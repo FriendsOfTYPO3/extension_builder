@@ -1,0 +1,76 @@
+
+
+.yui-skin-sam .yui-layout .yui-layout-hd {
+	//background:transparent url(../../alt_menu_mainitem_bg.gif) repeat-x scroll left top;
+	border:none;
+}
+
+#top .logo {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 24px;
+   font-weight: bold;
+   color: #FF8700;
+   padding-left: 10px;
+   padding-top: 4px;
+}
+
+
+div.WireIt-Container {
+   position: absolute;
+ 	z-index: 5;
+ 	opacity: 0.7;
+ 	filter: alpha(opacity = 70);
+   font-size: 8pt;
+}
+
+div.WireIt-Container div.body {
+ 	border: 2px solid #0A42AF;
+}
+
+div.WireIt-Container-ddhandle {
+   background-color: #0A42AF;
+}
+
+div.WireIt-Container-focused {
+   z-index: 6;
+   opacity: 0.85;
+   filter: alpha(opacity = 85);
+}
+
+
+
+#modelingLayer {
+	height: 100%;
+}
+
+#moduleBar {
+	width: 150px;
+	position: absolute;
+	top: 0px;
+	left: 500px;
+	z-index: 10;
+
+	cursor: move;
+	-moz-border-radius:5px;
+	-moz-box-shadow: white 0 0 5px 0;
+	border: 5px solid white;
+	
+	background-color: white;
+	
+	padding: 0;
+}
+
+div.WireIt-Layer {
+	background-image: url('background_pixel.png');
+}
+
+
+.WiringEditor-module {
+	cursor: move;
+	-moz-border-radius:5px;	
+	margin: 0;
+}
+
+#toolbar {
+   position: static;
+}
