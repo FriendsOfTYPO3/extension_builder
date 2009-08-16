@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'extbase_kickstarter'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_extbasekickstarter_extension">Extbase Kickstarter: Extension</label>
+			<label index="tx_extbasekickstarter_extension.extensionkey">extensionKey</label>
+			<label index="tx_extbasekickstarter_extension.title">Title</label>
+			<label index="tx_extbasekickstarter_extension.description">Description</label>
+			<label index="tx_extbasekickstarter_extension.state">State</label>
+			<label index="tx_extbasekickstarter_extension.languages">Languages</label>
+			<label index="tx_extbasekickstarter_extension.persons">Persons</label>
+			<label index="tx_extbasekickstarter_extension.domainobjects">Domain Objects</label>
+			<label index="tx_extbasekickstarter_person">Extbase Kickstarter: Person</label>
+			<label index="tx_extbasekickstarter_person.name">Person Name</label>
+			<label index="tx_extbasekickstarter_person.email">Person Email</label>
+			<label index="tx_extbasekickstarter_person.role">Role</label>
+			<label index="tx_extbasekickstarter_person.extension">Extension</label>
+			<label index="tx_extbasekickstarter_domainObjects">Extbase Kickstarter: Domain Objects</label>
+			<label index="tx_extbasekickstarter_domainObjects.name">Name</label>
+			<label index="tx_extbasekickstarter_domainObjects.description">Description</label>
+			<label index="tx_extbasekickstarter_domainObjects.relateddomainobjects">Related Domain Objects</label>
+			<label index="tx_extbasekickstarter_domainObjects.extension">Extension this Domain Object belongs to</label>
+			<label index="tx_extbasekickstarter_domainObjects.backendconfigurationoptions">Backend Configuration Options</label>
+			<label index="tx_extbasekickstarter_domainObjects.properties">Properties</label>
+			<label index="tx_extbasekickstarter_properties">Extbase Kickstarter: Properties</label>
+			<label index="tx_extbasekickstarter_properties.name">Name</label>
+			<label index="tx_extbasekickstarter_properties.description">Description</label>
+			<label index="tx_extbasekickstarter_properties.validationrules">validationRules</label>
+			<label index="tx_extbasekickstarter_properties.isrequired">isRequired</label>
+			<label index="tx_extbasekickstarter_properties.accessmethods">Access Methods</label>
+		</languageKey>
+	</data>
+</T3locallang>
