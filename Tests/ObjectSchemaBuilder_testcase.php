@@ -41,7 +41,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 		$description = 'My cool fancy description';
 		$name = 'ExtName';
 		$extensionKey = 'EXTKEY';
-		$state = 1;
+		$state = 'beta';
 
 		$input = array(
 		    'properties' => array(
@@ -56,7 +56,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 		$extension->setDescription($description);
 		$extension->setName($name);
 		$extension->setExtensionKey($extensionKey);
-		$extension->setState($state);
+		$extension->setState(2);
 
 
 		$actual = $this->objectSchemaBuilder->build($input);
@@ -115,5 +115,167 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 
 		$actual = $this->objectSchemaBuilder->_call('buildDomainObject', $input);
 		$this->assertEquals($actual, $expected, 'Domain Object not built correctly.');
+	}
+	/**
+	 * @test
+	 */
+	public function conversionExtractsWholeExtensionMetadataWithRelations() {
+		$input = array(
+			'modules' => array(
+				0 => array(
+					// config
+					// name
+					'value' =>  array(
+						'name' => 'Blog',
+						'objectsettings' => array(
+							'description' => 'A blog object',
+							'aggregateRoot' => TRUE,
+							'type' => 'Entity'
+						),
+						'propertyGroup' => array(
+							'properties' => array(
+								0 => array(
+									'propertyName' => 'name',
+									'propertyType' => 'String'
+								),
+								1 => array(
+									'propertyName' => 'description',
+									'propertyType' => 'String'
+								)
+							)
+						),
+						'relationGroup' => array(
+							'relations' => array(
+								0 => array(
+									'relationName' => 'posts',
+									'relationType' => 'zeroToOne'
+								)
+							)
+						)
+					)
+				),
+				1 => array(
+					// config
+					// name
+					'value' =>  array(
+						'name' => 'Post',
+						'objectsettings' => array(
+							'description' => 'A blog post',
+							'aggregateRoot' => FALSE,
+							'type' => 'Entity'
+						),
+						'propertyGroup' => array(
+							'properties' => array(
+							)
+						),
+						'relationGroup' => array(
+							'relations' => array(
+								0 => array(
+									'relationName' => 'comments',
+									'relationType' => 'zeroToMany'
+								)
+							)
+						)
+					)
+				),
+				2 => array(
+					// config
+					// name
+					'value' =>  array(
+						'name' => 'Comment',
+						'objectsettings' => array(
+							'description' => '',
+							'aggregateRoot' => FALSE,
+							'type' => 'Entity'
+						),
+						'propertyGroup' => array(
+							'properties' => array(
+							)
+						),
+						'relationGroup' => array(
+							'relations' => array()
+						)
+					)
+				),
+			),
+			'properties' => array(
+				'description' => 'Some description',
+				'extensionKey' => 'my_extension_key',
+				'name' => 'My ext name',
+				'state' => 'beta',
+				
+			),
+			'wires' => array(
+				0 => array(
+					'tgt' => array(
+						'moduleId' => 1,
+						'terminal' => 'SOURCES'
+					),
+					'src' => array(
+						'moduleId' => 0, // hier stand leerstring drin
+						'terminal' => 'relationWire_0'
+					)
+				),
+				1 => array(
+					'tgt' => array(
+						'moduleId' => 2,
+						'terminal' => 'SOURCES'
+					),
+					'src' => array(
+						'moduleId' => 1,
+						'terminal' => 'relationWire_0'
+					)
+				)
+			)
+		);
+
+		$extension = new Tx_ExtbaseKickstarter_Domain_Model_Extension();
+		$extension->setName('My ext name');
+		$extension->setState(Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_BETA);
+		$extension->setExtensionKey('my_extension_key');
+		$extension->setDescription('Some description');
+
+		$blog = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
+		$blog->setName('Blog');
+		$blog->setDescription('A blog object');
+		$blog->setEntity(TRUE);
+		$blog->setAggregateRoot(TRUE);
+		$property = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
+		$property->setName('name');
+		$blog->addProperty($property);
+		$property = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
+		$property->setName('description');
+		$blog->addProperty($property);
+
+		$extension->addDomainObject($blog);
+		
+		
+		$post = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
+		$post->setName('Post');
+		$post->setDescription('A blog post');
+		$post->setEntity(TRUE);
+		$post->setAggregateRoot(FALSE);
+		$extension->addDomainObject($post);
+
+		$comment = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
+		$comment->setName('Comment');
+		$comment->setDescription('');
+		$comment->setEntity(TRUE);
+		$comment->setAggregateRoot(FALSE);
+		$extension->addDomainObject($comment);
+
+		$relation = new Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToOneRelation();
+		$relation->setName('posts');
+		$relation->setForeignClass($post);
+		$blog->addProperty($relation);
+
+		$relation = new Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToManyRelation();
+		$relation->setName('comments');
+		$relation->setForeignClass($comment);
+		$post->addProperty($relation);
+
+		$actualExtension = $this->objectSchemaBuilder->build($input);
+		$this->assertEquals($extension, $actualExtension, 'The extensions differ');
+
 	}
 }
