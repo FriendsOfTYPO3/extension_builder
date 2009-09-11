@@ -54,8 +54,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	 * @return string The rendered view
 	 */
 	public function indexAction() {
-	   
-	   	                    
+		
 			// Prepare scBase
 		$this->scBase = t3lib_div::makeInstance('t3lib_SCbase'); 
 		$this->scBase->MCONF['name'] = $this->request->getControllerName();
@@ -81,7 +80,13 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 		$this->view->assign('endPage', $this->doc->endPage());
                             
 	}
+
+	protected function generateCodeAction() {
+		$jsonObject = json_decode(file_get_contents('php://input'),true);
 		
+		return json_encode(array('saved'));
+	}
+
 	/**
 	 * Adds items to the ->MOD_MENU array. Used for the function menu selector.
 	 *

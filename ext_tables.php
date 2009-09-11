@@ -14,7 +14,7 @@ Tx_Extbase_Utility_Extension::registerModule(
 	'kickstarter',
 	'',
 	array(
-		'KickstarterModule' => 'index'
+		'KickstarterModule' => 'index,generateCode'
 	),
 	array(
 		'access' => 'user,group',
