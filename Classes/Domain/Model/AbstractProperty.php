@@ -31,7 +31,7 @@
  * @package ExtbaseKickstarter
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
+abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	/**
 	 * Name of the property
 	 * @var string
