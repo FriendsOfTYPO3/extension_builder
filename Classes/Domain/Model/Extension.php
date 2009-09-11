@@ -33,5 +33,127 @@
  */
 class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 
+	/**
+	 * The extension key
+	 * @var string
+	 */
+	protected $extensionKey;
+
+	/**
+	 * Extension's title
+	 * @var string
+	 */
+	protected $title;
+
+	/**
+	 *
+	 * @var string
+	 */
+	protected $description;
+
+	/**
+	 * The extension's state. One of the STATE_* constants.
+	 * @var integer
+	 */
+	protected $state = 0;
+
+	const STATE_DEVELOPMENT = 0;
+	const STATE_ALPHA = 1;
+	const STATE_BETA = 2;
+	const STATE_STABLE = 3;
+
+	/**
+	 * All domain objects
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_ExtbaseKickstarter_Domain_Model_DomainObject>
+	 */
+	protected $domainObjects;
+
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		$this->domainObjects = new Tx_Extbase_Persistence_ObjectStorage();
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getExtensionKey() {
+		return $this->extensionKey;
+	}
+
+	/**
+	 *
+	 * @param string $extensionKey
+	 */
+	public function setExtensionKey($extensionKey) {
+		$this->extensionKey = $extensionKey;
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getTitle() {
+		return $this->title;
+	}
+
+	/**
+	 *
+	 * @param string $title
+	 */
+	public function setTitle($title) {
+		$this->title = $title;
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+
+	/**
+	 *
+	 * @param string $description
+	 */
+	public function setDescription($description) {
+		$this->description = $description;
+	}
+
+	/**
+	 *
+	 * @return integer
+	 */
+	public function getState() {
+		return $this->state;
+	}
+
+	/**
+	 *
+	 * @param integer $state
+	 */
+	public function setState($state) {
+		$this->state = $state;
+	}
+
+	/**
+	 *
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_ExtbaseKickstarter_Domain_Model_DomainObject>
+	 */
+	public function getDomainObjects() {
+		return $this->domainObjects;
+	}
+
+	/**
+	 *
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject 
+	 */
+	public function addDomainObject(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
+		$this->domainObjects->attach($domainObject);
+	}
+
 }
 ?>
