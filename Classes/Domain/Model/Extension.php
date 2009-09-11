@@ -64,16 +64,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 
 	/**
 	 * All domain objects
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_ExtbaseKickstarter_Domain_Model_DomainObject>
+	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject>
 	 */
-	protected $domainObjects;
-
-	/**
-	 * Constructor.
-	 */
-	public function __construct() {
-		$this->domainObjects = new Tx_Extbase_Persistence_ObjectStorage();
-	}
+	protected $domainObjects = array();
 
 	/**
 	 *
@@ -141,7 +134,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 
 	/**
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_ExtbaseKickstarter_Domain_Model_DomainObject>
+	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject>
 	 */
 	public function getDomainObjects() {
 		return $this->domainObjects;
@@ -152,7 +145,14 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject 
 	 */
 	public function addDomainObject(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
-		$this->domainObjects->attach($domainObject);
+		$this->domainObjects[$domainObject->getName()] = $domainObject;
+	}
+
+	public function getDomainObjectByName($domainObjectName) {
+		if (isset($this->domainObjects[$domainObjectName])) {
+			return $this->domainObjects[$domainObjectName];
+		}
+		return NULL;
 	}
 
 }

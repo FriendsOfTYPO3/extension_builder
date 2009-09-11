@@ -41,7 +41,53 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder {
 		$extension->setName($globalProperties['name']);
 		$extension->setDescription($globalProperties['description']);
 		$extension->setExtensionKey($globalProperties['extensionKey']);
-		$extension->setState($globalProperties['state']);
+
+		switch ($globalProperties['state']) {
+			case 'development':
+				$state = Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_DEVELOPMENT;
+				break;
+			case 'alpha':
+				$state = Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_ALPHA;
+				break;
+			case 'beta':
+				$state = Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_BETA;
+				break;
+			case 'stable':
+				$state = Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_STABLE;
+				break;
+		}
+		$extension->setState($state);
+
+
+		// classes
+		if (isset($jsonArray['modules'])) {
+			foreach ($jsonArray['modules'] as $singleModule) {
+				$domainObject = $this->buildDomainObject($singleModule['value']);
+				$extension->addDomainObject($domainObject);
+			}
+		}
+
+		// relations
+		if (isset($jsonArray['wires'])) {
+			foreach ($jsonArray['wires'] as $wire) {
+				$relationJsonConfiguration = $jsonArray['modules'][$wire['src']['moduleId']]['value']['relationGroup']['relations'][substr($wire['src']['terminal'], 13)];
+				if (!is_array($relationJsonConfiguration)) throw new Exception('Error. Relation JSON config was not found');
+
+				if ($wire['tgt']['terminal'] !== 'SOURCES') throw new Exception('Connections to other places than SOURCES not supported.');
+
+				$foreignClassName = $jsonArray['modules'][$wire['tgt']['moduleId']]['value']['name'];
+				$localClassName = $jsonArray['modules'][$wire['src']['moduleId']]['value']['name'];
+
+				$relationSchemaClassName = 'Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_' . ucfirst($relationJsonConfiguration['relationType']) . 'Relation';
+
+				if (!class_exists($relationSchemaClassName)) throw new Exception('Relation of type ' . $relationSchemaClassName . ' not found');
+				$relation = new $relationSchemaClassName;
+				$relation->setName($relationJsonConfiguration['relationName']);
+				$relation->setForeignClass($extension->getDomainObjectByName($foreignClassName));
+
+				$extension->getDomainObjectByName($localClassName)->addProperty($relation);
+			}
+		}
 
 		return $extension;
 	}
