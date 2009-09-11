@@ -25,12 +25,41 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends tx_phpunit_testcase { //extends Tx_Extbase_Base_testcase {
+require_once('BaseTestCase.php');
+class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKickstarter_BaseTestCase { //extends Tx_Extbase_Base_testcase {
+
+	protected $objectSchemaBuilder;
+	
+	public function setUp() {
+		$this->objectSchemaBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_ObjectSchemaBuilder');
+	}
 	/**
 	 * @test
 	 */
 	public function conversionExtractsExtensionProperties() {
-		
-		$this->fail('ERROR');
+
+		$description = 'My cool fancy description';
+		$name = 'ExtName';
+		$extensionKey = 'EXTKEY';
+		$state = 1;
+
+		$input = array(
+		    'properties' => array(
+			'description' => $description,
+			'extensionKey' => $extensionKey,
+			'name' => $name,
+			'state' => $state
+		    )
+		    );
+
+		$extension = new Tx_ExtbaseKickstarter_Domain_Model_Extension();
+		$extension->setDescription($description);
+		$extension->setName($name);
+		$extension->setExtensionKey($extensionKey);
+		$extension->setState($state);
+
+
+		$actual = $this->objectSchemaBuilder->build($input);
+		$this->assertEquals($actual, $extension, 'Extension properties were not extracted.');
 	}
 }
