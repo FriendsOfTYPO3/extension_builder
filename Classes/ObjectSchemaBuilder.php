@@ -42,6 +42,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder {
 		$extension->setDescription($globalProperties['description']);
 		$extension->setExtensionKey($globalProperties['extensionKey']);
 
+		$state = 0;
 		switch ($globalProperties['state']) {
 			case 'development':
 				$state = Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_DEVELOPMENT;
