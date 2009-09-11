@@ -70,7 +70,7 @@ var extbaseModeling_wiringEditorLanguage = {
 			type: "string",
 			inputParams: {
 				name: "name",
-				label: "Title",
+				label: "Name",
 				typeInvite: "Extension title"
 			}
 		},
@@ -158,7 +158,7 @@ var extbaseModeling_wiringEditorLanguage = {
 					{
 						type: "inplaceedit", 
 						inputParams: {
-							name: "title",
+							name: "name",
 							className: "inputEx-Field extbase-modelTitleEditor",
 							editorField:{
 								type: "string",
@@ -180,7 +180,8 @@ var extbaseModeling_wiringEditorLanguage = {
 									inputParams: {
 										label: "Object Type", 
 										name: "type", 
-										selectValues: ["Entity", "Value Object"]
+										selectValues: ["Entity", "ValueObject"],
+										selectOptions: ["Entity", "Value Object"]
 									}
 								},
 								{
@@ -254,7 +255,14 @@ var extbaseModeling_wiringEditorLanguage = {
 														inputParams: {
 															label: "Property Type", 
 															name: "propertyType", 
-															selectValues: ["String","Integer","Float"]
+															selectValues: [
+																"String",
+																"Integer",
+																"Float",
+																"Boolean",
+																"DateTime",
+																"Select"
+															]
 														}
 													},
 													{
@@ -310,6 +318,15 @@ var extbaseModeling_wiringEditorLanguage = {
 														 		type: "input",
 														 		allowedTypes: ["output", "input"]
 															}
+														}
+													},
+													{
+														type: "select", 
+														inputParams: {
+															label: "Type", 
+															name: "relationType",
+															selectValues: ["zeroToOne", "zeroToMany"],
+															selectOptions: ["0 .. 1","0 .. *"]
 														}
 													}
 												]

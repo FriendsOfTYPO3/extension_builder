@@ -5,10 +5,9 @@
    "envelope":"JSON-RPC-2.0",
    "transport":"POST",
    
-   "target":"WiringEditor.php",
+   "target":"../../../../../../../typo3/mod.php?M=tools_ExtbaseKickstarterKickstarter&tx_extbasekickstarter_tools_extbasekickstarterkickstarter[controllerName]=KickstarterModule&tx_extbasekickstarter_tools_extbasekickstarterkickstarter[actionName]=generateCode",
    
    "services": {
-   
       "saveWiring" : {
          "description": "Save the module",
          "parameters": [
