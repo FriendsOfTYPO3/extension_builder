@@ -32,18 +32,42 @@
  * @version $ID:$
  */
 class Tx_ExtbaseKickstarter_ObjectSchemaBuilder {
-    public function build(array $jsonArray) {
-	$extension = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Extension');
-	$globalProperties = $jsonArray['properties'];
-	if (!is_array($globalProperties)) throw new Exception('Wrong 1');
+	public function build(array $jsonArray) {
+		$extension = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Extension');
+		$globalProperties = $jsonArray['properties'];
+		if (!is_array($globalProperties)) throw new Exception('Wrong 1');
 
 
-	$extension->setName($globalProperties['name']);
-	$extension->setDescription($globalProperties['description']);
-	$extension->setExtensionKey($globalProperties['extensionKey']);
-	$extension->setState($globalProperties['state']);
+		$extension->setName($globalProperties['name']);
+		$extension->setDescription($globalProperties['description']);
+		$extension->setExtensionKey($globalProperties['extensionKey']);
+		$extension->setState($globalProperties['state']);
 
-	return $extension;
-    }
+		return $extension;
+	}
+
+	protected function buildDomainObject(array $jsonDomainObject) {
+		$domainObject = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject');
+		$domainObject->setName($jsonDomainObject['name']);
+		$domainObject->setDescription($jsonDomainObject['objectsettings']['description']);
+		if ($jsonDomainObject['objectsettings']['type'] === 'Entity') {
+			$domainObject->setEntity(TRUE);
+		} else {
+			$domainObject->setEntity(FALSE);
+		}
+
+		$domainObject->setAggregateRoot($jsonDomainObject['objectsettings']['aggregateRoot']);
+
+		foreach ($jsonDomainObject['propertyGroup']['properties'] as $jsonProperty) {
+			$propertyType = $jsonProperty['propertyType'];
+			$propertyClassName = 'Tx_ExtbaseKickstarter_Domain_Model_Property_' . $propertyType . 'Property';
+			if (!class_exists($propertyClassName)) throw new Exception('Property of type ' . $propertyType . ' not found');
+			$property = new $propertyClassName;
+			$property->setName($jsonProperty['propertyName']);
+
+			$domainObject->addProperty($property);
+		}
+		return $domainObject;
+	}
 }
 ?>

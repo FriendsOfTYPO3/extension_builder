@@ -31,7 +31,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 	protected $objectSchemaBuilder;
 	
 	public function setUp() {
-		$this->objectSchemaBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_ObjectSchemaBuilder');
+		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_ObjectSchemaBuilder'), array('dummy'));
 	}
 	/**
 	 * @test
@@ -61,5 +61,59 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 
 		$actual = $this->objectSchemaBuilder->build($input);
 		$this->assertEquals($actual, $extension, 'Extension properties were not extracted.');
+	}
+
+	/**
+	 * @test
+	 */
+	public function conversionExtractsPersons() {
+		$this->markTestIncomplete('Persons not supported');
+
+	}
+
+
+	/**
+	 * @test
+	 */
+	public function conversionExtractsSingleDomainObjectMetadata() {
+		$name = 'MyDomainObject';
+		$description = 'My long domain object description';
+
+		$input = array(
+			'name' => $name,
+			'objectsettings' => array(
+				'description' => $description,
+				'aggregateRoot' => TRUE,
+				'type' => 'Entity'
+			),
+			'propertyGroup' => array(
+				'properties' => array(
+					0 => array(
+						'propertyName' => 'name',
+						'propertyType' => 'String'
+					),
+					1 => array(
+						'propertyName' => 'type',
+						'propertyType' => 'Integer'
+					)
+				)
+			    ),
+			'relationGroup' => array()
+		    );
+		$expected = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
+		$expected->setName($name);
+		$expected->setDescription($description);
+		$expected->setEntity(TRUE);
+		$expected->setAggregateRoot(TRUE);
+
+		$property0 = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
+		$property0->setName('name');
+		$property1 = new Tx_ExtbaseKickstarter_Domain_Model_Property_IntegerProperty();
+		$property1->setName('type');
+		$expected->addProperty($property0);
+		$expected->addProperty($property1);
+
+		$actual = $this->objectSchemaBuilder->_call('buildDomainObject', $input);
+		$this->assertEquals($actual, $expected, 'Domain Object not built correctly.');
 	}
 }

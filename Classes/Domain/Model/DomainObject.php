@@ -44,6 +44,20 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	 * @var string
 	 */
 	protected $description;
+
+	/**
+	 * If TRUE, this is an aggregate root.
+	 * @var boolean
+	 */
+	protected $aggregateRoot;
+
+	/**
+	 * If TRUE, this is an entity. If false, it is a ValueObject
+	 * @var boolean
+	 */
+	protected $entity;
+
+	protected $properties = array();
 	
 	/**
 	 * Set name
@@ -75,7 +89,28 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	 */
 	public function setDescription($description) {
 		$this->description = $description;
-	}	
+	}
+	public function getAggregateRoot() {
+		return $this->aggregateRoot;
+	}
+
+	public function setAggregateRoot($aggregateRoot) {
+		$this->aggregateRoot = (boolean)$aggregateRoot;
+	}
+
+	public function getEntity() {
+		return $this->entity;
+	}
+
+	public function setEntity($entity) {
+		$this->entity = (boolean)$entity;
+	}
+
+	public function addProperty(Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty $property) {
+		$this->properties[] = $property;
+	}
+
+
 }
 
 ?>
