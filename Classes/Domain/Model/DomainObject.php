@@ -33,5 +33,52 @@
  */
 class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 
+	/**
+	 * Name of the domain object
+	 * @var string
+	 */
+	protected $name;
+
+	/**
+	 * Description of the domain object
+	 * @var string
+	 */
+	protected $description;
+	
+	/**
+	 * Set name
+	 * @return string
+	 */
+	public function getName() {
+		return $this->name;
+	}
+	
+	/**
+	 * Set name
+	 * @param string Name
+	 */
+	public function setName($name) {
+		$this->name = $name;
+	}
+	
+	/**
+	 * Get description
+	 * @return string
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+	
+	/**
+	 * Set description
+	 * @param string Description
+	 */
+	public function setDescription($description) {
+		$this->description = $description;
+	}	
 }
+
+
+
+
 ?>
