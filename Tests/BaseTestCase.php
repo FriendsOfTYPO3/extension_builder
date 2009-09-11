@@ -2,8 +2,11 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Ingmar Schlecht
+*  (c) 2009 Jochen Rau <jochen.rau@typoplanet.de>
 *  All rights reserved
+*
+*  This class is a backport of the corresponding class of FLOW3.
+*  All credits go to the v5 team.
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
 *  free software; you can redistribute it and/or modify
@@ -22,28 +25,17 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-/**
- * Creates a request an dispatches it to the controller which was specified
- * by TS Setup, Flexform and returns the content to the v4 framework.
- *
- * This class is the main entry point for extbase extensions in the frontend.
- *
- * @package ExtbaseKickstarter
- * @version $ID:$
- */
-class Tx_ExtbaseKickstarter_ObjectSchemaBuilder {
-    public function build(array $jsonArray) {
-	$extension = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Extension');
-	$globalProperties = $jsonArray['properties'];
-	if (!is_array($globalProperties)) throw new Exception('Wrong 1');
+abstract class Tx_ExtbaseKickstarter_BaseTestCase extends tx_phpunit_testcase { //extends Tx_Extbase_Base_testcase {
+	public function __construct() {
+		if (!class_exists('Tx_Extbase_Utility_ClassLoader')) {
+			require(t3lib_extmgm::extPath('extbase') . 'Classes/Utility/ClassLoader.php');
+		}
 
-
-	$extension->setName($globalProperties['name']);
-	$extension->setDescription($globalProperties['description']);
-	$extension->setExtensionKey($globalProperties['extensionKey']);
-	$extension->setState($globalProperties['state']);
-
-	return $extension;
-    }
+		$classLoader = new Tx_Extbase_Utility_ClassLoader();
+		spl_autoload_register(array($classLoader, 'loadClass'));
+	}
 }
-?>
+
+
+
+

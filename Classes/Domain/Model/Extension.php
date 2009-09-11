@@ -40,10 +40,10 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	protected $extensionKey;
 
 	/**
-	 * Extension's title
+	 * Extension's name
 	 * @var string
 	 */
-	protected $title;
+	protected $name;
 
 	/**
 	 *
@@ -95,16 +95,16 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 *
 	 * @return string
 	 */
-	public function getTitle() {
-		return $this->title;
+	public function getName() {
+		return $this->name;
 	}
 
 	/**
 	 *
-	 * @param string $title
+	 * @param string $name
 	 */
-	public function setTitle($title) {
-		$this->title = $title;
+	public function setName($name) {
+		$this->name = $name;
 	}
 
 	/**
