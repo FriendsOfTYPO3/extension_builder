@@ -32,6 +32,55 @@
  * @version $ID:$
  */
 class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
+	/**
+	 * Name of the property
+	 * @var string
+	 */
 	protected $name;
+	
+	/**
+	 * Description of property
+	 * @var string
+	 */
+	protected $description;
+	
+	/**
+	 * Whether the property is required
+	 * @var boolean
+	 */
+	protected $required;
+	
+	/**
+	 * Get property name
+	 * @return string
+	 */
+	public function getName() {
+		return $this->name;
+	}
+	
+	/**
+	 * Set property name
+	 * @param string Property name
+	 */
+	public function setName($name) {
+		$this->name = $name;
+	}
+
+	/**
+	 * Get property description
+	 * @return string Property description
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+	
+	/**
+	 * Set property description
+	 * @param string Property description
+	 */
+	public function setDescription($description) {
+		$this->description = $description;
+	}
+	
 }
 ?>
