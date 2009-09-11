@@ -81,6 +81,5 @@ class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	public function setDescription($description) {
 		$this->description = $description;
 	}
-	
 }
 ?>
