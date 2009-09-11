@@ -10,6 +10,9 @@ if (!defined ('TYPO3_MODE')) {
 
 Tx_Extbase_Utility_Extension::registerModule(
 	$_EXTKEY,
+	'tools',
+	'kickstarter',
+	'',
 	array(
 		'KickstarterModule' => 'index'
 	),
@@ -17,9 +20,7 @@ Tx_Extbase_Utility_Extension::registerModule(
 		'access' => 'user,group',
 		'icon'   => 'EXT:extbase_kickstarter/ext_icon.gif',
 		'labels' => 'LLL:EXT:extbase_kickstarter/Resources/Private/Language/locallang_mod.xml',
-	),
-	'tools',	// Make module a submodule of 'user'
-	'kickstarter'
+	)
 );
 
 
