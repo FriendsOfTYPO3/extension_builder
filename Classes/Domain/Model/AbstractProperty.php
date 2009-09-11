@@ -81,5 +81,15 @@ class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	public function setDescription($description) {
 		$this->description = $description;
 	}
+
+	//abstract public function getTcaDefinition();
+
+	abstract public function getTypeForComment();
+
+	abstract public function getTypeHint();
+
+	//abstract public function getLocallangEntry()
+
+	//abstract public function getSqlTypeDefinition();
 }
 ?>

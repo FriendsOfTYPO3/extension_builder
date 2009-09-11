@@ -32,5 +32,13 @@
  * @version $ID:$
  */
 class Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty extends Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
+
+	public function getTypeForComment() {
+		return 'string';
+	}
+
+	public function getTypeHint() {
+		return '';
+	}
 }
 ?>
