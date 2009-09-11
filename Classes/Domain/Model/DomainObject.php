@@ -78,7 +78,4 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	}	
 }
 
-
-
-
 ?>
