@@ -23,10 +23,7 @@
 ***************************************************************/
 
 /**
- * Creates a request an dispatches it to the controller which was specified
- * by TS Setup, Flexform and returns the content to the v4 framework.
- *
- * This class is the main entry point for extbase extensions in the frontend.
+ * Schema for a Domain Object.
  *
  * @package ExtbaseKickstarter
  * @version $ID:$
@@ -57,6 +54,10 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	 */
 	protected $entity;
 
+	/**
+	 * List of properties the domain object has
+	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty>
+	 */
 	protected $properties = array();
 	
 	/**
@@ -69,7 +70,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	
 	/**
 	 * Set name
-	 * @param string Name
+	 * @param string $name Name
 	 */
 	public function setName($name) {
 		$this->name = $name;
@@ -85,35 +86,64 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	
 	/**
 	 * Set description
-	 * @param string Description
+	 * @param string $description Description
 	 */
 	public function setDescription($description) {
 		$this->description = $description;
 	}
+
+	/**
+	 * get aggregate root
+	 * @return boolean TRUE if it is an aggregate root, FALSE otherwise.
+	 */
 	public function getAggregateRoot() {
 		return $this->aggregateRoot;
 	}
 
+	/**
+	 * Setter for aggregate root flag
+	 * @param boolean $aggregateRoot TRUE if Domain Object should be aggregate root.
+	 */
 	public function setAggregateRoot($aggregateRoot) {
 		$this->aggregateRoot = (boolean)$aggregateRoot;
 	}
 
+	/**
+	 *
+	 * @return boolean TRUE if it is an entity, FALSE if it is a ValueObject
+	 */
 	public function getEntity() {
 		return $this->entity;
 	}
 
+	/**
+	 *
+	 * @param $entity $entity TRUE if it is an entity, FALSE if it is a ValueObject
+	 */
 	public function setEntity($entity) {
 		$this->entity = (boolean)$entity;
 	}
 
+	/**
+	 * Adding a new property
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty $property The new property to add
+	 */
 	public function addProperty(Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty $property) {
 		$this->properties[] = $property;
 	}
 
+	/**
+	 * Get all properties
+	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty>
+	 */
 	public function getProperties() {
 		return $this->properties;
 	}
 
+	/**
+	 * Get the base class for this Domain Object (different if it is entity or value object)
+	 * @return string name of the base class
+	 */
 	public function getBaseClass() {
 		if ($this->entity) {
 			return 'Tx_Extbase_DomainObject_AbstractEntity';
@@ -121,7 +151,6 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 			return 'Tx_Extbase_DomainObject_AbstractValueObject';
 		}
 	}
-
 
 }
 
