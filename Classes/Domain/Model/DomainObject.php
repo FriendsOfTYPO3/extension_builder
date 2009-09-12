@@ -110,6 +110,18 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 		$this->properties[] = $property;
 	}
 
+	public function getProperties() {
+		return $this->properties;
+	}
+
+	public function getBaseClass() {
+		if ($this->entity) {
+			return 'Tx_Extbase_DomainObject_AbstractEntity';
+		} else {
+			return 'Tx_Extbase_DomainObject_AbstractValueObject';
+		}
+	}
+
 
 }
 
