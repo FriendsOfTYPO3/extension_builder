@@ -251,6 +251,13 @@ var extbaseModeling_wiringEditorLanguage = {
 												name: "property",
 												fields: [
 													{
+														inputParams: {
+															label: "Property Name", 
+															name: "propertyName",
+															required: false
+														}
+													},
+													{
 														type: "select", 
 														inputParams: {
 															label: "Property Type", 
@@ -262,14 +269,28 @@ var extbaseModeling_wiringEditorLanguage = {
 																"Boolean",
 																"DateTime",
 																"Select"
+															], 
+															selectValues: [
+																"Text String",
+																"Integer",
+																"Floating Point",
+																"Boolean",
+																"Date Time",
+																"Select List"
 															]
 														}
 													},
 													{
 														inputParams: {
-															label: "Property Name", 
-															name: "propertyName",
-															required: true
+															label: "Description", 
+															name: "propertyDescription",
+														}
+													},
+													{
+														type: "boolean",
+														inputParams: {
+															label: "Is Required?", 
+															name: "propertyIsRequired",
 														}
 													}
 												]
