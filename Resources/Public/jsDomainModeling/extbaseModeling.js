@@ -270,7 +270,7 @@ var extbaseModeling_wiringEditorLanguage = {
 																"DateTime",
 																"Select"
 															], 
-															selectValues: [
+															selectOptions: [
 																"Text String",
 																"Integer",
 																"Floating Point",

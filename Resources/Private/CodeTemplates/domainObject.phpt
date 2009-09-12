@@ -35,7 +35,7 @@ class <k:classDefinition domainObject="{domainObject}" /> extends {domainObject.
 	<f:for each="{domainObject.properties}" as="property">
 	/**
 	 * {property.description}
-	 * @var ${property.typeForComment}
+	 * @var {property.typeForComment}
 	 */
 	protected ${property.name};
 	</f:for>
