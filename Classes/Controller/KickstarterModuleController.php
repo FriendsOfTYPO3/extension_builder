@@ -47,7 +47,17 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	 * @var t3lib_SCbase
 	 */
 	protected $scBase;
-	
+
+
+	protected $objectSchemaBuilder;
+
+	protected $codeGenerator;
+
+	public function initializeAction() {
+		$this->objectSchemaBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_ObjectSchemaBuilder');
+		$this->codeGenerator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_CodeGenerator');
+	}
+
 	/**
 	 * Index action for this controller.
 	 *
@@ -81,9 +91,19 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
                             
 	}
 
-	protected function generateCodeAction() {
+	public function generateCodeAction() {
 		$jsonObject = json_decode(file_get_contents('php://input'),true);
-		
+		$extensionSchema = $this->objectSchemaBuilder->build($jsonObject);
+
+		$extensionDirectory = PATH_typo3conf . 'ext/' . $extensionSchema->getExtensionKey();
+		t3lib_div::mkdir($extensionDirectory);
+		t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Model');
+
+		$domainModelDirectory = $extensionDirectory . '/Classes/Domain/Model/';
+		foreach ($extensionSchema->getDomainObjects() as $lastPartOfClassName => $domainObject) {
+			$fileContents = $this->codeGenerator->generateDomainObjectCode($domainObject);
+			t3lib_div::writeFile($domainModelDirectory . $lastPartOfClassName . '.php', $fileContents);
+		}
 		return json_encode(array('saved'));
 	}
 

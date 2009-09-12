@@ -31,7 +31,33 @@
  */
 
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-class <k:classDefinition domainObject="{domainObject}"> {
+class <k:classDefinition domainObject="{domainObject}"> extends {domainObject.baseClass} {
+	<f:for each="{domainObject.properties}" as="property">
+	/**
+	 * {property.description}
+	 * @var ${property.typeForComment}
+	 */
+	protected ${property.name};
+	</f:for>
+		
+	<f:for each="{domainObject.properties}" as="property">
+	/**
+	 * Getter for {property.name}
+	 * @return {property.typeForComment} {property.description}
+	 */
+	public function get<k:uppercaseFirst>{property.name}</k:uppercaseFirst>() {
+		return $this->{property.name}
+	}
+	
+	/**
+	 * Setter for {property.name}
+	 * @param {property.typeForComment} ${property.name} {property.description}
+	 * @return void
+	 */
+	public function set<k:uppercaseFirst>{property.name}</k:uppercaseFirst>({property.typeHint} ${property.name}) {
+		$this->{property.name} = ${property.name};
+	}
+	</f:for>
 
 }
 ?>
