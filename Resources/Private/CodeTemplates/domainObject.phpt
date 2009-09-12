@@ -31,7 +31,7 @@
  */
 
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-class <k:classDefinition domainObject="{domainObject}"> extends {domainObject.baseClass} {
+class <k:classDefinition domainObject="{domainObject}" /> extends {domainObject.baseClass} {
 	<f:for each="{domainObject.properties}" as="property">
 	/**
 	 * {property.description}
