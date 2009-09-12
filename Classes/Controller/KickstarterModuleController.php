@@ -85,7 +85,6 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 		$this->view->assign('SAVE', '<input type="image" class="c-inputButton" name="submit" value="Update"' . t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/savedok.gif', '') . ' title="' . $GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_core.php:rm.saveDoc', 1) . '" />');
 		$this->view->assign('SHORTCUT',  $this->doc->makeShortcutIcon('', 'function', $settings['pluginName']));
 		
-		
 		$this->view->assign('startPage', $this->doc->startPage('OldStyle Module'));
 		$this->view->assign('endPage', $this->doc->endPage());
                             
@@ -104,6 +103,8 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 			$fileContents = $this->codeGenerator->generateDomainObjectCode($domainObject);
 			t3lib_div::writeFile($domainModelDirectory . $lastPartOfClassName . '.php', $fileContents);
 		}
+		$extensionConfigurationFromJson = $jsonObject['params']['working'];
+		
 		return json_encode(array('saved'));
 	}
 
