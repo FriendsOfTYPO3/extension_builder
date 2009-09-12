@@ -1,7 +1,4 @@
 <?php
-declare(ENCODING = 'utf-8');
-namespace F3\Kickstart\ViewHelpers;
-
 /*                                                                        *
  * This script belongs to the FLOW3 package "Kickstart".                  *
  *                                                                        *
@@ -39,7 +36,7 @@ namespace F3\Kickstart\ViewHelpers;
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @scope prototype
  */
-class UppercaseFirstViewHelper extends \F3\Fluid\Core\ViewHelper\AbstractViewHelper {
+class Tx_ExtbaseKickstarter_ViewHelpers_UppercaseFirstViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
 	 * Uppercase first character

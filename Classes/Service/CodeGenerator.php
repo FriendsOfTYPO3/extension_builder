@@ -72,7 +72,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 
 		$renderingContext = $this->objectFactory->create('Tx_Fluid_Core_Rendering_RenderingContext');
 		$renderingContext->setTemplateVariableContainer($variableContainer);
-		$renderingContext->setControllerContext($this->controllerContext);
+		//$renderingContext->setControllerContext($this->controllerContext); 
 		$renderingContext->setRenderingConfiguration($renderingConfiguration);
 
 		$viewHelperVariableContainer = $this->objectFactory->create('Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer');
@@ -83,7 +83,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 	}
 
 	protected function renderTemplate($filePath, $variables) {
-		$parsedTemplate = $this->templateParser->parse(file_get_contents('Resources/Private/CodeTemplates/' . $filePath));
+		$parsedTemplate = $this->templateParser->parse(file_get_contents(t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/' . $filePath));
 		return $parsedTemplate->render($this->buildRenderingContext($variables));
 	}
 	public function generateDomainObjectCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {

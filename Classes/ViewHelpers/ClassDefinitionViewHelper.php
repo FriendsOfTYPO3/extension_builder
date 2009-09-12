@@ -41,10 +41,10 @@ class Tx_ExtbaseKickstarter_ViewHelpers_ClassDefinitionViewHelper extends Tx_Flu
 	/**
 	 * Render without processing
 	 *
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject Domain Object
+	 * @param mixed $domainObject Domain Object
 	 * @return string
 	 */
-	public function render(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
+	public function render(/* @TODO typehint temporarily commented out Tx_ExtbaseKickstarter_Domain_Model_DomainObject */ $domainObject) {
 		$extension = $this->viewHelperVariableContainer->get('GLOBAL', 'extension');
 		return 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($extension->getExtensionKey()) . '_Domain_Model_' . $domainObject->getName();
 	}
