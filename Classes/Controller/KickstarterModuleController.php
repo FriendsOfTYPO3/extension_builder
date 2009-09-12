@@ -92,7 +92,8 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 
 	public function generateCodeAction() {
 		$jsonObject = json_decode(file_get_contents('php://input'),true);
-		$extensionSchema = $this->objectSchemaBuilder->build($jsonObject);
+		$extensionConfigurationFromJson = json_decode($jsonObject['params']['working'],true);
+		$extensionSchema = $this->objectSchemaBuilder->build($extensionConfigurationFromJson);
 
 		$extensionDirectory = PATH_typo3conf . 'ext/' . $extensionSchema->getExtensionKey();
 		t3lib_div::mkdir($extensionDirectory);
