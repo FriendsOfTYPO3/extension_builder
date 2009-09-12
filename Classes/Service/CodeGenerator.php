@@ -56,8 +56,18 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 		$this->objectFactory = new Tx_Fluid_Compatibility_ObjectFactory();
 	}
 
-	public function initialize(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
+	public function build(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
 		$this->extension = $extension;
+		
+		$extensionDirectory = PATH_typo3conf . 'ext/' . $this->extension->getExtensionKey().'/';
+		t3lib_div::mkdir($extensionDirectory);
+		t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Model');
+
+		$domainModelDirectory = $extensionDirectory . 'Classes/Domain/Model/';
+		foreach ($this->extension->getDomainObjects() as $domainObject) {
+			$fileContents = $this->generateDomainObjectCode($domainObject);
+			t3lib_div::writeFile($domainModelDirectory . $domainObject->getName() . '.php', $fileContents);
+		}
 	}
 
 	/**

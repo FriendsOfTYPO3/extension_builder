@@ -95,19 +95,8 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 		$extensionConfigurationFromJson = json_decode($jsonObject['params']['working'],true);
 		$extensionSchema = $this->objectSchemaBuilder->build($extensionConfigurationFromJson);
 		
-		$this->codeGenerator->initialize($extensionSchema);
+		$this->codeGenerator->build($extensionSchema);
 
-		$extensionDirectory = PATH_typo3conf . 'ext/' . $extensionSchema->getExtensionKey().'/';
-		t3lib_div::mkdir($extensionDirectory);
-		t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Model');
-
-		$domainModelDirectory = $extensionDirectory . 'Classes/Domain/Model/';
-		foreach ($extensionSchema->getDomainObjects() as $domainObject) {
-			$fileContents = $this->codeGenerator->generateDomainObjectCode($domainObject);
-			t3lib_div::writeFile($domainModelDirectory . $domainObject->getName() . '.php', $fileContents);
-		}
-		$extensionConfigurationFromJson = $jsonObject['params']['working'];
-		
 		return json_encode(array('saved'));
 	}
 
