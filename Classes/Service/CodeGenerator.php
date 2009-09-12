@@ -78,7 +78,6 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 		$variableContainer = $this->objectFactory->create('Tx_Fluid_Core_ViewHelper_TemplateVariableContainer', $templateVariables);
 
 		$renderingConfiguration = $this->objectFactory->create('Tx_Fluid_Core_Rendering_RenderingConfiguration');
-		$renderingConfiguration->setObjectAccessorPostProcessor($this->objectFactory->create('Tx_Fluid_Core_Rendering_HTMLSpecialCharsPostProcessor'));
 
 		$renderingContext = $this->objectFactory->create('Tx_Fluid_Core_Rendering_RenderingContext');
 		$renderingContext->setTemplateVariableContainer($variableContainer);
