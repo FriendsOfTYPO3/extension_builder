@@ -64,8 +64,8 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 	 * Build the rendering context
 	 * @author Sebastian Kurfürst <sebastian@typo3.org>
 	 */
-	protected function buildRenderingContext($templateVariableContainer) {
-		$variableContainer = $this->objectFactory->create('Tx_Fluid_Core_ViewHelper_TemplateVariableContainer', $templateVariableContainer);
+	protected function buildRenderingContext($templateVariables) {
+		$variableContainer = $this->objectFactory->create('Tx_Fluid_Core_ViewHelper_TemplateVariableContainer', $templateVariables);
 
 		$renderingConfiguration = $this->objectFactory->create('Tx_Fluid_Core_Rendering_RenderingConfiguration');
 		$renderingConfiguration->setObjectAccessorPostProcessor($this->objectFactory->create('Tx_Fluid_Core_Rendering_HTMLSpecialCharsPostProcessor'));
@@ -87,7 +87,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 		return $parsedTemplate->render($this->buildRenderingContext($variables));
 	}
 	public function generateDomainObjectCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
-		return $this->renderTemplate('domainObject.phpt', array('domainObject', $domainObject));
+		return $this->renderTemplate('domainObject.phpt', array('domainObject' => $domainObject));
 	}
 }
 ?>
