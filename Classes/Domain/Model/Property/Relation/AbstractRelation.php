@@ -33,15 +33,23 @@
  */
 abstract class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRelation extends Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	/**
-	 *
+	 * The schema of the foreign class
 	 * @var Tx_ExtbaseKickstarter_Domain_Model_DomainObject
 	 */
 	protected $foreignClass;
-	
+
+	/**
+	 *
+	 * @return Tx_ExtbaseKickstarter_Domain_Model_DomainObject The foreign class
+	 */
 	public function getForeignClass() {
 		return $this->foreignClass;
 	}
 
+	/**
+	 *
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $foreignClass Set the foreign class of the relation
+	 */
 	public function setForeignClass(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $foreignClass) {
 		$this->foreignClass = $foreignClass;
 	}

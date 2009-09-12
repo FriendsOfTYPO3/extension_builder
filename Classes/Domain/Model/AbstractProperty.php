@@ -23,10 +23,7 @@
 ***************************************************************/
 
 /**
- * Creates a request an dispatches it to the controller which was specified
- * by TS Setup, Flexform and returns the content to the v4 framework.
- *
- * This class is the main entry point for extbase extensions in the frontend.
+ * Base class for all properties in the object schema.
  *
  * @package ExtbaseKickstarter
  * @version $ID:$
@@ -60,7 +57,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	
 	/**
 	 * Set property name
-	 * @param string Property name
+	 * @param string $name Property name
 	 */
 	public function setName($name) {
 		$this->name = $name;
@@ -76,7 +73,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	
 	/**
 	 * Set property description
-	 * @param string Property description
+	 * @param string $description Property description
 	 */
 	public function setDescription($description) {
 		$this->description = $description;
@@ -84,8 +81,18 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 
 	//abstract public function getTcaDefinition();
 
+	/**
+	 * Template Method which should return the type hinting information
+	 * being used in PHPDoc Comments
+	 * @return string
+	 */
 	abstract public function getTypeForComment();
 
+	/**
+	 * Template method which should return the type hint being used as PHP
+	 * arguments
+	 * @return string
+	 */
 	abstract public function getTypeHint();
 
 	//abstract public function getLocallangEntry()
