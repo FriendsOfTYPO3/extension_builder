@@ -39,10 +39,21 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	 */
 	protected ${property.name};
 	</f:for>
-		
+
+	/**
+	 * Constructor. Initializes all Tx_Extbase_Persistence_ObjectStorage instances.
+	 */
+	public function __construct() {
+		<k:removeNewlines>
+		<f:for each="{domainObject.properties}" as="property"><f:if condition="{k:isOfType(object='{property}' type='Property_Relation_ZeroToManyRelation')}">
+		$this->{property.name} = new Tx_Extbase_Persistence_ObjectStorage();
+		</f:if></f:for>
+	</k:removeNewlines>
+	}
 	<f:for each="{domainObject.properties}" as="property">
 	/**
 	 * Getter for {property.name}
+	 * 
 	 * @return {property.typeForComment} {property.description}
 	 */
 	public function get<k:uppercaseFirst>{property.name}</k:uppercaseFirst>() {
@@ -51,13 +62,24 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	
 	/**
 	 * Setter for {property.name}
+	 *
 	 * @param {property.typeForComment} ${property.name} {property.description}
 	 * @return void
 	 */
 	public function set<k:uppercaseFirst>{property.name}</k:uppercaseFirst>({property.typeHint} ${property.name}) {
 		$this->{property.name} = ${property.name};
 	}
-	</f:for>
+	<f:if condition="{k:isOfType(object='{property}' type='Property_Relation_ZeroToManyRelation')}">
+	/**
+	 * Add a <k:uppercaseFirst>{property.foreignClass.name}</k:uppercaseFirst>
+	 *
+	 * @param {property.foreignClass.className} The <k:uppercaseFirst>{property.foreignClass.name}</k:uppercaseFirst> to add
+	 * @return void
+	 */
+	public function add<k:uppercaseFirst>{property.foreignClass.name}</k:uppercaseFirst>({property.foreignClass.className} $<k:singularize>{property.name}</k:singularize>) {
+		$this->{property.name}->attach($<k:singularize>{property.name}</k:singularize>);
+	}
+	</f:if></f:for>
 
 }
 ?>
