@@ -94,6 +94,23 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	 * @return string
 	 */
 	abstract public function getTypeHint();
+	
+	
+	public function getRequired() {
+		return $this->required;
+	}
+
+	public function setRequired($required) {
+		$this->required = $required;
+	}
+
+	public function getValidateAnnotation() {
+		if ($this->required) {
+			return '@validate NotEmpty';
+		}
+		return '';
+	}
+
 
 	//abstract public function getLocallangEntry()
 

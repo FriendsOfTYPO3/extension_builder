@@ -35,7 +35,8 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	<f:for each="{domainObject.properties}" as="property">
 	/**
 	 * {property.description}
-	 * @var {property.typeForComment}
+	 * @var {property.typeForComment}<f:if condition="{property.validateAnnotation}">
+	 * {property.validateAnnotation}</f:if>
 	 */
 	protected ${property.name};
 	</f:for>
