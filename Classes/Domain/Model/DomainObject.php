@@ -110,6 +110,10 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 		return $this->aggregateRoot;
 	}
 
+	public function isAggregateRoot() {
+		return $this->getAggregateRoot();
+	}
+
 	/**
 	 * Setter for aggregate root flag
 	 * @param boolean $aggregateRoot TRUE if Domain Object should be aggregate root.
@@ -168,6 +172,14 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 		} else {
 			return 'Tx_Extbase_DomainObject_AbstractValueObject';
 		}
+	}
+
+	/**
+	 * returns the name of the domain repository class name, if it is an aggregateroot.
+	 */
+	public function getDomainRepositoryClassName() {
+		if (!$this->aggregateRoot) return '';
+		return 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Repository_' . $this->getName() . 'Repository';
 	}
 
 }

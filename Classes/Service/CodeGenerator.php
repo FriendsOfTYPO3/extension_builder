@@ -58,15 +58,27 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 
 	public function build(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
 		$this->extension = $extension;
-		
+
+		// Generate base directory
 		$extensionDirectory = PATH_typo3conf . 'ext/' . $this->extension->getExtensionKey().'/';
 		t3lib_div::mkdir($extensionDirectory);
-		t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Model');
 
+		// Generate Domain Model
+		t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Model');
 		$domainModelDirectory = $extensionDirectory . 'Classes/Domain/Model/';
 		foreach ($this->extension->getDomainObjects() as $domainObject) {
 			$fileContents = $this->generateDomainObjectCode($domainObject);
 			t3lib_div::writeFile($domainModelDirectory . $domainObject->getName() . '.php', $fileContents);
+		}
+
+		// Generate Domain Repositories
+		t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Repository');
+		$domainRepositoryDirectory = $extensionDirectory . 'Classes/Domain/Repository/';
+		foreach ($this->extension->getDomainObjects() as $domainObject) {
+			if (!$domainObject->isAggregateRoot()) continue;
+		
+			$fileContents = $this->generateDomainRepositoryCode($domainObject);
+			t3lib_div::writeFile($domainRepositoryDirectory . $domainObject->getName() . 'Repository.php', $fileContents);
 		}
 	}
 
@@ -94,8 +106,14 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 		$parsedTemplate = $this->templateParser->parse(file_get_contents(t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/' . $filePath));
 		return $parsedTemplate->render($this->buildRenderingContext($variables));
 	}
+
+
 	public function generateDomainObjectCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
 		return $this->renderTemplate('domainObject.phpt', array('domainObject' => $domainObject));
+	}
+
+	public function generateDomainRepositoryCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
+		return $this->renderTemplate('domainRepository.phpt', array('domainObject' => $domainObject));
 	}
 }
 ?>
