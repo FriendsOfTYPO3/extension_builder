@@ -76,7 +76,7 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	 * @param {property.foreignClass.className} The <k:uppercaseFirst>{property.foreignClass.name}</k:uppercaseFirst> to add
 	 * @return void
 	 */
-	public function add<k:uppercaseFirst>{property.foreignClass.name}</k:uppercaseFirst>({property.foreignClass.className} $<k:singularize>{property.name}</k:singularize>) {
+	public function add<k:uppercaseFirst><k:singularize>{property.name}</k:singularize></k:uppercaseFirst>({property.foreignClass.className} $<k:singularize>{property.name}</k:singularize>) {
 		$this->{property.name}->attach($<k:singularize>{property.name}</k:singularize>);
 	}
 	</f:if></f:for>
