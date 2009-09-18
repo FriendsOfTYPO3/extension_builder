@@ -55,6 +55,12 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	protected $entity;
 
 	/**
+	 * The extension this domain object belongs to.
+	 * @var Tx_ExtbaseKickstarter_Domain_Model_Extension
+	 */
+	protected $extension;
+
+	/**
 	 * List of properties the domain object has
 	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty>
 	 */
@@ -74,6 +80,10 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	 */
 	public function setName($name) {
 		$this->name = $name;
+	}
+	
+	public function getClassName() {
+		return 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Model_' . $this->getName();
 	}
 	
 	/**
@@ -138,6 +148,14 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	 */
 	public function getProperties() {
 		return $this->properties;
+	}
+
+	/**
+	 * DO NOT CALL DIRECTLY! This is being called by addDomainModel() automatically.
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_Extension $extension the extension this domain model belongs to.
+	 */
+	public function setExtension(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
+		$this->extension = $extension;
 	}
 
 	/**

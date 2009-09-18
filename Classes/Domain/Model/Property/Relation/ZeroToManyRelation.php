@@ -33,7 +33,7 @@
  */
 class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToManyRelation extends Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRelation {
 	public function getTypeForComment() {
-		return 'Tx_Extbase_Persistence_ObjectStorage<' . $this->getForeignClass()->getName() . '>';
+		return 'Tx_Extbase_Persistence_ObjectStorage<' . $this->getForeignClass()->getClassName() . '>';
 	}
 
 	public function getTypeHint() {
