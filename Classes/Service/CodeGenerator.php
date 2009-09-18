@@ -85,7 +85,6 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 		$renderingContext->setRenderingConfiguration($renderingConfiguration);
 
 		$viewHelperVariableContainer = $this->objectFactory->create('Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer');
-		$viewHelperVariableContainer->add('GLOBAL', 'extension', $this->extension);
 		$renderingContext->setViewHelperVariableContainer($viewHelperVariableContainer);
 
 		return $renderingContext;

@@ -138,10 +138,11 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	}
 
 	/**
-	 *
+	 * Add a domain object to the extension. Creates the reverse link as well.
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject 
 	 */
 	public function addDomainObject(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
+		$domainObject->setExtension($this);
 		$this->domainObjects[$domainObject->getName()] = $domainObject;
 	}
 
