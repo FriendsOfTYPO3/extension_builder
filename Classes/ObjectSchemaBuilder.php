@@ -112,6 +112,10 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder {
 			$property = new $propertyClassName;
 			$property->setName($jsonProperty['propertyName']);
 
+			if (isset($jsonProperty['propertyIsRequired'])) {
+				$property->setRequired($jsonProperty['propertyIsRequired']);
+			}
+
 			$domainObject->addProperty($property);
 		}
 		return $domainObject;

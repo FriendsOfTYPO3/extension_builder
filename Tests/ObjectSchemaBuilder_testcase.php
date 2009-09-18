@@ -90,7 +90,8 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 				'properties' => array(
 					0 => array(
 						'propertyName' => 'name',
-						'propertyType' => 'String'
+						'propertyType' => 'String',
+						'propertyIsRequired' => 'true'
 					),
 					1 => array(
 						'propertyName' => 'type',
@@ -108,6 +109,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 
 		$property0 = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
 		$property0->setName('name');
+		$property0->setRequired(TRUE);
 		$property1 = new Tx_ExtbaseKickstarter_Domain_Model_Property_IntegerProperty();
 		$property1->setName('type');
 		$expected->addProperty($property0);
