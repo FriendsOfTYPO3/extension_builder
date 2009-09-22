@@ -39,5 +39,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_BooleanProperty extends Tx_Ext
 	public function getTypeHint() {
 		return '';
 	}
+
+	public function getSqlDefinition() {
+		return strtolower($this->getName()) . " tinyint(1) unsigned DEFAULT '0' NOT NULL,";
+	}
 }
 ?>

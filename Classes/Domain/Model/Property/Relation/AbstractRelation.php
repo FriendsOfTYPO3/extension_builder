@@ -53,7 +53,8 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRela
 	public function setForeignClass(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $foreignClass) {
 		$this->foreignClass = $foreignClass;
 	}
-
-
+	public function getSqlDefinition() {
+		return '# TODO relations';
+	}
 }
 ?>

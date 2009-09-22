@@ -114,6 +114,6 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 
 	//abstract public function getLocallangEntry()
 
-	//abstract public function getSqlTypeDefinition();
+	abstract public function getSqlDefinition();
 }
 ?>

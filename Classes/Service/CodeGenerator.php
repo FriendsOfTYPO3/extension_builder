@@ -80,6 +80,16 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 			$fileContents = $this->generateDomainRepositoryCode($domainObject);
 			t3lib_div::writeFile($domainRepositoryDirectory . $domainObject->getName() . 'Repository.php', $fileContents);
 		}
+
+		// Generate ext_emconf.php
+		$fileContents = $this->generateExtEmconf($extension);
+		t3lib_div::writeFile($extensionDirectory . 'ext_emconf.php', $fileContents);
+
+		$fileContents = $this->generateExtTablesPhp($extension);
+		t3lib_div::writeFile($extensionDirectory . 'ext_tables.php', $fileContents);
+		
+		$fileContents = $this->generateExtTablesSql($extension);
+		t3lib_div::writeFile($extensionDirectory . 'ext_tables.sql', $fileContents);
 	}
 
 	/**
@@ -109,11 +119,23 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 
 
 	public function generateDomainObjectCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
-		return $this->renderTemplate('domainObject.phpt', array('domainObject' => $domainObject));
+		return $this->renderTemplate('Domain/Model/domainObject.phpt', array('domainObject' => $domainObject));
 	}
 
 	public function generateDomainRepositoryCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
-		return $this->renderTemplate('domainRepository.phpt', array('domainObject' => $domainObject));
+		return $this->renderTemplate('Domain/Repository/domainRepository.phpt', array('domainObject' => $domainObject));
+	}
+
+	public function generateExtEmconf(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
+		return $this->renderTemplate('extEmconf.phpt', array('extension' => $extension));
+	}
+
+	public function generateExtTablesPhp(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
+		return $this->renderTemplate('extTables.phpt', array('extension' => $extension));
+	}
+
+	public function generateExtTablesSql(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
+		return $this->renderTemplate('extTables.sqlt', array('extension' => $extension));
 	}
 }
 ?>
