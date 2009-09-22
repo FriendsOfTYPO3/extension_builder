@@ -1,6 +1,8 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
+{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+
 <f:for each="{extension.domainObjects}" as="domainObject">
 $TCA['{domainObject.databaseTableName}'] = array(
 	'ctrl' => $TCA['{domainObject.databaseTableName}']['ctrl'],
@@ -65,7 +67,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			'exclude' => 0,
 			'label'   => '{property.name}', // TODO 'LLL:EXT:blog_example/Resources/Private/Language/locallang_db.xml:tx_blogexample_domain_model_blog.title',
 			'config'  => array(
-				// TODO
+				<k:render partial="TCA/{property.dataType}.phpt" arguments="{property: property}" />
 				'type' => 'input',
 				'size' => 20,
 				'eval' => 'trim,required',
