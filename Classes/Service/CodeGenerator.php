@@ -59,9 +59,9 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 	public function build(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
 		$this->extension = $extension;
 
-		// Generate base directory
+		// Base directory already exists at this point
 		$extensionDirectory = PATH_typo3conf . 'ext/' . $this->extension->getExtensionKey().'/';
-		t3lib_div::mkdir($extensionDirectory);
+		//t3lib_div::mkdir($extensionDirectory);
 
 		// Generate Domain Model
 		t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Model');

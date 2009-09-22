@@ -68,10 +68,6 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			'label'   => '{property.name}', // TODO 'LLL:EXT:blog_example/Resources/Private/Language/locallang_db.xml:tx_blogexample_domain_model_blog.title',
 			'config'  => array(
 				<k:render partial="TCA/{property.dataType}.phpt" arguments="{property: property}" />
-				'type' => 'input',
-				'size' => 20,
-				'eval' => 'trim,required',
-				'max'  => 256
 			)
 		),
 		</f:for>

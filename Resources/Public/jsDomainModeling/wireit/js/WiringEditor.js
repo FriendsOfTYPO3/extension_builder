@@ -434,8 +434,8 @@ WireIt.WiringEditor.prototype = {
 				this.pipes = result.result;
 				this.pipesByName = {};
 				this.renderLoadPanel();
-            this.updateLoadPanelList();
-            this.loadPanel.show();
+		        this.updateLoadPanelList();
+			    this.loadPanel.show();
 			},
 			scope: this
 		}

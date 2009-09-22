@@ -199,6 +199,18 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 		return implode(',', $fieldNames);
 	}
 
+	/**
+	 * Get the label to display in the list module.
+	 * TODO: Needs to be configurable.
+	 * @return <type> 
+	 */
+	public function getListModuleValueLabel() {
+		if (isset($this->properties[1])) {
+			return $this->properties[1]->getName();
+		} else {
+			return 'uid';
+		}
+	}
 }
 
 ?>
