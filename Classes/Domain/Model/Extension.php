@@ -153,5 +153,8 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 		return NULL;
 	}
 
+	public function getShorthandForTypoScript() {
+		return 'tx_' . strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->getExtensionKey()));
+	}
 }
 ?>
