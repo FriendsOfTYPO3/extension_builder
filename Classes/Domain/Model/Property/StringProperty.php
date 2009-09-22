@@ -40,5 +40,8 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty extends Tx_Extb
 	public function getTypeHint() {
 		return '';
 	}
+	public function getSqlDefinition() {
+		return strtolower($this->getName()) . " tinytext,";
+	}
 }
 ?>

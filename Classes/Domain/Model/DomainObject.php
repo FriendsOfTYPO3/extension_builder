@@ -85,7 +85,10 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	public function getClassName() {
 		return 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Model_' . $this->getName();
 	}
-	
+
+	public function getDatabaseTableName() {
+		return 'tx_' . strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey())) . '_domain_model_' . strtolower($this->getName());
+	}
 	/**
 	 * Get description
 	 * @return string

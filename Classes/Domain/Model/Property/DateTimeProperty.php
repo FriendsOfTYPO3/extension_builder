@@ -39,5 +39,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_DateTimeProperty extends Tx_Ex
 	public function getTypeHint() {
 		return 'DateTime';
 	}
+
+	public function getSqlDefinition() {
+		return "# TODO DateTime";
+	}
 }
 ?>

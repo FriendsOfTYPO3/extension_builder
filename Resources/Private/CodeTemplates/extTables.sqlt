@@ -1,0 +1,7 @@
+<f:for each="{extension.domainObjects}" as="domainObject">
+CREATE TABLE {domainObject.databaseTableName} {
+	<f:for each="{domainObject.properties}" as="property">
+		{property.sqlDefinition}
+	</f:for>
+}
+</f:for>
