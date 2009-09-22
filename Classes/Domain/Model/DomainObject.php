@@ -190,6 +190,15 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 		return 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Repository_' . $this->getName() . 'Repository';
 	}
 
+	public function getCommaSeparatedFieldList() {
+		$fieldNames = array();
+		foreach ($this->properties as $property) {
+			$fieldNames[] = $property->getName();
+		}
+		// TODO: we might need to distinguish relations differently
+		return implode(',', $fieldNames);
+	}
+
 }
 
 ?>
