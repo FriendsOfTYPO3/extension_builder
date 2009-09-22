@@ -12,7 +12,10 @@ CREATE TABLE {domainObject.databaseTableName} (
 	<f:for each="{domainObject.properties}" as="property">
 	{property.sqlDefinition}
 	</f:for>
-	# TODO: Foreign Keys
+
+	<f:for each="{k:listForeignKeyRelations(extension='{extension}' domainObject='{domainObject}')}" as="relation">
+	{relation.foreignKeyName} int(11) unsigned DEFAULT '0'
+	</f:for>
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
@@ -21,8 +24,7 @@ CREATE TABLE {domainObject.databaseTableName} (
 <f:for each="{extension.domainObjects}" as="domainObject">
 	<f:for each="{domainObject.properties}" as="property">
 		<f:if condition="{k:isOfType(object='{property}' type='Property_Relation_ManyToManyRelation')}">
-			// TODO: Generate code for MM-Table
-
+		
 CREATE TABLE {property.relationTableName} (
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
@@ -37,4 +39,3 @@ CREATE TABLE {property.relationTableName} (
 		</f:if>
 	</f:for>
 </f:for>
-// TODO: MM-Tables
