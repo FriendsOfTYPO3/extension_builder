@@ -46,7 +46,30 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	 * @var boolean
 	 */
 	protected $required;
-	
+
+	/**
+	 * The domain object this property belongs to.
+	 * @var Tx_ExtbaseKickstarter_Domain_Model_DomainObject
+	 */
+	protected $domainObject;
+
+	/**
+	 * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject the domain object this property belongs to
+	 */
+	public function setDomainObject(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
+		$this->domainObject = $domainObject;
+	}
+
+	/**
+	 *
+	 * @return Tx_ExtbaseKickstarter_Domain_Model_DomainObject
+	 */
+	public function getDomainObject() {
+		return $this->domainObject;
+	}
+
+
 	/**
 	 * Get property name
 	 * @return string
