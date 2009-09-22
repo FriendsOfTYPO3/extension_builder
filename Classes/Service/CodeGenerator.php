@@ -81,7 +81,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 			t3lib_div::writeFile($domainRepositoryDirectory . $domainObject->getName() . 'Repository.php', $fileContents);
 		}
 
-		// Generate ext_emconf.php
+		// Generate ext_emconf.php, ext_tables.* and TCA definition
 		$fileContents = $this->generateExtEmconf($extension);
 		t3lib_div::writeFile($extensionDirectory . 'ext_emconf.php', $fileContents);
 
@@ -90,6 +90,19 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 		
 		$fileContents = $this->generateExtTablesSql($extension);
 		t3lib_div::writeFile($extensionDirectory . 'ext_tables.sql', $fileContents);
+
+		t3lib_div::mkdir_deep($extensionDirectory, 'Configuration/TCA');
+		$tcaDirectory = $extensionDirectory . 'Configuration/TCA/';
+		$fileContents = $this->generateTCA($extension);
+		t3lib_div::writeFile($tcaDirectory . 'tca.php', $fileContents);
+
+		// Generate TypoScript setup
+		t3lib_div::mkdir_deep($extensionDirectory, 'Configuration/TypoScript');
+		$typoscriptDirectory = $extensionDirectory . 'Configuration/TypoScript/';
+		$fileContents = $this->generateTyposcriptSetup($extension);
+		t3lib_div::writeFile($typoscriptDirectory . 'setup.txt', $fileContents);
+
+
 	}
 
 	/**
@@ -136,6 +149,14 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 
 	public function generateExtTablesSql(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
 		return $this->renderTemplate('extTables.sqlt', array('extension' => $extension));
+	}
+
+	public function generateTCA(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
+		return $this->renderTemplate('Configuration/TCA/tca.phpt', array('extension' => $extension));
+	}
+
+	public function generateTyposcriptSetup(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
+		return $this->renderTemplate('Configuration/TypoScript/setup.txt', array('extension' => $extension));
 	}
 }
 ?>

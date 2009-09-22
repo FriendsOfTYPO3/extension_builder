@@ -1,0 +1,2 @@
+plugin.{extension.shorthandForTypoScript}.settings <![CDATA[{
+}]]>
