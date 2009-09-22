@@ -146,6 +146,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty $property The new property to add
 	 */
 	public function addProperty(Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty $property) {
+		$property->setDomainObject($this);
 		$this->properties[] = $property;
 	}
 
@@ -164,7 +165,11 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	public function setExtension(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
 		$this->extension = $extension;
 	}
+	public function getExtension() {
+		return $this->extension;
+	}
 
+	
 	/**
 	 * Get the base class for this Domain Object (different if it is entity or value object)
 	 * @return string name of the base class

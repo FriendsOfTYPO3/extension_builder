@@ -346,8 +346,8 @@ var extbaseModeling_wiringEditorLanguage = {
 														inputParams: {
 															label: "Type", 
 															name: "relationType",
-															selectValues: ["zeroToOne", "zeroToMany"],
-															selectOptions: ["0 .. 1","0 .. *"]
+															selectValues: ["zeroToOne", "zeroToMany", "manyToMany"],
+															selectOptions: ["0 .. 1","0 .. * (foreign Key)", "0 .. * (association table)"]
 														}
 													}
 												]
