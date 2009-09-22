@@ -201,12 +201,12 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 
 	/**
 	 * Get the label to display in the list module.
-	 * TODO: Needs to be configurable.
+	 * TODO: Needs to be configurable. Currently, the first property is the label in the backend.
 	 * @return <type> 
 	 */
 	public function getListModuleValueLabel() {
-		if (isset($this->properties[1])) {
-			return $this->properties[1]->getName();
+		if (isset($this->properties[0])) {
+			return $this->properties[0]->getName();
 		} else {
 			return 'uid';
 		}
