@@ -71,6 +71,7 @@ class {domainObject.className} extends {domainObject.baseClass} {
 		$this->{property.name} = ${property.name};
 	}
 	<f:if condition="{k:isOfType(object='{property}' type='Property_Relation_ZeroToManyRelation')}">
+	// TODO: ADD the "add"-method for the "ManyToMany" Relation as well
 	/**
 	 * Add a <k:uppercaseFirst>{property.foreignClass.name}</k:uppercaseFirst>
 	 *

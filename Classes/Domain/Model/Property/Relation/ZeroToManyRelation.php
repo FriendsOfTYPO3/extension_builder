@@ -39,5 +39,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToManyRelation ex
 	public function getTypeHint() {
 		return 'Tx_Extbase_Persistence_ObjectStorage';
 	}
+
+	public function getForeignKeyName() {
+		return strtolower($this->getDomainObject()->getName()) . '_uid';
+	}
 }
 ?>

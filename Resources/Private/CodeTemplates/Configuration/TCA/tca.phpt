@@ -67,7 +67,14 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			'exclude' => 0,
 			'label'   => '{property.name}', // TODO 'LLL:EXT:blog_example/Resources/Private/Language/locallang_db.xml:tx_blogexample_domain_model_blog.title',
 			'config'  => array(
-				<k:render partial="TCA/{property.dataType}.phpt" arguments="{property: property}" />
+				<k:indent indentation="4"><k:render partial="TCA/{property.dataType}.phpt" arguments="{property: property}" /></k:indent>
+			)
+		),
+		</f:for>
+		<f:for each="{k:listForeignKeyRelations(extension='{extension}' domainObject='{domainObject}')}" as="relation">
+		'{relation.foreignKeyName}' => array(
+			'config' => array(
+				'type' => 'passthrough',
 			)
 		),
 		</f:for>
