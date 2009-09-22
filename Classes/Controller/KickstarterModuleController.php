@@ -91,13 +91,47 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	}
 
 	public function generateCodeAction() {
-		$jsonObject = json_decode(file_get_contents('php://input'),true);
-		$extensionConfigurationFromJson = json_decode($jsonObject['params']['working'],true);
-		$extensionSchema = $this->objectSchemaBuilder->build($extensionConfigurationFromJson);
-		
-		$this->codeGenerator->build($extensionSchema);
+		$jsonString = file_get_contents('php://input');
+		$request = json_decode($jsonString,true);
+		switch ($request['method']) {
+			case 'saveWiring':
+				$extensionConfigurationFromJson = json_decode($request['params']['working'],true);
+				$extensionSchema = $this->objectSchemaBuilder->build($extensionConfigurationFromJson);
 
-		return json_encode(array('saved'));
+				$extensionDirectory = PATH_typo3conf . 'ext/' . $extensionSchema->getExtensionKey().'/';
+				t3lib_div::mkdir($extensionDirectory);
+				t3lib_div::writeFile($extensionDirectory . 'kickstarter.json', $request['params']['working']);
+
+				$this->codeGenerator->build($extensionSchema);
+
+				return json_encode(array('saved'));
+			break;
+			case 'listWirings':
+				$result = $this->getWirings();
+
+				$response = array ('id' => $request['id'],'result' => $result,'error' => NULL);
+				header('content-type: text/javascript');
+				echo json_encode($response);
+				exit();
+		}
+	}
+
+	protected function getWirings() {
+		$result = array();
+
+		$extensionDirectoryHandle = opendir(PATH_typo3conf . 'ext/');
+		while (false !== ($singleExtensionDirectory = readdir($extensionDirectoryHandle))) {
+			if ($singleExtensionDirectory[0] == '.') continue;
+			if (file_exists(PATH_typo3conf . 'ext/' . $singleExtensionDirectory . '/kickstarter.json')) {
+				$result[] = array(
+					'name' => $singleExtensionDirectory,
+					'working' => file_get_contents(PATH_typo3conf . 'ext/' . $singleExtensionDirectory . '/kickstarter.json')
+				);
+			}
+		}
+		closedir($extensionDirectoryHandle);
+		
+		return $result;
 	}
 
 	/**

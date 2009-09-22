@@ -10,8 +10,8 @@ t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '{extension.na
 t3lib_extMgm::allowTableOnStandardPages('{domainObject.databaseTableName}');
 $TCA['{domainObject.databaseTableName}'] = array (
 	'ctrl' => array (
-		'title'             => 'TMP', //'LLL:EXT:blog_example/Resources/Private/Language/locallang_db.xml:tx_blogexample_domain_model_blog', // TODO
-		'label' 			=> 'title', // TODO
+		'title'             => '{domainObject.name}', //'LLL:EXT:blog_example/Resources/Private/Language/locallang_db.xml:tx_blogexample_domain_model_blog', // TODO
+		'label' 			=> '{domainObject.listModuleValueLabel}',
 		'tstamp' 			=> 'tstamp',
 		'crdate' 			=> 'crdate',
 		'versioningWS' 		=> 2,
