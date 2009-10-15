@@ -30,9 +30,9 @@ if (!class_exists('Tx_Extbase_Utility_ClassLoader')) {
 
 $classLoader = new Tx_Extbase_Utility_ClassLoader();
 spl_autoload_register(array($classLoader, 'loadClass'));
-require_once(t3lib_extmgm::extPath('extbase') . 'Tests/Base_testcase.php');
+require_once(t3lib_extmgm::extPath('extbase') . 'Tests/BaseTestCase.php');
 
-abstract class Tx_ExtbaseKickstarter_BaseTestCase extends Tx_Extbase_Base_testcase {
+abstract class Tx_ExtbaseKickstarter_BaseTestCase extends Tx_Extbase_BaseTestCase {
 }
 
 

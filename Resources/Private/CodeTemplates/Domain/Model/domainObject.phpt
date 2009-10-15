@@ -58,7 +58,7 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	 * @return {property.typeForComment} {property.description}
 	 */
 	public function get<k:uppercaseFirst>{property.name}</k:uppercaseFirst>() {
-		return $this->{property.name}
+		return $this->{property.name};
 	}
 	
 	/**
