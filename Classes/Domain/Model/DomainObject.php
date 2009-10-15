@@ -195,7 +195,6 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 		foreach ($this->properties as $property) {
 			$fieldNames[] = $property->getName();
 		}
-		// TODO: we might need to distinguish relations differently
 		return implode(',', $fieldNames);
 	}
 

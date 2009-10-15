@@ -5,7 +5,7 @@
 'foreign_field' => '{property.foreignKeyName}',
 'maxitems'      => 999999, // TODO This is only necessary because of a bug in tcemain
 'appearance' => array(
- 'newRecordLinkPosition' => 'bottom',
- 'collapseAll' => 1,
- 'expandSingle' => 1,
+	'newRecordLinkPosition' => 'bottom',
+	'collapseAll' => 1,
+	'expandSingle' => 1,
 ),
