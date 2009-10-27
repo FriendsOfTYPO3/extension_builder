@@ -29,7 +29,7 @@ require_once('BaseTestCase.php');
 class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKickstarter_BaseTestCase { //extends Tx_Extbase_Base_testcase {
 
 	protected $objectSchemaBuilder;
-	
+
 	public function setUp() {
 		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_ObjectSchemaBuilder'), array('dummy'));
 	}
@@ -44,12 +44,12 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 		$state = 'beta';
 
 		$input = array(
-		    'properties' => array(
-			'description' => $description,
-			'extensionKey' => $extensionKey,
-			'name' => $name,
-			'state' => $state
-		    )
+			'properties' => array(
+				'description' => $description,
+				'extensionKey' => $extensionKey,
+				'name' => $name,
+				'state' => $state
+				)
 		    );
 
 		$extension = new Tx_ExtbaseKickstarter_Domain_Model_Extension();
@@ -57,7 +57,6 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 		$extension->setName($name);
 		$extension->setExtensionKey($extensionKey);
 		$extension->setState(2);
-
 
 		$actual = $this->objectSchemaBuilder->build($input);
 		$this->assertEquals($actual, $extension, 'Extension properties were not extracted.');
@@ -205,7 +204,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 				'extensionKey' => 'my_extension_key',
 				'name' => 'My ext name',
 				'state' => 'beta',
-				
+
 			),
 			'wires' => array(
 				0 => array(
@@ -250,8 +249,8 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 		$blog->addProperty($property);
 
 		$extension->addDomainObject($blog);
-		
-		
+
+
 		$post = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
 		$post->setName('Post');
 		$post->setDescription('A blog post');

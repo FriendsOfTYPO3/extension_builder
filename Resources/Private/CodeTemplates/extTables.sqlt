@@ -27,7 +27,7 @@ CREATE TABLE {domainObject.databaseTableName} (
 	{property.sqlDefinition}
 	</f:for>
 
-	<f:for each="{k:listForeignKeyRelations(extension='{extension}' domainObject='{domainObject}')}" as="relation">
+	<f:for each="{k:listForeignKeyRelations(extension: extension, domainObject:domainObject)}" as="relation">
 	{relation.foreignKeyName} int(11) unsigned DEFAULT '0'
 	</f:for>
 
@@ -37,8 +37,8 @@ CREATE TABLE {domainObject.databaseTableName} (
 </f:for>
 <f:for each="{extension.domainObjects}" as="domainObject">
 	<f:for each="{domainObject.properties}" as="property">
-		<f:if condition="{k:isOfType(object='{property}' type='Property_Relation_ManyToManyRelation')}">
-		
+		<f:if condition="{k:isOfType(object: property, type: 'Property_Relation_ManyToManyRelation')}">
+
 CREATE TABLE {property.relationTableName} (
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,

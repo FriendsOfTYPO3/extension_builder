@@ -71,7 +71,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			)
 		),
 		</f:for>
-		<f:for each="{k:listForeignKeyRelations(extension='{extension}' domainObject='{domainObject}')}" as="relation">
+		<f:for each="{k:listForeignKeyRelations(extension: extension, domainObject: domainObject)}" as="relation">
 		'{relation.foreignKeyName}' => array(
 			'config' => array(
 				'type' => 'passthrough',

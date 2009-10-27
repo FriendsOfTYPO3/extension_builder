@@ -46,7 +46,7 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	 */
 	public function __construct() {
 		<k:removeNewlines>
-		<f:for each="{domainObject.properties}" as="property"><f:if condition="{k:isOfType(object='{property}' type='Property_Relation_ZeroToManyRelation')}">
+		<f:for each="{domainObject.properties}" as="property"><f:if condition="{k:isOfType(object: property, type:'Property_Relation_ZeroToManyRelation')}">
 		$this->{property.name} = new Tx_Extbase_Persistence_ObjectStorage();
 		</f:if></f:for>
 	</k:removeNewlines>
@@ -54,32 +54,32 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	<f:for each="{domainObject.properties}" as="property">
 	/**
 	 * Getter for {property.name}
-	 * 
+	 *
 	 * @return {property.typeForComment} {property.description}
 	 */
-	public function get<k:uppercaseFirst>{property.name}</k:uppercaseFirst>() {
+	public function get{property.name -> k:uppercaseFirst()}() {
 		return $this->{property.name};
 	}
-	
+
 	/**
 	 * Setter for {property.name}
 	 *
 	 * @param {property.typeForComment} ${property.name} {property.description}
 	 * @return void
 	 */
-	public function set<k:uppercaseFirst>{property.name}</k:uppercaseFirst>({property.typeHint} ${property.name}) {
+	public function set{property.name -> k:uppercaseFirst()}({property.typeHint} ${property.name}) {
 		$this->{property.name} = ${property.name};
 	}
-	<f:if condition="{k:isOfType(object='{property}' type='Property_Relation_ZeroToManyRelation')}">
+	<f:if condition="{k:isOfType(object:property, type:'Property_Relation_ZeroToManyRelation')}">
 	// TODO: ADD the "add"-method for the "ManyToMany" Relation as well
 	/**
-	 * Add a <k:uppercaseFirst>{property.foreignClass.name}</k:uppercaseFirst>
+	 * Add a {property.foreignClass.name -> k:uppercaseFirst()}
 	 *
-	 * @param {property.foreignClass.className} The <k:uppercaseFirst>{property.foreignClass.name}</k:uppercaseFirst> to add
+	 * @param {property.foreignClass.className} The {property.foreignClass.name -> k:uppercaseFirst()} to add
 	 * @return void
 	 */
-	public function add<k:uppercaseFirst><k:singularize>{property.name}</k:singularize></k:uppercaseFirst>({property.foreignClass.className} $<k:singularize>{property.name}</k:singularize>) {
-		$this->{property.name}->attach($<k:singularize>{property.name}</k:singularize>);
+	public function add{property.name->k:singularize()->k:uppercaseFirst()}({property.foreignClass.className} ${property.name->k:singularize()}) {
+		$this->{property.name}->attach(${property.name -> k:singularize()});
 	}
 	</f:if></f:for>
 
