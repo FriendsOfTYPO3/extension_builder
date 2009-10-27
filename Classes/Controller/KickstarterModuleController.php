@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Ingmar Schlecht <ingmar@typo3.org> 
+*  (c) 2009 Ingmar Schlecht <ingmar@typo3.org>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,22 +28,22 @@
  * @category    Controller
  * @package     TYPO3
  * @subpackage  tx_mvcextjssamples
- * @author      Ingmar Schlecht <ingmar@typo3.org> 
+ * @author      Ingmar Schlecht <ingmar@typo3.org>
  * @license     http://www.gnu.org/copyleft/gpl.html
  * @version     SVN: $Id$
  */
 class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Extbase_MVC_Controller_ActionController {
-	
+
 	/**
 	 * Holds reference to the template class
-	 * 
+	 *
 	 * @var template
 	 */
 	protected $doc;
-	
+
 	/**
 	 * Holds reference to t3lib_SCbase
-	 * 
+	 *
 	 * @var t3lib_SCbase
 	 */
 	protected $scBase;
@@ -64,38 +64,44 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	 * @return string The rendered view
 	 */
 	public function indexAction() {
-		
+
 			// Prepare scBase
-		$this->scBase = t3lib_div::makeInstance('t3lib_SCbase'); 
+		$this->scBase = t3lib_div::makeInstance('t3lib_SCbase');
 		$this->scBase->MCONF['name'] = $this->request->getControllerName();
 		$this->scBase->init();
-		
+
 			// Prepare template class
-		$this->doc = t3lib_div::makeInstance('template'); 
+		$this->doc = t3lib_div::makeInstance('template');
 		$this->doc->backPath = $GLOBALS['BACK_PATH'];
-		
+
 		$this->menuConfig();
-		
+
 			// Template page
-		$this->view->assign('title', 'Backend Module!');  
-		
+		$this->view->assign('title', 'Backend Module!');
+
 		$this->view->assign('FUNC_MENU', t3lib_BEfunc::getFuncMenu(0, 'SET[function]', $this->scBase->MOD_SETTINGS['function'], $this->scBase->MOD_MENU['function']));
-		
+
 		$this->view->assign('CSH', t3lib_BEfunc::cshItem('_MOD_web_func', '', $GLOBALS['BACK_PATH']));
 		$this->view->assign('SAVE', '<input type="image" class="c-inputButton" name="submit" value="Update"' . t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/savedok.gif', '') . ' title="' . $GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_core.php:rm.saveDoc', 1) . '" />');
 		$this->view->assign('SHORTCUT',  $this->doc->makeShortcutIcon('', 'function', $settings['pluginName']));
-		
+
 		$this->view->assign('startPage', $this->doc->startPage('OldStyle Module'));
 		$this->view->assign('endPage', $this->doc->endPage());
-                            
+
 	}
 
+	/**
+	 * Main entry point for the buttons in the frontend
+	 * @return unknown_type
+	 * @todo rename this action
+	 */
 	public function generateCodeAction() {
 		$jsonString = file_get_contents('php://input');
 		$request = json_decode($jsonString,true);
 		switch ($request['method']) {
 			case 'saveWiring':
 				$extensionConfigurationFromJson = json_decode($request['params']['working'],true);
+				//t3lib_div::devLog("msg1", 'tx_extbasekickstarter', 0, $extensionConfigurationFromJson);
 				$extensionSchema = $this->objectSchemaBuilder->build($extensionConfigurationFromJson);
 
 				$extensionDirectory = PATH_typo3conf . 'ext/' . $extensionSchema->getExtensionKey().'/';
@@ -130,7 +136,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 			}
 		}
 		closedir($extensionDirectoryHandle);
-		
+
 		return $result;
 	}
 
@@ -149,6 +155,6 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 		);
 		$this->scBase->menuConfig();
 	}
-	
+
 }
 ?>
