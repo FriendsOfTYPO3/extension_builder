@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension '{extension.extensionKey}'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array"><f:for each="{extension.domainObjects}" as="domainObject">
+			<label index="{domainObject.labelNamespace}">{domainObject.description}</label><f:for each="{domainObject.properties}" as="property">
+			<label index="{property.labelNamespace}">{property.description}</label></f:for></f:for>
+		</languageKey>
+	</data>
+</T3locallang>

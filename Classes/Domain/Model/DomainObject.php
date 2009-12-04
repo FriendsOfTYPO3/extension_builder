@@ -99,12 +99,17 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	public function getDatabaseTableName() {
 		return 'tx_' . strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey())) . '_domain_model_' . strtolower($this->getName());
 	}
+	
 	/**
 	 * Get description
 	 * @return string
 	 */
 	public function getDescription() {
-		return $this->description;
+		if($this->description){
+			return $this->description;
+		}else{
+			return $this->getName();
+		}
 	}
 	
 	/**
@@ -236,6 +241,10 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 		} else {
 			return 'uid';
 		}
+	}
+	
+	public function getLabelNamespace() {
+		return $this->extension->getShorthandForTypoScript() . '_domain_model_' . strtolower($this->getName());
 	}
 }
 
