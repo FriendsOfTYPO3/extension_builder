@@ -54,10 +54,11 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 */
 	protected $state = 0;
 
-	const STATE_DEVELOPMENT = 0;
-	const STATE_ALPHA = 1;
-	const STATE_BETA = 2;
-	const STATE_STABLE = 3;
+	const STATE_ALPHA = 0;
+	const STATE_BETA = 1;
+	const STATE_STABLE = 2;
+	const STATE_EXPERIMENTAL = 3;
+	const STATE_TEST = 4;
 
 	/**
 	 * All domain objects
