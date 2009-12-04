@@ -165,11 +165,11 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 	}
 	
 	public function generateDomainObjectCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject, Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
-		return $this->renderTemplate('Domain/Model/domainObject.phpt', array('domainObject' => $domainObject, 'extension' => $extension));
+		return $this->renderTemplate('Classes/Domain/Model/domainObject.phpt', array('domainObject' => $domainObject, 'extension' => $extension));
 	}
 
 	public function generateDomainRepositoryCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
-		return $this->renderTemplate('Domain/Repository/domainRepository.phpt', array('domainObject' => $domainObject));
+		return $this->renderTemplate('Classes/Domain/Repository/domainRepository.phpt', array('domainObject' => $domainObject));
 	}
 	
 	/**
