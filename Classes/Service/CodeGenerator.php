@@ -120,6 +120,14 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 		$fileContents = $this->generatePrivateResourcesHtaccess();
 		t3lib_div::writeFile($privateResourcesDirectory . '.htaccess', $fileContents);
 		
+		// Generate locallang*.xml files
+		t3lib_div::mkdir_deep($extensionDirectory, 'Resources/Private/Language');
+		$languageDirectory = $extensionDirectory . 'Resources/Private/Language/';
+		$fileContents = $this->generateLocallang($extension);
+		t3lib_div::writeFile($languageDirectory . 'locallang.xml', $fileContents);
+		$fileContents = $this->generateLocallangDB($extension);
+		t3lib_div::writeFile($languageDirectory . 'locallang_db.xml', $fileContents);
+		
 		// Generate Domain Templates
 		foreach ($this->extension->getDomainObjects() as $domainObject) {
 			// Do not generate anyting if $domainObject is not an Entity or has no actions defined
@@ -183,7 +191,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 	 */
 	public function generateDomainTemplate(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject, Tx_ExtbaseKickstarter_Domain_Model_Action $action) {
 		if (file_exists(t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/Resources/Private/Templates/' . $action->getName() . '.htmlt')) {
-			return $this->renderTemplate('Resources/Private/Templates/'. $action->getName() . '.htmlt', array('domainObject' => $domainObject));
+			return $this->renderTemplate('Resources/Private/Templates/'. $action->getName() . '.htmlt', array('domainObject' => $domainObject, 'action' => $action));
 		}
 	}
 
@@ -197,6 +205,14 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 
 	public function generateExtTablesSql(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
 		return $this->renderTemplate('extTables.sqlt', array('extension' => $extension));
+	}
+	
+	public function generateLocallang(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
+		return $this->renderTemplate('Resources/Private/Language/locallang.xmlt', array('extension' => $extension));
+	}
+	
+	public function generateLocallangDB(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
+		return $this->renderTemplate('Resources/Private/Language/locallang_db.xmlt', array('extension' => $extension));
 	}
 	
 	public function generatePrivateResourcesHtaccess() {

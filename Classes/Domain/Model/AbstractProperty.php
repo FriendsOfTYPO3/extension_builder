@@ -91,7 +91,11 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	 * @return string Property description
 	 */
 	public function getDescription() {
-		return $this->description;
+		if($this->description){
+			return $this->description;
+		}else{
+			return $this->getName();
+		}
 	}
 	
 	/**
@@ -146,6 +150,10 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 
 	public function getDataType() {
 		return substr(get_class($this), strlen('Tx_ExtbaseKickstarter_Domain_Model_Property_'));
+	}
+	
+	public function getLabelNamespace() {
+		return $this->domainObject->getLabelNamespace() . '.' . strtolower($this->getName());
 	}
 }
 ?>
