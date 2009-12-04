@@ -57,9 +57,6 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder {
 			// state
 		$state = 0;
 		switch ($globalProperties['state']) {
-			case 'development':
-				$state = Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_DEVELOPMENT;
-				break;
 			case 'alpha':
 				$state = Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_ALPHA;
 				break;
@@ -68,6 +65,12 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder {
 				break;
 			case 'stable':
 				$state = Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_STABLE;
+				break;
+			case 'experimental':
+				$state = Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_EXPERIMENTAL;
+				break;
+			case 'test':
+				$state = Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_TEST;
 				break;
 		}
 		$extension->setState($state);

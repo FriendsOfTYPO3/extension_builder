@@ -12,6 +12,7 @@
    color: #FF8700;
    padding-left: 10px;
    padding-top: 4px;
+   text-align: center;
 }
 
 
@@ -73,4 +74,13 @@ div.WireIt-Layer {
 
 #toolbar {
    position: static;
+}
+
+.yui-skin-sam .yui-layout{
+	background-color: #EDEEEE;
+}
+
+.yui-skin-sam .yui-layout .yui-layout-unit div.yui-layout-bd ,
+.yui-skin-sam .yui-layout .yui-layout-clip {
+	background-color: transparent;
 }

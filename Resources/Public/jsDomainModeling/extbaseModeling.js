@@ -97,7 +97,7 @@ var extbaseModeling_wiringEditorLanguage = {
 			inputParams: {
 				label: "State", 
 				name: "state", 
-				selectValues: ["alpha","beta","stable", "development"]
+				selectValues: ["alpha","beta","stable","experimental","test"]
 			}
 		},
 		{
