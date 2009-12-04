@@ -1,29 +1,29 @@
 <?php
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2009 Jochen Rau <jochen.rau@typoplanet.de>
-*  All rights reserved
-*
-*  This class is a backport of the corresponding class of FLOW3.
-*  All credits go to the v5 team.
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2009 Jochen Rau <jochen.rau@typoplanet.de>
+ *  All rights reserved
+ *
+ *  This class is a backport of the corresponding class of FLOW3.
+ *  All credits go to the v5 team.
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 require_once('BaseTestCase.php');
 class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKickstarter_BaseTestCase { //extends Tx_Extbase_Base_testcase {
@@ -49,8 +49,8 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 				'extensionKey' => $extensionKey,
 				'name' => $name,
 				'state' => $state
-				)
-		    );
+		)
+		);
 
 		$extension = new Tx_ExtbaseKickstarter_Domain_Model_Extension();
 		$extension->setDescription($description);
@@ -66,8 +66,38 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 	 * @test
 	 */
 	public function conversionExtractsPersons() {
-		$this->markTestIncomplete('Persons not supported');
-
+		$persons=array();
+		$persons[]=t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Person');
+		$persons[]=t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Person');
+		$persons[0]->setName('name0');
+		$persons[0]->setRole('role0');
+		$persons[0]->setEmail('email0');
+		$persons[0]->setCompany('company0');
+		$persons[1]->setName('name1');
+		$persons[1]->setRole('role1');
+		$persons[1]->setEmail('email1');
+		$persons[1]->setCompany('company1');
+		
+		$input = array(
+			'properties' => array(
+				'description' => 'myDescription',
+				'extensionKey' => 'myExtensionKey',
+				'name' => 'myName',
+				'persons' => array(
+					array(	'company'=>'company0',
+							'email'=>'email0',
+							'name'=>'name0',
+							'role'=>'role0'),
+					array(	'company'=>'company1',
+							'email'=>'email1',
+							'name'=>'name1',
+							'role'=>'role1'),
+				),
+				'state' => 'beta'
+		)
+		);
+		$extension = $this->objectSchemaBuilder->build($input);
+		$this->assertEquals($extension->getPersons(), $persons, 'Persons set wrong in ObjectBuilder.');
 	}
 
 
@@ -84,38 +114,38 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 				'description' => $description,
 				'aggregateRoot' => TRUE,
 				'type' => 'Entity'
-			),
+				),
 			'propertyGroup' => array(
 				'properties' => array(
-					0 => array(
+				0 => array(
 						'propertyName' => 'name',
 						'propertyType' => 'String',
 						'propertyIsRequired' => 'true'
-					),
-					1 => array(
+						),
+						1 => array(
 						'propertyName' => 'type',
 						'propertyType' => 'Integer'
-					)
-				)
-			    ),
+						)
+						)
+						),
 			'relationGroup' => array()
 		    );
-		$expected = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
-		$expected->setName($name);
-		$expected->setDescription($description);
-		$expected->setEntity(TRUE);
-		$expected->setAggregateRoot(TRUE);
+		    $expected = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
+		    $expected->setName($name);
+		    $expected->setDescription($description);
+		    $expected->setEntity(TRUE);
+		    $expected->setAggregateRoot(TRUE);
 
-		$property0 = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
-		$property0->setName('name');
-		$property0->setRequired(TRUE);
-		$property1 = new Tx_ExtbaseKickstarter_Domain_Model_Property_IntegerProperty();
-		$property1->setName('type');
-		$expected->addProperty($property0);
-		$expected->addProperty($property1);
+		    $property0 = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
+		    $property0->setName('name');
+		    $property0->setRequired(TRUE);
+		    $property1 = new Tx_ExtbaseKickstarter_Domain_Model_Property_IntegerProperty();
+		    $property1->setName('type');
+		    $expected->addProperty($property0);
+		    $expected->addProperty($property1);
 
-		$actual = $this->objectSchemaBuilder->_call('buildDomainObject', $input);
-		$this->assertEquals($actual, $expected, 'Domain Object not built correctly.');
+		    $actual = $this->objectSchemaBuilder->_call('buildDomainObject', $input);
+		    $this->assertEquals($actual, $expected, 'Domain Object not built correctly.');
 	}
 	/**
 	 * @test
@@ -204,7 +234,6 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 				'extensionKey' => 'my_extension_key',
 				'name' => 'My ext name',
 				'state' => 'beta',
-
 			),
 			'wires' => array(
 				0 => array(

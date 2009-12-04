@@ -38,10 +38,23 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder {
 		if (!is_array($globalProperties)) throw new Exception('Wrong 1');
 
 
+			// name
 		$extension->setName($globalProperties['name']);
+			// description
 		$extension->setDescription($globalProperties['description']);
+			// extensionKey
 		$extension->setExtensionKey($globalProperties['extensionKey']);
-
+		
+		foreach($globalProperties['persons'] as $personValues) {
+			$person=t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Person');
+			$person->setName($personValues['name']);
+			$person->setRole($personValues['role']);
+			$person->setEmail($personValues['email']);
+			$person->setCompany($personValues['company']);
+			$extension->addPerson($person);
+		}
+		
+			// state
 		$state = 0;
 		switch ($globalProperties['state']) {
 			case 'development':
@@ -109,7 +122,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder {
 			$propertyType = $jsonProperty['propertyType'];
 			$propertyClassName = 'Tx_ExtbaseKickstarter_Domain_Model_Property_' . $propertyType . 'Property';
 			if (!class_exists($propertyClassName)) throw new Exception('Property of type ' . $propertyType . ' not found');
-			$property = new $propertyClassName;
+			$property = t3lib_div::makeInstance($propertyClassName);
 			$property->setName($jsonProperty['propertyName']);
 
 			if (isset($jsonProperty['propertyIsRequired'])) {
@@ -117,6 +130,13 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder {
 			}
 
 			$domainObject->addProperty($property);
+		}
+		
+		foreach ($jsonDomainObject['actionGroup']['actions'] as $jsonAction) {
+			$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Action');
+			$action->setName($jsonAction);
+			
+			$domainObject->addAction($action);
 		}
 		return $domainObject;
 	}

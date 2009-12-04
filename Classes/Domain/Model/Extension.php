@@ -64,6 +64,12 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject>
 	 */
 	protected $domainObjects = array();
+	
+	/**
+	 * The Perons working on the Extension
+	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_Person>
+	 */
+	protected $persons = array();
 
 	/**
 	 *
@@ -156,5 +162,33 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	public function getShorthandForTypoScript() {
 		return 'tx_' . strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->getExtensionKey()));
 	}
+	
+	/**
+	 * Returns the Persons
+	 * 
+	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_Person>
+	 */
+	public function getPersons() {
+		return $this->persons;
+	}
+	/**
+	 * Sets the Persons
+	 * 
+	 * @param array<Tx_ExtbaseKickstarter_Domain_Model_Person> $persons
+	 * @return void
+	 */
+	public function setPersons($persons) {
+		$this->persons=$persons;
+	}
+	/**
+	 * Adds a Person to the end of the current Set of Persons.
+	 * 
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_Person $person
+	 * @return void
+	 */
+	public function addPerson($person) {
+		$this->persons[]=$person;
+	}
+	
 }
 ?>

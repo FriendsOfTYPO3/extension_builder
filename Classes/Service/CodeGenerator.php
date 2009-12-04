@@ -67,7 +67,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 		t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Model');
 		$domainModelDirectory = $extensionDirectory . 'Classes/Domain/Model/';
 		foreach ($this->extension->getDomainObjects() as $domainObject) {
-			$fileContents = $this->generateDomainObjectCode($domainObject);
+			$fileContents = $this->generateDomainObjectCode($domainObject, $extension);
 			t3lib_div::writeFile($domainModelDirectory . $domainObject->getName() . '.php', $fileContents);
 		}
 
@@ -80,6 +80,17 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 			$fileContents = $this->generateDomainRepositoryCode($domainObject);
 			t3lib_div::writeFile($domainRepositoryDirectory . $domainObject->getName() . 'Repository.php', $fileContents);
 		}
+		
+		// Generate Action Controller
+		t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Controller');
+		$controllerDirectory = $extensionDirectory . 'Classes/Controller/';
+		foreach ($this->extension->getDomainObjects() as $domainObject) {
+			// Every Domain Object with defined actions will get a corresponding Action Controller
+			if(count($domainObject->getActions())){
+				$fileContents = $this->generateActionControllerCode($domainObject, $extension);
+				t3lib_div::writeFile($controllerDirectory . $domainObject->getName() . 'Controller.php', $fileContents);
+			}
+		}
 
 		// Generate ext_emconf.php, ext_tables.* and TCA definition
 		$fileContents = $this->generateExtEmconf($extension);
@@ -91,6 +102,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 		$fileContents = $this->generateExtTablesSql($extension);
 		t3lib_div::writeFile($extensionDirectory . 'ext_tables.sql', $fileContents);
 
+		// Generate TCA
 		t3lib_div::mkdir_deep($extensionDirectory, 'Configuration/TCA');
 		$tcaDirectory = $extensionDirectory . 'Configuration/TCA/';
 		$fileContents = $this->generateTCA($extension);
@@ -102,7 +114,24 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 		$fileContents = $this->generateTyposcriptSetup($extension);
 		t3lib_div::writeFile($typoscriptDirectory . 'setup.txt', $fileContents);
 
-
+		// Generate Private Resources .htaccess
+		t3lib_div::mkdir_deep($extensionDirectory, 'Resources/Private');
+		$privateResourcesDirectory = $extensionDirectory . 'Resources/Private/';
+		$fileContents = $this->generatePrivateResourcesHtaccess();
+		t3lib_div::writeFile($privateResourcesDirectory . '.htaccess', $fileContents);
+		
+		// Generate Domain Templates
+		foreach ($this->extension->getDomainObjects() as $domainObject) {
+			if (!$domainObject->getEntity()) continue;
+			
+			t3lib_div::mkdir_deep($extensionDirectory, 'Resources/Private/Templates/' . $domainObject->getName());
+			$domainTemplateDirectory = $extensionDirectory . 'Resources/Private/Templates/' . $domainObject->getName() . '/';
+			foreach($domainObject->getActions() as $action) {
+				$fileContents = $this->generateDomainTemplate($domainObject, $action);
+				t3lib_div::writeFile($domainTemplateDirectory . $action->getName() . '.html', $fileContents);
+			}
+		}
+		t3lib_div::mkdir_deep($extensionDirectory, 'Resources/Public');
 	}
 
 	/**
@@ -131,12 +160,30 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 	}
 
 
-	public function generateDomainObjectCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
-		return $this->renderTemplate('Domain/Model/domainObject.phpt', array('domainObject' => $domainObject));
+	public function generateActionControllerCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject, Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
+		return $this->renderTemplate('Classes/Controller/actionController.phpt', array('domainObject' => $domainObject, 'extension' => $extension));
+	}
+	
+	public function generateDomainObjectCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject, Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
+		return $this->renderTemplate('Domain/Model/domainObject.phpt', array('domainObject' => $domainObject, 'extension' => $extension));
 	}
 
 	public function generateDomainRepositoryCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
 		return $this->renderTemplate('Domain/Repository/domainRepository.phpt', array('domainObject' => $domainObject));
+	}
+	
+	/**
+	 * Generates the content of an Action template
+	 * For some Actions default templates are provided, other Action templates will just be created emtpy
+	 *
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_Action $action
+	 * @return string The generated Template code (might be empty)
+	 */
+	public function generateDomainTemplate(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject, Tx_ExtbaseKickstarter_Domain_Model_Action $action) {
+		if(t3lib_div::inList('create,edit,list', $action->getName())){
+			return $this->renderTemplate('Resources/Private/Templates/'. $action->getName() . '.htmlt', array('domainObject' => $domainObject));
+		}
 	}
 
 	public function generateExtEmconf(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
@@ -149,6 +196,10 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 
 	public function generateExtTablesSql(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
 		return $this->renderTemplate('extTables.sqlt', array('extension' => $extension));
+	}
+	
+	public function generatePrivateResourcesHtaccess() {
+		return $this->renderTemplate('Resources/Private/htaccess.t', array());
 	}
 
 	public function generateTCA(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {

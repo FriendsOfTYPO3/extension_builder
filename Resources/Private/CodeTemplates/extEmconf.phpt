@@ -1,5 +1,5 @@
 <?php
-
+{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
 ########################################################################
 # Extension Manager/Repository config file for ext: "{extension.extensionKey}"
 #
@@ -14,8 +14,9 @@ $EM_CONF[$_EXTKEY] = array(
 	'title' => '{extension.name}',
 	'description' => '{extension.description}',
 	'category' => '',
-	'author' => 'TODO',
-	'author_email' => 'TODO',
+	'author' => '<k:listObjectsByPropertyCSV objects="{extension.persons}" property="name" />',
+	'author_email' => '<k:listObjectsByPropertyCSV objects="{extension.persons}" property="email" />',
+	'author_company' => '<k:listObjectsByPropertyCSV objects="{extension.persons}" property="company" />',
 	'shy' => '',
 	'dependencies' => 'cms,extbase,fluid',
 	'conflicts' => '',
@@ -28,7 +29,6 @@ $EM_CONF[$_EXTKEY] = array(
 	'modify_tables' => '',
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
-	'author_company' => '',
 	'version' => '0.0.0',
 	'constraints' => array(
 		'depends' => array(
