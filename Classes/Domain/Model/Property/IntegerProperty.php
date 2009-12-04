@@ -40,7 +40,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_IntegerProperty extends Tx_Ext
 		return '';
 	}
 	public function getSqlDefinition() {
-		return strtolower($this->getName()) . " int(11) DEFAULT '0' NOT NULL,";
+		return this->getName() . " int(11) DEFAULT '0' NOT NULL,";
 	}
 }
 ?>
