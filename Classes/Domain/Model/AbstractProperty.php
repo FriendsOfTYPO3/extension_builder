@@ -118,6 +118,11 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	 */
 	abstract public function getTypeHint();
 	
+	public function getTypeHintWithTrailingWhiteSpace() {
+		if ($typehint = $this->getTypeHint()) {
+			return $typehint . ' ';
+		}
+	}
 	
 	public function getRequired() {
 		return $this->required;
