@@ -54,10 +54,12 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 */
 	protected $state = 0;
 
-	const STATE_DEVELOPMENT = 0;
-	const STATE_ALPHA = 1;
-	const STATE_BETA = 2;
-	const STATE_STABLE = 3;
+	const STATE_ALPHA = 0;
+	const STATE_BETA = 1;
+	const STATE_STABLE = 2;
+	const STATE_EXPERIMENTAL = 3;
+	const STATE_TEST = 4;
+
 
 	/**
 	 * All domain objects
@@ -188,6 +190,16 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 */
 	public function addPerson($person) {
 		$this->persons[]=$person;
+	}
+	
+	public function getReadableState() {
+		switch($this->getState()){
+			case self::STATE_ALPHA: return 'alpha';
+			case self::STATE_BETA: return 'beta';
+			case self::STATE_STABLE: return 'stable';
+			case self::STATE_EXPERIMENTAL: return 'experimental';
+			case self::STATE_TEST: return 'test';
+		}
 	}
 	
 }
