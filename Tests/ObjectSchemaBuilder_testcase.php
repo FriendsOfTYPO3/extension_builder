@@ -49,7 +49,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 				'extensionKey' => $extensionKey,
 				'name' => $name,
 				'state' => $state
-		)
+			)
 		);
 
 		$extension = new Tx_ExtbaseKickstarter_Domain_Model_Extension();
@@ -66,9 +66,9 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 	 * @test
 	 */
 	public function conversionExtractsPersons() {
-		$persons=array();
-		$persons[]=t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Person');
-		$persons[]=t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Person');
+		$persons = array();
+		$persons[] = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Person');
+		$persons[] = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Person');
 		$persons[0]->setName('name0');
 		$persons[0]->setRole('role0');
 		$persons[0]->setEmail('email0');
@@ -84,17 +84,21 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 				'extensionKey' => 'myExtensionKey',
 				'name' => 'myName',
 				'persons' => array(
-					array(	'company'=>'company0',
-							'email'=>'email0',
-							'name'=>'name0',
-							'role'=>'role0'),
-					array(	'company'=>'company1',
-							'email'=>'email1',
-							'name'=>'name1',
-							'role'=>'role1'),
+					array(
+						'company'=>'company0',
+						'email'=>'email0',
+						'name'=>'name0',
+						'role'=>'role0'
+					),
+					array(
+						'company'=>'company1',
+						'email'=>'email1',
+						'name'=>'name1',
+						'role'=>'role1'
+					),
 				),
 				'state' => 'beta'
-		)
+			)
 		);
 		$extension = $this->objectSchemaBuilder->build($input);
 		$this->assertEquals($extension->getPersons(), $persons, 'Persons set wrong in ObjectBuilder.');
@@ -114,38 +118,39 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 				'description' => $description,
 				'aggregateRoot' => TRUE,
 				'type' => 'Entity'
-				),
+			),
 			'propertyGroup' => array(
 				'properties' => array(
-				0 => array(
+					0 => array(
 						'propertyName' => 'name',
 						'propertyType' => 'String',
 						'propertyIsRequired' => 'true'
-						),
-						1 => array(
+					),
+					1 => array(
 						'propertyName' => 'type',
 						'propertyType' => 'Integer'
-						)
-						)
-						),
+					)
+				)
+			),
 			'relationGroup' => array()
-		    );
-		    $expected = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
-		    $expected->setName($name);
-		    $expected->setDescription($description);
-		    $expected->setEntity(TRUE);
-		    $expected->setAggregateRoot(TRUE);
+		);
+		
+		$expected = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
+		$expected->setName($name);
+		$expected->setDescription($description);
+		$expected->setEntity(TRUE);
+		$expected->setAggregateRoot(TRUE);
 
-		    $property0 = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
-		    $property0->setName('name');
-		    $property0->setRequired(TRUE);
-		    $property1 = new Tx_ExtbaseKickstarter_Domain_Model_Property_IntegerProperty();
-		    $property1->setName('type');
-		    $expected->addProperty($property0);
-		    $expected->addProperty($property1);
+		$property0 = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
+		$property0->setName('name');
+		$property0->setRequired(TRUE);
+		$property1 = new Tx_ExtbaseKickstarter_Domain_Model_Property_IntegerProperty();
+		$property1->setName('type');
+		$expected->addProperty($property0);
+		$expected->addProperty($property1);
 
-		    $actual = $this->objectSchemaBuilder->_call('buildDomainObject', $input);
-		    $this->assertEquals($actual, $expected, 'Domain Object not built correctly.');
+		$actual = $this->objectSchemaBuilder->_call('buildDomainObject', $input);
+		$this->assertEquals($actual, $expected, 'Domain Object not built correctly.');
 	}
 	/**
 	 * @test
@@ -279,7 +284,6 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 
 		$extension->addDomainObject($blog);
 
-
 		$post = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
 		$post->setName('Post');
 		$post->setDescription('A blog post');
@@ -306,6 +310,5 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 
 		$actualExtension = $this->objectSchemaBuilder->build($input);
 		$this->assertEquals($extension, $actualExtension, 'The extensions differ');
-
 	}
 }
