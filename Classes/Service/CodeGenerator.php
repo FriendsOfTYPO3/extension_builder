@@ -181,7 +181,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 	 * @return string The generated Template code (might be empty)
 	 */
 	public function generateDomainTemplate(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject, Tx_ExtbaseKickstarter_Domain_Model_Action $action) {
-		if(t3lib_div::inList('create,edit,list', $action->getName())){
+		if (file_exists(t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/Resources/Private/Templates/' . $action->getName() . '.htmlt')) {
 			return $this->renderTemplate('Resources/Private/Templates/'. $action->getName() . '.htmlt', array('domainObject' => $domainObject));
 		}
 	}
