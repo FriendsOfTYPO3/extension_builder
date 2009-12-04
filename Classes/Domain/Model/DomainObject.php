@@ -67,6 +67,12 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	protected $properties = array();
 	
 	/**
+	 * List of actions the domain object has
+	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_Action>
+	 */
+	protected $actions = array();
+	
+	/**
 	 * Set name
 	 * @return string
 	 */
@@ -84,6 +90,10 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	
 	public function getClassName() {
 		return 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Model_' . $this->getName();
+	}
+	
+	public function getControllerName() {
+		return 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey()) . '_Controller_' . $this->getName() . 'Controller';
 	}
 
 	public function getDatabaseTableName() {
@@ -156,6 +166,23 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	 */
 	public function getProperties() {
 		return $this->properties;
+	}
+	
+	/**
+	 * Adding a new action
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_Action $action The new action to add
+	 */
+	public function addAction(Tx_ExtbaseKickstarter_Domain_Model_Action $action) {
+		$action->setDomainObject($this);
+		$this->actions[] = $action;
+	}
+
+	/**
+	 * Get all actions
+	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_Action>
+	 */
+	public function getActions() {
+		return $this->actions;
 	}
 
 	/**

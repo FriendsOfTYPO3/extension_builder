@@ -8,6 +8,8 @@
         <languageKey index="default" type="array">
             <label index="mlang_tabs_tab">Extbase Kickstarter</label>
             <label index="mlang_labels_tabdescr">View / Modify Extension Objects</label>
+            <label index="mlang_tx_extbasekickstarter_domain_model_person_developer">Developer</label>
+            <label index="mlang_tx_extbasekickstarter_domain_model_person_product_manager">Product Manager</label>
         </languageKey>
     </data>
 </T3locallang>

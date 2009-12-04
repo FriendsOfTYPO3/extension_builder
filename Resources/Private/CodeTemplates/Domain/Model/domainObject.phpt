@@ -1,8 +1,10 @@
 <?php
+
 /***************************************************************
 *  Copyright notice
 *
-*  (c)  TODO - INSERT COPYRIGHT
+*  (c) <f:format.date format="Y">now</f:format.date> <f:for each="{extension.persons}" as="person">{person.name} <f:if condition="{person.email}"><{person.email}></f:if><f:if condition="{person.company}">, {person.company}</f:if>
+*  			</f:for>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -67,7 +69,7 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	 * @param {property.typeForComment} ${property.name} {property.description}
 	 * @return void
 	 */
-	public function set{property.name -> k:uppercaseFirst()}({property.typeHint} ${property.name}) {
+	public function set{property.name -> k:uppercaseFirst()}(<f:if condition="{property.typeHint}"> {property.typeHint}</f:if>${property.name}) {
 		$this->{property.name} = ${property.name};
 	}
 	<f:if condition="{k:isOfType(object:property, type:'Property_Relation_ZeroToManyRelation')}">
@@ -82,6 +84,5 @@ class {domainObject.className} extends {domainObject.baseClass} {
 		$this->{property.name}->attach(${property.name -> k:singularize()});
 	}
 	</f:if></f:for>
-
 }
 ?>
