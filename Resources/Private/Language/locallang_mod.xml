@@ -11,5 +11,11 @@
             <label index="mlang_tx_extbasekickstarter_domain_model_person_developer">Developer</label>
             <label index="mlang_tx_extbasekickstarter_domain_model_person_product_manager">Product Manager</label>
         </languageKey>
+		<languageKey index="de" type="array">
+            <label index="mlang_tabs_tab">Extbase Kickstarter</label>
+            <label index="mlang_labels_tabdescr">Dieses Modul dient dazu neue Extensions anzulegen, die auf Extbase und Fluid basieren. Hierzu lassen sich über die grafische Oberfläche Daten-Objekte der Extension anlegen und bearbeiten.</label>
+            <label index="mlang_tx_extbasekickstarter_domain_model_person_developer">Entwickler</label>
+            <label index="mlang_tx_extbasekickstarter_domain_model_person_product_manager">Product Manager</label>
+        </languageKey>
     </data>
 </T3locallang>

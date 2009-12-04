@@ -122,7 +122,8 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 		
 		// Generate Domain Templates
 		foreach ($this->extension->getDomainObjects() as $domainObject) {
-			if (!$domainObject->getEntity()) continue;
+			// Do not generate anyting if $domainObject is not an Entity or has no actions defined
+			if (!$domainObject->getEntity() || (count($domainObject->getActions()) == 0)) continue;
 			
 			t3lib_div::mkdir_deep($extensionDirectory, 'Resources/Private/Templates/' . $domainObject->getName());
 			$domainTemplateDirectory = $extensionDirectory . 'Resources/Private/Templates/' . $domainObject->getName() . '/';

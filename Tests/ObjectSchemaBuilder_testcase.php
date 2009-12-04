@@ -26,7 +26,7 @@
  ***************************************************************/
 
 require_once('BaseTestCase.php');
-class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKickstarter_BaseTestCase { //extends Tx_Extbase_Base_testcase {
+class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKickstarter_BaseTestCase {
 
 	protected $objectSchemaBuilder;
 
