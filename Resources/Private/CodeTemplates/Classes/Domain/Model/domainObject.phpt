@@ -69,7 +69,7 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	 * @param {property.typeForComment} ${property.name} {property.description}
 	 * @return void
 	 */
-	public function set{property.name -> k:uppercaseFirst()}(<f:if condition="{property.typeHint}"> {property.typeHint}</f:if>${property.name}) {
+	public function set{property.name -> k:uppercaseFirst()}({property.typeHintWithTrailingWhiteSpace}${property.name}) {
 		$this->{property.name} = ${property.name};
 	}
 	<f:if condition="{k:isOfType(object:property, type:'Property_Relation_ZeroToManyRelation')}">
