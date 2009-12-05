@@ -33,15 +33,15 @@
  */
 class Tx_ExtbaseKickstarter_Domain_Model_Property_DateTimeProperty extends Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	public function getTypeForComment() {
-		return 'DateTime';
+		return 'integer';
 	}
 
 	public function getTypeHint() {
-		return 'DateTime';
+		return '';
 	}
 
 	public function getSqlDefinition() {
-		return "# TODO DateTime";
+		return $this->getName() . ' int(11) DEFAULT \'0\' NOT NULL,';
 	}
 }
 ?>
