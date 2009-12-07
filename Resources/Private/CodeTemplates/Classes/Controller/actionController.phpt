@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /***************************************************************
 *  Copyright notice
@@ -33,7 +33,7 @@
  */
 
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-class {domainObject.controllerName} extends {domainObject.baseClass} {
+class {domainObject.controllerName} extends Tx_Extbase_MVC_Controller_ActionController {
 	
 	<f:for each="{domainObject.actions}" as="action">
 	/**
