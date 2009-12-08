@@ -77,7 +77,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder {
 
 
 		// classes
-		if (isset($jsonArray['modules'])) {
+		if (is_array($jsonArray['modules'])) {
 			foreach ($jsonArray['modules'] as $singleModule) {
 				$domainObject = $this->buildDomainObject($singleModule['value']);
 				$extension->addDomainObject($domainObject);
@@ -85,7 +85,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder {
 		}
 
 		// relations
-		if (isset($jsonArray['wires'])) {
+		if (is_array($jsonArray['wires'])) {
 			foreach ($jsonArray['wires'] as $wire) {
 				$relationJsonConfiguration = $jsonArray['modules'][$wire['src']['moduleId']]['value']['relationGroup']['relations'][substr($wire['src']['terminal'], 13)];
 				if (!is_array($relationJsonConfiguration)) throw new Exception('Error. Relation JSON config was not found');
