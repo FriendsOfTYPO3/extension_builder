@@ -54,7 +54,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRela
 		$this->foreignClass = $foreignClass;
 	}
 	public function getSqlDefinition() {
-		return $this->getName() . " int(11) unsigned DEFAULT '0'";
+		return $this->getFieldName() . " int(11) unsigned DEFAULT '0'";
 	}
 }
 ?>

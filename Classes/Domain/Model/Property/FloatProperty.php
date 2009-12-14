@@ -40,7 +40,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_FloatProperty extends Tx_Extba
 		return '';
 	}
 	public function getSqlDefinition() {
-		return $this->getName() . " double(11,2) DEFAULT '0.00' NOT NULL,";
+		return $this->getFieldName() . " double(11,2) DEFAULT '0.00' NOT NULL,";
 	}
 }
 ?>

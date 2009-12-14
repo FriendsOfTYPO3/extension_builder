@@ -87,6 +87,16 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	}
 
 	/**
+	 * Returns a field name used in the database. This is the property name converted 
+	 * to lowercase underscore (mySpecialProperty -> my_special_property).
+	 *
+	 * @return string the field name in lowercase underscore
+	 */
+	public function getFieldName() {
+		return Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($this->name);
+	}
+
+	/**
 	 * Get property description
 	 * @return string Property description
 	 */
@@ -153,7 +163,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	}
 	
 	public function getLabelNamespace() {
-		return $this->domainObject->getLabelNamespace() . '.' . strtolower($this->getName());
+		return $this->domainObject->getLabelNamespace() . '.' . $this->getFieldName();
 	}
 }
 ?>
