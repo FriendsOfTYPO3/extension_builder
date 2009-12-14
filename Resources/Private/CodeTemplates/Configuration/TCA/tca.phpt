@@ -63,7 +63,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			)
 		),
 		<f:for each="{domainObject.properties}" as="property">
-		'{property.name}' => array(
+		'{property.fieldName}' => array(
 			'exclude' => 0,
 			'label'   => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xml:{property.labelNamespace}',
 			'config'  => array(
