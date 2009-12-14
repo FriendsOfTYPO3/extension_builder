@@ -32,22 +32,40 @@
  * @version $ID:$
  */
 class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ManyToManyRelation extends Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRelation {
+
+	/**
+	 * Returns the type for an ObjectStorage and its contained type based on a mm-relation.
+	 *
+	 * @return string The type.
+	 */
 	public function getTypeForComment() {
 		return 'Tx_Extbase_Persistence_ObjectStorage<' . $this->getForeignClass()->getClassName() . '>';
 	}
 
+	/**
+	 * returns the type hint to be used in the arguments list of the method.
+	 *
+	 * @return string The type hint.
+	 */
 	public function getTypeHint() {
 		return 'Tx_Extbase_Persistence_ObjectStorage';
 	}
 
+	/**
+	 * Returns the relation table name. It is build by having 'tx_myextension_' followed by the 
+	 * first domain object name followed by the second domain object name followed by '_mm'.
+	 *
+	 * @return void
+	 */
 	public function getRelationTableName() {
 		return 'tx_'
 			. strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->domainObject->getExtension()->getExtensionKey()))
-			. '_domain_model_'
+			. '_'
 			. strtolower($this->domainObject->getName())
 			. '_'
 			. strtolower($this->foreignClass->getName())
 			. '_mm';
 	}
 }
+
 ?>
