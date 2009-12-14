@@ -41,7 +41,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_BooleanProperty extends Tx_Ext
 	}
 
 	public function getSqlDefinition() {
-		return $this->getName() . " tinyint(1) unsigned DEFAULT '0' NOT NULL,";
+		return $this->getFieldName() . " tinyint(1) unsigned DEFAULT '0' NOT NULL,";
 	}
 }
 ?>
