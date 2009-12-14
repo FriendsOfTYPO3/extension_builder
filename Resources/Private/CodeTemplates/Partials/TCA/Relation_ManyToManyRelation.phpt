@@ -4,9 +4,5 @@
 'maxitems' => 9999,
 'autoSizeMax' => 30,
 'multiple' => 1,
-'foreign_class' => '{property.foreignClass.className}',
 'foreign_table' => '{property.foreignClass.databaseTableName}',
 'MM' => '{property.relationTableName}',
-// TODO: Remove the below fields:
-//'MM_insert_fields' => array('tablenames' => 'tx_blogexample_domain_model_tag'),
-//'MM_match_fields' => array('tablenames' => 'tx_blogexample_domain_model_tag'),
