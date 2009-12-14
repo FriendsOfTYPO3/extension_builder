@@ -225,7 +225,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	public function getCommaSeparatedFieldList() {
 		$fieldNames = array();
 		foreach ($this->properties as $property) {
-			$fieldNames[] = $property->getName();
+			$fieldNames[] = $property->getFieldName();
 		}
 		return implode(',', $fieldNames);
 	}
@@ -237,7 +237,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	 */
 	public function getListModuleValueLabel() {
 		if (isset($this->properties[0])) {
-			return $this->properties[0]->getName();
+			return $this->properties[0]->getFieldName();
 		} else {
 			return 'uid';
 		}
