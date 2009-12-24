@@ -63,33 +63,50 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 		$extensionDirectory = PATH_typo3conf . 'ext/' . $this->extension->getExtensionKey().'/';
 		//t3lib_div::mkdir($extensionDirectory);
 
-		// Generate Domain Model
-		t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Model');
-		$domainModelDirectory = $extensionDirectory . 'Classes/Domain/Model/';
-		foreach ($this->extension->getDomainObjects() as $domainObject) {
-			$fileContents = $this->generateDomainObjectCode($domainObject, $extension);
-			t3lib_div::writeFile($domainModelDirectory . $domainObject->getName() . '.php', $fileContents);
-		}
-
-		// Generate Domain Repositories
-		t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Repository');
-		$domainRepositoryDirectory = $extensionDirectory . 'Classes/Domain/Repository/';
-		foreach ($this->extension->getDomainObjects() as $domainObject) {
-			if (!$domainObject->isAggregateRoot()) continue;
+		if (count($this->extension->getDomainObjects())) {
 		
-			$fileContents = $this->generateDomainRepositoryCode($domainObject);
-			t3lib_div::writeFile($domainRepositoryDirectory . $domainObject->getName() . 'Repository.php', $fileContents);
-		}
-		
-		// Generate Action Controller
-		t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Controller');
-		$controllerDirectory = $extensionDirectory . 'Classes/Controller/';
-		foreach ($this->extension->getDomainObjects() as $domainObject) {
-			// Every Domain Object with defined actions will get a corresponding Action Controller
-			if(count($domainObject->getActions())){
-				$fileContents = $this->generateActionControllerCode($domainObject, $extension);
-				t3lib_div::writeFile($controllerDirectory . $domainObject->getName() . 'Controller.php', $fileContents);
+			// Generate Domain Model
+			t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Model');
+			$domainModelDirectory = $extensionDirectory . 'Classes/Domain/Model/';
+			foreach ($this->extension->getDomainObjects() as $domainObject) {
+				$fileContents = $this->generateDomainObjectCode($domainObject, $extension);
+				t3lib_div::writeFile($domainModelDirectory . $domainObject->getName() . '.php', $fileContents);
 			}
+
+			// Generate Domain Repositories
+			t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Repository');
+			$domainRepositoryDirectory = $extensionDirectory . 'Classes/Domain/Repository/';
+			foreach ($this->extension->getDomainObjects() as $domainObject) {
+				if (!$domainObject->isAggregateRoot()) continue;
+			
+				$fileContents = $this->generateDomainRepositoryCode($domainObject);
+				t3lib_div::writeFile($domainRepositoryDirectory . $domainObject->getName() . 'Repository.php', $fileContents);
+			}
+		
+			// Generate Action Controller
+			t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Controller');
+			$controllerDirectory = $extensionDirectory . 'Classes/Controller/';
+			foreach ($this->extension->getDomainObjects() as $domainObject) {
+				// Every Domain Object with defined actions will get a corresponding Action Controller
+				if(count($domainObject->getActions())){
+					$fileContents = $this->generateActionControllerCode($domainObject, $extension);
+					t3lib_div::writeFile($controllerDirectory . $domainObject->getName() . 'Controller.php', $fileContents);
+				}
+			}
+			
+			// Generate Domain Templates
+			foreach ($this->extension->getDomainObjects() as $domainObject) {
+				// Do not generate anyting if $domainObject is not an Entity or has no actions defined
+				if (!$domainObject->getEntity() || (count($domainObject->getActions()) == 0)) continue;
+				
+				t3lib_div::mkdir_deep($extensionDirectory, 'Resources/Private/Templates/' . $domainObject->getName());
+				$domainTemplateDirectory = $extensionDirectory . 'Resources/Private/Templates/' . $domainObject->getName() . '/';
+				foreach($domainObject->getActions() as $action) {
+					$fileContents = $this->generateDomainTemplate($domainObject, $action);
+					t3lib_div::writeFile($domainTemplateDirectory . $action->getName() . '.html', $fileContents);
+				}
+			}
+			
 		}
 
 		// Generate ext_emconf.php, ext_tables.* and TCA definition
@@ -128,18 +145,6 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 		$fileContents = $this->generateLocallangDB($extension);
 		t3lib_div::writeFile($languageDirectory . 'locallang_db.xml', $fileContents);
 		
-		// Generate Domain Templates
-		foreach ($this->extension->getDomainObjects() as $domainObject) {
-			// Do not generate anyting if $domainObject is not an Entity or has no actions defined
-			if (!$domainObject->getEntity() || (count($domainObject->getActions()) == 0)) continue;
-			
-			t3lib_div::mkdir_deep($extensionDirectory, 'Resources/Private/Templates/' . $domainObject->getName());
-			$domainTemplateDirectory = $extensionDirectory . 'Resources/Private/Templates/' . $domainObject->getName() . '/';
-			foreach($domainObject->getActions() as $action) {
-				$fileContents = $this->generateDomainTemplate($domainObject, $action);
-				t3lib_div::writeFile($domainTemplateDirectory . $action->getName() . '.html', $fileContents);
-			}
-		}
 		t3lib_div::mkdir_deep($extensionDirectory, 'Resources/Public');
 	}
 
