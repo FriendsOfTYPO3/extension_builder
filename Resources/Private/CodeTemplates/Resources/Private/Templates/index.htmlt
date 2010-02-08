@@ -11,7 +11,7 @@ This Template is responsible for creating a table of domain objects.
 <tr>
 <f:for each="{domainObject.properties}" as="property">
 	<f:if condition="{property.isDisplayable}">
-		<th>{property.name}</th>
+		<th><k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag></th>
 	</f:if>
 </f:for>
 <th> </th>

@@ -146,6 +146,24 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	}
 
 	/**
+	 * An array of domain objects for which a controller should be built.
+	 * This is done in the following two cases:
+	 * - Domain Objects which are aggregate roots
+	 * - Actions defined for these domain objects
+	 *
+	 * @return array
+	 */
+	public function getDomainObjectsForWhichAControllerShouldBeBuilt() {
+		$domainObjects = array();
+		foreach ($this->domainObjects as $domainObject) {
+			if (count($domainObject->getActions()) || $domainObject->isAggregateRoot()) {
+				$domainObjects[] = $domainObject;
+			}
+		}
+		return $domainObjects;
+	}
+
+	/**
 	 * Add a domain object to the extension. Creates the reverse link as well.
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject 
 	 */

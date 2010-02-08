@@ -33,7 +33,7 @@
  */
 
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-class {domainObject.controllerName} extends Tx_Extbase_MVC_Controller_ActionController {
+class {domainObject.controllerName} extends Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController {
 	
 	<f:for each="{domainObject.actions}" as="action">
 	/**

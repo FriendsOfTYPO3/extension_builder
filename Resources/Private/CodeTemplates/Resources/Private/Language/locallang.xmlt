@@ -2,11 +2,12 @@
 <T3locallang>
 	<meta type="array">
 		<type>module</type>
-		<description>Language labels for the {extension.name} extension</description>
+		<description>Language labels for the {extension.name} extension in the FRONTEND</description>
 	</meta>
 	<data type="array">
-		<languageKey index="default" type="array">
-			<label index="sample">This is how you should store your labels.</label>
+		<languageKey index="default" type="array"><f:for each="{extension.domainObjects}" as="domainObject">
+			<label index="{domainObject.labelNamespace}">{domainObject.description}</label><f:for each="{domainObject.properties}" as="property">
+			<label index="{property.labelNamespace}">{property.description}</label></f:for></f:for>
 		</languageKey>
 	</data>
 </T3locallang>

@@ -86,12 +86,9 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 			// Generate Action Controller
 			t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Controller');
 			$controllerDirectory = $extensionDirectory . 'Classes/Controller/';
-			foreach ($this->extension->getDomainObjects() as $domainObject) {
-				// Every Domain Object with defined actions will get a corresponding Action Controller
-				if(count($domainObject->getActions())){
-					$fileContents = $this->generateActionControllerCode($domainObject, $extension);
-					t3lib_div::writeFile($controllerDirectory . $domainObject->getName() . 'Controller.php', $fileContents);
-				}
+			foreach ($this->extension->getDomainObjectsForWhichAControllerShouldBeBuilt() as $domainObject) {
+				$fileContents = $this->generateActionControllerCode($domainObject, $extension);
+				t3lib_div::writeFile($controllerDirectory . $domainObject->getName() . 'Controller.php', $fileContents);
 			}
 			
 			// Generate Domain Templates
@@ -118,6 +115,9 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 		
 		$fileContents = $this->generateExtTablesSql($extension);
 		t3lib_div::writeFile($extensionDirectory . 'ext_tables.sql', $fileContents);
+
+		$fileContents = $this->generateExtLocalconf($extension);
+		t3lib_div::writeFile($extensionDirectory . 'ext_localconf.php', $fileContents);
 
 		// Generate TCA
 		t3lib_div::mkdir_deep($extensionDirectory, 'Configuration/TCA');
@@ -202,6 +202,10 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 
 	public function generateExtEmconf(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
 		return $this->renderTemplate('extEmconf.phpt', array('extension' => $extension));
+	}
+
+	public function generateExtLocalconf(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
+		return $this->renderTemplate('extLocalconf.phpt', array('extension' => $extension));
 	}
 
 	public function generateExtTablesPhp(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
