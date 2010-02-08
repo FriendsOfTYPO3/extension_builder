@@ -43,13 +43,5 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty extends Tx_Extb
 	public function getSqlDefinition() {
 		return $this->getFieldName() . " tinytext,";
 	}
-
-	public function getIsDisplayable() {
-		return TRUE;
-	}
-
-	public function getNameToBeDisplayedInFluidTemplate() {
-		return $this->name;
-	}
 }
 ?>

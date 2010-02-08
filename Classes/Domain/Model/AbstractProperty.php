@@ -55,6 +55,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
+	 *
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject the domain object this property belongs to
 	 */
 	public function setDomainObject(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
@@ -62,6 +63,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	}
 
 	/**
+	 * Get the domain object this property belongs to.
 	 *
 	 * @return Tx_ExtbaseKickstarter_Domain_Model_DomainObject
 	 */
@@ -72,6 +74,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 
 	/**
 	 * Get property name
+	 *
 	 * @return string
 	 */
 	public function getName() {
@@ -80,6 +83,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	
 	/**
 	 * Set property name
+	 * 
 	 * @param string $name Property name
 	 */
 	public function setName($name) {
@@ -97,55 +101,85 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	}
 
 	/**
-	 * Get property description
+	 * Get SQL Definition to be used inside CREATE TABLE.
+	 *
+	 * @retrun string the SQL definition
+	 */
+	abstract public function getSqlDefinition();
+
+	/**
+	 * Get property description to be used in comments
+	 *
 	 * @return string Property description
 	 */
 	public function getDescription() {
-		if($this->description){
+		if ($this->description){
 			return $this->description;
-		}else{
+		} else {
 			return $this->getName();
 		}
 	}
 	
 	/**
 	 * Set property description
+	 *
 	 * @param string $description Property description
 	 */
 	public function setDescription($description) {
 		$this->description = $description;
 	}
 
-	//abstract public function getTcaDefinition();
-
 	/**
 	 * Template Method which should return the type hinting information
-	 * being used in PHPDoc Comments
+	 * being used in PHPDoc Comments.
+	 * Examples: integer, string, Tx_FooBar_Something, Tx_Extbase_Persistence_ObjectStorage<Tx_FooBar_Something>
+	 *
 	 * @return string
 	 */
 	abstract public function getTypeForComment();
 
 	/**
-	 * Template method which should return the type hint being used as PHP
-	 * arguments
+	 * Template method which should return the PHP type hint
+	 * Example: Tx_Extbase_Persistence_ObjectStorage, array, Tx_FooBar_Something
+	 *
 	 * @return string
 	 */
 	abstract public function getTypeHint();
-	
+
+	/**
+	 * Get PHP type hint with a single trailing whitespace appended if needed, or if no type hint is set, omit this trailing whitespace.
+	 *
+	 * @return string
+	 */
 	public function getTypeHintWithTrailingWhiteSpace() {
 		if ($typehint = $this->getTypeHint()) {
 			return $typehint . ' ';
 		}
 	}
-	
+
+	/**
+	 * TRUE if this property is required, FALSE otherwise.
+	 * 
+	 * @return boolean
+	 */
 	public function getRequired() {
 		return $this->required;
 	}
 
+	/**
+	 * Set whether this property is required
+	 *
+	 * @param boolean $required
+	 */
 	public function setRequired($required) {
 		$this->required = $required;
 	}
 
+	/**
+	 * Get the validate annotation to be used in the domain model for this property.
+	 *
+	 * @return string
+	 */
 	public function getValidateAnnotation() {
 		if ($this->required) {
 			return '@validate NotEmpty';
@@ -153,23 +187,38 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 		return '';
 	}
 
-
-	//abstract public function getLocallangEntry()
-
-	abstract public function getSqlDefinition();
-
+	/**
+	 * Get the data type of this property. This is the last part after Tx_ExtbaseKickstarter_Domain_Model_Property_*
+	 * 
+	 * @return string the data type of this property
+	 */
 	public function getDataType() {
 		return substr(get_class($this), strlen('Tx_ExtbaseKickstarter_Domain_Model_Property_'));
 	}
 
+	/**
+	 * Is this property displayable inside a Fluid template?
+	 *
+	 * @return boolean TRUE if this property can be displayed inside a fluid template
+	 */
 	public function getIsDisplayable() {
-		return FALSE;
+		return TRUE;
 	}
 
-
+	/**
+	 * The string to be used inside object accessors to display this property.
+	 *
+	 * @return string
+	 */
 	public function getNameToBeDisplayedInFluidTemplate() {
-		return '';
+		return $this->name;
 	}
+
+	/**
+	 * The locallang key for this property which contains the label.
+	 *
+	 * @return <type>
+	 */
 	public function getLabelNamespace() {
 		return $this->domainObject->getLabelNamespace() . '.' . $this->getFieldName();
 	}
