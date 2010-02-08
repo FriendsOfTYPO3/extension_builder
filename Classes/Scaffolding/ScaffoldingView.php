@@ -41,7 +41,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_ScaffoldingView extends Tx_Fluid_View_Te
 	}
 
 	protected function parseTemplate($actionName) {
-		$allowedActionNames = array('index', 'new');
+		$allowedActionNames = array('index', 'new', 'edit');
 		if (!in_array($actionName, $allowedActionNames)) {
 			throw new Exception('There is no scaffolding template for action "' . $actionName . '"'); // TODO: Replace by proper exception!
 		}

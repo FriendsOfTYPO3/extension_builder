@@ -122,27 +122,33 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 		$this->flashMessages->add('Your new ' . $this->domainObjectName . ' was created.');
 		$this->redirect('index');
 	}
-	/**
-	 * Edits an existing blog
-	 *
-	 * @param Tx_BlogExample_Domain_Model_Blog $blog The blog to be edited. This might also be a clone of the original blog already containing modifications if the edit form has been submitted, contained errors and therefore ended up in this action again.
-	 * @return string Form for editing the existing blog
-	 * @dontvalidate $blog
-	 */
-	public function editAction(Tx_BlogExample_Domain_Model_Blog $blog) {
-		$this->view->assign('blog', $blog);
-		$this->view->assign('administrators', $this->administratorRepository->findAll());
+
+	public function initializeEditAction() {
+		$this->arguments->addNewArgument(lcfirst($this->domainObjectName), $this->domainObjectClassName, FALSE);
 	}
 
 	/**
-	 * Updates an existing blog
+	 * Edits an existing domain object
 	 *
-	 * @param Tx_BlogExample_Domain_Model_Blog $blog A not yet persisted clone of the original blog containing the modifications
+	 * @return string Form for editing the existing object
+	 */
+	public function editAction() {
+		$this->view->assign(lcfirst($this->domainObjectName), $this->arguments[lcfirst($this->domainObjectName)]->getValue());
+	}
+
+	public function initializeUpdateAction() {
+		$argument = $this->arguments->addNewArgument(lcfirst($this->domainObjectName), $this->domainObjectClassName, TRUE);
+		$argument->setValidator($this->validatorResolver->getBaseValidatorConjunction($this->domainObjectClassName));
+	}
+
+	/**
+	 * Updates an existing domain object
+	 *
 	 * @return void
 	 */
-	public function updateAction(Tx_BlogExample_Domain_Model_Blog $blog) {
-		$this->blogRepository->update($blog);
-		$this->flashMessages->add('Your blog has been updated.');
+	public function updateAction() {
+		$this->repository->update($this->arguments[lcfirst($this->domainObjectName)]->getValue());
+		$this->flashMessages->add('Your ' . $this->domainObjectName . ' has been updated.');
 		$this->redirect('index');
 	}
 
