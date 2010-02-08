@@ -33,24 +33,24 @@ class Tx_ExtbaseKickstarter_Scaffolding_ScaffoldingView extends Tx_Fluid_View_Te
 		$this->domainObjectName = $domainObjectName;
 	}
 
-
-
 	protected function resolveTemplatePathAndFilename($actionName = NULL) {
 		$actionName = ($actionName !== NULL ? $actionName : $this->controllerContext->getRequest()->getControllerActionName());
 		$actionName = strtolower($actionName);
 
 		return $actionName;
 	}
-	protected function parseTemplate($templatePathAndFilename) {
-		if ($templatePathAndFilename == 'index') {
-			$domainObject = $this->buildDomainObjectByReflection();
-			$action = new Tx_ExtbaseKickstarter_Domain_Model_Action();
-			$action->setName('list');
-			$template = $this->codeGenerator->generateDomainTemplate($domainObject, $action);
-			return $this->templateParser->parse($template);
+
+	protected function parseTemplate($actionName) {
+		$allowedActionNames = array('index', 'new');
+		if (!in_array($actionName, $allowedActionNames)) {
+			throw new Exception('There is no scaffolding template for action "' . $actionName . '"'); // TODO: Replace by proper exception!
 		}
 
-		return null; // TODO: Should not happen!
+		$domainObject = $this->buildDomainObjectByReflection();
+		$action = new Tx_ExtbaseKickstarter_Domain_Model_Action();
+		$action->setName($actionName);
+		$template = $this->codeGenerator->generateDomainTemplate($domainObject, $action);
+		return $this->templateParser->parse($template);
 	}
 
 	/**
@@ -62,7 +62,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_ScaffoldingView extends Tx_Fluid_View_Te
 		$classSchema = $this->reflectionService->getClassSchema($this->domainObjectClassName);
 
 		foreach ($classSchema->getProperties() as $propertyName => $propertyDescription) {
-
+			if ($propertyName == 'uid') continue;
 			$propertyType = 'Tx_ExtbaseKickstarter_Domain_Model_Property_' . $this->resolveKickstarterPropertyTypeFromPropertyDescription($propertyDescription['type'], $propertyDescription['elementType']);
 			$property = new $propertyType;
 			$property->setName($propertyName);

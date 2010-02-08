@@ -63,8 +63,11 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 	}
 
 	protected function resolveViewObjectName() {
-		// TODO: Return this only on list of supported views
-		return 'Tx_ExtbaseKickstarter_Scaffolding_ScaffoldingView';
+		if (class_exists(parent::resolveViewObjectName())) {
+			return parent::resolveViewObjectName();
+		} else {
+			return 'Tx_ExtbaseKickstarter_Scaffolding_ScaffoldingView';
+		}
 	}
 
 	/**
@@ -94,27 +97,29 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 
 	public function initializeNewAction() {
 		$this->arguments->addNewArgument('new' . $this->domainObjectName, $this->domainObjectClassName, FALSE);
-		// Argument IS NOT VALIDATED (but that is correct)
 	}
 
 	/**
-	 * Displays a form for creating a new blog
+	 * Displays a form for creating a new domain object
 	 *
-	 * @return string An HTML form for creating a new blog
+	 * @return string An HTML form for creating a new domain object
 	 */
 	public function newAction() {
-		$this->view->assign('new' . $this->domainObjectName, $this->arguments['new' . $this->domainObjectName]);
+		$this->view->assign('new' . $this->domainObjectName, $this->arguments['new' . $this->domainObjectName]->getValue());
 	}
 
+	public function initializeCreateAction() {
+		$argument = $this->arguments->addNewArgument('new' . $this->domainObjectName, $this->domainObjectClassName, TRUE);
+		$argument->setValidator($this->validatorResolver->getBaseValidatorConjunction($this->domainObjectClassName));
+	}
 	/**
-	 * Creates a new blog
+	 * Creates a new domain object
 	 *
-	 * @param Tx_BlogExample_Domain_Model_Blog $newBlog A fresh Blog object which has not yet been added to the repository
 	 * @return void
 	 */
-	public function createAction(Tx_BlogExample_Domain_Model_Blog $newBlog) {
-		$this->blogRepository->add($newBlog);
-		$this->flashMessages->add('Your new blog was created.');
+	public function createAction() {
+		$this->repository->add($this->arguments['new' . $this->domainObjectName]->getValue());
+		$this->flashMessages->add('Your new ' . $this->domainObjectName . ' was created.');
 		$this->redirect('index');
 	}
 	/**

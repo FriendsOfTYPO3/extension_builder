@@ -1,9 +1,10 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-<h1> Listing for {domainObject.name}</h1>
 
 <k:comment>
 This Template is responsible for creating a table of domain objects.
 </k:comment>
+
+<h1>Listing for {domainObject.name}</h1>
 
 <table>
 <k:comment>Building up the table header</k:comment>
@@ -16,6 +17,7 @@ This Template is responsible for creating a table of domain objects.
 <th> </th>
 </tr>
 
+<k:comment>Creating the f:for which loops through all objects</k:comment>
 <k:openingTag>f:for each="{domainObject.name -> k:lowercaseFirst() -> k:pluralize() -> k:curlyBrackets()}" as="{domainObject.name -> k:lowercaseFirst()}"</k:openingTag>
 <tr>
 <f:for each="{domainObject.properties}" as="property">
@@ -27,3 +29,5 @@ This Template is responsible for creating a table of domain objects.
 </tr>
 <![CDATA[</f:for>]]>
 </table>
+
+<k:openingTag>f:link.action action="new"</k:openingTag>New {domainObject.name}<![CDATA[</f:link.action>]]>
