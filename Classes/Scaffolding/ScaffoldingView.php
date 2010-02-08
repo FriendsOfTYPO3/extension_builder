@@ -77,7 +77,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_ScaffoldingView extends Tx_Fluid_View_Te
 	 * See Tx_Extbase_Reflection_ClassSchema::ALLOWED_TYPES_PATTERN
 	 */
 	protected function resolveKickstarterPropertyTypeFromPropertyDescription($phpPropertyType, $elementType) {
-		switch ($propertyDescription) {
+		switch ($phpPropertyType) {
 			case 'integer': return 'IntegerProperty';
 			case 'float': return 'FloatProperty';
 			case 'boolean': return 'BooleanProperty';

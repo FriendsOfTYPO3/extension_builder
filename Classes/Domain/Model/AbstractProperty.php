@@ -161,7 +161,15 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	public function getDataType() {
 		return substr(get_class($this), strlen('Tx_ExtbaseKickstarter_Domain_Model_Property_'));
 	}
-	
+
+	public function getIsDisplayable() {
+		return FALSE;
+	}
+
+
+	public function getNameToBeDisplayedInFluidTemplate() {
+		return '';
+	}
 	public function getLabelNamespace() {
 		return $this->domainObject->getLabelNamespace() . '.' . $this->getFieldName();
 	}

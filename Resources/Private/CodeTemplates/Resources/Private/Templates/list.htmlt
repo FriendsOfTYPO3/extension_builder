@@ -1,2 +1,16 @@
-{domainObject.name}
-<![CDATA[{domainObject.name}]]>
+{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+
+<h1> Listing for {domainObject.name}</h1>
+
+<table>
+<k:openingTag>f:for each="{domainObject.name -> k:lowercaseFirst() -> k:pluralize() -> k:curlyBrackets()}" as="{domainObject.name -> k:lowercaseFirst()}"</k:openingTag>
+
+<tr>
+<f:for each="{domainObject.properties}" as="property">
+	<f:if condition="{property.isDisplayable}">
+		<td><k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets></td>
+	</f:if>
+</f:for>
+</tr>
+<![CDATA[</f:for>]]>
+</table>
