@@ -29,13 +29,14 @@ require(t3lib_extMgm::extPath('extbase_kickstarter') . 'Resources/Private/PHP/Sh
  * @version $Id: $
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_ExtbaseKickstarter_Utility_Inflector implements t3lib_Singleton {
+class Tx_ExtbaseKickstarter_Utility_Inflector {
 	/**
 	 * @param string $word The word to pluralize
 	 * @return string The pluralized word
 	 * @author Christopher Hlubek
 	 */
-	public function pluralize($word) {
+	// TODO: These methods are static now, this breaks other places.
+	public static function pluralize($word) {
 		return Sho_Inflect::pluralize($word);
 	}
 
@@ -44,7 +45,7 @@ class Tx_ExtbaseKickstarter_Utility_Inflector implements t3lib_Singleton {
 	 * @return string The singularized word
 	 * @author Sebastian Kurfürst <sbastian@typo3.org>
 	 */
-	public function singularize($word) {
+	public static function singularize($word) {
 		return Sho_Inflect::singularize($word);
 	}
 
@@ -56,8 +57,8 @@ class Tx_ExtbaseKickstarter_Utility_Inflector implements t3lib_Singleton {
 	 * @return The humanized value
 	 * @author Christopher Hlubek <hlubek@networkteam.com>
 	 */
-	public function humanizeCamelCase($camelCased, $lowercase = FALSE) {
-		$spacified = $this->spacify($camelCased);
+	public static function humanizeCamelCase($camelCased, $lowercase = FALSE) {
+		$spacified = self::spacify($camelCased);
 		$result = strtolower($spacified);
 		if (!$lowercase) {
 			$result = ucfirst($result);
@@ -65,7 +66,7 @@ class Tx_ExtbaseKickstarter_Utility_Inflector implements t3lib_Singleton {
 		return $result;
 	}
 
-	protected function spacify($camelCased, $glue = ' ') {
+	protected static function spacify($camelCased, $glue = ' ') {
 		return preg_replace('/([a-z0-9])([A-Z])/', '$1' . $glue . '$2', $camelCased);
 	}
 }
