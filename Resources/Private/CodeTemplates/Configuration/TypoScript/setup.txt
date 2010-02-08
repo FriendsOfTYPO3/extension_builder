@@ -1,2 +1,9 @@
 plugin.{extension.shorthandForTypoScript}.settings <![CDATA[{
 }]]>
+
+plugin.{extension.shorthandForTypoScript}._CSS_DEFAULT_STYLE (
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+)

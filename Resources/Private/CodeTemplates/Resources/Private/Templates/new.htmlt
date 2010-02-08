@@ -5,12 +5,26 @@ This template displays a NEW form for the current domain object.
 </k:comment>
 
 <h1>New {domainObject.name}</h1>
-<b>TODO: form Errors</b>
+
+<!-- TODO: make this a partial -->
+<k:openingTag>f:form.errors for="{domainObject.name -> k:lowercaseFirst()}"</k:openingTag>
+<![CDATA[	<div class="error">
+		{error.message}
+		<f:if condition="{error.propertyName}">
+			<p>
+				<strong>{error.propertyName}</strong>:
+				<f:for each="{error.errors}" as="errorDetail">
+					{errorDetail.message}
+				</f:for>
+			</p>
+		</f:if>
+	</div>
+</f:form.errors>]]>
 
 <k:openingTag>f:form method="post" action="create" name="new{domainObject.name}" object="<k:curlyBrackets>new{domainObject.name}</k:curlyBrackets>"</k:openingTag>
 <f:for each="{domainObject.properties}" as="property">
 	<f:if condition="{property.isDisplayable}">
-	<label for="title">{property.name} LOCALIZE<f:if condition="{property.required}"> <span class="required">(required)</span></f:if></label><br />
+	<label for="title"><k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag><f:if condition="{property.required}"> <span class="required">(required)</span></f:if></label><br />
 	<k:openingTag><k:render partial="Form/{property.dataType}.htmlt" arguments="{property: property}" /> /</k:openingTag><br />
 	</f:if>
 </f:for>

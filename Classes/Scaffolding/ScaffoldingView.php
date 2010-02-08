@@ -57,7 +57,11 @@ class Tx_ExtbaseKickstarter_Scaffolding_ScaffoldingView extends Tx_Fluid_View_Te
 	 * @return Tx_ExtbaseKickstarter_Domain_Model_DomainObject
 	 */
 	protected function buildDomainObjectByReflection() {
+		$extension = new Tx_ExtbaseKickstarter_Domain_Model_Extension();
+		$extension->setExtensionKey($this->controllerContext->getRequest()->getControllerExtensionKey());
+
 		$domainObject = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
+		$extension->addDomainObject($domainObject);
 		$domainObject->setName($this->domainObjectName);
 		$classSchema = $this->reflectionService->getClassSchema($this->domainObjectClassName);
 
