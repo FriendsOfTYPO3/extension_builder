@@ -152,15 +152,18 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 		$this->redirect('index');
 	}
 
+	public function initializeDeleteAction() {
+		$this->arguments->addNewArgument(lcfirst($this->domainObjectName), $this->domainObjectClassName, TRUE);
+	}
+	
 	/**
-	 * Deletes an existing blog
+	 * Deletes an existing domain object
 	 *
-	 * @param Tx_BlogExample_Domain_Model_Blog $blog The blog to delete
 	 * @return void
 	 */
-	public function deleteAction(Tx_BlogExample_Domain_Model_Blog $blog) {
-		$this->blogRepository->remove($blog);
-		$this->flashMessages->add('Your blog has been removed.');
+	public function deleteAction() {
+		$this->repository->remove($this->arguments[lcfirst($this->domainObjectName)]->getValue());
+		$this->flashMessages->add('Your ' . $this->domainObjectName . ' has been removed.');
 		$this->redirect('index');
 	}
 

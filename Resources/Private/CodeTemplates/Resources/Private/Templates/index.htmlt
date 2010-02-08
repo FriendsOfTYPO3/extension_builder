@@ -15,6 +15,7 @@ This Template is responsible for creating a table of domain objects.
 	</f:if>
 </f:for>
 <th> </th>
+<th> </th>
 </tr>
 
 <k:comment>Creating the f:for which loops through all objects</k:comment>
@@ -26,6 +27,7 @@ This Template is responsible for creating a table of domain objects.
 	</f:if>
 </f:for>
 <td><k:openingTag>f:link.action action="edit" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Edit<![CDATA[</f:link.action>]]></td>
+<td><k:openingTag>f:link.action action="delete" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Delete<![CDATA[</f:link.action>]]></td>
 </tr>
 <![CDATA[</f:for>]]>
 </table>
