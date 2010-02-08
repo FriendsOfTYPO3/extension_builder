@@ -1,0 +1,19 @@
+{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+
+<k:comment>
+This template displays a NEW form for the current domain object.
+</k:comment>
+
+<h1>New {domainObject.name}</h1>
+<b>TODO: form Errors</b>
+
+<k:openingTag>f:form method="post" action="create" name="new{domainObject.name}" object="<k:curlyBrackets>new{domainObject.name}</k:curlyBrackets>"</k:openingTag>
+<f:for each="{domainObject.properties}" as="property">
+	<f:if condition="{property.isDisplayable}">
+	<label for="title">{property.name} LOCALIZE<f:if condition="{property.required}"> <span class="required">(required)</span></f:if></label><br />
+	<k:openingTag>f:form.textbox property="{property.name}" /</k:openingTag><br />
+	</f:if>
+</f:for>
+TODO: Other than textboxes
+<k:openingTag>f:form.submit value="Create new" /</k:openingTag>
+<![CDATA[</f:form>]]>
