@@ -56,5 +56,9 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRela
 	public function getSqlDefinition() {
 		return $this->getFieldName() . " int(11) unsigned DEFAULT '0'";
 	}
+
+	public function getIsDisplayable() {
+		return FALSE;
+	}
 }
 ?>

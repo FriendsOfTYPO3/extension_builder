@@ -1,16 +1,29 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-
 <h1> Listing for {domainObject.name}</h1>
 
-<table>
-<k:openingTag>f:for each="{domainObject.name -> k:lowercaseFirst() -> k:pluralize() -> k:curlyBrackets()}" as="{domainObject.name -> k:lowercaseFirst()}"</k:openingTag>
+<k:comment>
+This Template is responsible for creating a table of domain objects.
+</k:comment>
 
+<table>
+<k:comment>Building up the table header</k:comment>
+<tr>
+<f:for each="{domainObject.properties}" as="property">
+	<f:if condition="{property.isDisplayable}">
+		<th>{property.name}</th>
+	</f:if>
+</f:for>
+<th> </th>
+</tr>
+
+<k:openingTag>f:for each="{domainObject.name -> k:lowercaseFirst() -> k:pluralize() -> k:curlyBrackets()}" as="{domainObject.name -> k:lowercaseFirst()}"</k:openingTag>
 <tr>
 <f:for each="{domainObject.properties}" as="property">
 	<f:if condition="{property.isDisplayable}">
 		<td><k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets></td>
 	</f:if>
 </f:for>
+<td><k:openingTag>f:link.action action="edit" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Edit<![CDATA[</f:link.action>]]></td>
 </tr>
 <![CDATA[</f:for>]]>
 </table>

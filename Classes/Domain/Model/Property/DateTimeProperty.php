@@ -43,5 +43,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_DateTimeProperty extends Tx_Ex
 	public function getSqlDefinition() {
 		return $this->getFieldName() . ' int(11) DEFAULT \'0\' NOT NULL,';
 	}
+
+	public function getNameToBeDisplayedInFluidTemplate() {
+		return $this->name . ' -> f:format.date()';
+	}
 }
 ?>
