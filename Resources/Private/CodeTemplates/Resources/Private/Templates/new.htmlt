@@ -11,9 +11,8 @@ This template displays a NEW form for the current domain object.
 <f:for each="{domainObject.properties}" as="property">
 	<f:if condition="{property.isDisplayable}">
 	<label for="title">{property.name} LOCALIZE<f:if condition="{property.required}"> <span class="required">(required)</span></f:if></label><br />
-	<k:openingTag>f:form.textbox property="{property.name}" /</k:openingTag><br />
+	<k:openingTag><k:render partial="Form/{property.dataType}.htmlt" arguments="{property: property}" /> /</k:openingTag><br />
 	</f:if>
 </f:for>
-TODO: Other than textboxes
 <k:openingTag>f:form.submit value="Create new" /</k:openingTag>
 <![CDATA[</f:form>]]>
