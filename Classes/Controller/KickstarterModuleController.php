@@ -65,29 +65,11 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	 */
 	public function indexAction() {
 
-			// Prepare scBase
-		$this->scBase = t3lib_div::makeInstance('t3lib_SCbase');
-		$this->scBase->MCONF['name'] = $this->request->getControllerName();
-		$this->scBase->init();
 
-			// Prepare template class
-		$this->doc = t3lib_div::makeInstance('template');
-		$this->doc->backPath = $GLOBALS['BACK_PATH'];
+	}
 
-		$this->menuConfig();
-
-			// Template page
-		$this->view->assign('title', 'Backend Module!');
-
-		$this->view->assign('FUNC_MENU', t3lib_BEfunc::getFuncMenu(0, 'SET[function]', $this->scBase->MOD_SETTINGS['function'], $this->scBase->MOD_MENU['function']));
-
-		$this->view->assign('CSH', t3lib_BEfunc::cshItem('_MOD_web_func', '', $GLOBALS['BACK_PATH']));
-		$this->view->assign('SAVE', '<input type="image" class="c-inputButton" name="submit" value="Update"' . t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/savedok.gif', '') . ' title="' . $GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_core.php:rm.saveDoc', 1) . '" />');
-		$this->view->assign('SHORTCUT',  $this->doc->makeShortcutIcon('', 'function', $settings['pluginName']));
-
-		$this->view->assign('startPage', $this->doc->startPage('OldStyle Module'));
-		$this->view->assign('endPage', $this->doc->endPage());
-
+	public function domainmodellingAction() {
+		
 	}
 
 	/**

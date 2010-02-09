@@ -45,7 +45,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_LowercaseFirstViewHelper extends Tx_Flui
 	 */
 	public function render() {
 		$content = $this->renderChildren();
-		return lcfirst($content); // TODO: only works in PHP 5.3
+		return t3lib_div::lcfirst($content);
 	}
 }
 ?>

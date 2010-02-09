@@ -116,7 +116,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 	 * @return string The rendered view
 	 */
 	public function indexAction() {
-		$lowercasedAndPluralizedDomainObjectName = Tx_ExtbaseKickstarter_Utility_Inflector::pluralize(lcfirst($this->domainObjectName)); // TODO: lcfirst >= php 5.3
+		$lowercasedAndPluralizedDomainObjectName = Tx_ExtbaseKickstarter_Utility_Inflector::pluralize(t3lib_div::lcfirst($this->domainObjectName));
 		$this->view->assign($lowercasedAndPluralizedDomainObjectName, $this->repository->findAll());
 	}
 
@@ -165,7 +165,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 	 * @return void
 	 */
 	public function initializeEditAction() {
-		$this->arguments->addNewArgument(lcfirst($this->domainObjectName), $this->domainObjectClassName, FALSE);
+		$this->arguments->addNewArgument(t3lib_div::lcfirst($this->domainObjectName), $this->domainObjectClassName, FALSE);
 	}
 
 	/**
@@ -174,7 +174,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 	 * @return string Form for editing the existing object
 	 */
 	public function editAction() {
-		$this->view->assign(lcfirst($this->domainObjectName), $this->arguments[lcfirst($this->domainObjectName)]->getValue());
+		$this->view->assign(t3lib_div::lcfirst($this->domainObjectName), $this->arguments[t3lib_div::lcfirst($this->domainObjectName)]->getValue());
 	}
 
 	/**
@@ -183,7 +183,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 	 * @return void
 	 */
 	public function initializeUpdateAction() {
-		$argument = $this->arguments->addNewArgument(lcfirst($this->domainObjectName), $this->domainObjectClassName, TRUE);
+		$argument = $this->arguments->addNewArgument(t3lib_div::lcfirst($this->domainObjectName), $this->domainObjectClassName, TRUE);
 		$argument->setValidator($this->validatorResolver->getBaseValidatorConjunction($this->domainObjectClassName));
 	}
 
@@ -193,7 +193,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 	 * @return void
 	 */
 	public function updateAction() {
-		$this->repository->update($this->arguments[lcfirst($this->domainObjectName)]->getValue());
+		$this->repository->update($this->arguments[t3lib_div::lcfirst($this->domainObjectName)]->getValue());
 		$this->flashMessages->add('Your ' . $this->domainObjectName . ' has been updated.');
 		$this->redirect('index');
 	}
@@ -204,7 +204,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 	 * @return void
 	 */
 	public function initializeDeleteAction() {
-		$this->arguments->addNewArgument(lcfirst($this->domainObjectName), $this->domainObjectClassName, TRUE);
+		$this->arguments->addNewArgument(t3lib_div::lcfirst($this->domainObjectName), $this->domainObjectClassName, TRUE);
 	}
 	
 	/**
@@ -213,7 +213,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 	 * @return void
 	 */
 	public function deleteAction() {
-		$this->repository->remove($this->arguments[lcfirst($this->domainObjectName)]->getValue());
+		$this->repository->remove($this->arguments[t3lib_div::lcfirst($this->domainObjectName)]->getValue());
 		$this->flashMessages->add('Your ' . $this->domainObjectName . ' has been removed.');
 		$this->redirect('index');
 	}

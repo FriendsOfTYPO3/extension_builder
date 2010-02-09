@@ -14,6 +14,7 @@ Object.prototype.clone = function() {
 
 
 var extbaseModeling_wiringEditorLanguage = {
+	parentEl: 'domainModelEditor',
 	languageName: "extbaseModeling",
 	smdUrl: '../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd',
 	layoutOptions: {	// Configuration of the whole layout. See documentation of YUI's widget.Layout()

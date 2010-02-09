@@ -84,3 +84,81 @@ div.WireIt-Layer {
 .yui-skin-sam .yui-layout .yui-layout-clip {
 	background-color: transparent;
 }
+
+
+
+div#typo3-inner-docbody {
+	height:100%;
+	padding:0;
+}
+
+div#domainModelEditor {
+	height:100%;
+	width:100%;
+}
+
+div.WireIt-Container {
+	width: 350px; /* Prevent the modules from scratching on the right */
+}
+div.WireIt-InputExTerminal {
+	float: left;
+	width: 21px;
+	height: 21px;
+	position: relative;
+}
+div.WireIt-InputExTerminal div.WireIt-Terminal {
+	top: -3px;
+	left: -7px;
+}
+div.inputEx-Group div.inputEx-label {
+	width:100px;
+}
+
+div.WireIt-ImageContainer {
+	width: auto;
+}
+
+div.Bubble div.body {
+	width: 70px;
+	height: 45px;
+	opacity: 0.8;
+	cursor: move;
+}
+
+
+.WiringEditor-module span {
+	position: relative;
+	top: -3px;
+}
+
+/*********** CSS code for making the model title inplaceEdit appear as the container title ************/
+
+/*
+div.WireIt-Container {
+	position: absolute;
+}
+*/
+
+div.WireIt-Container div.body {
+	position: relative;
+}
+
+
+div.extbase-modelTitleEditor {
+	position: absolute;
+	top: -32px;
+	left: 50px;
+	color:white;
+	cursor:move;
+	font-size:10pt;
+	font-weight:bold;
+	line-height:150%;
+	text-align:center;
+}
+div.WireIt-Container-ddhandle span {
+	display: none;
+}
+div.inputEx-InPlaceEdit-visu:hover {
+   background-color: #000000;
+}
+/*********** End of CSS code for inplaceEdit as container title ************/
