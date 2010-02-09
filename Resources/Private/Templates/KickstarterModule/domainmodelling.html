@@ -1,0 +1,55 @@
+{namespace k=Tx_ExtbaseKickstarter_ViewHelpers} 
+<f:layout name="default" />
+<f:section name="header">
+	<k:be.configuration />
+</f:section>
+<f:section name="iconButtons">
+</f:section>
+<f:section name="content">
+
+	<script>
+		// InputEx needs a correct path to this image
+		inputEx.spacerUrl = "../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/images/space.gif";
+
+		YAHOO.util.Event.onDOMReady( function() {
+			var editor = new WireIt.WiringEditor(extbaseModeling_wiringEditorLanguage);
+			// editor.onHelp();
+		});
+	</script>
+
+	<div id="domainModelEditor">
+		<div id="top">
+			<div class="logo">Extbase Kickstarter</div>
+			<div class="topright"><!--  Username could go here... --></div>
+		</div>
+
+		<div id="left">
+			<div id="propertiesForm"></div>
+		</div>
+
+		<div id="right">
+			<h2>Code generation related stuff here</h2>
+		</div>
+
+		<div id="center">
+			<div id="moduleBar"></div>
+			<div id="modelingLayer"></div>
+		</div>
+
+
+		<div id="bottom">
+			<center><div id="toolbar"></div></center>
+		</div>
+
+
+		<div id="helpPanel">
+			<div class="hd">Extbase Modeling - a kickstarter for extbase based extensions</div>
+			<div class="bd" style="text-align: left;">
+				<p>This is the Extbase Modeling interface.</p>
+				<br />
+				<p>View <a href="http://www.infoq.com/presentations/model-to-work-evans" target="_new">Putting the Model to Work</a> and <a href="http://www.infoq.com/presentations/strategic-design-evans" target="_new">Strategic Design</a> by Eric Evans <br /> to get an introduction into Domain Driven Design (DDD).</p>
+				<br />
+			</div>
+		</div>
+	</div>
+</f:section>
