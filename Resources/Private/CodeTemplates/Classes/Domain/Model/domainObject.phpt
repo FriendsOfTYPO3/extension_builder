@@ -30,9 +30,7 @@
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- */
-
-{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+ */{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
 class {domainObject.className} extends {domainObject.baseClass} {
 	<f:for each="{domainObject.properties}" as="property">
 	/**
@@ -42,17 +40,20 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	 */
 	protected ${property.name};
 	</f:for>
-
+	<k:removeNewlines>
+	<f:if condition="{domainObject.zeroToManyRelationProperties}">
 	/**
 	 * Constructor. Initializes all Tx_Extbase_Persistence_ObjectStorage instances.
 	 */
 	public function __construct() {
 		<k:removeNewlines>
-		<f:for each="{domainObject.properties}" as="property"><f:if condition="{k:isOfType(object: property, type:'Property_Relation_ZeroToManyRelation')}">
+		<f:for each="{domainObject.zeroToManyRelationProperties}" as="property">
 		$this->{property.name} = new Tx_Extbase_Persistence_ObjectStorage();
-		</f:if></f:for>
-	</k:removeNewlines>
+		</f:for>
+		</k:removeNewlines>
 	}
+	</f:if>
+	</k:removeNewlines>
 	<f:for each="{domainObject.properties}" as="property">
 	/**
 	 * Getter for {property.name}
@@ -72,8 +73,7 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	public function set{property.name -> k:uppercaseFirst()}({property.typeHintWithTrailingWhiteSpace}${property.name}) {
 		$this->{property.name} = ${property.name};
 	}
-	<f:if condition="{k:isOfType(object:property, type:'Property_Relation_ZeroToManyRelation')}">
-	// TODO: ADD the "add"-method for the "ManyToMany" Relation as well
+	<f:if condition="{k:isOfType(object:property, type:'Property_Relation_AnyToManyRelation')}">
 	/**
 	 * Add a {property.foreignClass.name -> k:uppercaseFirst()}
 	 *

@@ -32,6 +32,7 @@
  * @version $ID:$
  */
 abstract class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRelation extends Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
+
 	/**
 	 * The schema of the foreign class
 	 * @var Tx_ExtbaseKickstarter_Domain_Model_DomainObject
@@ -53,6 +54,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRela
 	public function setForeignClass(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $foreignClass) {
 		$this->foreignClass = $foreignClass;
 	}
+	
 	public function getSqlDefinition() {
 		return $this->getFieldName() . " int(11) unsigned DEFAULT '0'";
 	}
@@ -60,5 +62,6 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRela
 	public function getIsDisplayable() {
 		return FALSE;
 	}
+	
 }
 ?>

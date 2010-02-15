@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Ingmar Schlecht
+*  (c) 2010 Jochen Rau
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -23,27 +23,10 @@
 ***************************************************************/
 
 /**
- * Creates a request an dispatches it to the controller which was specified
- * by TS Setup, Flexform and returns the content to the v4 framework.
- *
- * This class is the main entry point for extbase extensions in the frontend.
  *
  * @package ExtbaseKickstarter
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToManyRelation extends Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AnyToManyRelation {
-
-	public function getTypeForComment() {
-		return 'Tx_Extbase_Persistence_ObjectStorage<' . $this->getForeignClass()->getClassName() . '>';
-	}
-
-	public function getTypeHint() {
-		return 'Tx_Extbase_Persistence_ObjectStorage';
-	}
-
-	public function getForeignKeyName() {
-		return strtolower($this->getDomainObject()->getName());
-	}
-	
+abstract class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AnyToManyRelation extends Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRelation {
 }
 ?>

@@ -33,8 +33,8 @@ $TCA['{domainObject.databaseTableName}'] = array (
 		'enablecolumns' 	=> array(
 			'disabled' => 'hidden'
 			),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tca.php', // TODO CREATE
-		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/icon_{domainObject.databaseTableName}.gif' // TODO CREATE
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tca.php',
+		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif'
 	)
 );
 
