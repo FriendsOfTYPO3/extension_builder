@@ -32,6 +32,7 @@
  * @version $ID:$
  */
 class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToOneRelation extends Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRelation {
+
 	public function getTypeForComment() {
 		return $this->getForeignClass()->getClassName();
 	}
@@ -39,5 +40,6 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToOneRelation ext
 	public function getTypeHint() {
 		return $this->getForeignClass()->getClassName();
 	}
+	
 }
 ?>

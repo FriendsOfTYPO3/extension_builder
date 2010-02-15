@@ -127,6 +127,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder {
 			if (!class_exists($propertyClassName)) throw new Exception('Property of type ' . $propertyType . ' not found');
 			$property = t3lib_div::makeInstance($propertyClassName);
 			$property->setName($jsonProperty['propertyName']);
+			$property->setDescription($jsonProperty['propertyDescription']);
 
 			if (isset($jsonProperty['propertyIsRequired'])) {
 				$property->setRequired($jsonProperty['propertyIsRequired']);

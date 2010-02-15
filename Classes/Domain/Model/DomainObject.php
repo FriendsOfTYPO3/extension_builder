@@ -150,12 +150,20 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 
 	/**
 	 *
+	 * @return boolean TRUE if it is an entity, FALSE if it is a ValueObject
+	 */
+	public function isEntity() {
+		return $this->getEntity();
+	}
+
+	/**
+	 *
 	 * @param $entity $entity TRUE if it is an entity, FALSE if it is a ValueObject
 	 */
 	public function setEntity($entity) {
 		$this->entity = (boolean)$entity;
 	}
-
+	
 	/**
 	 * Adding a new property
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty $property The new property to add
@@ -172,6 +180,20 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	public function getProperties() {
 		return $this->properties;
 	}
+	
+	/**
+	 * Get all properties holding relations of type Property_Relation_ZeroToManyRelation
+	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToManyRelation>
+	 */
+	public function getZeroToManyRelationProperties() {
+		$relationProperties = array();
+		foreach ($this->properties as $property) {
+			if (is_a($property, 'Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToManyRelation')) {
+				$relationProperties[] = $property;
+			}
+		}
+		return $relationProperties;
+	}	
 	
 	/**
 	 * Adding a new action
