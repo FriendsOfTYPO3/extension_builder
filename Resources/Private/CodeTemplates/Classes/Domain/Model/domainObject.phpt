@@ -56,15 +56,6 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	</k:removeNewlines>
 	<f:for each="{domainObject.properties}" as="property">
 	/**
-	 * Getter for {property.name}
-	 *
-	 * @return {property.typeForComment} {property.description}
-	 */
-	public function get{property.name -> k:uppercaseFirst()}() {
-		return $this->{property.name};
-	}
-
-	/**
 	 * Setter for {property.name}
 	 *
 	 * @param {property.typeForComment} ${property.name} {property.description}
@@ -73,15 +64,43 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	public function set{property.name -> k:uppercaseFirst()}({property.typeHintWithTrailingWhiteSpace}${property.name}) {
 		$this->{property.name} = ${property.name};
 	}
-	<f:if condition="{k:isOfType(object:property, type:'Property_Relation_AnyToManyRelation')}">
+
 	/**
-	 * Add a {property.foreignClass.name -> k:uppercaseFirst()}
+	 * Getter for {property.name}
 	 *
-	 * @param {property.foreignClass.className} The {property.foreignClass.name -> k:uppercaseFirst()} to add
+	 * @return {property.typeForComment} {property.description}
+	 */
+	public function get{property.name -> k:uppercaseFirst()}() {
+		return $this->{property.name};
+	}
+	<f:if condition="{k:isOfType(object:property, type:'Property_BooleanProperty')}">
+	/**
+	 * Returns the boolean state of {property.name}
+	 *
+	 * @return bool The state of {property.name}
+	 */
+	public function is{property.name -> k:uppercaseFirst()}() {
+		$this->get{property.name -> k:uppercaseFirst()}();
+	}
+	</f:if><f:if condition="{k:isOfType(object:property, type:'Property_Relation_AnyToManyRelation')}">
+	/**
+	 * Adds a {property.foreignClass.name -> k:uppercaseFirst()}
+	 *
+	 * @param {property.foreignClass.className} The {property.foreignClass.name -> k:uppercaseFirst()} to be added
 	 * @return void
 	 */
 	public function add{property.name->k:singularize()->k:uppercaseFirst()}({property.foreignClass.className} ${property.name->k:singularize()}) {
 		$this->{property.name}->attach(${property.name -> k:singularize()});
+	}
+	
+	/**
+	 * Removes a {property.foreignClass.name -> k:uppercaseFirst()}
+	 *
+	 * @param {property.foreignClass.className} The {property.foreignClass.name -> k:uppercaseFirst()} to be removed
+	 * @return void
+	 */
+	public function remove{property.name->k:singularize()->k:uppercaseFirst()}({property.foreignClass.className} ${property.name->k:singularize()}) {
+		$this->{property.name}->detach(${property.name -> k:singularize()});
 	}
 	</f:if></f:for>
 }
