@@ -1,5 +1,5 @@
+<k:removeNewlines>
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-
 <f:for each="{extension.domainObjects}" as="domainObject">
 CREATE TABLE {domainObject.databaseTableName} (
 	uid int(11) unsigned DEFAULT '0' NOT NULL auto_increment,
@@ -32,10 +32,13 @@ CREATE TABLE {domainObject.databaseTableName} (
 	KEY parent (pid),
 );
 </f:for>
-<f:for each="{extension.domainObjects}" as="domainObject">
-	<f:for each="{domainObject.properties}" as="property">
-		<f:if condition="{k:isOfType(object: property, type: 'Property_Relation_ManyToManyRelation')}">
+</k:removeNewlines>
 
+<k:removeNewlines>
+<f:for each="{extension.domainObjects}" as="domainObject">
+<k:removeNewlines>
+<f:for each="{domainObject.properties}" as="property">
+<f:if condition="{k:isOfType(object: property, type: 'Property_Relation_ManyToManyRelation')}">
 CREATE TABLE {property.relationTableName} (
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
@@ -46,7 +49,8 @@ CREATE TABLE {property.relationTableName} (
 	KEY uid_local (uid_local),
 	KEY uid_foreign (uid_foreign)
 );
-
-		</f:if>
-	</f:for>
+</f:if>
 </f:for>
+</k:removeNewlines>
+</f:for>
+</k:removeNewlines>

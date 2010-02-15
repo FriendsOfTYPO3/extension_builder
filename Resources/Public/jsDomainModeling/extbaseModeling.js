@@ -50,7 +50,7 @@ var extbaseModeling_wiringEditorLanguage = {
 				resize: true,
 				body: 'right',
 				gutter: '5px',
-				collapse: true, 
+				collapse: true,
 				collapseSize: 25,
 				header: 'Code Generator',
 				scroll: true,
@@ -235,7 +235,7 @@ var extbaseModeling_wiringEditorLanguage = {
 						type: "group",
 						inputParams: {
 							collapsible: true,
-							collapsed: false,
+							collapsed: true,
 							legend: "Properties",
 							name: "propertyGroup",
 							fields: [
@@ -292,6 +292,7 @@ var extbaseModeling_wiringEditorLanguage = {
 														inputParams: {
 															label: "Is Required?", 
 															name: "propertyIsRequired",
+															value: false,
 														}
 													}
 												]
