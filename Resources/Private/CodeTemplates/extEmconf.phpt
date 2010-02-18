@@ -13,7 +13,7 @@
 $EM_CONF[$_EXTKEY] = array(
 	'title' => '{extension.name}',
 	'description' => '{extension.description}',
-	'category' => '',
+	'category' => 'plugin',
 	'author' => '<k:listObjectsByPropertyCSV objects="{extension.persons}" property="name" />',
 	'author_email' => '<k:listObjectsByPropertyCSV objects="{extension.persons}" property="email" />',
 	'author_company' => '<k:listObjectsByPropertyCSV objects="{extension.persons}" property="company" />',

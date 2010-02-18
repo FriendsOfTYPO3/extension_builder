@@ -2,7 +2,7 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
 <f:for each="{extension.domainObjects}" as="domainObject">
 CREATE TABLE {domainObject.databaseTableName} (
-	uid int(11) unsigned DEFAULT '0' NOT NULL auto_increment,
+	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	<f:for each="{k:listForeignKeyRelations(extension: extension, domainObject:domainObject)}" as="relation">
 	{relation.foreignKeyName} int(11) unsigned DEFAULT '0' NOT NULL,</f:for>
@@ -29,7 +29,7 @@ CREATE TABLE {domainObject.databaseTableName} (
 	l18n_diffsource mediumblob NOT NULL,
 
 	PRIMARY KEY (uid),
-	KEY parent (pid),
+	KEY parent (pid)
 );
 </f:for>
 </k:removeNewlines>

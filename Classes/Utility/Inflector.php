@@ -51,23 +51,17 @@ class Tx_ExtbaseKickstarter_Utility_Inflector {
 
 	/**
 	 * Convert a model class name like "BlogAuthor" or a field name like
-	 * "blogAuthor" to a humanized version like "Blog author" for better readability.
+	 * "blog_author" to a humanized version "Blog Author" for better readability.
 	 *
-	 * @param string $camelCased The camel cased value
-	 * @return The humanized value
-	 * @author Christopher Hlubek <hlubek@networkteam.com>
+	 * @param string $string The camel cased or lower underscore value
+	 * @return string The humanized value
 	 */
-	public static function humanizeCamelCase($camelCased, $lowercase = FALSE) {
-		$spacified = self::spacify($camelCased);
-		$result = strtolower($spacified);
-		if (!$lowercase) {
-			$result = ucfirst($result);
-		}
-		return $result;
+	public static function humanize($string) {
+		$string = strtolower(preg_replace('/(?<=\w)([A-Z])/', '_\\1', $string));
+		$string = str_replace('_', ' ', $string);
+		$string = ucwords($string);
+		return $string;
 	}
 
-	protected static function spacify($camelCased, $glue = ' ') {
-		return preg_replace('/([a-z0-9])([A-Z])/', '$1' . $glue . '$2', $camelCased);
-	}
 }
 ?>

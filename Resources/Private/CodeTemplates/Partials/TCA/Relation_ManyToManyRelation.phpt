@@ -1,4 +1,4 @@
-'type' => 'select',
+'type' => 'inline',
 'size' => 10,
 'minitems' => 0,
 'maxitems' => 9999,
