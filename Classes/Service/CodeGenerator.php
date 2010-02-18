@@ -115,6 +115,8 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 			t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Model');
 			$domainDirectory = $extensionDirectory . 'Classes/Domain/';
 			$domainModelDirectory = $domainDirectory . 'Model/';
+			t3lib_div::mkdir_deep($domainDirectory . 'Repository');
+			$domainRepositoryDirectory = $domainDirectory . 'Repository/';
 			foreach ($this->extension->getDomainObjects() as $domainObject) {
 				$fileContents = $this->generateDomainObjectCode($domainObject, $extension);
 				t3lib_div::writeFile($domainModelDirectory . $domainObject->getName() . '.php', $fileContents);
@@ -126,16 +128,14 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 					$iconFileName = 'value_object.gif';
 				}
 				t3lib_div::upload_copy_move(t3lib_extMgm::extPath('extbase_kickstarter') . 'Resources/Private/Icons/' . $iconFileName, $iconsDirectory . $domainObject->getDatabaseTableName() . '.gif');
-			}
 
-			// Generate Domain Repositories
-			t3lib_div::mkdir_deep($domainDirectory . 'Repository');
-			$domainRepositoryDirectory = $domainDirectory . 'Repository/';
-			foreach ($this->extension->getDomainObjects() as $domainObject) {
-				if (!$domainObject->isAggregateRoot()) continue;
-			
-				$fileContents = $this->generateDomainRepositoryCode($domainObject);
-				t3lib_div::writeFile($domainRepositoryDirectory . $domainObject->getName() . 'Repository.php', $fileContents);
+				$fileContents = $this->generateLocallangCsh($extension, $domainObject);
+				t3lib_div::writeFile($languageDirectory . 'locallang_csh_' . $domainObject->getDatabaseTableName() . '.xml', $fileContents);
+
+				if ($domainObject->isAggregateRoot()) {
+					$fileContents = $this->generateDomainRepositoryCode($domainObject);
+					t3lib_div::writeFile($domainRepositoryDirectory . $domainObject->getName() . 'Repository.php', $fileContents);
+				}
 			}
 		
 			// Generate Action Controller
@@ -237,6 +237,10 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 	
 	public function generateLocallangDB(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
 		return $this->renderTemplate('Resources/Private/Language/locallang_db.xmlt', array('extension' => $extension));
+	}
+	
+	public function generateLocallangCsh(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension, Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
+		return $this->renderTemplate('Resources/Private/Language/locallang_csh.xmlt', array('extension' => $extension, 'domainObject' => $domainObject));
 	}
 	
 	public function generatePrivateResourcesHtaccess() {

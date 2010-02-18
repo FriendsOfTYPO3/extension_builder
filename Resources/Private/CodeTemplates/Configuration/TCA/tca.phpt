@@ -16,7 +16,6 @@ $TCA['{domainObject.databaseTableName}'] = array(
 		'1' => array('showitem' => '')
 	),
 	'columns' => array(
-
 		'sys_language_uid' => array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.language',
@@ -61,23 +60,19 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			'config'  => array(
 				'type' => 'check'
 			)
-		),
-		<f:for each="{domainObject.properties}" as="property">
+		),<f:for each="{domainObject.properties}" as="property">
 		'{property.fieldName}' => array(
 			'exclude' => 0,
 			'label'   => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xml:{property.labelNamespace}',
 			'config'  => array(
 				<k:indent indentation="4"><k:render partial="TCA/{property.dataType}.phpt" arguments="{property: property}" /></k:indent>
 			)
-		),
-		</f:for>
-		<f:for each="{k:listForeignKeyRelations(extension: extension, domainObject: domainObject)}" as="relation">
+		),</f:for><f:for each="{k:listForeignKeyRelations(extension: extension, domainObject: domainObject)}" as="relation">
 		'{relation.foreignKeyName}' => array(
 			'config' => array(
 				'type' => 'passthrough',
 			)
-		),
-		</f:for>
+		),</f:for>
 	),
 );
 </f:for>

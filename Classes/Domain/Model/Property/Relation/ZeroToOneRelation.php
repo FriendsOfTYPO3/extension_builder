@@ -41,5 +41,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToOneRelation ext
 		return $this->getForeignClass()->getClassName();
 	}
 	
+	public function getSqlDefinition() {
+		return $this->getFieldName() . " int(11) unsigned DEFAULT '0',";
+	}
+
 }
 ?>

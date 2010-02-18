@@ -1,13 +1,10 @@
 <?php
 if (!defined ('TYPO3_MODE')) die ('Access denied.');
 
-/**
- * Registers a Plugin to be listed in the Backend. You also have to configure the Dispatcher in ext_localconf.php.
- */
 Tx_Extbase_Utility_Extension::registerPlugin(
-	$_EXTKEY,		// The extension name (in UpperCamelCase) or the extension key (in lower_underscore)
-	'Pi1',			// A unique name of the plugin in UpperCamelCase
-	'{extension.name}'	// A title shown in the backend dropdown field
+	$_EXTKEY,
+	'Pi1',
+	'{extension.name}'
 );
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '{extension.name}');
@@ -16,10 +13,11 @@ t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '{extension.na
 //t3lib_extMgm::addPiFlexFormValue($_EXTKEY . '_pi1', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_list.xml');
 
 <f:for each="{extension.domainObjects}" as="domainObject">
+t3lib_extMgm::addLLrefForTCAdescr('{domainObject.databaseTableName}','EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xml');
 t3lib_extMgm::allowTableOnStandardPages('{domainObject.databaseTableName}');
 $TCA['{domainObject.databaseTableName}'] = array (
 	'ctrl' => array (
-		'title'             => '{domainObject.name}', //'LLL:EXT:blog_example/Resources/Private/Language/locallang_db.xml:tx_blogexample_domain_model_blog', // TODO
+		'title'             => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xml:{domainObject.databaseTableName}',
 		'label' 			=> '{domainObject.listModuleValueLabel}',
 		'tstamp' 			=> 'tstamp',
 		'crdate' 			=> 'crdate',
@@ -37,7 +35,6 @@ $TCA['{domainObject.databaseTableName}'] = array (
 		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif'
 	)
 );
-
 </f:for>
 
 ?>
