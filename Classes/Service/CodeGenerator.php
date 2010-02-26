@@ -115,7 +115,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 			t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Model');
 			$domainDirectory = $extensionDirectory . 'Classes/Domain/';
 			$domainModelDirectory = $domainDirectory . 'Model/';
-			t3lib_div::mkdir_deep($domainDirectory . 'Repository');
+			t3lib_div::mkdir_deep($domainDirectory, 'Repository');
 			$domainRepositoryDirectory = $domainDirectory . 'Repository/';
 			foreach ($this->extension->getDomainObjects() as $domainObject) {
 				$fileContents = $this->generateDomainObjectCode($domainObject, $extension);
@@ -151,7 +151,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 				// Do not generate anyting if $domainObject is not an Entity or has no actions defined
 				if (!$domainObject->getEntity() || (count($domainObject->getActions()) == 0)) continue;
 				
-				t3lib_div::mkdir_deep($extensionDirectory, $privateResourcesDirectory . 'Templates/' . $domainObject->getName());
+				t3lib_div::mkdir_deep($privateResourcesDirectory, 'Templates/' . $domainObject->getName());
 				$domainTemplateDirectory = $privateResourcesDirectory . 'Templates/' . $domainObject->getName() . '/';
 				foreach($domainObject->getActions() as $action) {
 					$fileContents = $this->generateDomainTemplate($domainObject, $action);
