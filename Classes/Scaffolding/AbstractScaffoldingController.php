@@ -74,7 +74,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 		}
 		
 		if (!class_exists($this->repositoryClassName)) {
-			throw new Exception('The repository class "' . $this->domainObjectClassName . '" does not exist.');
+			throw new Exception('The repository class "' . $this->repositoryClassName . '" does not exist.');
 		}
 
 		$this->repository = t3lib_div::makeInstance($this->repositoryClassName);
