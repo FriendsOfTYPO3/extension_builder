@@ -22,7 +22,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Fl
 		// InputEx with wirable options
 		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/inputex.js');
 		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Field.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/js/util/inputex/WirableField-beta.js" type="text/javascript');
+		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/js/util/inputex/WirableField-beta.js');
 		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Group.js');
 		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Visus.js');
 		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/StringField.js');
