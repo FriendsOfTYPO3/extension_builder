@@ -40,14 +40,21 @@ CREATE TABLE {domainObject.databaseTableName} (
 <f:for each="{domainObject.properties}" as="property">
 <f:if condition="{k:isOfType(object: property, type: 'Property_Relation_ManyToManyRelation')}">
 CREATE TABLE {property.relationTableName} (
+	uid int(10) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+	
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
 	tablenames varchar(255) DEFAULT '' NOT NULL,
 	sorting int(11) unsigned DEFAULT '0' NOT NULL,
 	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	
+	tstamp int(10) unsigned NOT NULL,
+	crdate int(10) unsigned NOT NULL,
+	hidden tinyint(3) unsigned DEFAULT '0' NOT NULL,
 
-	KEY uid_local (uid_local),
-	KEY uid_foreign (uid_foreign)
+	PRIMARY KEY (uid),
+	KEY parent (pid)
 );
 </f:if>
 </f:for>

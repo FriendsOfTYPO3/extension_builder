@@ -108,15 +108,15 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 		$publicResourcesDirectory = $extensionDirectory . 'Resources/Public/';
 		t3lib_div::mkdir_deep($publicResourcesDirectory, 'Icons');
 		$iconsDirectory = $publicResourcesDirectory . 'Icons/';
+		t3lib_div::upload_copy_move(t3lib_extMgm::extPath('extbase_kickstarter') . 'Resources/Private/Icons/relation.gif', $iconsDirectory . 'relation.gif');
 		
 		if (count($this->extension->getDomainObjects())) {
 		
 			// Generate Domain Model
 			t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Model');
-			$domainDirectory = $extensionDirectory . 'Classes/Domain/';
-			$domainModelDirectory = $domainDirectory . 'Model/';
-			t3lib_div::mkdir_deep($domainDirectory, 'Repository');
-			$domainRepositoryDirectory = $domainDirectory . 'Repository/';
+			$domainModelDirectory = $extensionDirectory . 'Classes/Domain/Model/';
+			t3lib_div::mkdir_deep($extensionDirectory, 'Classes/Domain/Repository');
+			$domainRepositoryDirectory = $extensionDirectory . 'Classes/Domain/Repository/';
 			foreach ($this->extension->getDomainObjects() as $domainObject) {
 				$fileContents = $this->generateDomainObjectCode($domainObject, $extension);
 				t3lib_div::writeFile($domainModelDirectory . $domainObject->getName() . '.php', $fileContents);
