@@ -1,5 +1,5 @@
 <?php
-if (!defined ('TYPO3_MODE')) die ('Access denied.');
+if (!defined ('TYPO3_MODE')) die ('Access denied.');{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
 
 Tx_Extbase_Utility_Extension::registerPlugin(
 	$_EXTKEY,
@@ -22,7 +22,7 @@ $TCA['{domainObject.databaseTableName}'] = array (
 		'tstamp' 			=> 'tstamp',
 		'crdate' 			=> 'crdate',
 		'versioningWS' 		=> 2,
-		'versioning_followPages'	=> true,
+		'versioning_followPages'	=> TRUE,
 		'origUid' 			=> 't3_origuid',
 		'languageField' 	=> 'sys_language_uid',
 		'transOrigPointerField' 	=> 'l18n_parent',
@@ -35,6 +35,22 @@ $TCA['{domainObject.databaseTableName}'] = array (
 		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif'
 	)
 );
-</f:for>
+</f:for><f:for each="{extension.domainObjects}" as="domainObject"><f:for each="{domainObject.properties}" as="property"><f:if condition="{k:isOfType(object: property, type: 'Property_Relation_ManyToManyRelation')}">
+t3lib_extMgm::allowTableOnStandardPages('{property.relationTableName}');
+$TCA['{property.relationTableName}'] = array (
+	'ctrl' => array (
+		'title'             => '<k:humanize>{domainObject.name}</k:humanize> <-> <k:humanize>{property.foreignClass.name}</k:humanize>',
+		'label'				=> 'uid_local',
+		'label_alt'			=> 'uid_foreign',
+		'label_alt_force'	=> TRUE,
+		'tstamp'            => 'tstamp',
+		'crdate'            => 'crdate',
+		'enablecolumns'     => array(
+			'disabled' => 'hidden'
+		),
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tca.php',
+		'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/relation.gif'
+	)
+);</f:if></f:for></f:for>
 
 ?>

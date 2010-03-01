@@ -46,7 +46,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRela
 	public function getForeignClass() {
 		return $this->foreignClass;
 	}
-
+	
 	/**
 	 *
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $foreignClass Set the foreign class of the relation

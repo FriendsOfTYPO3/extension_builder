@@ -1,8 +1,5 @@
 <?php
-if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
-
-{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-
+if (!defined ('TYPO3_MODE')) 	die ('Access denied.');{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
 <f:for each="{extension.domainObjects}" as="domainObject">
 $TCA['{domainObject.databaseTableName}'] = array(
 	'ctrl' => $TCA['{domainObject.databaseTableName}']['ctrl'],
@@ -16,10 +13,10 @@ $TCA['{domainObject.databaseTableName}'] = array(
 		'1' => array('showitem' => '')
 	),
 	'columns' => array(
-		'sys_language_uid' => array (
+		'sys_language_uid' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.language',
-			'config' => array (
+			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'sys_language',
 				'foreign_table_where' => 'ORDER BY sys_language.title',
@@ -29,13 +26,13 @@ $TCA['{domainObject.databaseTableName}'] = array(
 				)
 			)
 		),
-		'l18n_parent' => array (
+		'l18n_parent' => array(
 			'displayCond' => 'FIELD:sys_language_uid:>:0',
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.l18n_parent',
-			'config' => array (
+			'config' => array(
 				'type' => 'select',
-				'items' => array (
+				'items' => array(
 					array('', 0),
 				),
 				'foreign_table' => 'tt_news',
@@ -46,10 +43,10 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			'config'=>array(
 				'type'=>'passthrough')
 		),
-		't3ver_label' => array (
+		't3ver_label' => array(
 			'displayCond' => 'FIELD:t3ver_label:REQ:true',
 			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.versionLabel',
-			'config' => array (
+			'config' => array(
 				'type'=>'none',
 				'cols' => 27
 			)
@@ -76,4 +73,33 @@ $TCA['{domainObject.databaseTableName}'] = array(
 	),
 );
 </f:for>
+<f:for each="{extension.domainObjects}" as="domainObject"><f:for each="{domainObject.properties}" as="property"><f:if condition="{k:isOfType(object: property, type: 'Property_Relation_ManyToManyRelation')}">
+$TCA['{property.relationTableName}'] = array(
+	'ctrl' => $TCA['{property.relationTableName}']['ctrl'],
+	'interface' => array(
+		'showRecordFieldList' => 'hidden, uid_local, uid_foreign'
+	),
+	'types' => array(
+		'1' => array('showitem' => 'hidden, uid_local, uid_foreign')
+	),
+	'columns' => array(
+		'uid_local' => array(		
+			'label'   => 'uid_local',
+			'config' => array(
+				'type' => 'select',
+				'foreign_table' => '{domainObject.databaseTableName}',
+				'maxitems' => 1,
+			)
+		),
+		'uid_foreign' => array(		
+			'label'   => 'uid_foreign',
+			'config' => array(
+				'type' => 'select',
+				'foreign_table' => '{property.foreignClass.databaseTableName}',
+				'maxitems' => 1,
+			)
+		),
+	),
+);
+</f:if></f:for></f:for>
 ?>
