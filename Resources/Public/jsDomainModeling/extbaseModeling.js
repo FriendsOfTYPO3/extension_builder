@@ -1,18 +1,3 @@
-
-
-// Clone function for all objects. From: http://my.opera.com/GreyWyvern/blog/show.dml/1725165
-// This is needed for function renderForm() in wireit/js/util/inputex/FormContainer-beta.js, where the option object needs to be cloned
-Object.prototype.clone = function() {
-	var newObj = (this instanceof Array) ? [] : {};
-	for (i in this) {
-		if (i == 'clone') continue;
-		if (this[i] && typeof this[i] == "object") {
-			newObj[i] = this[i].clone();
-		} else newObj[i] = this[i]
-	} return newObj;
-};
-
-
 var extbaseModeling_wiringEditorLanguage = {
 	parentEl: 'domainModelEditor',
 	languageName: "extbaseModeling",
