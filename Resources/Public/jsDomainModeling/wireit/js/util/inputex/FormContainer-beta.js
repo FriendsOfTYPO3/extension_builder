@@ -1,3 +1,24 @@
+
+
+
+// Comment by Ingmar Schlecht, 4. March 2010: The cloneObject function is needed later in this file, in order to make the back reference 
+// from the subfields to the container work, which is necessary for the positioning etc. of the wires of subfields
+
+// Clone function for all objects. From: http://my.opera.com/GreyWyvern/blog/show.dml/1725165
+// This is needed for function renderForm() in wireit/js/util/inputex/FormContainer-beta.js, where the option object needs to be cloned
+Object.prototype.cloneObject = function() {
+	var newObj = (this instanceof Array) ? [] : {};
+	for (i in this) {
+		if (i == 'cloneObject') continue;
+		if (this[i] && typeof this[i] == "object") {
+			newObj[i] = this[i].cloneObject();
+		} else newObj[i] = this[i]
+	} return newObj;
+};
+
+
+
+
 /**
  * Class used to build a container with inputEx forms
  * @class FormContainer
@@ -41,7 +62,7 @@ YAHOO.lang.extend(WireIt.FormContainer, WireIt.Container, {
 
 	  // IS:
 	  // Clone field options, so we have our own copy here.
-	  this.options = this.options.clone();
+	  this.options = this.options.cloneObject();
 
 	  this.setBackReferenceOnFieldOptionsRecursively(this.options.fields);
       
