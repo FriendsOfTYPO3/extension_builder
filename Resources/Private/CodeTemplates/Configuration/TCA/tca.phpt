@@ -36,7 +36,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 					array('', 0),
 				),
 				'foreign_table' => '{domainObject.databaseTableName}',
-				'foreign_table_where' => 'AND {domainObject.databaseTableName}.uid=###REC_FIELD_l18n_parent### AND {domainObject.databaseTableName}.sys_language_uid IN (-1,0)', // TODO
+				'foreign_table_where' => 'AND {domainObject.databaseTableName}.uid=###REC_FIELD_l18n_parent### AND {domainObject.databaseTableName}.sys_language_uid IN (-1,0)',
 			)
 		),
 		'l18n_diffsource' => array(
