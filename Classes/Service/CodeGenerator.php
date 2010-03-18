@@ -41,9 +41,9 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 
 	/**
 	 *
-	 * @var Tx_Fluid_Compatibility_ObjectFactory
+	 * @var Tx_Fluid_Compatibility_ObjectManager
 	 */
-	protected $objectFactory;
+	protected $objectManager;
 
 	/**
 	 *
@@ -53,7 +53,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 
 	public function __construct() {
 		$this->templateParser = Tx_Fluid_Compatibility_TemplateParserBuilder::build();
-		$this->objectFactory = new Tx_Fluid_Compatibility_ObjectFactory();
+		$this->objectManager = new Tx_Fluid_Compatibility_ObjectManager();
 	}
 
 	public function build(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
@@ -168,16 +168,13 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 	 * @author Sebastian Kurfürst <sebastian@typo3.org>
 	 */
 	protected function buildRenderingContext($templateVariables) {
-		$variableContainer = $this->objectFactory->create('Tx_Fluid_Core_ViewHelper_TemplateVariableContainer', $templateVariables);
+		$variableContainer = $this->objectManager->create('Tx_Fluid_Core_ViewHelper_TemplateVariableContainer', $templateVariables);
 
-		$renderingConfiguration = $this->objectFactory->create('Tx_Fluid_Core_Rendering_RenderingConfiguration');
-
-		$renderingContext = $this->objectFactory->create('Tx_Fluid_Core_Rendering_RenderingContext');
+		$renderingContext = $this->objectManager->create('Tx_Fluid_Core_Rendering_RenderingContext');
 		$renderingContext->setTemplateVariableContainer($variableContainer);
 		//$renderingContext->setControllerContext($this->controllerContext); 
-		$renderingContext->setRenderingConfiguration($renderingConfiguration);
 
-		$viewHelperVariableContainer = $this->objectFactory->create('Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer');
+		$viewHelperVariableContainer = $this->objectManager->create('Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer');
 		$renderingContext->setViewHelperVariableContainer($viewHelperVariableContainer);
 
 		return $renderingContext;
