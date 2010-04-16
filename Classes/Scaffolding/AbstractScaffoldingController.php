@@ -61,12 +61,11 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 		}
 
 		if ($this->domainObjectClassName === NULL) {
-			$this->domainObjectClassName = 'Tx_' . $this->extensionName . '_Domain_Model_' . $this->domainObjectName;
+			$this->domainObjectClassName = Tx_ExtbaseKickstarter_Utility_Naming::getDomainObjectClassName($this->extensionName, $this->domainObjectName);
 		}
 
 		if ($this->repositoryClassName === NULL) {
 			$this->repositoryClassName = 'Tx_' . $this->extensionName . '_Domain_Repository_' . $this->domainObjectName . 'Repository';
-			// TODO: Exceptions if classes not found.
 		}
 	
 		if (!class_exists($this->domainObjectClassName)) {
@@ -101,7 +100,6 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 	 */
 	protected function initializeView(Tx_Extbase_MVC_View_ViewInterface $view) {
 		if ($view instanceof Tx_ExtbaseKickstarter_Scaffolding_ScaffoldingView) {
-			$view->setDomainObjectClassName($this->domainObjectClassName);
 			$view->setDomainObjectName($this->domainObjectName);
 		}
 	}
@@ -155,7 +153,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 	 */
 	public function createAction() {
 		$this->repository->add($this->arguments['new' . $this->domainObjectName]->getValue());
-		$this->flashMessages->add('Your new ' . $this->domainObjectName . ' was created.');
+		$this->flashMessageContainer->add('Your new ' . $this->domainObjectName . ' was created.');
 		$this->redirect('index');
 	}
 
@@ -194,7 +192,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 	 */
 	public function updateAction() {
 		$this->repository->update($this->arguments[t3lib_div::lcfirst($this->domainObjectName)]->getValue());
-		$this->flashMessages->add('Your ' . $this->domainObjectName . ' has been updated.');
+		$this->flashMessageContainer->add('Your ' . $this->domainObjectName . ' has been updated.');
 		$this->redirect('index');
 	}
 
@@ -214,7 +212,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 	 */
 	public function deleteAction() {
 		$this->repository->remove($this->arguments[t3lib_div::lcfirst($this->domainObjectName)]->getValue());
-		$this->flashMessages->add('Your ' . $this->domainObjectName . ' has been removed.');
+		$this->flashMessageContainer->add('Your ' . $this->domainObjectName . ' has been removed.');
 		$this->redirect('index');
 	}
 }

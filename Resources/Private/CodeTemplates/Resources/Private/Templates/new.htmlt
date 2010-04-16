@@ -6,6 +6,8 @@ This template displays a NEW form for the current domain object.
 
 <h1>New {domainObject.name}</h1>
 
+<k:openingTag>f:flashMessages /</k:openingTag>
+
 <!-- TODO: make this a partial -->
 <k:openingTag>f:form.errors for="{domainObject.name -> k:lowercaseFirst()}"</k:openingTag>
 <![CDATA[	<div class="error">

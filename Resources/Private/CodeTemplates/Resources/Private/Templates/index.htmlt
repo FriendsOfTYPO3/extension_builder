@@ -6,6 +6,8 @@ This Template is responsible for creating a table of domain objects.
 
 <h1>Listing for {domainObject.name}</h1>
 
+<k:openingTag>f:flashMessages /</k:openingTag>
+
 <table>
 <k:comment>Building up the table header</k:comment>
 <tr>

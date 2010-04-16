@@ -8,7 +8,7 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 		<f:for each="{extension.domainObjectsForWhichAControllerShouldBeBuilt}" as="domainObject">'{domainObject.name}' => 'index, new, create, edit, update, delete',</f:for>
 	),
 	array(
-		<f:for each="{extension.domainObjectsForWhichAControllerShouldBeBuilt}" as="domainObject">'{domainObject.name}' => 'new, edit',</f:for>
+		<f:for each="{extension.domainObjectsForWhichAControllerShouldBeBuilt}" as="domainObject">'{domainObject.name}' => 'create, update, delete',</f:for>
 	)
 );
 

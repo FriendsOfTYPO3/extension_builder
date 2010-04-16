@@ -31,7 +31,7 @@
  * @package ExtbaseKickstarter
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_ObjectSchemaBuilder {
+class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_Singleton {
 	public function build(array $jsonArray) {
 		$extension = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Extension');
 		$globalProperties = $jsonArray['properties'];
@@ -143,6 +143,53 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder {
 			$domainObject->addAction($action);
 		}
 		return $domainObject;
+	}
+
+	/**
+	 * @return Tx_ExtbaseKickstarter_Domain_Model_DomainObject
+	 */
+	public function buildDomainObjectByReflection($extensionName, $domainObjectName) {
+		$extension = new Tx_ExtbaseKickstarter_Domain_Model_Extension();
+
+		$extension->setExtensionKey(t3lib_div::camelCaseToLowerCaseUnderscored($extensionName));
+
+		$domainObject = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
+		$extension->addDomainObject($domainObject);
+		$domainObject->setName($domainObjectName);
+
+		$reflectionService = t3lib_div::makeInstance('Tx_Extbase_Reflection_Service');
+		$classSchema = $reflectionService->getClassSchema(Tx_ExtbaseKickstarter_Utility_Naming::getDomainObjectClassName($extensionName, $domainObjectName));
+
+		foreach ($classSchema->getProperties() as $propertyName => $propertyDescription) {
+			if (in_array($propertyName, array('uid', '_localizedUid', '_languageUid'))) continue;
+			$propertyType = 'Tx_ExtbaseKickstarter_Domain_Model_Property_' . $this->resolveKickstarterPropertyTypeFromPropertyDescription($propertyDescription['type'], $propertyDescription['elementType']);
+			$property = new $propertyType;
+			$property->setName($propertyName);
+			$domainObject->addProperty($property);
+		}
+
+		return $domainObject;
+	}
+
+
+	/**
+	 * See Tx_Extbase_Reflection_ClassSchema::ALLOWED_TYPES_PATTERN
+	 */
+	protected function resolveKickstarterPropertyTypeFromPropertyDescription($phpPropertyType, $elementType) {
+		switch ($phpPropertyType) {
+			case 'integer': return 'IntegerProperty';
+			case 'float': return 'FloatProperty';
+			case 'boolean': return 'BooleanProperty';
+			case 'string' : return 'StringProperty';
+			case 'DateTime': return 'DateTimeProperty';
+			case 'array':
+			case 'ArrayObject':
+			case 'Tx_Extbase_Persistence_ObjectStorage':
+				return 'Relation_ZeroToManyRelation'; // TODO: Is this correct?
+			default:
+			// Tx_*
+				return 'Relation_ZeroToOneRelation';
+		}
 	}
 }
 ?>
