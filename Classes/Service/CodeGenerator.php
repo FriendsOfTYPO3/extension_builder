@@ -79,10 +79,10 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		t3lib_div::upload_copy_move(t3lib_extMgm::extPath('extbase_kickstarter') . 'Resources/Private/Icons/ext_icon.gif', $extensionDirectory . 'ext_icon.gif');
 
 		// Generate TCA
-		t3lib_div::mkdir_deep($extensionDirectory, 'Configuration/TCA');
-		$tcaDirectory = $extensionDirectory . 'Configuration/TCA/';
+		t3lib_div::mkdir_deep($extensionDirectory, 'Configuration');
+		$tcaDirectory = $extensionDirectory . 'Configuration/';
 		$fileContents = $this->generateTCA($extension);
-		t3lib_div::writeFile($tcaDirectory . 'tca.php', $fileContents);
+		t3lib_div::writeFile($tcaDirectory . 'Tca.php', $fileContents);
 
 		// Generate TypoScript setup
 		t3lib_div::mkdir_deep($extensionDirectory, 'Configuration/TypoScript');
@@ -249,7 +249,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	}
 
 	public function generateTCA(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
-		return $this->renderTemplate('Configuration/TCA/tca.phpt', array('extension' => $extension));
+		return $this->renderTemplate('Configuration/Tca.phpt', array('extension' => $extension));
 	}
 
 	public function generateTyposcriptSetup(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
