@@ -1,0 +1,23 @@
+{namespace be=Tx_ExtbaseKickstarter_ViewHelpers}
+<f:layout name="default" />
+
+<f:section name="header">
+</f:section>
+<f:section name="iconButtons">
+</f:section>
+<f:section name="content">
+	<h2>Dynamic to Static scaffolding</h2>
+	<p>With this module, you can remove the dynamic CRUD scaffolding for your extension, and generate explicit templates and controller actions</p>
+	<p><b>Please select the controller for which you want to convert the dynamic scaffolding into static scaffolding.</b></p>
+	<ul>
+		<f:for each="{extensions}" key="extensionKey" as="controllers">
+			<li><b>Extension {extensionKey}</b>
+				<ul>
+					<f:for each="{controllers}" as="controller">
+						<li>{controller} <f:link.action style="color:blue;text-decoration:underline;" action="generateFiles" arguments="{extensionKey: extensionKey, controllerName: controller}">Convert dynamic to static scaffolding</f:link.action></li>
+					</f:for>
+				</ul>
+			</li>
+		</f:for>
+	</ul>
+</f:section>

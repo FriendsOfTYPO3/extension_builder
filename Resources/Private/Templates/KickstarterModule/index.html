@@ -20,21 +20,22 @@
 		<li><b>Database Tables and TCA</b>: Will create Database Tables and TCA definitions which fit to the domain model.</li>
 		<li><b>Skeleton Locallang Files</b>: Will create skeleton locallang files</li>
 		<li><b>NEW - Plugin Configuration</b>: Will create a plugin configuration, so it will work out-of-the-box.</li>
-		<li><b>NEW - Scaffolding</b>: Automatically all CRUD (Create, Read, Update, Delete) actions available for all Aggregate Roots!</li>
+		<li><b>NEW - Dynamic Scaffolding</b>: Automatically create all CRUD actions (Create, Read, Update, Delete) for Aggregate Roots!</li>
 	</ul>
 
-	<p><b><f:link.action action="domainmodelling" style="text-decoration:underline;">Go to the Domain Modeller</f:link.action></b></p>
+	<p><b><f:link.action action="domainmodelling" style="color:blue;text-decoration:underline;">Go to the Domain Modeller</f:link.action></b></p>
 
 	<h2>Iterative model refinement</h2>
 	The first version of the model will usually not be the one you'll use lateron. That's why you should take your time, and improve your model.<br />
 	Useful things to know:
 	<ul>
-		<li><b>Automatic Scaffolding</b>: The Scaffolding will automatically adjust the templates needed to render CRUD-functionality for your domain models.
-			That is, if you modify your domain model by adding or removing fields, the Scaffolding will still work as expected.
+		<li><b>Dynamic Scaffolding</b>: The Scaffolding will automatically adjust the templates needed to render CRUD-functionality for your domain models.
+			That is, if you modify your domain model by adding or removing fields, the standard CRUD actions display the new fields as well.
 	</ul>
 
 	<h2>Improving Views and Controllers</h2>
 	After the model has been improved iteratively, at one point, your focus of attention usually shifts to the Controller and View part of your extension.<br />
-	At this point, you'll want to <b>disable Scaffolding</b> and refine the controllers and templates.
-	<p><b>Coming soon - scaffold2file for controller and template</b></p>
+	At this point, you'll want to <b>disable Dynamic Scaffolding</b>, and instead use <b>Static Scaffolding</b>.
+	This means you can take the automatically generated CRUD actions as a basis, and adjust them manually.
+	<p><b><f:link.action controller="WriteScaffolding" action="index" style="color:blue;text-decoration:underline;">Convert Dynamic to Static Scaffolding</f:link.action></b></p>
 </f:section>

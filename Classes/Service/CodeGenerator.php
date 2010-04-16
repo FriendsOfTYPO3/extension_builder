@@ -31,7 +31,7 @@
  * @package ExtbaseKickstarter
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Service_CodeGenerator {
+class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	
 	/**
 	 *
@@ -188,6 +188,10 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator {
 
 	public function generateActionControllerCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject, Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
 		return $this->renderTemplate('Classes/Controller/actionController.phpt', array('domainObject' => $domainObject, 'extension' => $extension));
+	}
+
+	public function generateActionControllerCrudActions(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
+		return $this->renderTemplate('Classes/Controller/actionControllerCrudActions.phpt', array('domainObject' => $domainObject));
 	}
 	
 	public function generateDomainObjectCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject, Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {

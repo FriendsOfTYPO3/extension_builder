@@ -34,7 +34,24 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
 // TODO: As your extension matures, you should use Tx_Extbase_MVC_Controller_ActionController as base class, instead of the ScaffoldingController used below.
 class {domainObject.controllerName} extends Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController {
-	
+	<f:if condition="{domainObject.aggregateRoot}">
+	/**
+	 * @var {domainObject.domainRepositoryClassName}
+	 */
+	protected ${domainObject.name -> k:lowercaseFirst()}Repository;
+
+	/**
+	 * Initializes the current action
+	 *
+	 * @return void
+	 */
+	protected function initializeAction() {
+		$this->{domainObject.name -> k:lowercaseFirst()}Repository = t3lib_div::makeInstance('{domainObject.domainRepositoryClassName}');
+	}
+	##TOKEN FOR SCAFFOLDING. Will be replaced by the necessary actions for Create, Read, Update and Delete queries by the kickstarter, when using scaffold2file.
+	# DO NOT REMOVE THIS TOKEN!##
+	</f:if>
+
 	<f:for each="{domainObject.actions}" as="action">
 	/**
 	 * {action.name} action
