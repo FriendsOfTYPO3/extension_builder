@@ -73,33 +73,4 @@ $TCA['{domainObject.databaseTableName}'] = array(
 	),
 );
 </f:for>
-<f:for each="{extension.domainObjects}" as="domainObject"><f:for each="{domainObject.properties}" as="property"><f:if condition="{k:isOfType(object: property, type: 'Property_Relation_ManyToManyRelation')}">
-$TCA['{property.relationTableName}'] = array(
-	'ctrl' => $TCA['{property.relationTableName}']['ctrl'],
-	'interface' => array(
-		'showRecordFieldList' => 'hidden, uid_local, uid_foreign'
-	),
-	'types' => array(
-		'1' => array('showitem' => 'hidden, uid_local, uid_foreign')
-	),
-	'columns' => array(
-		'uid_local' => array(		
-			'label'   => 'uid_local',
-			'config' => array(
-				'type' => 'select',
-				'foreign_table' => '{domainObject.databaseTableName}',
-				'maxitems' => 1,
-			)
-		),
-		'uid_foreign' => array(		
-			'label'   => 'uid_foreign',
-			'config' => array(
-				'type' => 'select',
-				'foreign_table' => '{property.foreignClass.databaseTableName}',
-				'maxitems' => 1,
-			)
-		),
-	),
-);
-</f:if></f:for></f:for>
 ?>
