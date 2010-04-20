@@ -87,7 +87,7 @@ class Tx_ExtbaseKickstarter_Controller_WriteScaffoldingController extends Tx_Ext
 
 		$domainObjectName = substr($controllerName, 0, -10);
 
-		$allowedActionNames = array('index', 'new', 'edit');
+		$allowedActionNames = array('index', 'new', 'edit', 'show');
 		$domainObject = $objectSchemaBuilder->buildDomainObjectByReflection(t3lib_div::underscoredToUpperCamelCase($extensionKey), $domainObjectName);
 
 		t3lib_div::mkdir_deep(PATH_typo3conf . 'ext/' . $extensionKey . '/Resources/Private/', 'Templates/' . $domainObjectName);

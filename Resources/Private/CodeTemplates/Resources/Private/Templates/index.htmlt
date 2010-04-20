@@ -26,7 +26,7 @@
 
 		<tr>
 		<f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
-			<td><k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets></td>
+			<td><k:openingTag>f:link.action action="show" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag> <k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets><![CDATA[</f:link.action>]]></td>
 		</f:if></f:for>
 
 			<td><k:openingTag>f:link.action action="edit" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Edit<![CDATA[</f:link.action>]]></td>

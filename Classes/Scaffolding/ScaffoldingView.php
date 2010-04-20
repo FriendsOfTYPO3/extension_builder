@@ -55,7 +55,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_ScaffoldingView extends Tx_Fluid_View_Te
 	 * @return string the HTML code
 	 */
 	protected function parseTemplate($actionName) {
-		$allowedActionNames = array('index', 'new', 'edit');
+		$allowedActionNames = array('index', 'new', 'edit', 'show');
 		if (!in_array($actionName, $allowedActionNames)) {
 			return parent::parseTemplate($actionName);
 		}

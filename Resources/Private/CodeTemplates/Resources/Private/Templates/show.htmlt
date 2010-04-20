@@ -1,0 +1,26 @@
+{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+<k:comment>
+	This Template is responsible for creating a single view for a domain object
+</k:comment>
+
+<h1>Single View for {domainObject.name}</h1>
+
+<k:openingTag>f:flashMessages /</k:openingTag>
+
+<table>
+	<k:removeMultipleNewlines>
+
+	<f:for each="{domainObject.properties}" as="property">
+	<f:if condition="{property.isDisplayable}">
+	<tr>
+		<td><k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag></td>
+		<td><k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets></td>
+	</tr>
+	</f:if>
+	</f:for>
+	</k:removeMultipleNewlines>
+</table>
+<k:openingTag>f:link.action action="edit" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Edit<![CDATA[</f:link.action>]]>
+<k:openingTag>f:link.action action="delete" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Delete<![CDATA[</f:link.action>]]>
+
+<k:openingTag>f:link.action action="index"</k:openingTag>Back to listing<![CDATA[</f:link.action>]]>
