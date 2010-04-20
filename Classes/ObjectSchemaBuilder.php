@@ -184,6 +184,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_Singleton {
 	 * @param <type> $className 
 	 */
 	public function loadClass($className) {
+		if (class_exists($className, FALSE)) return;
 		$classNameParts = explode('_', $className, 3);
 		$extensionKey = Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($classNameParts[1]);
 		$classFilePathAndName = PATH_typo3conf . 'ext/' . $extensionKey . '/Classes/' . strtr($classNameParts[2], '_', '/') . '.php';
