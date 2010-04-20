@@ -215,5 +215,24 @@ class Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController extends Tx
 		$this->flashMessageContainer->add('Your ' . $this->domainObjectName . ' has been removed.');
 		$this->redirect('index');
 	}
+
+	/**
+	 * Initialize the SHOW action which displays the object.
+	 *
+	 * @return void
+	 */
+	public function initializeShowAction() {
+		$this->arguments->addNewArgument(t3lib_div::lcfirst($this->domainObjectName), $this->domainObjectClassName, FALSE);
+	}
+
+	/**
+	 * Displays the existing domain object
+	 *
+	 * @return string
+	 */
+	public function showAction() {
+		$this->view->assign(t3lib_div::lcfirst($this->domainObjectName), $this->arguments[t3lib_div::lcfirst($this->domainObjectName)]->getValue());
+	}
+
 }
 ?>

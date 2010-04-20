@@ -6,18 +6,16 @@
 		${domainObject.name -> k:lowercaseFirst() -> k:pluralize()} = $this->{domainObject.name -> k:lowercaseFirst()}Repository->findAll();
 		$this->view->assign('{domainObject.name -> k:lowercaseFirst() -> k:pluralize()}', ${domainObject.name -> k:lowercaseFirst() -> k:pluralize()});
 	}
-	<k:comment>
-		TODO THIS -- There is now "show" template for this yet.
+
 	/**
 	 * Action that displays a single {domainObject.name}
 	 *
 	 * @param {domainObject.className} ${domainObject.name -> k:lowercaseFirst()} The {domainObject.name} to display
 	 */
 	public function showAction({domainObject.className} ${domainObject.name -> k:lowercaseFirst()}) {
-		$this->view->assign('{domainObject.name -> k:lowercaseFirst()}', $${domainObject.name -> k:lowercaseFirst()});
+		$this->view->assign('{domainObject.name -> k:lowercaseFirst()}', ${domainObject.name -> k:lowercaseFirst()});
 	}
 
-	</k:comment>
 	/**
 	 * Displays a form for creating a new {domainObject.name}
 	 *
