@@ -57,7 +57,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_ScaffoldingView extends Tx_Fluid_View_Te
 	protected function parseTemplate($actionName) {
 		$allowedActionNames = array('index', 'new', 'edit');
 		if (!in_array($actionName, $allowedActionNames)) {
-			throw new Exception('There is no scaffolding template for action "' . $actionName . '"'); // TODO: Replace by proper exception!
+			return parent::parseTemplate($actionName);
 		}
 
 		$domainObject = $this->objectSchemaBuilder->buildDomainObjectByReflection($this->controllerContext->getRequest()->getControllerExtensionName(), $this->domainObjectName);
@@ -67,6 +67,11 @@ class Tx_ExtbaseKickstarter_Scaffolding_ScaffoldingView extends Tx_Fluid_View_Te
 		return $this->templateParser->parse($template);
 	}
 
-	
+	public function resolvePartialPathAndFilename($partialName) {
+		if ($partialName !== 'formErrors') {
+			return parent::resolvePartialPathAndFilename($partialName);
+		}
+		return t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/Resources/Private/Partials/formErrors.htmlt';	
+	}	
 }
 ?>

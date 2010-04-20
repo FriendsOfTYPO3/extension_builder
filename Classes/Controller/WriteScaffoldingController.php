@@ -101,6 +101,10 @@ class Tx_ExtbaseKickstarter_Controller_WriteScaffoldingController extends Tx_Ext
 			file_put_contents($templateDirectory . $actionName . '.html', $template);
 		}
 
+		$partialsDirectory = PATH_typo3conf . 'ext/' . $extensionKey . '/Resources/Private/Partials/';
+		file_put_contents($partialsDirectory . 'formErrors.html', $this->codeGenerator->generateFormErrorsPartial());
+
+
 		$this->rewriteScaffoldingController($extensionKey, $controllerName, $domainObject);
 	}
 
