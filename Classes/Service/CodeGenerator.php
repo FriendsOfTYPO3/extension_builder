@@ -182,7 +182,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 
 	protected function renderTemplate($filePath, $variables) {
 		$parsedTemplate = $this->templateParser->parse(file_get_contents(t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/' . $filePath));
-		return $parsedTemplate->render($this->buildRenderingContext($variables));
+		return trim($parsedTemplate->render($this->buildRenderingContext($variables)));
 	}
 
 

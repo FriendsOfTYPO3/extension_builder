@@ -158,8 +158,12 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_Singleton {
 		$domainObject->setName($domainObjectName);
 
 		$reflectionService = t3lib_div::makeInstance('Tx_Extbase_Reflection_Service');
-		$classSchema = $reflectionService->getClassSchema(Tx_ExtbaseKickstarter_Utility_Naming::getDomainObjectClassName($extensionName, $domainObjectName));
-
+		$domainObjectClassName = Tx_ExtbaseKickstarter_Utility_Naming::getDomainObjectClassName($extensionName, $domainObjectName);
+		$this->loadClass($domainObjectClassName); // needed if the extension is not installed yet.
+		$classSchema = $reflectionService->getClassSchema($domainObjectClassName);
+		if ($classSchema === null) {
+			throw new Exception("ClassSchema not found, as the target class could not be loaded.", 1271669067);
+		}
 		foreach ($classSchema->getProperties() as $propertyName => $propertyDescription) {
 			if (in_array($propertyName, array('uid', '_localizedUid', '_languageUid'))) continue;
 			$propertyType = 'Tx_ExtbaseKickstarter_Domain_Model_Property_' . $this->resolveKickstarterPropertyTypeFromPropertyDescription($propertyDescription['type'], $propertyDescription['elementType']);
@@ -171,6 +175,22 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_Singleton {
 		return $domainObject;
 	}
 
+	/**
+	 * This method includes the class file. It is a duplicate of
+	 * Tx_Extbase_Utility_ClassLoader::loadClass, but without the check
+	 * if the extension is installed.
+	 *
+	 * @TODO: Refactor, as this is a very ugly place for that code.
+	 * @param <type> $className 
+	 */
+	public function loadClass($className) {
+		$classNameParts = explode('_', $className, 3);
+		$extensionKey = Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($classNameParts[1]);
+		$classFilePathAndName = PATH_typo3conf . 'ext/' . $extensionKey . '/Classes/' . strtr($classNameParts[2], '_', '/') . '.php';
+		if (file_exists($classFilePathAndName)) {
+			require($classFilePathAndName);
+		}
+	}
 
 	/**
 	 * See Tx_Extbase_Reflection_ClassSchema::ALLOWED_TYPES_PATTERN

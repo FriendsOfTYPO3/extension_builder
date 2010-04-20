@@ -24,11 +24,9 @@ This template displays a EDIT form for the current domain object.
 </f:form.errors>]]>
 
 <k:openingTag>f:form method="post" action="update" name="{domainObject.name -> k:lowercaseFirst()}" object="{domainObject.name -> k:lowercaseFirst() -> k:curlyBrackets()}"</k:openingTag>
-<f:for each="{domainObject.properties}" as="property">
-	<f:if condition="{property.isDisplayable}">
+<f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
 	<label for="title"><k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag><f:if condition="{property.required}"> <span class="required">(required)</span></f:if></label><br />
 	<k:openingTag><k:render partial="Form/{property.dataType}.htmlt" arguments="{property: property}" /> /</k:openingTag><br />
-	</f:if>
-</f:for>
-<k:openingTag>f:form.submit value="Edit" /</k:openingTag>
+</f:if></f:for>
+	<k:openingTag>f:form.submit value="Edit" /</k:openingTag>
 <![CDATA[</f:form>]]>

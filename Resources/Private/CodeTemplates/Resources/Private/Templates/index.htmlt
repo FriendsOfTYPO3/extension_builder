@@ -1,7 +1,6 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-
 <k:comment>
-This Template is responsible for creating a table of domain objects.
+	This Template is responsible for creating a table of domain objects.
 </k:comment>
 
 <h1>Listing for {domainObject.name}</h1>
@@ -9,29 +8,32 @@ This Template is responsible for creating a table of domain objects.
 <k:openingTag>f:flashMessages /</k:openingTag>
 
 <table>
-<k:comment>Building up the table header</k:comment>
-<tr>
-<f:for each="{domainObject.properties}" as="property">
-	<f:if condition="{property.isDisplayable}">
-		<th><k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag></th>
-	</f:if>
-</f:for>
-<th> </th>
-<th> </th>
-</tr>
+	<k:removeMultipleNewlines><tr>
 
-<k:comment>Creating the f:for which loops through all objects</k:comment>
-<k:openingTag>f:for each="{domainObject.name -> k:lowercaseFirst() -> k:pluralize() -> k:curlyBrackets()}" as="{domainObject.name -> k:lowercaseFirst()}"</k:openingTag>
-<tr>
-<f:for each="{domainObject.properties}" as="property">
-	<f:if condition="{property.isDisplayable}">
-		<td><k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets></td>
-	</f:if>
-</f:for>
-<td><k:openingTag>f:link.action action="edit" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Edit<![CDATA[</f:link.action>]]></td>
-<td><k:openingTag>f:link.action action="delete" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Delete<![CDATA[</f:link.action>]]></td>
-</tr>
-<![CDATA[</f:for>]]>
+	<k:comment>Building up the table header</k:comment>
+		<f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
+		<th><k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag></th>
+		</f:if></f:for>
+		<th> </th>
+		<th> </th>
+	</tr>
+	</k:removeMultipleNewlines>
+
+	<k:removeMultipleNewlines>
+	<k:comment>Creating the f:for which loops through all objects</k:comment>
+	
+	<k:openingTag>f:for each="{domainObject.name -> k:lowercaseFirst() -> k:pluralize() -> k:curlyBrackets()}" as="{domainObject.name -> k:lowercaseFirst()}"</k:openingTag>
+
+		<tr>
+		<f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
+			<td><k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets></td>
+		</f:if></f:for>
+
+			<td><k:openingTag>f:link.action action="edit" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Edit<![CDATA[</f:link.action>]]></td>
+			<td><k:openingTag>f:link.action action="delete" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Delete<![CDATA[</f:link.action>]]></td>
+		</tr>
+	<![CDATA[</f:for>]]>
+	</k:removeMultipleNewlines>
 </table>
 
 <k:openingTag>f:link.action action="new"</k:openingTag>New {domainObject.name}<![CDATA[</f:link.action>]]>
