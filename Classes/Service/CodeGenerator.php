@@ -161,6 +161,11 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 
 			// Generate Partial directory
 			t3lib_div::mkdir_deep($extensionDirectory, 'Resources/Private/Partials');
+
+			// Generate Layouts directory
+			t3lib_div::mkdir_deep($extensionDirectory, 'Resources/Private/Layouts');
+			$layoutsDirectory = $extensionDirectory . 'Resources/Private/Layouts/';
+			t3lib_div::writeFile($layoutsDirectory . 'default.html', $this->generateLayout($extension));
 		}
 		
 	}
@@ -220,6 +225,10 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 
 	public function generateFormErrorsPartial() {
 		return file_get_contents(t3lib_extMgm::extPath('extbase_kickstarter') . 'Resources/Private/CodeTemplates/Resources/Private/Partials/formErrors.htmlt');
+	}
+
+	public function generateLayout(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
+		return $this->renderTemplate('Resources/Private/Layouts/default.htmlt', array('extension' => $extension));
 	}
 
 	public function generateExtEmconf(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
