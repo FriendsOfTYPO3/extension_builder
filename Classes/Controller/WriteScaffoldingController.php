@@ -106,6 +106,9 @@ class Tx_ExtbaseKickstarter_Controller_WriteScaffoldingController extends Tx_Ext
 
 
 		$this->rewriteScaffoldingController($extensionKey, $controllerName, $domainObject);
+
+		$this->flashMessageContainer->add('The controller ' . $controllerName . ' was converted to static scaffolding.');
+		$this->redirect('index');
 	}
 
 	protected function rewriteScaffoldingController($extensionKey, $controllerName, $domainObject) {
