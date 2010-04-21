@@ -6,4 +6,17 @@ plugin.{extension.shorthandForTypoScript}._CSS_DEFAULT_STYLE (
 		background-color:#FF9F9F;
 		border: 1px #FF0000 solid;
 	}
+
+	.{extension.cssClassName} table {
+		border-collapse:separate;
+		border-spacing:10px;
+	}
+
+	.{extension.cssClassName} table th {
+		font-weight:bold;
+	}
+
+	.{extension.cssClassName} table td {
+		vertical-align:top;
+	}
 )
