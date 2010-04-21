@@ -1,9 +1,9 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-<f:layout name="default" />
+<k:openingTag>f:layout name="default" /</k:openingTag>
 
 This template displays a NEW form for the current domain object.
 
-<f:section name="main">
+<k:openingTag>f:section name="main"</k:openingTag>
 <h1>New {domainObject.name}</h1>
 
 <k:openingTag>f:flashMessages /</k:openingTag>
@@ -21,4 +21,4 @@ This template displays a NEW form for the current domain object.
 </k:removeMultipleNewlines>
 	<k:openingTag>f:form.submit value="Create new" /</k:openingTag>
 <![CDATA[</f:form>]]>
-</f:section>
+<![CDATA[</f:section>]]>

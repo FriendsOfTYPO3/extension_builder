@@ -1,9 +1,9 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-<f:layout name="default" />
+<k:openingTag>f:layout name="default" /</k:openingTag>
 
 This Template is responsible for creating a table of domain objects.
 
-<f:section name="main">
+<k:openingTag>f:section name="main"</k:openingTag>
 <h1>Listing for {domainObject.name}</h1>
 
 <k:openingTag>f:flashMessages /</k:openingTag>
@@ -38,4 +38,4 @@ This Template is responsible for creating a table of domain objects.
 </table>
 
 <k:openingTag>f:link.action action="new"</k:openingTag>New {domainObject.name}<![CDATA[</f:link.action>]]>
-</f:section>
+<![CDATA[</f:section>]]>
