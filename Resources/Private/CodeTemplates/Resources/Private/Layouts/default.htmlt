@@ -1,0 +1,4 @@
+{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+<div class="{extension.cssClassName}">
+	<k:openingTag>f:render section="main" /</k:openingTag>
+</div>

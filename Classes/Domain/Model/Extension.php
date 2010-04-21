@@ -219,6 +219,10 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 			case self::STATE_TEST: return 'test';
 		}
 	}
-	
+
+	public function getCssClassName() {
+		$key = 'tx_' . strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->getExtensionKey())) . '_pi1';
+		return str_replace('_', '-', $key);
+	}
 }
 ?>
