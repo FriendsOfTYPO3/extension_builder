@@ -1,9 +1,9 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-<f:layout name="default" />
+<k:openingTag>f:layout name="default" /</k:openingTag>
 
 This Template is responsible for creating a single view for a domain object
 
-<f:section name="main">
+<k:openingTag>f:section name="main"</k:openingTag>
 <h1>Single View for {domainObject.name}</h1>
 
 <k:openingTag>f:flashMessages /</k:openingTag>
@@ -25,4 +25,4 @@ This Template is responsible for creating a single view for a domain object
 <k:openingTag>f:link.action action="delete" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Delete<![CDATA[</f:link.action>]]>
 
 <k:openingTag>f:link.action action="index"</k:openingTag>Back to listing<![CDATA[</f:link.action>]]>
-</f:section>
+<![CDATA[</f:section>]]>
