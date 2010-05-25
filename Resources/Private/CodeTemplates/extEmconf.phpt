@@ -11,8 +11,8 @@
 ########################################################################
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => '{extension.name}',
-	'description' => '{extension.description}',
+	'title' => '<k:quoteString>{extension.name}</k:quoteString>',
+	'description' => '<k:quoteString>{extension.description}</k:quoteString>',
 	'category' => 'plugin',
 	'author' => '<k:listObjectsByPropertyCSV objects="{extension.persons}" property="name" />',
 	'author_email' => '<k:listObjectsByPropertyCSV objects="{extension.persons}" property="email" />',
