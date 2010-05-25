@@ -59,6 +59,14 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	public function build(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
 		$this->extension = $extension;
 
+		// Validate the extension
+		$extensionValidator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator');
+		try {
+			$extensionValidator->isValid($this->extension);
+		} catch (Exception $e) {
+			return $e->getMessage();
+		}
+		
 		// Base directory already exists at this point
 		$extensionDirectory = PATH_typo3conf . 'ext/' . $this->extension->getExtensionKey().'/';
 		//t3lib_div::mkdir($extensionDirectory);
@@ -167,7 +175,8 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 			$layoutsDirectory = $extensionDirectory . 'Resources/Private/Layouts/';
 			t3lib_div::writeFile($layoutsDirectory . 'default.html', $this->generateLayout($extension));
 		}
-		
+
+		return true;
 	}
 
 	/**
