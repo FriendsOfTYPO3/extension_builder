@@ -69,7 +69,17 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	}
 
 	public function domainmodellingAction() {
-		
+//
+//		$extension = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Extension');
+//		$extension->setExtensionKey('asd%');
+//		$extensionValidator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator');
+//		if (!$extensionValidator->isValid($extension)) {
+//			die('invalid');
+//		}
+//		die('-');
+//
+//
+//		$extensionValidator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator');
 	}
 
 	/**
@@ -91,9 +101,13 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 				t3lib_div::mkdir($extensionDirectory);
 				t3lib_div::writeFile($extensionDirectory . 'kickstarter.json', $request['params']['working']);
 
-				$this->codeGenerator->build($extensionSchema);
-
-				return json_encode(array('saved'));
+				$build = $this->codeGenerator->build($extensionSchema);
+				if ($build === true) {
+					return json_encode(array('saved'));
+				} else {
+					return json_encode(array($build));
+				}
+				
 			break;
 			case 'listWirings':
 				$result = $this->getWirings();
