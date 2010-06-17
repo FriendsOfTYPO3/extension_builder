@@ -77,6 +77,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	 * @todo rename this action
 	 */
 	public function generateCodeAction() {
+		
 		$jsonString = file_get_contents('php://input');
 		$request = json_decode($jsonString, true);
 		switch ($request['method']) {
