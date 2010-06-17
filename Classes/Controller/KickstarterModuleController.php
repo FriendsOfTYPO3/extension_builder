@@ -69,17 +69,6 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	}
 
 	public function domainmodellingAction() {
-//
-//		$extension = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Extension');
-//		$extension->setExtensionKey('asd%');
-//		$extensionValidator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator');
-//		if (!$extensionValidator->isValid($extension)) {
-//			die('invalid');
-//		}
-//		die('-');
-//
-//
-//		$extensionValidator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator');
 	}
 
 	/**
