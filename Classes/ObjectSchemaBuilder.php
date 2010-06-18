@@ -132,6 +132,9 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_Singleton {
 			if (isset($jsonProperty['propertyIsRequired'])) {
 				$property->setRequired($jsonProperty['propertyIsRequired']);
 			}
+			if (isset($jsonProperty['propertyIsExcludeField'])) {
+				$property->setExcludeField($jsonProperty['propertyIsExcludeField']);
+			}
 
 			$domainObject->addProperty($property);
 		}

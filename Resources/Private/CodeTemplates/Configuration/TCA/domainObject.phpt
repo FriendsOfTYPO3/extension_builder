@@ -59,7 +59,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			)
 		),<f:for each="{domainObject.properties}" as="property">
 		'{property.fieldName}' => array(
-			'exclude' => 0,
+			'exclude' => <f:if condition="{property.excludeField}"><f:then>1</f:then><f:else>0</f:else></f:if>,
 			'label'   => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xml:{property.labelNamespace}',
 			'config'  => array(
 				<k:indent indentation="4"><k:render partial="TCA/{property.dataType}.phpt" arguments="{property: property}" /></k:indent>

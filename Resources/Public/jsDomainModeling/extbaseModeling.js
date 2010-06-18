@@ -278,6 +278,14 @@ var extbaseModeling_wiringEditorLanguage = {
 															name: "propertyIsRequired",
 															value: false
 														}
+													},
+													{
+														type: "boolean",
+														inputParams: {
+															label: "Is exclude field?",
+															name: "propertyIsExcludeField",
+															value: false
+														}
 													}
 												]
 											}

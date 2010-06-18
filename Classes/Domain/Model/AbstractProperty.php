@@ -186,6 +186,12 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	protected $required;
 
 	/**
+	 * Whether the property is an exclude field
+	 * @var boolean
+	 */
+	protected $excludeField;
+
+	/**
 	 * The domain object this property belongs to.
 	 * @var Tx_ExtbaseKickstarter_Domain_Model_DomainObject
 	 */
@@ -315,6 +321,25 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	 */
 	public function setRequired($required) {
 		$this->required = $required;
+	}
+
+	/**
+	 * Set whether this property is exclude field
+	 *
+	 * @param boolean $excludeField
+	 * @return void
+	 */
+	public function setExcludeField($excludeField) {
+		$this->excludeField = $excludeField;
+	}
+
+	/**
+	 * TRUE if this property is an exclude field, FALSE otherwise.
+	 *
+	 * @return boolean
+	 */
+	public function getExcludeField() {
+		return $this->excludeField;
 	}
 
 	/**
