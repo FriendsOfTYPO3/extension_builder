@@ -108,10 +108,15 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 
 		// Generate TCA
 		try {
-			t3lib_div::mkdir_deep($extensionDirectory, 'Configuration');
+			t3lib_div::mkdir_deep($extensionDirectory, 'Configuration/TCA');
 			$tcaDirectory = $extensionDirectory . 'Configuration/';
-			$fileContents = $this->generateTCA($extension);
-			t3lib_div::writeFile($tcaDirectory . 'Tca.php', $fileContents);
+			$domainObjects = $extension->getDomainObjects();
+			foreach ($domainObjects as $domainObject) {
+				$fileContents = $this->generateTCA($extension, $domainObject);
+				t3lib_div::writeFile($tcaDirectory . 'TCA/' . $domainObject->getName() . '.php', $fileContents);
+			}
+			#$fileContents = $this->generateTCA($extension);
+			#t3lib_div::writeFile($tcaDirectory . 'Tca.php', $fileContents);
 		} catch (Exception $e) {
 			return 'Could not generate Tca.php, error: ' . $e->getMessage();
 		}
@@ -328,8 +333,10 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		return $this->renderTemplate('Resources/Private/htaccess.t', array());
 	}
 
-	public function generateTCA(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
-		return $this->renderTemplate('Configuration/Tca.phpt', array('extension' => $extension));
+	public function generateTCA(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension, Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
+		return $this->renderTemplate('Configuration/TCA/domainObject.phpt', array('extension' => $extension, 'domainObject' => $domainObject));
+	#public function generateTCA(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
+		#return $this->renderTemplate('Configuration/Tca.phpt', array('extension' => $extension));
 	}
 
 	public function generateTyposcriptSetup(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
