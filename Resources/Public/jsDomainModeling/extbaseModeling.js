@@ -44,7 +44,7 @@ var extbaseModeling_wiringEditorLanguage = {
 			{
 				position: 'bottom',
 				height: 40,
-				body: 'bottom',
+				body: 'bottom'
 			}
 		]
 	},
@@ -152,8 +152,7 @@ var extbaseModeling_wiringEditorLanguage = {
 							}, 
 							animColors: {from: "#000000" , to: "#5C85D6"}
 						}
-					},
-					{
+					}, {
 						type: "group",
 						inputParams: {
 							collapsible: true,
@@ -225,7 +224,7 @@ var extbaseModeling_wiringEditorLanguage = {
 							name: "propertyGroup",
 							fields: [
 								{
-									type: "list", 
+									type: "list",
 									inputParams: {
 										label: "",
 										name: "properties",
@@ -269,7 +268,7 @@ var extbaseModeling_wiringEditorLanguage = {
 													{
 														inputParams: {
 															label: "Description", 
-															name: "propertyDescription",
+															name: "propertyDescription"
 														}
 													},
 													{
@@ -277,7 +276,7 @@ var extbaseModeling_wiringEditorLanguage = {
 														inputParams: {
 															label: "Is Required?", 
 															name: "propertyIsRequired",
-															value: false,
+															value: false
 														}
 													}
 												]
@@ -312,7 +311,7 @@ var extbaseModeling_wiringEditorLanguage = {
 														inputParams: {
 															label: "Name", 
 															name: "relationName", 
-															required: false, 
+															required: false
 														}
 													},
 													{
