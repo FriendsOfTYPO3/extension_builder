@@ -56,6 +56,10 @@ class Tx_ExtbaseKickstarter_Controller_WriteScaffoldingController extends Tx_Ext
 		foreach ($controllerFilesIterator as $pathAndFileName => $tmp) {
 			if ($this->isFileScaffoldingController($pathAndFileName)) {
 				$pathRelativeToExtensionDirectory = substr($pathAndFileName, strlen(PATH_typo3conf . 'ext/'), -4);
+				
+					// Convert path divider \ to / so that this can also work on Windows				
+				$pathRelativeToExtensionDirectory = str_replace('\\', '/', $pathRelativeToExtensionDirectory);
+				
 				list($extensionKey, , , $controllerName) = explode('/', $pathRelativeToExtensionDirectory);
 				$extensions[$extensionKey][] = $controllerName;
 			}
