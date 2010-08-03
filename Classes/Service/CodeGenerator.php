@@ -248,11 +248,11 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		$variableContainer = $this->objectManager->create('Tx_Fluid_Core_ViewHelper_TemplateVariableContainer', $templateVariables);
 
 		$renderingContext = $this->objectManager->create('Tx_Fluid_Core_Rendering_RenderingContext');
-		$renderingContext->setTemplateVariableContainer($variableContainer);
+		$renderingContext->injectTemplateVariableContainer($variableContainer);
 		//$renderingContext->setControllerContext($this->controllerContext); 
 
 		$viewHelperVariableContainer = $this->objectManager->create('Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer');
-		$renderingContext->setViewHelperVariableContainer($viewHelperVariableContainer);
+		$renderingContext->injectViewHelperVariableContainer($viewHelperVariableContainer);
 
 		return $renderingContext;
 	}
