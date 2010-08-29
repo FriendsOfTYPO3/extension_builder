@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <T3locallang>
     <meta type="array">
-        <description>Ontext Sensitive Help (CSH) for table {domainObject.databaseTableName}</description>
+        <description>Context Sensitive Help (CSH) for table {domainObject.databaseTableName}</description>
         <type>CSH</type>
         <csh_table>{domainObject.databaseTableName}</csh_table>
     </meta>
