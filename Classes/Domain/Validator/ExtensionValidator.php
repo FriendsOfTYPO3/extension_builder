@@ -42,6 +42,8 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		ERROR_EXTKEY_ILLEGAL_CHARACTERS	= 1,
 		ERROR_EXTKEY_ILLEGAL_PREFIX		= 2,
 		ERROR_EXTKEY_ILLEGAL_FIRST_CHARACTER	= 3,
+		ERROR_DOMAINOBJECT_ILLEGAL_CHARACTER = 100,
+		ERROR_DOMAINOBJECT_NO_NAME = 101,
 		ERROR_PROPERTY_NO_NAME = 200,
 		ERROR_PROPERTY_DUPLICATE = 201;
 
@@ -76,6 +78,20 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 	 */
 	private static function validateDomainObjects($extension) {
 		foreach($extension->getDomainObjects() as $domainObject) {
+			
+				// Check if domainObject name is given
+			if(!$domainObject->getName()) {
+				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('A Domain Object has no name', self::ERROR_DOMAINOBJECT_NO_NAME);
+			}
+			
+			/**
+		 	 * Character test
+			 * Allowed characters are: a-z (lowercase), A-Z (uppercase) and 0-9
+			 */
+			if (!preg_match("/^[a-zA-Z0-9]*$/", $domainObject->getName())) {
+				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Illegal domain object name "' . $domainObject->getName() . '". Please use UpperCamelCase, no spaces or underscores.', self::ERROR_DOMAINOBJECT_ILLEGAL_CHARACTER);
+			}
+			
 			try {
 				self::validateProperties($domainObject);
 			} catch (Tx_Extbase_Exception $e) {
