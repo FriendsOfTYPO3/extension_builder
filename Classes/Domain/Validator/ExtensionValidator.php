@@ -42,7 +42,8 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		ERROR_EXTKEY_ILLEGAL_CHARACTERS	= 1,
 		ERROR_EXTKEY_ILLEGAL_PREFIX		= 2,
 		ERROR_EXTKEY_ILLEGAL_FIRST_CHARACTER	= 3,
-		ERROR_PROPERTY_NO_NAME = 200;
+		ERROR_PROPERTY_NO_NAME = 200,
+		ERROR_PROPERTY_DUPLICATE = 201;
 
 	/**
 	 * Validate the given extension
@@ -90,10 +91,19 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 	 * @throws Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException
 	 */
 	private static function validateProperties($domainObject) {
+		$propertyNames = array();
 		foreach($domainObject->getProperties() as $property) {
+			
+				// Check if property name is given
 			if(!$property->getName()) {
 				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('A property of ' . $domainObject->getName() . ' has no name', self::ERROR_PROPERTY_NO_NAME);
 			}
+			
+				// Check for duplicate property names
+			if(in_array($property->getName(), $propertyNames)) {
+				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Property "' . $property->getName() . '" of ' . $domainObject->getName() . ' exists twice.', self::ERROR_PROPERTY_DUPLICATE);
+			}
+			$propertyNames[] = $property->getName();
 		}
 	}
 	
