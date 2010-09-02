@@ -53,7 +53,14 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 
 	public function __construct() {
 		$this->templateParser = Tx_Fluid_Compatibility_TemplateParserBuilder::build();
-		$this->objectManager = new Tx_Fluid_Compatibility_ObjectManager();
+		
+		if(Tx_ExtbaseKickstarter_Utility_Compatibility::compareFluidVersion('1.1.0', '<')) {
+				// Compatibility with Fluid 1.0
+			$this->objectManager = new Tx_Fluid_Compatibility_ObjectFactory();
+		} else {
+			$this->objectManager = new Tx_Fluid_Compatibility_ObjectManager();
+		}
+		
 	}
 
 	public function build(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
