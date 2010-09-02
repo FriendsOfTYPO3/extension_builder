@@ -44,9 +44,11 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		ERROR_EXTKEY_ILLEGAL_FIRST_CHARACTER	= 3,
 		ERROR_DOMAINOBJECT_ILLEGAL_CHARACTER = 100,
 		ERROR_DOMAINOBJECT_NO_NAME = 101,
+		ERROR_DOMAINOBJECT_LOWER_FIRST_CHARACTER = 102,
 		ERROR_PROPERTY_NO_NAME = 200,
 		ERROR_PROPERTY_DUPLICATE = 201,
-		ERROR_PROPERTY_ILLEGAL_CHARACTER = 202;
+		ERROR_PROPERTY_ILLEGAL_CHARACTER = 202,
+		ERROR_PROPERTY_UPPER_FIRST_CHARACTER = 203;
 
 	/**
 	 * Validate the given extension
@@ -93,6 +95,12 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Illegal domain object name "' . $domainObject->getName() . '". Please use UpperCamelCase, no spaces or underscores.', self::ERROR_DOMAINOBJECT_ILLEGAL_CHARACTER);
 			}
 			
+			$objectName = $domainObject->getName();
+			$firstChar = $objectName{0};
+			if(strtolower($firstChar) == $firstChar) {
+				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Illegal first character of domain object name "' . $domainObject->getName() . '". Please use UpperCamelCase.', self::ERROR_DOMAINOBJECT_LOWER_FIRST_CHARACTER);
+			}
+			
 			try {
 				self::validateProperties($domainObject);
 			} catch (Tx_Extbase_Exception $e) {
@@ -124,6 +132,15 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(
 					'Illegal property name "' . $property->getName() . '" of ' . $domainObject->getName() . '. Please use lowerCamelCase, no spaces or underscores.',
 					self::ERROR_PROPERTY_ILLEGAL_CHARACTER
+				);
+			}
+			
+			$propertyName = $property->getName();
+			$firstChar = $propertyName{0};
+			if(strtoupper($firstChar) == $firstChar) {
+				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(
+					'Illegal first character of property name "' . $property->getName() . '" of domain object "' . $domainObject->getName() . '". Please use lowerCamelCase.',
+					self::ERROR_PROPERTY_UPPER_FIRST_CHARACTER
 				);
 			}
 			
