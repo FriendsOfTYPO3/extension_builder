@@ -32,10 +32,17 @@
  */
 class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 
+	/**
+	 * Error Codes:
+	 * 0 - 99: Errors concerning the Extension configuration
+	 * 100 - 199: Errors concerning the Domain Objects directly
+	 * 200 - 299: Errors concerning the Properties
+	 */
 	const	ERROR_EXTKEY_LENGTH			= 0,
 		ERROR_EXTKEY_ILLEGAL_CHARACTERS	= 1,
 		ERROR_EXTKEY_ILLEGAL_PREFIX		= 2,
-		ERROR_EXTKEY_ILLEGAL_FIRST_CHARACTER	= 3;
+		ERROR_EXTKEY_ILLEGAL_FIRST_CHARACTER	= 3,
+		ERROR_PROPERTY_NO_NAME = 200;
 
 	/**
 	 * Validate the given extension
@@ -50,10 +57,46 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		} catch (Tx_Extbase_Exception $e) {
 			throw($e);
 		}
+		
+		try {
+			self::validateDomainObjects($extension);
+		} catch (Tx_Extbase_Exception $e) {
+			throw($e);
+		}
 
 		return true;
 	}
 
+	/**
+	 * @author Sebastian Michaelsen <sebastian.gebhard@gmail.com>
+	 * @param	Tx_ExtbaseKickstarter_Domain_Model_Extension
+	 * @return 	bool
+	 * @throws Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException
+	 */
+	private static function validateDomainObjects($extension) {
+		foreach($extension->getDomainObjects() as $domainObject) {
+			try {
+				self::validateProperties($domainObject);
+			} catch (Tx_Extbase_Exception $e) {
+				throw($e);
+			}
+		}
+	}
+	
+	/**
+	 * @author Sebastian Michaelsen <sebastian.gebhard@gmail.com>
+	 * @param	Tx_ExtbaseKickstarter_Domain_Model_DomainObject
+	 * @return 	bool
+	 * @throws Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException
+	 */
+	private static function validateProperties($domainObject) {
+		foreach($domainObject->getProperties() as $property) {
+			if(!$property->getName()) {
+				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('A property of ' . $domainObject->getName() . ' has no name', self::ERROR_PROPERTY_NO_NAME);
+			}
+		}
+	}
+	
 	/**
 	 * @author Rens Admiraal
 	 * @param string $key

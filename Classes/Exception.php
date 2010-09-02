@@ -59,7 +59,7 @@ class Tx_ExtbaseKickstarter_Exception extends Tx_Extbase_Exception {
 			$message = $translated;
 		}
 		
-		parent::__construct($message, $code, $previous);
+		parent::__construct($message, $code);
 	}
 
 	/**
