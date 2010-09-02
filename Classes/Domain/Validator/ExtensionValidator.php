@@ -45,7 +45,8 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		ERROR_DOMAINOBJECT_ILLEGAL_CHARACTER = 100,
 		ERROR_DOMAINOBJECT_NO_NAME = 101,
 		ERROR_PROPERTY_NO_NAME = 200,
-		ERROR_PROPERTY_DUPLICATE = 201;
+		ERROR_PROPERTY_DUPLICATE = 201,
+		ERROR_PROPERTY_ILLEGAL_CHARACTER = 202;
 
 	/**
 	 * Validate the given extension
@@ -113,6 +114,17 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 				// Check if property name is given
 			if(!$property->getName()) {
 				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('A property of ' . $domainObject->getName() . ' has no name', self::ERROR_PROPERTY_NO_NAME);
+			}
+			
+			/**
+		 	 * Character test
+			 * Allowed characters are: a-z (lowercase), A-Z (uppercase) and 0-9
+			 */
+			if (!preg_match("/^[a-zA-Z0-9]*$/", $property->getName())) {
+				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(
+					'Illegal property name "' . $property->getName() . '" of ' . $domainObject->getName() . '. Please use lowerCamelCase, no spaces or underscores.',
+					self::ERROR_PROPERTY_ILLEGAL_CHARACTER
+				);
 			}
 			
 				// Check for duplicate property names
