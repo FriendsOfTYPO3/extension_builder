@@ -30,7 +30,7 @@
 class Tx_ExtbaseKickstarter_Domain_Model_Property_SelectProperty extends Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 
 	public function getTypeForComment() {
-		return 'select';
+		return 'string';
 	}
 
 	public function getTypeHint() {
