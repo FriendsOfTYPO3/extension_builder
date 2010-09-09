@@ -11,7 +11,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Fl
 		$pageRenderer = $doc->getPageRenderer();
 		$pageRenderer->loadExtJS(false, false);
 
-		$compress = true; // Set to false for debugging purposes
+		$compress = false; // Set to false for debugging purposes
 
 		// SECTION: JAVASCRIPT FILES
 		// YUI Basis Files

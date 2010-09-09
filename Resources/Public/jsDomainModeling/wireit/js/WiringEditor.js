@@ -83,7 +83,8 @@ WireIt.WiringEditor = function(options) {
     this.layout.render();
 
     	// collapse right
-    this.layout.getUnitById('right').collapse();
+//    this.layout.getUnitById('right').collapse();
+	this.layout.getUnitById('right').close();
     this.layout.getUnitById('right').set('animate', true, false);
 
     	// collapse left
