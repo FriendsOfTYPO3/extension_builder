@@ -274,7 +274,7 @@ WireIt.WiringEditor.prototype = {
   * @method onSMDsuccess
   */
  onSMDsuccess: function() {
-    //console.log("onSMDsuccess",this.service);
+//   console.log("onSMDsuccess",this.service);
  },
  
  /**
@@ -282,7 +282,7 @@ WireIt.WiringEditor.prototype = {
   * @method onSMDfailure
   */
  onSMDfailure: function() { 
-    //console.log("onSMDfailure", this.service);
+//    console.log("onSMDfailure", this.service);
  },
 
  /**

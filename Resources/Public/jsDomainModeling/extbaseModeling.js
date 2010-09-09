@@ -1,7 +1,7 @@
 var extbaseModeling_wiringEditorLanguage = {
 	parentEl: 'domainModelEditor',
 	languageName: "extbaseModeling",
-	smdUrl: '../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd',
+	smdUrl: TYPO3.settings.kickstarter.baseUrl + 'Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd',
 	layoutOptions: {	// Configuration of the whole layout. See documentation of YUI's widget.Layout()
 		units: [
 			{
@@ -138,7 +138,7 @@ var extbaseModeling_wiringEditorLanguage = {
 			container: {	// Configuration according to WireIt.Container.options
 				xtype: "WireIt.FormContainer",
 				title: "Title",	// this will be overriden in WiteIt.WiringEditor.addModule() with the module name, so it could also be left empty here
-				icon: "../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/typo3-logo.gif",
+				icon: TYPO3.settings.kickstarter.baseUrl + "Resources/Public/jsDomainModeling/typo3-logo.gif",
 				preventSelfWiring: false,
 				fields: [
 					{
