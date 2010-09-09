@@ -1,74 +1,85 @@
 <?php
 
 class Tx_ExtbaseKickstarter_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Fluid_ViewHelpers_Be_AbstractBackendViewHelper {
+	
 	public function render() {
 		$doc = $this->getDocInstance();
 		$doc->bodyTagAdditions .= 'class="yui-skin-sam"';
 
+		$baseUrl = t3lib_div::getIndpEnv('TYPO3_SITE_URL') . str_replace(PATH_site, '', t3lib_extMgm::extPath('extbase_kickstarter'));
+
 		$pageRenderer = $doc->getPageRenderer();
+		$pageRenderer->loadExtJS(false, false);
+
+		$compress = true; // Set to false for debugging purposes
 
 		// SECTION: JAVASCRIPT FILES
 		// YUI Basis Files
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/yui/utilities/utilities.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/yui/resize/resize-min.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/yui/layout/layout-min.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/yui/container/container-min.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/yui/json/json-min.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/yui/button/button-min.js');
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/yui/utilities/utilities.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/yui/resize/resize-min.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/yui/layout/layout-min.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/yui/container/container-min.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/yui/json/json-min.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/yui/button/button-min.js', 'text/javascript', $compress);
 
 		// YUI-RPC
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/yui-rpc.js');
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/yui-rpc.js', 'text/javascript', $compress);
 
 		// InputEx with wirable options
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/inputex.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Field.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/js/util/inputex/WirableField-beta.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Group.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Visus.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/StringField.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/Textarea.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/SelectField.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/EmailField.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/UrlField.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/ListField.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/CheckBox.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/InPlaceEdit.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/MenuField.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/TypeField.js');
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/inputex.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Field.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/util/inputex/WirableField-beta.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Group.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Visus.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/StringField.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/Textarea.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/SelectField.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/EmailField.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/UrlField.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/ListField.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/CheckBox.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/InPlaceEdit.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/MenuField.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/TypeField.js', 'text/javascript', $compress);
 
 		// WireIt
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/excanvas.js', 'text/javascript', TRUE, FALSE, '<!--[if IE]>|<![endif]-->');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/js/WireIt.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/js/CanvasElement.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/js/Wire.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/js/Terminal.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/js/util/DD.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/js/util/DDResize.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/js/Container.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/js/ImageContainer.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/js/Layer.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/js/util/inputex/FormContainer-beta.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/js/LayerMap.js');
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/js/WiringEditor.js');
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/excanvas.js', 'text/javascript', false, FALSE, '<!--[if IE]>|<![endif]-->');
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/WireIt.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/CanvasElement.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/Wire.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/Terminal.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/util/DD.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/util/DDResize.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/Container.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/ImageContainer.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/Layer.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/util/inputex/FormContainer-beta.js', 'text/javascript', $compress);
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/LayerMap.js', 'text/javascript', $compress);
+
+		$pageRenderer->addInlineSettingArray('kickstarter', array(
+			'baseUrl' => $baseUrl
+		));
+
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/WiringEditor.js', 'text/javascript', $compress);
 
 		// Extbase Modelling definition
-		$pageRenderer->addJsFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/extbaseModeling.js');
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/extbaseModeling.js', 'text/javascript', $compress);
 
 
 		// SECTION: CSS Files
 		// YUI CSS
-		$pageRenderer->addCssFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/yui/reset-fonts-grids/reset-fonts-grids.css');
-		$pageRenderer->addCssFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/yui/assets/skins/sam/skin.css');
+		$pageRenderer->addCssFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/yui/reset-fonts-grids/reset-fonts-grids.css', 'stylesheet', 'all', '', $compress);
+		$pageRenderer->addCssFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/yui/assets/skins/sam/skin.css', 'stylesheet', 'all', '', $compress);
 
 		// InputEx CSS
-		$pageRenderer->addCssFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/lib/inputex/css/inputEx.css');
+		$pageRenderer->addCssFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/css/inputEx.css', 'stylesheet', 'all', '', $compress);
 
 		// WireIt CSS
-		$pageRenderer->addCssFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/css/WireIt.css');
-		$pageRenderer->addCssFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/wireit/css/WireItEditor.css');
+		$pageRenderer->addCssFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/css/WireIt.css', 'stylesheet', 'all', '', $compress);
+		$pageRenderer->addCssFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/css/WireItEditor.css', 'stylesheet', 'all', '', $compress);
 
 		// Custom CSS
-		$pageRenderer->addCssFile('../typo3conf/ext/extbase_kickstarter/Resources/Public/jsDomainModeling/extbaseModeling.css');
+		$pageRenderer->addCssFile($baseUrl . 'Resources/Public/jsDomainModeling/extbaseModeling.css', 'stylesheet', 'all', '', $compress);
 
 	}
 }
