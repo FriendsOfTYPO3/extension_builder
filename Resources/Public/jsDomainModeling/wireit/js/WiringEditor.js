@@ -76,18 +76,6 @@ WireIt.WiringEditor = function(options) {
     this.el = Dom.get(options.parentEl);
     
     /**
-     * @property helpPanel
-     * @type {YAHOO.widget.Panel}
-     */
-    this.helpPanel = new widget.Panel('helpPanel', {
-        fixedcenter: true,
-        draggable: true,
-        visible: false,
-        modal: true
-     });
-     this.helpPanel.render();
-    
-    /**
      * @property layout
      * @type {YAHOO.widget.Layout}
      */
@@ -264,9 +252,6 @@ WireIt.WiringEditor.prototype = {
 
     var deleteButton = new widget.Button({ label:"Delete", id:"WiringEditor-deleteButton", container: toolbar });
     deleteButton.on("click", this.onDelete, this, true);
-
-    var helpButton = new widget.Button({ label:"Help", id:"WiringEditor-helpButton", container: toolbar });
-    helpButton.on("click", this.onHelp, this, true);
  },
 
 
@@ -339,15 +324,6 @@ WireIt.WiringEditor.prototype = {
   */
  saveModuleFailure: function(o) {
     alert("error while saving! ");
- },
-
-
- /**
-  * Create a help panel
-  * @method onHelp
-  */
- onHelp: function() {
-    this.helpPanel.show();
  },
 
  /**
