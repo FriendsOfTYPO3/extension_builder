@@ -13,7 +13,7 @@ t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '{extension.na
 //t3lib_extMgm::addPiFlexFormValue($_EXTKEY . '_pi1', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_list.xml');
 
 <f:for each="{extension.domainObjects}" as="domainObject">
-t3lib_extMgm::addLLrefForTCAdescr('{domainObject.databaseTableName}','EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xml');
+t3lib_extMgm::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xml');
 t3lib_extMgm::allowTableOnStandardPages('{domainObject.databaseTableName}');
 $TCA['{domainObject.databaseTableName}'] = array (
 	'ctrl' => array (
