@@ -74,6 +74,19 @@ WireIt.WiringEditor = function(options) {
      * @property el
      */
     this.el = Dom.get(options.parentEl);
+
+    /**
+     * @property helpPanel
+     * @type {YAHOO.widget.Panel}
+     */
+    this.helpPanel = new widget.Panel('helpPanel', {
+        fixedcenter: true,
+        draggable: true,
+        visible: false,
+        modal: true
+     });
+     this.helpPanel.render();
+
     
     /**
      * @property layout
