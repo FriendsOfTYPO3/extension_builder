@@ -85,7 +85,7 @@ WireIt.WiringEditor = function(options) {
     	// collapse right
 //    this.layout.getUnitById('right').collapse();
 	this.layout.getUnitById('right').close();
-    this.layout.getUnitById('right').set('animate', true, false);
+//    this.layout.getUnitById('right').set('animate', true, false);
 
     	// collapse left
     this.layout.getUnitById('left').collapse();
@@ -155,7 +155,7 @@ WireIt.WiringEditor.prototype = {
      
     this.options.languageName = options.languageName || 'anonymousLanguage';
      
-//    this.options.smdUrl = options.smdUrl || 'WiringEditor.smd';
+    this.options.smdUrl = options.smdUrl || 'WiringEditor.smd';
     
     this.options.propertiesFields = options.propertiesFields;
     
@@ -261,7 +261,6 @@ WireIt.WiringEditor.prototype = {
   * @method loadSMD
   */
  loadSMD: function() {
-    
      this.service = new YAHOO.rpc.Service(this.options.smdUrl,{
  				success: this.onSMDsuccess,
  				failure: this.onSMDfailure,
@@ -298,7 +297,7 @@ WireIt.WiringEditor.prototype = {
        alert("Please choose a name");
        return;
     }
-                
+    
     this.service.saveWiring({name: value.name, working: JSON.stringify(value.working), language: this.options.languageName }, {
        success: this.saveModuleSuccess,
        failure: this.saveModuleFailure,

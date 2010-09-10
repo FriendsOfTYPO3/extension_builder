@@ -279,14 +279,14 @@ WireIt.WiringEditor.prototype = {
  saveModule: function() {
     
     var value = this.getValue();
-    
-    if(value.name === "") {
+
+	if(value.name === "") {
        this.alert("Please choose a name");
        return;
     }
 
 	this.tempSavedWiring = {name: value.name, working: JSON.stringify(value.working), language: this.options.languageName };
-                
+    
     this.adapter.saveWiring(this.tempSavedWiring, {
        success: this.saveModuleSuccess,
        failure: this.saveModuleFailure,
