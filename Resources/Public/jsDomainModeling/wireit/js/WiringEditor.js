@@ -92,22 +92,22 @@ WireIt.WiringEditor = function(options) {
     this.layout.getUnitById('left').set('animate', true, false);
     
     	// register events to collapse the other one if this is expanded
-    this.layout.getUnitById('right').subscribe(
-    	'beforeExpand',
-    	function() {
-    	    this.layout.getUnitById('left').collapse();
-    	},
-    	this,
-    	this
-    )
-    this.layout.getUnitById('left').subscribe(
-    	'beforeExpand',
-    	function() {
-    	    this.layout.getUnitById('right').collapse();
-    	},
-    	this,
-    	this
-    )
+//    this.layout.getUnitById('right').subscribe(
+//    	'beforeExpand',
+//    	function() {
+//    	    this.layout.getUnitById('left').collapse();
+//    	},
+//    	this,
+//    	this
+//    )
+//    this.layout.getUnitById('left').subscribe(
+//    	'beforeExpand',
+//    	function() {
+////    	    this.layout.getUnitById('right').collapse();
+//    	},
+//    	this,
+//    	this
+//    )
     
 
     /**
@@ -155,7 +155,7 @@ WireIt.WiringEditor.prototype = {
      
     this.options.languageName = options.languageName || 'anonymousLanguage';
      
-    this.options.smdUrl = options.smdUrl || 'WiringEditor.smd';
+//    this.options.smdUrl = options.smdUrl || 'WiringEditor.smd';
     
     this.options.propertiesFields = options.propertiesFields;
     
@@ -340,6 +340,7 @@ WireIt.WiringEditor.prototype = {
   * @method onDelete
   */
  onDelete: function() {
+
     if( confirm("Are you sure you want to delete this wiring ?") ) {
        
       var value = this.getValue();
