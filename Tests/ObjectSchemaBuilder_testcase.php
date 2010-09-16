@@ -56,7 +56,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder_testcase extends Tx_ExtbaseKicks
 		$extension->setDescription($description);
 		$extension->setName($name);
 		$extension->setExtensionKey($extensionKey);
-		$extension->setState(2);
+		$extension->setState(1);
 
 		$actual = $this->objectSchemaBuilder->build($input);
 		$this->assertEquals($actual, $extension, 'Extension properties were not extracted.');
