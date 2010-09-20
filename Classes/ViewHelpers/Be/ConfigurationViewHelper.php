@@ -6,10 +6,9 @@ class Tx_ExtbaseKickstarter_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Fl
 		$doc = $this->getDocInstance();
 		$doc->bodyTagAdditions .= 'class="yui-skin-sam"';
 
-		$baseUrl = t3lib_div::getIndpEnv('TYPO3_SITE_URL') . t3lib_extMgm::siteRelPath('extbase_kickstarter');
+		$baseUrl = '../' . t3lib_extMgm::siteRelPath('extbase_kickstarter');
 
 		$pageRenderer = $doc->getPageRenderer();
-		$pageRenderer->setBaseUrl(t3lib_div::getIndpEnv('TYPO3_SITE_URL'));
 		$pageRenderer->loadExtJS(false, false);
 
 		$compress = false; // Set to false for debugging purposes
