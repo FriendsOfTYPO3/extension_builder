@@ -52,15 +52,32 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	protected $extension;
 
 	public function __construct() {
-		$this->templateParser = Tx_Fluid_Compatibility_TemplateParserBuilder::build();
-		
-		if(Tx_ExtbaseKickstarter_Utility_Compatibility::compareFluidVersion('1.1.0', '<')) {
+		if (Tx_ExtbaseKickstarter_Utility_Compatibility::compareFluidVersion('1.3.0', '<')) {
+			$this->templateParser = Tx_Fluid_Compatibility_TemplateParserBuilder::build();
+
+			if(Tx_ExtbaseKickstarter_Utility_Compatibility::compareFluidVersion('1.1.0', '<')) {
 				// Compatibility with Fluid 1.0
-			$this->objectManager = new Tx_Fluid_Compatibility_ObjectFactory();
-		} else {
-			$this->objectManager = new Tx_Fluid_Compatibility_ObjectManager();
+				$this->objectManager = new Tx_Fluid_Compatibility_ObjectFactory();
+			} else {
+				$this->objectManager = new Tx_Fluid_Compatibility_ObjectManager();
+			}
 		}
-		
+	}
+
+	/**
+	 * @param Tx_Fluid_Core_Parser_TemplateParser $templateParser
+	 * @return void
+	 */
+	public function injectTemplateParser(Tx_Fluid_Core_Parser_TemplateParser $templateParser) {
+		$this->templateParser = $templateParser;
+	}
+
+	/**
+	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @return void
+	 */
+	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+		$this->objectManager = $objectManager;
 	}
 
 	public function build(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
