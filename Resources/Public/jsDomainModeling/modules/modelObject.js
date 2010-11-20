@@ -16,7 +16,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 							type: "string",
 							inputParams: {}
 						},
-						animColors: {from: "#000000" , to: "#5C85D6"}
+						animColors: {from: "#7a7a7a" , to: "#585858"}
 					}
 				}, {
 					type: "group",

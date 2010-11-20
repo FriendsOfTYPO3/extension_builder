@@ -4,8 +4,17 @@
 	of the PageRenderer, f.e. to include custom CSS or JavaScript.
 </k:comment>
 <f:render section="header" />
-
 <f:be.container>
+	<style type="text/css">
+	span.logo {
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 14px;
+		font-weight: bold;
+		color: #585858;
+		position: relative;
+		bottom: 2px;
+	}
+	</style>
 	<div class="typo3-fullDoc">
 		<div id="typo3-docheader">
 			<div id="typo3-docheader-row1">
@@ -26,6 +35,7 @@
 					</f:be.menus.actionMenu>
 				</div>
 				<div class="docheader-row2-right">
+					<span class="logo">Extbase Kickstarter</span>
 				</div>
 			</div>
 		</div>

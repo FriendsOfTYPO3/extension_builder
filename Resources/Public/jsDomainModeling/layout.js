@@ -4,13 +4,8 @@ extbaseModeling_wiringEditorLanguage.layoutOptions =
 	units:
 	[
 		{
-			position: 'top',
-			height: 50,
-			body: 'top'
-		},
-		{
 			position: 'left',
-			width: 500,
+			width: 380,
 			resize: true,
 			body: 'left',
 			gutter: '5px',
@@ -22,27 +17,13 @@ extbaseModeling_wiringEditorLanguage.layoutOptions =
 		},
 		{
 			position: 'center',
-			header: 'Domain Modeling',
 			body: 'center',
 			gutter: '5px',
-			collapse: true,
-			collapseSize: 25
-		},
-		{
-			position: 'right',
-			width: 500,
-			resize: true,
-			body: 'right',
-			gutter: '5px',
-			collapse: true,
-			collapseSize: 25,
-			header: 'Code Generator',
-			scroll: true,
-			animate: false
+			scroll: false
 		},
 		{
 			position: 'bottom',
-			height: 40,
+			height: 27,
 			body: 'bottom'
 		}
 	]

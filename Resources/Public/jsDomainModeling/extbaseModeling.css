@@ -1,44 +1,28 @@
-
-
 .yui-skin-sam .yui-layout .yui-layout-hd {
-	/*background:transparent url(../../alt_menu_mainitem_bg.gif) repeat-x scroll left top;*/
 	border:none;
 }
 
-#top .logo {
-   font-family: Verdana, Arial, Helvetica, sans-serif;
-   font-size: 24px;
-   font-weight: bold;
-   color: #FF8700;
-   padding-left: 10px;
-   padding-top: 4px;
-   text-align: center;
-}
-
-
 div.WireIt-Container {
-   position: absolute;
- 	z-index: 5;
- 	opacity: 0.7;
- 	filter: alpha(opacity = 70);
-   font-size: 8pt;
+	position: relative;
+	z-index: 5;
+	opacity: 0.7;
+	filter: alpha(opacity = 70);
+	font-size: 8pt;
 }
 
 div.WireIt-Container div.body {
- 	border: 2px solid #0A42AF;
+	border: 2px solid #585858;
 }
 
 div.WireIt-Container-ddhandle {
-   background-color: #0A42AF;
+	background-color: #585858;
 }
 
 div.WireIt-Container-focused {
-   z-index: 6;
-   opacity: 0.85;
-   filter: alpha(opacity = 85);
+	z-index: 6;
+	opacity: 0.85;
+	filter: alpha(opacity = 85);
 }
-
-
 
 #modelingLayer {
 	height: 100%;
@@ -47,17 +31,14 @@ div.WireIt-Container-focused {
 #moduleBar {
 	width: 150px;
 	position: absolute;
-	top: 0px;
+	top: 1px;
 	left: 500px;
 	z-index: 10;
-
 	cursor: move;
 	-moz-border-radius:5px;
 	-moz-box-shadow: white 0 0 5px 0;
 	border: 5px solid white;
-	
 	background-color: white;
-	
 	padding: 0;
 }
 
@@ -65,27 +46,24 @@ div.WireIt-Layer {
 	background-image: url('background_pixel.png');
 }
 
-
 .WiringEditor-module {
 	cursor: move;
-	-moz-border-radius:5px;	
+	-moz-border-radius:5px;
 	margin: 0;
 }
 
 #toolbar {
-   position: static;
+	position: static;
 }
 
 .yui-skin-sam .yui-layout{
-	background-color: #EDEEEE;
+	background-color: #EEEEEE;
 }
 
 .yui-skin-sam .yui-layout .yui-layout-unit div.yui-layout-bd ,
 .yui-skin-sam .yui-layout .yui-layout-clip {
 	background-color: transparent;
 }
-
-
 
 div#typo3-inner-docbody {
 	height:100%;
@@ -100,6 +78,7 @@ div#domainModelEditor {
 div.WireIt-Container {
 	width: 350px; /* Prevent the modules from scratching on the right */
 }
+
 div.WireIt-InputExTerminal {
 	float: left;
 	width: 21px;
@@ -125,7 +104,6 @@ div.Bubble div.body {
 	cursor: move;
 }
 
-
 .WiringEditor-module span {
 	position: relative;
 	top: -3px;
@@ -133,32 +111,38 @@ div.Bubble div.body {
 
 /*********** CSS code for making the model title inplaceEdit appear as the container title ************/
 
-/*
-div.WireIt-Container {
-	position: absolute;
-}
-*/
-
 div.WireIt-Container div.body {
 	position: relative;
 }
 
-
 div.extbase-modelTitleEditor {
 	position: absolute;
-	top: -32px;
+	top: -29px;
 	left: 50px;
 	color:white;
 	cursor:move;
 	font-size:10pt;
 	font-weight:bold;
-	line-height:150%;
+	line-height:100%;
 	text-align:center;
 }
+
 div.WireIt-Container-ddhandle span {
 	display: none;
 }
+
 div.inputEx-InPlaceEdit-visu:hover {
-   background-color: #000000;
+	background-color: #000000;
 }
+
 /*********** End of CSS code for inplaceEdit as container title ************/
+
+.yui-layout-hd {
+	background-color: #eeeeee !important;
+	
+	background-image: none !important;
+}
+
+.yui-layout-hd h2 {
+	color: #585858 !important;
+}
