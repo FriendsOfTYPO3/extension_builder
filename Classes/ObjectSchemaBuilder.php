@@ -37,7 +37,6 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_Singleton {
 		$globalProperties = $jsonArray['properties'];
 		if (!is_array($globalProperties)) throw new Exception('Wrong 1');
 
-
 			// name
 		$extension->setName($globalProperties['name']);
 			// description
@@ -45,13 +44,21 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_Singleton {
 			// extensionKey
 		$extension->setExtensionKey($globalProperties['extensionKey']);
 		
-		foreach($globalProperties['persons'] as $personValues) {
+		foreach ($globalProperties['persons'] as $personValues) {
 			$person=t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Person');
 			$person->setName($personValues['name']);
 			$person->setRole($personValues['role']);
 			$person->setEmail($personValues['email']);
 			$person->setCompany($personValues['company']);
 			$extension->addPerson($person);
+		}
+
+		foreach ($globalProperties['plugins'] as $pluginValues) {
+			$plugin = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Plugin');
+			$plugin->setName($pluginValues['name']);
+			$plugin->setType($pluginValues['type']);
+			$plugin->setKey($pluginValues['key']);
+			$extension->addPlugin($plugin);
 		}
 		
 			// state

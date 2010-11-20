@@ -74,6 +74,12 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	protected $persons = array();
 
 	/**
+	 * plugins
+	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_Plugin>
+	 */
+	private $plugin;
+
+	/**
 	 *
 	 * @return string
 	 */
@@ -208,6 +214,49 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 */
 	public function addPerson($person) {
 		$this->persons[]=$person;
+	}
+
+	/**
+	 * Setter for plugin
+	 *
+	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_ExtbaseKickstarter_Domain_Model_Plugin> $plugin
+	 * @return void
+	 */
+	public function setPlugin(Tx_Extbase_Persistence_ObjectStorage $plugin) {
+		$this->plugin = $plugin;
+	}
+
+	/**
+	 * Getter for $plugin
+	 *
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_ExtbaseKickstarter_Domain_Model_Plugin>
+	 */
+	public function getPlugin() {
+		return $this->plugin;
+	}
+
+	/**
+	 * Add $plugin
+	 *
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_Plugin
+	 * @return void
+	 */
+	public function addPlugin(Tx_ExtbaseKickstarter_Domain_Model_Plugin $plugin) {
+		$this->plugin[] = $plugin;
+	}
+
+	/**
+	 * Remove $plugin
+	 *
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_Plugin
+	 * @return void
+	 */
+	public function removePlugins(Tx_ExtbaseKickstarter_Domain_Model_Plugin $plugin) {
+		foreach ($this->plugin as $key => $value) {
+			if ($value === $plugin) {
+				unset($this->plugin[$key]);
+			}
+		}
 	}
 	
 	public function getReadableState() {

@@ -63,7 +63,9 @@ class Tx_ExtbaseKickstarter_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Fl
 
 		// Extbase Modelling definition
 		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/extbaseModeling.js', 'text/javascript');
-
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/layout.js', 'text/javascript');
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/extensionProperties.js', 'text/javascript');
+		$pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/modules/modelObject.js', 'text/javascript');
 
 		// SECTION: CSS Files
 		// YUI CSS

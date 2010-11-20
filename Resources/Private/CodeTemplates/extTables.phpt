@@ -1,17 +1,17 @@
-<?php
-if (!defined ('TYPO3_MODE')) die ('Access denied.');{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-
+{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}<?php
+if (!defined ('TYPO3_MODE')) die ('Access denied.');
+<f:for each="{extension.plugin}" as="plugin">
 Tx_Extbase_Utility_Extension::registerPlugin(
 	$_EXTKEY,
-	'Pi1',
-	'{extension.name}'
+	'{plugin.key}',
+	'{plugin.name} ({extension.name})'
 );
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '{extension.name}');
 
-//$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY . '_pi1'] = 'pi_flexform';
-//t3lib_extMgm::addPiFlexFormValue($_EXTKEY . '_pi1', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_list.xml');
-
+//$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY . '_{plugin.key}'] = 'pi_flexform';
+//t3lib_extMgm::addPiFlexFormValue($_EXTKEY . '_{plugin.key}', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_{plugin.key}.xml');
+</f:for>
 <f:for each="{extension.domainObjects}" as="domainObject">
 t3lib_extMgm::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xml');
 t3lib_extMgm::allowTableOnStandardPages('{domainObject.databaseTableName}');
