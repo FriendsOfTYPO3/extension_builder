@@ -44,4 +44,5 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty extends Tx_Extb
 		return $this->getFieldName() . " tinytext,";
 	}
 }
+
 ?>

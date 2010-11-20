@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009 Christoph Dähne
+ *  (c) 2009 Christoph Dï¿½hne
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -39,7 +39,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Person {
 	 * @var array
 	 * @transient
 	 */
-	protected static $ROLES = array ('developer', 'product_manager');
+	protected static $ROLES = array('developer', 'product_manager');
 
 	/**
 	 * The Persons name.
@@ -47,6 +47,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Person {
 	 * @var string
 	 */
 	protected $name = '';
+
 	/**
 	 * TODO validation?
 	 * The Persons role.
@@ -55,12 +56,14 @@ class Tx_ExtbaseKickstarter_Domain_Model_Person {
 	 * @see Tx_ExtbaseKickstarter_Domain_Model_Person::ROLES
 	 */
 	protected $role = '';
+
 	/**
 	 * The Emailadress.
 	 *
 	 * @var string
 	 */
 	protected $email = '';
+
 	/**
 	 * The Persons company.
 	 *
@@ -76,6 +79,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Person {
 	public function getName () {
 		return $this->name;
 	}
+
 	/**
 	 * Sets the Name
 	 *
@@ -85,6 +89,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Person {
 	public function setName ($name) {
 		$this->name =$name;
 	}
+
 	/**
 	 * Gets the role.
 	 *
@@ -93,6 +98,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Person {
 	public function getRole () {
 		return $this->role;
 	}
+
 	/**
 	 * Sets the role.
 	 *
@@ -102,6 +108,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Person {
 	public function setRole ($role) {
 		$this->role =$role;
 	}
+
 	/**
 	 * Gets the email
 	 *
@@ -110,6 +117,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Person {
 	public function getEmail () {
 		return $this->email;
 	}
+
 	/**
 	 * Sets the email
 	 *
@@ -119,6 +127,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Person {
 	public function setEmail ($email) {
 		$this->email=$email;
 	}
+
 	/**
 	 * Gets the company
 	 *
@@ -127,6 +136,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Person {
 	public function getCompany () {
 		return $this->company;
 	}
+
 	/**
 	 * Sets the company
 	 *

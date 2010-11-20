@@ -66,6 +66,6 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ManyToManyRelation ex
 			. strtolower($this->foreignClass->getName())
 			. '_mm';
 	}
-	
 }
+
 ?>

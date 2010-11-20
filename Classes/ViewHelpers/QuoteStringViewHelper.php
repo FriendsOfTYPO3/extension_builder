@@ -44,4 +44,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_QuoteStringViewHelper extends Tx_Fluid_C
 		
 		return addslashes($value);
 	}
+	
 }
+
+?>

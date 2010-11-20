@@ -62,6 +62,6 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRela
 	public function getIsDisplayable() {
 		return FALSE;
 	}
-	
 }
+
 ?>

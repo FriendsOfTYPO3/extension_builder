@@ -1,5 +1,4 @@
 <?php
-
 /*                                                                        *
  * This script belongs to the FLOW3 package "Kickstart".                  *
  *                                                                        *
@@ -64,4 +63,5 @@ class Tx_ExtbaseKickstarter_Utility_Inflector {
 	}
 
 }
+
 ?>

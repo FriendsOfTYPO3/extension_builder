@@ -40,3 +40,5 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_SelectProperty extends Tx_Extb
 		return $this->getFieldName() . " int(11) DEFAULT '0' NOT NULL,";
 	}
 }
+
+?>

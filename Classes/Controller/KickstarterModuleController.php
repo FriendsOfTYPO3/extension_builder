@@ -71,7 +71,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 
 	/**
 	 * Main entry point for the buttons in the frontend
-	 * @return unknown_type
+	 * @return string
 	 * @todo rename this action
 	 */
 	public function generateCodeAction() {
@@ -100,7 +100,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 			case 'listWirings':
 				$result = $this->getWirings();
 
-				$response = array ('id' => $request['id'],'result' => $result,'error' => NULL);
+				$response = array('id' => $request['id'], 'result' => $result, 'error' => NULL);
 				header('content-type: text/javascript');
 				echo json_encode($response);
 				exit();

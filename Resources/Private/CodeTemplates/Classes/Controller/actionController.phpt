@@ -1,5 +1,4 @@
-<?php
-
+{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}<?php
 /***************************************************************
 *  Copyright notice
 *
@@ -31,7 +30,6 @@
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
 // TODO: As your extension matures, you should use Tx_Extbase_MVC_Controller_ActionController as base class, instead of the ScaffoldingController used below.
 class {domainObject.controllerName} extends Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController {
 	<f:if condition="{domainObject.aggregateRoot}">

@@ -1,5 +1,4 @@
 <?php
-
 /***************************************************************
 *  Copyright notice
 *
@@ -32,3 +31,5 @@
  */
 class Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException extends Tx_ExtbaseKickstarter_Exception {
 }
+
+?>

@@ -49,4 +49,5 @@ class Tx_ExtbaseKickstarter_ViewHelpers_RemoveNewlinesViewHelper extends Tx_Flui
 		return trim($content);
 	}
 }
+
 ?>

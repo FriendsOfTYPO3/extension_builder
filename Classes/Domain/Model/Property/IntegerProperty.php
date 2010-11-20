@@ -32,6 +32,7 @@
  * @version $ID:$
  */
 class Tx_ExtbaseKickstarter_Domain_Model_Property_IntegerProperty extends Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
+
 	public function getTypeForComment() {
 		return 'integer';
 	}
@@ -43,4 +44,5 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_IntegerProperty extends Tx_Ext
 		return $this->getFieldName() . " int(11) DEFAULT '0' NOT NULL,";
 	}
 }
+
 ?>

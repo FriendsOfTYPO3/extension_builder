@@ -43,5 +43,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_IndentViewHelper extends Tx_Fluid_Core_V
 		}
 		return implode(chr(10) . $indentString, $lineArray);
 	}
+
 }
+
 ?>

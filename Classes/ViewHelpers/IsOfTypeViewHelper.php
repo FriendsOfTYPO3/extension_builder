@@ -47,5 +47,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_IsOfTypeViewHelper extends Tx_Fluid_Core
 	public function render($object, $type) {
 		return is_a($object, 'Tx_ExtbaseKickstarter_Domain_Model_' . $type);
 	}
+
 }
+
 ?>

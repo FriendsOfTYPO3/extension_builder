@@ -48,4 +48,5 @@ class Tx_ExtbaseKickstarter_ViewHelpers_LowercaseFirstViewHelper extends Tx_Flui
 		return t3lib_div::lcfirst($content);
 	}
 }
+
 ?>

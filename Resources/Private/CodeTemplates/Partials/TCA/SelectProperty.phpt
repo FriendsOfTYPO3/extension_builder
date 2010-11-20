@@ -1,5 +1,5 @@
 'type' => 'select',
-'items' => array (
+'items' => array(
 	array('-- Label --', 0),
 ),
 'size' => 1,

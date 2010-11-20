@@ -48,5 +48,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_ListForeignKeyRelationsViewHelper extend
 		}
 		return $results;
 	}
+
 }
+
 ?>

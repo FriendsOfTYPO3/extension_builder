@@ -29,4 +29,5 @@
  */
 abstract class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AnyToManyRelation extends Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRelation {
 }
+
 ?>
