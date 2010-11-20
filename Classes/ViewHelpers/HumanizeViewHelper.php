@@ -61,4 +61,5 @@ class Tx_ExtbaseKickstarter_ViewHelpers_HumanizeViewHelper extends Tx_Fluid_Core
 		return $this->inflector->humanize($string);
 	}
 }
+
 ?>

@@ -48,4 +48,5 @@ class Tx_ExtbaseKickstarter_ViewHelpers_BeFuncViewHelper extends Tx_Fluid_Core_V
 		return $this->renderChildren(); 
 	}
 }
+
 ?>

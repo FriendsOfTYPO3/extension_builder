@@ -390,4 +390,5 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 		return $this->domainObject->getLabelNamespace() . '.' . $this->getFieldName();
 	}
 }
+
 ?>

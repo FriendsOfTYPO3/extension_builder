@@ -372,4 +372,5 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		return $this->renderTemplate('Configuration/TypoScript/setup.txt', array('extension' => $extension));
 	}
 }
+
 ?>

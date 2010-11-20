@@ -1,5 +1,4 @@
 <?php
-
 /*                                                                        *
  * This script belongs to the FLOW3 package "Fluid".                      *
  *                                                                        *
@@ -81,6 +80,5 @@ class Tx_ExtbaseKickstarter_ViewHelpers_RenderViewHelper extends Tx_Fluid_Core_V
 		return $parsedTemplate->render($this->buildRenderingContext($variables));
 	}
 }
-
 
 ?>

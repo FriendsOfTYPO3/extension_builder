@@ -1,5 +1,4 @@
-<?php
-
+{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}<?php
 /***************************************************************
 *  Copyright notice
 *
@@ -30,7 +29,7 @@
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- */{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+ */
 class {domainObject.className} extends {domainObject.baseClass} {
 	<f:for each="{domainObject.properties}" as="property">
 	/**
@@ -39,11 +38,9 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	 * {property.validateAnnotation}</f:if>
 	 */
 	protected ${property.name};
-	</f:for>
-	<k:removeNewlines>
-	<f:if condition="{domainObject.zeroToManyRelationProperties}">
+	</f:for><k:removeNewlines><f:if condition="{domainObject.zeroToManyRelationProperties}">
 	/**
-	 * Constructor. Initializes all Tx_Extbase_Persistence_ObjectStorage instances.
+	 * The constructor. Initializes all Tx_Extbase_Persistence_ObjectStorage instances.
 	 */
 	public function __construct() {
 		<k:removeNewlines>
@@ -52,9 +49,8 @@ class {domainObject.className} extends {domainObject.baseClass} {
 		</f:for>
 		</k:removeNewlines>
 	}
-	</f:if>
-	</k:removeNewlines>
-	<f:for each="{domainObject.properties}" as="property">
+	
+	</f:if></k:removeNewlines><f:for each="{domainObject.properties}" as="property">
 	/**
 	 * Setter for {property.name}
 	 *
@@ -75,9 +71,9 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	}
 	<f:if condition="{k:isOfType(object:property, type:'Property_BooleanProperty')}">
 	/**
-	 * Returns the boolean state of {property.name}
+	 * Returns the state of {property.name}
 	 *
-	 * @return boolean The state of {property.name}
+	 * @return boolean the state of {property.name}
 	 */
 	public function is{property.name -> k:uppercaseFirst()}() {
 		return $this->get{property.name -> k:uppercaseFirst()}();
@@ -86,7 +82,7 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	/**
 	 * Adds a {property.foreignClass.name -> k:uppercaseFirst()}
 	 *
-	 * @param {property.foreignClass.className} The {property.foreignClass.name -> k:uppercaseFirst()} to be added
+	 * @param {property.foreignClass.className} the {property.foreignClass.name -> k:uppercaseFirst()} to be added
 	 * @return void
 	 */
 	public function add{property.name->k:singularize()->k:uppercaseFirst()}({property.foreignClass.className} ${property.name->k:singularize()}) {
@@ -96,7 +92,7 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	/**
 	 * Removes a {property.foreignClass.name -> k:uppercaseFirst()}
 	 *
-	 * @param {property.foreignClass.className} The {property.foreignClass.name -> k:uppercaseFirst()} to be removed
+	 * @param {property.foreignClass.className} the {property.foreignClass.name -> k:uppercaseFirst()} to be removed
 	 * @return void
 	 */
 	public function remove{property.name->k:singularize()->k:uppercaseFirst()}({property.foreignClass.className} ${property.name->k:singularize()}) {

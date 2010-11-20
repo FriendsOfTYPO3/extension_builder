@@ -49,4 +49,5 @@ class Tx_ExtbaseKickstarter_ViewHelpers_UppercaseFirstViewHelper extends Tx_Flui
 		return ucfirst($content);
 	}
 }
+
 ?>

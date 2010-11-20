@@ -32,6 +32,7 @@
  * @version $ID:$
  */
 class Tx_ExtbaseKickstarter_Domain_Model_Property_DateTimeProperty extends Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
+
 	public function getTypeForComment() {
 		return 'integer';
 	}
@@ -48,4 +49,5 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_DateTimeProperty extends Tx_Ex
 		return $this->name . ' -> f:format.date()';
 	}
 }
+
 ?>

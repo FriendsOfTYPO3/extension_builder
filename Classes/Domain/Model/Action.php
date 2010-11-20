@@ -73,6 +73,6 @@ class Tx_ExtbaseKickstarter_Domain_Model_Action {
 	public function getDomainObject() {
 		return $this->domainObject;
 	}
-
 }
+
 ?>

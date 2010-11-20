@@ -1,5 +1,7 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}<?php
-if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
+if (!defined ('TYPO3_MODE')) {
+	die ('Access denied.');
+}
 <f:for each="{extension.plugin}" as="plugin">
 Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,

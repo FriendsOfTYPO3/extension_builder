@@ -54,4 +54,5 @@ class Tx_ExtbaseKickstarter_ViewHelpers_RemoveMultipleNewlinesViewHelper extends
 		return $content;
 	}
 }
+
 ?>
