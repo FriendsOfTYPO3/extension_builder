@@ -241,7 +241,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 					$domainTemplateDirectory = $privateResourcesDirectory . 'Templates/' . $domainObject->getName() . '/';
 					foreach($domainObject->getActions() as $action) {
 						$fileContents = $this->generateDomainTemplate($domainObject, $action);
-						t3lib_div::writeFile($domainTemplateDirectory . $action->getName() . '.html', $fileContents);
+						t3lib_div::writeFile($domainTemplateDirectory . ucfirst($action->getName()) . '.html', $fileContents);
 					}
 				}
 			} catch (Exception $e) {

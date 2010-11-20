@@ -102,7 +102,7 @@ class Tx_ExtbaseKickstarter_Controller_WriteScaffoldingController extends Tx_Ext
 			$action->setName($actionName);
 			$template = $this->codeGenerator->generateDomainTemplate($domainObject, $action);
 
-			file_put_contents($templateDirectory . $actionName . '.html', $template);
+			file_put_contents($templateDirectory . ucfirst($actionName) . '.html', $template);
 		}
 
 		$partialsDirectory = PATH_typo3conf . 'ext/' . $extensionKey . '/Resources/Private/Partials/';
