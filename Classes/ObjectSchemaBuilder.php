@@ -107,6 +107,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_Singleton {
 				if (!class_exists($relationSchemaClassName)) throw new Exception('Relation of type ' . $relationSchemaClassName . ' not found');
 				$relation = new $relationSchemaClassName;
 				$relation->setName($relationJsonConfiguration['relationName']);
+				$relation->setInlineEditing((bool)$relationJsonConfiguration['inlineEditing']);
 				$relation->setForeignClass($extension->getDomainObjectByName($foreignClassName));
 
 				$extension->getDomainObjectByName($localClassName)->addProperty($relation);

@@ -114,6 +114,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 														name: "propertyType",
 														selectValues: [
 															"String",
+															"Text",
 															"Integer",
 															"Float",
 															"Boolean",
@@ -121,7 +122,8 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 															"Select"
 														],
 														selectOptions: [
-															"Text String",
+															"String",
+															"Text",
 															"Integer",
 															"Floating Point",
 															"Boolean",
@@ -207,6 +209,14 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 														name: "relationType",
 														selectValues: ["zeroToOne", "zeroToMany", "manyToMany"],
 														selectOptions: ["1:1","1:n", "m:n"]
+													}
+												},
+												{
+													type: "boolean",
+													inputParams: {
+														label: "Edit inline?",
+														name: "inlineEditing",
+														value: false
 													}
 												}
 											]

@@ -23,15 +23,10 @@
 ***************************************************************/
 
 /**
- * Creates a request an dispatches it to the controller which was specified
- * by TS Setup, Flexform and returns the content to the v4 framework.
- *
- * This class is the main entry point for extbase extensions in the frontend.
- *
  * @package ExtbaseKickstarter
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty extends Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
+class Tx_ExtbaseKickstarter_Domain_Model_Property_TextProperty extends Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 
 	public function getTypeForComment() {
 		return 'string';
@@ -41,7 +36,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty extends Tx_Extb
 		return '';
 	}
 	public function getSqlDefinition() {
-		return $this->getFieldName() . " varchar(255) DEFAULT '' NOT NULL,";
+		return $this->getFieldName() . " text NOT NULL,";
 	}
 }
 
