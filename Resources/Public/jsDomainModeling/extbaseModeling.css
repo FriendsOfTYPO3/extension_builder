@@ -3,25 +3,21 @@
 }
 
 div.WireIt-Container {
-	position: relative;
+	position: absolute;
 	z-index: 5;
-	opacity: 0.9;
-	filter: alpha(opacity = 90);
+	opacity: 0.8;
+	filter: alpha(opacity = 80);
 	font-size: 8pt;
 }
 
 div.WireIt-Container div.body {
-	border: 1px solid #999;
-}
-
-div.WireIt-Container-ddhandle {
-	background-color: #585858;
+	border: 1px solid #ccc;
 }
 
 div.WireIt-Container-focused {
 	z-index: 6;
-	opacity: 0.9;
-	filter: alpha(opacity = 90);
+	opacity: 0.8;
+	filter: alpha(opacity = 80);
 }
 
 #modelingLayer {
@@ -88,7 +84,7 @@ div.WireIt-Container-ddhandle {
 	-moz-border-radius-topleft:0px;
 	-moz-border-radius-topright:0px;
    	background-color: #ccc;
-	border: 1px solid #999;
+	border: 1px solid #ccc;
 	color:white;
 	cursor:move;
 	font-size:10pt;
