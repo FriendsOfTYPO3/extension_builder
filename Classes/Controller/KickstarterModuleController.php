@@ -49,13 +49,38 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	protected $scBase;
 
 
+	/**
+	 * @var Tx_ExtbaseKickstarter_ObjectSchemaBuilder
+	 */
 	protected $objectSchemaBuilder;
 
+	
+	/**
+	 * @var Tx_ExtbaseKickstarter_Service_CodeGenerator
+	 */
 	protected $codeGenerator;
 
 	public function initializeAction() {
-		$this->objectSchemaBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_ObjectSchemaBuilder');
-		$this->codeGenerator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_CodeGenerator');
+		if (Tx_ExtbaseKickstarter_Utility_Compatibility::compareFluidVersion('1.2.0', '<')) {
+			$this->objectSchemaBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_ObjectSchemaBuilder');
+			$this->codeGenerator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_CodeGenerator');
+		}
+	}
+
+	/**
+	 * @param Tx_ExtbaseKickstarter_ObjectSchemaBuilder $objectSchemaBuilder
+	 * @return void
+	 */
+	public function injectObjectSchemaBuilder(Tx_ExtbaseKickstarter_ObjectSchemaBuilder $objectSchemaBuilder) {
+		$this->objectSchemaBuilder = $objectSchemaBuilder;
+	}
+
+	/**
+	 * @param Tx_ExtbaseKickstarter_Service_CodeGenerator $codeGenerator
+	 * @return void
+	 */
+	public function injectCodeGenerator(Tx_ExtbaseKickstarter_Service_CodeGenerator $codeGenerator) {
+		$this->codeGenerator = $codeGenerator;
 	}
 
 	/**

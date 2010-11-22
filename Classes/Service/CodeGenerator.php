@@ -274,14 +274,15 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		$renderingContext = $this->objectManager->create('Tx_Fluid_Core_Rendering_RenderingContext');
 		$viewHelperVariableContainer = $this->objectManager->create('Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer');
 		
-		if(Tx_ExtbaseKickstarter_Utility_Compatibility::compareFluidVersion('1.3.0', '<')) {
+		// FIXME the inject*() methods are not implemented, yet
+		//if(Tx_ExtbaseKickstarter_Utility_Compatibility::compareFluidVersion('1.3.0', '<')) {
 				// Compatibility with Fluid 1.2
 			$renderingContext->setTemplateVariableContainer($variableContainer);
 			$renderingContext->setViewHelperVariableContainer($viewHelperVariableContainer);
-		} else {
-			$renderingContext->injectTemplateVariableContainer($variableContainer);
-			$renderingContext->injectViewHelperVariableContainer($viewHelperVariableContainer);
-		}
+		//} else {
+			//$renderingContext->injectTemplateVariableContainer($variableContainer);
+			//$renderingContext->injectViewHelperVariableContainer($viewHelperVariableContainer);
+		//}
 
 		return $renderingContext;
 	}
