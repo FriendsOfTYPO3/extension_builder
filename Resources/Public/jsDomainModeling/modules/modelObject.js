@@ -4,7 +4,6 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 		container: {	// Configuration according to WireIt.Container.options
 			xtype: "WireIt.FormContainer",
 			title: "Title",	// this will be overriden in WiteIt.WiringEditor.addModule() with the module name, so it could also be left empty here
-			icon: TYPO3.settings.kickstarter.baseUrl + "Resources/Public/jsDomainModeling/typo3-logo.gif",
 			preventSelfWiring: false,
 			fields: [
 				{
@@ -140,7 +139,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 												{
 													type: "boolean",
 													inputParams: {
-														label: "Is Required?",
+														label: "Is required?",
 														name: "propertyIsRequired",
 														value: false
 													}
@@ -148,7 +147,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 												{
 													type: "boolean",
 													inputParams: {
-														label: "Is exclude field?",
+														label: "Can be excluded?",
 														name: "propertyIsExcludeField",
 														value: false
 													}
@@ -207,7 +206,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 														label: "Type",
 														name: "relationType",
 														selectValues: ["zeroToOne", "zeroToMany", "manyToMany"],
-														selectOptions: ["0 .. 1","0 .. * (foreign Key)", "0 .. * (association table)"]
+														selectOptions: ["1:1","1:n", "m:n"]
 													}
 												}
 											]

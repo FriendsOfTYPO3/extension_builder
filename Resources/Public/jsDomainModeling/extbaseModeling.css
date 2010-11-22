@@ -5,13 +5,13 @@
 div.WireIt-Container {
 	position: relative;
 	z-index: 5;
-	opacity: 0.7;
-	filter: alpha(opacity = 70);
+	opacity: 0.9;
+	filter: alpha(opacity = 90);
 	font-size: 8pt;
 }
 
 div.WireIt-Container div.body {
-	border: 2px solid #585858;
+	border: 1px solid #999;
 }
 
 div.WireIt-Container-ddhandle {
@@ -20,8 +20,8 @@ div.WireIt-Container-ddhandle {
 
 div.WireIt-Container-focused {
 	z-index: 6;
-	opacity: 0.85;
-	filter: alpha(opacity = 85);
+	opacity: 0.9;
+	filter: alpha(opacity = 90);
 }
 
 #modelingLayer {
@@ -31,15 +31,11 @@ div.WireIt-Container-focused {
 #moduleBar {
 	width: 150px;
 	position: absolute;
-	top: 1px;
-	left: 500px;
 	z-index: 10;
 	cursor: move;
-	-moz-border-radius:5px;
-	-moz-box-shadow: white 0 0 5px 0;
-	border: 5px solid white;
-	background-color: white;
-	padding: 0;
+	padding: 3px;
+	-moz-border-radius:0px;
+	-moz-box-shadow: none;
 }
 
 div.WireIt-Layer {
@@ -48,8 +44,15 @@ div.WireIt-Layer {
 
 .WiringEditor-module {
 	cursor: move;
-	-moz-border-radius:5px;
-	margin: 0;
+	-moz-border-radius:0px;
+	background-color:#ccc;
+	font-size: 10pt;
+	font-weight: bold;
+	color: #333;
+	height:16px;
+	width:130px;
+	margin:5px;
+	padding:5px;
 }
 
 #toolbar {
@@ -63,6 +66,7 @@ div.WireIt-Layer {
 .yui-skin-sam .yui-layout .yui-layout-unit div.yui-layout-bd ,
 .yui-skin-sam .yui-layout .yui-layout-clip {
 	background-color: transparent;
+	border: none;
 }
 
 div#typo3-inner-docbody {
@@ -77,6 +81,23 @@ div#domainModelEditor {
 
 div.WireIt-Container {
 	width: 350px; /* Prevent the modules from scratching on the right */
+}
+
+
+div.WireIt-Container-ddhandle {
+	-moz-border-radius-topleft:0px;
+	-moz-border-radius-topright:0px;
+   	background-color: #ccc;
+	border: 1px solid #999;
+	color:white;
+	cursor:move;
+	font-size:10pt;
+	font-weight:bold;
+	height:22px;
+	line-height:150%;
+	padding-top:3px;
+	text-align:center;
+	width: auto;
 }
 
 div.WireIt-InputExTerminal {
@@ -100,7 +121,7 @@ div.WireIt-ImageContainer {
 div.Bubble div.body {
 	width: 70px;
 	height: 45px;
-	opacity: 0.8;
+	opacity: 0.9;
 	cursor: move;
 }
 
@@ -119,7 +140,7 @@ div.extbase-modelTitleEditor {
 	position: absolute;
 	top: -29px;
 	left: 50px;
-	color:white;
+	color: #333;
 	cursor:move;
 	font-size:10pt;
 	font-weight:bold;
@@ -133,6 +154,17 @@ div.WireIt-Container-ddhandle span {
 
 div.inputEx-InPlaceEdit-visu:hover {
 	background-color: #000000;
+}
+
+legend.inputEx-Group-legend {
+	color: #666;
+	font-weight:bold;
+}
+
+a.inputEx-List-link {
+	color: #F1A21B;
+	cursor:pointer;
+	margin-left:10px;
 }
 
 /*********** End of CSS code for inplaceEdit as container title ************/
