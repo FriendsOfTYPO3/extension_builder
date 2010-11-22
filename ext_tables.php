@@ -14,7 +14,7 @@ Tx_Extbase_Utility_Extension::registerModule(
 	'kickstarter',
 	'',
 	array(
-		'KickstarterModule' => 'index,domainmodelling,generateCode',
+		'KickstarterModule' => 'domainmodelling,index,generateCode',
 		'WriteScaffolding' => 'index,generateFiles'
 	),
 	array(
