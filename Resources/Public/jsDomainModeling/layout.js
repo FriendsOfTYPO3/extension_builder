@@ -5,12 +5,12 @@ extbaseModeling_wiringEditorLanguage.layoutOptions =
 	[
 		{
 			position: 'left',
-			width: 380,
+			width: 350,
 			resize: true,
 			body: 'left',
 			gutter: '5px',
 			collapse: true,
-			collapseSize: 25,
+			collapseSize: 20,
 			header: 'Extension Configuration',
 			scroll: true,
 			animate: false
