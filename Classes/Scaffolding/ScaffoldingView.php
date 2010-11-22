@@ -24,27 +24,41 @@
 class Tx_ExtbaseKickstarter_Scaffolding_ScaffoldingView extends Tx_Fluid_View_TemplateView {
 
 	/**
-	 * @var Tx_ExtbaseKickstarter_Service_CodeGenerator
-	 */
-	protected $codeGenerator;
-
-	/**
-	 * @var Tx_ExtbaseKickstarter_ObjectSchemaBuilder
-	 */
-	protected $objectSchemaBuilder;
-
-	/**
 	 * @var string
 	 */
 	protected $domainObjectName;
 
 	/**
-	 * Constructor. Initializes the object schema builder and the code generator.
+	 * @var Tx_ExtbaseKickstarter_ObjectSchemaBuilder
 	 */
-	public function __construct() {
-		parent::__construct();
-		$this->objectSchemaBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_ObjectSchemaBuilder');
-		$this->codeGenerator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_CodeGenerator');
+	protected $objectSchemaBuilder;
+	
+	/**
+	 * @var Tx_ExtbaseKickstarter_Service_CodeGenerator
+	 */
+	protected $codeGenerator;
+
+	public function initializeAction() {
+		if (Tx_ExtbaseKickstarter_Utility_Compatibility::compareFluidVersion('1.3.0', '<')) {
+			$this->objectSchemaBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_ObjectSchemaBuilder');
+			$this->codeGenerator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_CodeGenerator');
+		}
+	}
+
+	/**
+	 * @param Tx_ExtbaseKickstarter_ObjectSchemaBuilder $objectSchemaBuilder
+	 * @return void
+	 */
+	public function injectObjectSchemaBuilder(Tx_ExtbaseKickstarter_ObjectSchemaBuilder $objectSchemaBuilder) {
+		$this->objectSchemaBuilder = $objectSchemaBuilder;
+	}
+
+	/**
+	 * @param Tx_ExtbaseKickstarter_Service_CodeGenerator $codeGenerator
+	 * @return void
+	 */
+	public function injectCodeGenerator(Tx_ExtbaseKickstarter_Service_CodeGenerator $codeGenerator) {
+		$this->codeGenerator = $codeGenerator;
 	}
 
 	/**
