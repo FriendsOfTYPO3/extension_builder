@@ -25,13 +25,19 @@ div.WireIt-Container-focused {
 }
 
 #moduleBar {
-	width: 150px;
+	width: 160px;
 	position: absolute;
 	z-index: 10;
 	cursor: move;
 	padding: 3px;
 	-moz-border-radius:0px;
 	-moz-box-shadow: none;
+}
+
+#moduleBar .WiringEditor-module span {
+	font-size: 13px;
+	position: relative;
+	top: 0px;
 }
 
 div.WireIt-Layer {
