@@ -5,7 +5,7 @@ if (!defined ('TYPO3_MODE')) {
 <f:for each="{extension.plugin}" as="plugin">
 Tx_Extbase_Utility_Extension::registerPlugin(
 	$_EXTKEY,
-	'{plugin.key}',
+	'<k:uppercaseFirst>{plugin.key}</k:uppercaseFirst>',
 	'{plugin.name} ({extension.name})'
 );
 
@@ -38,4 +38,5 @@ $TCA['{domainObject.databaseTableName}'] = array(
 	)
 );
 </f:for>
+	
 ?>
