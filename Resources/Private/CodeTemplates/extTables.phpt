@@ -31,10 +31,10 @@ $TCA['{domainObject.databaseTableName}'] = array(
 		'transOrigDiffSourceField'	=> 'l18n_diffsource',
 		'delete'					=> 'deleted',
 		'enablecolumns'				=> array(
-			'disabled'		=> 'hidden'
+			'disabled'		=> 'hidden',
 		),
 		'dynamicConfigFile'			=> t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/{domainObject.name}.php',
-		'iconfile'					=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif'
+		'iconfile'					=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif',
 	)
 );
 </f:for>
