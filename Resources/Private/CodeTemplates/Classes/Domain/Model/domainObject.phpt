@@ -55,10 +55,11 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	 * Setter for {property.name}
 	 *
 	 * @param {property.typeForComment} ${property.name} {property.description}
-	 * @return void
+	 * @return {domainObject.className}
 	 */
 	public function set{property.name -> k:uppercaseFirst()}({property.typeHintWithTrailingWhiteSpace}${property.name}) {
 		$this->{property.name} = ${property.name};
+		return $this;
 	}
 
 	/**
