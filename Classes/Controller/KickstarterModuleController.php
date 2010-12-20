@@ -61,9 +61,9 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	protected $codeGenerator;
 
 	public function initializeAction() {
-		if (Tx_ExtbaseKickstarter_Utility_Compatibility::compareFluidVersion('1.2.0', '<')) {
-			$this->objectSchemaBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_ObjectSchemaBuilder');
-			$this->codeGenerator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_CodeGenerator');
+		if (!$this->objectSchemaBuilder instanceof Tx_ExtbaseKickstarter_ObjectSchemaBuilder) {
+			$this->injectObjectSchemaBuilder(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_ObjectSchemaBuilder'));
+			$this->injectCodeGenerator(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_CodeGenerator'));
 		}
 	}
 
@@ -148,22 +148,6 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 		closedir($extensionDirectoryHandle);
 
 		return $result;
-	}
-
-	/**
-	 * Adds items to the ->MOD_MENU array. Used for the function menu selector.
-	 *
-	 * @return	void
-	 */
-	function menuConfig()	{
-		$this->scBase->MOD_MENU = Array (
-			'function' => Array (
-				'1' => 'Menu 1',
-				'2' => 'Menu 2',
-				'3' => 'Menu 3',
-			)
-		);
-		$this->scBase->menuConfig();
 	}
 
 }

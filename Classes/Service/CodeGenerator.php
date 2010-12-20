@@ -52,15 +52,15 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	protected $extension;
 
 	public function __construct() {
-		if (Tx_ExtbaseKickstarter_Utility_Compatibility::compareFluidVersion('1.3.0', '<')) {
-			$this->templateParser = Tx_Fluid_Compatibility_TemplateParserBuilder::build();
+		if (!$this->templateParser instanceof Tx_Fluid_Core_Parser_TemplateParser) {
+			$this->injectTemplateParser(Tx_Fluid_Compatibility_TemplateParserBuilder::build());
+		}
 
-			if(Tx_ExtbaseKickstarter_Utility_Compatibility::compareFluidVersion('1.1.0', '<')) {
-				// Compatibility with Fluid 1.0
-				$this->objectManager = new Tx_Fluid_Compatibility_ObjectFactory();
-			} else {
-				$this->objectManager = new Tx_Fluid_Compatibility_ObjectManager();
-			}
+		if (	class_exists('Tx_Fluid_Compatibility_ObjectManager') &&
+				!$this->objectManager instanceof Tx_Fluid_Compatibility_ObjectManager) {
+			$this->objectManager = new Tx_Fluid_Compatibility_ObjectManager();
+		} elseif (!$this->objectManager instanceof Tx_Extbase_Object_ObjectManager) {
+			$this->injectObjectManager(new Tx_Extbase_Object_ObjectManager());
 		}
 	}
 
@@ -274,15 +274,8 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		$renderingContext = $this->objectManager->create('Tx_Fluid_Core_Rendering_RenderingContext');
 		$viewHelperVariableContainer = $this->objectManager->create('Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer');
 		
-		// FIXME the inject*() methods are not implemented, yet
-		//if(Tx_ExtbaseKickstarter_Utility_Compatibility::compareFluidVersion('1.3.0', '<')) {
-				// Compatibility with Fluid 1.2
-			$renderingContext->setTemplateVariableContainer($variableContainer);
-			$renderingContext->setViewHelperVariableContainer($viewHelperVariableContainer);
-		//} else {
-			//$renderingContext->injectTemplateVariableContainer($variableContainer);
-			//$renderingContext->injectViewHelperVariableContainer($viewHelperVariableContainer);
-		//}
+		$renderingContext->setTemplateVariableContainer($variableContainer);
+		$renderingContext->setViewHelperVariableContainer($viewHelperVariableContainer);
 
 		return $renderingContext;
 	}

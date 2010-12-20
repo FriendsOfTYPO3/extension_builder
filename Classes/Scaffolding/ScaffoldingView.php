@@ -39,9 +39,9 @@ class Tx_ExtbaseKickstarter_Scaffolding_ScaffoldingView extends Tx_Fluid_View_Te
 	protected $codeGenerator;
 
 	public function initializeAction() {
-		if (Tx_ExtbaseKickstarter_Utility_Compatibility::compareFluidVersion('1.3.0', '<')) {
-			$this->objectSchemaBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_ObjectSchemaBuilder');
-			$this->codeGenerator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_CodeGenerator');
+		if (!$this->objectSchemaBuilder instanceof Tx_ExtbaseKickstarter_ObjectSchemaBuilder) {
+			$this->injectCodeGenerator(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_CodeGenerator'));
+			$this->injectObjectSchemaBuilder(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_ObjectSchemaBuilder'));
 		}
 	}
 
