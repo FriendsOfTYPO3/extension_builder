@@ -40,8 +40,8 @@ class Tx_ExtbaseKickstarter_Controller_WriteScaffoldingController extends Tx_Ext
 	protected $codeGenerator;
 
 	public function initializeAction() {
-		if (Tx_ExtbaseKickstarter_Utility_Compatibility::compareFluidVersion('1.3.0', '<')) {
-			$this->codeGenerator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_CodeGenerator');
+		if (!$this->codeGenerator instanceof Tx_ExtbaseKickstarter_Service_CodeGenerator) {
+			$this->injectCodeGenerator(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_CodeGenerator'));
 		}
 	}
 
@@ -98,9 +98,6 @@ class Tx_ExtbaseKickstarter_Controller_WriteScaffoldingController extends Tx_Ext
 	 * @param string $controllerName
 	 */
 	public function generateFilesAction($extensionKey, $controllerName) {
-		if (Tx_ExtbaseKickstarter_Utility_Compatibility::compareFluidVersion('1.3.0', '<')) {
-			$objectSchemaBuilder = $this->objectSchemaBuilder;
-		}
 		$objectSchemaBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_ObjectSchemaBuilder');
 
 		$domainObjectName = substr($controllerName, 0, -10);
