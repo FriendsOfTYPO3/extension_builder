@@ -324,6 +324,9 @@ WireIt.WiringEditor.prototype = {
 
     var deleteButton = new widget.Button({ label:"Delete", id:"WiringEditor-deleteButton", container: toolbar });
     deleteButton.on("click", this.onDelete, this, true);
+
+    var helpButton = new widget.Button({ label:"Help", id:"WiringEditor-helpButton", container: toolbar });
+    helpButton.on("click", this.onHelp, this, true);
  },
 
 	/**
@@ -448,7 +451,6 @@ WireIt.WiringEditor.prototype = {
   * @method onSave
   */
  onSave: function() {
-	 console.log('save');
     this.saveModule();
  },
 

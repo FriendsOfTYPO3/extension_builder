@@ -26,7 +26,7 @@
  ***************************************************************/
 
 require_once('BaseTestCase.php');
-class  Tx_ExtbaseKickstarter_Domain_Model_Person_testcase extends Tx_ExtbaseKickstarter_BaseTestCase {
+class  Tx_ExtbaseKickstarter_Domain_Model_PersonTest extends Tx_ExtbaseKickstarter_BaseTestCase {
 
 	protected $person;
 
@@ -38,7 +38,7 @@ class  Tx_ExtbaseKickstarter_Domain_Model_Person_testcase extends Tx_ExtbaseKick
 	 * @test
 	 */
 	function GettersSettersTest () {
-		$name="Christoph Dähne";
+		$name="Christoph Dï¿½hne";
 		$role="Tester";
 		$email="e@mail.com";
 		$company="none";
@@ -55,4 +55,5 @@ class  Tx_ExtbaseKickstarter_Domain_Model_Person_testcase extends Tx_ExtbaseKick
 
 	}
 }
+
 ?>

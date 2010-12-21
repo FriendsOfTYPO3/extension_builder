@@ -35,6 +35,12 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	 * @var string
 	 */
 	protected $name;
+	
+	/**
+	 * 
+	 * @var string
+	 */
+	protected $uniqueIdentifier = NULL;
 
 	/**
 	 * Description of the domain object
@@ -98,6 +104,24 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 
 	public function getDatabaseTableName() {
 		return 'tx_' . strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey())) . '_domain_model_' . strtolower($this->getName());
+	}
+	
+	/**
+	 * Get property uniqueIdentifier
+	 *
+	 * @return string
+	 */
+	public function getUniqueIdentifier() {
+		return $this->uniqueIdentifier;
+	}
+	
+	/**
+	 * Set property uniqueIdentifier
+	 * 
+	 * @param string Property uniqueIdentifier
+	 */
+	public function setUniqueIdentifier($uniqueIdentifier) {
+		$this->uniqueIdentifier = $uniqueIdentifier;
 	}
 	
 	/**
@@ -166,9 +190,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	
 	/**
 	 * Adding a new property
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty $property The new property to add
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty $property The new property to add
 	 */
-	public function addProperty(Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty $property) {
+	public function addProperty(Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty $property) {
 		$property->setDomainObject($this);
 		$this->properties[] = $property;
 	}
@@ -182,6 +206,19 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	}
 	
 	/**
+	 * Get property
+	 * @return object <Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty>
+	 */
+	public function getPropertyByName($propertyName) {
+		foreach($this->properties as $property){
+			if($property->getName() == $propertyName){
+				return $property;
+			}
+		}
+		return NULL;
+	}
+	
+	/**
 	 * Get all properties holding relations of type Property_Relation_ZeroToManyRelation
 	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToManyRelation>
 	 */
@@ -189,6 +226,20 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 		$relationProperties = array();
 		foreach ($this->properties as $property) {
 			if (is_a($property, 'Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToManyRelation')) {
+				$relationProperties[] = $property;
+			}
+		}
+		return $relationProperties;
+	}	
+	
+	/**
+	 * Get all properties holding relations of type Property_Relation_AnyToManyRelation
+	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_anyToManyRelation>
+	 */
+	public function getAnyToManyRelationProperties() {
+		$relationProperties = array();
+		foreach ($this->properties as $property) {
+			if (is_subclass_of($property, 'Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AnyToManyRelation')) {
 				$relationProperties[] = $property;
 			}
 		}

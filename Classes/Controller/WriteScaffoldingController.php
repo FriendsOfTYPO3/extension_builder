@@ -152,4 +152,5 @@ class Tx_ExtbaseKickstarter_Controller_WriteScaffoldingController extends Tx_Ext
 		file_put_contents($pathAndFileName, $output);
 	}
 }
+
 ?>

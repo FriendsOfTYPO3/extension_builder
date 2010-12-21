@@ -242,16 +242,16 @@ lang.extend(WireIt.TerminalProxy, util.DDProxy, {
       
       if(this.terminal.container) {
          var obj = this.terminal.container.layer.el;
-         var curleft = curtop = 0;
+         var curleft = 0;
+         var curtop = 0;
         	if (obj.offsetParent) {
         		do {
-        			curleft += obj.offsetLeft;
-        			curtop += obj.offsetTop;
+                    curleft += obj.scrollLeft;
+                    curtop += obj.scrollTop;
         			obj = obj.offsetParent ;
-        		} while ( obj = obj.offsetParent );
+        		} while ( obj );
         	}
-         this.fakeTerminal.pos = [e.clientX-curleft+this.terminal.container.layer.el.scrollLeft,
-                                  e.clientY-curtop+this.terminal.container.layer.el.scrollTop];
+         this.fakeTerminal.pos = [e.clientX+curleft, e.clientY+curtop];
       }
       else {
          this.fakeTerminal.pos = (YAHOO.env.ua.ie) ? [e.clientX, e.clientY] : [e.clientX+window.pageXOffset, e.clientY+window.pageYOffset];

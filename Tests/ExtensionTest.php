@@ -29,10 +29,10 @@ require_once('BaseTestCase.php');
 /**
  * TODO testcase doesn't cover whole class 
  * 
- * @author Christoph Dähen
+ * @author Christoph Dï¿½hen
  *
  */
-class  Tx_ExtbaseKickstarter_Domain_Model_Extension_testcase extends Tx_ExtbaseKickstarter_BaseTestCase {
+class  Tx_ExtbaseKickstarter_Domain_Model_ExtensionTest extends Tx_ExtbaseKickstarter_BaseTestCase {
 
 	protected $persons = array();
 	protected $extension;
@@ -73,4 +73,5 @@ class  Tx_ExtbaseKickstarter_Domain_Model_Extension_testcase extends Tx_ExtbaseK
 		
 	}
 }
+
 ?>

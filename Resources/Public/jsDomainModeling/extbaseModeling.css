@@ -2,6 +2,10 @@
 	border:none;
 }
 
+.yui-layout-unit-left  {
+	background-color:#EEE;
+}
+
 div.WireIt-Container {
 	position: absolute;
 	z-index: 5;
@@ -167,6 +171,51 @@ a.inputEx-List-link {
 	color: #F1A21B;
 	cursor:pointer;
 	margin-left:10px;
+}
+
+div.hiddenField {
+	display:none;
+}
+
+div.propertyGroup,div.relationGroup  {
+	border:1px solid #BBB;
+	margin-bottom:8px;
+	padding:6px;
+}
+
+div#wireEditorMessageBox {
+	padding:0 15px 15px;
+	min-width:200px;
+}
+
+div#wireEditorMessageBox .error {
+	color:red;
+	font-weight:bold;
+}
+
+div.WireIt-InputExTerminal {
+	float: left;
+	width: 21px;
+	height: 21px;
+	position: absolute;
+	top:-20px;
+}
+
+div.terminalFieldWrap {
+    display: none;
+}
+
+
+input[disabled] {
+	display:none;
+}
+
+div.WireIt-InputExTerminal div.WireIt-Terminal {
+	top: -3px;
+	left: -7px;
+}
+div.inputEx-Group div.inputEx-label {
+	width:100px;
 }
 
 /*********** End of CSS code for inplaceEdit as container title ************/

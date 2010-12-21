@@ -9,7 +9,7 @@
 *  This script is part of the TYPO3 project. The TYPO3 project is
 *  free software; you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
+*  the Free Software Foundation; either version 3 of the License, or
 *  (at your option) any later version.
 *
 *  The GNU General Public License can be found at
@@ -38,28 +38,41 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	 * {property.validateAnnotation}</f:if>
 	 */
 	protected ${property.name};
-	</f:for><k:removeNewlines><f:if condition="{domainObject.zeroToManyRelationProperties}">
+	</f:for><k:removeNewlines><f:if condition="{domainObject.AnyToManyRelationProperties}">
 	/**
-	 * The constructor. Initializes all Tx_Extbase_Persistence_ObjectStorage instances.
+	 * The constructor.
 	 */
 	public function __construct() {
+		//Do not remove the next line: It would break the functionality
+		$this->initStorageObjects();
+	}
+	
+	/**
+	 * Initializes all Tx_Extbase_Persistence_ObjectStorage instances.
+	 *
+	 */
+	protected function initStorageObjects(){
+		/**
+		* Do not modify this method!
+		* It will be rewritten on each save in the kickstarter
+		* You may modify the constructor of this class instead
+		*/
 		<k:removeNewlines>
-		<f:for each="{domainObject.zeroToManyRelationProperties}" as="property">
+		<f:for each="{domainObject.AnyToManyRelationProperties}" as="property">
 		$this->{property.name} = new Tx_Extbase_Persistence_ObjectStorage();
 		</f:for>
 		</k:removeNewlines>
-	}
+	} 
 	
 	</f:if></k:removeNewlines><f:for each="{domainObject.properties}" as="property">
 	/**
 	 * Setter for {property.name}
 	 *
 	 * @param {property.typeForComment} ${property.name} {property.description}
-	 * @return {domainObject.className}
+	 * @return void
 	 */
 	public function set{property.name -> k:uppercaseFirst()}({property.typeHintWithTrailingWhiteSpace}${property.name}) {
 		$this->{property.name} = ${property.name};
-		return $this;
 	}
 
 	/**
@@ -96,8 +109,8 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	 * @param {property.foreignClass.className} the {property.foreignClass.name -> k:uppercaseFirst()} to be removed
 	 * @return void
 	 */
-	public function remove{property.name->k:singularize()->k:uppercaseFirst()}({property.foreignClass.className} ${property.name->k:singularize()}) {
-		$this->{property.name}->detach(${property.name -> k:singularize()});
+	public function remove{property.name->k:singularize()->k:uppercaseFirst()}({property.foreignClass.className} ${property.name->k:singularize()}ToRemove) {
+		$this->{property.name}->detach(${property.name -> k:singularize()}ToRemove);
 	}
 	</f:if></f:for>
 }

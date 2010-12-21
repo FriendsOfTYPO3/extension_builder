@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Ingmar Schlecht
+*  (c) 2010 Nico de Haen, Ingmar Schlecht, Stephan Petzl
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -23,13 +23,13 @@
 ***************************************************************/
 
 /**
- * Base class for all properties in the object schema.
+ * property representing a "property" in the context of software development
  *
  * @package ExtbaseKickstarter
  * @version $ID:$
  */
-abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
-	
+abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty {
+
 	/**
 	 * Reserved words by TYPO3 and MySQL
 	 * @var array
@@ -168,6 +168,12 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	);
 	
 	/**
+	 * 
+	 * @var string
+	 */
+	protected $uniqueIdentifier;
+	
+	/**
 	 * Name of the property
 	 * @var string
 	 */
@@ -178,44 +184,38 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	 * @var string
 	 */
 	protected $description;
-	
+
 	/**
 	 * Whether the property is required
 	 * @var boolean
 	 */
 	protected $required;
 
-	/**
-	 * Whether the property is an exclude field
-	 * @var boolean
-	 */
-	protected $excludeField;
 
 	/**
 	 * The domain object this property belongs to.
 	 * @var Tx_ExtbaseKickstarter_Domain_Model_DomainObject
 	 */
-	protected $domainObject;
+	protected $class;
 
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
 	 *
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject the domain object this property belongs to
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_Class_Schema $class the class this property belongs to
 	 */
-	public function setDomainObject(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
-		$this->domainObject = $domainObject;
+	public function setClass(Tx_ExtbaseKickstarter_Domain_Model_Class_Schema $class) {
+		$this->class = $class;
 	}
 
 	/**
 	 * Get the domain object this property belongs to.
 	 *
-	 * @return Tx_ExtbaseKickstarter_Domain_Model_DomainObject
+	 * @return Tx_ExtbaseKickstarter_Domain_Model_Class_Schema
 	 */
-	public function getDomainObject() {
-		return $this->domainObject;
+	public function getClass() {
+		return $this->class;
 	}
-
-
+	
 	/**
 	 * Get property name
 	 *
@@ -233,27 +233,50 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	public function setName($name) {
 		$this->name = $name;
 	}
-
+	
 	/**
-	 * Returns a field name used in the database. This is the property name converted 
-	 * to lowercase underscore (mySpecialProperty -> my_special_property).
+	 * Get property uniqueIdentifier
 	 *
-	 * @return string the field name in lowercase underscore
+	 * @return string
 	 */
-	public function getFieldName() {
-		$fieldName = Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($this->name);
-		if (in_array($fieldName, $this->reservedWords)) {
-			$fieldName = $this->domainObject->getExtension()->getShorthandForTypoScript() . '_' . $fieldName;
-		}
-		return $fieldName;
+	public function getUniqueIdentifier() {
+		return $this->uniqueIdentifier;
 	}
+	
+	/**
+	 * Set property uniqueIdentifier
+	 * 
+	 * @param string Property uniqueIdentifier
+	 */
+	public function setUniqueIdentifier($uniqueIdentifier) {
+		$this->uniqueIdentifier = $uniqueIdentifier;
+	}
+	
+	/**
+	 * 
+	 * @return boolean true (if property is of type relation any to many)
+	 */
+	public function isAnyToManyRelation(){
+		return is_subclass_of($this, 'Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AnyToManyRelation');
+	}
+	
 
 	/**
-	 * Get SQL Definition to be used inside CREATE TABLE.
-	 *
-	 * @retrun string the SQL definition
+	 * 
+	 * @return boolean true (if property is of type relation)
 	 */
-	abstract public function getSqlDefinition();
+	public function isRelation(){
+		return is_subclass_of($this, 'Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRelation');
+	}
+	
+	/**
+	 * 
+	 * @return boolean true (if property is of type boolean)
+	 */
+	public function isBoolean(){
+		return is_a($this, 'Tx_ExtbaseKickstarter_Domain_Model_Property_BooleanProperty');
+	}
+	
 
 	/**
 	 * Get property description to be used in comments
@@ -276,6 +299,28 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	public function setDescription($description) {
 		$this->description = $description;
 	}
+	/**
+	 * Returns a field name used in the database. This is the property name converted
+	 * to lowercase underscore (mySpecialProperty -> my_special_property).
+	 *
+	 * @return string the field name in lowercase underscore
+	 */
+	public function getFieldName() {
+		$fieldName = Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($this->name);
+		if (in_array($fieldName, $this->reservedWords)) {
+			$fieldName = $this->domainObject->getExtension()->getShorthandForTypoScript() . '_' . $fieldName;
+		}
+		return $fieldName;
+	}
+
+	/**
+	 * Get SQL Definition to be used inside CREATE TABLE.
+	 *
+	 * @retrun string the SQL definition
+	 */
+	abstract public function getSqlDefinition();
+
+
 
 	/**
 	 * Template Method which should return the type hinting information
@@ -293,7 +338,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	 * @return string
 	 */
 	abstract public function getTypeHint();
-
+	
 	/**
 	 * Get PHP type hint with a single trailing whitespace appended if needed, or if no type hint is set, omit this trailing whitespace.
 	 *
@@ -307,7 +352,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 
 	/**
 	 * TRUE if this property is required, FALSE otherwise.
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function getRequired() {
@@ -322,7 +367,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	public function setRequired($required) {
 		$this->required = $required;
 	}
-
+	
 	/**
 	 * Set whether this property is exclude field
 	 *
@@ -332,7 +377,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	public function setExcludeField($excludeField) {
 		$this->excludeField = $excludeField;
 	}
-
+	
 	/**
 	 * TRUE if this property is an exclude field, FALSE otherwise.
 	 *
@@ -356,7 +401,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 
 	/**
 	 * Get the data type of this property. This is the last part after Tx_ExtbaseKickstarter_Domain_Model_Property_*
-	 * 
+	 *
 	 * @return string the data type of this property
 	 */
 	public function getDataType() {
@@ -389,6 +434,32 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
 	public function getLabelNamespace() {
 		return $this->domainObject->getLabelNamespace() . '.' . $this->getFieldName();
 	}
+	/**
+	 *
+	 * @param string $propertyName
+	 * @return void
+	 */
+	public function __construct($propertyName){
+		$this->name = $propertyName;
+	}
+
+	/**
+	 * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
+	 *
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject the domain object this property belongs to
+	 */
+	public function setDomainObject(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
+		$this->domainObject = $domainObject;
+	}
+	
+	/**
+	 * 
+	 * @return Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject
+	 */
+	public function getDomainObject() {
+		return $this->domainObject;
+	}
+	
 }
 
 ?>

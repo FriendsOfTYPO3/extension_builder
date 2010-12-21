@@ -1,4 +1,5 @@
 extbaseModeling_wiringEditorLanguage.modules.push(
+	
 	{
 		name: "New Model Object",
 		container: {	// Configuration according to WireIt.Container.options
@@ -7,17 +8,20 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 			preventSelfWiring: false,
 			fields: [
 				{
-					type: "inplaceedit",
+					type: "inplaceedit", 
 					inputParams: {
 						name: "name",
 						className: "inputEx-Field extbase-modelTitleEditor",
 						editorField:{
 							type: "string",
-							inputParams: {}
-						},
-						animColors: {from: "#7a7a7a" , to: "#585858"}
+							inputParams: {
+								required	: true
+							}
+						}, 
+						animColors: {from: "#000000" , to: "#5C85D6"}
 					}
-				}, {
+				},
+				{
 					type: "group",
 					inputParams: {
 						collapsible: true,
@@ -26,24 +30,30 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 						name: "objectsettings",
 						fields: [
 							{
-								type: "select",
 								inputParams: {
-									label: "Object Type",
-									name: "type",
+									name: "uid", 
+									className:'hiddenField'
+								}
+							},
+							{
+								type: "select", 
+								inputParams: {
+									label: "Object Type", 
+									name: "type", 
 									selectValues: ["Entity", "ValueObject"],
 									selectOptions: ["Entity", "Value Object"]
 								}
 							},
 							{
-								type: "boolean",
+								type: "boolean", 
 								inputParams: {
-									label: "Is aggregate root?",
+									label: "Is aggregate root?", 
 									name: "aggregateRoot",
 									value: false
 								}
 							},
 							{
-								type: "string",
+								type: "string", 
 								inputParams: {
 									label: "Description",
 									name: "description",
@@ -62,16 +72,16 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 						name: "actionGroup",
 						fields: [
 							{
-								type: "list",
+								type: "list", 
 								inputParams: {
 									label: "",
 									name: "actions",
 									sortable: false,
 									elementType: {
-										type: "select",
+										type: "select", 
 										inputParams: {
-											label: "Action Type",
-											name: "actionType",
+											label: "Action Type", 
+											name: "actionType", 
 											selectValues: ["list", "edit", "create"]
 										}
 									}
@@ -89,7 +99,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 						name: "propertyGroup",
 						fields: [
 							{
-								type: "list",
+								type: "list", 
 								inputParams: {
 									label: "",
 									name: "properties",
@@ -99,19 +109,27 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 										type: "group",
 										inputParams: {
 											name: "property",
+											className: "propertyGroup",
 											fields: [
 												{
-													inputParams: {
-														label: "Property Name",
-														name: "propertyName",
-														required: false
+													type: "hidden",
+														inputParams: {
+														name: "uid",
+														className:'hiddenField'
 													}
 												},
 												{
-													type: "select",
 													inputParams: {
-														label: "Property Type",
-														name: "propertyType",
+														label: "Property Name", 
+														name: "propertyName",
+														required: true
+													}
+												},
+												{
+													type: "select", 
+													inputParams: {
+														label: "Property Type", 
+														name: "propertyType", 
 														selectValues: [
 															"String",
 															"Text",
@@ -120,7 +138,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 															"Boolean",
 															"DateTime",
 															"Select"
-														],
+														], 
 														selectOptions: [
 															"String",
 															"Text",
@@ -133,15 +151,18 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 													}
 												},
 												{
+													type:'text',
 													inputParams: {
-														label: "Description",
-														name: "propertyDescription"
+														label: "Description", 
+														name: "propertyDescription",
+														cols:20,
+														rows:1
 													}
 												},
 												{
 													type: "boolean",
 													inputParams: {
-														label: "Is required?",
+														label: "Is Required?", 
 														name: "propertyIsRequired",
 														value: false
 													}
@@ -149,7 +170,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 												{
 													type: "boolean",
 													inputParams: {
-														label: "Can be excluded?",
+														label: "Is ExcludeField?", 
 														name: "propertyIsExcludeField",
 														value: false
 													}
@@ -171,7 +192,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 						name: "relationGroup",
 						fields: [
 							{
-								type: "list",
+								type: "list", 
 								inputParams: {
 									label: "",
 									name: "relations",
@@ -180,25 +201,52 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 										type: "group",
 										inputParams: {
 											name: "relation",
+											className: "relationGroup",
 											fields: [
 												{
-													type: "string",
-													inputParams: {
-														label: "Name",
-														name: "relationName",
-														required: false
+													type: "hidden",
+														inputParams: {
+														name: "uid",
+														className:'hiddenField'
 													}
 												},
 												{
-													type: "string",
+													type: "string", 
 													inputParams: {
-														label: "Related Object",
-														name: "relationWire",
-														required: false,
+														label: "Name", 
+														name: "relationName", 
+														required: true
+													}
+												},
+												{
+													type: "boolean",
+													inputParams: {
+														label: "Is ExcludeField?", 
+														name: "propertyIsExcludeField",
+														value: false
+													}
+												},
+												{
+													type: "text", 
+													inputParams: {
+														label: "Description", 
+														name: "relationDescription", 
+														required: false, 
+														cols:20,
+														rows:1
+													}
+												},
+												{
+													type: "string", 
+													inputParams: {
+														label: "", 
+														name: "relationWire", 
+														required: false, 
 														wirable: true,
+														className: 'terminalFieldWrap',
 														ddConfig: {
-															type: "input",
-															allowedTypes: ["output", "input"]
+													 		type: "input",
+													 		allowedTypes: ["output", "input"]
 														}
 													}
 												},
@@ -209,14 +257,6 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 														name: "relationType",
 														selectValues: ["zeroToOne", "zeroToMany", "manyToMany"],
 														selectOptions: ["1:1","1:n", "m:n"]
-													}
-												},
-												{
-													type: "boolean",
-													inputParams: {
-														label: "Edit inline?",
-														name: "inlineEditing",
-														value: false
 													}
 												}
 											]
@@ -234,7 +274,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 					direction: [0,-1],
 					offsetPosition: {
 						left: 20,
-						top: -15
+						top: -15 
 					},
 					ddConfig: {
 						type: "output",
@@ -244,4 +284,5 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 			]
 		}
 	}
+		  	
 );
