@@ -31,8 +31,7 @@
  * @package ExtbaseKickstarter
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_Property_BooleanProperty extends Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
-
+class Tx_ExtbaseKickstarter_Domain_Model_Property_BooleanProperty extends Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty {
 	public function getTypeForComment() {
 		return 'boolean';
 	}

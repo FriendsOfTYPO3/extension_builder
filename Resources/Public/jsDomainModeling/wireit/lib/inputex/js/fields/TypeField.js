@@ -360,7 +360,7 @@ if(inputEx.SliderField) {
    ]);
 }
 
-if(inputEx.ListField) {
+if(inputEx.ListField && typeof inputEx.ListField.superclass.constructor.groupOptions != 'undefined') {
    inputEx.ListField.groupOptions = inputEx.ListField.superclass.constructor.groupOptions.concat([
       { type: 'string', inputParams: {label: 'List label', name: 'listLabel', value: ''}},
       { type: 'type', inputParams: {label: 'List element type', required: true, name: 'elementType'} }

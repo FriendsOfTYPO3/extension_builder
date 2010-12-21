@@ -31,8 +31,7 @@
  * @package ExtbaseKickstarter
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_Property_FloatProperty extends Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
-
+class Tx_ExtbaseKickstarter_Domain_Model_Property_FloatProperty extends Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty {
 	public function getTypeForComment() {
 		return 'float';
 	}

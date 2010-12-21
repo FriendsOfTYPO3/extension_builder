@@ -31,20 +31,49 @@
  * @package ExtbaseKickstarter
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_Singleton {
+class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_singleton {
+	
+	/**
+	 * 
+	 * @param array $jsonArray
+	 * @return $extension
+	 */
 	public function build(array $jsonArray) {
 		$extension = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Extension');
 		$globalProperties = $jsonArray['properties'];
-		if (!is_array($globalProperties)) throw new Exception('Wrong 1');
+		if (!is_array($globalProperties)){
+			throw new Exception('Extension properties not submitted!');
+		}
 
-			// name
+		// name
 		$extension->setName($globalProperties['name']);
-			// description
+		// description
 		$extension->setDescription($globalProperties['description']);
-			// extensionKey
+		// extensionKey
 		$extension->setExtensionKey($globalProperties['extensionKey']);
+
+		if(!empty($globalProperties['originalExtensionKey'])){
+			// original extensionKey
+			$extension->setOriginalExtensionKey($globalProperties['originalExtensionKey']);
+		}
+
+		if(!empty($globalProperties['originalExtensionKey']) && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()){
+			$settings = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getExtensionSettings($extension->getOriginalExtensionKey());
+			copy(Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getSettingsFile($extension->getOriginalExtensionKey()),Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getSettingsFile($extension->getExtensionKey()));
+		}
+		else {
+			$settings = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getExtensionSettings($extension->getExtensionKey());	
+		}
+
+		if(!empty($settings)){
+			$extension->setSettings($settings);
+			//t3lib_div::devlog('settings','extbase',0,$extension->getSettings());
+		}
 		
-		foreach ($globalProperties['persons'] as $personValues) {
+			// version
+		$extension->setVersion($globalProperties['version']);
+		
+		foreach($globalProperties['persons'] as $personValues) {
 			$person=t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Person');
 			$person->setName($personValues['name']);
 			$person->setRole($personValues['role']);
@@ -52,7 +81,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_Singleton {
 			$person->setCompany($personValues['company']);
 			$extension->addPerson($person);
 		}
-
+		
 		foreach ($globalProperties['plugins'] as $pluginValues) {
 			$plugin = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Plugin');
 			$plugin->setName($pluginValues['name']);
@@ -95,19 +124,23 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_Singleton {
 		if (is_array($jsonArray['wires'])) {
 			foreach ($jsonArray['wires'] as $wire) {
 				$relationJsonConfiguration = $jsonArray['modules'][$wire['src']['moduleId']]['value']['relationGroup']['relations'][substr($wire['src']['terminal'], 13)];
-				if (!is_array($relationJsonConfiguration)) throw new Exception('Error. Relation JSON config was not found');
-
+				if (!is_array($relationJsonConfiguration)){
+					t3lib_div::devlog('jsonArray:','extbase_kickstarter',3,$jsonArray);
+					throw new Exception('Error. Relation JSON config was not found','extbase_kickstarter');
+				}
 				if ($wire['tgt']['terminal'] !== 'SOURCES') throw new Exception('Connections to other places than SOURCES not supported.');
 
 				$foreignClassName = $jsonArray['modules'][$wire['tgt']['moduleId']]['value']['name'];
 				$localClassName = $jsonArray['modules'][$wire['src']['moduleId']]['value']['name'];
 
 				$relationSchemaClassName = 'Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_' . ucfirst($relationJsonConfiguration['relationType']) . 'Relation';
-
+				
 				if (!class_exists($relationSchemaClassName)) throw new Exception('Relation of type ' . $relationSchemaClassName . ' not found');
 				$relation = new $relationSchemaClassName;
 				$relation->setName($relationJsonConfiguration['relationName']);
 				$relation->setInlineEditing((bool)$relationJsonConfiguration['inlineEditing']);
+				$relation->setDescription($relationJsonConfiguration['relationDescription']);
+				$relation->setUniqueIdentifier($relationJsonConfiguration['uid']);
 				$relation->setForeignClass($extension->getDomainObjectByName($foreignClassName));
 
 				$extension->getDomainObjectByName($localClassName)->addProperty($relation);
@@ -119,6 +152,8 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_Singleton {
 
 	protected function buildDomainObject(array $jsonDomainObject) {
 		$domainObject = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject');
+		$domainObject->setUniqueIdentifier($jsonDomainObject['objectsettings']['uid']);
+		
 		$domainObject->setName($jsonDomainObject['name']);
 		$domainObject->setDescription($jsonDomainObject['objectsettings']['description']);
 		if ($jsonDomainObject['objectsettings']['type'] === 'Entity') {
@@ -126,7 +161,6 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_Singleton {
 		} else {
 			$domainObject->setEntity(FALSE);
 		}
-
 		$domainObject->setAggregateRoot($jsonDomainObject['objectsettings']['aggregateRoot']);
 
 		foreach ($jsonDomainObject['propertyGroup']['properties'] as $jsonProperty) {
@@ -134,6 +168,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_Singleton {
 			$propertyClassName = 'Tx_ExtbaseKickstarter_Domain_Model_Property_' . $propertyType . 'Property';
 			if (!class_exists($propertyClassName)) throw new Exception('Property of type ' . $propertyType . ' not found');
 			$property = t3lib_div::makeInstance($propertyClassName);
+			$property->setUniqueIdentifier($jsonProperty['uid']);
 			$property->setName($jsonProperty['propertyName']);
 			$property->setDescription($jsonProperty['propertyDescription']);
 
@@ -224,4 +259,5 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_Singleton {
 		}
 	}
 }
+
 ?>

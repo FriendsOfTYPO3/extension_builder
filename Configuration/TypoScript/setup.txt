@@ -1,0 +1,24 @@
+ # Module configuration
+module.tx_extbasekickstarter {
+	
+	settings {
+		
+		classBuilder {
+				
+			Controller {
+				parentClass = {$module.tx_extbasekickstarter.settings.classBuilder.Controller.parentClass}
+			}
+			
+			Modell {
+				
+				entityParentClass = {$module.tx_extbasekickstarter.settings.classBuilder.Model.entityParentClass}
+				
+				valueObjectParentClass = {$module.tx_extbasekickstarter.settings.classBuilder.Model.valueObjectParentClass}
+			}
+		}
+		
+		#codeTemplateRootPath = fileadmin/templates/kickstarter/CodeTemplates/
+	}
+	
+	
+}

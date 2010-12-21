@@ -15,7 +15,7 @@ Tx_Extbase_Utility_Extension::registerModule(
 	'',
 	array(
 		'KickstarterModule' => 'domainmodelling,index,generateCode',
-		'WriteScaffolding' => 'index,generateFiles'
+		'WriteScaffolding' => 'index,generateFiles',
 	),
 	array(
 		'access' => 'user,group',
@@ -23,4 +23,7 @@ Tx_Extbase_Utility_Extension::registerModule(
 		'labels' => 'LLL:EXT:extbase_kickstarter/Resources/Private/Language/locallang_mod.xml',
 	)
 );
+
+t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', $_EXTKEY);
+
 ?>

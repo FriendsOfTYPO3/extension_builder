@@ -31,7 +31,7 @@
  * @package ExtbaseKickstarter
  * @version $ID:$
  */
-abstract class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRelation extends Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty {
+abstract class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRelation extends Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty {
 
 	/**
 	 * The schema of the foreign class
@@ -52,7 +52,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRela
 	public function getForeignClass() {
 		return $this->foreignClass;
 	}
-	
+
 	/**
 	 *
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $foreignClass Set the foreign class of the relation
@@ -70,7 +70,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRela
 	public function setInlineEditing($inlineEditing) {
 		$this->inlineEditing = (bool) $inlineEditing;
 	}
-	
+
 	/**
 	 * Returns the state of the flag, if the relation should be rendered as IRRE field.
 	 *

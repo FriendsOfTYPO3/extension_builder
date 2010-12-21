@@ -74,7 +74,7 @@ WireIt.WiringEditor = function(options) {
      * @property el
      */
     this.el = Dom.get(options.parentEl);
-
+    
     /**
      * @property helpPanel
      * @type {YAHOO.widget.Panel}
@@ -86,6 +86,30 @@ WireIt.WiringEditor = function(options) {
         modal: true
      });
      this.helpPanel.render();
+     
+     this.alertPanel = new widget.Panel('alertPanel', {
+         fixedcenter: true,
+         draggable: true,
+         visible: false,
+         modal: true
+      });
+     this.alertPanel.setBody("<div id='wireEditorMessageBox'></div>");
+     this.alertPanel.render(document.body);
+     
+     this.showSpinnerPanel = new YAHOO.widget.Panel("wait",  
+ 			{ width:"240px", 
+ 			  fixedcenter:true, 
+ 			  close:false, 
+ 			  draggable:false, 
+ 			  zindex:4,
+ 			  modal:true,
+ 			  visible:false
+ 			} 
+ 		);
+
+     this.showSpinnerPanel.setHeader("Saving, please wait...");
+     this.showSpinnerPanel.setBody('<img src="'+ TYPO3.settings.kickstarter.baseUrl + 'Resources/Public/jsDomainModeling/wireit/images/loading.gif" />');
+     this.showSpinnerPanel.render(document.body);
 
     
     /**
@@ -96,31 +120,31 @@ WireIt.WiringEditor = function(options) {
     this.layout.render();
 
     	// collapse right
-//    this.layout.getUnitById('right').collapse();
-	//this.layout.getUnitById('right').close();
-//    this.layout.getUnitById('right').set('animate', true, false);
+   // this.layout.getUnitById('right').collapse();
+   // this.layout.getUnitById('right').set('animate', true, false);
 
     	// collapse left
     this.layout.getUnitById('left').collapse();
     this.layout.getUnitById('left').set('animate', true, false);
-    
+   /** 
     	// register events to collapse the other one if this is expanded
-//    this.layout.getUnitById('right').subscribe(
-//    	'beforeExpand',
-//    	function() {
-//    	    this.layout.getUnitById('left').collapse();
-//    	},
-//    	this,
-//    	this
-//    )
-//    this.layout.getUnitById('left').subscribe(
-//    	'beforeExpand',
-//    	function() {
-////    	    this.layout.getUnitById('right').collapse();
-//    	},
-//    	this,
-//    	this
-//    )
+    this.layout.getUnitById('right').subscribe(
+    	'beforeExpand',
+    	function() {
+    	    this.layout.getUnitById('left').collapse();
+    	},
+    	this,
+    	this
+    )
+    */
+    this.layout.getUnitById('left').subscribe(
+    	'beforeExpand',
+    	function() {
+    	    this.layout.getUnitById('right').collapse();
+    	},
+    	this,
+    	this
+    )
     
 
     /**
@@ -266,6 +290,9 @@ WireIt.WiringEditor.prototype = {
 
     var deleteButton = new widget.Button({ label:"Delete", id:"WiringEditor-deleteButton", container: toolbar });
     deleteButton.on("click", this.onDelete, this, true);
+
+    var helpButton = new widget.Button({ label:"Help", id:"WiringEditor-helpButton", container: toolbar });
+    helpButton.on("click", this.onHelp, this, true);
  },
 
 
@@ -274,6 +301,7 @@ WireIt.WiringEditor.prototype = {
   * @method loadSMD
   */
  loadSMD: function() {
+    
      this.service = new YAHOO.rpc.Service(this.options.smdUrl,{
  				success: this.onSMDsuccess,
  				failure: this.onSMDfailure,
@@ -287,7 +315,7 @@ WireIt.WiringEditor.prototype = {
   * @method onSMDsuccess
   */
  onSMDsuccess: function() {
-//   console.log("onSMDsuccess",this.service);
+    //console.log("onSMDsuccess",this.service);
  },
  
  /**
@@ -295,7 +323,7 @@ WireIt.WiringEditor.prototype = {
   * @method onSMDfailure
   */
  onSMDfailure: function() { 
-//    console.log("onSMDfailure", this.service);
+    //console.log("onSMDfailure", this.service);
  },
 
  /**
@@ -310,7 +338,7 @@ WireIt.WiringEditor.prototype = {
        alert("Please choose a name");
        return;
     }
-    
+    this.showSpinnerPanel.show();
     this.service.saveWiring({name: value.name, working: JSON.stringify(value.working), language: this.options.languageName }, {
        success: this.saveModuleSuccess,
        failure: this.saveModuleFailure,
@@ -324,11 +352,29 @@ WireIt.WiringEditor.prototype = {
   * @method saveModuleSuccess
   */
  saveModuleSuccess: function(o) {
-	 if (o == 'saved') {
-		alert("Saved !");
-	 } else {
-		 alert(o);
-	 }
+	 this.showSpinnerPanel.hide();
+	 if(typeof o.success != 'undefined'){
+		 title = 'Success';
+		 message = o.success;
+	 } 
+	 else if(typeof o.error != 'undefined'){
+		title = 'Error';
+		message = "Extension could not be saved:\n " + o.error;
+	 } 
+	 else if(typeof o.warning != 'undefined'){
+		 title = 'Warning';
+		 message = o.warning;
+	 } 
+	
+	 this.alert(title,message);
+    
+
+ },
+ 
+ alert: function(title,message){
+	 this.alertPanel.setHeader(title);
+	 this.alertPanel.setBody("<div id='wireEditorMessageBox'>" + message + "</div>");
+	 this.alertPanel.show();
  },
 
  /**
@@ -336,7 +382,17 @@ WireIt.WiringEditor.prototype = {
   * @method saveModuleFailure
   */
  saveModuleFailure: function(o) {
-    alert("error while saving! ");
+	 this.showSpinnerPanel.hide()
+	 this.alert('Error',"Error while saving! ");
+ },
+
+
+ /**
+  * Create a help panel
+  * @method onHelp
+  */
+ onHelp: function() {
+    this.helpPanel.show();
  },
 
  /**
@@ -352,7 +408,6 @@ WireIt.WiringEditor.prototype = {
   * @method onDelete
   */
  onDelete: function() {
-
     if( confirm("Are you sure you want to delete this wiring ?") ) {
        
       var value = this.getValue();

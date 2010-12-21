@@ -41,12 +41,36 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 * @var string
 	 */
 	protected $name;
+	
+	/**
+	 * Extension dir
+	 * @var string
+	 */
+	protected $extensionDir;
 
+	/**
+	 * Extension's version
+	 * @var string
+	 */
+	protected $version;
+	
 	/**
 	 *
 	 * @var string
 	 */
 	protected $description;
+	
+	/**
+	 * The original extension key (if an extension was renamed)
+	 * @var string
+	 */
+	protected $originalExtensionKey;
+	
+	/**
+	 * 
+	 * @var array
+	 */
+	protected $settings = array();
 
 	/**
 	 * The extension's state. One of the STATE_* constants.
@@ -59,7 +83,14 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	const STATE_STABLE = 2;
 	const STATE_EXPERIMENTAL = 3;
 	const STATE_TEST = 4;
-
+	
+	/**
+	 * 
+	 * an array keeping all md5 hashes of all files in the extension to detect modifications
+	 * 
+	 * @var array
+	 */
+	protected $md5Hashes = array();
 
 	/**
 	 * All domain objects
@@ -68,7 +99,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	protected $domainObjects = array();
 	
 	/**
-	 * The Perons working on the Extension
+	 * The Persons working on the Extension
 	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_Person>
 	 */
 	protected $persons = array();
@@ -77,8 +108,8 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 * plugins
 	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_Plugin>
 	 */
-	private $plugin;
-
+	private $plugins;
+	
 	/**
 	 *
 	 * @return string
@@ -93,6 +124,71 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 */
 	public function setExtensionKey($extensionKey) {
 		$this->extensionKey = $extensionKey;
+	}
+	
+/**
+	 *
+	 * @return string
+	 */
+	public function getOriginalExtensionKey() {
+		return $this->originalExtensionKey;
+	}
+
+	/**
+	 *
+	 * @param string $extensionKey
+	 */
+	public function setOriginalExtensionKey($extensionKey) {
+		$this->originalExtensionKey = $extensionKey;
+	}
+	
+	/**
+	 * 
+	 * @param array $overWriteSettings
+	 */
+	public function setSettings($settings){
+		$this->settings = $settings;
+	}
+	
+	/**
+	 * @return array 
+	 */
+	public function getSettings(){
+		return $this->settings;
+	}
+	
+	/**
+	 * 
+	 * @return array settings for Extension Manager
+	 */
+	public function getEmConf(){
+		if(isset($this->settings['emConf'])){
+			return $this->settings['emConf'];
+		}
+		else return array();
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getExtensionDir() {
+		if(empty($this->extensionDir)){
+			if(empty($this->extensionKey)){
+				throw new Exception('ExtensionDir can only be created if a extensionKey is defined first');
+			}
+			$this->extensionDir = PATH_typo3conf.'ext/'.$this->extensionKey.'/';
+			return $this->extensionDir;
+		}
+		return $this->extensionDir;
+	}
+
+	/**
+	 *
+	 * @param string $extensionDir
+	 */
+	public function setExtensionDir($extensionDir) {
+		$this->extensionDir = $extensionDir;
 	}
 
 	/**
@@ -109,6 +205,22 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 */
 	public function setName($name) {
 		$this->name = $name;
+	}
+	
+	/**
+	 *
+	 * @return string
+	 */
+	public function getVersion() {
+		return $this->version;
+	}
+
+	/**
+	 *
+	 * @param string $version
+	 */
+	public function setVersion($version) {
+		$this->version = $version;
 	}
 
 	/**
@@ -178,6 +290,11 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 		$this->domainObjects[$domainObject->getName()] = $domainObject;
 	}
 
+	/**
+	 *
+	 * @param string $domainObjectName
+	 * @return Tx_ExtbaseKickstarter_Domain_Model_DomainObject
+	 */
 	public function getDomainObjectByName($domainObjectName) {
 		if (isset($this->domainObjects[$domainObjectName])) {
 			return $this->domainObjects[$domainObjectName];
@@ -219,11 +336,11 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	/**
 	 * Setter for plugin
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_ExtbaseKickstarter_Domain_Model_Plugin> $plugin
+	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_ExtbaseKickstarter_Domain_Model_Plugin> $plugins
 	 * @return void
 	 */
-	public function setPlugin(Tx_Extbase_Persistence_ObjectStorage $plugin) {
-		$this->plugin = $plugin;
+	public function setPlugins(Tx_Extbase_Persistence_ObjectStorage $plugins) {
+		$this->plugins = $plugins;
 	}
 
 	/**
@@ -231,8 +348,8 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 *
 	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_ExtbaseKickstarter_Domain_Model_Plugin>
 	 */
-	public function getPlugin() {
-		return $this->plugin;
+	public function getPlugins() {
+		return $this->plugins;
 	}
 
 	/**
@@ -242,7 +359,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 * @return void
 	 */
 	public function addPlugin(Tx_ExtbaseKickstarter_Domain_Model_Plugin $plugin) {
-		$this->plugin[] = $plugin;
+		$this->plugins[] = $plugin;
 	}
 
 	/**
@@ -252,9 +369,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 * @return void
 	 */
 	public function removePlugins(Tx_ExtbaseKickstarter_Domain_Model_Plugin $plugin) {
-		foreach ($this->plugin as $key => $value) {
+		foreach ($this->plugins as $key => $value) {
 			if ($value === $plugin) {
-				unset($this->plugin[$key]);
+				unset($this->plugins[$key]);
 			}
 		}
 	}
@@ -272,6 +389,40 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	public function getCssClassName() {
 		$key = 'tx_' . strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->getExtensionKey())) . '_pi1';
 		return str_replace('_', '-', $key);
+	}
+	
+	public function isModified( $filePath){
+		if(is_file($filePath) && isset($this->md5Hashes[$filePath])){
+			if(md5_file($filePath) != $this->md5Hashes[$filePath]){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * setter for md5 hashes 
+	 * @return void
+	 */
+	public function setMD5Hashes($md5Hashes){
+		$this->md5Hashes = $md5Hashes;
+	}
+	
+	/**
+	 * getter for md5 hashes 
+	 * @return array $md5Hashes
+	 */
+	public function getMD5Hashes(){
+		return $this->md5Hashes;
+	}
+	
+	/**
+	 * calculates all md5 hashes 
+	 * @return 
+	 */
+	public function setMD5Hash($filePath){
+		$this->md5Hashes[$filePath] = md5_file($filePath);
+		
 	}
 }
 ?>

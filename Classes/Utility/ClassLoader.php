@@ -24,17 +24,36 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-if (!class_exists('Tx_Extbase_Utility_ClassLoader')) {
-	require(t3lib_extmgm::extPath('extbase') . 'Classes/Utility/ClassLoader.php');
+
+/**
+ * Autoloader of ExtbaseKickstarter
+ * 
+ * Needed to avoid errors when loading classes that have references or parent classes
+ * to other classes in a not installed extension
+ *
+ * @package Extbase
+ * @subpackage Utility
+ * @version $Id: ClassLoader.php 1729 2009-11-25 21:37:20Z stucki $
+ */
+class Tx_ExtbaseKickstarter_Utility_ClassLoader {
+	
+	/**
+	 * Loads php files containing classes or interfaces found in the classes directory of
+	 * an extension.
+	 *
+	 * @param string $className: Name of the class/interface to load
+	 * @uses t3lib_extMgm::extPath()
+	 * @return void
+	 */
+	public static function loadClass($className) {
+		$classNameParts = explode('_', $className, 3);
+		$extensionKey = Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($classNameParts[1]);
+		$classFilePathAndName = PATH_typo3conf.'ext/'.$extensionKey . '/Classes/' . strtr($classNameParts[2], '_', '/') . '.php';
+		if (file_exists($classFilePathAndName)) {
+			require_once($classFilePathAndName);
+		}
+	}
+	
 }
 
-$classLoader = new Tx_Extbase_Utility_ClassLoader();
-spl_autoload_register(array($classLoader, 'loadClass'));
-require_once(t3lib_extmgm::extPath('extbase') . 'Tests/BaseTestCase.php');
-
-abstract class Tx_ExtbaseKickstarter_BaseTestCase extends Tx_Extbase_BaseTestCase {
-}
-
-
-
-
+?>
