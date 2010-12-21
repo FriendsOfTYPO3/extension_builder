@@ -91,7 +91,7 @@ class Tx_ExtbaseKickstarter_Scaffolding_ScaffoldingView extends Tx_Fluid_View_Te
 		if (!in_array($actionName, $allowedActionNames)) {
 			return parent::parseTemplate($actionName);
 		}
-
+		$this->initializeAction();
 		$domainObject = $this->objectSchemaBuilder->buildDomainObjectByReflection($this->controllerContext->getRequest()->getControllerExtensionName(), $this->domainObjectName);
 		$action = new Tx_ExtbaseKickstarter_Domain_Model_Action();
 		$action->setName($actionName);
