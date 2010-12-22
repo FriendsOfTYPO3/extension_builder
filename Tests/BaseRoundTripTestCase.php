@@ -49,7 +49,8 @@ abstract class Tx_ExtbaseKickstarter_BaseRoundTripTestCase extends Tx_ExtbaseKic
 		$settings = $yamlParser->YAMLLoadString(file_get_contents(PATH_typo3conf.'ext/extbase_kickstarter/Tests/Examples/Settings/settings1.yaml'));
 		$this->extension->setSettings($settings);
 		
-        $this->objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+        
+		
         $this->classParser = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Utility_ClassParser');
         $this->roundTripService =  $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Service_RoundTrip'),array('dummy'));
 
@@ -58,9 +59,17 @@ abstract class Tx_ExtbaseKickstarter_BaseRoundTripTestCase extends Tx_ExtbaseKic
         $this->templateParser = $this->getMock($this->buildAccessibleProxy('Tx_Fluid_Core_Parser_TemplateParser'),array('dummy'));
         $this->codeGenerator = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Service_CodeGenerator'),array('dummy'));
         
+		if (class_exists('Tx_Extbase_Object_ObjectManager')) {
+			$this->objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+			$this->codeGenerator->injectObjectManager($this->objectManager);
+       		$this->templateParser->injectObjectManager($this->objectManager);
+			
+		} else{
+			$this->objectManager = new Tx_Fluid_Compatibility_ObjectManager();
+			$this->codeGenerator->_set('objectManager',$this->objectManager);
+			$this->templateParser->_set('objectManager',$this->objectManager);
+		}
        	
-       	$this->codeGenerator->injectObjectManager($this->objectManager);
-       	$this->templateParser->injectObjectManager($this->objectManager);
        
         $this->roundTripService->injectClassParser($this->classParser);
         $this->roundTripService->initialize($this->extension);
