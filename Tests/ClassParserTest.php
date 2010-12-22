@@ -27,7 +27,7 @@
 
 require_once('BaseTestCase.php');
 
-class Tx_ExtbaseKickstarter_ClassParser_testcase extends Tx_ExtbaseKickstarter_BaseTestCase {
+class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_BaseTestCase {
 
 	/**
 	 * set to true to see an overview of the parsed class objects in the backend
@@ -43,7 +43,7 @@ class Tx_ExtbaseKickstarter_ClassParser_testcase extends Tx_ExtbaseKickstarter_B
 	 * Parse a basic class from a file 
 	 * @test
 	 */
-	public function TestBasicClassParse(){
+	public function ParseBasicClass(){
 		require_once(t3lib_extmgm::extPath('extbase_kickstarter') . 'Tests/Examples/ClassParser/BasicClass.php');
 		$this->parseClass('Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_BasicClass');
 	}
@@ -52,7 +52,7 @@ class Tx_ExtbaseKickstarter_ClassParser_testcase extends Tx_ExtbaseKickstarter_B
 	 * Parse a complex class from a file 
 	 * @test
 	 */
-	public function TestComplexClassParse(){
+	public function ParseComplexClass(){
 		require_once(t3lib_extmgm::extPath('extbase_kickstarter') . 'Tests/Examples/ClassParser/ComplexClass.php');
 		$classObject = $this->parseClass('Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_ComplexClass');
 		$getters = $classObject->getGetters();
@@ -69,7 +69,7 @@ class Tx_ExtbaseKickstarter_ClassParser_testcase extends Tx_ExtbaseKickstarter_B
 	 * Parse a basic class from a file 
 	 * @test
 	 */
-	public function TestExtendedClassParse(){
+	public function ParseExtendedClass(){
 		$this->parseClass('Tx_ExtbaseKickstarter_Controller_KickstarterModuleController');
 	}
 	
@@ -77,7 +77,7 @@ class Tx_ExtbaseKickstarter_ClassParser_testcase extends Tx_ExtbaseKickstarter_B
 	 * Parse a complex class from a file 
 	 * @test
 	 */
-	public function TestAnotherComplexClassParse(){
+	public function ParseAnotherComplexClass(){
 		require_once(t3lib_extmgm::extPath('extbase_kickstarter') . 'Tests/Examples/ClassParser/AnotherComplexClass.php');
 		$classObject = $this->parseClass('Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass');
 		
@@ -91,7 +91,7 @@ class Tx_ExtbaseKickstarter_ClassParser_testcase extends Tx_ExtbaseKickstarter_B
 	 * Parse a big class from a file  
 	 * @test
 	 */
-	public function Test_t3lib_div_ClassParse(){
+	public function Parse_t3lib_div(){
 		//require_once(t3lib_extmgm::extPath('extbase_kickstarter') . 'Tests/Examples/BasicClass.php');
 		$this->parseClass('t3lib_div');
 	}

@@ -35,7 +35,6 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilderTest extends Tx_ExtbaseKickstarte
 		$this->extension = $this->getMock('Tx_ExtbaseKickstarter_Domain_Model_Extension',array('getOverWriteSettings'));
 		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_ObjectSchemaBuilder'), array('dummy'));
 		$this->extensionKey = 'dummy';
-		$this->dummyExtensionDir = PATH_typo3conf.'ext/'.$this->extensionKey.'/';
 	}
 	/**
 	 * @test
@@ -61,10 +60,10 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilderTest extends Tx_ExtbaseKickstarte
 		$extension->setName($name);
 		$extension->setExtensionKey($extensionKey);
 		$extension->setState($state);
-		$extension->setExtensionDir($this->dummyExtensionDir);
+		$extension->setExtensionDir('');
 
 		$actual = $this->objectSchemaBuilder->build($input);
-		$this->assertEquals($actual, $extension, 'Extension properties were not extracted.');
+		$this->assertEquals($extension,$actual, 'Extension properties were not extracted.');
 	}
 
 	/**
@@ -282,7 +281,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilderTest extends Tx_ExtbaseKickstarte
 		$extension->setState(Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_BETA);
 		$extension->setExtensionKey($this->extensionKey);
 		$extension->setDescription('Some description');
-		$extension->setExtensionDir($this->dummyExtensionDir);
+		$extension->setExtensionDir('');
 
 		$blog = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
 		$blog->setName('Blog');

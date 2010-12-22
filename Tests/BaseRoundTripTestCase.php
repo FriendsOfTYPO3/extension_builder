@@ -28,11 +28,15 @@ require_once('BaseTestCase.php');
 
 abstract class Tx_ExtbaseKickstarter_BaseRoundTripTestCase extends Tx_ExtbaseKickstarter_BaseTestCase {
 	
-	function setUp(){
+	var $modelClassDir = 'Classes/Domain/Model/';
+	
+	function setUp($settingFile = ''){
 		
-		$this->extension = $this->getMock('Tx_ExtbaseKickstarter_Domain_Model_Extension',array('getExtensionDir','getOverWriteSettings'));
+		
+		$this->extension = $this->getMock('Tx_ExtbaseKickstarter_Domain_Model_Extension',array('getExtensionDir'));
 		$extensionKey = 'dummy';
 		$dummyExtensionDir = PATH_typo3conf.'ext/extbase_kickstarter/Tests/Examples/'.$extensionKey.'/';
+		$this->assertTrue(is_writable(PATH_typo3conf.'ext/extbase_kickstarter/Tests/Examples'),'The directory Tests/Examples in extbase_kickstarter is not writable for the web server for some reason');
 		if(!is_dir($dummyExtensionDir)){
 			t3lib_div::mkdir_deep(PATH_typo3conf.'ext/extbase_kickstarter/Tests/Examples/',$extensionKey);
 		}
@@ -40,34 +44,28 @@ abstract class Tx_ExtbaseKickstarter_BaseRoundTripTestCase extends Tx_ExtbaseKic
 		$this->extension->expects($this->any())
              ->method('getExtensionDir')
              ->will($this->returnValue($dummyExtensionDir));
-             
-        $this->extension->expects($this->any())
-             ->method('getOverWriteSettings')
-             ->will($this->returnValue(array()));
-        
+
+        $yamlParser = new Tx_ExtbaseKickstarter_Utility_SpycYAMLParser();
+		$settings = $yamlParser->YAMLLoadString(file_get_contents(PATH_typo3conf.'ext/extbase_kickstarter/Tests/Examples/Settings/settings1.yaml'));
+		$this->extension->setSettings($settings);
+		
+        $this->objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
         $this->classParser = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Utility_ClassParser');
         $this->roundTripService =  $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Service_RoundTrip'),array('dummy'));
+
+        
         $this->classBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_ClassBuilder');
         $this->templateParser = $this->getMock($this->buildAccessibleProxy('Tx_Fluid_Core_Parser_TemplateParser'),array('dummy'));
         $this->codeGenerator = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Service_CodeGenerator'),array('dummy'));
         
-        if (class_exists(Tx_Extbase_Object_ObjectManager)) {
-        	$this->objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
-        	$this->codeGenerator->injectObjectManager($this->objectManager);
-        	$this->templateParser->injectObjectManager($this->objectManager);
-        }
-        else {
-        	$this->objectManager = new Tx_Fluid_Compatibility_ObjectManager();
-        	$this->codeGenerator->_set('objectManager',$this->objectManager);
-        	$this->templateParser->_set('objectManager',$this->objectManager);
-        }	
-        
-        
+       	
+       	$this->codeGenerator->injectObjectManager($this->objectManager);
+       	$this->templateParser->injectObjectManager($this->objectManager);
+       
         $this->roundTripService->injectClassParser($this->classParser);
         $this->roundTripService->initialize($this->extension);
         
         $this->classBuilder->injectRoundtripService($this->roundTripService);
-        $this->classBuilder->injectClassParser($this->classParser);
         $this->classBuilder->initialize($this->extension);
         
         $this->codeGenerator->injectTemplateParser($this->templateParser);
@@ -92,6 +90,31 @@ abstract class Tx_ExtbaseKickstarter_BaseRoundTripTestCase extends Tx_ExtbaseKic
 		$domainObject->setEntity($entity);
 		$domainObject->setAggregateRoot($aggregateRoot);
 		return $domainObject;
+	}
+	
+	/**
+	 * Builds an initial class file to test parsing and modifiying of existing classes
+	 * 
+	 * This class file is generated based on the CodeTemplates
+	 * @param string $modelName
+	 */
+	function generateInitialModelClassFile($modelName){
+		$domainObject = $this->buildDomainObject($modelName);
+		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
+		$modelClassDir = 'Classes/Domain/Model/';
+		$result = t3lib_div::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
+		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
+		$this->assertTrue(is_dir($absModelClassDir),'Directory ' . $absModelClassDir . ' was not created');
+		
+		$modelClassPath =  $absModelClassDir . $domainObject->getName() . '.php';
+		t3lib_div::writeFile($modelClassPath,$classFileContent);
+	}
+	
+	function removeInitialModelClassFile($modelName){
+		if(@file_exists($this->extension->getExtensionDir().$this->modelClassDir.$modelName . '.php')){
+			//unlink($this->extension->getExtensionDir().$this->modelClassDir.$modelName . '.php');
+		}
+		$this->assertFalse(file_exists($this->extension->getExtensionDir().$this->modelClassDir. $modelName . '.php'),'Dummy files could not be removed:'.$this->extension->getExtensionDir().$this->modelClassDir. $modelName . '.php');
 	}
 
 }
