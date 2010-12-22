@@ -66,11 +66,8 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 		$this->extClassPrefix = 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey());
 		if (!$this->roundTripService instanceof Tx_ExtbaseKickstarter_Service_RoundTrip) {
 			$this->injectRoundtripService(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_RoundTrip'));
-			$this->injectClassParser(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Utility_ClassParser'));
-			$frameworkConfiguration = Tx_Extbase_Dispatcher::getExtbaseFrameworkConfiguration();
-			$this->settings = $frameworkConfiguration['settings'];
 		}
-		$this->settings = array_merge($this->settings,Tx_ExtbaseKickstarter_Service_RoundTrip::getExtConfiguration());
+		
 		$this->roundTripService->initialize($this->extension);
 	}
 	
@@ -82,23 +79,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 		$this->roundTripService = $roundTripService;
 	}
 	
-	/**
-	 * @param Tx_ExtbaseKickstarter_Utility_ClassParser $classParser
-	 * @return void
-	 */
-	public function injectClassParser(Tx_ExtbaseKickstarter_Utility_ClassParser $classParser) {
-		$this->classParser = $classParser;
-	}	
 
-	/**
-	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
-	 * @return void
-	 */
-	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
-		$this->configurationManager = $configurationManager;
-		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
-	}	
-	
 	/**
 	 * This method generates the class schema object, which is passed to the template
 	 * it keeps all methods and properties including user modified method bodies and comments 
@@ -117,15 +98,17 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 		
 		if( Tx_ExtbaseKickstarter_Service_RoundTrip::getOverWriteSettingForPath($classPath,$this->extension) != 0){
 			try {
+				t3lib_div::devLog('Try to import Class '.$className, 'extbase_kickstarter',2);		
 				$this->classObject = $this->roundTripService->getDomainModelClass($domainObject);
 			}
 			catch(Exception $e){
 				t3lib_div::devLog('Class '.$className.' could not be imported: '.$e->getMessage(), 'extbase_kickstarter',2);		
 			}
 		}
-		else t3lib_div::devlog('Class:'.$classPath.' : '.Tx_ExtbaseKickstarter_Service_RoundTrip::getOverWriteSettingForPath($classPath,$this->extension),'extbase_kickstarter',2);
+		else t3lib_div::devlog('Class:'.$classPath.' : '.Tx_ExtbaseKickstarter_Service_RoundTrip::getOverWriteSettingForPath($classPath,$this->extension),'extbase_kickstarter',2,$this->settings);
 		
 		if($this->classObject == NULL) {
+			t3lib_div::devLog('Class '.$className.' could not be imported: ', 'extbase_kickstarter',2);
 			return NULL;
 		}
 		
@@ -197,7 +180,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 			
 			$this->setPropertyRelatedMethods($domainProperty);
 		}
-		// t3lib_div::devlog('Methods before sorting','extbase_kickstarter',0,array_keys($this->classObject->getMethods()));
+		t3lib_div::devlog('Methods before sorting','extbase_kickstarter',0,array_keys($this->classObject->getMethods()));
 		//$this->sortMethods($domainObject);
 		return $this->classObject;
 	}
@@ -549,6 +532,12 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 		return $this->classObject;
 	}
 	
+	/**
+	 * Not used right now
+	 * TODO: Needs better implementation
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject
+	 * @return void
+	 */
 	public function sortMethods($domainObject){
 		
 		$objectProperties = $domainObject->getProperties();
