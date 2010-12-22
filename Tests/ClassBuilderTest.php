@@ -27,21 +27,33 @@
 
 require_once('BaseRoundTripTestCase.php');
 
-class Tx_ExtbaseKickstarter_Service_ClassBuilder_testcase extends Tx_ExtbaseKickstarter_BaseRoundTripTestCase {
+/**
+ * 
+ * @author ndh
+ *
+ */
+class Tx_ExtbaseKickstarter_Service_ClassBuilderTest extends Tx_ExtbaseKickstarter_BaseRoundTripTestCase {
+	
+	var $modelName = 'Model1';
 	
 	function setUp(){
 		parent::setUp();
+		$this->generateInitialModelClassFile($this->modelName);
 	}
 	
+    public function tearDown(){
+    	$this->removeInitialModelClassFile($this->modelName);
+    }
+	
 	/**
-	* 
+	* @test
 	*/
 	public function classBuilderGeneratesSetterMethodForSimpleProperty() {
-		$domainObject = $this->buildDomainObject('Blog',true,true);
+		
+		$domainObject = $this->buildDomainObject($this->modelName,true,true);
 
 		$property0 = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
 		$property0->setName('name');
-		$property0->setRequired(TRUE);
 		$domainObject->addProperty($property0);
 		
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
@@ -63,7 +75,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder_testcase extends Tx_ExtbaseKick
 	
 	public function classBuilderGeneratesGetterMethodForSimpleProperty() {
 		
-		$domainObject = $this->buildDomainObject('Blog',true,true);
+		$domainObject = $this->buildDomainObject($this->modelName,true,true);
 		$property0 = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
 		$property0->setName('name');
 		$property0->setRequired(TRUE);
@@ -80,7 +92,8 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder_testcase extends Tx_ExtbaseKick
 	 */
 	public function classBuilderGeneratesIsMethodForBooleanProperty() {
 		
-		$domainObject = $this->buildDomainObject('Dummy',true,true);
+		$domainObject = $this->buildDomainObject($this->modelName,true,true);
+		
 		$property = new Tx_ExtbaseKickstarter_Domain_Model_Property_BooleanProperty();
 		$property->setName('blue');
 		$property->setRequired(TRUE);
@@ -92,56 +105,39 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder_testcase extends Tx_ExtbaseKick
 	}
 	
 	/**
-	* 
+	* @test
 	*/
-	public function classBuilderGeneratesAddMethodForRelationProperty() {
-		$domainObject1 = $this->buildDomainObject('Blog',true,true);
-		$domainObject2 = $this->buildDomainObject('Post');
+	public function classBuilderGeneratesMethodsForRelationProperty() {
+		$modelName2 = 'Model2';
+		$propertyName = 'relNames';
+		
+		$domainObject1 = $this->buildDomainObject($this->modelName,true,true);
+		$relatedDomainObject = $this->buildDomainObject($modelName2);
 		
 		$relationProperty = new Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ManyToManyRelation();
-		$relationProperty->setName('posts');
-		$relationProperty->setForeignClass($domainObject2);
+		$relationProperty->setName($propertyName);
+		$relationProperty->setForeignClass($relatedDomainObject);
 		$domainObject1->addProperty($relationProperty);
 		
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject1);
 		
-		$this->assertTrue($modelClassObject->methodExists('addPost'),'No method: addPost');
+		$this->assertTrue($modelClassObject->methodExists('add' . ucfirst(Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName))),'Add method was not generated');
+		$this->assertTrue($modelClassObject->methodExists('remove' . ucfirst(Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName))),'Remove method was not generated');
+		$this->assertTrue($modelClassObject->methodExists('set' . ucfirst($propertyName)),'Setter was not generated');
+		$this->assertTrue($modelClassObject->methodExists('set' . ucfirst($propertyName)),'Setter was not generated');
 		
-		$setNameMethod = $modelClassObject->getMethod('addPost');
-		$this->assertEquals($setNameMethod->getTagsValues('param'),'Tx_Dummy_Domain_Model_Post $post');
+		$addMethod = $modelClassObject->getMethod('add' . ucfirst(Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName)));
+		$this->assertTrue($addMethod->isTaggedWith('param'),'No param tag set for setter method');
+		$paramTagValues = $addMethod->getTagsValues('param');
+		$this->assertTrue((strpos($paramTagValues,$relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues);
 		
-		$parameters = $setNameMethod->getParameters();
-		$this->assertEquals(count($parameters),1);
-		$firstParameter = array_shift($parameters);
-		$this->assertEquals($firstParameter->getName(),'post');
-		$this->assertEquals($firstParameter->getTypeHint(),'Tx_Dummy_Domain_Model_Post');
+		$parameters = $addMethod->getParameters();
+		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in add method');
+		$parameter = current($parameters);
+		$this->assertTrue(($parameter->getName() == Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName)),'Wrong parameter name in add method');
+		$this->assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getClassName()),'Wrong type hint for add method parameter:'.$parameter->getTypeHint());
 		
 	}
-	
-	/**
-	* 
-	*/
-	public function classBuilderGeneratesRemoveMethodForRelationProperty() {
-		$domainObject1 = $this->buildDomainObject('Blog',true,true);
-		$domainObject2 = $this->buildDomainObject('Post');
-		
-		$relationProperty = new Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ManyToManyRelation();
-		$relationProperty->setName('posts');
-		$relationProperty->setForeignClass($domainObject2);
-		$domainObject1->addProperty($relationProperty);
-		
-		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject1);
-		
-		$this->assertTrue($modelClassObject->methodExists('removePost'),'No method: removePost');
-		
-		$setNameMethod = $modelClassObject->getMethod('removePost');
-		$parameters = $setNameMethod->getParameters();
-		$this->assertEquals(count($parameters),1);
-		$firstParameter = array_shift($parameters);
-		$this->assertEquals($firstParameter->getName(),'postToRemove');
-		$this->assertEquals($firstParameter->getTypeHint(),'Tx_Dummy_Domain_Model_Post');
-	}
-	
 	
 }
 

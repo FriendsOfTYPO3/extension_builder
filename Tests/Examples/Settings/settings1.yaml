@@ -1,0 +1,94 @@
+#
+# Kickstarter settings for extension test1
+# generated 2010-12-21 01:03
+#
+# See http://www.yaml.org/spec/1.2/spec.html
+#
+
+---
+
+###########    Overwrite settings  ###########
+#
+# These settings only apply, if the roundtrip feature of the kickstarter
+# is enabled in the extension manager
+#
+# Usage:
+# nesting reflects the file structure
+# a setting applies to a file or recursive to all files and subfolders
+# 
+# merge: 
+# means for classes: All properties ,methods and method bodies
+# of the existing class will be modified according to the new settings
+# but not overwritten 
+# 
+# for locallang xml files: Existing keys and labels are always
+# preserved (renaming in the GUI has only influence on the property and method names)
+#
+# for other files: You will find a Split token at the end of the file
+# After this token you can write whatever you want and it will be appended
+# everytime the code is generated
+#
+# keep:
+# files are never overwritten
+# These settings may break the functionality of the kickstarter!
+# Handle with care!
+#
+#
+
+############  extension settings  ##############
+
+emConf:
+
+	dependencies:			cms,extbase,fluid
+	
+overwriteSettings:
+	Classes:
+		Controller: 		merge
+		Domain:
+			Model:			merge
+			Repository:		merge
+		
+	Resources:
+		Private: 
+			Language:
+				locallang.xml:		keep
+				
+			Templates:		keep
+	
+	ext_icon.gif:			keep
+	
+#	ext_localconf.php		merge
+
+#	ext_tables.php			merge
+
+#	ext_tables.sql			merge
+
+
+
+######### settings for classBuilder #############################
+#
+# here you may define default parent classes for your classes
+# these settings only apply for new generated classes
+# you may also just change the parent class in the generated class file. 
+# It will be kept on next code generation, if the overwrite settings 
+# are configured to merge it
+#
+#	Experimental!!
+#################################################################
+
+classBuilder:
+				
+	Controller:
+		parentClass: 		Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController
+			
+	Model:
+		AbstractEntity: 		
+			parentClass:	Tx_Extbase_DomainObject_AbstractEntity
+			
+		AbstractValueObject:	
+			parentClass:	Tx_Extbase_DomainObject_AbstractValueObject
+
+	Repository:
+		parentClass: 		Tx_Extbase_Persistence_Repository
+		
+		

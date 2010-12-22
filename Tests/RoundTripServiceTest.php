@@ -33,13 +33,18 @@ class Tx_ExtbaseKickstarter_RoundTripServiceTest extends Tx_ExtbaseKickstarter_B
 		parent::setUp();
 	}
 	
+	
 	/**
 	 * Write a simple model class for a non aggregate root domain obbject
 	 * @test
 	 */
-	function relatedMethodsReflectRenamingProperty(){
+	function relatedMethodsReflectRenamingAProperty(){
+		$modelName = 'model7';
+		$this->generateInitialModelClassFile($modelName);
 		// create an "old" domainObject
-		$domainObject = $this->buildDomainObject('Dummy');
+		$domainObject = $this->buildDomainObject($modelName);
+		$this->assertTrue(is_object($domainObject),'No domain object');
+		
 		$property = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
 		$property->setName('prop1');
 		$uniqueIdentifier1 = md5(microtime() . 'prop1');
@@ -52,6 +57,7 @@ class Tx_ExtbaseKickstarter_RoundTripServiceTest extends Tx_ExtbaseKickstarter_B
 		
 		// create an "old" class object. 
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
+		$this->assertTrue(is_object($modelClassObject),'No class object');
 		
 		// Check that the getter/methods exist
 		$this->assertTrue($modelClassObject->methodExists('getProp1'));
@@ -88,7 +94,7 @@ class Tx_ExtbaseKickstarter_RoundTripServiceTest extends Tx_ExtbaseKickstarter_B
 		
 		t3lib_div::rmdir($this->extension->getExtensionDir(),true);
 	}
-
+	
 }
 
 ?>
