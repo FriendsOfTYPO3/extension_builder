@@ -71,15 +71,13 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	 */
 	public function __construct() {
 		
+		$this->settings = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getKickstarterSettings();
 		if (!$this->templateParser instanceof Tx_Fluid_Core_Parser_TemplateParser) {
 			$this->injectTemplateParser(Tx_Fluid_Compatibility_TemplateParserBuilder::build());
 			$this->classBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_ClassBuilder');
-			$frameworkConfiguration = Tx_Extbase_Dispatcher::getExtbaseFrameworkConfiguration();
-			$this->settings = $frameworkConfiguration['settings'];
-			$this->settings['extConf'] = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getKickstarterSettings();
 		}
 
-		if (	class_exists('Tx_Fluid_Compatibility_ObjectManager') &&
+		if (class_exists('Tx_Fluid_Compatibility_ObjectManager') &&
 				!$this->objectManager instanceof Tx_Fluid_Compatibility_ObjectManager) {
 			$this->objectManager = new Tx_Fluid_Compatibility_ObjectManager();
 		} elseif (!$this->objectManager instanceof Tx_Extbase_Object_ObjectManager) {
@@ -110,8 +108,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	 */
 	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
 		$this->configurationManager = $configurationManager;
-		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
-		$this->settings['extConf'] = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getKickstarterSettings();
+		$this->settings = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getKickstarterSettings();
 	}
 	
 	/**
@@ -133,7 +130,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		$this->extension = $extension;
 		
 		$this->classBuilder->initialize($extension);
-		if($this->settings['extConf']['enableRoundtrip']==1){
+		if($this->settings['enableRoundtrip']==1){
 			$this->roundTripEnabled = true;
 		}
 		else t3lib_div::devLog('roundtrip disabled', 'extbase_kickstarter',0,$this->settings);

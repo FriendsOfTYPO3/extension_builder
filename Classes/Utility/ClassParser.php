@@ -210,7 +210,7 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 						}
 						catch(ReflectionException $e){
 							// ReflectionClass throws an exception if a method was not found
-							t3lib_div::print_array('Exception: '.$e->getMessage());
+							t3lib_div::devlog('Exception: '.$e->getMessage());
 						}
 						
 					} // end of preg_match_all method
@@ -370,7 +370,7 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 			}
 			catch(ReflectionException $e){
 				// ReflectionClass throws an exception if a property was not found
-				t3lib_div::print_array('Exception in line : '.$e->getMessage().' Constant '.$constantName.' found in line '.$this->lineCount);
+				t3lib_div::devlog('Exception in line : '.$e->getMessage().' Constant '.$constantName.' found in line '.$this->lineCount);
 			}
 		}
 	}
@@ -410,7 +410,7 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 			}
 			catch(ReflectionException $e){
 				// ReflectionClass throws an exception if a property was not found
-				t3lib_div::print_array('Exception in line : '.$e->getMessage().'Property '.$propertyName.' found in line '.$this->lineCount);
+				t3lib_div::devlog('Exception in line : '.$e->getMessage().'Property '.$propertyName.' found in line '.$this->lineCount);
 			}
 		}
 	}

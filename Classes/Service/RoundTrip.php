@@ -90,10 +90,8 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 		
 		if (!$this->classParser instanceof Tx_ExtbaseKickstarter_Utility_ClassParser) {
 			$this->injectClassParser(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Utility_ClassParser'));
-			$frameworkConfiguration = Tx_Extbase_Dispatcher::getExtbaseFrameworkConfiguration();
-			$this->settings = $frameworkConfiguration['settings'];
 		}
-		$this->settings = array_merge($this->settings,$this->getExtConfiguration());
+		$this->settings = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getKickstarterSettings();
 		// defaults
 		$this->previousExtensionDirectory = $this->extensionDirectory;
 		$this->previousExtensionKey = $this->extension->getExtensionKey();
@@ -146,15 +144,6 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 	 */
 	public function injectClassParser(Tx_ExtbaseKickstarter_Utility_ClassParser $classParser) {
 		$this->classParser = $classParser;
-	}
-	
-	/**
-	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
-	 * @return void
-	 */
-	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
-		$this->configurationManager = $configurationManager;
-		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
 	}
 	
 	/**
@@ -742,7 +731,9 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 			'merge' => 1,
 			'keep' => 2
 		);
+		
 		$settings = $extension->getSettings();
+		t3lib_div::devlog('Overwrite settings for:'.$path,'kickstarter',0,$settings);
 		if(!is_array($settings)){
 			throw new Exception('overWrite settings could not be parsed');
 		}
