@@ -358,7 +358,7 @@ WireIt.WiringEditor.prototype = {
 		 message = o.success;
 	 } 
 	 else if(typeof o.error != 'undefined'){
-		title = 'Error';
+		title = '<span style="color:red">Error!</span>';
 		message = "Extension could not be saved:\n " + o.error;
 	 } 
 	 else if(typeof o.warning != 'undefined'){
