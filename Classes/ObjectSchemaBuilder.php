@@ -123,12 +123,25 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_singleton {
 		// relations
 		if (is_array($jsonArray['wires'])) {
 			foreach ($jsonArray['wires'] as $wire) {
+				
+				if($wire['tgt']['terminal'] !== 'SOURCES'){
+					if($wire['src']['terminal'] == 'SOURCES'){
+						// this happens if a relation wire was drawn from child to parent
+						// swap the two arrays
+						$tgtModuleId = $wire['src']['moduleId'];
+						$wire['src'] =  $wire['tgt'];
+						$wire['tgt'] = array('moduleId'=>$tgtModuleId,'terminal' => 'SOURCES');
+					}
+					else {
+						 throw new Exception('A wire has always to connect a relation with a model, not with another relation');
+					}
+				}
 				$relationJsonConfiguration = $jsonArray['modules'][$wire['src']['moduleId']]['value']['relationGroup']['relations'][substr($wire['src']['terminal'], 13)];
+				
 				if (!is_array($relationJsonConfiguration)){
 					t3lib_div::devlog('jsonArray:','extbase_kickstarter',3,$jsonArray);
-					throw new Exception('Error. Relation JSON config was not found','extbase_kickstarter');
+					throw new Exception('Error. Relation JSON config was not found');
 				}
-				if ($wire['tgt']['terminal'] !== 'SOURCES') throw new Exception('Connections to other places than SOURCES not supported.');
 
 				$foreignClassName = $jsonArray['modules'][$wire['tgt']['moduleId']]['value']['name'];
 				$localClassName = $jsonArray['modules'][$wire['src']['moduleId']]['value']['name'];
