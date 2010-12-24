@@ -34,5 +34,45 @@ var roundtrip = {
 										//console.log(params[1]);
 									}
 								}
+		,onAddWire			:	function(e, params, terminal){
+									var t1 = Ext.get(params[0].terminal1.el);
+									var t2 = Ext.get(params[0].terminal2.el);
+									this._debug('Wire added');
+									if(t1.getAttribute('title') == 'SOURCES'){
+										var moduleUID =  t2.parent().parent().parent().query('div.hiddenField input')[0].value;
+										this._debug('moduleUID: ' + moduleUID);
+										var relationUID = t1.parent().query('div.hiddenField input')[0].value;
+										this._debug('relationUID: ' + relationUID);
+									}
+									else {
+										var moduleUID =  t1.parent().parent().parent().query('div.hiddenField input')[0].value;
+										this._debug('moduleUID: ' + moduleUID);
+										var relationUID = t2.parent().query('div.hiddenField input')[0].value;
+										this._debug('relationUID: ' + relationUID);
+									}
+								}
+		
+		,onRemoveWire			:	function(e, params, terminal){
+										var t1 = Ext.get(params[0].terminal1.el);
+										var t2 = Ext.get(params[0].terminal2.el);
+										this._debug('Wire removed');
+										if(t1.getAttribute('title') == 'SOURCES'){
+											var moduleUID =  t2.parent().parent().parent().query('div.hiddenField input')[0].value;
+											this._debug('moduleUID: ' + moduleUID);
+											var relationUID = t1.parent().query('div.hiddenField input')[0].value;
+											this._debug('relationUID: ' + relationUID);
+										}
+										else {
+											var moduleUID =  t1.parent().parent().parent().query('div.hiddenField input')[0].value;
+											this._debug('moduleUID: ' + moduleUID);
+											var relationUID = t2.parent().query('div.hiddenField input')[0].value;
+											this._debug('relationUID: ' + relationUID);
+										}
+									}
+		,_debug					:	function(o){
+										if(typeof console != 'undefined' && typeof console.log == 'function'){
+											console.log(o);
+										}
+									}
 }
 
