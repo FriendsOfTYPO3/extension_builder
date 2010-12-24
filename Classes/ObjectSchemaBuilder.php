@@ -59,6 +59,8 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_singleton {
 
 		if(!empty($globalProperties['originalExtensionKey']) && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()){
 			$settings = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getExtensionSettings($extension->getOriginalExtensionKey());
+			// if an extension was renamed, a new extension dir is created and we
+			// have to copy the old settings file to the new extension dir
 			copy(Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getSettingsFile($extension->getOriginalExtensionKey()),Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getSettingsFile($extension->getExtensionKey()));
 		}
 		else {
@@ -67,7 +69,6 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_singleton {
 		t3lib_div::devlog('settings:'.$extension->getExtensionKey(),'extbase',0,$extension->getSettings());
 		if(!empty($settings)){
 			$extension->setSettings($settings);
-			//t3lib_div::devlog('settings','extbase',0,$extension->getSettings());
 		}
 		
 			// version
@@ -195,12 +196,26 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilder implements t3lib_singleton {
 			$domainObject->addProperty($property);
 		}
 		
-		foreach ($jsonDomainObject['actionGroup']['actions'] as $jsonAction) {
-			$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Action');
-			$action->setName($jsonAction);
+		if($domainObject->isAggregateRoot()){
+			$defaultActions = array('list','show','create','update','delete');
+			foreach($defaultActions as $actionName){
+				$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Action');
+				$action->setName($actionName);
+				if($actionName == 'deleted'){
+					$action->setNeedsTemplate = false;
+				}
+				$domainObject->addAction($action);
+			}
 			
-			$domainObject->addAction($action);
 		}
+		else {
+			foreach ($jsonDomainObject['actionGroup']['actions'] as $jsonAction) {
+				$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Action');
+				$action->setName($jsonAction);
+				$domainObject->addAction($action);
+			}
+		}
+		
 		return $domainObject;
 	}
 

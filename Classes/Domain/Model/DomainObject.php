@@ -252,7 +252,10 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	 */
 	public function addAction(Tx_ExtbaseKickstarter_Domain_Model_Action $action) {
 		$action->setDomainObject($this);
-		$this->actions[] = $action;
+		if(!in_array($action,$this->actions)){
+			$this->actions[] = $action;
+		}
+		
 	}
 
 	/**

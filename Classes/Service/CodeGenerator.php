@@ -313,11 +313,13 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 			try {
 				// Generate Partial directory
 				t3lib_div::mkdir_deep($extensionDirectory, 'Resources/Private/Partials');
-
+				$partialDirectory = $extensionDirectory . 'Resources/Private/Partials/';
+				$this->writeFile($partialDirectory . 'formErrors.html',$this->generateFormErrorsPartial());
 				// Generate Layouts directory
 				t3lib_div::mkdir_deep($extensionDirectory, 'Resources/Private/Layouts');
 				$layoutsDirectory = $extensionDirectory . 'Resources/Private/Layouts/';
 				$this->writeFile($layoutsDirectory . 'default.html', $this->generateLayout($extension));
+				
 			} catch (Exception $e) {
 				return 'Could not generate private template folders, error: ' . $e->getMessage();
 			}
@@ -416,7 +418,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	 * @return string The generated Template code (might be empty)
 	 */
 	public function generateDomainTemplate(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject, Tx_ExtbaseKickstarter_Domain_Model_Action $action) {
-		if (file_exists(t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/Resources/Private/Templates/' . $action->getName() . '.htmlt')) {
+		if ($action->getNeedsTemplate() && file_exists(t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/Resources/Private/Templates/' . $action->getName() . '.htmlt')) {
 			return $this->renderTemplate('Resources/Private/Templates/'. $action->getName() . '.htmlt', array('domainObject' => $domainObject, 'action' => $action));
 		}
 	}
