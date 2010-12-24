@@ -177,7 +177,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilderTest extends Tx_ExtbaseKickstarte
 						'name' => 'Blog',
 						'objectsettings' => array(
 							'description' => 'A blog object',
-							'aggregateRoot' => TRUE,
+							'aggregateRoot' => FALSE,
 							'type' => 'Entity'
 						),
 						'propertyGroup' => array(
@@ -287,7 +287,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilderTest extends Tx_ExtbaseKickstarte
 		$blog->setName('Blog');
 		$blog->setDescription('A blog object');
 		$blog->setEntity(TRUE);
-		$blog->setAggregateRoot(TRUE);
+		$blog->setAggregateRoot(FALSE);
 		$property = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
 		$property->setName('name');
 		$blog->addProperty($property);
