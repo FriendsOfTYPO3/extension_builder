@@ -24,6 +24,5 @@ Tx_Extbase_Utility_Extension::registerModule(
 	)
 );
 
-t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', $_EXTKEY);
 
 ?>
