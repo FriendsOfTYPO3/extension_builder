@@ -43,7 +43,7 @@ emConf:
 	
 overwriteSettings:
 	Classes:
-		Controller: 		merge
+	#	Controller: 		merge
 		Domain:
 			Model:			merge
 			Repository:		merge
@@ -51,9 +51,9 @@ overwriteSettings:
 	Resources:
 		Private: 
 			Language:
-				locallang.xml:		keep
+	#			locallang.xml:		merge
 				
-			Templates:		keep
+	#		Templates:		keep
 	
 	ext_icon.gif:			keep
 	

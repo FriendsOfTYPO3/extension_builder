@@ -1,7 +1,16 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
 <k:openingTag>f:layout name="default" /</k:openingTag>
 
-This Template is responsible for creating a single view for a domain object
+This Template is responsible for displaying a single view for a domain object
+
+If you modify this template, do not forget to change the overwrite settings 
+in /Configuration/Kickstarter/settings.yaml:
+	Resources:
+		Private: 
+			Templates:
+				Show.html		keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the kickstarter
 
 <k:openingTag>f:section name="main"</k:openingTag>
 <h1>Single View for {domainObject.name}</h1>
@@ -21,8 +30,5 @@ This Template is responsible for creating a single view for a domain object
 	</f:for>
 	</k:removeMultipleNewlines>
 </table>
-<k:openingTag>f:link.action action="edit" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Edit<![CDATA[</f:link.action>]]>
-<k:openingTag>f:link.action action="delete" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Delete<![CDATA[</f:link.action>]]>
-
-<k:openingTag>f:link.action action="index"</k:openingTag>Back to listing<![CDATA[</f:link.action>]]>
+<k:openingTag>f:link.action action="create"</k:openingTag>New {domainObject.name}<![CDATA[</f:link.action>]]>
 <![CDATA[</f:section>]]>

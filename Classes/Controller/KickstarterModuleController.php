@@ -311,7 +311,6 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 		if(t3lib_extMgm::isLoaded($extKey) && class_exists('tx_em_Install')){
 			$installTool = t3lib_div::makeInstance('tx_em_Install');
 			$updateNeeded = $installTool->checkDBupdates($extKey, array('type'=>'L','files'=>array('ext_tables.sql')),1);
-			t3lib_div::devlog('Check update:'.$extKey,'kickstarter',0,$updateNeeded['structure']['diff']);
 			if(!empty($updateNeeded['structure']['diff']['extra'])){
 				return true;
 			}
