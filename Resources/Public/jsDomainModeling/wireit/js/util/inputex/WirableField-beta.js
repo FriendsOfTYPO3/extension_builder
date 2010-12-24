@@ -90,7 +90,8 @@ lang.extend(inputEx.Field, inputEx.BaseField, {
      */
     onAddWire: function(e, params) {
        this.options.container.onAddWire(e,params);
-
+       roundtrip.onAddWire(e,params,this);
+      
        this.disable();
        this.el.value = "[wired]";
     },
@@ -101,7 +102,7 @@ lang.extend(inputEx.Field, inputEx.BaseField, {
      */
     onRemoveWire: function(e, params) { 
        this.options.container.onRemoveWire(e,params);
-
+       roundtrip.onRemoveWire(e,params,this);
        this.enable();
        this.el.value = "";
     }
