@@ -33,7 +33,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilderTest extends Tx_ExtbaseKickstarte
 	public function setUp() {
 		//parent::setUp();
 		$this->extension = $this->getMock('Tx_ExtbaseKickstarter_Domain_Model_Extension',array('getOverWriteSettings'));
-		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_ObjectSchemaBuilder'), array('dummy'));
+		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder'), array('dummy'));
 		$this->extensionKey = 'dummy';
 	}
 	/**
@@ -145,10 +145,10 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilderTest extends Tx_ExtbaseKickstarte
 		$expected->setEntity(TRUE);
 		$expected->setAggregateRoot(TRUE);
 
-		$property0 = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
+		$property0 = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_StringProperty();
 		$property0->setName('name');
 		$property0->setRequired(TRUE);
-		$property1 = new Tx_ExtbaseKickstarter_Domain_Model_Property_IntegerProperty();
+		$property1 = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_IntegerProperty();
 		$property1->setName('type');
 		$expected->addProperty($property0);
 		$expected->addProperty($property1);
@@ -288,10 +288,10 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilderTest extends Tx_ExtbaseKickstarte
 		$blog->setDescription('A blog object');
 		$blog->setEntity(TRUE);
 		$blog->setAggregateRoot(FALSE);
-		$property = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
+		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_StringProperty();
 		$property->setName('name');
 		$blog->addProperty($property);
-		$property = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
+		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_StringProperty();
 		$property->setName('description');
 		$blog->addProperty($property);
 
@@ -311,12 +311,12 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilderTest extends Tx_ExtbaseKickstarte
 		$comment->setAggregateRoot(FALSE);
 		$extension->addDomainObject($comment);
 
-		$relation = new Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToOneRelation();
+		$relation = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToOneRelation();
 		$relation->setName('posts');
 		$relation->setForeignClass($post);
 		$blog->addProperty($relation);
 
-		$relation = new Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToManyRelation();
+		$relation = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToManyRelation();
 		$relation->setName('comments');
 		$relation->setForeignClass($comment);
 		$post->addProperty($relation);

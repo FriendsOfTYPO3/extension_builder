@@ -109,7 +109,7 @@ class Tx_ExtbaseKickstarter_Controller_WriteScaffoldingController extends Tx_Ext
 		$templateDirectory = PATH_typo3conf . 'ext/' . $extensionKey . '/Resources/Private/Templates/' . $domainObjectName . '/';
 
 		foreach ($allowedActionNames as $actionName) {
-			$action = new Tx_ExtbaseKickstarter_Domain_Model_Action();
+			$action = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action();
 			$action->setName($actionName);
 			$template = $this->codeGenerator->generateDomainTemplate($domainObject, $action);
 

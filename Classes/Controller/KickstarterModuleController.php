@@ -50,7 +50,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 
 
 	/**
-	 * @var Tx_ExtbaseKickstarter_ObjectSchemaBuilder
+	 * @var Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder
 	 */
 	protected $objectSchemaBuilder;
 
@@ -61,8 +61,8 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	protected $codeGenerator;
 
 	public function initializeAction() {
-		if (!$this->objectSchemaBuilder instanceof Tx_ExtbaseKickstarter_ObjectSchemaBuilder) {
-			$this->injectObjectSchemaBuilder(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_ObjectSchemaBuilder'));
+		if (!$this->objectSchemaBuilder instanceof Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder) {
+			$this->injectObjectSchemaBuilder(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder'));
 			$this->injectCodeGenerator(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_CodeGenerator'));
 			$this->settings = $frameworkConfiguration['settings'];
 			$this->settings['extConf'] = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getKickstarterSettings();
@@ -70,10 +70,10 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	}
 	
 	/**
-	 * @param Tx_ExtbaseKickstarter_ObjectSchemaBuilder $objectSchemaBuilder
+	 * @param Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder $objectSchemaBuilder
 	 * @return void
 	 */
-	public function injectObjectSchemaBuilder(Tx_ExtbaseKickstarter_ObjectSchemaBuilder $objectSchemaBuilder) {
+	public function injectObjectSchemaBuilder(Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder $objectSchemaBuilder) {
 		$this->objectSchemaBuilder = $objectSchemaBuilder;
 	}
 

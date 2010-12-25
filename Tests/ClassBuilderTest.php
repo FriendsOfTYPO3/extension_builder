@@ -52,7 +52,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilderTest extends Tx_ExtbaseKickstart
 		
 		$domainObject = $this->buildDomainObject($this->modelName,true,true);
 
-		$property0 = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
+		$property0 = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_StringProperty();
 		$property0->setName('name');
 		$domainObject->addProperty($property0);
 		
@@ -76,7 +76,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilderTest extends Tx_ExtbaseKickstart
 	public function classBuilderGeneratesGetterMethodForSimpleProperty() {
 		
 		$domainObject = $this->buildDomainObject($this->modelName,true,true);
-		$property0 = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
+		$property0 = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_StringProperty();
 		$property0->setName('name');
 		$property0->setRequired(TRUE);
 		$domainObject->addProperty($property0);
@@ -94,7 +94,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilderTest extends Tx_ExtbaseKickstart
 		
 		$domainObject = $this->buildDomainObject($this->modelName,true,true);
 		
-		$property = new Tx_ExtbaseKickstarter_Domain_Model_Property_BooleanProperty();
+		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_BooleanProperty();
 		$property->setName('blue');
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
@@ -114,7 +114,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilderTest extends Tx_ExtbaseKickstart
 		$domainObject1 = $this->buildDomainObject($this->modelName,true,true);
 		$relatedDomainObject = $this->buildDomainObject($modelName2);
 		
-		$relationProperty = new Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ManyToManyRelation();
+		$relationProperty = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ManyToManyRelation();
 		$relationProperty->setName($propertyName);
 		$relationProperty->setForeignClass($relatedDomainObject);
 		$domainObject1->addProperty($relationProperty);
