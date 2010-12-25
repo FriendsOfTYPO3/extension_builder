@@ -36,7 +36,7 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_BaseTe
 	
 	
 	public function setUp() {
-		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_ObjectSchemaBuilder'), array('dummy'));
+		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder'), array('dummy'));
 	}
 	
 	/**
@@ -105,7 +105,7 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_BaseTe
 		$classParser = new Tx_ExtbaseKickstarter_Utility_ClassParser();
 		$classParser->debugMode = $this->debugMode;
 		$classObject = $classParser->parse($className);
-		$this->assertTrue($classObject instanceof Tx_ExtbaseKickstarter_Domain_Model_Class);
+		$this->assertTrue($classObject instanceof Tx_ExtbaseKickstarter_Domain_Model_Class_Class);
 		$classReflection = new Tx_ExtbaseKickstarter_Reflection_ClassReflection($className);
 		$this->ParserFindsAllMethods($classObject,$classReflection);
 		$this->ParserFindsAllProperties($classObject,$classReflection);

@@ -46,7 +46,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorTest extends Tx_ExtbaseKickstarter_Base
 		$modelName = 'Model2';
 		$propertyName = 'blue';
 		$domainObject = $this->buildDomainObject($modelName);
-		$property = new Tx_ExtbaseKickstarter_Domain_Model_Property_BooleanProperty();
+		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_BooleanProperty();
 		$property->setName($propertyName);
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
@@ -85,7 +85,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorTest extends Tx_ExtbaseKickstarter_Base
 		$modelName = 'Model3';
 		$propertyName = 'title';
 		$domainObject = $this->buildDomainObject($modelName);
-		$property = new Tx_ExtbaseKickstarter_Domain_Model_Property_StringProperty();
+		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_StringProperty();
 		$property->setName($propertyName);
 		//$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
@@ -126,7 +126,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorTest extends Tx_ExtbaseKickstarter_Base
 		$propertyName = 'relName';
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
-		$relation = new Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToOneRelation();
+		$relation = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToOneRelation();
 		$relation->setName($propertyName);
 		$relation->setForeignClass($relatedDomainObject);
 		$domainObject->addProperty($relation);
@@ -172,7 +172,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorTest extends Tx_ExtbaseKickstarter_Base
 		$propertyName = 'relNames';
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
-		$relation = new Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToManyRelation();
+		$relation = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToManyRelation();
 		$relation->setName($propertyName);
 		$relation->setForeignClass($relatedDomainObject);
 		$domainObject->addProperty($relation);
@@ -265,14 +265,16 @@ class Tx_ExtbaseKickstarter_CodeGeneratorTest extends Tx_ExtbaseKickstarter_Base
 	 */
 	function writeAggregateRootClassesFromDomainObject(){
 		$domainObject = $this->buildDomainObject('Model1',true,true);
-		$property = new Tx_ExtbaseKickstarter_Domain_Model_Property_BooleanProperty();
+		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_BooleanProperty();
 		$property->setName('blue');
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
 		
 		$this->extension->addDomainObject($domainObject);
 		
-		$this->codeGenerator->build($this->extension);
+		$result = $this->codeGenerator->build($this->extension);
+		
+		$this->assertEquals($result,'success',$result);
 		
 		$this->assertFileExists($this->extension->getExtensionDir().'Classes/Domain/Model/'. $domainObject->getName() . '.php');
 		$this->assertFileExists($this->extension->getExtensionDir().'Classes/Domain/Repository/'. $domainObject->getName() . 'Repository.php');
