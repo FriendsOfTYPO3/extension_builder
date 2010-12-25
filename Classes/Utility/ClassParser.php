@@ -32,7 +32,7 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 	  
 	/**
 	 * 
-	 * @var Tx_ExtbaseKickstarter_Domain_Model_Class
+	 * @var Tx_ExtbaseKickstarter_Domain_Model_Class_Class
 	 */
 	protected $classObject;
 	
@@ -89,7 +89,7 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 	/**
 	 * builds a classSchema from a className, you have to require_once before importing the class
 	 * @param string $className
-	 * @return Tx_ExtbaseKickstarter_Domain_Model_Class_Schema 
+	 * @return Tx_ExtbaseKickstarter_Domain_Model_Class_Class 
 	 */
 	public function parse($className){
 		
@@ -99,7 +99,7 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 			throw new Exception('Class not exists: '.$className);
 		} 
 		
-		$this->classObject = new Tx_ExtbaseKickstarter_Domain_Model_Class($className);
+		$this->classObject = new Tx_ExtbaseKickstarter_Domain_Model_Class_Class($className);
 		
 		$this->classReflection = new Tx_ExtbaseKickstarter_Reflection_ClassReflection($className);
 		
@@ -136,7 +136,7 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 		// the Tx_ExtbaseKickstarter_Reflection_MethodReflection returned from ClassReflection
 		$currentMethodReflection = NULL; 
 		
-		 // the new created Tx_ExtbaseKickstarter_Domain_Model_ClassMethod
+		 // the new created Tx_ExtbaseKickstarter_Domain_Model_Class_Method
 		$currentClassMethod = NULL;
 		
 		// remember the last line that matched either a property, a constant or a method end

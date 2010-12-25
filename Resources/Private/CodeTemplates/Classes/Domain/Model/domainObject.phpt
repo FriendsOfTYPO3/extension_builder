@@ -83,7 +83,7 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	public function get{property.name -> k:uppercaseFirst()}() {
 		return $this->{property.name};
 	}
-	<f:if condition="{k:isOfType(object:property, type:'Property_BooleanProperty')}">
+	<f:if condition="{k:isOfType(object:property, type:'DomainObject_BooleanProperty')}">
 	/**
 	 * Returns the state of {property.name}
 	 *
@@ -92,7 +92,7 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	public function is{property.name -> k:uppercaseFirst()}() {
 		return $this->get{property.name -> k:uppercaseFirst()}();
 	}
-	</f:if><f:if condition="{k:isOfType(object:property, type:'Property_Relation_AnyToManyRelation')}">
+	</f:if><f:if condition="{k:isOfType(object:property, type:'DomainObject_Relation_AnyToManyRelation')}">
 	/**
 	 * Adds a {property.foreignClass.name -> k:uppercaseFirst()}
 	 *

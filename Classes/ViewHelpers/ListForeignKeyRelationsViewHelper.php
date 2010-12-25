@@ -40,7 +40,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_ListForeignKeyRelationsViewHelper extend
 		foreach ($extension->getDomainObjects() as $domainObject) {
 			if (!count($domainObject->getProperties())) continue;
 			foreach ($domainObject->getProperties() as $property) {
-				if ($property instanceof Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToManyRelation
+				if ($property instanceof Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToManyRelation
 					&& $property->getForeignClass() === $expectedDomainObject) {
 					$results[] = $property;
 				}
