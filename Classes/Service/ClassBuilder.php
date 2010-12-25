@@ -32,7 +32,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 	
 	/**
 	 * The current class object 
-	 * @var Tx_ExtbaseKickstarter_Domain_Model_Class
+	 * @var Tx_ExtbaseKickstarter_Domain_Model_Class_Class
 	 */
 	protected $classObject = NULL;
 	
@@ -190,8 +190,8 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty $domainProperty
 	 */
 	protected function setPropertyRelatedMethods($domainProperty){
-		t3lib_div::devlog('setPropertyRelatedMethods:'.$domainProperty->getName(),'extbase_kickstarter',1);
-		if (is_subclass_of($domainProperty, 'Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AnyToManyRelation')) {
+		t3lib_div::devlog('setPropertyRelatedMethods:'.$domainProperty->getName(),'extbase_kickstarter',1,(array)$domainProperty);
+		if (is_subclass_of($domainProperty, 'Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
 			t3lib_div::devlog('setPropertyAddMethods:'.$domainProperty->getName(),'extbase_kickstarter',1);
 			$addMethod = $this->buildAddMethod($domainProperty);
 			$removeMethod = $this->buildRemoveMethod($domainProperty);
@@ -211,7 +211,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 	
 	/**
 	 * 
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty $domainProperty
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty $domainProperty
 	 */
 	protected function buildGetterMethod($domainProperty){
 		
@@ -307,7 +307,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 	
 	/**
 	 * 
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty $domainProperty
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty $domainProperty
 	 */
 	protected function buildRemoveMethod($domainProperty){
 		
@@ -346,7 +346,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 	/**
 	 * Builds a method that checks the current boolean state of a property
 	 * 
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty $domainProperty
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty $domainProperty
 	 */
 	protected function buildIsMethod($domainProperty){
 		
@@ -372,7 +372,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 	
 	/**
 	 * 
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty $property
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty $property
 	 * @param string $methodPrefix (get,set,add,remove,is)
 	 * @return string method name
 	 */
@@ -393,7 +393,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 	
 	/**
 	 * 
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty $property
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty $property
 	 * @param string $methodType (get,set,add,remove,is)
 	 * @return string method body
 	 */
@@ -418,7 +418,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 	
 	/**
 	 * 
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty $property
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty $property
 	 * @param string $methodType (set,add,remove)
 	 * @return string method body
 	 */

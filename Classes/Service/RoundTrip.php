@@ -106,7 +106,7 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 		}
 		
 		if(file_exists($this->previousExtensionDirectory . 'kickstarter.json')){
-			$objectSchemaBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_ObjectSchemaBuilder');
+			$objectSchemaBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder');
 			$jsonConfig =  json_decode(file_get_contents($this->previousExtensionDirectory . 'kickstarter.json'),true);
 			//t3lib_div::devlog('old JSON:'.$this->previousExtensionDirectory . 'kickstarter.json','extbase_kickstarter',0,$jsonConfig);
 			$this->previousExtension = $objectSchemaBuilder->build($jsonConfig);
@@ -646,7 +646,7 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 	/**comments
 	 * if the foreign DomainObject was renamed, the relation has to be updated also
 	 * 
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AbstractRelation $relation
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AbstractRelation $relation
 	 * @return string className of foreign class
 	 */
 	public function getForeignClass($relation){
@@ -733,7 +733,7 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 		);
 		
 		$settings = $extension->getSettings();
-		t3lib_div::devlog('Overwrite settings for:'.$path,'kickstarter',0,$settings);
+		//t3lib_div::devlog('Overwrite settings for:'.$path,'kickstarter',0,$settings);
 		if(!is_array($settings)){
 			throw new Exception('overWrite settings could not be parsed');
 		}
