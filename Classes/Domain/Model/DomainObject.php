@@ -68,13 +68,13 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 
 	/**
 	 * List of properties the domain object has
-	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty>
+	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty>
 	 */
 	protected $properties = array();
 	
 	/**
 	 * List of actions the domain object has
-	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_Action>
+	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action>
 	 */
 	protected $actions = array();
 	
@@ -190,16 +190,16 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	
 	/**
 	 * Adding a new property
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty $property The new property to add
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty $property The new property to add
 	 */
-	public function addProperty(Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty $property) {
+	public function addProperty(Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty $property) {
 		$property->setDomainObject($this);
 		$this->properties[] = $property;
 	}
 
 	/**
 	 * Get all properties
-	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty>
+	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty>
 	 */
 	public function getProperties() {
 		return $this->properties;
@@ -207,7 +207,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	
 	/**
 	 * Get property
-	 * @return object <Tx_ExtbaseKickstarter_Domain_Model_AbstractProperty>
+	 * @return object <Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty>
 	 */
 	public function getPropertyByName($propertyName) {
 		foreach($this->properties as $property){
@@ -220,12 +220,12 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	
 	/**
 	 * Get all properties holding relations of type Property_Relation_ZeroToManyRelation
-	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToManyRelation>
+	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToManyRelation>
 	 */
 	public function getZeroToManyRelationProperties() {
 		$relationProperties = array();
 		foreach ($this->properties as $property) {
-			if (is_a($property, 'Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_ZeroToManyRelation')) {
+			if (is_a($property, 'Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToManyRelation')) {
 				$relationProperties[] = $property;
 			}
 		}
@@ -234,12 +234,12 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	
 	/**
 	 * Get all properties holding relations of type Property_Relation_AnyToManyRelation
-	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_anyToManyRelation>
+	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToManyRelation>
 	 */
 	public function getAnyToManyRelationProperties() {
 		$relationProperties = array();
 		foreach ($this->properties as $property) {
-			if (is_subclass_of($property, 'Tx_ExtbaseKickstarter_Domain_Model_Property_Relation_AnyToManyRelation')) {
+			if (is_subclass_of($property, 'Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
 				$relationProperties[] = $property;
 			}
 		}
@@ -248,9 +248,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	
 	/**
 	 * Adding a new action
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Action $action The new action to add
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action $action The new action to add
 	 */
-	public function addAction(Tx_ExtbaseKickstarter_Domain_Model_Action $action) {
+	public function addAction(Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action $action) {
 		$action->setDomainObject($this);
 		if(!in_array($action,$this->actions)){
 			$this->actions[] = $action;
@@ -260,7 +260,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 
 	/**
 	 * Get all actions
-	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_Action>
+	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action>
 	 */
 	public function getActions() {
 		return $this->actions;
