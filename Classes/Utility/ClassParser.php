@@ -103,11 +103,7 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 		
 		$this->classReflection = new Tx_ExtbaseKickstarter_Reflection_ClassReflection($className);
 		
-		if($className == 'Tx_KickstartTest_Controller_BlogController'){
-			//die(json_encode($this->classReflection));
-		}
-		
-		$propertiesToMap = array('FileName','Modifiers','Tags','ParentClass');
+		$propertiesToMap = array('FileName','Modifiers','Tags','ParentClass','DocComment');
 		
 		// map class variables from ClassReflection to classObject 
 		foreach($propertiesToMap as $propertyToMap){
@@ -117,7 +113,7 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 			
 			$this->classObject->$setterMethod($this->classReflection->$getterMethod());
 		}
-		
+
 		$file = $this->classReflection->getFileName();
 		$fileHandler = fopen($file,'r');
 		

@@ -98,7 +98,6 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 		
 		if( Tx_ExtbaseKickstarter_Service_RoundTrip::getOverWriteSettingForPath($classPath,$this->extension) != 0){
 			try {
-				t3lib_div::devLog('Try to import Class '.$className, 'extbase_kickstarter',2);		
 				$this->classObject = $this->roundTripService->getDomainModelClass($domainObject);
 			}
 			catch(Exception $e){
@@ -115,8 +114,6 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 		if(!$this->classObject->hasDescription()){
 			$this->classObject->setDescription($domainObject->getDescription());
 		}
-		
-		
 		
 		$anyToManyRelationProperties = $domainObject->getAnyToManyRelationProperties();
 		

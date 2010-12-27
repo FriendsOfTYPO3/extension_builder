@@ -328,7 +328,6 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 				include_once($fileName);
 				$className = $oldDomainObject->getDomainRepositoryClassName();
 				$this->classObject  = $this->classParser->parse($className);
-				t3lib_div::devlog('existing Repository class:'.$fileName,'extbase_kickstarter',0,(array)$this->classObject);
 				if($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed){
 					$newClassName = $currentDomainObject->getDomainRepositoryClassName();
 					$this->classObject->setName($newClassName);
@@ -404,6 +403,10 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 		}
 	}
 	
+	/**
+	 * Removes all related methods, if a property was removed
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty $propertyToRemove
+	 */
 	protected function removePropertyAndRelatedMethods($propertyToRemove){
 		$propertyName = $propertyToRemove->getName();
 		$this->classObject->removeProperty($propertyName);

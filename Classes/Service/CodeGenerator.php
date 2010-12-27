@@ -311,9 +311,10 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 					t3lib_div::mkdir_deep($privateResourcesDirectory, 'Templates/' . $domainObject->getName());
 					$domainTemplateDirectory = $privateResourcesDirectory . 'Templates/' . $domainObject->getName() . '/';
 					foreach($domainObject->getActions() as $action) {
-						$fileContents = $this->generateDomainTemplate($domainObject, $action);
-						$this->writeFile($domainTemplateDirectory . ucfirst($action->getName()) . '.html', $fileContents);
-						
+						if ($action->getNeedsTemplate() && file_exists(t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/Resources/Private/Templates/' . $action->getName() . '.htmlt')) {
+							$fileContents = $this->generateDomainTemplate($domainObject, $action);
+							$this->writeFile($domainTemplateDirectory . ucfirst($action->getName()) . '.html', $fileContents);
+						}
 							// generate partials for formfields 
 						if(in_array($action->getName(),$actionsUsingFormFieldsPartial)){
 							$partialDirectory =  $extensionDirectory . 'Resources/Private/Partials/';
@@ -381,10 +382,9 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 			$controllerClassObject = $this->classBuilder->generateControllerClassObject($domainObject);
 			// returns a class object if an existing class was found
 			if($controllerClassObject){
-				if(!$controllerClassObject->hasDocComment()){
-					$classDocComment = $this->renderTemplate('Partials/Classes/classDocComment.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension,'classObject'=>$controllerClassObject));
-					$controllerClassObject->setDocComment($classDocComment);
-				}
+				$classDocComment = $this->renderDocComment($controllerClassObject,$domainObject);
+				$controllerClassObject->setDocComment($classDocComment);
+				
 				return $this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject, 'extension' => $extension,'classObject'=>$controllerClassObject));
 			}
 		}
@@ -399,10 +399,9 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		if($this->roundTripEnabled){
 			$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
 			if($modelClassObject){
-				if(!$modelClassObject->hasDocComment()){
-					$classDocComment = $this->renderTemplate('Partials/Classes/classDocComment.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension,'classObject'=>$modelClassObject));
-					$modelClassObject->setDocComment($classDocComment);
-				}
+				$classDocComment = $this->renderDocComment($modelClassObject,$domainObject);
+				$modelClassObject->setDocComment($classDocComment);
+				
 				return $this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject, 'extension' => $extension,'classObject'=>$modelClassObject));
 			}
 		}
@@ -414,15 +413,40 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		if($this->roundTripEnabled){
 			$repositoryClassObject = $this->classBuilder->generateRepositoryClassObject($domainObject);
 			if($repositoryClassObject){
-				if(!$repositoryClassObject->hasDocComment()){
-					$classDocComment = $this->renderTemplate('Partials/Classes/classDocComment.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension,'classObject'=>$repositoryClassObject));
-					$repositoryClassObject->setDocComment($classDocComment);
-				}
+				$classDocComment = $this->renderDocComment($repositoryClassObject,$domainObject);
+				$repositoryClassObject->setDocComment($classDocComment);
+				
 				return $this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject,'classObject' => $repositoryClassObject));
 			}
 			
 		}
 		return $this->renderTemplate('Classes/Domain/Repository/domainRepository.phpt', array('domainObject' => $domainObject, 'extension' => $extension));
+	}
+	
+	/**
+	 * generate a docComment for class files. Add a license haeder if none found
+	 * @param unknown_type $classObject
+	 * @param unknown_type $domainObject
+	 */
+	protected function renderDocComment($classObject,$domainObject){
+		if(!$classObject->hasDocComment()){
+			$docComment = $this->renderTemplate('Partials/Classes/classDocComment.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension,'classObject'=>$classObject));
+		}
+		else {
+			$docComment = $classObject->getDocComment();
+		}
+		$precedingBlock = $classObject->getPrecedingBlock();
+		
+		if(empty($precedingBlock) || strpos($precedingBlock,'GNU General Public License')<1){
+			
+			$licenseHeader = $this->renderTemplate('Partials/Classes/licenseHeader.phpt', array('persons' => $this->extension->getPersons()));
+			$docComment = $licenseHeader."\n\n\n".$docComment;
+			t3lib_div::devlog('No license header in: '.$classObject->getName(),'kickstarter');
+		}
+		else {
+			$docComment = $precedingBlock."\n".$docComment;
+		}
+		return $docComment;
 	}
 	
 	/**
@@ -434,9 +458,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	 * @return string The generated Template code (might be empty)
 	 */
 	public function generateDomainTemplate(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject, Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action $action) {
-		if ($action->getNeedsTemplate() && file_exists(t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/Resources/Private/Templates/' . $action->getName() . '.htmlt')) {
 			return $this->renderTemplate('Resources/Private/Templates/'. $action->getName() . '.htmlt', array('domainObject' => $domainObject, 'action' => $action));
-		}
 	}
 	
 	public function generateDomainFormFieldsPartial(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject){

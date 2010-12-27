@@ -1,7 +1,5 @@
-<?php
-{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}<?php
 {classObject.docComment}
-
 <f:for each="{classObject.modifierNames}" as="modifierName">{modifierName} </f:for>class {classObject.name} <k:class classObject="{classObject}"  renderElement="parentClass" />  <k:class classObject="{classObject}"  renderElement="interfaces" /> {
 <f:for each="{classObject.constants}" as="constant">
 	/**
