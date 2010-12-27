@@ -20,8 +20,8 @@ div.WireIt-Container div.body {
 
 div.WireIt-Container-focused {
 	z-index: 6;
-	opacity: 0.8;
-	filter: alpha(opacity = 80);
+	opacity: 1;
+	filter: alpha(opacity = 100);
 }
 
 #modelingLayer {
@@ -159,7 +159,7 @@ div.WireIt-Container-ddhandle span {
 }
 
 div.inputEx-InPlaceEdit-visu:hover {
-	background-color: #000000;
+	background-color: transparent;
 }
 
 legend.inputEx-Group-legend {

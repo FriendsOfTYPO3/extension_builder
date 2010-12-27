@@ -82,7 +82,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 										inputParams: {
 											label: "Action Type", 
 											name: "actionType", 
-											selectValues: ["list", "edit", "create"]
+											selectValues: ["show","list","create","update"]
 										}
 									}
 								}
