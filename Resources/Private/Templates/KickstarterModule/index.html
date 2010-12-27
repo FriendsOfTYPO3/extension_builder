@@ -24,7 +24,8 @@
 		<li><b>Plugin Configuration</b>: Will create a plugin configuration, so it will work out-of-the-box.</li>
 		<li><b>Dynamic Scaffolding</b>: Automatically create all CRUD actions (Create, Read, Update, Delete) for Aggregate Roots!</li>
 	</ul>
-
+	Have a look at the Wiki <a href="http://forge.typo3.org/projects/extension-extbase_kickstarter/wiki/Using_the_Kickstarter" target="_blank" style="color:blue;text-decoration:underline;">Using the Kickstarter</a> for more details.
+	<br /><br />
 	<p><b><f:link.action action="domainmodelling" style="color:blue;text-decoration:underline;">Go to the Domain Modeller</f:link.action></b></p>
 
 	<h2>Iterative model refinement</h2>
@@ -34,10 +35,11 @@
 		<li><b>Dynamic Scaffolding</b>: The Scaffolding will automatically adjust the templates needed to render CRUD-functionality for your domain models.
 			That is, if you modify your domain model by adding or removing fields, the standard CRUD actions display the new fields as well.
 	</ul>
-
-	<h2>Improving Views and Controllers</h2>
-	After the model has been improved iteratively, at one point, your focus of attention usually shifts to the Controller and View part of your extension.<br />
-	At this point, you'll want to <b>disable Dynamic Scaffolding</b>, and instead use <b>Static Scaffolding</b>.
-	This means you can take the automatically generated CRUD actions as a basis, and adjust them manually.
-	<p><b><f:link.action controller="WriteScaffolding" action="index" style="color:blue;text-decoration:underline;">Convert Dynamic to Static Scaffolding</f:link.action></b></p>
+	When you start to modify the generated files, but still want to use the graphical modeler to extend your model, you have to enable the roundtrip feature 
+	in the Kickstarter settings in the Extension Manager. <br />
+	You will find a file in your extension directory Configuration/Kickstarter/settings.yaml.<br />
+	There you can configure which files should be overwritten, kept or merged if you save your model.<br />
+	A good practice would be, to let the Kickstarter generate the Partials for form fields and properties for you and include them in your templates.
+	<br /><br />
+	At the Wiki <a href="http://forge.typo3.org/projects/extension-extbase_kickstarter/wiki/Modifying_and_extending_the_model" target="_blank" style="color:blue;text-decoration:underline;">Modifying and extending the model</a> you find more details about this feature
 </f:section>

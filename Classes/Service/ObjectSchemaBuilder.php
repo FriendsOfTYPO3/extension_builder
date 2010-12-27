@@ -80,9 +80,9 @@ class Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder implements t3lib_singlet
 			$person->setRole($personValues['role']);
 			$person->setEmail($personValues['email']);
 			$person->setCompany($personValues['company']);
+			
 			$extension->addPerson($person);
 		}
-		
 		foreach ($globalProperties['plugins'] as $pluginValues) {
 			$plugin = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Plugin');
 			$plugin->setName($pluginValues['name']);

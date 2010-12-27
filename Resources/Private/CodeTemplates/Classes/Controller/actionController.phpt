@@ -1,27 +1,5 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}<?php
-/***************************************************************
-*  Copyright notice
-*
-*  (c) <f:format.date format="Y">now</f:format.date> <f:for each="{extension.persons}" as="person">{person.name} <f:if condition="{person.email}"><{person.email}></f:if><f:if condition="{person.company}">, {person.company}</f:if>
-*  			</f:for>
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+<k:render partial="Classes/licenseHeader.phpt" arguments="{persons:extension.persons}" />
 
 /**
  * Controller for the {domainObject.name} object
@@ -49,9 +27,7 @@ class {domainObject.controllerName} extends Tx_Extbase_MVC_Controller_ActionCont
 	</f:if>
 
 	<f:for each="{domainObject.actions}" as="action">
-		<f:if condition="{action.needsTemplate}">
-			<k:render partial="Classes/Controller/{action.name}Action.phpt" arguments="{domainObject:domainObject}" />
-		</f:if>
+		<k:render partial="Classes/Controller/{action.name}Action.phpt" arguments="{domainObject:domainObject}" />
 	</f:for>
 }
 ?>
