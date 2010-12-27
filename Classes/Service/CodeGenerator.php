@@ -388,7 +388,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 				return $this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject, 'extension' => $extension,'classObject'=>$controllerClassObject));
 			}
 		}
-		return $this->renderTemplate('Classes/Controller/actionController.phpt', array('domainObject' => $domainObject));
+		return $this->renderTemplate('Classes/Controller/actionController.phpt', array('domainObject' => $domainObject,'extension'=>$extension));
 	}
 
 	public function generateActionControllerCrudActions(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
@@ -422,7 +422,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 			}
 			
 		}
-		return $this->renderTemplate('Classes/Domain/Repository/domainRepository.phpt', array('domainObject' => $domainObject));
+		return $this->renderTemplate('Classes/Domain/Repository/domainRepository.phpt', array('domainObject' => $domainObject, 'extension' => $extension));
 	}
 	
 	/**
