@@ -18,7 +18,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								required	: true
 							}
 						}, 
-						animColors: {from: "#000000" , to: "#5C85D6"}
+						animColors: {from: "#cccccc" , to: "#cccccc"}
 					}
 				},
 				{
