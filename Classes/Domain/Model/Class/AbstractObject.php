@@ -137,11 +137,14 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 	 */
 	public function getAnnotations(){
 		$annotations = array();
-		foreach($this->tags as $tagName => $tagValue){
-			if(is_array($tagValue)){
-				$tagValue = implode(' ',$tagValue);
+		foreach($this->tags as $tagName => $tagValues){
+			if(is_array($tagValues)){
+				foreach($tagValues as $tagValue){
+					$annotations[] = $tagName .' '. $tagValue;
+				}
+				//$tagValue = implode(' ',$tagValue);
 			}
-			$annotations[] = $tagName .' '. $tagValue;
+			else $annotations[] = $tagName .' '. $tagValues;
 		}
 		
 		return $annotations;
@@ -163,9 +166,17 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 	 * @param mixed $tagValue
 	 * @return void
 	 */
-	public function setTag($tagName,$tagValue) {
-		//TODO: multiple tags with same tagname must be possible (param etc.)
-		$this->tags[$tagName] = $tagValue;
+	public function setTag($tagName,$tagValue,$override = true) {
+		if(!$override && isset($this->tags[$tagName])){
+			if(!is_array($this->tags[$tagName])){
+				// build an array with the existing value as first element
+				$this->tags[$tagName] = array($this->tags[$tagName]);
+			}
+			$this->tags[$tagName][] = $tagValue;
+		}
+		else {
+			$this->tags[$tagName] = $tagValue;
+		}
 	}	
 	
 	/**
