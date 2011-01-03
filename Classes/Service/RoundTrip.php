@@ -539,11 +539,6 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 			$oldMethodBody = $mergedMethod->getBody();
 			$oldComment =  $mergedMethod->getDocComment();
 			
-			if(trim($oldMethodBody) ==  trim(Tx_ExtbaseKickstarter_Service_ClassBuilder::getDefaultMethodBody($oldProperty, $methodType))){
-				// this means the method was not modified so we can remove it and it will be regenerated from ClassBuilder
-				$this->classObject->removeMethod($oldMethodName);
-				return;
-			}
 			$newMethodBody = $this->replacePropertyNameInMethodBody($oldProperty->getName(),$newProperty->getName(),$oldMethodBody);
 			$mergedMethod->setBody($newMethodBody);
 		}
@@ -572,10 +567,9 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 		$tags = $mergedMethod->getTags();
 		foreach($tags as $tagKey => $tagValue){
 			//  we need to update the param tag
-			// TODO: multiple param tags are not yet supported since the extbase reflection tag does not support multiple tag with same key!!
 			if($tagKey == 'param'){
-				$mergedMethod->removeTag('param');
 				if(is_array($tagValue)){
+					// multiple parameter!
 					$newValues = array();
 					foreach($tagValue as $v){
 						if(method_exists($oldProperty,'getForeignClass')){
@@ -586,7 +580,7 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 						$v = str_replace($this->previousExtensionKey,$this->extension->getExtensionKey(),$v);
 						$newValues[] = $v;
 					}
-					$mergedMethod->setTag('param',implode(' ',$newValues));
+					$mergedMethod->setTag('param',$newValues);
 				}
 				else {
 					// TODO: str_replace is insufficient in certain cases 
