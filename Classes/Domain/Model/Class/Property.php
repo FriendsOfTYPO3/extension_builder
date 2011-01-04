@@ -49,6 +49,17 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 	protected $associatedDomainObjectProperty = NULL;
 	
 	/**
+	 * @var boolean
+	 */
+	protected $default;
+	
+	/**
+	 * 
+	 * @var mixed
+	 */
+	protected $value;
+	
+	/**
 	 * 
 	 * @param string $propertyName
 	 * @return void
@@ -66,6 +77,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 	 */
 	public function mapToReflectionProperty($propertyReflection){
 		if($propertyReflection instanceof Tx_ExtbaseKickstarter_Reflection_PropertyReflection){
+			
 			$propertyReflection->getTagsValues(); // just to initialize the docCommentParser
 			foreach($this as $key => $value) {
 				$setterMethodName = 'set'.t3lib_div::underscoredToUpperCamelCase($key);
@@ -75,8 +87,15 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 				if(method_exists($propertyReflection,$getterMethodName) && method_exists($this,$setterMethodName) ){
 	    			$this->$setterMethodName($propertyReflection->$getterMethodName());
 	    		}
+	    		
+	    		$isMethodName = 'is'.t3lib_div::underscoredToUpperCamelCase($key);
+	    		
+				// map properties of reflection class to this class
+				if(method_exists($propertyReflection,$setterMethodName) && method_exists($this,$isMethodName) ){
+	    			$this->$setterMethodName($propertyReflection->$isMethodName());
+	    		}
 			}
-			
+
 			// This is not yet used later on. The type is not validated, so it might be anything!!
 			if(isset($this->tags['var'])) {
 				$parts = preg_split('/\s/', $this->tags['var'][0], 2);
@@ -142,6 +161,47 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 	public function hasAssociatedDomainObjectProperty(){
 		return !is_null($this->associatedDomainObjectProperty);
 	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function isDefault(){
+		return $this->default;
+	}
+	
+	/**
+	 * 
+	 * @param boolean $default
+	 */
+	public function setDefault($default){
+		$this->default = $default;
+	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function getDefault(){
+		return $this->default;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getValue(){
+		return $this->value;
+	}
+	
+	/**
+	 * Setter for value
+	 * 
+	 * @param mixed
+	 */
+	public function setValue($value){
+		$this->value = $value;
+	}
+	
 	
 }
 

@@ -16,7 +16,7 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	 * @var {property.typeForComment}<f:if condition="{property.validateAnnotation}">
 	 * {property.validateAnnotation}</f:if>
 	 */
-	protected ${property.name};
+	protected ${property.name}<f:if condition="{property.default}"> = {property.value}</f:if>;
 	</f:for><k:removeNewlines><f:if condition="{domainObject.AnyToManyRelationProperties}">
 	/**
 	 * The constructor.

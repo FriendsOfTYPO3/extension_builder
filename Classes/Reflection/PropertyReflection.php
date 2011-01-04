@@ -47,6 +47,17 @@ class Tx_ExtbaseKickstarter_Reflection_PropertyReflection extends Tx_Extbase_Ref
 	protected $rawComment;
 	
 	/**
+	 * @var boolean
+	 */
+	protected $default;
+	
+	/**
+	 * 
+	 * @var mixed
+	 */
+	protected $value;
+	
+	/**
 	 * getter for line number
 	 * @return int line number
 	 */
@@ -84,6 +95,47 @@ class Tx_ExtbaseKickstarter_Reflection_PropertyReflection extends Tx_Extbase_Ref
 		}
 		return $this->description;
 	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function isDefault(){
+		return $this->default;
+	}
+	
+	/**
+	 * 
+	 * @param boolean $default
+	 */
+	public function setDefault($default){
+		$this->default = $default;
+	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function getDefault(){
+		return $this->default;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getValue(){
+		return $this->value;
+	}
+	
+	/**
+	 * Setter for value
+	 * 
+	 * @param mixed
+	 */
+	public function setValue($value){
+		$this->value = $value;
+	}
+	
 	
 }
 

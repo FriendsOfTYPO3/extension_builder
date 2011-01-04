@@ -123,6 +123,8 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	/**
 	 * The entry point to the class
 	 * 
+	 * TODO: split this huge method into smaller methods
+	 * 
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_Extension $extension
 	 * @return string a result message "success" or an error message describing the error
 	 */
@@ -149,16 +151,13 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 			t3lib_div::mkdir($this->extensionDirectory);
 		}
 		
-		
-		
-
 		// Generate ext_emconf.php, ext_tables.* and TCA definition
 		$extensionFiles = array('ext_emconf.php','ext_tables.php','ext_tables.sql','ext_localconf.php');
 		foreach($extensionFiles as  $extensionFile){
 			try {
 				$fileContents = $this->renderTemplate( Tx_Extbase_Utility_Extension::convertUnderscoredToLowerCamelCase($extensionFile).'t', array('extension' => $this->extension));
 				$this->writeFile($this->extensionDirectory . $extensionFile, $fileContents);
-				t3lib_div::devlog('Generated '.$extensionFile,'kickstarter',0);
+				t3lib_div::devlog('Generated '.$extensionFile,'kickstarter',0,array('Content'=>$fileContents));
 			} 
 			catch (Exception $e) {
 				return 'Could not write '.$extensionFile.', error: ' . $e->getMessage();
@@ -361,7 +360,13 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 
 		return $renderingContext;
 	}
-
+	
+	/**
+	 * Render a template with variables
+	 * 
+	 * @param string $filePath
+	 * @param array $variables
+	 */
 	protected function renderTemplate($filePath, $variables) {
 		if(isset($this->settings['codeTemplateRootPath'])){
 			$codeTemplateRootPath = PATH_site.$this->settings['codeTemplateRootPath'];
@@ -377,7 +382,12 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		return trim($parsedTemplate->render($this->buildRenderingContext($variables)));
 	}
 
-
+	/**
+	 * Generates the code for the controller class
+	 * Either from ectionController template or from class partial
+	 * 
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject
+	 */
 	public function generateActionControllerCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
 		if($this->roundTripEnabled){
 			$controllerClassObject = $this->classBuilder->generateControllerClassObject($domainObject);
@@ -391,11 +401,13 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		}
 		return $this->renderTemplate('Classes/Controller/actionController.phpt', array('domainObject' => $domainObject,'extension'=>$this->extension));
 	}
-
-	public function generateActionControllerCrudActions(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
-		return $this->renderTemplate('Classes/Controller/actionControllerCrudActions.phpt', array('domainObject' => $domainObject));
-	}
 	
+	/**
+	 * Generates the code for the domain model class
+	 * Either from domainObject template or from class partial
+	 * 
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject
+	 */
 	public function generateDomainObjectCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
 		if($this->roundTripEnabled){
 			$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
@@ -409,7 +421,13 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		return $this->renderTemplate('Classes/Domain/Model/domainObject.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension));
 		
 	}
-
+	
+	/**
+	 * Generates the code for the repository class
+	 * Either from domainRepository template or from class partial
+	 * 
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject
+	 */
 	public function generateDomainRepositoryCode(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
 		if($this->roundTripEnabled){
 			$repositoryClassObject = $this->classBuilder->generateRepositoryClassObject($domainObject);
