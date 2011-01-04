@@ -64,26 +64,26 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 	 * The regular expression to detect a method in a line 
 	 * @var string regular expression
 	 */
-	public $methodRegex = "/\s*function\s*([a-zA-Z0-9_]*)/";
+	public $methodRegex = "/\s*function\s*(\w*)/";
 	
 	/**
 	 * The regular expression to detect a property (or multiple) in a line 
 	 * @var string regular expression
 	 */
-	public $propertyRegex = "/\s*\\$([a-zA-Z0-9_]*)/";
+	public $propertyRegex = "/\s*\\$(?<name>\w*)\s*(\=(?<value>\s*([^;]*)))?;/";
 	
 	/**
 	 * The regular expression to detect a constant in a line 
 	 * @var string regular expression
 	 */
-	public $constantRegex = "/\s*const\s*([a-zA-Z0-9_]*)\s*\=\s*\'*\"*([^;\"']*)'*\"*;/";
+	public $constantRegex = "/\s*const\s*(\w*)\s*\=\s*\'*\"*([^;\"']*)'*\"*;/";
 	
 	// TODO parse definitions of namespaces
 	public $namespaceRegex = "/^namespace|^use|^declare/";
 	
 	public $includeRegex = "/(require_once|require|include_once|include)+\s*\(([^;]*)\)/";
 	
-	// TODO parse definitions of constants
+	// TODO parse definitions of "define" statements
 	public $defineRegex = "/define+\s*\(([a-zA-Z0-9_-,\\'\"\s]*)/";
 
 	/**
@@ -377,17 +377,27 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 	 * @param array $propertyMatches as returned from preg_match_all
 	 */
 	protected function addProperty(array $propertyMatches){
-		$propertyNames = $propertyMatches[1];
+		$properties = array_combine($propertyMatches['name'],$propertyMatches['value']);
+		t3lib_div::devLog('Properties parsed:','kickstarter',0,$properties);
 		$isFirstProperty = true;
-		foreach($propertyNames as $propertyName){
+		foreach($properties as $propertyName => $propertyValue){
 			try{
 				// the property has to exist in the classReflection
 				$reflectionProperty = $this->classReflection->getProperty($propertyName);
+				$reflectionProperty->setAccessible(true);
+				
 				if($reflectionProperty){
 					
 					$classProperty = new Tx_ExtbaseKickstarter_Domain_Model_Class_Property($propertyName);
 					$classProperty->mapToReflectionProperty($reflectionProperty);
 					
+					// set default values: the reflection method getValue does not work here??
+					// so we have to get the default value from regex matches
+					if(!empty($propertyValue)){
+						eval('$classProperty->setValue('.$propertyValue.');');
+						$classProperty->setDefault(true);
+					}
+
 					if($isFirstProperty){
 						// only the first property will get the preceding block assigned
 						$precedingBlock = $this->concatLinesFromArray($lines,$lastMatchedLine);
