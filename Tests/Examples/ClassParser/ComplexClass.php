@@ -65,6 +65,10 @@ final class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_ComplexClass extend
 		$this->name = $name;
 	}
 	private $another_Property = 'test456_"';
+	private $anotherProperty = "test456_'\"";
+	private $arrayProperty1 = array(2,6,'test');
+	private $arrayProperty2 = array('test'=>3,'b' => 'q');
+	static $constProperty = testConstant;
 	static function method_2($param1,&$param2,$param3= 'default',array $param4 = array('test'=>array(1,2,3))){
 		/**
 		 * test test

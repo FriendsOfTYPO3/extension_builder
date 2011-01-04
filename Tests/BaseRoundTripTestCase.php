@@ -98,6 +98,17 @@ abstract class Tx_ExtbaseKickstarter_BaseRoundTripTestCase extends Tx_ExtbaseKic
 		$domainObject->setName($name);
 		$domainObject->setEntity($entity);
 		$domainObject->setAggregateRoot($aggregateRoot);
+		if($aggregateRoot){
+			$defaultActions = array('list','show','create','update','delete');
+			foreach($defaultActions as $actionName){
+				$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action');
+				$action->setName($actionName);
+				if($actionName == 'deleted'){
+					$action->setNeedsTemplate = false;
+				}
+				$domainObject->addAction($action);
+			}
+		}
 		return $domainObject;
 	}
 	
