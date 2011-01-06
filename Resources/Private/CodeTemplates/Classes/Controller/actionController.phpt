@@ -12,6 +12,8 @@
 class {domainObject.controllerName} extends Tx_Extbase_MVC_Controller_ActionController {
 	<f:if condition="{domainObject.aggregateRoot}">
 	/**
+	 * {domainObject.name -> k:lowercaseFirst()}Repository
+	 * 
 	 * @var {domainObject.domainRepositoryClassName}
 	 */
 	protected ${domainObject.name -> k:lowercaseFirst()}Repository;
@@ -25,7 +27,6 @@ class {domainObject.controllerName} extends Tx_Extbase_MVC_Controller_ActionCont
 		$this->{domainObject.name -> k:lowercaseFirst()}Repository = t3lib_div::makeInstance('{domainObject.domainRepositoryClassName}');
 	}
 	</f:if>
-
 	<f:for each="{domainObject.actions}" as="action">
 		<k:render partial="Classes/Controller/{action.name}Action.phpt" arguments="{domainObject:domainObject}" />
 	</f:for>
