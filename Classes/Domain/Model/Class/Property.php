@@ -111,7 +111,6 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 				$this->description = trim($this->description);
 				$this->setTag('var','mixed // please define a var type here');
 			}
-			
 		}
 	}
 	

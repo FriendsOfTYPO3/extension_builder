@@ -23,35 +23,24 @@
 ***************************************************************/
 
 /**
- * JSON view helper
- * enables access to json_encode and json_decode in fluid templates
+ * provides helper methods
  *
  * @package ExtbaseKickstarter
+ * @version $ID:$
  */
-
-class Tx_ExtbaseKickstarter_ViewHelpers_JsonViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtbaseKickstarter_Utility_Tools implements t3lib_singleton{
 	
-	/**
-	 * 
-	 * @param string $encodeType (optional) default encode possible: decode, encode
-	 * @param boolean $arraysAsPhpNotation (optional) should arrays be notated as php arrays?
-	 * @return mixed the encoded string or decoded data
-	 */
-	public function render($encodeType = 'encode',$arraysAsPhpNotation = true) {
-		$content = $this->renderChildren();
-		if($encodeType == 'decode'){
-			return json_decode($content);
+	static public function convertJSONArrayToPHPArray($encodedArray){
+		if(strpos($encodedArray,'}')>-1){
+			$encodedArray = str_replace('{','array(',$encodedArray);
+			$encodedArray = str_replace('}',')',$encodedArray);
+			$encodedArray = str_replace(':',' => ',$encodedArray);
 		}
-		else {
-			$content = json_encode($content);
-			if($arraysAsPhpNotation){
-				$content = Tx_ExtbaseKickstarter_Utility_Tools::convertJSONArrayToPHPArray($content);
-			}
-			return $content;
+		if(strpos($encodedArray,']')>-1){
+			$encodedArray = str_replace('[','array(',$encodedArray);
+			$encodedArray = str_replace(']',')',$encodedArray);
 		}
+		return $encodedArray;
 	}
-	
-
 }
-
 ?>

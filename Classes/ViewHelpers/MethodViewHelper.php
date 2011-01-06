@@ -73,15 +73,8 @@ class Tx_ExtbaseKickstarter_ViewHelpers_MethodViewHelper extends Tx_Fluid_Core_V
 					if(!empty($defaultValue)){
 						$defaultValue = json_encode($defaultValue);
 						// now we render php notation from JSON notation
-						if(strpos($defaultValue,'}')>-1){
-							$defaultValue = str_replace('{','array(',$defaultValue);
-							$defaultValue = str_replace('}',')',$defaultValue);
-							$defaultValue = str_replace(':',' => ',$defaultValue);
-						}
-						if(strpos($defaultValue,']')>-1){
-							$defaultValue = str_replace('[','array(',$defaultValue);
-							$defaultValue = str_replace(']',')',$defaultValue);
-						}
+						$defaultValue = Tx_ExtbaseKickstarter_Utility_Tools::convertJSONArrayToPHPArray($defaultValue);
+						
 						//t3lib_div::devLog('default Value: '. $defaultValue, 'parameter debug');				
 					}
 					else $defaultValue = 'array()';
