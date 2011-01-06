@@ -9,6 +9,8 @@
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
+ 
 class {domainObject.domainRepositoryClassName} extends Tx_Extbase_Persistence_Repository <![CDATA[{]]>
+
 <![CDATA[}]]>
 ?>

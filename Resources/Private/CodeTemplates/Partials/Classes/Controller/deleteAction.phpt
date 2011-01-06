@@ -3,6 +3,7 @@
 	 * Deletes an existing {domainObject.name}
 	 *
 	 * @param {domainObject.className} ${domainObject.name -> k:lowercaseFirst()} the {domainObject.name} to be deleted
+	 * @return void
 	 */
 	public function deleteAction({domainObject.className} ${domainObject.name -> k:lowercaseFirst()}) {
 		$this->{domainObject.name -> k:lowercaseFirst()}Repository->remove(${domainObject.name -> k:lowercaseFirst()});
