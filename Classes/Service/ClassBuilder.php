@@ -173,6 +173,12 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 			
 			$classProperty->setAssociatedDomainObjectProperty($domainProperty);
 			
+			if ($domainProperty->getRequired()) {
+				if(!$classProperty->isTaggedWith('validate')){
+					$validateTag = explode(' ',trim($domainProperty->getValidateAnnotation()));
+					$classProperty->setTag('validate',$validateTag[1]);
+				}
+			}
 			$this->classObject->setProperty($classProperty);
 			
 			$this->setPropertyRelatedMethods($domainProperty);
