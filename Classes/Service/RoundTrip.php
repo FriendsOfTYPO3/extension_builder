@@ -715,9 +715,10 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 	/**
 	 * finds a related overwrite setting to a path
 	 * and returns the overWrite setting
-	 * 0 for overwrite
-	 * 1 for merge (if possible)
-	 * 2 for keep existing file
+	 * -1 for do not create at all
+	 * 0  for overwrite
+	 * 1  for merge (if possible)
+	 * 2  for keep existing file
 	 * 
 	 * @param string $path of the file to get the settings for
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_Extension $extension
@@ -725,6 +726,7 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 	 */
 	public static function getOverWriteSettingForPath($path,$extension){
 		$map = array(
+			'skip' => -1,
 			'merge' => 1,
 			'keep' => 2
 		);

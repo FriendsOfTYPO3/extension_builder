@@ -96,7 +96,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 		// is there already a class file? 
 		$classPath = 'Classes/Domain/Model/' . $domainObject->getName() . '.php';
 		
-		if( Tx_ExtbaseKickstarter_Service_RoundTrip::getOverWriteSettingForPath($classPath,$this->extension) != 0){
+		if( Tx_ExtbaseKickstarter_Service_RoundTrip::getOverWriteSettingForPath($classPath,$this->extension) > 0){
 			try {
 				$this->classObject = $this->roundTripService->getDomainModelClass($domainObject);
 			}
@@ -458,7 +458,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 		$className =  $domainObject->getControllerName();
 		$classPath = 'Classes/Controller/' . $domainObject->getName() . 'Controller.php';
 		
-		if(Tx_ExtbaseKickstarter_Service_RoundTrip::getOverWriteSettingForPath($classPath,$this->extension) != 0){
+		if(Tx_ExtbaseKickstarter_Service_RoundTrip::getOverWriteSettingForPath($classPath,$this->extension) > 0){
 			try {
 				$this->classObject = $this->roundTripService->getControllerClass($domainObject);
 			}
@@ -521,7 +521,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 		
 		$className = $domainObject->getDomainRepositoryClassName();
 		$classPath = 'Classes/Domain/Repository/' . $domainObject->getName() . 'Repository.php';
-		if(Tx_ExtbaseKickstarter_Service_RoundTrip::getOverWriteSettingForPath($classPath,$this->extension) != 0){
+		if(Tx_ExtbaseKickstarter_Service_RoundTrip::getOverWriteSettingForPath($classPath,$this->extension) > 0){
 			try {
 				$this->classObject = $this->roundTripService->getRepositoryClass($domainObject);
 			}
