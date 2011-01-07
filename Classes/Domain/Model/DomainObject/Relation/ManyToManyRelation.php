@@ -51,21 +51,6 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ManyToManyRelatio
 		return 'Tx_Extbase_Persistence_ObjectStorage';
 	}
 
-	/**
-	 * Returns the relation table name. It is build by having 'tx_myextension_' followed by the 
-	 * first domain object name followed by the second domain object name followed by '_mm'.
-	 *
-	 * @return void
-	 */
-	public function getRelationTableName() {
-		return 'tx_'
-			. strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->domainObject->getExtension()->getExtensionKey()))
-			. '_'
-			. strtolower($this->domainObject->getName())
-			. '_'
-			. strtolower($this->foreignClass->getName())
-			. '_mm';
-	}
 	
 	/**
 	 * 

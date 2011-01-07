@@ -11,7 +11,7 @@
 	'showAllLocalizationLink' => 1
 ),</f:then><f:else>'type' => 'select',
 'foreign_table' => '{property.foreignClass.databaseTableName}',
-'foreign_field' => '{property.foreignKeyName}',
+'MM' => '{property.relationTableName}',
 'size' => 10,
 'autoSizeMax' => 30,
 'maxitems' => 9999,
