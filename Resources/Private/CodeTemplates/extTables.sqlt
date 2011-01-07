@@ -38,7 +38,11 @@ CREATE TABLE {domainObject.databaseTableName} (
 <f:for each="{extension.domainObjects}" as="domainObject">
 <k:removeNewlines>
 <f:for each="{domainObject.properties}" as="property">
-<f:if condition="{k:isOfType(object: property, type: 'DomainObject_Relation_ManyToManyRelation')}">
+<f:if condition="{k:isOfType(object: property, type: 'DomainObject_Relation_AnyToManyRelation')}">
+	<f:if condition="{property.inlineEditing}">
+		<f:then>
+		</f:then>
+		<f:else>
 CREATE TABLE {property.relationTableName} (
 	uid int(10) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
@@ -56,6 +60,8 @@ CREATE TABLE {property.relationTableName} (
 	PRIMARY KEY (uid),
 	KEY parent (pid)
 );
+		</f:else>
+	</f:if>
 </f:if>
 </f:for>
 </k:removeNewlines>
