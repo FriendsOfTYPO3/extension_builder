@@ -1,4 +1,5 @@
 var roundtrip = {
+		debugMode			:	false,
 		renderFieldHook 	:	function(input){
 									if(input.inputParams.name == 'uid' && typeof input.inputParams.value == 'undefined'){
 										input.inputParams.value = this.createUniqueId();
@@ -70,6 +71,9 @@ var roundtrip = {
 										}
 									}
 		,_debug					:	function(o){
+										if(!this.debugMode){
+											return;
+										}
 										if(typeof console != 'undefined' && typeof console.log == 'function'){
 											console.log(o);
 										}
