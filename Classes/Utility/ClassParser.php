@@ -384,7 +384,6 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 			try{
 				// the property has to exist in the classReflection
 				$reflectionProperty = $this->classReflection->getProperty($propertyName);
-				$reflectionProperty->setAccessible(true);
 				
 				if($reflectionProperty){
 					
