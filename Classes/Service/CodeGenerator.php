@@ -569,6 +569,9 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		if($this->roundTripEnabled){
 			$overWriteMode = Tx_ExtbaseKickstarter_Service_RoundTrip::getOverWriteSettingForPath($targetFile,$this->extension);
 			//t3lib_div::devlog($targetFile.'-'.$overWriteMode,'extbase_kickstarter');
+			if($overWriteMode == -1){
+				return; // skop file creation
+			}
 			if(file_exists($targetFile)){
 				if($overWriteMode == 2){
 					// keep the existing file

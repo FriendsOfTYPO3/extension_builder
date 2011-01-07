@@ -66,9 +66,10 @@ class Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder implements t3lib_singlet
 		else {
 			$settings = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getExtensionSettings($extension->getExtensionKey());	
 		}
-		t3lib_div::devlog('settings:'.$extension->getExtensionKey(),'extbase',0,$extension->getSettings());
+		
 		if(!empty($settings)){
 			$extension->setSettings($settings);
+			//t3lib_div::devlog('settings:'.$extension->getExtensionKey(),'extbase',0,$extension->getSettings());
 		}
 		
 			// version

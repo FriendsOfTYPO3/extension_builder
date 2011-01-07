@@ -39,29 +39,29 @@
 
 emConf:
 
-	dependencies:			cms,extbase,fluid
+  dependencies: cms,extbase,fluid
 	
 overwriteSettings:
-	Classes:
-	#	Controller: 		merge
-		Domain:
-			Model:			merge
-			Repository:		merge
-		
-	Resources:
-		Private: 
-			Language:
-	#			locallang.xml:		merge
-				
-	#		Templates:		keep
-	
-	ext_icon.gif:			keep
-	
-#	ext_localconf.php		merge
+  Classes:
+#    Controller: merge
+    Domain:
+      Model: merge
+      Repository: merge
+    
+  Resources:
+    Private: 
+      Language:
+#        locallang.xml: merge
+        
+#      Templates: keep
+  
+  ext_icon.gif: keep
 
-#	ext_tables.php			merge
+#  ext_localconf.php: merge
 
-#	ext_tables.sql			merge
+#  ext_tables.php: merge
+
+#  ext_tables.sql: merge
 
 
 
@@ -73,22 +73,20 @@ overwriteSettings:
 # It will be kept on next code generation, if the overwrite settings 
 # are configured to merge it
 #
-#	Experimental!!
+#  Experimental!!
 #################################################################
 
 classBuilder:
-				
-	Controller:
-		parentClass: 		Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController
-			
-	Model:
-		AbstractEntity: 		
-			parentClass:	Tx_Extbase_DomainObject_AbstractEntity
-			
-		AbstractValueObject:	
-			parentClass:	Tx_Extbase_DomainObject_AbstractValueObject
 
-	Repository:
-		parentClass: 		Tx_Extbase_Persistence_Repository
-		
-		
+  Controller:
+    parentClass: Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController
+      
+  Model:
+    AbstractEntity:     
+      parentClass: Tx_Extbase_DomainObject_AbstractEntity
+      
+    AbstractValueObject:  
+      parentClass: Tx_Extbase_DomainObject_AbstractValueObject
+
+  Repository:
+    parentClass: Tx_Extbase_Persistence_Repository
