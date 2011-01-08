@@ -43,6 +43,20 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToMan
 			. strtolower($this->foreignClass->getName())
 			. '_mm';
 	}
+	
+	/**
+	 * Is a MM table needed for this relation?
+	 * 
+	 * @return void
+	 */
+	public function getUseMMTable(){
+		if($this->getInlineEditing()){
+			return FALSE;
+		} 
+		else {
+			return TRUE;
+		}
+	}
 
 }
 
