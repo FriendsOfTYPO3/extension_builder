@@ -243,6 +243,13 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 				$domainModelDirectory = $this->extensionDirectory . 'Classes/Domain/Model/';
 				t3lib_div::mkdir_deep($this->extensionDirectory, 'Classes/Domain/Repository');
 				$domainRepositoryDirectory = $this->extensionDirectory . 'Classes/Domain/Repository/';
+
+				t3lib_div::mkdir_deep($this->extensionDirectory, 'Tests/Domain/Model');
+				$domainModelTestsDirectory = $this->extensionDirectory . 'Tests/Domain/Model/';
+
+				t3lib_div::mkdir_deep($this->extensionDirectory, 'Tests/Controller');
+				$crudEnabledControllerTestsDirectory = $this->extensionDirectory . 'Tests/Controller/';
+
 				foreach ($this->extension->getDomainObjects() as $domainObject) {
 					$fileContents = $this->generateDomainObjectCode($domainObject);
 					$this->writeFile($domainModelDirectory . $domainObject->getName() . '.php', $fileContents);
@@ -267,6 +274,10 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 						t3lib_div::devlog('Generated '.$domainObject->getName() . 'Repository.php','kickstarter',0);
 						$this->extension->setMD5Hash($domainRepositoryDirectory . $domainObject->getName() . 'Repository.php');
 					}
+
+					// Generate basic UnitTests
+					$fileContents = $this->generateDomainModelTests($domainObject);
+					$this->writeFile($domainModelTestsDirectory . $domainObject->getName() . 'Test.php', $fileContents);
 				}
 			} catch (Exception $e) {
 				return 'Could not generate domain model, error: ' . $e->getMessage();
@@ -281,6 +292,8 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 					$this->writeFile($controllerDirectory . $domainObject->getName() . 'Controller.php', $fileContents);
 					t3lib_div::devlog('Generated '.$domainObject->getName() . 'Controller.php','kickstarter',0);
 					$this->extension->setMD5Hash($controllerDirectory . $domainObject->getName() . 'Controller.php');
+
+					$this->generateScaffoldingControllerTests($controllerName, $domainObject); 
 				}
 			} catch (Exception $e) {
 				return 'Could not generate action controller, error: ' . $e->getMessage();
@@ -442,6 +455,30 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		return $this->renderTemplate('Classes/Domain/Repository/domainRepository.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension));
 	}
 	
+	/**
+	 * Generate the tests for a model
+	 *
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject
+	 *
+	 * @return string
+	 */
+	public function generateDomainModelTests(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
+		return $this->renderTemplate('Tests/DomainModelTest.phpt', array('extension' => $this->extension, 'domainObject' => $domainObject));
+	}
+
+	/**
+	 * Generate the tests for a CRUD-enabled controller
+	 *
+	 * @param array $extensionProperties
+	 * @param string $controllerName
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject
+	 *
+	 * @return string
+	 */
+	public function generateScaffoldingControllerTests($controllerName, Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
+		return $this->renderTemplate('Tests/ScaffoldingControllerTest.phpt', array('extension' => $this->extension, 'controllerName' => $controllerName, 'domainObject' => $domainObject));
+	}
+
 	/**
 	 * generate a docComment for class files. Add a license haeder if none found
 	 * @param unknown_type $classObject
