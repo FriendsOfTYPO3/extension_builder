@@ -60,6 +60,15 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ManyToManyRelatio
 		return true;
 	}
 	
+	/**
+	 * Is a MM table needed for this relation?
+	 * 
+	 * @return void
+	 */
+	public function getUseMMTable(){
+		return TRUE;
+	}
+	
 }
 
 ?>
