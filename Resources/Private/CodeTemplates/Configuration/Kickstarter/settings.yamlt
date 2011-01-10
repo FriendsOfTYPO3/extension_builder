@@ -43,7 +43,7 @@ emConf:
 	
 overwriteSettings:
   Classes:
-#    Controller: merge
+    Controller: merge
     Domain:
       Model: merge
       Repository: merge

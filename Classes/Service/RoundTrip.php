@@ -162,8 +162,6 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 	 * 
 	 * Methods are either removed/added or updated according to the new property names
 	 * 
-	 * 
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Class $classObject The class object parsed from an existing class
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject The new domain object
 	 * 
 	 * @return Tx_ExtbaseKickstarter_Domain_Model_Class OR NULL
@@ -229,9 +227,9 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject
 	 */
 	public function getControllerClass(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $currentDomainObject){
+		$extensionDir = $this->previousExtensionDirectory;
 		if(isset($this->oldDomainObjects[$currentDomainObject->getUniqueIdentifier()])){
 			$oldDomainObject = $this->oldDomainObjects[$currentDomainObject->getUniqueIdentifier()];
-			$extensionDir = $this->previousExtensionDirectory;
 			$fileName =  Tx_ExtbaseKickstarter_Service_CodeGenerator::getFolderForClassFile($extensionDir ,'Controller',false).$oldDomainObject->getName().'Controller.php';
 			if(file_exists($fileName)){
 				t3lib_div::devlog('existing controller class:'.$fileName,'extbase_kickstarter',0);
@@ -239,42 +237,9 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 				$className = $oldDomainObject->getControllerName();
 				$this->classObject  = $this->classParser->parse($className);
 				
-				$parentClasses = (array)$this->classObject->getParentClass();
-				if(is_array($parentClasses) && $parentClasses['name'] == 'Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController'){
-					t3lib_div::devlog('Controller extends AbstractScaffoldingController so roundtrip is skipped. Use the kickstarter to convert dynamic to static scaffolding','extbase_kickstarter',3);
-					return NULL;
-				}
 				//t3lib_div::devlog('Controller class methods','extbase_kickstarter',0,$this->classObject->getMethods());
 				if($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed){
-					$newClassName = $currentDomainObject->getControllerName();
-					$this->classObject->setName($newClassName);
-					if($oldDomainObject->isAggregateRoot()){
-						// should we keep the old properties comments and tags?
-						$this->classObject->removeProperty(t3lib_div::lcfirst($oldDomainObject->getName()).'Repository');
-						
-						if($currentDomainObject->isAggregateRoot()){
-							// update the initializeAction method body
-							$initializeMethod = $this->classObject->getMethod('initializeAction');
-							if($initializeMethod != NULL){
-								$initializeMethodBody = $initializeMethod->getBody();
-								if($currentDomainObject->isAggregateRoot()){
-									$newMethodBody = str_replace($oldDomainObject->getDomainRepositoryClassName(), $currentDomainObject->getDomainRepositoryClassName(),$initializeMethodBody);
-									$newMethodBody = str_replace(t3lib_div::lcfirst($oldDomainObject->getName()).'Repository', t3lib_div::lcfirst($currentDomainObject->getName()).'Repository',$newMethodBody);
-									$initializeMethod->setBody($newMethodBody);
-									$this->classObject->setMethod($initializeMethod);
-								}
-								else {
-									$this->classObject->removeMethod('initializeAction');
-								}
-							}
-						}
-						else {
-							$this->cleanUp(Tx_ExtbaseKickstarter_Service_CodeGenerator::getFolderForClassFile($extensionDir ,'Repository'),$oldDomainObject->getName().'Repository.php');
-						}
-					}
-					
-					$this->classObject->setFileName($currentDomainObject->getName().'Controller.php');
-					$this->cleanUp( Tx_ExtbaseKickstarter_Service_CodeGenerator::getFolderForClassFile($extensionDir ,'Controller'),$oldDomainObject->getName().'Controller.php');
+					$this->mapOldControllerToCurrentClassObject($oldDomainObject,$currentDomainObject);
 				}
 				
 				$newActions = array();
@@ -302,7 +267,7 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 			}
 		}
 		else {
-			$fileName =  Tx_ExtbaseKickstarter_Service_CodeGenerator::getFolderForClassFile($this->extensionDir ,'Controller',false).$currentDomainObject->getName().'Controller.php';
+			$fileName =  Tx_ExtbaseKickstarter_Service_CodeGenerator::getFolderForClassFile($extensionDir ,'Controller',false).$currentDomainObject->getName().'Controller.php';
 			if(file_exists($fileName)){
 				include_once($fileName);
 				$className = $currentDomainObject->getControllerName();
@@ -310,9 +275,45 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 				t3lib_div::devlog('existing controller class:'.$fileName,'extbase_kickstarter',0,$this->classObject->getAnnotations());
 				return $this->classObject;
 			}
+			else t3lib_div::devlog('No existing controller class:'.$fileName,'extbase_kickstarter',2);
 		}
 		t3lib_div::devlog('No existing controller class:'.$currentDomainObject->getName(),'extbase_kickstarter',2);
 		return NULL;
+	}
+	
+	/**
+	 * If a domainObject was renamed
+	 *
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $oldDomainObject
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $currentDomainObject
+	 * @return void
+	 */
+	protected function mapOldControllerToCurrentClassObject(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $oldDomainObject,Tx_ExtbaseKickstarter_Domain_Model_DomainObject $currentDomainObject){
+		$newClassName = $currentDomainObject->getControllerName();
+		$this->classObject->setName($newClassName);
+		if($oldDomainObject->isAggregateRoot()){
+			// should we keep the old properties comments and tags?
+			$this->classObject->removeProperty(t3lib_div::lcfirst($oldDomainObject->getName()).'Repository');
+
+			if($currentDomainObject->isAggregateRoot()){
+				// update the initializeAction method body
+				$initializeMethod = $this->classObject->getMethod('initializeAction');
+				if($initializeMethod != NULL){
+					$initializeMethodBody = $initializeMethod->getBody();
+					$newMethodBody = str_replace($oldDomainObject->getDomainRepositoryClassName(), $currentDomainObject->getDomainRepositoryClassName(),$initializeMethodBody);
+					$newMethodBody = str_replace(t3lib_div::lcfirst($oldDomainObject->getName()).'Repository', t3lib_div::lcfirst($currentDomainObject->getName()).'Repository',$newMethodBody);
+					$initializeMethod->setBody($newMethodBody);
+					$this->classObject->setMethod($initializeMethod);
+				}
+			}
+			else {
+				$this->classObject->removeMethod('initializeAction');
+				$this->cleanUp(Tx_ExtbaseKickstarter_Service_CodeGenerator::getFolderForClassFile($extensionDir ,'Repository'),$oldDomainObject->getName().'Repository.php');
+			}
+		}
+		
+		$this->classObject->setFileName($currentDomainObject->getName().'Controller.php');
+		$this->cleanUp( Tx_ExtbaseKickstarter_Service_CodeGenerator::getFolderForClassFile($extensionDir ,'Controller'),$oldDomainObject->getName().'Controller.php');
 	}
 	
 	/**
@@ -320,9 +321,9 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject
 	 */
 	public function getRepositoryClass(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $currentDomainObject){
+		$extensionDir = $this->previousExtensionDirectory;
 		if(isset($this->oldDomainObjects[$currentDomainObject->getUniqueIdentifier()])){
 			$oldDomainObject = $this->oldDomainObjects[$currentDomainObject->getUniqueIdentifier()];
-			$extensionDir = $this->previousExtensionDirectory;
 			$fileName =  Tx_ExtbaseKickstarter_Service_CodeGenerator::getFolderForClassFile($extensionDir ,'Repository',false).$oldDomainObject->getName().'Repository.php';
 			if(file_exists($fileName)){
 				include_once($fileName);
@@ -341,7 +342,7 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 			}
 		}
 		else {
-			$fileName =  Tx_ExtbaseKickstarter_Service_CodeGenerator::getFolderForClassFile($this->extensionDir ,'Repository',false).$currentDomainObject->getName().'Repository.php';
+			$fileName =  Tx_ExtbaseKickstarter_Service_CodeGenerator::getFolderForClassFile($extensionDir ,'Repository',false).$currentDomainObject->getName().'Repository.php';
 			if(file_exists($fileName)){
 				include_once($fileName);
 				$className = $currentDomainObject->getDomainRepositoryClassName();
@@ -364,7 +365,7 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 	 * 
 	 * return void (all actions are performed on $this->classObject
 	 */
-	protected function updateModelClassProperties($oldDomainObject,$newDomainObject){
+	protected function updateModelClassProperties(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $oldDomainObject,Tx_ExtbaseKickstarter_Domain_Model_DomainObject $newDomainObject){
 		$newProperties = array();
 		foreach($newDomainObject->getProperties() as $property){
 			$newProperties[$property->getUniqueIdentifier()] = $property;
