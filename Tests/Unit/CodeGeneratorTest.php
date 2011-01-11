@@ -5,8 +5,6 @@
 *  (c) 2010 Nico de Haen
  *  All rights reserved
  *
- *  This class is a backport of the corresponding class of FLOW3.
- *  All credits go to the v5 team.
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
  *  free software; you can redistribute it and/or modify
@@ -25,21 +23,30 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once('BaseRoundTripTestCase.php');
+
 
 /**
  * 
  * @author Nico de Haen
  *
  */
-class Tx_ExtbaseKickstarter_CodeGeneratorTest extends Tx_ExtbaseKickstarter_BaseRoundTripTestCase {
+class Tx_ExtbaseKickstarter_CodeGeneratorTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
 	
 	function setUp(){
 		parent::setUp();
 	}
 	
 	/**
+	 * @test
+	 */
+	public function checkRequirements(){
+		$this->assertTrue(class_exists(vfsStream),'Requirements not fulfilled: vfsStream is needed for file operation tests. Please make sure you are using at least phpunit Version 3.5.6');
+	}
+	
+	/**
 	 * Write a simple model class for a non aggregate root domain object with one boolean property
+	 * 
+	 * @depends checkRequirements
 	 * @test
 	 */
 	function writeModelClassWithBooleanProperty(){
@@ -73,12 +80,12 @@ class Tx_ExtbaseKickstarter_CodeGeneratorTest extends Tx_ExtbaseKickstarter_Base
 		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in setter method');
 		$parameter = current($parameters);
 		$this->assertTrue(($parameter->getName() == $propertyName),'Wrong parameter name in setter method');
-		
-		unlink($modelClassPath);
 	}
 
 	/**
 	 * Write a simple model class for a non aggregate root domain object with one string property
+	 * 
+	 * @depends checkRequirements
 	 * @test
 	 */
 	function writeModelClassWithStringProperty(){
@@ -113,11 +120,12 @@ class Tx_ExtbaseKickstarter_CodeGeneratorTest extends Tx_ExtbaseKickstarter_Base
 		$parameter = current($parameters);
 		$this->assertTrue(($parameter->getName() == $propertyName),'Wrong parameter name in setter method');
 		
-		unlink($modelClassPath);
 	}
 	
 	/**
 	 * Write a simple model class for a non aggregate root domain object with one to one relation
+	 * 
+	 * @depends checkRequirements
 	 * @test
 	 */
 	function writeModelClassWithZeroToOneRelation(){
@@ -159,11 +167,12 @@ class Tx_ExtbaseKickstarter_CodeGeneratorTest extends Tx_ExtbaseKickstarter_Base
 		$this->assertTrue(($parameter->getName() == $propertyName),'Wrong parameter name in setter method');
 		$this->assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getClassName()),'Wrong type hint for setter parameter:'.$parameter->getTypeHint());
 		
-		unlink($modelClassPath);
 	}
 	
 	/**
 	 * Write a simple model class for a non aggregate root domain object with zero to many relation
+	 * 
+	 * @depends checkRequirements
 	 * @test
 	 */
 	function writeModelClassWithZeroToManyRelation(){
@@ -230,11 +239,12 @@ class Tx_ExtbaseKickstarter_CodeGeneratorTest extends Tx_ExtbaseKickstarter_Base
 		$parameter = current($parameters);
 		$this->assertTrue(($parameter->getName() == Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName).'ToRemove'),'Wrong parameter name in remove method');
 		$this->assertTrue(($parameter->getTypeHint() ==  $relatedDomainObject->getClassName()),'Wrong type hint for remove method parameter:'.$parameter->getTypeHint());
-		unlink($modelClassPath);
 	}
 	
 	/**
 	 * Write a simple model class for a non aggregate root domain object with one to one relation
+	 * 
+	 * @depends checkRequirements
 	 * @test
 	 */
 	function writeModelClassWithManyToManyRelation(){
@@ -303,13 +313,14 @@ class Tx_ExtbaseKickstarter_CodeGeneratorTest extends Tx_ExtbaseKickstarter_Base
 		$parameter = current($parameters);
 		$this->assertTrue(($parameter->getName() == Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName).'ToRemove'),'Wrong parameter name in remove method');
 		$this->assertTrue(($parameter->getTypeHint() ==  $relatedDomainObject->getClassName()),'Wrong type hint for remove method parameter:'.$parameter->getTypeHint());
-		unlink($modelClassPath);
 	}
 	
 	
 	
 	/**
 	 * Write a simple model class for a non aggregate root domain object
+	 * 
+	 * @depends checkRequirements
 	 * @test
 	 */
 	function writeSimpleControllerClassFromDomainObject(){
@@ -332,7 +343,6 @@ class Tx_ExtbaseKickstarter_CodeGeneratorTest extends Tx_ExtbaseKickstarter_Base
 		include($controllerClassPath);
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 		
-		unlink($controllerClassPath);
 	}
 	
 	/**
@@ -404,7 +414,6 @@ class Tx_ExtbaseKickstarter_CodeGeneratorTest extends Tx_ExtbaseKickstarter_Base
 		$this->assertFileExists($extensionDir.'Resources/Private/Language/locallang.xml');
 		$this->assertFileExists($extensionDir.'Resources/Private/Partials/'. $domainObject->getName() .'/formFields.html');
 		$this->assertFileExists($extensionDir.'Resources/Private/Partials/'. $domainObject->getName() .'/properties.html');
-		t3lib_div::rmdir($this->extension->getExtensionDir(),true);
 	}
 
 }

@@ -25,14 +25,13 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once('BaseTestCase.php');
 /**
  * TODO testcase doesn't cover whole class 
  * 
  * @author Christoph D�hen
  *
  */
-class  Tx_ExtbaseKickstarter_Domain_Model_ExtensionTest extends Tx_ExtbaseKickstarter_BaseTestCase {
+class  Tx_ExtbaseKickstarter_Domain_Model_ExtensionTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
 
 	protected $persons = array();
 	protected $extension;
