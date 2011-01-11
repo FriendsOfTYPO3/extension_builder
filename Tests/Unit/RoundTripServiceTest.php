@@ -5,8 +5,6 @@
 *  (c) 2010 Nico de Haen
  *  All rights reserved
  *
- *  This class is a backport of the corresponding class of FLOW3.
- *  All credits go to the v5 team.
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
  *  free software; you can redistribute it and/or modify
@@ -25,9 +23,8 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once('BaseRoundTripTestCase.php');
 
-class Tx_ExtbaseKickstarter_RoundTripServiceTest extends Tx_ExtbaseKickstarter_BaseRoundTripTestCase {
+class Tx_ExtbaseKickstarter_RoundTripServiceTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
 	
 	function setUp(){
 		parent::setUp();
@@ -91,8 +88,6 @@ class Tx_ExtbaseKickstarter_RoundTripServiceTest extends Tx_ExtbaseKickstarter_B
 		$classObject = $this->roundTripService->_get('classObject');
 		$this->assertTrue($classObject->methodExists('getNewProp1Name'));
 		$this->assertTrue($classObject->methodExists('setNewProp1Name'));
-		
-		t3lib_div::rmdir($this->extension->getExtensionDir(),true);
 	}
 	
 }

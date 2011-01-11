@@ -25,8 +25,8 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once('BaseTestCase.php');
-class Tx_ExtbaseKickstarter_ObjectSchemaBuilderTest extends Tx_ExtbaseKickstarter_BaseRoundTripTestCase {
+
+class Tx_ExtbaseKickstarter_ObjectSchemaBuilderTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
 
 	protected $objectSchemaBuilder;
 

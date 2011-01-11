@@ -5,8 +5,6 @@
 *  (c) 2010 Nico de Haen
  *  All rights reserved
  *
- *  This class is a backport of the corresponding class of FLOW3.
- *  All credits go to the v5 team.
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
  *  free software; you can redistribute it and/or modify
@@ -25,14 +23,13 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once('BaseRoundTripTestCase.php');
 
 /**
  * 
  * @author ndh
  *
  */
-class Tx_ExtbaseKickstarter_Service_ClassBuilderTest extends Tx_ExtbaseKickstarter_BaseRoundTripTestCase {
+class Tx_ExtbaseKickstarter_Service_ClassBuilderTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
 	
 	var $modelName = 'Model1';
 	
