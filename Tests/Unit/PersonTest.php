@@ -25,7 +25,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class  Tx_ExtbaseKickstarter_Domain_Model_PersonTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
+class Tx_ExtbaseKickstarter_Domain_Model_PersonTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
 
 	protected $person;
 

@@ -81,7 +81,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilderTest extends Tx_ExtbaseKickstarte
 		$persons[1]->setRole('role1');
 		$persons[1]->setEmail('email1');
 		$persons[1]->setCompany('company1');
-		
+
 		$input = array(
 			'properties' => array(
 				'description' => 'myDescription',
@@ -138,7 +138,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilderTest extends Tx_ExtbaseKickstarte
 			),
 			'relationGroup' => array()
 		);
-		
+
 		$expected = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
 		$expected->setName($name);
 		$expected->setDescription($description);
@@ -152,7 +152,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilderTest extends Tx_ExtbaseKickstarte
 		$property1->setName('type');
 		$expected->addProperty($property0);
 		$expected->addProperty($property1);
-		
+
 		$extension = new Tx_ExtbaseKickstarter_Domain_Model_Extension();
 		$extension->setExtensionKey('my_ext_key');
 		$this->objectSchemaBuilder->extension = $extension;
@@ -161,7 +161,7 @@ class Tx_ExtbaseKickstarter_ObjectSchemaBuilderTest extends Tx_ExtbaseKickstarte
 		//$this->codeGenerator = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Service_CodeGenerator'), array('dummy'));
 		//$this->codeGenerator->build($this->objectSchemaBuilder->extension);
 		$domainObjects = $this->objectSchemaBuilder->extension->getDomainObjects();
-		
+
 		//$this->assertEquals($actual, $expected, 'Domain Object not built correctly.');
 	}
 	/**
