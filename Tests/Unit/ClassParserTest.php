@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
-*  (c) 2010 Nico de Haen
+ *  (c) 2010 Nico de Haen
  *  All rights reserved
  *
  *
@@ -30,23 +30,22 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 	 * set to true to see an overview of the parsed class objects in the backend
 	 */
 	protected $debugMode = false;
-	
-	
+
 	public function setUp() {
 		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder'), array('dummy'));
 	}
-	
+
 	/**
-	 * Parse a basic class from a file 
+	 * Parse a basic class from a file
 	 * @test
 	 */
 	public function ParseBasicClass(){
 		require_once(t3lib_extmgm::extPath('extbase_kickstarter') . 'Tests/Examples/ClassParser/BasicClass.php');
 		$this->parseClass('Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_BasicClass');
 	}
-	
+
 	/**
-	 * Parse a complex class from a file 
+	 * Parse a complex class from a file
 	 * @test
 	 */
 	public function ParseComplexClass(){
@@ -61,40 +60,40 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 		$a = $classObject->getAppendedBlock();
 		*/
 	}
-	
+
 	/**
-	 * Parse a basic class from a file 
+	 * Parse a basic class from a file
 	 * @test
 	 */
 	public function ParseExtendedClass(){
 		$this->parseClass('Tx_ExtbaseKickstarter_Controller_KickstarterModuleController');
 	}
-	
+
 	/**
-	 * Parse a complex class from a file 
+	 * Parse a complex class from a file
 	 * @test
 	 */
 	public function ParseAnotherComplexClass(){
 		require_once(t3lib_extmgm::extPath('extbase_kickstarter') . 'Tests/Examples/ClassParser/AnotherComplexClass.php');
 		$classObject = $this->parseClass('Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass');
-		
+
 		/**  here we could include some more tests
 		$p = $classObject->getMethod('methodWithStrangePrecedingBlock')->getPrecedingBlock();
 		$a = $classObject->getAppendedBlock();
 		*/
 	}
-	
+
 	/**
-	 * Parse a big class from a file  
+	 * Parse a big class from a file
 	 * @test
 	 */
 	public function Parse_t3lib_div(){
 		//require_once(t3lib_extmgm::extPath('extbase_kickstarter') . 'Tests/Examples/BasicClass.php');
 		$this->parseClass('t3lib_div');
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param $className
 	 * @return unknown_type
 	 */
@@ -106,10 +105,9 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 		$classReflection = new Tx_ExtbaseKickstarter_Reflection_ClassReflection($className);
 		$this->ParserFindsAllMethods($classObject,$classReflection);
 		$this->ParserFindsAllProperties($classObject,$classReflection);
-		
 		return $classObject;
 	}
-	
+
 	/**
 	 * compares the number of methods found by parsing with those retrieved from the reflection class
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_Class $classObject
@@ -121,7 +119,7 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 		$classObjectMethodCount = count($classObject->getMethods());
 		$this->assertEquals($classObjectMethodCount, $reflectionMethodCount, 'Not all Methods were found!');
 	}
-	
+
 	/**
 	 * compares the number of properties found by parsing with those retrieved from the reflection class
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_Class $classObject
@@ -132,7 +130,6 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 		$reflectionPropertyCount = count($classReflection->getNotInheritedProperties());
 		$classObjectPropertCount = count($classObject->getProperties());
 		$this->assertEquals($classObjectPropertCount, $reflectionPropertyCount, 'Not all Properties were found!');
-		
 	}
 
 }

@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
-*  (c) 2010 Nico de Haen
+ *  (c) 2010 Nico de Haen
  *  All rights reserved
  *
  *
@@ -25,12 +25,12 @@
 
 
 class Tx_ExtbaseKickstarter_RoundTripServiceTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
-	
+
 	function setUp(){
 		parent::setUp();
 	}
-	
-	
+
+
 	/**
 	 * Write a simple model class for a non aggregate root domain obbject
 	 * @test
@@ -41,7 +41,7 @@ class Tx_ExtbaseKickstarter_RoundTripServiceTest extends Tx_ExtbaseKickstarter_T
 		// create an "old" domainObject
 		$domainObject = $this->buildDomainObject($modelName);
 		$this->assertTrue(is_object($domainObject),'No domain object');
-		
+
 		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_StringProperty();
 		$property->setName('prop1');
 		$uniqueIdentifier1 = md5(microtime() . 'prop1');
@@ -49,30 +49,30 @@ class Tx_ExtbaseKickstarter_RoundTripServiceTest extends Tx_ExtbaseKickstarter_T
 		$domainObject->addProperty($property);
 		$uniqueIdentifier2 = md5(microtime() . 'model');
 		$domainObject->setUniqueIdentifier($uniqueIdentifier2);
-		
+
 		$this->roundTripService->_set('oldDomainObjects',array($domainObject->getUniqueIdentifier()=>$domainObject));
-		
-		// create an "old" class object. 
+
+		// create an "old" class object.
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
 		$this->assertTrue(is_object($modelClassObject),'No class object');
-		
+
 		// Check that the getter/methods exist
 		$this->assertTrue($modelClassObject->methodExists('getProp1'));
 		$this->assertTrue($modelClassObject->methodExists('setProp1'));
-		
-		// we have to modifiy the method bodies, otherwise the roundtrip service 
+
+		// we have to modifiy the method bodies, otherwise the roundtrip service
 		// removes them and let them rebuild from ClassBuilder (see comment in line 388)
 		$getterMethod =  $modelClassObject->getMethod('getProp1');
 		$getterMethod->setBody('if($dummy) return $this->prop1;');
 		$modelClassObject->setMethod($getterMethod);
-		
+
 		$setterMethod =  $modelClassObject->getMethod('setProp1');
 		$setterMethod->setBody('if($dummy)$this->prop1 = $prop1;');
 		$modelClassObject->setMethod($setterMethod);
-		
+
 		// set the class object manually, this is usually parsed from an existing class file
 		$this->roundTripService->_set('classObject',$modelClassObject);
-		
+
 		// build a new domain object with the same unique identifiers
 		$newDomainObject = $this->buildDomainObject('Dummy');
 		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_BooleanProperty();
@@ -81,15 +81,15 @@ class Tx_ExtbaseKickstarter_RoundTripServiceTest extends Tx_ExtbaseKickstarter_T
 		$property->setRequired(TRUE);
 		$newDomainObject->addProperty($property);
 		$newDomainObject->setUniqueIdentifier($uniqueIdentifier2);
-		
+
 		// now the slass object should be updated
 		$this->roundTripService->_call('updateModelClassProperties',$domainObject,$newDomainObject);
-		
+
 		$classObject = $this->roundTripService->_get('classObject');
 		$this->assertTrue($classObject->methodExists('getNewProp1Name'));
 		$this->assertTrue($classObject->methodExists('setNewProp1Name'));
 	}
-	
+
 }
 
 ?>

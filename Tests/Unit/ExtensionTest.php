@@ -26,9 +26,9 @@
  ***************************************************************/
 
 /**
- * TODO testcase doesn't cover whole class 
- * 
- * @author Christoph D�hen
+ * TODO testcase doesn't cover whole class
+ *
+ * @author Christoph Dhen
  *
  */
 class  Tx_ExtbaseKickstarter_Domain_Model_ExtensionTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
@@ -51,10 +51,9 @@ class  Tx_ExtbaseKickstarter_Domain_Model_ExtensionTest extends Tx_ExtbaseKickst
 	 */
 	function testGetPersonsSetPersons() {
 		$this->extension->setPersons($this->persons);
-		
 		$this->assertEquals($this->extension->getPersons(), $this->persons, 'Extensions Persons have been set wrong.');
 	}
-	
+
 	/**
 	 * @test
 	 */
@@ -64,12 +63,11 @@ class  Tx_ExtbaseKickstarter_Domain_Model_ExtensionTest extends Tx_ExtbaseKickst
 		$this->extension->addPerson($this->persons[1]);
 		$this->extension->addPerson($this->persons[2]);
 		$this->assertEquals(count($this->extension->getPersons()), 3, 'To many Persons in Extension.');
-		
 		$persons = $this->extension->getPersons();
 		$this->assertEquals($persons[0]->getName(), "0", 'Wrong ordering of Persons in Extension.');
 		$this->assertEquals($persons[1]->getName(), "1", 'Wrong ordering of Persons in Extension.');
 		$this->assertEquals($persons[2]->getName(), "2", 'Wrong ordering of Persons in Extension.');
-		
+
 	}
 }
 
