@@ -400,8 +400,8 @@ WireIt.WiringEditor.prototype = {
   */
  onNew: function() {
     this.layer.removeAllContainers();
-    
-     this.propertiesForm.clear();
+    this.propertiesForm.destroy();
+	this.renderPropertiesForm();
  },
 
  /**
