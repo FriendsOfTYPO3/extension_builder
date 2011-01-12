@@ -35,16 +35,16 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action {
 	 * @var string
 	 */
 	protected $name;
-	
+
 	/**
 	 * The domain object this action belongs to.
 	 * @var Tx_ExtbaseKickstarter_Domain_Model_DomainObject
 	 */
 	protected $domainObject;
-	
+
 	/**
 	 * Is a template required for this action?
-	 * 
+	 *
 	 * @var boolean
 	 */
 	protected $needsTemplate = true;
@@ -64,9 +64,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action {
 	public function setName($name) {
 		$this->name = $name;
 	}
-	
-	
-	
+
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addAction() automatically.
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject the domain object this actions belongs to
@@ -82,23 +80,20 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action {
 	public function getDomainObject() {
 		return $this->domainObject;
 	}
-	
-	/**
-	 * Sets the needsTemplate flag
-	 * 
-	 * @param boolean $needsTemplate
-	 */
-	public function setNeedsTemplate($needsTemplate){
-		$this->needsTemplate = $needsTemplate;
-	}
-	
+
 	/**
 	 * Is a template required for this action?
 	 * 
 	 * @return boolean
 	 */
 	public function getNeedsTemplate(){
-		return $this->needsTemplate;
+		$actionsWithoutTemplate = array('create','update','delete');
+		if(in_array($this->getName(),$actionsWithoutTemplate)){
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 }
 

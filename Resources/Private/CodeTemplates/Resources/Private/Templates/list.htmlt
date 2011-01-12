@@ -40,12 +40,12 @@ Otherwise your changes will be overwritten the next time you save the extension 
 			<td><k:openingTag>f:link.action action="show" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag> <k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets><![CDATA[</f:link.action>]]></td>
 		</f:if></f:for>
 
-			<td><k:openingTag>f:link.action action="update" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Edit<![CDATA[</f:link.action>]]></td>
+			<td><k:openingTag>f:link.action action="edit" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Edit<![CDATA[</f:link.action>]]></td>
 			<td><k:openingTag>f:link.action action="delete" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()} : {domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Delete<![CDATA[</f:link.action>]]></td>
 		</tr>
 	<![CDATA[</f:for>]]>
 	</k:removeMultipleNewlines>
 </table>
 
-<k:openingTag>f:link.action action="create"</k:openingTag>New {domainObject.name}<![CDATA[</f:link.action>]]>
+<k:openingTag>f:link.action action="new"</k:openingTag>New {domainObject.name}<![CDATA[</f:link.action>]]>
 <![CDATA[</f:section>]]>

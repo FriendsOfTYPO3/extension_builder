@@ -198,23 +198,29 @@ class Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder implements t3lib_singlet
 		}
 		
 		if($domainObject->isAggregateRoot()){
-			$defaultActions = array('list','show','create','update','delete');
+			$defaultActions = array('list','show','new','create','edit','update','delete');
 			foreach($defaultActions as $actionName){
 				$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action');
 				$action->setName($actionName);
-				if($actionName == 'deleted'){
-					$action->setNeedsTemplate = false;
-				}
 				$domainObject->addAction($action);
 			}
 			
 		}
-		else {
-			foreach ($jsonDomainObject['actionGroup']['actions'] as $jsonAction) {
+		foreach ($jsonDomainObject['actionGroup']['actions'] as $jsonAction) {
+			if($jsonAction == 'create'){
 				$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action');
-				$action->setName($jsonAction);
-				$domainObject->addAction($action);
+				$action->setName('new');
+				$domainObject->addAction('new');
 			}
+			if($jsonAction == 'update'){
+				$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action');
+				$action->setName('edit');
+				$domainObject->addAction('edit');
+			}
+			$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action');
+			$action->setName($jsonAction);
+			$domainObject->addAction($action);
+			
 		}
 		
 		return $domainObject;

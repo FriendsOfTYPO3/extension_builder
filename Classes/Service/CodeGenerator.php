@@ -315,7 +315,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 			
 			// Generate Domain Templates
 			try {
-				$actionsUsingFormFieldsPartial = array('edit','update','create');
+				$actionsUsingFormFieldsPartial = array('edit','new');
 				$actionsUsingPropertiesPartial = array('show');
 				foreach ($this->extension->getDomainObjects() as $domainObject) {
 					// Do not generate anyting if $domainObject is not an Entity or has no actions defined
