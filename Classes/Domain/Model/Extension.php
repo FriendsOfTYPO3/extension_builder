@@ -71,6 +71,12 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 * @var array
 	 */
 	protected $settings = array();
+	
+	/**
+	 * default settings for em_conf
+	 * @var array
+	 */
+	protected $emConfDefaults = array('dependencies'=>'cms,extbase,fluid');
 
 	/**
 	 * The extension's state. One of the STATE_* constants.
@@ -159,13 +165,15 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	
 	/**
 	 * 
+	 * 
 	 * @return array settings for Extension Manager
 	 */
 	public function getEmConf(){
+		
 		if(isset($this->settings['emConf'])){
 			return $this->settings['emConf'];
 		}
-		else return array();
+		else return $this->emConfDefaults;
 	}
 
 	/**
@@ -175,7 +183,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	public function getExtensionDir() {
 		if(empty($this->extensionDir)){
 			if(empty($this->extensionKey)){
-				throw new Exception('ExtensionDir can only be created if a extensionKey is defined first');
+				throw new Exception('ExtensionDir can only be created if an extensionKey is defined first');
 			}
 			$this->extensionDir = PATH_typo3conf.'ext/'.$this->extensionKey.'/';
 			return $this->extensionDir;
