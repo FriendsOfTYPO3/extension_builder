@@ -120,7 +120,7 @@ inputEx.Field.prototype = {
       
 	   // Insert a float breaker
 	   this.divEl.appendChild( inputEx.cn('div',null, {clear: 'both'}," ") );
-	
+	   setTimeout('roundtrip.onFieldRendered("' + this.options.id + '")',50);
 	},
 	
 	/**

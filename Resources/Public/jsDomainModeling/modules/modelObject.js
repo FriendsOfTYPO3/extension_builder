@@ -39,7 +39,8 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								type: "select", 
 								inputParams: {
 									label: "Object Type", 
-									name: "type", 
+									name: "type",
+									description: "Value objects are simple objects that are defined by their value and have no 'identity'",
 									selectValues: ["Entity", "ValueObject"],
 									selectOptions: ["Entity", "Value Object"]
 								}
@@ -49,6 +50,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								inputParams: {
 									label: "Is aggregate root?", 
 									name: "aggregateRoot",
+									description: "If true, the kickstarter will generate a repository and default controller actions for this model",
 									value: false
 								}
 							},
@@ -82,7 +84,9 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 										inputParams: {
 											label: "Action Type", 
 											name: "actionType", 
-											selectValues: ["show","list","create","update"]
+											description: "For each selected action, the kickstarter will generate a template and a action method in the controller of this model. If the model is an aggregate root the default CRUD actions will be generated per default.",
+											selectValues: ["show","list","create","update","confirm","delete"],
+											selectOptions: ["show","list","create/new","edit/update","confirm","delete"]
 										}
 									}
 								}
@@ -122,6 +126,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 													inputParams: {
 														label: "Property Name", 
 														name: "propertyName",
+														description:'The name should be lowercase and unique in this model',
 														required: true
 													}
 												},
@@ -172,6 +177,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 													inputParams: {
 														label: "Is ExcludeField?", 
 														name: "propertyIsExcludeField",
+														description: 'If set to true, this field will only be visible for admin users per default',
 														value: false
 													}
 												}
@@ -214,7 +220,8 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 													type: "string", 
 													inputParams: {
 														label: "Name", 
-														name: "relationName", 
+														name: "relationName",
+														description:'The name should be lowercase and unique in this model',
 														required: true
 													}
 												},
@@ -284,5 +291,5 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 			]
 		}
 	}
-		  	
+
 );

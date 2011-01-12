@@ -16,10 +16,10 @@ var advancedFields = {
 						}
 					},
 					{
-						type: "text", 
+						type: "text",
 						inputParams: {
-							label: "Description", 
-							name: "relationDescription", 
+							label: "Description",
+							name: "relationDescription",
 							cols:20,
 							rows:1
 						}
@@ -27,9 +27,10 @@ var advancedFields = {
 					{
 						type: "boolean",
 						inputParams: {
-							label: "Is ExcludeField?", 
+							label: "Is ExcludeField?",
 							name: "propertyIsExcludeField",
-							value: false
+							value: false,
+							description: 'If set to true, this field will only be visible for admin users per default'
 						}
 					},
 					{
@@ -37,7 +38,8 @@ var advancedFields = {
 						inputParams: {
 							label: "Edit inline?",
 							name: "inlineEditing",
-							value: true
+							value: true,
+							description: 'If set to true, new records can only be created in the form of this model (Applies only for 1:n or m:n relations) '
 						}
 					}
 			]

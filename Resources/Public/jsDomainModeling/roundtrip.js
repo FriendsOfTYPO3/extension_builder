@@ -70,6 +70,38 @@ var roundtrip = {
 											this._debug('relationUID: ' + relationUID);
 										}
 									}
+		,onFieldRendered		:	function(fieldId){
+										this._debug('onFieldRendered called: ' + fieldId);
+										var l = Ext.get(
+											Ext.query('div#' + fieldId + '-label')
+										);
+										if(l && Ext.query('div#' + fieldId + '-desc').length){
+											l.addListener(
+												"mouseover",
+												function(ev,target){
+													roundtrip.showHelp(target,true);
+												}
+											);
+											l.addListener(
+													"mouseout",
+													function(ev,target){
+														roundtrip.showHelp(target,false);
+													}
+												);
+											l.addClass('helpAvailable')
+										}
+									}
+		,showHelp				:	function(targetEl,show){
+										var descriptionElement = Ext.get(targetEl.id.replace('label','desc'));
+										if(descriptionElement && descriptionElement.dom.innerHTML.length){
+											if(show){
+												descriptionElement.show();
+											}
+											else {
+												descriptionElement.hide();
+											}
+										}
+									}
 		,_debug					:	function(o){
 										if(!this.debugMode){
 											return;
@@ -79,4 +111,3 @@ var roundtrip = {
 										}
 									}
 }
-

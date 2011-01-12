@@ -93,7 +93,7 @@ div.WireIt-Container {
 div.WireIt-Container-ddhandle {
 	-moz-border-radius-topleft:0px;
 	-moz-border-radius-topright:0px;
-   	background-color: #ccc;
+	background-color: #ccc;
 	border: 1px solid #ccc;
 	color:white;
 	cursor:move;
@@ -218,11 +218,36 @@ div.inputEx-Group div.inputEx-label {
 	width:100px;
 }
 
+div.inputEx-description {
+	display:none;
+	background-color: #EEEEEE;
+	border: 1px solid orange;
+	font-size: 8pt;
+	margin-left: 10px;
+	margin-top: -20px;
+	min-width: 120px;
+	padding: 8px;
+	position: absolute;
+	z-index: 100;
+}
+
+div.inputEx-label {
+	padding-right:17px;
+	margin-right:2px;
+	display:block;
+}
+div.helpAvailable{
+	background-image:url('help.png');
+	background-repeat:no-repeat;
+	background-position:right;
+}
+
+
 /*********** End of CSS code for inplaceEdit as container title ************/
 
 .yui-layout-hd {
 	background-color: #eeeeee !important;
-	
+
 	background-image: none !important;
 }
 
