@@ -14,13 +14,14 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 			name: "extensionKey",
 			label: "Key",
 			typeInvite: "Extension Key",
-			cols: 30
+			cols: 30,
+			description:'The extensionkey should be lowercase and without spaces. It will be the unique identifier for this extension. '
 		}
 	},
 	{
 		inputParams: {
 			name: "originalExtensionKey", 
-			className:'hiddenField'
+			className:'hiddenField',
 		}
 	},
 	{
