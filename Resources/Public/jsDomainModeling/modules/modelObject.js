@@ -85,8 +85,8 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 											label: "Action Type", 
 											name: "actionType", 
 											description: "For each selected action, the kickstarter will generate a template and a action method in the controller of this model. If the model is an aggregate root the default CRUD actions will be generated per default.",
-											selectValues: ["show","list","create","update","confirm","delete"],
-											selectOptions: ["show","list","create/new","edit/update","confirm","delete"]
+											selectValues: ["show","list","create","update","delete"],
+											selectOptions: ["show","list","create/new","edit/update","delete"]
 										}
 									}
 								}

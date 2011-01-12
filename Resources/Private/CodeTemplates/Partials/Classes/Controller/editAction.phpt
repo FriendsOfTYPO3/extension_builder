@@ -1,10 +1,11 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+	
 	/**
-	 * Displays a single {domainObject.name}
+	 * Updates an existing {domainObject.name} and forwards to the index action afterwards.
 	 *
 	 * @param {domainObject.className} ${domainObject.name -> k:lowercaseFirst()} the {domainObject.name} to display
-	 * @return string The rendered view
+	 * @return string A form to edit a {domainObject.name} 
 	 */
-	public function showAction({domainObject.className} ${domainObject.name -> k:lowercaseFirst()}) {
+	public function editAction({domainObject.className} ${domainObject.name -> k:lowercaseFirst()}) {
 		$this->view->assign('{domainObject.name -> k:lowercaseFirst()}', ${domainObject.name -> k:lowercaseFirst()});
 	}
