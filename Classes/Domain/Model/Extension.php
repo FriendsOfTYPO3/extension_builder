@@ -295,6 +295,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 */
 	public function addDomainObject(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
 		$domainObject->setExtension($this);
+		if(in_array($domainObject->getName(),array_keys($this->domainObjects))){
+			throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
+		}
 		$this->domainObjects[$domainObject->getName()] = $domainObject;
 	}
 
