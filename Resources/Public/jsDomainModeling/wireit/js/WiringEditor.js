@@ -335,7 +335,11 @@ WireIt.WiringEditor.prototype = {
     var value = this.getValue();
     
     if(value.name == "") {
-       alert("Please choose a name");
+       this.alert('Extension name missing',"Please enter an extension name in the left panel");
+       return;
+    }
+	if(value.extensionKey == "") {
+       this.alert('Extension key missing',"Please enter an extension key in the left panel");
        return;
     }
     this.showSpinnerPanel.show();
