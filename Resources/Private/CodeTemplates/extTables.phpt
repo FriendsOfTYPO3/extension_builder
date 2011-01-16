@@ -8,7 +8,7 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 	'{plugin.name}'
 );
 
-//$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY . '_pi1'] = 'pi_flexform';
+//$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY . '_{plugin.key}'] = 'pi_flexform';
 //t3lib_extMgm::addPiFlexFormValue($_EXTKEY . '_{plugin.key}', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_{plugin.key}.xml');
 
 </f:for>
