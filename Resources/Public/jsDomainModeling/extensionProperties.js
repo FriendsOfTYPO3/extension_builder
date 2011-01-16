@@ -4,18 +4,18 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 		type: "string",
 		inputParams: {
 			name: "name",
-			label: "Name",
-			typeInvite: "Extension title"
+			label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.name,
+			typeInvite: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.extensionTitle
 		}
 	},
 	{
 		type: "string",
 		inputParams: {
 			name: "extensionKey",
-			label: "Key",
-			typeInvite: "Extension Key",
+			label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.key,
+			typeInvite: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.extensionKey,
 			cols: 30,
-			description:'The extensionkey should be lowercase and without spaces. It will be the unique identifier for this extension. '
+			description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.descr_extensionKey
 		}
 	},
 	{
@@ -28,8 +28,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 		type: "text",
 		inputParams: {
 			name: "description",
-			label: "Descr.",
-			typeInvite: "Description",
+			label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.short_description,
+			typeInvite: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.description,
 			cols: 30
 		}
 	},
@@ -37,7 +37,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 		type: "string",
 		inputParams: {
 			name: "version", 
-			label: "Version",
+			label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.version,
 			required: false,
 			size: 5
 		}
@@ -45,15 +45,22 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 	{
 		type: "select",
 		inputParams: {
-			label: "State",
 			name: "state",
+			label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.state,
+			selectOptions: [
+				TYPO3.settings.extbaseKickstarter._LOCAL_LANG.alpha,
+				TYPO3.settings.extbaseKickstarter._LOCAL_LANG.beta,
+				TYPO3.settings.extbaseKickstarter._LOCAL_LANG.stable,
+				TYPO3.settings.extbaseKickstarter._LOCAL_LANG.experimental,
+				TYPO3.settings.extbaseKickstarter._LOCAL_LANG.test
+			],
 			selectValues: ["alpha","beta","stable","experimental","test"]
 		}
 	},
 	{
 		type: "list",
 		inputParams: {
-			label: "Persons",
+			label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.persons,
 			name: "persons",
 			sortable: true,
 			elementType: {
@@ -63,7 +70,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 					fields: [
 						{
 							inputParams: {
-								label: "Name",
+								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.name,
 								name: "name",
 								required: false
 							}
@@ -71,22 +78,26 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 						{
 							type: "select",
 							inputParams: {
-								label: "Role",
 								name: "role",
+								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.role,
+								selectOptions: [
+									TYPO3.settings.extbaseKickstarter._LOCAL_LANG.developer,
+									TYPO3.settings.extbaseKickstarter._LOCAL_LANG.product_manager
+								],
 								selectValues: ["Developer", "Product Manager"]
 							}
 						},
 						{
 							inputParams: {
-								label: "Email",
 								name: "email",
+								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.email,
 								required: false
 							}
 						},
 						{
 							inputParams: {
-								label: "Company",
 								name: "company",
+								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.company,
 								required: false
 							}
 						},
@@ -98,8 +109,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 	{
 		type: "list",
 		inputParams: {
-			label: "Plugins",
 			name: "plugins",
+			label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.plugins,
 			sortable: true,
 			elementType: {
 				type: "group",
@@ -108,23 +119,23 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 					fields: [
 						{
 							inputParams: {
-								label: "Name",
 								name: "name",
+								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.name,
 								required: true
 							}
 						},
 						{
 							inputParams: {
-								label: "Key",
 								name: "key",
+								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.key,
 								required: true
 							}
 //						},
 //						{
 //							type: "select",
 //							inputParams: {
-//								label: "Type",
 //								name: "type",
+//								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.type,
 //								selectValues: ["list_type", "CType"],
 //								selectOptions: ["Frontend plugin", "Content type"],
 //							}
