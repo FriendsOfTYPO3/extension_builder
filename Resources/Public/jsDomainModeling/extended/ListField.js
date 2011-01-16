@@ -398,7 +398,7 @@
 	inputEx.registerType("list", inputEx.ListField);
 
 
-	inputEx.messages.listAddLink = "Add";
-	inputEx.messages.listRemoveLink = "remove";
+	inputEx.messages.listAddLink = TYPO3.settings.extbaseKickstarter._LOCAL_LANG.add;
+	inputEx.messages.listRemoveLink = TYPO3.settings.extbaseKickstarter._LOCAL_LANG.remove;
 		
 	})();

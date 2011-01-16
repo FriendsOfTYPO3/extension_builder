@@ -26,7 +26,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 					inputParams: {
 						collapsible: true,
 						collapsed: true,
-						legend: "Domain Object Settings",
+						legend: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.domainObjectSettings,
 						name: "objectsettings",
 						fields: [
 							{
@@ -38,27 +38,30 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 							{
 								type: "select", 
 								inputParams: {
-									label: "Object Type", 
 									name: "type",
-									description: "Value objects are simple objects that are defined by their value and have no 'identity'",
+									label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.objectType,
+									description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.descr_objectType,
 									selectValues: ["Entity", "ValueObject"],
-									selectOptions: ["Entity", "Value Object"]
+									selectOptions: [
+										TYPO3.settings.extbaseKickstarter._LOCAL_LANG.entity,
+										TYPO3.settings.extbaseKickstarter._LOCAL_LANG.valueObject
+									]
 								}
 							},
 							{
 								type: "boolean", 
 								inputParams: {
-									label: "Is aggregate root?", 
 									name: "aggregateRoot",
-									description: "If true, the kickstarter will generate a repository and default controller actions for this model",
+									label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.isAggregateRoot,
+									description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.descr_isAggregateRoot,
 									value: false
 								}
 							},
 							{
 								type: "string", 
 								inputParams: {
-									label: "Description",
 									name: "description",
+									label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.description,
 									required: false
 								}
 							}
@@ -70,7 +73,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 					inputParams: {
 						collapsible: true,
 						collapsed: true,
-						legend: "Default Actions",
+						legend: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.defaultActions,
 						name: "actionGroup",
 						fields: [
 							{
@@ -82,11 +85,17 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 									elementType: {
 										type: "select", 
 										inputParams: {
-											label: "Action Type", 
-											name: "actionType", 
-											description: "For each selected action, the kickstarter will generate a template and a action method in the controller of this model. If the model is an aggregate root the default CRUD actions will be generated per default.",
+											name: "actionType",
+											label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.actionType,
+											description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.descr_actionType,
 											selectValues: ["show","list","create","update","delete"],
-											selectOptions: ["show","list","create/new","edit/update","delete"]
+											selectOptions: [
+												TYPO3.settings.extbaseKickstarter._LOCAL_LANG.show,
+												TYPO3.settings.extbaseKickstarter._LOCAL_LANG.list,
+												TYPO3.settings.extbaseKickstarter._LOCAL_LANG.create_new,
+												TYPO3.settings.extbaseKickstarter._LOCAL_LANG.edit_update,
+												TYPO3.settings.extbaseKickstarter._LOCAL_LANG.delete
+											]
 										}
 									}
 								}
@@ -99,7 +108,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 					inputParams: {
 						collapsible: true,
 						collapsed: true,
-						legend: "Properties",
+						legend: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.properties,
 						name: "propertyGroup",
 						fields: [
 							{
@@ -124,17 +133,17 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 												},
 												{
 													inputParams: {
-														label: "Property Name", 
 														name: "propertyName",
-														description:'The name should be lowercase and unique in this model',
+														label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.propertyName,
+														description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.descr_propertyName,
 														required: true
 													}
 												},
 												{
 													type: "select", 
 													inputParams: {
-														label: "Property Type", 
-														name: "propertyType", 
+														name: "propertyType",
+														label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.propertyType,
 														selectValues: [
 															"String",
 															"Text",
@@ -145,20 +154,20 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 															"Select"
 														], 
 														selectOptions: [
-															"String",
-															"Text",
-															"Integer",
-															"Floating Point",
-															"Boolean",
-															"Date Time",
-															"Select List"
+															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.string,
+															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.text,
+															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.integer,
+															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.floatingPoint,
+															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.boolean,
+															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.dateTime,
+															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.selectList
 														]
 													}
 												},
 												{
 													type:'text',
 													inputParams: {
-														label: "Description", 
+														label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.description, 
 														name: "propertyDescription",
 														cols:20,
 														rows:1
@@ -167,7 +176,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 												{
 													type: "boolean",
 													inputParams: {
-														label: "Is Required?", 
+														label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.isRequired, 
 														name: "propertyIsRequired",
 														value: false
 													}
@@ -175,9 +184,9 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 												{
 													type: "boolean",
 													inputParams: {
-														label: "Is ExcludeField?", 
+														label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.isExcludeField, 
 														name: "propertyIsExcludeField",
-														description: 'If set to true, this field will only be visible for admin users per default',
+														description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.descr_isExcludeField,
 														value: false
 													}
 												}
@@ -194,14 +203,14 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 					inputParams: {
 						collapsible: false,
 						collapsed: false,
-						legend: "Relations",
+						legend: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.relations,
 						name: "relationGroup",
 						fields: [
 							{
 								type: "list", 
 								inputParams: {
-									label: "",
 									name: "relations",
+									label: "",
 									wirable: false,
 									elementType: {
 										type: "group",
@@ -219,26 +228,27 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 												{
 													type: "string", 
 													inputParams: {
-														label: "Name", 
+														label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.relationName, 
 														name: "relationName",
-														description:'The name should be lowercase and unique in this model',
+														description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.descr_relationName,
 														required: true
 													}
 												},
 												{
 													type: "boolean",
 													inputParams: {
-														label: "Is ExcludeField?", 
 														name: "propertyIsExcludeField",
+														label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.isExcludeField,
+														description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.descr_isExcludeField,
 														value: false
 													}
 												},
 												{
 													type: "text", 
 													inputParams: {
-														label: "Description", 
-														name: "relationDescription", 
-														required: false, 
+														name: "relationDescription",
+														label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.description,
+														required: false,
 														cols:20,
 														rows:1
 													}
@@ -260,10 +270,14 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 												{
 													type: "select",
 													inputParams: {
-														label: "Type",
+														label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.type,
 														name: "relationType",
 														selectValues: ["zeroToOne", "zeroToMany", "manyToMany"],
-														selectOptions: ["1:1","1:n", "m:n"]
+														selectOptions: [
+															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.zeroToOne,
+															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.zeroToMany,
+															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.manyToMany
+														]
 													}
 												}
 											]

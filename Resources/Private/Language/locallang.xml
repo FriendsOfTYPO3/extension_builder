@@ -43,6 +43,38 @@
 			<label index="descr_isExcludeField">If set to true, this field will only be visible for admin users per default</label>
 			<label index="editInline">Edit inline?</label>
 			<label index="descr_editInline">If set to true, new records can only be created in the form of this model (Applies only for 1:n or m:n relations)</label>
+			<label index="newModelObject">New model object</label>
+			<label index="domainObjectSettings">Domain object settings</label>
+			<label index="objectType">Object type</label>
+			<label index="descr_objectType">Value objects are simple objects that are defined by their value and have no 'identity'</label>
+			<label index="entity">Entity</label>
+			<label index="valueObject">Value object</label>
+			<label index="isAggregateRoot">Is aggregate root?</label>
+			<label index="descr_isAggregateRoot">If true, the kickstarter will generate a repository and default controller actions for this model</label>
+			<label index="defaultActions">Default actions</label>
+			<label index="actionType">Action type</label>
+			<label index="descr_actionType">For each selected action, the kickstarter will generate a template and a action method in the controller of this model. If the model is an aggregate root the default CRUD actions will be generated per default.</label>
+			<label index="show">Show</label>
+			<label index="list">List</label>
+			<label index="create_new">Create/new</label>
+			<label index="edit_update">Edit/update</label>
+			<label index="delete">Delete</label>
+			<label index="properties">Properties</label>
+			<label index="propertyName">Property name</label>
+			<label index="descr_propertyName">The name should be lowercase and unique in this model</label>
+			<label index="propertyType">Property type</label>
+			<label index="string">String</label>
+			<label index="text">Text</label>
+			<label index="integer">Integer</label>
+			<label index="floatingPoint">Floating point</label>
+			<label index="boolean">Boolean</label>
+			<label index="dateTime">Date time</label>
+			<label index="selectList">Select list</label>
+			<label index="isRequired">Is required?</label>
+			<label index="relations">Relations</label>
+			<label index="relationName">Name</label>
+			<label index="descr_relationName">The name should be lowercase and unique in this model</label>
+			<label index="extensionProperties">Extension properties</label>
 		</languageKey>
 	</data>
 </T3locallang>
