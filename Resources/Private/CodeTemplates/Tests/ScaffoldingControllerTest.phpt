@@ -36,7 +36,7 @@
  * 
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
 </f:for> */{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-class Tx_{extension.extensionKey -> k:uppercaseFirst()}_Controller_{controllerName}Test extends Tx_Extbase_BaseTestCase {
+class Tx_{extension.extensionKey -> k:uppercaseFirst()}_Controller_{controllerName}Test extends Tx_Extbase_Tests_Unit_BaseTestCase {
 	/**
 	 * @var {domainObject.className}
 	 */
