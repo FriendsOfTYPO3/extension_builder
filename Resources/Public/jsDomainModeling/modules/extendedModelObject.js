@@ -3,22 +3,26 @@ var advancedFields = {
 		inputParams: {
 			collapsible: true,
 			collapsed: true,
-			legend: "More",
+			legend: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.more,
 			name: "advancedSettings",
 			fields: [
 					{
 						type: "select",
 						inputParams: {
-							label: "Type",
+							label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.type,
 							name: "relationType",
 							selectValues: ["zeroToOne", "zeroToMany", "manyToMany"],
-							selectOptions: ["1:1","1:n", "m:n"]
+							selectOptions: [
+								TYPO3.settings.extbaseKickstarter._LOCAL_LANG.zeroToOne,
+								TYPO3.settings.extbaseKickstarter._LOCAL_LANG.zeroToMany,
+								TYPO3.settings.extbaseKickstarter._LOCAL_LANG.manyToMany
+							]
 						}
 					},
 					{
 						type: "text",
 						inputParams: {
-							label: "Description",
+							label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.description,
 							name: "relationDescription",
 							cols:20,
 							rows:1
@@ -27,19 +31,19 @@ var advancedFields = {
 					{
 						type: "boolean",
 						inputParams: {
-							label: "Is ExcludeField?",
+							label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.isExcludeField,
 							name: "propertyIsExcludeField",
 							value: false,
-							description: 'If set to true, this field will only be visible for admin users per default'
+							description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.descr_isExcludeField
 						}
 					},
 					{
 						type: "boolean",
 						inputParams: {
-							label: "Edit inline?",
+							label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.editInline,
 							name: "inlineEditing",
 							value: true,
-							description: 'If set to true, new records can only be created in the form of this model (Applies only for 1:n or m:n relations) '
+							description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.descr_editInline
 						}
 					}
 			]
