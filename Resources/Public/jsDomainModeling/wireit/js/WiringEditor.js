@@ -108,7 +108,7 @@ WireIt.WiringEditor = function(options) {
  		);
 
      this.showSpinnerPanel.setHeader("Saving, please wait...");
-     this.showSpinnerPanel.setBody('<img src="'+ TYPO3.settings.kickstarter.baseUrl + 'Resources/Public/jsDomainModeling/wireit/images/loading.gif" />');
+     this.showSpinnerPanel.setBody('<img src="'+ TYPO3.settings.extbaseKickstarter.baseUrl + 'Resources/Public/jsDomainModeling/wireit/images/loading.gif" />');
      this.showSpinnerPanel.render(document.body);
 
     
