@@ -210,12 +210,12 @@ class Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder implements t3lib_singlet
 			if($jsonAction == 'create'){
 				$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action');
 				$action->setName('new');
-				$domainObject->addAction('new');
+				$domainObject->addAction($action);
 			}
 			if($jsonAction == 'update'){
 				$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action');
 				$action->setName('edit');
-				$domainObject->addAction('edit');
+				$domainObject->addAction($action);
 			}
 			$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action');
 			$action->setName($jsonAction);
