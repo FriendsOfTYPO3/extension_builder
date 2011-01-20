@@ -93,7 +93,7 @@ abstract class Tx_ExtbaseKickstarter_Tests_BaseTest extends Tx_Extbase_Tests_Uni
 		$domainObject->setEntity($entity);
 		$domainObject->setAggregateRoot($aggregateRoot);
 		if($aggregateRoot){
-			$defaultActions = array('list','show','create','update','delete');
+			$defaultActions = array('list','show','new','create','edit','update','delete');
 			foreach($defaultActions as $actionName){
 				$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action');
 				$action->setName($actionName);
