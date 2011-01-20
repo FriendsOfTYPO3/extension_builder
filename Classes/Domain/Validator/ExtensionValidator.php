@@ -48,7 +48,8 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		ERROR_PROPERTY_NO_NAME = 200,
 		ERROR_PROPERTY_DUPLICATE = 201,
 		ERROR_PROPERTY_ILLEGAL_CHARACTER = 202,
-		ERROR_PROPERTY_UPPER_FIRST_CHARACTER = 203;
+		ERROR_PROPERTY_UPPER_FIRST_CHARACTER = 203,
+		ERROR_PROPERTY_RESERVED_WORD = 204;
 
 	/**
 	 * Validate the given extension
@@ -141,6 +142,13 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(
 					'Illegal first character of property name "' . $property->getName() . '" of domain object "' . $domainObject->getName() . '". Please use lowerCamelCase.',
 					self::ERROR_PROPERTY_UPPER_FIRST_CHARACTER
+				);
+			}
+			
+			if(Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty::isReservedWord($property->getName())){
+				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(
+					'Using a reserved word as property name is not allowed. Please rename property "' . $property->getName() . '" in Model "' . $domainObject->getName() . '".',
+					self::ERROR_PROPERTY_RESERVED_WORD
 				);
 			}
 			
