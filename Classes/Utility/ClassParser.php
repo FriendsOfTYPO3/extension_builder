@@ -64,27 +64,27 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 	 * The regular expression to detect a method in a line 
 	 * @var string regular expression
 	 */
-	public $methodRegex = "/\s*function\s*(\w*)/";
+	public $methodRegex = '/\s*function\s*(\w*)/';
 	
 	/**
 	 * The regular expression to detect a property (or multiple) in a line 
 	 * @var string regular expression
 	 */
-	public $propertyRegex = "/\s*\\$(?<name>\w*)\s*(\=(?<value>\s*([^;]*)))?;/";
+	public $propertyRegex = '/\s*\\$(?<name>\w*)\s*(\=(?<value>\s*([^;]*)))?;/';
 	
 	/**
 	 * The regular expression to detect a constant in a line 
 	 * @var string regular expression
 	 */
-	public $constantRegex = "/\s*const\s*(\w*)\s*\=\s*\'*\"*([^;\"']*)'*\"*;/";
+	public $constantRegex = '/\s*const\s*(\w*)\s*\=\s*\'*\"*([^;"\']*)\'*\"*;/';
 	
 	// TODO parse definitions of namespaces
-	public $namespaceRegex = "/^namespace|^use|^declare/";
+	public $namespaceRegex = '/^namespace|^use|^declare/';
 	
-	public $includeRegex = "/(require_once|require|include_once|include)+\s*\(([^;]*)\)/";
+	public $includeRegex = '/(require_once|require|include_once|include)+\s*\(([^;]*)\)/';
 	
 	// TODO parse definitions of "define" statements
-	public $defineRegex = "/define+\s*\(([a-zA-Z0-9_-,\\'\"\s]*)/";
+	public $defineRegex = '/define+\s*\(([a-zA-Z0-9_-,\\\'"\s]*)/';
 
 	/**
 	 * builds a classSchema from a className, you have to require_once before importing the class
@@ -319,7 +319,7 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 	protected function isSingleLineComment($line){
 		$isSingleLineComment = false;
 		// single comment line
-		if(!$isSingleLineComment && preg_match("/^\s*\/\\//",$line)){
+		if(!$isSingleLineComment && preg_match('/^\s*\/\\//',$line)){
 			$isSingleLineComment = true;
 		}
 		return $isSingleLineComment;
