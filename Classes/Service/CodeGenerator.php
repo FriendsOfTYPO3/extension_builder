@@ -607,7 +607,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 			$overWriteMode = Tx_ExtbaseKickstarter_Service_RoundTrip::getOverWriteSettingForPath($targetFile,$this->extension);
 			//t3lib_div::devlog($targetFile.'-'.$overWriteMode,'extbase_kickstarter');
 			if($overWriteMode == -1){
-				return; // skop file creation
+				return; // skip file creation
 			}
 			if(file_exists($targetFile)){
 				if($overWriteMode == 2){
@@ -655,7 +655,12 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	 * @param string $fileContents
 	 */
 	protected function upload_copy_move($sourceFile,$targetFile){
-		if(!file_exists($targetFile) || ($this->roundTripEnabled && Tx_ExtbaseKickstarter_Service_RoundTrip::getOverWriteSettingForPath($targetFile,$this->extension) < 2)){
+		$overWriteMode = Tx_ExtbaseKickstarter_Service_RoundTrip::getOverWriteSettingForPath($targetFile,$this->extension);
+		if($overWriteMode === -1){
+			// skip creation
+			return;
+		}
+		if(!file_exists($targetFile) || ($this->roundTripEnabled && $overWriteMode < 2)){
 			t3lib_div::upload_copy_move($sourceFile,$targetFile);
 		}
 	}
