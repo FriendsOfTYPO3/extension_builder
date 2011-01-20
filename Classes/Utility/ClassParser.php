@@ -76,7 +76,7 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 	 * The regular expression to detect a constant in a line 
 	 * @var string regular expression
 	 */
-	public $constantRegex = '/\s*const\s*(\w*)\s*\=\s*\'*\"*([^;"\']*)\'*\"*;/';
+	public $constantRegex = '/\s*const\s+(\w*)\s*\=\s*\'*\"*([^;"\']*)\'*\"*;/';
 	
 	// TODO parse definitions of namespaces
 	public $namespaceRegex = '/^namespace|^use|^declare/';

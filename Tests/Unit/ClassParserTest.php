@@ -103,11 +103,27 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 		$classObject = $classParser->parse($className);
 		$this->assertTrue($classObject instanceof Tx_ExtbaseKickstarter_Domain_Model_Class_Class);
 		$classReflection = new Tx_ExtbaseKickstarter_Reflection_ClassReflection($className);
+		$this->ParserFindsAllConstants($classObject,$classReflection);
 		$this->ParserFindsAllMethods($classObject,$classReflection);
 		$this->ParserFindsAllProperties($classObject,$classReflection);
 		return $classObject;
 	}
 
+	/**
+	 * compares the number of methods found by parsing with those retrieved from the reflection class
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_Class $classObject
+	 * @param Tx_ExtbaseKickstarter_Reflection_ClassReflection $classReflection
+	 * @return void
+	 */
+	public function ParserFindsAllConstants($classObject,$classReflection){
+		$reflectionConstantCount = count($classReflection->getConstants());
+		if($classReflection->getParentClass()){
+			$reflectionConstantCount -=  count($classReflection->getParentClass()->getConstants());
+		}
+		$classObjectConstantCount = count($classObject->getConstants());
+		$this->assertEquals($reflectionConstantCount, $classObjectConstantCount, 'Not all Constants were found: '.$classObject->getName().serialize($classReflection->getConstants()));
+	}
+	
 	/**
 	 * compares the number of methods found by parsing with those retrieved from the reflection class
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_Class $classObject
