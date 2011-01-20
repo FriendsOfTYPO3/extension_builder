@@ -1,5 +1,8 @@
 plugin.{extension.shorthandForTypoScript} {
+	settings <![CDATA[{]]>
+	<![CDATA[}]]>
 	persistence {
+		storagePid = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.persistence.storagePid<![CDATA[}]]>
 		classes {<f:for each="{extension.domainObjects}" as="domainObject"><f:if condition="{domainObject.propertiesWithMappingStatements}">
 			{domainObject.className} {
 				mapping {
@@ -11,8 +14,14 @@ plugin.{extension.shorthandForTypoScript} {
 			}</f:if></f:for>
 		}
 	}
+	view <![CDATA[{]]>
+		templateRootPath = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.view.templateRootPath<![CDATA[}]]>
+		partialRootPath = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.view.partialRootPath<![CDATA[}]]>
+		layoutRootPath = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.view.layoutRootPath<![CDATA[}]]>
+	<![CDATA[}]]>
+<![CDATA[}]]>
 
-	_CSS_DEFAULT_STYLE (
+plugin.{extension.shorthandForTypoScript}._CSS_DEFAULT_STYLE (
 		input.f3-form-error {
 			background-color:#FF9F9F;
 			border: 1px #FF0000 solid;
