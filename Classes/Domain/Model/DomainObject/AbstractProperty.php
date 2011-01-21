@@ -30,277 +30,6 @@
  */
 abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty {
 
-	/**
-	 * Reserved words by MySQL
-	 * @var array
-	 */
-	static protected $reservedMYSQLWords = array(
-		'ACCESSIBLE',
-		'ADD',
-		'ALL',
-		'ALTER',
-		'ANALYZE',
-		'AND',
-		'AS',
-		'ASC',
-		'ASENSITIVE',
-		'BEFORE',
-		'BETWEEN',
-		'BIGINT',
-		'BINARY',
-		'BLOB',
-		'BOTH',
-		'BY',
-		'CALL',
-		'CASCADE',
-		'CASE',
-		'CHANGE',
-		'CHAR',
-		'CHARACTER',
-		'CHECK',
-		'COLLATE',
-		'COLUMN',
-		'CONDITION',
-		'CONSTRAINT',
-		'CONTINUE',
-		'CONVERT',
-		'CREATE',
-		'CROSS',
-		'CURRENT_DATE',
-		'CURRENT_TIME',
-		'CURRENT_TIMESTAMP',
-		'CURRENT_USER',
-		'CURSOR',
-		'DATABASE',
-		'DATABASES',
-		'DAY_HOUR',
-		'DAY_MICROSECOND',
-		'DAY_MINUTE',
-		'DAY_SECOND',
-		'DEC',
-		'DECIMAL',
-		'DECLARE',
-		'DEFAULT',
-		'DELAYED',
-		'DELETE',
-		'DESC',
-		'DESCRIBE',
-		'DETERMINISTIC',
-		'DISTINCT',
-		'DISTINCTROW',
-		'DIV',
-		'DOUBLE',
-		'DROP',
-		'DUAL',
-		'EACH',
-		'ELSE',
-		'ELSEIF',
-		'ENCLOSED',
-		'ESCAPED',
-		'EXISTS',
-		'EXIT',
-		'EXPLAIN',
-		'FALSE',
-		'FETCH',
-		'FLOAT',
-		'FLOAT4',
-		'FLOAT8',
-		'FOR',
-		'FORCE',
-		'FOREIGN',
-		'FROM',
-		'FULLTEXT',
-		'GENERAL',
-		'GOTO',
-		'GRANT',
-		'GROUP',
-		'HAVING',
-		'HIGH_PRIORITY',
-		'HOUR_MICROSECOND',
-		'HOUR_MINUTE',
-		'HOUR_SECOND',
-		'IF',
-		'IGNORE',
-		'IGNORE_SERVER_IDS',
-		'IN',
-		'INDEX',
-		'INFILE',
-		'INNER',
-		'INOUT',
-		'INSENSITIVE',
-		'INSERT',
-		'INT',
-		'INT1',
-		'INT2',
-		'INT3',
-		'INT4',
-		'INT8',
-		'INTEGER',
-		'INTERVAL',
-		'INTO',
-		'IS',
-		'ITERATE',
-		'JOIN',
-		'KEY',
-		'KEYS',
-		'KILL',
-		'LABEL',
-		'LEADING',
-		'LEAVE',
-		'LEFT',
-		'LIKE',
-		'LIMIT',
-		'LINEAR',
-		'LINES',
-		'LOAD',
-		'LOCALTIME',
-		'LOCALTIMESTAMP',
-		'LOCK',
-		'LONG',
-		'LONGBLOB',
-		'LONGTEXT',
-		'LOOP',
-		'LOW_PRIORITY',
-		'MASTER_HEARTBEAT_PERIOD',
-		'MASTER_SSL_VERIFY_SERVER_CERT',
-		'MATCH',
-		'MAXVALUE',
-		'MEDIUMBLOB',
-		'MEDIUMINT',
-		'MEDIUMTEXT',
-		'MIDDLEINT',
-		'MINUTE_MICROSECOND',
-		'MINUTE_SECOND',
-		'MOD',
-		'MODIFIES',
-		'NATURAL',
-		'NOT',
-		'NO_WRITE_TO_BINLOG',
-		'NULL',
-		'NUMERIC',
-		'ON',
-		'OPTIMIZE',
-		'OPTION',
-		'OPTIONALLY',
-		'OR',
-		'ORDER',
-		'OUT',
-		'OUTER',
-		'OUTFILE',
-		'PRECISION',
-		'PRIMARY',
-		'PROCEDURE',
-		'PURGE',
-		'RANGE',
-		'READ',
-		'READS',
-		'READ_WRITE',
-		'READ_ONLY',
-		'REAL',
-		'REFERENCES',
-		'REGEXP',
-		'RELEASE',
-		'RENAME',
-		'REPEAT',
-		'REPLACE',
-		'REQUIRE',
-		'RESIGNAL',
-		'RESTRICT',
-		'RETURN',
-		'REVOKE',
-		'RIGHT',
-		'RLIKE',
-		'SCHEMA',
-		'SCHEMAS',
-		'SECOND_MICROSECOND',
-		'SELECT',
-		'SENSITIVE',
-		'SEPARATOR',
-		'SET',
-		'SHOW',
-		'SIGNAL',
-		'SLOW',
-		'SMALLINT',
-		'SPATIAL',
-		'SPECIFIC',
-		'SQL',
-		'SQLEXCEPTION',
-		'SQLSTATE',
-		'SQLWARNING',
-		'SQL_BIG_RESULT',
-		'SQL_CALC_FOUND_ROWS',
-		'SQL_SMALL_RESULT',
-		'SSL',
-		'STARTING',
-		'STRAIGHT_JOIN',
-		'TABLE',
-		'TERMINATED',
-		'THEN',
-		'TINYBLOB',
-		'TINYINT',
-		'TINYTEXT',
-		'TO',
-		'TRAILING',
-		'TRIGGER',
-		'TRUE',
-		'UNDO',
-		'UNION',
-		'UNIQUE',
-		'UNLOCK',
-		'UNSIGNED',
-		'UPDATE',
-		'USAGE',
-		'USE',
-		'USING',
-		'UTC_DATE',
-		'UTC_TIME',
-		'UTC_TIMESTAMP',
-		'VALUES',
-		'VARBINARY',
-		'VARCHAR',
-		'VARCHARACTER',
-		'VARYING',
-		'WHEN',
-		'WHERE',
-		'WHILE',
-		'WITH',
-		'WRITE',
-		'XOR',
-		'YEAR_MONTH',
-		'ZEROFILL'
-	);
-	
-	/**
-	 * 
-	 * column names used by TYPO3
-	 * @var array
-	 */
-	static protected $reservedTYPO3ColumnNames = array(
-		'uid',
-		'pid',
-		'endtime',
-		'starttime',
-		'sorting',
-		'fe_group',
-		'hidden',
-		'deleted',
-		'cruser_id',
-		'crdate',
-		'tstamp',
-		'sys_language',
-		't3ver_oid',
-		't3ver_id',
-		't3ver_wsid',
-		't3ver_label',
-		't3ver_state',
-		't3ver_stage',
-		't3ver_count',
-		't3ver_tstamp',
-		't3_origuid',
-		'sys_language_uid',
-		'l18n_parent',
-		'l18n_diffsource'
-	);
 	
 	/**
 	 * 
@@ -350,7 +79,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	public function getClass() {
 		return $this->class;
 	}
-	
+
 	/**
 	 * Get property name
 	 *
@@ -359,7 +88,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	public function getName() {
 		return $this->name;
 	}
-	
+
 	/**
 	 * Set property name
 	 * 
@@ -377,7 +106,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	public function getUniqueIdentifier() {
 		return $this->uniqueIdentifier;
 	}
-	
+
 	/**
 	 * Set property uniqueIdentifier
 	 * 
@@ -386,7 +115,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	public function setUniqueIdentifier($uniqueIdentifier) {
 		$this->uniqueIdentifier = $uniqueIdentifier;
 	}
-	
+
 	/**
 	 * 
 	 * @return boolean true (if property is of type relation any to many)
@@ -403,7 +132,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	public function isRelation(){
 		return is_subclass_of($this, 'Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AbstractRelation');
 	}
-	
+
 	/**
 	 * 
 	 * @return boolean true (if property is of type boolean)
@@ -434,6 +163,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	public function setDescription($description) {
 		$this->description = $description;
 	}
+
 	/**
 	 * Returns a field name used in the database. This is the property name converted
 	 * to lowercase underscore (mySpecialProperty -> my_special_property).
@@ -442,7 +172,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	 */
 	public function getFieldName() {
 		$fieldName = Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($this->name);
-		if ($this->isReservedWord($fieldName)) {
+		if (Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator::isReservedMYSQLWord($fieldName)) {
 			$fieldName = $this->domainObject->getExtension()->getShorthandForTypoScript() . '_' . $fieldName;
 		}
 		return $fieldName;
@@ -596,45 +326,18 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	}
 	
 	/**
+	 * The Typoscript statement used by extbase to map the property to
+	 * a specific database fieldname
 	 * 
-	 * @param string $word
+	 * @return string $mappingStatement
 	 */
-	static public function isReservedTYPO3Word($word){
-		if(in_array(Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($word),self::$reservedTYPO3ColumnNames)){
-			return true;
+	public function getMappingStatement(){
+		if($this->getFieldName() != Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($this->name)){
+			return $this->getFieldName().'.mapOnProperty = '.$this->name;
 		}
-		else {
-			return false;
-		}
+		else return NULL;
 	}
-	
-	/**
-	 * TODO: Enable property names with reserved MYSQL words 
-	 *       by mapping properties to a prefixed column name
-	 * 
-	 * @param string $word
-	 */
-	static public function isReservedMYSQLWord($word){
-		if(in_array(strtoupper($word),self::$reservedMYSQLWords)){
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	/**
-	 * 
-	 * @param string $word
-	 */
-	static public function isReservedWord($word){
-		if(self::isReservedMYSQLWord($word) || self::isReservedTYPO3Word($word)){
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+
 }
 
 ?>
