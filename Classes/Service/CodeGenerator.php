@@ -518,11 +518,11 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	}
 	
 	public function generateDomainFormFieldsPartial(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject){
-		return $this->renderTemplate('Resources/Private/Partials/formFields.htmlt', array('domainObject' => $domainObject));
+		return $this->renderTemplate('Resources/Private/Partials/formFields.htmlt', array('extension' => $this->extension,'domainObject' => $domainObject));
 	}
 	
 	public function generateDomainPropertiesPartial(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject){
-		return $this->renderTemplate('Resources/Private/Partials/properties.htmlt', array('domainObject' => $domainObject));
+		return $this->renderTemplate('Resources/Private/Partials/properties.htmlt', array('extension' => $this->extension,'domainObject' => $domainObject));
 	}
 
 	public function generateFormErrorsPartial() {

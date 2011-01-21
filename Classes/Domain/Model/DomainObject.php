@@ -78,6 +78,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	 */
 	protected $actions = array();
 	
+
 	/**
 	 * Set name
 	 * @return string
@@ -322,6 +323,20 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	public function getLabelNamespace() {
 		return $this->extension->getShorthandForTypoScript() . '_domain_model_' . strtolower($this->getName());
 	}
+
+	/**
+	 * @return array
+	 */
+	public function getPropertiesWithMappingStatements(){
+		$propertiesWithMappingStatements = array();
+		foreach($this->properties as $property){
+			if($property->getMappingStatement()){
+				$propertiesWithMappingStatements[] = $property;
+			}
+		}
+		return $propertiesWithMappingStatements;
+	}
+
 }
 
 ?>

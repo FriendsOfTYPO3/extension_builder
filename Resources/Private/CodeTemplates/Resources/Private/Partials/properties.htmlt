@@ -1,5 +1,5 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-<table>
+<table class="{extension.cssClassName}" >
 	<k:removeMultipleNewlines>
 	<f:for each="{domainObject.properties}" as="property">
 		<f:if condition="{property.isDisplayable}">
