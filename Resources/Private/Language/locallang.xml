@@ -31,7 +31,8 @@
 			<label index="product_manager">Product Manager</label>
 			<label index="email">Email</label>
 			<label index="company">Company</label>
-			<label index="plugins">Plugins</label>
+			<label index="plugins">Frontend plugins</label>
+			<label index="descr_plugins">The frontend plugins which have to be registered in the extension</label>
 			<label index="type">Type</label>
 			<label index="more">More</label>
 			<label index="remove">Remove</label>
