@@ -33,6 +33,9 @@
 			<label index="company">Company</label>
 			<label index="plugins">Frontend plugins</label>
 			<label index="descr_plugins">The frontend plugins which have to be registered in the extension</label>
+			<label index="backendModules">Backend modules</label>
+			<label index="mainModule">Main module</label>
+			<label index="uniqueInThisModel">Should be unique for this model</label>
 			<label index="type">Type</label>
 			<label index="more">More</label>
 			<label index="remove">Remove</label>

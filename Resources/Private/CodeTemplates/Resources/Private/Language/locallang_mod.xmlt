@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for backend module {backendModule.name} belonging to extension '{extension.extensionKey}'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			 <label index="mlang_tabs_tab">{backendModule.name}</label>
+            <label index="mlang_labels_tabdescr">{backendModule.description}</label>
+		</languageKey>
+	</data>
+</T3locallang>

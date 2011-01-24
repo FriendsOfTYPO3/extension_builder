@@ -129,7 +129,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							inputParams: {
 								name: "key",
 								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.key,
-								required: true
+								required: true,
+								description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.uniqueInThisModel
 							}
 //						},
 //						{
@@ -140,6 +141,52 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 //								selectValues: ["list_type", "CType"],
 //								selectOptions: ["Frontend plugin", "Content type"],
 //							}
+						}
+					]
+				}
+			}
+		}
+	},
+	{
+		type: "list",
+		inputParams: {
+			label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.backendModules,
+			name: "backendModules",
+			sortable: true,
+			elementType: {
+				type: "group",
+				inputParams: {
+					name: "properties",
+					fields: [
+						{
+							inputParams: {
+								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.name,
+								name: "name",
+								required: true
+							}
+						},
+						{
+							inputParams: {
+								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.key,
+								name: "key",
+								required: true,
+								description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.uniqueInThisModel
+							}
+						},
+						{
+							inputParams: {
+								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.short_description,
+								name: "description",
+							}
+						},
+						{
+							type: 'select',
+							inputParams: {
+								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.mainModule,
+								name: "mainModule",
+								required: true,
+								selectValues: ["web", "user","tools","help"]
+							}
 						}
 					]
 				}

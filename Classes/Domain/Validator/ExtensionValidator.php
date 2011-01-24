@@ -49,7 +49,9 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		ERROR_PROPERTY_DUPLICATE = 201,
 		ERROR_PROPERTY_ILLEGAL_CHARACTER = 202,
 		ERROR_PROPERTY_UPPER_FIRST_CHARACTER = 203,
-		ERROR_PROPERTY_RESERVED_WORD = 204;
+		ERROR_PROPERTY_RESERVED_WORD = 204,
+		ERROR_PLUGIN_DUPLICATE_KEY = 300,
+		ERROR_BACKENDMODULE_DUPLICATE_KEY = 400;
 
 			/**
 	 * Reserved words by MySQL
@@ -336,7 +338,23 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		} catch (Tx_Extbase_Exception $e) {
 			throw($e);
 		}
-		
+
+		$pluginKeys = array();
+		foreach($extension->getPlugins() as $plugin){
+			if(in_array($plugin->getKey(),$pluginKeys)){
+				throw new Exception('Duplicate plugin key: "'. $plugin->getKey() . '". Plugin keys must be unique.',self::ERROR_PLUGIN_DUPLICATE_KEY);
+			}
+			$pluginKeys[] = $plugin->getKey();
+		}
+
+		$backendModuleKeys = array();
+		foreach($extension->getBackendModules() as $backendModule){
+			if(in_array($backendModule->getKey(),$backendModuleKeys)){
+				throw new Exception('Duplicate backend moduke key: "'. $backendModule->getKey() . '". Backend module keys must be unique.',self::ERROR_BACKENDMODULE_DUPLICATE_KEY);
+			}
+			$backendModuleKeys[] = $backendModule->getKey();
+		}
+
 		try {
 			self::validateDomainObjects($extension);
 		} catch (Tx_Extbase_Exception $e) {

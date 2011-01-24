@@ -220,7 +220,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		} catch (Exception $e) {
 			return 'Could not create private resources folder, error: ' . $e->getMessage();
 		}
-		
+
 		// Generate locallang*.xml files
 		try {
 			t3lib_div::mkdir_deep($privateResourcesDirectory, 'Language');
@@ -229,6 +229,13 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 			$this->writeFile($languageDirectory . 'locallang.xml', $fileContents);
 			$fileContents = $this->generateLocallangDB();
 			$this->writeFile($languageDirectory . 'locallang_db.xml', $fileContents);
+			if($this->extension->hasBackendModules()){
+				foreach($this->extension->getBackendModules() as $backendModule){
+					$fileContents = $this->generateLocallangModule($backendModule);
+					$this->writeFile($languageDirectory . 'locallang_' . $backendModule->getKey() . '.xml', $fileContents);
+				}
+
+			}
 		} catch (Exception $e) {
 			return 'Could not generate locallang files, error: ' . $e->getMessage();
 		}
@@ -320,7 +327,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 			} catch (Exception $e) {
 				return 'Could not generate private template folders, error: ' . $e->getMessage();
 			}
-			
+
 			// Generate Domain Templates
 			try {
 				$actionsUsingFormFieldsPartial = array('edit','new');
@@ -550,6 +557,10 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		return $this->renderTemplate('Resources/Private/Language/locallang_db.xmlt', array('extension' => $this->extension));
 	}
 	
+	public function generateLocallangModule($backendModule) {
+	    return $this->renderTemplate('Resources/Private/Language/locallang_mod.xmlt', array('extension' => $this->extension, 'backendModule' => $backendModule));
+	}
+
 	public function generateLocallangCsh(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
 		return $this->renderTemplate('Resources/Private/Language/locallang_csh.xmlt', array('extension' => $this->extension, 'domainObject' => $domainObject));
 	}

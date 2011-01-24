@@ -12,6 +12,27 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 //t3lib_extMgm::addPiFlexFormValue($_EXTKEY . '_{plugin.key}', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_{plugin.key}.xml');
 
 </f:for>
+
+<f:for each="{extension.BackendModules}" as="backendModule">
+	/**
+	* Registers a Backend Module
+	*/
+	Tx_Extbase_Utility_Extension::registerModule(
+		$_EXTKEY,
+		'{backendModule.mainModule}',	 // Make module a submodule of '{backendModule.mainModule}'
+		'{backendModule.key}',	// Submodule key
+		'',						// Position
+		array(
+			<f:for each="{extension.domainObjectsForWhichAControllerShouldBeBuilt}" as="domainObject">'{domainObject.name}' => 'list, show, new, create, edit, update, delete',</f:for>
+		),
+		array(
+			'access' => 'user,group',
+			'icon'   => 'EXT:' . $_EXTKEY . '/ext_icon.gif',
+			'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_{backendModule.key}.xml',
+		)
+	);
+</f:for>
+
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '{extension.name}');
 
 
