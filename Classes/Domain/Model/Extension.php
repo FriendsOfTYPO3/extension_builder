@@ -115,7 +115,13 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_Plugin>
 	 */
 	private $plugins;
-	
+
+	/**
+	 * backend modules
+	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_BackendModule>
+	 */
+	private $backendModules;
+
 	/**
 	 *
 	 * @return string
@@ -316,7 +322,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	public function getShorthandForTypoScript() {
 		return 'tx_' . strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->getExtensionKey()));
 	}
-	
+
 	/**
 	 * Returns the Persons
 	 * 
@@ -383,6 +389,62 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 		foreach ($this->plugins as $key => $value) {
 			if ($value === $plugin) {
 				unset($this->plugins[$key]);
+			}
+		}
+	}
+	
+	/**
+	 * Setter for backendModule
+	 *
+	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_ExtbaseKickstarter_Domain_Model_BackendModule> $backendModules
+	 * @return void
+	 */
+	public function setBackendModules(Tx_Extbase_Persistence_ObjectStorage $backendModules) {
+		$this->backendModules = $backendModules;
+	}
+
+	/**
+	 * Getter for $backendModule
+	 *
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_ExtbaseKickstarter_Domain_Model_Plugin>
+	 */
+	public function getBackendModules() {
+		return $this->backendModules;
+	}
+
+	/**
+	 * Add $backendModule
+	 *
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_BackendModule
+	 * @return void
+	 */
+	public function addBackendModule(Tx_ExtbaseKickstarter_Domain_Model_BackendModule $backendModule) {
+		$this->backendModules[] = $backendModule;
+	}
+
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function hasBackendModules(){
+		if(count($this->backendModules)>0){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Remove $backendModule
+	 *
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_BackendModule
+	 * @return void
+	 */
+	public function removeBackendModule(Tx_ExtbaseKickstarter_Domain_Model_BackendModule $backendModule) {
+		foreach ($this->backendModules as $key => $value) {
+			if ($value === $backendModule) {
+				unset($this->backendModules[$key]);
 			}
 		}
 	}

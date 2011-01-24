@@ -92,6 +92,15 @@ class Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder implements t3lib_singlet
 			$extension->addPlugin($plugin);
 		}
 		
+		foreach ($globalProperties['backendModules'] as $backendModuleValues) {
+			$backendModule = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_BackendModule');
+			$backendModule->setName($backendModuleValues['name']);
+			$backendModule->setMainModule($backendModuleValues['mainModule']);
+			$backendModule->setKey($backendModuleValues['key']);
+			$backendModule->setDescription($backendModuleValues['description']);
+			$extension->addBackendModule($backendModule);
+		}
+
 			// state
 		$state = 0;
 		switch ($globalProperties['state']) {
