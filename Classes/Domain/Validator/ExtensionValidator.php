@@ -377,8 +377,7 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 	protected function checkExistingExtensions($extension){
 		if(!is_dir(PATH_typo3conf.'ext/'.$extension->getExtensionKey())){
 			// no existing extension dir 
-			throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(PATH_typo3conf.'ext/'.$extension->getExtensionKey());
-			return true;
+			return;
 		}
 		else {
 			/**

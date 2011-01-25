@@ -77,6 +77,14 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 * @var array
 	 */
 	protected $emConfDefaults = array('dependencies'=>'cms,extbase,fluid');
+	
+	/**
+	 * flag that is set to true if there are domain objects with
+	 * properties that need mapping (because they use MYSQL protected words etc.
+	 * 
+	 * @var boolean
+	 */
+	protected $propertiesThatNeedMapping = false;
 
 	/**
 	 * The extension's state. One of the STATE_* constants.
@@ -301,6 +309,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 */
 	public function addDomainObject(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
 		$domainObject->setExtension($this);
+		if(count($domainObject->getPropertiesWithMappingStatements())>0){
+			$this->propertiesThatNeedMapping = true;
+		}
 		if(in_array($domainObject->getName(),array_keys($this->domainObjects))){
 			throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
 		}
@@ -497,5 +508,16 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 		$this->md5Hashes[$filePath] = md5_file($filePath);
 		
 	}
+	
+	/**
+	 * 
+	 * @reutn boolean
+	 */
+	public function hasPropertiesThatNeedMapping(){
+		return $this->propertiesThatNeedMapping;
+	}
+	
+
+
 }
 ?>
