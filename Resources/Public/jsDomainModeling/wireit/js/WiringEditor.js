@@ -93,8 +93,12 @@ WireIt.WiringEditor = function(options) {
          visible: false,
          modal: true
       });
-     this.alertPanel.setBody("<div id='wireEditorMessageBox'></div>");
+     this.alertPanel.setBody("<div id='wireEditorMessageBox'></div><button id='alertPanelButton'>Ok</button>");
      this.alertPanel.render(document.body);
+     Event.addListener('alertPanelButton','click', function() {
+		this.alertPanel.hide();
+	 }, this, true);
+
      
      this.showSpinnerPanel = new YAHOO.widget.Panel("wait",  
  			{ width:"240px", 
@@ -373,9 +377,9 @@ WireIt.WiringEditor.prototype = {
  },
  
  alert: function(title,message){
-	 this.alertPanel.setHeader(title);
-	 this.alertPanel.setBody("<div id='wireEditorMessageBox'>" + message + "</div>");
-	 this.alertPanel.show();
+	this.alertPanel.setHeader(title);
+	Dom.get('wireEditorMessageBox').innerHTML = message;
+	this.alertPanel.show();
  },
 
  /**
