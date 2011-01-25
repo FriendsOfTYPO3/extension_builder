@@ -65,6 +65,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	 */
 	protected $overWriteSettings;
 	
+	
 	/**
 	 * 
 	 * @return void
@@ -203,6 +204,16 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 			$this->writeFile($typoscriptDirectory . 'constants.txt', $fileContents);
 		} catch (Exception $e) {
 			return 'Could not generate typoscript constants, error: ' . $e->getMessage();
+		}
+		
+			// Generate Static TypoScript
+		try {
+			if($this->extension->hasPropertiesThatNeedMapping()){
+				$fileContents = $this->generateStaticTyposcript();
+				$this->writeFile($this->extensionDirectory . 'ext_typoscript_setup.txt', $fileContents);
+			}
+		} catch (Exception $e) {
+			return 'Could not generate static typoscript, error: ' . $e->getMessage();
 		}
 
 		// Generate Private Resources .htaccess
@@ -575,11 +586,15 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	
 
 	public function generateTyposcriptSetup() {
-		return $this->renderTemplate('Configuration/TypoScript/setup.txt', array('extension' => $this->extension));
+		return $this->renderTemplate('Configuration/TypoScript/setup.txtt', array('extension' => $this->extension));
 	}
 
 	public function generateTyposcriptConstants() {
-		return $this->renderTemplate('Configuration/TypoScript/constants.txt', array('extension' => $this->extension));
+		return $this->renderTemplate('Configuration/TypoScript/constants.txtt', array('extension' => $this->extension));
+	}
+	
+	public function generateStaticTyposcript() {
+		return $this->renderTemplate('ext_typoscript_setup.txtt', array('extension' => $this->extension));
 	}
 	
 	/**

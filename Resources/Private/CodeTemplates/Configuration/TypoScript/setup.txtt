@@ -1,25 +1,12 @@
 plugin.{extension.shorthandForTypoScript} {
-	settings <![CDATA[{]]>
-	<![CDATA[}]]>
-	persistence {
-		storagePid = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.persistence.storagePid<![CDATA[}]]>
-		classes {<f:for each="{extension.domainObjects}" as="domainObject"><f:if condition="{domainObject.propertiesWithMappingStatements}">
-			{domainObject.className} {
-				mapping {
-					columns {<f:for each="{domainObject.propertiesWithMappingStatements}" as="property">
-						{property.mappingStatement}
-					</f:for>
-					}
-				}
-			}</f:if></f:for>
-		}
+	settings {
 	}
-	view <![CDATA[{]]>
+	view {
 		templateRootPath = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.view.templateRootPath<![CDATA[}]]>
 		partialRootPath = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.view.partialRootPath<![CDATA[}]]>
 		layoutRootPath = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.view.layoutRootPath<![CDATA[}]]>
-	<![CDATA[}]]>
-<![CDATA[}]]>
+	}
+}
 
 plugin.{extension.shorthandForTypoScript}._CSS_DEFAULT_STYLE (
 		input.f3-form-error {
