@@ -33,7 +33,7 @@
  */
 class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_DateTimeProperty extends Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty {
 	public function getTypeForComment() {
-		return 'integer';
+		return 'DateTime';
 	}
 
 	public function getTypeHint() {
