@@ -136,13 +136,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 			$this->roundTripEnabled = true;
 		}
 		else t3lib_div::devLog('roundtrip disabled', 'extbase_kickstarter',0,$this->settings);
-		// Validate the extension
-		$extensionValidator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator');
-		try {
-			$extensionValidator->isValid($this->extension);
-		} catch (Exception $e) {
-			return $e->getMessage();
-		}
+
 		
 		// Base directory already exists at this point
 		$this->extensionDirectory = $this->extension->getExtensionDir();
