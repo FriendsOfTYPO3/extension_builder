@@ -51,7 +51,9 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		ERROR_PROPERTY_UPPER_FIRST_CHARACTER = 203,
 		ERROR_PROPERTY_RESERVED_WORD = 204,
 		ERROR_PLUGIN_DUPLICATE_KEY = 300,
-		ERROR_BACKENDMODULE_DUPLICATE_KEY = 400;
+		ERROR_BACKENDMODULE_DUPLICATE_KEY = 400,
+		EXTENSION_EXISTS_PIBASE = 500,
+		EXTENSION_EXISTS_EXTBASE = 501;
 
 			/**
 	 * Reserved words by MySQL
@@ -333,8 +335,16 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 	 * @return boolean
 	 */
 	public function isValid($extension) {
+
 		try {
 			self::validateExtensionKey($extension->getExtensionKey());
+		} catch (Tx_Extbase_Exception $e) {
+			throw($e);
+		}
+
+
+		try {
+			$this->checkExistingExtensions($extension);
 		} catch (Tx_Extbase_Exception $e) {
 			throw($e);
 		}
@@ -350,7 +360,7 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		$backendModuleKeys = array();
 		foreach($extension->getBackendModules() as $backendModule){
 			if(in_array($backendModule->getKey(),$backendModuleKeys)){
-				throw new Exception('Duplicate backend moduke key: "'. $backendModule->getKey() . '". Backend module keys must be unique.',self::ERROR_BACKENDMODULE_DUPLICATE_KEY);
+				throw new Exception('Duplicate backend module key: "'. $backendModule->getKey() . '". Backend module keys must be unique.',self::ERROR_BACKENDMODULE_DUPLICATE_KEY);
 			}
 			$backendModuleKeys[] = $backendModule->getKey();
 		}
@@ -362,6 +372,55 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		}
 
 		return true;
+	}
+
+	protected function checkExistingExtensions($extension){
+		if(!is_dir(PATH_typo3conf.'ext/'.$extension->getExtensionKey())){
+			// no existing extension dir 
+			throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(PATH_typo3conf.'ext/'.$extension->getExtensionKey());
+			return true;
+		}
+		else {
+			/**
+			 * Not yet shure, what to do here...
+			if($this->detectExtbaseExtension($extension->getExtensionKey())){
+				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(
+					'There is an existing extension with this extension key. ' 
+					.'Are you shure you want to overwrite/merge it?',
+					self::EXTENSION_EXISTS_EXTBASE);
+			}
+			*/
+			if($this->detectPiBasedExtension($extension->getExtensionKey())){
+				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(
+					'There is an existing piBased extension with this extension key. ' 
+					.'Please choose another extension key or rename the existing extension directory',
+					self::EXTENSION_EXISTS_PIBASE);
+			}
+		}
+	}
+
+
+	protected function detectPiBasedExtension($extensionKey){
+		$extDir = PATH_typo3conf.'ext/'.$extensionKey.'/';
+		if(is_dir($extDir.'pi1')){
+			return true;
+		}
+		if(!is_dir($extDir.'Classes') && !is_dir($extDir.'Configuration')){
+			return true;
+		}
+	}
+
+	protected function detectExtbaseExtension($extensionKey){
+		$extDir = PATH_typo3conf.'ext/'.$extensionKey.'/';
+
+		if(file_exists($extDir.'ext_emconf.php')){
+			$EM_CONF = array();
+			$_EXTKEY = $extensionKey;
+			require_once($extDir.'ext_emconf.php');
+			if(strpos($EM_CONF[$_EXTKEY]['dependencies'],'extbase') > -1){
+				return true;
+			}
+		}
 	}
 
 	/**

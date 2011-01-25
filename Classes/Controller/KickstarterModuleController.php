@@ -84,7 +84,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	public function injectCodeGenerator(Tx_ExtbaseKickstarter_Service_CodeGenerator $codeGenerator) {
 		$this->codeGenerator = $codeGenerator;
 	}
-	
+
 	/**
 	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
 	 * @return void
@@ -94,7 +94,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
 		$this->settings['extConf'] = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getKickstarterSettings();
 	}
-	
+
 	/**
 	 * Index action for this controller.
 	 *
@@ -131,8 +131,16 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 					return json_encode(array('error' => $e->getMessage()));
 				}
 
+				// Validate the extension
+				$extensionValidator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator');
+				try {
+					$extensionValidator->isValid($extensionSchema);
+				} catch (Exception $e) {
+					return json_encode(array('error' => $e->getMessage()));
+				}
+
 				$extensionDirectory = $extensionSchema->getExtensionDir();
-				
+
 				if(!is_dir($extensionDirectory)){
 					t3lib_div::mkdir($extensionDirectory);
 				}

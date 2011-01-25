@@ -9,8 +9,9 @@
 		<languageKey index="default" type="array">
 			<label index="error.extension.0">An extension key must have minimum 3, maximum 30 characters (not counting underscores)</label>
 			<label index="error.extension.1">Illegal character(s) in extension key. Allowed characters are: a-z (lowercase), 0-9 and '_' (underscore)</label>
-			<label index="error.extension.2">The key must not being with one of the following prefixes: tx,u,user_,pages,tt_,sys_,ts_language_,csh_</label>
+			<label index="error.extension.2">The key may not begin with one of the following prefixes: tx,u,user_,pages,tt_,sys_,ts_language_,csh_</label>
 			<label index="error.extension.3">Extension keys cannot start or end with 0-9 and '_' (underscore)</label>
+			<label index="error.extension.500">There is an existing piBased extension with this extension key. Please choose another extension key or rename the existing extension directory</label>
 			<label index="name">Name</label>
 			<label index="key">Key</label>
 			<label index="extensionTitle">Extension title</label>
