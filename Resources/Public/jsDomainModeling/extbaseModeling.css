@@ -242,6 +242,13 @@ div.helpAvailable{
 	background-position:right;
 }
 
+#alertPanel_c {
+	max-width:400px;
+}
+
+#alertPanelButton {
+	padding:2px 15px;
+}
 
 /*********** End of CSS code for inplaceEdit as container title ************/
 
