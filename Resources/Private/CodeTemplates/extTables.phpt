@@ -5,7 +5,7 @@ if (!defined ('TYPO3_MODE')) die ('Access denied.');
 Tx_Extbase_Utility_Extension::registerPlugin(
 	$_EXTKEY,
 	'<k:uppercaseFirst>{plugin.key}</k:uppercaseFirst>',
-	'{plugin.name}'
+	'<k:quoteString>{plugin.name}</k:quoteString>'
 );
 
 //$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY . '_{plugin.key}'] = 'pi_flexform';
@@ -33,7 +33,7 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 	);
 </f:for>
 
-t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '{extension.name}');
+t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '<k:quoteString>{extension.name}</k:quoteString>');
 
 
 

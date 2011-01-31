@@ -24,7 +24,7 @@
  *
  * = Examples =
  *
- * <f:addSlashes>{anyString}</f:addSlashes>
+ * <f:quoteString>{anyString}</f:quoteString>
  *
  *
  * @package	 ExtbaseKickstarter
