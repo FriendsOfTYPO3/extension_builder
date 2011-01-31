@@ -51,7 +51,9 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		ERROR_PROPERTY_UPPER_FIRST_CHARACTER = 203,
 		ERROR_PROPERTY_RESERVED_WORD = 204,
 		ERROR_PLUGIN_DUPLICATE_KEY = 300,
+		ERROR_PLUGIN_INVALID_KEY = 301,
 		ERROR_BACKENDMODULE_DUPLICATE_KEY = 400,
+		ERROR_BACKENDMODULE_INVALID_KEY = 401,
 		EXTENSION_EXISTS_PIBASE = 500,
 		EXTENSION_EXISTS_EXTBASE = 501;
 
@@ -351,6 +353,9 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 
 		$pluginKeys = array();
 		foreach($extension->getPlugins() as $plugin){
+			if(self::validatePluginKey($plugin->getKey()) === 0){
+				throw new Exception('Invalid plugin key in plugin '.$plugin->getName().': "'.$plugin->getKey().'". Only alphanumeric character without spaces are allowed' ,self::ERROR_PLUGIN_INVALID_KEY);
+			}
 			if(in_array($plugin->getKey(),$pluginKeys)){
 				throw new Exception('Duplicate plugin key: "'. $plugin->getKey() . '". Plugin keys must be unique.',self::ERROR_PLUGIN_DUPLICATE_KEY);
 			}
@@ -359,6 +364,9 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 
 		$backendModuleKeys = array();
 		foreach($extension->getBackendModules() as $backendModule){
+			if(self::validateModuleKey($backendModule->getKey()) === 0){
+				throw new Exception('Invalid key in backend module '.$backendModule->getName().'. Only alphanumeric character without spaces are allowed' ,self::ERROR_BACKENDMODULE_INVALID_KEY);
+			}
 			if(in_array($backendModule->getKey(),$backendModuleKeys)){
 				throw new Exception('Duplicate backend module key: "'. $backendModule->getKey() . '". Backend module keys must be unique.',self::ERROR_BACKENDMODULE_DUPLICATE_KEY);
 			}
@@ -506,6 +514,24 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 			}
 			$propertyNames[] = $property->getName();
 		}
+	}
+	
+	/**
+	 * validates a plugin key
+	 * @param string $key
+	 * @return boolean true if valid
+	 */
+	private static function validatePluginKey($key){
+		return preg_match('/^[a-zA-Z0-9_-]*$/',$key);
+	}
+	
+	/**
+	 * validates a backend module key
+	 * @param string $key
+	 * @return boolean true if valid
+	 */
+	private static function validateModuleKey($key){
+		return preg_match('/^[a-zA-Z0-9_-]*$/',$key);
 	}
 	
 	/**

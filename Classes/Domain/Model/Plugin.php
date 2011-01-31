@@ -101,7 +101,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Plugin {
 	 * @return void
 	 */
 	public function setKey($key) {
-		$this->key = preg_replace("/[^a-z0-9]/", '', strtolower($key));
+		$this->key = strtolower($key);
 	}
 
 	/**
