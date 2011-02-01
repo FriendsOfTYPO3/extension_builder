@@ -120,6 +120,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 			case 'saveWiring':
 				$extensionConfigurationFromJson = json_decode($request['params']['working'], true);
 				$extensionConfigurationFromJson['modules'] = $this->mapAdvancedMode($extensionConfigurationFromJson['modules']);
+				$extensionConfigurationFromJson['modules'] = $this->resetOutboundedPositions($extensionConfigurationFromJson['modules']);
 				
 				t3lib_div::devlog('JSON:','extbase_kickstarter',0,$extensionConfigurationFromJson);
 				
@@ -154,11 +155,13 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 						}
 					}
 					$extensionSettings =  Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getExtensionSettings($extensionSchema->getExtensionKey());
-					if($this->settings['extConf']['enableRoundtrip'] == 1 && empty($extensionSettings)){
-						// no config file in an existing extension!
-						// this would result in a total overwrite so we create one and give a warning
-						Tx_ExtbaseKickstarter_Utility_ConfigurationManager::createInitialSettingsFile($extensionSchema);
-						return json_encode(array('warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the kickstarter the first time for this extension. <br />A settings file was generated in <br /><b>typo3conf/ext/".$extensionSchema->getExtensionKey()."/Configuration/Kickstarter/settings.yaml.</b><br />Configure the overwrite settings, then save again."));
+					if($this->settings['extConf']['enableRoundtrip'] == 1){
+						if(empty($extensionSettings)){
+							// no config file in an existing extension!
+							// this would result in a total overwrite so we create one and give a warning
+							Tx_ExtbaseKickstarter_Utility_ConfigurationManager::createInitialSettingsFile($extensionSchema);
+							return json_encode(array('warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the kickstarter the first time for this extension. <br />A settings file was generated in <br /><b>typo3conf/ext/".$extensionSchema->getExtensionKey()."/Configuration/Kickstarter/settings.yaml.</b><br />Configure the overwrite settings, then save again."));
+						}
 					}
 				}
 				
@@ -308,7 +311,23 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 		}
 		return $jsonConfig;
 	}
-	
+
+	/**
+	 * just a temporary workaround until the new UI is available
+	 *
+	 * @param array $jsonConfig
+	 */
+	protected function resetOutboundedPositions($jsonConfig){
+		foreach($jsonConfig as &$module){
+			if($module['config']['position'][0] < 0){
+				$module['config']['position'][0] = 10;
+			}
+			if($module['config']['position'][1] < 0){
+				$module['config']['position'][1] = 10;
+			}
+		}
+		return $jsonConfig;
+	}
 	/**
 	 * TODO: Is there a real API for this?
 	 * TODO: SHould better be moved to where??
@@ -325,6 +344,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 		}
 		return false;
 	}
+	
 
 }
 
