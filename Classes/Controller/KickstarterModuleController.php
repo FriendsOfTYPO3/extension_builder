@@ -162,6 +162,11 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 							Tx_ExtbaseKickstarter_Utility_ConfigurationManager::createInitialSettingsFile($extensionSchema);
 							return json_encode(array('warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the kickstarter the first time for this extension. <br />A settings file was generated in <br /><b>typo3conf/ext/".$extensionSchema->getExtensionKey()."/Configuration/Kickstarter/settings.yaml.</b><br />Configure the overwrite settings, then save again."));
 						}
+						try {
+							Tx_ExtbaseKickstarter_Service_RoundTrip::prepareExtensionForRoundtrip($extensionSchema);
+						} catch (Exception $e) {
+							return json_encode(array('error' => $e->getMessage()));
+						}
 					}
 				}
 				

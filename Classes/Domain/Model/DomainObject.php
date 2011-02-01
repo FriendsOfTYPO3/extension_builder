@@ -35,7 +35,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	 * @var string
 	 */
 	protected $name;
-	
+
 	/**
 	 * 
 	 * @var string
@@ -195,7 +195,30 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	 */
 	public function addProperty(Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty $property) {
 		$property->setDomainObject($this);
+		if(is_subclass_of($property, 'Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
+			// here we do a check if there is already a relation to the same foreign class
+			if(!$this->isUniqueRelationToForeignClass($property->getForeignClass())){
+				$property->setUseExtendedRelationTableName(true);
+			}
+		}
 		$this->properties[] = $property;
+	}
+
+	/**
+	 * Check all relations of this object and returns true
+	 * if there is no other relation to the same foreign class
+	 *
+	 * @param string $foreignClass
+	 */
+	protected function isUniqueRelationToForeignClass($foreignClass){
+		$anyToManyRelationProperties = $this->getAnyToManyRelationProperties();
+		$foreignClasses = array();
+		foreach($anyToManyRelationProperties as $anyToManyRelationProperty){
+			if($anyToManyRelationProperty->getForeignClass() == $foreignClass){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**

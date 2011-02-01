@@ -131,6 +131,12 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	private $backendModules;
 
 	/**
+	 * was the extension renamed?
+	 * @var boolean
+	 */
+	private $renamed = false;
+
+	/**
 	 *
 	 * @return string
 	 */
@@ -145,8 +151,8 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	public function setExtensionKey($extensionKey) {
 		$this->extensionKey = $extensionKey;
 	}
-	
-/**
+
+	/**
 	 *
 	 * @return string
 	 */
@@ -517,7 +523,34 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 		return $this->propertiesThatNeedMapping;
 	}
 	
-
+	/**
+	 * Get the previous extension directory
+	 * if the extension was renamed it is different from $this->extensionDir
+	 * 
+	 * @return void
+	 */
+	public function getPreviousExtensionDirectory(){
+		if($this->isRenamed()){
+			$this->previousExtensionDirectory = PATH_typo3conf.'ext/'.$originalExtensionKey.'/';
+			$this->previousExtensionKey = $originalExtensionKey;
+			return $this->previousExtensionDirectory;
+		}
+		else {
+			return $this->extensionDir;
+		}
+	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function isRenamed(){
+		$originalExtensionKey = $this->getOriginalExtensionKey();
+		if(!empty($originalExtensionKey) && $originalExtensionKey != $this->getExtensionKey()){
+			$this->renamed = true;
+		}
+		return $this->renamed;
+	}
 
 }
 ?>
