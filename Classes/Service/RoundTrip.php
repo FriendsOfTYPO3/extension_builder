@@ -96,11 +96,9 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 		$this->previousExtensionDirectory = $this->extensionDirectory;
 		$this->previousExtensionKey = $this->extension->getExtensionKey();
 		
-		$originalExtensionKey = $extension->getOriginalExtensionKey();
-		
-		if(!empty($originalExtensionKey) && $originalExtensionKey != $this->extension->getExtensionKey()){
-			$this->previousExtensionDirectory = PATH_typo3conf.'ext/'.$originalExtensionKey.'/';
-			$this->previousExtensionKey = $originalExtensionKey;
+		if($extension->isRenamed()){
+			$this->previousExtensionDirectory = $extension->getPreviousExtensionDirectory();
+			$this->previousExtensionKey = $extension->getOriginalExtensionKey();
 			$this->extensionRenamed = true;
 			t3lib_div::devlog('Extension renamed: ' . $originalExtensionKey .' => ' . $this->extension->getExtensionKey() ,'extbase_kickstarter',1);
 		}
@@ -756,9 +754,44 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 		
 		return 0;
 	}
-	
+
 	/**
-	 * 
+	 * parse existing tca and set appropriate properties
+	 *
+	 * @param $extension
+	 * @return void
+	 */
+	public static function prepareExtensionForRoundtrip(&$extension){
+		foreach($extension->getDomainObjects() as $domainObject){
+			$existingTca = self::getTcaForDomainObject($domainObject,$extension);
+			if($existingTca){
+				foreach($domainObject->getAnyToManyRelationProperties() as $relationProperty){
+					if(isset($existingTca['columns'][$relationProperty->getName()]['config']['MM'])){
+						t3lib_div::devlog('Relation table for Model '. $domainObject->getName() .' relation ' . $relationProperty->getName(),'extbase_kickstarter',0,$existingTca['columns'][$relationProperty->getName()]['config']);
+						$relationProperty->setRelationTableName($existingTca['columns'][$relationProperty->getName()]['config']['MM']);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Returns the current TCA for a domain objects table if the extension is installed
+	 * TODO: check for previous table name if an extension is renamed
+	 *
+	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject
+	 */
+	protected static function getTcaForDomainObject($domainObject,$extension){
+		$tableName = $domainObject->getDatabaseTableName();
+		t3lib_div::loadTca($tableName);
+		if(isset($GLOBALS['TCA'][$tableName])){
+			return $GLOBALS['TCA'][$tableName];
+		}
+		else return NULL;
+	}
+
+	/**
+	 *
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_Extension $extension
 	 * @param string $backupDir
 	 */
@@ -810,32 +843,32 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 		t3lib_div::devlog('Backup created in ' . $backupDir,'extbase_kickstarter',0);
 		return true;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param string $src path to copy
 	 * @param string $dst destination
 	 */
 	static public function recurse_copy($src,$dst) {
-	    $dir = opendir($src);
-	    @mkdir($dst);
-	    while(false !== ( $file = readdir($dir)) ) {
-	        if (( $file != '.' ) && ( $file != '..' )) {
-	            if ( is_dir($src . '/' . $file) ) {
-	            	self::recurse_copy($src . '/' . $file,$dst . '/' . $file);
-	            }
-	            else {
-	                $success = copy($src . '/' . $file,$dst . '/' . $file);
-	                if(!$success){
-	                	throw new Exception('Could not copy '. $src . '/' . $file . ' to '. $dst . '/' . $file);
-	                }
-	            }
-	        }
-	    }
-	    closedir($dir);
+		$dir = opendir($src);
+		@mkdir($dst);
+		while(false !== ( $file = readdir($dir)) ) {
+			if (( $file != '.' ) && ( $file != '..' )) {
+				if ( is_dir($src . '/' . $file) ) {
+					self::recurse_copy($src . '/' . $file,$dst . '/' . $file);
+				}
+				else {
+					$success = copy($src . '/' . $file,$dst . '/' . $file);
+					if(!$success){
+						throw new Exception('Could not copy '. $src . '/' . $file . ' to '. $dst . '/' . $file);
+					}
+				}
+			}
+		}
+		closedir($dir);
 	}
-	
-	
+
+
 	static public function mergeLocallangXml($locallangFile,$newXmlString){
 		$existingXml = t3lib_div::xml2array(t3lib_div::getUrl($locallangFile));
 		$newXml = t3lib_div::xml2array($newXmlString);

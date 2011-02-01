@@ -28,6 +28,22 @@
  * @version $ID:$
  */
 abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToManyRelation extends Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AbstractRelation {
+
+	/**
+	 * The mm relation table name
+	 *
+	 * @var string
+	 */
+	protected $relationTableName;
+
+	/**
+	 * Use tbl1_field1_tbl2_mm as table name to enable multiple relations
+	 * to the same foreign class
+	 *
+	 * @var boolean
+	 */
+	protected $useExtendedRelationTableName = false;
+
 	/**
 	 * Returns the relation table name. It is build by having 'tx_myextension_' followed by the 
 	 * first domain object name followed by the second domain object name followed by '_mm'.
@@ -35,15 +51,40 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToMan
 	 * @return void
 	 */
 	public function getRelationTableName() {
-		return 'tx_'
+		if(!empty($this->relationTableName)){
+			return $this->relationTableName;
+		}
+		$relationTableName = 'tx_'
 			. strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->domainObject->getExtension()->getExtensionKey()))
 			. '_'
-			. strtolower($this->domainObject->getName())
-			. '_'
-			. strtolower($this->foreignClass->getName())
-			. '_mm';
+			. strtolower($this->domainObject->getName());
+
+		if($this->useExtendedRelationTableName){
+			$relationTableName .= '_'.strtolower($this->getName());
+		}
+		$relationTableName .= '_' . strtolower($this->foreignClass->getName()). '_mm';
+		return $relationTableName;
 	}
-	
+
+	/**
+	 * Setter for useExtendedRelationTableName
+	 * @param boolean $useExtendedRelationTableName
+	 */
+	public function setUseExtendedRelationTableName($useExtendedRelationTableName){
+		$this->useExtendedRelationTableName = $useExtendedRelationTableName;
+	}
+
+	/**
+	 * setter for relation table name
+	 * if a table name is configured in TCA the table name is ste to the configured name
+	 * 
+	 * @param $relationTableName
+	 * @return void
+	 */
+	public function setRelationTableName($relationTableName){
+		$this->relationTableName = $relationTableName;
+	}
+
 	/**
 	 * Is a MM table needed for this relation?
 	 * 
