@@ -103,7 +103,7 @@ WireIt.WiringEditor = function(options) {
      this.showSpinnerPanel = new YAHOO.widget.Panel("wait",  
  			{ width:"240px", 
  			  fixedcenter:true, 
- 			  close:false, 
+ 			  close:true, 
  			  draggable:false, 
  			  zindex:4,
  			  modal:true,
@@ -272,7 +272,7 @@ WireIt.WiringEditor.prototype = {
        Dom.addClass(container.el, "WiringEditor-module-"+module.name);
     }
     catch(ex) {
-       console.log("Error Layer.addContainer", ex.message);
+      //debug("Error Layer.addContainer", ex.message);
     }    
  },
 

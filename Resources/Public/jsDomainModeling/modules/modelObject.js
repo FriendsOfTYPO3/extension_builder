@@ -151,7 +151,9 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 															"Float",
 															"Boolean",
 															"DateTime",
-															"Select"
+															"Select",
+															"File",
+															"Image"
 														], 
 														selectOptions: [
 															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.string,
@@ -160,7 +162,9 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.floatingPoint,
 															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.boolean,
 															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.dateTime,
-															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.selectList
+															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.selectList,
+															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.file,
+															TYPO3.settings.extbaseKickstarter._LOCAL_LANG.image
 														]
 													}
 												},

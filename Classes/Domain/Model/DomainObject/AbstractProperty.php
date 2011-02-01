@@ -54,6 +54,13 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	 * @var boolean
 	 */
 	protected $required;
+	
+	/**
+	 * Is an upload folder required for this property
+	 * 
+	 * @var boolean
+	 */
+	protected $needsUploadFolder = false;
 
 
 	/**
@@ -336,6 +343,16 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 			return $this->getFieldName().'.mapOnProperty = '.$this->name;
 		}
 		else return NULL;
+	}
+	
+
+	/**
+	 * Getter for $needsUploadFolder
+	 * 
+	 * @return boolean $needsUploadFolder
+	 */
+	public function getNeedsUploadFolder(){
+		return $this->needsUploadFolder;
 	}
 
 }

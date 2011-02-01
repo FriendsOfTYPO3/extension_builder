@@ -77,7 +77,14 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action>
 	 */
 	protected $actions = array();
-	
+
+
+	/**
+	 * Is an upload folder required for this domain object
+	 * 
+	 * @var boolean
+	 */
+	protected $needsUploadFolder = false;
 
 	/**
 	 * Set name
@@ -200,6 +207,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 			if(!$this->isUniqueRelationToForeignClass($property->getForeignClass())){
 				$property->setUseExtendedRelationTableName(true);
 			}
+		}
+		if ($property->getNeedsUploadFolder()) {
+			$this->needsUploadFolder = true;
 		}
 		$this->properties[] = $property;
 	}
@@ -360,6 +370,14 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 		return $propertiesWithMappingStatements;
 	}
 
+	/**
+	 * Getter for $needsUploadFolder
+	 * 
+	 * @return boolean $needsUploadFolder
+	 */
+	public function getNeedsUploadFolder(){
+		return $this->needsUploadFolder;
+	}
 }
 
 ?>

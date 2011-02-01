@@ -1,0 +1,7 @@
+'type' => 'group',
+'internal_type' => 'file',
+'uploadfolder' => '{extension.uploadFolder}',
+'show_thumbs' => 1,
+'size' => 5,
+'allowed' => '{property.allowedFileTypes}',
+'disallowed' => '{property.disallowedFileTypes}',

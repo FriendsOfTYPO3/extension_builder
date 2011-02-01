@@ -97,7 +97,14 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	const STATE_STABLE = 2;
 	const STATE_EXPERIMENTAL = 3;
 	const STATE_TEST = 4;
-	
+
+	/**
+	 * Is an upload folder required for this extension
+	 * 
+	 * @var boolean
+	 */
+	protected $needsUploadFolder = false;
+
 	/**
 	 * 
 	 * an array keeping all md5 hashes of all files in the extension to detect modifications
@@ -320,6 +327,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 		}
 		if(in_array($domainObject->getName(),array_keys($this->domainObjects))){
 			throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
+		}
+		if($domainObject->getNeedsUploadFolder()){
+			$this->needsUploadFolder = true;
 		}
 		$this->domainObjects[$domainObject->getName()] = $domainObject;
 	}
@@ -550,6 +560,28 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 			$this->renamed = true;
 		}
 		return $this->renamed;
+	}
+
+	/**
+	 * Getter for $needsUploadFolder
+	 * 
+	 * @return boolean $needsUploadFolder
+	 */
+	public function getNeedsUploadFolder(){
+		if($this->needsUploadFolder){
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+	
+	/**
+	 *
+	 * @return string $uploadFolder
+	 */
+	public function getUploadFolder(){
+		return 'uploads/tx_' . $this->getExtensionKey();
 	}
 
 }

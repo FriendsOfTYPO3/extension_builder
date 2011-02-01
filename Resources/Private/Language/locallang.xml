@@ -75,6 +75,8 @@
 			<label index="boolean">Boolean</label>
 			<label index="dateTime">Date time</label>
 			<label index="selectList">Select list</label>
+			<label index="file">File</label>
+			<label index="image">Image</label>
 			<label index="isRequired">Is required?</label>
 			<label index="relations">Relations</label>
 			<label index="relationName">Name</label>
