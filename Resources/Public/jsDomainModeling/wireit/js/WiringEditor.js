@@ -128,7 +128,7 @@ WireIt.WiringEditor = function(options) {
    // this.layout.getUnitById('right').set('animate', true, false);
 
     	// collapse left
-    this.layout.getUnitById('left').collapse();
+    //this.layout.getUnitById('left').collapse();
     this.layout.getUnitById('left').set('animate', true, false);
    /** 
     	// register events to collapse the other one if this is expanded
@@ -407,6 +407,7 @@ WireIt.WiringEditor.prototype = {
     this.layer.removeAllContainers();
     this.propertiesForm.destroy();
 	this.renderPropertiesForm();
+	 this.layout.getUnitById('left').expand();
  },
 
  /**
@@ -490,6 +491,7 @@ WireIt.WiringEditor.prototype = {
 				this.renderLoadPanel();
 		        this.updateLoadPanelList();
 			    this.loadPanel.show();
+			    this.layout.getUnitById('left').collapse();
 			},
 			scope: this
 		}
