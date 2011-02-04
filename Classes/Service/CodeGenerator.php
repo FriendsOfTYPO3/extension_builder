@@ -327,7 +327,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 				// Generate Layouts directory
 				t3lib_div::mkdir_deep($this->extensionDirectory, 'Resources/Private/Layouts');
 				$layoutsDirectory = $this->extensionDirectory . 'Resources/Private/Layouts/';
-				$this->writeFile($layoutsDirectory . 'default.html', $this->generateLayout());
+				$this->writeFile($layoutsDirectory . 'Default.html', $this->generateLayout());
 				
 			} catch (Exception $e) {
 				return 'Could not generate private template folders, error: ' . $e->getMessage();
