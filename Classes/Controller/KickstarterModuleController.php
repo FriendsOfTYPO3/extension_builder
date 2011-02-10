@@ -101,9 +101,17 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	 * @return string The rendered view
 	 */
 	public function indexAction() {
+	// if the user has seen the introduction the domain modeller becomes the default view
+		if(!$this->request->hasArgument('action')){
+			$userSettings = $GLOBALS['BE_USER']->getModuleData('kickstarter');
+			if($userSettings['firstTime']===0){
+				$this->forward('domainmodelling');
+			}
+		}
 	}
 
 	public function domainmodellingAction() {
+		$GLOBALS['BE_USER']->pushModuleData('kickstarter',array('firstTime'=>0));
 	}
 
 	/**
