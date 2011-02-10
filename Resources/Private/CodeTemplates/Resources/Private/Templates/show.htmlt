@@ -1,5 +1,5 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
-<k:openingTag>f:layout name="default" /</k:openingTag>
+<k:openingTag>f:layout name="Default" /</k:openingTag>
 
 This Template is responsible for displaying a single view for a domain object
 
