@@ -138,7 +138,6 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		}
 		else t3lib_div::devLog('roundtrip disabled', 'extbase_kickstarter',0,$this->settings);
 
-		
 		// Base directory already exists at this point
 		$this->extensionDirectory = $this->extension->getExtensionDir();
 		if(!is_dir($this->extensionDirectory)){
@@ -383,11 +382,12 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	 * @author Sebastian Kurfürst <sebastian@typo3.org>
 	 */
 	protected function buildRenderingContext($templateVariables) {
+		$templateVariables['settings'] = $this->settings;
 		$variableContainer = $this->objectManager->create('Tx_Fluid_Core_ViewHelper_TemplateVariableContainer', $templateVariables);
 
 		$renderingContext = $this->objectManager->create('Tx_Fluid_Core_Rendering_RenderingContext');
 		$viewHelperVariableContainer = $this->objectManager->create('Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer');
-		
+
 		$renderingContext->setTemplateVariableContainer($variableContainer);
 		$renderingContext->setViewHelperVariableContainer($viewHelperVariableContainer);
 
