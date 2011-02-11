@@ -5,7 +5,7 @@ plugin.{extension.shorthandForTypoScript} {
 		layoutRootPath = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.view.layoutRootPath<![CDATA[}]]>
 	}
 	persistence {
-		storagePid = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.storagePid<![CDATA[}]]>
+		storagePid = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.persistence.storagePid<![CDATA[}]]>
 	}
 }
 
