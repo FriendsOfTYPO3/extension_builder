@@ -28,7 +28,8 @@ class {domainObject.controllerName} extends Tx_Extbase_MVC_Controller_ActionCont
 	}
 	</f:if>
 	<f:for each="{domainObject.actions}" as="action">
-		<k:render partial="Classes/Controller/{action.name}Action.phpt" arguments="{domainObject:domainObject,extension:extension}" />
+		<k:render partial="Classes/Controller/{action.name}Action.phpt" arguments="{domainObject:domainObject,extension:extension,settings:settings}" />
 	</f:for>
+
 }
 ?>
