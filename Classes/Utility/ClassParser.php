@@ -73,6 +73,12 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 	public $propertyRegex = '/\s*\\$(?<name>\w*)\s*(\=(?<value>\s*([^;]*)))?;/';
 	
 	/**
+	 * The regular expression to detect a property with a multiline default value (for example an array)
+	 * @var string regular expression
+	 */
+	public $multiLinePropertyRegex = '/\s*\\$(?<name>\w*)\s*(\=(?<value>\s*(.*)))?/';
+
+	/**
 	 * The regular expression to detect a constant in a line 
 	 * @var string regular expression
 	 */
@@ -126,7 +132,8 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 		 */
 		
 		$isSingleLineComment = false; 
-		$isMultilineComment = false;
+		$isMultiLineComment = false;
+		$multiLineProperty = NULL;;
 		$isMethodBody = false;
 		
 		// the Tx_ExtbaseKickstarter_Reflection_MethodReflection returned from ClassReflection
@@ -167,13 +174,13 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 			if(!empty($trimmedLine) && !$isMethodBody){
 				
 				// process multi line comment
-				$isMultilineComment = $this->isMultiLineComment($line,$isMultilineComment);
+				$isMultiLineComment = $this->isMultiLineComment($line,$isMultiLineComment);
 				
 				// process single line comment
 				$isSingleLineComment = $this->isSingleLineComment($line);
 				
 				// if not in a comment we look for methods, properties or constants
-				if(!$isSingleLineComment && !$isMultilineComment && !empty($trimmedLine)){
+				if(!$isSingleLineComment && !$isMultiLineComment && !empty($trimmedLine)){
 					
 
 					$methodMatches = array();
@@ -212,16 +219,29 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 					} // end of preg_match_all method
 					
 					if(!$isMethodBody){
+						// skip this if we are in a method
+						if($multiLineProperty & strpos($trimmedLine,';') > -1){
+							// the end line of a multi line property
+							$multiLineProperty['value'][0] .= "\n".$this->concatLinesFromArray($lines,$multiLineProperty['startLine']).str_replace(';','',$line);
+							$this->addProperty($multiLineProperty);
+							$multiLineProperty = NULL;
+							$lastMatchedLine = $this->lineCount;
+						}
+
 						// process constants
 						if(preg_match_all($this->constantRegex,$trimmedLine,$constantMatches)){
 							$this->addConstant($constantMatches);
 						}
-						
+
 						// process properties
 						if(preg_match_all($this->propertyRegex,$trimmedLine,$propertyMatches)){
 							$this->addProperty($propertyMatches);
-						} 
-						
+						}
+						elseif(preg_match_all($this->multiLinePropertyRegex,$trimmedLine,$propertyMatches)){
+							// a multiline property is a property that has a multiline devault value (like an array for example)
+							$multiLineProperty = $propertyMatches;
+							$multiLineProperty['startLine'] = $this->lineCount;
+						}
 					}
 					
 					$includeMatches = array();
@@ -329,25 +349,25 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 	 * Test for multiLineComment
 	 * 
 	 * @param string $line
-	 * @param boolean $isMultilineComment
+	 * @param boolean $isMultiLineComment
 	 */
-	protected function isMultiLineComment($line,$isMultilineComment){
+	protected function isMultiLineComment($line,$isMultiLineComment){
 
 		// end of multiline comment found (maybe this part could be better solved with tokenizer?)
 		if(strrpos($line,'*/')>-1){
 			if(strrpos($line,'/**')>-1){
 				// if a multiline comment starts in the same line after a multiline comment end
-				$isMultilineComment = (strrpos($line,'/**') > strrpos($line,'*/'));
+				$isMultiLineComment = (strrpos($line,'/**') > strrpos($line,'*/'));
 			}
 			else {
-				$isMultilineComment = false;
+				$isMultiLineComment = false;
 			}
 		}
 		else if(strrpos($line,'/**')>-1){
 			// multiline comment start
-			$isMultilineComment = true;
+			$isMultiLineComment = true;
 		}
-		return $isMultilineComment;
+		return $isMultiLineComment;
 	}
 
 	/**
@@ -389,10 +409,16 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 					
 					$classProperty = new Tx_ExtbaseKickstarter_Domain_Model_Class_Property($propertyName);
 					$classProperty->mapToReflectionProperty($reflectionProperty);
-					
+
 					// get the default value from regex matches
 					if(!empty($propertyValue)){
-						eval('$varType = gettype('.$propertyValue.');');
+						if(strpos($propertyValue,'array')>-1){
+							$varType = 'array';
+						}
+						else {
+							eval('$varType = gettype('.$propertyValue.');');
+						}
+
 						if(!empty($varType)){
 							$classProperty->setVarType($varType);
 						}
