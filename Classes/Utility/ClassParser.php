@@ -390,10 +390,13 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 					$classProperty = new Tx_ExtbaseKickstarter_Domain_Model_Class_Property($propertyName);
 					$classProperty->mapToReflectionProperty($reflectionProperty);
 					
-					// set default values: the reflection method getValue does not work here??
-					// so we have to get the default value from regex matches
+					// get the default value from regex matches
 					if(!empty($propertyValue)){
-						eval('$classProperty->setValue('.$propertyValue.');');
+						eval('$varType = gettype('.$propertyValue.');');
+						if(!empty($varType)){
+							$classProperty->setVarType($varType);
+						}
+						$classProperty->setValue(trim($propertyValue));
 						$classProperty->setDefault(true);
 					}
 

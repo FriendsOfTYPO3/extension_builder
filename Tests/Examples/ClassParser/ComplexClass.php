@@ -25,6 +25,8 @@ final class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_ComplexClass extend
 	
 	const testConstant = "123"; const testConstant2 = 0.56;
 	
+	protected $defaultOrderings = array('title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING);
+	
 	/**
 	 * 
 	 * @return string $name

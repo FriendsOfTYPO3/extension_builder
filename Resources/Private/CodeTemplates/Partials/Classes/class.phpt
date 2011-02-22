@@ -15,7 +15,7 @@
 	 *<f:for each="{property.annotations}" as="annotation">
 	 * @{annotation}</f:for>
 	 */
-	<f:for each="{property.modifierNames}" as="modifierName">{modifierName} </f:for>${property.name}<f:if condition="{property.default}"> = <k:json>{property.value}</k:json></f:if>;
+	<f:for each="{property.modifierNames}" as="modifierName">{modifierName} </f:for>${property.name}<f:if condition="{property.default}"> = {property.value}</f:if>;
 </f:for><f:for each="{classObject.methods}" as="method">
 	/**<f:for each="{method.descriptionLines}" as="descriptionLine">
 	 * {descriptionLine}</f:for>

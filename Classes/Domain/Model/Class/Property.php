@@ -30,8 +30,7 @@
  */
 class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject{
 
-    
-    		
+
 	/**
 	 * php var type of this property (read from @var annotation in doc comment)
 	 * 
@@ -67,7 +66,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 	public function __construct($propertyName){
 		$this->name = $propertyName;
 	}
-	
+
 	/**
 	 * 
 	 * all properties that have a setter in this class and a getter in the reflection class will be set here 
@@ -82,18 +81,18 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 			foreach($this as $key => $value) {
 				$setterMethodName = 'set'.t3lib_div::underscoredToUpperCamelCase($key);
 				$getterMethodName = 'get'.t3lib_div::underscoredToUpperCamelCase($key);
-				
-	    		// map properties of reflection class to this class
-				if(method_exists($propertyReflection,$getterMethodName) && method_exists($this,$setterMethodName) ){
-	    			$this->$setterMethodName($propertyReflection->$getterMethodName());
-	    		}
-	    		
-	    		$isMethodName = 'is'.t3lib_div::underscoredToUpperCamelCase($key);
-	    		
+
+				// map properties of reflection class to this class
+				if(method_exists($propertyReflection,$getterMethodName) && method_exists($this,$setterMethodName) && $key != 'value'){
+					$this->$setterMethodName($propertyReflection->$getterMethodName());
+				}
+
+				$isMethodName = 'is'.t3lib_div::underscoredToUpperCamelCase($key);
+
 				// map properties of reflection class to this class
 				if(method_exists($propertyReflection,$setterMethodName) && method_exists($this,$isMethodName) ){
-	    			$this->$setterMethodName($propertyReflection->$isMethodName());
-	    		}
+					$this->$setterMethodName($propertyReflection->$isMethodName());
+				}
 			}
 
 			// This is not yet used later on. The type is not validated, so it might be anything!!
@@ -104,7 +103,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 			else {
 				t3lib_div::devLog('No var type set for property $'.$this->name. ' in class '.$propertyReflection->getDeclaringClass()->name,'extbase_kickstarter');
 			}
-			
+
 			if(empty($this->tags)){
 				// strange behaviour in php ReflectionProperty->getDescription(). A backslash is added to the description
 				$this->description = str_replace("\n/",'',$this->description);
@@ -113,54 +112,55 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 			}
 		}
 	}
-	
-	 
-    /**
-     *
-     * @return string $type.
-     */
-    public function getVarType() {
-        return $this->varType;
-    }
-    
-    /**
-     * Sets $type.
-     *
-     * @param string $type
-     */
-    public function setVarType($varType) {
-        $this->varType = $varType;
-    }
-	
-	
+
+
+	/**
+	 *
+	 * @return string $type.
+	 */
+	public function getVarType() {
+		return $this->varType;
+	}
+
+	/**
+	 * Sets $type.
+	 *
+	 * @param string $type
+	 */
+	public function setVarType($varType) {
+		$this->tags['var'] = array($varType . ' $'.$this->getName());
+		$this->varType = $varType;
+	}
+
+
 	 /**
-     * Returns $associatedDomainObjectProperty.
-     *
-     * @return object associatedDomainObjectProperty
-     */
-    public function getAssociatedDomainObjectProperty() {
-        return $this->associatedDomainObjectProperty;
-    }
-    
-    /**
-     * Sets $associatedDomainObjectProperty.
-     *
-     * @param object $associatedDomainObjectProperty
-     */
-    public function setAssociatedDomainObjectProperty($associatedDomainObjectProperty) {
-        $this->associatedDomainObjectProperty = $associatedDomainObjectProperty;
+	 * Returns $associatedDomainObjectProperty.
+	 *
+	 * @return object associatedDomainObjectProperty
+	 */
+	public function getAssociatedDomainObjectProperty() {
+		return $this->associatedDomainObjectProperty;
+	}
+	
+	/**
+	 * Sets $associatedDomainObjectProperty.
+	 *
+	 * @param object $associatedDomainObjectProperty
+	 */
+	public function setAssociatedDomainObjectProperty($associatedDomainObjectProperty) {
+		$this->associatedDomainObjectProperty = $associatedDomainObjectProperty;
 		if(empty($this->description)){ 
 			$this->description = $associatedDomainObjectProperty->getDescription();
 			if(empty($this->description)){
 				$this->description = $this->name;
 			}
 		}
-    }
+	}
 	
 	public function hasAssociatedDomainObjectProperty(){
 		return !is_null($this->associatedDomainObjectProperty);
 	}
-	
+
 	/**
 	 * 
 	 * @return boolean
@@ -168,7 +168,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 	public function isDefault(){
 		return $this->default;
 	}
-	
+
 	/**
 	 * 
 	 * @param boolean $default
@@ -176,7 +176,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 	public function setDefault($default){
 		$this->default = $default;
 	}
-	
+
 	/**
 	 * 
 	 * @return boolean
