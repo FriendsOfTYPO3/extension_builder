@@ -17,7 +17,7 @@ CREATE TABLE {domainObject.databaseTableName} (
 	t3ver_oid int(11) DEFAULT '0' NOT NULL,
 	t3ver_id int(11) DEFAULT '0' NOT NULL,
 	t3ver_wsid int(11) DEFAULT '0' NOT NULL,
-	t3ver_label varchar(30) DEFAULT '' NOT NULL,
+	t3ver_label varchar(255) DEFAULT '' NOT NULL,
 	t3ver_state tinyint(4) DEFAULT '0' NOT NULL,
 	t3ver_stage int(11) DEFAULT '0' NOT NULL,
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
@@ -41,21 +41,14 @@ CREATE TABLE {domainObject.databaseTableName} (
 <f:if condition="{k:isOfType(object: property, type: 'DomainObject_Relation_AnyToManyRelation')}">
 <f:if condition="{property.useMMTable}">
 CREATE TABLE {property.relationTableName} (
-	uid int(10) NOT NULL auto_increment,
-	pid int(11) DEFAULT '0' NOT NULL,
 
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
-	tablenames varchar(255) DEFAULT '' NOT NULL,
 	sorting int(11) unsigned DEFAULT '0' NOT NULL,
 	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
 
-	tstamp int(10) unsigned DEFAULT '0' NOT NULL,
-	crdate int(10) unsigned DEFAULT '0' NOT NULL,
-	hidden tinyint(3) unsigned DEFAULT '0' NOT NULL,
-
-	PRIMARY KEY (uid),
-	KEY parent (pid)
+    KEY uid_local (uid_local),
+    KEY uid_foreign (uid_foreign)
 );
 </f:if>
 </f:if>

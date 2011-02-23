@@ -5,10 +5,10 @@ This template displays a NEW form for the current domain object.
 
 If you modify this template, do not forget to change the overwrite settings 
 in /Configuration/Kickstarter/settings.yaml:
-	Resources:
-		Private: 
-			Templates:
-				Create.html:		keep
+  Resources:
+    Private: 
+      Templates:
+        New.html: keep
 
 Otherwise your changes will be overwritten the next time you save the extension in the kickstarter
 

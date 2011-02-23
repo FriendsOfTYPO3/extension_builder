@@ -312,7 +312,7 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 		
 		$this->classObject->setFileName($currentDomainObject->getName().'Controller.php');
 		$this->cleanUp( Tx_ExtbaseKickstarter_Service_CodeGenerator::getFolderForClassFile($extensionDir ,'Controller'),$oldDomainObject->getName().'Controller.php');
-		t3lib_div::devlog('Removed existing controller class:'.$fileName,'extbase_kickstarter',0,$this->classObject->getAnnotations());
+		t3lib_div::devlog('Removed existing controller class:'.$oldDomainObject->getName().'Controller.php','extbase_kickstarter',0);
 	}
 	
 	/**
