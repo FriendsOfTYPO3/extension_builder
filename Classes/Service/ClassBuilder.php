@@ -183,7 +183,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 			
 			$this->setPropertyRelatedMethods($domainProperty);
 		}
-		t3lib_div::devlog('Methods before sorting','extbase_kickstarter',0,array_keys($this->classObject->getMethods()));
+		//t3lib_div::devlog('Methods before sorting','extbase_kickstarter',0,array_keys($this->classObject->getMethods()));
 		//$this->sortMethods($domainObject);
 		return $this->classObject;
 	}

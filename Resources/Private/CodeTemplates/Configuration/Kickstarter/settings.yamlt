@@ -38,7 +38,6 @@
 ############  extension settings  ##############
 
 emConf:
-
   dependencies: cms,extbase,fluid
 	
 overwriteSettings:
@@ -47,13 +46,16 @@ overwriteSettings:
     Domain:
       Model: merge
       Repository: merge
-    
+
+  Configuration:
+    #TCA: merge
+    #Typoscript: keep
+
   Resources:
     Private: 
       Language:
-#        locallang.xml: merge
-        
-#      Templates: keep
+        #locallang.xml: merge
+      #Templates: keep
   
   ext_icon.gif: keep
 
