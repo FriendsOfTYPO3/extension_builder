@@ -1,3 +1,4 @@
+<f:if condition="{extension.plugins}">
 plugin.{extension.shorthandForTypoScript} {
 	view {
 		templateRootPath = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.view.templateRootPath<![CDATA[}]]>
@@ -28,3 +29,18 @@ plugin.{extension.shorthandForTypoScript}._CSS_DEFAULT_STYLE (
 		vertical-align:top;
 	}
 )
+</f:if>
+
+<f:if condition="{extension.backendModules}">
+ # Module configuration
+module.{extension.shorthandForTypoScript} {
+	persistence {
+		storagePid = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.persistence.storagePid<![CDATA[}]]>
+	}
+	view {
+		templateRootPath = <![CDATA[{$]]>module.{extension.shorthandForTypoScript}.view.templateRootPath<![CDATA[}]]>
+		partialRootPath = <![CDATA[{$]]>module.{extension.shorthandForTypoScript}.view.partialRootPath<![CDATA[}]]>
+		layoutRootPath = <![CDATA[{$]]>module.{extension.shorthandForTypoScript}.view.layoutRootPath<![CDATA[}]]>
+	}
+}
+</f:if>

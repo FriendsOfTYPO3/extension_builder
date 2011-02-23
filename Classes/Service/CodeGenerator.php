@@ -318,52 +318,15 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 				return 'Could not generate action controller, error: ' . $e->getMessage();
 			}
 			
-			try {
-				// Generate Partial directory
-				t3lib_div::mkdir_deep($this->extensionDirectory, 'Resources/Private/Partials');
-				$partialDirectory = $this->extensionDirectory . 'Resources/Private/Partials/';
-				$this->writeFile($partialDirectory . 'formErrors.html',$this->generateFormErrorsPartial());
-				// Generate Layouts directory
-				t3lib_div::mkdir_deep($this->extensionDirectory, 'Resources/Private/Layouts');
-				$layoutsDirectory = $this->extensionDirectory . 'Resources/Private/Layouts/';
-				$this->writeFile($layoutsDirectory . 'Default.html', $this->generateLayout());
-				
-			} catch (Exception $e) {
-				return 'Could not generate private template folders, error: ' . $e->getMessage();
-			}
-
 			// Generate Domain Templates
 			try {
-				$actionsUsingFormFieldsPartial = array('edit','new');
-				$actionsUsingPropertiesPartial = array('show');
-				foreach ($this->extension->getDomainObjects() as $domainObject) {
-					// Do not generate anyting if $domainObject is not an Entity or has no actions defined
-					if (!$domainObject->getEntity() || (count($domainObject->getActions()) == 0)) continue;
-
-					t3lib_div::mkdir_deep($privateResourcesDirectory, 'Templates/' . $domainObject->getName());
-					$domainTemplateDirectory = $privateResourcesDirectory . 'Templates/' . $domainObject->getName() . '/';
-					foreach($domainObject->getActions() as $action) {
-						if ($action->getNeedsTemplate() && file_exists(t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/Resources/Private/Templates/' . $action->getName() . '.htmlt')) {
-							$fileContents = $this->generateDomainTemplate($domainObject, $action);
-							$this->writeFile($domainTemplateDirectory . ucfirst($action->getName()) . '.html', $fileContents);
-						}
-							// generate partials for formfields 
-						if(in_array($action->getName(),$actionsUsingFormFieldsPartial)){
-							$partialDirectory =  $this->extensionDirectory . 'Resources/Private/Partials/';
-							t3lib_div::mkdir_deep($partialDirectory, $domainObject->getName());
-							$formfieldsPartial = $partialDirectory.$domainObject->getName().'/formFields.html';
-							$fileContents = $this->generateDomainFormFieldsPartial($domainObject);
-							$this->writeFile($formfieldsPartial, $fileContents);
-						}
-							// generate partials for properties 
-						if(in_array($action->getName(),$actionsUsingPropertiesPartial)){
-							$partialDirectory =  $this->extensionDirectory . 'Resources/Private/Partials/';
-							t3lib_div::mkdir_deep($partialDirectory, $domainObject->getName());
-							$propertiesPartial = $partialDirectory.$domainObject->getName().'/properties.html';
-							$fileContents = $this->generateDomainPropertiesPartial($domainObject);
-							$this->writeFile($propertiesPartial, $fileContents);
-						}
-					}
+				$privateResourcesDirectory = $this->extensionDirectory . 'Resources/Private/';
+				t3lib_div::mkdir_deep($this->extensionDirectory,'Resources/Private');
+				$this->generateTemplateFiles($privateResourcesDirectory);
+				if($this->extension->getBackendModules()){
+					t3lib_div::mkdir_deep($this->extensionDirectory,'Resources/Private/Backend');
+					$privateResourcesDirectory = $this->extensionDirectory . 'Resources/Private/Backend/';
+					$this->generateTemplateFiles($privateResourcesDirectory);
 				}
 			} catch (Exception $e) {
 				return 'Could not generate domain templates, error: ' . $e->getMessage();
@@ -375,6 +338,48 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 			t3lib_div::devlog('No domainObjects in this extension','kickstarter',3,(array)$this->extension);
 		}
 		return 'success';
+	}
+	
+	protected function generateTemplateFiles($privateResourcesDirectory){
+		// Generate Layouts directory
+		t3lib_div::mkdir_deep($privateResourcesDirectory, 'Layouts');
+		$layoutsDirectory = $privateResourcesDirectory . 'Layouts/';
+		$this->writeFile($layoutsDirectory . 'Default.html', $this->generateLayout());
+		
+		$actionsUsingFormFieldsPartial = array('edit','new');
+		$actionsUsingPropertiesPartial = array('show');
+		foreach ($this->extension->getDomainObjects() as $domainObject) {
+			// Do not generate anyting if $domainObject is not an Entity or has no actions defined
+			if (!$domainObject->getEntity() || (count($domainObject->getActions()) == 0)) continue;
+
+			t3lib_div::mkdir_deep($privateResourcesDirectory, 'Templates/' . $domainObject->getName());
+			$domainTemplateDirectory = $privateResourcesDirectory . 'Templates/' . $domainObject->getName() . '/';
+			foreach($domainObject->getActions() as $action) {
+				if ($action->getNeedsTemplate() && file_exists(t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/Resources/Private/Templates/' . $action->getName() . '.htmlt')) {
+					$fileContents = $this->generateDomainTemplate($domainObject, $action);
+					$this->writeFile($domainTemplateDirectory . ucfirst($action->getName()) . '.html', $fileContents);
+				}
+					// generate partials for formfields 
+				if(in_array($action->getName(),$actionsUsingFormFieldsPartial)){
+					t3lib_div::mkdir_deep($privateResourcesDirectory, 'Partials');
+					$partialDirectory =  $privateResourcesDirectory . 'Partials/';
+					t3lib_div::mkdir_deep($partialDirectory, $domainObject->getName());
+					$formfieldsPartial = $partialDirectory.$domainObject->getName().'/formFields.html';
+					$fileContents = $this->generateDomainFormFieldsPartial($domainObject);
+					$this->writeFile($formfieldsPartial, $fileContents);
+					$this->writeFile($partialDirectory . 'formErrors.html',$this->generateFormErrorsPartial());
+				}
+					// generate partials for properties 
+				if(in_array($action->getName(),$actionsUsingPropertiesPartial)){
+					t3lib_div::mkdir_deep($privateResourcesDirectory, 'Partials');
+					$partialDirectory =  $privateResourcesDirectory . 'Partials/';
+					t3lib_div::mkdir_deep($partialDirectory, $domainObject->getName());
+					$propertiesPartial = $partialDirectory.$domainObject->getName().'/properties.html';
+					$fileContents = $this->generateDomainPropertiesPartial($domainObject);
+					$this->writeFile($propertiesPartial, $fileContents);
+				}
+			}
+		}
 	}
 
 	/**
