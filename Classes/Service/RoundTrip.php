@@ -256,7 +256,6 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 					}
 					// we don't have to add new ones, this will be done automatically by the class builder
 				}
-				
 				return $this->classObject;
 			}
 			else {
@@ -287,6 +286,7 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 	 * @return void
 	 */
 	protected function mapOldControllerToCurrentClassObject(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $oldDomainObject,Tx_ExtbaseKickstarter_Domain_Model_DomainObject $currentDomainObject){
+		$extensionDir = $this->previousExtensionDirectory;
 		$newClassName = $currentDomainObject->getControllerName();
 		$this->classObject->setName($newClassName);
 		if($oldDomainObject->isAggregateRoot()){
@@ -312,6 +312,7 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 		
 		$this->classObject->setFileName($currentDomainObject->getName().'Controller.php');
 		$this->cleanUp( Tx_ExtbaseKickstarter_Service_CodeGenerator::getFolderForClassFile($extensionDir ,'Controller'),$oldDomainObject->getName().'Controller.php');
+		t3lib_div::devlog('Removed existing controller class:'.$fileName,'extbase_kickstarter',0,$this->classObject->getAnnotations());
 	}
 	
 	/**
