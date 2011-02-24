@@ -29,7 +29,8 @@ CREATE TABLE {domainObject.databaseTableName} (
 	l10n_diffsource mediumblob NOT NULL,
 
 	PRIMARY KEY (uid),
-	KEY parent (pid)
+	KEY parent (pid),
+	KEY t3ver_oid (t3ver_oid,t3ver_wsid)
 );
 </f:for>
 </k:removeNewlines>
@@ -47,8 +48,8 @@ CREATE TABLE {property.relationTableName} (
 	sorting int(11) unsigned DEFAULT '0' NOT NULL,
 	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
 
-    KEY uid_local (uid_local),
-    KEY uid_foreign (uid_foreign)
+	KEY uid_local (uid_local),
+	KEY uid_foreign (uid_foreign)
 );
 </f:if>
 </f:if>
