@@ -46,6 +46,11 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_Abstract
 	protected $inlineEditing = FALSE;
 
 	/**
+	 * If this flag is set to TRUE the relation will be lazy loading. Default is FALSE
+	 */
+	protected $lazyLoading = FALSE;
+
+	/**
 	 *
 	 * @return Tx_ExtbaseKickstarter_Domain_Model_DomainObject The foreign class
 	 */
@@ -78,6 +83,25 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_Abstract
 	 **/
 	public function getInlineEditing() {
 		return (bool) $this->inlineEditing;
+	}
+
+	/**
+	 * Sets the lazyLoading flag
+	 *
+	 * @param  $lazyLoading
+	 * @return void
+	 */
+	public function setLazyLoading($lazyLoading) {
+		$this->lazyLoading = $lazyLoading;
+	}
+
+	/**
+	 * Gets the lazyLoading flag
+	 *
+	 * @return bool
+	 */
+	public function getLazyLoading() {
+		return $this->lazyLoading;
 	}
 
 	public function getSqlDefinition() {

@@ -83,6 +83,8 @@
 			<label index="descr_relationName">The name should be lowercase and unique in this model</label>
 			<label index="extensionProperties">Extension properties</label>
 			<label index="tab_label">Tab label</label>
+			<label index="lazyLoading">Lazy loading</label>
+			<label index="descr_lazyLoading">Make this relation lazy loading</label>
 		</languageKey>
 	</data>
 </T3locallang>

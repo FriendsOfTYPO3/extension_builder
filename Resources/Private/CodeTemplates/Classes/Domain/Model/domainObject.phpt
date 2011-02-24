@@ -16,7 +16,8 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	 * {property.description}
 	 *
 	 * @var {property.typeForComment} ${property.name}<f:if condition="{property.validateAnnotation}">
-	 * {property.validateAnnotation}</f:if>
+	 * {property.validateAnnotation}</f:if><f:if condition="{property.lazyLoading}">
+	 * @lazy</f:if>
 	 */
 	protected ${property.name}<f:if condition="{property.default}"> = {property.value}</f:if>;
 </f:for><f:if condition="{domainObject.AnyToManyRelationProperties}">
