@@ -45,6 +45,15 @@ var advancedFields = {
 							value: true,
 							description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.descr_editInline
 						}
+					},
+					{
+						type: 'boolean',
+						inputParams: {
+							label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.lazyLoading,
+							name: 'lazyLoading',
+							description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.descr_lazyLoading,
+							value: false
+						}
 					}
 			]
 		}

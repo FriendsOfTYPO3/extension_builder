@@ -164,6 +164,7 @@ class Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder implements t3lib_singlet
 				$relation = new $relationSchemaClassName;
 				$relation->setName($relationJsonConfiguration['relationName']);
 				$relation->setInlineEditing((bool)$relationJsonConfiguration['inlineEditing']);
+				$relation->setLazyLoading((bool)$relationJsonConfiguration['lazyLoading']);
 				$relation->setDescription($relationJsonConfiguration['relationDescription']);
 				$relation->setUniqueIdentifier($relationJsonConfiguration['uid']);
 				$relation->setForeignClass($extension->getDomainObjectByName($foreignClassName));
