@@ -13,6 +13,8 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 
 </f:for>
 
+<f:if condition="{extension.BackendModules}">
+if (TYPO3_MODE === 'BE') {
 <f:for each="{extension.BackendModules}" as="backendModule">
 	/**
 	* Registers a Backend Module
@@ -32,6 +34,8 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 		)
 	);
 </f:for>
+}
+</f:if>
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '<k:quoteString>{extension.name}</k:quoteString>');
 
