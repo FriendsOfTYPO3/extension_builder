@@ -94,7 +94,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 												TYPO3.settings.extbaseKickstarter._LOCAL_LANG.list,
 												TYPO3.settings.extbaseKickstarter._LOCAL_LANG.create_new,
 												TYPO3.settings.extbaseKickstarter._LOCAL_LANG.edit_update,
-												TYPO3.settings.extbaseKickstarter._LOCAL_LANG.delete
+												TYPO3.settings.extbaseKickstarter._LOCAL_LANG['delete']
 											]
 										}
 									}

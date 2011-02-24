@@ -21,7 +21,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 	{
 		inputParams: {
 			name: "originalExtensionKey", 
-			className:'hiddenField',
+			className:'hiddenField'
 		}
 	},
 	{
@@ -100,7 +100,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.company,
 								required: false
 							}
-						},
+						}
 					]
 				}
 			}
@@ -176,7 +176,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 						{
 							inputParams: {
 								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.short_description,
-								name: "description",
+								name: "description"
 							}
 						},
 						{
