@@ -145,12 +145,23 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		}
 		
 		// Generate ext_emconf.php, ext_tables.* and TCA definition
-		$extensionFiles = array('ext_emconf.php','ext_tables.php','ext_tables.sql','ext_localconf.php');
+		$extensionFiles = array('ext_emconf.php','ext_tables.php','ext_tables.sql');
 		foreach($extensionFiles as  $extensionFile){
 			try {
 				$fileContents = $this->renderTemplate( Tx_Extbase_Utility_Extension::convertUnderscoredToLowerCamelCase($extensionFile).'t', array('extension' => $this->extension));
 				$this->writeFile($this->extensionDirectory . $extensionFile, $fileContents);
 				t3lib_div::devlog('Generated '.$extensionFile,'kickstarter',0,array('Content'=>$fileContents));
+			} 
+			catch (Exception $e) {
+				return 'Could not write '.$extensionFile.', error: ' . $e->getMessage();
+			}
+		}
+		
+		if($this->extension->getPlugins()){
+			try {
+				$fileContents = $this->renderTemplate( Tx_Extbase_Utility_Extension::convertUnderscoredToLowerCamelCase('ext_localconf.phpt'), array('extension' => $this->extension));
+				$this->writeFile($this->extensionDirectory . 'ext_localconf.php', $fileContents);
+				t3lib_div::devlog('Generated ext_localconf.php','kickstarter',0,array('Content'=>$fileContents));
 			} 
 			catch (Exception $e) {
 				return 'Could not write '.$extensionFile.', error: ' . $e->getMessage();
