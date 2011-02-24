@@ -47,6 +47,13 @@ class Tx_ExtbaseKickstarter_Domain_Model_BackendModule {
 	protected $description = '';
 
 	/**
+	 * The tab label
+	 *
+	 * @var string
+	 */
+	protected $tabLabel = '';
+
+	/**
 	 * The mainModule of the module (default is 'web')
 	 *
 	 * @var string
@@ -97,6 +104,25 @@ class Tx_ExtbaseKickstarter_Domain_Model_BackendModule {
 	 */
 	public function setDescription ($description) {
 		$this->description =$description;
+	}
+
+	/**
+	 * Gets the tab label
+	 *
+	 * @return string
+	 */
+	public function getTabLabel() {
+		return $this->tabLabel;
+	}
+
+	/**
+	 * Sets the tab label
+	 *
+	 * @param string $tablLabel
+	 * @return void
+	 */
+	public function setTabLabel($tabLabel) {
+		$this->tabLabel = $tabLabel;
 	}
 
 	/**

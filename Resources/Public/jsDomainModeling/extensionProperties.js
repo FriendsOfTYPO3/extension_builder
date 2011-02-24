@@ -180,6 +180,12 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							}
 						},
 						{
+							inputParams: {
+								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.tab_label,
+								name: "tabLabel"
+							}
+						},
+						{
 							type: 'select',
 							inputParams: {
 								label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.mainModule,
