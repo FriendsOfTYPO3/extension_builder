@@ -60,6 +60,36 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			'config'	=> array(
 				'type'	=> 'check',
 			)
+		),
+		'starttime' => Array (
+			'exclude' => 1,
+			'l10n_mode' => 'mergeIfNotBlank',
+			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.starttime',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '10',
+				'max' => '20',
+				'eval' => 'datetime',
+				'checkbox' => '0',
+				'default' => '0'
+			)
+		),
+		'endtime' => Array (
+			'exclude' => 1,
+			'l10n_mode' => 'mergeIfNotBlank',
+			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.endtime',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '8',
+				'max' => '20',
+				'eval' => 'datetime',
+				'checkbox' => '0',
+				'default' => '0',
+				'range' => Array (
+					'upper' => mktime(0,0,0,12,31,date('Y')+10),
+					'lower' => mktime(0,0,0,date('m')-1,date('d'),date('Y'))
+				)
+			)
 		),<f:for each="{domainObject.properties}" as="property">
 		'{property.fieldName}' => array(
 			'exclude'	=> <f:if condition="{property.excludeField}"><f:then>1</f:then><f:else>0</f:else></f:if>,
