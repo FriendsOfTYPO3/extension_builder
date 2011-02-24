@@ -82,6 +82,7 @@
 			<label index="relationName">Name</label>
 			<label index="descr_relationName">The name should be lowercase and unique in this model</label>
 			<label index="extensionProperties">Extension properties</label>
+			<label index="tab_label">Tab label</label>
 		</languageKey>
 	</data>
 </T3locallang>
