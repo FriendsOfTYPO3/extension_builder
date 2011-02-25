@@ -47,7 +47,40 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action {
 	 *
 	 * @var boolean
 	 */
-	protected $needsTemplate = true;
+	protected $needsTemplate = false;
+
+	/**
+	 * Is a form required in the template for this action?
+	 *
+	 * @var boolean
+	 */
+	protected $needsForm = false;
+
+	/**
+	 * Is a property partial required in the template for this action?
+	 *
+	 * @var boolean
+	 */
+	protected $needsPropertyPartial = false;
+
+	/**
+	 * these actions do not need a template since they are never rendered
+	 * @var array
+	 */
+	protected $actionNamesWithNoRendering = array(
+		'create',
+		'update',
+		'delete'
+	);
+
+	/**
+	 * these actions need a form 
+	 * @var array
+	 */
+	protected $actionNamesWithForm = array(
+		'new',
+		'edit'
+	);
 
 	/**
 	 *
@@ -87,13 +120,43 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action {
 	 * @return boolean
 	 */
 	public function getNeedsTemplate(){
-		$actionsWithoutTemplate = array('create','update','delete');
-		if(in_array($this->getName(),$actionsWithoutTemplate)){
-			return false;
+		if(in_array($this->getName(),$this->actionNamesWithNoRendering)){
+			$this->needsTemplate = false;
 		}
 		else {
-			return true;
+			$this->needsTemplate =  true;
 		}
+		return $this->needsTemplate;
+	}
+
+	/**
+	 * Is a form required to render the actions template?
+	 * 
+	 * @return boolean
+	 */
+	public function getNeedsForm(){
+		if(in_array($this->getName(),$this->actionNamesWithForm)){
+			$this->needsForm = true;
+		}
+		else {
+			$this->needsForm =  false;
+		}
+		return $this->needsForm;
+	}
+
+	/**
+	 * Is a property partial needed to render the actions template?
+	 * 
+	 * @return boolean
+	 */
+	public function getNeedsPropertyPartial(){
+		if($this->getName() == 'show'){
+			$this->needsPropertyPartial = true;
+		}
+		else {
+			$this->needsPropertyPartial =  false;
+		}
+		return $this->needsPropertyPartial;
 	}
 }
 
