@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['{domainObject.databaseTableName}'] = array(
 	'ctrl' => $TCA['{domainObject.databaseTableName}']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList'	=> '{domainObject.commaSeparatedFieldList}',
+		'showRecordFieldList'	=> 'sys_language_uid, l10n_parent, l10n_diffsource, hidden<f:for each="{domainObject.properties}" as="property">, {property.fieldName}</f:for>',
 	),
 	'types' => array(
-		'1' => array('showitem'	=> '{domainObject.commaSeparatedFieldList}'),
+		'1' => array('showitem'	=> 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1<f:for each="{domainObject.properties}" as="property">, {property.fieldName}</f:for>,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem'	=> ''),
@@ -26,7 +26,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 					array('LLL:EXT:lang/locallang_general.php:LGL.allLanguages', -1),
 					array('LLL:EXT:lang/locallang_general.php:LGL.default_value', 0)
 				),
-			)
+			),
 		),
 		'l18n_parent' => array(
 			'displayCond'	=> 'FIELD:sys_language_uid:>:0',
@@ -39,12 +39,12 @@ $TCA['{domainObject.databaseTableName}'] = array(
 				),
 				'foreign_table' => '{domainObject.databaseTableName}',
 				'foreign_table_where' => 'AND {domainObject.databaseTableName}.uid=###REC_FIELD_l18n_parent### AND {domainObject.databaseTableName}.sys_language_uid IN (-1,0)',
-			)
+			),
 		),
 		'l18n_diffsource' => array(
 			'config'		=>array(
 				'type'		=>'passthrough',
-			)
+			),
 		),
 		't3ver_label' => array(
 			'displayCond'	=> 'FIELD:t3ver_label:REQ:true',
@@ -52,44 +52,44 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			'config'		=> array(
 				'type'		=>'none',
 				'cols'		=> 27,
-			)
+			),
 		),
 		'hidden' => array(
 			'exclude'	=> 1,
 			'label'		=> 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
 			'config'	=> array(
 				'type'	=> 'check',
-			)
+			),
 		),
-		'starttime' => Array (
+		'starttime' => array(
 			'exclude' => 1,
 			'l10n_mode' => 'mergeIfNotBlank',
 			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.starttime',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '10',
 				'max' => '20',
 				'eval' => 'datetime',
 				'checkbox' => '0',
-				'default' => '0'
-			)
+				'default' => '0',
+			),
 		),
-		'endtime' => Array (
+		'endtime' => array(
 			'exclude' => 1,
 			'l10n_mode' => 'mergeIfNotBlank',
 			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.endtime',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '8',
 				'max' => '20',
 				'eval' => 'datetime',
 				'checkbox' => '0',
 				'default' => '0',
-				'range' => Array (
+				'range' => array(
 					'upper' => mktime(0,0,0,12,31,date('Y')+10),
 					'lower' => mktime(0,0,0,date('m')-1,date('d'),date('Y'))
-				)
-			)
+				),
+			),
 		),<f:for each="{domainObject.properties}" as="property">
 		'{property.fieldName}' => array(
 			'exclude'	=> <f:if condition="{property.excludeField}"><f:then>1</f:then><f:else>0</f:else></f:if>,

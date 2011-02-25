@@ -1,6 +1,7 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}<?php
-if (!defined ('TYPO3_MODE')) die ('Access denied.');
-
+if (!defined ('TYPO3_MODE')){
+	die ('Access denied.');
+}
 <f:for each="{extension.Plugins}" as="plugin">
 Tx_Extbase_Utility_Extension::registerPlugin(
 	$_EXTKEY,
@@ -39,17 +40,16 @@ if (TYPO3_MODE === 'BE') {
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '<k:quoteString>{extension.name}</k:quoteString>');
 
-
-
 <f:for each="{extension.domainObjects}" as="domainObject">
 t3lib_extMgm::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xml');
 t3lib_extMgm::allowTableOnStandardPages('{domainObject.databaseTableName}');
-$TCA['{domainObject.databaseTableName}'] = array (
-	'ctrl' => array (
-		'title'             => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xml:{domainObject.databaseTableName}',
+$TCA['{domainObject.databaseTableName}'] = array(
+	'ctrl' => array(
+		'title'				=> 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xml:{domainObject.databaseTableName}',
 		'label' 			=> '{domainObject.listModuleValueLabel}',
 		'tstamp' 			=> 'tstamp',
 		'crdate' 			=> 'crdate',
+		'dividers2tabs' => true,
 		'versioningWS' 		=> 2,
 		'versioning_followPages'	=> TRUE,
 		'origUid' 			=> 't3_origuid',
@@ -58,12 +58,13 @@ $TCA['{domainObject.databaseTableName}'] = array (
 		'transOrigDiffSourceField' 	=> 'l10n_diffsource',
 		'delete' 			=> 'deleted',
 		'enablecolumns' 	=> array(
-			'disabled' => 'hidden'
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'endtime' => 'endtime',
 			),
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/{domainObject.name}.php',
 		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif'
-	)
+	),
 );
 </f:for>
-
 ?>
