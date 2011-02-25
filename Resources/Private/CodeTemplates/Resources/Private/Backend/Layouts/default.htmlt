@@ -1,0 +1,41 @@
+{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+<k:openingTag>f:be.container</k:openingTag>
+	<div class="typo3-fullDoc">
+		<div id="typo3-docheader">
+			<div id="typo3-docheader-row1">
+				<div class="buttonsleft">
+					
+				</div>
+				<div class="buttonsright">
+					<k:openingTag>f:be.buttons.shortcut /</k:openingTag>
+				</div>
+			</div>
+			<div id="typo3-docheader-row2">
+				<div class="docheader-row2-left">
+					<k:openingTag>f:be.buttons.csh /</k:openingTag>
+					<k:openingTag>f:be.menus.actionMenu</k:openingTag>
+						<k:openingTag>f:be.menus.actionMenuItem label="Overview" controller="{domainObject.name}" action="list" /</k:openingTag>
+						<k:removeMultipleNewlines>
+						<f:for each="{extension.domainObjects}" as="domainObject">
+							<f:if condition="{domainObject.aggregateRoot}">
+								<k:openingTag>f:be.menus.actionMenuItem label="Create new {domainObject.name}" action="new" controller="{domainObject.name}" /</k:openingTag>
+							</f:if>
+						</f:for>
+						</k:removeMultipleNewlines>
+					<k:openingTag>/f:be.menus.actionMenu</k:openingTag>
+				</div>
+				<div class="docheader-row2-right">
+					<k:openingTag>f:be.pagePath /</k:openingTag>
+					<k:openingTag>f:be.pageInfo /</k:openingTag>
+				</div>
+			</div>
+
+		</div>
+		<div id="typo3-docbody">
+			<div id="typo3-inner-docbody">
+				<k:openingTag>f:renderFlashMessages renderMode="div" /</k:openingTag>
+				<k:openingTag>f:render section="content" /</k:openingTag>
+			</div>
+		</div>
+	</div>
+<k:openingTag>/f:be.container</k:openingTag>

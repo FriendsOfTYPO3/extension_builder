@@ -1,0 +1,28 @@
+{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+<k:openingTag>f:layout name="default" /</k:openingTag>
+
+This template displays a NEW form for the current domain object.
+
+If you modify this template, do not forget to change the overwrite settings 
+in /Configuration/Kickstarter/settings.yaml:
+  Resources:
+    Private: 
+      Templates:
+        Create.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the kickstarter
+
+<k:openingTag>f:section name="content"</k:openingTag>
+<h1>New {domainObject.name}</h1>
+
+<k:openingTag>f:flashMessages /</k:openingTag>
+
+<k:openingTag>f:render partial="FormErrors" /</k:openingTag>
+
+<k:removeMultipleNewlines>
+<k:openingTag>f:form method="post" action="create" name="new{domainObject.name}" object="<k:curlyBrackets>new{domainObject.name}</k:curlyBrackets>"</k:openingTag>
+<k:openingTag>f:render partial="{domainObject.name}/FormFields" arguments="<k:curlyBrackets>domainObject:domainObject</k:curlyBrackets>" /</k:openingTag>
+</k:removeMultipleNewlines>
+	<k:openingTag>f:form.submit value="Create new" /</k:openingTag>
+<![CDATA[</f:form>]]>
+<![CDATA[</f:section>]]>

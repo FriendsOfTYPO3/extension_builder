@@ -1,3 +1,4 @@
+<f:if condition="{extension.plugins}">
 plugin.{extension.shorthandForTypoScript} {
 	view {
 		# cat=plugin.{extension.shorthandForTypoScript}/file; type=string; label=Path to template root (FE)
@@ -12,3 +13,21 @@ plugin.{extension.shorthandForTypoScript} {
 		storagePid = 
 	}
 }
+</f:if>
+<f:if condition="{extension.backendModules}">
+module.{extension.shorthandForTypoScript} {
+	view {
+		# cat=plugin.{extension.shorthandForTypoScript}/file; type=string; label=Path to template root (BE)
+		templateRootPath = EXT:{extension.extensionKey}/Resources/Private/Backend/Templates/
+		# cat=plugin.{extension.shorthandForTypoScript}/file; type=string; label=Path to template partials (BE)
+		partialRootPath = EXT:{extension.extensionKey}/Resources/Private/Backend/Partials/
+		# cat=plugin.{extension.shorthandForTypoScript}/file; type=string; label=Path to template layouts (BE)
+		layoutRootPath = EXT:{extension.extensionKey}/Resources/Private/Backend/Layouts/
+	}
+	persistence {
+		# cat=plugin.{extension.shorthandForTypoScript}//a; type=int+; label=Default storage PID
+		storagePid = 
+	}
+}
+
+</f:if>
