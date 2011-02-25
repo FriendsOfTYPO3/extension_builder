@@ -331,13 +331,15 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 			
 			// Generate Domain Templates
 			try {
-				$privateResourcesDirectory = $this->extensionDirectory . 'Resources/Private/';
-				t3lib_div::mkdir_deep($this->extensionDirectory,'Resources/Private');
-				$this->generateTemplateFiles($privateResourcesDirectory);
+				if($this->extension->getPlugins()){
+					$privateResourcesDirectory = $this->extensionDirectory . 'Resources/Private/';
+					t3lib_div::mkdir_deep($this->extensionDirectory,'Resources/Private');
+					$this->generateTemplateFiles($privateResourcesDirectory);
+				}
 				if($this->extension->getBackendModules()){
 					t3lib_div::mkdir_deep($this->extensionDirectory,'Resources/Private/Backend');
 					$privateResourcesDirectory = $this->extensionDirectory . 'Resources/Private/Backend/';
-					$this->generateTemplateFiles($privateResourcesDirectory);
+					$this->generateTemplateFiles($privateResourcesDirectory,'Backend/');
 				}
 			} catch (Exception $e) {
 				return 'Could not generate domain templates, error: ' . $e->getMessage();
@@ -351,11 +353,12 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		return 'success';
 	}
 	
-	protected function generateTemplateFiles($privateResourcesDirectory){
+	protected function generateTemplateFiles($privateResourcesDirectory,$templateSubFolder = ''){
+		$templateRootFolder = 'Resources/Private/'.$templateSubFolder;
 		// Generate Layouts directory
 		t3lib_div::mkdir_deep($privateResourcesDirectory, 'Layouts');
 		$layoutsDirectory = $privateResourcesDirectory . 'Layouts/';
-		$this->writeFile($layoutsDirectory . 'Default.html', $this->generateLayout());
+		$this->writeFile($layoutsDirectory . 'Default.html', $this->generateLayout($templateRootFolder.'Layouts/'));
 		
 		$actionsUsingFormFieldsPartial = array('edit','new');
 		$actionsUsingPropertiesPartial = array('show');
@@ -367,7 +370,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 			$domainTemplateDirectory = $privateResourcesDirectory . 'Templates/' . $domainObject->getName() . '/';
 			foreach($domainObject->getActions() as $action) {
 				if ($action->getNeedsTemplate() && file_exists(t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/Resources/Private/Templates/' . $action->getName() . '.htmlt')) {
-					$fileContents = $this->generateDomainTemplate($domainObject, $action);
+					$fileContents = $this->generateDomainTemplate($templateRootFolder.'Templates/',$domainObject, $action);
 					$this->writeFile($domainTemplateDirectory . ucfirst($action->getName()) . '.html', $fileContents);
 				}
 					// generate partials for formfields 
@@ -375,18 +378,18 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 					t3lib_div::mkdir_deep($privateResourcesDirectory, 'Partials');
 					$partialDirectory =  $privateResourcesDirectory . 'Partials/';
 					t3lib_div::mkdir_deep($partialDirectory, $domainObject->getName());
-					$formfieldsPartial = $partialDirectory.$domainObject->getName().'/formFields.html';
-					$fileContents = $this->generateDomainFormFieldsPartial($domainObject);
+					$formfieldsPartial = $partialDirectory.$domainObject->getName().'/FormFields.html';
+					$fileContents = $this->generateDomainFormFieldsPartial($templateRootFolder.'Partials/',$domainObject);
 					$this->writeFile($formfieldsPartial, $fileContents);
-					$this->writeFile($partialDirectory . 'formErrors.html',$this->generateFormErrorsPartial());
+					$this->writeFile($partialDirectory . 'FormErrors.html',$this->generateFormErrorsPartial($templateRootFolder.'Partials/'));
 				}
 					// generate partials for properties 
 				if(in_array($action->getName(),$actionsUsingPropertiesPartial)){
 					t3lib_div::mkdir_deep($privateResourcesDirectory, 'Partials');
 					$partialDirectory =  $privateResourcesDirectory . 'Partials/';
 					t3lib_div::mkdir_deep($partialDirectory, $domainObject->getName());
-					$propertiesPartial = $partialDirectory.$domainObject->getName().'/properties.html';
-					$fileContents = $this->generateDomainPropertiesPartial($domainObject);
+					$propertiesPartial = $partialDirectory.$domainObject->getName().'/Properties.html';
+					$fileContents = $this->generateDomainPropertiesPartial($templateRootFolder.'Partials/',$domainObject);
 					$this->writeFile($propertiesPartial, $fileContents);
 				}
 			}
@@ -545,28 +548,29 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	 * Generates the content of an Action template
 	 * For some Actions default templates are provided, other Action templates will just be created emtpy
 	 *
+	 * @param string $templateRootFolder
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action $action
 	 * @return string The generated Template code (might be empty)
 	 */
-	public function generateDomainTemplate(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject, Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action $action) {
-			return $this->renderTemplate('Resources/Private/Templates/'. $action->getName() . '.htmlt', array('domainObject' => $domainObject, 'action' => $action, 'extension' => $this->extension));
+	public function generateDomainTemplate($templateRootFolder, Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject, Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action $action) {
+			return $this->renderTemplate($templateRootFolder. $action->getName() . '.htmlt', array('domainObject' => $domainObject, 'action' => $action, 'extension' => $this->extension));
 	}
 	
-	public function generateDomainFormFieldsPartial(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject){
-		return $this->renderTemplate('Resources/Private/Partials/formFields.htmlt', array('extension' => $this->extension,'domainObject' => $domainObject));
+	public function generateDomainFormFieldsPartial($templateRootFolder, Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject){
+		return $this->renderTemplate($templateRootFolder.'formFields.htmlt', array('extension' => $this->extension,'domainObject' => $domainObject));
 	}
 	
-	public function generateDomainPropertiesPartial(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject){
-		return $this->renderTemplate('Resources/Private/Partials/properties.htmlt', array('extension' => $this->extension,'domainObject' => $domainObject));
+	public function generateDomainPropertiesPartial($templateRootFolder, Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject){
+		return $this->renderTemplate($templateRootFolder.'properties.htmlt', array('extension' => $this->extension,'domainObject' => $domainObject));
 	}
 
-	public function generateFormErrorsPartial() {
-		return file_get_contents(t3lib_extMgm::extPath('extbase_kickstarter') . 'Resources/Private/CodeTemplates/Resources/Private/Partials/formErrors.htmlt');
+	public function generateFormErrorsPartial($templateRootFolder) {
+		return file_get_contents(t3lib_extMgm::extPath('extbase_kickstarter') .$templateRootFolder.'/Partials/formErrors.htmlt');
 	}
 
-	public function generateLayout() {
-		return $this->renderTemplate('Resources/Private/Layouts/default.htmlt', array('extension' => $this->extension));
+	public function generateLayout($templateRootFolder) {
+		return $this->renderTemplate($templateRootFolder.'default.htmlt', array('extension' => $this->extension));
 	}
 
 	

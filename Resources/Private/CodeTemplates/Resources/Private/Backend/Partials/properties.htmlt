@@ -1,0 +1,17 @@
+{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+<table class="{extension.cssClassName}" >
+	<k:removeMultipleNewlines>
+	<f:for each="{domainObject.properties}" as="property">
+		<f:if condition="{property.isDisplayable}">
+	<tr>
+		<td>
+			<k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag>
+		</td>
+		<td>
+			<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets>
+		</td>
+	</tr>
+		</f:if>
+	</f:for>
+	</k:removeMultipleNewlines>
+</table>
