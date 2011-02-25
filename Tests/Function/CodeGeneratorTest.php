@@ -394,6 +394,11 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 
 		$this->extension->addDomainObject($domainObject);
 		$this->extension->addDomainObject($relatedDomainObject);
+		
+		$plugin = new Tx_ExtbaseKickstarter_Domain_Model_Plugin();
+		$plugin->setName('Test');
+		$plugin->setKey('test');
+		$this->extension->addPlugin($plugin);
 
 		$test = $this->codeGenerator->build($this->extension);
 
@@ -411,8 +416,8 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 
 		$this->assertFileExists($extensionDir.'Resources/Private/Language/locallang_db.xml');
 		$this->assertFileExists($extensionDir.'Resources/Private/Language/locallang.xml');
-		$this->assertFileExists($extensionDir.'Resources/Private/Partials/'. $domainObject->getName() .'/properties.html');
-		$this->assertFileExists($extensionDir.'Resources/Private/Partials/'. $domainObject->getName() .'/formFields.html');
+		$this->assertFileExists($extensionDir.'Resources/Private/Partials/'. $domainObject->getName() .'/Properties.html');
+		$this->assertFileExists($extensionDir.'Resources/Private/Partials/'. $domainObject->getName() .'/FormFields.html');
 	}
 
 }
