@@ -45,12 +45,24 @@ YAHOO.extend(WireIt.ModuleProxy,YAHOO.util.DDProxy, {
     * Add the module to the WiringEditor on drop on layer
     * @method onDragDrop
     */
-   onDragDrop: function(e, ddTargets) { 
+   onDragDrop: function(e, ddTargets) {
+
       // The layer is the only target :
       var layerTarget = ddTargets[0];
       var layer = ddTargets[0]._layer;
       var del = this.getDragEl();
       var pos = YAHOO.util.Dom.getXY(del);
+
+	   // Make sure new models are not positioned outside the window
+	   if (pos[1] < 60) {
+		   pos[1] = 60;
+	   }
+
+	   if (pos[0] < this._WiringEditor.layout._sizes.left.w) {
+		   pos[0] = this._WiringEditor.layout._sizes.left.w;
+	   }
+	   // End make sure new models are not positioned outside the window
+
       var layerPos = YAHOO.util.Dom.getXY(layer.el);
       this._WiringEditor.addModule( this._module ,[pos[0]-layerPos[0], pos[1]-layerPos[1]]);
     }

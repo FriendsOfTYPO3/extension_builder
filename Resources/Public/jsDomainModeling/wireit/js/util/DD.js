@@ -19,7 +19,7 @@ WireIt.util.DD = function( terminals, id, sGroup, config) {
     * @type {Array}
     */
    this._WireItTerminals = terminals;
-   
+
    WireIt.util.DD.superclass.constructor.call(this, id, sGroup, config);
 };
 
@@ -30,6 +30,20 @@ YAHOO.extend(WireIt.util.DD, YAHOO.util.DD, {
     * @method onDrag
     */
    onDrag: function(e) {
+	   var leftPanel = Ext.query('.yui-layout-unit-left');
+	   var leftWidth = Ext.get(leftPanel[0]).getWidth() + 10;
+
+		Ext.select('.WireIt-Container').each(function(element) {
+			var el = Ext.get(element);
+			if (el.getX() < leftWidth) {
+				el.setX(leftWidth);
+			}
+
+			if (el.getY() < 65) {
+				el.setY(65);
+			}
+		});
+
       // Make sure terminalList is an array
       var terminalList = YAHOO.lang.isArray(this._WireItTerminals) ? this._WireItTerminals : (this._WireItTerminals.isWireItTerminal ? [this._WireItTerminals] : []);
       // Redraw all the wires
@@ -37,9 +51,11 @@ YAHOO.extend(WireIt.util.DD, YAHOO.util.DD, {
          if(terminalList[i].wires) {
             for(var k = 0 ; k < terminalList[i].wires.length ; k++) {
                terminalList[i].wires[k].redraw();
+
             }
          }
       }
+
    },
 
    /**
