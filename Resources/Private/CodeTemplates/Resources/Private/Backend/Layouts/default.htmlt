@@ -33,7 +33,7 @@
 		</div>
 		<div id="typo3-docbody">
 			<div id="typo3-inner-docbody">
-				<k:openingTag>f:renderFlashMessages renderMode="div" /</k:openingTag>
+				<k:openingTag>f:flashMessages renderMode="div" /</k:openingTag>
 				<k:openingTag>f:render section="content" /</k:openingTag>
 			</div>
 		</div>
