@@ -664,32 +664,13 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 			if($overWriteMode == -1){
 				return; // skip file creation
 			}
-			if(file_exists($targetFile)){
-				if($overWriteMode == 2){
-					// keep the existing file
-					return;
-				}
-				else if($overWriteMode == 1 && strpos($targetFile,'Classes')===false){
-					// merge the files means append everything behind the split token
-					$existingFileContent = file_get_contents($targetFile);
-					$fileParts = explode(Tx_ExtbaseKickstarter_Service_RoundTrip::SPLIT_TOKEN,$existingFileContent);
-					if(count($fileParts) == 2){
-						$customFileContent .= $fileParts[1];
-					}
-					if(strtolower(pathinfo($targetFile, PATHINFO_EXTENSION)) == 'php'){
-						$fileContents = str_replace('?>','',$fileContents);
-						$customFileContent =  str_replace('?>','',$customFileContent);
-						$fileContents .= Tx_ExtbaseKickstarter_Service_RoundTrip::SPLIT_TOKEN;
-						$fileContents .=  $customFileContent . "\n?>";
-					}
-					else if(strtolower(pathinfo($targetFile, PATHINFO_EXTENSION)) == 'xml'){
-						$fileContents = Tx_ExtbaseKickstarter_Service_RoundTrip::mergeLocallangXml($targetFile,$fileContents);
-					}
-					else {
-						$fileContents .= "\n".Tx_ExtbaseKickstarter_Service_RoundTrip::SPLIT_TOKEN;
-						$fileContents .= $customFileContent;
-					}
-				}
+			if($overWriteMode == 1 && strpos($targetFile,'Classes')===false){
+					// classes are merged by the class builder
+				$fileContents = $this->insertSplitToken($targetFile,$fileContents);
+			}
+			else if(file_exists($targetFile) && $overWriteMode == 2){
+				// keep the existing file
+				return;
 			}
 		}
 
@@ -700,6 +681,35 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 		if(!$success){
 			throw new Exception('File ' . $targetFile . 'could not be created!');
 		}
+	}
+	
+	protected function insertSplitToken($targetFile,$fileContents){
+		$customFileContent = '';
+		if(file_exists($targetFile)){
+			// merge the files means append everything behind the split token
+			$existingFileContent = file_get_contents($targetFile);
+			$fileParts = explode(Tx_ExtbaseKickstarter_Service_RoundTrip::SPLIT_TOKEN,$existingFileContent);
+			if(count($fileParts) == 2){
+				$customFileContent = str_replace('?>','',$fileParts[1]);
+			}
+		}
+		if(strtolower(pathinfo($targetFile, PATHINFO_EXTENSION)) == 'php'){
+			$fileContents = str_replace('?>','',$fileContents);
+			$fileContents .= Tx_ExtbaseKickstarter_Service_RoundTrip::SPLIT_TOKEN;
+		}
+		else if(strtolower(pathinfo($targetFile, PATHINFO_EXTENSION)) == 'xml'){
+			$fileContents = Tx_ExtbaseKickstarter_Service_RoundTrip::mergeLocallangXml($targetFile,$fileContents);
+		}
+		else {
+			$fileContents .= "\n".Tx_ExtbaseKickstarter_Service_RoundTrip::SPLIT_TOKEN;
+		}
+
+		$fileContents .= rtrim($customFileContent);
+
+		if(strtolower(pathinfo($targetFile, PATHINFO_EXTENSION)) == 'php'){
+			$fileContents .=  "\n?>";
+		}
+		return $fileContents;
 	}
 	
 	/**
