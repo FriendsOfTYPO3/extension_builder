@@ -475,24 +475,23 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 	private static function validateProperties($domainObject) {
 		$propertyNames = array();
 		foreach($domainObject->getProperties() as $property) {
-			
 				// Check if property name is given
 			if(!$property->getName()) {
 				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('A property of ' . $domainObject->getName() . ' has no name', self::ERROR_PROPERTY_NO_NAME);
 			}
-			
+			$propertyName = $property->getName();
 			/**
 		 	 * Character test
 			 * Allowed characters are: a-z (lowercase), A-Z (uppercase) and 0-9
 			 */
-			if (!preg_match("/^[a-zA-Z0-9]*$/", $property->getName())) {
+			if (!preg_match("/^[a-zA-Z0-9]*$/", $propertyName)) {
 				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(
-					'Illegal property name "' . $property->getName() . '" of ' . $domainObject->getName() . '. Please use lowerCamelCase, no spaces or underscores.',
+					'Illegal property name "' . $propertyName . '" of ' . $domainObject->getName() . '. Please use lowerCamelCase, no spaces or underscores.',
 					self::ERROR_PROPERTY_ILLEGAL_CHARACTER
 				);
 			}
 			
-			$propertyName = $property->getName();
+			
 			$firstChar = $propertyName{0};
 			if(strtoupper($firstChar) == $firstChar) {
 				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(
@@ -501,18 +500,17 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 				);
 			}
 			
-			if(self::isReservedTYPO3Word($property->getName())){
+			if(self::isReservedTYPO3Word($propertyName)){
 				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(
-					'Using a reserved word as property name is not allowed. Please rename property "' . $property->getName() . '" in Model "' . $domainObject->getName() . '".',
+					'Using a reserved word as property name is not allowed. Please rename property "' . $propertyName . '" in Model "' . $domainObject->getName() . '".',
 					self::ERROR_PROPERTY_RESERVED_WORD
 				);
 			}
-			
 				// Check for duplicate property names
-			if(in_array($property->getName(), $propertyNames)) {
+			if(in_array($propertyName, $propertyNames)) {
 				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Property "' . $property->getName() . '" of ' . $domainObject->getName() . ' exists twice.', self::ERROR_PROPERTY_DUPLICATE);
 			}
-			$propertyNames[] = $property->getName();
+			$propertyNames[] = $propertyName;
 		}
 	}
 	

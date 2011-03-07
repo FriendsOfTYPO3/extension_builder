@@ -127,9 +127,10 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 
 			case 'saveWiring':
 				$extensionConfigurationFromJson = json_decode($request['params']['working'], true);
-				$extensionConfigurationFromJson['modules'] = $this->mapAdvancedMode($extensionConfigurationFromJson['modules']);
-				$extensionConfigurationFromJson['modules'] = $this->resetOutboundedPositions($extensionConfigurationFromJson['modules']);
-				
+				$extensionConfigurationFromJson['modules'] = Tx_ExtbaseKickstarter_Utility_ModelImport::mapAdvancedMode($extensionConfigurationFromJson['modules']);
+				$extensionConfigurationFromJson['modules'] = Tx_ExtbaseKickstarter_Utility_ModelImport::resetOutboundedPositions($extensionConfigurationFromJson['modules']);
+				t3lib_div::devlog('JSON:','extbase_kickstarter',0,$extensionConfigurationFromJson);
+				$extensionConfigurationFromJson = Tx_ExtbaseKickstarter_Utility_ModelImport::reArrangeRelations($extensionConfigurationFromJson);
 				t3lib_div::devlog('JSON:','extbase_kickstarter',0,$extensionConfigurationFromJson);
 				
 				
@@ -223,10 +224,8 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 				if($this->settings['extConf']['enableRoundtrip']){
 					// generate unique IDs 
 					$extensionConfigurationFromJson = json_decode(file_get_contents($jsonFile),true);
-					$extensionConfigurationFromJson['modules'] = $this->generateUniqueIDs($extensionConfigurationFromJson['modules']);
-					$extensionConfigurationFromJson['modules'] = $this->mapAdvancedMode($extensionConfigurationFromJson['modules']);
+					$extensionConfigurationFromJson = Tx_ExtbaseKickstarter_Utility_ModelImport::getConfigurationFromKickstarterJson($extensionConfigurationFromJson);
 					$extensionConfigurationFromJson['properties']['originalExtensionKey'] = $singleExtensionDirectory;
-
 					t3lib_div::writeFile($jsonFile, json_encode($extensionConfigurationFromJson));
 				}
 				
@@ -259,88 +258,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	
 	
 	
-	/**
-	 * enable unique IDs to track modifications of models, properties and relations
-	 * this method sets unique IDs to the JSON array, if it was created 
-	 * with an older version of the kickstarter
-	 * 
-	 * @param $jsonConfig
-	 * @return array $jsonConfig with unique IDs
-	 */
-	protected function generateUniqueIDs($jsonConfig){
-		//  generate unique IDs
-		foreach($jsonConfig as &$module){
-			
-			if(empty($module['value']['objectsettings']['uid'])){
-				$module['value']['objectsettings']['uid'] = md5(microtime().$module['propertyName']);
-			}
-		
-			for($i=0;$i < count($module['value']['propertyGroup']['properties']);$i++){
-				// don't save empty properties
-				if(empty($module['value']['propertyGroup']['properties'][$i]['propertyName'])){
-					unset($module['value']['propertyGroup']['properties'][$i]);
-				}
-				else if(empty($module['value']['propertyGroup']['properties'][$i]['uid'])){
-					$module['value']['propertyGroup']['properties'][$i]['uid'] = md5(microtime().$module['value']['propertyGroup']['properties'][$i]['propertyName']);
-				}
-			}
-			for($i=0;$i < count($module['value']['relationGroup']['relations']);$i++){
-				// don't save empty relations
-				if(empty($module['value']['relationGroup']['relations'][$i]['relationName'])){
-					unset($module['value']['relationGroup']['relations'][$i]);
-					t3lib_div::devlog('Unset called:'.$i,'extbase',0,$jsonConfig);
-				}
-				else if(empty($module['value']['relationGroup']['relations'][$i]['uid'])){
-					$module['value']['relationGroup']['relations'][$i]['uid'] = md5(microtime().$module['value']['relationGroup']['relations'][$i]['relationName']);
-				}
-			}
-		}
-		return $jsonConfig;
-	}
 	
-	
-	/**
-	 * copy values from advanced fieldset to simple mode fieldset and vice versa
-	 * 
-	 * enables compatibility with JSON from older versions of the kickstarter
-	 * 
-	 * @param array $jsonConfig
-	 */
-	protected function mapAdvancedMode($jsonConfig){
-		foreach($jsonConfig as &$module){
-			for($i=0;$i < count($module['value']['relationGroup']['relations']);$i++){
-				if(empty($module['value']['relationGroup']['relations'][$i]['advancedSettings'])){
-					$module['value']['relationGroup']['relations'][$i]['advancedSettings'] = array();
-					$module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] = $module['value']['relationGroup']['relations'][$i]['relationType'];
-					$module['value']['relationGroup']['relations'][$i]['advancedSettings']['propertyIsExcludeField'] = $module['value']['relationGroup']['relations'][$i]['propertyIsExcludeField'];
-				}
-				else {
-					foreach($module['value']['relationGroup']['relations'][$i]['advancedSettings'] as $key => $value){
-						$module['value']['relationGroup']['relations'][$i][$key] = $value;
-					}
-					
-				}
-			}
-		}
-		return $jsonConfig;
-	}
-
-	/**
-	 * just a temporary workaround until the new UI is available
-	 *
-	 * @param array $jsonConfig
-	 */
-	protected function resetOutboundedPositions($jsonConfig){
-		foreach($jsonConfig as &$module){
-			if($module['config']['position'][0] < 0){
-				$module['config']['position'][0] = 10;
-			}
-			if($module['config']['position'][1] < 0){
-				$module['config']['position'][1] = 10;
-			}
-		}
-		return $jsonConfig;
-	}
 	/**
 	 * TODO: Is there a real API for this?
 	 * TODO: SHould better be moved to where??

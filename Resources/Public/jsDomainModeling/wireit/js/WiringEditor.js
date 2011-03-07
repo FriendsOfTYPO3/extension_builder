@@ -597,9 +597,16 @@ WireIt.WiringEditor.prototype = {
    for( i = 0 ; i < this.layer.wires.length ; i++) {
       var wire = this.layer.wires[i];
 
+    if(wire.terminal2.el.getAttribute('title') != 'SOURCES'){
+    	// this happens if the wire was drawn from child to parent
+    	var tmpTerminal = wire.terminal1;
+		wire.terminal1 = wire.terminal2;
+		wire.terminal2 = tmpTerminal;
+    }
+
       var wireObj = { 
-         src: {moduleId: WireIt.indexOf(wire.terminal1.container, this.layer.containers), terminal: wire.terminal1.options.name}, 
-         tgt: {moduleId: WireIt.indexOf(wire.terminal2.container, this.layer.containers), terminal: wire.terminal2.options.name}
+         src: {moduleId: WireIt.indexOf(wire.terminal1.container, this.layer.containers), terminal: wire.terminal1.options.name, uid:roundtrip.getUidForTerminal(wire.terminal1)}, 
+         tgt: {moduleId: WireIt.indexOf(wire.terminal2.container, this.layer.containers), terminal: wire.terminal2.options.name, uid:roundtrip.getUidForTerminal(wire.terminal2)}
       };
       obj.wires.push(wireObj);
    }

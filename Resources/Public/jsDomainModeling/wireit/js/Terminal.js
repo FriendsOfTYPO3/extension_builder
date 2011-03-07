@@ -3,7 +3,6 @@
    var util = YAHOO.util;
    var Event = util.Event, lang = YAHOO.lang, Dom = util.Dom, CSS_PREFIX = "WireIt-";
 
-
    /**
     * Scissors widget to cut wires
     * @class Scissors
@@ -567,12 +566,13 @@ WireIt.Terminal.prototype = {
     * @method render
     */
    render: function() {
-   
-      // Create the DIV element
-      this.el = WireIt.cn('div', {className: this.options.className} );
-      if(this.options.name) { this.el.title = this.options.name; }
+	// Create the DIV element
+	this.el = WireIt.cn('div', {className: this.options.className} );
+	if(this.options.name) {
+		this.el.title = this.options.name;
+	}
 
-      // Set the offset position
+// Set the offset position
       var pos = this.options.offsetPosition;
       if(pos) {
          // Kept old version [x,y] for retro-compatibility
@@ -592,6 +592,7 @@ WireIt.Terminal.prototype = {
    
       // Append the element to the parent
       this.parentEl.appendChild(this.el);
+      
    },
 
 
