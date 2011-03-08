@@ -3,12 +3,7 @@
 
 /**
  * Controller for the {domainObject.name} object
- *
- * @version $Id$
- * @copyright Copyright belongs to the respective authors
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-
 class {domainObject.controllerName} extends Tx_Extbase_MVC_Controller_ActionController {
 	<f:if condition="{domainObject.aggregateRoot}">
 	/**
@@ -17,6 +12,16 @@ class {domainObject.controllerName} extends Tx_Extbase_MVC_Controller_ActionCont
 	 * @var {domainObject.domainRepositoryClassName}
 	 */
 	protected ${domainObject.name -> k:lowercaseFirst()}Repository;
+	
+	/**
+	 * Dependency injection of the {domainObject.name} Repository
+ 	 *
+	 * @param {domainObject.domainRepositoryClassName} ${domainObject.name -> k:lowercaseFirst()}Repository
+ 	 * @return void
+-	 */
+	public function injectBlogRepository(Tx_BlogExample_Domain_Repository_BlogRepository $blogRepository) {
+		$this->{domainObject.name -> k:lowercaseFirst()}Repository = ${domainObject.name -> k:lowercaseFirst()}Repository;
+	}
 
 	/**
 	 * Initializes the current action

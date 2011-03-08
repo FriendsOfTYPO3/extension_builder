@@ -1,7 +1,7 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
 	
 	/**
-	 * Updates an existing {domainObject.name} and forwards to the index action afterwards.
+	 * Displays a form for editing an existing {domainObject.name}
 	 *
 	 * @param {domainObject.className} ${domainObject.name -> k:lowercaseFirst()} the {domainObject.name} to display
 	 * @return string A form to edit a {domainObject.name} 

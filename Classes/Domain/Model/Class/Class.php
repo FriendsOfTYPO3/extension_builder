@@ -45,10 +45,10 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	protected $properties = array();
 	
 	/**
-	 * propertieNames - deprecated -> use this->getPropertyNames() instead
+	 * propertyNames - deprecated -> use this->getPropertyNames() instead
 	 * @var array
 	 */
-	protected $propertieNames = array();
+	protected $propertyNames = array();
 
 	
 	/**

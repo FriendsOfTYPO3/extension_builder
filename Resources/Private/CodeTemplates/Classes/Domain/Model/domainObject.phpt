@@ -1,15 +1,9 @@
 {namespace k=Tx_ExtbaseKickstarter_ViewHelpers}<?php
 <k:render partial="Classes/licenseHeader.phpt" arguments="{persons:extension.persons}" />
 
-
 /**
  * {domainObject.description}
- *
- * @version $Id$
- * @copyright Copyright belongs to the respective authors
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-
 class {domainObject.className} extends {domainObject.baseClass} {
 <f:for each="{domainObject.properties}" as="property">
 	/**
