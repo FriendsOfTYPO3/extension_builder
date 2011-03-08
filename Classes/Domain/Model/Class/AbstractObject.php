@@ -137,16 +137,21 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 	 */
 	public function getAnnotations(){
 		$annotations = array();
-		foreach($this->tags as $tagName => $tagValues){
-			if(is_array($tagValues)){
-				foreach($tagValues as $tagValue){
+		$tagNames = array_keys($this->tags);
+		foreach($tagNames as $tagName){
+			if(empty($this->tags[$tagName])){
+				$annotations[] = $tagName;
+			}
+			if(is_array($this->tags[$tagName])){
+				foreach($this->tags[$tagName] as $tagValue){
 					$annotations[] = $tagName .' '. $tagValue;
 				}
 				//$tagValue = implode(' ',$tagValue);
 			}
-			else $annotations[] = $tagName .' '. $tagValues;
+			else {
+				$annotations[] = $tagName .' '. $this->tags[$tagName];
+			}
 		}
-		
 		return $annotations;
 	}
 

@@ -2,7 +2,7 @@
 	/**
 	 * Displays all {domainObject.name -> k:pluralize()}
 	 *
-	 * @return string The rendered list view
+	 * @return void
 	 */
 	public function listAction() {
 		${domainObject.name -> k:lowercaseFirst() -> k:pluralize()} = $this->{domainObject.name -> k:lowercaseFirst()}Repository->findAll();

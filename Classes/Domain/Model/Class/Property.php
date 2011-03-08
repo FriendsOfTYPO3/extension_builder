@@ -77,7 +77,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 	public function mapToReflectionProperty($propertyReflection){
 		if($propertyReflection instanceof Tx_ExtbaseKickstarter_Reflection_PropertyReflection){
 			
-			$propertyReflection->getTagsValues(); // just to initialize the docCommentParser
+			$tags = $propertyReflection->getTagsValues(); // just to initialize the docCommentParser
 			foreach($this as $key => $value) {
 				$setterMethodName = 'set'.t3lib_div::underscoredToUpperCamelCase($key);
 				$getterMethodName = 'get'.t3lib_div::underscoredToUpperCamelCase($key);

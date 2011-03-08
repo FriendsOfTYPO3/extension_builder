@@ -4,7 +4,6 @@
  * {classSchema.description}</f:if>
  *
  * @package {extension.extensionKey}
- * @version $Id$
  *<f:for each="{classSchema.annotations}" as="annotation">
  * @{annotation}</f:for>
  */

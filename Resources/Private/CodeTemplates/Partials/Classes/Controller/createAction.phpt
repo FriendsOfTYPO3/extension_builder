@@ -14,6 +14,5 @@
 				$this->flashMessageContainer->add('File upload is not yet supported by the Persistence Manager. You have to implement it yourself.');
 			}
 			</f:if>
-		</f:if>
-		$this->redirect('list');
+		</f:if>$this->redirect('list');
 	}

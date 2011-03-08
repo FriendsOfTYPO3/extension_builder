@@ -376,7 +376,11 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 						$formfieldsPartial = $partialDirectory.$domainObject->getName().'/FormFields.html';
 						$fileContents = $this->generateDomainFormFieldsPartial($templateRootFolder.'Partials/',$domainObject);
 						$this->writeFile($formfieldsPartial, $fileContents);
-						$this->writeFile($partialDirectory . 'FormErrors.html',$this->generateFormErrorsPartial($templateRootFolder.'Partials/'));
+						t3lib_div::devlog($templateRootFolder.'formErrors.htmlt');
+						if(!file_exists($partialDirectory . 'FormErrors.html')){
+							t3lib_div::devLog($partialDirectory.'formErrors.htmlt', 'extbase_kickstarter',0,array('Content'=>$this->generateFormErrorsPartial($templateRootFolder.'Partials/')));
+							$this->writeFile($partialDirectory . 'FormErrors.html',$this->generateFormErrorsPartial($templateRootFolder.'Partials/'));
+						}
 					}
 						// generate partials for properties 
 					if($action->getNeedsPropertyPartial()){
@@ -423,18 +427,27 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	 * @param array $variables
 	 */
 	protected function renderTemplate($filePath, $variables) {
-		if(isset($this->settings['codeTemplateRootPath'])){
-			$codeTemplateRootPath = PATH_site.$this->settings['codeTemplateRootPath'];
-		}
-		else {
-			$codeTemplateRootPath = t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/';
-		}
+		$codeTemplateRootPath = $this->getCodeTemplateRootPath();
 		if(!is_file($codeTemplateRootPath. $filePath)){
 			throw(new Exception('TemplateFile '.$codeTemplateRootPath . $filePath.' not found'));
 		}
 				
 		$parsedTemplate = $this->templateParser->parse(file_get_contents($codeTemplateRootPath . $filePath));
 		return trim($parsedTemplate->render($this->buildRenderingContext($variables)));
+	}
+	
+	/**
+	 * Get the path for the code templates
+	 *
+	 * @return string path
+	 */
+	protected function getCodeTemplateRootPath(){
+		if(isset($this->settings['codeTemplateRootPath'])){
+			return PATH_site.$this->settings['codeTemplateRootPath'];
+		}
+		else {
+			return t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/';
+		}
 	}
 
 	/**
@@ -569,7 +582,8 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 	}
 
 	public function generateFormErrorsPartial($templateRootFolder) {
-		return file_get_contents(t3lib_extMgm::extPath('extbase_kickstarter') .$templateRootFolder.'/Partials/formErrors.htmlt');
+		$codeTemplateRootPath = $this->getCodeTemplateRootPath().$templateRootFolder;
+		return file_get_contents($codeTemplateRootPath.'formErrors.htmlt');
 	}
 
 	public function generateLayout($templateRootFolder) {
