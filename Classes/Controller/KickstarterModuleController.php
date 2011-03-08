@@ -3,6 +3,7 @@
 *  Copyright notice
 *
 *  (c) 2009 Ingmar Schlecht <ingmar@typo3.org>
+*  (c) 2011 Nico de Haen
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -50,9 +51,9 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 
 
 	/**
-	 * @var Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder
+	 * @var Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder
 	 */
-	protected $objectSchemaBuilder;
+	protected $extensionSchemaBuilder;
 
 	
 	/**
@@ -61,8 +62,8 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	protected $codeGenerator;
 
 	public function initializeAction() {
-		if (!$this->objectSchemaBuilder instanceof Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder) {
-			$this->injectObjectSchemaBuilder(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder'));
+		if (!$this->extensionSchemaBuilder instanceof Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder) {
+			$this->injectExtensionSchemaBuilder(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder'));
 			$this->injectCodeGenerator(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_CodeGenerator'));
 			$this->settings = $frameworkConfiguration['settings'];
 			$this->settings['extConf'] = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getKickstarterSettings();
@@ -70,11 +71,11 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	}
 	
 	/**
-	 * @param Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder $objectSchemaBuilder
+	 * @param Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder $extensionSchemaBuilder
 	 * @return void
 	 */
-	public function injectObjectSchemaBuilder(Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder $objectSchemaBuilder) {
-		$this->objectSchemaBuilder = $objectSchemaBuilder;
+	public function injectExtensionSchemaBuilder(Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder $extensionSchemaBuilder) {
+		$this->extensionSchemaBuilder = $extensionSchemaBuilder;
 	}
 
 	/**
@@ -135,7 +136,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 				
 				
 				try {
-					$extensionSchema = $this->objectSchemaBuilder->build($extensionConfigurationFromJson);
+					$extensionSchema = $this->extensionSchemaBuilder->build($extensionConfigurationFromJson);
 				}
 				catch(Exception $e){
 					return json_encode(array('error' => $e->getMessage()));

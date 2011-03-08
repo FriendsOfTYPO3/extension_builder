@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Nico de Haen
+*  (c) 2011 Nico de Haen
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,9 +24,9 @@
 
 /**
  * provides methods to import a model
- *
+ * currently this class holds almost only methods for workarounds of WireIt bugs
+ * Later it should be the parent class for importing from various model formats
  * @package ExtbaseKickstarter
- * @version $ID:$
  */
 class Tx_ExtbaseKickstarter_Utility_ModelImport {
 	
