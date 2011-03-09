@@ -9,17 +9,13 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	/**
 	 * {property.description}
 	 *
-	 * @var {property.typeForComment} ${property.name}<f:if condition="{property.validateAnnotation}">
+	 * @var {property.typeForComment}<f:if condition="{property.validateAnnotation}">
 	 * {property.validateAnnotation}</f:if><f:if condition="{property.lazyLoading}">
 	 * @lazy</f:if>
 	 */
 	protected ${property.name}<f:if condition="{property.default}"> = {property.value}</f:if>;
 </f:for><f:if condition="{domainObject.AnyToManyRelationProperties}">
-	/**
-	 * The constructor.
-	 *
-	 * @return void
-	 */
+
 	public function __construct() {
 		//Do not remove the next line: It would break the functionality
 		$this->initStorageObjects();
@@ -44,9 +40,7 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	}
 </f:if><f:for each="{domainObject.properties}" as="property">
 	/**
-	 * Setter for {property.name}
-	 *
-	 * @param {property.typeForComment} ${property.name} {property.description}
+	 * @param {property.typeForComment} ${property.name}
 	 * @return void
 	 */
 	public function set{property.name -> k:uppercaseFirst()}({property.typeHintWithTrailingWhiteSpace}${property.name}) {
@@ -54,26 +48,20 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	}
 
 	/**
-	 * Getter for {property.name}
-	 *
-	 * @return {property.typeForComment} {property.description}
+	 * @return {property.typeForComment}
 	 */
 	public function get{property.name -> k:uppercaseFirst()}() {
 		return $this->{property.name};
 	}
 <f:if condition="{k:isOfType(object:property, type:'DomainObject_BooleanProperty')}">
 	/**
-	 * Returns the state of {property.name}
-	 *
-	 * @return boolean the state of {property.name}
+	 * @return boolean
 	 */
 	public function is{property.name -> k:uppercaseFirst()}() {
 		return $this->get{property.name -> k:uppercaseFirst()}();
 	}
 </f:if><f:if condition="{k:isOfType(object:property, type:'DomainObject_Relation_AnyToManyRelation')}">
 	/**
-	 * Adds a {property.foreignClass.name -> k:uppercaseFirst()}
-	 *
 	 * @param {property.foreignClass.className} the {property.foreignClass.name -> k:uppercaseFirst()} to be added
 	 * @return void
 	 */
@@ -82,8 +70,6 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	}
 
 	/**
-	 * Removes a {property.foreignClass.name -> k:uppercaseFirst()}
-	 *
 	 * @param {property.foreignClass.className} the {property.foreignClass.name -> k:uppercaseFirst()} to be removed
 	 * @return void
 	 */

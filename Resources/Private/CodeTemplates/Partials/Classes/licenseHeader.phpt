@@ -2,7 +2,7 @@
 *  Copyright notice
 *
 *  (c) <f:format.date format="Y">now</f:format.date> <f:for each="{persons}" as="person">{person.name} <f:if condition="{person.email}"><{person.email}></f:if><f:if condition="{person.company}">, {person.company}</f:if>
-*  	</f:for>
+*  </f:for>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
