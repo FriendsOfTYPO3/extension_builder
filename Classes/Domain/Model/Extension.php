@@ -541,6 +541,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 */
 	public function getPreviousExtensionDirectory(){
 		if($this->isRenamed()){
+			$originalExtensionKey = $this->getOriginalExtensionKey();
 			$this->previousExtensionDirectory = PATH_typo3conf.'ext/'.$originalExtensionKey.'/';
 			$this->previousExtensionKey = $originalExtensionKey;
 			return $this->previousExtensionDirectory;
