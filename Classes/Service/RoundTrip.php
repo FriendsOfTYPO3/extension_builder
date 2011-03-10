@@ -104,10 +104,10 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 		}
 		
 		if(file_exists($this->previousExtensionDirectory . 'kickstarter.json')){
-			$objectSchemaBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder');
+			$extensionSchemaBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder');
 			$jsonConfig =  json_decode(file_get_contents($this->previousExtensionDirectory . 'kickstarter.json'),true);
 			//t3lib_div::devlog('old JSON:'.$this->previousExtensionDirectory . 'kickstarter.json','extbase_kickstarter',0,$jsonConfig);
-			$this->previousExtension = $objectSchemaBuilder->build($jsonConfig);
+			$this->previousExtension = $extensionSchemaBuilder->build($jsonConfig);
 			$oldDomainObjects = $this->previousExtension->getDomainObjects();
 			foreach($oldDomainObjects as $oldDomainObject){
 				$this->oldDomainObjects[$oldDomainObject->getUniqueIdentifier()] = $oldDomainObject;

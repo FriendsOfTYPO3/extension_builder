@@ -104,10 +104,8 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 				t3lib_div::devLog('Class '.$className.' could not be imported: '.$e->getMessage(), 'extbase_kickstarter',2);		
 			}
 		}
-		else t3lib_div::devlog('Class:'.$classPath.' : '.Tx_ExtbaseKickstarter_Service_RoundTrip::getOverWriteSettingForPath($classPath,$this->extension),'extbase_kickstarter',2,$this->settings);
 		
 		if($this->classObject == NULL) {
-			t3lib_div::devLog('Class '.$className.' could not be imported: ', 'extbase_kickstarter',2);
 			return NULL;
 		}
 		
@@ -119,7 +117,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 		
 		if(!$this->classObject->methodExists('__construct')){
 			$constructorMethod = new Tx_ExtbaseKickstarter_Domain_Model_Class_Method('__construct');
-			$constructorMethod->setDescription('The constructor of this '.$domainObject->getName());
+			//$constructorMethod->setDescription('The constructor of this '.$domainObject->getName());
 			if(count($anyToManyRelationProperties) > 0){
 				$constructorMethod->setBody($this->initStorageObjectCall);
 			}
@@ -163,6 +161,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 			if($this->classObject->propertyExists($propertyName)){
 				$classProperty = $this->classObject->getProperty($propertyName);
 				$classPropertyTags = $classProperty->getTags();
+				t3lib_div::devLog('Property found: '.$propertyName.':'.$domainProperty->getTypeForComment(), 'extbase_kickstarter',1,(array)$classProperty);
 			}
 			else {
 				$classProperty = new Tx_ExtbaseKickstarter_Domain_Model_Class_Property($propertyName);
@@ -193,9 +192,8 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 	 * @param Tx_ExtbaseKickstarter_Domain_Model_AbstractDomainObjectProperty $domainProperty
 	 */
 	protected function setPropertyRelatedMethods($domainProperty){
-		t3lib_div::devlog('setPropertyRelatedMethods:'.$domainProperty->getName(),'extbase_kickstarter',1,(array)$domainProperty);
+		t3lib_div::devlog('setPropertyRelatedMethods:'.$domainProperty->getName(),'extbase_kickstarter',0,(array)$domainProperty);
 		if (is_subclass_of($domainProperty, 'Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
-			t3lib_div::devlog('setPropertyAddMethods:'.$domainProperty->getName(),'extbase_kickstarter',1);
 			$addMethod = $this->buildAddMethod($domainProperty);
 			$removeMethod = $this->buildRemoveMethod($domainProperty);
 			$this->classObject->setMethod($addMethod);
@@ -223,10 +221,11 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 		if($this->classObject->methodExists($getterMethodName)){
 			$getterMethod = $this->classObject->getMethod($getterMethodName);
 			$getterMethodTags = $getterMethod->getTags();
+			t3lib_div::devlog('Existing getterMethod imported:'.$getterMethodName,'extbase_kickstarter',0,array('methodBody'=>$getterMethod->getBody()));
 		}
 		else {
-			t3lib_div::devlog('new getMethod:'.$getterMethodName,'extbase_kickstarter',1);
 			$getterMethod = new Tx_ExtbaseKickstarter_Domain_Model_Class_Method($getterMethodName);
+			t3lib_div::devlog('new getMethod:'.$getterMethodName,'extbase_kickstarter',0);
 			// default method body
 			$getterMethod->setBody($this->getDefaultMethodBody($domainProperty,'get'));
 			$getterMethod->setTag('return',$domainProperty->getTypeForComment().' $'.$domainProperty->getName());
@@ -250,9 +249,10 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 		if($this->classObject->methodExists($setterMethodName)){
 			$setterMethod = $this->classObject->getMethod($setterMethodName);
 			$setterMethodTags = $setterMethod->getTags();
+			t3lib_div::devlog('Existing setterMethod imported:'.$setterMethodName,'extbase_kickstarter',0,array('methodBody'=>$setterMethod->getBody()));
 		}
 		else {
-			t3lib_div::devlog('new setMethod:'.$setterMethodName,'extbase_kickstarter',1);
+			t3lib_div::devlog('new setMethod:'.$setterMethodName,'extbase_kickstarter',0);
 			$setterMethod = new Tx_ExtbaseKickstarter_Domain_Model_Class_Method($setterMethodName);
 			// default method body
 			$setterMethod->setBody($this->getDefaultMethodBody($domainProperty,'set'));
@@ -284,9 +284,10 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 		
 		if($this->classObject->methodExists($addMethodName)){
 			$addMethod = $this->classObject->getMethod($addMethodName);
+			t3lib_div::devlog('Existing addMethod imported:'.$addMethodName,'extbase_kickstarter',0,array('methodBody'=>$addMethod->getBody()));
 		}
 		else {
-			t3lib_div::devlog('new addMethod:'.$addMethodName,'extbase_kickstarter',1);
+			t3lib_div::devlog('new addMethod:'.$addMethodName,'extbase_kickstarter',0);
 			$addMethod = new Tx_ExtbaseKickstarter_Domain_Model_Class_Method($addMethodName);
 			// default method body
 			$addMethod->setBody($this->getDefaultMethodBody($domainProperty,'add'));
@@ -320,9 +321,10 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 		
 		if($this->classObject->methodExists($removeMethodName)){
 			$removeMethod = $this->classObject->getMethod($removeMethodName);
+			t3lib_div::devlog('Existing removeMethod imported:'.$removeMethodName,'extbase_kickstarter',0,array('methodBody'=>$removeMethod->getBody()));
 		}
 		else {
-			t3lib_div::devlog('new removeMethod:'.$removeMethodName,'extbase_kickstarter',1);
+			t3lib_div::devlog('new removeMethod:'.$removeMethodName,'extbase_kickstarter',0);
 			$removeMethod = new Tx_ExtbaseKickstarter_Domain_Model_Class_Method($removeMethodName);
 			// default method body
 			$removeMethod->setBody($this->getDefaultMethodBody($domainProperty,'remove'));
@@ -357,6 +359,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilder implements t3lib_Singleton {
 		
 		if($this->classObject->methodExists($isMethodName)){
 			$isMethod = $this->classObject->getMethod($isMethodName);
+			t3lib_div::devlog('Existing isMethod imported:'.$isMethodName,'extbase_kickstarter',0,array('methodBody'=>$isMethod->getBody()));
 		}
 		else {
 			t3lib_div::devlog('new isMethod:'.$isMethodName,'extbase_kickstarter',1);

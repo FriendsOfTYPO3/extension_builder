@@ -54,7 +54,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorUnitTest extends Tx_ExtbaseKickstarter_
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
 		$this->assertRegExp("/.*class Tx_Dummy_Domain_Model_ModelCgt1.*/", $classFileContent, 'Class declaration was not generated');
 		$this->assertRegExp('/.*protected \\$blue.*/', $classFileContent, 'boolean property was not generated');
-		$this->assertRegExp('/.*\* \@var boolean \$blue.*/', $classFileContent, 'var tag for boolean property was not generated');
+		$this->assertRegExp('/.*\* \@var boolean.*/', $classFileContent, 'var tag for boolean property was not generated');
 		$this->assertRegExp('/.*\* \@validate NotEmpty.*/', $classFileContent, 'validate tag for required property was not generated');
 		$this->assertRegExp('/.*public function getBlue\(\).*/', $classFileContent, 'Getter for boolean property was not generated');
 		$this->assertRegExp('/.*public function setBlue\(\$blue\).*/', $classFileContent, 'Setter for boolean property was not generated');
