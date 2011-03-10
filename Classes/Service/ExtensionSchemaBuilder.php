@@ -47,15 +47,16 @@ class Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder implements t3lib_sing
 		}
 
 		// name
-		$extension->setName($globalProperties['name']);
+		$extension->setName(trim($globalProperties['name']));
 		// description
 		$extension->setDescription($globalProperties['description']);
 		// extensionKey
-		$extension->setExtensionKey($globalProperties['extensionKey']);
+		$extension->setExtensionKey(trim($globalProperties['extensionKey']));
 
 		if(!empty($globalProperties['originalExtensionKey'])){
 			// original extensionKey
 			$extension->setOriginalExtensionKey($globalProperties['originalExtensionKey']);
+			t3lib_div::devlog('Extension setOriginalExtensionKey:'.$extension->getOriginalExtensionKey(),'extbase',0,$globalProperties);
 		}
 
 		if(!empty($globalProperties['originalExtensionKey']) && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()){

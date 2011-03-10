@@ -100,7 +100,7 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 			$this->previousExtensionDirectory = $extension->getPreviousExtensionDirectory();
 			$this->previousExtensionKey = $extension->getOriginalExtensionKey();
 			$this->extensionRenamed = true;
-			t3lib_div::devlog('Extension renamed: ' . $originalExtensionKey .' => ' . $this->extension->getExtensionKey() ,'extbase_kickstarter',1);
+			t3lib_div::devlog('Extension renamed: ' . $this->previousExtensionKey .' => ' . $this->extension->getExtensionKey() ,'extbase_kickstarter',1,array('$previousExtensionDirectory '=>$this->previousExtensionDirectory ));
 		}
 		
 		if(file_exists($this->previousExtensionDirectory . 'kickstarter.json')){
@@ -111,6 +111,7 @@ class Tx_ExtbaseKickstarter_Service_RoundTrip implements t3lib_singleton {
 			$oldDomainObjects = $this->previousExtension->getDomainObjects();
 			foreach($oldDomainObjects as $oldDomainObject){
 				$this->oldDomainObjects[$oldDomainObject->getUniqueIdentifier()] = $oldDomainObject;
+				t3lib_div::devlog('Old domain object: '.$oldDomainObject->getName().' - '.$oldDomainObject->getUniqueIdentifier(),'extension_builder');
 			}
 			
 			// now we store all renamed domainObjects in an array to enable detection of renaming in 
