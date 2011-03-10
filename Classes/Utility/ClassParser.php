@@ -398,7 +398,6 @@ class Tx_ExtbaseKickstarter_Utility_ClassParser implements t3lib_singleton{
 	 */
 	protected function addProperty(array $propertyMatches){
 		$properties = array_combine($propertyMatches['name'],$propertyMatches['value']);
-		t3lib_div::devLog('Properties parsed:','kickstarter',0,$properties);
 		$isFirstProperty = true;
 		foreach($properties as $propertyName => $propertyValue){
 			try{

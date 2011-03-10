@@ -377,9 +377,7 @@ class Tx_ExtbaseKickstarter_Service_CodeGenerator implements t3lib_Singleton {
 						$formfieldsPartial = $partialDirectory.$domainObject->getName().'/FormFields.html';
 						$fileContents = $this->generateDomainFormFieldsPartial($templateRootFolder.'Partials/',$domainObject);
 						$this->writeFile($formfieldsPartial, $fileContents);
-						t3lib_div::devlog($templateRootFolder.'formErrors.htmlt');
 						if(!file_exists($partialDirectory . 'FormErrors.html')){
-							t3lib_div::devLog($partialDirectory.'formErrors.htmlt', 'extbase_kickstarter',0,array('Content'=>$this->generateFormErrorsPartial($templateRootFolder.'Partials/')));
 							$this->writeFile($partialDirectory . 'FormErrors.html',$this->generateFormErrorsPartial($templateRootFolder.'Partials/'));
 						}
 					}

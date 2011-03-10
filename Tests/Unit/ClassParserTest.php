@@ -32,7 +32,7 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 	protected $debugMode = false;
 
 	public function setUp() {
-		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder'), array('dummy'));
+		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder'), array('dummy'));
 	}
 
 	/**

@@ -70,7 +70,7 @@ class Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder implements t3lib_sing
 		
 		if(!empty($settings)){
 			$extension->setSettings($settings);
-			//t3lib_div::devlog('settings:'.$extension->getExtensionKey(),'extbase',0,$extension->getSettings());
+			t3lib_div::devlog('Extension settings:'.$extension->getExtensionKey(),'extbase',0,$extension->getSettings());
 		}
 		
 			// version
@@ -86,7 +86,7 @@ class Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder implements t3lib_sing
 		}
 		
 		foreach ($globalProperties['backendModules'] as $backendModuleValues) {
-			$backendModule = $this->buildBackendModule($backendModule);
+			$backendModule = $this->buildBackendModule($backendModuleValues);
 			$extension->addBackendModule($backendModule);
 		}
 
