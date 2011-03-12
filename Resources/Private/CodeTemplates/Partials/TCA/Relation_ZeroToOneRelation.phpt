@@ -5,7 +5,7 @@
 'maxitems' => 1,
 'appearance' => array(
 	'collapse' => 0,
-	'newRecordLinkPosition' => 'bottom',
+	'levelLinksPosition' => 'both',
 	'showSynchronizationLink' => 1,
 	'showPossibleLocalizationRecords' => 1,
 	'showAllLocalizationLink' => 1
