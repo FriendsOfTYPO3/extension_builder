@@ -47,12 +47,12 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			),
 		),
 		't3ver_label' => array(
-			'displayCond' => 'FIELD:t3ver_label:REQ:true',
-			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.versionLabel',
+			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.versionLabel',
 			'config' => array(
-				'type' =>'none',
-				'cols' => 27,
-			),
+			'type' => 'input',
+			'size' => '30',
+			'max' => '255',
+			)
 		),
 		'hidden' => array(
 			'exclude' => 1,
