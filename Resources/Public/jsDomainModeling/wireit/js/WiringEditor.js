@@ -78,6 +78,7 @@ YAHOO.extend(WireIt.ModuleProxy,YAHOO.util.DDProxy, {
  */
 WireIt.WiringEditor = function(options) {
    
+   
     // set the default options
     this.setOptions(options);
     
@@ -338,13 +339,40 @@ WireIt.WiringEditor.prototype = {
  onSMDfailure: function() { 
     //console.log("onSMDfailure", this.service);
  },
-
+ 
+ loginCheck: function(o){
+ 	eval('var result = ' + o.responseText + ';');
+	if (result.login.timed_out || result.login.will_time_out){
+		if(typeof parent.TYPO3.loginRefresh.showLoginPopup != 'undefined'){
+			parent.TYPO3.loginRefresh.showLoginPopup();
+		} 
+		else {
+			this.alert('Your login is expired. Please refresh your login in a separate brwoser window and save again');
+		}
+		return;
+	}
+	else {
+		o.argument.editor.saveModule(true);
+	}
+	
+ },
  /**
   * save the current module
   * @method saveModule
   */
- saveModule: function() {
-    
+ saveModule: function(login) {
+	if(typeof login == 'undefined'){
+		Connect.asyncRequest(
+		   	'GET', 
+			'/typo3/ajax.php?ajaxID=BackendLogin%3A%3AisTimedOut&skipSessionUpdate=1', 
+			{
+				'success':this.loginCheck
+				,argument: {'editor':this}
+			}
+		);
+		return;
+	}
+	
     var value = this.getValue();
     
     if(value.name == "") {
