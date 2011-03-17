@@ -343,11 +343,11 @@ WireIt.WiringEditor.prototype = {
  loginCheck: function(o){
  	eval('var result = ' + o.responseText + ';');
 	if (result.login.timed_out || result.login.will_time_out){
-		if(typeof parent.TYPO3.loginRefresh.showLoginPopup != 'undefined'){
+		if(typeof parent.TYPO3.loginRefresh != 'undefined'){
 			parent.TYPO3.loginRefresh.showLoginPopup();
 		} 
 		else {
-			this.alert('Your login is expired. Please refresh your login in a separate brwoser window and save again');
+			o.argument.editor.alert('Login expired','Your login is expired. Please refresh your login in a separate browser window and save again');
 		}
 		return;
 	}
@@ -362,9 +362,17 @@ WireIt.WiringEditor.prototype = {
   */
  saveModule: function(login) {
 	if(typeof login == 'undefined'){
+		var baseUrl;
+		if(typeof parent.TYPO3.configuration != 'undefined'){
+			baseUrl = parent.TYPO3.configuration.PATH_typo3;
+		}
+		else {
+			baseUrl = window.location.href.split('mod.php')[0];
+		}
+		
 		Connect.asyncRequest(
-		   	'GET', 
-			'/typo3/ajax.php?ajaxID=BackendLogin%3A%3AisTimedOut&skipSessionUpdate=1', 
+			'GET', 
+			baseUrl + 'ajax.php?ajaxID=BackendLogin%3A%3AisTimedOut&skipSessionUpdate=1', 
 			{
 				'success':this.loginCheck
 				,argument: {'editor':this}
