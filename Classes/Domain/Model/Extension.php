@@ -76,7 +76,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 * default settings for em_conf
 	 * @var array
 	 */
-	protected $emConfDefaults = array('dependencies'=>'cms,extbase,fluid');
+	protected $emConfDefaults = array('dependencies'=>'cms,extbase,fluid','category'=>'plugin');
 	
 	/**
 	 * flag that is set to true if there are domain objects with
