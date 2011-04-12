@@ -323,6 +323,7 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		't3ver_stage',
 		't3ver_count',
 		't3ver_tstamp',
+		't3ver_move_id',
 		't3_origuid',
 		'sys_language_uid',
 		'l18n_parent',
