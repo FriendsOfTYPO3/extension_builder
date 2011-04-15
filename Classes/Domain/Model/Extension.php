@@ -582,7 +582,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 * @return string $uploadFolder
 	 */
 	public function getUploadFolder(){
-		return 'uploads/tx_' . $this->getExtensionKey();
+		return 'uploads/tx_' . str_replace('_', '', $this->getExtensionKey());
 	}
 
 }
