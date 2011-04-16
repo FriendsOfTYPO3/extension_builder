@@ -180,7 +180,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	public function getFieldName() {
 		$fieldName = Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($this->name);
 		if (Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator::isReservedMYSQLWord($fieldName)) {
-			$fieldName = $this->domainObject->getExtension()->getShorthandForTypoScript() . '_' . $fieldName;
+			$fieldName = $this->domainObject->getExtension()->getShortExtensionKey() . '_' . $fieldName;
 		}
 		return $fieldName;
 	}

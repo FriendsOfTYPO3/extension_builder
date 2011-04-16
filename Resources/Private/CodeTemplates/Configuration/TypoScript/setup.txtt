@@ -1,16 +1,16 @@
 <f:if condition="{extension.plugins}">
-plugin.{extension.shorthandForTypoScript} {
+plugin.{extension.shortExtensionKey} {
 	view {
-		templateRootPath = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.view.templateRootPath<![CDATA[}]]>
-		partialRootPath = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.view.partialRootPath<![CDATA[}]]>
-		layoutRootPath = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.view.layoutRootPath<![CDATA[}]]>
+		templateRootPath = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}.view.templateRootPath<![CDATA[}]]>
+		partialRootPath = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}.view.partialRootPath<![CDATA[}]]>
+		layoutRootPath = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}.view.layoutRootPath<![CDATA[}]]>
 	}
 	persistence {
-		storagePid = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.persistence.storagePid<![CDATA[}]]>
+		storagePid = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}.persistence.storagePid<![CDATA[}]]>
 	}
 }
 
-plugin.{extension.shorthandForTypoScript}._CSS_DEFAULT_STYLE (
+plugin.{extension.shortExtensionKey}._CSS_DEFAULT_STYLE (
 	input.f3-form-error {
 		background-color:#FF9F9F;
 		border: 1px #FF0000 solid;
@@ -33,14 +33,14 @@ plugin.{extension.shorthandForTypoScript}._CSS_DEFAULT_STYLE (
 
 <f:if condition="{extension.backendModules}">
  # Module configuration
-module.{extension.shorthandForTypoScript} {
+module.{extension.shortExtensionKey} {
 	persistence {
-		storagePid = <![CDATA[{$]]>plugin.{extension.shorthandForTypoScript}.persistence.storagePid<![CDATA[}]]>
+		storagePid = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}.persistence.storagePid<![CDATA[}]]>
 	}
 	view {
-		templateRootPath = <![CDATA[{$]]>module.{extension.shorthandForTypoScript}.view.templateRootPath<![CDATA[}]]>
-		partialRootPath = <![CDATA[{$]]>module.{extension.shorthandForTypoScript}.view.partialRootPath<![CDATA[}]]>
-		layoutRootPath = <![CDATA[{$]]>module.{extension.shorthandForTypoScript}.view.layoutRootPath<![CDATA[}]]>
+		templateRootPath = <![CDATA[{$]]>module.{extension.shortExtensionKey}.view.templateRootPath<![CDATA[}]]>
+		partialRootPath = <![CDATA[{$]]>module.{extension.shortExtensionKey}.view.partialRootPath<![CDATA[}]]>
+		layoutRootPath = <![CDATA[{$]]>module.{extension.shortExtensionKey}.view.layoutRootPath<![CDATA[}]]>
 	}
 }
 </f:if>

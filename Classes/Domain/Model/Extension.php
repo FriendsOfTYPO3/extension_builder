@@ -346,8 +346,11 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 		return NULL;
 	}
 
-	public function getShorthandForTypoScript() {
-		return 'tx_' . strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->getExtensionKey()));
+	/**
+	 * returns the extension key a prefix tx_  and without underscore
+	 */
+	public function getShortExtensionKey() {
+		return 'tx_' .str_replace('_','',$this->getExtensionKey());
 	}
 
 	/**
@@ -486,9 +489,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 		}
 	}
 
+
 	public function getCssClassName() {
-		$key = 'tx_' . strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->getExtensionKey())) . '_pi1';
-		return str_replace('_', '-', $key);
+		return 'tx-' . str_replace('_', '-',$this->getExtensionKey());
 	}
 	
 	public function isModified( $filePath){
@@ -582,7 +585,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 * @return string $uploadFolder
 	 */
 	public function getUploadFolder(){
-		return 'uploads/tx_' . str_replace('_', '', $this->getExtensionKey());
+		return 'uploads/' . $this->getShortExtensionKey();
 	}
 
 }
