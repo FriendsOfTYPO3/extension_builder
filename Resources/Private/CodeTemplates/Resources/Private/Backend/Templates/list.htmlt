@@ -18,7 +18,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
 <k:openingTag>f:flashMessages /</k:openingTag>
 
-<table  class="{extension.shorthandForTypoScript}" >
+<table  class="{extension.shortExtensionKey}" >
 	<k:removeMultipleNewlines><tr>
 
 	<k:comment>Building up the table header</k:comment>

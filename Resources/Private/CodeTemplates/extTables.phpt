@@ -9,8 +9,10 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 	'<k:quoteString>{plugin.name}</k:quoteString>'
 );
 
-//$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY . '_{plugin.key}'] = 'pi_flexform';
-//t3lib_extMgm::addPiFlexFormValue($_EXTKEY . '_{plugin.key}', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_{plugin.key}.xml');
+//$pluginSignature = str_replace('_','',$_EXTKEY) . '_' . {plugin.key};
+//$TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+//t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_' .{plugin.key}. '.xml');
+
 
 </f:for>
 

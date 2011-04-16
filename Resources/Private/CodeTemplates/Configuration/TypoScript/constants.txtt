@@ -1,31 +1,31 @@
 <f:if condition="{extension.plugins}">
-plugin.{extension.shorthandForTypoScript} {
+plugin.{extension.shortExtensionKey} {
 	view {
-		# cat=plugin.{extension.shorthandForTypoScript}/file; type=string; label=Path to template root (FE)
+		# cat=plugin.{extension.shortExtensionKey}/file; type=string; label=Path to template root (FE)
 		templateRootPath = EXT:{extension.extensionKey}/Resources/Private/Templates/
-		# cat=plugin.{extension.shorthandForTypoScript}/file; type=string; label=Path to template partials (FE)
+		# cat=plugin.{extension.shortExtensionKey}/file; type=string; label=Path to template partials (FE)
 		partialRootPath = EXT:{extension.extensionKey}/Resources/Private/Partials/
-		# cat=plugin.{extension.shorthandForTypoScript}/file; type=string; label=Path to template layouts (FE)
+		# cat=plugin.{extension.shortExtensionKey}/file; type=string; label=Path to template layouts (FE)
 		layoutRootPath = EXT:{extension.extensionKey}/Resources/Private/Layouts/
 	}
 	persistence {
-		# cat=plugin.{extension.shorthandForTypoScript}//a; type=int+; label=Default storage PID
+		# cat=plugin.{extension.shortExtensionKey}//a; type=int+; label=Default storage PID
 		storagePid = 
 	}
 }
 </f:if>
 <f:if condition="{extension.backendModules}">
-module.{extension.shorthandForTypoScript} {
+module.{extension.shortExtensionKey} {
 	view {
-		# cat=module.{extension.shorthandForTypoScript}/file; type=string; label=Path to template root (BE)
+		# cat=module.{extension.shortExtensionKey}/file; type=string; label=Path to template root (BE)
 		templateRootPath = EXT:{extension.extensionKey}/Resources/Private/Backend/Templates/
-		# cat=module.{extension.shorthandForTypoScript}/file; type=string; label=Path to template partials (BE)
+		# cat=module.{extension.shortExtensionKey}/file; type=string; label=Path to template partials (BE)
 		partialRootPath = EXT:{extension.extensionKey}/Resources/Private/Backend/Partials/
-		# cat=module.{extension.shorthandForTypoScript}/file; type=string; label=Path to template layouts (BE)
+		# cat=module.{extension.shortExtensionKey}/file; type=string; label=Path to template layouts (BE)
 		layoutRootPath = EXT:{extension.extensionKey}/Resources/Private/Backend/Layouts/
 	}
 	persistence {
-		# cat=module.{extension.shorthandForTypoScript}//a; type=int+; label=Default storage PID
+		# cat=module.{extension.shortExtensionKey}//a; type=int+; label=Default storage PID
 		storagePid = 
 	}
 }

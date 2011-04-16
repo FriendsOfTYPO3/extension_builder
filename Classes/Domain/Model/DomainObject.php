@@ -354,7 +354,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	}
 	
 	public function getLabelNamespace() {
-		return $this->extension->getShorthandForTypoScript() . '_domain_model_' . strtolower($this->getName());
+		return $this->extension->getShortExtensionKey() . '_domain_model_' . strtolower($this->getName());
 	}
 
 	/**

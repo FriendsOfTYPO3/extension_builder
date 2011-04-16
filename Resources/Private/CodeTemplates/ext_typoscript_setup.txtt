@@ -1,4 +1,4 @@
-plugin.{extension.shorthandForTypoScript} {
+plugin.{extension.shortExtensionKey} {
 	persistence {
 		classes {<f:for each="{extension.domainObjects}" as="domainObject"><f:if condition="{domainObject.propertiesWithMappingStatements}">
 			{domainObject.className} {
