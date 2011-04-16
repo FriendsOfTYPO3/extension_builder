@@ -5,7 +5,7 @@
 'maxitems'      => 9999,
 'appearance' => array(
 	'collapse' => 0,
-	'levelLinksPosition' => 'both',
+	'levelLinksPosition' => 'top',
 	'showSynchronizationLink' => 1,
 	'showPossibleLocalizationRecords' => 1,
 	'showAllLocalizationLink' => 1
