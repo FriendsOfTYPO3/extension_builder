@@ -14,7 +14,7 @@ class {domainObject.controllerName} extends Tx_Extbase_MVC_Controller_ActionCont
 	/**
 	 * @param {domainObject.domainRepositoryClassName} ${domainObject.name -> k:lowercaseFirst()}Repository
  	 * @return void
--	 */
+	 */
 	public function inject{domainObject.name}Repository({domainObject.domainRepositoryClassName} ${domainObject.name -> k:lowercaseFirst()}Repository) {
 		$this->{domainObject.name -> k:lowercaseFirst()}Repository = ${domainObject.name -> k:lowercaseFirst()}Repository;
 	}

@@ -50,8 +50,8 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.versionLabel',
 			'config' => array(
 			'type' => 'input',
-			'size' => '30',
-			'max' => '255',
+			'size' => 30,
+			'max' => 255,
 			)
 		),
 		'hidden' => array(
@@ -67,11 +67,14 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.starttime',
 			'config' => array(
 				'type' => 'input',
-				'size' => '10',
-				'max' => '20',
+				'size' => 13,
+				'max' => 20,
 				'eval' => 'datetime',
-				'checkbox' => '0',
-				'default' => '0',
+				'checkbox' => 0,
+				'default' => 0,
+				'range' => array(
+					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
+				),
 			),
 		),
 		'endtime' => array(
@@ -80,14 +83,13 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.endtime',
 			'config' => array(
 				'type' => 'input',
-				'size' => '8',
-				'max' => '20',
+				'size' => 13,
+				'max' => 20,
 				'eval' => 'datetime',
-				'checkbox' => '0',
-				'default' => '0',
+				'checkbox' => 0,
+				'default' => 0,
 				'range' => array(
-					'upper' => mktime(0, 0, 0, 12, 31, date('Y') + 10),
-					'lower' => mktime(0, 0, 0, date('m')-1, date('d'), date('Y'))
+					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
 				),
 			),
 		),<f:for each="{domainObject.properties}" as="property">
