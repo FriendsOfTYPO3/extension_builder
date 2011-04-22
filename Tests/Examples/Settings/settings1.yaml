@@ -1,5 +1,5 @@
 #
-# Kickstarter settings for extension test1
+# Extension Builder settings for extension test1
 # generated 2010-12-21 01:03
 #
 # See http://www.yaml.org/spec/1.2/spec.html
@@ -9,18 +9,18 @@
 
 ###########    Overwrite settings  ###########
 #
-# These settings only apply, if the roundtrip feature of the kickstarter
+# These settings only apply, if the roundtrip feature of the extension builder
 # is enabled in the extension manager
 #
 # Usage:
 # nesting reflects the file structure
 # a setting applies to a file or recursive to all files and subfolders
-# 
-# merge: 
+#
+# merge:
 # means for classes: All properties ,methods and method bodies
 # of the existing class will be modified according to the new settings
-# but not overwritten 
-# 
+# but not overwritten
+#
 # for locallang xml files: Existing keys and labels are always
 # preserved (renaming in the GUI has only influence on the property and method names)
 #
@@ -30,7 +30,7 @@
 #
 # keep:
 # files are never overwritten
-# These settings may break the functionality of the kickstarter!
+# These settings may break the functionality of the extension builder!
 # Handle with care!
 #
 #
@@ -40,23 +40,23 @@
 emConf:
 
 	dependencies:			cms,extbase,fluid
-	
+
 overwriteSettings:
 	Classes:
 		Controller: 		merge
 		Domain:
 			Model:			merge
 			Repository:		merge
-		
+
 	Resources:
-		Private: 
+		Private:
 			Language:
 				locallang.xml:		keep
-				
+
 			Templates:		keep
-	
+
 	ext_icon.gif:			keep
-	
+
 #	ext_localconf.php		merge
 
 #	ext_tables.php			merge
@@ -69,26 +69,25 @@ overwriteSettings:
 #
 # here you may define default parent classes for your classes
 # these settings only apply for new generated classes
-# you may also just change the parent class in the generated class file. 
-# It will be kept on next code generation, if the overwrite settings 
+# you may also just change the parent class in the generated class file.
+# It will be kept on next code generation, if the overwrite settings
 # are configured to merge it
 #
 #	Experimental!!
 #################################################################
 
 classBuilder:
-				
+
 	Controller:
-		parentClass: 		Tx_ExtbaseKickstarter_Scaffolding_AbstractScaffoldingController
-			
+		parentClass: 		Tx_ExtensionBuilder_Scaffolding_AbstractScaffoldingController
+
 	Model:
-		AbstractEntity: 		
+		AbstractEntity:
 			parentClass:	Tx_Extbase_DomainObject_AbstractEntity
-			
-		AbstractValueObject:	
+
+		AbstractValueObject:
 			parentClass:	Tx_Extbase_DomainObject_AbstractValueObject
 
 	Repository:
 		parentClass: 		Tx_Extbase_Persistence_Repository
-		
-		
+

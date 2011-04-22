@@ -25,17 +25,17 @@
 /**
  * Extended version of the Tx_Extbase_Reflection_ClassReflection
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @subpackage Reflection
  */
-class Tx_ExtbaseKickstarter_Reflection_ClassReflection extends Tx_Extbase_Reflection_ClassReflection {
-	
+class Tx_ExtensionBuilder_Reflection_ClassReflection extends Tx_Extbase_Reflection_ClassReflection {
+
 	/**
-	 * 
+	 *
 	 * @var array to keep all methods that are inherited from parent classes
 	 */
 	protected $inheritedMethods = array();
-	
+
 	/**
 	 * The constructor - initializes the class Tx_Extbase_Reflection_reflector
 	 *
@@ -55,23 +55,23 @@ class Tx_ExtbaseKickstarter_Reflection_ClassReflection extends Tx_Extbase_Reflec
 	 */
 	public function getMethods($filter = NULL) {
 		$extendedMethods = array();
-		
+
 		$methods = ($filter === NULL ? parent::getMethods() : parent::getMethods($filter));
-		
+
 		foreach ($methods as $method) {
-			$extendedMethods[] = new Tx_ExtbaseKickstarter_Reflection_MethodReflection($this->getName(), $method->getName());
+			$extendedMethods[] = new Tx_ExtensionBuilder_Reflection_MethodReflection($this->getName(), $method->getName());
 		}
 		return $extendedMethods;
 	}
-	
-	
-	
+
+
+
 	/**
-	 * get all methods that are declared in parent classes and not in the actual class 
-	 * 
+	 * get all methods that are declared in parent classes and not in the actual class
+	 *
 	 * @return array
 	 */
-	
+
 	public function getInheritedMethods(){
 		$inheritedMethods = array();
 		$parentClass = $this->getParentClass();
@@ -80,12 +80,12 @@ class Tx_ExtbaseKickstarter_Reflection_ClassReflection extends Tx_Extbase_Reflec
 		}
 		return $inheritedMethods;
 	}
-	
+
 	/**
 	 * get all methods that are declared in the actual class and not inherited (or overwrite inherited methods)
-	 * 
+	 *
 	 * @param $includeOverridingMethods default is true
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getNotInheritedMethods($includeOverridingMethods = true){
@@ -105,20 +105,20 @@ class Tx_ExtbaseKickstarter_Reflection_ClassReflection extends Tx_Extbase_Reflec
 		}
 		return $notInheritedMethods;
 	}
-	
-	
+
+
 
 	/**
 	 * Replacement for the original getMethod() method which makes sure
 	 * that Tx_Extbase_Reflection_MethodReflection objects are returned instead of the
 	 * orginal ReflectionMethod instances.
 	 *
-	 * @return Tx_ExtbaseKickstarter_Reflection_MethodReflection Method reflection object of the named method
+	 * @return Tx_ExtensionBuilder_Reflection_MethodReflection Method reflection object of the named method
 	 */
 	public function getMethod($name) {
 		$parentMethod = parent::getMethod($name);
 		if (!is_object($parentMethod)) return $parentMethod;
-		return new Tx_ExtbaseKickstarter_Reflection_MethodReflection($this->getName(), $parentMethod->getName());
+		return new Tx_ExtensionBuilder_Reflection_MethodReflection($this->getName(), $parentMethod->getName());
 	}
 
 	/**
@@ -126,12 +126,12 @@ class Tx_ExtbaseKickstarter_Reflection_ClassReflection extends Tx_Extbase_Reflec
 	 * that Tx_Extbase_Reflection_MethodReflection objects are returned instead of the
 	 * orginal ReflectionMethod instances.
 	 *
-	 * @return Tx_ExtbaseKickstarter_Reflection_MethodReflection Method reflection object of the constructor method
+	 * @return Tx_ExtensionBuilder_Reflection_MethodReflection Method reflection object of the constructor method
 	 */
 	public function getConstructor() {
 		$parentConstructor = parent::getConstructor();
 		if (!is_object($parentConstructor)) return $parentConstructor;
-		return new Tx_ExtbaseKickstarter_Reflection_MethodReflection($this->getName(), $parentConstructor->getName());
+		return new Tx_ExtensionBuilder_Reflection_MethodReflection($this->getName(), $parentConstructor->getName());
 	}
 
 	/**
@@ -146,7 +146,7 @@ class Tx_ExtbaseKickstarter_Reflection_ClassReflection extends Tx_Extbase_Reflec
 		$extendedProperties = array();
 		$properties = ($filter === NULL ? parent::getProperties() : parent::getProperties($filter));
 		foreach ($properties as $property) {
-			$extendedProperties[] = new Tx_ExtbaseKickstarter_Reflection_PropertyReflection($this->getName(), $property->getName());
+			$extendedProperties[] = new Tx_ExtensionBuilder_Reflection_PropertyReflection($this->getName(), $property->getName());
 		}
 		return $extendedProperties;
 	}
@@ -160,15 +160,15 @@ class Tx_ExtbaseKickstarter_Reflection_ClassReflection extends Tx_Extbase_Reflec
 	 * @return Tx_Extbase_Reflection_PropertyReflection Property reflection object of the specified property in this class
 	 */
 	public function getProperty($name) {
-		return new Tx_ExtbaseKickstarter_Reflection_PropertyReflection($this->getName(), $name);
+		return new Tx_ExtensionBuilder_Reflection_PropertyReflection($this->getName(), $name);
 	}
-	
+
 /**
-	 * get all methods that are declared in parent classes and not in the actual class 
-	 * 
+	 * get all methods that are declared in parent classes and not in the actual class
+	 *
 	 * @return array
 	 */
-	
+
 	public function getInheritedProperties(){
 		$inheritedProperties = array();
 		$parentClass = $this->getParentClass();
@@ -177,12 +177,12 @@ class Tx_ExtbaseKickstarter_Reflection_ClassReflection extends Tx_Extbase_Reflec
 		}
 		return $inheritedProperties;
 	}
-	
+
 	/**
 	 * get all Properties that are declared in the actual class and not inherited (or overwrite inherited Properties)
-	 * 
+	 *
 	 * @param $includeOverridingProperties default is true
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getNotInheritedProperties($includeOverridingProperties = true){
@@ -216,7 +216,7 @@ class Tx_ExtbaseKickstarter_Reflection_ClassReflection extends Tx_Extbase_Reflec
 		$phpReflectionClass = new ReflectionClass($this->getName());
 		$parentClass = $phpReflectionClass->getParentClass();
 		if($parentClass){
-			return new Tx_ExtbaseKickstarter_Reflection_ClassReflection($parentClass->getName());
+			return new Tx_ExtensionBuilder_Reflection_ClassReflection($parentClass->getName());
 		}
 		else return false;
 	}
@@ -249,7 +249,7 @@ class Tx_ExtbaseKickstarter_Reflection_ClassReflection extends Tx_Extbase_Reflec
 	public function getTagValues($tag) {
 		return $this->getDocCommentParser()->getTagValues($tag);
 	}
-	
+
 	/**
 	 * Returns an array of tags and their values
 	 *
@@ -272,12 +272,12 @@ class Tx_ExtbaseKickstarter_Reflection_ClassReflection extends Tx_Extbase_Reflec
 		}
 		return $this->docCommentParser;
 	}
-	
+
 	public function getDocCommentContent(){
 		$this->getDocCommentParser();
 		return $this->docCommentParser->getDescription();
 	}
-	
+
 	public function getRawComments(){
 		$this->getDocCommentParser();
 		return $this->docCommentParser->getRawComments($this->getFileName());

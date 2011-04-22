@@ -25,15 +25,15 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-abstract class Tx_ExtbaseKickstarter_Tests_BaseTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
 
 	var $modelClassDir = 'Classes/Domain/Model/';
 
 	function setUp($settingFile = ''){
 
-		$this->extension = $this->getMock('Tx_ExtbaseKickstarter_Domain_Model_Extension',array('getExtensionDir'));
+		$this->extension = $this->getMock('Tx_ExtensionBuilder_Domain_Model_Extension',array('getExtensionDir'));
 		$extensionKey = 'dummy';
-		//$dummyExtensionDir = PATH_typo3conf.'ext/extbase_kickstarter/Tests/Examples/'.$extensionKey.'/';
+		//$dummyExtensionDir = PATH_typo3conf.'ext/extension_builder/Tests/Examples/'.$extensionKey.'/';
 		vfsStream::setup('testDir');
 		$dummyExtensionDir = vfsStream::url('testDir').'/';
 
@@ -43,15 +43,15 @@ abstract class Tx_ExtbaseKickstarter_Tests_BaseTest extends Tx_Extbase_Tests_Uni
 				->method('getExtensionDir')
 				->will($this->returnValue($dummyExtensionDir));
 
-		$yamlParser = new Tx_ExtbaseKickstarter_Utility_SpycYAMLParser();
-		$settings = $yamlParser->YAMLLoadString(file_get_contents(PATH_typo3conf.'ext/extbase_kickstarter/Tests/Examples/Settings/settings1.yaml'));
+		$yamlParser = new Tx_ExtensionBuilder_Utility_SpycYAMLParser();
+		$settings = $yamlParser->YAMLLoadString(file_get_contents(PATH_typo3conf.'ext/extension_builder/Tests/Examples/Settings/settings1.yaml'));
 		$this->extension->setSettings($settings);
 
-		$this->classParser = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Utility_ClassParser');
-		$this->roundTripService =  $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Service_RoundTrip'),array('dummy'));
-		$this->classBuilder = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_ClassBuilder');
+		$this->classParser = t3lib_div::makeInstance('Tx_ExtensionBuilder_Utility_ClassParser');
+		$this->roundTripService =  $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_RoundTrip'),array('dummy'));
+		$this->classBuilder = t3lib_div::makeInstance('Tx_ExtensionBuilder_Service_ClassBuilder');
 		$this->templateParser = $this->getMock($this->buildAccessibleProxy('Tx_Fluid_Core_Parser_TemplateParser'),array('dummy'));
-		$this->codeGenerator = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Service_CodeGenerator'),array('dummy'));
+		$this->codeGenerator = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_CodeGenerator'),array('dummy'));
 
 		if (class_exists('Tx_Extbase_Object_ObjectManager')) {
 			$this->objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
@@ -67,7 +67,7 @@ abstract class Tx_ExtbaseKickstarter_Tests_BaseTest extends Tx_Extbase_Tests_Uni
 
 		$this->roundTripService->injectClassParser($this->classParser);
 		$this->roundTripService->initialize($this->extension);
-	
+
 		$this->classBuilder->injectRoundtripService($this->roundTripService);
 		$this->classBuilder->initialize($this->extension);
 
@@ -84,10 +84,10 @@ abstract class Tx_ExtbaseKickstarter_Tests_BaseTest extends Tx_Extbase_Tests_Uni
 	 * @param $name
 	 * @param $entity
 	 * @param $aggregateRoot
-	 * @return object Tx_ExtbaseKickstarter_Domain_Model_DomainObject
+	 * @return object Tx_ExtensionBuilder_Domain_Model_DomainObject
 	 */
 	protected function buildDomainObject($name, $entity = false, $aggregateRoot = false){
-		$domainObject = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Domain_Model_DomainObject'),array('dummy'));
+		$domainObject = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Domain_Model_DomainObject'),array('dummy'));
 		$domainObject->setExtension($this->extension);
 		$domainObject->setName($name);
 		$domainObject->setEntity($entity);
@@ -95,7 +95,7 @@ abstract class Tx_ExtbaseKickstarter_Tests_BaseTest extends Tx_Extbase_Tests_Uni
 		if($aggregateRoot){
 			$defaultActions = array('list','show','new','create','edit','update','delete');
 			foreach($defaultActions as $actionName){
-				$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action');
+				$action = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
 				$action->setName($actionName);
 				if($actionName == 'deleted'){
 					$action->setNeedsTemplate = false;
@@ -108,7 +108,7 @@ abstract class Tx_ExtbaseKickstarter_Tests_BaseTest extends Tx_Extbase_Tests_Uni
 
 	/**
 	 * Builds an initial class file to test parsing and modifiying of existing classes
-	 * 
+	 *
 	 * This class file is generated based on the CodeTemplates
 	 * @param string $modelName
 	 */

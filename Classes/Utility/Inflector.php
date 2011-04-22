@@ -1,6 +1,6 @@
 <?php
 /*                                                                        *
- * This script belongs to the FLOW3 package "Kickstart".                  *
+ * This script belongs to the TYPO3 package "Extension Builder".          *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU General Public License as published by the Free   *
@@ -19,16 +19,16 @@
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-require(t3lib_extMgm::extPath('extbase_kickstarter') . 'Resources/Private/PHP/Sho_Inflect.php');
+require(t3lib_extMgm::extPath('extension_builder') . 'Resources/Private/PHP/Sho_Inflect.php');
 
 /**
- * Inflector utilities for the Kickstarter. This is a basic conversion from PHP
+ * Inflector utilities for the Extension Builder. This is a basic conversion from PHP
  * class and field names to a human readable form.
  *
  * @version $Id: $
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_ExtbaseKickstarter_Utility_Inflector {
+class Tx_ExtensionBuilder_Utility_Inflector {
 	/**
 	 * @param string $word The word to pluralize
 	 * @return string The pluralized word

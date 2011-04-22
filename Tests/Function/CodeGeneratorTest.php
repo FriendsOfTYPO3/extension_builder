@@ -30,7 +30,7 @@
  * @author Nico de Haen
  *
  */
-class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
+class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_Tests_BaseTest {
 
 	function setUp(){
 		parent::setUp();
@@ -53,7 +53,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		$modelName = 'ModelCgt1';
 		$propertyName = 'blue';
 		$domainObject = $this->buildDomainObject($modelName);
-		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_BooleanProperty();
+		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty();
 		$property->setName($propertyName);
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
@@ -92,7 +92,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		$modelName = 'ModelCgt2';
 		$propertyName = 'title';
 		$domainObject = $this->buildDomainObject($modelName);
-		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_StringProperty();
+		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
 		$property->setName($propertyName);
 		//$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
@@ -134,7 +134,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		$propertyName = 'relName';
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
-		$relation = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToOneRelation();
+		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToOneRelation();
 		$relation->setName($propertyName);
 		$relation->setForeignClass($relatedDomainObject);
 		$domainObject->addProperty($relation);
@@ -152,13 +152,13 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		include($modelClassPath);
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 
-		$reflection = new Tx_ExtbaseKickstarter_Reflection_ClassReflection($className);
+		$reflection = new Tx_ExtensionBuilder_Reflection_ClassReflection($className);
 		$this->assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)),'Getter was not generated');
 		$this->assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)),'Setter was not generated');
 		$setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
 		$this->assertTrue($setterMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $setterMethod->getTagValues('param');
-		t3lib_div::devlog('Parameter','kickstarter',0,$paramTagValues);
+		t3lib_div::devlog('Parameter','extension_builder',0,$paramTagValues);
 		$this->assertTrue((strpos($paramTagValues[0],$relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
 
 		$parameters = $setterMethod->getParameters();
@@ -181,7 +181,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		$propertyName = 'relNames';
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
-		$relation = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToManyRelation();
+		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation();
 		$relation->setName($propertyName);
 		$relation->setForeignClass($relatedDomainObject);
 		$domainObject->addProperty($relation);
@@ -200,9 +200,9 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		include($modelClassPath);
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 
-		$reflection = new Tx_ExtbaseKickstarter_Reflection_ClassReflection($className);
-		$this->assertTrue($reflection->hasMethod('add' . ucfirst(Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName))),'Add method was not generated');
-		$this->assertTrue($reflection->hasMethod('remove' . ucfirst(Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName))),'Remove method was not generated');
+		$reflection = new Tx_ExtensionBuilder_Reflection_ClassReflection($className);
+		$this->assertTrue($reflection->hasMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))),'Add method was not generated');
+		$this->assertTrue($reflection->hasMethod('remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))),'Remove method was not generated');
 		$this->assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)),'Getter was not generated');
 		$this->assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)),'Setter was not generated');
 
@@ -218,7 +218,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		$this->assertTrue(($parameter->getName() == $propertyName),'Wrong parameter name in setter method');
 		$this->assertTrue(($parameter->getTypeHint() == 'Tx_Extbase_Persistence_ObjectStorage'),'Wrong type hint for setter parameter:'.$parameter->getTypeHint());
 
-		$addMethod = $reflection->getMethod('add' . ucfirst(Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName)));
+		$addMethod = $reflection->getMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
 		$this->assertTrue($addMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $addMethod->getTagValues('param');
 		$this->assertTrue((strpos($paramTagValues[0],$relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
@@ -226,10 +226,10 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		$parameters = $addMethod->getParameters();
 		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in add method');
 		$parameter = current($parameters);
-		$this->assertTrue(($parameter->getName() == Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName)),'Wrong parameter name in add method');
+		$this->assertTrue(($parameter->getName() == Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)),'Wrong parameter name in add method');
 		$this->assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getClassName()),'Wrong type hint for add method parameter:'.$parameter->getTypeHint());
 
-		$removeMethod = $reflection->getMethod('remove' . ucfirst(Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName)));
+		$removeMethod = $reflection->getMethod('remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
 		$this->assertTrue($removeMethod->isTaggedWith('param'),'No param tag set for remove method');
 		$paramTagValues = $removeMethod->getTagValues('param');
 		$this->assertTrue((strpos($paramTagValues[0],$relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
@@ -237,7 +237,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		$parameters = $removeMethod->getParameters();
 		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in remove method');
 		$parameter = current($parameters);
-		$this->assertTrue(($parameter->getName() == Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName).'ToRemove'),'Wrong parameter name in remove method');
+		$this->assertTrue(($parameter->getName() == Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName).'ToRemove'),'Wrong parameter name in remove method');
 		$this->assertTrue(($parameter->getTypeHint() ==  $relatedDomainObject->getClassName()),'Wrong type hint for remove method parameter:'.$parameter->getTypeHint());
 	}
 
@@ -253,7 +253,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		$propertyName = 'relNames';
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
-		$relation = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ManyToManyRelation();
+		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation();
 		$relation->setName($propertyName);
 		$relation->setForeignClass($relatedDomainObject);
 		$relation->setInlineEditing(false);
@@ -273,9 +273,9 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		include($modelClassPath);
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 
-		$reflection = new Tx_ExtbaseKickstarter_Reflection_ClassReflection($className);
-		$this->assertTrue($reflection->hasMethod('add' . ucfirst(Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName))),'Add method was not generated');
-		$this->assertTrue($reflection->hasMethod('remove' . ucfirst(Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName))),'Remove method was not generated');
+		$reflection = new Tx_ExtensionBuilder_Reflection_ClassReflection($className);
+		$this->assertTrue($reflection->hasMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))),'Add method was not generated');
+		$this->assertTrue($reflection->hasMethod('remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))),'Remove method was not generated');
 		$this->assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)),'Getter was not generated');
 		$this->assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)),'Setter was not generated');
 		$this->assertTrue($reflection->hasMethod('initStorageObjects'),'initStorageObjects was not generated');
@@ -292,7 +292,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		$this->assertTrue(($parameter->getName() == $propertyName),'Wrong parameter name in setter method');
 		$this->assertTrue(($parameter->getTypeHint() == 'Tx_Extbase_Persistence_ObjectStorage'),'Wrong type hint for setter parameter:'.$parameter->getTypeHint());
 
-		$addMethod = $reflection->getMethod('add' . ucfirst(Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName)));
+		$addMethod = $reflection->getMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
 		$this->assertTrue($addMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $addMethod->getTagValues('param');
 		$this->assertTrue((strpos($paramTagValues[0],$relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
@@ -300,10 +300,10 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		$parameters = $addMethod->getParameters();
 		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in add method');
 		$parameter = current($parameters);
-		$this->assertTrue(($parameter->getName() == Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName)),'Wrong parameter name in add method');
+		$this->assertTrue(($parameter->getName() == Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)),'Wrong parameter name in add method');
 		$this->assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getClassName()),'Wrong type hint for add method parameter:'.$parameter->getTypeHint());
 
-		$removeMethod = $reflection->getMethod('remove' . ucfirst(Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName)));
+		$removeMethod = $reflection->getMethod('remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
 		$this->assertTrue($removeMethod->isTaggedWith('param'),'No param tag set for remove method');
 		$paramTagValues = $removeMethod->getTagValues('param');
 		$this->assertTrue((strpos($paramTagValues[0],$relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
@@ -311,7 +311,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		$parameters = $removeMethod->getParameters();
 		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in remove method');
 		$parameter = current($parameters);
-		$this->assertTrue(($parameter->getName() == Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName).'ToRemove'),'Wrong parameter name in remove method');
+		$this->assertTrue(($parameter->getName() == Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName).'ToRemove'),'Wrong parameter name in remove method');
 		$this->assertTrue(($parameter->getTypeHint() ==  $relatedDomainObject->getClassName()),'Wrong type hint for remove method parameter:'.$parameter->getTypeHint());
 	}
 
@@ -325,7 +325,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 	 */
 	function writeSimpleControllerClassFromDomainObject(){
 		$domainObject = $this->buildDomainObject('ModelCgt6',true);
-		$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action');
+		$action = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
 		$action->setName('list');
 		$domainObject->addAction($action);
 
@@ -354,7 +354,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 	 */
 	function writeAggregateRootClassesFromDomainObject(){
 		$domainObject = $this->buildDomainObject('ModelCgt7',true,true);
-		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_BooleanProperty();
+		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty();
 		$property->setName('blue');
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
@@ -386,7 +386,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		$domainObject = $this->buildDomainObject($modelName,true,true);
 
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName,true);
-		$relation = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ManyToManyRelation();
+		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation();
 		$relation->setName($propertyName);
 		$relation->setForeignClass($relatedDomainObject);
 		$relation->setInlineEditing(false);
@@ -394,8 +394,8 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 
 		$this->extension->addDomainObject($domainObject);
 		$this->extension->addDomainObject($relatedDomainObject);
-		
-		$plugin = new Tx_ExtbaseKickstarter_Domain_Model_Plugin();
+
+		$plugin = new Tx_ExtensionBuilder_Domain_Model_Plugin();
 		$plugin->setName('Test');
 		$plugin->setKey('test');
 		$this->extension->addPlugin($plugin);
@@ -412,7 +412,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorFunctionTest extends Tx_ExtbaseKickstar
 		}
 
 		$this->assertFileExists($extensionDir.'Configuration/TCA/'. $domainObject->getName() . '.php');
-		$this->assertFileExists($extensionDir.'Configuration/Kickstarter/settings.yaml');
+		$this->assertFileExists($extensionDir.'Configuration/ExtensionBuilder/settings.yaml');
 
 		$this->assertFileExists($extensionDir.'Resources/Private/Language/locallang_db.xml');
 		$this->assertFileExists($extensionDir.'Resources/Private/Language/locallang.xml');

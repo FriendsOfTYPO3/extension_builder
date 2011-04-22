@@ -1,6 +1,6 @@
 <?php
 /*                                                                        *
- * This script belongs to the FLOW3 package "ExtbaseKickstarter".         *
+ * This script belongs to the TYPO3 package "Extension Builder".         *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -27,12 +27,12 @@
  * {k:matchString(match:'this', in:'this and that')}
  *
  * @package TYPO3
- * @subpackage	 ExtbaseKickstarter
+ * @subpackage	 ExtensionBuilder
  * @author	 Andreas Lappe
  * @version $ID:$
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
-class Tx_ExtbaseKickstarter_ViewHelpers_MatchStringViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_MatchStringViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
 	 * @param string $match
@@ -43,7 +43,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_MatchStringViewHelper extends Tx_Fluid_C
 	 */
 	public function render($match, $in, $caseSensitive = FALSE) {
 		$matchAsRegularExpression = '/' . $match . '/';
-		if (! $caseSensitive) $matchAsRegularExpression .= 'i'; 
+		if (! $caseSensitive) $matchAsRegularExpression .= 'i';
 		return (preg_match($matchAsRegularExpression, $in) === 0) ? FALSE : TRUE;
 	}
 }

@@ -11,7 +11,7 @@ extbaseModeling_wiringEditorLanguage.layoutOptions =
 			gutter: '5px',
 			collapse: true,
 			collapseSize: 20,
-			header: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.extensionProperties,
+			header: TYPO3.settings.extensionBuilder._LOCAL_LANG.extensionProperties,
 			scroll: true,
 			animate: false
 		},

@@ -24,10 +24,10 @@
 
 /**
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToManyRelation extends Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AbstractRelation {
+abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation extends Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation {
 
 	/**
 	 * The mm relation table name
@@ -45,7 +45,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToMan
 	protected $useExtendedRelationTableName = false;
 
 	/**
-	 * Returns the relation table name. It is build by having 'tx_myextension_' followed by the 
+	 * Returns the relation table name. It is build by having 'tx_myextension_' followed by the
 	 * first domain object name followed by the second domain object name followed by '_mm'.
 	 *
 	 * @return void
@@ -77,7 +77,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToMan
 	/**
 	 * setter for relation table name
 	 * if a table name is configured in TCA the table name is ste to the configured name
-	 * 
+	 *
 	 * @param $relationTableName
 	 * @return void
 	 */
@@ -87,13 +87,13 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToMan
 
 	/**
 	 * Is a MM table needed for this relation?
-	 * 
+	 *
 	 * @return void
 	 */
 	public function getUseMMTable(){
 		if($this->getInlineEditing()){
 			return FALSE;
-		} 
+		}
 		else {
 			return TRUE;
 		}

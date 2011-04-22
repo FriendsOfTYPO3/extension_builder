@@ -25,7 +25,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @scope prototype
  */
-class Tx_ExtbaseKickstarter_ViewHelpers_RenderViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_RenderViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
 	 *
@@ -41,7 +41,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_RenderViewHelper extends Tx_Fluid_Core_V
 
 	/**
 	 *
-	 * @var Tx_ExtbaseKickstarter_Domain_Model_Extension
+	 * @var Tx_ExtensionBuilder_Domain_Model_Extension
 	 */
 	protected $extension;
 
@@ -94,7 +94,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_RenderViewHelper extends Tx_Fluid_Core_V
 
 		$renderingContext = $this->objectManager->create('Tx_Fluid_Core_Rendering_RenderingContext');
 		$viewHelperVariableContainer = $this->objectManager->create('Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer');
-		
+
 		$renderingContext->setTemplateVariableContainer($variableContainer);
 		$renderingContext->setViewHelperVariableContainer($viewHelperVariableContainer);
 
@@ -102,7 +102,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_RenderViewHelper extends Tx_Fluid_Core_V
 	}
 
 	protected function renderTemplate($filePath, $variables) {
-		$parsedTemplate = $this->templateParser->parse(file_get_contents(t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/' . $filePath));
+		$parsedTemplate = $this->templateParser->parse(file_get_contents(t3lib_extMgm::extPath('extension_builder').'Resources/Private/CodeTemplates/' . $filePath));
 		return $parsedTemplate->render($this->buildRenderingContext($variables));
 	}
 }

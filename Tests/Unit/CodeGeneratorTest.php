@@ -30,7 +30,7 @@
  * @author Nico de Haen
  *
  */
-class Tx_ExtbaseKickstarter_CodeGeneratorUnitTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
+class Tx_ExtensionBuilder_CodeGeneratorUnitTest extends Tx_ExtensionBuilder_Tests_BaseTest {
 
 	function setUp(){
 		parent::setUp();
@@ -38,7 +38,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorUnitTest extends Tx_ExtbaseKickstarter_
 
 
 	/**
-	 * Generate the appropriate code for a simple model class 
+	 * Generate the appropriate code for a simple model class
 	 * for a non aggregate root domain object with one boolean property
 	 *
 	 * @test
@@ -47,7 +47,7 @@ class Tx_ExtbaseKickstarter_CodeGeneratorUnitTest extends Tx_ExtbaseKickstarter_
 		$modelName = 'ModelCgt1';
 		$propertyName = 'blue';
 		$domainObject = $this->buildDomainObject($modelName);
-		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_BooleanProperty();
+		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty();
 		$property->setName($propertyName);
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);

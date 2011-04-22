@@ -28,14 +28,14 @@
  *
  * This class is the main entry point for extbase extensions in the frontend.
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AbstractRelation extends Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty {
+abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
 	/**
 	 * The schema of the foreign class
-	 * @var Tx_ExtbaseKickstarter_Domain_Model_DomainObject
+	 * @var Tx_ExtensionBuilder_Domain_Model_DomainObject
 	 */
 	protected $foreignClass;
 
@@ -52,7 +52,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_Abstract
 
 	/**
 	 *
-	 * @return Tx_ExtbaseKickstarter_Domain_Model_DomainObject The foreign class
+	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject The foreign class
 	 */
 	public function getForeignClass() {
 		return $this->foreignClass;
@@ -60,9 +60,9 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_Abstract
 
 	/**
 	 *
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $foreignClass Set the foreign class of the relation
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $foreignClass Set the foreign class of the relation
 	 */
-	public function setForeignClass(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $foreignClass) {
+	public function setForeignClass(Tx_ExtensionBuilder_Domain_Model_DomainObject $foreignClass) {
 		$this->foreignClass = $foreignClass;
 	}
 

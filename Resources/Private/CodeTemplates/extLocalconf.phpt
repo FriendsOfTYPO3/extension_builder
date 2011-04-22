@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}<?php
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}<?php
 if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }

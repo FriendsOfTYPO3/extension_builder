@@ -1,10 +1,10 @@
-{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}
 <k:openingTag>f:be.container</k:openingTag>
 	<div class="typo3-fullDoc">
 		<div id="typo3-docheader">
 			<div id="typo3-docheader-row1">
 				<div class="buttonsleft">
-					
+
 				</div>
 				<div class="buttonsright">
 					<k:openingTag>f:be.buttons.shortcut /</k:openingTag>

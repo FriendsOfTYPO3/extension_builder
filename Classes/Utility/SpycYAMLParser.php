@@ -33,14 +33,14 @@
    * </code>
    * @package Spyc
    */
-class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
+class Tx_ExtensionBuilder_Utility_SpycYAMLParser {
 
   // SETTINGS
 
   /**
    * Setting this to true will force YAMLDump to enclose any string value in
    * quotes.  False by default.
-   * 
+   *
    * @var bool
    */
   public $setting_dump_force_quotes = false;
@@ -113,14 +113,14 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
      * @param string $input Path of YAML file or string containing YAML
      */
   public static function YAMLLoad($input) {
-    $Spyc = new Tx_ExtbaseKickstarter_Utility_SpycYAMLParser;
+    $Spyc = new Tx_ExtensionBuilder_Utility_SpycYAMLParser;
     return $Spyc->__load($input);
   }
 
   /**
      * Load a string of YAML into a PHP array statically
      *
-     * The load method, when supplied with a YAML string, will do its best 
+     * The load method, when supplied with a YAML string, will do its best
      * to convert YAML in a string into a PHP array.  Pretty simple.
      *
      * Note: use this function if you don't want files from the file system
@@ -137,7 +137,7 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
      * @param string $input String containing YAML
      */
   public static function YAMLLoadString($input) {
-    $Spyc = new Tx_ExtbaseKickstarter_Utility_SpycYAMLParser;
+    $Spyc = new Tx_ExtensionBuilder_Utility_SpycYAMLParser;
     return $Spyc->__loadString($input);
   }
 
@@ -162,7 +162,7 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
      * @param int $wordwrap Pass in 0 for no wordwrap, false for default (40)
      */
   public static function YAMLDump($array,$indent = false,$wordwrap = false) {
-    $spyc = new Tx_ExtbaseKickstarter_Utility_SpycYAMLParser;
+    $spyc = new Tx_ExtensionBuilder_Utility_SpycYAMLParser;
     return $spyc->dump($array,$indent,$wordwrap);
   }
 
@@ -211,7 +211,7 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
     if ($array) {
       $array = (array)$array;
       $first_key = key($array);
-      
+
       $previous_key = -1;
       foreach ($array as $key => $value) {
         $string .= $this->_yamlize($key,$value,0,$previous_key, $first_key);
@@ -378,7 +378,7 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
     $cnt = count($Source);
     for ($i = 0; $i < $cnt; $i++) {
       $line = $Source[$i];
-      
+
       $this->indent = strlen($line) - strlen(ltrim($line));
       $tempPath = $this->getParentPathByIndent($this->indent);
       $line = self::stripIndent($line, $this->indent);
@@ -470,9 +470,9 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
      return $this->returnArrayElement($line);
 
     if ($this->isPlainArray($line))
-     return $this->returnPlainArray($line); 
-     
-     
+     return $this->returnPlainArray($line);
+
+
     return $this->returnKeyValuePair($line);
 
   }
@@ -498,7 +498,7 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
 
     if ($is_quoted)
       return strtr(substr ($value, 1, -1), array ('\\"' => '"', '\'\'' => '\'', '\\\'' => '\''));
-    
+
     if (strpos($value, ' #') !== false)
       $value = preg_replace('/\s+#(.+)$/','',$value);
 
@@ -523,7 +523,7 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
       $value = $this->_toType($value);
       return array($key => $value);
     }
-    
+
     if ($first_character == '{' && $last_character == '}') {
       $innerValue = trim(substr ($value, 1, -1));
       if ($innerValue === '') return array();
@@ -570,7 +570,7 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
         $value = (float)$value;
       return $value;
     }
-    
+
     return $value;
   }
 
@@ -673,7 +673,7 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
     if ($finished) break;
 
     $i++;
-    if ($i > 10) 
+    if ($i > 10)
       break; // Prevent infinite loops.
     }
 
@@ -701,7 +701,7 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
   private function addArrayInline ($array, $indent) {
       $CommonGroupPath = $this->path;
       if (empty ($array)) return false;
-      
+
       foreach ($array as $k => $_) {
         $this->addArray(array($k => $_), $indent);
         $this->path = $CommonGroupPath;
@@ -715,7 +715,7 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
 
     if (count ($incoming_data) > 1)
       return $this->addArrayInline ($incoming_data, $incoming_indent);
-    
+
     $key = key ($incoming_data);
     $value = isset($incoming_data[$key]) ? $incoming_data[$key] : null;
     if ($key === '__!YAMLZero') $key = '0';
@@ -731,7 +731,7 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
     }
 
 
-    
+
     $history = array();
     // Unfolding inner array tree.
     $history[] = $_arr = $this->result;
@@ -872,7 +872,7 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
     if ($line[0] != '-') return false;
     if (strlen ($line) > 3)
       if (substr($line,0,3) == '---') return false;
-    
+
     return true;
   }
 
@@ -917,14 +917,14 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
   private function startsMappedValue ($line) {
     return (substr ($line, -1, 1) == ':');
   }
-  
+
   private function isPlainArray ($line) {
     return ($line[0] == '[' && substr ($line, -1, 1) == ']');
   }
-  
+
   private function returnPlainArray ($line) {
-    return $this->_toType($line); 
-  }  
+    return $this->_toType($line);
+  }
 
   private function returnKeyValuePair ($line) {
     $array = array();
@@ -964,7 +964,7 @@ class Tx_ExtbaseKickstarter_Utility_SpycYAMLParser {
   }
 
 
-  private function nodeContainsGroup ($line) {    
+  private function nodeContainsGroup ($line) {
     $symbolsForReference = 'A-z0-9_\-';
     if (strpos($line, '&') === false && strpos($line, '*') === false) return false; // Please die fast ;-)
     if ($line[0] == '&' && preg_match('/^(&['.$symbolsForReference.']+)/', $line, $matches)) return $matches[1];

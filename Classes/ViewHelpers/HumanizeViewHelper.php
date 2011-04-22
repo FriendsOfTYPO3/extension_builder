@@ -1,7 +1,7 @@
 <?php
 
 /*                                                                        *
- * This script belongs to the FLOW3 package "Kickstart".                  *
+ * This script belongs to the TYPO3 package "Extension Builder".                  *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -36,22 +36,21 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @scope prototype
  */
-class Tx_ExtbaseKickstarter_ViewHelpers_HumanizeViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_HumanizeViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
-	 * @var F3\Kickstart\Utility\Inflector
-	 * @inject
+	 * @var Tx_ExtensionBuilder_Utility_Inflector
 	 */
 	protected $inflector;
 
 	public function __construct() {
-		$this->inflector = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Utility_Inflector');
+		$this->inflector = t3lib_div::makeInstance('Tx_ExtensionBuilder_Utility_Inflector');
 	}
 
 	/**
 	 * Make a word human readable
 	 *
-	 * @param string $string The string to make human readable 
+	 * @param string $string The string to make human readable
 	 * @return string The human readable string
 	 */
 	public function render($string = NULL) {

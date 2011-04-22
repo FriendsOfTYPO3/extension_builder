@@ -23,14 +23,14 @@
 ***************************************************************/
 
 /**
- * abstract object representing a class, method or property in the context of 
+ * abstract object representing a class, method or property in the context of
  * software development
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
-	
+abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
+
 	/**
 	 * 1  	 	ReflectionMethod::IS_STATIC
 	 * 2 		ReflectionMethod::IS_ABSTRACT
@@ -46,52 +46,52 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 			'public' => ReflectionMethod::IS_PUBLIC,
 			'protected' => ReflectionMethod::IS_PROTECTED,
 			'private' => ReflectionMethod::IS_PRIVATE
-	
-	); 
-	
+
+	);
+
 	/**
 	 * name
 	 * @var string
 	 */
 	protected $name;
-	
+
 	/**
 	 * modifiers  (privat, static abstract etc. not to mix up with "isModified" )
 	 * @var int
 	 */
 	protected $modifiers;
-	
+
 	/**
 	 * @var array An array of tag names and their values (multiple values are possible)
 	 */
 	protected $tags = array();
-	
+
 	/**
 	 * docComment
 	 * @var string
 	 */
 	protected $docComment;
-	
+
 	/**
 	 * precedingBlock
 	 * all lines that were found above the declaration of the current element
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $precedingBlock;
-	
+
 	/**
 	 * isModified (this flag is set to true, if a modification of a class was detected)
 	 * @var string
 	 */
-	protected $isModified;	
+	protected $isModified;
 
 	/**
 	 * Description of property
 	 * @var string
 	 */
 	protected $description;
-	
+
 	/**
 	 * Setter for name
 	 *
@@ -110,7 +110,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 	public function getName() {
 		return $this->name;
 	}
-	
+
 	/**
 	 * Checks if the doc comment of this method is tagged with
 	 * the specified tag
@@ -130,10 +130,10 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 	public function getTags() {
 		return $this->tags;
 	}
-	
+
 	/**
-	 * 
-	 * @return 
+	 *
+	 * @return
 	 */
 	public function getAnnotations(){
 		$annotations = array();
@@ -156,17 +156,17 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 	}
 
 	/**
-	 * sets the array of tags 
+	 * sets the array of tags
 	 *
 	 * @return array Tags and values
 	 */
 	public function setTags($tags) {
 		$this->tags = $tags;
 	}
-	
+
 	/**
-	 * sets a tags 
-	 * 
+	 * sets a tags
+	 *
 	 * @param string $tagName
 	 * @param mixed $tagValue
 	 * @return void
@@ -182,19 +182,19 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 		else {
 			$this->tags[$tagName] = $tagValue;
 		}
-	}	
-	
+	}
+
 	/**
-	 * unsets a tags 
-	 * 
+	 * unsets a tags
+	 *
 	 * @param string $tagName
 	 * @return void
 	 */
 	public function removeTag($tagName) {
 		//TODO: multiple tags with same tagname must be possible (param etc.)
 		unset($this->tags[$tagName]);
-	}	
-	
+	}
+
 	/**
 	 * Get property description to be used in comments
 	 *
@@ -207,7 +207,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 		}
 		return $this->description;
 	}
-	
+
 	/**
 	 * Get property description lines as array
 	 *
@@ -225,9 +225,9 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 	public function setDescription($description) {
 		$this->description = $description;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 *
 	 * @return boolean true if the description isn't empty
 	 */
@@ -237,7 +237,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Returns the values of the specified tag
 	 * @return array Values of the given tag
@@ -245,7 +245,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 	public function getTagsValues($tagName) {
 		return $this->tags[$tagName];
 	}
-	
+
 	/**
 	 * Setter for modifiers
 	 *
@@ -255,7 +255,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 	public function setModifiers($modifiers) {
 		$this->modifiers = $modifiers;
 	}
-	
+
 	/**
 	 * adds a modifier
 	 *
@@ -269,9 +269,9 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 		if(!in_array($modifier,$this->modifiers)){
 			$this->modifiers[] = $modifier;
 		}
-		
+
 	}
-	
+
 
 	/**
 	 * Getter for modifiers
@@ -281,7 +281,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 	public function getModifiers() {
 		return $this->modifiers;
 	}
-	
+
 	public function getModifierNames(){
 		$modifiers = $this->getModifiers();
 		$modifierNames = array();
@@ -293,7 +293,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 		else $modifierNames[] = array_shift(Reflection::getModifierNames($modifiers));
 		return $modifierNames;
 	}
-	
+
 
 	/**
 	 * Setter for docComment
@@ -313,11 +313,11 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 	public function getDocComment() {
 		return $this->docComment;
 	}
-	
+
 	/**
 	 * is there a docComment
 	 *
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public function hasDocComment() {
 		if(!empty($this->docComment)){
@@ -325,7 +325,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Setter for precedingBlock
 	 *
@@ -346,9 +346,9 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject {
 		$cleanPrecedingBlock = str_replace('<?php','',$cleanPrecedingBlock);
 		return $cleanPrecedingBlock;
 	}
-	
+
 	/**
-	 * Setter for isModified 
+	 * Setter for isModified
 	 *
 	 * @param string $isModified isModified
 	 * @return void

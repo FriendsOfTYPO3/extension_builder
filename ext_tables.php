@@ -11,16 +11,15 @@ if (!defined ('TYPO3_MODE')) {
 Tx_Extbase_Utility_Extension::registerModule(
 	$_EXTKEY,
 	'tools',
-	'kickstarter',
+	'extensionbuilder',
 	'',
 	array(
-		'KickstarterModule' => 'index,domainmodelling,generateCode',
-		'WriteScaffolding' => 'index,generateFiles',
+		'BuilderModule' => 'index,domainmodelling,generateCode',
 	),
 	array(
 		'access' => 'user,group',
-		'icon'   => 'EXT:extbase_kickstarter/ext_icon.gif',
-		'labels' => 'LLL:EXT:extbase_kickstarter/Resources/Private/Language/locallang_mod.xml',
+		'icon'   => 'EXT:extension_builder/ext_icon.gif',
+		'labels' => 'LLL:EXT:extension_builder/Resources/Private/Language/locallang_mod.xml',
 	)
 );
 

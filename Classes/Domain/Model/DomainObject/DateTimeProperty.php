@@ -28,10 +28,10 @@
  *
  * This class is the main entry point for extbase extensions in the frontend.
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_DateTimeProperty extends Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty {
+class Tx_ExtensionBuilder_Domain_Model_DomainObject_DateTimeProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	public function getTypeForComment() {
 		return 'DateTime';
 	}

@@ -24,7 +24,7 @@
  ***************************************************************/
 
 
-class Tx_ExtbaseKickstarter_RoundTripServiceTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
+class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests_BaseTest {
 
 	function setUp(){
 		parent::setUp();
@@ -42,7 +42,7 @@ class Tx_ExtbaseKickstarter_RoundTripServiceTest extends Tx_ExtbaseKickstarter_T
 		$domainObject = $this->buildDomainObject($modelName);
 		$this->assertTrue(is_object($domainObject),'No domain object');
 
-		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_StringProperty();
+		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
 		$property->setName('prop1');
 		$uniqueIdentifier1 = md5(microtime() . 'prop1');
 		$property->setUniqueIdentifier($uniqueIdentifier1);
@@ -75,7 +75,7 @@ class Tx_ExtbaseKickstarter_RoundTripServiceTest extends Tx_ExtbaseKickstarter_T
 
 		// build a new domain object with the same unique identifiers
 		$newDomainObject = $this->buildDomainObject('Dummy');
-		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_BooleanProperty();
+		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty();
 		$property->setName('newProp1Name');
 		$property->setUniqueIdentifier($uniqueIdentifier1);
 		$property->setRequired(TRUE);

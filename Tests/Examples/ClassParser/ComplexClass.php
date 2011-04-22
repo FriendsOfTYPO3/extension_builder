@@ -1,37 +1,37 @@
-<?php 
+<?php
 /**
  * multiline comment test
  * @author Nico de Haen
- * 
+ *
 
 	empty line in multiline comment
-	
+
 	// single comment in multiline
-	 * 
+	 *
 	some keywords: $property  function
-	static 
-	
-	
+	static
+
+
 
  *
  * @test testtag
  */
-require_once(t3lib_extmgm::extPath('extbase_kickstarter') . 'Tests/Examples/ClassParser/BasicClass.php');
-		
+require_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');
 
-final class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_ComplexClass extends Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_BasicClass{
-	
+
+final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass extends Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClass{
+
 	protected $name; private $propertiesInOneLine;
-	
+
 	const testConstant = "123"; const testConstant2 = 0.56;
-	
+
 	protected $defaultOrderings = array(
 		'title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING,
 		'subtitle' =>  Tx_Extbase_Persistence_QueryInterface::ORDER_DESCENDING,
 	);
-	
+
 	/**
-	 * 
+	 *
 	 * @return string $name
 	 */
 	public function getName(){
@@ -39,25 +39,25 @@ final class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_ComplexClass extend
 	}
 	// some methods
 	public function getNames(){	return $this->names;}
-	
+
 	public function getNames1(){  }
-	
-	public function getNames2(){	
+
+	public function getNames2(){
 	}
-	
-	public function getNames3(){	
+
+	public function getNames3(){
 		return $this->names;		}
-		
+
 	//startPrecedingBlock
-	
+
 	/***********************************************************/
-	
-	
+
+
 	/*********/ //some  strange comments /*/ test \*\*\*
-	//  include_once('typo3conf/ext/extbase_kickstarter/Tests/Examples/ComplexClass.php'); // test
-	
+	//  include_once('typo3conf/ext/extension_builder/Tests/Examples/ComplexClass.php'); // test
+
 	/**
-	 * 
+	 *
 	 * @param string $name
 	 * @return void
 	 * @lazy
@@ -89,7 +89,7 @@ var $testProperty4 = 123;
 /**
  *  dfg dfg dfg dfg
  */
-require_once(t3lib_extmgm:: extPath('extbase_kickstarter') . 'Tests/Examples/ClassParser/BasicClass.php');   include_once(t3lib_extmgm::extPath('extbase_kickstarter') . 'Tests/Examples/ComplexClass.php'); // test
+require_once(t3lib_extmgm:: extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');   include_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ComplexClass.php'); // test
 
- include_once(t3lib_extmgm::extPath('extbase_kickstarter') . 'Tests/Examples/ClassParser/ComplexClass.php'); // test
+ include_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ClassParser/ComplexClass.php'); // test
 ?>

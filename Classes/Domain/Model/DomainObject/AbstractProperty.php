@@ -25,24 +25,24 @@
 /**
  * property representing a "property" in the context of software development
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty {
+abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
-	
+
 	/**
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $uniqueIdentifier;
-	
+
 	/**
 	 * Name of the property
 	 * @var string
 	 */
 	protected $name;
-	
+
 	/**
 	 * Description of property
 	 * @var string
@@ -54,10 +54,10 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	 * @var boolean
 	 */
 	protected $required;
-	
+
 	/**
 	 * Is an upload folder required for this property
-	 * 
+	 *
 	 * @var boolean
 	 */
 	protected $needsUploadFolder = false;
@@ -65,23 +65,23 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 
 	/**
 	 * The domain object this property belongs to.
-	 * @var Tx_ExtbaseKickstarter_Domain_Model_DomainObject
+	 * @var Tx_ExtensionBuilder_Domain_Model_DomainObject
 	 */
 	protected $class;
 
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
 	 *
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Class_Schema $class the class this property belongs to
+	 * @param Tx_ExtensionBuilder_Domain_Model_Class_Schema $class the class this property belongs to
 	 */
-	public function setClass(Tx_ExtbaseKickstarter_Domain_Model_Class_Schema $class) {
+	public function setClass(Tx_ExtensionBuilder_Domain_Model_Class_Schema $class) {
 		$this->class = $class;
 	}
 
 	/**
 	 * Get the domain object this property belongs to.
 	 *
-	 * @return Tx_ExtbaseKickstarter_Domain_Model_Class_Schema
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Schema
 	 */
 	public function getClass() {
 		return $this->class;
@@ -98,13 +98,13 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 
 	/**
 	 * Set property name
-	 * 
+	 *
 	 * @param string $name Property name
 	 */
 	public function setName($name) {
 		$this->name = $name;
 	}
-	
+
 	/**
 	 * Get property uniqueIdentifier
 	 *
@@ -116,7 +116,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 
 	/**
 	 * Set property uniqueIdentifier
-	 * 
+	 *
 	 * @param string Property uniqueIdentifier
 	 */
 	public function setUniqueIdentifier($uniqueIdentifier) {
@@ -124,30 +124,30 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	}
 
 	/**
-	 * 
+	 *
 	 * @return boolean true (if property is of type relation any to many)
 	 */
 	public function isAnyToManyRelation(){
-		return is_subclass_of($this, 'Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToManyRelation');
+		return is_subclass_of($this, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation');
 	}
-	
+
 
 	/**
-	 * 
+	 *
 	 * @return boolean true (if property is of type relation)
 	 */
 	public function isRelation(){
-		return is_subclass_of($this, 'Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AbstractRelation');
+		return is_subclass_of($this, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation');
 	}
 
 	/**
-	 * 
+	 *
 	 * @return boolean true (if property is of type boolean)
 	 */
 	public function isBoolean(){
-		return is_a($this, 'Tx_ExtbaseKickstarter_Domain_Model_DomainObject_BooleanProperty');
+		return is_a($this, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty');
 	}
-	
+
 
 	/**
 	 * Get property description to be used in comments
@@ -161,7 +161,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 			return $this->getName();
 		}
 	}
-	
+
 	/**
 	 * Set property description
 	 *
@@ -179,7 +179,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	 */
 	public function getFieldName() {
 		$fieldName = Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($this->name);
-		if (Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator::isReservedMYSQLWord($fieldName)) {
+		if (Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::isReservedMYSQLWord($fieldName)) {
 			$fieldName = $this->domainObject->getExtension()->getShortExtensionKey() . '_' . $fieldName;
 		}
 		return $fieldName;
@@ -210,7 +210,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	 * @return string
 	 */
 	abstract public function getTypeHint();
-	
+
 	/**
 	 * Get PHP type hint with a single trailing whitespace appended if needed, or if no type hint is set, omit this trailing whitespace.
 	 *
@@ -239,7 +239,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	public function setRequired($required) {
 		$this->required = $required;
 	}
-	
+
 	/**
 	 * Set whether this property is exclude field
 	 *
@@ -249,7 +249,7 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	public function setExcludeField($excludeField) {
 		$this->excludeField = $excludeField;
 	}
-	
+
 	/**
 	 * TRUE if this property is an exclude field, FALSE otherwise.
 	 *
@@ -272,12 +272,12 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	}
 
 	/**
-	 * Get the data type of this property. This is the last part after Tx_ExtbaseKickstarter_Domain_Model_DomainObject_*
+	 * Get the data type of this property. This is the last part after Tx_ExtensionBuilder_Domain_Model_DomainObject_*
 	 *
 	 * @return string the data type of this property
 	 */
 	public function getDataType() {
-		return substr(get_class($this), strlen('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_'));
+		return substr(get_class($this), strlen('Tx_ExtensionBuilder_Domain_Model_DomainObject_'));
 	}
 
 	/**
@@ -318,24 +318,24 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
 	 *
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject the domain object this property belongs to
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject the domain object this property belongs to
 	 */
-	public function setDomainObject(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
+	public function setDomainObject(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
 		$this->domainObject = $domainObject;
 	}
-	
+
 	/**
-	 * 
-	 * @return Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject
+	 *
+	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
 	 */
 	public function getDomainObject() {
 		return $this->domainObject;
 	}
-	
+
 	/**
 	 * The Typoscript statement used by extbase to map the property to
 	 * a specific database fieldname
-	 * 
+	 *
 	 * @return string $mappingStatement
 	 */
 	public function getMappingStatement(){
@@ -344,11 +344,11 @@ abstract class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty 
 		}
 		else return NULL;
 	}
-	
+
 
 	/**
 	 * Getter for $needsUploadFolder
-	 * 
+	 *
 	 * @return boolean $needsUploadFolder
 	 */
 	public function getNeedsUploadFolder(){

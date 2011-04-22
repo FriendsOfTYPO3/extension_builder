@@ -23,10 +23,10 @@
 ***************************************************************/
 
 /**
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_TextProperty extends Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty {
+class Tx_ExtensionBuilder_Domain_Model_DomainObject_TextProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
 	public function getTypeForComment() {
 		return 'string';

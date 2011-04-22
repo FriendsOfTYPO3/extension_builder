@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}
 	/**
 	 * Displays a form for creating a new  {domainObject.name}
 	 *

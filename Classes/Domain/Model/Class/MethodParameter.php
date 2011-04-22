@@ -25,56 +25,56 @@
 /**
  * parameter representing a method parameterin the context of software development
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_Class_MethodParameter {
+class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 
-    
+
 	/**
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $name;
-	
+
 	/**
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $varType;
-	
+
 	/**
 	 * @var mixed
 	 */
 	protected $typeHint;
-	
-	
+
+
 	/**
-	 * 
+	 *
 	 * @var mixed
 	 */
 	protected $defaultValue;
-	
+
 	/**
-	 * 
+	 *
 	 * @var int
 	 */
 	protected $position;
-	
+
 	/**
-	 * 
+	 *
 	 * @var boolean
 	 */
 	protected $optional;
-	
+
 	/**
-	 * 
+	 *
 	 * @var boolean
 	 */
 	protected $passedByReference;
-	
+
 	/**
-	 * 
+	 *
 	 * @param $propertyName
 	 * @param $propertyReflection (optional)
 	 * @return unknown_type
@@ -83,13 +83,13 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_MethodParameter {
 		$this->name = $parameterName;
 		//TODO the parameter hints (or casts?) are not yet evaluated since the reflection does not recognize the
 		// maybe we can get them by a reg expression from the import tool?
-		
+
 		if($parameterReflection && $parameterReflection instanceof Tx_Extbase_Reflection_ParameterReflection){
 			foreach($this as $key => $value) {
 				$setterMethodName = 'set'.ucfirst($key);
 				$getterMethodName = 'get'.ucfirst($key);
 				$getBooleanMethodName = 'is'.ucfirst($key);
-				
+
 	    		// map properties of reflection parmeter to this parameter
 	    		try{
 		    		if(method_exists($parameterReflection,$getterMethodName) && method_exists($this,$setterMethodName) ){
@@ -99,33 +99,33 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_MethodParameter {
 	    		catch(ReflectionException $e){
 	    			// the getDefaultValue throws an exception if the parameter is not optional
 	    		}
-				
+
 				if(method_exists($parameterReflection,$getBooleanMethodName)){
 	    			$this->$key = $parameterReflection->$getBooleanMethodName();
 	    		}
-	    		
+
 			}
 		}
 	}
-	
-	
-	
+
+
+
 	/**
-	 * 
+	 *
 	 * @return string $name
 	 */
 	public function getName(){
 		return $this->name;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param string $name
 	 */
 	public function setName($name){
 		$this->name = $name;
 	}
-	
+
 	    /**
      * Returns $varType.
      *
@@ -133,7 +133,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_MethodParameter {
     public function getVarType() {
         return $this->varType;
     }
-    
+
     /**
      * Sets $varType.
      *
@@ -142,26 +142,26 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_MethodParameter {
     public function setVarType($varType) {
         $this->varType = $varType;
     }
-	
+
 	/**
-	 * 
+	 *
 	 * @return int $position
 	 */
 	public function getPosition(){
 		return $this->position;
 	}
-	
+
 	/**
 	 * setter for position
-	 * 
+	 *
 	 * @param int $position
 	 * @return void
 	 */
 	public function setPosition($position){
 		$this->position = $position;
 	}
-	
-	
+
+
 	/**
 	 * getter for defaultValue
 	 * @return mixed
@@ -169,7 +169,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_MethodParameter {
 	public function getDefaultValue(){
 		return $this->defaultValue;
 	}
-	
+
 	/**
 	 * setter for defaultValue
 	 * @param $defaultValue
@@ -178,36 +178,36 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_MethodParameter {
 	public function setDefaultValue($defaultValue = NULL){
 		$this->defaultValue = $defaultValue;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function isOptional(){
 		return $this->optional;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function isPassedByReference(){
 		return $this->passedByReference;
 	}
-	
+
 	/**
-	 * 
-	 * @return 
+	 *
+	 * @return
 	 */
 	public function getTypeHint(){
 		return $this->typeHint;
 	}
-	
+
 	 /**
      * Sets $typeHint.
      *
      * @param object $typeHint
-     * @see Tx_ExtbaseKickstarter_Domain_Model_Class_MethodParameter::$typeHint
+     * @see Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter::$typeHint
      */
     public function setTypeHint($typeHint) {
         $this->typeHint = $typeHint;

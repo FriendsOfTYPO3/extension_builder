@@ -25,11 +25,11 @@
 /**
  * provides helper methods
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Utility_Tools implements t3lib_singleton{
-	
+class Tx_ExtensionBuilder_Utility_Tools implements t3lib_singleton{
+
 	static public function convertJSONArrayToPHPArray($encodedArray){
 		if(strpos($encodedArray,'}')>-1){
 			$encodedArray = str_replace('{','array(',$encodedArray);

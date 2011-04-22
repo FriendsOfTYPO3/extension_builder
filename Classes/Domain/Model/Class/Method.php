@@ -25,29 +25,29 @@
 /**
  * method representing a "method" in the context of software development
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_Class_Method extends Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject{
-	
+class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject{
+
 	/**
 	 * body
 	 * @var string
 	 */
 	protected $body;
-	
+
 	public $defaultIndent = "\t\t";
-	
+
 	/**
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $parameters;
-	
-	
+
+
 	public function __construct($methodName,$methodReflection = NULL){
 		$this->setName($methodName);
-		if($methodReflection instanceof Tx_ExtbaseKickstarter_Reflection_MethodReflection){
+		if($methodReflection instanceof Tx_ExtensionBuilder_Reflection_MethodReflection){
 			$methodReflection->getTagsValues(); // just to initialize the docCommentParser
 			foreach($this as $key => $value) {
 				$setterMethodName = 'set'.t3lib_div::underscoredToUpperCamelCase($key);
@@ -57,7 +57,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Method extends Tx_ExtbaseKickstar
 					$this->$setterMethodName($methodReflection->$getterMethodName());
 	    			//t3lib_div::print_array($getterMethodName);
 	    		}
-				
+
 			}
 			if(empty($this->tags)){
 				// strange behaviour in php ReflectionProperty->getDescription(). A backslash is added to the description
@@ -66,9 +66,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Method extends Tx_ExtbaseKickstar
 				$this->setTag('return','void');
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * Setter for body
 	 *
@@ -76,7 +76,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Method extends Tx_ExtbaseKickstar
 	 * @return void
 	 */
 	public function setBody($body) {
-		// keep or set the indent 
+		// keep or set the indent
 		if(strpos($body,$this->defaultIndent)!==0){
 			$lines = explode("\n",$body);
 			$newLines = array();
@@ -96,7 +96,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Method extends Tx_ExtbaseKickstar
 	public function getBody() {
 		return $this->body;
 	}
-	
+
 	/**
 	 * getter for parameters
 	 * @return array parameters
@@ -104,7 +104,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Method extends Tx_ExtbaseKickstar
 	public function getParameters(){
 		return $this->parameters;
 	}
-	
+
 	/**
 	 * getter for parameter names
 	 * @return array parameter names
@@ -119,12 +119,12 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Method extends Tx_ExtbaseKickstar
 
 	/**
 	 * adder for parameters
-	 * @param array $parameters of type Tx_ExtbaseKickstarter_Reflection_ParameterReflection
+	 * @param array $parameters of type Tx_ExtensionBuilder_Reflection_ParameterReflection
 	 * @return void
 	 */
 	public function setParameters($parameters){
 		foreach($parameters as $parameter){
-			$methodParameter = new Tx_ExtbaseKickstarter_Domain_Model_Class_MethodParameter($parameter->getName(),$parameter);
+			$methodParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($parameter->getName(),$parameter);
 			$this->parameters[$methodParameter->getPosition()] = $methodParameter;
 		}
 
@@ -139,9 +139,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Method extends Tx_ExtbaseKickstar
 		if(!in_array($parameter->getName(),$this->getParameterNames())){
 			$this->parameters[$parameter->getPosition()] = $parameter;
 		}
-		
+
 	}
-	
+
 	/**
 	 * replace a single parameter, depending on position
 	 * @param array $parameter
@@ -150,7 +150,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Method extends Tx_ExtbaseKickstar
 	public function replaceParameter($parameter){
 		$this->parameters[$parameter->getPosition()] = $parameter;
 	}
-	
+
 	/**
 	 * removes a parameter
 	 * @param $parameterName
@@ -165,9 +165,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Method extends Tx_ExtbaseKickstar
 		}
 		else return false;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param $parameterName
 	 * @param $parameterSortingIndex
 	 * @return boolean true (if successfull removed)
@@ -184,13 +184,13 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Method extends Tx_ExtbaseKickstar
 		}
 		return false;
 	}
-	
+
 	/**
-	* 
-	* TODO: THe sorting of tags/annotations should be controlled	
-	*   
+	*
+	* TODO: THe sorting of tags/annotations should be controlled
+	*
 	*/
-	public function getAnnotations(){ 
+	public function getAnnotations(){
 		$annotations = parent::getAnnotations();
 		if(count($this->parameters > 0) && !$this->isTaggedWith('param')){
 			foreach($this->parameters as $parameter){
@@ -202,7 +202,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Method extends Tx_ExtbaseKickstar
 		}
 		return $annotations;
 	}
-	
+
 }
 
 ?>

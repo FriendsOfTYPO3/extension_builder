@@ -1,5 +1,5 @@
 <k:removeNewlines>
-{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}
 <f:for each="{extension.domainObjects}" as="domainObject">
 #
 # Table structure for table '{domainObject.databaseTableName}'

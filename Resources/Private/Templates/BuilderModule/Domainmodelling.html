@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtbaseKickstarter_ViewHelpers} 
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}
 <f:layout name="Default" />
 <f:section name="header">
 	<k:be.configuration/>
@@ -9,7 +9,7 @@
 
 	<script type="text/javascript">
 		// InputEx needs a correct path to this image
-		inputEx.spacerUrl = TYPO3.settings.extbaseKickstarter.baseUrl + "Resources/Public/jsDomainModeling/wireit/lib/inputex/images/space.gif";
+		inputEx.spacerUrl = TYPO3.settings.extensionBuilder.baseUrl + "Resources/Public/jsDomainModeling/wireit/lib/inputex/images/space.gif";
 
 		YAHOO.util.Event.onDOMReady( function() {
 			var editor = new WireIt.WiringEditor(extbaseModeling_wiringEditorLanguage);
@@ -32,7 +32,7 @@
 		</div>
 
 		<div id="helpPanel">
-			
+
 		</div>
 
 	</div>

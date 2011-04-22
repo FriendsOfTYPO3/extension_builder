@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<T3locallang>{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+<T3locallang>{namespace k=Tx_ExtensionBuilder_ViewHelpers}
 	<meta type="array">
 		<type>database</type>
 		<description>Language labels for database tables/fields belonging to extension '{extension.extensionKey}'</description>

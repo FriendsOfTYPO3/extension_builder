@@ -26,14 +26,14 @@
  ***************************************************************/
 
 
-class Tx_ExtbaseKickstarter_ExtensionSchemaBuilderTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
+class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder_Tests_BaseTest {
 
 	protected $extensionSchemaBuilder;
 
 	public function setUp() {
 		//parent::setUp();
-		$this->extension = $this->getMock('Tx_ExtbaseKickstarter_Domain_Model_Extension',array('getOverWriteSettings'));
-		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder'), array('dummy'));
+		$this->extension = $this->getMock('Tx_ExtensionBuilder_Domain_Model_Extension',array('getOverWriteSettings'));
+		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder'), array('dummy'));
 		$this->extensionKey = 'dummy';
 	}
 	/**
@@ -55,7 +55,7 @@ class Tx_ExtbaseKickstarter_ExtensionSchemaBuilderTest extends Tx_ExtbaseKicksta
 			)
 		);
 
-		$extension = new Tx_ExtbaseKickstarter_Domain_Model_Extension();
+		$extension = new Tx_ExtensionBuilder_Domain_Model_Extension();
 		$extension->setDescription($description);
 		$extension->setName($name);
 		$extension->setExtensionKey($extensionKey);
@@ -71,8 +71,8 @@ class Tx_ExtbaseKickstarter_ExtensionSchemaBuilderTest extends Tx_ExtbaseKicksta
 	 */
 	public function conversionExtractsPersons() {
 		$persons = array();
-		$persons[] = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Person');
-		$persons[] = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Person');
+		$persons[] = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
+		$persons[] = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
 		$persons[0]->setName('name0');
 		$persons[0]->setRole('role0');
 		$persons[0]->setEmail('email0');
@@ -139,26 +139,26 @@ class Tx_ExtbaseKickstarter_ExtensionSchemaBuilderTest extends Tx_ExtbaseKicksta
 			'relationGroup' => array()
 		);
 
-		$expected = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
+		$expected = new Tx_ExtensionBuilder_Domain_Model_DomainObject();
 		$expected->setName($name);
 		$expected->setDescription($description);
 		$expected->setEntity(TRUE);
 		$expected->setAggregateRoot(TRUE);
 
-		$property0 = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_StringProperty();
+		$property0 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
 		$property0->setName('name');
 		$property0->setRequired(TRUE);
-		$property1 = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_IntegerProperty();
+		$property1 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_IntegerProperty();
 		$property1->setName('type');
 		$expected->addProperty($property0);
 		$expected->addProperty($property1);
 
-		$extension = new Tx_ExtbaseKickstarter_Domain_Model_Extension();
+		$extension = new Tx_ExtensionBuilder_Domain_Model_Extension();
 		$extension->setExtensionKey('my_ext_key');
 		$this->extensionSchemaBuilder->extension = $extension;
 
 		$actual = $this->extensionSchemaBuilder->_call('buildDomainObject', $input);
-		//$this->codeGenerator = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Service_CodeGenerator'), array('dummy'));
+		//$this->codeGenerator = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_CodeGenerator'), array('dummy'));
 		//$this->codeGenerator->build($this->extensionSchemaBuilder->extension);
 		$domainObjects = $this->extensionSchemaBuilder->extension->getDomainObjects();
 
@@ -276,47 +276,47 @@ class Tx_ExtbaseKickstarter_ExtensionSchemaBuilderTest extends Tx_ExtbaseKicksta
 			)
 		);
 
-		$extension = new Tx_ExtbaseKickstarter_Domain_Model_Extension();
+		$extension = new Tx_ExtensionBuilder_Domain_Model_Extension();
 		$extension->setName('My ext name');
-		$extension->setState(Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_BETA);
+		$extension->setState(Tx_ExtensionBuilder_Domain_Model_Extension::STATE_BETA);
 		$extension->setExtensionKey($this->extensionKey);
 		$extension->setDescription('Some description');
 		$extension->setExtensionDir('');
 
-		$blog = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
+		$blog = new Tx_ExtensionBuilder_Domain_Model_DomainObject();
 		$blog->setName('Blog');
 		$blog->setDescription('A blog object');
 		$blog->setEntity(TRUE);
 		$blog->setAggregateRoot(FALSE);
-		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_StringProperty();
+		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
 		$property->setName('name');
 		$blog->addProperty($property);
-		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_StringProperty();
+		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
 		$property->setName('description');
 		$blog->addProperty($property);
 
 		$extension->addDomainObject($blog);
 
-		$post = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
+		$post = new Tx_ExtensionBuilder_Domain_Model_DomainObject();
 		$post->setName('Post');
 		$post->setDescription('A blog post');
 		$post->setEntity(TRUE);
 		$post->setAggregateRoot(FALSE);
 		$extension->addDomainObject($post);
 
-		$comment = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject();
+		$comment = new Tx_ExtensionBuilder_Domain_Model_DomainObject();
 		$comment->setName('Comment');
 		$comment->setDescription('');
 		$comment->setEntity(TRUE);
 		$comment->setAggregateRoot(FALSE);
 		$extension->addDomainObject($comment);
 
-		$relation = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToOneRelation();
+		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToOneRelation();
 		$relation->setName('posts');
 		$relation->setForeignClass($post);
 		$blog->addProperty($relation);
 
-		$relation = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToManyRelation();
+		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation();
 		$relation->setName('comments');
 		$relation->setForeignClass($comment);
 		$post->addProperty($relation);

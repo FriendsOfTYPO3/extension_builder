@@ -25,16 +25,16 @@
 /**
  * method view helper
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  */
 
-class Tx_ExtbaseKickstarter_ViewHelpers_MethodViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
-	
+class Tx_ExtensionBuilder_ViewHelpers_MethodViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+
 	/**
-	 * 
+	 *
 	 * @param object $methodObject
 	 * @param string $renderElement
-	 * @return 
+	 * @return
 	 */
 	public function render($methodObject,$renderElement) {
 		$content = '';
@@ -45,17 +45,17 @@ class Tx_ExtbaseKickstarter_ViewHelpers_MethodViewHelper extends Tx_Fluid_Core_V
 		}
 		return $content;
 	}
-	
+
 	/**
 	 * This methods renders the parameters of a method, including typeHints and default values.
-	 * 
+	 *
 	 * @param $methodObject
 	 * @return string parameters
 	 */
 	private function renderMethodParameter($methodObject){
 		$content = '';
 		$parameters = array();
-		
+
 		foreach($methodObject->getParameters()  as $parameter){
 			$parameterName = $parameter->getName();
 			$typeHint = $parameter->getTypeHint ();
@@ -67,15 +67,15 @@ class Tx_ExtbaseKickstarter_ViewHelpers_MethodViewHelper extends Tx_Fluid_Core_V
 					$typeHintParts = explode(' ',$typeHint);
 					$typeHint = $typeHintParts[0];
 				}
-				
+
 				// the default value has to be json_encoded to render its string representation
 				if(is_array($defaultValue)){
 					if(!empty($defaultValue)){
 						$defaultValue = json_encode($defaultValue);
 						// now we render php notation from JSON notation
-						$defaultValue = Tx_ExtbaseKickstarter_Utility_Tools::convertJSONArrayToPHPArray($defaultValue);
-						
-						//t3lib_div::devLog('default Value: '. $defaultValue, 'parameter debug');				
+						$defaultValue = Tx_ExtensionBuilder_Utility_Tools::convertJSONArrayToPHPArray($defaultValue);
+
+						//t3lib_div::devLog('default Value: '. $defaultValue, 'parameter debug');
 					}
 					else $defaultValue = 'array()';
 				}
@@ -84,9 +84,9 @@ class Tx_ExtbaseKickstarter_ViewHelpers_MethodViewHelper extends Tx_Fluid_Core_V
 				}
 				$parameterName .= ' = '.$defaultValue;
 			}
-			
+
 			$parameterName = '$'.$parameterName;
-			
+
 			if($parameter->isPassedByReference()){
 				$parameterName = '&'.$parameterName;
 			}
@@ -94,12 +94,12 @@ class Tx_ExtbaseKickstarter_ViewHelpers_MethodViewHelper extends Tx_Fluid_Core_V
 				$parameterName = $typeHint.' '.$parameterName;
 			}
 			$parameters[] = $parameterName;
-			//t3lib_div::devLog($methodSchemaObject->getName().':'.$parameter->getName(), 'parameter debug');			
+			//t3lib_div::devLog($methodSchemaObject->getName().':'.$parameter->getName(), 'parameter debug');
 		}
-		
+
 		return implode(', ',$parameters);
 	}
-	
+
 
 }
 

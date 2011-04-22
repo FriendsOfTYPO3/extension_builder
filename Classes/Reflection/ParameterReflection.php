@@ -26,21 +26,21 @@
  * Extended version of the Tx_Extbase_Reflection_ParameterReflection
  * implements typeHint
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @subpackage Reflection
  */
-class Tx_ExtbaseKickstarter_Reflection_ParameterReflection extends Tx_Extbase_Reflection_ParameterReflection {
-	
+class Tx_ExtensionBuilder_Reflection_ParameterReflection extends Tx_Extbase_Reflection_ParameterReflection {
+
 	/**
 	 * typeHint is missing in PHP Reflection (at least in 5.3)
-	 * In the constructor of Tx_ExtbaseKickstarter_Reflection_MethodReflection 
+	 * In the constructor of Tx_ExtensionBuilder_Reflection_MethodReflection
 	 * is a workaround implemented and each parameter gets a typeHint injected
-	 * 
-	 * 
+	 *
+	 *
 	 * @var string
 	 */
 	var $typeHint;
-	
+
 	/**
 	 * The constructor, initializes the reflection parameter
 	 *
@@ -53,17 +53,17 @@ class Tx_ExtbaseKickstarter_Reflection_ParameterReflection extends Tx_Extbase_Re
 		parent::__construct($function, $parameterName);
 		$this->typeHint = $typeHint;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return string $typeHint
 	 */
 	public function getTypeHint(){
 		return $this->typeHint;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param string $typeHint
 	 * @return void
 	 */

@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}<?php
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}<?php
 <k:render partial="Classes/licenseHeader.phpt" arguments="{persons:extension.persons}" />
 
 /**
@@ -29,7 +29,7 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	protected function initStorageObjects() {
 		/**
 		* Do not modify this method!
-		* It will be rewritten on each save in the kickstarter
+		* It will be rewritten on each save in the extension builder
 		* You may modify the constructor of this class instead
 		*/
 		<k:removeNewlines>

@@ -1,16 +1,16 @@
-{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}
 <k:openingTag>f:layout name="Default" /</k:openingTag>
 
 This Template is responsible for displaying a single view for a domain object
 
-If you modify this template, do not forget to change the overwrite settings 
-in /Configuration/Kickstarter/settings.yaml:
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
   Resources:
-    Private: 
+    Private:
       Templates:
         Show.html: keep
 
-Otherwise your changes will be overwritten the next time you save the extension in the kickstarter
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
 <k:openingTag>f:section name="main"</k:openingTag>
 <h1>Single View for {domainObject.name}</h1>

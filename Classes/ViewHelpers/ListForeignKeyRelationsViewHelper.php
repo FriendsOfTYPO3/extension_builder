@@ -1,6 +1,6 @@
 <?php
 /*                                                                        *
- * This script belongs to the FLOW3 package "Kickstart".                  *
+ * This script belongs to the TYPO3 package "Extension Builder".                  *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -26,7 +26,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @scope prototype
  */
-class Tx_ExtbaseKickstarter_ViewHelpers_ListForeignKeyRelationsViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_ListForeignKeyRelationsViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
 	 *
@@ -40,7 +40,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_ListForeignKeyRelationsViewHelper extend
 		foreach ($extension->getDomainObjects() as $domainObject) {
 			if (!count($domainObject->getProperties())) continue;
 			foreach ($domainObject->getProperties() as $property) {
-				if ($property instanceof Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToManyRelation
+				if ($property instanceof Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation
 					&& $property->getForeignClass() === $expectedDomainObject) {
 					$results[] = $property;
 				}

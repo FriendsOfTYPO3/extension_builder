@@ -19,7 +19,7 @@
  * @package	TYPO3
  * @subpackage	Tx_GimmeFive
  */
-class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
+class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	const PACKAGE_PREFIX = 'Tx';
 	const THIS_PACKAGE_KEY = 'GimmeFive';
 	const DIRECTORY_CLASSES = 'Classes/';
@@ -37,8 +37,8 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 	protected $componentObjects = array(); // the object cache
 	protected $componentConfigurations = array(); // the configuration cache
 	protected $tsConf; // TypoScript config
-	
-		
+
+
 	public static function getInstance() {
         if (self::$instance === NULL) {
             self::$instance = new Tx_GimmeFive_Component_Manager();
@@ -52,7 +52,7 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 	}
 
     private function __clone() {}
-    
+
 	/**
      * Loads the TypoScript config/setup for the formhandler on the current page.
      */
@@ -70,22 +70,22 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 		$conf = $TSObj->setup['plugin.']['Tx_Formhandler.']['settings.'];
 		$this->tsConf = $conf;
     }
-   	
+
 	/**
 	 * Returns a component object from the cache. If there is no object stored already, a new one is created and stored in the cache.
 	 *
-	 * @param string $componentName 
+	 * @param string $componentName
 	 * @return void
 	 * @author Robert Lemke <robert@typo3.org>
 	 * @author adapted for TYPO3v4 by Jochen Rau <jochen.rau@typoplanet.de>
 	 */
 	public function getComponent($componentName) {
-		
+
 		//Avoid component manager creating multiple instances of itself:
 		if (get_class($this) == $componentName) {
 			return $this;
 		}
-		
+
 		if(!is_array($this->classFiles)) {
 			$this->classFiles = array();
 		}
@@ -97,7 +97,7 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 			$componentObject = $this->createComponentObject($componentName, array());
 			$this->putComponentObject($componentName, $componentObject);
 		} else {
-			$arguments =  array_slice(func_get_args(), 1, NULL, TRUE); // array keys are preserved (TRUE) -> argument array starts with key=1 
+			$arguments =  array_slice(func_get_args(), 1, NULL, TRUE); // array keys are preserved (TRUE) -> argument array starts with key=1
 			$componentObject = $this->createComponentObject($componentName, $arguments);
 		}
 		return $componentObject;
@@ -106,16 +106,16 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 	/**
 	 * Requires a class file and instanciates a class.
 	 *
-	 * @param string $componentName 
+	 * @param string $componentName
 	 * @param array	$overridingConstructorArguments
 	 * @return object
 	 * @author Robert Lemke <robert@typo3.org>
 	 * @author adapted for TYPO3v4 by Jochen Rau <jochen.rau@typoplanet.de>
 	 */
 	protected function createComponentObject($componentName, array $overridingConstructorArguments) {
-		$componentConfiguration = $this->getComponentConfiguration($componentName);		
+		$componentConfiguration = $this->getComponentConfiguration($componentName);
 		$className = $componentConfiguration['className'] ? $componentConfiguration['className'] : $componentName;
-		
+
 		if (!class_exists($className, TRUE)) {
 			throw new Exception('No valid implementation class for component "' . $componentName . '" found while building the component object (Class "' . $className . '" does not exist).');
 		}
@@ -126,7 +126,7 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 		}
 		$class = new ReflectionClass($className);
 		$constructorArguments = $this->autoWireConstructorArguments($constructorArguments, $class);
-		
+
 		$injectedArguments = array();
 		$preparedArguments = array();
 		$this->injectConstructorArguments($constructorArguments, $injectedArguments, $preparedArguments);
@@ -134,7 +134,7 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 		$instruction = '$componentObject = new ' . $className .'(';
 		$instruction .= implode(', ',$preparedArguments);
 		$instruction .= ');';
-		
+
 		eval($instruction);
 
 		if (!is_object($componentObject)) {
@@ -142,7 +142,7 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 			throw new Exception('A parse error ocurred while trying to build a new object of type ' . $className . ' (' . $errorMessage['message'] . '). The evaluated PHP code was: ' . $instruction);
 		}
 		$scope = $this->getComponentScope($componentName, $componentConfiguration);
-		
+
 		switch ($scope) {
 			case 'singleton' :
 				$this->putComponentObject($componentName, $componentObject);
@@ -154,7 +154,7 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 		}
 		return $componentObject;
 	}
-	
+
 	/**
 	 * If mandatory constructor arguments have not been defined yet, this function tries to autowire
 	 * them if possible.
@@ -195,7 +195,7 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 		}
 		return $constructorArguments;
 	}
-	
+
 	/**
 	 * Checks and resolves dependencies of the constructor arguments and prepares an array of constructor
 	 * arguments (strings) which can be used in a "new" statement to instantiate the component.
@@ -228,11 +228,11 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 			}
 		}
 	}
-	
+
 	/**
-	 * Returns the component configuration from cache or fetches it from scratch. 
+	 * Returns the component configuration from cache or fetches it from scratch.
 	 *
-	 * @param string $componentName 
+	 * @param string $componentName
 	 * @return Tx_Contentparser_Configuration
 	 */
 	protected function getComponentConfiguration($componentName) {
@@ -241,18 +241,18 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 		if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . $componentNameParts[1] .'.']['components.'][$componentName . '.'])) {
 			$componentConfiguration = $GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . $componentNameParts[1] .'.']['components.'][$componentName . '.'];
 		} elseif (isset($GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . ucfirst(self::THIS_PACKAGE_KEY) .'.']['components.'][$componentName . '.'])) {
-			$componentConfiguration = $GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . ucfirst(self::THIS_PACKAGE_KEY) .'.']['components.'][$componentName . '.'];			
+			$componentConfiguration = $GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . ucfirst(self::THIS_PACKAGE_KEY) .'.']['components.'][$componentName . '.'];
 		} else {
 			$componentConfiguration = NULL;
 		}
 		return $componentConfiguration;
 	}
-	
+
 	/**
 	 * Puts a component object and its configuration to the cache
 	 *
-	 * @param string $componentName 
-	 * @param string $componentObject 
+	 * @param string $componentName
+	 * @param string $componentObject
 	 * @return void
 	 */
 	protected function putComponentObject($componentName, $componentObject) {
@@ -260,20 +260,20 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 		 	$this->componentObjects[$componentName] = $componentObject;
 		 }
 	}
-	
+
 	/**
-	 * Tests if a component object already exists in cache 
+	 * Tests if a component object already exists in cache
 	 *
-	 * @param string $componentName 
+	 * @param string $componentName
 	 * @return void
 	 */
 	protected function componentObjectExists($componentName) {
 		if (!is_string($componentName)) throw new InvalidArgumentException('The component name must be of type string, ' . gettype($componentName) . ' given.');
 		return array_key_exists($componentName, $this->componentObjects);
 	}
-	
+
 	/**
-	 * Tests if a component configuration already exists in cache 
+	 * Tests if a component configuration already exists in cache
 	 *
 	 * @param string $componentName
 	 * @return void
@@ -282,7 +282,7 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 		if (!is_string($componentName)) throw new InvalidArgumentException('The component name must be of type string, ' . gettype($componentName) . ' given.');
 		return array_key_exists($componentName, $this->componentConfigurations);
 	}
-	
+
 	/**
 	 * Returns the scope of the specified component. If it is not defined in the component
 	 * configuration, the scope is 'singleton'.
@@ -294,17 +294,17 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 	 * @author adapted for TYPO3v4 by Jochen Rau <jochen.rau@typoplanet.de>
 	 */
 	protected function getComponentScope($componentName, $componentConfiguration) {
-		$scope = !is_null($componentConfiguration['scope']) ? $componentConfiguration['scope'] : 'prototype';		
+		$scope = !is_null($componentConfiguration['scope']) ? $componentConfiguration['scope'] : 'prototype';
 		return $scope;
 	}
-	
+
 	/**
 	 * Builds and returns an array of class names => file names of all
 	 * tx_*.php files in the extension's Classes directory and its sub-
 	 * directories.
 	 *
 	 * @param string $packageKey
-	 * @param string $subDirectory: for recursion 
+	 * @param string $subDirectory: for recursion
 	 * @param int $recursionLevel: maximum depth of recursion
 	 * @return array
 	 * @author Robert Lemke <robert@typo3.org>
@@ -318,37 +318,37 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 		} else {
 			$currentPath = $this->getPackagePath($packageKey) . $subDirectory;
 		}
-		
+
 		if (!is_dir($currentPath)) return array();
 		if ($recursionLevel > 100) throw new Exception('Recursion too deep.');
 
 		try {
-			
+
 			$classesDirectoryIterator = new DirectoryIterator($currentPath);
 			while ($classesDirectoryIterator->valid()) {
 				$filename = $classesDirectoryIterator->getFilename();
-				
+
 				if ($filename{0} != '.') {
 					if (is_dir($currentPath . $filename)) {
 						$classFiles = array_merge($classFiles, $this->buildArrayOfClassFiles($packageKey, $subDirectory . $filename . '/', ($recursionLevel+1)));
 					} else {
 						if (substr($filename, 0, 3) == self::PACKAGE_PREFIX . '_' && substr($filename, -4, 4) == '.php') {
 							$classFiles[substr($filename, 0, -4)] = $currentPath . $filename;
-							
+
 						}
 					}
 				}
 				$classesDirectoryIterator->next();
 			}
-			
-			
+
+
 		} catch(Exception $exception) {
 			throw new Exception($exception->getMessage());
 		}
 		return $classFiles;
 	}
-	
-	
+
+
 	/**
 	 * Loads php files containing classes or interfaces found in the classes directory of
 	 * a package and specifically registered classes.
@@ -357,44 +357,44 @@ class Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass {
 	 * @return  void
 	 * @author  Jochen Rau <jochen.rau@typoplanet.de>
 	 */
-	private function loadClass($className) {		
+	private function loadClass($className) {
 		$classNameParts = explode('_', $className,3);
 		if ($classNameParts[0] === self::PACKAGE_PREFIX) {
-		
+
 			// Caches the $classFiles
 			if ($this->classFiles === NULL || empty($this->classFiles)) {
 				$this->classFiles = $this->buildArrayOfClassFiles($classNameParts[1]);
 			}
-			
+
 			if(is_array($this->tsConf['additionalIncludePaths.'])) {
 				foreach($this->tsConf['additionalIncludePaths.'] as $dir) {
-					
+
 					$temp = array();
 					$temp = $this->buildArrayOfClassFiles($dir);
-					
+
 					$this->classFiles = array_merge($temp, $this->classFiles);
 				}
 			}
 
 			$classFilePathAndName = isset($this->classFiles[$className]) ? $this->classFiles[$className] : NULL;
 			if (isset($classFilePathAndName) && file_exists($classFilePathAndName)) {
-				require_once ($classFilePathAndName);			
+				require_once ($classFilePathAndName);
 			}
 		}
 	}
-	
+
 	protected function getPackagePath($packageKey) {
 		if(strpos($packageKey, '/') === FALSE) {
-			$path = t3lib_extMgm::extPath(strtolower($packageKey));	
+			$path = t3lib_extMgm::extPath(strtolower($packageKey));
 		} else {
 			$path = t3lib_div::getFileAbsFileName($packageKey);
 			if(substr($path,strlen($path) -1) !== '/') {
 				$path .= '/';
 			}
 		}
-		
+
 		return $path;
-		
+
 	}
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
 
 ########################################################################
-# Extension Manager/Repository config file for ext: "extbase_kickstarter"
+# Extension Manager/Repository config file for ext: "extension_builder"
 #
 # Auto generated 16-08-2009 17:55
 #
@@ -11,20 +11,20 @@
 ########################################################################
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'Extbase Kickstarter',
-	'description' => 'The Extbase Kickstarter helps you kickstart your Extbase based TYPO3 extensions.',
+	'title' => 'Extension Builder',
+	'description' => 'The Extension Builder helps you build and manage your Extbase based TYPO3 extensions.',
 	'category' => '',
 	'author' => 'Ingmar Schlecht',
 	'author_email' => 'ingmar@typo3.org',
 	'shy' => '',
-	'dependencies' => 'cms,extbase,fluid',
+	'dependencies' => 'extbase,fluid',
 	'conflicts' => '',
 	'priority' => '',
 	'module' => '',
 	'state' => 'alpha',
 	'internal' => '',
 	'uploadfolder' => 1,
-	'createDirs' => 'uploads/tx_extbasekickstarter/backups',
+	'createDirs' => 'uploads/tx_extensionbuilder/backups',
 	'modify_tables' => '',
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
@@ -39,6 +39,7 @@ $EM_CONF[$_EXTKEY] = array(
 		'conflicts' => array(
 		),
 		'suggests' => array(
+			'phpunit' => '',
 		),
 	),
 );
