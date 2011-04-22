@@ -28,10 +28,10 @@
  *
  * This class is the main entry point for extbase extensions in the frontend.
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ManyToManyRelation extends Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToManyRelation {
+class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation extends Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation {
 
 	/**
 	 * Returns the type for an ObjectStorage and its contained type based on a mm-relation.
@@ -51,24 +51,24 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ManyToManyRelatio
 		return 'Tx_Extbase_Persistence_ObjectStorage';
 	}
 
-	
+
 	/**
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function isOfTypeObjectStorage(){
 		return true;
 	}
-	
+
 	/**
 	 * Is a MM table needed for this relation?
-	 * 
+	 *
 	 * @return void
 	 */
 	public function getUseMMTable(){
 		return TRUE;
 	}
-	
+
 }
 
 ?>

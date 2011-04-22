@@ -25,41 +25,41 @@
 /**
  * property representing a "property" in the context of software development
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject{
+class Tx_ExtensionBuilder_Domain_Model_Class_Property extends Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject{
 
 
 	/**
 	 * php var type of this property (read from @var annotation in doc comment)
-	 * 
+	 *
 	 * @var string type
 	 */
 	protected $varType;
-	
+
 	/**
-	 * if there is a domain object property associated 
+	 * if there is a domain object property associated
 	 * with this ClassProperty this object holds all extbase related information
 	 * (like SQL, TYPO3 related stuff)
-	 * 
+	 *
 	 * @var object associatedDomainObjectProperty
 	 */
 	protected $associatedDomainObjectProperty = NULL;
-	
+
 	/**
 	 * @var boolean
 	 */
 	protected $default;
-	
+
 	/**
-	 * 
+	 *
 	 * @var mixed
 	 */
 	protected $value;
-	
+
 	/**
-	 * 
+	 *
 	 * @param string $propertyName
 	 * @return void
 	 */
@@ -68,15 +68,15 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 	}
 
 	/**
-	 * 
-	 * all properties that have a setter in this class and a getter in the reflection class will be set here 
-	 * 
-	 * @param Tx_ExtbaseKickstarter_Reflection_PropertyReflection $propertyReflection
+	 *
+	 * all properties that have a setter in this class and a getter in the reflection class will be set here
+	 *
+	 * @param Tx_ExtensionBuilder_Reflection_PropertyReflection $propertyReflection
 	 * @return void
 	 */
 	public function mapToReflectionProperty($propertyReflection){
-		if($propertyReflection instanceof Tx_ExtbaseKickstarter_Reflection_PropertyReflection){
-			
+		if($propertyReflection instanceof Tx_ExtensionBuilder_Reflection_PropertyReflection){
+
 			$tags = $propertyReflection->getTagsValues(); // just to initialize the docCommentParser
 			foreach($this as $key => $value) {
 				$setterMethodName = 'set'.t3lib_div::underscoredToUpperCamelCase($key);
@@ -101,7 +101,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 				$this->varType = $parts[0];
 			}
 			else {
-				t3lib_div::devLog('No var type set for property $'.$this->name. ' in class '.$propertyReflection->getDeclaringClass()->name,'extbase_kickstarter');
+				t3lib_div::devLog('No var type set for property $'.$this->name. ' in class '.$propertyReflection->getDeclaringClass()->name,'extension_builder');
 			}
 
 			if(empty($this->tags)){
@@ -141,7 +141,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 	public function getAssociatedDomainObjectProperty() {
 		return $this->associatedDomainObjectProperty;
 	}
-	
+
 	/**
 	 * Sets $associatedDomainObjectProperty.
 	 *
@@ -149,20 +149,20 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 	 */
 	public function setAssociatedDomainObjectProperty($associatedDomainObjectProperty) {
 		$this->associatedDomainObjectProperty = $associatedDomainObjectProperty;
-		if(empty($this->description)){ 
+		if(empty($this->description)){
 			$this->description = $associatedDomainObjectProperty->getDescription();
 			if(empty($this->description)){
 				$this->description = $this->name;
 			}
 		}
 	}
-	
+
 	public function hasAssociatedDomainObjectProperty(){
 		return !is_null($this->associatedDomainObjectProperty);
 	}
 
 	/**
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function isDefault(){
@@ -170,7 +170,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 	}
 
 	/**
-	 * 
+	 *
 	 * @param boolean $default
 	 */
 	public function setDefault($default){
@@ -178,30 +178,30 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Property extends Tx_ExtbaseKickst
 	}
 
 	/**
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function getDefault(){
 		return $this->default;
 	}
-	
+
 	/**
 	 * @return mixed
 	 */
 	public function getValue(){
 		return $this->value;
 	}
-	
+
 	/**
 	 * Setter for value
-	 * 
+	 *
 	 * @param mixed
 	 */
 	public function setValue($value){
 		$this->value = $value;
 	}
-	
-	
+
+
 }
 
 ?>

@@ -11,18 +11,18 @@
  * @param {WireIt.WiringEditor} WiringEditor
  */
 WireIt.ModuleProxy = function(el, WiringEditor) {
-   
+
    this._WiringEditor = WiringEditor;
-   
+
    // Init the DDProxy
    WireIt.ModuleProxy.superclass.constructor.call(this,el, "module", {
         dragElId: "moduleProxy"
     });
-    
-    this.isTarget = false; 
+
+    this.isTarget = false;
 };
 YAHOO.extend(WireIt.ModuleProxy,YAHOO.util.DDProxy, {
-   
+
    /**
     * copy the html and apply selected classes
     * @method startDrag
@@ -34,13 +34,13 @@ YAHOO.extend(WireIt.ModuleProxy,YAHOO.util.DDProxy, {
        del.innerHTML = lel.innerHTML;
        del.className = lel.className;
    },
-   
+
    /**
     * Override default behavior of DDProxy
     * @method endDrag
     */
    endDrag: function(e) {},
-    
+
    /**
     * Add the module to the WiringEditor on drop on layer
     * @method onDragDrop
@@ -66,28 +66,28 @@ YAHOO.extend(WireIt.ModuleProxy,YAHOO.util.DDProxy, {
       var layerPos = YAHOO.util.Dom.getXY(layer.el);
       this._WiringEditor.addModule( this._module ,[pos[0]-layerPos[0], pos[1]-layerPos[1]]);
     }
-   
+
 });
 
 
 /**
- * The WiringEditor class provides a full page interface 
+ * The WiringEditor class provides a full page interface
  * @class WiringEditor
  * @constructor
  * @param {Object} options
  */
 WireIt.WiringEditor = function(options) {
-   
-   
+
+
     // set the default options
     this.setOptions(options);
-    
+
     /**
      * Container DOM element
      * @property el
      */
     this.el = Dom.get(options.parentEl);
-    
+
     /**
      * @property helpPanel
      * @type {YAHOO.widget.Panel}
@@ -99,7 +99,7 @@ WireIt.WiringEditor = function(options) {
         modal: true
      });
      this.helpPanel.render();
-     
+
      this.alertPanel = new widget.Panel('alertPanel', {
          fixedcenter: true,
          draggable: true,
@@ -112,23 +112,23 @@ WireIt.WiringEditor = function(options) {
 		this.alertPanel.hide();
 	 }, this, true);
 
-     
-     this.showSpinnerPanel = new YAHOO.widget.Panel("wait",  
- 			{ width:"240px", 
- 			  fixedcenter:true, 
- 			  close:true, 
- 			  draggable:false, 
+
+     this.showSpinnerPanel = new YAHOO.widget.Panel("wait",
+ 			{ width:"240px",
+ 			  fixedcenter:true,
+ 			  close:true,
+ 			  draggable:false,
  			  zindex:4,
  			  modal:true,
  			  visible:false
- 			} 
+ 			}
  		);
 
      this.showSpinnerPanel.setHeader("Saving, please wait...");
-     this.showSpinnerPanel.setBody('<img src="'+ TYPO3.settings.extbaseKickstarter.baseUrl + 'Resources/Public/jsDomainModeling/wireit/images/loading.gif" />');
+     this.showSpinnerPanel.setBody('<img src="'+ TYPO3.settings.extensionBuilder.baseUrl + 'Resources/Public/jsDomainModeling/wireit/images/loading.gif" />');
      this.showSpinnerPanel.render(document.body);
 
-    
+
     /**
      * @property layout
      * @type {YAHOO.widget.Layout}
@@ -143,7 +143,7 @@ WireIt.WiringEditor = function(options) {
     	// collapse left
     //this.layout.getUnitById('left').collapse();
     this.layout.getUnitById('left').set('animate', true, false);
-   /** 
+   /**
     	// register events to collapse the other one if this is expanded
     this.layout.getUnitById('right').subscribe(
     	'beforeExpand',
@@ -162,7 +162,7 @@ WireIt.WiringEditor = function(options) {
     	this,
     	this
     )
-    
+
 
     /**
      * @property layer
@@ -175,13 +175,13 @@ WireIt.WiringEditor = function(options) {
 
     // Render buttons
     this.renderButtons();
-    
+
     // Properties Form
     this.renderPropertiesForm();
-    
+
     // Load Service
     this.loadSMD();
-    
+
 };
 
 WireIt.WiringEditor.prototype = {
@@ -191,13 +191,13 @@ WireIt.WiringEditor.prototype = {
   * @param {Object} options
   */
  setOptions: function(options) {
-    
+
     /**
      * @property options
      * @type {Object}
      */
     this.options = {};
-    
+
     // Load the modules from options
     this.modules = options.modules || ([]);
     this.modulesByName = {};
@@ -206,33 +206,33 @@ WireIt.WiringEditor.prototype = {
        this.modulesByName[m.name] = m;
     }
 
-     
+
     this.options.languageName = options.languageName || 'anonymousLanguage';
-     
+
     this.options.smdUrl = options.smdUrl || 'WiringEditor.smd';
-    
+
     this.options.propertiesFields = options.propertiesFields;
-    
+
     this.options.layoutOptions = options.layoutOptions || {
 	        units: [
 	          { position: 'top', height: 50, body: 'top'},
-	          { position: 'left', width: 200, resize: true, body: 'left', gutter: '5px', collapse: true, 
+	          { position: 'left', width: 200, resize: true, body: 'left', gutter: '5px', collapse: true,
 	            collapseSize: 25, header: 'Modules', scroll: true, animate: true },
 	          { position: 'center', body: 'center', gutter: '5px' },
-	          { position: 'right', width: 320, resize: true, body: 'right', gutter: '5px', collapse: true, 
+	          { position: 'right', width: 320, resize: true, body: 'right', gutter: '5px', collapse: true,
 	             collapseSize: 25, header: 'Properties', scroll: true, animate: true }
 	        ]
 	};
-     
+
     this.options.layerOptions = {};
     var layerOptions = options.layerOptions || {};
     this.options.layerOptions.parentEl = layerOptions.parentEl ? layerOptions.parentEl : Dom.get('modelingLayer');
-    
+
     // IS: Disable layer map:
    // this.options.layerOptions.layerMap = YAHOO.lang.isUndefined(layerOptions.layerMap) ? true : layerOptions.layerMap;
    // this.options.layerOptions.layerMapOptions = layerOptions.layerMapOptions || { parentEl: 'layerMap' };
  },
- 
+
  /**
   * Render the properties form
   * @method renderPropertiesForm
@@ -243,13 +243,13 @@ WireIt.WiringEditor.prototype = {
        fields: this.options.propertiesFields
     });
  },
- 
+
  /**
   * Build the left menu on the left
   * @method buildModulesList
   */
  buildModulesList: function() {
-    
+
     var left = Dom.get('moduleBar');
 
      var modules = this.modules;
@@ -270,9 +270,9 @@ WireIt.WiringEditor.prototype = {
        this.ddTarget = new YAHOO.util.DDTarget(this.layer.el, "module");
        this.ddTarget._layer = this.layer;
      }
-     
+
  },
- 
+
  /**
   * add a module at the given pos
   */
@@ -286,7 +286,7 @@ WireIt.WiringEditor.prototype = {
     }
     catch(ex) {
       //debug("Error Layer.addContainer", ex.message);
-    }    
+    }
  },
 
  /**
@@ -315,15 +315,15 @@ WireIt.WiringEditor.prototype = {
   * @method loadSMD
   */
  loadSMD: function() {
-    
+
      this.service = new YAHOO.rpc.Service(this.options.smdUrl,{
  				success: this.onSMDsuccess,
  				failure: this.onSMDfailure,
  				scope: this
  		});
- 		
+
  },
- 
+
  /**
   * callback for loadSMD request
   * @method onSMDsuccess
@@ -331,21 +331,21 @@ WireIt.WiringEditor.prototype = {
  onSMDsuccess: function() {
     //console.log("onSMDsuccess",this.service);
  },
- 
+
  /**
   * callback for loadSMD request
   * @method onSMDfailure
   */
- onSMDfailure: function() { 
+ onSMDfailure: function() {
     //console.log("onSMDfailure", this.service);
  },
- 
+
  loginCheck: function(o){
  	eval('var result = ' + o.responseText + ';');
 	if (result.login.timed_out || result.login.will_time_out){
 		if(typeof parent.TYPO3.loginRefresh != 'undefined'){
 			parent.TYPO3.loginRefresh.showLoginPopup();
-		} 
+		}
 		else {
 			o.argument.editor.alert('Login expired','Your login is expired. Please refresh your login in a separate browser window and save again');
 		}
@@ -354,7 +354,7 @@ WireIt.WiringEditor.prototype = {
 	else {
 		o.argument.editor.saveModule(true);
 	}
-	
+
  },
  /**
   * save the current module
@@ -369,10 +369,10 @@ WireIt.WiringEditor.prototype = {
 		else {
 			baseUrl = window.location.href.split('mod.php')[0];
 		}
-		
+
 		Connect.asyncRequest(
-			'GET', 
-			baseUrl + 'ajax.php?ajaxID=BackendLogin%3A%3AisTimedOut&skipSessionUpdate=1', 
+			'GET',
+			baseUrl + 'ajax.php?ajaxID=BackendLogin%3A%3AisTimedOut&skipSessionUpdate=1',
 			{
 				'success':this.loginCheck
 				,argument: {'editor':this}
@@ -380,9 +380,9 @@ WireIt.WiringEditor.prototype = {
 		);
 		return;
 	}
-	
+
     var value = this.getValue();
-    
+
     if(value.name == "") {
        this.alert('Extension name missing',"Please enter an extension name in the left panel");
        return;
@@ -409,21 +409,21 @@ WireIt.WiringEditor.prototype = {
 	 if(typeof o.success != 'undefined'){
 		 title = 'Success';
 		 message = o.success;
-	 } 
+	 }
 	 else if(typeof o.error != 'undefined'){
 		title = '<span style="color:red">Error!</span>';
 		message = "Extension could not be saved:\n " + o.error;
-	 } 
+	 }
 	 else if(typeof o.warning != 'undefined'){
 		 title = 'Warning';
 		 message = o.warning;
-	 } 
-	
+	 }
+
 	 this.alert(title,message);
-    
+
 
  },
- 
+
  alert: function(title,message){
 	this.alertPanel.setHeader(title);
 	Dom.get('wireEditorMessageBox').innerHTML = message;
@@ -463,14 +463,14 @@ WireIt.WiringEditor.prototype = {
   */
  onDelete: function() {
     if( confirm("Are you sure you want to delete this wiring ?") ) {
-       
+
       var value = this.getValue();
  		this.service.deleteWiring({name: value.name, language: this.options.languageName},{
  			success: function(result) {
  				alert("Deleted !");
  			}
  		});
-       
+
     }
  },
 
@@ -507,9 +507,9 @@ WireIt.WiringEditor.prototype = {
     if(lang.isArray(this.pipes)) {
        for(var i = 0 ; i < this.pipes.length ; i++) {
           var module = this.pipes[i];
-          
+
           this.pipesByName[module.name] = module;
-          
+
           var li = WireIt.cn('li',null,{cursor: 'pointer'},module.name);
           Event.addListener(li, 'click', function(e,args) {
              try {
@@ -531,7 +531,7 @@ WireIt.WiringEditor.prototype = {
   * @method onLoad
   */
  onLoad: function() {
-    
+
     this.service.listWirings({language: this.options.languageName},{
 			success: function(result) {
 				this.pipes = result.result;
@@ -546,7 +546,7 @@ WireIt.WiringEditor.prototype = {
 		);
 
  },
- 
+
  /**
   * @method getPipeByName
   * @param {String} name Pipe's name
@@ -567,33 +567,33 @@ WireIt.WiringEditor.prototype = {
           }
        }
     }
-    
+
     return null;
  },
- 
+
  /**
   * @method loadPipe
   * @param {String} name Pipe name
   */
  loadPipe: function(name) {
     var pipe = this.getPipeByName(name), i;
-    
+
     // TODO: check if current pipe is saved...
-    
+
     if(!confirm('Do you really want to clear the current working board and load the selected pipe?')) return false;
-    
+
     this.layer.removeAllContainers();
-    
+
     this.propertiesForm.setValue(pipe.properties);
-    
+
     if(lang.isArray(pipe.modules)) {
-      
+
        // Containers
        for(i = 0 ; i < pipe.modules.length ; i++) {
           var m = pipe.modules[i];
           if(this.modulesByName[m.name]) {
              var baseContainerConfig = this.modulesByName[m.name].container;
-             YAHOO.lang.augmentObject(m.config, baseContainerConfig); 
+             YAHOO.lang.augmentObject(m.config, baseContainerConfig);
              m.config.title = m.name;
              var container = this.layer.addContainer(m.config);
              Dom.addClass(container.el, "WiringEditor-module-"+m.name);
@@ -603,7 +603,7 @@ WireIt.WiringEditor.prototype = {
              throw new Error("WiringEditor: module '"+m.name+"' not found !");
           }
        }
-       
+
        // Wires
        if(lang.isArray(pipe.wires)) {
            for(i = 0 ; i < pipe.wires.length ; i++) {
@@ -612,17 +612,17 @@ WireIt.WiringEditor.prototype = {
            }
         }
      }
-     
+
      this.loadPanel.hide();
  },
- 
- 
+
+
  /**
   * This method return a wiring within the given vocabulary described by the modules list
   * @method getValue
   */
  getValue: function() {
-    
+
    var i;
    var obj = {modules: [], wires: [], properties: null};
 
@@ -640,15 +640,15 @@ WireIt.WiringEditor.prototype = {
 		wire.terminal2 = tmpTerminal;
     }
 
-      var wireObj = { 
-         src: {moduleId: WireIt.indexOf(wire.terminal1.container, this.layer.containers), terminal: wire.terminal1.options.name, uid:roundtrip.getUidForTerminal(wire.terminal1)}, 
+      var wireObj = {
+         src: {moduleId: WireIt.indexOf(wire.terminal1.container, this.layer.containers), terminal: wire.terminal1.options.name, uid:roundtrip.getUidForTerminal(wire.terminal1)},
          tgt: {moduleId: WireIt.indexOf(wire.terminal2.container, this.layer.containers), terminal: wire.terminal2.options.name, uid:roundtrip.getUidForTerminal(wire.terminal2)}
       };
       obj.wires.push(wireObj);
    }
-   
+
    obj.properties = this.propertiesForm.getValue();
-    
+
    return {
       name: obj.properties.name,
       working: obj
@@ -659,4 +659,4 @@ WireIt.WiringEditor.prototype = {
 };
 
 })();
-   
+

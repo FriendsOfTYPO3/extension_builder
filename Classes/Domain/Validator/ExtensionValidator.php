@@ -25,11 +25,11 @@
 /**
  * Schema for a whole extension
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
-class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 
 	/**
 	 * Error Codes:
@@ -298,7 +298,7 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 	);
 
 	/**
-	 * 
+	 *
 	 * column names used by TYPO3
 	 * @var array
 	 */
@@ -333,7 +333,7 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 	/**
 	 * Validate the given extension
 	 *
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Extension $extension
+	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
 	 * @author Rens Admiraal
 	 * @return boolean
 	 */
@@ -385,22 +385,22 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 
 	protected function checkExistingExtensions($extension){
 		if(!is_dir(PATH_typo3conf.'ext/'.$extension->getExtensionKey())){
-			// no existing extension dir 
+			// no existing extension dir
 			return;
 		}
 		else {
 			/**
 			 * Not yet shure, what to do here...
 			if($this->detectExtbaseExtension($extension->getExtensionKey())){
-				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(
-					'There is an existing extension with this extension key. ' 
+				throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+					'There is an existing extension with this extension key. '
 					.'Are you shure you want to overwrite/merge it?',
 					self::EXTENSION_EXISTS_EXTBASE);
 			}
 			*/
 			if($this->detectPiBasedExtension($extension->getExtensionKey())){
-				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(
-					'There is an existing piBased extension with this extension key. ' 
+				throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+					'There is an existing piBased extension with this extension key. '
 					.'Please choose another extension key or rename the existing extension directory',
 					self::EXTENSION_EXISTS_PIBASE);
 			}
@@ -433,16 +433,16 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 
 	/**
 	 * @author Sebastian Michaelsen <sebastian.gebhard@gmail.com>
-	 * @param	Tx_ExtbaseKickstarter_Domain_Model_Extension
+	 * @param	Tx_ExtensionBuilder_Domain_Model_Extension
 	 * @return 	bool
-	 * @throws Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException
+	 * @throws Tx_ExtensionBuilder_Domain_Exception_ExtensionException
 	 */
 	private static function validateDomainObjects($extension) {
 		foreach($extension->getDomainObjects() as $domainObject) {
-			
+
 				// Check if domainObject name is given
 			if(!$domainObject->getName()) {
-				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('A Domain Object has no name', self::ERROR_DOMAINOBJECT_NO_NAME);
+				throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('A Domain Object has no name', self::ERROR_DOMAINOBJECT_NO_NAME);
 			}
 
 			/**
@@ -450,13 +450,13 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 			 * Allowed characters are: a-z (lowercase), A-Z (uppercase) and 0-9
 			 */
 			if (!preg_match("/^[a-zA-Z0-9]*$/", $domainObject->getName())) {
-				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Illegal domain object name "' . $domainObject->getName() . '". Please use UpperCamelCase, no spaces or underscores.', self::ERROR_DOMAINOBJECT_ILLEGAL_CHARACTER);
+				throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal domain object name "' . $domainObject->getName() . '". Please use UpperCamelCase, no spaces or underscores.', self::ERROR_DOMAINOBJECT_ILLEGAL_CHARACTER);
 			}
 
 			$objectName = $domainObject->getName();
 			$firstChar = $objectName{0};
 			if(strtolower($firstChar) == $firstChar) {
-				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Illegal first character of domain object name "' . $domainObject->getName() . '". Please use UpperCamelCase.', self::ERROR_DOMAINOBJECT_LOWER_FIRST_CHARACTER);
+				throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal first character of domain object name "' . $domainObject->getName() . '". Please use UpperCamelCase.', self::ERROR_DOMAINOBJECT_LOWER_FIRST_CHARACTER);
 			}
 
 			try {
@@ -469,16 +469,16 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 
 	/**
 	 * @author Sebastian Michaelsen <sebastian.gebhard@gmail.com>
-	 * @param	Tx_ExtbaseKickstarter_Domain_Model_DomainObject
+	 * @param	Tx_ExtensionBuilder_Domain_Model_DomainObject
 	 * @return 	bool
-	 * @throws Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException
+	 * @throws Tx_ExtensionBuilder_Domain_Exception_ExtensionException
 	 */
 	private static function validateProperties($domainObject) {
 		$propertyNames = array();
 		foreach($domainObject->getProperties() as $property) {
 				// Check if property name is given
 			if(!$property->getName()) {
-				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('A property of ' . $domainObject->getName() . ' has no name', self::ERROR_PROPERTY_NO_NAME);
+				throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('A property of ' . $domainObject->getName() . ' has no name', self::ERROR_PROPERTY_NO_NAME);
 			}
 			$propertyName = $property->getName();
 			/**
@@ -486,35 +486,35 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 			 * Allowed characters are: a-z (lowercase), A-Z (uppercase) and 0-9
 			 */
 			if (!preg_match("/^[a-zA-Z0-9]*$/", $propertyName)) {
-				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(
+				throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 					'Illegal property name "' . $propertyName . '" of ' . $domainObject->getName() . '. Please use lowerCamelCase, no spaces or underscores.',
 					self::ERROR_PROPERTY_ILLEGAL_CHARACTER
 				);
 			}
-			
-			
+
+
 			$firstChar = $propertyName{0};
 			if(strtoupper($firstChar) == $firstChar) {
-				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(
+				throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 					'Illegal first character of property name "' . $property->getName() . '" of domain object "' . $domainObject->getName() . '". Please use lowerCamelCase.',
 					self::ERROR_PROPERTY_UPPER_FIRST_CHARACTER
 				);
 			}
-			
+
 			if(self::isReservedTYPO3Word($propertyName)){
-				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException(
+				throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 					'Using a reserved word as property name is not allowed. Please rename property "' . $propertyName . '" in Model "' . $domainObject->getName() . '".',
 					self::ERROR_PROPERTY_RESERVED_WORD
 				);
 			}
 				// Check for duplicate property names
 			if(in_array($propertyName, $propertyNames)) {
-				throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Property "' . $property->getName() . '" of ' . $domainObject->getName() . ' exists twice.', self::ERROR_PROPERTY_DUPLICATE);
+				throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Property "' . $property->getName() . '" of ' . $domainObject->getName() . ' exists twice.', self::ERROR_PROPERTY_DUPLICATE);
 			}
 			$propertyNames[] = $propertyName;
 		}
 	}
-	
+
 	/**
 	 * validates a plugin key
 	 * @param string $key
@@ -523,7 +523,7 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 	private static function validatePluginKey($key){
 		return preg_match('/^[a-zA-Z0-9_-]*$/',$key);
 	}
-	
+
 	/**
 	 * validates a backend module key
 	 * @param string $key
@@ -532,12 +532,12 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 	private static function validateModuleKey($key){
 		return preg_match('/^[a-zA-Z0-9_-]*$/',$key);
 	}
-	
+
 	/**
 	 * @author Rens Admiraal
 	 * @param string $key
 	 * @return boolean
-	 * @throws Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException
+	 * @throws Tx_ExtensionBuilder_Domain_Exception_ExtensionException
 	 */
 	private static function validateExtensionKey($key) {
 		/**
@@ -545,7 +545,7 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		 * Allowed characters are: a-z (lowercase), 0-9 and '_' (underscore)
 		 */
 		if (!preg_match("/^[a-z0-9_]*$/", $key)) {
-			throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Illegal characters in extension key', self::ERROR_EXTKEY_ILLEGAL_CHARACTERS);
+			throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal characters in extension key', self::ERROR_EXTKEY_ILLEGAL_CHARACTERS);
 		}
 
 		/**
@@ -553,7 +553,7 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		 * Extension keys cannot start or end with 0-9 and '_' (underscore)
 		 */
 		if (preg_match("/^[0-9_]/", $key)) {
-			throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Illegal first character of extension key', self::ERROR_EXTKEY_ILLEGAL_FIRST_CHARACTER);
+			throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal first character of extension key', self::ERROR_EXTKEY_ILLEGAL_FIRST_CHARACTER);
 		}
 
 		/**
@@ -562,7 +562,7 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		 */
 		$keyLengthTest = str_replace('_', '', $key);
 		if (strlen($keyLengthTest) < 3 || strlen($keyLengthTest) > 30) {
-			throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Invalid extension key length', self::ERROR_EXTKEY_LENGTH);
+			throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Invalid extension key length', self::ERROR_EXTKEY_LENGTH);
 		}
 
 		/**
@@ -570,7 +570,7 @@ class Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator extends Tx_Extba
 		 * The key must not being with one of the following prefixes: tx,u,user_,pages,tt_,sys_,ts_language_,csh_
 		 */
 		if (preg_match("/^(tx_|u_|user_|pages_|tt_|sys_|ts_language_|csh_)/", $key)) {
-			throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Illegal extension key prefix', self::ERROR_EXTKEY_ILLEGAL_PREFIX);
+			throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal extension key prefix', self::ERROR_EXTKEY_ILLEGAL_PREFIX);
 		}
 
 		return true;

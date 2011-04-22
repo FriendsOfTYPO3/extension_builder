@@ -25,11 +25,11 @@
 /**
  * Schema for a whole extension
  *
- * @package ExtbaseKickstarter
+ * @package ExtbaseBuilder
  * @version $ID:$
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
-class Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException extends Tx_ExtbaseKickstarter_Exception {
+class Tx_ExtensionBuilder_Domain_Exception_ExtensionException extends Tx_ExtensionBuilder_Exception {
 }
 
 ?>

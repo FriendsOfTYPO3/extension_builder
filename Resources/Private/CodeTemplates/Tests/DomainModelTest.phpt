@@ -33,9 +33,9 @@
  *
  * @package TYPO3
  * @subpackage {extension.name}
- * 
+ *
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
-</f:for> */{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+</f:for> */{namespace k=Tx_ExtensionBuilder_ViewHelpers}
 class {domainObject.className}Test extends Tx_Extbase_Tests_Unit_BaseTestCase {
 	/**
 	 * @var {domainObject.className}

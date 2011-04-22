@@ -25,9 +25,9 @@
 /**
  * An exception thrown if an error occured during parsing a php file
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  */
-class Tx_ExtbaseKickstarter_Exception_ParseError extends Tx_Extbase_Exception {
+class Tx_ExtensionBuilder_Exception_ParseError extends Tx_Extbase_Exception {
 
 }
 

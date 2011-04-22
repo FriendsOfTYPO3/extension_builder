@@ -25,10 +25,10 @@
 /**
  * Schema for a Domain Object.
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
+class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 
 	/**
 	 * Name of the domain object
@@ -37,7 +37,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	protected $name;
 
 	/**
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $uniqueIdentifier = NULL;
@@ -62,26 +62,26 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 
 	/**
 	 * The extension this domain object belongs to.
-	 * @var Tx_ExtbaseKickstarter_Domain_Model_Extension
+	 * @var Tx_ExtensionBuilder_Domain_Model_Extension
 	 */
 	protected $extension;
 
 	/**
 	 * List of properties the domain object has
-	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty>
+	 * @var array<Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty>
 	 */
 	protected $properties = array();
-	
+
 	/**
 	 * List of actions the domain object has
-	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action>
+	 * @var array<Tx_ExtensionBuilder_Domain_Model_DomainObject_Action>
 	 */
 	protected $actions = array();
 
 
 	/**
 	 * Is an upload folder required for this domain object
-	 * 
+	 *
 	 * @var boolean
 	 */
 	protected $needsUploadFolder = false;
@@ -93,7 +93,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	public function getName() {
 		return $this->name;
 	}
-	
+
 	/**
 	 * Set name
 	 * @param string $name Name
@@ -101,11 +101,11 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	public function setName($name) {
 		$this->name = $name;
 	}
-	
+
 	public function getClassName() {
 		return 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Model_' . $this->getName();
 	}
-	
+
 	public function getControllerName() {
 		return 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey()) . '_Controller_' . $this->getName() . 'Controller';
 	}
@@ -113,7 +113,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	public function getDatabaseTableName() {
 		return 'tx_' . strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey())) . '_domain_model_' . strtolower($this->getName());
 	}
-	
+
 	/**
 	 * Get property uniqueIdentifier
 	 *
@@ -122,16 +122,16 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	public function getUniqueIdentifier() {
 		return $this->uniqueIdentifier;
 	}
-	
+
 	/**
 	 * Set property uniqueIdentifier
-	 * 
+	 *
 	 * @param string Property uniqueIdentifier
 	 */
 	public function setUniqueIdentifier($uniqueIdentifier) {
 		$this->uniqueIdentifier = $uniqueIdentifier;
 	}
-	
+
 	/**
 	 * Get description
 	 * @return string
@@ -143,7 +143,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 			return $this->getName();
 		}
 	}
-	
+
 	/**
 	 * Set description
 	 * @param string $description Description
@@ -195,14 +195,14 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	public function setEntity($entity) {
 		$this->entity = (boolean)$entity;
 	}
-	
+
 	/**
 	 * Adding a new property
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty $property The new property to add
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $property The new property to add
 	 */
-	public function addProperty(Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty $property) {
+	public function addProperty(Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $property) {
 		$property->setDomainObject($this);
-		if(is_subclass_of($property, 'Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
+		if(is_subclass_of($property, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
 			// here we do a check if there is already a relation to the same foreign class
 			if(!$this->isUniqueRelationToForeignClass($property->getForeignClass())){
 				$property->setUseExtendedRelationTableName(true);
@@ -233,15 +233,15 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 
 	/**
 	 * Get all properties
-	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty>
+	 * @return array<Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty>
 	 */
 	public function getProperties() {
 		return $this->properties;
 	}
-	
+
 	/**
 	 * Get property
-	 * @return object <Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty>
+	 * @return object <Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty>
 	 */
 	public function getPropertyByName($propertyName) {
 		foreach($this->properties as $property){
@@ -251,50 +251,50 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 		}
 		return NULL;
 	}
-	
+
 	/**
 	 * Get all properties holding relations of type Property_Relation_ZeroToManyRelation
-	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToManyRelation>
+	 * @return array<Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation>
 	 */
 	public function getZeroToManyRelationProperties() {
 		$relationProperties = array();
 		foreach ($this->properties as $property) {
-			if (is_a($property, 'Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToManyRelation')) {
+			if (is_a($property, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation')) {
 				$relationProperties[] = $property;
 			}
 		}
 		return $relationProperties;
-	}	
-	
+	}
+
 	/**
 	 * Get all properties holding relations of type Property_Relation_AnyToManyRelation
-	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToManyRelation>
+	 * @return array<Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation>
 	 */
 	public function getAnyToManyRelationProperties() {
 		$relationProperties = array();
 		foreach ($this->properties as $property) {
-			if (is_subclass_of($property, 'Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
+			if (is_subclass_of($property, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
 				$relationProperties[] = $property;
 			}
 		}
 		return $relationProperties;
-	}	
-	
+	}
+
 	/**
 	 * Adding a new action
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action $action The new action to add
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action The new action to add
 	 */
-	public function addAction(Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action $action) {
+	public function addAction(Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action) {
 		$action->setDomainObject($this);
 		if(!in_array($action,$this->actions)){
 			$this->actions[] = $action;
 		}
-		
+
 	}
 
 	/**
 	 * Get all actions
-	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action>
+	 * @return array<Tx_ExtensionBuilder_Domain_Model_DomainObject_Action>
 	 */
 	public function getActions() {
 		return $this->actions;
@@ -302,16 +302,16 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addDomainModel() automatically.
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Extension $extension the extension this domain model belongs to.
+	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension the extension this domain model belongs to.
 	 */
-	public function setExtension(Tx_ExtbaseKickstarter_Domain_Model_Extension $extension) {
+	public function setExtension(Tx_ExtensionBuilder_Domain_Model_Extension $extension) {
 		$this->extension = $extension;
 	}
 	public function getExtension() {
 		return $this->extension;
 	}
 
-	
+
 	/**
 	 * Get the base class for this Domain Object (different if it is entity or value object)
 	 * @return string name of the base class
@@ -343,7 +343,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 	/**
 	 * Get the label to display in the list module.
 	 * TODO: Needs to be configurable. Currently, the first property is the label in the backend.
-	 * @return <type> 
+	 * @return <type>
 	 */
 	public function getListModuleValueLabel() {
 		if (isset($this->properties[0])) {
@@ -352,7 +352,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 			return 'uid';
 		}
 	}
-	
+
 	public function getLabelNamespace() {
 		return $this->extension->getShortExtensionKey() . '_domain_model_' . strtolower($this->getName());
 	}
@@ -372,7 +372,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject {
 
 	/**
 	 * Getter for $needsUploadFolder
-	 * 
+	 *
 	 * @return boolean $needsUploadFolder
 	 */
 	public function getNeedsUploadFolder(){

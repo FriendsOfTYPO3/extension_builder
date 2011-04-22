@@ -25,10 +25,10 @@
 /**
  * Schema for a whole extension
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_Extension {
+class Tx_ExtensionBuilder_Domain_Model_Extension {
 
 	/**
 	 * The extension key
@@ -41,7 +41,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 * @var string
 	 */
 	protected $name;
-	
+
 	/**
 	 * Extension dir
 	 * @var string
@@ -53,35 +53,35 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	 * @var string
 	 */
 	protected $version;
-	
+
 	/**
 	 *
 	 * @var string
 	 */
 	protected $description;
-	
+
 	/**
 	 * The original extension key (if an extension was renamed)
 	 * @var string
 	 */
 	protected $originalExtensionKey;
-	
+
 	/**
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $settings = array();
-	
+
 	/**
 	 * default settings for em_conf
 	 * @var array
 	 */
 	protected $emConfDefaults = array('dependencies'=>'cms,extbase,fluid','category'=>'plugin');
-	
+
 	/**
 	 * flag that is set to true if there are domain objects with
 	 * properties that need mapping (because they use MYSQL protected words etc.
-	 * 
+	 *
 	 * @var boolean
 	 */
 	protected $propertiesThatNeedMapping = false;
@@ -100,40 +100,40 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 
 	/**
 	 * Is an upload folder required for this extension
-	 * 
+	 *
 	 * @var boolean
 	 */
 	protected $needsUploadFolder = false;
 
 	/**
-	 * 
+	 *
 	 * an array keeping all md5 hashes of all files in the extension to detect modifications
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $md5Hashes = array();
 
 	/**
 	 * All domain objects
-	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject>
+	 * @var array<Tx_ExtensionBuilder_Domain_Model_DomainObject>
 	 */
 	protected $domainObjects = array();
-	
+
 	/**
 	 * The Persons working on the Extension
-	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_Person>
+	 * @var array<Tx_ExtensionBuilder_Domain_Model_Person>
 	 */
 	protected $persons = array();
 
 	/**
 	 * plugins
-	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_Plugin>
+	 * @var array<Tx_ExtensionBuilder_Domain_Model_Plugin>
 	 */
 	private $plugins;
 
 	/**
 	 * backend modules
-	 * @var array<Tx_ExtbaseKickstarter_Domain_Model_BackendModule>
+	 * @var array<Tx_ExtensionBuilder_Domain_Model_BackendModule>
 	 */
 	private $backendModules;
 
@@ -174,29 +174,29 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	public function setOriginalExtensionKey($extensionKey) {
 		$this->originalExtensionKey = $extensionKey;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param array $overWriteSettings
 	 */
 	public function setSettings($settings){
 		$this->settings = $settings;
 	}
-	
+
 	/**
-	 * @return array 
+	 * @return array
 	 */
 	public function getSettings(){
 		return $this->settings;
 	}
-	
+
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 * @return array settings for Extension Manager
 	 */
 	public function getEmConf(){
-		
+
 		if(isset($this->settings['emConf'])){
 			return $this->settings['emConf'];
 		}
@@ -241,7 +241,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	public function setName($name) {
 		$this->name = $name;
 	}
-	
+
 	/**
 	 *
 	 * @return string
@@ -292,7 +292,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 
 	/**
 	 *
-	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_DomainObject>
+	 * @return array<Tx_ExtensionBuilder_Domain_Model_DomainObject>
 	 */
 	public function getDomainObjects() {
 		return $this->domainObjects;
@@ -318,15 +318,15 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 
 	/**
 	 * Add a domain object to the extension. Creates the reverse link as well.
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject 
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
 	 */
-	public function addDomainObject(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
+	public function addDomainObject(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
 		$domainObject->setExtension($this);
 		if(count($domainObject->getPropertiesWithMappingStatements())>0){
 			$this->propertiesThatNeedMapping = true;
 		}
 		if(in_array($domainObject->getName(),array_keys($this->domainObjects))){
-			throw new Tx_ExtbaseKickstarter_Domain_Exception_ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
+			throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
 		}
 		if($domainObject->getNeedsUploadFolder()){
 			$this->needsUploadFolder = true;
@@ -337,7 +337,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	/**
 	 *
 	 * @param string $domainObjectName
-	 * @return Tx_ExtbaseKickstarter_Domain_Model_DomainObject
+	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject
 	 */
 	public function getDomainObjectByName($domainObjectName) {
 		if (isset($this->domainObjects[$domainObjectName])) {
@@ -355,16 +355,16 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 
 	/**
 	 * Returns the Persons
-	 * 
-	 * @return array<Tx_ExtbaseKickstarter_Domain_Model_Person>
+	 *
+	 * @return array<Tx_ExtensionBuilder_Domain_Model_Person>
 	 */
 	public function getPersons() {
 		return $this->persons;
 	}
 	/**
 	 * Sets the Persons
-	 * 
-	 * @param array<Tx_ExtbaseKickstarter_Domain_Model_Person> $persons
+	 *
+	 * @param array<Tx_ExtensionBuilder_Domain_Model_Person> $persons
 	 * @return void
 	 */
 	public function setPersons($persons) {
@@ -372,8 +372,8 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	}
 	/**
 	 * Adds a Person to the end of the current Set of Persons.
-	 * 
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Person $person
+	 *
+	 * @param Tx_ExtensionBuilder_Domain_Model_Person $person
 	 * @return void
 	 */
 	public function addPerson($person) {
@@ -383,7 +383,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	/**
 	 * Setter for plugin
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_ExtbaseKickstarter_Domain_Model_Plugin> $plugins
+	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_ExtensionBuilder_Domain_Model_Plugin> $plugins
 	 * @return void
 	 */
 	public function setPlugins(Tx_Extbase_Persistence_ObjectStorage $plugins) {
@@ -393,7 +393,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	/**
 	 * Getter for $plugin
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_ExtbaseKickstarter_Domain_Model_Plugin>
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_ExtensionBuilder_Domain_Model_Plugin>
 	 */
 	public function getPlugins() {
 		return $this->plugins;
@@ -402,31 +402,31 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	/**
 	 * Add $plugin
 	 *
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Plugin
+	 * @param Tx_ExtensionBuilder_Domain_Model_Plugin
 	 * @return void
 	 */
-	public function addPlugin(Tx_ExtbaseKickstarter_Domain_Model_Plugin $plugin) {
+	public function addPlugin(Tx_ExtensionBuilder_Domain_Model_Plugin $plugin) {
 		$this->plugins[] = $plugin;
 	}
 
 	/**
 	 * Remove $plugin
 	 *
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Plugin
+	 * @param Tx_ExtensionBuilder_Domain_Model_Plugin
 	 * @return void
 	 */
-	public function removePlugins(Tx_ExtbaseKickstarter_Domain_Model_Plugin $plugin) {
+	public function removePlugins(Tx_ExtensionBuilder_Domain_Model_Plugin $plugin) {
 		foreach ($this->plugins as $key => $value) {
 			if ($value === $plugin) {
 				unset($this->plugins[$key]);
 			}
 		}
 	}
-	
+
 	/**
 	 * Setter for backendModule
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_ExtbaseKickstarter_Domain_Model_BackendModule> $backendModules
+	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_ExtensionBuilder_Domain_Model_BackendModule> $backendModules
 	 * @return void
 	 */
 	public function setBackendModules(Tx_Extbase_Persistence_ObjectStorage $backendModules) {
@@ -436,7 +436,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	/**
 	 * Getter for $backendModule
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_ExtbaseKickstarter_Domain_Model_Plugin>
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_ExtensionBuilder_Domain_Model_Plugin>
 	 */
 	public function getBackendModules() {
 		return $this->backendModules;
@@ -445,10 +445,10 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	/**
 	 * Add $backendModule
 	 *
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_BackendModule
+	 * @param Tx_ExtensionBuilder_Domain_Model_BackendModule
 	 * @return void
 	 */
-	public function addBackendModule(Tx_ExtbaseKickstarter_Domain_Model_BackendModule $backendModule) {
+	public function addBackendModule(Tx_ExtensionBuilder_Domain_Model_BackendModule $backendModule) {
 		$this->backendModules[] = $backendModule;
 	}
 
@@ -468,17 +468,17 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	/**
 	 * Remove $backendModule
 	 *
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_BackendModule
+	 * @param Tx_ExtensionBuilder_Domain_Model_BackendModule
 	 * @return void
 	 */
-	public function removeBackendModule(Tx_ExtbaseKickstarter_Domain_Model_BackendModule $backendModule) {
+	public function removeBackendModule(Tx_ExtensionBuilder_Domain_Model_BackendModule $backendModule) {
 		foreach ($this->backendModules as $key => $value) {
 			if ($value === $backendModule) {
 				unset($this->backendModules[$key]);
 			}
 		}
 	}
-	
+
 	public function getReadableState() {
 		switch($this->getState()){
 			case self::STATE_ALPHA: return 'alpha';
@@ -493,7 +493,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 	public function getCssClassName() {
 		return 'tx-' . str_replace('_', '-',$this->getExtensionKey());
 	}
-	
+
 	public function isModified( $filePath){
 		if(is_file($filePath) && isset($this->md5Hashes[$filePath])){
 			if(md5_file($filePath) != $this->md5Hashes[$filePath]){
@@ -502,44 +502,44 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 		}
 		return false;
 	}
-	
+
 	/**
-	 * setter for md5 hashes 
+	 * setter for md5 hashes
 	 * @return void
 	 */
 	public function setMD5Hashes($md5Hashes){
 		$this->md5Hashes = $md5Hashes;
 	}
-	
+
 	/**
-	 * getter for md5 hashes 
+	 * getter for md5 hashes
 	 * @return array $md5Hashes
 	 */
 	public function getMD5Hashes(){
 		return $this->md5Hashes;
 	}
-	
+
 	/**
-	 * calculates all md5 hashes 
-	 * @return 
+	 * calculates all md5 hashes
+	 * @return
 	 */
 	public function setMD5Hash($filePath){
 		$this->md5Hashes[$filePath] = md5_file($filePath);
-		
+
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @reutn boolean
 	 */
 	public function hasPropertiesThatNeedMapping(){
 		return $this->propertiesThatNeedMapping;
 	}
-	
+
 	/**
 	 * Get the previous extension directory
 	 * if the extension was renamed it is different from $this->extensionDir
-	 * 
+	 *
 	 * @return void
 	 */
 	public function getPreviousExtensionDirectory(){
@@ -553,9 +553,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 			return $this->extensionDir;
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function isRenamed(){
@@ -568,7 +568,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 
 	/**
 	 * Getter for $needsUploadFolder
-	 * 
+	 *
 	 * @return boolean $needsUploadFolder
 	 */
 	public function getNeedsUploadFolder(){
@@ -579,7 +579,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Extension {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 *
 	 * @return string $uploadFolder

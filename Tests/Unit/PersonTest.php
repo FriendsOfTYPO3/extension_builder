@@ -25,12 +25,12 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class Tx_ExtbaseKickstarter_Domain_Model_PersonTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
+class Tx_ExtensionBuilder_Domain_Model_PersonTest extends Tx_ExtensionBuilder_Tests_BaseTest {
 
 	protected $person;
 
 	function setUp() {
-		$this->person=t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Person');
+		$this->person=t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
 	}
 
 	/**

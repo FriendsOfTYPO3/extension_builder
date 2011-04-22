@@ -24,11 +24,11 @@
 /**
  * A plugin in the extension
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
 
-class Tx_ExtbaseKickstarter_Domain_Model_Plugin {
+class Tx_ExtensionBuilder_Domain_Model_Plugin {
 
 	/**
 	 * @var array

@@ -24,16 +24,16 @@
 ***************************************************************/
 
 /**
- * Backend Module of the Extbase Kickstarter extension
+ * Backend Module of the Extension Builder extension
  *
  * @category    Controller
  * @package     TYPO3
- * @subpackage  tx_mvcextjssamples
+ * @subpackage  tx_extensionbuilder
  * @author      Ingmar Schlecht <ingmar@typo3.org>
  * @license     http://www.gnu.org/copyleft/gpl.html
  * @version     SVN: $Id$
  */
-class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Extbase_MVC_Controller_ActionController {
+class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_MVC_Controller_ActionController {
 
 	/**
 	 * Holds reference to the template class
@@ -51,38 +51,38 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 
 
 	/**
-	 * @var Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder
+	 * @var Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder
 	 */
 	protected $extensionSchemaBuilder;
 
-	
+
 	/**
-	 * @var Tx_ExtbaseKickstarter_Service_CodeGenerator
+	 * @var Tx_ExtensionBuilder_Service_CodeGenerator
 	 */
 	protected $codeGenerator;
 
 	public function initializeAction() {
-		if (!$this->extensionSchemaBuilder instanceof Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder) {
-			$this->injectExtensionSchemaBuilder(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder'));
-			$this->injectCodeGenerator(t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Service_CodeGenerator'));
+		if (!$this->extensionSchemaBuilder instanceof Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder) {
+			$this->injectExtensionSchemaBuilder(t3lib_div::makeInstance('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder'));
+			$this->injectCodeGenerator(t3lib_div::makeInstance('Tx_ExtensionBuilder_Service_CodeGenerator'));
 			$this->settings = $frameworkConfiguration['settings'];
-			$this->settings['extConf'] = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getKickstarterSettings();
+			$this->settings['extConf'] = Tx_ExtensionBuilder_Utility_ConfigurationManager::getExtensionBuilderSettings();
 		}
 	}
-	
+
 	/**
-	 * @param Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder $extensionSchemaBuilder
+	 * @param Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder $extensionSchemaBuilder
 	 * @return void
 	 */
-	public function injectExtensionSchemaBuilder(Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder $extensionSchemaBuilder) {
+	public function injectExtensionSchemaBuilder(Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder $extensionSchemaBuilder) {
 		$this->extensionSchemaBuilder = $extensionSchemaBuilder;
 	}
 
 	/**
-	 * @param Tx_ExtbaseKickstarter_Service_CodeGenerator $codeGenerator
+	 * @param Tx_ExtensionBuilder_Service_CodeGenerator $codeGenerator
 	 * @return void
 	 */
-	public function injectCodeGenerator(Tx_ExtbaseKickstarter_Service_CodeGenerator $codeGenerator) {
+	public function injectCodeGenerator(Tx_ExtensionBuilder_Service_CodeGenerator $codeGenerator) {
 		$this->codeGenerator = $codeGenerator;
 	}
 
@@ -93,7 +93,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
 		$this->configurationManager = $configurationManager;
 		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
-		$this->settings['extConf'] = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getKickstarterSettings();
+		$this->settings['extConf'] = Tx_ExtensionBuilder_Utility_ConfigurationManager::getExtensionBuilderSettings();
 	}
 
 	/**
@@ -104,7 +104,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	public function indexAction() {
 	// if the user has seen the introduction the domain modeller becomes the default view
 		if(!$this->request->hasArgument('action')){
-			$userSettings = $GLOBALS['BE_USER']->getModuleData('kickstarter');
+			$userSettings = $GLOBALS['BE_USER']->getModuleData('extensionbuilder');
 			if($userSettings['firstTime']===0){
 				$this->forward('domainmodelling');
 			}
@@ -112,7 +112,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	}
 
 	public function domainmodellingAction() {
-		$GLOBALS['BE_USER']->pushModuleData('kickstarter',array('firstTime'=>0));
+		$GLOBALS['BE_USER']->pushModuleData('extensionbuilder',array('firstTime'=>0));
 	}
 
 	/**
@@ -121,20 +121,20 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 	 * @todo rename this action
 	 */
 	public function generateCodeAction() {
-		
+
 		$jsonString = file_get_contents('php://input');
 		$request = json_decode($jsonString, true);
 		switch ($request['method']) {
 
 			case 'saveWiring':
 				$extensionConfigurationFromJson = json_decode($request['params']['working'], true);
-				$extensionConfigurationFromJson['modules'] = Tx_ExtbaseKickstarter_Utility_ModelImport::mapAdvancedMode($extensionConfigurationFromJson['modules']);
-				$extensionConfigurationFromJson['modules'] = Tx_ExtbaseKickstarter_Utility_ModelImport::resetOutboundedPositions($extensionConfigurationFromJson['modules']);
-				t3lib_div::devlog('JSON:','extbase_kickstarter',0,$extensionConfigurationFromJson);
-				$extensionConfigurationFromJson = Tx_ExtbaseKickstarter_Utility_ModelImport::reArrangeRelations($extensionConfigurationFromJson);
-				t3lib_div::devlog('JSON:','extbase_kickstarter',0,$extensionConfigurationFromJson);
-				
-				
+				$extensionConfigurationFromJson['modules'] = Tx_ExtensionBuilder_Utility_ModelImport::mapAdvancedMode($extensionConfigurationFromJson['modules']);
+				$extensionConfigurationFromJson['modules'] = Tx_ExtensionBuilder_Utility_ModelImport::resetOutboundedPositions($extensionConfigurationFromJson['modules']);
+				t3lib_div::devlog('JSON:','extension_builder',0,$extensionConfigurationFromJson);
+				$extensionConfigurationFromJson = Tx_ExtensionBuilder_Utility_ModelImport::reArrangeRelations($extensionConfigurationFromJson);
+				t3lib_div::devlog('JSON:','extension_builder',0,$extensionConfigurationFromJson);
+
+
 				try {
 					$extensionSchema = $this->extensionSchemaBuilder->build($extensionConfigurationFromJson);
 				}
@@ -143,7 +143,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 				}
 
 				// Validate the extension
-				$extensionValidator = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Validator_ExtensionValidator');
+				$extensionValidator = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator');
 				try {
 					$extensionValidator->isValid($extensionSchema);
 				} catch (Exception $e) {
@@ -158,37 +158,37 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 				else {
 					if($this->settings['extConf']['backupExtension'] == 1){
 						try {
-							Tx_ExtbaseKickstarter_Service_RoundTrip::backupExtension($extensionSchema,$this->settings['extConf']['backupDir']);
+							Tx_ExtensionBuilder_Service_RoundTrip::backupExtension($extensionSchema,$this->settings['extConf']['backupDir']);
 						}
 						catch(Exception $e){
 							return json_encode(array('error' => $e->getMessage()));
 						}
 					}
-					$extensionSettings =  Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getExtensionSettings($extensionSchema->getExtensionKey());
+					$extensionSettings =  Tx_ExtensionBuilder_Utility_ConfigurationManager::getExtensionSettings($extensionSchema->getExtensionKey());
 					if($this->settings['extConf']['enableRoundtrip'] == 1){
 						if(empty($extensionSettings)){
 							// no config file in an existing extension!
 							// this would result in a total overwrite so we create one and give a warning
-							Tx_ExtbaseKickstarter_Utility_ConfigurationManager::createInitialSettingsFile($extensionSchema);
-							return json_encode(array('warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the kickstarter the first time for this extension. <br />A settings file was generated in <br /><b>typo3conf/ext/".$extensionSchema->getExtensionKey()."/Configuration/Kickstarter/settings.yaml.</b><br />Configure the overwrite settings, then save again."));
+							Tx_ExtensionBuilder_Utility_ConfigurationManager::createInitialSettingsFile($extensionSchema);
+							return json_encode(array('warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the extension builder the first time for this extension. <br />A settings file was generated in <br /><b>typo3conf/ext/".$extensionSchema->getExtensionKey()."/Configuration/ExtensionBuilder/settings.yaml.</b><br />Configure the overwrite settings, then save again."));
 						}
 						try {
-							Tx_ExtbaseKickstarter_Service_RoundTrip::prepareExtensionForRoundtrip($extensionSchema);
+							Tx_ExtensionBuilder_Service_RoundTrip::prepareExtensionForRoundtrip($extensionSchema);
 						} catch (Exception $e) {
 							return json_encode(array('error' => $e->getMessage()));
 						}
 					}
 				}
-				
-				
+
+
 				$buildResult = $this->codeGenerator->build($extensionSchema);
-				
+
 				$extensionConfigurationFromJson['log'] = array(
 					'last_modified'=>date('Y-m-d h:i'),
-					'kickstarter_version'=>t3lib_extMgm::getExtensionVersion('extbase_kickstarter'),
+					'extension_builder_version'=>t3lib_extMgm::getExtensionVersion('extension_builder'),
 					'be_user'=>$GLOBALS['BE_USER']->user['realName'].' ('.$GLOBALS['BE_USER']->user['uid'].')'
 				);
-				t3lib_div::writeFile($extensionDirectory . 'kickstarter.json', json_encode($extensionConfigurationFromJson));
+				t3lib_div::writeFile($extensionDirectory . 'ExtensionBuilder.json', json_encode($extensionConfigurationFromJson));
 
 				if ($buildResult === 'success') {
 					$message = 'The Extension was saved';
@@ -199,7 +199,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 				} else {
 					return json_encode(array('error' => $buildResult));
 				}
-				
+
 			break;
 			case 'listWirings':
 				$result = $this->getWirings();
@@ -219,17 +219,22 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 			if ($singleExtensionDirectory[0] == '.'){
 				continue;
 			}
-			$jsonFile =  PATH_typo3conf . 'ext/' . $singleExtensionDirectory . '/kickstarter.json';
+			$oldJsonFile =  PATH_typo3conf . 'ext/' . $singleExtensionDirectory . '/kickstarter.json';
+			$jsonFile =  PATH_typo3conf . 'ext/' . $singleExtensionDirectory . '/ExtensionBuilder.json';
+			if (file_exists($oldJsonFile)) {
+				rename($oldJsonFile, $jsonFile);
+			}
+
 			if (file_exists($jsonFile)) {
-				
+
 				if($this->settings['extConf']['enableRoundtrip']){
-					// generate unique IDs 
+					// generate unique IDs
 					$extensionConfigurationFromJson = json_decode(file_get_contents($jsonFile),true);
-					$extensionConfigurationFromJson = Tx_ExtbaseKickstarter_Utility_ModelImport::getConfigurationFromKickstarterJson($extensionConfigurationFromJson);
+					$extensionConfigurationFromJson = Tx_ExtensionBuilder_Utility_ModelImport::getConfigurationFromExtensionBuilderJson($extensionConfigurationFromJson);
 					$extensionConfigurationFromJson['properties']['originalExtensionKey'] = $singleExtensionDirectory;
 					t3lib_div::writeFile($jsonFile, json_encode($extensionConfigurationFromJson));
 				}
-				
+
 				$result[] = array(
 					'name' => $singleExtensionDirectory,
 					'working' => file_get_contents($jsonFile)
@@ -237,7 +242,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 			}
 		}
 		closedir($extensionDirectoryHandle);
-		
+
 		return $result;
 	}
 
@@ -256,10 +261,10 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 		);
 		$this->scBase->menuConfig();
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * TODO: Is there a real API for this?
 	 * TODO: SHould better be moved to where??
@@ -276,7 +281,7 @@ class Tx_ExtbaseKickstarter_Controller_KickstarterModuleController extends Tx_Ex
 		}
 		return false;
 	}
-	
+
 
 }
 

@@ -3,26 +3,26 @@ var advancedFields = {
 		inputParams: {
 			collapsible: true,
 			collapsed: true,
-			legend: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.more,
+			legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.more,
 			name: "advancedSettings",
 			fields: [
 					{
 						type: "select",
 						inputParams: {
-							label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.type,
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.type,
 							name: "relationType",
 							selectValues: ["zeroToOne", "zeroToMany", "manyToMany"],
 							selectOptions: [
-								TYPO3.settings.extbaseKickstarter._LOCAL_LANG.zeroToOne,
-								TYPO3.settings.extbaseKickstarter._LOCAL_LANG.zeroToMany,
-								TYPO3.settings.extbaseKickstarter._LOCAL_LANG.manyToMany
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.zeroToOne,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.zeroToMany,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.manyToMany
 							]
 						}
 					},
 					{
 						type: "text",
 						inputParams: {
-							label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.description,
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
 							name: "relationDescription",
 							cols:20,
 							rows:1
@@ -31,27 +31,27 @@ var advancedFields = {
 					{
 						type: "boolean",
 						inputParams: {
-							label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.isExcludeField,
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isExcludeField,
 							name: "propertyIsExcludeField",
 							value: false,
-							description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.descr_isExcludeField
+							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_isExcludeField
 						}
 					},
 					{
 						type: "boolean",
 						inputParams: {
-							label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.editInline,
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.editInline,
 							name: "inlineEditing",
 							value: true,
-							description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.descr_editInline
+							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_editInline
 						}
 					},
 					{
 						type: 'boolean',
 						inputParams: {
-							label: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.lazyLoading,
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.lazyLoading,
 							name: 'lazyLoading',
-							description: TYPO3.settings.extbaseKickstarter._LOCAL_LANG.descr_lazyLoading,
+							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_lazyLoading,
 							value: false
 						}
 					}

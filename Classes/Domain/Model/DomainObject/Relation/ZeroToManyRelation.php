@@ -28,10 +28,10 @@
  *
  * This class is the main entry point for extbase extensions in the frontend.
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToManyRelation extends Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AnyToManyRelation {
+class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation extends Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation {
 
 	public function getTypeForComment() {
 		return 'Tx_Extbase_Persistence_ObjectStorage<' . $this->getForeignClass()->getClassName() . '>';
@@ -44,7 +44,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ZeroToManyRelatio
 	public function getForeignKeyName() {
 		return strtolower($this->getDomainObject()->getName());
 	}
-	
+
 }
 
 ?>

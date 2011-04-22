@@ -21,12 +21,12 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class Tx_ExtbaseKickstarter_ViewHelpers_OpeningTagViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_OpeningTagViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	public function render() {
 		return '<' . $this->renderChildren() . '>';
 	}
-	
+
 }
 
 ?>

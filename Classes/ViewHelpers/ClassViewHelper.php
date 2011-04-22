@@ -25,35 +25,35 @@
 /**
  * class view helper
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
 
-class Tx_ExtbaseKickstarter_ViewHelpers_ClassViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
-	
+class Tx_ExtensionBuilder_ViewHelpers_ClassViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+
 	/**
-	 * 
+	 *
 	 * @param object $classObject
 	 * @param string $renderElement
-	 * @return 
+	 * @return
 	 */
 	public function render($classObject,$renderElement) {
 		$content = '';
-		
+
 		switch($renderElement){
 			case 'parentClass'		:	$content = $this->renderExtendClassDeclaration($classObject);
 									break;
-									
+
 			case 'interfaces'		:	$content = $this->renderInterfaceDeclaration($classObject);
 									break;
 		}
 		return $content;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param object $classObject
-	 * @return 
+	 * @return
 	 */
 	private function renderExtendClassDeclaration($classObject){
 		$parentClass = $classObject->getParentClass();
@@ -65,11 +65,11 @@ class Tx_ExtbaseKickstarter_ViewHelpers_ClassViewHelper extends Tx_Fluid_Core_Vi
 		}
 		else return '';
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param object $classObject
-	 * @return 
+	 * @return
 	 */
 	private function renderInterfaceDeclaration($classObject){
 		$interfaceNames = $classObject->getInterfaceNames();
@@ -78,7 +78,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_ClassViewHelper extends Tx_Fluid_Core_Vi
 		}
 		else return '';
 	}
-	
+
 
 }
 ?>

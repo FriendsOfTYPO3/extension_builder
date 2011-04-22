@@ -26,33 +26,33 @@
  * provides methods to import a model
  * currently this class holds almost only methods for workarounds of WireIt bugs
  * Later it should be the parent class for importing from various model formats
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  */
-class Tx_ExtbaseKickstarter_Utility_ModelImport {
-	
-	public static function getConfigurationFromKickstarterJson($extensionConfigurationFromJson){
+class Tx_ExtensionBuilder_Utility_ModelImport {
+
+	public static function getConfigurationFromExtensionBuilderJson($extensionConfigurationFromJson){
 		$extensionConfigurationFromJson['modules'] = self::generateUniqueIDs($extensionConfigurationFromJson['modules']);
 		$extensionConfigurationFromJson['modules'] = self::mapAdvancedMode($extensionConfigurationFromJson['modules']);
 		//$extensionConfigurationFromJson = self::reArrangeRelations($extensionConfigurationFromJson);
 		return $extensionConfigurationFromJson;
 	}
-	
+
 	/**
 	 * enable unique IDs to track modifications of models, properties and relations
-	 * this method sets unique IDs to the JSON array, if it was created 
-	 * with an older version of the kickstarter
-	 * 
+	 * this method sets unique IDs to the JSON array, if it was created
+	 * with an older version of the extension builder
+	 *
 	 * @param $jsonConfig
 	 * @return array $jsonConfig with unique IDs
 	 */
 	static public function generateUniqueIDs($jsonConfig){
 		//  generate unique IDs
 		foreach($jsonConfig as &$module){
-			
+
 			if(empty($module['value']['objectsettings']['uid'])){
 				$module['value']['objectsettings']['uid'] = md5(microtime().$module['propertyName']);
 			}
-		
+
 			for($i=0;$i < count($module['value']['propertyGroup']['properties']);$i++){
 				// don't save empty properties
 				if(empty($module['value']['propertyGroup']['properties'][$i]['propertyName'])){
@@ -75,13 +75,13 @@ class Tx_ExtbaseKickstarter_Utility_ModelImport {
 		}
 		return $jsonConfig;
 	}
-	
-	
+
+
 	/**
 	 * copy values from advanced fieldset to simple mode fieldset and vice versa
-	 * 
-	 * enables compatibility with JSON from older versions of the kickstarter
-	 * 
+	 *
+	 * enables compatibility with JSON from older versions of the extension builder
+	 *
 	 * @param array $jsonConfig
 	 */
 	static public function mapAdvancedMode($jsonConfig){
@@ -96,7 +96,7 @@ class Tx_ExtbaseKickstarter_Utility_ModelImport {
 					foreach($module['value']['relationGroup']['relations'][$i]['advancedSettings'] as $key => $value){
 						$module['value']['relationGroup']['relations'][$i][$key] = $value;
 					}
-					
+
 				}
 			}
 		}
@@ -119,12 +119,12 @@ class Tx_ExtbaseKickstarter_Utility_ModelImport {
 		}
 		return $jsonConfig;
 	}
-	
+
 	/**
 	 * This is a workaround for the bad design in WireIt
-	 * All wire terminals are only identified by a simple index, 
+	 * All wire terminals are only identified by a simple index,
 	 * that does not reflect deleting of models and relations
-	 * 
+	 *
 	 * @param array $jsonConfig
 	 */
 	static public function reArrangeRelations($jsonConfig){
@@ -135,7 +135,7 @@ class Tx_ExtbaseKickstarter_Utility_ModelImport {
 			$uid = $wire['src']['uid'];
 			$wire['src'] = self::findModuleIndexByRelationUid($wire['src']['uid'],$jsonConfig['modules'],$wire['src']['moduleId'],$supposedRelationIndex);
 			$wire['src']['uid'] = $uid;
-			
+
 			$supposedModuleIndex = $wire['tgt']['moduleId'];
 			$uid = $wire['tgt']['uid'];
 			$wire['tgt'] = self::findModuleIndexByRelationUid($wire['tgt']['uid'],$jsonConfig['modules'],$wire['tgt']['moduleId']);
@@ -143,9 +143,9 @@ class Tx_ExtbaseKickstarter_Utility_ModelImport {
 		}
 		return $jsonConfig;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param int $uid
 	 * @param array $modules
 	 * @param int $supposedModuleIndex

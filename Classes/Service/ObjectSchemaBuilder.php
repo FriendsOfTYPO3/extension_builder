@@ -29,20 +29,20 @@
  *
  * This class is the main entry point for extbase extensions in the frontend.
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder implements t3lib_singleton {
-	
+class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton {
+
 	/**
-	 * 
+	 *
 	 * @param array $jsonDomainObject
-	 * @return Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject
+	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
 	 */
 	static public function build(array $jsonDomainObject) {
-		$domainObject = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject');
+		$domainObject = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject');
 		$domainObject->setUniqueIdentifier($jsonDomainObject['objectsettings']['uid']);
-		
+
 		$domainObject->setName($jsonDomainObject['name']);
 		$domainObject->setDescription($jsonDomainObject['objectsettings']['description']);
 		if ($jsonDomainObject['objectsettings']['type'] === 'Entity') {
@@ -54,7 +54,7 @@ class Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder implements t3lib_singlet
 
 		foreach ($jsonDomainObject['propertyGroup']['properties'] as $jsonProperty) {
 			$propertyType = $jsonProperty['propertyType'];
-			$propertyClassName = 'Tx_ExtbaseKickstarter_Domain_Model_DomainObject_' . $propertyType . 'Property';
+			$propertyClassName = 'Tx_ExtensionBuilder_Domain_Model_DomainObject_' . $propertyType . 'Property';
 			if (!class_exists($propertyClassName)) throw new Exception('Property of type ' . $propertyType . ' not found');
 			$property = t3lib_div::makeInstance($propertyClassName);
 			$property->setUniqueIdentifier($jsonProperty['uid']);
@@ -70,43 +70,43 @@ class Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder implements t3lib_singlet
 
 			$domainObject->addProperty($property);
 		}
-		
+
 		if($domainObject->isAggregateRoot()){
 			$defaultActions = array('list','show','new','create','edit','update','delete');
 			foreach($defaultActions as $actionName){
-				$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action');
+				$action = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
 				$action->setName($actionName);
 				$domainObject->addAction($action);
 			}
-			
+
 		}
 		foreach ($jsonDomainObject['actionGroup']['actions'] as $jsonAction) {
 			if($jsonAction == 'create'){
-				$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action');
+				$action = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
 				$action->setName('new');
 				$domainObject->addAction($action);
 			}
 			if($jsonAction == 'update'){
-				$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action');
+				$action = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
 				$action->setName('edit');
 				$domainObject->addAction($action);
 			}
-			$action = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action');
+			$action = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
 			$action->setName($jsonAction);
 			$domainObject->addAction($action);
-			
+
 		}
-		
+
 		return $domainObject;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param $relationJsonConfiguration
-	 * @return Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_AbstractRelation
+	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation
 	 */
 	public static function buildRelation($relationJsonConfiguration){
-		$relationSchemaClassName = 'Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_' . ucfirst($relationJsonConfiguration['relationType']) . 'Relation';
+		$relationSchemaClassName = 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_' . ucfirst($relationJsonConfiguration['relationType']) . 'Relation';
 		if (!class_exists($relationSchemaClassName)){
 			throw new Exception('Relation of type ' . $relationSchemaClassName . ' not found');
 		}

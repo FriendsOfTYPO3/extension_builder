@@ -25,56 +25,56 @@
 /**
  * Extended version of the ReflectionProperty
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @subpackage Reflection
  */
-class Tx_ExtbaseKickstarter_Reflection_PropertyReflection extends Tx_Extbase_Reflection_PropertyReflection {
-	
+class Tx_ExtensionBuilder_Reflection_PropertyReflection extends Tx_Extbase_Reflection_PropertyReflection {
+
 	/**
 	 * the line number where this property is declared in the class file
 	 * @var int
 	 */
 	protected $lineNumber;
-	
+
 	/**
 	 * @var string description as found in docComment
 	 */
 	protected $description;
-	
+
 	/**
 	 * @var string
 	 */
 	protected $rawComment;
-	
+
 	/**
 	 * @var boolean
 	 */
 	protected $default;
-	
+
 	/**
-	 * 
+	 *
 	 * @var mixed
 	 */
 	protected $value;
-	
+
 	/**
 	 * getter for line number
 	 * @return int line number
 	 */
 	public function getLineNumber(){
-		
+
 		return $this->lineNumber;
 	}
-	
+
 	/**
 	 * setter for line number
 	 * @return int line number
 	 */
 	public function setLineNumber($lineNumber){
-		
+
 		return $this->lineNumber = $lineNumber;
 	}
-	
+
 	/**
 	 * wrapper for Tx_Extbase_Reflection_PropertyReflection::getTagsValues()
 	 * @return array $tags
@@ -84,7 +84,7 @@ class Tx_ExtbaseKickstarter_Reflection_PropertyReflection extends Tx_Extbase_Ref
 		// as the name says, but an associative array with tagName=>tagValue
 		return $this->getTagsValues();
 	}
-	
+
 	/**
 	 * getter for description
 	 * @return string description
@@ -95,48 +95,48 @@ class Tx_ExtbaseKickstarter_Reflection_PropertyReflection extends Tx_Extbase_Ref
 		}
 		return $this->description;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function isDefault(){
 		return $this->default;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param boolean $default
 	 */
 	public function setDefault($default){
 		$this->default = $default;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function getDefault(){
 		return $this->default;
 	}
-	
+
 	/**
 	 * @return mixed
 	 */
 	public function getValue(){
 		return $this->value;
 	}
-	
+
 	/**
 	 * Setter for value
-	 * 
+	 *
 	 * @param mixed
 	 */
 	public function setValue($value){
 		$this->value = $value;
 	}
-	
-	
+
+
 }
 
 ?>

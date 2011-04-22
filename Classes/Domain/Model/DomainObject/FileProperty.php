@@ -23,33 +23,33 @@
 ***************************************************************/
 
 /**
- * 
+ *
  * File property
- * 
- * @package ExtbaseKickstarter
+ *
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_FileProperty extends Tx_ExtbaseKickstarter_Domain_Model_DomainObject_AbstractProperty {
-	
+class Tx_ExtensionBuilder_Domain_Model_DomainObject_FileProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
+
 	/**
 	 * allowed file types for this property
 	 * @var string (comma separated filetypes)
 	 */
 	protected $allowedFileTypes = '*';
-	
+
 	/**
 	 * not allowed file types for this property
 	 * @var string (comma separated filetypes)
 	 */
 	protected $disallowedFileTypes = 'php';
-	
+
 	/**
 	 * flag that this property needs an upload folder
 	 *
 	 * @var boolean
 	 */
 	protected $needsUploadFolder = true;
-	
+
 	public function getTypeForComment() {
 		return 'string';
 	}

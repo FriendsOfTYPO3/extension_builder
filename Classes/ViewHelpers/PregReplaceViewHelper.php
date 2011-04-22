@@ -1,6 +1,6 @@
 <?php
 /*                                                                        *
- * This script belongs to the FLOW3 package "ExtbaseKickstarter".         *
+ * This script belongs to the TYPO3 package "Extension Builder".         *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -26,12 +26,12 @@
  * <k:pregReplace match="/this/" replace="that" subject="this" />
  * {k:pregReplace(match:'/this/', replace:'that', subject:'this')}
  *
- * @version $Id:$ 
+ * @version $Id:$
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @package TYPO3
- * @subpackage ExtbaseKickstarter
+ * @subpackage ExtensionBuilder
  */
-class Tx_ExtbaseKickstarter_ViewHelpers_PregReplaceViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_PregReplaceViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
 	 * Execute the preg_replace

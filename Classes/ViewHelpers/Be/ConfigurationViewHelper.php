@@ -1,6 +1,6 @@
 <?php
 
-class Tx_ExtbaseKickstarter_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Fluid_ViewHelpers_Be_AbstractBackendViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Fluid_ViewHelpers_Be_AbstractBackendViewHelper {
 
 	/**
 	 * @var t3lib_PageRenderer
@@ -15,11 +15,11 @@ class Tx_ExtbaseKickstarter_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Fl
 	}
 
 	public function render() {
-		
+
 		$doc = $this->getDocInstance();
 		$doc->bodyTagAdditions .= 'class="yui-skin-sam"';
 
-		$baseUrl = '../' . t3lib_extMgm::siteRelPath('extbase_kickstarter');
+		$baseUrl = '../' . t3lib_extMgm::siteRelPath('extension_builder');
 
 		$this->pageRenderer->disableCompressJavascript();
 		$this->pageRenderer->loadExtJS(false, false);
@@ -39,7 +39,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Fl
 		// InputEx with wirable options
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/inputex.js');
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Field.js');
-		
+
 		// extended fields for enabling unique ids
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/extended/ListField.js');
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/extended/Group.js');
@@ -70,7 +70,7 @@ class Tx_ExtbaseKickstarter_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Fl
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/util/inputex/FormContainer-beta.js');
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/LayerMap.js');
 
-		$this->pageRenderer->addInlineSettingArray('extbaseKickstarter', array(
+		$this->pageRenderer->addInlineSettingArray('extensionBuilder', array(
 			'baseUrl' => $baseUrl
 		));
 		$this->setLocallangSettings();
@@ -107,25 +107,25 @@ class Tx_ExtbaseKickstarter_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Fl
 
 	/**
 	 * This method loads the locallang.xml file (default language), and
-	 * adds all keys found in it to the TYPO3.settings.extbase_kickstarter._LOCAL_LANG object
+	 * adds all keys found in it to the TYPO3.settings.extension_builder._LOCAL_LANG object
 	 * translated into the current language
 	 *
 	 * Dots in a key are replaced by a _
 	 *
 	 * Example:
-	 *		error.name becomes TYPO3.settings.extbase_kickstarter._LOCAL_LANG.error_name
+	 *		error.name becomes TYPO3.settings.extension_builder._LOCAL_LANG.error_name
 	 *
 	 * @return void
 	 */
 	private function setLocallangSettings() {
-		$LL = t3lib_div::readLLfile('EXT:extbase_kickstarter/Resources/Private/Language/locallang.xml', 'default');
+		$LL = t3lib_div::readLLfile('EXT:extension_builder/Resources/Private/Language/locallang.xml', 'default');
 
 		if (!empty($LL['default']) && is_array($LL['default'])) {
 			foreach ($LL['default'] as $key => $value) {
 				$this->pageRenderer->addInlineSetting(
-					'extbaseKickstarter._LOCAL_LANG',
+					'extensionBuilder._LOCAL_LANG',
 					str_replace('.', '_', $key),
-					Tx_Extbase_Utility_Localization::translate($key, 'extbase_kickstarter')
+					Tx_Extbase_Utility_Localization::translate($key, 'extension_builder')
 				);
 			}
 		}

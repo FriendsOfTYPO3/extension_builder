@@ -25,90 +25,90 @@
 /**
  * class schema representing a "class" in the context of software development
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
 
 
-class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstarter_Domain_Model_Class_AbstractObject{
-	
+class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject{
+
 	/**
 	 * constants
 	 * @var array
 	 */
 	protected $constants;
-	
+
 	/**
 	 * properties
 	 * @var array
 	 */
 	protected $properties = array();
-	
+
 	/**
 	 * propertyNames - deprecated -> use this->getPropertyNames() instead
 	 * @var array
 	 */
 	protected $propertyNames = array();
 
-	
+
 	/**
 	 * methods
 	 * @var array
 	 */
 	protected $methods = array();
-	
-	
+
+
 	/**
 	 * interfaceNames
 	 * @var string
 	 */
 	protected $interfaceNames;
-	
+
 	/**
 	 * all lines that were found below the class declaration
 	 * @var string
 	 */
 	protected $appendedBlock;
-	
+
 	/**
-	 * all includes (filenames) that were found in a file 
+	 * all includes (filenames) that were found in a file
 	 * currently not used
 	 * includes should be preserved by writing the blocks (preceding, appended) into the new file
 	 * @var array
 	 */
 	protected $includes;
-	
+
 	/**
 	 * parentClass
 	 * @var string
 	 */
 	//protected $parent_class;
-	
-	
+
+
 	/**
 	 * isFileBased
 	 * @var boolean
 	 */
 	protected $isFileBased = false;
-	
-	
+
+
 	/**
 	 * the path to the file this class was defined in
 	 * @var string
 	 */
 	protected $fileName;
-	
+
 	/**
 	 * is instantiated only if the class is imported from a file
-	 * @var Tx_ExtbaseKickstarter_Reflection_ClassReflection
+	 * @var Tx_ExtensionBuilder_Reflection_ClassReflection
 	 */
 	protected $classReflection = NULL;
-	
+
 	/**
 	 * @var object parentClass
 	 */
 	protected $parentClass = NULL;
-	
+
 	/**
 	 * constructor of this class
 	 * @param string $className
@@ -117,7 +117,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	public function __construct($className){
 		$this->name = $className;
 	}
-	
+
 	/**
 	 * Setter for a single constant
 	 *
@@ -127,7 +127,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	public function setConstant($constantName,$constantValue) {
 		$this->constants[$constantName] = array('name' => $constantName,'value' => $constantValue);
 	}
-	
+
 	/**
 	 * Setter for constants
 	 *
@@ -146,7 +146,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	public function getConstants() {
 		return $this->constants;
 	}
-	
+
 	/**
 	 * Getter for a single constant
 	 *
@@ -158,9 +158,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 		}
 		else return NULL;
 	}
-	
+
 	/**
-	 * removes a constant 
+	 * removes a constant
 	 * @param string $constantName
 	 * @return boolean true (if successfull removed)
 	 */
@@ -171,10 +171,10 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 		}
 		return false;
 	}
-	
+
 	/**
-	 * 
-	 * @return boolean 
+	 *
+	 * @return boolean
 	 */
 	public function methodExists($methodName){
 		if(!is_array($this->methods)){
@@ -186,7 +186,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 		}
 		else return false;
 	}
-	
+
 	/**
 	 * Setter for methods
 	 *
@@ -196,14 +196,14 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	public function setMethods($methods) {
 		$this->methods = $methods;
 	}
-	
+
 	/**
 	 * Setter for a single method (allows to override an existing method)
 	 *
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Class_Method $method
+	 * @param Tx_ExtensionBuilder_Domain_Model_Class_Method $method
 	 * @return void
 	 */
-	public function setMethod(Tx_ExtbaseKickstarter_Domain_Model_Class_Method $classMethod) {
+	public function setMethod(Tx_ExtensionBuilder_Domain_Model_Class_Method $classMethod) {
 		$this->methods[$classMethod->getName()] = $classMethod;
 	}
 
@@ -215,11 +215,11 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	public function getMethods() {
 		return $this->methods;
 	}
-	
+
 	/**
 	 * Getter for method
 	 *
-	 * @return Tx_ExtbaseKickstarter_Domain_Model_Class_Method
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
 	 */
 	public function getMethod($methodName) {
 		if($this->methodExists($methodName)){
@@ -227,22 +227,22 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 		}
 		else return NULL;
 	}
-	
+
 	/**
 	 * Add a method
 	 *
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Class_Method $classMethod
+	 * @param Tx_ExtensionBuilder_Domain_Model_Class_Method $classMethod
 	 * @return void
 	 */
 	public function addMethod($classMethod) {
 		if(!$this->methodExists($classMethod->getName())){
 			$this->methods[$classMethod->getName()] = $classMethod;
 		}
-		
+
 	}
-	
+
 	/**
-	 * removes a method 
+	 * removes a method
 	 * @param string $methodName
 	 * @return boolean true (if successfull removed)
 	 */
@@ -253,7 +253,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 		}
 		return false;
 	}
-	
+
 	/**
 	 * rename a method
 	 * @param string $oldName
@@ -270,8 +270,8 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 		}
 		else return false;
 	}
-	
-	
+
+
 	/**
 	 * returnes all methods starting with "get"
 	 * @return array an array of method objects
@@ -287,10 +287,10 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 				}
 			}
 		}
-		
+
 		return $getterMethods;
 	}
-	
+
 	/**
 	 * returnes all methods starting with "set"
 	 * @return array an array of method objects
@@ -310,11 +310,11 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	}
 
 
-	
+
 	/**
 	 * Getter for property
 	 * @param $propertyName the name of the property
-	 * @return Tx_ExtbaseKickstarter_Reflection_PropertyReflection
+	 * @return Tx_ExtensionBuilder_Reflection_PropertyReflection
 	 */
 	public function getProperty($propertyName) {
 		if($this->propertyExists($propertyName)){
@@ -341,9 +341,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	public function getProperties() {
 		return $this->properties;
 	}
-	
+
 	/**
-	 * removes a property 
+	 * removes a property
 	 * @param string $propertyName
 	 * @return boolean true (if successfull removed)
 	 */
@@ -354,7 +354,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 		}
 		return false;
 	}
-	
+
 	/**
 	 * rename a property
 	 * @param string $oldName
@@ -371,9 +371,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 		}
 		else return false;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param string $propertyName
 	 * @param array $tag
 	 */
@@ -400,12 +400,12 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	public function getStaticProperties() {
 		return $this->staticProperties;
 	}
-	
 
-	
+
+
 	/**
-	 * 
-	 * @return boolean 
+	 *
+	 * @return boolean
 	 */
 	public function propertyExists($propertyName){
 		$propertyNames = $this->getPropertyNames();
@@ -417,14 +417,14 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 		}
 		else return false;
 	}
-	
+
 	/**
 	 * add a property (returns true if successfull added)
 	 *
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Class_Property
+	 * @param Tx_ExtensionBuilder_Domain_Model_Class_Property
 	 * @return boolean success
 	 */
-	public function addProperty(Tx_ExtbaseKickstarter_Domain_Model_Class_Property $classProperty) {
+	public function addProperty(Tx_ExtensionBuilder_Domain_Model_Class_Property $classProperty) {
 		if(!$this->propertyExists($classProperty->getName())){
 			$this->propertyNames[] = $classProperty->getName();
 			$this->properties[$classProperty->getName()] = $classProperty;
@@ -442,14 +442,14 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	/**
 	 * Setter for property
 	 *
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Class_Property
+	 * @param Tx_ExtensionBuilder_Domain_Model_Class_Property
 	 * @return boolean success
 	 */
 	public function setProperty($classProperty) {
 		$this->properties[$classProperty->getName()] = $classProperty;
 	}
-	
-	
+
+
 	/**
 	 * Setter for interfaceNames
 	 *
@@ -468,8 +468,8 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	public function getInterfaceNames() {
 		return $this->interfaceNames;
 	}
-	
-	
+
+
 	/**
 	 * Setter for parentClass
 	 *
@@ -488,7 +488,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	public function getParentClass() {
 		return $this->parentClass;
 	}
-	
+
 
 	/**
 	 * Setter for includes
@@ -508,9 +508,9 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	public function getIncludes() {
 		return $this->includes;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param $fileName
 	 * @return void
 	 */
@@ -518,7 +518,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 		//TODO make some checks... allowed file?
 		$this->includes[] = $fileName;
 	}
-	
+
 	/**
 	 * Getter for fileName
 	 *
@@ -527,7 +527,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	public function getFileName() {
 		return $this->fileName;
 	}
-	
+
 	/**
 	 * Setter for fileName
 	 * @param string $fileName
@@ -536,7 +536,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	public function setFileName($fileName) {
 		$this->fileName = $fileName;
 	}
-	
+
 	/**
 	 * getter for appendedBlock
 	 * @return string $appendedBlock
@@ -544,7 +544,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	public function getAppendedBlock(){
 		return $this->appendedBlock;
 	}
-	
+
 	/**
 	 * setter for appendedBlock
 	 * @param string $appendedBlock
@@ -553,12 +553,12 @@ class Tx_ExtbaseKickstarter_Domain_Model_Class_Class extends Tx_ExtbaseKickstart
 	public function setAppendedBlock($appendedBlock){
 		$this->appendedBlock = $appendedBlock;
 	}
-	
+
 	public function getInfo(){
 		$infoArray = array();
 		$infoArray['className'] = $this->getName();
 		$infoArray['fileName'] = $this->getFileName();
-		
+
 		$methodArray  = array();
 		foreach( $this->getMethods() as $method){
 			$methodArray[$method->getName()] = array('parameter'=>$method->getParameters());

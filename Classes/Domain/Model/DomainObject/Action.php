@@ -25,10 +25,10 @@
 /**
  * An action defined for a domain object
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action {
+class Tx_ExtensionBuilder_Domain_Model_DomainObject_Action {
 
 	/**
 	 * The action's name
@@ -38,7 +38,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action {
 
 	/**
 	 * The domain object this action belongs to.
-	 * @var Tx_ExtbaseKickstarter_Domain_Model_DomainObject
+	 * @var Tx_ExtensionBuilder_Domain_Model_DomainObject
 	 */
 	protected $domainObject;
 
@@ -74,7 +74,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action {
 	);
 
 	/**
-	 * these actions need a form 
+	 * these actions need a form
 	 * @var array
 	 */
 	protected $actionNamesWithForm = array(
@@ -100,15 +100,15 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action {
 
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addAction() automatically.
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject the domain object this actions belongs to
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject the domain object this actions belongs to
 	 */
-	public function setDomainObject(Tx_ExtbaseKickstarter_Domain_Model_DomainObject $domainObject) {
+	public function setDomainObject(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
 		$this->domainObject = $domainObject;
 	}
 
 	/**
 	 *
-	 * @return Tx_ExtbaseKickstarter_Domain_Model_DomainObject
+	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject
 	 */
 	public function getDomainObject() {
 		return $this->domainObject;
@@ -116,7 +116,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action {
 
 	/**
 	 * Is a template required for this action?
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function getNeedsTemplate(){
@@ -131,7 +131,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action {
 
 	/**
 	 * Is a form required to render the actions template?
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function getNeedsForm(){
@@ -146,7 +146,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Action {
 
 	/**
 	 * Is a property partial needed to render the actions template?
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function getNeedsPropertyPartial(){

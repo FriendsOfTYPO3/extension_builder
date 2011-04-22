@@ -29,18 +29,18 @@
  * @package Extbase
  * @subpackage Utility
  */
-class Tx_ExtbaseKickstarter_Utility_ConfigurationManager {
-	
-	public static $settingsDir = 'Configuration/Kickstarter/';
-	
-	public static function getKickstarterSettings(){
+class Tx_ExtensionBuilder_Utility_ConfigurationManager {
+
+	public static $settingsDir = 'Configuration/ExtensionBuilder/';
+
+	public static function getExtensionBuilderSettings(){
 		$settings = array();
-		if(!empty($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['extbase_kickstarter'])){
-			$settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['extbase_kickstarter']);
+		if(!empty($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['extension_builder'])){
+			$settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['extension_builder']);
 		}
 		return $settings;
 	}
-	
+
 	/**
 	 *
 	 * @param string $extensionKey
@@ -50,14 +50,14 @@ class Tx_ExtbaseKickstarter_Utility_ConfigurationManager {
 		$settings = array();
 		$settingsFile = self::getSettingsFile($extensionKey);
 		if (file_exists($settingsFile)) {
-			$yamlParser = new Tx_ExtbaseKickstarter_Utility_SpycYAMLParser();
+			$yamlParser = new Tx_ExtensionBuilder_Utility_SpycYAMLParser();
 			$settings = $yamlParser->YAMLLoadString(file_get_contents($settingsFile));
 		}
-		else t3lib_div::devlog('No settings found: '.$settingsFile,'extbase_kickstarter',2);
+		else t3lib_div::devlog('No settings found: '.$settingsFile,'extension_builder',2);
 
 		return $settings;
 	}
-	
+
 	/**
 	 * get the file name and path of the settings file
 	 * @param string $extensionKey
@@ -69,16 +69,16 @@ class Tx_ExtbaseKickstarter_Utility_ConfigurationManager {
 		return $settingsFile;
 	}
 
-	
+
 	static public function createInitialSettingsFile($extension){
 		t3lib_div::mkdir_deep($extension->getExtensionDir(),self::$settingsDir);
-		$settings = file_get_contents(t3lib_extMgm::extPath('extbase_kickstarter').'Resources/Private/CodeTemplates/Configuration/Kickstarter/settings.yamlt');
+		$settings = file_get_contents(t3lib_extMgm::extPath('extension_builder').'Resources/Private/CodeTemplates/Configuration/ExtensionBuilder/settings.yamlt');
 		$settings = str_replace('{extension.extensionKey}',$extension->getExtensionKey(),$settings);
 		$settings = str_replace('<f:format.date>now</f:format.date>',date('Y-m-d H:i'),$settings);
 		t3lib_div::writeFile($extension->getExtensionDir().self::$settingsDir.'settings.yaml', $settings);
 	}
 
-	
+
 }
 
 ?>

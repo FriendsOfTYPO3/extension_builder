@@ -26,17 +26,17 @@
 ***************************************************************/
 
 /**
- * Autoloader of ExtbaseKickstarter
- * 
+ * Autoloader of ExtensionBuilder
+ *
  * Needed to avoid errors when loading classes that have references or parent classes
  * to other classes in a not installed extension
  *
- * @package Extbase
- * @subpackage Utility
+ * @package TYPO3
+ * @subpackage ExtensionBuilder
  * @version $Id: ClassLoader.php 1729 2009-11-25 21:37:20Z stucki $
  */
-class Tx_ExtbaseKickstarter_Utility_ClassLoader {
-	
+class Tx_ExtensionBuilder_Utility_ClassLoader {
+
 	/**
 	 * Loads php files containing classes or interfaces found in the classes directory of
 	 * an extension.
@@ -47,13 +47,13 @@ class Tx_ExtbaseKickstarter_Utility_ClassLoader {
 	 */
 	public static function loadClass($className) {
 		$classNameParts = explode('_', $className, 3);
-		$extensionKey = Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($classNameParts[1]);
+		$extensionKey = t3lib_div::underscoredToLowerCamelCase($classNameParts[1]);
 		$classFilePathAndName = PATH_typo3conf.'ext/'.$extensionKey . '/Classes/' . strtr($classNameParts[2], '_', '/') . '.php';
 		if (file_exists($classFilePathAndName)) {
 			require_once($classFilePathAndName);
 		}
 	}
-	
+
 }
 
 ?>

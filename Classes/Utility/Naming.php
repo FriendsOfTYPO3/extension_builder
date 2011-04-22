@@ -1,7 +1,7 @@
 <?php
 
 /*                                                                        *
- * This script belongs to the FLOW3 package "Kickstart".                  *
+ * This script belongs to the TYPO3 package "Extension Builder".                  *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU General Public License as published by the Free   *
@@ -19,7 +19,7 @@
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  */
-class Tx_ExtbaseKickstarter_Utility_Naming {
+class Tx_ExtensionBuilder_Utility_Naming {
 	public static function getDomainObjectClassName($extensionName, $domainObjectName) {
 		return 'Tx_' . $extensionName . '_Domain_Model_' . $domainObjectName;
 	}

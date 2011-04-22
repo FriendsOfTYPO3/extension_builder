@@ -29,7 +29,7 @@
  * @author ndh
  *
  */
-class Tx_ExtbaseKickstarter_Service_ClassBuilderTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
+class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_Tests_BaseTest {
 
 	var $modelName = 'Model1';
 
@@ -49,7 +49,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilderTest extends Tx_ExtbaseKickstart
 
 		$domainObject = $this->buildDomainObject($this->modelName,true,true);
 
-		$property0 = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_StringProperty();
+		$property0 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
 		$property0->setName('name');
 		$domainObject->addProperty($property0);
 
@@ -73,7 +73,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilderTest extends Tx_ExtbaseKickstart
 	public function classBuilderGeneratesGetterMethodForSimpleProperty() {
 
 		$domainObject = $this->buildDomainObject($this->modelName,true,true);
-		$property0 = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_StringProperty();
+		$property0 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
 		$property0->setName('name');
 		$property0->setRequired(TRUE);
 		$domainObject->addProperty($property0);
@@ -91,7 +91,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilderTest extends Tx_ExtbaseKickstart
 
 		$domainObject = $this->buildDomainObject($this->modelName,true,true);
 
-		$property = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_BooleanProperty();
+		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty();
 		$property->setName('blue');
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
@@ -111,19 +111,19 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilderTest extends Tx_ExtbaseKickstart
 		$domainObject1 = $this->buildDomainObject($this->modelName,true,true);
 		$relatedDomainObject = $this->buildDomainObject($modelName2);
 
-		$relationProperty = new Tx_ExtbaseKickstarter_Domain_Model_DomainObject_Relation_ManyToManyRelation();
+		$relationProperty = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation();
 		$relationProperty->setName($propertyName);
 		$relationProperty->setForeignClass($relatedDomainObject);
 		$domainObject1->addProperty($relationProperty);
 
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject1);
 
-		$this->assertTrue($modelClassObject->methodExists('add' . ucfirst(Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName))),'Add method was not generated');
-		$this->assertTrue($modelClassObject->methodExists('remove' . ucfirst(Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName))),'Remove method was not generated');
+		$this->assertTrue($modelClassObject->methodExists('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))),'Add method was not generated');
+		$this->assertTrue($modelClassObject->methodExists('remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))),'Remove method was not generated');
 		$this->assertTrue($modelClassObject->methodExists('set' . ucfirst($propertyName)),'Setter was not generated');
 		$this->assertTrue($modelClassObject->methodExists('set' . ucfirst($propertyName)),'Setter was not generated');
 
-		$addMethod = $modelClassObject->getMethod('add' . ucfirst(Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName)));
+		$addMethod = $modelClassObject->getMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
 		$this->assertTrue($addMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $addMethod->getTagsValues('param');
 		$this->assertTrue((strpos($paramTagValues,$relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues);
@@ -131,7 +131,7 @@ class Tx_ExtbaseKickstarter_Service_ClassBuilderTest extends Tx_ExtbaseKickstart
 		$parameters = $addMethod->getParameters();
 		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in add method');
 		$parameter = current($parameters);
-		$this->assertTrue(($parameter->getName() == Tx_ExtbaseKickstarter_Utility_Inflector::singularize($propertyName)),'Wrong parameter name in add method');
+		$this->assertTrue(($parameter->getName() == Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)),'Wrong parameter name in add method');
 		$this->assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getClassName()),'Wrong type hint for add method parameter:'.$parameter->getTypeHint());
 
 	}

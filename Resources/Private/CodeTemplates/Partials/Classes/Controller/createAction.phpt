@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}
 	/**
 	 * Creates a new {domainObject.name} and forwards to the list action.
 	 *

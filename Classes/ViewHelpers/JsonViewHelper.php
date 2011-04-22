@@ -26,13 +26,13 @@
  * JSON view helper
  * enables access to json_encode and json_decode in fluid templates
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  */
 
-class Tx_ExtbaseKickstarter_ViewHelpers_JsonViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
-	
+class Tx_ExtensionBuilder_ViewHelpers_JsonViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+
 	/**
-	 * 
+	 *
 	 * @param string $encodeType (optional) default encode possible: decode, encode
 	 * @param boolean $arraysAsPhpNotation (optional) should arrays be notated as php arrays?
 	 * @return mixed the encoded string or decoded data
@@ -45,12 +45,12 @@ class Tx_ExtbaseKickstarter_ViewHelpers_JsonViewHelper extends Tx_Fluid_Core_Vie
 		else {
 			$content = json_encode($content);
 			if($arraysAsPhpNotation){
-				$content = Tx_ExtbaseKickstarter_Utility_Tools::convertJSONArrayToPHPArray($content);
+				$content = Tx_ExtensionBuilder_Utility_Tools::convertJSONArrayToPHPArray($content);
 			}
 			return $content;
 		}
 	}
-	
+
 
 }
 

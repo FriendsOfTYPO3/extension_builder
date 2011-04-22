@@ -29,18 +29,18 @@
  *
  * This class is the main entry point for extbase extensions in the frontend.
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder implements t3lib_singleton {
-	
+class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_singleton {
+
 	/**
-	 * 
+	 *
 	 * @param array $jsonArray
 	 * @return $extension
 	 */
 	public function build(array $jsonArray) {
-		$extension = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Extension');
+		$extension = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Extension');
 		$globalProperties = $jsonArray['properties'];
 		if (!is_array($globalProperties)){
 			throw new Exception('Extension properties not submitted!');
@@ -60,23 +60,23 @@ class Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder implements t3lib_sing
 		}
 
 		if(!empty($globalProperties['originalExtensionKey']) && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()){
-			$settings = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getExtensionSettings($extension->getOriginalExtensionKey());
+			$settings = Tx_ExtensionBuilder_Utility_ConfigurationManager::getExtensionSettings($extension->getOriginalExtensionKey());
 			// if an extension was renamed, a new extension dir is created and we
 			// have to copy the old settings file to the new extension dir
-			copy(Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getSettingsFile($extension->getOriginalExtensionKey()),Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getSettingsFile($extension->getExtensionKey()));
+			copy(Tx_ExtensionBuilder_Utility_ConfigurationManager::getSettingsFile($extension->getOriginalExtensionKey()),Tx_ExtensionBuilder_Utility_ConfigurationManager::getSettingsFile($extension->getExtensionKey()));
 		}
 		else {
-			$settings = Tx_ExtbaseKickstarter_Utility_ConfigurationManager::getExtensionSettings($extension->getExtensionKey());	
+			$settings = Tx_ExtensionBuilder_Utility_ConfigurationManager::getExtensionSettings($extension->getExtensionKey());
 		}
-		
+
 		if(!empty($settings)){
 			$extension->setSettings($settings);
 			t3lib_div::devlog('Extension settings:'.$extension->getExtensionKey(),'extbase',0,$extension->getSettings());
 		}
-		
+
 			// version
 		$extension->setVersion($globalProperties['version']);
-		
+
 		foreach($globalProperties['persons'] as $personValues) {
 			$person = $this->buildPerson($personValues);
 			$extension->addPerson($person);
@@ -85,7 +85,7 @@ class Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder implements t3lib_sing
 			$plugin = $this->buildPlugin($pluginValues);
 			$extension->addPlugin($plugin);
 		}
-		
+
 		foreach ($globalProperties['backendModules'] as $backendModuleValues) {
 			$backendModule = $this->buildBackendModule($backendModuleValues);
 			$extension->addBackendModule($backendModule);
@@ -95,19 +95,19 @@ class Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder implements t3lib_sing
 		$state = 0;
 		switch ($globalProperties['state']) {
 			case 'alpha':
-				$state = Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_ALPHA;
+				$state = Tx_ExtensionBuilder_Domain_Model_Extension::STATE_ALPHA;
 				break;
 			case 'beta':
-				$state = Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_BETA;
+				$state = Tx_ExtensionBuilder_Domain_Model_Extension::STATE_BETA;
 				break;
 			case 'stable':
-				$state = Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_STABLE;
+				$state = Tx_ExtensionBuilder_Domain_Model_Extension::STATE_STABLE;
 				break;
 			case 'experimental':
-				$state = Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_EXPERIMENTAL;
+				$state = Tx_ExtensionBuilder_Domain_Model_Extension::STATE_EXPERIMENTAL;
 				break;
 			case 'test':
-				$state = Tx_ExtbaseKickstarter_Domain_Model_Extension::STATE_TEST;
+				$state = Tx_ExtensionBuilder_Domain_Model_Extension::STATE_TEST;
 				break;
 		}
 		$extension->setState($state);
@@ -116,7 +116,7 @@ class Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder implements t3lib_sing
 		// classes
 		if (is_array($jsonArray['modules'])) {
 			foreach ($jsonArray['modules'] as $singleModule) {
-				$domainObject = Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder::build($singleModule['value']);
+				$domainObject = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::build($singleModule['value']);
 				$extension->addDomainObject($domainObject);
 			}
 		}
@@ -124,7 +124,7 @@ class Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder implements t3lib_sing
 		// relations
 		if (is_array($jsonArray['wires'])) {
 			foreach ($jsonArray['wires'] as $wire) {
-				
+
 				if($wire['tgt']['terminal'] !== 'SOURCES'){
 					if($wire['src']['terminal'] == 'SOURCES'){
 						// this happens if a relation wire was drawn from child to parent
@@ -138,17 +138,17 @@ class Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder implements t3lib_sing
 					}
 				}
 				$relationJsonConfiguration = $jsonArray['modules'][$wire['src']['moduleId']]['value']['relationGroup']['relations'][substr($wire['src']['terminal'], 13)];
-				
+
 				if (!is_array($relationJsonConfiguration)){
-					t3lib_div::devlog('jsonArray:','extbase_kickstarter',3,$jsonArray);
+					t3lib_div::devlog('jsonArray:','extension_builder',3,$jsonArray);
 					throw new Exception('Error. Relation JSON config was not found');
 				}
 
 				$foreignClassName = $jsonArray['modules'][$wire['tgt']['moduleId']]['value']['name'];
 				$localClassName = $jsonArray['modules'][$wire['src']['moduleId']]['value']['name'];
-				
-				$relation = Tx_ExtbaseKickstarter_Service_ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
-				
+
+				$relation = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
+
 				$relation->setForeignClass($extension->getDomainObjectByName($foreignClassName));
 
 				$extension->getDomainObjectByName($localClassName)->addProperty($relation);
@@ -157,41 +157,41 @@ class Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder implements t3lib_sing
 
 		return $extension;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param array $personValues
-	 * @return Tx_ExtbaseKickstarter_Domain_Model_Person
+	 * @return Tx_ExtensionBuilder_Domain_Model_Person
 	 */
 	protected function buildPerson($personValues){
-		$person=t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Person');
+		$person=t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
 		$person->setName($personValues['name']);
 		$person->setRole($personValues['role']);
 		$person->setEmail($personValues['email']);
 		$person->setCompany($personValues['company']);
 		return $person;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param array $pluginValues
-	 * @return Tx_ExtbaseKickstarter_Domain_Model_Plugin
+	 * @return Tx_ExtensionBuilder_Domain_Model_Plugin
 	 */
 	protected function buildPlugin($pluginValues){
-		$plugin = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_Plugin');
+		$plugin = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Plugin');
 		$plugin->setName($pluginValues['name']);
 		$plugin->setType($pluginValues['type']);
 		$plugin->setKey($pluginValues['key']);
 		return $plugin;
 	}
-	
+
 /**
-	 * 
+	 *
 	 * @param array $backendModuleValues
-	 * @return Tx_ExtbaseKickstarter_Domain_Model_BackendModule
+	 * @return Tx_ExtensionBuilder_Domain_Model_BackendModule
 	 */
 	protected function buildBackendModule($backendModuleValues){
-		$backendModule = t3lib_div::makeInstance('Tx_ExtbaseKickstarter_Domain_Model_BackendModule');
+		$backendModule = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_BackendModule');
 		$backendModule->setName($backendModuleValues['name']);
 		$backendModule->setMainModule($backendModuleValues['mainModule']);
 		$backendModule->setTabLabel($backendModuleValues['tabLabel']);

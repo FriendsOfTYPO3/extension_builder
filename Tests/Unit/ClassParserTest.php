@@ -24,7 +24,7 @@
  ***************************************************************/
 
 
-class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_BaseTest {
+class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_BaseTest {
 
 	/**
 	 * set to true to see an overview of the parsed class objects in the backend
@@ -32,7 +32,7 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 	protected $debugMode = false;
 
 	public function setUp() {
-		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtbaseKickstarter_Service_ExtensionSchemaBuilder'), array('dummy'));
+		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder'), array('dummy'));
 	}
 
 	/**
@@ -40,8 +40,8 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 	 * @test
 	 */
 	public function ParseBasicClass(){
-		require_once(t3lib_extmgm::extPath('extbase_kickstarter') . 'Tests/Examples/ClassParser/BasicClass.php');
-		$this->parseClass('Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_BasicClass');
+		require_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');
+		$this->parseClass('Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClass');
 	}
 
 	/**
@@ -49,8 +49,8 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 	 * @test
 	 */
 	public function ParseComplexClass(){
-		require_once(t3lib_extmgm::extPath('extbase_kickstarter') . 'Tests/Examples/ClassParser/ComplexClass.php');
-		$classObject = $this->parseClass('Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_ComplexClass');
+		require_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ClassParser/ComplexClass.php');
+		$classObject = $this->parseClass('Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass');
 		$getters = $classObject->getGetters();
 		$this->assertEquals(1, count($getters));
 		$firstGetter = array_pop($getters);
@@ -66,7 +66,7 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 	 * @test
 	 */
 	public function ParseExtendedClass(){
-		$this->parseClass('Tx_ExtbaseKickstarter_Controller_KickstarterModuleController');
+		$this->parseClass('Tx_ExtensionBuilder_Controller_BuilderModuleController');
 	}
 
 	/**
@@ -74,8 +74,8 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 	 * @test
 	 */
 	public function ParseAnotherComplexClass(){
-		require_once(t3lib_extmgm::extPath('extbase_kickstarter') . 'Tests/Examples/ClassParser/AnotherComplexClass.php');
-		$classObject = $this->parseClass('Tx_ExtbaseKickstarter_Tests_Examples_ClassParser_AnotherComplexClass');
+		require_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ClassParser/AnotherComplexClass.php');
+		$classObject = $this->parseClass('Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass');
 
 		/**  here we could include some more tests
 		$p = $classObject->getMethod('methodWithStrangePrecedingBlock')->getPrecedingBlock();
@@ -88,7 +88,7 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 	 * @test
 	 */
 	public function Parse_t3lib_div(){
-		//require_once(t3lib_extmgm::extPath('extbase_kickstarter') . 'Tests/Examples/BasicClass.php');
+		//require_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/BasicClass.php');
 		$this->parseClass('t3lib_div');
 	}
 
@@ -98,11 +98,11 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 	 * @return unknown_type
 	 */
 	protected function parseClass($className){
-		$classParser = new Tx_ExtbaseKickstarter_Utility_ClassParser();
+		$classParser = new Tx_ExtensionBuilder_Utility_ClassParser();
 		$classParser->debugMode = $this->debugMode;
 		$classObject = $classParser->parse($className);
-		$this->assertTrue($classObject instanceof Tx_ExtbaseKickstarter_Domain_Model_Class_Class);
-		$classReflection = new Tx_ExtbaseKickstarter_Reflection_ClassReflection($className);
+		$this->assertTrue($classObject instanceof Tx_ExtensionBuilder_Domain_Model_Class_Class);
+		$classReflection = new Tx_ExtensionBuilder_Reflection_ClassReflection($className);
 		$this->ParserFindsAllConstants($classObject,$classReflection);
 		$this->ParserFindsAllMethods($classObject,$classReflection);
 		$this->ParserFindsAllProperties($classObject,$classReflection);
@@ -111,8 +111,8 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 
 	/**
 	 * compares the number of methods found by parsing with those retrieved from the reflection class
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Class $classObject
-	 * @param Tx_ExtbaseKickstarter_Reflection_ClassReflection $classReflection
+	 * @param Tx_ExtensionBuilder_Domain_Model_Class $classObject
+	 * @param Tx_ExtensionBuilder_Reflection_ClassReflection $classReflection
 	 * @return void
 	 */
 	public function ParserFindsAllConstants($classObject,$classReflection){
@@ -123,11 +123,11 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 		$classObjectConstantCount = count($classObject->getConstants());
 		$this->assertEquals($reflectionConstantCount, $classObjectConstantCount, 'Not all Constants were found: '.$classObject->getName().serialize($classReflection->getConstants()));
 	}
-	
+
 	/**
 	 * compares the number of methods found by parsing with those retrieved from the reflection class
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Class $classObject
-	 * @param Tx_ExtbaseKickstarter_Reflection_ClassReflection $classReflection
+	 * @param Tx_ExtensionBuilder_Domain_Model_Class $classObject
+	 * @param Tx_ExtensionBuilder_Reflection_ClassReflection $classReflection
 	 * @return void
 	 */
 	public function ParserFindsAllMethods($classObject,$classReflection){
@@ -138,8 +138,8 @@ class Tx_ExtbaseKickstarter_ClassParserTest extends Tx_ExtbaseKickstarter_Tests_
 
 	/**
 	 * compares the number of properties found by parsing with those retrieved from the reflection class
-	 * @param Tx_ExtbaseKickstarter_Domain_Model_Class $classObject
-	 * @param Tx_ExtbaseKickstarter_Reflection_ClassReflection $classReflection
+	 * @param Tx_ExtensionBuilder_Domain_Model_Class $classObject
+	 * @param Tx_ExtensionBuilder_Reflection_ClassReflection $classReflection
 	 * @return void
 	 */
 	public function ParserFindsAllProperties($classObject,$classReflection){

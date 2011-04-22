@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtbaseKickstarter_ViewHelpers}
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}
 <table class="{extension.cssClassName}" >
 	<k:removeMultipleNewlines>
 	<f:for each="{domainObject.properties}" as="property">

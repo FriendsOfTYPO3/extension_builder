@@ -25,16 +25,16 @@
 /**
  * A person participating in the project somehow (i.e. as a developer).
  *
- * @package ExtbaseKickstarter
+ * @package ExtensionBuilder
  * @version $ID:$
  */
 
-class Tx_ExtbaseKickstarter_Domain_Model_Person {
+class Tx_ExtensionBuilder_Domain_Model_Person {
 
 	/**
 	 * TODO make that work
 	 * This Array contains all valid values for the role of a person.
-	 * Extend here and in the locallang (mlang_tx_extbasekickstarter_domain_model_person_[rolekey from array]) to add new Roles.
+	 * Extend here and in the locallang (mlang_Tx_ExtensionBuilder_domain_model_person_[rolekey from array]) to add new Roles.
 	 *
 	 * @var array
 	 * @transient
@@ -53,7 +53,7 @@ class Tx_ExtbaseKickstarter_Domain_Model_Person {
 	 * The Persons role.
 	 *
 	 * @var string
-	 * @see Tx_ExtbaseKickstarter_Domain_Model_Person::ROLES
+	 * @see Tx_ExtensionBuilder_Domain_Model_Person::ROLES
 	 */
 	protected $role = '';
 
