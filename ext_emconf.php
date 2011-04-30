@@ -12,9 +12,9 @@
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Extension Builder',
 	'description' => 'The Extension Builder helps you build and manage your Extbase based TYPO3 extensions.',
-	'category' => '',
+	'category' => 'Backend Modules',
 	'author' => 'Ingmar Schlecht, Nico de Haen',
-	'author_email' => 'ingmar@typo3.org',
+	'author_email' => 'ingmar@typo3.org,mail@ndh-websolutions.de',
 	'shy' => '',
 	'dependencies' => 'extbase,fluid',
 	'conflicts' => '',
