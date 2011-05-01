@@ -31,7 +31,10 @@
 class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 
 	const SPLIT_TOKEN = '## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder';
-
+	
+	const OLD_SPLIT_TOKEN = '## KICKSTARTER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the kickstarter';
+	
+	
 	protected $previousExtension = NULL;
 
 	/**

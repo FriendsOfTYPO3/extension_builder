@@ -699,8 +699,12 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	protected function insertSplitToken($targetFile,$fileContents){
 		$customFileContent = '';
 		if(file_exists($targetFile)){
+			
 			// merge the files means append everything behind the split token
 			$existingFileContent = file_get_contents($targetFile);
+			if(strpos($existingFileContent,Tx_ExtensionBuilder_Service_RoundTrip::OLD_SPLIT_TOKEN)){
+				$existingFileContent = str_replace(Tx_ExtensionBuilder_Service_RoundTrip::OLD_SPLIT_TOKEN,Tx_ExtensionBuilder_Service_RoundTrip::SPLIT_TOKEN,$existingFileContent);
+			}
 			$fileParts = explode(Tx_ExtensionBuilder_Service_RoundTrip::SPLIT_TOKEN,$existingFileContent);
 			if(count($fileParts) == 2){
 				$customFileContent = str_replace('?>','',$fileParts[1]);
