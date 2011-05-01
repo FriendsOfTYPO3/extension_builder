@@ -32,6 +32,7 @@
 class Tx_ExtensionBuilder_Utility_ConfigurationManager {
 
 	public static $settingsDir = 'Configuration/ExtensionBuilder/';
+	public static $oldSettingsDir = 'Configuration/Kickstarter/';
 
 	public static function getExtensionBuilderSettings(){
 		$settings = array();
@@ -66,6 +67,12 @@ class Tx_ExtensionBuilder_Utility_ConfigurationManager {
 	public static function getSettingsFile($extensionKey){
 		$extensionDir = PATH_typo3conf.'ext/'.$extensionKey.'/';
 		$settingsFile =  $extensionDir.self::$settingsDir . 'settings.yaml';
+		if(!file_exists($settingsFile) && file_exists($extensionDir.self::$oldSettingsDir . 'settings.yaml')){
+			// upgrade from an extension that was built with the extbase_kickstarter
+			mkdir($extensionDir.self::$settingsDir);
+			copy($extensionDir.self::$oldSettingsDir . 'settings.yaml', $extensionDir.self::$settingsDir . 'settings.yaml');
+			$settingsFile =  $extensionDir.self::$settingsDir . 'settings.yaml';
+		}
 		return $settingsFile;
 	}
 
