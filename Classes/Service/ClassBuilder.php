@@ -483,6 +483,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 				$classProperty->addModifier('protected');
 				$this->classObject->setProperty($classProperty);
 			}
+			/**
 			$initializeMethodName = 'initializeAction';
 			if(!$this->classObject->methodExists($initializeMethodName)){
 				$initializeMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($initializeMethodName);
@@ -491,6 +492,20 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 				$initializeMethod->setTag('return','void');
 				$initializeMethod->addModifier('public');
 				$this->classObject->addMethod($initializeMethod);
+			}
+			*/
+			$injectMethodName = 'inject' . $domainObject->getName() . 'Repository';
+			if(!$this->classObject->methodExists($injectMethodName)){
+				$injectMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($injectMethodName);
+				$injectMethod->setBody('$this->'.t3lib_div::lcfirst($domainObject->getName()).'Repository = t3lib_div::makeInstance('.$domainObject->getDomainRepositoryClassName().');');
+				$injectMethod->setTag('param',$domainObject->getDomainRepositoryClassName() . ' $' . $domainObject->getName() . 'Repository');
+				$injectMethod->setTag('return','void');
+				$injectMethod->addModifier('public');
+				$parameter =  new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter(t3lib_div::lcfirst($domainObject->getName()) . 'Repository');
+				$parameter->setVarType($domainObject->getDomainRepositoryClassName());
+				$parameter->setPosition(0);
+				$injectMethod->setParameter($parameter);
+				$this->classObject->addMethod($injectMethod);
 			}
 		}
 
@@ -504,6 +519,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 				$actionMethod->addModifier('public');
 
 				$this->classObject->addMethod($actionMethod);
+			} else {
+				t3lib_div::devlog('existing action method:' . $actionMethodName,'ext',0,$this->classObject->getMethod($actionMethodName)->getParameters());
 			}
 		}
 		return $this->classObject;

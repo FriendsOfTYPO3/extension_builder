@@ -247,6 +247,9 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 				//t3lib_div::devlog('Controller class methods','extension_builder',0,$this->classObject->getMethods());
 				if($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed){
 					$this->mapOldControllerToCurrentClassObject($oldDomainObject,$currentDomainObject);
+				} else if($oldDomainObject->isAggregateRoot() && !$currentDomainObject->isAggregateRoot()) {
+					$injectMethodName = 'inject' . t3lib_div::lcfirst($oldDomainObject->getName()). 'Repository';
+					$this->classObject->removeMethod($injectMethodName);
 				}
 
 				$newActions = array();
@@ -278,7 +281,6 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 				include_once($fileName);
 				$className = $currentDomainObject->getControllerName();
 				$this->classObject  = $this->classParser->parse($className);
-				t3lib_div::devlog('existing controller class:'.$fileName,'extension_builder',0,$this->classObject->getAnnotations());
 				return $this->classObject;
 			}
 			else t3lib_div::devlog('No existing controller class:'.$fileName,'extension_builder',2);
@@ -297,31 +299,82 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	protected function mapOldControllerToCurrentClassObject(Tx_ExtensionBuilder_Domain_Model_DomainObject $oldDomainObject,Tx_ExtensionBuilder_Domain_Model_DomainObject $currentDomainObject){
 		$extensionDir = $this->previousExtensionDirectory;
 		$newClassName = $currentDomainObject->getControllerName();
+		$newName = $currentDomainObject->getName();
+		$oldName = $oldDomainObject->getName();
 		$this->classObject->setName($newClassName);
+		$this->classObject->setDescription($this->replaceUpperAndLowerCase($oldName,$newName,$this->classObject->getDescription()));
 		if($oldDomainObject->isAggregateRoot()){
-			// should we keep the old properties comments and tags?
-			$this->classObject->removeProperty(t3lib_div::lcfirst($oldDomainObject->getName()).'Repository');
 
+			// should we keep the old properties comments and tags?
+			$this->classObject->removeProperty(t3lib_div::lcfirst($oldName).'Repository');
+			$injectMethodName = 'inject' . $oldName. 'Repository';
 			if($currentDomainObject->isAggregateRoot()){
 				// update the initializeAction method body
 				$initializeMethod = $this->classObject->getMethod('initializeAction');
 				if($initializeMethod != NULL){
 					$initializeMethodBody = $initializeMethod->getBody();
 					$newMethodBody = str_replace($oldDomainObject->getDomainRepositoryClassName(), $currentDomainObject->getDomainRepositoryClassName(),$initializeMethodBody);
-					$newMethodBody = str_replace(t3lib_div::lcfirst($oldDomainObject->getName()).'Repository', t3lib_div::lcfirst($currentDomainObject->getName()).'Repository',$newMethodBody);
+					$newMethodBody = str_replace(t3lib_div::lcfirst($oldName).'Repository', t3lib_div::lcfirst($newName).'Repository',$newMethodBody);
 					$initializeMethod->setBody($newMethodBody);
 					$this->classObject->setMethod($initializeMethod);
+				}
+
+				$injectMethod = $this->classObject->getMethod($injectMethodName);
+				if($injectMethod != NULL){
+					$this->classObject->removeMethod($injectMethodName);
+					$newMethodBody = str_replace(t3lib_div::lcfirst($oldName),t3lib_div::lcfirst($newName),$injectMethod->getBody());
+					$injectMethod->setBody($newMethodBody);
+					$injectMethod->setTag('param',$currentDomainObject->getDomainRepositoryClassName() . ' $' . $newName . 'Repository');
+					$injectMethod->setName('inject' . $newName. 'Repository');
+					$parameter =  new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter(t3lib_div::lcfirst($newName) . 'Repository');
+					$parameter->setTypeHint($currentDomainObject->getDomainRepositoryClassName());
+					$parameter->setPosition(0);
+					$injectMethod->replaceParameter($parameter);
+					$this->classObject->setMethod($injectMethod);
+				}
+
+				foreach($oldDomainObject->getActions() as $action){
+					// here we have to update all the occurences of domain object names in action methods 
+					$actionMethod = $this->classObject->getMethod($action->getName().'Action');
+					if($actionMethod != NULL){
+						$actionMethodBody = $actionMethod->getBody();
+						$newActionMethodBody = str_replace(t3lib_div::lcfirst($oldName).'Repository',t3lib_div::lcfirst($newName).'Repository',$actionMethodBody);
+						$actionMethod->setBody($newActionMethodBody);
+						$actionMethod->setTag('param',$currentDomainObject->getClassName());
+
+						$parameters = $actionMethod->getParameters();
+						foreach($parameters as &$parameter){
+							if(strpos($parameter->getTypeHint(),$oldDomainObject->getClassName())>-1){
+								$parameter->setTypeHint($currentDomainObject->getClassName());
+								$parameter->setName($this->replaceUpperAndLowerCase($oldName,$newName,$parameter->getName()));
+								$actionMethod->replaceParameter($parameter);
+							} 
+						}
+
+						$tags = $actionMethod->getTags();
+						foreach($tags as $tagName => $tagValue){
+							$tags[$tagName] = $this->replaceUpperAndLowerCase($oldName,$newName,$tagValue);
+						}
+						$actionMethod->setTags($tags);
+
+						$actionMethod->setDescription($this->replaceUpperAndLowerCase($oldName,$newName,$actionMethod->getDescription()));
+
+						//TODO: this is not safe. Could rename unwanted variables
+						$actionMethod->setBody($this->replaceUpperAndLowerCase($oldName,$newName,$actionMethod->getBody()));
+						$this->classObject->setMethod($actionMethod);
+					}
 				}
 			}
 			else {
 				$this->classObject->removeMethod('initializeAction');
-				$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir ,'Repository'),$oldDomainObject->getName().'Repository.php');
+				$this->classObject->removeMethod($injectMethodName);
+				$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir ,'Repository'),$oldName.'Repository.php');
 			}
 		}
 
-		$this->classObject->setFileName($currentDomainObject->getName().'Controller.php');
-		$this->cleanUp( Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir ,'Controller'),$oldDomainObject->getName().'Controller.php');
-		t3lib_div::devlog('Removed existing controller class:'.$oldDomainObject->getName().'Controller.php','extension_builder',0);
+		$this->classObject->setFileName($newName.'Controller.php');
+		$this->cleanUp( Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir ,'Controller'),$oldName.'Controller.php');
+		t3lib_div::devlog('Removed existing controller class:'.$oldName.'Controller.php','extension_builder',0);
 	}
 
 	/**
@@ -616,6 +669,19 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		}
 		$this->classObject->removeMethod($oldMethodName);
 		$this->classObject->addMethod($mergedMethod);
+	}
+
+	/**
+	 * @param string $search
+	 * @param string $replace
+	 * @param string $haystack
+	 * 
+	 * @return string with replaced values
+	 */
+	protected function replaceUpperAndLowerCase($search,$replace,$haystack){
+		$result = str_replace(ucfirst($search),ucfirst($replace),$haystack);
+		$result = str_replace(t3lib_div::lcfirst($search),t3lib_div::lcfirst($replace),$result);
+		return $result;
 	}
 
 	/**
