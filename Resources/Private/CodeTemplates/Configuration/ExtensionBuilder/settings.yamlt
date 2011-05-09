@@ -65,7 +65,8 @@ overwriteSettings:
 
 #  ext_tables.sql: merge
 
-
+## ext_autoload.php is only needed in special cases ##
+createAutoloadRegistry: false
 
 ######### settings for classBuilder #############################
 #

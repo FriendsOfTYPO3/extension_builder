@@ -342,6 +342,15 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				return 'Could not generate domain templates, error: ' . $e->getMessage();
 			}
 
+			try {
+				$settings = $this->extension->getSettings();
+				if(isset($settings['createAutoloadRegistry']) && $settings['createAutoloadRegistry'] == true){
+					Tx_Extbase_Utility_Extension::createAutoloadRegistryForExtension($this->extension->getExtensionKey(), $this->extensionDirectory); 
+				}
+			} catch (Exception $e) {
+				return 'Could not generate ext_autoload.php, error: ' . $e->getMessage();
+			}
+
 
 		}
 		else {
@@ -667,7 +676,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 * wrapper for t3lib_div::writeFile
 	 * checks for overwrite settings
 	 *
-	 * @param string $targetFile the path and filename of the targetFile
+	 * @param string $targetFile the path and filename of the targetFile (relative to extension dir)
 	 * @param string $fileContents
 	 */
 	protected function writeFile($targetFile,$fileContents){
