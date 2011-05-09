@@ -18,5 +18,5 @@ Otherwise your changes will be overwritten the next time you save the extension 
 <k:openingTag>f:flashMessages /</k:openingTag>
 <k:openingTag>f:render partial="{domainObject.name}/Properties" arguments="<k:curlyBrackets>{domainObject.name -> k:lowercaseFirst()}:{domainObject.name -> k:lowercaseFirst()}</k:curlyBrackets>" /</k:openingTag>
 <k:openingTag>f:link.action action="list"</k:openingTag>Back to list<![CDATA[</f:link.action>]]><br />
-<k:openingTag>f:link.action action="create"</k:openingTag>New {domainObject.name}<![CDATA[</f:link.action>]]>
+<k:openingTag>f:link.action action="new"</k:openingTag>New {domainObject.name}<![CDATA[</f:link.action>]]>
 <![CDATA[</f:section>]]>
