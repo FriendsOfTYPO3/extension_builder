@@ -78,8 +78,9 @@ class Tx_ExtensionBuilder_ViewHelpers_MethodViewHelper extends Tx_Fluid_Core_Vie
 						//t3lib_div::devLog('default Value: '. $defaultValue, 'parameter debug');
 					}
 					else $defaultValue = 'array()';
-				}
-				else {
+				} elseif ($defaultValue === NULL) {
+					$defaultValue = 'NULL';
+				} else {
 					$defaultValue = json_encode($defaultValue);
 				}
 				$parameterName .= ' = '.$defaultValue;
