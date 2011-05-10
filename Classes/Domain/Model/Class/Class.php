@@ -261,7 +261,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @return boolean success
 	 */
 	public function renameMethod($oldName, $newName){
-		if($this->methodExists($oldmethodName)){
+		if($this->methodExists($oldName)){
 			$method = $this->methods[$oldName];
 			$method->setName($newName);
 			$this->methods[$newName] = $method;
