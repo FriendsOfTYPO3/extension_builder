@@ -290,7 +290,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 				$modifierNames[] = array_shift(Reflection::getModifierNames($modifier));
 			}
 		}
-		else $modifierNames[] = array_shift(Reflection::getModifierNames($modifiers));
+		else $modifierNames = Reflection::getModifierNames($modifiers);
 		return $modifierNames;
 	}
 
