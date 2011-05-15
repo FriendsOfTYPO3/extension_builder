@@ -35,7 +35,7 @@ class Tx_ExtensionBuilder_ViewHelpers_RenderViewHelper extends Tx_Fluid_Core_Vie
 
 	/**
 	 *
-	 * @var Tx_Fluid_Compatibility_ObjectManager
+	 * @var Tx_Extbase_Object_ObjectManager
 	 */
 	protected $objectManager;
 
@@ -44,19 +44,6 @@ class Tx_ExtensionBuilder_ViewHelpers_RenderViewHelper extends Tx_Fluid_Core_Vie
 	 * @var Tx_ExtensionBuilder_Domain_Model_Extension
 	 */
 	protected $extension;
-
-	public function __construct() {
-		if (!$this->templateParser instanceof Tx_Fluid_Core_Parser_TemplateParser) {
-			$this->injectTemplateParser(Tx_Fluid_Compatibility_TemplateParserBuilder::build());
-		}
-
-		if (	class_exists('Tx_Fluid_Compatibility_ObjectManager') &&
-				!$this->objectManager instanceof Tx_Fluid_Compatibility_ObjectManager) {
-			$this->objectManager = new Tx_Fluid_Compatibility_ObjectManager();
-		} elseif (!$this->objectManager instanceof Tx_Extbase_Object_ObjectManager) {
-			$this->injectObjectManager(new Tx_Extbase_Object_ObjectManager());
-		}
-	}
 
 	/**
 	 * @param Tx_Fluid_Core_Parser_TemplateParser $templateParser
@@ -67,10 +54,10 @@ class Tx_ExtensionBuilder_ViewHelpers_RenderViewHelper extends Tx_Fluid_Core_Vie
 	}
 
 	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @param Tx_Extbase_Object_ObjectManager $objectManager
 	 * @return void
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(Tx_Extbase_Object_ObjectManager $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 

@@ -58,11 +58,6 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Extbase_Tests_Unit_
 			//parent::runBare(); causes a memory exhausted error??
 			$this->codeGenerator->injectObjectManager($this->objectManager);
 			$this->templateParser->injectObjectManager($this->objectManager);
-
-		} else{
-			$this->objectManager = new Tx_Fluid_Compatibility_ObjectManager();
-			$this->codeGenerator->_set('objectManager',$this->objectManager);
-			$this->templateParser->_set('objectManager',$this->objectManager);
 		}
 
 		$this->roundTripService->injectClassParser($this->classParser);
