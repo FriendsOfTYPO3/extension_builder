@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}<k:render partial="Classes/licenseHeader.phpt" arguments="{persons:extension.persons}" />
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}<k:render partial="Classes/licenseHeader.phpt" arguments="{persons:extension.persons,settings:settings}" />
 /**
 <f:if condition="{classSchema}">
  * {classSchema.description}</f:if>

@@ -400,6 +400,18 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	}
 
 	/**
+	 *
+	 * @return boolean
+	 */
+	public function hasPlugins(){
+		if(count($this->plugins)>0){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Add $plugin
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_Plugin
@@ -459,8 +471,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	public function hasBackendModules(){
 		if(count($this->backendModules)>0){
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
