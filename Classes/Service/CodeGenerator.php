@@ -39,7 +39,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
 	/**
 	 *
-	 * @var Tx_Fluid_Compatibility_ObjectManager
+	 * @var Tx_Extbase_Object_ObjectManager
 	 */
 	protected $objectManager;
 

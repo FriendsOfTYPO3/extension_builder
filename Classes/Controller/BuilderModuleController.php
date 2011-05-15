@@ -95,6 +95,9 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	 * @return string The rendered view
 	 */
 	public function indexAction() {
+		if(floatval(t3lib_extMgm::getExtensionVersion('extbase')) < 1.3){
+			die('The Extension Builder requires at least Extbase/Fluid Version 1.3. Sorry!');
+		}
 		t3lib_div::devlog('Settings','extension_builder',0,$this->settings);
 		// if the user has seen the introduction the domain modeler becomes the default view
 		if(!$this->request->hasArgument('action')){
