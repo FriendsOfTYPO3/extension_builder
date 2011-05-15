@@ -66,26 +66,10 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 */
 	protected $overWriteSettings;
 
-
 	/**
-	 *
-	 * @return void
+	 * @var string
 	 */
-	public function __construct() {
-
-		$this->settings = Tx_ExtensionBuilder_Utility_ConfigurationManager::getExtensionBuilderSettings();
-		if (!$this->templateParser instanceof Tx_Fluid_Core_Parser_TemplateParser) {
-			$this->injectTemplateParser(Tx_Fluid_Compatibility_TemplateParserBuilder::build());
-			$this->classBuilder = t3lib_div::makeInstance('Tx_ExtensionBuilder_Service_ClassBuilder');
-		}
-
-		if (class_exists('Tx_Fluid_Compatibility_ObjectManager') &&
-				!$this->objectManager instanceof Tx_Fluid_Compatibility_ObjectManager) {
-			$this->objectManager = new Tx_Fluid_Compatibility_ObjectManager();
-		} elseif (!$this->objectManager instanceof Tx_Extbase_Object_ObjectManager) {
-			$this->injectObjectManager(new Tx_Extbase_Object_ObjectManager());
-		}
-	}
+	protected $codeTemplateRootPath;
 
 
 	/**
@@ -104,21 +88,21 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		$this->objectManager = $objectManager;
 	}
 
-	/**
-	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
-	 * @return void
-	 */
-	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
-		$this->configurationManager = $configurationManager;
-		$this->settings = Tx_ExtensionBuilder_Utility_ConfigurationManager::getExtensionBuilderSettings();
-	}
-
+	
 	/**
 	 * @param Tx_ExtensionBuilder_Service_ClassBuilder $classBuilder
 	 * @return void
 	 */
 	public function injectClassBuilder(Tx_ExtensionBuilder_Service_ClassBuilder $classBuilder) {
 		$this->classBuilder = $classBuilder;
+	}
+
+	/**
+	 * called by controller
+	 * @param Array $settings
+	 */
+	public function injectSettings($settings){
+		$this->settings = $settings;
 	}
 
 
@@ -132,12 +116,20 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 */
 	public function build(Tx_ExtensionBuilder_Domain_Model_Extension $extension) {
 		$this->extension = $extension;
-
 		$this->classBuilder->initialize($this->extension);
-		if($this->settings['enableRoundtrip']==1){
+		if($this->settings['extConf']['enableRoundtrip']==1){
 			$this->roundTripEnabled = true;
+			t3lib_div::devLog('roundtrip enabled', 'extension_builder',0,$this->settings);
 		}
-		else t3lib_div::devLog('roundtrip disabled', 'extension_builder',0,$this->settings);
+		else {
+			t3lib_div::devLog('roundtrip disabled', 'extension_builder',0,$this->settings);
+		}
+		
+		if(isset($this->settings['codeTemplateRootPath'])){
+			$this->codeTemplateRootPath = $this->settings['codeTemplateRootPath'];
+		} else {
+			throw new Exception('No codeTemplateRootPath configured');
+		}
 
 		// Base directory already exists at this point
 		$this->extensionDirectory = $this->extension->getExtensionDir();
@@ -187,7 +179,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			}
 
 		} catch (Exception $e) {
-			return 'Could not generate Tca.php, error: ' . $e->getMessage();
+			return 'Could not generate Tca.php, error: ' . $e->getMessage().$e->getFile();
 		}
 
 		if($this->roundTripEnabled && !file_exists($tcaDirectory.'ExtensionBuilder/settings.yaml')){
@@ -198,26 +190,28 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
 		}
 
-		// Generate TypoScript setup
-		try {
-			t3lib_div::mkdir_deep($this->extensionDirectory, 'Configuration/TypoScript');
-			$typoscriptDirectory = $this->extensionDirectory . 'Configuration/TypoScript/';
-			$fileContents = $this->generateTyposcriptSetup();
-			$this->writeFile($typoscriptDirectory . 'setup.txt', $fileContents);
-		} catch (Exception $e) {
-			return 'Could not generate typoscript setup, error: ' . $e->getMessage();
+		if($extension->hasPlugins() || $extension->hasBackendModules()){
+			// Generate TypoScript setup
+			try {
+				t3lib_div::mkdir_deep($this->extensionDirectory, 'Configuration/TypoScript');
+				$typoscriptDirectory = $this->extensionDirectory . 'Configuration/TypoScript/';
+				$fileContents = $this->generateTyposcriptSetup();
+				$this->writeFile($typoscriptDirectory . 'setup.txt', $fileContents);
+			} catch (Exception $e) {
+				return 'Could not generate typoscript setup, error: ' . $e->getMessage();
+			}
+
+			// Generate TypoScript constants
+			try {
+				$typoscriptDirectory = $this->extensionDirectory . 'Configuration/TypoScript/';
+				$fileContents = $this->generateTyposcriptConstants();
+				$this->writeFile($typoscriptDirectory . 'constants.txt', $fileContents);
+			} catch (Exception $e) {
+				return 'Could not generate typoscript constants, error: ' . $e->getMessage();
+			}
 		}
 
-		// Generate TypoScript constants
-		try {
-			$typoscriptDirectory = $this->extensionDirectory . 'Configuration/TypoScript/';
-			$fileContents = $this->generateTyposcriptConstants();
-			$this->writeFile($typoscriptDirectory . 'constants.txt', $fileContents);
-		} catch (Exception $e) {
-			return 'Could not generate typoscript constants, error: ' . $e->getMessage();
-		}
-
-			// Generate Static TypoScript
+		// Generate Static TypoScript
 		try {
 			if($this->extension->hasPropertiesThatNeedMapping()){
 				$fileContents = $this->generateStaticTyposcript();
@@ -300,6 +294,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 					$this->writeFile($languageDirectory . 'locallang_csh_' . $domainObject->getDatabaseTableName() . '.xml', $fileContents);
 
 					if ($domainObject->isAggregateRoot()) {
+						t3lib_div::devlog('Generated '.$domainObject->getName() . 'Repository.php','extension_builder',0);
 						$fileContents = $this->generateDomainRepositoryCode($domainObject);
 						$this->writeFile($domainRepositoryDirectory . $domainObject->getName() . 'Repository.php', $fileContents);
 						t3lib_div::devlog('Generated '.$domainObject->getName() . 'Repository.php','extension_builder',0);
@@ -373,13 +368,13 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			$domainTemplateDirectory = $privateResourcesDirectory . 'Templates/' . $domainObject->getName() . '/';
 			foreach($domainObject->getActions() as $action) {
 				if ($action->getNeedsTemplate()
-					&& file_exists(t3lib_extMgm::extPath('extension_builder').'Resources/Private/CodeTemplates/'.$templateRootFolder.'Templates/' . $action->getName() . '.htmlt')){
+					&& file_exists($this->codeTemplateRootPath.$templateRootFolder.'Templates/' . $action->getName() . '.htmlt')){
 					$hasTemplates = true;
 					t3lib_div::mkdir_deep($this->extensionDirectory, $templateRootFolder .'Templates/' . $domainObject->getName());
 					$fileContents = $this->generateDomainTemplate($templateRootFolder.'Templates/',$domainObject, $action);
 					$this->writeFile($domainTemplateDirectory . ucfirst($action->getName()) . '.html', $fileContents);
 						// generate partials for formfields
-					if($action->getNeedsForm()){
+					if($action->getNeedsForm()){						
 						t3lib_div::mkdir_deep($privateResourcesDirectory, 'Partials');
 						$partialDirectory =  $privateResourcesDirectory . 'Partials/';
 						t3lib_div::mkdir_deep($partialDirectory, $domainObject->getName());
@@ -435,28 +430,21 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 * @param array $variables
 	 */
 	protected function renderTemplate($filePath, $variables) {
-		$codeTemplateRootPath = $this->getCodeTemplateRootPath();
-		if(!is_file($codeTemplateRootPath. $filePath)){
-			throw(new Exception('TemplateFile '.$codeTemplateRootPath . $filePath.' not found'));
+		//$codeTemplateRootPath = $this->getCodeTemplateRootPath();
+		$variables['settings'] = $this->settings;
+		//$variables['settings']['codeTemplateRootPath'] = $this->codeTemplateRootPath;
+		if(!is_file($this->codeTemplateRootPath. $filePath)){
+			throw(new Exception('TemplateFile '.$this->codeTemplateRootPath . $filePath.' not found'));
 		}
-
-		$parsedTemplate = $this->templateParser->parse(file_get_contents($codeTemplateRootPath . $filePath));
+		$templateCode = file_get_contents($this->codeTemplateRootPath . $filePath);
+		if(empty($templateCode)){
+			throw(new Exception('TemplateFile '.$this->codeTemplateRootPath . $filePath.' has no content'));
+		}
+		$parsedTemplate = $this->templateParser->parse($templateCode);
 		return trim($parsedTemplate->render($this->buildRenderingContext($variables)));
 	}
 
-	/**
-	 * Get the path for the code templates
-	 *
-	 * @return string path
-	 */
-	protected function getCodeTemplateRootPath(){
-		if(isset($this->settings['codeTemplateRootPath'])){
-			return PATH_site.$this->settings['codeTemplateRootPath'];
-		}
-		else {
-			return t3lib_extMgm::extPath('extension_builder').'Resources/Private/CodeTemplates/';
-		}
-	}
+	
 
 	/**
 	 * Generates the code for the controller class
@@ -485,7 +473,9 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
 	 */
 	public function generateDomainObjectCode(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
+		t3lib_div::devlog('Generated '.$domainObject->getName() . '.php','extension_builder',0);
 		if($this->roundTripEnabled){
+			t3lib_div::devlog('Generated '.$domainObject->getName() . '.php','extension_builder',0);
 			$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
 			if($modelClassObject){
 				$classDocComment = $this->renderDocComment($modelClassObject,$domainObject);
@@ -590,7 +580,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	}
 
 	public function generateFormErrorsPartial($templateRootFolder) {
-		$codeTemplateRootPath = $this->getCodeTemplateRootPath().$templateRootFolder;
+		$codeTemplateRootPath = $this->codeTemplateRootPath.$templateRootFolder;
 		return file_get_contents($codeTemplateRootPath.'formErrors.htmlt');
 	}
 
@@ -621,8 +611,6 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
 	public function generateTCA(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
 		return $this->renderTemplate('Configuration/TCA/domainObject.phpt', array('extension' => $this->extension, 'domainObject' => $domainObject));
-	#public function generateTCA() {
-		#return $this->renderTemplate('Configuration/Tca.phpt', array('extension' => $this->extension));
 	}
 
 	public function generateYamlSettings() {
@@ -697,11 +685,11 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		}
 
 		if(empty($fileContents)){
-			t3lib_div::devLog('No file content! File ' . $targetFile . 'could not be created', 'extension_builder',0,$this->settings);
+			t3lib_div::devLog('No file content! File ' . $targetFile . ' had no content', 'extension_builder',0,$this->settings);
 		}
 		$success = t3lib_div::writeFile($targetFile, $fileContents);
 		if(!$success){
-			throw new Exception('File ' . $targetFile . 'could not be created!');
+			throw new Exception('File ' . $targetFile . ' could not be created!');
 		}
 	}
 

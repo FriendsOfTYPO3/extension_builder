@@ -52,7 +52,7 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Extbase_Tests_Unit_
 		$this->classBuilder = t3lib_div::makeInstance('Tx_ExtensionBuilder_Service_ClassBuilder');
 		$this->templateParser = $this->getMock($this->buildAccessibleProxy('Tx_Fluid_Core_Parser_TemplateParser'),array('dummy'));
 		$this->codeGenerator = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_CodeGenerator'),array('dummy'));
-
+		
 		if (class_exists('Tx_Extbase_Object_ObjectManager')) {
 			$this->objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
 			//parent::runBare(); causes a memory exhausted error??
@@ -73,8 +73,16 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Extbase_Tests_Unit_
 
 		$this->codeGenerator->injectTemplateParser($this->templateParser);
 		$this->codeGenerator->injectClassBuilder($this->classBuilder);
-		$this->codeGenerator->settings= array('enableRoundtrip'=>'1');
-
+		$this->codeGenerator->injectSettings(
+			array(
+				'codeTemplateRootPath' => PATH_typo3conf.'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/',
+				'extConf' => array(
+					'enableRoundtrip'=>'1'
+				)
+			)
+		);
+		$this->codeGenerator->_set('codeTemplateRootPath',PATH_typo3conf.'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/');
+		$this->codeGenerator->_set('enableRoundtrip',true);
 	}
 
 

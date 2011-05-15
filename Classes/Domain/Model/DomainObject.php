@@ -307,6 +307,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	public function setExtension(Tx_ExtensionBuilder_Domain_Model_Extension $extension) {
 		$this->extension = $extension;
 	}
+	
 	public function getExtension() {
 		return $this->extension;
 	}

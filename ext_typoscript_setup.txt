@@ -1,0 +1,7 @@
+ # global configuration
+
+module.extension_builder {
+	settings{
+		codeTemplateRootPath = EXT:extension_builder/Resources/Private/CodeTemplates/Extbase/
+	}
+}

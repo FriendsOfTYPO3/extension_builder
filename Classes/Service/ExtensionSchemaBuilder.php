@@ -24,11 +24,8 @@
 ***************************************************************/
 
 /**
- * Creates a request an dispatches it to the controller which was specified
- * by TS Setup, Flexform and returns the content to the v4 framework.
  *
- * This class is the main entry point for extbase extensions in the frontend.
- *
+ * Builds an extension object based on the buildConfiguration
  * @package ExtensionBuilder
  * @version $ID:$
  */
@@ -36,13 +33,14 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 
 	/**
 	 *
-	 * @param array $jsonArray
+	 * @param array $extensionBuildConfiguration
 	 * @return $extension
 	 */
-	public function build(array $jsonArray) {
+	public function build(array $extensionBuildConfiguration) {
 		$extension = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Extension');
-		$globalProperties = $jsonArray['properties'];
+		$globalProperties = $extensionBuildConfiguration['properties'];
 		if (!is_array($globalProperties)){
+			t3lib_div::devlog('Error: Extension properties not submitted! '.$extension->getOriginalExtensionKey(),'builder',3,$globalProperties);
 			throw new Exception('Extension properties not submitted!');
 		}
 
@@ -114,16 +112,16 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 
 
 		// classes
-		if (is_array($jsonArray['modules'])) {
-			foreach ($jsonArray['modules'] as $singleModule) {
+		if (is_array($extensionBuildConfiguration['modules'])) {
+			foreach ($extensionBuildConfiguration['modules'] as $singleModule) {
 				$domainObject = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::build($singleModule['value']);
 				$extension->addDomainObject($domainObject);
 			}
 		}
 
 		// relations
-		if (is_array($jsonArray['wires'])) {
-			foreach ($jsonArray['wires'] as $wire) {
+		if (is_array($extensionBuildConfiguration['wires'])) {
+			foreach ($extensionBuildConfiguration['wires'] as $wire) {
 
 				if($wire['tgt']['terminal'] !== 'SOURCES'){
 					if($wire['src']['terminal'] == 'SOURCES'){
@@ -137,15 +135,15 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 						 throw new Exception('A wire has always to connect a relation with a model, not with another relation');
 					}
 				}
-				$relationJsonConfiguration = $jsonArray['modules'][$wire['src']['moduleId']]['value']['relationGroup']['relations'][substr($wire['src']['terminal'], 13)];
+				$relationJsonConfiguration = $extensionBuildConfiguration['modules'][$wire['src']['moduleId']]['value']['relationGroup']['relations'][substr($wire['src']['terminal'], 13)];
 
 				if (!is_array($relationJsonConfiguration)){
-					t3lib_div::devlog('jsonArray:','extension_builder',3,$jsonArray);
+					t3lib_div::devlog('jsonArray:','extension_builder',3,$extensionBuildConfiguration);
 					throw new Exception('Error. Relation JSON config was not found');
 				}
 
-				$foreignClassName = $jsonArray['modules'][$wire['tgt']['moduleId']]['value']['name'];
-				$localClassName = $jsonArray['modules'][$wire['src']['moduleId']]['value']['name'];
+				$foreignClassName = $extensionBuildConfiguration['modules'][$wire['tgt']['moduleId']]['value']['name'];
+				$localClassName = $extensionBuildConfiguration['modules'][$wire['src']['moduleId']]['value']['name'];
 
 				$relation = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
 
