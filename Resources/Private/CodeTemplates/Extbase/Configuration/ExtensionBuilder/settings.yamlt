@@ -49,7 +49,7 @@ overwriteSettings:
 
   Configuration:
     #TCA: merge
-    #Typoscript: keep
+    #TypoScript: keep
 
   Resources:
     Private:
