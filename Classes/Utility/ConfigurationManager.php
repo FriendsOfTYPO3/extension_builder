@@ -40,6 +40,9 @@ class Tx_ExtensionBuilder_Utility_ConfigurationManager {
 	 */
 	public static function getSettings($typoscript){
 		$settings = $typoscript['module.']['extension_builder.']['settings.'];
+		if(empty($settings['codeTemplateRootPath'])){
+			$settings['codeTemplateRootPath'] = 'EXT:extension_builder/Resources/Private/CodeTemplates/Extbase/';
+		}
 		$settings['codeTemplateRootPath'] = self::substituteExtensionPath($settings['codeTemplateRootPath']);
 		$settings['extConf'] = Tx_ExtensionBuilder_Utility_ConfigurationManager::getExtensionBuilderSettings();
 		return $settings;
@@ -114,6 +117,8 @@ class Tx_ExtensionBuilder_Utility_ConfigurationManager {
 				return t3lib_extMgm::extPath($extKey) . $script;
 				
 			}
+		} else if(t3lib_div::isAbsPath($encodedTemplateRootPath)){
+			return $encodedTemplateRootPath;
 		} else {
 			return PATH_site.$encodedTemplateRootPath;
 		}
