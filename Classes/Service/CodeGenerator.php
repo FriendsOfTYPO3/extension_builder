@@ -167,6 +167,18 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			return 'Could not copy ext_icon.gif, error: ' . $e->getMessage();
 		}
 
+		// insert a manual template
+		try {
+			if(!file_exists($this->extensionDirectory.'doc/manual.sxw') && file_exists($this->codeTemplateRootPath.'doc/manual.sxw')){
+				t3lib_div::mkdir_deep($this->extensionDirectory, 'doc');
+				$this->upload_copy_move($this->codeTemplateRootPath . 'doc/manual.sxw', $this->extensionDirectory . 'doc/manual.sxw');
+			} else {
+				t3lib_div::devlog('No Doc template!:'.$this->codeTemplateRootPath.'doc/manual.sxw','extension_builder',1);
+			}
+		} catch (Exception $e) {
+			return 'An error occurred when copying the manual template: ' . $e->getMessage().$e->getFile();
+		}
+
 		// Generate TCA
 		try {
 			t3lib_div::mkdir_deep($this->extensionDirectory, 'Configuration/TCA');
