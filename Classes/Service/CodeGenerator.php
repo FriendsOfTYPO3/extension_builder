@@ -674,9 +674,14 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			if($overWriteMode == -1){
 				return; // skip file creation
 			}
-			if($overWriteMode == 1 && strpos($targetFile,'Classes')===false){
-					// classes are merged by the class builder
-				$fileContents = $this->insertSplitToken($targetFile,$fileContents);
+			if($overWriteMode == 1 && strpos($targetFile,'Classes')===false){ // classes are merged by the class builder
+				if(strtolower(pathinfo($targetFile, PATHINFO_EXTENSION)) == 'html'){
+					//TODO: We need some kind of protocol to be displayed after code generation
+					t3lib_div::devlog('File ' . basename($targetFile) . ' was not written. Template files can\'t be merged!','extension_builder',1);
+					return;
+				} else {
+					$fileContents = $this->insertSplitToken($targetFile,$fileContents);
+				}
 			}
 			else if(file_exists($targetFile) && $overWriteMode == 2){
 				// keep the existing file
@@ -707,11 +712,14 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				$customFileContent = str_replace('?>','',$fileParts[1]);
 			}
 		}
-		if(strtolower(pathinfo($targetFile, PATHINFO_EXTENSION)) == 'php'){
+
+		$fileExtension = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+		if($fileExtension == 'php'){
 			$fileContents = str_replace('?>','',$fileContents);
 			$fileContents .= Tx_ExtensionBuilder_Service_RoundTrip::SPLIT_TOKEN;
 		}
-		else if(strtolower(pathinfo($targetFile, PATHINFO_EXTENSION)) == 'xml'){
+		else if($fileExtension == 'xml'){
 			$fileContents = Tx_ExtensionBuilder_Service_RoundTrip::mergeLocallangXml($targetFile,$fileContents);
 		}
 		else {
@@ -720,7 +728,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
 		$fileContents .= rtrim($customFileContent);
 
-		if(strtolower(pathinfo($targetFile, PATHINFO_EXTENSION)) == 'php'){
+		if($fileExtension == 'php'){
 			$fileContents .=  "\n?>";
 		}
 		return $fileContents;
