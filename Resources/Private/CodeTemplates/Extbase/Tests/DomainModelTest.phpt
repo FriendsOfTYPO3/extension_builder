@@ -55,114 +55,114 @@ class {domainObject.className}Test extends Tx_Extbase_Tests_Unit_BaseTestCase {
 	/**
 	 * @test
 	 */
-	public function get{property.name -> k:uppercaseFirst()}ReturnsInitialValueFor{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.typeForComment)}", then:"{k:pregReplace(match:'/^.*<(.*)>$/', replace:'ObjectStorageContaining\1', subject:property.typeForComment)}", else:"{property.typeForComment -> k:upperCaseFirst()}")}() { <f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'integer')}">
+	public function get{property.name -> k:format.uppercaseFirst()}ReturnsInitialValueFor{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.typeForComment)}", then:"{k:pregReplace(match:'/^.*<(.*)>$/', replace:'ObjectStorageContaining\1', subject:property.typeForComment)}", else:"{property.typeForComment -> k:format.uppercaseFirst()}")}() { <f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'integer')}">
 		$this->assertSame(
 			0,
-			$this->fixture->get{property.name -> k:uppercaseFirst()}()
+			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
 	</f:if><f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'float')}">
 		$this->assertSame(
 			0.0,
-			$this->fixture->get{property.name -> k:uppercaseFirst()}()
+			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
 	</f:if><f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'boolean')}">
 		$this->assertSame(
 			TRUE,
-			$this->fixture->get{property.name -> k:uppercaseFirst()}()
+			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
 	</f:if><f:if condition="{k:matchString(match:'ObjectStorage', in:property.typeForComment)}"><f:then>
 		$newObjectStorage = new Tx_Extbase_Persistence_ObjectStorage();
 		$this->assertEquals(
 			$newObjectStorage,
-			$this->fixture->get{property.name -> k:uppercaseFirst()}()
+			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
 	</f:then><f:else><f:if condition="{k:matchString(match:extension.extensionKey, in:property.typeForComment)}">
 		$this->assertEquals(
 			NULL,
-			$this->fixture->get{property.name -> k:uppercaseFirst()}()
+			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
 	</f:if></f:else></f:if>}
 
 	/**
 	 * @test
 	 */
-	public function set{property.name -> k:uppercaseFirst()}For{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.typeForComment)}", then:"{k:pregReplace(match:'/^.*<(.*)>$/', replace:'ObjectStorageContaining\1', subject:property.typeForComment)}", else:"{property.typeForComment -> k:upperCaseFirst()}")}Sets{property.name -> k:upperCaseFirst()}() { <f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'string')}">
-		$this->fixture->set{property.name -> k:uppercaseFirst()}('Conceived at T3CON10');
+	public function set{property.name -> k:format.uppercaseFirst()}For{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.typeForComment)}", then:"{k:pregReplace(match:'/^.*<(.*)>$/', replace:'ObjectStorageContaining\1', subject:property.typeForComment)}", else:"{property.typeForComment -> k:format.uppercaseFirst()}")}Sets{property.name -> k:format.uppercaseFirst()}() { <f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'string')}">
+		$this->fixture->set{property.name -> k:format.uppercaseFirst()}('Conceived at T3CON10');
 
 		$this->assertSame(
 			'Conceived at T3CON10',
-			$this->fixture->get{property.name -> k:uppercaseFirst()}()
+			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
 	</f:if><f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'integer')}">
-		$this->fixture->set{property.name -> k:uppercaseFirst()}(12);
+		$this->fixture->set{property.name -> k:format.uppercaseFirst()}(12);
 
 		$this->assertSame(
 			12,
-			$this->fixture->get{property.name -> k:uppercaseFirst()}()
+			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
 	</f:if><f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'float')}">
-		$this->fixture->set{property.name -> k:uppercaseFirst()}(3.14159265);
+		$this->fixture->set{property.name -> k:format.uppercaseFirst()}(3.14159265);
 
 		$this->assertSame(
 			3.14159265,
-			$this->fixture->get{property.name -> k:uppercaseFirst()}()
+			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
 	</f:if><f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'boolean')}">
-		$this->fixture->set{property.name -> k:uppercaseFirst()}(TRUE);
+		$this->fixture->set{property.name -> k:format.uppercaseFirst()}(TRUE);
 
 		$this->assertSame(
 			TRUE,
-			$this->fixture->get{property.name -> k:uppercaseFirst()}()
+			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
 	</f:if><f:if condition="{k:matchString(match:'ObjectStorage', in:property.typeForComment)}"><f:then>
 		${property.name -> k:singularize()} = new {k:pregReplace(match:'/^.*<(.*)>$/', replace:'\1', subject:property.typeForComment)}();
-		$objectStorageHoldingExactlyOne{property.name -> k:uppercaseFirst()} = new Tx_Extbase_Persistence_ObjectStorage();
-		$objectStorageHoldingExactlyOne{property.name -> k:uppercaseFirst()}->attach(${property.name -> k:singularize()});
-		$this->fixture->set{property.name -> k:uppercaseFirst()}($objectStorageHoldingExactlyOne{property.name -> k:uppercaseFirst()});
+		$objectStorageHoldingExactlyOne{property.name -> k:format.uppercaseFirst()} = new Tx_Extbase_Persistence_ObjectStorage();
+		$objectStorageHoldingExactlyOne{property.name -> k:format.uppercaseFirst()}->attach(${property.name -> k:singularize()});
+		$this->fixture->set{property.name -> k:format.uppercaseFirst()}($objectStorageHoldingExactlyOne{property.name -> k:format.uppercaseFirst()});
 
 		$this->assertSame(
-			$objectStorageHoldingExactlyOne{property.name -> k:uppercaseFirst()},
-			$this->fixture->get{property.name -> k:uppercaseFirst()}()
+			$objectStorageHoldingExactlyOne{property.name -> k:format.uppercaseFirst()},
+			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
 	</f:then><f:else><f:if condition="{k:matchString(match:extension.extensionKey, in:property.typeForComment)}">
-		$dummyObject = new {f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.typeForComment)}", then:"{k:pregReplace(match:'/^.*<(.*)>$/', replace:'ObjectStorageContaining\1'}, subject:property.typeForComment)}", else:"{property.typeForComment -> k:upperCaseFirst()}")}();
-		$this->fixture->set{property.name -> k:uppercaseFirst()}($dummyObject);
+		$dummyObject = new {f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.typeForComment)}", then:"{k:pregReplace(match:'/^.*<(.*)>$/', replace:'ObjectStorageContaining\1'}, subject:property.typeForComment)}", else:"{property.typeForComment -> k:format.uppercaseFirst()}")}();
+		$this->fixture->set{property.name -> k:format.uppercaseFirst()}($dummyObject);
 
 		$this->assertSame(
 			$dummyObject,
-			$this->fixture->get{property.name -> k:uppercaseFirst()}()
+			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
 	</f:if></f:else></f:if>}
 	<f:if condition="{k:matchString(match:'ObjectStorage', in:property.typeForComment)}">
 	/**
 	 * @test
 	 */
-	public function add{property.name -> k:singularize() -> k:uppercaseFirst()}ToObjectStorageHolding{property.name -> k:uppercaseFirst()}() {
+	public function add{property.name -> k:singularize() -> k:format.uppercaseFirst()}ToObjectStorageHolding{property.name -> k:format.uppercaseFirst()}() {
 		${property.name -> k:singularize()} = new {k:pregReplace(match:'/^.*<(.*)>$/', replace:'\1', subject:property.typeForComment)}();
-		$objectStorageHoldingExactlyOne{property.name -> k:singularize() -> k:uppercaseFirst()} = new Tx_Extbase_Persistence_ObjectStorage();
-		$objectStorageHoldingExactlyOne{property.name -> k:singularize() -> k:uppercaseFirst()}->attach(${property.name -> k:singularize()});
-		$this->fixture->add{property.name -> k:singularize() -> k:uppercaseFirst()}(${property.name -> k:singularize()});
+		$objectStorageHoldingExactlyOne{property.name -> k:singularize() -> k:format.uppercaseFirst()} = new Tx_Extbase_Persistence_ObjectStorage();
+		$objectStorageHoldingExactlyOne{property.name -> k:singularize() -> k:format.uppercaseFirst()}->attach(${property.name -> k:singularize()});
+		$this->fixture->add{property.name -> k:singularize() -> k:format.uppercaseFirst()}(${property.name -> k:singularize()});
 
 		$this->assertEquals(
-			$objectStorageHoldingExactlyOne{property.name -> k:singularize() -> k:uppercaseFirst()},
-			$this->fixture->get{property.name -> k:uppercaseFirst()}()
+			$objectStorageHoldingExactlyOne{property.name -> k:singularize() -> k:format.uppercaseFirst()},
+			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
 	}
 
 	/**
 	 * @test
 	 */
-	public function remove{property.name -> k:singularize() -> k:uppercaseFirst()}FromObjectStorageHolding{property.name -> k:uppercaseFirst()}() {
+	public function remove{property.name -> k:singularize() -> k:format.uppercaseFirst()}FromObjectStorageHolding{property.name -> k:format.uppercaseFirst()}() {
 		${property.name -> k:singularize()} = new {k:pregReplace(match:'/^.*<(.*)>$/', replace:'\1', subject:property.typeForComment)}();
 		$localObjectStorage = new Tx_Extbase_Persistence_ObjectStorage();
 		$localObjectStorage->attach(${property.name -> k:singularize()});
 		$localObjectStorage->detach(${property.name -> k:singularize()});
-		$this->fixture->add{property.name -> k:singularize() -> k:uppercaseFirst()}(${property.name -> k:singularize()});
-		$this->fixture->remove{property.name -> k:singularize() -> k:uppercaseFirst()}(${property.name -> k:singularize()});
+		$this->fixture->add{property.name -> k:singularize() -> k:format.uppercaseFirst()}(${property.name -> k:singularize()});
+		$this->fixture->remove{property.name -> k:singularize() -> k:format.uppercaseFirst()}(${property.name -> k:singularize()});
 
 		$this->assertEquals(
 			$localObjectStorage,
-			$this->fixture->get{property.name -> k:uppercaseFirst()}()
+			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
 	}
 	</f:if></f:for></f:then><f:else>

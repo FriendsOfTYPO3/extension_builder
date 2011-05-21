@@ -25,7 +25,7 @@
 ***************************************************************/
 
 /**
- * Testcase for class Tx_{extension.extensionKey -> k:uppercaseFirst()}_Controller_{controllerName}.
+ * Testcase for class Tx_{extension.extensionKey -> k:format.uppercaseFirst()}_Controller_{controllerName}.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
@@ -36,7 +36,7 @@
  *
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
 </f:for> */{namespace k=Tx_ExtensionBuilder_ViewHelpers}
-class Tx_{extension.extensionKey -> k:uppercaseFirst()}_Controller_{controllerName}Test extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class Tx_{extension.extensionKey -> k:format.uppercaseFirst()}_Controller_{controllerName}Test extends Tx_Extbase_Tests_Unit_BaseTestCase {
 	/**
 	 * @var {domainObject.className}
 	 */

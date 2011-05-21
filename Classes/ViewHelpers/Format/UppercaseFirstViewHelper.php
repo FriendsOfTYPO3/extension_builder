@@ -20,30 +20,34 @@
  *                                                                        */
 
 /**
- * Indentation ViewHelper
+ * Wrapper for PHPs ucfirst function.
+ * @see http://www.php.net/manual/en/ucfirst
+ *
+ * = Examples =
+ *
+ * <code title="Example">
+ * <k:uppercaseFirst>{textWithMixedCase}</k:uppercaseFirst>
+ * </code>
+ *
+ * Output:
+ * TextWithMixedCase
  *
  * @version $Id: $
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @scope prototype
  */
-class Tx_ExtensionBuilder_ViewHelpers_IndentViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_Format_UppercaseFirstViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
+	 * Uppercase first character
 	 *
-	 * @param integer $indentation
-	 * @param string $type
-	 * @return boolean true or false
+	 * @return string The altered string.
+	 * @author Christopher Hlubek <hlubek@networkteam.com>
 	 */
-	public function render($indentation) {
-		$outputToIndent = $this->renderChildren();
-		$lineArray = explode(chr(10), $outputToIndent);
-		$indentString = '';
-		for ($i = 0; $i < $indentation; $i++) {
-			$indentString .= '	';
-		}
-		return implode(chr(10) . $indentString, $lineArray);
+	public function render() {
+		$content = $this->renderChildren();
+		return ucfirst($content);
 	}
-
 }
 
 ?>

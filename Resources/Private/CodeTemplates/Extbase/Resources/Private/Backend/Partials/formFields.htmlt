@@ -1,5 +1,5 @@
 {namespace k=Tx_ExtensionBuilder_ViewHelpers}
-<k:removeMultipleNewlines>
+<k:format.removeMultipleNewlines>
 <f:for each="{domainObject.properties}" as="property">
 <f:if condition="{property.isDisplayable}">
 <label for="{property.name}">
@@ -8,4 +8,4 @@
 	<k:openingTag><k:render partial="Form/{property.dataType}.htmlt" arguments="{domainObject:domainObject,property: property,settings:settings}" /> /</k:openingTag><br />
 </f:if>
 </f:for>
-</k:removeMultipleNewlines>
+</k:format.removeMultipleNewlines>

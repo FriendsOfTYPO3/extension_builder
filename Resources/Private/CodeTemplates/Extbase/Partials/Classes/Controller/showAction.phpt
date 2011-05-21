@@ -2,9 +2,9 @@
 	/**
 	 * Displays a single {domainObject.name}
 	 *
-	 * @param {domainObject.className} ${domainObject.name -> k:lowercaseFirst()} the {domainObject.name} to display
+	 * @param {domainObject.className} ${domainObject.name -> k:format.lowercaseFirst()} the {domainObject.name} to display
 	 * @return string The rendered view
 	 */
-	public function showAction({domainObject.className} ${domainObject.name -> k:lowercaseFirst()}) {
-		$this->view->assign('{domainObject.name -> k:lowercaseFirst()}', ${domainObject.name -> k:lowercaseFirst()});
+	public function showAction({domainObject.className} ${domainObject.name -> k:format.lowercaseFirst()}) {
+		$this->view->assign('{domainObject.name -> k:format.lowercaseFirst()}', ${domainObject.name -> k:format.lowercaseFirst()});
 	}

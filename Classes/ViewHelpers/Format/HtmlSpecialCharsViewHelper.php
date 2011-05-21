@@ -1,6 +1,6 @@
 <?php
 /*                                                                        *
- * This script belongs to the TYPO3 package "Extension Builder".         *
+ * This script belongs to the TYPO3 package "Extension Builder".          *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -20,29 +20,21 @@
  *                                                                        */
 
 /**
- * View helper which returns a quoted string
+ * Wrapper for htmlspecialchars ViewHelper
  *
- * = Examples =
- *
- * <f:quoteString>{anyString}</f:quoteString>
- *
- *
- * @package	 ExtensionBuilder
- * @author	 Rens Admiraal
- * @version $ID:$
+ * @version $Id: $
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @scope prototype
  */
-class Tx_ExtensionBuilder_ViewHelpers_QuoteStringViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_Format_HtmlSpecialCharsViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
-	 * @param string $value
+	 *
+	 * @return boolean string
 	 */
-	public function render($value = null) {
-		if ($value == null) {
-			$value = $this->renderChildren();
-		}
-
-		return addslashes($value);
+	public function render() {
+		
+		return htmlspecialchars($this->renderChildren());
 	}
 
 }

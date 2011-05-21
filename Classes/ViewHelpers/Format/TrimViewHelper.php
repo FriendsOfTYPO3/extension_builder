@@ -20,38 +20,22 @@
  *                                                                        */
 
 /**
- * Wrapper for PHPs ucfirst function.
- * @see http://www.php.net/manual/en/ucfirst
- *
- * = Examples =
- *
- * <code title="Example">
- * <k:uppercaseFirst>{textWithMixedCase}</k:uppercaseFirst>
- * </code>
- *
- * Output:
- * TextWithMixedCase
+ * Wrapper for PHPs trim function.
  *
  * @version $Id: $
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @scope prototype
  */
-class Tx_ExtensionBuilder_ViewHelpers_RemoveMultipleNewlinesViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_Format_TrimViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
-	 * Uppercase first character
 	 *
 	 * @return string The altered string.
 	 * @author Christopher Hlubek <hlubek@networkteam.com>
 	 */
 	public function render() {
-		$content = trim($this->renderChildren());
-
-		// Collapse whitespace lines
-		$content = preg_replace('/^\s+$/m', '', $content);
-		$content = preg_replace("/\n\n+/", "\n", $content);
-
-		return $content;
+		$content = $this->renderChildren();
+		return trim($content);
 	}
 }
 

@@ -97,7 +97,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			'exclude' => <f:if condition="{property.excludeField}"><f:then>1</f:then><f:else>0</f:else></f:if>,
 			'label' => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xml:{property.labelNamespace}',
 			'config' => array(
-				<k:indent indentation="4"><k:render partial="TCA/{property.dataType}.phpt" arguments="{property: property,extension:extension,settings:settings}" /></k:indent>
+				<k:format.indent indentation="4"><k:render partial="TCA/{property.dataType}.phpt" arguments="{property: property,extension:extension,settings:settings}" /></k:format.indent>
 			),
 		),</f:for><f:for each="{k:listForeignKeyRelations(extension: extension, domainObject: domainObject)}" as="relation">
 		'{relation.foreignKeyName}' => array(
