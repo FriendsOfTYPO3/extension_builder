@@ -15,13 +15,13 @@
 					<k:openingTag>f:be.buttons.csh /</k:openingTag>
 					<k:openingTag>f:be.menus.actionMenu</k:openingTag>
 						<k:openingTag>f:be.menus.actionMenuItem label="Overview" controller="{domainObject.name}" action="list" /</k:openingTag>
-						<k:removeMultipleNewlines>
+						<k:format.removeMultipleNewlines>
 						<f:for each="{extension.domainObjects}" as="domainObject">
 							<f:if condition="{domainObject.aggregateRoot}">
 								<k:openingTag>f:be.menus.actionMenuItem label="Create new {domainObject.name}" action="new" controller="{domainObject.name}" /</k:openingTag>
 							</f:if>
 						</f:for>
-						</k:removeMultipleNewlines>
+						</k:format.removeMultipleNewlines>
 					<k:openingTag>/f:be.menus.actionMenu</k:openingTag>
 				</div>
 				<div class="docheader-row2-right">

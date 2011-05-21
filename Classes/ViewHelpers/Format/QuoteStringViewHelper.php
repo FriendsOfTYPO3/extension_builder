@@ -1,6 +1,6 @@
 <?php
 /*                                                                        *
- * This script belongs to the TYPO3 package "Extension Builder".                  *
+ * This script belongs to the TYPO3 package "Extension Builder".         *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -20,34 +20,31 @@
  *                                                                        */
 
 /**
- * Wrapper for PHPs ucfirst function.
- * @see http://www.php.net/manual/en/ucfirst
+ * View helper which returns a quoted string
  *
  * = Examples =
  *
- * <code title="Example">
- * <k:uppercaseFirst>{textWithMixedCase}</k:uppercaseFirst>
- * </code>
+ * <f:quoteString>{anyString}</f:quoteString>
  *
- * Output:
- * TextWithMixedCase
  *
- * @version $Id: $
+ * @package	 ExtensionBuilder
+ * @author	 Rens Admiraal
+ * @version $ID:$
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
- * @scope prototype
  */
-class Tx_ExtensionBuilder_ViewHelpers_UppercaseFirstViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_Format_QuoteStringViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
-	 * Uppercase first character
-	 *
-	 * @return string The altered string.
-	 * @author Christopher Hlubek <hlubek@networkteam.com>
+	 * @param string $value
 	 */
-	public function render() {
-		$content = $this->renderChildren();
-		return ucfirst($content);
+	public function render($value = null) {
+		if ($value == null) {
+			$value = $this->renderChildren();
+		}
+
+		return addslashes($value);
 	}
+
 }
 
 ?>

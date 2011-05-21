@@ -1,1 +1,1 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}f:form.textbox property="{property.name}"  value="<k:curlyBrackets>{domainObject.name-> k:lowercaseFirst()}.{property.name}->f:format.date()</k:curlyBrackets>"
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}f:form.textbox property="{property.name}"  value="<k:curlyBrackets>{domainObject.name-> k:format.lowercaseFirst()}.{property.name}->f:format.date()</k:curlyBrackets>"

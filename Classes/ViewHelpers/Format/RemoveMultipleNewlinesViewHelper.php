@@ -20,23 +20,13 @@
  *                                                                        */
 
 /**
- * Wrapper for PHPs ucfirst function.
- * @see http://www.php.net/manual/en/ucfirst
- *
- * = Examples =
- *
- * <code title="Example">
- * <k:uppercaseFirst>{textWithMixedCase}</k:uppercaseFirst>
- * </code>
- *
- * Output:
- * TextWithMixedCase
+ * Removes all linebreaks
  *
  * @version $Id: $
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @scope prototype
  */
-class Tx_ExtensionBuilder_ViewHelpers_RemoveNewlinesViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_Format_RemoveMultipleNewlinesViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
 	 * Uppercase first character
@@ -45,8 +35,13 @@ class Tx_ExtensionBuilder_ViewHelpers_RemoveNewlinesViewHelper extends Tx_Fluid_
 	 * @author Christopher Hlubek <hlubek@networkteam.com>
 	 */
 	public function render() {
-		$content = $this->renderChildren();
-		return trim($content);
+		$content = trim($this->renderChildren());
+
+		// Collapse whitespace lines
+		$content = preg_replace('/^\s+$/m', '', $content);
+		$content = preg_replace("/\n\n+/", "\n", $content);
+
+		return $content;
 	}
 }
 

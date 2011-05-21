@@ -1,5 +1,4 @@
-<k:removeNewlines>
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}<k:format.trim>
 <f:for each="{extension.domainObjects}" as="domainObject">
 #
 # Table structure for table '{domainObject.databaseTableName}'
@@ -39,11 +38,11 @@ CREATE TABLE {domainObject.databaseTableName} (
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid)
 );
 </f:for>
-</k:removeNewlines>
+</k:format.trim>
 
-<k:removeNewlines>
+<k:format.trim>
 <f:for each="{extension.domainObjects}" as="domainObject">
-<k:removeNewlines>
+<k:format.trim>
 <f:for each="{domainObject.properties}" as="property">
 <f:if condition="{k:isOfType(object: property, type: 'DomainObject_Relation_AnyToManyRelation')}">
 <f:if condition="{property.useMMTable}">
@@ -62,6 +61,6 @@ CREATE TABLE {property.relationTableName} (
 </f:if>
 </f:if>
 </f:for>
-</k:removeNewlines>
+</k:format.trim>
 </f:for>
-</k:removeNewlines>
+</k:format.trim>

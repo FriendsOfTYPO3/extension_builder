@@ -9,14 +9,14 @@ class {domainObject.controllerName} extends Tx_Extbase_MVC_Controller_ActionCont
 	/**
 	 * @var {domainObject.domainRepositoryClassName}
 	 */
-	protected ${domainObject.name -> k:lowercaseFirst()}Repository;
+	protected ${domainObject.name -> k:format.lowercaseFirst()}Repository;
 
 	/**
-	 * @param {domainObject.domainRepositoryClassName} ${domainObject.name -> k:lowercaseFirst()}Repository
+	 * @param {domainObject.domainRepositoryClassName} ${domainObject.name -> k:format.lowercaseFirst()}Repository
  	 * @return void
 	 */
-	public function inject{domainObject.name}Repository({domainObject.domainRepositoryClassName} ${domainObject.name -> k:lowercaseFirst()}Repository) {
-		$this->{domainObject.name -> k:lowercaseFirst()}Repository = ${domainObject.name -> k:lowercaseFirst()}Repository;
+	public function inject{domainObject.name}Repository({domainObject.domainRepositoryClassName} ${domainObject.name -> k:format.lowercaseFirst()}Repository) {
+		$this->{domainObject.name -> k:format.lowercaseFirst()}Repository = ${domainObject.name -> k:format.lowercaseFirst()}Repository;
 	}
 </f:if>
 <f:for each="{domainObject.actions}" as="action">

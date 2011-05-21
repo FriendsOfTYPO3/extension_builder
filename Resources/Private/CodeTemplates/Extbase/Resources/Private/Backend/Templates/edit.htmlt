@@ -19,10 +19,10 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
 <k:openingTag>f:render partial="FormErrors" /</k:openingTag>
 
-<k:removeMultipleNewlines>
-<k:openingTag>f:form method="post" action="update" name="{domainObject.name -> k:lowercaseFirst()}" object="{domainObject.name -> k:lowercaseFirst() -> k:curlyBrackets()}" </k:openingTag>
-<k:openingTag>f:render partial="{domainObject.name}/FormFields" arguments="<k:curlyBrackets>{domainObject.name-> k:lowercaseFirst()}:{domainObject.name-> k:lowercaseFirst()}</k:curlyBrackets>" /</k:openingTag>
-</k:removeMultipleNewlines>
+<k:format.removeMultipleNewlines>
+<k:openingTag>f:form method="post" action="update" name="{domainObject.name -> k:format.lowercaseFirst()}" object="{domainObject.name -> k:format.lowercaseFirst() -> k:curlyBrackets()}" </k:openingTag>
+<k:openingTag>f:render partial="{domainObject.name}/FormFields" arguments="<k:curlyBrackets>{domainObject.name-> k:format.lowercaseFirst()}:{domainObject.name-> k:format.lowercaseFirst()}</k:curlyBrackets>" /</k:openingTag>
+</k:format.removeMultipleNewlines>
 	<k:openingTag>f:form.submit value="Save" /</k:openingTag>
 <![CDATA[</f:form>]]>
 <![CDATA[</f:section>]]>

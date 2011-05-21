@@ -5,8 +5,8 @@ if (!defined ('TYPO3_MODE')) {
 <f:for each="{extension.Plugins}" as="plugin">
 Tx_Extbase_Utility_Extension::registerPlugin(
 	$_EXTKEY,
-	'<k:uppercaseFirst>{plugin.key}</k:uppercaseFirst>',
-	'<k:quoteString>{plugin.name}</k:quoteString>'
+	'<k:format.uppercaseFirst>{plugin.key}</k:format.uppercaseFirst>',
+	'<k:format.quoteString>{plugin.name}</k:format.quoteString>'
 );
 
 //$pluginSignature = str_replace('_','',$_EXTKEY) . '_' . {plugin.key};
@@ -40,7 +40,7 @@ if (TYPO3_MODE === 'BE') {
 }
 </f:if>
 
-t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '<k:quoteString>{extension.name}</k:quoteString>');
+t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '<k:format.quoteString>{extension.name}</k:format.quoteString>');
 
 <f:for each="{extension.domainObjects}" as="domainObject">
 t3lib_extMgm::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xml');
