@@ -43,15 +43,15 @@ $TCA['{domainObject.databaseTableName}'] = array(
 		),
 		'l10n_diffsource' => array(
 			'config' =>array(
-				'type' =>'passthrough',
+				'type' => 'passthrough',
 			),
 		),
 		't3ver_label' => array(
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.versionLabel',
 			'config' => array(
-			'type' => 'input',
-			'size' => 30,
-			'max' => 255,
+				'type' => 'input',
+				'size' => 30,
+				'max' => 255,
 			)
 		),
 		'hidden' => array(
