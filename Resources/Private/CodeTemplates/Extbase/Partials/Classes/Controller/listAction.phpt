@@ -9,7 +9,6 @@
 		$configuration = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 		if(empty($configuration['persistence']['storagePid'])){
 			$this->flashMessageContainer->add('No storagePid! You have to include the static template of this extension and set the constant plugin.tx_' . t3lib_div::lcfirst($this->extensionName) . '.persistence.storagePid in the constant editor');
-			$this->redirect('list');
 		}
 		</f:if>
 		</k:format.trim>
