@@ -367,6 +367,14 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 		return $this->extension->getShortExtensionKey() . '_domain_model_' . strtolower($this->getName());
 	}
 
+	public function getHasBooleanProperties(){
+		foreach($this->properties as $property){
+			if($property->isBoolean()){
+				return true;
+			}
+		}
+	}
+
 	/**
 	 * @return array
 	 */

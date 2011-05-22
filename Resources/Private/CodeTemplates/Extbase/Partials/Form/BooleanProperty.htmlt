@@ -1,1 +1,1 @@
-f:form.textbox property="{property.name}"
+f:form.checkbox property="{property.name}" value="1"
