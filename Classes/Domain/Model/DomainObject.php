@@ -301,6 +301,15 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	}
 
 	/**
+	 * returns true if the domainObject has actions
+	 *
+	 * @return boolean
+	 */
+	public function hasActions() {
+		return count($this->actions) > 0;
+	}
+
+	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addDomainModel() automatically.
 	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension the extension this domain model belongs to.
 	 */

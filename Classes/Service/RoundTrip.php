@@ -77,6 +77,13 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 */
 	protected $extensionRenamed = false;
 
+	/**
+	 * @param Tx_ExtensionBuilder_Utility_ClassParser $classParser
+	 * @return void
+	 */
+	public function injectClassParser(Tx_ExtensionBuilder_Utility_ClassParser $classParser) {
+		$this->classParser = $classParser;
+	}
 
 	/**
 	 * If a JSON file is found in the extensions directory the previous version
@@ -142,23 +149,6 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 			}
 		}
 		spl_autoload_register('Tx_ExtensionBuilder_Utility_ClassLoader::loadClass',false,true);
-	}
-
-
-	/**
-	 * @param Tx_ExtensionBuilder_Utility_ClassParser $classParser
-	 * @return void
-	 */
-	public function injectClassParser(Tx_ExtensionBuilder_Utility_ClassParser $classParser) {
-		$this->classParser = $classParser;
-	}
-
-	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
-	 * @return void
-	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
-		$this->objectManager = $objectManager;
 	}
 
 	/**
