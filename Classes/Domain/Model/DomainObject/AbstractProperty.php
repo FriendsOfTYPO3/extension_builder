@@ -56,18 +56,32 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	protected $required;
 
 	/**
+	 * The string representation of the properties default value
+	 * @var string
+	 */
+	protected $defaultValue;
+
+	/**
 	 * Is an upload folder required for this property
 	 *
 	 * @var boolean
 	 */
 	protected $needsUploadFolder = false;
 
-
 	/**
 	 * The domain object this property belongs to.
 	 * @var Tx_ExtensionBuilder_Domain_Model_DomainObject
 	 */
 	protected $class;
+
+	/**
+	 *
+	 * @param string $propertyName
+	 * @return void
+	 */
+	public function __construct($propertyName){
+		$this->name = $propertyName;
+	}
 
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
@@ -103,6 +117,32 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 */
 	public function setName($name) {
 		$this->name = $name;
+	}
+
+	/**
+	 * Get property defaultValue
+	 *
+	 * @return string
+	 */
+	public function getDefaultValue() {
+		return $this->defaultValue;
+	}
+
+	/**
+	 * Set property defaultValue
+	 *
+	 * @param string $defaultValue
+	 */
+	public function setDefaultValue($defaultValue) {
+		$this->defaultValue = $defaultValue;
+	}
+
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function getHasDefaultValue(){
+		return isset($this->defaultValue);
 	}
 
 	/**
@@ -305,14 +345,6 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 */
 	public function getLabelNamespace() {
 		return $this->domainObject->getLabelNamespace() . '.' . $this->getFieldName();
-	}
-	/**
-	 *
-	 * @param string $propertyName
-	 * @return void
-	 */
-	public function __construct($propertyName){
-		$this->name = $propertyName;
 	}
 
 	/**

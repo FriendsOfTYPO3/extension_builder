@@ -26,7 +26,7 @@
  * An action defined for a domain object
  *
  * @package ExtensionBuilder
- * @version $ID:$
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_Action {
 

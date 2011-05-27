@@ -13,7 +13,7 @@ class {domainObject.className} extends {domainObject.baseClass} {
 	 * {property.validateAnnotation}</f:if><f:if condition="{property.lazyLoading}">
 	 * @lazy</f:if>
 	 */
-	protected ${property.name}<f:if condition="{property.default}"> = {property.value}</f:if>;
+	protected ${property.name}<f:if condition="{property.hasDefaultValue}"> = {property.defaultValue}</f:if>;
 </f:for><f:if condition="{domainObject.AnyToManyRelationProperties}">
 
 	public function __construct() {

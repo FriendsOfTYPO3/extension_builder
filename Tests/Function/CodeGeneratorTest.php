@@ -58,7 +58,6 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
-
 		$modelClassDir =  'Classes/Domain/Model/';
 		$result = t3lib_div::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
