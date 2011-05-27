@@ -28,7 +28,8 @@ if (TYPO3_MODE === 'BE') {
 		'{backendModule.key}',	// Submodule key
 		'',						// Position
 		array(
-			<f:for each="{extension.domainObjectsForWhichAControllerShouldBeBuilt}" as="domainObject">'{domainObject.name}' => 'list, show, new, create, edit, update, delete',</f:for>
+			<f:for each="{extension.domainObjectsForWhichAControllerShouldBeBuilt}" as="domainObject" iteration="domainObjectIterator">'{domainObject.name}' => 'list, show, new, create, edit, update, delete',<f:if condition="{domainObjectIterator.isLast}"><f:then/><f:else>
+			</f:else></f:if></f:for>
 		),
 		array(
 			'access' => 'user,group',
