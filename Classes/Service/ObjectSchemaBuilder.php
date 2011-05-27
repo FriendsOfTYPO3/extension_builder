@@ -60,6 +60,9 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 			$property->setUniqueIdentifier($jsonProperty['uid']);
 			$property->setName($jsonProperty['propertyName']);
 			$property->setDescription($jsonProperty['propertyDescription']);
+			if($property->isBoolean()){
+				//$property->setDefaultValue('false');
+			}
 
 			if (isset($jsonProperty['propertyIsRequired'])) {
 				$property->setRequired($jsonProperty['propertyIsRequired']);

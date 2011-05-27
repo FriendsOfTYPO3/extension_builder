@@ -23,26 +23,40 @@
 ***************************************************************/
 
 /**
- * Creates a request an dispatches it to the controller which was specified
- * by TS Setup, Flexform and returns the content to the v4 framework.
- *
- * This class is the main entry point for extbase extensions in the frontend.
  *
  * @package ExtensionBuilder
- * @version $ID:$
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
+
+	/**
+	 * string representation of the default value
+	 * 
+	 * @var string
+	 */
+	protected $defaultValue = 'false';
+
+	/*
+	 * @return string
+	 */
 	public function getTypeForComment() {
 		return 'boolean';
 	}
 
+	/*
+	 * @return string
+	 */
 	public function getTypeHint() {
 		return '';
 	}
 
+	/*
+	 * @return string
+	 */
 	public function getSqlDefinition() {
 		return $this->getFieldName() . " tinyint(1) unsigned DEFAULT '0' NOT NULL,";
 	}
+
 }
 
 ?>
