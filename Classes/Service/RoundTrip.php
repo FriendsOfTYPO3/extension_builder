@@ -303,17 +303,17 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 				$initializeMethod = $this->classObject->getMethod('initializeAction');
 				if($initializeMethod != NULL){
 					$initializeMethodBody = $initializeMethod->getBody();
-					$newMethodBody = str_replace($oldDomainObject->getDomainRepositoryClassName(), $currentDomainObject->getDomainRepositoryClassName(),$initializeMethodBody);
-					$newMethodBody = str_replace(t3lib_div::lcfirst($oldName).'Repository', t3lib_div::lcfirst($newName).'Repository',$newMethodBody);
-					$initializeMethod->setBody($newMethodBody);
+					$newInitializeMethodBody = str_replace($oldDomainObject->getDomainRepositoryClassName(), $currentDomainObject->getDomainRepositoryClassName(),$initializeMethodBody);
+					$newInitializeMethodBody = str_replace(t3lib_div::lcfirst($oldName).'Repository', t3lib_div::lcfirst($newName).'Repository',$newInitializeMethodBody);
+					$initializeMethod->setBody($newInitializeMethodBody);
 					$this->classObject->setMethod($initializeMethod);
 				}
 
 				$injectMethod = $this->classObject->getMethod($injectMethodName);
 				if($injectMethod != NULL){
 					$this->classObject->removeMethod($injectMethodName);
-					$newMethodBody = str_replace(t3lib_div::lcfirst($oldName),t3lib_div::lcfirst($newName),$injectMethod->getBody());
-					$injectMethod->setBody($newMethodBody);
+					$newInjectMethodBody = str_replace(t3lib_div::lcfirst($oldName),t3lib_div::lcfirst($newName),$injectMethod->getBody());
+					$injectMethod->setBody($newInjectMethodBody);
 					$injectMethod->setTag('param',$currentDomainObject->getDomainRepositoryClassName() . ' $' . $newName . 'Repository');
 					$injectMethod->setName('inject' . $newName. 'Repository');
 					$parameter =  new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter(t3lib_div::lcfirst($newName) . 'Repository');
