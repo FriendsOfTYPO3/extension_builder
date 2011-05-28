@@ -72,7 +72,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							inputParams: {
 								label: TYPO3.settings.extensionBuilder._LOCAL_LANG.name,
 								name: "name",
-								required: false
+								required: true
 							}
 						},
 						{
