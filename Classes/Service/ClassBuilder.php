@@ -442,9 +442,6 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 		}
 	}
 
-	public static function getDefaultInitializeMethodBody($domainObject){
-		return '$this->'.t3lib_div::lcfirst($domainObject->getName()).'Repository = t3lib_div::makeInstance('.$omainObject->getDomainRepositoryClassName().');';
-	}
 	/**
 	 * This method generates the class object, which is passed to the template
 	 * it keeps all methods and properties including user modified method bodies and
@@ -475,7 +472,6 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 
 		if($domainObject->isAggregateRoot()){
 			$propertyName = t3lib_div::lcfirst($domainObject->getName()).'Repository';
-			//$domainObject->getDomainRepositoryClassName();
 			// now add the property to class Object (or update an existing class Object property)
 			if(!$this->classObject->propertyExists($propertyName)){
 				$classProperty = new Tx_ExtensionBuilder_Domain_Model_Class_Property($propertyName);
@@ -483,26 +479,18 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 				$classProperty->addModifier('protected');
 				$this->classObject->setProperty($classProperty);
 			}
-			/**
-			$initializeMethodName = 'initializeAction';
-			if(!$this->classObject->methodExists($initializeMethodName)){
-				$initializeMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($initializeMethodName);
-				$initializeMethod->setDescription('Initializes the current action');
-				$initializeMethod->setBody('$this->'.t3lib_div::lcfirst($domainObject->getName()).'Repository = t3lib_div::makeInstance('.$domainObject->getDomainRepositoryClassName().');');
-				$initializeMethod->setTag('return','void');
-				$initializeMethod->addModifier('public');
-				$this->classObject->addMethod($initializeMethod);
-			}
-			*/
+
 			$injectMethodName = 'inject' . $domainObject->getName() . 'Repository';
 			if(!$this->classObject->methodExists($injectMethodName)){
+				$repositoryVarName = t3lib_div::lcfirst($domainObject->getName()).'Repository';
 				$injectMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($injectMethodName);
-				$injectMethod->setBody('$this->'.t3lib_div::lcfirst($domainObject->getName()).'Repository = t3lib_div::makeInstance('.$domainObject->getDomainRepositoryClassName().');');
-				$injectMethod->setTag('param',$domainObject->getDomainRepositoryClassName() . ' $' . $domainObject->getName() . 'Repository');
+				$injectMethod->setBody('$this->'.$repositoryVarName.' = $' . $repositoryVarName . ';');
+				$injectMethod->setTag('param',$domainObject->getDomainRepositoryClassName() . ' $' . $repositoryVarName);
 				$injectMethod->setTag('return','void');
 				$injectMethod->addModifier('public');
-				$parameter =  new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter(t3lib_div::lcfirst($domainObject->getName()) . 'Repository');
+				$parameter =  new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($repositoryVarName);
 				$parameter->setVarType($domainObject->getDomainRepositoryClassName());
+				$parameter->setTypeHint($domainObject->getDomainRepositoryClassName());
 				$parameter->setPosition(0);
 				$injectMethod->setParameter($parameter);
 				$this->classObject->addMethod($injectMethod);
@@ -520,7 +508,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 
 				$this->classObject->addMethod($actionMethod);
 			} else {
-				t3lib_div::devlog('existing action method:' . $actionMethodName,'ext',0,$this->classObject->getMethod($actionMethodName)->getParameters());
+				//t3lib_div::devlog('existing action method:' . $actionMethodName,'ext',0,$this->classObject->getMethod($actionMethodName)->getParameters());
 			}
 		}
 		return $this->classObject;
