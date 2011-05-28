@@ -3,5 +3,5 @@
 'uploadfolder' => '{extension.uploadFolder}',
 'show_thumbs' => 1,
 'size' => 5,
-'allowed' => '{property.allowedFileTypes}',
+'allowed' => $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
 'disallowed' => '{property.disallowedFileTypes}',
