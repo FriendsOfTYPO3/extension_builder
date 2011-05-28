@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <T3locallang>
 	<meta type="array">
 		<description>Context Sensitive Help (CSH) for table {domainObject.databaseTableName}</description>
