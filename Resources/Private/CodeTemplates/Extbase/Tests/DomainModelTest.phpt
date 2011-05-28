@@ -25,7 +25,7 @@
 ***************************************************************/
 
 /**
- * Testcase for class {domainObject.className}.
+ * Test case for class {domainObject.className}.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors

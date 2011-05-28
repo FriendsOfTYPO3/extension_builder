@@ -25,7 +25,7 @@
 ***************************************************************/
 
 /**
- * Testcase for class Tx_{extension.extensionKey -> k:format.uppercaseFirst()}_Controller_{controllerName}.
+ * Test case for class Tx_{extension.extensionKey -> k:format.uppercaseFirst()}_Controller_{controllerName}.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
