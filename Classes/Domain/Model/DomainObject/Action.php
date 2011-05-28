@@ -83,6 +83,22 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Action {
 	);
 
 	/**
+	 * these actions should not be cached
+	 * @var array
+	 */
+	protected $actionNamesThatShouldNotBeCached = array(
+		'create',
+		'update',
+		'delete'
+	);
+
+	/**
+	 * flag: true if the action is cacheable
+	 * @var boolean
+	 */
+	protected $cacheable;
+
+	/**
 	 *
 	 * @return string
 	 */
@@ -157,6 +173,36 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Action {
 			$this->needsPropertyPartial =  false;
 		}
 		return $this->needsPropertyPartial;
+	}
+
+	/**
+	 * setter for cacheable flag
+	 *
+	 * @param boolean $cacheable
+	 */
+	public function setCacheable($cacheable){
+		$this->cacheable = $cacheable;
+	}
+
+	/**
+	 * Getter for cacheable
+	 *
+	 * @return boolean $cacheable
+	 */
+	public function getCacheable(){
+		return $this->isCacheable();
+	}
+
+	/**
+	 * should this action be cacheable
+	 *
+	 * @return boolean
+	 */
+	public function isCacheable(){
+		if(!isset($this->cacheable)){
+			$this->cacheable = !in_array($this->getName(),$this->actionNamesThatShouldNotBeCached);
+		}
+		return $this->cacheable;
 	}
 }
 
