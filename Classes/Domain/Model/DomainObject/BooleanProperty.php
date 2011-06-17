@@ -34,7 +34,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty extends Tx_E
 	 * 
 	 * @var string
 	 */
-	protected $defaultValue = 'false';
+	protected $defaultValue = 'FALSE';
 
 	/*
 	 * @return string
