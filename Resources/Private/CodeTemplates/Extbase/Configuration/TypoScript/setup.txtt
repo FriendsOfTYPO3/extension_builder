@@ -35,7 +35,7 @@ plugin.{extension.shortExtensionKey}._CSS_DEFAULT_STYLE (
  # Module configuration
 module.{extension.shortExtensionKey} {
 	persistence {
-		storagePid = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}.persistence.storagePid<![CDATA[}]]>
+		storagePid = <![CDATA[{$]]>module.{extension.shortExtensionKey}.persistence.storagePid<![CDATA[}]]>
 	}
 	view {
 		templateRootPath = <![CDATA[{$]]>module.{extension.shortExtensionKey}.view.templateRootPath<![CDATA[}]]>
