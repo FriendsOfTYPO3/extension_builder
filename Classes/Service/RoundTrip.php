@@ -101,7 +101,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		if (!$this->classParser instanceof Tx_ExtensionBuilder_Utility_ClassParser) {
 			$this->injectClassParser(t3lib_div::makeInstance('Tx_ExtensionBuilder_Utility_ClassParser'));
 		}
-		$this->settings = Tx_ExtensionBuilder_Utility_ConfigurationManager::getExtensionBuilderSettings();
+		$this->settings = Tx_ExtensionBuilder_Configuration_ConfigurationManager::getExtensionBuilderSettings();
 		// defaults
 		$this->previousExtensionDirectory = $this->extensionDirectory;
 		$this->previousExtensionKey = $this->extension->getExtensionKey();

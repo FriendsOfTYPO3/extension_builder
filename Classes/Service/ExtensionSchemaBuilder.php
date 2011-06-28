@@ -31,6 +31,15 @@
  */
 class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_singleton {
 
+
+	/**
+	 * @param Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager
+	 * @return void
+	 */
+	public function injectConfigurationManager(Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager) {
+		$this->configurationManager = $configurationManager;
+	}
+
 	/**
 	 *
 	 * @param array $extensionBuildConfiguration
@@ -58,13 +67,13 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		}
 
 		if(!empty($globalProperties['originalExtensionKey']) && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()){
-			$settings = Tx_ExtensionBuilder_Utility_ConfigurationManager::getExtensionSettings($extension->getOriginalExtensionKey());
+			$settings = $this->configurationManager->getExtensionSettings($extension->getOriginalExtensionKey());
 			// if an extension was renamed, a new extension dir is created and we
 			// have to copy the old settings file to the new extension dir
-			copy(Tx_ExtensionBuilder_Utility_ConfigurationManager::getSettingsFile($extension->getOriginalExtensionKey()),Tx_ExtensionBuilder_Utility_ConfigurationManager::getSettingsFile($extension->getExtensionKey()));
+			copy($this->configurationManager->getSettingsFile($extension->getOriginalExtensionKey()),$this->configurationManager->getSettingsFile($extension->getExtensionKey()));
 		}
 		else {
-			$settings = Tx_ExtensionBuilder_Utility_ConfigurationManager::getExtensionSettings($extension->getExtensionKey());
+			$settings = $this->configurationManager->getExtensionSettings($extension->getExtensionKey());
 		}
 
 		if(!empty($settings)){

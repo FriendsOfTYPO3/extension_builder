@@ -61,7 +61,6 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	 */
 	protected $codeGenerator;
 
-
 	/**
 	 * @param Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder $extensionSchemaBuilder
 	 * @return void
@@ -79,16 +78,15 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	}
 
 	/**
-	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
+	 * @param Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager
 	 * @return void
 	 */
-	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
+	public function injectConfigurationManager(Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager) {
 		$this->configurationManager = $configurationManager;
-		$typoscript = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-		$this->settings = Tx_ExtensionBuilder_Utility_ConfigurationManager::getSettings($typoscript);
+		$this->settings = $this->configurationManager->getSettings();
 	}
-	
-	
+
+
 	/**
 	 * Index action for this controller.
 	 *
@@ -118,13 +116,20 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	 * @todo rename this action
 	 */
 	public function generateCodeAction() {
-		$jsonString = file_get_contents('php://input');
-		$request = json_decode($jsonString, true);
-		switch ($request['method']) {
+		try {
+			$this->configurationManager->parseRequest();
+			$subAction = $this->configurationManager->getSubActionFromRequest();
+		} catch (Exception $e){
+			return json_encode(array('error' => $e->getMessage()));
+		}
+
+		if(empty($subAction)){
+			return json_encode(array('error' => 'No sub action!'));
+		}
+		switch ($subAction) {
 
 			case 'saveWiring':
-				$extensionConfigurationJSON = json_decode($request['params']['working'], true);
-				$extensionBuildConfiguration = Tx_ExtensionBuilder_Utility_ConfigurationManager::fixExtensionBuilderJSON($extensionConfigurationJSON);
+				$extensionBuildConfiguration = $this->configurationManager->getConfigurationFromModeler();
 				//t3lib_div::devlog('JSON:','extension_builder',0,$extensionBuildConfiguration);
 				try {
 					$extensionSchema = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
@@ -155,12 +160,12 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 							return json_encode(array('error' => $e->getMessage()));
 						}
 					}
-					$extensionSettings =  Tx_ExtensionBuilder_Utility_ConfigurationManager::getExtensionSettings($extensionSchema->getExtensionKey());
+					$extensionSettings =  $this->configurationManager->getExtensionSettings($extensionSchema->getExtensionKey());
 					if($this->settings['extConf']['enableRoundtrip'] == 1){
 						if(empty($extensionSettings)){
 							// no config file in an existing extension!
 							// this would result in a total overwrite so we create one and give a warning
-							Tx_ExtensionBuilder_Utility_ConfigurationManager::createInitialSettingsFile($extensionSchema,$this->settings['codeTemplateRootPath']);
+							$this->configurationManager->createInitialSettingsFile($extensionSchema,$this->settings['codeTemplateRootPath']);
 							return json_encode(array('warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the extension builder the first time for this extension. <br />A settings file was generated in <br /><b>typo3conf/ext/".$extensionSchema->getExtensionKey()."/Configuration/ExtensionBuilder/settings.yaml.</b><br />Configure the overwrite settings, then save again."));
 						}
 						try {
@@ -221,7 +226,7 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 				if($this->settings['extConf']['enableRoundtrip']){
 					// generate unique IDs
 					$extensionConfigurationJSON = json_decode(file_get_contents($jsonFile),true);
-					$extensionConfigurationJSON = Tx_ExtensionBuilder_Utility_ConfigurationManager::fixExtensionBuilderJSON($extensionConfigurationJSON);
+					$extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON($extensionConfigurationJSON);
 					$extensionConfigurationJSON['properties']['originalExtensionKey'] = $singleExtensionDirectory;
 					t3lib_div::writeFile($jsonFile, json_encode($extensionConfigurationJSON));
 				}
