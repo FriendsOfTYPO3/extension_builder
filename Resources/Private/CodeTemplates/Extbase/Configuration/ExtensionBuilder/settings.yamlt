@@ -82,7 +82,7 @@ createAutoloadRegistry: false
 classBuilder:
 
   Controller:
-    parentClass: Tx_ExtensionBuilder_Scaffolding_AbstractScaffoldingController
+    parentClass: Tx_Extbase_MVC_Controller_ActionController
 
   Model:
     AbstractEntity:

@@ -64,7 +64,7 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Extbase_Tests_Unit_
 		$this->roundTripService->initialize($this->extension);
 
 		$this->classBuilder->injectRoundtripService($this->roundTripService);
-		$this->classBuilder->initialize($this->extension);
+		$this->classBuilder->initialize($this->codeGenerator,$this->extension);
 
 		$this->codeGenerator->injectTemplateParser($this->templateParser);
 		$this->codeGenerator->injectClassBuilder($this->classBuilder);
@@ -78,6 +78,7 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Extbase_Tests_Unit_
 		);
 		$this->codeGenerator->_set('codeTemplateRootPath',PATH_typo3conf.'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/');
 		$this->codeGenerator->_set('enableRoundtrip',true);
+		$this->codeGenerator->_set('extension',$this->extension);
 	}
 
 

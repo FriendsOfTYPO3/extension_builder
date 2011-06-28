@@ -84,7 +84,6 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 	/**
 	 * Write a simple model class for a non aggregate root domain object with one string property
 	 *
-	 * @depends checkRequirements
 	 * @test
 	 */
 	function writeModelClassWithStringProperty(){
@@ -124,7 +123,6 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 	/**
 	 * Write a simple model class for a non aggregate root domain object with one to one relation
 	 *
-	 * @depends checkRequirements
 	 * @test
 	 */
 	function writeModelClassWithZeroToOneRelation(){
@@ -137,7 +135,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$relation->setName($propertyName);
 		$relation->setForeignClass($relatedDomainObject);
 		$domainObject->addProperty($relation);
-		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
+		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,TRUE);
 
 		$modelClassDir =  'Classes/Domain/Model/';
 		$result = t3lib_div::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
@@ -145,6 +143,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$this->assertTrue(is_dir($absModelClassDir),'Directory ' . $absModelClassDir . ' was not created');
 
 		$modelClassPath =  $absModelClassDir . $domainObject->getName() . '.php';
+		t3lib_div::devlog('Class Content','extension_builder',0,array('c'=>$classFileContent));
 		t3lib_div::writeFile($modelClassPath,$classFileContent);
 		$this->assertFileExists($modelClassPath,'File was not generated: ' . $modelClassPath);
 		$className = $domainObject->getClassName();
@@ -163,6 +162,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$parameters = $setterMethod->getParameters();
 		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in setter method');
 		$parameter = current($parameters);
+		t3lib_div::devlog('Parameter','extension_builder',0,(array)$parameter);
 		$this->assertTrue(($parameter->getName() == $propertyName),'Wrong parameter name in setter method');
 		$this->assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getClassName()),'Wrong type hint for setter parameter:'.$parameter->getTypeHint());
 
@@ -348,7 +348,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 	 * This test is too generic, since it creates the required classes
 	 * with a whole codeGenerator->build call
 	 *
-	 * @depends writeSimpleControllerClassFromDomainObject
+	 * 
 	 * @test
 	 */
 	function writeAggregateRootClassesFromDomainObject(){

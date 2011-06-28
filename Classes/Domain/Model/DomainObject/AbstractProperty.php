@@ -66,13 +66,20 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 *
 	 * @var boolean
 	 */
-	protected $needsUploadFolder = false;
+	protected $needsUploadFolder = FALSE;
 
 	/**
 	 * The domain object this property belongs to.
 	 * @var Tx_ExtensionBuilder_Domain_Model_DomainObject
 	 */
 	protected $class;
+
+	/**
+	 * is set to true, if this property was new added
+	 *
+	 * @var boolean
+	 */
+	protected $isNew = FALSE;
 
 	/**
 	 *
@@ -385,6 +392,23 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 */
 	public function getNeedsUploadFolder(){
 		return $this->needsUploadFolder;
+	}
+
+
+	/**
+	 *
+	 */
+	public function getIsNew(){
+		return $this->isNew;
+	}
+
+
+	/**
+	 *
+	 * @param boolean $new
+	 */
+	public function setIsNew($isNew){
+		$this->isNew = $isNew;
 	}
 
 }
