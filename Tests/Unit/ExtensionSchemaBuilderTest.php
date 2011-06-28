@@ -34,6 +34,7 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 		//parent::setUp();
 		$this->extension = $this->getMock('Tx_ExtensionBuilder_Domain_Model_Extension',array('getOverWriteSettings'));
 		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder'), array('dummy'));
+		$this->extensionSchemaBuilder->injectConfigurationManager(new Tx_ExtensionBuilder_Configuration_ConfigurationManager()); 
 		$this->extensionKey = 'dummy';
 	}
 	/**

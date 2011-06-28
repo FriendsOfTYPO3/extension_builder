@@ -29,29 +29,57 @@
  * @package Extbase
  * @subpackage Utility
  */
-class Tx_ExtensionBuilder_Utility_ConfigurationManager {
+class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_Configuration_ConfigurationManager{
 
-	public static $settingsDir = 'Configuration/ExtensionBuilder/';
-	public static $oldSettingsDir = 'Configuration/Kickstarter/';
+	const SETTINGS_DIR = 'Configuration/ExtensionBuilder/';
+	const OLD_SETTINGS_DIR = 'Configuration/Kickstarter/';
 	
 	/**
 	 * 
-	 * @param array $typoscript
+	 * @var array
 	 */
-	public static function getSettings($typoscript){
+	private $inputData = array(); 
+	
+	public function parseRequest(){
+		$jsonString = file_get_contents('php://input');
+		$this->inputData = json_decode($jsonString, true);
+	}
+
+	public function getConfigurationFromModeler(){
+		if(empty($this->inputData)){
+			throw new Exception('No inputData!');
+		}
+		$extensionConfigurationJSON = json_decode($this->inputData['params']['working'], true);
+		$extensionBuildConfiguration = $this->fixExtensionBuilderJSON($extensionConfigurationJSON);
+		return $extensionBuildConfiguration;
+	}
+
+	public function getSubActionFromRequest() {
+		$subAction = $this->inputData['method'];
+		return $subAction;
+	}
+
+	/**
+	 * 
+	 * @param array $typoscript (optional)
+	 */
+	public function getSettings($typoscript = NULL){
+		if($typoscript == NULL){
+			$typoscript = $this->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+		}
 		$settings = $typoscript['module.']['extension_builder.']['settings.'];
 		if(empty($settings['codeTemplateRootPath'])){
 			$settings['codeTemplateRootPath'] = 'EXT:extension_builder/Resources/Private/CodeTemplates/Extbase/';
 		}
 		$settings['codeTemplateRootPath'] = self::substituteExtensionPath($settings['codeTemplateRootPath']);
-		$settings['extConf'] = Tx_ExtensionBuilder_Utility_ConfigurationManager::getExtensionBuilderSettings();
+		$settings['extConf'] = $this->getExtensionBuilderSettings();
 		return $settings;
 	}
-	
+
 	/**
 	 * Get the extension_builder configuration (ext_template_conf)
 	 */
-	public static function getExtensionBuilderSettings(){
+	public function getExtensionBuilderSettings(){
 		$settings = array();
 		if(!empty($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['extension_builder'])){
 			$settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['extension_builder']);
@@ -64,9 +92,9 @@ class Tx_ExtensionBuilder_Utility_ConfigurationManager {
 	 * @param string $extensionKey
 	 * @return array settings
 	 */
-	public static function getExtensionSettings($extensionKey){
+	public function getExtensionSettings($extensionKey){
 		$settings = array();
-		$settingsFile = self::getSettingsFile($extensionKey);
+		$settingsFile = $this->getSettingsFile($extensionKey);
 		if (file_exists($settingsFile)) {
 			$yamlParser = new Tx_ExtensionBuilder_Utility_SpycYAMLParser();
 			$settings = $yamlParser->YAMLLoadString(file_get_contents($settingsFile));
@@ -81,31 +109,31 @@ class Tx_ExtensionBuilder_Utility_ConfigurationManager {
 	 * @param string $extensionKey
 	 * @return string path
 	 */
-	public static function getSettingsFile($extensionKey){
+	public function getSettingsFile($extensionKey){
 		$extensionDir = PATH_typo3conf.'ext/'.$extensionKey.'/';
-		$settingsFile =  $extensionDir.self::$settingsDir . 'settings.yaml';
-		if(!file_exists($settingsFile) && file_exists($extensionDir.self::$oldSettingsDir . 'settings.yaml')){
+		$settingsFile =  $extensionDir.self::SETTINGS_DIR . 'settings.yaml';
+		if(!file_exists($settingsFile) && file_exists($extensionDir.self::OLD_SETTINGS_DIR . 'settings.yaml')){
 			// upgrade from an extension that was built with the extbase_kickstarter
-			mkdir($extensionDir.self::$settingsDir);
-			copy($extensionDir.self::$oldSettingsDir . 'settings.yaml', $extensionDir.self::$settingsDir . 'settings.yaml');
-			$settingsFile =  $extensionDir.self::$settingsDir . 'settings.yaml';
+			mkdir($extensionDir.self::SETTINGS_DIR);
+			copy($extensionDir.self::OLD_SETTINGS_DIR . 'settings.yaml', $extensionDir.self::SETTINGS_DIR . 'settings.yaml');
+			$settingsFile =  $extensionDir.self::SETTINGS_DIR . 'settings.yaml';
 		}
 		return $settingsFile;
 	}
 
 	/**
-	 * 
+	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
 	 * @param string $codeTemplateRootPath
 	 */
-	static public function createInitialSettingsFile($extension,$codeTemplateRootPath){
-		t3lib_div::mkdir_deep($extension->getExtensionDir(),self::$settingsDir);
+	public function createInitialSettingsFile($extension,$codeTemplateRootPath){
+		t3lib_div::mkdir_deep($extension->getExtensionDir(),self::SETTINGS_DIR);
 		$settings = file_get_contents($codeTemplateRootPath.'Configuration/ExtensionBuilder/settings.yamlt');
 		$settings = str_replace('{extension.extensionKey}',$extension->getExtensionKey(),$settings);
 		$settings = str_replace('<f:format.date>now</f:format.date>',date('Y-m-d H:i'),$settings);
-		t3lib_div::writeFile($extension->getExtensionDir().self::$settingsDir.'settings.yaml', $settings);
+		t3lib_div::writeFile($extension->getExtensionDir().self::SETTINGS_DIR.'settings.yaml', $settings);
 	}
-	
+
 	/**
 	 * Replace the EXT:extkey prefix with the appropriate path
 	 * @param string $encodedTemplateRootPath
@@ -115,7 +143,6 @@ class Tx_ExtensionBuilder_Utility_ConfigurationManager {
 			list($extKey, $script) = explode('/', substr($encodedTemplateRootPath, 4), 2);
 			if ($extKey && t3lib_extMgm::isLoaded($extKey)) {
 				return t3lib_extMgm::extPath($extKey) . $script;
-				
 			}
 		} else if(t3lib_div::isAbsPath($encodedTemplateRootPath)){
 			return $encodedTemplateRootPath;
@@ -124,11 +151,11 @@ class Tx_ExtensionBuilder_Utility_ConfigurationManager {
 		}
 	}
 
-	static public function fixExtensionBuilderJSON($extensionConfigurationJSON){
-		$extensionConfigurationJSON['modules'] = self::generateUniqueIDs($extensionConfigurationJSON['modules']);
-		$extensionConfigurationJSON['modules'] = self::mapAdvancedMode($extensionConfigurationJSON['modules']);
-		$extensionConfigurationJSON['modules'] = self::resetOutboundedPositions($extensionConfigurationJSON['modules']);
-		$extensionConfigurationJSON = self::reArrangeRelations($extensionConfigurationJSON);
+	protected function fixExtensionBuilderJSON($extensionConfigurationJSON){
+		$extensionConfigurationJSON['modules'] = $this->generateUniqueIDs($extensionConfigurationJSON['modules']);
+		$extensionConfigurationJSON['modules'] = $this->mapAdvancedMode($extensionConfigurationJSON['modules']);
+		$extensionConfigurationJSON['modules'] = $this->resetOutboundedPositions($extensionConfigurationJSON['modules']);
+		$extensionConfigurationJSON = $this->reArrangeRelations($extensionConfigurationJSON);
 		return $extensionConfigurationJSON;
 	}
 
