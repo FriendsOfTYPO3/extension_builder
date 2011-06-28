@@ -82,6 +82,8 @@ class Tx_ExtensionBuilder_Reflection_MethodReflection extends Tx_Extbase_Reflect
 	protected function getTypeHintFromReflectionParameter($reflectionParameter){
 		$paramAsString = (string) $reflectionParameter;
 		$paramRegex = '/^Parameter\s\#[0-9]\s\[\s<(required|optional)>\s*.*\$.*]$/';
+		//t3lib_div::devLog('ReflectionParameter in method '.$this->getName().' : '.$paramAsString,'extension_builder',2);
+			
 		if(!preg_match($paramRegex, $paramAsString)){
 			// since the approach to cast the reflection parameter as a string is not part of the official PHP API
 			// this might not work anymore in future versions

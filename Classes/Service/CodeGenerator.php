@@ -116,7 +116,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 */
 	public function build(Tx_ExtensionBuilder_Domain_Model_Extension $extension) {
 		$this->extension = $extension;
-		$this->classBuilder->initialize($this->extension);
+		$this->classBuilder->initialize($this,$extension);
 		if($this->settings['extConf']['enableRoundtrip']==1){
 			$this->roundTripEnabled = true;
 			t3lib_div::devLog('roundtrip enabled', 'extension_builder',0,$this->settings);
@@ -180,24 +180,23 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		// Generate TCA
 		try {
 			t3lib_div::mkdir_deep($this->extensionDirectory, 'Configuration/TCA');
-			$tcaDirectory = $this->extensionDirectory . 'Configuration/';
+			$configurationDirectory = $this->extensionDirectory . 'Configuration/';
 			$domainObjects = $this->extension->getDomainObjects();
 
 			foreach ($domainObjects as $domainObject) {
 				$fileContents = $this->generateTCA($domainObject);
-				$this->writeFile($tcaDirectory . 'TCA/' . $domainObject->getName() . '.php', $fileContents);
+				$this->writeFile($configurationDirectory . 'TCA/' . $domainObject->getName() . '.php', $fileContents);
 			}
 
 		} catch (Exception $e) {
 			return 'Could not generate Tca.php, error: ' . $e->getMessage().$e->getFile();
 		}
 
-		if($this->roundTripEnabled && !file_exists($tcaDirectory.'ExtensionBuilder/settings.yaml')){
-			t3lib_div::mkdir($tcaDirectory.'ExtensionBuilder');
+		if(!file_exists($configurationDirectory.'ExtensionBuilder/settings.yaml')){
+			t3lib_div::mkdir($configurationDirectory.'ExtensionBuilder');
 			$fileContents = $this->generateYamlSettings();
-			$targetFile = $tcaDirectory.'ExtensionBuilder/settings.yaml';
+			$targetFile = $configurationDirectory.'ExtensionBuilder/settings.yaml';
 			t3lib_div::writeFile($targetFile, $fileContents);
-
 		}
 
 		if($extension->hasPlugins() || $extension->hasBackendModules()){
@@ -274,22 +273,30 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			t3lib_div::devlog(count($this->extension->getDomainObjects()).' domainObjects','extension_builder',0,(array)$this->extension->getDomainObjects());
 			// Generate Domain Model
 			try {
-				t3lib_div::mkdir_deep($this->extensionDirectory, 'Classes/Domain/Model');
-				$domainModelDirectory = $this->extensionDirectory . 'Classes/Domain/Model/';
-				t3lib_div::mkdir_deep($this->extensionDirectory, 'Classes/Domain/Repository');
-				$domainRepositoryDirectory = $this->extensionDirectory . 'Classes/Domain/Repository/';
 
-				t3lib_div::mkdir_deep($this->extensionDirectory, 'Tests/Unit/Domain/Model');
-				$domainModelTestsDirectory = $this->extensionDirectory . 'Tests/Unit/Domain/Model/';
+				$domainModelDirectory = 'Classes/Domain/Model/';
+				t3lib_div::mkdir_deep($this->extensionDirectory, $domainModelDirectory);
 
-				t3lib_div::mkdir_deep($this->extensionDirectory, 'Tests/Unit/Controller');
-				$crudEnabledControllerTestsDirectory = $this->extensionDirectory . 'Tests/Unit/Controller/';
+				$domainRepositoryDirectory = 'Classes/Domain/Repository/';
+				t3lib_div::mkdir_deep($this->extensionDirectory, $domainRepositoryDirectory);
+
+				t3lib_div::mkdir_deep($this->extensionDirectory, 'Tests/Domain/Model');
+				$domainModelTestsDirectory = $this->extensionDirectory . 'Tests/Domain/Model/';
+
+				t3lib_div::mkdir_deep($this->extensionDirectory, 'Tests/Controller');
+				$crudEnabledControllerTestsDirectory = $this->extensionDirectory . 'Tests/Controller/';
 
 				foreach ($this->extension->getDomainObjects() as $domainObject) {
-					$fileContents = $this->generateDomainObjectCode($domainObject);
-					$this->writeFile($domainModelDirectory . $domainObject->getName() . '.php', $fileContents);
+					$destinationFile = $domainModelDirectory . $domainObject->getName() . '.php';
+					if($this->roundTripEnabled && Tx_ExtensionBuilder_Service_RoundTrip::getOverWriteSettingForPath($destinationFile,$this->extension) > 0){
+						$mergeWithExistingClass = TRUE;
+					} else {
+						$mergeWithExistingClass = FALSE;
+					}
+					$fileContents = $this->generateDomainObjectCode($domainObject,$mergeWithExistingClass);
+					$this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
 					t3lib_div::devlog('Generated '.$domainObject->getName() . '.php','extension_builder',0);
-					$this->extension->setMD5Hash($domainModelDirectory . $domainObject->getName() . '.php');
+					$this->extension->setMD5Hash($this->extensionDirectory . $destinationFile);
 
 					if ($domainObject->isAggregateRoot()) {
 						$iconFileName = 'aggregate_root.gif';
@@ -304,11 +311,16 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 					$this->writeFile($languageDirectory . 'locallang_csh_' . $domainObject->getDatabaseTableName() . '.xml', $fileContents);
 
 					if ($domainObject->isAggregateRoot()) {
+						$destinationFile = $domainRepositoryDirectory . $domainObject->getName() . 'Repository.php';
+						if($this->roundTripEnabled && Tx_ExtensionBuilder_Service_RoundTrip::getOverWriteSettingForPath($destinationFile,$this->extension) > 0){
+							$mergeWithExistingClass = TRUE;
+						} else {
+							$mergeWithExistingClass = FALSE;
+						}
+						$fileContents = $this->generateDomainRepositoryCode($domainObject,$mergeWithExistingClass);
+						$this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
 						t3lib_div::devlog('Generated '.$domainObject->getName() . 'Repository.php','extension_builder',0);
-						$fileContents = $this->generateDomainRepositoryCode($domainObject);
-						$this->writeFile($domainRepositoryDirectory . $domainObject->getName() . 'Repository.php', $fileContents);
-						t3lib_div::devlog('Generated '.$domainObject->getName() . 'Repository.php','extension_builder',0);
-						$this->extension->setMD5Hash($domainRepositoryDirectory . $domainObject->getName() . 'Repository.php');
+						$this->extension->setMD5Hash($this->extensionDirectory . $destinationFile);
 					}
 
 					// Generate basic UnitTests
@@ -322,12 +334,18 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			// Generate Action Controller
 			try {
 				t3lib_div::mkdir_deep($this->extensionDirectory, 'Classes/Controller');
-				$controllerDirectory = $this->extensionDirectory . 'Classes/Controller/';
+				$controllerDirectory = 'Classes/Controller/';
 				foreach ($this->extension->getDomainObjectsForWhichAControllerShouldBeBuilt() as $domainObject) {
-					$fileContents = $this->generateActionControllerCode($domainObject);
-					$this->writeFile($controllerDirectory . $domainObject->getName() . 'Controller.php', $fileContents);
+					$destinationFile = $controllerDirectory . $domainObject->getName() . 'Controller.php';
+					if($this->roundTripEnabled && Tx_ExtensionBuilder_Service_RoundTrip::getOverWriteSettingForPath($destinationFile,$this->extension) > 0){
+						$mergeWithExistingClass = TRUE;
+					} else {
+						$mergeWithExistingClass = FALSE;
+					}
+					$fileContents = $this->generateActionControllerCode($domainObject,$mergeWithExistingClass);
+					$this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
 					t3lib_div::devlog('Generated '.$domainObject->getName() . 'Controller.php','extension_builder',0);
-					$this->extension->setMD5Hash($controllerDirectory . $domainObject->getName() . 'Controller.php');
+					$this->extension->setMD5Hash($this->extensionDirectory . $destinationFile);
 
 					$this->generateScaffoldingControllerTests($controllerName, $domainObject);
 				}
@@ -461,20 +479,20 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 * Either from ectionController template or from class partial
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param boolean $mergeWithExistingClass
 	 */
-	public function generateActionControllerCode(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
+	public function generateActionControllerCode(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject,$mergeWithExistingClass) {
 		t3lib_div::devlog('emConf','builder',0,$this->settings);
-		if($this->roundTripEnabled){
-			$controllerClassObject = $this->classBuilder->generateControllerClassObject($domainObject);
-			// returns a class object if an existing class was found
-			if($controllerClassObject){
-				$classDocComment = $this->renderDocComment($controllerClassObject,$domainObject);
-				$controllerClassObject->setDocComment($classDocComment);
+		$controllerClassObject = $this->classBuilder->generateControllerClassObject($domainObject,$mergeWithExistingClass);
+		// returns a class object if an existing class was found
+		if($controllerClassObject){
+			$classDocComment = $this->renderDocComment($controllerClassObject,$domainObject);
+			$controllerClassObject->setDocComment($classDocComment);
 
-				return $this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension,'classObject'=>$controllerClassObject));
-			}
+			return $this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension,'classObject'=>$controllerClassObject));
+		} else {
+			throw new Exception('Class file for controller could not be generated');
 		}
-		return $this->renderTemplate('Classes/Controller/actionController.phpt', array('domainObject' => $domainObject,'extension'=>$this->extension));
 	}
 
 	/**
@@ -482,20 +500,18 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 * Either from domainObject template or from class partial
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param boolean $mergeWithExistingClass
 	 */
-	public function generateDomainObjectCode(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
-		t3lib_div::devlog('Generated '.$domainObject->getName() . '.php','extension_builder',0);
-		if($this->roundTripEnabled){
-			t3lib_div::devlog('Generated '.$domainObject->getName() . '.php','extension_builder',0);
-			$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
-			if($modelClassObject){
-				$classDocComment = $this->renderDocComment($modelClassObject,$domainObject);
-				$modelClassObject->setDocComment($classDocComment);
-
-				return $this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension,'classObject'=>$modelClassObject));
-			}
+	public function generateDomainObjectCode(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject,$mergeWithExistingClass) {
+		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject,$mergeWithExistingClass);
+		if($modelClassObject){
+			$classDocComment = $this->renderDocComment($modelClassObject,$domainObject);
+			$modelClassObject->setDocComment($classDocComment);
+			t3lib_div::devlog('Generated '.$domainObject->getName() . '.php','extension_builder',0,array('c'=>$this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension,'classObject'=>$modelClassObject))));
+			return $this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension,'classObject'=>$modelClassObject));
+		} else {
+			throw new Exception('Class file for domain object could not be generated');
 		}
-		return $this->renderTemplate('Classes/Domain/Model/domainObject.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension));
 
 	}
 
@@ -504,19 +520,18 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 * Either from domainRepository template or from class partial
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param boolean $mergeWithExistingClass
 	 */
-	public function generateDomainRepositoryCode(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
-		if($this->roundTripEnabled){
-			$repositoryClassObject = $this->classBuilder->generateRepositoryClassObject($domainObject);
-			if($repositoryClassObject){
-				$classDocComment = $this->renderDocComment($repositoryClassObject,$domainObject);
-				$repositoryClassObject->setDocComment($classDocComment);
+	public function generateDomainRepositoryCode(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject,$mergeWithExistingClass) {
+		$repositoryClassObject = $this->classBuilder->generateRepositoryClassObject($domainObject,$mergeWithExistingClass);
+		if($repositoryClassObject){
+			$classDocComment = $this->renderDocComment($repositoryClassObject,$domainObject);
+			$repositoryClassObject->setDocComment($classDocComment);
 
-				return $this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject,'classObject' => $repositoryClassObject));
-			}
-
+			return $this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject,'classObject' => $repositoryClassObject));
+		} else {
+			throw new Exception('Class file for repository could not be generated');
 		}
-		return $this->renderTemplate('Classes/Domain/Repository/domainRepository.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension));
 	}
 
 	/**
@@ -639,6 +654,34 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
 	public function generateStaticTyposcript() {
 		return $this->renderTemplate('ext_typoscript_setup.txtt', array('extension' => $this->extension));
+	}
+
+
+	/**
+	 *
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $domainProperty
+	 * @param string $classType
+	 * @param string $methodType (used for add, get set etc.)
+	 * @param string $methodName (used for concrete methods like createAction, initialze etc.)
+	 * @return string method body
+	 */
+	public function getDefaultMethodBody($domainObject, $domainProperty, $classType, $methodType, $methodName){
+
+		if(!empty($methodType) && empty($methodName)){
+			$methodName = $methodType;
+		}
+
+		$variables = array(
+			'domainObject' => $domainObject,
+			'property' => $domainProperty,
+			'extension' => $this->extension,
+			'settings' => $this->settings
+		);
+
+		$methodBody = $this->renderTemplate('Partials/Classes/' . $classType . '/Methods/' . $methodName . 'MethodBody.phpt',$variables);
+
+		return $methodBody;
 	}
 
 	/**

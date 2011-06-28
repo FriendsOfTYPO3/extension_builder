@@ -189,6 +189,15 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 
 	/**
 	 *
+	 * @param $optional
+	 * @return void
+	 */
+	public function setOptional($optional){
+		$this->optional = $optional;
+	}
+
+	/**
+	 *
 	 * @return boolean
 	 */
 	public function isPassedByReference(){

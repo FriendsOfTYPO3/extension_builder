@@ -51,7 +51,7 @@ class Tx_ExtensionBuilder_CodeGeneratorUnitTest extends Tx_ExtensionBuilder_Test
 		$property->setName($propertyName);
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
-		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
+		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,TRUE);
 		$this->assertRegExp("/.*class Tx_Dummy_Domain_Model_ModelCgt1.*/", $classFileContent, 'Class declaration was not generated');
 		$this->assertRegExp('/.*protected \\$blue.*/', $classFileContent, 'boolean property was not generated');
 		$this->assertRegExp('/.*\* \@var boolean.*/', $classFileContent, 'var tag for boolean property was not generated');

@@ -53,21 +53,26 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 */
 	protected $initStorageObjectCall = "//Do not remove the next line: It would break the functionality\n\$this->initStorageObjects();";
 
-
+	/**
+	 * 
+	 * @var Tx_ExtensionBuilder_Service_CodeGenerator
+	 */
+	protected $codeGenerator;
 
 	/**
 	 *
+	 * @param Tx_ExtensionBuilder_Service_CodeGenerator $codeGenerator
 	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
 	 * @return void
 	 */
-	public function initialize(Tx_ExtensionBuilder_Domain_Model_Extension $extension){
+	public function initialize(Tx_ExtensionBuilder_Service_CodeGenerator $codeGenerator, Tx_ExtensionBuilder_Domain_Model_Extension $extension){
+		$this->codeGenerator = $codeGenerator;
 		$this->extension = $extension;
+		$settings = $extension->getSettings();
+		$this->settings = $settings['classBuilder'];
+		t3lib_div::devlog('Extension settings:'.$extension->getExtensionKey(),'extbase',0,$this->settings);
 		$this->extensionDirectory = $this->extension->getExtensionDir();
 		$this->extClassPrefix = 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey());
-		if (!$this->roundTripService instanceof Tx_ExtensionBuilder_Service_RoundTrip) {
-			$this->injectRoundtripService(t3lib_div::makeInstance('Tx_ExtensionBuilder_Service_RoundTrip'));
-		}
-
 		$this->roundTripService->initialize($this->extension);
 	}
 
@@ -86,17 +91,16 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 * needed to create a domain object class file
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param boolean mergeWithExistingClass
 	 * @return
 	 */
-	public function generateModelClassObject($domainObject){
+	public function generateModelClassObject($domainObject,$mergeWithExistingClass){
 		t3lib_div::devlog('------------------------------------- generateModelClassObject('.$domainObject->getName().') ---------------------------------','extension_builder',1);
-		$this->classObject = NULL;
-
+		
+		$this->classObject = NULL; // reference to the resulting class file,
 		$className = $domainObject->getClassName();
-		// is there already a class file?
-		$classPath = 'Classes/Domain/Model/' . $domainObject->getName() . '.php';
-
-		if( Tx_ExtensionBuilder_Service_RoundTrip::getOverWriteSettingForPath($classPath,$this->extension) > 0){
+		
+		if($mergeWithExistingClass){
 			try {
 				$this->classObject = $this->roundTripService->getDomainModelClass($domainObject);
 			}
@@ -106,7 +110,21 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 		}
 
 		if($this->classObject == NULL) {
-			return NULL;
+			$this->classObject = new Tx_ExtensionBuilder_Domain_Model_Class_Class($className);
+			if($domainObject->isEntity()){
+				if(isset($this->settings['Model']['AbstractEntity']['parentClass'])){
+					$parentClass = $this->settings['Model']['AbstractEntity']['parentClass'];
+				} else {
+					$parentClass = 'Tx_Extbase_DomainObject_AbstractEntity';
+				}
+			} else {
+				if(isset($this->settings['Model']['AbstractValueObject']['parentClass'])){
+					$parentClass = $this->settings['Model']['AbstractValueObject']['parentClass'];
+				} else {
+					$parentClass = 'Tx_Extbase_DomainObject_AbstractValueObject';
+				}
+			}
+			$this->classObject->setParentClass($parentClass);
 		}
 
 		if(!$this->classObject->hasDescription()){
@@ -119,7 +137,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			$constructorMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method('__construct');
 			//$constructorMethod->setDescription('The constructor of this '.$domainObject->getName());
 			if(count($anyToManyRelationProperties) > 0){
-				$constructorMethod->setBody($this->initStorageObjectCall);
+				$constructorMethod->setBody($this->codeGenerator->getDefaultMethodBody($domainObject,NULL,'Model','','construct'));
 			}
 			$constructorMethod->addModifier('public');
 			$constructorMethod->setTag('return','void');
@@ -145,7 +163,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			foreach($anyToManyRelationProperties as $relationProperty){
 				$methodBody .= "\$this->".$relationProperty->getName()." = new Tx_Extbase_Persistence_ObjectStorage();\n";
 			}
-			$initStorageObjectsMethod->setBody($methodBody);
+			$initStorageObjectsMethod->setBody($this->codeGenerator->getDefaultMethodBody($domainObject,NULL,'Model','','initStorageObjects'));
 			$initStorageObjectsMethod->addModifier('protected');
 			$initStorageObjectsMethod->setTag('return','void');
 			$this->classObject->setMethod($initStorageObjectsMethod);
@@ -160,7 +178,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			// add the property to class Object (or update an existing class Object property)
 			if($this->classObject->propertyExists($propertyName)){
 				$classProperty = $this->classObject->getProperty($propertyName);
-				$classPropertyTags = $classProperty->getTags();
+				//$classPropertyTags = $classProperty->getTags();
 				t3lib_div::devLog('Property found: '.$propertyName.':'.$domainProperty->getTypeForComment(), 'extension_builder',1,(array)$classProperty);
 			}
 			else {
@@ -220,14 +238,14 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 		$getterMethodName = $this->getMethodName($domainProperty,'get');
 		if($this->classObject->methodExists($getterMethodName)){
 			$getterMethod = $this->classObject->getMethod($getterMethodName);
-			$getterMethodTags = $getterMethod->getTags();
+			//$getterMethodTags = $getterMethod->getTags();
 			t3lib_div::devlog('Existing getterMethod imported:'.$getterMethodName,'extension_builder',0,array('methodBody'=>$getterMethod->getBody()));
 		}
 		else {
 			$getterMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($getterMethodName);
 			t3lib_div::devlog('new getMethod:'.$getterMethodName,'extension_builder',0);
 			// default method body
-			$getterMethod->setBody($this->getDefaultMethodBody($domainProperty,'get'));
+			$getterMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL,$domainProperty,'Model','get',''));
 			$getterMethod->setTag('return',$domainProperty->getTypeForComment().' $'.$domainProperty->getName());
 			$getterMethod->addModifier('public');
 		}
@@ -248,14 +266,14 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 		$setterMethodName = $this->getMethodName($domainProperty,'set');
 		if($this->classObject->methodExists($setterMethodName)){
 			$setterMethod = $this->classObject->getMethod($setterMethodName);
-			$setterMethodTags = $setterMethod->getTags();
+			//$setterMethodTags = $setterMethod->getTags();
 			t3lib_div::devlog('Existing setterMethod imported:'.$setterMethodName,'extension_builder',0,array('methodBody'=>$setterMethod->getBody()));
 		}
 		else {
 			t3lib_div::devlog('new setMethod:'.$setterMethodName,'extension_builder',0);
 			$setterMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($setterMethodName);
 			// default method body
-			$setterMethod->setBody($this->getDefaultMethodBody($domainProperty,'set'));
+			$setterMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL,$domainProperty,'Model','set',''));
 			$setterMethod->setTag('param',$domainProperty->getTypeForComment().' $'.$propertyName);
 			$setterMethod->setTag('return','void');
 			$setterMethod->addModifier('public');
@@ -267,10 +285,14 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 		if(!in_array($propertyName,$setterParameters)){
 			$setterParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($propertyName);
 			$setterParameter->setVarType($domainProperty->getTypeForComment());
+			if(is_subclass_of($domainProperty, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation')){
+				$setterParameter->setTypeHint($domainProperty->getTypeHint());
+			}
 			$setterMethod->setParameter($setterParameter);
 		}
 		return $setterMethod;
 	}
+
 
 	/**
 	 *
@@ -290,7 +312,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			t3lib_div::devlog('new addMethod:'.$addMethodName,'extension_builder',0);
 			$addMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($addMethodName);
 			// default method body
-			$addMethod->setBody($this->getDefaultMethodBody($domainProperty,'add'));
+			$addMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL,$domainProperty,'Model','add',''));
 			$addMethod->setTag('param',$domainProperty->getForeignClass()->getClassName().' $'.self::getParameterName($domainProperty,'add'));
 			$addMethod->setTag('return','void');
 			$addMethod->addModifier('public');
@@ -327,7 +349,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			t3lib_div::devlog('new removeMethod:'.$removeMethodName,'extension_builder',0);
 			$removeMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($removeMethodName);
 			// default method body
-			$removeMethod->setBody($this->getDefaultMethodBody($domainProperty,'remove'));
+			$removeMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL,$domainProperty,'Model','remove',''));
 			$removeMethod->setTag('param',$domainProperty->getForeignClass()->getClassName().' $'.self::getParameterName($domainProperty, 'remove').' The '.$domainProperty->getForeignClass()->getName().' to be removed');
 			$removeMethod->setTag('return','void');
 			$removeMethod->addModifier('public');
@@ -365,7 +387,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			t3lib_div::devlog('new isMethod:'.$isMethodName,'extension_builder',1);
 			$isMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($isMethodName);
 			// default method body
-			$isMethod->setBody($this->getDefaultMethodBody($domainProperty,'is'));
+			$isMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL,$domainProperty,'Model','is',''));
 			$isMethod->setTag('return','boolean');
 			$isMethod->addModifier('public');
 		}
@@ -374,6 +396,38 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			$isMethod->setDescription('Returns the boolean state of '.$domainProperty->getName());
 		}
 		return $isMethod;
+	}
+
+	/**
+	 * 
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 */
+	protected function buildActionMethod(Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action,Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject){
+		$actionName = $action->getName();
+		$actionMethodName = $actionName .'Action';
+		$actionMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($actionMethodName);
+		$actionMethod->setDescription('action '.$action->getName());
+		$actionMethod->setBody($this->codeGenerator->getDefaultMethodBody($domainObject,NULL,'Controller','',$actionMethodName));
+		$actionMethod->addModifier('public');
+		if($actionName != 'list'){
+			// needs a parameter
+			if(in_array($actionName,array('create','new'))){
+				$parameterName = 'new' . $domainObject->getName();
+			} else {
+				$parameterName = t3lib_div::lcfirst($domainObject->getName());
+			}
+			$parameter =  new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($parameterName);
+			$parameter->setTypeHint($domainObject->getClassName());
+			$parameter->setPosition(0);
+			if($actionName == 'new'){
+				$parameter->setOptional(TRUE);
+				$actionMethod->setTag('dontvalidate','$' . $parameterName);
+			}
+			$actionMethod->setParameter($parameter);
+		}
+		$actionMethod->setTag('return','string The rendered ' . $actionName .' action');
+		return $actionMethod;
 	}
 
 	/**
@@ -394,31 +448,6 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			case 'remove'	: return 'remove'.ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName));
 
 			case 'is'		: return 'is'.ucfirst($propertyName);
-		}
-	}
-
-	/**
-	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $property
-	 * @param string $methodType (get,set,add,remove,is)
-	 * @return string method body
-	 */
-	public static function getDefaultMethodBody($domainProperty, $methodType){
-
-		$propertyName = $domainProperty->getName();
-
-		switch($methodType){
-
-			case 'set'			: return "\$this->".$propertyName." = \$".self::getParameterName($domainProperty, $methodType).";\n";
-
-			case 'get'			: return "return \$this->".$propertyName.";\n";
-
-			case 'add'			: return "\$this->".$propertyName."->attach(\$".self::getParameterName($domainProperty, $methodType).");\n";
-
-			case 'remove'		: return "\$this->".$propertyName."->detach(\$".self::getParameterName($domainProperty, $methodType).");";
-
-			case 'is'			: return "return \$this->get".ucfirst($propertyName)."();\n";
-
 		}
 	}
 
@@ -448,17 +477,16 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 * comments that are required to create a controller class file
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param boolean $mergeWithExistingClass
 	 * @return
 	 */
-	public function generateControllerClassObject($domainObject){
+	public function generateControllerClassObject($domainObject,$mergeWithExistingClass){
 		t3lib_div::devlog('------------------------------------- generateControllerClassObject('.$domainObject->getName().') ---------------------------------','extension_builder',1);
 
 		$this->classObject = NULL;
-
 		$className =  $domainObject->getControllerName();
-		$classPath = 'Classes/Controller/' . $domainObject->getName() . 'Controller.php';
 
-		if(Tx_ExtensionBuilder_Service_RoundTrip::getOverWriteSettingForPath($classPath,$this->extension) > 0){
+		if($mergeWithExistingClass){
 			try {
 				$this->classObject = $this->roundTripService->getControllerClass($domainObject);
 			}
@@ -466,8 +494,15 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 				t3lib_div::devLog('Class '.$className.' could not be imported: '.$e->getMessage(), 'extension_builder');
 			}
 		}
+
 		if($this->classObject == NULL) {
-			return NULL;
+			$this->classObject = new Tx_ExtensionBuilder_Domain_Model_Class_Class($className);
+			if(isset($this->settings['Controller']['parentClass'])){
+				$parentClass = $this->settings['Controller']['parentClass'];
+			} else {
+				$parentClass = 'Tx_Extbase_MVC_Controller_ActionController';
+			}
+			$this->classObject->setParentClass($parentClass);
 		}
 
 		if($domainObject->isAggregateRoot()){
@@ -500,15 +535,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 		foreach($domainObject->getActions() as $action){
 			$actionMethodName = $action->getName().'Action';
 			if(!$this->classObject->methodExists($actionMethodName)){
-				$actionMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($actionMethodName);
-				$actionMethod->setDescription('action '.$action->getName());
-				$actionMethod->setBody('');
-				$actionMethod->setTag('return','string The rendered ' . $action->getName() .' action');
-				$actionMethod->addModifier('public');
-
+				$actionMethod = $this->buildActionMethod($action,$domainObject);
 				$this->classObject->addMethod($actionMethod);
-			} else {
-				//t3lib_div::devlog('existing action method:' . $actionMethodName,'ext',0,$this->classObject->getMethod($actionMethodName)->getParameters());
 			}
 		}
 		return $this->classObject;
@@ -520,16 +548,15 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 * needed to create a repository class file
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param boolean $mergeWithExistingClass
 	 * @return
 	 */
-	public function generateRepositoryClassObject($domainObject){
+	public function generateRepositoryClassObject($domainObject,$mergeWithExistingClass){
 		t3lib_div::devlog('------------------------------------- generateRepositoryClassObject('.$domainObject->getName().') ---------------------------------','extension_builder',1);
 
 		$this->classObject = NULL;
-
 		$className = $domainObject->getDomainRepositoryClassName();
-		$classPath = 'Classes/Domain/Repository/' . $domainObject->getName() . 'Repository.php';
-		if(Tx_ExtensionBuilder_Service_RoundTrip::getOverWriteSettingForPath($classPath,$this->extension) > 0){
+		if($mergeWithExistingClass){
 			try {
 				$this->classObject = $this->roundTripService->getRepositoryClass($domainObject);
 			}
@@ -537,9 +564,17 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 				t3lib_div::devLog('Class '.$className.' could not be imported: '.$e->getMessage(), 'extension_builder');
 			}
 		}
+
 		if($this->classObject == NULL) {
-			return NULL;
+			$this->classObject = new Tx_ExtensionBuilder_Domain_Model_Class_Class($className);
+			if(isset($this->settings['Repository']['parentClass'])){
+				$parentClass = $this->settings['Repository']['parentClass'];
+			} else {
+				$parentClass = 'Tx_Extbase_Persistence_Repository';
+			}
+			$this->classObject->setParentClass($parentClass);
 		}
+
 		return $this->classObject;
 	}
 

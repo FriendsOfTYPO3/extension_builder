@@ -63,7 +63,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 				// strange behaviour in php ReflectionProperty->getDescription(). A backslash is added to the description
 				$this->description = str_replace("\n/",'',$this->description);
 				$this->description = trim($this->description);
-				$this->setTag('return','void');
+				//$this->setTag('return','void');
 			}
 		}
 
@@ -193,9 +193,11 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 	public function getAnnotations(){
 		$annotations = parent::getAnnotations();
 		if(count($this->parameters > 0) && !$this->isTaggedWith('param')){
+			$paramTags = array();
 			foreach($this->parameters as $parameter){
-				$annotations[] = 'param '.strtolower($parameter->getVarType()).' $'.$parameter->getName();
+				$paramTags[] = 'param '.strtolower($parameter->getVarType()).' $'.$parameter->getName();
 			}
+			$annotations = array_merge($paramTags,$annotations);
 		}
 		if(!$this->isTaggedWith('return')){
 			$annotations[] = 'return';
