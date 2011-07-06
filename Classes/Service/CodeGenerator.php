@@ -280,11 +280,11 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				$domainRepositoryDirectory = 'Classes/Domain/Repository/';
 				t3lib_div::mkdir_deep($this->extensionDirectory, $domainRepositoryDirectory);
 
-				t3lib_div::mkdir_deep($this->extensionDirectory, 'Tests/Domain/Model');
-				$domainModelTestsDirectory = $this->extensionDirectory . 'Tests/Domain/Model/';
+				t3lib_div::mkdir_deep($this->extensionDirectory, 'Tests/Unit/Domain/Model');
+				$domainModelTestsDirectory = $this->extensionDirectory . 'Tests/Unit/Domain/Model/';
 
-				t3lib_div::mkdir_deep($this->extensionDirectory, 'Tests/Controller');
-				$crudEnabledControllerTestsDirectory = $this->extensionDirectory . 'Tests/Controller/';
+				t3lib_div::mkdir_deep($this->extensionDirectory, 'Tests/Unit/Controller');
+				$crudEnabledControllerTestsDirectory = $this->extensionDirectory . 'Tests/Unit/Controller/';
 
 				foreach ($this->extension->getDomainObjects() as $domainObject) {
 					$destinationFile = $domainModelDirectory . $domainObject->getName() . '.php';
