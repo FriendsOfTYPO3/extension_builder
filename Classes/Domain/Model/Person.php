@@ -76,7 +76,7 @@ class Tx_ExtensionBuilder_Domain_Model_Person {
 	 *
 	 * @return string
 	 */
-	public function getName () {
+	public function getName() {
 		return $this->name;
 	}
 
@@ -86,8 +86,8 @@ class Tx_ExtensionBuilder_Domain_Model_Person {
 	 * @param string $name
 	 * @return void
 	 */
-	public function setName ($name) {
-		$this->name =$name;
+	public function setName($name) {
+		$this->name = $name;
 	}
 
 	/**
@@ -95,7 +95,7 @@ class Tx_ExtensionBuilder_Domain_Model_Person {
 	 *
 	 * @return string
 	 */
-	public function getRole () {
+	public function getRole() {
 		return $this->role;
 	}
 
@@ -105,8 +105,8 @@ class Tx_ExtensionBuilder_Domain_Model_Person {
 	 * @param string $role
 	 * @return void
 	 */
-	public function setRole ($role) {
-		$this->role =$role;
+	public function setRole($role) {
+		$this->role = $role;
 	}
 
 	/**
@@ -114,7 +114,7 @@ class Tx_ExtensionBuilder_Domain_Model_Person {
 	 *
 	 * @return string
 	 */
-	public function getEmail () {
+	public function getEmail() {
 		return $this->email;
 	}
 
@@ -124,8 +124,8 @@ class Tx_ExtensionBuilder_Domain_Model_Person {
 	 * @param string $email
 	 * @return void
 	 */
-	public function setEmail ($email) {
-		$this->email=$email;
+	public function setEmail($email) {
+		$this->email = $email;
 	}
 
 	/**
@@ -133,7 +133,7 @@ class Tx_ExtensionBuilder_Domain_Model_Person {
 	 *
 	 * @return string
 	 */
-	public function getCompany () {
+	public function getCompany() {
 		return $this->company;
 	}
 
@@ -143,8 +143,9 @@ class Tx_ExtensionBuilder_Domain_Model_Person {
 	 * @param string $company
 	 * @return void
 	 */
-	public function setCompany ($company) {
-		$this->company =$company;
+	public function setCompany($company) {
+		$this->company = $company;
 	}
 }
+
 ?>

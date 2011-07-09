@@ -40,25 +40,26 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 
 
 	public static function getInstance() {
-        if (self::$instance === NULL) {
-            self::$instance = new Tx_GimmeFive_Component_Manager();
-        }
-        return self::$instance;
-    }
+		if (self::$instance === NULL) {
+			self::$instance = new Tx_GimmeFive_Component_Manager();
+		}
+		return self::$instance;
+	}
 
 	protected function __construct() {
 		$this->loadTypoScriptConfig();
 		spl_autoload_register(array($this, 'loadClass'));
 	}
 
-    private function __clone() {}
+	private function __clone() {
+	}
 
 	/**
-     * Loads the TypoScript config/setup for the formhandler on the current page.
-     */
-    private function loadTypoScriptConfig() {
-    	$sysPageObj = t3lib_div::makeInstance('t3lib_pageSelect');
-		if(!$GLOBALS['TSFE']->sys_page) {
+	 * Loads the TypoScript config/setup for the formhandler on the current page.
+	 */
+	private function loadTypoScriptConfig() {
+		$sysPageObj = t3lib_div::makeInstance('t3lib_pageSelect');
+		if (!$GLOBALS['TSFE']->sys_page) {
 			$GLOBALS['TSFE']->sys_page = $sysPageObj;
 		}
 		$rootLine = $sysPageObj->getRootLine($GLOBALS['TSFE']->id);
@@ -69,7 +70,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 		$TSObj->generateConfig();
 		$conf = $TSObj->setup['plugin.']['Tx_Formhandler.']['settings.'];
 		$this->tsConf = $conf;
-    }
+	}
 
 	/**
 	 * Returns a component object from the cache. If there is no object stored already, a new one is created and stored in the cache.
@@ -86,7 +87,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 			return $this;
 		}
 
-		if(!is_array($this->classFiles)) {
+		if (!is_array($this->classFiles)) {
 			$this->classFiles = array();
 		}
 		/*if ($this->componentObjectExists($componentName)) {
@@ -97,7 +98,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 			$componentObject = $this->createComponentObject($componentName, array());
 			$this->putComponentObject($componentName, $componentObject);
 		} else {
-			$arguments =  array_slice(func_get_args(), 1, NULL, TRUE); // array keys are preserved (TRUE) -> argument array starts with key=1
+			$arguments = array_slice(func_get_args(), 1, NULL, TRUE); // array keys are preserved (TRUE) -> argument array starts with key=1
 			$componentObject = $this->createComponentObject($componentName, $arguments);
 		}
 		return $componentObject;
@@ -131,8 +132,8 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 		$preparedArguments = array();
 		$this->injectConstructorArguments($constructorArguments, $injectedArguments, $preparedArguments);
 
-		$instruction = '$componentObject = new ' . $className .'(';
-		$instruction .= implode(', ',$preparedArguments);
+		$instruction = '$componentObject = new ' . $className . '(';
+		$instruction .= implode(', ', $preparedArguments);
 		$instruction .= ');';
 
 		eval($instruction);
@@ -150,7 +151,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 			case 'prototype' :
 				break;
 			default :
-				throw new Exception('Support for scope "' . $scope .'" has not been implemented (yet)', 1167484148);
+				throw new Exception('Support for scope "' . $scope . '" has not been implemented (yet)', 1167484148);
 		}
 		return $componentObject;
 	}
@@ -169,12 +170,13 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 		$className = $class->getName();
 		$constructor = $class->getConstructor();
 		if ($constructor !== NULL) {
-			foreach($constructor->getParameters() as $parameterIndex => $parameter) {
+			foreach ($constructor->getParameters() as $parameterIndex => $parameter) {
 				$index = $parameterIndex + 1;
 				if (!isset($constructorArguments[$index])) {
 					try {
 						if ($parameter->isOptional()) {
-							$defaultValue = ($parameter->isDefaultValueAvailable()) ? $parameter->getDefaultValue() : NULL;
+							$defaultValue = ($parameter->isDefaultValueAvailable()) ? $parameter->getDefaultValue()
+									: NULL;
 							$constructorArguments[$index] = $defaultValue;
 						} elseif ($parameter->getClass() !== NULL) {
 							$constructorArguments[$index] = $parameter->getClass()->getName();
@@ -184,7 +186,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 							$this->debugMessages[] = 'Tried everything to autowire parameter $' . $parameter->getName() . ' in ' . $className . '::' . $constructor->getName() . '() but I saw no way.';
 						}
 					} catch (ReflectionException $exception) {
-						throw new Exception('While trying to autowire the parameter $' . $parameter->getName() . ' of the method ' . $className . '::' . $constructor->getName() .'() a ReflectionException was thrown. Please verify the definition of your constructor method in ' . $constructor->getFileName() . ' line ' . $constructor->getStartLine() .'. Original message: ' . $exception->getMessage());
+						throw new Exception('While trying to autowire the parameter $' . $parameter->getName() . ' of the method ' . $className . '::' . $constructor->getName() . '() a ReflectionException was thrown. Please verify the definition of your constructor method in ' . $constructor->getFileName() . ' line ' . $constructor->getStartLine() . '. Original message: ' . $exception->getMessage());
 					}
 				} else {
 					$this->debugMessages[] = 'Did not try to autowire parameter $' . $parameter->getName() . ' in ' . $className . '::' . $constructor->getName() . '() because it was already set.';
@@ -210,7 +212,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	public function injectConstructorArguments($constructorArguments, &$injectedArguments, &$preparedArguments) {
 		foreach ($constructorArguments as $index => $constructorArgument) {
 			// TODO Testing the prefix is not very sophisticated. Should be is_object()
-			if (substr($constructorArgument,0,3) === self::PACKAGE_PREFIX . '_') {
+			if (substr($constructorArgument, 0, 3) === self::PACKAGE_PREFIX . '_') {
 				$value = $this->getComponent($constructorArgument);
 			} else {
 				$value = $constructorArgument;
@@ -236,12 +238,12 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	 * @return Tx_Contentparser_Configuration
 	 */
 	protected function getComponentConfiguration($componentName) {
-		$componentNameParts = explode('_', $componentName,3);
+		$componentNameParts = explode('_', $componentName, 3);
 		if (($componentNameParts[0] !== self::PACKAGE_PREFIX) || !isset($componentNameParts[1])) throw new Exception ('Invalid component name. Component name "' . $componentName . '" must be prefixed by "' . self::PACKAGE_PREFIX . '_".');
-		if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . $componentNameParts[1] .'.']['components.'][$componentName . '.'])) {
-			$componentConfiguration = $GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . $componentNameParts[1] .'.']['components.'][$componentName . '.'];
-		} elseif (isset($GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . ucfirst(self::THIS_PACKAGE_KEY) .'.']['components.'][$componentName . '.'])) {
-			$componentConfiguration = $GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . ucfirst(self::THIS_PACKAGE_KEY) .'.']['components.'][$componentName . '.'];
+		if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . $componentNameParts[1] . '.']['components.'][$componentName . '.'])) {
+			$componentConfiguration = $GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . $componentNameParts[1] . '.']['components.'][$componentName . '.'];
+		} elseif (isset($GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . ucfirst(self::THIS_PACKAGE_KEY) . '.']['components.'][$componentName . '.'])) {
+			$componentConfiguration = $GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . ucfirst(self::THIS_PACKAGE_KEY) . '.']['components.'][$componentName . '.'];
 		} else {
 			$componentConfiguration = NULL;
 		}
@@ -256,9 +258,9 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	 * @return void
 	 */
 	protected function putComponentObject($componentName, $componentObject) {
-		 if (is_object($componentObject)) {
-		 	$this->componentObjects[$componentName] = $componentObject;
-		 }
+		if (is_object($componentObject)) {
+			$this->componentObjects[$componentName] = $componentObject;
+		}
 	}
 
 	/**
@@ -313,7 +315,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	 */
 	protected function buildArrayOfClassFiles($packageKey, $subDirectory = '', $recursionLevel = 0) {
 		$classFiles = array();
-		if(strpos($packageKey, '/') === FALSE) {
+		if (strpos($packageKey, '/') === FALSE) {
 			$currentPath = $this->getPackagePath($packageKey) . self::DIRECTORY_CLASSES . $subDirectory;
 		} else {
 			$currentPath = $this->getPackagePath($packageKey) . $subDirectory;
@@ -330,7 +332,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 
 				if ($filename{0} != '.') {
 					if (is_dir($currentPath . $filename)) {
-						$classFiles = array_merge($classFiles, $this->buildArrayOfClassFiles($packageKey, $subDirectory . $filename . '/', ($recursionLevel+1)));
+						$classFiles = array_merge($classFiles, $this->buildArrayOfClassFiles($packageKey, $subDirectory . $filename . '/', ($recursionLevel + 1)));
 					} else {
 						if (substr($filename, 0, 3) == self::PACKAGE_PREFIX . '_' && substr($filename, -4, 4) == '.php') {
 							$classFiles[substr($filename, 0, -4)] = $currentPath . $filename;
@@ -342,7 +344,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 			}
 
 
-		} catch(Exception $exception) {
+		} catch (Exception $exception) {
 			throw new Exception($exception->getMessage());
 		}
 		return $classFiles;
@@ -358,7 +360,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	 * @author  Jochen Rau <jochen.rau@typoplanet.de>
 	 */
 	private function loadClass($className) {
-		$classNameParts = explode('_', $className,3);
+		$classNameParts = explode('_', $className, 3);
 		if ($classNameParts[0] === self::PACKAGE_PREFIX) {
 
 			// Caches the $classFiles
@@ -366,8 +368,8 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 				$this->classFiles = $this->buildArrayOfClassFiles($classNameParts[1]);
 			}
 
-			if(is_array($this->tsConf['additionalIncludePaths.'])) {
-				foreach($this->tsConf['additionalIncludePaths.'] as $dir) {
+			if (is_array($this->tsConf['additionalIncludePaths.'])) {
+				foreach ($this->tsConf['additionalIncludePaths.'] as $dir) {
 
 					$temp = array();
 					$temp = $this->buildArrayOfClassFiles($dir);
@@ -384,11 +386,11 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	}
 
 	protected function getPackagePath($packageKey) {
-		if(strpos($packageKey, '/') === FALSE) {
+		if (strpos($packageKey, '/') === FALSE) {
 			$path = t3lib_extMgm::extPath(strtolower($packageKey));
 		} else {
 			$path = t3lib_div::getFileAbsFileName($packageKey);
-			if(substr($path,strlen($path) -1) !== '/') {
+			if (substr($path, strlen($path) - 1) !== '/') {
 				$path .= '/';
 			}
 		}
@@ -397,4 +399,5 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 
 	}
 }
+
 ?>

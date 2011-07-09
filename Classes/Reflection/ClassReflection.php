@@ -1,26 +1,26 @@
 <?php
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2010 Nico de Haen
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2010 Nico de Haen
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * Extended version of the Tx_Extbase_Reflection_ClassReflection
@@ -65,17 +65,16 @@ class Tx_ExtensionBuilder_Reflection_ClassReflection extends Tx_Extbase_Reflecti
 	}
 
 
-
 	/**
 	 * get all methods that are declared in parent classes and not in the actual class
 	 *
 	 * @return array
 	 */
 
-	public function getInheritedMethods(){
+	public function getInheritedMethods() {
 		$inheritedMethods = array();
 		$parentClass = $this->getParentClass();
-		if($parentClass){
+		if ($parentClass) {
 			$inheritedMethods = $parentClass->getMethods();
 		}
 		return $inheritedMethods;
@@ -88,24 +87,23 @@ class Tx_ExtensionBuilder_Reflection_ClassReflection extends Tx_Extbase_Reflecti
 	 *
 	 * @return array
 	 */
-	public function getNotInheritedMethods($includeOverridingMethods = true){
+	public function getNotInheritedMethods($includeOverridingMethods = true) {
 		$parentClass = $this->getParentClass();
-		if(!$parentClass){
+		if (!$parentClass) {
 			return $this->getMethods();
 		}
 		$allMethods = $this->getMethods();
 		$inheritedMethods = $this->getInheritedMethods();
 		$notInheritedMethods = array();
-		foreach($allMethods as $method){
-			if(!in_array($method,$inheritedMethods)){
-				if($includeOverridingMethods || (!$includeOverridingMethods && !$parentClass->hasMethod($method->getName()))){
+		foreach ($allMethods as $method) {
+			if (!in_array($method, $inheritedMethods)) {
+				if ($includeOverridingMethods || (!$includeOverridingMethods && !$parentClass->hasMethod($method->getName()))) {
 					$notInheritedMethods[] = $method;
 				}
 			}
 		}
 		return $notInheritedMethods;
 	}
-
 
 
 	/**
@@ -163,16 +161,16 @@ class Tx_ExtensionBuilder_Reflection_ClassReflection extends Tx_Extbase_Reflecti
 		return new Tx_ExtensionBuilder_Reflection_PropertyReflection($this->getName(), $name);
 	}
 
-/**
+	/**
 	 * get all methods that are declared in parent classes and not in the actual class
 	 *
 	 * @return array
 	 */
 
-	public function getInheritedProperties(){
+	public function getInheritedProperties() {
 		$inheritedProperties = array();
 		$parentClass = $this->getParentClass();
-		if($parentClass){
+		if ($parentClass) {
 			$inheritedProperties = $parentClass->getProperties();
 		}
 		return $inheritedProperties;
@@ -185,17 +183,17 @@ class Tx_ExtensionBuilder_Reflection_ClassReflection extends Tx_Extbase_Reflecti
 	 *
 	 * @return array
 	 */
-	public function getNotInheritedProperties($includeOverridingProperties = true){
+	public function getNotInheritedProperties($includeOverridingProperties = true) {
 		$parentClass = $this->getParentClass();
-		if(!$parentClass){
+		if (!$parentClass) {
 			return $this->getProperties();
 		}
 		$allProperties = $this->getProperties();
 		$inheritedProperties = $this->getInheritedProperties();
 		$notInheritedProperties = array();
-		foreach($allProperties as $property){
-			if(!in_array($property,$inheritedProperties)){
-				if($includeOverridingProperties || (!$includeOverridingProperties && !$parentClass->hasProperty($property->getName()))){
+		foreach ($allProperties as $property) {
+			if (!in_array($property, $inheritedProperties)) {
+				if ($includeOverridingProperties || (!$includeOverridingProperties && !$parentClass->hasProperty($property->getName()))) {
 					$notInheritedProperties[] = $property;
 				}
 			}
@@ -215,7 +213,7 @@ class Tx_ExtensionBuilder_Reflection_ClassReflection extends Tx_Extbase_Reflecti
 		// workaround for bug #8800 in Tx_Extbase_Reflection_ClassReflection
 		$phpReflectionClass = new ReflectionClass($this->getName());
 		$parentClass = $phpReflectionClass->getParentClass();
-		if($parentClass){
+		if ($parentClass) {
 			return new Tx_ExtensionBuilder_Reflection_ClassReflection($parentClass->getName());
 		}
 		else return false;
@@ -273,12 +271,12 @@ class Tx_ExtensionBuilder_Reflection_ClassReflection extends Tx_Extbase_Reflecti
 		return $this->docCommentParser;
 	}
 
-	public function getDocCommentContent(){
+	public function getDocCommentContent() {
 		$this->getDocCommentParser();
 		return $this->docCommentParser->getDescription();
 	}
 
-	public function getRawComments(){
+	public function getRawComments() {
 		$this->getDocCommentParser();
 		return $this->docCommentParser->getRawComments($this->getFileName());
 	}

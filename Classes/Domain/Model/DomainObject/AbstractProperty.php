@@ -1,26 +1,26 @@
 <?php
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2010 Nico de Haen, Ingmar Schlecht, Stephan Petzl
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2010 Nico de Haen, Ingmar Schlecht, Stephan Petzl
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * property representing a "property" in the context of software development
@@ -86,7 +86,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 * @param string $propertyName
 	 * @return void
 	 */
-	public function __construct($propertyName){
+	public function __construct($propertyName) {
 		$this->name = $propertyName;
 	}
 
@@ -148,7 +148,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 *
 	 * @return boolean
 	 */
-	public function getHasDefaultValue(){
+	public function getHasDefaultValue() {
 		return isset($this->defaultValue);
 	}
 
@@ -174,7 +174,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 *
 	 * @return boolean true (if property is of type relation any to many)
 	 */
-	public function isAnyToManyRelation(){
+	public function isAnyToManyRelation() {
 		return is_subclass_of($this, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation');
 	}
 
@@ -183,7 +183,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 *
 	 * @return boolean true (if property is of type relation)
 	 */
-	public function isRelation(){
+	public function isRelation() {
 		return is_subclass_of($this, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation');
 	}
 
@@ -191,7 +191,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 *
 	 * @return boolean true (if property is of type boolean)
 	 */
-	public function isBoolean(){
+	public function isBoolean() {
 		return is_a($this, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty');
 	}
 
@@ -202,7 +202,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 * @return string Property description
 	 */
 	public function getDescription() {
-		if ($this->description){
+		if ($this->description) {
 			return $this->description;
 		} else {
 			return $this->getName();
@@ -238,7 +238,6 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 * @retrun string the SQL definition
 	 */
 	abstract public function getSqlDefinition();
-
 
 
 	/**
@@ -377,9 +376,9 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 *
 	 * @return string $mappingStatement
 	 */
-	public function getMappingStatement(){
-		if($this->getFieldName() != Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($this->name)){
-			return $this->getFieldName().'.mapOnProperty = '.$this->name;
+	public function getMappingStatement() {
+		if ($this->getFieldName() != Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($this->name)) {
+			return $this->getFieldName() . '.mapOnProperty = ' . $this->name;
 		}
 		else return NULL;
 	}
@@ -390,7 +389,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 *
 	 * @return boolean $needsUploadFolder
 	 */
-	public function getNeedsUploadFolder(){
+	public function getNeedsUploadFolder() {
 		return $this->needsUploadFolder;
 	}
 
@@ -398,7 +397,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	/**
 	 *
 	 */
-	public function getIsNew(){
+	public function getIsNew() {
 		return $this->isNew;
 	}
 
@@ -407,7 +406,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 *
 	 * @param boolean $new
 	 */
-	public function setIsNew($isNew){
+	public function setIsNew($isNew) {
 		$this->isNew = $isNew;
 	}
 

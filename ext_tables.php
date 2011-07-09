@@ -1,12 +1,12 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
+if (!defined('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
 
 /**
-* Register Backend Module
-*/
+ * Register Backend Module
+ */
 
 Tx_Extbase_Utility_Extension::registerModule(
 	$_EXTKEY,
@@ -14,12 +14,12 @@ Tx_Extbase_Utility_Extension::registerModule(
 	'extensionbuilder',
 	'',
 	array(
-		'BuilderModule' => 'index,domainmodelling,generateCode',
+		 'BuilderModule' => 'index,domainmodelling,generateCode',
 	),
 	array(
-		'access' => 'user,group',
-		'icon'   => 'EXT:extension_builder/ext_icon.gif',
-		'labels' => 'LLL:EXT:extension_builder/Resources/Private/Language/locallang_mod.xml',
+		 'access' => 'user,group',
+		 'icon' => 'EXT:extension_builder/ext_icon.gif',
+		 'labels' => 'LLL:EXT:extension_builder/Resources/Private/Language/locallang_mod.xml',
 	)
 );
 

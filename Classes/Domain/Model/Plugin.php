@@ -61,7 +61,7 @@ class Tx_ExtensionBuilder_Domain_Model_Plugin {
 	 *
 	 * @return string
 	 */
-	public function getName () {
+	public function getName() {
 		return $this->name;
 	}
 
@@ -71,8 +71,8 @@ class Tx_ExtensionBuilder_Domain_Model_Plugin {
 	 * @param string $name
 	 * @return void
 	 */
-	public function setName ($name) {
-		$this->name =$name;
+	public function setName($name) {
+		$this->name = $name;
 	}
 
 	/**
@@ -113,4 +113,5 @@ class Tx_ExtensionBuilder_Domain_Model_Plugin {
 		return $this->key;
 	}
 }
+
 ?>

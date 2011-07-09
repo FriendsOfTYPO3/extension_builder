@@ -7,16 +7,26 @@
 	<data type="array">
 
 		<languageKey index="default" type="array">
-			<label index="error.extension.0">An extension key must have minimum 3, maximum 30 characters (not counting underscores)</label>
-			<label index="error.extension.1">Illegal character(s) in extension key. Allowed characters are: a-z (lowercase), 0-9 and '_' (underscore)</label>
-			<label index="error.extension.2">The key may not begin with one of the following prefixes: tx,u,user_,pages,tt_,sys_,ts_language_,csh_</label>
+			<label index="error.extension.0">An extension key must have minimum 3, maximum 30 characters (not counting
+				underscores)
+			</label>
+			<label index="error.extension.1">Illegal character(s) in extension key. Allowed characters are: a-z
+				(lowercase), 0-9 and '_' (underscore)
+			</label>
+			<label index="error.extension.2">The key may not begin with one of the following prefixes:
+				tx,u,user_,pages,tt_,sys_,ts_language_,csh_
+			</label>
 			<label index="error.extension.3">Extension keys cannot start or end with 0-9 and '_' (underscore)</label>
-			<label index="error.extension.500">There is an existing piBased extension with this extension key. Please choose another extension key or rename the existing extension directory</label>
+			<label index="error.extension.500">There is an existing piBased extension with this extension key. Please
+				choose another extension key or rename the existing extension directory
+			</label>
 			<label index="name">Name</label>
 			<label index="key">Key</label>
 			<label index="extensionTitle">Extension title</label>
 			<label index="extensionKey">Extenion Key</label>
-			<label index="descr_extensionKey">The extensionkey should be lowercase and without spaces. It will be the unique identifier for this extension.</label>
+			<label index="descr_extensionKey">The extensionkey should be lowercase and without spaces. It will be the
+				unique identifier for this extension.
+			</label>
 			<label index="short_description">Descr.</label>
 			<label index="description">Description</label>
 			<label index="version">Version</label>
@@ -45,20 +55,31 @@
 			<label index="zeroToMany">1:n</label>
 			<label index="manyToMany">m:n</label>
 			<label index="isExcludeField">Is exclude field?</label>
-			<label index="descr_isExcludeField">If set to true, this field will only be visible for admin users per default</label>
+			<label index="descr_isExcludeField">If set to true, this field will only be visible for admin users per
+				default
+			</label>
 			<label index="editInline">Edit inline?</label>
-			<label index="descr_editInline">If set to true, new records can only be created in the form of this model (Applies only for 1:n or m:n relations)</label>
+			<label index="descr_editInline">If set to true, new records can only be created in the form of this model
+				(Applies only for 1:n or m:n relations)
+			</label>
 			<label index="newModelObject">New model object</label>
 			<label index="domainObjectSettings">Domain object settings</label>
 			<label index="objectType">Object type</label>
-			<label index="descr_objectType">Value objects are simple objects that are defined by their value and have no 'identity'</label>
+			<label index="descr_objectType">Value objects are simple objects that are defined by their value and have no
+				'identity'
+			</label>
 			<label index="entity">Entity</label>
 			<label index="valueObject">Value object</label>
 			<label index="isAggregateRoot">Is aggregate root?</label>
-			<label index="descr_isAggregateRoot">If true, the extension builder will generate a repository and default controller actions for this model</label>
+			<label index="descr_isAggregateRoot">If true, the extension builder will generate a repository and default
+				controller actions for this model
+			</label>
 			<label index="defaultActions">Default actions</label>
 			<label index="actionType">Action type</label>
-			<label index="descr_actionType">For each selected action, the extension builder will generate a template and a action method in the controller of this model. If the model is an aggregate root the default CRUD actions will be generated per default.</label>
+			<label index="descr_actionType">For each selected action, the extension builder will generate a template and
+				a action method in the controller of this model. If the model is an aggregate root the default CRUD
+				actions will be generated per default.
+			</label>
 			<label index="show">Show</label>
 			<label index="list">List</label>
 			<label index="create_new">Create/new</label>
