@@ -421,20 +421,6 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	}
 
 	/**
-	 * Remove $plugin
-	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_Plugin
-	 * @return void
-	 */
-	public function removePlugins(Tx_ExtensionBuilder_Domain_Model_Plugin $plugin) {
-		foreach ($this->plugins as $key => $value) {
-			if ($value === $plugin) {
-				unset($this->plugins[$key]);
-			}
-		}
-	}
-
-	/**
 	 * Setter for backendModule
 	 *
 	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_ExtensionBuilder_Domain_Model_BackendModule> $backendModules
@@ -472,20 +458,6 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 			return true;
 		} else {
 			return false;
-		}
-	}
-
-	/**
-	 * Remove $backendModule
-	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_BackendModule
-	 * @return void
-	 */
-	public function removeBackendModule(Tx_ExtensionBuilder_Domain_Model_BackendModule $backendModule) {
-		foreach ($this->backendModules as $key => $value) {
-			if ($value === $backendModule) {
-				unset($this->backendModules[$key]);
-			}
 		}
 	}
 
