@@ -360,9 +360,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 
 		$this->extension->addDomainObject($domainObject);
 
-		$result = $this->codeGenerator->build($this->extension);
-
-		$this->assertEquals($result,'success',$result);
+		$this->codeGenerator->build($this->extension);
 
 		$this->assertFileExists($this->extension->getExtensionDir().'Classes/Domain/Model/'. $domainObject->getName() . '.php');
 		$this->assertFileExists($this->extension->getExtensionDir().'Classes/Domain/Repository/'. $domainObject->getName() . 'Repository.php');
@@ -399,9 +397,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$plugin->setKey('test');
 		$this->extension->addPlugin($plugin);
 
-		$test = $this->codeGenerator->build($this->extension);
-
-		$this->assertEquals($test,'success','Extension could not be generated');
+		$this->codeGenerator->build($this->extension);
 
 		$extensionDir = $this->extension->getExtensionDir();
 

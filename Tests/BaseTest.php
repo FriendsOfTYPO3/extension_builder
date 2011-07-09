@@ -68,7 +68,7 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Extbase_Tests_Unit_
 
 		$this->codeGenerator->injectTemplateParser($this->templateParser);
 		$this->codeGenerator->injectClassBuilder($this->classBuilder);
-		$this->codeGenerator->injectSettings(
+		$this->codeGenerator->setSettings(
 			array(
 				'codeTemplateRootPath' => PATH_typo3conf.'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/',
 				'extConf' => array(
