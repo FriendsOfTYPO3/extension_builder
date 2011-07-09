@@ -151,7 +151,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		}
 	}
 
-	protected function fixExtensionBuilderJSON($extensionConfigurationJSON){
+	public function fixExtensionBuilderJSON($extensionConfigurationJSON){
 		$extensionConfigurationJSON['modules'] = $this->generateUniqueIDs($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->mapAdvancedMode($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->resetOutboundedPositions($extensionConfigurationJSON['modules']);
@@ -167,7 +167,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 * @param $jsonConfig
 	 * @return array $jsonConfig with unique IDs
 	 */
-	static public function generateUniqueIDs($jsonConfig){
+	protected function generateUniqueIDs($jsonConfig){
 		//  generate unique IDs
 		foreach($jsonConfig as &$module){
 
@@ -206,7 +206,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 *
 	 * @param array $jsonConfig
 	 */
-	static public function mapAdvancedMode($jsonConfig){
+	protected function mapAdvancedMode($jsonConfig){
 		foreach($jsonConfig as &$module){
 			for($i=0;$i < count($module['value']['relationGroup']['relations']);$i++){
 				if(empty($module['value']['relationGroup']['relations'][$i]['advancedSettings'])){
@@ -230,7 +230,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 *
 	 * @param array $jsonConfig
 	 */
-	static public function resetOutboundedPositions($jsonConfig){
+	protected function resetOutboundedPositions($jsonConfig){
 		foreach($jsonConfig as &$module){
 			if($module['config']['position'][0] < 0){
 				$module['config']['position'][0] = 10;
@@ -249,7 +249,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 *
 	 * @param array $jsonConfig
 	 */
-	static public function reArrangeRelations($jsonConfig){
+	protected function reArrangeRelations($jsonConfig){
 		foreach($jsonConfig['wires'] as &$wire){
 			$parts = explode('_',$wire['src']['terminal']); // format: relation_1
 			$supposedRelationIndex = $parts[1];
@@ -273,7 +273,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 * @param int $supposedModuleIndex
 	 * @param int $supposedRelationIndex
 	 */
-	static public function findModuleIndexByRelationUid($uid,$modules,$supposedModuleIndex,$supposedRelationIndex = NULL){
+	protected function findModuleIndexByRelationUid($uid,$modules,$supposedModuleIndex,$supposedRelationIndex = NULL){
 		$result = array(
 				'moduleId' => $supposedModuleIndex
 			);
