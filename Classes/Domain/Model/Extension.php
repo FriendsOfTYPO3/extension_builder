@@ -212,8 +212,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 			if(empty($this->extensionKey)){
 				throw new Exception('ExtensionDir can only be created if an extensionKey is defined first');
 			}
-			$this->extensionDir = PATH_typo3conf.'ext/'.$this->extensionKey.'/';
-			return $this->extensionDir;
+			$this->extensionDir = PATH_typo3conf . 'ext/' . $this->extensionKey . '/';
 		}
 		return $this->extensionDir;
 	}

@@ -43,7 +43,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 	/**
 	 *
 	 * @param array $extensionBuildConfiguration
-	 * @return $extension
+	 * @return Tx_ExtensionBuilder_Domain_Model_Extension $extension
 	 */
 	public function build(array $extensionBuildConfiguration) {
 		$extension = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Extension');

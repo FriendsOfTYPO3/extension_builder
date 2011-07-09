@@ -32,76 +32,76 @@
 class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
 	/**
-	 *
-	 * @var Tx_Fluid_Core_Parser_TemplateParser
-	 */
-	protected $templateParser;
-
-	/**
-	 *
-	 * @var Tx_Extbase_Object_ObjectManager
-	 */
-	protected $objectManager;
-
-	/**
-	 *
-	 * @var Tx_ExtensionBuilder_Domain_Model_Extension
-	 */
-	protected $extension;
-
-	/**
-	 *
 	 * @var Tx_ExtensionBuilder_Service_ClassBuilder
 	 */
 	protected $classBuilder;
 
-	/**
-	 * @var boolean
-	 */
-	protected $roundTripEnabled = false;
-
-	/**
-	 *
-	 * @var array
-	 */
-	protected $overWriteSettings;
-
-	/**
+    /**
 	 * @var string
 	 */
 	protected $codeTemplateRootPath;
 
-
-	/**
-	 * @param Tx_Fluid_Core_Parser_TemplateParser $templateParser
-	 * @return void
+    /**
+	 * @var Tx_ExtensionBuilder_Domain_Model_Extension
 	 */
-	public function injectTemplateParser(Tx_Fluid_Core_Parser_TemplateParser $templateParser) {
-		$this->templateParser = $templateParser;
-	}
+	protected $extension;
 
-	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
-	 * @return void
+    /**
+     * @var string
+     */
+    protected $extensionDirectory;
+
+    /**
+	 * @var Tx_Extbase_Object_ObjectManager
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
-		$this->objectManager = $objectManager;
-	}
+	protected $objectManager;
 
-	
-	/**
+    /**
+	 * @var array
+	 */
+	protected $overWriteSettings;
+
+    /**
+	 * @var boolean
+	 */
+	protected $roundTripEnabled = false;
+
+    /**
+     * @var array Settings
+     */
+    protected $settings;
+
+    /**
+	 * @var Tx_Fluid_Core_Parser_TemplateParser
+	 */
+	protected $templateParser;
+
+    /**
 	 * @param Tx_ExtensionBuilder_Service_ClassBuilder $classBuilder
-	 * @return void
 	 */
 	public function injectClassBuilder(Tx_ExtensionBuilder_Service_ClassBuilder $classBuilder) {
 		$this->classBuilder = $classBuilder;
 	}
 
 	/**
+	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 */
+	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+		$this->objectManager = $objectManager;
+	}
+
+    /**
+	 * @param Tx_Fluid_Core_Parser_TemplateParser $templateParser
+	 */
+	public function injectTemplateParser(Tx_Fluid_Core_Parser_TemplateParser $templateParser) {
+		$this->templateParser = $templateParser;
+	}
+
+	/**
 	 * called by controller
 	 * @param Array $settings
 	 */
-	public function injectSettings($settings){
+	public function setSettings($settings){
 		$this->settings = $settings;
 	}
 
@@ -112,17 +112,16 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 * TODO: split this huge method into smaller methods
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
-	 * @return string a result message "success" or an error message describing the error
 	 */
 	public function build(Tx_ExtensionBuilder_Domain_Model_Extension $extension) {
 		$this->extension = $extension;
-		$this->classBuilder->initialize($this,$extension);
+		$this->classBuilder->initialize($this, $extension);
 		if($this->settings['extConf']['enableRoundtrip']==1){
 			$this->roundTripEnabled = true;
-			t3lib_div::devLog('roundtrip enabled', 'extension_builder',0,$this->settings);
+			t3lib_div::devLog('roundtrip enabled', 'extension_builder', 0, $this->settings);
 		}
 		else {
-			t3lib_div::devLog('roundtrip disabled', 'extension_builder',0,$this->settings);
+			t3lib_div::devLog('roundtrip disabled', 'extension_builder', 0, $this->settings);
 		}
 		
 		if(isset($this->settings['codeTemplateRootPath'])){
@@ -146,7 +145,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				t3lib_div::devlog('Generated '.$extensionFile,'extension_builder',0,array('Content'=>$fileContents));
 			}
 			catch (Exception $e) {
-				return 'Could not write '.$extensionFile.', error: ' . $e->getMessage();
+				throw new Exception('Could not write ' . $extensionFile . ', error: ' . $e->getMessage());
 			}
 		}
 
@@ -157,14 +156,14 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				t3lib_div::devlog('Generated ext_localconf.php','extension_builder',0,array('Content'=>$fileContents));
 			}
 			catch (Exception $e) {
-				return 'Could not write '.$extensionFile.', error: ' . $e->getMessage();
+				throw new Exception('Could not write ' . $extensionFile . ', error: ' . $e->getMessage());
 			}
 		}
 
 		try {
 			$this->upload_copy_move(t3lib_extMgm::extPath('extension_builder') . 'Resources/Private/Icons/ext_icon.gif', $this->extensionDirectory . 'ext_icon.gif');
 		} catch (Exception $e) {
-			return 'Could not copy ext_icon.gif, error: ' . $e->getMessage();
+			throw new Exception('Could not copy ext_icon.gif, error: ' . $e->getMessage());
 		}
 
 		// insert a manual template
@@ -174,7 +173,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				$this->upload_copy_move($this->codeTemplateRootPath . 'doc/manual.sxw', $this->extensionDirectory . 'doc/manual.sxw');
 			}
 		} catch (Exception $e) {
-			return 'An error occurred when copying the manual template: ' . $e->getMessage().$e->getFile();
+			throw new Exception('An error occurred when copying the manual template: ' . $e->getMessage() . $e->getFile());
 		}
 
 		// Generate TCA
@@ -189,7 +188,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			}
 
 		} catch (Exception $e) {
-			return 'Could not generate Tca.php, error: ' . $e->getMessage().$e->getFile();
+			throw new Exception('Could not generate Tca.php, error: ' . $e->getMessage() . $e->getFile());
 		}
 
 		if(!file_exists($configurationDirectory.'ExtensionBuilder/settings.yaml')){
@@ -207,7 +206,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				$fileContents = $this->generateTyposcriptSetup();
 				$this->writeFile($typoscriptDirectory . 'setup.txt', $fileContents);
 			} catch (Exception $e) {
-				return 'Could not generate typoscript setup, error: ' . $e->getMessage();
+				throw new Exception('Could not generate typoscript setup, error: ' . $e->getMessage());
 			}
 
 			// Generate TypoScript constants
@@ -216,7 +215,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				$fileContents = $this->generateTyposcriptConstants();
 				$this->writeFile($typoscriptDirectory . 'constants.txt', $fileContents);
 			} catch (Exception $e) {
-				return 'Could not generate typoscript constants, error: ' . $e->getMessage();
+				throw new Exception('Could not generate typoscript constants, error: ' . $e->getMessage());
 			}
 		}
 
@@ -227,7 +226,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				$this->writeFile($this->extensionDirectory . 'ext_typoscript_setup.txt', $fileContents);
 			}
 		} catch (Exception $e) {
-			return 'Could not generate static typoscript, error: ' . $e->getMessage();
+			throw new Exception('Could not generate static typoscript, error: ' . $e->getMessage());
 		}
 
 		// Generate Private Resources .htaccess
@@ -237,7 +236,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			$fileContents = $this->generatePrivateResourcesHtaccess();
 			$this->writeFile($privateResourcesDirectory . '.htaccess', $fileContents);
 		} catch (Exception $e) {
-			return 'Could not create private resources folder, error: ' . $e->getMessage();
+			throw new Exception('Could not create private resources folder, error: ' . $e->getMessage());
 		}
 
 		// Generate locallang*.xml files
@@ -256,7 +255,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
 			}
 		} catch (Exception $e) {
-			return 'Could not generate locallang files, error: ' . $e->getMessage();
+			throw new Exception('Could not generate locallang files, error: ' . $e->getMessage());
 		}
 
 		try {
@@ -266,7 +265,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			$iconsDirectory = $publicResourcesDirectory . 'Icons/';
 			$this->upload_copy_move(t3lib_extMgm::extPath('extension_builder') . 'Resources/Private/Icons/relation.gif', $iconsDirectory . 'relation.gif');
 		} catch (Exception $e) {
-			return 'Could not create public resources folder, error: ' . $e->getMessage();
+			throw new Exception('Could not create public resources folder, error: ' . $e->getMessage());
 		}
 
 		if (count($this->extension->getDomainObjects()) > 0 ) {
@@ -328,7 +327,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 					$this->writeFile($domainModelTestsDirectory . $domainObject->getName() . 'Test.php', $fileContents);
 				}
 			} catch (Exception $e) {
-				return 'Could not generate domain model, error: ' . $e->getMessage();
+				throw new Exception('Could not generate domain model, error: ' . $e->getMessage());
 			}
 
 			// Generate Action Controller
@@ -350,7 +349,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 					$this->generateScaffoldingControllerTests($controllerName, $domainObject);
 				}
 			} catch (Exception $e) {
-				return 'Could not generate action controller, error: ' . $e->getMessage();
+				throw new Exception('Could not generate action controller, error: ' . $e->getMessage());
 			}
 
 			// Generate Domain Templates
@@ -362,7 +361,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 					$this->generateTemplateFiles('Backend/');
 				}
 			} catch (Exception $e) {
-				return 'Could not generate domain templates, error: ' . $e->getMessage();
+				throw new Exception('Could not generate domain templates, error: ' . $e->getMessage());
 			}
 
 			try {
@@ -371,7 +370,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 					Tx_Extbase_Utility_Extension::createAutoloadRegistryForExtension($this->extension->getExtensionKey(), $this->extensionDirectory); 
 				}
 			} catch (Exception $e) {
-				return 'Could not generate ext_autoload.php, error: ' . $e->getMessage();
+				throw new Exception('Could not generate ext_autoload.php, error: ' . $e->getMessage());
 			}
 
 
@@ -379,7 +378,6 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		else {
 			t3lib_div::devlog('No domainObjects in this extension','extension_builder',3,(array)$this->extension);
 		}
-		return 'success';
 	}
 
 	protected function generateTemplateFiles($templateSubFolder = ''){
@@ -445,8 +443,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		$renderingContext = $this->objectManager->create('Tx_Fluid_Core_Rendering_RenderingContext');
 		$viewHelperVariableContainer = $this->objectManager->create('Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer');
 
-		$renderingContext->setTemplateVariableContainer($variableContainer);
-		$renderingContext->setViewHelperVariableContainer($viewHelperVariableContainer);
+		$renderingContext->injectTemplateVariableContainer($variableContainer);
+		$renderingContext->injectViewHelperVariableContainer($viewHelperVariableContainer);
 
 		return $renderingContext;
 	}
