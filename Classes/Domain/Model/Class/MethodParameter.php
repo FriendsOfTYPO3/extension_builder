@@ -1,26 +1,26 @@
 <?php
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2010 Nico de Haen
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2010 Nico de Haen
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * parameter representing a method parameterin the context of software development
@@ -79,42 +79,41 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 	 * @param $propertyReflection (optional)
 	 * @return unknown_type
 	 */
-	public function __construct($parameterName,$parameterReflection = NULL){
+	public function __construct($parameterName, $parameterReflection = NULL) {
 		$this->name = $parameterName;
 		//TODO the parameter hints (or casts?) are not yet evaluated since the reflection does not recognize the
 		// maybe we can get them by a reg expression from the import tool?
 
-		if($parameterReflection && $parameterReflection instanceof Tx_Extbase_Reflection_ParameterReflection){
-			foreach($this as $key => $value) {
-				$setterMethodName = 'set'.ucfirst($key);
-				$getterMethodName = 'get'.ucfirst($key);
-				$getBooleanMethodName = 'is'.ucfirst($key);
+		if ($parameterReflection && $parameterReflection instanceof Tx_Extbase_Reflection_ParameterReflection) {
+			foreach ($this as $key => $value) {
+				$setterMethodName = 'set' . ucfirst($key);
+				$getterMethodName = 'get' . ucfirst($key);
+				$getBooleanMethodName = 'is' . ucfirst($key);
 
-	    		// map properties of reflection parmeter to this parameter
-	    		try{
-		    		if(method_exists($parameterReflection,$getterMethodName) && method_exists($this,$setterMethodName) ){
-		    			$this->$setterMethodName($parameterReflection->$getterMethodName());
-		    		}
-	    		}
-	    		catch(ReflectionException $e){
-	    			// the getDefaultValue throws an exception if the parameter is not optional
-	    		}
+				// map properties of reflection parmeter to this parameter
+				try {
+					if (method_exists($parameterReflection, $getterMethodName) && method_exists($this, $setterMethodName)) {
+						$this->$setterMethodName($parameterReflection->$getterMethodName());
+					}
+				}
+				catch (ReflectionException $e) {
+					// the getDefaultValue throws an exception if the parameter is not optional
+				}
 
-				if(method_exists($parameterReflection,$getBooleanMethodName)){
-	    			$this->$key = $parameterReflection->$getBooleanMethodName();
-	    		}
+				if (method_exists($parameterReflection, $getBooleanMethodName)) {
+					$this->$key = $parameterReflection->$getBooleanMethodName();
+				}
 
 			}
 		}
 	}
 
 
-
 	/**
 	 *
 	 * @return string $name
 	 */
-	public function getName(){
+	public function getName() {
 		return $this->name;
 	}
 
@@ -122,32 +121,32 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 	 *
 	 * @param string $name
 	 */
-	public function setName($name){
+	public function setName($name) {
 		$this->name = $name;
 	}
 
-	    /**
-     * Returns $varType.
-     *
-     */
-    public function getVarType() {
-        return $this->varType;
-    }
+	/**
+	 * Returns $varType.
+	 *
+	 */
+	public function getVarType() {
+		return $this->varType;
+	}
 
-    /**
-     * Sets $varType.
-     *
-     * @param object $varType
-     */
-    public function setVarType($varType) {
-        $this->varType = $varType;
-    }
+	/**
+	 * Sets $varType.
+	 *
+	 * @param object $varType
+	 */
+	public function setVarType($varType) {
+		$this->varType = $varType;
+	}
 
 	/**
 	 *
 	 * @return int $position
 	 */
-	public function getPosition(){
+	public function getPosition() {
 		return $this->position;
 	}
 
@@ -157,7 +156,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 	 * @param int $position
 	 * @return void
 	 */
-	public function setPosition($position){
+	public function setPosition($position) {
 		$this->position = $position;
 	}
 
@@ -166,7 +165,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 	 * getter for defaultValue
 	 * @return mixed
 	 */
-	public function getDefaultValue(){
+	public function getDefaultValue() {
 		return $this->defaultValue;
 	}
 
@@ -175,7 +174,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 	 * @param $defaultValue
 	 * @return void
 	 */
-	public function setDefaultValue($defaultValue = NULL){
+	public function setDefaultValue($defaultValue = NULL) {
 		$this->defaultValue = $defaultValue;
 	}
 
@@ -183,7 +182,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 	 *
 	 * @return boolean
 	 */
-	public function isOptional(){
+	public function isOptional() {
 		return $this->optional;
 	}
 
@@ -192,7 +191,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 	 * @param $optional
 	 * @return void
 	 */
-	public function setOptional($optional){
+	public function setOptional($optional) {
 		$this->optional = $optional;
 	}
 
@@ -200,7 +199,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 	 *
 	 * @return boolean
 	 */
-	public function isPassedByReference(){
+	public function isPassedByReference() {
 		return $this->passedByReference;
 	}
 
@@ -208,19 +207,19 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 	 *
 	 * @return
 	 */
-	public function getTypeHint(){
+	public function getTypeHint() {
 		return $this->typeHint;
 	}
 
-	 /**
-     * Sets $typeHint.
-     *
-     * @param object $typeHint
-     * @see Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter::$typeHint
-     */
-    public function setTypeHint($typeHint) {
-        $this->typeHint = $typeHint;
-    }
+	/**
+	 * Sets $typeHint.
+	 *
+	 * @param object $typeHint
+	 * @see Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter::$typeHint
+	 */
+	public function setTypeHint($typeHint) {
+		$this->typeHint = $typeHint;
+	}
 }
 
 ?>

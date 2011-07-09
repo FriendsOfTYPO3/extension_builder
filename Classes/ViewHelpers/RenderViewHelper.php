@@ -89,20 +89,20 @@ class Tx_ExtensionBuilder_ViewHelpers_RenderViewHelper extends Tx_Fluid_Core_Vie
 	}
 
 	/**
-	 * 
+	 *
 	 * @param string $filePath
 	 * @param Array $variables
 	 */
 	protected function renderTemplate($filePath, $variables) {
-		if(!isset($variables['settings']['codeTemplateRootPath'])){
-			t3lib_div::devlog('Render: ' . $filePath, 'builder',2,$variables);
-			throw new Exception('No template root path configured: '. $filePath);
+		if (!isset($variables['settings']['codeTemplateRootPath'])) {
+			t3lib_div::devlog('Render: ' . $filePath, 'builder', 2, $variables);
+			throw new Exception('No template root path configured: ' . $filePath);
 		}
-		if(!file_exists($variables['settings']['codeTemplateRootPath'] . $filePath)){
-			t3lib_div::devlog('No template file found: ' . $variables['settings']['codeTemplateRootPath'] . $filePath,'extension_builder',2,$variables);
+		if (!file_exists($variables['settings']['codeTemplateRootPath'] . $filePath)) {
+			t3lib_div::devlog('No template file found: ' . $variables['settings']['codeTemplateRootPath'] . $filePath, 'extension_builder', 2, $variables);
 			throw new Exception('No template file found: ' . $variables['settings']['codeTemplateRootPath'] . $filePath);
 		}
-		$parsedTemplate = $this->templateParser->parse(file_get_contents($variables['settings']['codeTemplateRootPath']. $filePath));
+		$parsedTemplate = $this->templateParser->parse(file_get_contents($variables['settings']['codeTemplateRootPath'] . $filePath));
 		return $parsedTemplate->render($this->buildRenderingContext($variables));
 	}
 }

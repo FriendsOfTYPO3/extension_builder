@@ -1,26 +1,26 @@
 <?php
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2010 Nico de Haen
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2010 Nico de Haen
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * class schema representing a "class" in the context of software development
@@ -30,7 +30,7 @@
  */
 
 
-class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject{
+class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 
 	/**
 	 * constants
@@ -114,7 +114,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @param string $className
 	 * @return unknown_type
 	 */
-	public function __construct($className){
+	public function __construct($className) {
 		$this->name = $className;
 	}
 
@@ -124,8 +124,8 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @param string $constant constant
 	 * @return void
 	 */
-	public function setConstant($constantName,$constantValue) {
-		$this->constants[$constantName] = array('name' => $constantName,'value' => $constantValue);
+	public function setConstant($constantName, $constantValue) {
+		$this->constants[$constantName] = array('name' => $constantName, 'value' => $constantValue);
 	}
 
 	/**
@@ -153,7 +153,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @return mixed constant value
 	 */
 	public function getConstant($constantName) {
-		if(isset($this->constants[$constantName])){
+		if (isset($this->constants[$constantName])) {
 			return $this->constants[$constantName]['value'];
 		}
 		else return NULL;
@@ -164,8 +164,8 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @param string $constantName
 	 * @return boolean true (if successfull removed)
 	 */
-	public function removeConstant($constantName){
-		if(isset($this->constants[$constantName])){
+	public function removeConstant($constantName) {
+		if (isset($this->constants[$constantName])) {
 			unset($this->constants[$constantName]);
 			return true;
 		}
@@ -176,12 +176,12 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 *
 	 * @return boolean
 	 */
-	public function methodExists($methodName){
-		if(!is_array($this->methods)){
+	public function methodExists($methodName) {
+		if (!is_array($this->methods)) {
 			return false;
 		}
 		$methodNames = array_keys($this->methods);
-		if(is_array($methodNames) && in_array($methodName,$methodNames)){
+		if (is_array($methodNames) && in_array($methodName, $methodNames)) {
 			return true;
 		}
 		else return false;
@@ -222,7 +222,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
 	 */
 	public function getMethod($methodName) {
-		if($this->methodExists($methodName)){
+		if ($this->methodExists($methodName)) {
 			return $this->methods[$methodName];
 		}
 		else return NULL;
@@ -235,7 +235,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @return void
 	 */
 	public function addMethod($classMethod) {
-		if(!$this->methodExists($classMethod->getName())){
+		if (!$this->methodExists($classMethod->getName())) {
 			$this->methods[$classMethod->getName()] = $classMethod;
 		}
 
@@ -246,8 +246,8 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @param string $methodName
 	 * @return boolean true (if successfull removed)
 	 */
-	public function removeMethod($methodName){
-		if($this->methodExists($methodName)){
+	public function removeMethod($methodName) {
+		if ($this->methodExists($methodName)) {
 			unset($this->methods[$methodName]);
 			return true;
 		}
@@ -260,8 +260,8 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @param string $newName
 	 * @return boolean success
 	 */
-	public function renameMethod($oldName, $newName){
-		if($this->methodExists($oldName)){
+	public function renameMethod($oldName, $newName) {
+		if ($this->methodExists($oldName)) {
 			$method = $this->methods[$oldName];
 			$method->setName($newName);
 			$this->methods[$newName] = $method;
@@ -276,13 +276,13 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * returnes all methods starting with "get"
 	 * @return array an array of method objects
 	 */
-	public function getGetters(){
+	public function getGetters() {
 		$getterMethods = array();
-		foreach($this->getMethods() as $method){
+		foreach ($this->getMethods() as $method) {
 			$methodName = $method->getName();
-			if(strpos($methodName,'get')===0){
-				$propertyName = strtolower(substr($methodName,3));
-				if($this->propertyExists($propertyName)){
+			if (strpos($methodName, 'get') === 0) {
+				$propertyName = strtolower(substr($methodName, 3));
+				if ($this->propertyExists($propertyName)) {
 					$getterMethods[$propertyName] = $method;
 				}
 			}
@@ -295,13 +295,13 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * returnes all methods starting with "set"
 	 * @return array an array of method objects
 	 */
-	public function getSetters(){
+	public function getSetters() {
 		$setterMethods = array();
-		foreach($this->getMethods() as $method){
+		foreach ($this->getMethods() as $method) {
 			$methodName = $method->getName();
-			if(strpos($methodName,'set')===0){
-				$propertyName = strtolower(substr($methodName,3));
-				if($this->propertyExists($propertyName)){
+			if (strpos($methodName, 'set') === 0) {
+				$propertyName = strtolower(substr($methodName, 3));
+				if ($this->propertyExists($propertyName)) {
 					$setterMethods[$propertyName] = $method;
 				}
 			}
@@ -310,14 +310,13 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	}
 
 
-
 	/**
 	 * Getter for property
 	 * @param $propertyName the name of the property
 	 * @return Tx_ExtensionBuilder_Reflection_PropertyReflection
 	 */
 	public function getProperty($propertyName) {
-		if($this->propertyExists($propertyName)){
+		if ($this->propertyExists($propertyName)) {
 			return $this->properties[$propertyName];
 		}
 		else return NULL;
@@ -347,8 +346,8 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @param string $propertyName
 	 * @return boolean true (if successfull removed)
 	 */
-	public function removeProperty($propertyName){
-		if($this->propertyExists($propertyName)){
+	public function removeProperty($propertyName) {
+		if ($this->propertyExists($propertyName)) {
 			unset($this->properties[$propertyName]);
 			return true;
 		}
@@ -361,8 +360,8 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @param string $newName
 	 * @return boolean success
 	 */
-	public function renameProperty($oldName, $newName){
-		if($this->propertyExists($oldName)){
+	public function renameProperty($oldName, $newName) {
+		if ($this->propertyExists($oldName)) {
 			$property = $this->properties[$oldName];
 			$property->setName($newName);
 			$this->properties[$newName] = $property;
@@ -377,11 +376,12 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @param string $propertyName
 	 * @param array $tag
 	 */
-	public function setPropertyTag($propertyName,$tag){
-		if($this->propertyExists($propertyName)){
-			$this->properties[$propertyName]->setTag($tag['name'],$tag['value']);
+	public function setPropertyTag($propertyName, $tag) {
+		if ($this->propertyExists($propertyName)) {
+			$this->properties[$propertyName]->setTag($tag['name'], $tag['value']);
 		}
 	}
+
 	/**
 	 * Setter for staticProperties
 	 *
@@ -402,17 +402,16 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	}
 
 
-
 	/**
 	 *
 	 * @return boolean
 	 */
-	public function propertyExists($propertyName){
+	public function propertyExists($propertyName) {
 		$propertyNames = $this->getPropertyNames();
-		if(!is_array($this->methods)){
+		if (!is_array($this->methods)) {
 			return false;
 		}
-		if(in_array($propertyName,$this->getPropertyNames())){
+		if (in_array($propertyName, $this->getPropertyNames())) {
 			return true;
 		}
 		else return false;
@@ -425,7 +424,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @return boolean success
 	 */
 	public function addProperty(Tx_ExtensionBuilder_Domain_Model_Class_Property $classProperty) {
-		if(!$this->propertyExists($classProperty->getName())){
+		if (!$this->propertyExists($classProperty->getName())) {
 			$this->propertyNames[] = $classProperty->getName();
 			$this->properties[$classProperty->getName()] = $classProperty;
 		}
@@ -436,9 +435,10 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * returns all property names
 	 * @return array
 	 */
-	public function getPropertyNames(){
+	public function getPropertyNames() {
 		return array_keys($this->properties);
 	}
+
 	/**
 	 * Setter for property
 	 *
@@ -514,7 +514,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @param $fileName
 	 * @return void
 	 */
-	public function addInclude($fileName){
+	public function addInclude($fileName) {
 		//TODO make some checks... allowed file?
 		$this->includes[] = $fileName;
 	}
@@ -541,7 +541,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * getter for appendedBlock
 	 * @return string $appendedBlock
 	 */
-	public function getAppendedBlock(){
+	public function getAppendedBlock() {
 		return $this->appendedBlock;
 	}
 
@@ -550,18 +550,18 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @param string $appendedBlock
 	 * @return void
 	 */
-	public function setAppendedBlock($appendedBlock){
+	public function setAppendedBlock($appendedBlock) {
 		$this->appendedBlock = $appendedBlock;
 	}
 
-	public function getInfo(){
+	public function getInfo() {
 		$infoArray = array();
 		$infoArray['className'] = $this->getName();
 		$infoArray['fileName'] = $this->getFileName();
 
-		$methodArray  = array();
-		foreach( $this->getMethods() as $method){
-			$methodArray[$method->getName()] = array('parameter'=>$method->getParameters());
+		$methodArray = array();
+		foreach ($this->getMethods() as $method) {
+			$methodArray[$method->getName()] = array('parameter' => $method->getParameters());
 			//'body'=>$method->getBody()
 		}
 		$infoArray['Methods'] = $methodArray;

@@ -27,11 +27,11 @@
  * <f:null>{anyString}</f:null>
  *
  *
- * @package     TYPO3
+ * @package	 TYPO3
  * @subpackage  tx_blogexample
  * @author Steffen Kamper <info@sk-typo3.de>
- * @license     http://www.gnu.org/copyleft/gpl.html
- * @version     SVN: $Id:
+ * @license	 http://www.gnu.org/copyleft/gpl.html
+ * @version	 SVN: $Id:
  *
  */
 class Tx_ExtensionBuilder_ViewHelpers_BeFuncViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
