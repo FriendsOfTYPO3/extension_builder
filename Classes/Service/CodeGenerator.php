@@ -447,9 +447,13 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		$variableContainer = $this->objectManager->create('Tx_Fluid_Core_ViewHelper_TemplateVariableContainer', $templateVariables);
 		$renderingContext = $this->objectManager->create('Tx_Fluid_Core_Rendering_RenderingContext');
 		$viewHelperVariableContainer = $this->objectManager->create('Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer');
-
-		$renderingContext->injectTemplateVariableContainer($variableContainer);
-		$renderingContext->injectViewHelperVariableContainer($viewHelperVariableContainer);
+		if(method_exists($renderingContext,'setTemplateVariableContainer')){
+			$renderingContext->setTemplateVariableContainer($variableContainer);
+			$renderingContext->setViewHelperVariableContainer($viewHelperVariableContainer);
+		} else {
+			$renderingContext->injectTemplateVariableContainer($variableContainer);
+			$renderingContext->injectViewHelperVariableContainer($viewHelperVariableContainer);
+		}
 		return $renderingContext;
 	}
 
