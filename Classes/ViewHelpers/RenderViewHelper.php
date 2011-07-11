@@ -81,10 +81,13 @@ class Tx_ExtensionBuilder_ViewHelpers_RenderViewHelper extends Tx_Fluid_Core_Vie
 
 		$renderingContext = $this->objectManager->create('Tx_Fluid_Core_Rendering_RenderingContext');
 		$viewHelperVariableContainer = $this->objectManager->create('Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer');
-
-		$renderingContext->injectTemplateVariableContainer($variableContainer);
-		$renderingContext->injectViewHelperVariableContainer($viewHelperVariableContainer);
-
+		if(method_exists($renderingContext,'setTemplateVariableContainer')){
+			$renderingContext->setTemplateVariableContainer($variableContainer);
+			$renderingContext->setViewHelperVariableContainer($viewHelperVariableContainer);
+		} else {
+			$renderingContext->injectTemplateVariableContainer($variableContainer);
+			$renderingContext->injectViewHelperVariableContainer($viewHelperVariableContainer);
+		}
 		return $renderingContext;
 	}
 
