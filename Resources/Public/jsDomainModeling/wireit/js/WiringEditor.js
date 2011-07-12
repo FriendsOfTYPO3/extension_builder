@@ -304,10 +304,11 @@ WireIt.WiringEditor.prototype = {
 
     var saveButton = new widget.Button({ label:"Save", id:"WiringEditor-saveButton", container: toolbar });
     saveButton.on("click", this.onSave, this, true);
-
+/** Has no use so far, we don't want to delete extensions from here
     var deleteButton = new widget.Button({ label:"Delete", id:"WiringEditor-deleteButton", container: toolbar });
     deleteButton.on("click", this.onDelete, this, true);
- },
+*/
+},
 
 
  /**
@@ -452,6 +453,9 @@ WireIt.WiringEditor.prototype = {
   * @method onNew
   */
  onNew: function() {
+	if(!confirm('Do you really want to clear the current working board and load the selected pipe? Unsaved changes will get lost!')){
+		return false;
+	}
     this.layer.removeAllContainers();
     this.propertiesForm.destroy();
 	this.renderPropertiesForm();
