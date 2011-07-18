@@ -6,9 +6,9 @@
 CREATE TABLE {domainObject.databaseTableName} (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
-	<f:for each="{k:listForeignKeyRelations(extension: extension, domainObject:domainObject)}" as="relation">
+<f:for each="{k:listForeignKeyRelations(extension: extension, domainObject:domainObject)}" as="relation">
 	{relation.foreignKeyName} int(11) unsigned DEFAULT '0' NOT NULL,</f:for>
-	<f:for each="{domainObject.properties}" as="property">
+<f:for each="{domainObject.properties}" as="property">
 	{property.sqlDefinition}</f:for>
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
