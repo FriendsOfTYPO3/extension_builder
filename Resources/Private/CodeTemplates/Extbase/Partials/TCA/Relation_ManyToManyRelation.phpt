@@ -1,15 +1,4 @@
-<f:if condition="{property.inlineEditing}">
-<f:then>'type' => 'inline',
-'foreign_table' => '{property.foreignClass.databaseTableName}',
-'MM' => '{property.relationTableName}',
-'maxitems' => 99999,
-'appearance' => array(
-	'collapse' => 0,
-	'levelLinksPosition' => 'top',
-	'showSynchronizationLink' => 1,
-	'showPossibleLocalizationRecords' => 1,
-	'showAllLocalizationLink' => 1
-),</f:then><f:else>'type' => 'select',
+'type' => 'select',
 'foreign_table' => '{property.foreignClass.databaseTableName}',
 'MM' => '{property.relationTableName}',
 'size' => 10,
@@ -38,5 +27,4 @@
 			),
 		'script' => 'wizard_add.php',
 	),
-),</f:else>
-</f:if>
+),

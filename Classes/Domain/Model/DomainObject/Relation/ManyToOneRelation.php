@@ -31,29 +31,19 @@
  * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation extends Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation {
+class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToOneRelation extends Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation {
 
 	public function getTypeForComment() {
-		return 'Tx_Extbase_Persistence_ObjectStorage<' . $this->getForeignClass()->getClassName() . '>';
+		return $this->getForeignClass()->getClassName();
 	}
 
 	public function getTypeHint() {
-		return 'Tx_Extbase_Persistence_ObjectStorage';
+		return $this->getForeignClass()->getClassName();
 	}
 
-	public function getForeignKeyName() {
-		return strtolower($this->getDomainObject()->getName());
+	public function getSqlDefinition() {
+		return $this->getFieldName() . " int(11) unsigned DEFAULT '0',";
 	}
-
-	/**
-	 * Overwrite parent function
-	 *
-	 * @return void
-	 */
-	public function getUseMMTable() {
-		return FALSE;
-	}
-
 }
 
 ?>

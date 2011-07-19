@@ -114,7 +114,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 */
 	public function setExtension(Tx_ExtensionBuilder_Domain_Model_Extension $extension) {
 		$this->extension = $extension;
-		$this->classBuilder->initialize($this, $this->extension);
+		$this->classBuilder->initialize($this, $this->extension, $this->roundTripEnabled);
 		return $this;
 	}
 
@@ -141,6 +141,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		} else {
 			throw new Exception('No codeTemplateRootPath configured');
 		}
+		t3lib_div::devlog('generateCode line 144','extbuilder',0);
 
 		// Base directory already exists at this point
 		$this->extensionDirectory = $this->extension->getExtensionDir();
@@ -397,7 +398,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			foreach ($domainObject->getActions() as $action) {
 				/** @var $action Tx_ExtensionBuilder_Domain_Model_DomainObject_Action */
 				if ($action->getNeedsTemplate()
-					&& file_exists($this->codeTemplateRootPath . $templateRootFolder . 'Templates/' . $action->getName() . '.htmlt')
+				&& file_exists($this->codeTemplateRootPath . $templateRootFolder . 'Templates/' . $action->getName() . '.htmlt')
 				) {
 					$hasTemplates = true;
 					t3lib_div::mkdir_deep($this->extensionDirectory, $templateRootFolder . 'Templates/' . $domainObject->getName());
@@ -852,14 +853,12 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 */
 	protected function moveFile($sourceFile, $targetFile) {
 		$overWriteMode = Tx_ExtensionBuilder_Service_RoundTrip::getOverWriteSettingForPath($targetFile, $this->extension);
-		if (
-			!($overWriteMode === -1) && (
-					!file_exists($targetFile) || (
-							$this->roundTripEnabled && $overWriteMode < 2
-					)
-			)
-		) {
-			t3lib_div::upload_copy_move($sourceFile, $targetFile);
+		if ($overWriteMode !== -1){
+			// -1 means skip file generation
+			if(!file_exists($targetFile) || $overWriteMode != 2){
+				// if file exists overwrite settings may not be 2 (keep)
+				t3lib_div::upload_copy_move($sourceFile, $targetFile);
+			}
 		}
 	}
 

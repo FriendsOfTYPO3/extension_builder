@@ -199,7 +199,10 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 							'relations' => array(
 								0 => array(
 									'relationName' => 'posts',
-									'relationType' => 'zeroToOne'
+									'advancedSettings' => array(
+										'relationType' => 'zeroToMany',
+										'propertyIsExcludeField' => 1
+									),
 								)
 							)
 						)
@@ -223,7 +226,10 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 							'relations' => array(
 								0 => array(
 									'relationName' => 'comments',
-									'relationType' => 'zeroToMany'
+									'advancedSettings' => array(
+										'relationType' => 'zeroToMany',
+										'propertyIsExcludeField' => 1
+									),
 								)
 							)
 						)
@@ -314,18 +320,19 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 		$comment->setAggregateRoot(FALSE);
 		$extension->addDomainObject($comment);
 
-		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToOneRelation();
+		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation();
 		$relation->setName('posts');
 		$relation->setForeignClass($post);
+		$relation->setExcludeField(1);
 		$blog->addProperty($relation);
 
 		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation();
 		$relation->setName('comments');
 		$relation->setForeignClass($comment);
+		$relation->setExcludeField(1);
 		$post->addProperty($relation);
-
 		$actualExtension = $this->extensionSchemaBuilder->build($input);
-		$this->assertEquals($extension, $actualExtension, 'The extensions differ');
+		$this->assertEquals($extension->getDomainObjects(), $actualExtension->getDomainObjects(), 'The extensions differ');
 	}
 }
 

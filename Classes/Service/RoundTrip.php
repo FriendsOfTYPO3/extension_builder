@@ -86,6 +86,14 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	}
 
 	/**
+	 * @param Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager
+	 * @return void
+	 */
+	public function injectConfigurationManager(Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager) {
+		$this->configurationManager = $configurationManager;
+	}
+
+	/**
 	 * If a JSON file is found in the extensions directory the previous version
 	 * of the extension is build to compare it with the new configuration coming
 	 * from the extension builder input
@@ -120,7 +128,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 
 		if (file_exists($this->previousExtensionDirectory . 'ExtensionBuilder.json')) {
 			$extensionSchemaBuilder = t3lib_div::makeInstance('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder');
-			$jsonConfig = json_decode(file_get_contents($this->previousExtensionDirectory . 'ExtensionBuilder.json'), true);
+			$jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey);
+			//$jsonConfig = json_decode(file_get_contents($this->previousExtensionDirectory . 'ExtensionBuilder.json'), true);
 			//t3lib_div::devlog('old JSON:'.$this->previousExtensionDirectory . 'ExtensionBuilder.json','extension_builder',0,$jsonConfig);
 			$this->previousExtension = $extensionSchemaBuilder->build($jsonConfig);
 			$oldDomainObjects = $this->previousExtension->getDomainObjects();
@@ -364,7 +373,6 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 
 		$this->classObject->setFileName($newName . 'Controller.php');
 		$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Controller'), $oldName . 'Controller.php');
-		t3lib_div::devlog('Removed existing controller class:' . $oldName . 'Controller.php', 'extension_builder', 0);
 	}
 
 	/**

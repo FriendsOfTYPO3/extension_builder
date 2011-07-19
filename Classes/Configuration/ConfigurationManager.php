@@ -40,18 +40,25 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 */
 	private $inputData = array();
 
+	/**
+	 * wrapper for file_get_contents('php://input')
+	 */
 	public function parseRequest() {
 		$jsonString = file_get_contents('php://input');
 		$this->inputData = json_decode($jsonString, true);
 	}
 
+	/**
+	 * reads the configuration from this->inputData
+	 * and returns it as array
+	 *
+	 */
 	public function getConfigurationFromModeler() {
 		if (empty($this->inputData)) {
 			throw new Exception('No inputData!');
 		}
 		$extensionConfigurationJSON = json_decode($this->inputData['params']['working'], true);
-		$extensionBuildConfiguration = $this->fixExtensionBuilderJSON($extensionConfigurationJSON);
-		return $extensionBuildConfiguration;
+		return $extensionConfigurationJSON;
 	}
 
 	public function getSubActionFromRequest() {
@@ -60,6 +67,9 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	}
 
 	/**
+	 * get settings from various sources:
+	 * settings configured in module.extension_builder typoscript
+	 * Module settings configured in the extension manager
 	 *
 	 * @param array $typoscript (optional)
 	 */
@@ -102,6 +112,32 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		else t3lib_div::devlog('No settings found: ' . $settingsFile, 'extension_builder', 2);
 
 		return $settings;
+	}
+
+	/**
+	 * reads the stored configuration  (i.e. the extension model etc.)
+	 *
+	 * @param string $extensionKey
+	 * @return array extension configuration
+	 */
+	public function getExtensionBuilderConfiguration($extensionKey){
+
+		$oldJsonFile = PATH_typo3conf . 'ext/' . $extensionKey . '/kickstarter.json';
+		$jsonFile = PATH_typo3conf . 'ext/' . $extensionKey . '/ExtensionBuilder.json';
+		if (file_exists($oldJsonFile)) {
+			rename($oldJsonFile, $jsonFile);
+		}
+
+		if (file_exists($jsonFile)) {
+			// compatibility adaptions for configurations from older versions
+			$extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), true);
+			$extensionConfigurationJSON = $this->fixExtensionBuilderJSON($extensionConfigurationJSON);
+			$extensionConfigurationJSON['properties']['originalExtensionKey'] = $extensionKey;
+			//t3lib_div::writeFile($jsonFile, json_encode($extensionConfigurationJSON));
+			return $extensionConfigurationJSON;
+		} else {
+			return NULL;
+		}
 	}
 
 	/**
@@ -151,11 +187,21 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		}
 	}
 
+	/**
+	 * performs various compatibility modifications
+	 * and fixes/workarounds for wireit limitations
+	 *
+	 * @param array $extensionConfigurationJSON
+	 * @return array the modified configuration
+	 */
 	public function fixExtensionBuilderJSON($extensionConfigurationJSON) {
+		//t3lib_div::devlog('JSON 1','extension_builder',0,$extensionConfigurationJSON);
+		$extensionConfigurationJSON['modules']  = $this->mapOldRelationTypesToNewRelationTypes($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->generateUniqueIDs($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->mapAdvancedMode($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->resetOutboundedPositions($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON = $this->reArrangeRelations($extensionConfigurationJSON);
+		//t3lib_div::devlog('JSON 2','extension_builder',0,$extensionConfigurationJSON);
 		return $extensionConfigurationJSON;
 	}
 
@@ -188,7 +234,6 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 				// don't save empty relations
 				if (empty($module['value']['relationGroup']['relations'][$i]['relationName'])) {
 					unset($module['value']['relationGroup']['relations'][$i]);
-					t3lib_div::devlog('Unset called:' . $i, 'extbase', 0, $jsonConfig);
 				}
 				else if (empty($module['value']['relationGroup']['relations'][$i]['uid'])) {
 					$module['value']['relationGroup']['relations'][$i]['uid'] = md5(microtime() . $module['value']['relationGroup']['relations'][$i]['relationName']);
@@ -200,7 +245,54 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 
 
 	/**
-	 * copy values from advanced fieldset to simple mode fieldset and vice versa
+	 *
+	 * enables compatibility with JSON from older versions of the extension builder
+	 * old relation types are mapped to new types according to this scheme:
+	 *
+	 * zeroToMany
+	 * 		inline == 1 => zeroToMany
+	 * 		inline == 0 => manyToMany
+	 * zeroToOne
+	 * 		inline == 1 => zeroToOne
+	 * 		inline == 0 => manyToOne
+	 * ManyToMany
+	 * 		inline == 1 => oneToMany
+	 * 		inline == 0 => manyToMany
+	 *
+	 * @param array $jsonConfig
+	 */
+	protected function mapOldRelationTypesToNewRelationTypes($jsonConfig) {
+		foreach ($jsonConfig as &$module) {
+			for ($i = 0; $i < count($module['value']['relationGroup']['relations']); $i++) {
+				if (isset($module['value']['relationGroup']['relations'][$i]['advancedSettings']['inlineEditing'])){
+					// the json config was created with an older version of the kickstarter
+					if($module['value']['relationGroup']['relations'][$i]['advancedSettings']['inlineEditing'] == 1) {
+						if($module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] == 'manyToMany'){
+							// inline enabled results in a zeroToMany
+							$module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] = 'zeroToMany';
+						}
+					} else {
+						if($module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] == 'zeroToMany'){
+							// inline disabled results in a manyToMany
+							$module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] = 'manyToMany';
+						}
+						if($module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] == 'zeroToOne'){
+							// inline disabled results in a manyToOne
+							$module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] = 'manyToOne';
+						}
+					}
+				}
+				unset($module['value']['relationGroup']['relations'][$i]['advancedSettings']['inlineEditing']);
+				unset($module['value']['relationGroup']['relations'][$i]['inlineEditing']);
+				unset($module['value']['relationGroup']['relations'][$i]['lazyLoading']);
+				unset($module['value']['relationGroup']['relations'][$i]['relationType']);
+			}
+		}
+		return $jsonConfig;
+	}
+
+	/**
+	 * copy values from simple mode fieldset to advanced fieldset
 	 *
 	 * enables compatibility with JSON from older versions of the extension builder
 	 *
@@ -213,12 +305,6 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 					$module['value']['relationGroup']['relations'][$i]['advancedSettings'] = array();
 					$module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] = $module['value']['relationGroup']['relations'][$i]['relationType'];
 					$module['value']['relationGroup']['relations'][$i]['advancedSettings']['propertyIsExcludeField'] = $module['value']['relationGroup']['relations'][$i]['propertyIsExcludeField'];
-				}
-				else {
-					foreach ($module['value']['relationGroup']['relations'][$i]['advancedSettings'] as $key => $value) {
-						$module['value']['relationGroup']['relations'][$i][$key] = $value;
-					}
-
 				}
 			}
 		}

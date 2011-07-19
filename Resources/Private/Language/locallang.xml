@@ -52,6 +52,7 @@
 			<label index="remove">Remove</label>
 			<label index="add">Add</label>
 			<label index="zeroToOne">1:1</label>
+			<label index="manyToOne">n:1</label>
 			<label index="zeroToMany">1:n</label>
 			<label index="manyToMany">m:n</label>
 			<label index="isExcludeField">Is exclude field?</label>
