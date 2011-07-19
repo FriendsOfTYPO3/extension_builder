@@ -60,23 +60,6 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	protected $codeGenerator;
 
 	/**
-	 *
-	 * @param Tx_ExtensionBuilder_Service_CodeGenerator $codeGenerator
-	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
-	 * @return void
-	 */
-	public function initialize(Tx_ExtensionBuilder_Service_CodeGenerator $codeGenerator, Tx_ExtensionBuilder_Domain_Model_Extension $extension) {
-		$this->codeGenerator = $codeGenerator;
-		$this->extension = $extension;
-		$settings = $extension->getSettings();
-		$this->settings = $settings['classBuilder'];
-		t3lib_div::devlog('Extension settings:' . $extension->getExtensionKey(), 'extbase', 0, $this->settings);
-		$this->extensionDirectory = $this->extension->getExtensionDir();
-		$this->extClassPrefix = 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey());
-		$this->roundTripService->initialize($this->extension);
-	}
-
-	/**
 	 * @param Tx_ExtensionBuilder_Service_RoundTrip $roundTripService
 	 * @return void
 	 */
@@ -84,6 +67,26 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 		$this->roundTripService = $roundTripService;
 	}
 
+	/**
+	 *
+	 * @param Tx_ExtensionBuilder_Service_CodeGenerator $codeGenerator
+	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
+	 * @param boolean roundtrip enabled?
+	 *
+	 * @return void
+	 */
+	public function initialize(Tx_ExtensionBuilder_Service_CodeGenerator $codeGenerator, Tx_ExtensionBuilder_Domain_Model_Extension $extension,$roundTripEnabled) {
+		$this->codeGenerator = $codeGenerator;
+		$this->extension = $extension;
+		$settings = $extension->getSettings();
+		if ($roundTripEnabled) {
+			$this->roundTripService->initialize($this->extension);
+		}
+		$this->settings = $settings['classBuilder'];
+		$this->extensionDirectory = $this->extension->getExtensionDir();
+		$this->extClassPrefix = 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey());
+
+	}
 
 	/**
 	 * This method generates the class schema object, which is passed to the template
@@ -95,7 +98,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 * @return
 	 */
 	public function generateModelClassObject($domainObject, $mergeWithExistingClass) {
-		t3lib_div::devlog('------------------------------------- generateModelClassObject(' . $domainObject->getName() . ') ---------------------------------', 'extension_builder', 1);
+		t3lib_div::devlog('------------------------------------- generateModelClassObject(' . $domainObject->getName() . ') ---------------------------------', 'extension_builder', 1,array($extensionBuildConfiguration));
 
 		$this->classObject = NULL; // reference to the resulting class file,
 		$className = $domainObject->getClassName();

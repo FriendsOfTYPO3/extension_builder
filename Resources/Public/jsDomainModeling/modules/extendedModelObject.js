@@ -11,10 +11,11 @@ var advancedFields = {
 						inputParams: {
 							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.type,
 							name: "relationType",
-							selectValues: ["zeroToOne", "zeroToMany", "manyToMany"],
+							selectValues: ["zeroToOne", "zeroToMany", "manyToOne", "manyToMany"],
 							selectOptions: [
 								TYPO3.settings.extensionBuilder._LOCAL_LANG.zeroToOne,
 								TYPO3.settings.extensionBuilder._LOCAL_LANG.zeroToMany,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.manyToOne,
 								TYPO3.settings.extensionBuilder._LOCAL_LANG.manyToMany
 							]
 						}
@@ -37,6 +38,7 @@ var advancedFields = {
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_isExcludeField
 						}
 					},
+					/**
 					{
 						type: "boolean",
 						inputParams: {
@@ -46,6 +48,7 @@ var advancedFields = {
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_editInline
 						}
 					},
+					*/
 					{
 						type: 'boolean',
 						inputParams: {

@@ -109,15 +109,17 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation
 	 */
 	public static function buildRelation($relationJsonConfiguration) {
-		$relationSchemaClassName = 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_' . ucfirst($relationJsonConfiguration['relationType']) . 'Relation';
+		$relationSchemaClassName = 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_' . ucfirst($relationJsonConfiguration['advancedSettings']['relationType']) . 'Relation';
 		if (!class_exists($relationSchemaClassName)) {
+			t3lib_div::devlog('Relation of type ' . $relationSchemaClassName . ' not found','extension_builder',0,$relationJsonConfiguration);
 			throw new Exception('Relation of type ' . $relationSchemaClassName . ' not found');
 		}
 		$relation = new $relationSchemaClassName;
 		$relation->setName($relationJsonConfiguration['relationName']);
-		$relation->setInlineEditing((bool)$relationJsonConfiguration['inlineEditing']);
-		$relation->setLazyLoading((bool)$relationJsonConfiguration['lazyLoading']);
-		$relation->setDescription($relationJsonConfiguration['relationDescription']);
+		//$relation->setInlineEditing((bool)$relationJsonConfiguration['inlineEditing']);
+		$relation->setLazyLoading((bool)$relationJsonConfiguration['advancedSettings']['lazyLoading']);
+		$relation->setExcludeField($relationJsonConfiguration['advancedSettings']['propertyIsExcludeField']);
+		$relation->setDescription($relationJsonConfiguration['advancedSettings']['relationDescription']);
 		$relation->setUniqueIdentifier($relationJsonConfiguration['uid']);
 		return $relation;
 	}

@@ -212,7 +212,6 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 				}
 			}
 		}
-
 		try {
 			$this->codeGenerator->setExtension($extension)->build();
 			$this->extensionInstallationStatus->setExtension($extension);
@@ -246,31 +245,16 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	 */
 	protected function generateCodeAction_listWirings() {
 		$result = array();
-
 		$extensionDirectoryHandle = opendir(PATH_typo3conf . 'ext/');
 		while (false !== ($singleExtensionDirectory = readdir($extensionDirectoryHandle))) {
 			if ($singleExtensionDirectory[0] == '.') {
 				continue;
 			}
-			$oldJsonFile = PATH_typo3conf . 'ext/' . $singleExtensionDirectory . '/kickstarter.json';
-			$jsonFile = PATH_typo3conf . 'ext/' . $singleExtensionDirectory . '/ExtensionBuilder.json';
-			if (file_exists($oldJsonFile)) {
-				rename($oldJsonFile, $jsonFile);
-			}
-
-			if (file_exists($jsonFile)) {
-
-				if ($this->settings['extConf']['enableRoundtrip']) {
-					// generate unique IDs
-					$extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), true);
-					$extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON($extensionConfigurationJSON);
-					$extensionConfigurationJSON['properties']['originalExtensionKey'] = $singleExtensionDirectory;
-					t3lib_div::writeFile($jsonFile, json_encode($extensionConfigurationJSON));
-				}
-
+			$extensionBuilderConfiguration = $this->configurationManager->getExtensionBuilderConfiguration($singleExtensionDirectory);
+			if($extensionBuilderConfiguration !== NULL){
 				$result[] = array(
 					'name' => $singleExtensionDirectory,
-					'working' => file_get_contents($jsonFile)
+					'working' => json_encode($extensionBuilderConfiguration)
 				);
 			}
 		}
