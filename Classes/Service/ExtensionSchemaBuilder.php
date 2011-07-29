@@ -1,27 +1,27 @@
 <?php
 /***************************************************************
- *  Copyright notice
- *
- *  (c) 2009 Ingmar Schlecht
- *  (c) 2011 Nico de Haen
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+*  Copyright notice
+*
+*  (c) 2009 Ingmar Schlecht
+*  (c) 2011 Nico de Haen
+*  All rights reserved
+*
+*  This script is part of the TYPO3 project. The TYPO3 project is
+*  free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation; either version 2 of the License, or
+*  (at your option) any later version.
+*
+*  The GNU General Public License can be found at
+*  http://www.gnu.org/copyleft/gpl.html.
+*
+*  This script is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  This copyright notice MUST APPEAR in all copies of the script!
+***************************************************************/
 
 /**
  *
@@ -48,8 +48,8 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 	public function build(array $extensionBuildConfiguration) {
 		$extension = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Extension');
 		$globalProperties = $extensionBuildConfiguration['properties'];
-		if (!is_array($globalProperties)) {
-			t3lib_div::devlog('Error: Extension properties not submitted! ' . $extension->getOriginalExtensionKey(), 'builder', 3, $globalProperties);
+		if (!is_array($globalProperties)){
+			t3lib_div::devlog('Error: Extension properties not submitted! '.$extension->getOriginalExtensionKey(),'builder',3,$globalProperties);
 			throw new Exception('Extension properties not submitted!');
 		}
 
@@ -60,31 +60,31 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		// extensionKey
 		$extension->setExtensionKey(trim($globalProperties['extensionKey']));
 
-		if (!empty($globalProperties['originalExtensionKey'])) {
+		if(!empty($globalProperties['originalExtensionKey'])){
 			// original extensionKey
 			$extension->setOriginalExtensionKey($globalProperties['originalExtensionKey']);
-			t3lib_div::devlog('Extension setOriginalExtensionKey:' . $extension->getOriginalExtensionKey(), 'extbase', 0, $globalProperties);
+			t3lib_div::devlog('Extension setOriginalExtensionKey:'.$extension->getOriginalExtensionKey(),'extbase',0,$globalProperties);
 		}
 
-		if (!empty($globalProperties['originalExtensionKey']) && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()) {
+		if(!empty($globalProperties['originalExtensionKey']) && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()){
 			$settings = $this->configurationManager->getExtensionSettings($extension->getOriginalExtensionKey());
 			// if an extension was renamed, a new extension dir is created and we
 			// have to copy the old settings file to the new extension dir
-			copy($this->configurationManager->getSettingsFile($extension->getOriginalExtensionKey()), $this->configurationManager->getSettingsFile($extension->getExtensionKey()));
+			copy($this->configurationManager->getSettingsFile($extension->getOriginalExtensionKey()),$this->configurationManager->getSettingsFile($extension->getExtensionKey()));
 		}
 		else {
 			$settings = $this->configurationManager->getExtensionSettings($extension->getExtensionKey());
 		}
 
-		if (!empty($settings)) {
+		if(!empty($settings)){
 			$extension->setSettings($settings);
-			t3lib_div::devlog('Extension settings:' . $extension->getExtensionKey(), 'extbase', 0, $extension->getSettings());
+			t3lib_div::devlog('Extension settings:'.$extension->getExtensionKey(),'extbase',0,$extension->getSettings());
 		}
 
-		// version
+			// version
 		$extension->setVersion($globalProperties['version']);
 
-		foreach ($globalProperties['persons'] as $personValues) {
+		foreach($globalProperties['persons'] as $personValues) {
 			$person = $this->buildPerson($personValues);
 			$extension->addPerson($person);
 		}
@@ -98,7 +98,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 			$extension->addBackendModule($backendModule);
 		}
 
-		// state
+			// state
 		$state = 0;
 		switch ($globalProperties['state']) {
 			case 'alpha':
@@ -132,23 +132,23 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		if (is_array($extensionBuildConfiguration['wires'])) {
 			foreach ($extensionBuildConfiguration['wires'] as $wire) {
 
-				if ($wire['tgt']['terminal'] !== 'SOURCES') {
-					if ($wire['src']['terminal'] == 'SOURCES') {
+				if($wire['tgt']['terminal'] !== 'SOURCES'){
+					if($wire['src']['terminal'] == 'SOURCES'){
 						// this happens if a relation wire was drawn from child to parent
 						// swap the two arrays
 						$tgtModuleId = $wire['src']['moduleId'];
-						$wire['src'] = $wire['tgt'];
-						$wire['tgt'] = array('moduleId' => $tgtModuleId, 'terminal' => 'SOURCES');
+						$wire['src'] =  $wire['tgt'];
+						$wire['tgt'] = array('moduleId'=>$tgtModuleId,'terminal' => 'SOURCES');
 					}
 					else {
-						throw new Exception('A wire has always to connect a relation with a model, not with another relation');
+						 throw new Exception('A wire has always to connect a relation with a model, not with another relation');
 					}
 				}
 				$relationJsonConfiguration = $extensionBuildConfiguration['modules'][$wire['src']['moduleId']]['value']['relationGroup']['relations'][substr($wire['src']['terminal'], 13)];
 
-				if (!is_array($relationJsonConfiguration)) {
-					t3lib_div::devlog('Error in JSON relation configuration!', 'extension_builder', 3, $extensionBuildConfiguration);
-					$errorMessage = 'Missing relation config in domain object: ' . $jsonArray['modules'][$wire['tgt']['moduleId']]['value']['name'];
+				if (!is_array($relationJsonConfiguration)){
+					t3lib_div::devlog('Error in JSON relation configuration!','extension_builder',3,$extensionBuildConfiguration);
+					$errorMessage = 'Missing relation config in domain object: ' .  $jsonArray['modules'][$wire['tgt']['moduleId']]['value']['name'];
 					throw new Exception($errorMessage);
 				}
 
@@ -171,8 +171,8 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 	 * @param array $personValues
 	 * @return Tx_ExtensionBuilder_Domain_Model_Person
 	 */
-	protected function buildPerson($personValues) {
-		$person = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
+	protected function buildPerson($personValues){
+		$person=t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
 		$person->setName($personValues['name']);
 		$person->setRole($personValues['role']);
 		$person->setEmail($personValues['email']);
@@ -185,7 +185,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 	 * @param array $pluginValues
 	 * @return Tx_ExtensionBuilder_Domain_Model_Plugin
 	 */
-	protected function buildPlugin($pluginValues) {
+	protected function buildPlugin($pluginValues){
 		$plugin = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Plugin');
 		$plugin->setName($pluginValues['name']);
 		$plugin->setType($pluginValues['type']);
@@ -193,12 +193,12 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		return $plugin;
 	}
 
-	/**
+/**
 	 *
 	 * @param array $backendModuleValues
 	 * @return Tx_ExtensionBuilder_Domain_Model_BackendModule
 	 */
-	protected function buildBackendModule($backendModuleValues) {
+	protected function buildBackendModule($backendModuleValues){
 		$backendModule = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_BackendModule');
 		$backendModule->setName($backendModuleValues['name']);
 		$backendModule->setMainModule($backendModuleValues['mainModule']);

@@ -1,26 +1,26 @@
 <?php
 /***************************************************************
- *  Copyright notice
- *
- *  (c) 2010 Nico de Haen
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+*  Copyright notice
+*
+*  (c) 2010 Nico de Haen
+*  All rights reserved
+*
+*  This script is part of the TYPO3 project. The TYPO3 project is
+*  free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation; either version 2 of the License, or
+*  (at your option) any later version.
+*
+*  The GNU General Public License can be found at
+*  http://www.gnu.org/copyleft/gpl.html.
+*
+*  This script is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  This copyright notice MUST APPEAR in all copies of the script!
+***************************************************************/
 
 /**
  * Extended version of the ReflectionProperty
@@ -61,7 +61,7 @@ class Tx_ExtensionBuilder_Reflection_PropertyReflection extends Tx_Extbase_Refle
 	 * getter for line number
 	 * @return int line number
 	 */
-	public function getLineNumber() {
+	public function getLineNumber(){
 
 		return $this->lineNumber;
 	}
@@ -70,7 +70,7 @@ class Tx_ExtensionBuilder_Reflection_PropertyReflection extends Tx_Extbase_Refle
 	 * setter for line number
 	 * @return int line number
 	 */
-	public function setLineNumber($lineNumber) {
+	public function setLineNumber($lineNumber){
 
 		return $this->lineNumber = $lineNumber;
 	}
@@ -79,7 +79,7 @@ class Tx_ExtensionBuilder_Reflection_PropertyReflection extends Tx_Extbase_Refle
 	 * wrapper for Tx_Extbase_Reflection_PropertyReflection::getTagsValues()
 	 * @return array $tags
 	 */
-	public function getTags() {
+	public function getTags(){
 		// getTagsValues does not return an array with tag values only
 		// as the name says, but an associative array with tagName=>tagValue
 		return $this->getTagsValues();
@@ -89,8 +89,8 @@ class Tx_ExtensionBuilder_Reflection_PropertyReflection extends Tx_Extbase_Refle
 	 * getter for description
 	 * @return string description
 	 */
-	public function getDescription() {
-		if (empty($this->description)) {
+	public function getDescription(){
+		if(empty($this->description)){
 			$this->description = $this->getDocCommentParser()->getDescription();
 		}
 		return $this->description;
@@ -100,7 +100,7 @@ class Tx_ExtensionBuilder_Reflection_PropertyReflection extends Tx_Extbase_Refle
 	 *
 	 * @return boolean
 	 */
-	public function isDefault() {
+	public function isDefault(){
 		return $this->default;
 	}
 
@@ -108,7 +108,7 @@ class Tx_ExtensionBuilder_Reflection_PropertyReflection extends Tx_Extbase_Refle
 	 *
 	 * @param boolean $default
 	 */
-	public function setDefault($default) {
+	public function setDefault($default){
 		$this->default = $default;
 	}
 
@@ -116,14 +116,14 @@ class Tx_ExtensionBuilder_Reflection_PropertyReflection extends Tx_Extbase_Refle
 	 *
 	 * @return boolean
 	 */
-	public function getDefault() {
+	public function getDefault(){
 		return $this->default;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getValue() {
+	public function getValue(){
 		return $this->value;
 	}
 
@@ -132,7 +132,7 @@ class Tx_ExtensionBuilder_Reflection_PropertyReflection extends Tx_Extbase_Refle
 	 *
 	 * @param mixed
 	 */
-	public function setValue($value) {
+	public function setValue($value){
 		$this->value = $value;
 	}
 

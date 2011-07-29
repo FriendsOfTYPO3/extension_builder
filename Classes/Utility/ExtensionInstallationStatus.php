@@ -21,54 +21,54 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+ 
 class Tx_ExtensionBuilder_Utility_ExtensionInstallationStatus {
 
-	/**
-	 * @var Tx_ExtensionBuilder_Domain_Model_Extension
-	 */
-	protected $extension;
+    /**
+     * @var Tx_ExtensionBuilder_Domain_Model_Extension
+     */
+    protected $extension;
 
-	/**
-	 * @var tx_em_Install
-	 */
-	protected $installTool;
+    /**
+     * @var tx_em_Install
+     */
+    protected $installTool;
 
-	public function __construct() {
-		if (t3lib_extMgm::isLoaded('install')) {
-			$this->installTool = t3lib_div::makeInstance('tx_em_Install');
-		}
-	}
+    public function __construct() {
+        if(t3lib_extMgm::isLoaded('install')){
+            $this->installTool = t3lib_div::makeInstance('tx_em_Install');
+        }
+    }
 
-	/**
-	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
-	 */
-	public function setExtension($extension) {
-		$this->extension = $extension;
-	}
+    /**
+     * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
+     */
+    public function setExtension($extension) {
+        $this->extension = $extension;
+    }
 
-	public function getStatusMessage() {
-		$statusMessage = '';
+    public function getStatusMessage() {
+        $statusMessage = '';
 
-		if ($this->dbUpdateNeeded()) {
-			$statusMessage .= '<p>Please update the database in the Extension Manager!</p>';
-		}
+        if($this->dbUpdateNeeded()) {
+            $statusMessage .= '<p>Please update the database in the Extension Manager!</p>';
+        }
 
-		if (!t3lib_extMgm::isLoaded($this->extension->getExtensionKey())) {
-			$statusMessage .= '<p>Your Extension is not installed yet.</p>';
-		}
+        if(!t3lib_extMgm::isLoaded($this->extension->getExtensionKey())) {
+            $statusMessage .= '<p>Your Extension is not installed yet.</p>';
+        }
 
-		return $statusMessage;
-	}
+        return $statusMessage;
+    }
 
-	/**
+    /**
 	 * @param string $extKey
 	 * @return boolean
 	 */
-	protected function dbUpdateNeeded() {
-		if (t3lib_extMgm::isLoaded($this->extension->getExtensionKey()) && !empty($this->installTool)) {
-			$updateNeeded = $this->installTool->checkDBupdates($this->extension->getExtensionKey(), array('type' => 'L', 'files' => array('ext_tables.sql')), 1);
-			if (!empty($updateNeeded['structure']['diff']['extra'])) {
+	protected function dbUpdateNeeded(){
+        if(t3lib_extMgm::isLoaded($this->extension->getExtensionKey()) && !empty($this->installTool)){
+			$updateNeeded = $this->installTool->checkDBupdates($this->extension->getExtensionKey(), array('type'=>'L','files'=>array('ext_tables.sql')),1);
+			if(!empty($updateNeeded['structure']['diff']['extra'])){
 				return true;
 			}
 		}

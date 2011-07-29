@@ -26,7 +26,7 @@
 
 class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests_BaseTest {
 
-	function setUp() {
+	function setUp(){
 		parent::setUp();
 	}
 
@@ -35,12 +35,12 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 	 * Write a simple model class for a non aggregate root domain obbject
 	 * @test
 	 */
-	function relatedMethodsReflectRenamingAProperty() {
+	function relatedMethodsReflectRenamingAProperty(){
 		$modelName = 'model7';
 		$this->generateInitialModelClassFile($modelName);
 		// create an "old" domainObject
 		$domainObject = $this->buildDomainObject($modelName);
-		$this->assertTrue(is_object($domainObject), 'No domain object');
+		$this->assertTrue(is_object($domainObject),'No domain object');
 
 		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
 		$property->setName('prop1');
@@ -50,11 +50,11 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 		$uniqueIdentifier2 = md5(microtime() . 'model');
 		$domainObject->setUniqueIdentifier($uniqueIdentifier2);
 
-		$this->roundTripService->_set('oldDomainObjects', array($domainObject->getUniqueIdentifier() => $domainObject));
+		$this->roundTripService->_set('oldDomainObjects',array($domainObject->getUniqueIdentifier()=>$domainObject));
 
 		// create an "old" class object.
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
-		$this->assertTrue(is_object($modelClassObject), 'No class object');
+		$this->assertTrue(is_object($modelClassObject),'No class object');
 
 		// Check that the getter/methods exist
 		$this->assertTrue($modelClassObject->methodExists('getProp1'));
@@ -62,16 +62,16 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 
 		// we have to modifiy the method bodies, otherwise the roundtrip service
 		// removes them and let them rebuild from ClassBuilder (see comment in line 388)
-		$getterMethod = $modelClassObject->getMethod('getProp1');
+		$getterMethod =  $modelClassObject->getMethod('getProp1');
 		$getterMethod->setBody('if($dummy) return $this->prop1;');
 		$modelClassObject->setMethod($getterMethod);
 
-		$setterMethod = $modelClassObject->getMethod('setProp1');
+		$setterMethod =  $modelClassObject->getMethod('setProp1');
 		$setterMethod->setBody('if($dummy)$this->prop1 = $prop1;');
 		$modelClassObject->setMethod($setterMethod);
 
 		// set the class object manually, this is usually parsed from an existing class file
-		$this->roundTripService->_set('classObject', $modelClassObject);
+		$this->roundTripService->_set('classObject',$modelClassObject);
 
 		// build a new domain object with the same unique identifiers
 		$newDomainObject = $this->buildDomainObject('Dummy');
@@ -83,7 +83,7 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 		$newDomainObject->setUniqueIdentifier($uniqueIdentifier2);
 
 		// now the slass object should be updated
-		$this->roundTripService->_call('updateModelClassProperties', $domainObject, $newDomainObject);
+		$this->roundTripService->_call('updateModelClassProperties',$domainObject,$newDomainObject);
 
 		$classObject = $this->roundTripService->_get('classObject');
 		$this->assertTrue($classObject->methodExists('getNewProp1Name'));
