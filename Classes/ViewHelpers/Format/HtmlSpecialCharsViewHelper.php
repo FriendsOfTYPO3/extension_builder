@@ -33,7 +33,7 @@ class Tx_ExtensionBuilder_ViewHelpers_Format_HtmlSpecialCharsViewHelper extends 
 	 * @return boolean string
 	 */
 	public function render() {
-
+		
 		return htmlspecialchars($this->renderChildren());
 	}
 

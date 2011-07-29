@@ -1,41 +1,39 @@
 {namespace k=Tx_ExtensionBuilder_ViewHelpers}
-<f:layout name="Default"/>
+<f:layout name="Default" />
 <f:section name="header">
-    <k:be.configuration/>
+	<k:be.configuration/>
 </f:section>
 <f:section name="iconButtons">
 </f:section>
 <f:section name="content">
 
-    <script type="text/javascript">
-        // InputEx needs a correct path to this image
-        inputEx.spacerUrl = TYPO3.settings.extensionBuilder.baseUrl + "Resources/Public/jsDomainModeling/wireit/lib/inputex/images/space.gif";
+	<script type="text/javascript">
+		// InputEx needs a correct path to this image
+		inputEx.spacerUrl = TYPO3.settings.extensionBuilder.baseUrl + "Resources/Public/jsDomainModeling/wireit/lib/inputex/images/space.gif";
 
-        YAHOO.util.Event.onDOMReady(function() {
-            var editor = new WireIt.WiringEditor(extbaseModeling_wiringEditorLanguage);
-        });
-    </script>
+		YAHOO.util.Event.onDOMReady( function() {
+			var editor = new WireIt.WiringEditor(extbaseModeling_wiringEditorLanguage);
+		});
+	</script>
 
-    <div id="domainModelEditor">
+	<div id="domainModelEditor">
 
-        <div id="left">
-            <div id="propertiesForm"></div>
-        </div>
+		<div id="left">
+			<div id="propertiesForm"></div>
+		</div>
 
-        <div id="center">
-            <div id="moduleBar"></div>
-            <div id="modelingLayer"></div>
-        </div>
+		<div id="center">
+			<div id="moduleBar"></div>
+			<div id="modelingLayer"></div>
+		</div>
 
-        <div id="bottom">
-            <center>
-                <div id="toolbar"></div>
-            </center>
-        </div>
+		<div id="bottom">
+			<center><div id="toolbar"></div></center>
+		</div>
 
-        <div id="helpPanel">
+		<div id="helpPanel">
 
-        </div>
+		</div>
 
-    </div>
+	</div>
 </f:section>

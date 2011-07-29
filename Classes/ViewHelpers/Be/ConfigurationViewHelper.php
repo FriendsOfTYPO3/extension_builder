@@ -71,21 +71,21 @@ class Tx_ExtensionBuilder_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Flui
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/LayerMap.js');
 
 		$this->pageRenderer->addInlineSettingArray('extensionBuilder', array(
-																			'baseUrl' => $baseUrl
-																	   ));
+			'baseUrl' => $baseUrl
+		));
 		$this->setLocallangSettings();
 
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/WiringEditor.js');
 
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/roundtrip.js');
 
-		// Extbase Modelling definition
+			// Extbase Modelling definition
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/extbaseModeling.js');
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/layout.js');
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/extensionProperties.js');
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/modules/modelObject.js');
 
-		// collapsible forms in relations
+			// collapsible forms in relations
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/modules/extendedModelObject.js');
 
 		// SECTION: CSS Files

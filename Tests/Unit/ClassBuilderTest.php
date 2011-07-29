@@ -33,21 +33,21 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 
 	var $modelName = 'Model1';
 
-	function setUp() {
+	function setUp(){
 		parent::setUp();
 		$this->generateInitialModelClassFile($this->modelName);
 	}
 
-	public function tearDown() {
+	public function tearDown(){
 		$this->removeInitialModelClassFile($this->modelName);
 	}
 
 	/**
-	 * @test
-	 */
+	* @test
+	*/
 	public function classBuilderGeneratesSetterMethodForSimpleProperty() {
 
-		$domainObject = $this->buildDomainObject($this->modelName, true, true);
+		$domainObject = $this->buildDomainObject($this->modelName,true,true);
 
 		$property0 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
 		$property0->setName('name');
@@ -55,31 +55,31 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
 
-		$this->assertTrue(is_object($modelClassObject), 'No model class object');
-		$this->assertTrue($modelClassObject->methodExists('setName'), 'No method: setName');
+		$this->assertTrue(is_object($modelClassObject),'No model class object');
+		$this->assertTrue($modelClassObject->methodExists('setName'),'No method: setName');
 
 		$setNameMethod = $modelClassObject->getMethod('setName');
 		$parameters = $setNameMethod->getParameters();
-		$this->assertEquals(count($parameters), 1);
+		$this->assertEquals(count($parameters),1);
 		$firstParameter = array_shift($parameters);
-		$this->assertEquals($firstParameter->getName(), 'name');
+		$this->assertEquals($firstParameter->getName(),'name');
 	}
 
 
 	/**
-	 *
-	 */
+	*
+	*/
 
 	public function classBuilderGeneratesGetterMethodForSimpleProperty() {
 
-		$domainObject = $this->buildDomainObject($this->modelName, true, true);
+		$domainObject = $this->buildDomainObject($this->modelName,true,true);
 		$property0 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
 		$property0->setName('name');
 		$property0->setRequired(TRUE);
 		$domainObject->addProperty($property0);
 
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
-		$this->assertTrue($modelClassObject->methodExists('getName'), 'No method: getName');
+		$this->assertTrue($modelClassObject->methodExists('getName'),'No method: getName');
 
 	}
 
@@ -89,7 +89,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 	 */
 	public function classBuilderGeneratesIsMethodForBooleanProperty() {
 
-		$domainObject = $this->buildDomainObject($this->modelName, true, true);
+		$domainObject = $this->buildDomainObject($this->modelName,true,true);
 
 		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty();
 		$property->setName('blue');
@@ -97,18 +97,18 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 		$domainObject->addProperty($property);
 
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
-		$this->assertTrue($modelClassObject->methodExists('isBlue'), 'No method: isBlue');
+		$this->assertTrue($modelClassObject->methodExists('isBlue'),'No method: isBlue');
 
 	}
 
 	/**
-	 * @test
-	 */
+	* @test
+	*/
 	public function classBuilderGeneratesMethodsForRelationProperty() {
 		$modelName2 = 'Model2';
 		$propertyName = 'relNames';
 
-		$domainObject1 = $this->buildDomainObject($this->modelName, true, true);
+		$domainObject1 = $this->buildDomainObject($this->modelName,true,true);
 		$relatedDomainObject = $this->buildDomainObject($modelName2);
 
 		$relationProperty = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation();
@@ -118,21 +118,21 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject1);
 
-		$this->assertTrue($modelClassObject->methodExists('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))), 'Add method was not generated');
-		$this->assertTrue($modelClassObject->methodExists('remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))), 'Remove method was not generated');
-		$this->assertTrue($modelClassObject->methodExists('set' . ucfirst($propertyName)), 'Setter was not generated');
-		$this->assertTrue($modelClassObject->methodExists('set' . ucfirst($propertyName)), 'Setter was not generated');
+		$this->assertTrue($modelClassObject->methodExists('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))),'Add method was not generated');
+		$this->assertTrue($modelClassObject->methodExists('remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))),'Remove method was not generated');
+		$this->assertTrue($modelClassObject->methodExists('set' . ucfirst($propertyName)),'Setter was not generated');
+		$this->assertTrue($modelClassObject->methodExists('set' . ucfirst($propertyName)),'Setter was not generated');
 
 		$addMethod = $modelClassObject->getMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
-		$this->assertTrue($addMethod->isTaggedWith('param'), 'No param tag set for setter method');
+		$this->assertTrue($addMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $addMethod->getTagsValues('param');
-		$this->assertTrue((strpos($paramTagValues, $relatedDomainObject->getClassName()) === 0), 'Wrong param tag:' . $paramTagValues);
+		$this->assertTrue((strpos($paramTagValues,$relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues);
 
 		$parameters = $addMethod->getParameters();
-		$this->assertTrue((count($parameters) == 1), 'Wrong parameter count in add method');
+		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in add method');
 		$parameter = current($parameters);
-		$this->assertTrue(($parameter->getName() == Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)), 'Wrong parameter name in add method');
-		$this->assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getClassName()), 'Wrong type hint for add method parameter:' . $parameter->getTypeHint());
+		$this->assertTrue(($parameter->getName() == Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)),'Wrong parameter name in add method');
+		$this->assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getClassName()),'Wrong type hint for add method parameter:'.$parameter->getTypeHint());
 
 	}
 

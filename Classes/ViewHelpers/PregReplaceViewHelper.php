@@ -46,5 +46,4 @@ class Tx_ExtensionBuilder_ViewHelpers_PregReplaceViewHelper extends Tx_Fluid_Cor
 		return preg_replace($match, $replace, $subject);
 	}
 }
-
 ?>

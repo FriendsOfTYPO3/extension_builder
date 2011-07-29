@@ -1,26 +1,26 @@
 <?php
 /***************************************************************
- *  Copyright notice
- *
- *  (c) 2009 Ingmar Schlecht
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+*  Copyright notice
+*
+*  (c) 2009 Ingmar Schlecht
+*  All rights reserved
+*
+*  This script is part of the TYPO3 project. The TYPO3 project is
+*  free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation; either version 2 of the License, or
+*  (at your option) any later version.
+*
+*  The GNU General Public License can be found at
+*  http://www.gnu.org/copyleft/gpl.html.
+*
+*  This script is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  This copyright notice MUST APPEAR in all copies of the script!
+***************************************************************/
 
 /**
  * Schema for a whole extension
@@ -76,7 +76,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 * default settings for em_conf
 	 * @var array
 	 */
-	protected $emConfDefaults = array('dependencies' => 'cms,extbase,fluid', 'category' => 'plugin');
+	protected $emConfDefaults = array('dependencies'=>'cms,extbase,fluid','category'=>'plugin');
 
 	/**
 	 * flag that is set to true if there are domain objects with
@@ -179,14 +179,14 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 *
 	 * @param array $overWriteSettings
 	 */
-	public function setSettings($settings) {
+	public function setSettings($settings){
 		$this->settings = $settings;
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getSettings() {
+	public function getSettings(){
 		return $this->settings;
 	}
 
@@ -195,9 +195,9 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 *
 	 * @return array settings for Extension Manager
 	 */
-	public function getEmConf() {
+	public function getEmConf(){
 
-		if (isset($this->settings['emConf'])) {
+		if(isset($this->settings['emConf'])){
 			return $this->settings['emConf'];
 		}
 		else return $this->emConfDefaults;
@@ -208,8 +208,8 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 * @return string
 	 */
 	public function getExtensionDir() {
-		if (empty($this->extensionDir)) {
-			if (empty($this->extensionKey)) {
+		if(empty($this->extensionDir)){
+			if(empty($this->extensionKey)){
 				throw new Exception('ExtensionDir can only be created if an extensionKey is defined first');
 			}
 			$this->extensionDir = PATH_typo3conf . 'ext/' . $this->extensionKey . '/';
@@ -306,13 +306,13 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 * @return array
 	 */
 	public function getDomainObjectsForWhichAControllerShouldBeBuilt() {
-		$domainObjectsWithController = array();
+		$domainObjects = array();
 		foreach ($this->domainObjects as $domainObject) {
 			if (count($domainObject->getActions()) || $domainObject->isAggregateRoot()) {
-				$domainObjectsWithController[] = $domainObject;
+				$domainObjects[] = $domainObject;
 			}
 		}
-		return $domainObjectsWithController;
+		return $domainObjects;
 	}
 
 	/**
@@ -321,13 +321,13 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 */
 	public function addDomainObject(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
 		$domainObject->setExtension($this);
-		if (count($domainObject->getPropertiesWithMappingStatements()) > 0) {
+		if(count($domainObject->getPropertiesWithMappingStatements())>0){
 			$this->propertiesThatNeedMapping = true;
 		}
-		if (in_array($domainObject->getName(), array_keys($this->domainObjects))) {
+		if(in_array($domainObject->getName(),array_keys($this->domainObjects))){
 			throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
 		}
-		if ($domainObject->getNeedsUploadFolder()) {
+		if($domainObject->getNeedsUploadFolder()){
 			$this->needsUploadFolder = true;
 		}
 		$this->domainObjects[$domainObject->getName()] = $domainObject;
@@ -349,7 +349,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 * returns the extension key a prefix tx_  and without underscore
 	 */
 	public function getShortExtensionKey() {
-		return 'tx_' . str_replace('_', '', $this->getExtensionKey());
+		return 'tx_' .str_replace('_','',$this->getExtensionKey());
 	}
 
 	/**
@@ -360,7 +360,6 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	public function getPersons() {
 		return $this->persons;
 	}
-
 	/**
 	 * Sets the Persons
 	 *
@@ -368,9 +367,8 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 * @return void
 	 */
 	public function setPersons($persons) {
-		$this->persons = $persons;
+		$this->persons=$persons;
 	}
-
 	/**
 	 * Adds a Person to the end of the current Set of Persons.
 	 *
@@ -378,7 +376,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 * @return void
 	 */
 	public function addPerson($person) {
-		$this->persons[] = $person;
+		$this->persons[]=$person;
 	}
 
 	/**
@@ -404,8 +402,8 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 *
 	 * @return boolean
 	 */
-	public function hasPlugins() {
-		if (count($this->plugins) > 0) {
+	public function hasPlugins(){
+		if(count($this->plugins)>0){
 			return true;
 		} else {
 			return false;
@@ -455,8 +453,8 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 *
 	 * @return boolean
 	 */
-	public function hasBackendModules() {
-		if (count($this->backendModules) > 0) {
+	public function hasBackendModules(){
+		if(count($this->backendModules)>0){
 			return true;
 		} else {
 			return false;
@@ -464,28 +462,23 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	}
 
 	public function getReadableState() {
-		switch ($this->getState()) {
-			case self::STATE_ALPHA:
-				return 'alpha';
-			case self::STATE_BETA:
-				return 'beta';
-			case self::STATE_STABLE:
-				return 'stable';
-			case self::STATE_EXPERIMENTAL:
-				return 'experimental';
-			case self::STATE_TEST:
-				return 'test';
+		switch($this->getState()){
+			case self::STATE_ALPHA: return 'alpha';
+			case self::STATE_BETA: return 'beta';
+			case self::STATE_STABLE: return 'stable';
+			case self::STATE_EXPERIMENTAL: return 'experimental';
+			case self::STATE_TEST: return 'test';
 		}
 	}
 
 
 	public function getCssClassName() {
-		return 'tx-' . str_replace('_', '-', $this->getExtensionKey());
+		return 'tx-' . str_replace('_', '-',$this->getExtensionKey());
 	}
 
-	public function isModified($filePath) {
-		if (is_file($filePath) && isset($this->md5Hashes[$filePath])) {
-			if (md5_file($filePath) != $this->md5Hashes[$filePath]) {
+	public function isModified( $filePath){
+		if(is_file($filePath) && isset($this->md5Hashes[$filePath])){
+			if(md5_file($filePath) != $this->md5Hashes[$filePath]){
 				return true;
 			}
 		}
@@ -496,7 +489,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 * setter for md5 hashes
 	 * @return void
 	 */
-	public function setMD5Hashes($md5Hashes) {
+	public function setMD5Hashes($md5Hashes){
 		$this->md5Hashes = $md5Hashes;
 	}
 
@@ -504,7 +497,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 * getter for md5 hashes
 	 * @return array $md5Hashes
 	 */
-	public function getMD5Hashes() {
+	public function getMD5Hashes(){
 		return $this->md5Hashes;
 	}
 
@@ -512,7 +505,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 * calculates all md5 hashes
 	 * @return
 	 */
-	public function setMD5Hash($filePath) {
+	public function setMD5Hash($filePath){
 		$this->md5Hashes[$filePath] = md5_file($filePath);
 
 	}
@@ -521,7 +514,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 *
 	 * @reutn boolean
 	 */
-	public function hasPropertiesThatNeedMapping() {
+	public function hasPropertiesThatNeedMapping(){
 		return $this->propertiesThatNeedMapping;
 	}
 
@@ -531,10 +524,10 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 *
 	 * @return void
 	 */
-	public function getPreviousExtensionDirectory() {
-		if ($this->isRenamed()) {
+	public function getPreviousExtensionDirectory(){
+		if($this->isRenamed()){
 			$originalExtensionKey = $this->getOriginalExtensionKey();
-			$this->previousExtensionDirectory = PATH_typo3conf . 'ext/' . $originalExtensionKey . '/';
+			$this->previousExtensionDirectory = PATH_typo3conf.'ext/'.$originalExtensionKey.'/';
 			$this->previousExtensionKey = $originalExtensionKey;
 			return $this->previousExtensionDirectory;
 		}
@@ -547,9 +540,9 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 *
 	 * @return boolean
 	 */
-	public function isRenamed() {
+	public function isRenamed(){
 		$originalExtensionKey = $this->getOriginalExtensionKey();
-		if (!empty($originalExtensionKey) && $originalExtensionKey != $this->getExtensionKey()) {
+		if(!empty($originalExtensionKey) && $originalExtensionKey != $this->getExtensionKey()){
 			$this->renamed = true;
 		}
 		return $this->renamed;
@@ -560,8 +553,8 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 *
 	 * @return boolean $needsUploadFolder
 	 */
-	public function getNeedsUploadFolder() {
-		if ($this->needsUploadFolder) {
+	public function getNeedsUploadFolder(){
+		if($this->needsUploadFolder){
 			return 1;
 		}
 		else {
@@ -573,10 +566,9 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 *
 	 * @return string $uploadFolder
 	 */
-	public function getUploadFolder() {
+	public function getUploadFolder(){
 		return 'uploads/' . $this->getShortExtensionKey();
 	}
 
 }
-
 ?>

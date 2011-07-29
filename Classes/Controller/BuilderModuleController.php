@@ -26,12 +26,12 @@
 /**
  * Backend Module of the Extension Builder extension
  *
- * @category	Controller
- * @package	 TYPO3
+ * @category    Controller
+ * @package     TYPO3
  * @subpackage  tx_extensionbuilder
- * @author	  Ingmar Schlecht <ingmar@typo3.org>
- * @license	 http://www.gnu.org/copyleft/gpl.html
- * @version	 SVN: $Id$
+ * @author      Ingmar Schlecht <ingmar@typo3.org>
+ * @license     http://www.gnu.org/copyleft/gpl.html
+ * @version     SVN: $Id$
  */
 class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_MVC_Controller_ActionController {
 
@@ -170,6 +170,7 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	}
 
 	protected function generateCodeAction_saveWiring() {
+
 		try {
 			$extensionBuildConfiguration = $this->configurationManager->getConfigurationFromModeler();
 			$extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
@@ -213,7 +214,7 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 			}
 		}
 		try {
-			$this->codeGenerator->setExtension($extension)->build();
+			$this->codeGenerator->build($extension);
 			$this->extensionInstallationStatus->setExtension($extension);
 			$message = '<p>The Extension was saved</p>' . $this->extensionInstallationStatus->getStatusMessage();
 			$result = array('success' => $message);
