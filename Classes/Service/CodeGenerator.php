@@ -128,7 +128,6 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		} else {
 			throw new Exception('No codeTemplateRootPath configured');
 		}
-		t3lib_div::devlog('generateCode line 144','extbuilder',0);
 
 		// Base directory already exists at this point
 		$this->extensionDirectory = $this->extension->getExtensionDir();
@@ -269,7 +268,6 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		}
 
 		if (count($this->extension->getDomainObjects()) > 0 ) {
-			t3lib_div::devlog(count($this->extension->getDomainObjects()).' domainObjects','extension_builder',0,(array)$this->extension->getDomainObjects());
 			// Generate Domain Model
 			try {
 
@@ -483,7 +481,6 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 * @param boolean $mergeWithExistingClass
 	 */
 	public function generateActionControllerCode(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject,$mergeWithExistingClass) {
-		t3lib_div::devlog('emConf','builder',0,$this->settings);
 		$controllerClassObject = $this->classBuilder->generateControllerClassObject($domainObject,$mergeWithExistingClass);
 		// returns a class object if an existing class was found
 		if($controllerClassObject){
@@ -508,7 +505,6 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		if($modelClassObject){
 			$classDocComment = $this->renderDocComment($modelClassObject,$domainObject);
 			$modelClassObject->setDocComment($classDocComment);
-			t3lib_div::devlog('Generated '.$domainObject->getName() . '.php','extension_builder',0,array('c'=>$this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension,'classObject'=>$modelClassObject))));
 			return $this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension,'classObject'=>$modelClassObject));
 		} else {
 			throw new Exception('Class file for domain object could not be generated');
@@ -577,7 +573,6 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
 			$licenseHeader = $this->renderTemplate('Partials/Classes/licenseHeader.phpt', array('persons' => $this->extension->getPersons()));
 			$docComment = $licenseHeader."\n\n\n".$docComment;
-			t3lib_div::devlog('No license header in: '.$classObject->getName(),'extension_builder');
 		}
 		else {
 			$docComment = $precedingBlock."\n".$docComment;
@@ -725,7 +720,6 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	protected function writeFile($targetFile,$fileContents){
 		if($this->roundTripEnabled){
 			$overWriteMode = Tx_ExtensionBuilder_Service_RoundTrip::getOverWriteSettingForPath($targetFile,$this->extension);
-			//t3lib_div::devlog($targetFile.'-'.$overWriteMode,'extension_builder');
 			if($overWriteMode == -1){
 				return; // skip file creation
 			}
