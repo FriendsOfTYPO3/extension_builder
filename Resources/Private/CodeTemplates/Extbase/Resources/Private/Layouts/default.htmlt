@@ -1,9 +1,4 @@
 {namespace k=Tx_ExtensionBuilder_ViewHelpers}
 <div class="{extension.cssClassName}">
-<f:if condition="{settings.extConf.advancedMode}==0">
-<p style="color:red;border:1px solid red;padding:5px">Warning: Due to a bug in extbase 1.3.0 the non-cachable actions (like "create" or "delete") won't be executed, if there is already a cached version of this page.<br />
-See <a href="http://forge.typo3.org/issues/13970" target="_blank">bugreport</a> for a workaround<br /><br />
-You can remove this message in Resources/Private/Layouts/Default.html</p>
-</f:if>
 	<k:openingTag>f:render section="main" /</k:openingTag>
 </div>
