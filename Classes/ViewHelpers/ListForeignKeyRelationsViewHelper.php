@@ -41,7 +41,8 @@ class Tx_ExtensionBuilder_ViewHelpers_ListForeignKeyRelationsViewHelper extends 
 			if (!count($domainObject->getProperties())) continue;
 			foreach ($domainObject->getProperties() as $property) {
 				if ($property instanceof Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation
-					&& $property->getForeignClass() === $expectedDomainObject) {
+					&& $property->getForeignClass() === $expectedDomainObject
+				) {
 					$results[] = $property;
 				}
 			}

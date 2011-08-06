@@ -21,7 +21,7 @@
 		'title' => 'Create new',
 		'icon' => 'add.gif',
 		'params' => array(
-			'table'=> '{property.foreignClass.databaseTableName}',
+			'table' => '{property.foreignClass.databaseTableName}',
 			'pid' => '###CURRENT_PID###',
 			'setValue' => 'prepend'
 			),

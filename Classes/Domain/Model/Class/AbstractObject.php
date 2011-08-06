@@ -1,26 +1,26 @@
 <?php
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2010 Nico de Haen
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2010 Nico de Haen
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * abstract object representing a class, method or property in the context of
@@ -32,20 +32,20 @@
 abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 
 	/**
-	 * 1  	 	ReflectionMethod::IS_STATIC
-	 * 2 		ReflectionMethod::IS_ABSTRACT
-	 * 4 		ReflectionMethod::IS_FINAL
-	 * 256 		ReflectionMethod::IS_PUBLIC
-	 * 512 		ReflectionMethod::IS_PROTECTED
-	 * 1024 	ReflectionMethod::IS_PRIVATE
+	 * 1	ReflectionMethod::IS_STATIC
+	 * 2	ReflectionMethod::IS_ABSTRACT
+	 * 4	ReflectionMethod::IS_FINAL
+	 * 256	ReflectionMethod::IS_PUBLIC
+	 * 512	ReflectionMethod::IS_PROTECTED
+	 * 1024	ReflectionMethod::IS_PRIVATE
 	 */
 	private $mapModifierNames = array(
-			'static' => ReflectionMethod::IS_STATIC,
-			'abstract' => ReflectionMethod::IS_ABSTRACT,
-			'final' => ReflectionMethod::IS_FINAL,
-			'public' => ReflectionMethod::IS_PUBLIC,
-			'protected' => ReflectionMethod::IS_PROTECTED,
-			'private' => ReflectionMethod::IS_PRIVATE
+		'static' => ReflectionMethod::IS_STATIC,
+		'abstract' => ReflectionMethod::IS_ABSTRACT,
+		'final' => ReflectionMethod::IS_FINAL,
+		'public' => ReflectionMethod::IS_PUBLIC,
+		'protected' => ReflectionMethod::IS_PROTECTED,
+		'private' => ReflectionMethod::IS_PRIVATE
 
 	);
 
@@ -119,7 +119,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 * @return boolean TRUE if such a tag has been defined, otherwise FALSE
 	 */
 	public function isTaggedWith($tagName) {
-		return in_array($tagName,array_keys($this->tags));
+		return in_array($tagName, array_keys($this->tags));
 	}
 
 	/**
@@ -135,21 +135,21 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 *
 	 * @return
 	 */
-	public function getAnnotations(){
+	public function getAnnotations() {
 		$annotations = array();
 		$tagNames = array_keys($this->tags);
-		foreach($tagNames as $tagName){
-			if(empty($this->tags[$tagName])){
+		foreach ($tagNames as $tagName) {
+			if (empty($this->tags[$tagName])) {
 				$annotations[] = $tagName;
 			}
-			if(is_array($this->tags[$tagName])){
-				foreach($this->tags[$tagName] as $tagValue){
-					$annotations[] = $tagName .' '. $tagValue;
+			if (is_array($this->tags[$tagName])) {
+				foreach ($this->tags[$tagName] as $tagValue) {
+					$annotations[] = $tagName . ' ' . $tagValue;
 				}
 				//$tagValue = implode(' ',$tagValue);
 			}
 			else {
-				$annotations[] = $tagName .' '. $this->tags[$tagName];
+				$annotations[] = $tagName . ' ' . $this->tags[$tagName];
 			}
 		}
 		return $annotations;
@@ -171,9 +171,9 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 * @param mixed $tagValue
 	 * @return void
 	 */
-	public function setTag($tagName,$tagValue,$override = true) {
-		if(!$override && isset($this->tags[$tagName])){
-			if(!is_array($this->tags[$tagName])){
+	public function setTag($tagName, $tagValue, $override = true) {
+		if (!$override && isset($this->tags[$tagName])) {
+			if (!is_array($this->tags[$tagName])) {
 				// build an array with the existing value as first element
 				$this->tags[$tagName] = array($this->tags[$tagName]);
 			}
@@ -201,8 +201,8 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 * @return string Property description
 	 */
 	public function getDescription() {
-		$test = str_replace('/','',trim($this->description));
-		if(empty($this->description) || empty($test)){
+		$test = str_replace('/', '', trim($this->description));
+		if (empty($this->description) || empty($test)) {
 			return $this->name;
 		}
 		return $this->description;
@@ -214,7 +214,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 * @return string Property description
 	 */
 	public function getDescriptionLines() {
-		return t3lib_div::trimExplode("\n",trim($this->getDescription()));
+		return t3lib_div::trimExplode("\n", trim($this->getDescription()));
 	}
 
 	/**
@@ -232,7 +232,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 * @return boolean true if the description isn't empty
 	 */
 	public function hasDescription() {
-		if(empty($this->description)){
+		if (empty($this->description)) {
 			return false;
 		}
 		return true;
@@ -263,10 +263,10 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 * @return void
 	 */
 	public function addModifier($modifier) {
-		if(!is_numeric($modifier)){
+		if (!is_numeric($modifier)) {
 			$modifier = $this->mapModifierNames[$modifier];
 		}
-		if(!in_array($modifier,$this->modifiers)){
+		if (!in_array($modifier, $this->modifiers)) {
 			$this->modifiers[] = $modifier;
 		}
 
@@ -282,11 +282,11 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 		return $this->modifiers;
 	}
 
-	public function getModifierNames(){
+	public function getModifierNames() {
 		$modifiers = $this->getModifiers();
 		$modifierNames = array();
-		if(is_array($modifiers)){
-			foreach($modifiers as $modifier){
+		if (is_array($modifiers)) {
+			foreach ($modifiers as $modifier) {
 				$modifierNames[] = array_shift(Reflection::getModifierNames($modifier));
 			}
 		}
@@ -320,7 +320,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 * @return boolean
 	 */
 	public function hasDocComment() {
-		if(!empty($this->docComment)){
+		if (!empty($this->docComment)) {
 			return true;
 		}
 		return false;
@@ -342,8 +342,8 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 * @return string precedingBlock
 	 */
 	public function getPrecedingBlock() {
-		$cleanPrecedingBlock = str_replace($this->docComment,'',$this->precedingBlock);
-		$cleanPrecedingBlock = str_replace('<?php','',$cleanPrecedingBlock);
+		$cleanPrecedingBlock = str_replace($this->docComment, '', $this->precedingBlock);
+		$cleanPrecedingBlock = str_replace('<?php', '', $cleanPrecedingBlock);
 		return $cleanPrecedingBlock;
 	}
 

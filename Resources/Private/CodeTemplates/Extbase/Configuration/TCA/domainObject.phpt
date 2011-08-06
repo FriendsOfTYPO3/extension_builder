@@ -42,7 +42,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			),
 		),
 		'l10n_diffsource' => array(
-			'config' =>array(
+			'config' => array(
 				'type' => 'passthrough',
 			),
 		),

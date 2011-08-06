@@ -1,26 +1,26 @@
 <?php
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2010 Nico de Haen
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2010 Nico de Haen
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * method representing a "method" in the context of software development
@@ -28,7 +28,7 @@
  * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject{
+class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 
 	/**
 	 * body
@@ -45,23 +45,23 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 	protected $parameters;
 
 
-	public function __construct($methodName,$methodReflection = NULL){
+	public function __construct($methodName, $methodReflection = NULL) {
 		$this->setName($methodName);
-		if($methodReflection instanceof Tx_ExtensionBuilder_Reflection_MethodReflection){
+		if ($methodReflection instanceof Tx_ExtensionBuilder_Reflection_MethodReflection) {
 			$methodReflection->getTagsValues(); // just to initialize the docCommentParser
-			foreach($this as $key => $value) {
-				$setterMethodName = 'set'.t3lib_div::underscoredToUpperCamelCase($key);
-				$getterMethodName = 'get'.t3lib_div::underscoredToUpperCamelCase($key);
-	    		// map properties of reflection class to this class
-				if(method_exists($methodReflection,$getterMethodName) && method_exists($this,$setterMethodName) ){
+			foreach ($this as $key => $value) {
+				$setterMethodName = 'set' . t3lib_div::underscoredToUpperCamelCase($key);
+				$getterMethodName = 'get' . t3lib_div::underscoredToUpperCamelCase($key);
+				// map properties of reflection class to this class
+				if (method_exists($methodReflection, $getterMethodName) && method_exists($this, $setterMethodName)) {
 					$this->$setterMethodName($methodReflection->$getterMethodName());
-	    			//t3lib_div::print_array($getterMethodName);
-	    		}
+					//t3lib_div::print_array($getterMethodName);
+				}
 
 			}
-			if(empty($this->tags)){
+			if (empty($this->tags)) {
 				// strange behaviour in php ReflectionProperty->getDescription(). A backslash is added to the description
-				$this->description = str_replace("\n/",'',$this->description);
+				$this->description = str_replace("\n/", '', $this->description);
 				$this->description = trim($this->description);
 				//$this->setTag('return','void');
 			}
@@ -77,13 +77,13 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 	 */
 	public function setBody($body) {
 		// keep or set the indent
-		if(strpos($body,$this->defaultIndent)!==0){
-			$lines = explode("\n",$body);
+		if (strpos($body, $this->defaultIndent) !== 0) {
+			$lines = explode("\n", $body);
 			$newLines = array();
-			foreach($lines as $line){
-				$newLines[] = $this->defaultIndent.$line;
+			foreach ($lines as $line) {
+				$newLines[] = $this->defaultIndent . $line;
 			}
-			$body = implode("\n",$newLines);
+			$body = implode("\n", $newLines);
 		}
 		$this->body = rtrim($body);
 	}
@@ -101,7 +101,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 	 * getter for parameters
 	 * @return array parameters
 	 */
-	public function getParameters(){
+	public function getParameters() {
 		return $this->parameters;
 	}
 
@@ -109,9 +109,9 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 	 * getter for parameter names
 	 * @return array parameter names
 	 */
-	public function getParameterNames(){
+	public function getParameterNames() {
 		$parameterNames = array();
-		foreach($this->parameters as $parameter){
+		foreach ($this->parameters as $parameter) {
 			$parameterNames[] = $parameter->getName();
 		}
 		return $parameterNames;
@@ -122,9 +122,9 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 	 * @param array $parameters of type Tx_ExtensionBuilder_Reflection_ParameterReflection
 	 * @return void
 	 */
-	public function setParameters($parameters){
-		foreach($parameters as $parameter){
-			$methodParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($parameter->getName(),$parameter);
+	public function setParameters($parameters) {
+		foreach ($parameters as $parameter) {
+			$methodParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($parameter->getName(), $parameter);
 			$this->parameters[$methodParameter->getPosition()] = $methodParameter;
 		}
 
@@ -135,8 +135,8 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 	 * @param array $parameter
 	 * @return void
 	 */
-	public function setParameter($parameter){
-		if(!in_array($parameter->getName(),$this->getParameterNames())){
+	public function setParameter($parameter) {
+		if (!in_array($parameter->getName(), $this->getParameterNames())) {
 			$this->parameters[$parameter->getPosition()] = $parameter;
 		}
 
@@ -147,7 +147,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 	 * @param array $parameter
 	 * @return void
 	 */
-	public function replaceParameter($parameter){
+	public function replaceParameter($parameter) {
 		$this->parameters[$parameter->getPosition()] = $parameter;
 	}
 
@@ -157,9 +157,9 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 	 * @param $parameterSortingIndex
 	 * @return boolean true (if successfull removed)
 	 */
-	public function removeParameter($parameterName, $parameterPosition){
+	public function removeParameter($parameterName, $parameterPosition) {
 		//TODO: Not yet tested
-		if(isset($this->parameter[$parameterPosition]) && $this->parameter[$parameterPosition]->getName() == $parameterName){
+		if (isset($this->parameter[$parameterPosition]) && $this->parameter[$parameterPosition]->getName() == $parameterName) {
 			unset($this->parameter[$parameterPosition]);
 			return true;
 		}
@@ -172,11 +172,11 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 	 * @param $parameterSortingIndex
 	 * @return boolean true (if successfull removed)
 	 */
-	public function renameParameter($oldName, $newName, $parameterPosition){
+	public function renameParameter($oldName, $newName, $parameterPosition) {
 		//TODO: Not yet tested
-		if(isset($this->parameter[$parameterPosition])){
+		if (isset($this->parameter[$parameterPosition])) {
 			$parameter = $this->parameter[$parameterPosition];
-			if($parameter->getName() == $oldName){
+			if ($parameter->getName() == $oldName) {
 				$parameter->setName($newName);
 				$this->parameter[$parameterPosition] = $parameter;
 				return true;
@@ -186,20 +186,20 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 	}
 
 	/**
-	*
-	* TODO: THe sorting of tags/annotations should be controlled
-	*
-	*/
-	public function getAnnotations(){
+	 *
+	 * TODO: THe sorting of tags/annotations should be controlled
+	 *
+	 */
+	public function getAnnotations() {
 		$annotations = parent::getAnnotations();
-		if(count($this->parameters > 0) && !$this->isTaggedWith('param')){
+		if (count($this->parameters > 0) && !$this->isTaggedWith('param')) {
 			$paramTags = array();
-			foreach($this->parameters as $parameter){
-				$paramTags[] = 'param '.strtolower($parameter->getVarType()).' $'.$parameter->getName();
+			foreach ($this->parameters as $parameter) {
+				$paramTags[] = 'param ' . strtolower($parameter->getVarType()) . ' $' . $parameter->getName();
 			}
-			$annotations = array_merge($paramTags,$annotations);
+			$annotations = array_merge($paramTags, $annotations);
 		}
-		if(!$this->isTaggedWith('return')){
+		if (!$this->isTaggedWith('return')) {
 			$annotations[] = 'return';
 		}
 		return $annotations;
