@@ -26,12 +26,11 @@
 /**
  * Backend Module of the Extension Builder extension
  *
- * @category    Controller
- * @package     TYPO3
+ * @category	Controller
+ * @package	 TYPO3
  * @subpackage  tx_extensionbuilder
- * @author      Ingmar Schlecht <ingmar@typo3.org>
- * @license     http://www.gnu.org/copyleft/gpl.html
- * @version     SVN: $Id$
+ * @author	  Ingmar Schlecht <ingmar@typo3.org>
+ * @license	 http://www.gnu.org/copyleft/gpl.html
  */
 class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_MVC_Controller_ActionController {
 
@@ -252,7 +251,7 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 				continue;
 			}
 			$extensionBuilderConfiguration = $this->configurationManager->getExtensionBuilderConfiguration($singleExtensionDirectory);
-			if($extensionBuilderConfiguration !== NULL){
+			if ($extensionBuilderConfiguration !== NULL) {
 				$result[] = array(
 					'name' => $singleExtensionDirectory,
 					'working' => json_encode($extensionBuilderConfiguration)

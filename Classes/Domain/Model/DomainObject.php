@@ -1,26 +1,26 @@
 <?php
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2009 Ingmar Schlecht
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2009 Ingmar Schlecht
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * Schema for a Domain Object.
@@ -137,9 +137,9 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	 * @return string
 	 */
 	public function getDescription() {
-		if($this->description){
+		if ($this->description) {
 			return $this->description;
-		}else{
+		} else {
 			return $this->getName();
 		}
 	}
@@ -202,9 +202,9 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	 */
 	public function addProperty(Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $property) {
 		$property->setDomainObject($this);
-		if(is_subclass_of($property, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
+		if (is_subclass_of($property, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
 			// here we do a check if there is already a relation to the same foreign class
-			if(!$this->isUniqueRelationToForeignClass($property->getForeignClass())){
+			if (!$this->isUniqueRelationToForeignClass($property->getForeignClass())) {
 				$property->setUseExtendedRelationTableName(true);
 			}
 		}
@@ -220,11 +220,11 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	 *
 	 * @param string $foreignClass
 	 */
-	protected function isUniqueRelationToForeignClass($foreignClass){
+	protected function isUniqueRelationToForeignClass($foreignClass) {
 		$anyToManyRelationProperties = $this->getAnyToManyRelationProperties();
 		$foreignClasses = array();
-		foreach($anyToManyRelationProperties as $anyToManyRelationProperty){
-			if($anyToManyRelationProperty->getForeignClass() == $foreignClass){
+		foreach ($anyToManyRelationProperties as $anyToManyRelationProperty) {
+			if ($anyToManyRelationProperty->getForeignClass() == $foreignClass) {
 				return false;
 			}
 		}
@@ -244,8 +244,8 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	 * @return object <Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty>
 	 */
 	public function getPropertyByName($propertyName) {
-		foreach($this->properties as $property){
-			if($property->getName() == $propertyName){
+		foreach ($this->properties as $property) {
+			if ($property->getName() == $propertyName) {
 				return $property;
 			}
 		}
@@ -286,7 +286,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	 */
 	public function addAction(Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action) {
 		$action->setDomainObject($this);
-		if(!in_array($action,$this->actions)){
+		if (!in_array($action, $this->actions)) {
 			$this->actions[] = $action;
 		}
 
@@ -316,7 +316,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	public function setExtension(Tx_ExtensionBuilder_Domain_Model_Extension $extension) {
 		$this->extension = $extension;
 	}
-	
+
 	public function getExtension() {
 		return $this->extension;
 	}
@@ -367,9 +367,9 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 		return $this->extension->getShortExtensionKey() . '_domain_model_' . strtolower($this->getName());
 	}
 
-	public function getHasBooleanProperties(){
-		foreach($this->properties as $property){
-			if($property->isBoolean()){
+	public function getHasBooleanProperties() {
+		foreach ($this->properties as $property) {
+			if ($property->isBoolean()) {
 				return true;
 			}
 		}
@@ -378,10 +378,10 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	/**
 	 * @return array
 	 */
-	public function getPropertiesWithMappingStatements(){
+	public function getPropertiesWithMappingStatements() {
 		$propertiesWithMappingStatements = array();
-		foreach($this->properties as $property){
-			if($property->getMappingStatement()){
+		foreach ($this->properties as $property) {
+			if ($property->getMappingStatement()) {
 				$propertiesWithMappingStatements[] = $property;
 			}
 		}
@@ -393,7 +393,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	 *
 	 * @return boolean $needsUploadFolder
 	 */
-	public function getNeedsUploadFolder(){
+	public function getNeedsUploadFolder() {
 		return $this->needsUploadFolder;
 	}
 }

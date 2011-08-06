@@ -43,7 +43,7 @@ class Tx_ExtensionBuilder_ViewHelpers_MatchStringViewHelper extends Tx_Fluid_Cor
 	 */
 	public function render($match, $in, $caseSensitive = FALSE) {
 		$matchAsRegularExpression = '/' . $match . '/';
-		if (! $caseSensitive) $matchAsRegularExpression .= 'i';
+		if (!$caseSensitive) $matchAsRegularExpression .= 'i';
 		return (preg_match($matchAsRegularExpression, $in) === 0) ? FALSE : TRUE;
 	}
 }

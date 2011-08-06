@@ -72,7 +72,7 @@ class Tx_ExtensionBuilder_Domain_Model_BackendModule {
 	 *
 	 * @return string
 	 */
-	public function getName () {
+	public function getName() {
 		return $this->name;
 	}
 
@@ -82,8 +82,8 @@ class Tx_ExtensionBuilder_Domain_Model_BackendModule {
 	 * @param string $name
 	 * @return void
 	 */
-	public function setName ($name) {
-		$this->name =$name;
+	public function setName($name) {
+		$this->name = $name;
 	}
 
 
@@ -92,7 +92,7 @@ class Tx_ExtensionBuilder_Domain_Model_BackendModule {
 	 *
 	 * @return string
 	 */
-	public function getDescription () {
+	public function getDescription() {
 		return $this->description;
 	}
 
@@ -102,8 +102,8 @@ class Tx_ExtensionBuilder_Domain_Model_BackendModule {
 	 * @param string $description
 	 * @return void
 	 */
-	public function setDescription ($description) {
-		$this->description =$description;
+	public function setDescription($description) {
+		$this->description = $description;
 	}
 
 	/**
@@ -127,7 +127,7 @@ class Tx_ExtensionBuilder_Domain_Model_BackendModule {
 
 	/**
 	 * Setter for mainModule
-	 * 	/**
+	 *	 /**
 	 * Setter for key
 	 *
 	 * @param string $key
@@ -150,7 +150,7 @@ class Tx_ExtensionBuilder_Domain_Model_BackendModule {
 	 * @param $mainModule
 	 * @return void
 	 */
-	public function setMainModule($mainModule){
+	public function setMainModule($mainModule) {
 		$this->mainModule = $mainModule;
 	}
 
@@ -158,8 +158,9 @@ class Tx_ExtensionBuilder_Domain_Model_BackendModule {
 	 * Getter for mainModule
 	 *
 	 */
-	public function getMainModule(){
+	public function getMainModule() {
 		return $this->mainModule;
 	}
 }
+
 ?>
