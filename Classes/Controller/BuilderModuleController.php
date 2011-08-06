@@ -216,6 +216,9 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 			$this->codeGenerator->build($extension);
 			$this->extensionInstallationStatus->setExtension($extension);
 			$message = '<p>The Extension was saved</p>' . $this->extensionInstallationStatus->getStatusMessage();
+			if ($extension->getNeedsUploadFolder()) {
+				$message .= '<br />Notice: File upload is not yet implemented.';
+			}
 			$result = array('success' => $message);
 		} catch (Exception $e) {
 			throw $e;
