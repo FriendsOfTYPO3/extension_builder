@@ -940,12 +940,22 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		closedir($dir);
 	}
 
-
+	/**
+	 * TODO: Adapt to new xlf format!
+	 * @static
+	 * @param string $locallangFile
+	 * @param string $newXmlString
+	 * @return string merged label in XML format
+	 */
 	static public function mergeLocallangXml($locallangFile, $newXmlString) {
-		$existingXml = t3lib_div::xml2array(t3lib_div::getUrl($locallangFile));
-		$newXml = t3lib_div::xml2array($newXmlString);
-		$mergedXml = t3lib_div::array_merge_recursive_overrule($newXml, $existingXml);
-		$xml = self::createXML($mergedXml);
+		$existingLabelArr = t3lib_div::xml2array(t3lib_div::getUrl($locallangFile));
+		$newLabelArr = t3lib_div::xml2array($newXmlString);
+		if(is_array($existingLabelArr)){
+			$mergedLabelArr = t3lib_div::array_merge_recursive_overrule($newLabelArr, $existingLabelArr);
+		} else {
+			$mergedLabelArr = $newLabelArr;
+		}
+		$xml = self::createXML($mergedLabelArr);
 		return $xml;
 	}
 
