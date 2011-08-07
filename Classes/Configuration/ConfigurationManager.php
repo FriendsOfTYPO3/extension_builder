@@ -33,12 +33,18 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 
 	const SETTINGS_DIR = 'Configuration/ExtensionBuilder/';
 	const OLD_SETTINGS_DIR = 'Configuration/Kickstarter/';
+	const EXTENSION_BUILDER_SETTINGS_FILE = 'ExtensionBuilder.json';
 
 	/**
 	 *
 	 * @var array
 	 */
 	private $inputData = array();
+
+	/**
+	 * @var array
+	 */
+	private $extensionConfigurationJSON = array();
 
 	/**
 	 * wrapper for file_get_contents('php://input')
@@ -57,8 +63,8 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		if (empty($this->inputData)) {
 			throw new Exception('No inputData!');
 		}
-		$extensionConfigurationJSON = json_decode($this->inputData['params']['working'], true);
-		return $extensionConfigurationJSON;
+		$this->extensionConfigurationJSON = json_decode($this->inputData['params']['working'], true);
+		return $this->extensionConfigurationJSON;
 	}
 
 	public function getSubActionFromRequest() {
@@ -195,13 +201,11 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 * @return array the modified configuration
 	 */
 	public function fixExtensionBuilderJSON($extensionConfigurationJSON) {
-		//t3lib_div::devlog('JSON 1','extension_builder',0,$extensionConfigurationJSON);
 		$extensionConfigurationJSON['modules'] = $this->mapOldRelationTypesToNewRelationTypes($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->generateUniqueIDs($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->mapAdvancedMode($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->resetOutboundedPositions($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON = $this->reArrangeRelations($extensionConfigurationJSON);
-		//t3lib_div::devlog('JSON 2','extension_builder',0,$extensionConfigurationJSON);
 		return $extensionConfigurationJSON;
 	}
 
@@ -269,23 +273,21 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 					if ($module['value']['relationGroup']['relations'][$i]['advancedSettings']['inlineEditing'] == 1) {
 						if ($module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] == 'manyToMany') {
 							// inline enabled results in a zeroToMany
-							$module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] = 'zeroToMany';
+							$module['value']['relationGroup']['relations'][$i]['relationType'] = 'zeroToMany';
 						}
 					} else {
 						if ($module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] == 'zeroToMany') {
 							// inline disabled results in a manyToMany
-							$module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] = 'manyToMany';
+							$module['value']['relationGroup']['relations'][$i]['relationType'] = 'manyToMany';
 						}
 						if ($module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] == 'zeroToOne') {
 							// inline disabled results in a manyToOne
-							$module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] = 'manyToOne';
+							$module['value']['relationGroup']['relations'][$i]['relationType'] = 'manyToOne';
 						}
 					}
 				}
 				unset($module['value']['relationGroup']['relations'][$i]['advancedSettings']['inlineEditing']);
 				unset($module['value']['relationGroup']['relations'][$i]['inlineEditing']);
-				unset($module['value']['relationGroup']['relations'][$i]['lazyLoading']);
-				unset($module['value']['relationGroup']['relations'][$i]['relationType']);
 			}
 		}
 		return $jsonConfig;
@@ -305,6 +307,8 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 					$module['value']['relationGroup']['relations'][$i]['advancedSettings'] = array();
 					$module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] = $module['value']['relationGroup']['relations'][$i]['relationType'];
 					$module['value']['relationGroup']['relations'][$i]['advancedSettings']['propertyIsExcludeField'] = $module['value']['relationGroup']['relations'][$i]['propertyIsExcludeField'];
+					$module['value']['relationGroup']['relations'][$i]['advancedSettings']['lazyLoading'] = $module['value']['relationGroup']['relations'][$i]['lazyLoading'];
+					$module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationDescription'] = $module['value']['relationGroup']['relations'][$i]['relationDescription'];
 				}
 			}
 		}
@@ -401,4 +405,4 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 
 }
 
-?>
+?>	
