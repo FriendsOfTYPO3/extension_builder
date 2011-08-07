@@ -169,7 +169,6 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	}
 
 	protected function generateCodeAction_saveWiring() {
-
 		try {
 			$extensionBuildConfiguration = $this->configurationManager->getConfigurationFromModeler();
 			$extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
@@ -182,10 +181,19 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 		try {
 			$this->extensionValidator->isValid($extension);
 		} catch (Exception $e) {
-			throw $e;
+			if ($e->getCode() == Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::EXTENSION_DIR_EXISTS) {
+				if (!$this->configurationManager->overwriteIsConfirmed()) {
+					return array(
+						'confirm' => 'There is already an extension with this extension key.<br />Are you shure, you want to write into that extension directory?',
+						'confirmFieldName' => 'allowExistingExtensionKey');
+				}
+			} else {
+				throw($e);
+			}
 		}
 
 		$extensionDirectory = $extension->getExtensionDir();
+
 		if (!is_dir($extensionDirectory)) {
 			t3lib_div::mkdir($extensionDirectory);
 		} else {

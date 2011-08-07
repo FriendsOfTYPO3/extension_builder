@@ -247,6 +247,19 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		return $jsonConfig;
 	}
 
+	/**
+	 * Check if the confirm was send with input data
+	 *
+	 * @return boolean
+	 */
+	public function overwriteIsConfirmed() {
+		if (isset($this->inputData['params']['allowExistingExtensionKey']) &&
+			$this->inputData['params']['allowExistingExtensionKey'] == 1 ) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
 
 	/**
 	 *
