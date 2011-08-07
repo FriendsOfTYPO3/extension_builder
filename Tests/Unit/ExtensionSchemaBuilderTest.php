@@ -197,10 +197,8 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 							'relations' => array(
 								0 => array(
 									'relationName' => 'posts',
-									'advancedSettings' => array(
-										'relationType' => 'zeroToMany',
-										'propertyIsExcludeField' => 1
-									),
+									'relationType' => 'zeroToMany',
+									'propertyIsExcludeField' => 1
 								)
 							)
 						)
@@ -224,10 +222,8 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 							'relations' => array(
 								0 => array(
 									'relationName' => 'comments',
-									'advancedSettings' => array(
-										'relationType' => 'zeroToMany',
-										'propertyIsExcludeField' => 1
-									),
+									'relationType' => 'zeroToMany',
+									'propertyIsExcludeField' => 1
 								)
 							)
 						)

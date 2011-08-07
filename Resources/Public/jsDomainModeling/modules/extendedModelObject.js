@@ -2,6 +2,7 @@ var advancedFields = {
 		type: "group",
 		inputParams: {
 			collapsible: true,
+			flatten:true,
 			collapsed: true,
 			legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.more,
 			name: "advancedSettings",
