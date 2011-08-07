@@ -175,3 +175,8 @@ div.savedStatus {
 #alertPanelBody {
 	padding: 10px 0;
 }
+
+div.bd button {
+	margin: 10px;
+    padding: 4px 10px;
+}

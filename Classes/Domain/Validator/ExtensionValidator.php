@@ -54,8 +54,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	ERROR_PLUGIN_INVALID_KEY = 301,
 	ERROR_BACKENDMODULE_DUPLICATE_KEY = 400,
 	ERROR_BACKENDMODULE_INVALID_KEY = 401,
-	EXTENSION_EXISTS_PIBASE = 500,
-	EXTENSION_EXISTS_EXTBASE = 501;
+	EXTENSION_DIR_EXISTS = 500;
 
 	/**
 	 * Reserved words by MySQL
@@ -383,50 +382,19 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 		return true;
 	}
 
+	/**
+	 * @throws Tx_ExtensionBuilder_Domain_Exception_ExtensionException
+	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
+	 * @return void
+	 */
 	protected function checkExistingExtensions($extension) {
-		if (!is_dir(PATH_typo3conf . 'ext/' . $extension->getExtensionKey())) {
-			// no existing extension dir
-			return;
-		}
-		else {
-			/**
-			 * Not yet shure, what to do here...
-			if($this->detectExtbaseExtension($extension->getExtensionKey())){
-			throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
-			'There is an existing extension with this extension key. '
-			.'Are you shure you want to overwrite/merge it?',
-			self::EXTENSION_EXISTS_EXTBASE);
-			}
-			 */
-			if ($this->detectPiBasedExtension($extension->getExtensionKey())) {
+		if (is_dir( $extension->getExtensionDir())){
+			$settingsFile = $extension->getExtensionDir() .
+						Tx_ExtensionBuilder_Configuration_ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
+			if (!file_exists($settingsFile) || $extension->isRenamed()) {
 				throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
-					'There is an existing piBased extension with this extension key. '
-					. 'Please choose another extension key or rename the existing extension directory',
-					self::EXTENSION_EXISTS_PIBASE);
-			}
-		}
-	}
-
-
-	protected function detectPiBasedExtension($extensionKey) {
-		$extDir = PATH_typo3conf . 'ext/' . $extensionKey . '/';
-		if (is_dir($extDir . 'pi1')) {
-			return true;
-		}
-		if (!is_dir($extDir . 'Classes') && !is_dir($extDir . 'Configuration')) {
-			return true;
-		}
-	}
-
-	protected function detectExtbaseExtension($extensionKey) {
-		$extDir = PATH_typo3conf . 'ext/' . $extensionKey . '/';
-
-		if (file_exists($extDir . 'ext_emconf.php')) {
-			$EM_CONF = array();
-			$_EXTKEY = $extensionKey;
-			require_once($extDir . 'ext_emconf.php');
-			if (strpos($EM_CONF[$_EXTKEY]['dependencies'], 'extbase') > -1) {
-				return true;
+					'Extension directory exists',
+					self::EXTENSION_DIR_EXISTS);
 			}
 		}
 	}

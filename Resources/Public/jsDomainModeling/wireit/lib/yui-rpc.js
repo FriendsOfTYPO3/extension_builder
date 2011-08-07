@@ -54,12 +54,28 @@ YAHOO.rpc.Service.prototype = {
 		   var envelope = rpc.Envelope[method.envelope || self._smd.envelope];
 		   var callback = {
    	      success: function(o) {
-               var results = envelope.deserialize(o);
+			var results = envelope.deserialize(o);
       	      opts.success.call(opts.scope || self,results);
    	      },
    	      failure: function(o) {
-   	         if(lang.isFunction(opts.failure) ) {
-   	            opts.failure.call(opts.scope || self, {error: "unable to transport"});
+			 if(lang.isFunction(opts.failure) ) {
+   	         	parent.console.log(o);
+				var errorMessage =  "Server responded with Status-Code: " + o.status + "<br />Statustext: " + o.statusText;
+				if(typeof o.error != 'undefined'){
+					errorMessage += 'Response:<div style="width:360px;height:300px;overflow: scroll">' + o.error + '</div>';
+				}
+				if(typeof o.responseText != 'undefined'){
+					errorMessage += '<br /><a href="#" id="debugPopup" style="text-decoration: underline">Show response</a>';
+					window.setTimeout(function(){
+						document.getElementById('debugPopup').onclick = function(){
+							var f = window.open('', "Debug", "width=900,height=400,scrollbars=yes");
+							f.document.write(o.responseText);
+							f.focus();
+						};
+					},1000);
+				}
+				 opts.failure.call(opts.scope || self,
+					{error:errorMessage});
    	         }
    	      },
    	      scope: self
@@ -317,7 +333,12 @@ YAHOO.rpc.Envelope = {
          };   
       },
       deserialize: function(results) {
-         return lang.JSON.parse(results.responseText);
+		  try {
+			  lang.JSON.parse(results.responseText);
+		  } catch(err){
+			  return {'error' : results.responseText};
+		  }
+		  return lang.JSON.parse(results.responseText);
       }
    }
    

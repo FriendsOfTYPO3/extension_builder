@@ -108,10 +108,15 @@ WireIt.WiringEditor = function(options) {
       });
      this.alertPanel.setBody("<div id='wireEditorMessageBox'></div><button id='alertPanelButton'>Ok</button>");
      this.alertPanel.render(document.body);
-     Event.addListener('alertPanelButton','click', function() {
-		this.alertPanel.hide();
-	 }, this, true);
 
+	 this.confirmPanel = new widget.Panel('confirmPanel', {
+         fixedcenter: true,
+         draggable: true,
+         visible: false,
+         modal: true
+      });
+     this.confirmPanel.setBody("<div id='wireEditorConfirmMessageBox'></div><button id='confirmPanelButton'>Ok</button>&nbsp;&nbsp;<button id='confirmPanelCancelButton'>Cancel</button>");
+     this.confirmPanel.render(document.body);
 
      this.showSpinnerPanel = new YAHOO.widget.Panel("wait",
  			{ width:"240px",
@@ -227,6 +232,8 @@ WireIt.WiringEditor.prototype = {
     this.options.layerOptions = {};
     var layerOptions = options.layerOptions || {};
     this.options.layerOptions.parentEl = layerOptions.parentEl ? layerOptions.parentEl : Dom.get('modelingLayer');
+
+	this.dataToSubmit = {name: '', working: '', language: this.options.languageName };
 
     // IS: Disable layer map:
    // this.options.layerOptions.layerMap = YAHOO.lang.isUndefined(layerOptions.layerMap) ? true : layerOptions.layerMap;
@@ -393,7 +400,9 @@ WireIt.WiringEditor.prototype = {
        return;
     }
     this.showSpinnerPanel.show();
-    this.service.saveWiring({name: value.name, working: JSON.stringify(value.working), language: this.options.languageName }, {
+	this.dataToSubmit.name = value.name;
+	this.dataToSubmit.working = JSON.stringify(value.working);
+    this.service.saveWiring(this.dataToSubmit, {
        success: this.saveModuleSuccess,
        failure: this.saveModuleFailure,
        scope: this
@@ -407,6 +416,14 @@ WireIt.WiringEditor.prototype = {
   */
  saveModuleSuccess: function(o) {
 	 this.showSpinnerPanel.hide();
+
+	 if (typeof o.confirm != 'undefined'){
+		 title = 'Please confirm';
+		 message = o.confirm;
+		 this.confirm(title,message,o.confirmFieldName);
+		 return;
+	 }
+
 	 if(typeof o.success != 'undefined'){
 		 title = 'Success';
 		 message = o.success;
@@ -429,15 +446,33 @@ WireIt.WiringEditor.prototype = {
 	this.alertPanel.setHeader(title);
 	Dom.get('wireEditorMessageBox').innerHTML = message;
 	this.alertPanel.show();
+	Event.addListener('alertPanelButton','click', function() {
+		this.alertPanel.hide();
+	}, this, true);
+ },
+
+ confirm: function(title,message,confirmFieldName){
+	this.confirmPanel.setHeader(title);
+	Dom.get('wireEditorConfirmMessageBox').innerHTML = message;
+	this.confirmPanel.show();
+	Event.addListener(
+			'confirmPanelButton',
+			'click',
+			function(){
+				this.dataToSubmit[confirmFieldName] = 1;
+				this.confirmPanel.hide();
+				this.onSave();
+			}, this, true);
+	Event.addListener('confirmPanelCancelButton','click', function(){this.confirmPanel.hide();}, this, true);
  },
 
  /**
   * saveModule failure callback
   * @method saveModuleFailure
   */
- saveModuleFailure: function(o) {
+ saveModuleFailure: function(o,t) {
 	 this.showSpinnerPanel.hide()
-	 this.alert('Error',"Error while saving! ");
+	 this.alert('Error',"Error while saving: " + o.error);
  },
 
 
