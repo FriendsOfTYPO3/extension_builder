@@ -123,13 +123,16 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 
 		// Rename the old kickstarter.json file to ExtensionBuilder.json
 		if (file_exists($this->previousExtensionDirectory . 'kickstarter.json')) {
-			rename($this->previousExtensionDirectory . 'kickstarter.json', $this->previousExtensionDirectory . 'ExtensionBuilder.json');
+			rename(
+				$this->previousExtensionDirectory . 'kickstarter.json',
+				$this->previousExtensionDirectory . Tx_ExtensionBuilder_Configuration_ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE
+			);
 		}
 
-		if (file_exists($this->previousExtensionDirectory . 'ExtensionBuilder.json')) {
+		if (file_exists($this->previousExtensionDirectory . Tx_ExtensionBuilder_Configuration_ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE)) {
 			$extensionSchemaBuilder = t3lib_div::makeInstance('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder');
-			$jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey);
-			//t3lib_div::devlog('old JSON:'.$this->previousExtensionDirectory . 'ExtensionBuilder.json','extension_builder',0,$jsonConfig);
+			$jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey,FALSE);
+			t3lib_div::devlog('old JSON:'.$this->previousExtensionDirectory . 'ExtensionBuilder.json','extension_builder',0,$jsonConfig);
 			$this->previousExtension = $extensionSchemaBuilder->build($jsonConfig);
 			$oldDomainObjects = $this->previousExtension->getDomainObjects();
 			foreach ($oldDomainObjects as $oldDomainObject) {

@@ -145,10 +145,9 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 					}
 				}
 				$relationJsonConfiguration = $extensionBuildConfiguration['modules'][$wire['src']['moduleId']]['value']['relationGroup']['relations'][substr($wire['src']['terminal'], 13)];
-
 				if (!is_array($relationJsonConfiguration)) {
 					t3lib_div::devlog('Error in JSON relation configuration!', 'extension_builder', 3, $extensionBuildConfiguration);
-					$errorMessage = 'Missing relation config in domain object: ' . $jsonArray['modules'][$wire['tgt']['moduleId']]['value']['name'];
+					$errorMessage = 'Missing relation config in domain object: ' . $extensionBuildConfiguration['modules'][$wire['tgt']['moduleId']]['value']['name'];
 					throw new Exception($errorMessage);
 				}
 

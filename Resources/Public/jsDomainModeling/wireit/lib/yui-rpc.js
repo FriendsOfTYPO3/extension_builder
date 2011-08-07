@@ -317,7 +317,13 @@ YAHOO.rpc.Envelope = {
           };   
        },
        deserialize: function(results) {
-          return lang.JSON.parse(results.responseText);
+          try {
+			  lang.JSON.parse(results.responseText);
+		  } catch(err){
+			  //parent.console.log(results);
+			  return {'error' : results.responseText};
+		  }
+		  return lang.JSON.parse(results.responseText);
        }
     },
    
@@ -336,6 +342,7 @@ YAHOO.rpc.Envelope = {
 		  try {
 			  lang.JSON.parse(results.responseText);
 		  } catch(err){
+			  //parent.console.log(results);
 			  return {'error' : results.responseText};
 		  }
 		  return lang.JSON.parse(results.responseText);
