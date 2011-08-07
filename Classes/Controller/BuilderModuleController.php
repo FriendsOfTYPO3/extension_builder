@@ -178,19 +178,21 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 		}
 
 		// Validate the extension
-		try {
-			$this->extensionValidator->isValid($extension);
-		} catch (Exception $e) {
-			if ($e->getCode() == Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::EXTENSION_DIR_EXISTS) {
-				if (!$this->configurationManager->overwriteIsConfirmed()) {
-					return array(
-						'confirm' => 'There is already an extension with this extension key.<br />Are you shure, you want to write into that extension directory?',
-						'confirmFieldName' => 'allowExistingExtensionKey');
-				}
-			} else {
-				throw($e);
+		$validationResult = $this->extensionValidator->isValid($extension);
+		if(!empty($validationResult['errors'])){
+			$errorMessage = '';
+			foreach($validationResult['errors'] as $exception){
+				$errorMessage .= '<br />'.$exception->getMessage();
+			}
+			throw new Exception($errorMessage);
+		}
+		if(!empty($validationResult['warnings'])){
+			$confirmationRequired = $this->handleValidationWarnings($validationResult['warnings']);
+			if(!empty($confirmationRequired)){
+				return $confirmationRequired;
 			}
 		}
+
 
 		$extensionDirectory = $extension->getExtensionDir();
 
@@ -238,6 +240,7 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	}
 
 	/**
+	 * Save the ExtensionBuilder config file
 	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
 	 * @return void
 	 */
@@ -248,10 +251,11 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 			'extension_builder_version' => t3lib_extMgm::getExtensionVersion('extension_builder'),
 			'be_user' => $GLOBALS['BE_USER']->user['realName'] . ' (' . $GLOBALS['BE_USER']->user['uid'] . ')'
 		);
-		t3lib_div::writeFile($extension->getExtensionDir() . 'ExtensionBuilder.json', json_encode($extensionBuildConfiguration));
+		t3lib_div::writeFile($extension->getExtensionDir() . Tx_ExtensionBuilder_Configuration_ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE, json_encode($extensionBuildConfiguration));
 	}
 
 	/**
+	 * Shows a list with available extensions (if they have an ExtensionBuilde.json file)
 	 * @return array
 	 */
 	protected function generateCodeAction_listWirings() {
@@ -272,6 +276,39 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 		closedir($extensionDirectoryHandle);
 
 		return array('result' => $result, 'error' => NULL);
+	}
+
+	/**
+	 * This is a hack to handle confirm requests in the GUI
+	 * @param $warnings
+	 * @return array confirm (Question to confirm), confirmFieldName (is set to true if confirmed)
+	 */
+	protected function handleValidationWarnings($warnings) {
+		$sqlReservedPropertyNames = array();
+		foreach($warnings as $exception){
+			if ($exception->getCode() == Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::EXTENSION_DIR_EXISTS) {
+				if (!$this->configurationManager->isConfirmed('allowExistingExtensionKey')) {
+					return array(
+						'confirm' => 'There is already an extension with this extension key.<br />Are you shure, you want to write into that extension directory?',
+						'confirmFieldName' => 'allowExistingExtensionKey');
+				}
+			}
+			if ($exception->getCode() == Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::ERROR_PROPERTY_RESERVED_SQL_WORD) {
+				$sqlReservedPropertyNames[] = $exception->getMessage();
+			}
+		}
+		if(!empty($sqlReservedPropertyNames)){
+			if (!$this->configurationManager->isConfirmed('allowReservedSQLWords')) {
+				$confirmMessage =  "SQL reserved names were found for these properties:<br />" .
+					implode("<br />",$sqlReservedPropertyNames) .
+						 "<br />This will result in a different column name in the database.<br />" .
+						"Are you shure, you want to use them?";
+				return array(
+					'confirm' => $confirmMessage,
+					'confirmFieldName' => 'allowReservedSQLWords');
+			}
+		}
+		return array();
 	}
 
 }

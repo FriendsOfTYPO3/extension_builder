@@ -182,13 +182,13 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			if ($this->classObject->propertyExists($propertyName)) {
 				$classProperty = $this->classObject->getProperty($propertyName);
 				//$classPropertyTags = $classProperty->getTags();
-				t3lib_div::devLog('Property found: ' . $propertyName . ':' . $domainProperty->getTypeForComment(), 'extension_builder', 1, (array)$classProperty);
+				//t3lib_div::devLog('Property found: ' . $propertyName . ':' . $domainProperty->getTypeForComment(), 'extension_builder', 1, (array)$classProperty);
 			}
 			else {
 				$classProperty = new Tx_ExtensionBuilder_Domain_Model_Class_Property($propertyName);
 				$classProperty->setTag('var', $domainProperty->getTypeForComment());
 				$classProperty->addModifier('protected');
-				t3lib_div::devLog('New property: ' . $propertyName . ':' . $domainProperty->getTypeForComment(), 'extension_builder', 1);
+				//t3lib_div::devLog('New property: ' . $propertyName . ':' . $domainProperty->getTypeForComment(), 'extension_builder', 1);
 			}
 
 			$classProperty->setAssociatedDomainObjectProperty($domainProperty);
@@ -213,7 +213,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 * @param Tx_ExtensionBuilder_Domain_Model_AbstractDomainObjectProperty $domainProperty
 	 */
 	protected function setPropertyRelatedMethods($domainProperty) {
-		t3lib_div::devlog('setPropertyRelatedMethods:' . $domainProperty->getName(), 'extension_builder', 0, (array)$domainProperty);
+		//t3lib_div::devlog('setPropertyRelatedMethods:' . $domainProperty->getName(), 'extension_builder', 0, (array)$domainProperty);
 		if (is_subclass_of($domainProperty, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
 			$addMethod = $this->buildAddMethod($domainProperty);
 			$removeMethod = $this->buildRemoveMethod($domainProperty);
@@ -242,7 +242,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 		if ($this->classObject->methodExists($getterMethodName)) {
 			$getterMethod = $this->classObject->getMethod($getterMethodName);
 			//$getterMethodTags = $getterMethod->getTags();
-			t3lib_div::devlog('Existing getterMethod imported:' . $getterMethodName, 'extension_builder', 0, array('methodBody' => $getterMethod->getBody()));
+			//t3lib_div::devlog('Existing getterMethod imported:' . $getterMethodName, 'extension_builder', 0, array('methodBody' => $getterMethod->getBody()));
 		}
 		else {
 			$getterMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($getterMethodName);
@@ -270,7 +270,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 		if ($this->classObject->methodExists($setterMethodName)) {
 			$setterMethod = $this->classObject->getMethod($setterMethodName);
 			//$setterMethodTags = $setterMethod->getTags();
-			t3lib_div::devlog('Existing setterMethod imported:' . $setterMethodName, 'extension_builder', 0, array('methodBody' => $setterMethod->getBody()));
+			//t3lib_div::devlog('Existing setterMethod imported:' . $setterMethodName, 'extension_builder', 0, array('methodBody' => $setterMethod->getBody()));
 		}
 		else {
 			t3lib_div::devlog('new setMethod:' . $setterMethodName, 'extension_builder', 0);
@@ -309,10 +309,10 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 
 		if ($this->classObject->methodExists($addMethodName)) {
 			$addMethod = $this->classObject->getMethod($addMethodName);
-			t3lib_div::devlog('Existing addMethod imported:' . $addMethodName, 'extension_builder', 0, array('methodBody' => $addMethod->getBody()));
+			//t3lib_div::devlog('Existing addMethod imported:' . $addMethodName, 'extension_builder', 0, array('methodBody' => $addMethod->getBody()));
 		}
 		else {
-			t3lib_div::devlog('new addMethod:' . $addMethodName, 'extension_builder', 0);
+			//t3lib_div::devlog('new addMethod:' . $addMethodName, 'extension_builder', 0);
 			$addMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($addMethodName);
 			// default method body
 			$addMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'add', ''));
@@ -346,10 +346,10 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 
 		if ($this->classObject->methodExists($removeMethodName)) {
 			$removeMethod = $this->classObject->getMethod($removeMethodName);
-			t3lib_div::devlog('Existing removeMethod imported:' . $removeMethodName, 'extension_builder', 0, array('methodBody' => $removeMethod->getBody()));
+			//t3lib_div::devlog('Existing removeMethod imported:' . $removeMethodName, 'extension_builder', 0, array('methodBody' => $removeMethod->getBody()));
 		}
 		else {
-			t3lib_div::devlog('new removeMethod:' . $removeMethodName, 'extension_builder', 0);
+			//t3lib_div::devlog('new removeMethod:' . $removeMethodName, 'extension_builder', 0);
 			$removeMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($removeMethodName);
 			// default method body
 			$removeMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'remove', ''));
@@ -384,10 +384,10 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 
 		if ($this->classObject->methodExists($isMethodName)) {
 			$isMethod = $this->classObject->getMethod($isMethodName);
-			t3lib_div::devlog('Existing isMethod imported:' . $isMethodName, 'extension_builder', 0, array('methodBody' => $isMethod->getBody()));
+			//t3lib_div::devlog('Existing isMethod imported:' . $isMethodName, 'extension_builder', 0, array('methodBody' => $isMethod->getBody()));
 		}
 		else {
-			t3lib_div::devlog('new isMethod:' . $isMethodName, 'extension_builder', 1);
+			//t3lib_div::devlog('new isMethod:' . $isMethodName, 'extension_builder', 1);
 			$isMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($isMethodName);
 			// default method body
 			$isMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'is', ''));
@@ -633,7 +633,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			}
 		}
 		$sortedMethods = array_merge($customMethods, $propertyRelatedMethods);
-		t3lib_div::devlog('Methods after sorting', 'extension_builder', 0, array_keys($sortedMethods));
+		//t3lib_div::devlog('Methods after sorting', 'extension_builder', 0, array_keys($sortedMethods));
 
 		$this->classObject->setProperties($sortedProperties);
 		$this->classObject->setMethods($sortedMethods);
