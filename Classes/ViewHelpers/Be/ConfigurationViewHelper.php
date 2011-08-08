@@ -56,6 +56,7 @@ class Tx_ExtensionBuilder_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Flui
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/MenuField.js');
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/TypeField.js');
 
+
 		// WireIt
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/excanvas.js', 'text/javascript', TRUE, FALSE, '<!--[if IE]>|<![endif]-->');
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/WireIt.js');
@@ -119,7 +120,6 @@ class Tx_ExtensionBuilder_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Flui
 	 */
 	private function setLocallangSettings() {
 		$LL = t3lib_div::readLLfile('EXT:extension_builder/Resources/Private/Language/locallang.xml', 'default');
-
 		if (!empty($LL['default']) && is_array($LL['default'])) {
 			foreach ($LL['default'] as $key => $value) {
 				$this->pageRenderer->addInlineSetting(

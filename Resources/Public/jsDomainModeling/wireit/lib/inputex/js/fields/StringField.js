@@ -42,6 +42,13 @@ lang.extend(inputEx.StringField, inputEx.Field,
 	   this.options.minLength = options.minLength;
 	   this.options.typeInvite = options.typeInvite;
 	   this.options.readonly = options.readonly;
+	   this.options.forceLowerCase = options.forceLowerCase;
+	   this.options.forceAlphaNumeric = options.forceAlphaNumeric;
+	   this.options.forceAlphaNumericUnderscore = options.forceAlphaNumericUnderscore;
+	   this.options.noSpaces = options.noSpaces;
+	   this.options.ucFirst = options.ucFirst;
+	   this.options.lcFirst = options.lcFirst;
+
    },
 
 
@@ -227,6 +234,33 @@ lang.extend(inputEx.StringField, inputEx.Field,
 	},
 
    onKeyUp: function(e) {
+     if(this.options.forceLowerCase){
+		this.el.value = this.el.value.toLowerCase();
+	 }
+	 if(this.options.forceAlphaNumeric){
+		this.el.value = this.el.value.replace(/[^a-zA-Z0-9]/g, '');
+	 }
+	  if(this.options.forceAlphaNumericUnderscore){
+		this.el.value = this.el.value.replace(/[^a-zA-Z0-9_]/g, '');
+	 }
+	 if(this.options.noSpaces){
+		   this.el.value = this.el.value.replace(/\s/g, '');
+	 }
+
+	if(this.options.lcFirst ||this.options.ucFirst  ){
+		var first = this.el.value.charAt(0);
+		var tmp = this.el.value.substr(1);
+		if(this.options.lcFirst){
+			first = first.toLowerCase();
+		} else {
+			first = first.toUpperCase();
+		}
+		this.el.value = first + tmp;
+	}
+
+
+
+
       // override me
       //
       //   example :

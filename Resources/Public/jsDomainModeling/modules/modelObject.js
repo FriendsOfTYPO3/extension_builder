@@ -132,8 +132,11 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 													}
 												},
 												{
+													type: 'string',
 													inputParams: {
 														name: "propertyName",
+														forceAlphaNumeric: true,
+														lcFirst: true,
 														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.propertyName,
 														description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_propertyName,
 														required: true
@@ -234,6 +237,8 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 													inputParams: {
 														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.relationName,
 														name: "relationName",
+														forceAlphaNumeric: true,
+														lcFirst: true,
 														description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_relationName,
 														required: true
 													}

@@ -128,7 +128,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Property extends Tx_ExtensionBuilde
 	 * @param string $type
 	 */
 	public function setVarType($varType) {
-		$this->tags['var'] = array($varType . ' $' . $this->getName());
+		$this->tags['var'] = array($varType);
 		$this->varType = $varType;
 	}
 

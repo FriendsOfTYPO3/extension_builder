@@ -273,7 +273,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			//t3lib_div::devlog('Existing setterMethod imported:' . $setterMethodName, 'extension_builder', 0, array('methodBody' => $setterMethod->getBody()));
 		}
 		else {
-			t3lib_div::devlog('new setMethod:' . $setterMethodName, 'extension_builder', 0);
+			//t3lib_div::devlog('new setMethod:' . $setterMethodName, 'extension_builder', 0);
 			$setterMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($setterMethodName);
 			// default method body
 			$setterMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'set', ''));
