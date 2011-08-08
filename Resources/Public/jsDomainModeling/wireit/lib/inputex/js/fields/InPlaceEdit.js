@@ -153,6 +153,9 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       if( e.keyCode == 27) {
          this.onCancelEditor(e);
       }
+	  var first = this.editorField.el.value.charAt(0);
+	  var tmp = this.editorField.el.value.substr(1).replace(/[^a-zA-Z0-9]/g, '');
+	  this.editorField.el.value = first.toUpperCase() + tmp;
    },
    
    /**

@@ -79,6 +79,21 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	protected $emConfDefaults = array('dependencies' => 'cms,extbase,fluid', 'category' => 'plugin');
 
 	/**
+	 * @var string
+	 */
+	protected $priority = '';
+
+	/**
+	 * @var bool
+	 */
+	protected $shy = FALSE;
+
+	/**
+	 * @var string
+	 */
+	protected $category;
+
+	/**
 	 * flag that is set to true if there are domain objects with
 	 * properties that need mapping (because they use MYSQL protected words etc.
 	 *
@@ -575,6 +590,49 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 */
 	public function getUploadFolder() {
 		return 'uploads/' . $this->getShortExtensionKey();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPriority() {
+		return $this->priority;
+	}
+
+	/**
+	 * @param string $priority
+	 */
+	public function setPriority($priority) {
+		$this->priority = $priority;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getShy(){
+		return $this->shy;
+	}
+
+	/**
+	 * @param boolean $shy
+	 * @return void
+	 */
+	public function setShy($shy){
+		$this->shy = $shy;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCategory() {
+		return $this->category;
+	}
+
+	/**
+	 * @param string $category
+	 */
+	public function setCategory($category) {
+		$this->category = $category;
 	}
 
 }

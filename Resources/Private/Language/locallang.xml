@@ -15,7 +15,7 @@
 			<label index="name">Name</label>
 			<label index="key">Key</label>
 			<label index="extensionTitle">Extension title</label>
-			<label index="extensionKey">Extenion Key</label>
+			<label index="extensionKey">Extension Key</label>
 			<label index="descr_extensionKey">The extensionkey should be lowercase and without spaces. It will be the unique identifier for this extension.</label>
 			<label index="short_description">Descr.</label>
 			<label index="description">Description</label>
@@ -26,6 +26,21 @@
 			<label index="stable">Stable</label>
 			<label index="experimental">Experimental</label>
 			<label index="test">Test</label>
+			<label index="category">Category</label>
+			<label index="custom_category">OR custom</label>
+			<label index="descr_custom_category">You can define an own category here</label>
+			<label index="descr_category">The category this extension belongs to in the extension manager.</label>
+			<label index="misc">Miscellaneous</label>
+			<label index="services">Services</label>
+			<label index="backend">Backend</label>
+			<label index="frontend">Frontend</label>
+			<label index="templates">Templates</label>
+			<label index="examples">Examples</label>
+			<label index="documentation">Documentation</label>
+			<label index="priority">Priority</label>
+			<label index="descr_priority">This tells the EM to try to put the extensions as the very first in the list.</label>
+			<label index="shy">Shy</label>
+			<label index="descr_shy">If the extension is marked as shy, it won't be displayed in the extension manager by default</label>
 			<label index="persons">Persons</label>
 			<label index="role">Role</label>
 			<label index="developer">Developer</label>
@@ -47,8 +62,6 @@
 			<label index="manyToMany">m:n</label>
 			<label index="isExcludeField">Is exclude field?</label>
 			<label index="descr_isExcludeField">If set to true, this field will only be visible for admin users per default</label>
-			<label index="editInline">Edit inline?</label>
-			<label index="descr_editInline">If set to true, new records can only be created in the form of this model (Applies only for 1:n or m:n relations)</label>
 			<label index="newModelObject">New model object</label>
 			<label index="domainObjectSettings">Domain object settings</label>
 			<label index="objectType">Object type</label>
@@ -67,7 +80,7 @@
 			<label index="delete">Delete</label>
 			<label index="properties">Properties</label>
 			<label index="propertyName">Property name</label>
-			<label index="descr_propertyName">The name should be lowercase and unique in this model</label>
+			<label index="descr_propertyName">The name should be lowerCamelCase and unique in this model</label>
 			<label index="propertyType">Property type</label>
 			<label index="string">String</label>
 			<label index="text">Text</label>
@@ -81,7 +94,7 @@
 			<label index="isRequired">Is required?</label>
 			<label index="relations">Relations</label>
 			<label index="relationName">Name</label>
-			<label index="descr_relationName">The name should be lowercase and unique in this model</label>
+			<label index="descr_relationName">The name should be lowerCamelCase and unique in this model</label>
 			<label index="extensionProperties">Extension properties</label>
 			<label index="tab_label">Tab label</label>
 			<label index="lazyLoading">Lazy loading</label>

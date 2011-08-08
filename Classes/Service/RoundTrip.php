@@ -496,7 +496,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		$classProperty = $this->classObject->getProperty($oldProperty->getName());
 		if ($classProperty) {
 			$classProperty->setName($newProperty->getName());
-			$classProperty->setTag('var', $newProperty->getTypeForComment() . ' $' . $newProperty->getName());
+			$classProperty->setTag('var', $newProperty->getTypeForComment());
 			$newDescription = $newProperty->getDescription();
 			if (empty($newDescription) || $newDescription == $newProperty->getName()) {
 				$newDescription = str_replace($oldProperty->getName(), $newProperty->getName(), $classProperty->getDescription());

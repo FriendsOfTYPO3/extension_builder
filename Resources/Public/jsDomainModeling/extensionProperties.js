@@ -14,6 +14,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 			name: "extensionKey",
 			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.key,
 			typeInvite: TYPO3.settings.extensionBuilder._LOCAL_LANG.extensionKey,
+			forceLowerCase: true,
+			forceAlphaNumericUnderscore: true,
 			cols: 30,
 			description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_extensionKey
 		}
@@ -34,27 +36,86 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 		}
 	},
 	{
-		type: "string",
+		type: 'group',
 		inputParams: {
-			name: "version",
-			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.version,
-			required: false,
-			size: 5
-		}
-	},
-	{
-		type: "select",
-		inputParams: {
-			name: "state",
-			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.state,
-			selectOptions: [
-				TYPO3.settings.extensionBuilder._LOCAL_LANG.alpha,
-				TYPO3.settings.extensionBuilder._LOCAL_LANG.beta,
-				TYPO3.settings.extensionBuilder._LOCAL_LANG.stable,
-				TYPO3.settings.extensionBuilder._LOCAL_LANG.experimental,
-				TYPO3.settings.extensionBuilder._LOCAL_LANG.test
-			],
-			selectValues: ["alpha","beta","stable","experimental","test"]
+			collapsible: true,
+			collapsed: true,
+			legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.more,
+			name: "emConf",
+			description: 'Test',
+			fields: [
+					{
+						type: "select",
+						inputParams: {
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.category,
+							name: "category",
+							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_category,
+							selectValues: [ "plugin", "module", "misc", "backend", "frontend", "services","templates", "examples", "doc"],
+							selectOptions: [
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.plugins,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.backendModules,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.misc,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.backend,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.frontend,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.services,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.templates,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.examples,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.documentation
+							]
+						}
+					},
+					{
+						type: "string",
+						inputParams: {
+							name: "custom_category",
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.custom_category,
+							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_custom_category,
+							cols: 30
+						}
+					},
+					{
+						type: "string",
+						inputParams: {
+							name: "version",
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.version,
+							required: false,
+							size: 5
+						}
+					},
+					{
+						type: "select",
+						inputParams: {
+							name: "state",
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.state,
+							selectOptions: [
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.alpha,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.beta,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.stable,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.experimental,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.test
+							],
+							selectValues: ["alpha","beta","stable","experimental","test"]
+						}
+					},
+					{
+						type: "string",
+						inputParams: {
+							name: "priority",
+							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_priority,
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.priority,
+							cols: 30
+						}
+					},
+					{
+						type: "boolean",
+						inputParams: {
+							name: "shy",
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.shy,
+							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_shy,
+							value: 0
+						}
+					}
+			]
 		}
 	},
 	{
@@ -130,6 +191,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 								name: "key",
 								label: TYPO3.settings.extensionBuilder._LOCAL_LANG.key,
 								required: true,
+								forceAlphaNumeric: true,
+								noSpaces: true,
 								description: TYPO3.settings.extensionBuilder._LOCAL_LANG.uniqueInThisModel
 							}
 //						},
@@ -170,6 +233,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 								label: TYPO3.settings.extensionBuilder._LOCAL_LANG.key,
 								name: "key",
 								required: true,
+								forceAlphaNumeric: true,
+								noSpaces: true,
 								description: TYPO3.settings.extensionBuilder._LOCAL_LANG.uniqueInThisModel
 							}
 						},

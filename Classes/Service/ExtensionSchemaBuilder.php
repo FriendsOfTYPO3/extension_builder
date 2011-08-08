@@ -53,12 +53,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 			throw new Exception('Extension properties not submitted!');
 		}
 
-		// name
-		$extension->setName(trim($globalProperties['name']));
-		// description
-		$extension->setDescription($globalProperties['description']);
-		// extensionKey
-		$extension->setExtensionKey(trim($globalProperties['extensionKey']));
+		$this->setExtensionProperties($extension,$globalProperties);
 
 		if (!empty($globalProperties['originalExtensionKey'])) {
 			// original extensionKey
@@ -80,9 +75,6 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 			$extension->setSettings($settings);
 			t3lib_div::devlog('Extension settings:' . $extension->getExtensionKey(), 'extbase', 0, $extension->getSettings());
 		}
-
-		// version
-		$extension->setVersion($globalProperties['version']);
 
 		foreach ($globalProperties['persons'] as $personValues) {
 			$person = $this->buildPerson($personValues);
@@ -163,6 +155,39 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		}
 
 		return $extension;
+	}
+
+	/**
+	 * @param $extension
+	 * @param $propertyConfiguration
+	 * @return 
+	 */
+	protected function setExtensionProperties(&$extension, $propertyConfiguration) {
+		// name
+		$extension->setName(trim($propertyConfiguration['name']));
+		// description
+		$extension->setDescription($propertyConfiguration['description']);
+		// extensionKey
+		$extension->setExtensionKey(trim($propertyConfiguration['extensionKey']));
+
+
+		// various extension properties
+		$extension->setVersion($propertyConfiguration['version']);
+
+		if (!empty($propertyConfiguration['emConf']['custom_category'])) {
+			$category = $propertyConfiguration['emConf']['custom_category'];
+		} else  {
+			$category = $propertyConfiguration['emConf']['category'];
+		}
+
+		$extension->setCategory($category);
+
+		$extension->setShy($propertyConfiguration['emConf']['shy']);
+
+		$extension->setPriority($propertyConfiguration['emConf']['priority']);
+
+		return $extension;
+
 	}
 
 	/**

@@ -39,17 +39,6 @@ var advancedFields = {
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_isExcludeField
 						}
 					},
-					/**
-					{
-						type: "boolean",
-						inputParams: {
-							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.editInline,
-							name: "inlineEditing",
-							value: true,
-							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_editInline
-						}
-					},
-					*/
 					{
 						type: 'boolean',
 						inputParams: {
