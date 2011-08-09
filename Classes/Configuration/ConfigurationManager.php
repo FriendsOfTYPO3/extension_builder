@@ -42,11 +42,6 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	private $inputData = array();
 
 	/**
-	 * @var array
-	 */
-	private $extensionConfigurationJSON = array();
-
-	/**
 	 * wrapper for file_get_contents('php://input')
 	 */
 	public function parseRequest() {
@@ -63,8 +58,9 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		if (empty($this->inputData)) {
 			throw new Exception('No inputData!');
 		}
-		$this->extensionConfigurationJSON = json_decode($this->inputData['params']['working'], true);
-		return $this->extensionConfigurationJSON;
+		$extensionConfigurationJSON = json_decode($this->inputData['params']['working'], true);
+		$extensionConfigurationJSON = $this->reArrangeRelations($extensionConfigurationJSON);
+		return $extensionConfigurationJSON;
 	}
 
 	public function getSubActionFromRequest() {

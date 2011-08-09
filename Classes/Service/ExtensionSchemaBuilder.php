@@ -136,10 +136,12 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 						throw new Exception('A wire has always to connect a relation with a model, not with another relation');
 					}
 				}
-				$relationJsonConfiguration = $extensionBuildConfiguration['modules'][$wire['src']['moduleId']]['value']['relationGroup']['relations'][substr($wire['src']['terminal'], 13)];
+				$srcModuleId = $wire['src']['moduleId'];
+				$relationId = substr($wire['src']['terminal'], 13); // strip "relationWire_"
+				$relationJsonConfiguration = $extensionBuildConfiguration['modules'][$srcModuleId]['value']['relationGroup']['relations'][$relationId];
 				if (!is_array($relationJsonConfiguration)) {
 					t3lib_div::devlog('Error in JSON relation configuration!', 'extension_builder', 3, $extensionBuildConfiguration);
-					$errorMessage = 'Missing relation config in domain object: ' . $extensionBuildConfiguration['modules'][$wire['tgt']['moduleId']]['value']['name'];
+					$errorMessage = 'Missing relation config in domain object: ' . $extensionBuildConfiguration['modules'][$srcModuleId]['value']['name'];
 					throw new Exception($errorMessage);
 				}
 
