@@ -38,7 +38,7 @@
 			<label index="examples">Examples</label>
 			<label index="documentation">Documentation</label>
 			<label index="priority">Priority</label>
-			<label index="descr_priority">This tells the EM to try to put the extensions as the very first in the list.</label>
+			<label index="descr_priority">This tells the EM to try to put the extensions as the very first in the list. Possible values: top or bottom</label>
 			<label index="shy">Shy</label>
 			<label index="descr_shy">If the extension is marked as shy, it won't be displayed in the extension manager by default</label>
 			<label index="persons">Persons</label>
