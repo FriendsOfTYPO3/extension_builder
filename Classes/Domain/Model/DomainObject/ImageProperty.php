@@ -36,7 +36,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_ImageProperty extends Tx_Ext
 	 *
 	 * @var boolean
 	 */
-	protected $needsUploadFolder = true;
+	protected $needsUploadFolder = TRUE;
 
 	/**
 	 * allowed file types for this property

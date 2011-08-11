@@ -81,7 +81,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	protected $precedingBlock;
 
 	/**
-	 * isModified (this flag is set to true, if a modification of a class was detected)
+	 * isModified (this flag is set to TRUE, if a modification of a class was detected)
 	 * @var string
 	 */
 	protected $isModified;
@@ -171,7 +171,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 * @param mixed $tagValue
 	 * @return void
 	 */
-	public function setTag($tagName, $tagValue, $override = true) {
+	public function setTag($tagName, $tagValue, $override = TRUE) {
 		if (!$override && isset($this->tags[$tagName])) {
 			if (!is_array($this->tags[$tagName])) {
 				// build an array with the existing value as first element
@@ -229,13 +229,13 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	/**
 	 *
 	 *
-	 * @return boolean true if the description isn't empty
+	 * @return boolean TRUE if the description isn't empty
 	 */
 	public function hasDescription() {
 		if (empty($this->description)) {
-			return false;
+			return FALSE;
 		}
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -321,9 +321,9 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 */
 	public function hasDocComment() {
 		if (!empty($this->docComment)) {
-			return true;
+			return TRUE;
 		}
-		return false;
+		return FALSE;
 	}
 
 	/**

@@ -55,7 +55,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	protected $aggregateRoot;
 
 	/**
-	 * If TRUE, this is an entity. If false, it is a ValueObject
+	 * If TRUE, this is an entity. If FALSE, it is a ValueObject
 	 * @var boolean
 	 */
 	protected $entity;
@@ -84,7 +84,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	 *
 	 * @var boolean
 	 */
-	protected $needsUploadFolder = false;
+	protected $needsUploadFolder = FALSE;
 
 	/**
 	 * Set name
@@ -191,6 +191,8 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	/**
 	 *
 	 * @param $entity $entity TRUE if it is an entity, FALSE if it is a ValueObject
+	 *
+	 * @return void
 	 */
 	public function setEntity($entity) {
 		$this->entity = (boolean)$entity;
@@ -199,36 +201,40 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	/**
 	 * Adding a new property
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $property The new property to add
+	 *
+	 * @return void
 	 */
 	public function addProperty(Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $property) {
 		$property->setDomainObject($this);
 		if (is_subclass_of($property, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
 			// here we do a check if there is already a relation to the same foreign class
 			if (!$this->isUniqueRelationToForeignClass($property->getForeignClass())) {
-				$property->setUseExtendedRelationTableName(true);
+				$property->setUseExtendedRelationTableName(TRUE);
 			}
 		}
 		if ($property->getNeedsUploadFolder()) {
-			$this->needsUploadFolder = true;
+			$this->needsUploadFolder = TRUE;
 		}
 		$this->properties[] = $property;
 	}
 
 	/**
-	 * Check all relations of this object and returns true
+	 * Check all relations of this object and returns TRUE
 	 * if there is no other relation to the same foreign class
 	 *
 	 * @param string $foreignClass
+	 *
+	 * @return boolean
 	 */
 	protected function isUniqueRelationToForeignClass($foreignClass) {
 		$anyToManyRelationProperties = $this->getAnyToManyRelationProperties();
 		$foreignClasses = array();
 		foreach ($anyToManyRelationProperties as $anyToManyRelationProperty) {
 			if ($anyToManyRelationProperty->getForeignClass() == $foreignClass) {
-				return false;
+				return FALSE;
 			}
 		}
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -241,6 +247,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 
 	/**
 	 * Get property
+	 *
 	 * @return object <Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty>
 	 */
 	public function getPropertyByName($propertyName) {
@@ -254,6 +261,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 
 	/**
 	 * Get all properties holding relations of type Property_Relation_ZeroToManyRelation
+	 *
 	 * @return array<Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation>
 	 */
 	public function getZeroToManyRelationProperties() {
@@ -268,6 +276,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 
 	/**
 	 * Get all properties holding relations of type Property_Relation_AnyToManyRelation
+	 *
 	 * @return array<Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation>
 	 */
 	public function getAnyToManyRelationProperties() {
@@ -283,6 +292,8 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	/**
 	 * Adding a new action
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action The new action to add
+	 *
+	 * @return void
 	 */
 	public function addAction(Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action) {
 		$action->setDomainObject($this);
@@ -294,6 +305,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 
 	/**
 	 * Get all actions
+	 *
 	 * @return array<Tx_ExtensionBuilder_Domain_Model_DomainObject_Action>
 	 */
 	public function getActions() {
@@ -301,7 +313,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	}
 
 	/**
-	 * returns true if the domainObject has actions
+	 * returns TRUE if the domainObject has actions
 	 *
 	 * @return boolean
 	 */
@@ -317,6 +329,9 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 		$this->extension = $extension;
 	}
 
+	/**
+	 * @return Tx_ExtensionBuilder_Domain_Model_Extension
+	 */
 	public function getExtension() {
 		return $this->extension;
 	}
@@ -324,6 +339,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 
 	/**
 	 * Get the base class for this Domain Object (different if it is entity or value object)
+	 *
 	 * @return string name of the base class
 	 */
 	public function getBaseClass() {
@@ -336,12 +352,17 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 
 	/**
 	 * returns the name of the domain repository class name, if it is an aggregateroot.
+	 *
+	 * @return string
 	 */
 	public function getDomainRepositoryClassName() {
 		if (!$this->aggregateRoot) return '';
 		return 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Repository_' . $this->getName() . 'Repository';
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getCommaSeparatedFieldList() {
 		$fieldNames = array();
 		foreach ($this->properties as $property) {
@@ -363,16 +384,23 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 		}
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getLabelNamespace() {
 		return $this->extension->getShortExtensionKey() . '_domain_model_' . strtolower($this->getName());
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function getHasBooleanProperties() {
 		foreach ($this->properties as $property) {
 			if ($property->isBoolean()) {
-				return true;
+				return TRUE;
 			}
 		}
+		return FALSE;
 	}
 
 	/**

@@ -47,21 +47,21 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Action {
 	 *
 	 * @var boolean
 	 */
-	protected $needsTemplate = false;
+	protected $needsTemplate = FALSE;
 
 	/**
 	 * Is a form required in the template for this action?
 	 *
 	 * @var boolean
 	 */
-	protected $needsForm = false;
+	protected $needsForm = FALSE;
 
 	/**
 	 * Is a property partial required in the template for this action?
 	 *
 	 * @var boolean
 	 */
-	protected $needsPropertyPartial = false;
+	protected $needsPropertyPartial = FALSE;
 
 	/**
 	 * these actions do not need a template since they are never rendered
@@ -93,7 +93,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Action {
 	);
 
 	/**
-	 * flag: true if the action is cacheable
+	 * flag: TRUE if the action is cacheable
 	 * @var boolean
 	 */
 	protected $cacheable;
@@ -137,10 +137,10 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Action {
 	 */
 	public function getNeedsTemplate() {
 		if (in_array($this->getName(), $this->actionNamesWithNoRendering)) {
-			$this->needsTemplate = false;
+			$this->needsTemplate = FALSE;
 		}
 		else {
-			$this->needsTemplate = true;
+			$this->needsTemplate = TRUE;
 		}
 		return $this->needsTemplate;
 	}
@@ -152,10 +152,10 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Action {
 	 */
 	public function getNeedsForm() {
 		if (in_array($this->getName(), $this->actionNamesWithForm)) {
-			$this->needsForm = true;
+			$this->needsForm = TRUE;
 		}
 		else {
-			$this->needsForm = false;
+			$this->needsForm = FALSE;
 		}
 		return $this->needsForm;
 	}
@@ -167,10 +167,10 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Action {
 	 */
 	public function getNeedsPropertyPartial() {
 		if ($this->getName() == 'show') {
-			$this->needsPropertyPartial = true;
+			$this->needsPropertyPartial = TRUE;
 		}
 		else {
-			$this->needsPropertyPartial = false;
+			$this->needsPropertyPartial = FALSE;
 		}
 		return $this->needsPropertyPartial;
 	}

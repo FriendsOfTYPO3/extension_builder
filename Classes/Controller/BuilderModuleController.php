@@ -3,7 +3,7 @@
  *  Copyright notice
  *
  *  (c) 2009 Ingmar Schlecht <ingmar@typo3.org>
- *  (c) 2011 Nico de Haen
+ *  (c) 2011 Nico de Haen <mail@ndh-websolutions.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,12 +24,11 @@
  ***************************************************************/
 
 /**
- * Backend Module of the Extension Builder extension
+ * Controller of the Extension Builder extension
  *
  * @category	Controller
  * @package	 TYPO3
- * @subpackage  tx_extensionbuilder
- * @author	  Ingmar Schlecht <ingmar@typo3.org>
+ * @subpackage  extension_builder
  * @license	 http://www.gnu.org/copyleft/gpl.html
  */
 class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_MVC_Controller_ActionController {
@@ -60,7 +59,10 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	protected $extensionValidator;
 
 	/**
-	 * @var array settings
+     * settings from various sources:
+	 * settings configured in module.extension_builder typoscript
+	 * Module settings configured in the extension manager
+     * @var array settings
 	 */
 	protected $settings;
 
@@ -120,8 +122,11 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 
 	/**
 	 * Index action for this controller.
+     * This is the default action, showing some introduction
+     * but after the first loading the user should
+     * immediately be redirected to the domainmodellingAction
 	 *
-	 * @return string The rendered view
+	 * @return void
 	 */
 	public function indexAction() {
 		if (!$this->request->hasArgument('action')) {
@@ -132,13 +137,21 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 		}
 	}
 
+    /**
+     *
+     * loads the Domainmodelling template
+     * Nothing more to do here, since the next action is invoked
+     * by the Javascript interface
+     *
+     * @return void
+     */
 	public function domainmodellingAction() {
 		$GLOBALS['BE_USER']->pushModuleData('extensionbuilder', array('firstTime' => 0));
 	}
 
 	/**
-	 * Main entry point for the buttons in the frontend
-	 * @return string
+	 * Main entry point for the buttons in the Javascript frontend
+	 * @return string json encoded array
 	 */
 	public function generateCodeAction() {
 		try {
@@ -159,6 +172,13 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 		return json_encode($response);
 	}
 
+    /**
+     * The YUI RPC request has to be parsed by the configuration manager
+     * since the extbase framework is not involved
+     *
+     * @throws Exception
+     * @return string
+     */
 	protected function generateCodeAction_getSubAction() {
 		$this->configurationManager->parseRequest();
 		$subAction = $this->configurationManager->getSubActionFromRequest();
@@ -168,6 +188,12 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 		return $subAction;
 	}
 
+    /**
+     * Generate the code files according to the transferred JSON configuration
+     *
+     * @throws Exception
+     * @return array (status => message)
+     */
 	protected function generateCodeAction_saveWiring() {
 		try {
 			$extensionBuildConfiguration = $this->configurationManager->getConfigurationFromModeler();
@@ -255,13 +281,13 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	}
 
 	/**
-	 * Shows a list with available extensions (if they have an ExtensionBuilde.json file)
+	 * Shows a list with available extensions (if they have an ExtensionBuilder.json file)
 	 * @return array
 	 */
 	protected function generateCodeAction_listWirings() {
 		$result = array();
 		$extensionDirectoryHandle = opendir(PATH_typo3conf . 'ext/');
-		while (false !== ($singleExtensionDirectory = readdir($extensionDirectoryHandle))) {
+		while (FALSE !== ($singleExtensionDirectory = readdir($extensionDirectoryHandle))) {
 			if ($singleExtensionDirectory[0] == '.') {
 				continue;
 			}
@@ -281,7 +307,7 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	/**
 	 * This is a hack to handle confirm requests in the GUI
 	 * @param $warnings
-	 * @return array confirm (Question to confirm), confirmFieldName (is set to true if confirmed)
+	 * @return array confirm (Question to confirm), confirmFieldName (is set to TRUE if confirmed)
 	 */
 	protected function handleValidationWarnings($warnings) {
 		$sqlReservedPropertyNames = array();

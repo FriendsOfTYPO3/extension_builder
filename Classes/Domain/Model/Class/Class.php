@@ -89,7 +89,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * isFileBased
 	 * @var boolean
 	 */
-	protected $isFileBased = false;
+	protected $isFileBased = FALSE;
 
 
 	/**
@@ -162,14 +162,14 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * removes a constant
 	 * @param string $constantName
-	 * @return boolean true (if successfull removed)
+	 * @return boolean TRUE (if successfull removed)
 	 */
 	public function removeConstant($constantName) {
 		if (isset($this->constants[$constantName])) {
 			unset($this->constants[$constantName]);
-			return true;
+			return TRUE;
 		}
-		return false;
+		return FALSE;
 	}
 
 	/**
@@ -178,13 +178,13 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 */
 	public function methodExists($methodName) {
 		if (!is_array($this->methods)) {
-			return false;
+			return FALSE;
 		}
 		$methodNames = array_keys($this->methods);
 		if (is_array($methodNames) && in_array($methodName, $methodNames)) {
-			return true;
+			return TRUE;
 		}
-		else return false;
+		else return FALSE;
 	}
 
 	/**
@@ -244,14 +244,14 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * removes a method
 	 * @param string $methodName
-	 * @return boolean true (if successfull removed)
+	 * @return boolean TRUE (if successfull removed)
 	 */
 	public function removeMethod($methodName) {
 		if ($this->methodExists($methodName)) {
 			unset($this->methods[$methodName]);
-			return true;
+			return TRUE;
 		}
-		return false;
+		return FALSE;
 	}
 
 	/**
@@ -266,9 +266,9 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 			$method->setName($newName);
 			$this->methods[$newName] = $method;
 			$this->removeMethod($oldName);
-			return true;
+			return TRUE;
 		}
-		else return false;
+		else return FALSE;
 	}
 
 
@@ -344,14 +344,14 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * removes a property
 	 * @param string $propertyName
-	 * @return boolean true (if successfull removed)
+	 * @return boolean TRUE (if successfull removed)
 	 */
 	public function removeProperty($propertyName) {
 		if ($this->propertyExists($propertyName)) {
 			unset($this->properties[$propertyName]);
-			return true;
+			return TRUE;
 		}
-		return false;
+		return FALSE;
 	}
 
 	/**
@@ -366,9 +366,9 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 			$property->setName($newName);
 			$this->properties[$newName] = $property;
 			$this->removeProperty($oldName);
-			return true;
+			return TRUE;
 		}
-		else return false;
+		else return FALSE;
 	}
 
 	/**
@@ -409,16 +409,16 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	public function propertyExists($propertyName) {
 		$propertyNames = $this->getPropertyNames();
 		if (!is_array($this->methods)) {
-			return false;
+			return FALSE;
 		}
 		if (in_array($propertyName, $this->getPropertyNames())) {
-			return true;
+			return TRUE;
 		}
-		else return false;
+		else return FALSE;
 	}
 
 	/**
-	 * add a property (returns true if successfull added)
+	 * add a property (returns TRUE if successfull added)
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_Class_Property
 	 * @return boolean success
@@ -428,7 +428,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 			$this->propertyNames[] = $classProperty->getName();
 			$this->properties[$classProperty->getName()] = $classProperty;
 		}
-		else return false;
+		else return FALSE;
 	}
 
 	/**

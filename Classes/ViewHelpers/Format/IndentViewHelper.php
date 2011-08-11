@@ -32,7 +32,7 @@ class Tx_ExtensionBuilder_ViewHelpers_Format_IndentViewHelper extends Tx_Fluid_C
 	 *
 	 * @param integer $indentation
 	 * @param string $type
-	 * @return boolean true or false
+	 * @return boolean TRUE or FALSE
 	 */
 	public function render($indentation) {
 		$outputToIndent = $this->renderChildren();

@@ -32,7 +32,7 @@ class Tx_ExtensionBuilder_ViewHelpers_ListForeignKeyRelationsViewHelper extends 
 	 *
 	 * @param mixed $extension
 	 * @param mixed $domainObject
-	 * @return boolean true or false
+	 * @return boolean TRUE or FALSE
 	 */
 	public function render($extension, $domainObject) {
 		$expectedDomainObject = $domainObject;

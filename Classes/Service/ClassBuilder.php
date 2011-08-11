@@ -24,6 +24,8 @@
 
 /**
  * Builds the required class objects for extbase extensions
+ * If roundtrip is enabled (second parameter in initialize method) the roundtrip service
+ * is requested to provide a class object parsed from an existing class
  *
  * @package ExtensionBuilder
  */
@@ -85,7 +87,6 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 		$this->settings = $settings['classBuilder'];
 		$this->extensionDirectory = $this->extension->getExtensionDir();
 		$this->extClassPrefix = 'Tx_' . t3lib_div::underscoredToUpperCamelCase($this->extension->getExtensionKey());
-
 	}
 
 	/**
@@ -95,7 +96,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
 	 * @param boolean mergeWithExistingClass
-	 * @return
+	 *
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Class
 	 */
 	public function generateModelClassObject($domainObject, $mergeWithExistingClass) {
 		t3lib_div::devlog('------------------------------------- generateModelClassObject(' . $domainObject->getName() . ') ---------------------------------', 'extension_builder', 0);
@@ -209,8 +211,10 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	}
 
 	/**
-	 * add all setter/getter/adder etc. methods
+	 * add all setter/getter/add/remove etc. methods
 	 * @param Tx_ExtensionBuilder_Domain_Model_AbstractDomainObjectProperty $domainProperty
+	 *
+	 * @return void
 	 */
 	protected function setPropertyRelatedMethods($domainProperty) {
 		//t3lib_div::devlog('setPropertyRelatedMethods:' . $domainProperty->getName(), 'extension_builder', 0, (array)$domainProperty);
@@ -234,6 +238,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	/**
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $domainProperty
+	 *
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
 	 */
 	protected function buildGetterMethod($domainProperty) {
 
@@ -261,6 +267,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	/**
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_AbstractDomainObjectProperty $domainProperty
+	 *
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
 	 */
 	protected function buildSetterMethod($domainProperty) {
 
@@ -300,6 +308,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	/**
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_AbstractDomainObjectProperty $domainProperty
+	 *
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
 	 */
 	protected function buildAddMethod($domainProperty) {
 
@@ -337,6 +347,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	/**
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $domainProperty
+	 *
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
 	 */
 	protected function buildRemoveMethod($domainProperty) {
 
@@ -377,6 +389,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 * Builds a method that checks the current boolean state of a property
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $domainProperty
+	 *
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
 	 */
 	protected function buildIsMethod($domainProperty) {
 
@@ -405,6 +419,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 *
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
 	 */
 	protected function buildActionMethod(Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action, Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
 		$actionName = $action->getName();
@@ -489,7 +505,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
 	 * @param boolean $mergeWithExistingClass
-	 * @return
+	 *
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Class
 	 */
 	public function generateControllerClassObject($domainObject, $mergeWithExistingClass) {
 		t3lib_div::devlog('------------------------------------- generateControllerClassObject(' . $domainObject->getName() . ') ---------------------------------', 'extension_builder', 1);
@@ -560,7 +577,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
 	 * @param boolean $mergeWithExistingClass
-	 * @return
+	 *
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Class
 	 */
 	public function generateRepositoryClassObject($domainObject, $mergeWithExistingClass) {
 		t3lib_div::devlog('------------------------------------- generateRepositoryClassObject(' . $domainObject->getName() . ') ---------------------------------', 'extension_builder', 1);
