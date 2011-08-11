@@ -24,13 +24,11 @@
  ***************************************************************/
 
 /**
- * Creates a request an dispatches it to the controller which was specified
- * by TS Setup, Flexform and returns the content to the v4 framework.
  *
- * This class is the main entry point for extbase extensions in the frontend.
+ * Builder for domain objects
  *
  * @package ExtensionBuilder
- * @version $ID:$
+ *
  */
 class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton {
 
@@ -61,7 +59,7 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 			$property->setName($jsonProperty['propertyName']);
 			$property->setDescription($jsonProperty['propertyDescription']);
 			if ($property->isBoolean()) {
-				//$property->setDefaultValue('false');
+				//$property->setDefaultValue('FALSE');
 			}
 
 			if (isset($jsonProperty['propertyIsRequired'])) {

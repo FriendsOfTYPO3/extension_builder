@@ -155,22 +155,22 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 	 * removes a parameter
 	 * @param $parameterName
 	 * @param $parameterSortingIndex
-	 * @return boolean true (if successfull removed)
+	 * @return boolean TRUE (if successfull removed)
 	 */
 	public function removeParameter($parameterName, $parameterPosition) {
 		//TODO: Not yet tested
 		if (isset($this->parameter[$parameterPosition]) && $this->parameter[$parameterPosition]->getName() == $parameterName) {
 			unset($this->parameter[$parameterPosition]);
-			return true;
+			return TRUE;
 		}
-		else return false;
+		else return FALSE;
 	}
 
 	/**
 	 *
 	 * @param $parameterName
 	 * @param $parameterSortingIndex
-	 * @return boolean true (if successfull removed)
+	 * @return boolean TRUE (if successfull removed)
 	 */
 	public function renameParameter($oldName, $newName, $parameterPosition) {
 		//TODO: Not yet tested
@@ -179,10 +179,10 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 			if ($parameter->getName() == $oldName) {
 				$parameter->setName($newName);
 				$this->parameter[$parameterPosition] = $parameter;
-				return true;
+				return TRUE;
 			}
 		}
-		return false;
+		return FALSE;
 	}
 
 	/**

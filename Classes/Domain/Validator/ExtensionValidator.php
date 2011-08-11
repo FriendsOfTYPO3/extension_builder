@@ -500,7 +500,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	/**
 	 * validates a plugin key
 	 * @param string $key
-	 * @return boolean true if valid
+	 * @return boolean TRUE if valid
 	 */
 	private static function validatePluginKey($key) {
 		return preg_match('/^[a-zA-Z0-9_-]*$/', $key);
@@ -509,7 +509,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	/**
 	 * validates a backend module key
 	 * @param string $key
-	 * @return boolean true if valid
+	 * @return boolean TRUE if valid
 	 */
 	private static function validateModuleKey($key) {
 		return preg_match('/^[a-zA-Z0-9_-]*$/', $key);
@@ -564,10 +564,10 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	 */
 	static public function isReservedTYPO3Word($word) {
 		if (in_array(Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($word), self::$reservedTYPO3ColumnNames)) {
-			return true;
+			return TRUE;
 		}
 		else {
-			return false;
+			return FALSE;
 		}
 	}
 
@@ -579,10 +579,10 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	 */
 	static public function isReservedMYSQLWord($word) {
 		if (in_array(strtoupper($word), self::$reservedMYSQLWords)) {
-			return true;
+			return TRUE;
 		}
 		else {
-			return false;
+			return FALSE;
 		}
 	}
 
@@ -594,10 +594,10 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	 */
 	static public function isReservedWord($word) {
 		if (self::isReservedMYSQLWord($word) || self::isReservedTYPO3Word($word)) {
-			return true;
+			return TRUE;
 		}
 		else {
-			return false;
+			return FALSE;
 		}
 	}
 }

@@ -37,7 +37,7 @@ class Tx_ExtensionBuilder_ViewHelpers_JsonViewHelper extends Tx_Fluid_Core_ViewH
 	 * @param boolean $arraysAsPhpNotation (optional) should arrays be notated as php arrays?
 	 * @return mixed the encoded string or decoded data
 	 */
-	public function render($encodeType = 'encode', $arraysAsPhpNotation = true) {
+	public function render($encodeType = 'encode', $arraysAsPhpNotation = TRUE) {
 		$content = $this->renderChildren();
 		if ($encodeType == 'decode') {
 			return json_decode($content);

@@ -22,7 +22,7 @@ class Tx_ExtensionBuilder_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Flui
 		$baseUrl = '../' . t3lib_extMgm::siteRelPath('extension_builder');
 
 		$this->pageRenderer->disableCompressJavascript();
-		$this->pageRenderer->loadExtJS(false, false);
+		$this->pageRenderer->loadExtJS(FALSE, FALSE);
 
 		// SECTION: JAVASCRIPT FILES
 		// YUI Basis Files

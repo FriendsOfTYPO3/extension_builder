@@ -42,7 +42,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyR
 	 *
 	 * @var boolean
 	 */
-	protected $useExtendedRelationTableName = false;
+	protected $useExtendedRelationTableName = FALSE;
 
 	/**
 	 * Returns the relation table name. It is build by having 'tx_myextension_' followed by the

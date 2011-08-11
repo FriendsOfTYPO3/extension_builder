@@ -83,11 +83,11 @@ class Tx_ExtensionBuilder_Reflection_ClassReflection extends Tx_Extbase_Reflecti
 	/**
 	 * get all methods that are declared in the actual class and not inherited (or overwrite inherited methods)
 	 *
-	 * @param $includeOverridingMethods default is true
+	 * @param $includeOverridingMethods default is TRUE
 	 *
 	 * @return array
 	 */
-	public function getNotInheritedMethods($includeOverridingMethods = true) {
+	public function getNotInheritedMethods($includeOverridingMethods = TRUE) {
 		$parentClass = $this->getParentClass();
 		if (!$parentClass) {
 			return $this->getMethods();
@@ -179,11 +179,11 @@ class Tx_ExtensionBuilder_Reflection_ClassReflection extends Tx_Extbase_Reflecti
 	/**
 	 * get all Properties that are declared in the actual class and not inherited (or overwrite inherited Properties)
 	 *
-	 * @param $includeOverridingProperties default is true
+	 * @param $includeOverridingProperties default is TRUE
 	 *
 	 * @return array
 	 */
-	public function getNotInheritedProperties($includeOverridingProperties = true) {
+	public function getNotInheritedProperties($includeOverridingProperties = TRUE) {
 		$parentClass = $this->getParentClass();
 		if (!$parentClass) {
 			return $this->getProperties();
@@ -216,7 +216,7 @@ class Tx_ExtensionBuilder_Reflection_ClassReflection extends Tx_Extbase_Reflecti
 		if ($parentClass) {
 			return new Tx_ExtensionBuilder_Reflection_ClassReflection($parentClass->getName());
 		}
-		else return false;
+		else return FALSE;
 	}
 
 	/**

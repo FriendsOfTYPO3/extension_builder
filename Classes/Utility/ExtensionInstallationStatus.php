@@ -69,9 +69,9 @@ class Tx_ExtensionBuilder_Utility_ExtensionInstallationStatus {
 		if (t3lib_extMgm::isLoaded($this->extension->getExtensionKey()) && !empty($this->installTool)) {
 			$updateNeeded = $this->installTool->checkDBupdates($this->extension->getExtensionKey(), array('type' => 'L', 'files' => array('ext_tables.sql')), 1);
 			if (!empty($updateNeeded['structure']['diff']['extra'])) {
-				return true;
+				return TRUE;
 			}
 		}
-		return false;
+		return FALSE;
 	}
 }

@@ -49,10 +49,10 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 	protected $lineCount;
 
 	/**
-	 * might be set to true from "outside"
+	 * might be set to TRUE from "outside"
 	 * @var boolean
 	 */
-	public $debugMode = false;
+	public $debugMode = FALSE;
 
 	/**
 	 * The default indent for lines in method bodies
@@ -99,7 +99,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 	 */
 	public function parse($className) {
 
-		$this->starttime = microtime(true); // for profiling
+		$this->starttime = microtime(TRUE); // for profiling
 
 		if (!class_exists($className)) {
 			throw new Exception('Class not exists: ' . $className);
@@ -131,11 +131,11 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 		 * various flags used during parsing process
 		 */
 
-		$isSingleLineComment = false;
-		$isMultiLineComment = false;
+		$isSingleLineComment = FALSE;
+		$isMultiLineComment = FALSE;
 		$multiLineProperty = NULL;
 		;
-		$isMethodBody = false;
+		$isMethodBody = FALSE;
 
 		// the Tx_ExtensionBuilder_Reflection_MethodReflection returned from ClassReflection
 		$currentMethodReflection = NULL;
@@ -190,7 +190,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 
 					// process methods
 					if (preg_match_all($this->methodRegex, $trimmedLine, $methodMatches)) {
-						$isMethodBody = true;
+						$isMethodBody = TRUE;
 						$methodName = $methodMatches[1][0];
 
 						try {
@@ -288,7 +288,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 				$this->classObject->addMethod($currentClassMethod);
 				$currentMethodEndLine = 0;
 				// end of a method body
-				$isMethodBody = false;
+				$isMethodBody = FALSE;
 				$lastMatchedLine = $this->lineCount;
 				//TODO what if a method is defined in the same line as the preceding method ends? Should be checked with tokenizer?
 			}
@@ -320,7 +320,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 
 			$info = $this->classObject->getInfo();
 
-			$this->endtime = microtime(true);
+			$this->endtime = microtime(TRUE);
 			$totaltime = $this->endtime - $this->starttime;
 			$totaltime = round($totaltime, 5);
 
@@ -338,10 +338,10 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 	 * $param string $line
 	 */
 	protected function isSingleLineComment($line) {
-		$isSingleLineComment = false;
+		$isSingleLineComment = FALSE;
 		// single comment line
 		if (!$isSingleLineComment && preg_match('/^\s*\/\\//', $line)) {
-			$isSingleLineComment = true;
+			$isSingleLineComment = TRUE;
 		}
 		return $isSingleLineComment;
 	}
@@ -361,12 +361,12 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 				$isMultiLineComment = (strrpos($line, '/**') > strrpos($line, '*/'));
 			}
 			else {
-				$isMultiLineComment = false;
+				$isMultiLineComment = FALSE;
 			}
 		}
 		else if (strrpos($line, '/**') > -1) {
 			// multiline comment start
-			$isMultiLineComment = true;
+			$isMultiLineComment = TRUE;
 		}
 		return $isMultiLineComment;
 	}
@@ -399,7 +399,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 	 */
 	protected function addProperty(array $propertyMatches) {
 		$properties = array_combine($propertyMatches['name'], $propertyMatches['value']);
-		$isFirstProperty = true;
+		$isFirstProperty = TRUE;
 		foreach ($properties as $propertyName => $propertyValue) {
 			try {
 				// the property has to exist in the classReflection
@@ -423,14 +423,14 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 							$classProperty->setVarType($varType);
 						}
 						$classProperty->setValue(trim($propertyValue));
-						$classProperty->setDefault(true);
+						$classProperty->setDefault(TRUE);
 					}
 
 					if ($isFirstProperty) {
 						// only the first property will get the preceding block assigned
 						$precedingBlock = $this->concatLinesFromArray($lines, $lastMatchedLine);
 						$classProperty->setPrecedingBlock($precedingBlock);
-						$isFirstProperty = false;
+						$isFirstProperty = FALSE;
 					}
 
 					$this->classObject->addProperty($classProperty);

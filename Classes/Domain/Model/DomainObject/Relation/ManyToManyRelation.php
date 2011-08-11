@@ -57,7 +57,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation 
 	 * @return boolean
 	 */
 	public function isOfTypeObjectStorage() {
-		return true;
+		return TRUE;
 	}
 
 	/**

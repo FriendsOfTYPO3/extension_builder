@@ -23,10 +23,12 @@
  ***************************************************************/
 
 /**
- * Manages roundtrip functions and settings
+ *
+ * Performs all changes that are required to adapt the
+ * existing classes and methods to the changes in the configurations
  *
  * @package ExtensionBuilder
- * @version $ID:$
+ *
  */
 class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 
@@ -75,7 +77,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 *
 	 * @var boolean
 	 */
-	protected $extensionRenamed = false;
+	protected $extensionRenamed = FALSE;
 
 	/**
 	 * @param Tx_ExtensionBuilder_Utility_ClassParser $classParser
@@ -117,7 +119,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		if ($extension->isRenamed()) {
 			$this->previousExtensionDirectory = $extension->getPreviousExtensionDirectory();
 			$this->previousExtensionKey = $extension->getOriginalExtensionKey();
-			$this->extensionRenamed = true;
+			$this->extensionRenamed = TRUE;
 			t3lib_div::devlog('Extension renamed: ' . $this->previousExtensionKey . ' => ' . $this->extension->getExtensionKey(), 'extension_builder', 1, array('$previousExtensionDirectory ' => $this->previousExtensionDirectory));
 		}
 
@@ -159,7 +161,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 				}
 			}
 		}
-		spl_autoload_register('Tx_ExtensionBuilder_Utility_ClassLoader::loadClass', false, true);
+		spl_autoload_register('Tx_ExtensionBuilder_Utility_ClassLoader::loadClass', FALSE, TRUE);
 	}
 
 	/**
@@ -179,7 +181,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 			t3lib_div::devlog('domainObject identified:' . $currentDomainObject->getName(), 'extension_builder', 0);
 			$oldDomainObject = $this->oldDomainObjects[$currentDomainObject->getUniqueIdentifier()];
 			$extensionDir = $this->previousExtensionDirectory;
-			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Model', false) . $oldDomainObject->getName() . '.php';
+			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Model', FALSE) . $oldDomainObject->getName() . '.php';
 			if (file_exists($fileName)) {
 				// import the classObject from the existing file
 				include_once($fileName);
@@ -217,7 +219,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		}
 		else {
 			t3lib_div::devlog('domainObject not identified:' . $currentDomainObject->getName(), 'extension_builder', 0, $this->oldDomainObjects);
-			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($this->extensionDirectory, 'Model', false) . $currentDomainObject->getName() . '.php';
+			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($this->extensionDirectory, 'Model', FALSE) . $currentDomainObject->getName() . '.php';
 			if (file_exists($fileName)) {
 				// import the classObject from the existing file
 				include_once($fileName);
@@ -233,12 +235,14 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	/**
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 *
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class OR NULL
 	 */
 	public function getControllerClass(Tx_ExtensionBuilder_Domain_Model_DomainObject $currentDomainObject) {
 		$extensionDir = $this->previousExtensionDirectory;
 		if (isset($this->oldDomainObjects[$currentDomainObject->getUniqueIdentifier()])) {
 			$oldDomainObject = $this->oldDomainObjects[$currentDomainObject->getUniqueIdentifier()];
-			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Controller', false) . $oldDomainObject->getName() . 'Controller.php';
+			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Controller', FALSE) . $oldDomainObject->getName() . 'Controller.php';
 			if (file_exists($fileName)) {
 				t3lib_div::devlog('existing controller class:' . $fileName, 'extension_builder', 0);
 				include_once($fileName);
@@ -277,7 +281,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 			}
 		}
 		else {
-			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Controller', false) . $currentDomainObject->getName() . 'Controller.php';
+			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Controller', FALSE) . $currentDomainObject->getName() . 'Controller.php';
 			if (file_exists($fileName)) {
 				include_once($fileName);
 				$className = $currentDomainObject->getControllerName();
@@ -380,12 +384,14 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	/**
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 *
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class OR NULL
 	 */
 	public function getRepositoryClass(Tx_ExtensionBuilder_Domain_Model_DomainObject $currentDomainObject) {
 		$extensionDir = $this->previousExtensionDirectory;
 		if (isset($this->oldDomainObjects[$currentDomainObject->getUniqueIdentifier()])) {
 			$oldDomainObject = $this->oldDomainObjects[$currentDomainObject->getUniqueIdentifier()];
-			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Repository', false) . $oldDomainObject->getName() . 'Repository.php';
+			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Repository', FALSE) . $oldDomainObject->getName() . 'Repository.php';
 			if (file_exists($fileName)) {
 				include_once($fileName);
 				$className = $oldDomainObject->getDomainRepositoryClassName();
@@ -403,7 +409,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 			}
 		}
 		else {
-			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Repository', false) . $currentDomainObject->getName() . 'Repository.php';
+			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Repository', FALSE) . $currentDomainObject->getName() . 'Repository.php';
 			if (file_exists($fileName)) {
 				include_once($fileName);
 				$className = $currentDomainObject->getDomainRepositoryClassName();
@@ -468,6 +474,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	/**
 	 * Removes all related methods, if a property was removed
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $propertyToRemove
+	 *
+	 * @return void
 	 */
 	protected function removePropertyAndRelatedMethods($propertyToRemove) {
 		$propertyName = $propertyToRemove->getName();
@@ -519,21 +527,21 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 */
 	protected function relatedMethodsNeedUpdate($oldProperty, $newProperty) {
 		if ($this->extensionRenamed) {
-			return true;
+			return TRUE;
 		}
 		if ($newProperty->getName() != $this->updateExtensionKey($oldProperty->getName())) {
 			t3lib_div::devlog('property renamed:' . $this->updateExtensionKey($oldProperty->getName()) . ' ' . $newProperty->getName(), 'extension_builder', 0);
-			return true;
+			return TRUE;
 		}
 		if ($newProperty->getTypeForComment() != $this->updateExtensionKey($oldProperty->getTypeForComment())) {
 			t3lib_div::devlog('property type changed from ' . $this->updateExtensionKey($oldProperty->getTypeForComment()) . ' to ' . $newProperty->getTypeForComment(), 'extension_builder', 0);
-			return true;
+			return TRUE;
 		}
 		if ($newProperty->isRelation()) {
 			// if only the related domain object was renamed
 			if ($this->getForeignClass($newProperty)->getClassName() != $this->updateExtensionKey($oldProperty->getForeignClass()->getClassName())) {
 				t3lib_div::devlog('related domainObject was renamed:' . $this->updateExtensionKey($oldProperty->getForeignClass()->getClassName()) . ' ->' . $this->getForeignClass($newProperty)->getClassName(), 'extension_builder');
-				return true;
+				return TRUE;
 			}
 		}
 	}
@@ -555,6 +563,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_AbstractDomainObjectProperty $oldProperty
 	 * @param Tx_ExtensionBuilder_Domain_Model_AbstractDomainObjectProperty $newProperty
+	 *
+	 * @return void
 	 */
 	protected function updatePropertyRelatedMethods($oldProperty, $newProperty) {
 		if ($newProperty->isAnyToManyRelation()) {
@@ -569,7 +579,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		if ($newProperty->getTypeForComment() != $this->updateExtensionKey($oldProperty->getTypeForComment())) {
 			if ($oldProperty->isBoolean() && !$newProperty->isBoolean()) {
 				$this->classObject->removeMethod(Tx_ExtensionBuilder_Service_ClassBuilder::getMethodName($oldProperty, 'is'));
-				t3lib_div::devlog('Method removed:' . Tx_ExtensionBuilder_Service_ClassBuilder::getMethodName($oldProperty, 'is'), 'extension_builder', 1, $this->classObject->getMethods());
+				t3lib_div::devlog('Method removed:' . Tx_ExtensionBuilder_Service_ClassBuilder::getMethodName($oldProperty, 'is'),
+								  'extension_builder', 1, $this->classObject->getMethods());
 			}
 		}
 	}
@@ -580,6 +591,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 * @param Tx_ExtensionBuilder_Domain_Model_AbstractDomainObjectProperty $oldProperty
 	 * @param Tx_ExtensionBuilder_Domain_Model_AbstractDomainObjectProperty $newProperty
 	 * @param string $methodType get,set,add,remove,is
+	 *
+	 * @return void
 	 */
 	protected function updateMethod($oldProperty, $newProperty, $methodType) {
 
@@ -690,6 +703,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 * @param string $string
 	 * @param string $oldName
 	 * @param string $newName
+	 *
+	 * @return string
 	 */
 	protected function replacePropertyNameInTagValue($oldProperty, $newProperty, $tagValue) {
 		$tagValue = str_replace($oldProperty->getName(), $newProperty->getName(), $tagValue);
@@ -706,6 +721,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 * @param string $oldName
 	 * @param string $newName
 	 * @param string $string
+	 *
+	 * @return string
 	 */
 	protected function replacePropertyNameInMethodBody($oldName, $newName, $string) {
 		$regex = '/([\$|>])' . $oldName . '([^a-zA-Z0-9_])/';
@@ -731,17 +748,18 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	/**
 	 * remove domainObject related files if a domainObject was deleted
 	 *
+	 * @return void
 	 */
 	protected function removeDomainObjectFiles($domainObject) {
 		t3lib_div::devlog('Remove domainObject ' . $domainObject->getName(), 'extension_builder', 0);
-		$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($this->previousExtensionDirectory, 'Model', false), $domainObject->getName() . '.php');
+		$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($this->previousExtensionDirectory, 'Model', FALSE), $domainObject->getName() . '.php');
 		$this->cleanUp($this->previousExtensionDirectory . 'Configuration/TCA/', $domainObject->getName() . '.php');
 		if ($domainObject->isAggregateRoot()) {
-			$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($this->previousExtensionDirectory, 'Controller', false), $domainObject->getName() . 'Controller.php');
-			$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($this->previousExtensionDirectory, 'Repository', false), $domainObject->getName() . 'Repository.php');
+			$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($this->previousExtensionDirectory, 'Controller', FALSE), $domainObject->getName() . 'Controller.php');
+			$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($this->previousExtensionDirectory, 'Repository', FALSE), $domainObject->getName() . 'Repository.php');
 		}
 		if (count($domainObject->getActions()) > 0) {
-			$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($this->previousExtensionDirectory, 'Controller', false), $domainObject->getName() . 'Controller.php');
+			$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($this->previousExtensionDirectory, 'Controller', FALSE), $domainObject->getName() . 'Controller.php');
 		}
 		// other files
 		$iconsDirectory = $this->extensionDirectory . 'Resources/Public/Icons/';
@@ -855,6 +873,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 * TODO: check for previous table name if an extension is renamed
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 *
+	 * @return array
 	 */
 	protected static function getTcaForDomainObject($domainObject, $extension) {
 		$tableName = $domainObject->getDatabaseTableName();
@@ -869,6 +889,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
 	 * @param string $backupDir
+	 *
+	 * @return void
 	 */
 	static function backupExtension($extension, $backupDir) {
 		if (empty($backupDir)) {
@@ -916,18 +938,19 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 			throw new Exception('Code generation aborted:' . $e->getMessage());
 		}
 		t3lib_div::devlog('Backup created in ' . $backupDir, 'extension_builder', 0);
-		return true;
 	}
 
 	/**
 	 *
 	 * @param string $src path to copy
 	 * @param string $dst destination
+	 *
+	 * @return void
 	 */
 	static public function recurse_copy($src, $dst) {
 		$dir = opendir($src);
 		@mkdir($dst);
-		while (false !== ($file = readdir($dir))) {
+		while (FALSE !== ($file = readdir($dir))) {
 			if (($file != '.') && ($file != '..')) {
 				if (is_dir($src . '/' . $file)) {
 					self::recurse_copy($src . '/' . $file, $dst . '/' . $file);

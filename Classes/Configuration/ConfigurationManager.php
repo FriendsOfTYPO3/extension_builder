@@ -26,8 +26,7 @@
 /**
  * Load settings from yaml file and from TYPO3_CONF_VARS extConf
  *
- * @package Extbase
- * @subpackage Utility
+ * @package extension_builder
  */
 class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_Configuration_ConfigurationManager {
 
@@ -46,7 +45,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 */
 	public function parseRequest() {
 		$jsonString = file_get_contents('php://input');
-		$this->inputData = json_decode($jsonString, true);
+		$this->inputData = json_decode($jsonString, TRUE);
 	}
 
 	/**
@@ -58,7 +57,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		if (empty($this->inputData)) {
 			throw new Exception('No inputData!');
 		}
-		$extensionConfigurationJSON = json_decode($this->inputData['params']['working'], true);
+		$extensionConfigurationJSON = json_decode($this->inputData['params']['working'], TRUE);
 		$extensionConfigurationJSON = $this->reArrangeRelations($extensionConfigurationJSON);
 		return $extensionConfigurationJSON;
 	}
@@ -90,6 +89,8 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 
 	/**
 	 * Get the extension_builder configuration (ext_template_conf)
+	 *
+	 * @return array
 	 */
 	public function getExtensionBuilderSettings() {
 		$settings = array();
@@ -123,7 +124,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 * @param boolean $prepareForModeler (should the advanced settings be mapped to the subform?)
 	 * @return array extension configuration
 	 */
-	public function getExtensionBuilderConfiguration($extensionKey,$prepareForModeler = TRUE) {
+	public function getExtensionBuilderConfiguration($extensionKey, $prepareForModeler = TRUE) {
 
 		$oldJsonFile = PATH_typo3conf . 'ext/' . $extensionKey . '/kickstarter.json';
 		$jsonFile = PATH_typo3conf . 'ext/' . $extensionKey . '/' . self::EXTENSION_BUILDER_SETTINGS_FILE;
@@ -133,9 +134,9 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 
 		if (file_exists($jsonFile)) {
 			// compatibility adaptions for configurations from older versions
-			$extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), true);
+			$extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), TRUE);
 			//t3lib_div::devlog('old JSON:','extension_builder',0,$extensionConfigurationJSON);
-			$extensionConfigurationJSON = $this->fixExtensionBuilderJSON($extensionConfigurationJSON,$prepareForModeler);
+			$extensionConfigurationJSON = $this->fixExtensionBuilderJSON($extensionConfigurationJSON, $prepareForModeler);
 			$extensionConfigurationJSON['properties']['originalExtensionKey'] = $extensionKey;
 			//t3lib_div::writeFile($jsonFile, json_encode($extensionConfigurationJSON));
 			return $extensionConfigurationJSON;
@@ -200,11 +201,11 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 *
 	 * @return array the modified configuration
 	 */
-	public function fixExtensionBuilderJSON($extensionConfigurationJSON,$prepareForModeler) {
+	public function fixExtensionBuilderJSON($extensionConfigurationJSON, $prepareForModeler) {
 		$extensionConfigurationJSON['modules'] = $this->mapOldRelationTypesToNewRelationTypes($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->generateUniqueIDs($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->resetOutboundedPositions($extensionConfigurationJSON['modules']);
-		$extensionConfigurationJSON['modules'] = $this->mapAdvancedMode($extensionConfigurationJSON['modules'],$prepareForModeler);
+		$extensionConfigurationJSON['modules'] = $this->mapAdvancedMode($extensionConfigurationJSON['modules'], $prepareForModeler);
 		$extensionConfigurationJSON = $this->reArrangeRelations($extensionConfigurationJSON);
 		return $extensionConfigurationJSON;
 	}
@@ -254,7 +255,8 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 */
 	public function isConfirmed($identifier) {
 		if (isset($this->inputData['params'][$identifier]) &&
-			$this->inputData['params'][$identifier] == 1 ) {
+			$this->inputData['params'][$identifier] == 1
+		) {
 			return TRUE;
 		}
 		return FALSE;
@@ -316,14 +318,14 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 *
 	 * @return array modified json
 	 */
-	protected function mapAdvancedMode($jsonConfig,$prepareForModeler) {
-		$fieldsToMap = array('relationType','propertyIsExcludeField','propertyIsExcludeField','lazyLoading','relationDescription');
+	protected function mapAdvancedMode($jsonConfig, $prepareForModeler) {
+		$fieldsToMap = array('relationType', 'propertyIsExcludeField', 'propertyIsExcludeField', 'lazyLoading', 'relationDescription');
 		foreach ($jsonConfig as &$module) {
 			for ($i = 0; $i < count($module['value']['relationGroup']['relations']); $i++) {
-				if ($prepareForModeler){
-					if(empty($module['value']['relationGroup']['relations'][$i]['advancedSettings'])){
+				if ($prepareForModeler) {
+					if (empty($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
 						$module['value']['relationGroup']['relations'][$i]['advancedSettings'] = array();
-						foreach($fieldsToMap as $fieldToMap){
+						foreach ($fieldsToMap as $fieldToMap) {
 							$module['value']['relationGroup']['relations'][$i]['advancedSettings'][$fieldToMap] = $module['value']['relationGroup']['relations'][$i][$fieldToMap];
 						}
 
@@ -331,8 +333,8 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 						$module['value']['relationGroup']['relations'][$i]['advancedSettings']['lazyLoading'] = $module['value']['relationGroup']['relations'][$i]['lazyLoading'];
 						$module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationDescription'] = $module['value']['relationGroup']['relations'][$i]['relationDescription'];
 					}
-				} else if(isset($module['value']['relationGroup']['relations'][$i]['advancedSettings'])){
-					foreach($fieldsToMap as $fieldToMap){
+				} else if (isset($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
+					foreach ($fieldsToMap as $fieldToMap) {
 						$module['value']['relationGroup']['relations'][$i][$fieldToMap] = $module['value']['relationGroup']['relations'][$i]['advancedSettings'][$fieldToMap];
 					}
 					unset($module['value']['relationGroup']['relations'][$i]['advancedSettings']);

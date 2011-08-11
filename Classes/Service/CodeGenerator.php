@@ -63,7 +63,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	/**
 	 * @var boolean
 	 */
-	protected $roundTripEnabled = false;
+	protected $roundTripEnabled = FALSE;
 
 	/**
 	 * @var array Settings
@@ -115,7 +115,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	public function build(Tx_ExtensionBuilder_Domain_Model_Extension $extension) {
 		$this->extension = $extension;
 		if ($this->settings['extConf']['enableRoundtrip'] == 1) {
-			$this->roundTripEnabled = true;
+			$this->roundTripEnabled = TRUE;
 			t3lib_div::devLog('roundtrip enabled', 'extension_builder', 0, $this->settings);
 		}
 		else {
@@ -365,7 +365,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
 			try {
 				$settings = $this->extension->getSettings();
-				if (isset($settings['createAutoloadRegistry']) && $settings['createAutoloadRegistry'] == true) {
+				if (isset($settings['createAutoloadRegistry']) && $settings['createAutoloadRegistry'] == TRUE) {
 					Tx_Extbase_Utility_Extension::createAutoloadRegistryForExtension($this->extension->getExtensionKey(), $this->extensionDirectory);
 				}
 			} catch (Exception $e) {
@@ -382,7 +382,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	protected function generateTemplateFiles($templateSubFolder = '') {
 		$templateRootFolder = 'Resources/Private/' . $templateSubFolder;
 		$privateResourcesDirectory = $this->extensionDirectory . $templateRootFolder;
-		$hasTemplates = false;
+		$hasTemplates = FALSE;
 		$actionsUsingFormFieldsPartial = array('edit', 'new');
 		$actionsUsingPropertiesPartial = array('show');
 		foreach ($this->extension->getDomainObjects() as $domainObject) {
@@ -395,7 +395,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				if ($action->getNeedsTemplate()
 					&& file_exists($this->codeTemplateRootPath . $templateRootFolder . 'Templates/' . $action->getName() . '.htmlt')
 				) {
-					$hasTemplates = true;
+					$hasTemplates = TRUE;
 					t3lib_div::mkdir_deep($this->extensionDirectory, $templateRootFolder . 'Templates/' . $domainObject->getName());
 					$fileContents = $this->generateDomainTemplate($templateRootFolder . 'Templates/', $domainObject, $action);
 					$this->writeFile($domainTemplateDirectory . ucfirst($action->getName()) . '.html', $fileContents);
@@ -686,7 +686,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 * @param string $classType
 	 * @return string
 	 */
-	public static function getFolderForClassFile($extensionDirectory, $classType, $createDirIfNotExist = true) {
+	public static function getFolderForClassFile($extensionDirectory, $classType, $createDirIfNotExist = TRUE) {
 		$classPath = '';
 		switch ($classType) {
 			case 'Model'		:
@@ -726,7 +726,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			if ($overWriteMode == -1) {
 				return; // skip file creation
 			}
-			if ($overWriteMode == 1 && strpos($targetFile, 'Classes') === false) { // classes are merged by the class builder
+			if ($overWriteMode == 1 && strpos($targetFile, 'Classes') === FALSE) { // classes are merged by the class builder
 				if (strtolower(pathinfo($targetFile, PATHINFO_EXTENSION)) == 'html') {
 					//TODO: We need some kind of protocol to be displayed after code generation
 					t3lib_div::devlog('File ' . basename($targetFile) . ' was not written. Template files can\'t be merged!', 'extension_builder', 1);

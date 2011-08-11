@@ -75,7 +75,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	protected $class;
 
 	/**
-	 * is set to true, if this property was new added
+	 * is set to TRUE, if this property was new added
 	 *
 	 * @var boolean
 	 */
@@ -172,7 +172,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
 	/**
 	 *
-	 * @return boolean true (if property is of type relation any to many)
+	 * @return boolean TRUE (if property is of type relation any to many)
 	 */
 	public function isAnyToManyRelation() {
 		return is_subclass_of($this, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation');
@@ -181,7 +181,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
 	/**
 	 *
-	 * @return boolean true (if property is of type relation)
+	 * @return boolean TRUE (if property is of type relation)
 	 */
 	public function isRelation() {
 		return is_subclass_of($this, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation');
@@ -189,7 +189,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
 	/**
 	 *
-	 * @return boolean true (if property is of type boolean)
+	 * @return boolean TRUE (if property is of type boolean)
 	 */
 	public function isBoolean() {
 		return is_a($this, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty');

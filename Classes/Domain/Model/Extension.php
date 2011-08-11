@@ -26,7 +26,6 @@
  * Schema for a whole extension
  *
  * @package ExtensionBuilder
- * @version $ID:$
  */
 class Tx_ExtensionBuilder_Domain_Model_Extension {
 
@@ -94,12 +93,12 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	protected $category;
 
 	/**
-	 * flag that is set to true if there are domain objects with
+	 * flag that is set to TRUE if there are domain objects with
 	 * properties that need mapping (because they use MYSQL protected words etc.
 	 *
 	 * @var boolean
 	 */
-	protected $propertiesThatNeedMapping = false;
+	protected $propertiesThatNeedMapping = FALSE;
 
 	/**
 	 * The extension's state. One of the STATE_* constants.
@@ -118,7 +117,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 *
 	 * @var boolean
 	 */
-	protected $needsUploadFolder = false;
+	protected $needsUploadFolder = FALSE;
 
 	/**
 	 *
@@ -156,7 +155,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 * was the extension renamed?
 	 * @var boolean
 	 */
-	private $renamed = false;
+	private $renamed = FALSE;
 
 	/**
 	 *
@@ -337,13 +336,13 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	public function addDomainObject(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
 		$domainObject->setExtension($this);
 		if (count($domainObject->getPropertiesWithMappingStatements()) > 0) {
-			$this->propertiesThatNeedMapping = true;
+			$this->propertiesThatNeedMapping = TRUE;
 		}
 		if (in_array($domainObject->getName(), array_keys($this->domainObjects))) {
 			throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
 		}
 		if ($domainObject->getNeedsUploadFolder()) {
-			$this->needsUploadFolder = true;
+			$this->needsUploadFolder = TRUE;
 		}
 		$this->domainObjects[$domainObject->getName()] = $domainObject;
 	}
@@ -421,9 +420,9 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 */
 	public function hasPlugins() {
 		if (count($this->plugins) > 0) {
-			return true;
+			return TRUE;
 		} else {
-			return false;
+			return FALSE;
 		}
 	}
 
@@ -472,9 +471,9 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 */
 	public function hasBackendModules() {
 		if (count($this->backendModules) > 0) {
-			return true;
+			return TRUE;
 		} else {
-			return false;
+			return FALSE;
 		}
 	}
 
@@ -501,10 +500,10 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	public function isModified($filePath) {
 		if (is_file($filePath) && isset($this->md5Hashes[$filePath])) {
 			if (md5_file($filePath) != $this->md5Hashes[$filePath]) {
-				return true;
+				return TRUE;
 			}
 		}
-		return false;
+		return FALSE;
 	}
 
 	/**
@@ -565,7 +564,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	public function isRenamed() {
 		$originalExtensionKey = $this->getOriginalExtensionKey();
 		if (!empty($originalExtensionKey) && $originalExtensionKey != $this->getExtensionKey()) {
-			$this->renamed = true;
+			$this->renamed = TRUE;
 		}
 		return $this->renamed;
 	}

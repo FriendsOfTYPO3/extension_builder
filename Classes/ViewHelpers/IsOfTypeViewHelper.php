@@ -39,10 +39,10 @@
 class Tx_ExtensionBuilder_ViewHelpers_IsOfTypeViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
-	 * Checks if $object is of type $type and returns true or false respectively
+	 * Checks if $object is of type $type and returns TRUE or FALSE respectively
 	 * @param mixed $object
 	 * @param string $type
-	 * @return boolean true or false
+	 * @return boolean TRUE or FALSE
 	 */
 	public function render($object, $type) {
 		return is_a($object, 'Tx_ExtensionBuilder_Domain_Model_' . $type);
