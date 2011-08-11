@@ -13,7 +13,7 @@ version: 2.7.0
 
 body {
 	/* For breathing room between content and viewport. */
-	margin:10px;
+	margin: 10px;
 }
 
 h1 {
@@ -31,20 +31,21 @@ h3 {
 	font-size: 108%;
 }
 
-h1,h2,h3 {
+h1, h2, h3 {
 	/* Top & bottom margin based on font size. */
 	margin: 1em 0;
 }
 
-h1,h2,h3,h4,h5,h6,strong,dt {
+h1, h2, h3, h4, h5, h6, strong, dt {
 	/* Bringing boldness back to headers and the strong element. */
 	font-weight: bold;
 }
+
 optgroup {
-	font-weight:normal;
+	font-weight: normal;
 }
 
-abbr,acronym {
+abbr, acronym {
 	/* Indicating to users that more info is available. */
 	border-bottom: 1px dotted #000;
 	cursor: help;
@@ -60,12 +61,12 @@ del {
 	text-decoration: line-through;
 }
 
-blockquote,ul,ol,dl {
+blockquote, ul, ol, dl {
 	/* Giving blockquotes and lists room to breath. */
 	margin: 1em;
 }
 
-ol,ul,dl {
+ol, ul, dl {
 	/* Bringing lists on to the page with breathing room. */
 	margin-left: 2em;
 }
@@ -85,7 +86,7 @@ dl dd {
 	margin-left: 1em;
 }
 
-th,td {
+th, td {
 	/* Borders and padding to make the table readable. */
 	border: 1px solid #000;
 	padding: .5em;
@@ -121,11 +122,12 @@ pre {
 	/* So things don't run into each other. */
 	margin-bottom: 1em;
 }
+
 /* Opera requires 1px of passing to render with contemporary native chrome */
 button,
 input[type="checkbox"],
 input[type="radio"],
 input[type="reset"],
 input[type="submit"] {
-	padding:1px;
+	padding: 1px;
 }

@@ -3,6 +3,7 @@
 	margin: 0;
 	padding: 0;
 }
+
 .yui-skin-sam .hidden {
 	visibility: hidden;
 	position: absolute;
@@ -23,7 +24,7 @@
 }
 
 .yui-skin-sam ul.yui-accordionview ul.yui-accordionview {
-    zoom: 1;
+	zoom: 1;
 }
 
 .yui-skin-sam .yui-accordionview li.yui-accordion-panel a.yui-accordion-toggle {
@@ -45,12 +46,14 @@
 .yui-skin-sam .yui-accordionview li.yui-accordion-panel a.yui-accordion-toggle:hover {
 	background-position: 0 -1300px;
 }
+
 .yui-skin-sam .yui-accordionview li.yui-accordion-panel a.yui-accordion-toggle.active {
 	background-position: 0 -1400px;
 	border-color: #243356;
 	border-bottom: 1px #243356 solid;
 	color: #fff;
 }
+
 .yui-skin-sam .yui-accordionview li.yui-accordion-panel a.yui-accordion-toggle.active:hover {
 	background-position: 0 -1400px;
 }
@@ -64,6 +67,7 @@
 	right: 0.5em;
 	top: 25%;
 }
+
 .yui-skin-sam .yui-accordion-toggle.active .indicator {
 	background: url(sprite.png) 0 -400px;
 }
@@ -72,7 +76,7 @@
 	border-left: 1px #A3A3A3 solid;
 	border-right: 1px #A3A3A3 solid;
 	background: #EDF5FF;
-    _zoom: 1;
+	_zoom: 1;
 }
 
 .yui-skin-sam ul.submenu {
@@ -88,17 +92,19 @@
 	text-decoration: none;
 	color: #000;
 }
+
 .yui-skin-sam ul.submenu li a:hover {
 	background: #b3d4ff;
 }
+
 .yui-skin-sam ul.submenu li a:visited, .yui-skin-sam .yui-accordionview li.yui-accordion-panel a.link:visited {
 	color: #777;
 }
 
-
 .yui-skin-sam .yui-accordionview li.yui-accordion-panel a.yui-accordion-toggle:focus {
 	text-decoration: underline;
 }
+
 .yui-skin-sam .yui-accordionview li.yui-accordion-panel a.yui-accordion-toggle.activepanel {
 	text-decoration: underline;
 }

@@ -32,8 +32,8 @@ body {
  * Section: Page Width Rules (#doc, #doc2, #doc3, #doc4)
  */
 
-#doc,#doc2,#doc3,#doc4,
-.yui-t1,.yui-t2,.yui-t3,.yui-t4,.yui-t5,.yui-t6,.yui-t7 {
+#doc, #doc2, #doc3, #doc4,
+.yui-t1, .yui-t2, .yui-t3, .yui-t4, .yui-t5, .yui-t6, .yui-t7 {
 	margin: auto;
 	text-align: left;
 	width: 57.69em;
@@ -48,12 +48,12 @@ body {
 
 /* 100% (doc3) */
 #doc3 {
-/**
- * Left and Right margins are not a structural part of Grids. Without them 
- * Grids works fine, but content bleeds to the very edge of the document, which
- * often impairs readability and usability. They are provided because they 
- * prevent the content from "bleeding" into the browser's chrome. 
- */
+	/**
+	 * Left and Right margins are not a structural part of Grids. Without them
+	 * Grids works fine, but content bleeds to the very edge of the document, which
+	 * often impairs readability and usability. They are provided because they
+	 * prevent the content from "bleeding" into the browser's chrome.
+	 */
 	margin: auto 10px;
 	width: auto;
 }
@@ -67,7 +67,6 @@ body {
 /**
  * Section: Preset Template Rules (.yui-t[1-6])
  */
-
 
 .yui-b {
 	/* to preserve source-order independence for Gecko */
@@ -198,7 +197,7 @@ body {
 .yui-gb .yui-gd,
 .yui-gb .yui-ge,
 .yui-gb .yui-gf,
-.yui-gc .yui-u, 
+.yui-gc .yui-u,
 .yui-gc .yui-g,
 .yui-gd .yui-u {
 	float: left;
@@ -207,27 +206,27 @@ body {
 /* Float units (and sub grids) to the right */
 .yui-g .yui-u,
 .yui-g .yui-g,
-.yui-g .yui-gb, 
-.yui-g .yui-gc, 
-.yui-g .yui-gd, 
-.yui-g .yui-ge, 
-.yui-g .yui-gf, 
-.yui-gc .yui-u, 
+.yui-g .yui-gb,
+.yui-g .yui-gc,
+.yui-g .yui-gd,
+.yui-g .yui-ge,
+.yui-g .yui-gf,
+.yui-gc .yui-u,
 .yui-gd .yui-g,
 .yui-g .yui-gc .yui-u,
-.yui-ge .yui-u, 
-.yui-ge .yui-g, 
+.yui-ge .yui-u,
+.yui-ge .yui-g,
 .yui-gf .yui-g,
 .yui-gf .yui-u {
 	float: right;
 }
 
 /*Float units (and sub grids) to the left */
-.yui-g div.first, 
+.yui-g div.first,
 .yui-gb div.first,
 .yui-gc div.first,
-.yui-gd div.first, 
-.yui-ge div.first, 
+.yui-gd div.first,
+.yui-ge div.first,
 .yui-gf div.first,
 .yui-g .yui-gc div.first,
 .yui-g .yui-ge div.first,
@@ -253,7 +252,7 @@ body {
 .yui-gb .yui-gd,
 .yui-gb .yui-ge,
 .yui-gb .yui-gf,
-.yui-gc .yui-u, 
+.yui-gc .yui-u,
 .yui-gc .yui-g,
 .yui-gd .yui-u {
 	width: 32%;
@@ -266,8 +265,8 @@ body {
 	*width: 31.9%;
 }
 
-.yui-gc div.first, 
-	.yui-gd .yui-u {
+.yui-gc div.first,
+.yui-gd .yui-u {
 	width: 66%;
 }
 
@@ -275,19 +274,19 @@ body {
 	width: 32%;
 }
 
-.yui-ge div.first, 
-	.yui-gf .yui-u {
+.yui-ge div.first,
+.yui-gf .yui-u {
 	width: 74.2%;
 }
 
 .yui-ge .yui-u,
-	.yui-gf div.first {
+.yui-gf div.first {
 	width: 24%;
 }
 
 .yui-g .yui-gb div.first,
-.yui-gb div.first, 
-.yui-gc div.first, 
+.yui-gb div.first,
+.yui-gc div.first,
 .yui-gd div.first {
 	margin-left: 0;
 }
@@ -313,14 +312,14 @@ body {
 
 /*SF 1927599 from 1.14 to 2.6.0*/
 .yui-g .yui-gb div.first,
-	.yui-gb .yui-gb div.first {
+.yui-gb .yui-gb div.first {
 	*margin-right: 0;
 	*width: 32%;
 	_width: 31.7%;
 }
 
-.yui-g .yui-gc div.first, 
-	.yui-gd .yui-g {
+.yui-g .yui-gc div.first,
+.yui-gd .yui-g {
 	width: 66%;
 }
 
@@ -329,13 +328,13 @@ body {
 	_margin-right: 1.3%;
 }
 
-.yui-gb .yui-gc div.first, 
-	.yui-gb .yui-gd div.first {
+.yui-gb .yui-gc div.first,
+.yui-gb .yui-gd div.first {
 	*margin-right: 0;
 }
 
 .yui-gb .yui-gb .yui-u,
-	.yui-gb .yui-gc .yui-u {
+.yui-gb .yui-gc .yui-u {
 	*margin-left: 1.8%;
 	_margin-left: 4%;
 }
@@ -354,8 +353,8 @@ body {
 	_width: 29.5%;
 }
 
-.yui-g .yui-gc .yui-u, 
-	.yui-gb .yui-gc .yui-u {
+.yui-g .yui-gc .yui-u,
+.yui-gb .yui-gc .yui-u {
 	width: 32%;
 	_float: right;
 	margin-right: 0;
@@ -368,8 +367,8 @@ body {
 	*margin-left: 0;
 }
 
-.yui-gb .yui-ge .yui-u, 
-	.yui-gb .yui-gf .yui-u {
+.yui-gb .yui-ge .yui-u,
+.yui-gb .yui-gf .yui-u {
 	margin: 0;
 }
 
@@ -377,13 +376,13 @@ body {
 	_margin-left: .7%;
 }
 
-.yui-gb .yui-g div.first, 
-	.yui-gb .yui-gb div.first {
+.yui-gb .yui-g div.first,
+.yui-gb .yui-gb div.first {
 	*margin-left: 0;
 }
 
 .yui-gc .yui-g .yui-u,
-	.yui-gd .yui-g .yui-u {
+.yui-gd .yui-g .yui-u {
 	*width: 48.1%;
 	*margin-left: 0;
 }
@@ -405,25 +404,25 @@ body {
 }
 
 .yui-gb .yui-ge div.yui-u,
-	.yui-gb .yui-gf div.yui-u {
+.yui-gb .yui-gf div.yui-u {
 	float: right;
 }
 
 .yui-gb .yui-ge div.first,
-	.yui-gb .yui-gf div.first {
+.yui-gb .yui-gf div.first {
 	float: left;
 }
 
 /* Width Accommodation for Nested Contexts */
 .yui-gb .yui-ge .yui-u,
-	.yui-gb .yui-gf div.first {
+.yui-gb .yui-gf div.first {
 	*width: 24%;
 	_width: 20%;
 }
 
 /* Width Accommodation for Nested Contexts */
-.yui-gb .yui-ge div.first, 
-	.yui-gb .yui-gf .yui-u {
+.yui-gb .yui-ge div.first,
+.yui-gb .yui-gf .yui-u {
 	*width: 73.5%;
 	_width: 65.5%;
 }
@@ -441,11 +440,11 @@ body {
 #hd:after,
 #bd:after,
 #ft:after,
-.yui-g:after, 
-.yui-gb:after, 
-.yui-gc:after, 
-.yui-gd:after, 
-.yui-ge:after, 
+.yui-g:after,
+.yui-gb:after,
+.yui-gc:after,
+.yui-gd:after,
+.yui-ge:after,
 .yui-gf:after {
 	content: ".";
 	display: block;
@@ -457,11 +456,11 @@ body {
 #hd,
 #bd,
 #ft,
-.yui-g, 
-.yui-gb, 
-.yui-gc, 
-.yui-gd, 
-.yui-ge, 
+.yui-g,
+.yui-gb,
+.yui-gc,
+.yui-gd,
+.yui-ge,
 .yui-gf {
 	zoom: 1;
 }

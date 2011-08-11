@@ -8,74 +8,72 @@ version: 2.7.0
 
 .yuimenu {
 
-    top: -999em;
-    left: -999em;
+	top: -999em;
+	left: -999em;
 
 }
 
 .yuimenubar {
 
-    position: static;
+	position: static;
 
 }
 
 .yuimenu .yuimenu,
 .yuimenubar .yuimenu {
 
-    position: absolute;
+	position: absolute;
 
 }
 
-.yuimenubar li, 
+.yuimenubar li,
 .yuimenu li {
 
-    list-style-type: none;    
+	list-style-type: none;
 
 }
 
-.yuimenubar ul, 
+.yuimenubar ul,
 .yuimenu ul,
-.yuimenubar li, 
+.yuimenubar li,
 .yuimenu li,
 .yuimenu h6,
-.yuimenubar h6 { 
+.yuimenubar h6 {
 
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 
 }
 
 .yuimenuitemlabel,
 .yuimenubaritemlabel {
 
-    text-align: left;
-    white-space: nowrap;
+	text-align: left;
+	white-space: nowrap;
 
 }
 
-
-/* 
-    The following style rule trigger the "hasLayout" property in 
-    IE (http://msdn2.microsoft.com/en-us/library/ms533776.aspx) for a
-    MenuBar instance's <ul> element, allowing both to clear their floated 
-    child <li> elements.
+/*
+	The following style rule trigger the "hasLayout" property in
+	IE (http://msdn2.microsoft.com/en-us/library/ms533776.aspx) for a
+	MenuBar instance's <ul> element, allowing both to clear their floated
+	child <li> elements.
 */
 
 .yuimenubar ul {
 
-    *zoom: 1;
+	*zoom: 1;
 
 }
 
-
-/* 
-    Remove the "hasLayout" trigger for submenus of MenuBar instances as it 
-    is unnecessary. 
+/*
+	Remove the "hasLayout" trigger for submenus of MenuBar instances as it
+	is unnecessary.
 */
 
 .yuimenubar .yuimenu ul {
 
-    *zoom: normal;
+	*zoom: normal;
 
 }
 
@@ -86,41 +84,41 @@ version: 2.7.0
 
 .yuimenubar>.bd>ul:after {
 
-    content: ".";
-    display: block;
-    clear: both;
-    visibility: hidden;
-    height: 0;
-    line-height: 0;
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	height: 0;
+	line-height: 0;
 
 }
 
 .yuimenubaritem {
 
-    float: left;
+	float: left;
 
 }
 
 .yuimenubaritemlabel,
 .yuimenuitemlabel {
 
-    display: block;
+	display: block;
 
 }
 
 .yuimenuitemlabel .helptext {
 
-    font-style: normal;
-    display: block;
-    
-    /*
-        The value for the left margin controls how much the help text is
-        offset from the text of the menu item.  This value will need to 
-        be customized depending on the longest text label of a menu item.
-    */
-    
-    margin: -1em 0 0 10em;
-    
+	font-style: normal;
+	display: block;
+
+	/*
+			The value for the left margin controls how much the help text is
+			offset from the text of the menu item.  This value will need to
+			be customized depending on the longest text label of a menu item.
+		*/
+
+	margin: -1em 0 0 10em;
+
 }
 
 /*
@@ -134,57 +132,56 @@ version: 2.7.0
 
 .yui-menu-shadow {
 
-    position: absolute;
-    visibility: hidden;
-    z-index: -1;
+	position: absolute;
+	visibility: hidden;
+	z-index: -1;
 
 }
 
 .yui-menu-shadow-visible {
 
-    top: 2px;
-    right: -3px;
-    left: -3px;
-    bottom: -3px;
-    visibility: visible;
+	top: 2px;
+	right: -3px;
+	left: -3px;
+	bottom: -3px;
+	visibility: visible;
 
 }
-
 
 /*
 
 There are two known issues with YAHOO.widget.Overlay (the superclass class of 
 Menu) that manifest in Gecko-based browsers on Mac OS X:
 
-    1) Elements with scrollbars will poke through Overlay instances floating 
-       above them.
-    
-    2) An Overlay's scrollbars and the scrollbars of its child nodes remain  
-       visible when the Overlay is hidden.
+	1) Elements with scrollbars will poke through Overlay instances floating
+	   above them.
+
+	2) An Overlay's scrollbars and the scrollbars of its child nodes remain
+	   visible when the Overlay is hidden.
 
 To fix these bugs in Menu (a subclass of YAHOO.widget.Overlay):
 
-    1) The "overflow" property of a Menu instance's shadow element and child 
-       nodes is toggled between "hidden" and "auto" (through the application  
-       and removal of the "hide-scrollbars" and "show-scrollbars" CSS classes)
-       as its "visibility" configuration property is toggled between 
-       "false" and "true."
-    
-    2) The "display" property of <select> elements that are child nodes of the 
-       Menu instance's root element is set to "none" when it is hidden.
+	1) The "overflow" property of a Menu instance's shadow element and child
+	   nodes is toggled between "hidden" and "auto" (through the application
+	   and removal of the "hide-scrollbars" and "show-scrollbars" CSS classes)
+	   as its "visibility" configuration property is toggled between
+	   "false" and "true."
 
-PLEASE NOTE:  
-  
-    1) The "hide-scrollbars" and "show-scrollbars" CSS classes classes are 
-       applied only for Gecko on Mac OS X and are added/removed to/from the 
-       Overlay's root HTML element (DIV) via the "hideMacGeckoScrollbars" and 
-       "showMacGeckoScrollbars" methods of YAHOO.widget.Overlay.
-    
-    2) There may be instances where the CSS for a web page or application 
-       contains style rules whose specificity override the rules implemented by 
-       the Menu CSS files to fix this bug.  In such cases, is necessary to 
-       leverage the provided "hide-scrollbars" and "show-scrollbars" classes to 
-       write custom style rules to guard against this bug.
+	2) The "display" property of <select> elements that are child nodes of the
+	   Menu instance's root element is set to "none" when it is hidden.
+
+PLEASE NOTE:
+
+	1) The "hide-scrollbars" and "show-scrollbars" CSS classes classes are
+	   applied only for Gecko on Mac OS X and are added/removed to/from the
+	   Overlay's root HTML element (DIV) via the "hideMacGeckoScrollbars" and
+	   "showMacGeckoScrollbars" methods of YAHOO.widget.Overlay.
+
+	2) There may be instances where the CSS for a web page or application
+	   contains style rules whose specificity override the rules implemented by
+	   the Menu CSS files to fix this bug.  In such cases, is necessary to
+	   leverage the provided "hide-scrollbars" and "show-scrollbars" classes to
+	   write custom style rules to guard against this bug.
 
 ** For more information on this issue, see:
 
@@ -205,7 +202,6 @@ PLEASE NOTE:
 
 }
 
-
 /*
 
 The following style rule (".yuimenu.show-scrollbars") overrides the 
@@ -219,24 +215,24 @@ when one of its submenus is visible.
 .yuimenu.show-scrollbars,
 .yuimenubar.show-scrollbars {
 
-	overflow: visible; 
+	overflow: visible;
 
 }
 
 .yuimenu.hide-scrollbars .yui-menu-shadow,
 .yuimenubar.hide-scrollbars .yui-menu-shadow {
 
-    overflow: hidden;
+	overflow: hidden;
 
 }
 
 .yuimenu.show-scrollbars .yui-menu-shadow,
 .yuimenubar.show-scrollbars .yui-menu-shadow {
 
-    overflow: auto;
+	overflow: auto;
 
 }
 
 .yui-overlay.yui-force-redraw {
-   margin-bottom: 1px;
+	margin-bottom: 1px;
 }
