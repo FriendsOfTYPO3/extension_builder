@@ -104,7 +104,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 
 		$this->extension = $extension;
 		$this->extensionDirectory = $this->extension->getExtensionDir();
-		$this->extClassPrefix = 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey());
+		$this->extClassPrefix = 'Tx_' . t3lib_div::underscoredToUpperCamelCase($this->extension->getExtensionKey());
 
 		if (!$this->classParser instanceof Tx_ExtensionBuilder_Utility_ClassParser) {
 			$this->injectClassParser(t3lib_div::makeInstance('Tx_ExtensionBuilder_Utility_ClassParser'));
