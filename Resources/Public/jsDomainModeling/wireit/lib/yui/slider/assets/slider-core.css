@@ -6,10 +6,11 @@ version: 2.7.0
 */
 .yui-h-slider,
 .yui-v-slider {
-    position: relative;
+	position: relative;
 }
+
 .yui-h-slider .yui-slider-thumb,
 .yui-v-slider .yui-slider-thumb {
-    position: absolute;
-    cursor: default;
+	position: absolute;
+	cursor: default;
 }

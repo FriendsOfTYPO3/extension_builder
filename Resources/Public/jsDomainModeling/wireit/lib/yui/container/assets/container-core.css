@@ -6,36 +6,36 @@ version: 2.7.0
 */
 .yui-overlay,
 .yui-panel-container {
-    visibility: hidden;
-    position: absolute;
-    z-index: 2;
+	visibility: hidden;
+	position: absolute;
+	z-index: 2;
 }
 
 .yui-panel {
-    position:relative;
+	position: relative;
 }
 
 .yui-panel-container form {
-    margin: 0;
+	margin: 0;
 }
 
 .mask {
-    z-index: 1;
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+	z-index: 1;
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 }
 
 .mask.block-scrollbars {
-    /*
-        Application of "overflow:auto" prevents Mac scrollbars from bleeding
-        through the modality mask in Gecko. The block-scollbars class is only 
-        added for Gecko on MacOS
-    */
-    overflow: auto;
+	/*
+			Application of "overflow:auto" prevents Mac scrollbars from bleeding
+			through the modality mask in Gecko. The block-scollbars class is only
+			added for Gecko on MacOS
+		*/
+	overflow: auto;
 }
 
 /* 
@@ -58,11 +58,11 @@ version: 2.7.0
 .masked select,
 .drag select,
 .hide-select select {
-    _visibility: hidden;
+	_visibility: hidden;
 }
 
 .yui-panel-container select {
-    _visibility: inherit;
+	_visibility: inherit;
 }
 
 /*
@@ -110,27 +110,27 @@ PLEASE NOTE:
 .hide-scrollbars,
 .hide-scrollbars * {
 
-    overflow: hidden;
+	overflow: hidden;
 
 }
 
 .hide-scrollbars select {
-    display: none;
+	display: none;
 }
 
 .show-scrollbars {
-    overflow: auto;
+	overflow: auto;
 }
 
 .yui-panel-container.show-scrollbars,
 .yui-tt.show-scrollbars {
-    overflow: visible;
+	overflow: visible;
 }
 
 .yui-panel-container.show-scrollbars .underlay,
 .yui-tt.show-scrollbars .yui-tt-shadow {
 
-    overflow: auto;
+	overflow: auto;
 
 }
 
@@ -141,11 +141,11 @@ PLEASE NOTE:
    removed.
 */
 .yui-panel-container.shadow .underlay.yui-force-redraw {
-    padding-bottom: 1px;
+	padding-bottom: 1px;
 }
 
 .yui-effect-fade .underlay, .yui-effect-fade .yui-tt-shadow {
-    display:none;
+	display: none;
 }
 
 /*
@@ -158,19 +158,19 @@ PLEASE NOTE:
 */
 
 .yui-tt-shadow {
-    position: absolute;
+	position: absolute;
 }
 
 .yui-override-padding {
-    padding:0 !important;
+	padding: 0 !important;
 }
 
 .yui-panel-container .container-close {
-    overflow:hidden;
-    text-indent:-10000em;
-    text-decoration:none;
+	overflow: hidden;
+	text-indent: -10000em;
+	text-decoration: none;
 }
 
 .yui-overlay.yui-force-redraw, .yui-panel-container.yui-force-redraw {
-    margin-bottom:1px;
+	margin-bottom: 1px;
 }

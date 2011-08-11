@@ -1,9 +1,9 @@
 /*
-Copyright (c) 2009, Yahoo! Inc. All rights reserved.
-Code licensed under the BSD License:
-http://developer.yahoo.net/yui/license.txt
-version: 2.7.0
-*/
+ Copyright (c) 2009, Yahoo! Inc. All rights reserved.
+ Code licensed under the BSD License:
+ http://developer.yahoo.net/yui/license.txt
+ version: 2.7.0
+ */
 /**
  * The image loader is a framework to dynamically load images
  * according to certain triggers, enabling faster load times
@@ -34,7 +34,7 @@ YAHOO.util.ImageLoader.group = function(trigEl, trigAct, timeout) {
 	 * @type String
 	 */
 	this.name = 'unnamed';
-	
+
 	/**
 	 * Collection of images registered with this group
 	 * @property _imgObjs
@@ -42,14 +42,14 @@ YAHOO.util.ImageLoader.group = function(trigEl, trigAct, timeout) {
 	 * @type Object
 	 */
 	this._imgObjs = {};
-	
+
 	/**
 	 * Timeout (time limit) length, in seconds
 	 * @property timeoutLen
 	 * @type Number
 	 */
 	this.timeoutLen = timeout;
-	
+
 	/**
 	 * Timeout object to keep a handle on the time limit
 	 * @property _timeout
@@ -57,7 +57,7 @@ YAHOO.util.ImageLoader.group = function(trigEl, trigAct, timeout) {
 	 * @type Object
 	 */
 	this._timeout = null;
-	
+
 	/**
 	 * Collection of triggers for this group.
 	 * Keeps track of each trigger's element, event, and event-listener-callback "fetch" function
@@ -172,7 +172,9 @@ YAHOO.util.ImageLoader.group.prototype._onloadTasks = function() {
  */
 YAHOO.util.ImageLoader.group.prototype._getFetchTimeout = function() {
 	var self = this;
-	return function() { self.fetch(); };
+	return function() {
+		self.fetch();
+	};
 };
 
 /**
@@ -205,7 +207,7 @@ YAHOO.util.ImageLoader.group.prototype.registerSrcImage = function(domId, url, w
  * @param {String}	domId	HTML DOM id of the image element
  * @param {String}	url	URL for the image
  * @param {Object}  ailProps The AlphaImageLoader properties to be set for the image
- *                    Valid properties are 'sizingMethod' and 'enabled'
+ *					Valid properties are 'sizingMethod' and 'enabled'
  * @return {Object}	pngBgImgObj that was registered, for modifying any attributes in the object
  */
 YAHOO.util.ImageLoader.group.prototype.registerPngBgImage = function(domId, url, ailProps) {
@@ -222,11 +224,11 @@ YAHOO.util.ImageLoader.group.prototype.fetch = function() {
 
 	clearTimeout(this._timeout);
 	// remove all listeners
-	for (var i=0, len = this._triggers.length; i < len; i++) {
+	for (var i = 0, len = this._triggers.length; i < len; i++) {
 		YAHOO.util.Event.removeListener(this._triggers[i][0], this._triggers[i][1], this._triggers[i][2]);
 	}
 	// remove custom event subscriptions
-	for (var i=0, len = this._customTriggers.length; i < len; i++) {
+	for (var i = 0, len = this._customTriggers.length; i < len; i++) {
 		this._customTriggers[i][0].unsubscribe(this._customTriggers[i][1], this);
 	}
 
@@ -266,7 +268,7 @@ YAHOO.util.ImageLoader.group.prototype._foldCheck = function() {
 	// and by class
 	if (this.className) {
 		this._classImageEls = YAHOO.util.Dom.getElementsByClassName(this.className);
-		for (var i=0, len = this._classImageEls.length; i < len; i++) {
+		for (var i = 0, len = this._classImageEls.length; i < len; i++) {
 			var elPos = YAHOO.util.Dom.getXY(this._classImageEls[i]);
 			if (elPos[1] < hLimit && elPos[0] < wLimit) {
 				YAHOO.log('Image with id "' + this._classImageEls[i].id + '" is above the fold. Fetching image. (Image registered by class name with the group - may not have an id.)', 'info', 'imageloader');
@@ -451,7 +453,7 @@ YAHOO.util.ImageLoader.srcImgObj.prototype._applyUrl = function(el) {
  * @param {String}	domId	HTML DOM id of the image element
  * @param {String}	url	URL for the image
  * @param {Object}  ailProps The AlphaImageLoader properties to be set for the image
- *                    Valid properties are 'sizingMethod' and 'enabled'
+ *					Valid properties are 'sizingMethod' and 'enabled'
  */
 YAHOO.util.ImageLoader.pngBgImgObj = function(domId, url, ailProps) {
 	YAHOO.util.ImageLoader.pngBgImgObj.superclass.constructor.call(this, domId, url);
