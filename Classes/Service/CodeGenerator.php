@@ -572,7 +572,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		if (empty($precedingBlock) || strpos($precedingBlock, 'GNU General Public License') < 1) {
 
 			$licenseHeader = $this->renderTemplate('Partials/Classes/licenseHeader.phpt', array('persons' => $this->extension->getPersons()));
-			$docComment = $licenseHeader . "\n\n\n" . $docComment;
+			$docComment = "\n".$licenseHeader . "\n\n\n" . $docComment;
 		}
 		else {
 			$docComment = $precedingBlock . "\n" . $docComment;
@@ -609,7 +609,6 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	public function generateLayout($templateRootFolder) {
 		return $this->renderTemplate($templateRootFolder . 'default.htmlt', array('extension' => $this->extension));
 	}
-
 
 	public function generateLocallang() {
 		return $this->renderTemplate('Resources/Private/Language/locallang.xmlt', array('extension' => $this->extension));
