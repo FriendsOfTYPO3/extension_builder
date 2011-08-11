@@ -20,8 +20,8 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 if (TYPO3_MODE === 'BE') {
 <f:for each="{extension.BackendModules}" as="backendModule">
 	/**
-	* Registers a Backend Module
-	*/
+	 * Registers a Backend Module
+	 */
 	Tx_Extbase_Utility_Extension::registerModule(
 		$_EXTKEY,
 		'{backendModule.mainModule}',	 // Make module a submodule of '{backendModule.mainModule}'

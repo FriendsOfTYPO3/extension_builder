@@ -1,3 +1,236 @@
-2009-08-16 Ingmar Schlecht  <ingmar@typo3.org>
+[BUGFIX] Initial code creation and reloaded do not differ anymore
+Resolves #26039
+[TASK] Removed deprecated method calls
+[TASK] Formatted Javascript files
+Removed ome unused files in jsDomainModeling
+[TASK] Improved priority explanation
+[TASK] Added explanation for priority in emConf
+[BUGFIX] Rearranging relations may not be skipped when reading JSON input
+Resovles #28860
+[BUGFIX] Added ontype input control. Extended emConf options
+Resolves #27906
+Resolves #26883
+[BUGFIX] Label for backup was replaced by advancedMode label unintenionally
+Resolves #28810
+[BUGFIX] Implemented a confirm routine
+This enables asking for confirmation for
+ - writing in existing extension directories
+ - using SQL reserved words
+Alse refactored validating, since throwing an error always stops validating, so it might lead to multiple save procedures
+Resolves #25958
+[BUGFIX] Check for is_array before calling array_merge
+Resolves #28418
+[TASK] Removed unused javascript files
+[BUGFIX] Check existing extension keys and improved error handling
+Resolves ##12132
+[TASK] Flattened the relation config to get rid of subform "advancedSetting"
+[TASK] Show a notice, that file upload isn't implemented yet
+[TASK] Removed advancedMode
+[TASK] Changed form.textbox to form.textfield to be compatible with fluid 1.4
+Resolves #28461
+[TASK] A bunch of formatting according to CGL
+[TASK] Updated manual.swx to reflect new relation options
+[TASK] Removed some devlog notifications
+Revert "[TASK] Refactoring: Refactored Code Generator and reformated PHP Files"
+The refactoring commit is reverted since it's a mixture of introducing changes and formatting files.
+The formatting of files makes it hard, to track the changes.
+[+BUGFIX] Correct relation type labels and implementations
+Resolves #28114
+New relation type manyToOne. Inline editing is configured implicit.
+Mapping to old relation configuration is based on this:
+old configuration	new configuration
+zeroToMany
+	inline == 1	: zeroToMany
+	inline == 0 	: manyToMany
+zeroToOne
+	inline == 1	: zeroToOne
+	inline == 0	: manyToOne
+ManyToMany
+	inline == 1	: oneToMany
+	inline == 0	: manyToMany
+[+BUGFIX] Removed spaces in ext_tables.sql
+[+BUGFIX] Confirm before loading new extension
+Also removed delete button
+Resolves #28059
+Resolves #28058
+[+BUGFIX] Show a warning that caching prevents some actions
+Resolves #27102
+Also includes a quick compatibility workaround for non-existing injectTemplateVariableContainer method in extbase 1.3
+[TASK] Refactoring: Refactored Code Generator and reformated PHP Files
+Merge "[+TASK] Removed unused templates and moved class template"
+[+TASK] Removed unused templates and moved class template
+[+TASK] Remove unused "Remove"  methods
+[~TASK] Big Refactoring: Refactored mainly BuilderModuleController as a first step.
+[+BUGFIX] Fixed wrong modifiers in ConfigurationManager
+[+BUGFIX] Reapplied a commit, moving the tests to a Unit subfolder
+Resolves #27218
+[+TASK] Refactoring of Configuration Manager
+Preparing connection to new frontend modeler
+[+TASK] Refactoring of code generation to avoid duplicate code
+[~BUGFIX] SelectProperty have int instead of integer as property type in annotation
+Resolves: #27522
+[~BUGFIX] TypoScript setup for modules points to plugin constant instead of module
+Resolves: #27327
+Merge "[-BUGFIX] Fix missing and misconfigured columns in SQL CodeTemplate"
+[-BUGFIX] Fix missing and misconfigured columns in SQL CodeTemplate
+Resolves: #27267
+[BUGFIX] Move UnitTests from to Tests/Unit/
+Move the UnitTests from the Tests/ directory to the new Tests/Unit to
+allow for jasmine and other tests.
+Resolves: #27218
+[+BUGFIX] added a injectRepsoitory method to controller class
+[+BUGFIX] Double usage of same variable name in mapControllerToCurrentClassObject
+[+BUGFIX] Only existing actions should be registered
+Merge changes Id33ea73d,I6ea56ebf
+* changes:
+  [BUGFIX] Fix typo in doc comments
+  [BUGFIX] Add newline to backend module registration
+Merge "[+TASK] Improved listing of author properties in em_conf.php"
+[+TASK] Improved listing of author properties in em_conf.php
+Resolves #25810
+Merge "Changed allowed image file extensions to CONF VAR imagefile_ext"
+Changed allowed image file extensions to CONF VAR imagefile_ext
+Resolves #26975
+Merge "[+BUGFIX] Fix html special chars in locallang_csh*.xml files"
+[+BUGFIX] Fix html special chars in locallang_csh*.xml files
+Due to a missing namespace declaration, fluid did not parse the k:htmlSpecialChars view helper, resulting in the view helper tag being added to the xml file. This adds the namespace declaration so the view helper works as expected.
+[+BUGFIX] Roundtrip: Fix class and method modifiers
+With roundtrip enabled, a single space is added before each class declaration.
+This changes the class builder to not add this space by fixing the retrieval
+of class and method modifiers. Those are resolved with Reflection::getModifierNames()
+which returns an array of modifiers. Before this change, the first one (or NULL
+if no modifiers are set) was added to the result array. The NULL value in the
+array resulted in the space before the class definition. This changes this so the
+result is directly used (i.e. array of all modifiers or NULL) is used. Then the
+modifier NULL is not added before class definitions avoiding the space and for
+example abstract methods have both modifiers (abstract and public) set and not
+just one.
+Merge "[+TASK] Implemented checkbox and workaround for fluid bug"
+[BUGFIX] Fix typo in doc comments
+Resolves: #26939
+[BUGFIX] Add newline to backend module registration
+Resolves: #26917
+Merge "[+BUGFIX] Change parameter default value of NULL to be uppercase"
+Merge "[+BUGFIX] Fix renaming method"
+[+TASK] Implemented checkbox and workaround for fluid bug
+Implemented default values for properties
+[+BUGFIX] Removed warning in new action and redirect in list action
+[~BUGFIX] Changed var type for select property from string to int
+Resolves #26944
+[+FEATURE] Show warning if no storage pid is set
+The warning is also shown in the list action
+[~BUGFIX] Added a condition for default actions Default actions for aggregate roots are only created if no actions were selected
+[~TASK] Several adjustments according to CGL
+Resolves #26920
+[~TASK] Refactoring of Viewhelpers
+Added a error message if no storagePid is configured
+htmlspecialchars in locallang.xml files
+Improved error message on missing relations
+[+TASK] Added a manual.sxw template
+Resolves #26916
+[+BUGFIX] Skip creation of template files if set to merge
+Resolves #26923
+[+BUGFIX] CodeTemplateRootPath has a fallback and detects correct path now
+[~BUGFIX] Fix extension category
+Resolves: #26882
+[~BUGFIX] Minor fixes locallang.xml instead of php
+[~TASK] Raised version to 1.0
+[+TASK] Added a doc to prepare upload in TER
+[~TASK] Removed Compatibility to extbase < 1.3
+[~TASK] Moved all CodeTemplates to a subfolder Extbase Refactoring of Controller and Configuration Added static Typoscript to enable configuration of CodeTemplateFolder
+[+BUGFIX] Fix renaming method
+[+BUGFIX] Change parameter default value of NULL to be uppercase
+According to FLOW3/Extbase CGL NULL is to be written in uppercase letters. The default value of method parameters is json encoded on roundtrip, which renders null in lowercase letters. This adds special treatment for NULL values to comply with CGL.
+[~BUGFIX] Fixed a bug in the Show Template create new link
+[+BUGFIX] Improved renaming of domain objects
+The renaming of aggregate root objects was not reflected in Controller class and action methods
+Resolves #26694
+[~TASK] Renamed roundtrip setting to edit mode in Extension settings
+[+FEATURE] Enabled configuration settings for ext_autoload.php
+[+BUGFIX] Enabled backwards compatibility with extbase_kickstarter
+Old settings.yaml file is now copied to new location and old SPLIT_TOKEN are replaced with new ones before writing files
+[~BUGFIX] Added Backend Modules as category for the extension builder
+Resolves #26279
+[~BUGFIX] Changed default upload folder to lowercase
+Resolves #26489
+[!!!][+TASK] Rename extbase_kickstarter to extension_builder
+[~BUGFIX] Various CGL related fixes (all detected by Stefan Galinksi - Thanks!)
+Resolves #25926
+Resolves #25927
+Resolves #25814
+[~BUGFIX] Removed underscores in Flexform configuration
+Renamed getShorthandForTyposcript since it's used not only for Typoscript.
+Resolves #25977
+[~BUGFIX] Updated TCA settings for inline records. Workaround to avoid bug #19862 in Core.
+[~BUGFIX] wrong uploadfolders in TCA on certain extension names
+Removing underscores from extensionKey in getUploadFolder() solves the issue.
+Resolves: #25967
+[~BUGFIX] Added missing column to support workspaces. Thanks to Xavier Perseguers!
+Resolves #25879
+[~FEATURE] Make extension category configurable
+Resolves #25813
+[~BUGFIX] Fixed a bug in Constants template
+Resolves #25809
+[+BUGFIX] Improved login check (still a hack...)
+[~TASK] Removed unused actonControllerCrudActions.
+Started login check (not quite browser compatible yet)
+[~TASK] Updated TCA definion of t3ver_label
+Remove unused ActionControllerCrudActions
+Resolves #13343
+[~TASK] Replaced deprecated IRRE configuration
+Resolves #13789
+[+BUGFIX] Renaming extension key didn't work, since there was a missing declaration
+White spaces in extension key are trimmed off now
+[~BUGFIX] Fixed a broken test and various minor issues
+[~TASK] Changed foreign_table_where clause in TCA
+Resolves #13347
+Merge "[~TASK] Some more minor changes according to CGL"
+[~TASK] Some more minor changes according to CGL
+Relates to: #13351
+[~TASK] Refactoring of ObjectSchemaBuilder
+Removed unused Scaffolding classes and methods
+Splitted ObjectSchemaBuilder in Extension- and ObjectSchemaBuilder
+[~TASK] Many small changes according to CGL and the new blog_example version
+Resolves #13351
+[+BUGFIX] Hopefully resolves the relation order bug
+Resolves #9809
+[+TASK] Append split token to new generated files
+Resolves #13489
+[-TASK] Temporary disable last changes
+[+BUGFIX] Block dragging models outside of the modeller
+Resolves: #5871
+[~BUGFIX] Removed deprecated renderFlashMessages calls
+Resolves #13363
+[+TASK] Renamed Template files to uppercase
+[+TASK] Fixed broken test, that expected lowercase partial files
+[+BUGFIX] Adapted partial names to uppercase in templates
+[+BUGFIX] l18n was not renamed in some places Deleted unused Tca.phpt
+[+TASK] Improved TCA definitions
+Resolves #13358
+Resolves #13357
+[+TASK] Improved generating of Templates
+Resolves #13304
+[+TASK] Improved support for backend modules Backend modules have a separate Template folder and an appropriate backend layout
+Resolves #13353
+Resolves #13350
+[+BUGFIX] Do not generate localconf.php if no plugin is added
+Resolves #13338
+[+TASK] Added start and endtime to Domain objectsi
+Resolves #13335
+[+BUGFIX] Added KEY in SQL definitions
+Resolves #13337
+[~BUGFIX] (CodeGeneration): Load backend modules only in BE mode
+Resolves: #13352
+[+FEATURE] Add lazy loading support
+Resolves: #12583
+[+TASK] (CGL): Remove some invalid JavaScript
+[+TASK] Add tab label for backend modules
+Resolves: #13348
+[+TASK] Improved  backend module implementation
+Resolves #13303
+[+TASK] Renamed l18n to l10n according to #13295
 
-	* initial code generated with kickstarter
+HOW TO CREATE THE CHANGELOG
+===========================
+
+git log d8cc4c50..HEAD --pretty=format:"%s%n%b%n" | grep -v "^$" | grep -v "Change-Id*"
