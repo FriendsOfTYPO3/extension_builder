@@ -429,7 +429,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			}
 			$actionMethod->setParameter($parameter);
 		}
-		$actionMethod->setTag('return', 'string The rendered ' . $actionName . ' action');
+		$actionMethod->setTag('return', 'void');
 		return $actionMethod;
 	}
 
