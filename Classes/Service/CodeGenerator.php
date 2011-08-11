@@ -27,7 +27,6 @@
  * Creates (or updates) all the required files for an extension
  *
  * @package ExtensionBuilder
- * @version $ID:$
  */
 class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
@@ -344,7 +343,9 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 					t3lib_div::devlog('Generated ' . $domainObject->getName() . 'Controller.php', 'extension_builder', 0);
 					$this->extension->setMD5Hash($this->extensionDirectory . $destinationFile);
 
-					$this->generateScaffoldingControllerTests($controllerName, $domainObject);
+					// Generate basic UnitTests
+					$fileContents = $this->generateScaffoldingControllerTests($domainObject->getName() . 'Controller', $domainObject);
+					$this->writeFile($crudEnabledControllerTestsDirectory . $domainObject->getName() . 'ControllerTest.php', $fileContents);
 				}
 			} catch (Exception $e) {
 				throw new Exception('Could not generate action controller, error: ' . $e->getMessage());
