@@ -1,0 +1,44 @@
+plugin.tx_testextension {
+	view {
+		templateRootPath = {$plugin.tx_testextension.view.templateRootPath}
+		partialRootPath = {$plugin.tx_testextension.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_testextension.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_testextension.persistence.storagePid}
+	}
+}
+
+plugin.tx_testextension._CSS_DEFAULT_STYLE (
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	.tx-test-extension table {
+		border-collapse:separate;
+		border-spacing:10px;
+	}
+
+	.tx-test-extension table th {
+		font-weight:bold;
+	}
+
+	.tx-test-extension table td {
+		vertical-align:top;
+	}
+)
+
+
+
+ # Module configuration
+module.tx_testextension {
+	persistence {
+		storagePid = {$module.tx_testextension.persistence.storagePid}
+	}
+	view {
+		templateRootPath = {$module.tx_testextension.view.templateRootPath}
+		partialRootPath = {$module.tx_testextension.view.partialRootPath}
+		layoutRootPath = {$module.tx_testextension.view.layoutRootPath}
+	}
+}

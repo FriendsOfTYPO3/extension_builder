@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'test_extension'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_testextension_domain_model_main">Main</label>
+			<label index="tx_testextension_domain_model_main.name">Name</label>
+			<label index="tx_testextension_domain_model_main.identifier">Identifier</label>
+			<label index="tx_testextension_domain_model_main.child1">Child1</label>
+			<label index="tx_testextension_domain_model_main.children2">Children2</label>
+			<label index="tx_testextension_domain_model_main.child3">Child3</label>
+			<label index="tx_testextension_domain_model_main.children4">Children4</label>
+			<label index="tx_testextension_domain_model_child1">Child1</label>
+			<label index="tx_testextension_domain_model_child1.name">Name</label>
+			<label index="tx_testextension_domain_model_child2">Child2</label>
+			<label index="tx_testextension_domain_model_child3">Child3</label>
+			<label index="tx_testextension_domain_model_child3.name">Name</label>
+			<label index="tx_testextension_domain_model_child4">Child4</label>
+			<label index="tx_testextension_domain_model_child4.name">Name</label>
+		</languageKey>
+	</data>
+</T3locallang>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for the Compatibility Test Extension Version 1.0 extension in the FRONTEND</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_testextension_domain_model_main">Main</label>
+			<label index="tx_testextension_domain_model_main.name">This is not required</label>
+			<label index="tx_testextension_domain_model_main.identifier">This is required</label>
+			<label index="tx_testextension_domain_model_main.child1">This is a 1:1 relation</label>
+			<label index="tx_testextension_domain_model_main.children2">This is a 1:n relation</label>
+			<label index="tx_testextension_domain_model_main.child3">This is a n:1 relation</label>
+			<label index="tx_testextension_domain_model_main.children4">This is a m:n relation</label>
+			<label index="tx_testextension_domain_model_child1">Child1</label>
+			<label index="tx_testextension_domain_model_child1.name">name</label>
+			<label index="tx_testextension_domain_model_child2">Child2</label>
+			<label index="tx_testextension_domain_model_child3">Child3</label>
+			<label index="tx_testextension_domain_model_child3.name">name</label>
+			<label index="tx_testextension_domain_model_child4">Child4</label>
+			<label index="tx_testextension_domain_model_child4.name">name</label>
+		</languageKey>
+	</data>
+</T3locallang>

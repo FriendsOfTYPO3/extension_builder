@@ -53,8 +53,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$modelName = 'ModelCgt1';
 		$propertyName = 'blue';
 		$domainObject = $this->buildDomainObject($modelName);
-		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty();
-		$property->setName($propertyName);
+		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty($propertyName);
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
@@ -90,8 +89,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$modelName = 'ModelCgt2';
 		$propertyName = 'title';
 		$domainObject = $this->buildDomainObject($modelName);
-		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
-		$property->setName($propertyName);
+		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty($propertyName);
 		//$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
@@ -131,8 +129,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$propertyName = 'relName';
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
-		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToOneRelation();
-		$relation->setName($propertyName);
+		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToOneRelation($propertyName);
 		$relation->setForeignClass($relatedDomainObject);
 		$domainObject->addProperty($relation);
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,TRUE);
@@ -156,13 +153,11 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
 		$this->assertTrue($setterMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $setterMethod->getTagValues('param');
-		t3lib_div::devlog('Parameter','extension_builder',0,$paramTagValues);
 		$this->assertTrue((strpos($paramTagValues[0],$relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
 
 		$parameters = $setterMethod->getParameters();
 		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in setter method');
 		$parameter = current($parameters);
-		t3lib_div::devlog('Parameter','extension_builder',0,(array)$parameter);
 		$this->assertTrue(($parameter->getName() == $propertyName),'Wrong parameter name in setter method');
 		$this->assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getClassName()),'Wrong type hint for setter parameter:'.$parameter->getTypeHint());
 
@@ -180,8 +175,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$propertyName = 'relNames';
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
-		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation();
-		$relation->setName($propertyName);
+		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation($propertyName);
 		$relation->setForeignClass($relatedDomainObject);
 		$domainObject->addProperty($relation);
 
@@ -252,8 +246,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$propertyName = 'relNames';
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
-		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation();
-		$relation->setName($propertyName);
+		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation($propertyName);
 		$relation->setForeignClass($relatedDomainObject);
 		$relation->setInlineEditing(false);
 		$domainObject->addProperty($relation);
@@ -353,8 +346,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 	 */
 	function writeAggregateRootClassesFromDomainObject(){
 		$domainObject = $this->buildDomainObject('ModelCgt7',true,true);
-		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty();
-		$property->setName('blue');
+		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty('blue');
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
 
@@ -383,8 +375,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$domainObject = $this->buildDomainObject($modelName,true,true);
 
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName,true);
-		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation();
-		$relation->setName($propertyName);
+		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation($propertyName);
 		$relation->setForeignClass($relatedDomainObject);
 		$relation->setInlineEditing(false);
 		$domainObject->addProperty($relation);
