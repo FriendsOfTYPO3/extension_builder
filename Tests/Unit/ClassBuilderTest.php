@@ -49,8 +49,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 
 		$domainObject = $this->buildDomainObject($this->modelName,true,true);
 
-		$property0 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
-		$property0->setName('name');
+		$property0 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty('name');
 		$domainObject->addProperty($property0);
 
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
@@ -73,8 +72,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 	public function classBuilderGeneratesGetterMethodForSimpleProperty() {
 
 		$domainObject = $this->buildDomainObject($this->modelName,true,true);
-		$property0 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
-		$property0->setName('name');
+		$property0 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty('name');
 		$property0->setRequired(TRUE);
 		$domainObject->addProperty($property0);
 
@@ -91,8 +89,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 
 		$domainObject = $this->buildDomainObject($this->modelName,true,true);
 
-		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty();
-		$property->setName('blue');
+		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty('blue');
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
 
@@ -111,8 +108,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 		$domainObject1 = $this->buildDomainObject($this->modelName,true,true);
 		$relatedDomainObject = $this->buildDomainObject($modelName2);
 
-		$relationProperty = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation();
-		$relationProperty->setName($propertyName);
+		$relationProperty = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation($propertyName);
 		$relationProperty->setForeignClass($relatedDomainObject);
 		$domainObject1->addProperty($relationProperty);
 
