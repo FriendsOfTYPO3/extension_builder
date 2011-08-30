@@ -74,6 +74,15 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass extends 
 	private $arrayProperty1 = array(2,6,'test');
 	private $arrayProperty2 = array('test'=>3,'b' => 'q');
 	static $constProperty = testConstant;
+
+	/**
+	 * @static
+	 * @param $param1
+	 * @param $param2
+	 * @param string $param3
+	 * @param array $param4
+	 * @return int
+	 */
 	static function method_2($param1,&$param2,$param3= 'default',array $param4 = array('test'=>array(1,2,3))){
 		/**
 		 * test test

@@ -285,7 +285,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			$setterMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($setterMethodName);
 			// default method body
 			$setterMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'set', ''));
-			$setterMethod->setTag('param', $domainProperty->getTypeForComment() . ' $' . $propertyName);
+			$setterMethod->setTag('param', self::getParamTag($domainProperty, 'set' ));
 			$setterMethod->setTag('return', 'void');
 			$setterMethod->addModifier('public');
 		}
@@ -326,7 +326,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			$addMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($addMethodName);
 			// default method body
 			$addMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'add', ''));
-			$addMethod->setTag('param', $domainProperty->getForeignClass()->getClassName() . ' $' . self::getParameterName($domainProperty, 'add'));
+			$addMethod->setTag('param', self::getParamTag($domainProperty, 'add' ));
+
 			$addMethod->setTag('return', 'void');
 			$addMethod->addModifier('public');
 		}
@@ -365,7 +366,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			$removeMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($removeMethodName);
 			// default method body
 			$removeMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'remove', ''));
-			$removeMethod->setTag('param', $domainProperty->getForeignClass()->getClassName() . ' $' . self::getParameterName($domainProperty, 'remove') . ' The ' . $domainProperty->getForeignClass()->getName() . ' to be removed');
+			$removeMethod->setTag('param', self::getParamTag($domainProperty, 'remove' ));
 			$removeMethod->setTag('return', 'void');
 			$removeMethod->addModifier('public');
 		}
@@ -452,12 +453,12 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	/**
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $property
-	 * @param string $methodPrefix (get,set,add,remove,is)
+	 * @param string $methodType (get,set,add,remove,is)
 	 * @return string method name
 	 */
-	public static function getMethodName($domainProperty, $methodPrefix) {
+	public static function getMethodName($domainProperty, $methodType) {
 		$propertyName = $domainProperty->getName();
-		switch ($methodPrefix) {
+		switch ($methodType) {
 			case 'set'		:
 				return 'set' . ucfirst($propertyName);
 
@@ -495,6 +496,25 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 
 			case 'remove'		:
 				return Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName) . 'ToRemove';
+		}
+	}
+
+	public static function getParamTag($domainProperty, $methodType ) {
+
+		switch ($methodType) {
+			case 'set'		:
+				return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
+
+			case 'add'		:
+				$paramTag = $domainProperty->getForeignClass()->getClassName();
+				$paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
+				return $paramTag;
+
+			case 'remove'	:
+				$paramTag = $domainProperty->getForeignClass()->getClassName();
+				$paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
+				$paramTag .= ' The ' . $domainProperty->getForeignClass()->getName() . ' to be removed';
+				return $paramTag;
 		}
 	}
 
