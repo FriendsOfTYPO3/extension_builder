@@ -133,8 +133,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 
 		if (file_exists($this->previousExtensionDirectory . Tx_ExtensionBuilder_Configuration_ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE)) {
 			$extensionSchemaBuilder = t3lib_div::makeInstance('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder');
-			$jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey,FALSE);
-			t3lib_div::devlog('old JSON:'.$this->previousExtensionDirectory . 'ExtensionBuilder.json','extension_builder',0,$jsonConfig);
+			$jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey, FALSE);
+			t3lib_div::devlog('old JSON:' . $this->previousExtensionDirectory . 'ExtensionBuilder.json', 'extension_builder', 0, $jsonConfig);
 			$this->previousExtension = $extensionSchemaBuilder->build($jsonConfig);
 			$oldDomainObjects = $this->previousExtension->getDomainObjects();
 			foreach ($oldDomainObjects as $oldDomainObject) {
@@ -148,7 +148,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 			$currentDomainsObjects = array();
 			foreach ($this->extension->getDomainObjects() as $domainObject) {
 				if (isset($this->oldDomainObjects[$domainObject->getUniqueIdentifier()])) {
-					if ($this->updateExtensionKey($this->oldDomainObjects[$domainObject->getUniqueIdentifier()]->getName()) != $domainObject->getName()) {
+					if ($this->oldDomainObjects[$domainObject->getUniqueIdentifier()]->getName() != $domainObject->getName()) {
 						$renamedDomainObjects[$domainObject->getUniqueIdentifier()] = $domainObject;
 					}
 				}
@@ -556,7 +556,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		if (!$this->extensionRenamed) {
 			return $stringToParse;
 		}
-		return str_replace(ucfirst($this->previousExtensionKey), ucfirst($this->extension->getExtensionKey()), $stringToParse);
+		return str_replace('_' . ucfirst($this->previousExtensionKey) . '_', '_' . ucfirst($this->extension->getExtensionKey()) . '_', $stringToParse);
 	}
 
 	/**
@@ -617,10 +617,12 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 			$newMethodBody = $this->replacePropertyNameInMethodBody($oldProperty->getName(), $newProperty->getName(), $oldMethodBody);
 			$mergedMethod->setBody($newMethodBody);
 		}
+
 		// update the method parameters
 		$methodParameters = $mergedMethod->getParameters();
 
 		if (!empty($methodParameters)) {
+			$parameterTags = $mergedMethod->getTagsValues('param');
 			foreach ($methodParameters as $methodParameter) {
 				$oldParameterName = $methodParameter->getName();
 				if ($oldParameterName == Tx_ExtensionBuilder_Service_ClassBuilder::getParameterName($oldProperty, $methodType)) {
@@ -635,46 +637,17 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 						$methodParameter->setTypeHint($this->updateExtensionKey($this->getForeignClass($newProperty)->getClassName()));
 					}
 				}
+				$parameterTags[$methodParameter->getPosition()] =  Tx_ExtensionBuilder_Service_ClassBuilder::getParamTag($newProperty, $methodType);
 				$mergedMethod->replaceParameter($methodParameter);
 			}
+			$mergedMethod->setTag('param',$parameterTags);
 		}
-		// update the tags
-		$tags = $mergedMethod->getTags();
-		foreach ($tags as $tagKey => $tagValue) {
-			//  we need to update the param tag
-			if ($tagKey == 'param') {
-				if (is_array($tagValue)) {
-					// multiple parameter!
-					$newValues = array();
-					foreach ($tagValue as $v) {
-						if (method_exists($oldProperty, 'getForeignClass')) {
-							$v = str_replace($oldProperty->getForeignClass()->getClassName(), $this->getForeignClass($newProperty)->getClassName(), $v);
-						}
-						$v = $this->replacePropertyNameInTagValue($oldProperty, $newProperty, $v);
-						// replace old extensionKey in propertyNames
-						$v = str_replace($this->previousExtensionKey, $this->extension->getExtensionKey(), $v);
-						$newValues[] = $v;
-					}
-					$mergedMethod->setTag('param', $newValues);
-				}
-				else {
-					// TODO: str_replace is insufficient in certain cases
-					if (method_exists($oldProperty, 'getForeignClass')) {
-						$tagValue = str_replace($oldProperty->getForeignClass()->getClassName(), $this->getForeignClass($newProperty)->getClassName(), $tagValue);
-					}
-					$tagValue = $this->replacePropertyNameInTagValue($oldProperty, $newProperty, $tagValue);
-					$mergedMethod->setTag('param', $tagValue);
-				}
-			}
-			if ($tagKey == 'return') {
-				$mergedMethod->removeTag('return');
-				$tagValue = $this->replacePropertyNameInTagValue($oldProperty, $newProperty, $tagValue);
 
-				// replace old extensionKey in propertyNames
-				$tagValue = str_replace($this->previousExtensionKey, $this->extension->getExtensionKey(), $tagValue);
-				$mergedMethod->setTag('return', $tagValue);
-			}
+		$returnTagValue = trim($mergedMethod->getTagsValues('return'));
+		if($returnTagValue != 'void'){
+			$mergedMethod->setTag('return', $newProperty->getTypeForComment() . ' ' . $newProperty->getName());
 		}
+
 		// replace property names in description
 		$mergedMethod->setDescription(str_replace($oldProperty->getName(), $newProperty->getName(), $mergedMethod->getDescription()));
 		if (method_exists($oldProperty, 'getForeignClass') && method_exists($newProperty, 'getForeignClass')) {
@@ -684,36 +657,6 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		$this->classObject->addMethod($mergedMethod);
 	}
 
-	/**
-	 * @param string $search
-	 * @param string $replace
-	 * @param string $haystack
-	 *
-	 * @return string with replaced values
-	 */
-	protected function replaceUpperAndLowerCase($search, $replace, $haystack) {
-		$result = str_replace(ucfirst($search), ucfirst($replace), $haystack);
-		$result = str_replace(t3lib_div::lcfirst($search), t3lib_div::lcfirst($replace), $result);
-		return $result;
-	}
-
-	/**
-	 * Replace all variants:
-	 *	 posts, Post, post etc.
-	 * @param string $string
-	 * @param string $oldName
-	 * @param string $newName
-	 *
-	 * @return string
-	 */
-	protected function replacePropertyNameInTagValue($oldProperty, $newProperty, $tagValue) {
-		$tagValue = str_replace($oldProperty->getName(), $newProperty->getName(), $tagValue);
-		$tagValue = str_replace(ucfirst($oldProperty->getName()), ucfirst($newProperty->getName()), $tagValue);
-		$tagValue = str_replace($oldProperty->getTypeForComment(), $newProperty->getTypeForComment(), $tagValue);
-		$tagValue = str_replace(Tx_ExtensionBuilder_Utility_Inflector::singularize($oldProperty->getName()), Tx_ExtensionBuilder_Utility_Inflector::singularize($newProperty->getName()), $tagValue);
-		$tagValue = $this->updateExtensionKey($tagValue);
-		return $tagValue;
-	}
 
 	/**
 	 * Replace all occurences of the old property name with the new name
@@ -976,7 +919,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	static public function mergeLocallangXml($locallangFile, $newXmlString) {
 		$existingLabelArr = t3lib_div::xml2array(t3lib_div::getUrl($locallangFile));
 		$newLabelArr = t3lib_div::xml2array($newXmlString);
-		if(is_array($existingLabelArr)){
+		if (is_array($existingLabelArr)) {
 			$mergedLabelArr = t3lib_div::array_merge_recursive_overrule($newLabelArr, $existingLabelArr);
 		} else {
 			$mergedLabelArr = $newLabelArr;

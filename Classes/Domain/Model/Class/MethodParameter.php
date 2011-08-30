@@ -46,7 +46,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 	/**
 	 * @var mixed
 	 */
-	protected $typeHint;
+	protected $typeHint = NULL;
 
 
 	/**

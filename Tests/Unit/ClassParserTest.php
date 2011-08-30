@@ -55,6 +55,13 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 		$this->assertEquals(1, count($getters));
 		$firstGetter = array_pop($getters);
 		$this->assertEquals('getName', $firstGetter->getName());
+		$methodWithParameters = $classObject->getMethod('method_2');
+		$parameters = $methodWithParameters->getParameters();
+		$this->assertEquals(count($parameters),4);
+		$this->assertEquals($parameters[3]->getDefaultValue(),array('test'=>array(1,2,3)));
+		$paramTags = $methodWithParameters->getTagsValues('param');
+		$this->assertEquals(count($paramTags),4);
+		$this->assertEquals($paramTags[3],'array $param4');
 		/**  here we could include some more tests
 		$p = $classObject->getMethod('methodWithStrangePrecedingBlock')->getPrecedingBlock();
 		$a = $classObject->getAppendedBlock();
