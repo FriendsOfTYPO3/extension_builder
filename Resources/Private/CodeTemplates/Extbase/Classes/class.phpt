@@ -9,14 +9,18 @@
 	 * {tag}</f:for>
 	 */
 	const {constant.name} = {constant.value};
-</f:for><f:for each="{classObject.properties}" as="property">
+</f:for><f:for each="{classObject.properties}" as="property"><f:if condition="{property.precedingBlock}">
+	<k:format.removeMultipleNewlines>{property.precedingBlock}</k:format.removeMultipleNewlines>
+	</f:if>
 	/**<f:for each="{property.descriptionLines}" as="descriptionLine">
 	 * {descriptionLine}</f:for>
 	 *<f:for each="{property.annotations}" as="annotation">
 	 * @{annotation}</f:for>
 	 */
 	<f:for each="{property.modifierNames}" as="modifierName">{modifierName} </f:for>${property.name}<f:if condition="{property.default}"> = {property.value}</f:if>;
-</f:for><f:for each="{classObject.methods}" as="method">
+</f:for><f:for each="{classObject.methods}" as="method"><f:if condition="{method.precedingBlock}">
+	<k:format.removeMultipleNewlines>{method.precedingBlock}</k:format.removeMultipleNewlines>
+	</f:if>
 	/**<f:for each="{method.descriptionLines}" as="descriptionLine">
 	 * {descriptionLine}</f:for>
 	 *<f:for each="{method.annotations}" as="annotation">

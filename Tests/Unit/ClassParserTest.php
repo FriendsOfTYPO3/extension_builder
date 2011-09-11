@@ -66,6 +66,17 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 		$p = $classObject->getMethod('methodWithStrangePrecedingBlock')->getPrecedingBlock();
 		$a = $classObject->getAppendedBlock();
 		*/
+
+		$this->assertEquals(
+			$classObject->getPrecedingBlock(),
+			"\n/**\n * multiline comment test\n * @author Nico de Haen\n *" .
+			"\n\tempty line in multiline comment\n	// single comment in multiline" .
+			"\n\t *\n	some keywords: \$property  function\n\tstatic\n *" .
+			"\n * @test testtag\n */" .
+			"\nrequire_once(t3lib_extmgm::extPath('extension_builder') ." .
+			" 'Tests/Examples/ClassParser/BasicClass.php');\n",
+			'Preceding block in complex class not properly parsed'
+		);
 	}
 
 	/**
