@@ -40,7 +40,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 
 	/**
 	 * properties
-	 * @var array
+	 * @var Tx_ExtensionBuilder_Domain_Model_Class_Property[]
 	 */
 	protected $properties = array();
 
@@ -53,7 +53,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 
 	/**
 	 * methods
-	 * @var array
+	 * @var Tx_ExtensionBuilder_Domain_Model_Class_Method[]
 	 */
 	protected $methods = array();
 
@@ -190,10 +190,10 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * Setter for methods
 	 *
-	 * @param array $methods methods
+	 * @param array $methods (Tx_ExtensionBuilder_Domain_Model_Class_Method[])
 	 * @return void
 	 */
-	public function setMethods($methods) {
+	public function setMethods(array $methods) {
 		$this->methods = $methods;
 	}
 
@@ -210,7 +210,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * Getter for methods
 	 *
-	 * @return array methods
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method[]
 	 */
 	public function getMethods() {
 		return $this->methods;
@@ -273,8 +273,8 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 
 
 	/**
-	 * returnes all methods starting with "get"
-	 * @return array an array of method objects
+	 * returns all methods starting with "get"
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method[]
 	 */
 	public function getGetters() {
 		$getterMethods = array();
@@ -293,7 +293,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 
 	/**
 	 * returnes all methods starting with "set"
-	 * @return array an array of method objects
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method[]
 	 */
 	public function getSetters() {
 		$setterMethods = array();
@@ -312,7 +312,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 
 	/**
 	 * Getter for property
-	 * @param $propertyName the name of the property
+	 * @param string $propertyName the name of the property
 	 * @return Tx_ExtensionBuilder_Reflection_PropertyReflection
 	 */
 	public function getProperty($propertyName) {
@@ -335,7 +335,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * Getter for properties
 	 *
-	 * @return select properties
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Property[]
 	 */
 	public function getProperties() {
 		return $this->properties;
@@ -385,7 +385,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * Setter for staticProperties
 	 *
-	 * @param string $staticProperties staticProperties
+	 * @param string $staticProperties
 	 * @return void
 	 */
 	public function setStaticProperties($staticProperties) {
@@ -403,7 +403,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 
 
 	/**
-	 *
+	 * @param string $propertyName
 	 * @return boolean
 	 */
 	public function propertyExists($propertyName) {
@@ -561,7 +561,9 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 
 		$methodArray = array();
 		foreach ($this->getMethods() as $method) {
-			$methodArray[$method->getName()] = array('parameter' => $method->getParameters());
+			$methodArray[$method->getName()] = array(
+				'parameter' => $method->getParameters()
+			);
 			//'body'=>$method->getBody()
 		}
 		$infoArray['Methods'] = $methodArray;

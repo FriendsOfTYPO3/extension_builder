@@ -344,7 +344,11 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	public function getPrecedingBlock() {
 		$cleanPrecedingBlock = str_replace($this->docComment, '', $this->precedingBlock);
 		$cleanPrecedingBlock = str_replace('<?php', '', $cleanPrecedingBlock);
-		return $cleanPrecedingBlock;
+		if(strlen(trim($cleanPrecedingBlock)) == 0){
+			return NULL;
+		} else {
+			return $cleanPrecedingBlock;
+		}
 	}
 
 	/**
