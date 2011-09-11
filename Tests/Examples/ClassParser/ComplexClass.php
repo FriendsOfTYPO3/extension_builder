@@ -21,13 +21,14 @@ require_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ClassP
 
 final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass extends Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClass{
 
-	protected $name; private $propertiesInOneLine;
+	protected $name="test;"; private $propertiesInOneLine;
 
 	const testConstant = "123"; const testConstant2 = 0.56;
 
 	protected $defaultOrderings = array(
 		'title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING,
 		'subtitle' =>  Tx_Extbase_Persistence_QueryInterface::ORDER_DESCENDING,
+		'test' => 'test;',
 	);
 
 	/**
@@ -69,7 +70,7 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass extends 
 		 */
 		$this->name = $name;
 	}
-	private $another_Property = 'test456_"';
+	private $another_Property = 'test456_";';
 	private $anotherProperty = "test456_'\"";
 	private $arrayProperty1 = array(2,6,'test');
 	private $arrayProperty2 = array('test'=>3,'b' => 'q');
@@ -83,7 +84,7 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass extends 
 	 * @param array $param4
 	 * @return int
 	 */
-	static function method_2($param1,&$param2,$param3= 'default',array $param4 = array('test'=>array(1,2,3))){
+	static function methodWithVariousParameter($param1,&$param2,$param3= 'default',array $param4 = array('test'=>array(1,2,3))){
 		/**
 		 * test test
 		 */
@@ -100,5 +101,5 @@ var $testProperty4 = 123;
  */
 require_once(t3lib_extmgm:: extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');   include_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ComplexClass.php'); // test
 
- include_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ClassParser/ComplexClass.php'); // test
+include_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ClassParser/ComplexClass.php'); // test
 ?>
