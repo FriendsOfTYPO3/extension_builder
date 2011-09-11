@@ -71,14 +71,6 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	protected $appendedBlock;
 
 	/**
-	 * all includes (filenames) that were found in a file
-	 * currently not used
-	 * includes should be preserved by writing the blocks (preceding, appended) into the new file
-	 * @var array
-	 */
-	protected $includes;
-
-	/**
 	 * parentClass
 	 * @var string
 	 */
@@ -489,36 +481,6 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 		return $this->parentClass;
 	}
 
-
-	/**
-	 * Setter for includes
-	 *
-	 * @param array $includes
-	 * @return void
-	 */
-	public function setIncludes($includes) {
-		$this->includes = $includes;
-	}
-
-	/**
-	 * Getter for includes
-	 *
-	 * @return array includes
-	 */
-	public function getIncludes() {
-		return $this->includes;
-	}
-
-	/**
-	 *
-	 * @param $fileName
-	 * @return void
-	 */
-	public function addInclude($fileName) {
-		//TODO make some checks... allowed file?
-		$this->includes[] = $fileName;
-	}
-
 	/**
 	 * Getter for fileName
 	 *
@@ -573,7 +535,6 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 		//$infoArray['Inherited Properties'] = count($this->getInheritedProperties());
 		//$infoArray['Not inherited Properties'] = count($this->getNotInheritedProperties());
 		$infoArray['Constants'] = $this->getConstants();
-		$infoArray['Includes'] = $this->getIncludes();
 		$infoArray['Modifiers'] = $this->getModifierNames();
 		$infoArray['Tags'] = $this->getTags();
 		//$infoArray['Methods'] = count($this->getMethods());

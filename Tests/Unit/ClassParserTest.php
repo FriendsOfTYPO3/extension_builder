@@ -55,17 +55,6 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 		$this->assertEquals(1, count($getters));
 		$firstGetter = array_pop($getters);
 		$this->assertEquals('getName', $firstGetter->getName());
-		$methodWithParameters = $classObject->getMethod('method_2');
-		$parameters = $methodWithParameters->getParameters();
-		$this->assertEquals(count($parameters),4);
-		$this->assertEquals($parameters[3]->getDefaultValue(),array('test'=>array(1,2,3)));
-		$paramTags = $methodWithParameters->getTagsValues('param');
-		$this->assertEquals(count($paramTags),4);
-		$this->assertEquals($paramTags[3],'array $param4');
-		/**  here we could include some more tests
-		$p = $classObject->getMethod('methodWithStrangePrecedingBlock')->getPrecedingBlock();
-		$a = $classObject->getAppendedBlock();
-		*/
 
 		$this->assertEquals(
 			$classObject->getPrecedingBlock(),
@@ -75,7 +64,33 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 			"\n * @test testtag\n */" .
 			"\nrequire_once(t3lib_extmgm::extPath('extension_builder') ." .
 			" 'Tests/Examples/ClassParser/BasicClass.php');\n",
-			'Preceding block in complex class not properly parsed'
+			'Preceding block in complex class not properly parsed');
+
+		$defaultOrderingsPropertyValue = $classObject->getProperty('defaultOrderings')->getValue();
+		$this->assertEquals(
+			$defaultOrderingsPropertyValue,
+			"array(\n\t\t'title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING,\n\t\t'subtitle' =>  Tx_Extbase_Persistence_QueryInterface::ORDER_DESCENDING,\n\t\t'test' => 'test;',\n\t)",
+			'Failed to parse multiline property definition:'
+		);
+		$params2 = $classObject->getMethod('methodWithVariousParameter')->getParameters();
+		$this->assertEquals(
+			count($params2),
+			4,
+			'Wrong parameter count in parsed "methodWithVariousParameter"'
+		);
+		$this->assertEquals(
+			$params2[3]->getName(),
+			'param4',
+			'Last parameter name was not correctly parsed'
+		);
+		$this->assertEquals(
+			$params2[3]->getDefaultValue(),
+			array('test'=>array(1,2,3))
+		);
+		$this->assertEquals(
+			$classObject->getAppendedBlock(),
+			"\n/**\n *  dfg dfg dfg dfg\n */\nrequire_once(t3lib_extmgm:: extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');   include_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ComplexClass.php'); // test\n\ninclude_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ClassParser/ComplexClass.php'); // test\n\n",
+			'Appended block was not properly parsed'
 		);
 	}
 

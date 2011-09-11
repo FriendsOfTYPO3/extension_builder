@@ -68,9 +68,12 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 
 	/**
 	 * The regular expression to detect a property (or multiple) in a line
+	 * TODO: the regex fails in at least 2 cases:
+	 * 		1. if a value contains a string with a semicolon AND an escaped quote; "test;\""
+	 * 		2. if an array contains a string with a semicolon in it: array(foo => 'bar;');
 	 * @var string regular expression
 	 */
-	public $propertyRegex = '/\s*\\$(?<name>\w*)\s*(\=(?<value>\s*([^;]*)))?;/';
+	public $propertyRegex = '/\s*\\$(?<name>\w*)\s*(\=(?<value>\s*([^;\"\']|\"[^\"]*\"|\'[^\']*\'|[^;]*)))?;/';
 
 	/**
 	 * The regular expression to detect a property with a multiline default value (for example an array)
@@ -87,23 +90,75 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 	// TODO parse definitions of namespaces
 	public $namespaceRegex = '/^namespace|^use|^declare/';
 
-	public $includeRegex = '/(require_once|require|include_once|include)+\s*\(([^;]*)\)/';
-
-	// TODO parse definitions of "define" statements
-	public $defineRegex = '/define+\s*\(([a-zA-Z0-9_-,\\\'"\s]*)/';
+	/**
+	 * Reference to the current line in the parser
+	 * @var String
+	 */
+	protected $currentLine;
 
 	/**
-	 * builds a classSchema from a className, you have to require_once before importing the class
-	 * @param string $className
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Class
+	 * remember the last line that matched either a property, a constant or a method end
+	 * this is needed to get all comments between two methods or properties
+	 * (not only the doc comment)
+	 * @var int
 	 */
-	public function parse($className) {
+	protected $lastMatchedLineNumber;
 
-		$this->starttime = microtime(TRUE); // for profiling
+	/**
+	 * for profiling
+	 * @var float
+	 */
+	protected $starttime;
 
-		if (!class_exists($className)) {
-			throw new Exception('Class not exists: ' . $className);
-		}
+	/**
+	 * Array with various data about the currently parsed method
+	 * @var array
+	 */
+	protected $currentMethod = Array(
+		'reflection' => NULL, // the Tx_ExtensionBuilder_Reflection_MethodReflection returned from ClassReflection
+		'methodObject' => NULL, // the new created Tx_ExtensionBuilder_Domain_Model_Class_Method
+		'endline' => 0,
+		'methodBody' => ''
+	);
+
+	/**
+	 * If the current parser position is in a method body we
+	 * can skip parsing except for method endings
+	 * @var bool
+	 */
+	protected $inMethodBody = FALSE;
+
+	/**
+	 * @var bool true if we are in a multiline comment (since alsmost everything is
+	 * allowed in multi line comments we skip parsing except for comment endings)
+	 */
+	protected $inMultiLineComment = FALSE;
+
+	/**
+	 * @var bool true if we are in a multiline property
+	 */
+	protected $inMultiLineProperty = FALSE;
+
+	/**
+	 * Array with matches from regex extended by a key 'startline'
+	 * of the current mulitline property
+	 * a multiline property is a property that has a multiline
+	 * devault value (like an array for example)
+	 * The additional lines are added to the "value" when the end(;) is parsed
+	 * @var array
+	 */
+	protected $multiLinePropertyMatches = array();
+
+	/**
+	 * @var array
+	 */
+	protected $lines = array();
+
+	/**
+	 * @param string $className
+	 * @return void
+	 */
+	protected function initClassObject($className) {
 
 		$this->classObject = new Tx_ExtensionBuilder_Domain_Model_Class_Class($className);
 
@@ -119,260 +174,285 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 
 			$this->classObject->$setterMethod($this->classReflection->$getterMethod());
 		}
+		// reset class properties
+		$this->lines = array();
+		$this->lastMatchedLineNumber = -1;
+	}
+
+	/**
+	 * builds a classSchema from a className, you have to require_once before importing the class
+	 * @param string $className
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Class
+	 */
+	public function parse($className) {
+
+		$this->starttime = microtime(TRUE);
+
+		if (!class_exists($className)) {
+			throw new Exception('Class not exists: ' . $className);
+		}
+
+		$this->initClassObject($className);
 
 		$file = $this->classReflection->getFileName();
+
 		$fileHandler = fopen($file, 'r');
 
 		if (!$fileHandler) {
 			throw new Exception('Could not open file: ' . $file);
 		}
 
-		/**
-		 * various flags used during parsing process
-		 */
-
-		$isSingleLineComment = FALSE;
-		$isMultiLineComment = FALSE;
-		$multiLineProperty = NULL;
-		;
-		$isMethodBody = FALSE;
-
-		// the Tx_ExtensionBuilder_Reflection_MethodReflection returned from ClassReflection
-		$currentMethodReflection = NULL;
-
-		// the new created Tx_ExtensionBuilder_Domain_Model_Class_Method
-		$currentClassMethod = NULL;
-
-		// remember the last line that matched either a property, a constant or a method end
-		// this is needed to get all comments between two methods or properties
-		// (not only the doc comment
-		$lastMatchedLine = 0;
-
-		$currentMethodEndLine = 0;
-
-		$lines = array();
-
 		$this->lineCount = 1;
 
 		while (!feof($fileHandler)) {
-			$line = fgets($fileHandler);
 
-			$trimmedLine = trim($line);
+			$this->currentLine = fgets($fileHandler);
+			$trimmedLine = trim($this->currentLine);
 
 			// save all comment found before the class start line
 			if ($this->lineCount == $this->classReflection->getStartLine()) {
-				$classPreComment = '';
-				foreach ($lines as $lN => $lContent) {
-					if (strlen(trim($lContent)) > 0) {
-						$classPreComment .= $lContent;
-					}
-				}
-				$this->classObject->setPrecedingBlock($classPreComment);
-
-				$lastMatchedLine = $this->lineCount;
+				$this->onClassDefinitionFound();
+				$this->lastMatchedLineNumber = $this->lineCount;
 			}
 
-			if (!empty($trimmedLine) && !$isMethodBody) {
-
-				// process multi line comment
-				$isMultiLineComment = $this->isMultiLineComment($line, $isMultiLineComment);
-
-				// process single line comment
-				$isSingleLineComment = $this->isSingleLineComment($line);
+			if (!empty($trimmedLine) && !$this->inMethodBody) {
 
 				// if not in a comment we look for methods, properties or constants
-				if (!$isSingleLineComment && !$isMultiLineComment && !empty($trimmedLine)) {
-
-
-					$methodMatches = array();
-					$propertyMatches = array();
-					$constantMatches = array();
+				if (!$this->isSingleLineComment() && !$this->isMultiLineComment() && !empty($trimmedLine)) {
 
 					// process methods
 					if (preg_match_all($this->methodRegex, $trimmedLine, $methodMatches)) {
-						$isMethodBody = TRUE;
-						$methodName = $methodMatches[1][0];
 
-						try {
-							// the method has to exist in the classReflection
-							$currentMethodReflection = $this->classReflection->getMethod($methodName);
-							if ($currentMethodReflection) {
-								//$parameters = $currentMethodReflection->getParameters();
-								$precedingBlock = $this->concatLinesFromArray($lines, $lastMatchedLine);
+						$this->onMethodFound($methodMatches);
 
-								$currentClassMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($methodName, $currentMethodReflection);
-								$currentClassMethod->setPrecedingBlock($precedingBlock);
-								//$currentClassMethod->setTags($currentMethodReflection->getTags());
-								$currentMethodEndLine = $currentMethodReflection->getEndline();
+					} else {
 
-							}
-							else {
-								throw new Tx_ExtensionBuilder_Exception_ParseError(
-									'Method ' . $methodName . ' does not exist. Parsed from line ' . $this->lineCount . 'in ' . $this->classReflection->getFileName()
-								);
-							}
-						}
-						catch (ReflectionException $e) {
-							// ReflectionClass throws an exception if a method was not found
-							t3lib_div::devlog('Exception: ' . $e->getMessage());
-						}
-
-					} // end of preg_match_all method
-
-					if (!$isMethodBody) {
-						// skip this if we are in a method
-						if ($multiLineProperty & strpos($trimmedLine, ';') > -1) {
+						// a semicolon was found (but not in single or double quotes!)
+						if ($this->inMultiLineProperty && preg_match('/(;)(?=(?:[^"\']|["|\'][^"\']*")*$)/',$trimmedLine)) {
 							// the end line of a multi line property
-							$multiLineProperty['value'][0] .= "\n" . $this->concatLinesFromArray($lines, $multiLineProperty['startLine']) . str_replace(';', '', $line);
-							$this->addProperty($multiLineProperty);
-							$multiLineProperty = NULL;
-							$lastMatchedLine = $this->lineCount;
+							$this->onMultiLinePropertyEnd();
 						}
 
 						// process constants
 						if (preg_match_all($this->constantRegex, $trimmedLine, $constantMatches)) {
 							$this->addConstant($constantMatches);
+							$this->lastMatchedLineNumber = $this->lineCount;
 						}
 
 						// process properties
 						if (preg_match_all($this->propertyRegex, $trimmedLine, $propertyMatches)) {
 							$this->addProperty($propertyMatches);
+							$this->lastMatchedLineNumber = $this->lineCount;
 						}
 						elseif (preg_match_all($this->multiLinePropertyRegex, $trimmedLine, $propertyMatches)) {
 							// a multiline property is a property that has a multiline devault value (like an array for example)
-							$multiLineProperty = $propertyMatches;
-							$multiLineProperty['startLine'] = $this->lineCount;
-						}
-					}
-
-					$includeMatches = array();
-					if (preg_match_all($this->includeRegex, $line, $includeMatches)) {
-						//preg_match_all($this->includeRegex,$trimmedLine,$includeMatches);
-						foreach ($includeMatches[2] as $include) {
-							$this->classObject->addInclude($include);
+							$this->inMultiLineProperty = TRUE;
+							$this->multiLinePropertyMatches = $propertyMatches;
+							$this->multiLinePropertyMatches['startLine'] = $this->lineCount;
 						}
 					}
 				} // end of not in comment
 
 			} // end of not empty and not in method body
 
-			// endline of a method
-			if ($isMethodBody && $this->lineCount == $currentMethodEndLine) {
-
-				$methodBodyStartLine = $currentMethodReflection->getStartLine();
-
-				if ($currentMethodEndLine - $currentMethodReflection->getStartLine() >= 2) {
-					$methodBody = $this->concatLinesFromArray($lines, $methodBodyStartLine);
-				}
-				else $methodBody = '';
-
-				if ($currentMethodEndLine == $currentMethodReflection->getStartLine()) {
-					// a one line method: we have to strip the method body from the rest
-					$methodBodyRegex = '/\{(.*)/';
-					$methodBodyMatches = array();
-					preg_match_all($methodBodyRegex, $line, $methodBodyMatches);
-					if (!empty($methodBodyMatches[1][0])) {
-						$trimmedLine = trim($methodBodyMatches[1][0]);
-						// trimmed line now still has a bracket at the end!
-					}
-				}
-
-				if ($trimmedLine != '}' && strlen($trimmedLine) > 0) {
-
-					// remove the bracket from last line
-					$trimmedLine = substr(rtrim($trimmedLine), 0, -1);
-					// add the trimmed $line
-					$methodBody .= $trimmedLine;
-				}
-				$currentClassMethod->setBody($methodBody);
-				$this->classObject->addMethod($currentClassMethod);
-				$currentMethodEndLine = 0;
-				// end of a method body
-				$isMethodBody = FALSE;
-				$lastMatchedLine = $this->lineCount;
-				//TODO what if a method is defined in the same line as the preceding method ends? Should be checked with tokenizer?
+			if ($this->inMethodBody && $this->lineCount == $this->currentMethod['reflection']->getEndline()) {
+				// endline of a method
+				$this->onMethodEnd($trimmedLine);
 			}
 
-			$lines[$this->lineCount] = $line;
+			// if no matches of the various regex are found, the line might be added
+			// later (onMethodEnd or on Multiline property end)
+			$this->lines[$this->lineCount] = $this->currentLine;
 			$this->lineCount++;
-
 
 		} // end while feof
 
 		if ($this->lineCount > $this->classReflection->getEndLine()) {
-			$appendedBlock = $this->concatLinesFromArray($lines, $this->classReflection->getEndLine());
+			$appendedBlock = $this->concatLinesFromArray($this->lines, $this->classReflection->getEndLine());
 			$appendedBlock = str_replace('?>', '', $appendedBlock);
 			$this->classObject->setAppendedBlock($appendedBlock);
 		}
 
 		// debug output
 		if ($this->debugMode) {
-			if (count($this->classObject->getMethods()) != count($this->classReflection->getNotInheritedMethods())) {
-				debug('Errorr: method count does not match: ' . count($this->classObject->getMethods()) . ' methods found, should be ' . count($this->classReflection->getNotInheritedMethods()));
-				debug($this->classObject->getMethods());
-				debug($this->classReflection->getNotInheritedMethods());
-			}
-			if (count($this->classObject->getProperties()) != count($this->classReflection->getNotInheritedProperties())) {
-				debug('Error: property count does not match:' . count($this->classObject->getProperties()) . ' properties found, should be ' . count($this->classReflection->getNotInheritedProperties()));
-				debug($this->classObject->getProperties());
-				debug($this->classReflection->getNotInheritedProperties());
-			}
+			$this->debugInfo();
+		}
 
-			$info = $this->classObject->getInfo();
+		// some checks again the reflection class
+		if (count($this->classObject->getMethods()) != count($this->classReflection->getNotInheritedMethods())) {
+			throw new Exception('Class ' . $className . ' could not be parsed properly. Method count does not equal reflection method count');
+		}
 
-			$this->endtime = microtime(TRUE);
-			$totaltime = $this->endtime - $this->starttime;
-			$totaltime = round($totaltime, 5);
-
-			$info['Parsetime:'] = $totaltime . ' s';
-
-			debug($info);
+		if (count($this->classObject->getProperties()) != count($this->classReflection->getNotInheritedProperties())) {
+			throw new Exception('Class ' . $className . ' could not be parsed properly. Property count does not equal reflection property count');
 		}
 
 		return $this->classObject;
 	}
 
 	/**
+	 * If the class definitions begins, all previous parsed lines
+	 * are added as preceding block
+	 * so we keep all includes, definition and other stuff
+	 * @return void
+	 */
+	protected function onClassDefinitionFound() {
+		$classPreComment = '';
+		foreach (array_values($this->lines) as $line) {
+			if (strlen(trim($line)) > 0) {
+				$classPreComment .= $line;
+			}
+		}
+		$this->classObject->setPrecedingBlock($classPreComment);
+	}
+
+	/**
+	 * The end of a multiLine property definition
+	 * @return void
+	 */
+	protected function onMultiLinePropertyEnd() {
+		// add all lines from startline to current line as value of the multiline property
+		$this->multiLinePropertyMatches['value'][0] .= "\n" . $this->concatLinesFromArray($this->lines, $this->multiLinePropertyMatches['startLine']);
+		$this->multiLinePropertyMatches['value'][0] .= str_replace(';', '', $this->currentLine);
+		$this->addProperty($this->multiLinePropertyMatches);
+		// reset the array
+		$this->multiLinePropertyMatches = array();
+		$this->lastMatchedLineNumber = $this->lineCount;
+		$this->inMultiLineProperty = FALSE;
+	}
+
+	/**
+	 *
+	 * @return void
+	 */
+	protected function debugInfo() {
+		if (count($this->classObject->getMethods()) != count($this->classReflection->getNotInheritedMethods())) {
+			debug('Errorr: method count does not match: ' . count($this->classObject->getMethods()) . ' methods found, should be ' . count($this->classReflection->getNotInheritedMethods()));
+			debug($this->classObject->getMethods());
+			debug($this->classReflection->getNotInheritedMethods());
+		}
+		if (count($this->classObject->getProperties()) != count($this->classReflection->getNotInheritedProperties())) {
+			debug('Error: property count does not match:' . count($this->classObject->getProperties()) . ' properties found, should be ' . count($this->classReflection->getNotInheritedProperties()));
+			debug($this->classObject->getProperties());
+			debug($this->classReflection->getNotInheritedProperties());
+		}
+
+		$info = $this->classObject->getInfo();
+
+		$endtime = microtime(TRUE);
+		$totaltime = $endtime - $this->starttime;
+		$totaltime = round($totaltime, 5);
+
+		$info['Parsetime:'] = $totaltime . ' s';
+
+		debug($info);
+	}
+
+	protected function onMethodEnd($trimmedLine) {
+		if ($this->currentMethod['reflection']->getEndline() - $this->currentMethod['reflection']->getStartLine() >= 2) {
+			$this->currentMethod['methodBody'] = $this->concatLinesFromArray($this->lines, $this->currentMethod['reflection']->getStartLine());
+		}
+		else $this->currentMethod['methodBody'] = '';
+
+		if ($this->currentMethod['reflection']->getEndline() == $this->currentMethod['reflection']->getStartLine()) {
+			// a one line method: we have to strip the method body from the rest
+			$methodBodyRegex = '/\{(.*)/';
+			$methodBodyMatches = array();
+			preg_match_all($methodBodyRegex, $this->currentLine, $methodBodyMatches);
+			if (!empty($methodBodyMatches[1][0])) {
+				$trimmedLine = trim($methodBodyMatches[1][0]);
+				// trimmed line now still has a bracket at the end!
+			}
+		}
+
+		if ($trimmedLine != '}' && strlen($trimmedLine) > 0) {
+
+			// remove the bracket from last line
+			$trimmedLine = substr(rtrim($trimmedLine), 0, -1);
+			// add the trimmed $line
+			$this->currentMethod['methodBody'] .= $trimmedLine;
+		}
+		$this->currentMethod['methodObject']->setBody($this->currentMethod['methodBody']);
+		$this->classObject->addMethod($this->currentMethod['methodObject']);
+		// end of a method body
+		$this->inMethodBody = FALSE;
+		$this->lastMatchedLineNumber = $this->lineCount;
+		//TODO what if a method is defined in the same line as the preceding method ends? Should be checked with tokenizer?
+	}
+
+	/**
+	 * If a method startline was found in the current line
+	 * @param array $methodMatches (regex matches)
+	 * @throws Tx_ExtensionBuilder_Exception_ParseError
+	 * @return void
+	 */
+	protected function onMethodFound($methodMatches) {
+		$this->inMethodBody = TRUE;
+		$methodName = $methodMatches[1][0];
+
+		try {
+			// the method has to exist in the classReflection
+			$this->currentMethod['reflection'] = $this->classReflection->getMethod($methodName);
+			if ($this->currentMethod['reflection']) {
+				$classMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($methodName, $this->currentMethod['reflection']);
+				$precedingBlock = $this->concatLinesFromArray($this->lines, $this->lastMatchedLineNumber, NULL, FALSE);
+				$classMethod->setPrecedingBlock($precedingBlock);
+				$this->currentMethod['methodObject'] = $classMethod;
+
+			}
+			else {
+				throw new Tx_ExtensionBuilder_Exception_ParseError(
+					'Method ' . $methodName . ' does not exist. Parsed from line ' . $this->lineCount . 'in ' . $this->classReflection->getFileName()
+				);
+			}
+		}
+		catch (ReflectionException $e) {
+			// ReflectionClass throws an exception if a method was not found
+			t3lib_div::devlog('Exception: ' . $e->getMessage(), 'extension_builder', 2);
+		}
+	}
+
+
+	/**
 	 * Test for singleLineComment
 	 *
-	 * $param string $line
+	 * @return boolean
 	 */
-	protected function isSingleLineComment($line) {
-		$isSingleLineComment = FALSE;
+	protected function isSingleLineComment() {
 		// single comment line
-		if (!$isSingleLineComment && preg_match('/^\s*\/\\//', $line)) {
-			$isSingleLineComment = TRUE;
+		if (preg_match('/^\s*\/\\//', $this->currentLine)) {
+			return TRUE;
 		}
-		return $isSingleLineComment;
+		return FALSE;
 	}
 
 	/**
 	 * Test for multiLineComment
+	 * switch the $this->inMultiLineComment to TRUE or FALSE
+	 * return TRUE if the parser is in a multiline comment
 	 *
-	 * @param string $line
-	 * @param boolean $isMultiLineComment
+	 * @return boolean $isMultiLineComment
 	 */
-	protected function isMultiLineComment($line, $isMultiLineComment) {
-
+	protected function isMultiLineComment() {
 		// end of multiline comment found (maybe this part could be better solved with tokenizer?)
-		if (strrpos($line, '*/') > -1) {
-			if (strrpos($line, '/**') > -1) {
+		if (strrpos($this->currentLine, '*/') > -1) {
+			if (strrpos($this->currentLine, '/**') > -1) {
 				// if a multiline comment starts in the same line after a multiline comment end
-				$isMultiLineComment = (strrpos($line, '/**') > strrpos($line, '*/'));
+				$this->inMultiLineComment = (strrpos($this->currentLine, '/**') > strrpos($this->currentLine, '*/'));
 			}
 			else {
-				$isMultiLineComment = FALSE;
+				$this->inMultiLineComment = FALSE;
 			}
 		}
-		else if (strrpos($line, '/**') > -1) {
+		else if (strrpos($this->currentLine, '/**') > -1) {
 			// multiline comment start
-			$isMultiLineComment = TRUE;
+			$this->inMultiLineComment = TRUE;
 		}
-		return $isMultiLineComment;
+		return $this->inMultiLineComment;
 	}
 
 	/**
-	 * Adds on (or multiple) constants found in a source code line to the classObject
+	 * Adds one (or multiple) constants found in a source code line to the classObject
 	 *
 	 * @param array $constantMatches as returned from preg_match_all
 	 */
@@ -387,7 +467,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 			}
 			catch (ReflectionException $e) {
 				// ReflectionClass throws an exception if a property was not found
-				t3lib_div::devlog('Exception in line : ' . $e->getMessage() . ' Constant ' . $constantName . ' found in line ' . $this->lineCount);
+				t3lib_div::devlog('Exception in line : ' . $e->getMessage() . ' Constant ' . $constantName . ' found in line ' . $this->lineCount, 'extension_builder');
 			}
 		}
 	}
@@ -428,13 +508,13 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 
 					if ($isFirstProperty) {
 						// only the first property will get the preceding block assigned
-						$precedingBlock = $this->concatLinesFromArray($lines, $lastMatchedLine);
+						$precedingBlock = $this->concatLinesFromArray($this->lines, $this->lastMatchedLineNumber, NULL, FALSE);
 						$classProperty->setPrecedingBlock($precedingBlock);
 						$isFirstProperty = FALSE;
 					}
 
 					$this->classObject->addProperty($classProperty);
-					$lastMatchedLine = $this->lineCount;
+					$this->lastMatchedLineNumber = $this->lineCount;
 				}
 				else {
 					throw new Tx_ExtensionBuilder_Exception_ParseError(
@@ -444,7 +524,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 			}
 			catch (ReflectionException $e) {
 				// ReflectionClass throws an exception if a property was not found
-				t3lib_div::devlog('Exception in line : ' . $e->getMessage() . 'Property ' . $propertyName . ' found in line ' . $this->lineCount);
+				t3lib_div::devlog('Exception in line : ' . $e->getMessage() . 'Property ' . $propertyName . ' found in line ' . $this->lineCount, 'extension_builder');
 			}
 		}
 	}
@@ -455,9 +535,10 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 	 * @param array $lines
 	 * @param int $start
 	 * @param int $end (optional)
+	 * @param boolean $skipEmptyLines
 	 * @return string concatenated lines
 	 */
-	public function concatLinesFromArray($lines, $start, $end = NULL) {
+	public function concatLinesFromArray($lines, $start, $end = NULL, $skipEmptyLines = TRUE) {
 		$result = '';
 		$lastLine = 'not empty';
 		foreach ($lines as $lineNumber => $lineContent) {
@@ -466,7 +547,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 			}
 			if ($lineNumber > $start) {
 				// remove multiple empty lines
-				if (empty($lineContent) && empty($lastLine)) {
+				if ($skipEmptyLines && empty($lineContent) && empty($lastLine)) {
 					continue;
 				}
 				else {
