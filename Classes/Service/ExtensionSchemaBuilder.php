@@ -92,28 +92,6 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 			$extension->addBackendModule($backendModule);
 		}
 
-		// state
-		$state = 0;
-		switch ($globalProperties['state']) {
-			case 'alpha':
-				$state = Tx_ExtensionBuilder_Domain_Model_Extension::STATE_ALPHA;
-				break;
-			case 'beta':
-				$state = Tx_ExtensionBuilder_Domain_Model_Extension::STATE_BETA;
-				break;
-			case 'stable':
-				$state = Tx_ExtensionBuilder_Domain_Model_Extension::STATE_STABLE;
-				break;
-			case 'experimental':
-				$state = Tx_ExtensionBuilder_Domain_Model_Extension::STATE_EXPERIMENTAL;
-				break;
-			case 'test':
-				$state = Tx_ExtensionBuilder_Domain_Model_Extension::STATE_TEST;
-				break;
-		}
-		$extension->setState($state);
-
-
 		// classes
 		if (is_array($extensionBuildConfiguration['modules'])) {
 			foreach ($extensionBuildConfiguration['modules'] as $singleModule) {
@@ -189,6 +167,27 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		$extension->setShy($propertyConfiguration['emConf']['shy']);
 
 		$extension->setPriority($propertyConfiguration['emConf']['priority']);
+
+			// state
+		$state = 0;
+		switch ($propertyConfiguration['emConf']['state']) {
+			case 'alpha':
+				$state = Tx_ExtensionBuilder_Domain_Model_Extension::STATE_ALPHA;
+				break;
+			case 'beta':
+				$state = Tx_ExtensionBuilder_Domain_Model_Extension::STATE_BETA;
+				break;
+			case 'stable':
+				$state = Tx_ExtensionBuilder_Domain_Model_Extension::STATE_STABLE;
+				break;
+			case 'experimental':
+				$state = Tx_ExtensionBuilder_Domain_Model_Extension::STATE_EXPERIMENTAL;
+				break;
+			case 'test':
+				$state = Tx_ExtensionBuilder_Domain_Model_Extension::STATE_TEST;
+				break;
+		}
+		$extension->setState($state);
 
 		return $extension;
 
