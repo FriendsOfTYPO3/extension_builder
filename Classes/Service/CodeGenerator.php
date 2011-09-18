@@ -488,7 +488,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			$classDocComment = $this->renderDocComment($controllerClassObject, $domainObject);
 			$controllerClassObject->setDocComment($classDocComment);
 
-			return $this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension, 'classObject' => $controllerClassObject));
+			return $this->renderTemplate('Classes/class.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension, 'classObject' => $controllerClassObject));
 		} else {
 			throw new Exception('Class file for controller could not be generated');
 		}
@@ -506,7 +506,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		if ($modelClassObject) {
 			$classDocComment = $this->renderDocComment($modelClassObject, $domainObject);
 			$modelClassObject->setDocComment($classDocComment);
-			return $this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension, 'classObject' => $modelClassObject));
+			return $this->renderTemplate('Classes/class.phpt', array('domainObject' => $domainObject, 'extension' => $this->extension, 'classObject' => $modelClassObject));
 		} else {
 			throw new Exception('Class file for domain object could not be generated');
 		}
@@ -526,7 +526,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			$classDocComment = $this->renderDocComment($repositoryClassObject, $domainObject);
 			$repositoryClassObject->setDocComment($classDocComment);
 
-			return $this->renderTemplate('Partials/Classes/class.phpt', array('domainObject' => $domainObject, 'classObject' => $repositoryClassObject));
+			return $this->renderTemplate('Classes/class.phpt', array('domainObject' => $domainObject, 'classObject' => $repositoryClassObject));
 		} else {
 			throw new Exception('Class file for repository could not be generated');
 		}

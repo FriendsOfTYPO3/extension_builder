@@ -52,7 +52,9 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 				'description' => $description,
 				'extensionKey' => $extensionKey,
 				'name' => $name,
-				'state' => $state
+				'emConf' => array(
+					'state' => $state
+				)
 			)
 		);
 
@@ -88,6 +90,9 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 				'description' => 'myDescription',
 				'extensionKey' => 'myExtensionKey',
 				'name' => 'myName',
+				'emConf' => array(
+					'state' => 'beta'
+				),
 				'persons' => array(
 					array(
 						'company'=>'company0',
@@ -146,11 +151,9 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 		$expected->setEntity(TRUE);
 		$expected->setAggregateRoot(TRUE);
 
-		$property0 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
-		$property0->setName('name');
+		$property0 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty('name');
 		$property0->setRequired(TRUE);
-		$property1 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_IntegerProperty();
-		$property1->setName('type');
+		$property1 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_IntegerProperty('type');
 		$expected->addProperty($property0);
 		$expected->addProperty($property1);
 
@@ -253,7 +256,9 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 				'description' => 'Some description',
 				'extensionKey' => $this->extensionKey,
 				'name' => 'My ext name',
-				'state' => 'beta',
+				'emConf' => array(
+					'state' => 'beta'
+				)
 			),
 			'wires' => array(
 				0 => array(
@@ -291,11 +296,9 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 		$blog->setDescription('A blog object');
 		$blog->setEntity(TRUE);
 		$blog->setAggregateRoot(FALSE);
-		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
-		$property->setName('name');
+		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty('name');
 		$blog->addProperty($property);
-		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
-		$property->setName('description');
+		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty('description');
 		$blog->addProperty($property);
 
 		$extension->addDomainObject($blog);
@@ -314,14 +317,12 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 		$comment->setAggregateRoot(FALSE);
 		$extension->addDomainObject($comment);
 
-		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation();
-		$relation->setName('posts');
+		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation('posts');
 		$relation->setForeignClass($post);
 		$relation->setExcludeField(1);
 		$blog->addProperty($relation);
 
-		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation();
-		$relation->setName('comments');
+		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation('comments');
 		$relation->setForeignClass($comment);
 		$relation->setExcludeField(1);
 		$post->addProperty($relation);
