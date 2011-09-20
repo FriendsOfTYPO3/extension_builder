@@ -46,6 +46,7 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 		$name = 'ExtName';
 		$extensionKey = $this->extensionKey;
 		$state = 0;
+		$version = '1.0.4';
 
 		$input = array(
 			'properties' => array(
@@ -53,7 +54,8 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 				'extensionKey' => $extensionKey,
 				'name' => $name,
 				'emConf' => array(
-					'state' => $state
+					'state' => $state,
+					'version' => $version
 				)
 			)
 		);
@@ -63,6 +65,7 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 		$extension->setName($name);
 		$extension->setExtensionKey($extensionKey);
 		$extension->setState($state);
+		$extension->setVersion($version);
 		$extension->setExtensionDir('');
 
 		$actual = $this->extensionSchemaBuilder->build($input);

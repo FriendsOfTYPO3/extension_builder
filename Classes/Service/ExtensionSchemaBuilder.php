@@ -154,7 +154,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 
 
 		// various extension properties
-		$extension->setVersion($propertyConfiguration['version']);
+		$extension->setVersion($propertyConfiguration['emConf']['version']);
 
 		if (!empty($propertyConfiguration['emConf']['custom_category'])) {
 			$category = $propertyConfiguration['emConf']['custom_category'];
