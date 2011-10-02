@@ -29,6 +29,27 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	const SCOPE_PROTOTYPE = 'prototype';
 	const SCOPE_SINGLETON = 'singleton';
 
+		/**
+	 * an array of fields that if changed require a reindexing of all the events
+	 *
+	 * @var array
+	 */
+	protected static $fieldsRequiringReindexing = array(
+		'recurrance_type',
+		'recurrance_subtype',
+		'recurrance_until',
+		'start_day',
+		'start_time',
+		'end_day',
+		'end_time',
+		'pid',
+		'hidden',
+		'deleted'
+	);
+
+	/**
+	 * @var Tx_GimmeFive_Component_Manager
+	 */
 	private static $instance = NULL;
 
 	protected $classFiles;

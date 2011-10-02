@@ -249,6 +249,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 							$this->inMultiLineProperty = TRUE;
 							$this->multiLinePropertyMatches = $propertyMatches;
 							$this->multiLinePropertyMatches['startLine'] = $this->lineCount;
+							$this->lastMatchedLineNumber = $this->lineCount;
 						}
 					}
 				} // end of not in comment
@@ -314,7 +315,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 		// add all lines from startline to current line as value of the multiline property
 		$this->multiLinePropertyMatches['value'][0] .= "\n" . $this->concatLinesFromArray($this->lines, $this->multiLinePropertyMatches['startLine']);
 		$this->multiLinePropertyMatches['value'][0] .= str_replace(';', '', $this->currentLine);
-		$this->addProperty($this->multiLinePropertyMatches);
+		$this->addProperty($this->multiLinePropertyMatches, $this->multiLinePropertyMatches['startLine']);
 		// reset the array
 		$this->multiLinePropertyMatches = array();
 		$this->lastMatchedLineNumber = $this->lineCount;
@@ -477,7 +478,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 	 *
 	 * @param array $propertyMatches as returned from preg_match_all
 	 */
-	protected function addProperty(array $propertyMatches) {
+	protected function addProperty(array $propertyMatches, $startLine = NULL) {
 		$properties = array_combine($propertyMatches['name'], $propertyMatches['value']);
 		$isFirstProperty = TRUE;
 		foreach ($properties as $propertyName => $propertyValue) {
@@ -492,6 +493,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 
 					// get the default value from regex matches
 					if (!empty($propertyValue)) {
+						// try to detect the varType from default value
 						if (strpos($propertyValue, 'array') > -1) {
 							$varType = 'array';
 						}
@@ -502,13 +504,14 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 						if (!empty($varType)) {
 							$classProperty->setVarType($varType);
 						}
+
 						$classProperty->setValue(trim($propertyValue));
 						$classProperty->setDefault(TRUE);
 					}
 
 					if ($isFirstProperty) {
 						// only the first property will get the preceding block assigned
-						$precedingBlock = $this->concatLinesFromArray($this->lines, $this->lastMatchedLineNumber, NULL, FALSE);
+						$precedingBlock = $this->concatLinesFromArray($this->lines, $this->lastMatchedLineNumber, $startLine, FALSE);
 						$classProperty->setPrecedingBlock($precedingBlock);
 						$isFirstProperty = FALSE;
 					}
