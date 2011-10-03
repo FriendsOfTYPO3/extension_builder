@@ -493,18 +493,19 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 
 					// get the default value from regex matches
 					if (!empty($propertyValue)) {
-						// try to detect the varType from default value
-						if (strpos($propertyValue, 'array') > -1) {
-							$varType = 'array';
-						}
-						else {
-							eval('$varType = gettype(' . $propertyValue . ');');
-						}
+						if(strlen($classProperty->getVarType()) < 1){
+							// try to detect the varType from default value
+							if (strpos($propertyValue, 'array') > -1) {
+								$varType = 'array';
+							}
+							else {
+								eval('$varType = gettype(' . $propertyValue . ');');
+							}
 
-						if (!empty($varType)) {
-							$classProperty->setVarType($varType);
+							if (!empty($varType) && $varType != 'NULL') {
+								$classProperty->setVarType($varType);
+							}
 						}
-
 						$classProperty->setValue(trim($propertyValue));
 						$classProperty->setDefault(TRUE);
 					}
