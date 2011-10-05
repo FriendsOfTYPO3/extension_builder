@@ -657,6 +657,18 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		$this->classObject->addMethod($mergedMethod);
 	}
 
+	/**
+	 * @param string $search
+	 * @param string $replace
+	 * @param string $haystack
+	 *
+	 * @return string with replaced values
+	 */
+	protected function replaceUpperAndLowerCase($search, $replace, $haystack) {
+		$result = str_replace(ucfirst($search), ucfirst($replace), $haystack);
+		$result = str_replace(t3lib_div::lcfirst($search), t3lib_div::lcfirst($replace), $result);
+		return $result;
+	}
 
 	/**
 	 * Replace all occurences of the old property name with the new name
