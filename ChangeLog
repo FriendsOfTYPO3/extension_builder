@@ -1,3 +1,42 @@
+[BUGFIX] Readded replaceUpperAndLowerCase helper function
+Resolves #30561
+[TASK] Updated ext_emconf.php
+[BUGFIX]  Vartype may not be NULL Vartype from @var tag should have  precedence before default value
+Resolves #30531
+[BUGFIX] Multiline properties need limit in preceeding block
+Resolves #30532
+[TASK] Refactored ClassParser
+Resolves #29635
+Extracted methods,
+Improved regex pattern,
+Removed includes (Those are better appended, prepended as plain code since
+includes might occur in conditions and other stuff)
+Added some Tests for multiline properties, parameter and appended blocks in classes
+[TASK] Updated ext_emconf.php
+[BUGFIX] Version was not written to em_conf.php
+Resolves #30028
+[TASK] Preserve non doc comments in class files
+Resolves ##30004
+[BUGFIX] State was not written to emconf.php
+Resolves #29998
+[BUGFIX] Improves the replacements after renaming
+Complete refactoring of updating tags
+Resolves #29362
+[TASK] Removed a bunch of Javascript files from YUI
+It's now 2.3 MB instead of 8.2 MB!!
+[TASK] Minor manual updates
+[TASK] Reformated manual.sxw
+[TASK] Updated icon
+[TASK] Updated manual.swx
+[TASK] Function test for backward compatibility
+Added a test to check compatiblity with ExtensionBuilder.json of Version 1.0
+This test should proove, that future changes in code generation won't break compatibility
+(Except we introduce breaking changes by purpose of course)
+[TASK] Replaced deprecated function calls
+[TASK] CGL stuff, improved doc comments and return statements
+[BUGFIX] Unit tests for controller were not generated
+[TASK] Updated ChangeLog
+Removed to superflous spaces in ext_tables.php template
 [BUGFIX] Initial code creation and reloaded do not differ anymore
 Resolves #26039
 [TASK] Removed deprecated method calls
@@ -230,7 +269,8 @@ Resolves: #13348
 Resolves #13303
 [+TASK] Renamed l18n to l10n according to #13295
 
-HOW TO CREATE THE CHANGELOG
-===========================
-
-git log d8cc4c50..HEAD --pretty=format:"%s%n%b%n" | grep -v "^$" | grep -v "Change-Id*"
+-
+-HOW TO CREATE THE CHANGELOG
+-===========================
+-
+-git log d8cc4c50..HEAD --pretty=format:"%s%n%b%n" | grep -v "^$" | grep -v "Change-Id*"
