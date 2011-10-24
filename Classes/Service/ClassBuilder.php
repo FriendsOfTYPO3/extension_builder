@@ -430,8 +430,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 		$actionMethod->setDescription('action ' . $action->getName());
 		$actionMethod->setBody($this->codeGenerator->getDefaultMethodBody($domainObject, NULL, 'Controller', '', $actionMethodName));
 		$actionMethod->addModifier('public');
-		if ($actionName != 'list') {
-			// needs a parameter
+		if (in_array($actionName, array('show', 'edit', 'create', 'new', 'update', 'delete'))) {
+			// these actions need a parameter
 			if (in_array($actionName, array('create', 'new'))) {
 				$parameterName = 'new' . $domainObject->getName();
 			} else {
@@ -447,6 +447,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			$actionMethod->setParameter($parameter);
 		}
 		$actionMethod->setTag('return', 'void');
+
 		return $actionMethod;
 	}
 
@@ -579,7 +580,6 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 				$this->classObject->addMethod($injectMethod);
 			}
 		}
-
 		foreach ($domainObject->getActions() as $action) {
 			$actionMethodName = $action->getName() . 'Action';
 			if (!$this->classObject->methodExists($actionMethodName)) {

@@ -72,28 +72,25 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 			$domainObject->addProperty($property);
 		}
 
-		foreach ($jsonDomainObject['actionGroup']['actions'] as $jsonAction) {
-			if ($jsonAction == 'create') {
-				$action = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
-				$action->setName('new');
-				$domainObject->addAction($action);
+		foreach ($jsonDomainObject['actionGroup'] as $jsonActionName => $actionValue) {
+			if ($jsonActionName == 'customActions' && !empty($actionValue)) {
+				$actionNames = $actionValue;
+			} else if ($actionValue == 1) {
+				if ($jsonActionName == 'edit_update' || $jsonActionName == 'new_create') {
+					$actionNames = explode('_', $jsonActionName);
+				} else {
+					$actionNames = array($jsonActionName);
+				}
+			} else {
+				$actionNames = array();
 			}
-			if ($jsonAction == 'update') {
-				$action = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
-				$action->setName('edit');
-				$domainObject->addAction($action);
-			}
-			$action = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
-			$action->setName($jsonAction);
-			$domainObject->addAction($action);
-		}
 
-		if ($domainObject->isAggregateRoot() && !$domainObject->hasActions()) {
-			$defaultActions = array('list', 'show', 'new', 'create', 'edit', 'update', 'delete');
-			foreach ($defaultActions as $actionName) {
-				$action = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
-				$action->setName($actionName);
-				$domainObject->addAction($action);
+			if (!empty($actionNames)) {
+				foreach ($actionNames as $actionName) {
+					$action = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
+					$action->setName($actionName);
+					$domainObject->addAction($action);
+				}
 			}
 
 		}

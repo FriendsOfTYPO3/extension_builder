@@ -40,9 +40,9 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 		inputParams: {
 			collapsible: true,
 			collapsed: true,
-			legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.more,
+			className: 'bottomBorder',
+			legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.moreOptions,
 			name: "emConf",
-			description: 'Test',
 			fields: [
 					{
 						type: "select",
@@ -125,6 +125,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.persons,
 			name: "persons",
 			sortable: true,
+			className: 'bottomBorder',
 			elementType: {
 				type: "group",
 				inputParams: {
@@ -175,6 +176,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.plugins,
 			description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_plugins,
 			sortable: true,
+			className: 'bottomBorder',
 			elementType: {
 				type: "group",
 				inputParams: {
@@ -198,34 +200,55 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							}
 						},
 						{
-							type: "text",
+							type: 'group',
 							inputParams: {
-								name: "cacheableActions",
-								label: TYPO3.settings.extensionBuilder._LOCAL_LANG.cacheable_actions,
-								description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_cacheable_actions,
-								cols: 28,
-								rows: 3
-							}
-						},
-						{
-							type: "text",
-							inputParams: {
-								name: "noncacheableActions",
-								label: TYPO3.settings.extensionBuilder._LOCAL_LANG.noncacheable_actions,
-								description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_noncacheable_actions,
-								cols: 28,
-								rows: 3
+								collapsible: true,
+								collapsed: true,
+								legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.advancedOptions,
+								name: "actions",
+								className:"wideTextfields",
+								fields: [
+									{
+										type: "text",
+										inputParams: {
+											name: "cacheableActions",
+											label: TYPO3.settings.extensionBuilder._LOCAL_LANG.cacheable_actions,
+											description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_cacheable_actions,
+											cols: 38,
+											rows: 3
+										}
+									},
+									{
+										type: "text",
+										inputParams: {
+											name: "noncacheableActions",
+											label: TYPO3.settings.extensionBuilder._LOCAL_LANG.noncacheable_actions,
+											description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_noncacheable_actions,
+											cols: 38,
+											rows: 3
+										}
+									},
+									{
+										type: "text",
+										inputParams: {
+											name: "switchableActions",
+											label: TYPO3.settings.extensionBuilder._LOCAL_LANG.switchableActions,
+											description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_switchableActions,
+											cols: 38,
+											rows: 3
+										}
+									}
+			//						{
+			//							type: "select",
+			//							inputParams: {
+			//								name: "type",
+			//								label: TYPO3.settings.extensionBuilder._LOCAL_LANG.type,
+			//								selectValues: ["list_type", "CType"],
+			//								selectOptions: ["Frontend plugin", "Content type"],
+			//							}
+								]
 							}
 						}
-//						},
-//						{
-//							type: "select",
-//							inputParams: {
-//								name: "type",
-//								label: TYPO3.settings.extensionBuilder._LOCAL_LANG.type,
-//								selectValues: ["list_type", "CType"],
-//								selectOptions: ["Frontend plugin", "Content type"],
-//							}
 					]
 				}
 			}
@@ -236,9 +259,11 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 		inputParams: {
 			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.backendModules,
 			name: "backendModules",
+			className: 'bottomBorder',
 			sortable: true,
 			elementType: {
 				type: "group",
+				className: 'smallBottomBorder',
 				inputParams: {
 					name: "properties",
 					fields: [

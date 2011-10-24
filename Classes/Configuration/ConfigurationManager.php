@@ -135,7 +135,6 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		if (file_exists($jsonFile)) {
 			// compatibility adaptions for configurations from older versions
 			$extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), TRUE);
-			//t3lib_div::devlog('old JSON:','extension_builder',0,$extensionConfigurationJSON);
 			$extensionConfigurationJSON = $this->fixExtensionBuilderJSON($extensionConfigurationJSON, $prepareForModeler);
 			$extensionConfigurationJSON['properties']['originalExtensionKey'] = $extensionKey;
 			//t3lib_div::writeFile($jsonFile, json_encode($extensionConfigurationJSON));
@@ -206,6 +205,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		$extensionConfigurationJSON['modules'] = $this->generateUniqueIDs($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->resetOutboundedPositions($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->mapAdvancedMode($extensionConfigurationJSON['modules'], $prepareForModeler);
+		$extensionConfigurationJSON['modules'] = $this->mapOldActions($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON = $this->reArrangeRelations($extensionConfigurationJSON);
 		return $extensionConfigurationJSON;
 	}
@@ -430,6 +430,37 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 				$moduleCounter++;
 			}
 		}
+	}
+
+	protected function mapOldActions($modules) {
+		$newActionNames = array('list', 'show', 'new_create', 'edit_update', 'delete');
+		foreach ($modules as &$module) {
+			if (isset($module['value']['actionGroup']['actions'])) {
+				foreach ($newActionNames as $defaultAction) {
+					$module['value']['actionGroup'][$defaultAction] = FALSE;
+				}
+				if (empty($module['value']['actionGroup']['actions'])) {
+					if ($module['value']['objectsettings']['aggregateRoot']) {
+						foreach ($newActionNames as $defaultAction) {
+							$module['value']['actionGroup'][$defaultAction] = TRUE;
+						}
+					}
+				} else {
+
+					foreach ($module['value']['actionGroup']['actions'] as $oldActionName) {
+						if ($oldActionName == 'create') {
+							$module['value']['actionGroup']['new_create'] = TRUE;
+						} else if ($oldActionName == 'update') {
+							$module['value']['actionGroup']['edit_update'] = TRUE;
+						} else {
+							$module['value']['actionGroup'][$oldActionName] = TRUE;
+						}
+					}
+				}
+				unset($module['value']['actionGroup']['actions']);
+			}
+		}
+		return $modules;
 	}
 
 }

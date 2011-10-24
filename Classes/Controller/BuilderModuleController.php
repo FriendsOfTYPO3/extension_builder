@@ -59,10 +59,10 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	protected $extensionValidator;
 
 	/**
-     * settings from various sources:
+	 * settings from various sources:
 	 * settings configured in module.extension_builder typoscript
 	 * Module settings configured in the extension manager
-     * @var array settings
+	 * @var array settings
 	 */
 	protected $settings;
 
@@ -122,9 +122,9 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 
 	/**
 	 * Index action for this controller.
-     * This is the default action, showing some introduction
-     * but after the first loading the user should
-     * immediately be redirected to the domainmodellingAction
+	 * This is the default action, showing some introduction
+	 * but after the first loading the user should
+	 * immediately be redirected to the domainmodellingAction
 	 *
 	 * @return void
 	 */
@@ -137,14 +137,14 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 		}
 	}
 
-    /**
-     *
-     * loads the Domainmodelling template
-     * Nothing more to do here, since the next action is invoked
-     * by the Javascript interface
-     *
-     * @return void
-     */
+	/**
+	 *
+	 * loads the Domainmodelling template
+	 * Nothing more to do here, since the next action is invoked
+	 * by the Javascript interface
+	 *
+	 * @return void
+	 */
 	public function domainmodellingAction() {
 		$GLOBALS['BE_USER']->pushModuleData('extensionbuilder', array('firstTime' => 0));
 	}
@@ -172,13 +172,13 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 		return json_encode($response);
 	}
 
-    /**
-     * The YUI RPC request has to be parsed by the configuration manager
-     * since the extbase framework is not involved
-     *
-     * @throws Exception
-     * @return string
-     */
+	/**
+	 * The YUI RPC request has to be parsed by the configuration manager
+	 * since the extbase framework is not involved
+	 *
+	 * @throws Exception
+	 * @return string
+	 */
 	protected function generateCodeAction_getSubAction() {
 		$this->configurationManager->parseRequest();
 		$subAction = $this->configurationManager->getSubActionFromRequest();
@@ -188,15 +188,22 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 		return $subAction;
 	}
 
-    /**
-     * Generate the code files according to the transferred JSON configuration
-     *
-     * @throws Exception
-     * @return array (status => message)
-     */
+	/**
+	 * Generate the code files according to the transferred JSON configuration
+	 *
+	 * @throws Exception
+	 * @return array (status => message)
+	 */
 	protected function generateCodeAction_saveWiring() {
 		try {
 			$extensionBuildConfiguration = $this->configurationManager->getConfigurationFromModeler();
+			$validationConfigurationResult = $this->extensionValidator->validateConfigurationFormat($extensionBuildConfiguration);
+			if (!empty($validationConfigurationResult['warnings'])) {
+				$confirmationRequired = $this->handleValidationWarnings($validationConfigurationResult['warnings']);
+				if (!empty($confirmationRequired)) {
+					return $confirmationRequired;
+				}
+			}
 			$extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
 		}
 		catch (Exception $e) {
@@ -205,16 +212,16 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 
 		// Validate the extension
 		$validationResult = $this->extensionValidator->isValid($extension);
-		if(!empty($validationResult['errors'])){
+		if (!empty($validationResult['errors'])) {
 			$errorMessage = '';
-			foreach($validationResult['errors'] as $exception){
-				$errorMessage .= '<br />'.$exception->getMessage();
+			foreach ($validationResult['errors'] as $exception) {
+				$errorMessage .= '<br />' . $exception->getMessage();
 			}
 			throw new Exception($errorMessage);
 		}
-		if(!empty($validationResult['warnings'])){
+		if (!empty($validationResult['warnings'])) {
 			$confirmationRequired = $this->handleValidationWarnings($validationResult['warnings']);
-			if(!empty($confirmationRequired)){
+			if (!empty($confirmationRequired)) {
 				return $confirmationRequired;
 			}
 		}
@@ -310,28 +317,28 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	 * @return array confirm (Question to confirm), confirmFieldName (is set to TRUE if confirmed)
 	 */
 	protected function handleValidationWarnings($warnings) {
-		$sqlReservedPropertyNames = array();
-		foreach($warnings as $exception){
-			if ($exception->getCode() == Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::EXTENSION_DIR_EXISTS) {
-				if (!$this->configurationManager->isConfirmed('allowExistingExtensionKey')) {
-					return array(
-						'confirm' => 'There is already an extension with this extension key.<br />Are you shure, you want to write into that extension directory?',
-						'confirmFieldName' => 'allowExistingExtensionKey');
-				}
+		$messagesPerErrorcode = array();
+		foreach ($warnings as $exception) {
+			if (!is_array($messagesPerErrorcode[$exception->getCode()])) {
+				$messagesPerErrorcode[$exception->getCode()] = array();
 			}
-			if ($exception->getCode() == Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::ERROR_PROPERTY_RESERVED_SQL_WORD) {
-				$sqlReservedPropertyNames[] = $exception->getMessage();
-			}
+			$messagesPerErrorcode[$exception->getCode()][] = $exception->getMessage();
 		}
-		if(!empty($sqlReservedPropertyNames)){
-			if (!$this->configurationManager->isConfirmed('allowReservedSQLWords')) {
-				$confirmMessage =  "SQL reserved names were found for these properties:<br />" .
-					implode("<br />",$sqlReservedPropertyNames) .
-						 "<br />This will result in a different column name in the database.<br />" .
-						"Are you shure, you want to use them?";
+		foreach ($messagesPerErrorcode as $errorCode => $messages) {
+			if (!$this->configurationManager->isConfirmed('allow' . $errorCode)) {
+				if ($errorCode == Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::ERROR_PROPERTY_RESERVED_SQL_WORD) {
+					$confirmMessage = 'SQL reserved names were found for these properties:<br />' .
+									  '<ol class="warnings"><li>' . implode('</li><li>', $messages) . '</li></ol>' .
+									  'This will result in a different column name in the database.<br />' .
+									  '<strong>Are you sure, you want to use them?</strong>';
+
+				} else {
+					$confirmMessage = '<ol class="warnings"><li>' . implode('</li><li>', $messages) . '</li></ol>' .
+									  '<strong>Do you want to save anyway?</strong>';
+				}
 				return array(
-					'confirm' => $confirmMessage,
-					'confirmFieldName' => 'allowReservedSQLWords');
+					'confirm' => '<span style="color:red">Warning!</span></br>' . $confirmMessage,
+					'confirmFieldName' => 'allow' . $errorCode);
 			}
 		}
 		return array();

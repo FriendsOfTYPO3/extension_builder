@@ -52,12 +52,16 @@
 			<label index="cacheable_actions">Cacheable actions</label>
 			<label index="descr_cacheable_actions">Here you can configure, which cacheable actions this plugin should have. Example: <![CDATA[<br />]]>Blog => list,show <![CDATA[<br />]]>(one controller per line, actions comma separated) <![CDATA[<br />]]>If you leave this empty, all available actions are configured for this plugin.</label>
 			<label index="noncacheable_actions">Non cacheable actions</label>
-			<label index="descr_noncacheable_actions">Typically create, delete and update actions should not be cached</label>
+			<label index="descr_noncacheable_actions">Typically create, delete and update actions should not be cached. (Same format as above)</label>
+			<label index="switchableActions">Switchable actions</label>
+			<label index="descr_switchableActions">Make actions switchable in the plugin's form. One line for the label, one for the list of allowed Controller->action pairs (semicolon separated). Example: <![CDATA[<br />]]>Display items<![CDATA[<br />]]>Model->list; Model->show;<![CDATA[<br />]]>Admin<![CDATA[<br />]]>Model->new; Model->create; Model->edit; Model->update;</label>
 			<label index="backendModules">Backend modules</label>
 			<label index="mainModule">Main module</label>
 			<label index="uniqueInThisModel">Should be unique for this model</label>
 			<label index="type">Type</label>
 			<label index="more">More</label>
+			<label index="moreOptions">More options</label>
+			<label index="advancedOptions">Advanced options</label>
 			<label index="remove">Remove</label>
 			<label index="add">Add</label>
 			<label index="zeroToOne">1:1</label>
@@ -77,11 +81,11 @@
 			<label index="defaultActions">Default actions</label>
 			<label index="actionType">Action type</label>
 			<label index="descr_actionType">For each selected action, the extension builder will generate a template and a action method in the controller of this model. If the model is an aggregate root the default CRUD actions will be generated per default.</label>
-			<label index="show">Show</label>
-			<label index="list">List</label>
-			<label index="create_new">Create/new</label>
-			<label index="edit_update">Edit/update</label>
-			<label index="delete">Delete</label>
+			<label index="show">show</label>
+			<label index="list">list</label>
+			<label index="create_new">wew/create</label>
+			<label index="edit_update">edit/update</label>
+			<label index="delete">delete</label>
 			<label index="properties">Properties</label>
 			<label index="propertyName">Property name</label>
 			<label index="descr_propertyName">The name should be lowerCamelCase and unique in this model</label>

@@ -75,6 +75,16 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 */
 	protected $templateParser;
 
+	static public $defaultActions = array(
+		'createAction',
+		'deleteAction',
+		'editAction',
+		'listAction',
+		'newAction',
+		'showAction',
+		'updateAction'
+	);
+
 	/**
 	 * @param Tx_ExtensionBuilder_Service_ClassBuilder $classBuilder
 	 */
@@ -154,7 +164,24 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				t3lib_div::devlog('Generated ext_localconf.php', 'extension_builder', 0, array('Content' => $fileContents));
 			}
 			catch (Exception $e) {
-				throw new Exception('Could not write ' . $extensionFile . ', error: ' . $e->getMessage());
+				throw new Exception('Could not write ext_localconf.php. Error: ' . $e->getMessage());
+			}
+			try {
+				$currentPluginKey = '';
+				foreach ($this->extension->getPlugins() as $plugin) {
+					if ($plugin->getSwitchableControllerActions()) {
+						if (!is_dir($this->extensionDirectory . 'Configuration/FlexForms')) {
+							t3lib_div::mkdir_deep($this->extensionDirectory, 'Configuration/FlexForms');
+						}
+						$currentPluginKey = $plugin->getKey();
+						$fileContents = $this->renderTemplate('Configuration/Flexforms/flexform.xmlt', array('plugin' => $plugin));
+						$this->writeFile($this->extensionDirectory . 'Configuration/FlexForms/flexform_' . $currentPluginKey . '.xml', $fileContents);
+						t3lib_div::devlog('Generated flexform_' . $currentPluginKey . '.xml', 'extension_builder', 0, array('Content' => $fileContents));
+					}
+				}
+			}
+			catch (Exception $e) {
+				throw new Exception('Could not write  flexform_' . $currentPluginKey . '.xml. Error: ' . $e->getMessage());
 			}
 		}
 
@@ -573,7 +600,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		if (empty($precedingBlock) || strpos($precedingBlock, 'GNU General Public License') < 1) {
 
 			$licenseHeader = $this->renderTemplate('Partials/Classes/licenseHeader.phpt', array('persons' => $this->extension->getPersons()));
-			$docComment = "\n".$licenseHeader . "\n\n\n" . $docComment;
+			$docComment = "\n" . $licenseHeader . "\n\n\n" . $docComment;
 		}
 		else {
 			$docComment = $precedingBlock . "\n" . $docComment;
@@ -664,6 +691,9 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 */
 	public function getDefaultMethodBody($domainObject, $domainProperty, $classType, $methodType, $methodName) {
 
+		if ($classType == 'Controller' && !in_array($methodName, self::$defaultActions)) {
+			return '';
+		}
 		if (!empty($methodType) && empty($methodName)) {
 			$methodName = $methodType;
 		}
@@ -676,7 +706,6 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		);
 
 		$methodBody = $this->renderTemplate('Partials/Classes/' . $classType . '/Methods/' . $methodName . 'MethodBody.phpt', $variables);
-
 		return $methodBody;
 	}
 

@@ -140,10 +140,6 @@ div.savedStatus {
 	/*width: 250px; Don't put any width or it breaks the layerMap */
 }
 
-#propertiesForm div.inputEx-Group div.inputEx-label {
-	width: 70px;
-}
-
 
 /**
  * Dialogs
