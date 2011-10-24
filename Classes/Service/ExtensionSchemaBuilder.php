@@ -55,29 +55,6 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 
 		$this->setExtensionProperties($extension,$globalProperties);
 
-
-		if (!empty($globalProperties['originalExtensionKey'])) {
-			// handle renaming of extensions
-			// original extensionKey
-			$extension->setOriginalExtensionKey($globalProperties['originalExtensionKey']);
-			t3lib_div::devlog('Extension setOriginalExtensionKey:' . $extension->getOriginalExtensionKey(), 'extbase', 0, $globalProperties);
-		}
-
-		if (!empty($globalProperties['originalExtensionKey']) && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()) {
-			$settings = $this->configurationManager->getExtensionSettings($extension->getOriginalExtensionKey());
-			// if an extension was renamed, a new extension dir is created and we
-			// have to copy the old settings file to the new extension dir
-			copy($this->configurationManager->getSettingsFile($extension->getOriginalExtensionKey()), $this->configurationManager->getSettingsFile($extension->getExtensionKey()));
-		}
-		else {
-			$settings = $this->configurationManager->getExtensionSettings($extension->getExtensionKey());
-		}
-
-		if (!empty($settings)) {
-			$extension->setSettings($settings);
-			t3lib_div::devlog('Extension settings:' . $extension->getExtensionKey(), 'extbase', 0, $extension->getSettings());
-		}
-
 		foreach ($globalProperties['persons'] as $personValues) {
 			$person = $this->buildPerson($personValues);
 			$extension->addPerson($person);
@@ -140,9 +117,9 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 	}
 
 	/**
-	 * @param $extension
-	 * @param $propertyConfiguration
-	 * @return Tx_ExtensionBuilder_Domain_Model_Extension
+	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
+	 * @param array $propertyConfiguration
+	 * @return void
 	 */
 	protected function setExtensionProperties(&$extension, $propertyConfiguration) {
 		// name
@@ -189,7 +166,27 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		}
 		$extension->setState($state);
 
-		return $extension;
+		if (!empty($propertyConfiguration['originalExtensionKey'])) {
+			// handle renaming of extensions
+			// original extensionKey
+			$extension->setOriginalExtensionKey($propertyConfiguration['originalExtensionKey']);
+			t3lib_div::devlog('Extension setOriginalExtensionKey:' . $extension->getOriginalExtensionKey(), 'extbase', 0, $propertyConfiguration);
+		}
+
+		if (!empty($propertyConfiguration['originalExtensionKey']) && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()) {
+			$settings = $this->configurationManager->getExtensionSettings($extension->getOriginalExtensionKey());
+			// if an extension was renamed, a new extension dir is created and we
+			// have to copy the old settings file to the new extension dir
+			copy($this->configurationManager->getSettingsFile($extension->getOriginalExtensionKey()), $this->configurationManager->getSettingsFile($extension->getExtensionKey()));
+		}
+		else {
+			$settings = $this->configurationManager->getExtensionSettings($extension->getExtensionKey());
+		}
+
+		if (!empty($settings)) {
+			$extension->setSettings($settings);
+			t3lib_div::devlog('Extension settings:' . $extension->getExtensionKey(), 'extbase', 0, $extension->getSettings());
+		}
 
 	}
 
@@ -217,8 +214,27 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		$plugin->setName($pluginValues['name']);
 		$plugin->setType($pluginValues['type']);
 		$plugin->setKey($pluginValues['key']);
+		if(!empty($pluginValues['cacheableActions'])){
+			$cacheableControllerActions = array();
+			$lines = explode("\n",$pluginValues['cacheableActions']);
+			foreach($lines as $line){
+				list($controller,$actions) = explode('=>',str_replace(' ','',$line));
+				$cacheableControllerActions[] = array('controller'=>$controller,'actions'=>$actions);
+			}
+			$plugin->setCacheableControllerActions($cacheableControllerActions);
+		}
+		if(!empty($pluginValues['noncacheableActions'])){
+			$noncacheableControllerActions = array();
+			$lines = explode("\n",$pluginValues['noncacheableActions']);
+			foreach($lines as $line){
+				list($controller,$actions) = explode('=>',str_replace(' ','',$line));
+				$noncacheableControllerActions[] = array('controller'=>$controller,'actions'=>$actions);
+			}
+			$plugin->setNoncacheableControllerActions($noncacheableControllerActions);
+		}
 		return $plugin;
 	}
+
 
 	/**
 	 *
