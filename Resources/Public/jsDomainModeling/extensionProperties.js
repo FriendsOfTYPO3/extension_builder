@@ -112,7 +112,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							name: "shy",
 							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.shy,
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_shy,
-							value: 0
+							value: 0,
+							postText: TYPO3.settings.extensionBuilder._LOCAL_LANG.extension_api_link
 						}
 					}
 			]
@@ -195,6 +196,27 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 								noSpaces: true,
 								description: TYPO3.settings.extensionBuilder._LOCAL_LANG.uniqueInThisModel
 							}
+						},
+						{
+							type: "text",
+							inputParams: {
+								name: "cacheableActions",
+								label: TYPO3.settings.extensionBuilder._LOCAL_LANG.cacheable_actions,
+								description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_cacheable_actions,
+								cols: 28,
+								rows: 3
+							}
+						},
+						{
+							type: "text",
+							inputParams: {
+								name: "noncacheableActions",
+								label: TYPO3.settings.extensionBuilder._LOCAL_LANG.noncacheable_actions,
+								description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_noncacheable_actions,
+								cols: 28,
+								rows: 3
+							}
+						}
 //						},
 //						{
 //							type: "select",
@@ -204,7 +226,6 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 //								selectValues: ["list_type", "CType"],
 //								selectOptions: ["Frontend plugin", "Content type"],
 //							}
-						}
 					]
 				}
 			}
