@@ -73,6 +73,11 @@ class Tx_ExtensionBuilder_Domain_Model_Plugin {
 	protected $noncacheableControllerActions;
 
 	/**
+	 * @var array
+	 */
+	protected $switchableControllerActions;
+
+	/**
 	 * Gets the Name
 	 *
 	 * @return string
@@ -155,6 +160,20 @@ class Tx_ExtensionBuilder_Domain_Model_Plugin {
 	 */
 	public function getNoncacheableControllerActions() {
 		return $this->noncacheableControllerActions;
+	}
+
+	/**
+	 * @param array $switchableControllerActions
+	 */
+	public function setSwitchableControllerActions($switchableControllerActions) {
+		$this->switchableControllerActions = $switchableControllerActions;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getSwitchableControllerActions() {
+		return $this->switchableControllerActions;
 	}
 }
 

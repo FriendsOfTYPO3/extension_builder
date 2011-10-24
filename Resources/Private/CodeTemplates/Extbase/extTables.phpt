@@ -8,12 +8,11 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 	'<k:format.uppercaseFirst>{plugin.key}</k:format.uppercaseFirst>',
 	'<k:format.quoteString>{plugin.name}</k:format.quoteString>'
 );
-
-//$pluginSignature = str_replace('_','',$_EXTKEY) . '_' . {plugin.key};
-//$TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-//t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_' .{plugin.key}. '.xml');
-
-
+<f:if condition="{plugin.switchableControllerActions}">
+$pluginSignature = str_replace('_','',$_EXTKEY) . '_' . {plugin.key};
+$TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_' .{plugin.key}. '.xml');
+</f:if>
 </f:for>
 
 <f:if condition="{extension.BackendModules}">

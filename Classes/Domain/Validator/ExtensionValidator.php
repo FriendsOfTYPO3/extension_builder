@@ -56,6 +56,9 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	ERROR_PLUGIN_INVALID_KEY = 301,
 	ERROR_BACKENDMODULE_DUPLICATE_KEY = 400,
 	ERROR_BACKENDMODULE_INVALID_KEY = 401,
+	ERROR_ACTIONNAME_DUPLICATE = 501,
+	ERROR_ACTIONNAME_ILLEGAL_CHARACTER = 502,
+	ERROR_MISCONFIGURATION = 503,
 	EXTENSION_DIR_EXISTS = 500;
 
 	/**
@@ -346,6 +349,8 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	 */
 	public function isValid($extension) {
 
+		$this->validationResult = array('errors' => array(), 'warnings' => array());
+
 		$this->validateExtensionKey($extension->getExtensionKey());
 
 		$this->checkExistingExtensions($extension);
@@ -359,16 +364,17 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 		return $this->validationResult;
 	}
 
+
 	/**
 	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
 	 * @return void
 	 */
 	protected function checkExistingExtensions($extension) {
-		if (is_dir( $extension->getExtensionDir())){
+		if (is_dir($extension->getExtensionDir())) {
 			$settingsFile = $extension->getExtensionDir() .
-						Tx_ExtensionBuilder_Configuration_ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
+							Tx_ExtensionBuilder_Configuration_ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
 			if (!file_exists($settingsFile) || $extension->isRenamed()) {
-				$this->validationResult['warnings'][] =  new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+				$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 					'Extension directory exists',
 					self::EXTENSION_DIR_EXISTS);
 			}
@@ -379,31 +385,200 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
 	 * @return void
 	 */
-	private function validatePlugins($extension){
+	private function validatePlugins($extension) {
 		$pluginKeys = array();
 		foreach ($extension->getPlugins() as $plugin) {
 			if (self::validatePluginKey($plugin->getKey()) === 0) {
 				$this->validationResult['errors'][] = new Exception('Invalid plugin key in plugin ' . $plugin->getName() . ': "' . $plugin->getKey() . '". Only alphanumeric character without spaces are allowed', self::ERROR_PLUGIN_INVALID_KEY);
 			}
 			if (in_array($plugin->getKey(), $pluginKeys)) {
-				$this->validationResult['errors'][] =  new Exception('Duplicate plugin key: "' . $plugin->getKey() . '". Plugin keys must be unique.', self::ERROR_PLUGIN_DUPLICATE_KEY);
+				$this->validationResult['errors'][] = new Exception('Duplicate plugin key: "' . $plugin->getKey() . '". Plugin keys must be unique.', self::ERROR_PLUGIN_DUPLICATE_KEY);
 			}
 			$pluginKeys[] = $plugin->getKey();
+
+			$this->validatePluginConfiguration($plugin, $extension);
 		}
+	}
+
+	/**
+	 * @param Tx_ExtensionBuilder_Domain_Model_Plugin $plugin
+	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
+	 * @return void
+	 */
+	private function validatePluginConfiguration($plugin, $extension) {
+		$cachableActionConfiguration = $plugin->getCacheableControllerActions();
+		if (is_array($cachableActionConfiguration)) {
+			$firstAction = TRUE;
+			foreach ($cachableActionConfiguration as $controllerName => $actionNames) {
+				if ($firstAction) {
+					$defaultAction = reset($actionNames);
+					if (in_array($defaultAction, array('show', 'edit'))) {
+						$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+							'Potential misconfiguration in plugin ' . $plugin->getName() . ':<br />Default action ' . $controllerName . '->' . $defaultAction . '  can not be called without a domain object parameter',
+							self::ERROR_MISCONFIGURATION);
+					}
+					$firstAction = FALSE;
+				}
+				$this->validateActionConfiguration($controllerName, $actionNames, $plugin, $extension);
+			}
+		}
+		$noncachableActionConfiguration = $plugin->getNoncacheableControllerActions();
+		if (is_array($noncachableActionConfiguration)) {
+			foreach ($noncachableActionConfiguration as $controllerName => $actionNames) {
+				$this->validateActionConfiguration($controllerName, $actionNames, $plugin, $extension);
+			}
+		}
+		$switchableActionConfiguration = $plugin->getSwitchableControllerActions();
+		// t3lib_div::devLog('validate switchableActionConfiguration', 'extension_builder', 0, $switchableActionConfiguration);
+		if (is_array($switchableActionConfiguration)) {
+			foreach ($switchableActionConfiguration as $switchableAction) {
+				$configuredActions = array();
+				foreach ($switchableAction['actions'] as $actions) {
+					// Format should be: Controller->action
+					list($controllerName, $actionName) = explode('->', $actions);
+					$configuredActions[] = $actionName;
+					t3lib_div::devLog('Controller'.$controllerName, 'extension_builder', 0, array($actionName));
+					$this->validateActionConfiguration($controllerName, array($actionName), $plugin, $extension);
+				}
+				$this->validateDependentActions($configuredActions, 'plugin ' . $plugin->getName());
+			}
+		}
+	}
+
+	private function validateDependentActions($actionNames, $name){
+		if((in_array('new',$actionNames) && !in_array('create',$actionNames)) ||
+			(in_array('create',$actionNames) && !in_array('new',$actionNames))){
+			$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+			'Potential misconfiguration in ' . $name . ':<br />Actions new and create usually depend on each other',
+			self::ERROR_MISCONFIGURATION);
+		}
+		if((in_array('edit',$actionNames) && !in_array('update',$actionNames)) ||
+			(in_array('update',$actionNames) && !in_array('edit',$actionNames))){
+			$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+			'Potential misconfiguration in ' . $name . ':<br />Actions edit and update usually depend on each other',
+			self::ERROR_MISCONFIGURATION);
+		}
+	}
+
+	/**
+	 * @param string $controllerName
+	 * @param array $actionNames
+	 * @param Tx_ExtensionBuilder_Domain_Model_Plugin $plugin
+	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
+	 * @return void
+	 */
+	private function validateActionConfiguration($controllerName, $actionNames, $plugin, $extension) {
+		$relatedDomainObject = $extension->getDomainObjectByName($controllerName);
+		if (!$relatedDomainObject) {
+			$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+				'Potential misconfiguration in plugin ' . $plugin->getName() . ':<br />Controller ' . $controllerName . ' has no related Domain Object',
+				self::ERROR_MISCONFIGURATION);
+		} else {
+			$existingActions = $relatedDomainObject->getActions();
+			$existingActionNames = array();
+			foreach ($existingActions as $existingAction) {
+				$existingActionNames[] = $existingAction->getName();
+			}
+			t3lib_div::devLog('plugin validateActionConfiguration', 'extension_builder', 0, array($actionNames, $existingActionNames));
+
+			foreach ($actionNames as $actionName) {
+				if (!in_array($actionName, $existingActionNames)) {
+					$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+						'Potential misconfiguration in plugin ' . $plugin->getName() . ':<br />Controller ' . $controllerName . ' has no action named ' . $actionName,
+						self::ERROR_MISCONFIGURATION);
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param array $configuration
+	 * @return void
+	 */
+	public function validateConfigurationFormat($configuration) {
+		foreach ($configuration['properties']['plugins'] as $pluginConfiguration) {
+			$pluginName = $pluginConfiguration['name'];
+			if (!empty($pluginConfiguration['actions'])) {
+				$configTypes = array('cacheableActions', 'noncacheableActions');
+				foreach ($configTypes as $configType) {
+					if (!empty($pluginConfiguration['actions'][$configType])) {
+						$isValid = $this->validateActionConfigFormat($pluginConfiguration['actions'][$configType], $configType);
+						if (!$isValid) {
+							$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+								'Wrong format in configuration for ' . $configType . ' in plugin ' . $pluginName,
+								self::ERROR_MISCONFIGURATION);
+						}
+					}
+				}
+				if (!empty($pluginConfiguration['actions']['switchableActions'])) {
+					$isValid = TRUE;
+					$lines = explode("\n", $pluginConfiguration['actions']['switchableActions']);
+					$firstLine = TRUE;
+					foreach ($lines as $line) {
+						if ($firstLine) {
+							// label for flexform select
+							if (!preg_match("/^[a-zA-Z0-9_-\s]*$/", $line)) {
+								$isValid = FALSE;
+								t3lib_div::devlog('Label in switchable Actions contained disallowed character:'.$line,'extension_builder',2);
+							}
+							$firstLine = FALSE;
+						} else {
+							$parts = explode(';', $line);
+							t3lib_div::devlog('switchable Actions line even:' . $line,'extension_builder',0,$parts);
+							if (count($parts) < 1) {
+								$isValid = FALSE;
+								t3lib_div::devlog('Wrong count for explode(";") switchable Actions line:'.$line,'extension_builder',2,$parts);
+							}
+							foreach ($parts as $part) {
+								if (!empty($part) && count(explode('->', $part)) != 2) {
+									$isValid = FALSE;
+									t3lib_div::devlog('Wrong count for explode("->") switchable Actions line:'.$part,'extension_builder',2);
+								}
+							}
+							$firstLine = TRUE;
+						}
+					}
+					if (!$isValid) {
+						$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+							'Wrong format in configuration for switchable ControllerActions in plugin ' . $pluginName,
+							self::ERROR_MISCONFIGURATION);
+					}
+				}
+			}
+		}
+		return $this->validationResult;
+	}
+
+	/**
+	 * @param array $configuration
+	 * @return bool
+	 */
+	protected function validateActionConfigFormat($configuration) {
+		$isValid = TRUE;
+		$lines = explode("\n", $configuration);
+		foreach ($lines as $line) {
+			$test = explode('=>', $line);
+			if (count($test) != 2) {
+				$isValid = FALSE;
+			} else if (!preg_match("/^[a-zA-Z0-9_,]*$/", $test[1])) {
+				$isValid = FALSE;
+			}
+		}
+		return $isValid;
 	}
 
 	/**
 	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
 	 * @return void
 	 */
-	private function validateBackendModules($extension){
+	private function validateBackendModules($extension) {
 		$backendModuleKeys = array();
 		foreach ($extension->getBackendModules() as $backendModule) {
 			if (self::validateModuleKey($backendModule->getKey()) === 0) {
 				$this->validationResult['errors'][] = new Exception('Invalid key in backend module ' . $backendModule->getName() . '. Only alphanumeric character without spaces are allowed', self::ERROR_BACKENDMODULE_INVALID_KEY);
 			}
 			if (in_array($backendModule->getKey(), $backendModuleKeys)) {
-				$this->validationResult['errors'][] =  new Exception('Duplicate backend module key: "' . $backendModule->getKey() . '". Backend module keys must be unique.', self::ERROR_BACKENDMODULE_DUPLICATE_KEY);
+				$this->validationResult['errors'][] = new Exception('Duplicate backend module key: "' . $backendModule->getKey() . '". Backend module keys must be unique.', self::ERROR_BACKENDMODULE_DUPLICATE_KEY);
 			}
 			$backendModuleKeys[] = $backendModule->getKey();
 		}
@@ -420,7 +595,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 
 			// Check if domainObject name is given
 			if (!$domainObject->getName()) {
-				$this->validationResult['errors'][] =  new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('A Domain Object has no name', self::ERROR_DOMAINOBJECT_NO_NAME);
+				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('A Domain Object has no name', self::ERROR_DOMAINOBJECT_NO_NAME);
 			}
 
 			/**
@@ -428,18 +603,56 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			 * Allowed characters are: a-z (lowercase), A-Z (uppercase) and 0-9
 			 */
 			if (!preg_match("/^[a-zA-Z0-9]*$/", $domainObject->getName())) {
-				$this->validationResult['errors'][] =  new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal domain object name "' . $domainObject->getName() . '". Please use UpperCamelCase, no spaces or underscores.', self::ERROR_DOMAINOBJECT_ILLEGAL_CHARACTER);
+				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal domain object name "' . $domainObject->getName() . '". Please use UpperCamelCase, no spaces or underscores.', self::ERROR_DOMAINOBJECT_ILLEGAL_CHARACTER);
 			}
 
 			$objectName = $domainObject->getName();
 			$firstChar = $objectName{0};
 			if (strtolower($firstChar) == $firstChar) {
-				$this->validationResult['errors'][] =  new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal first character of domain object name "' . $domainObject->getName() . '". Please use UpperCamelCase.', self::ERROR_DOMAINOBJECT_LOWER_FIRST_CHARACTER);
+				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal first character of domain object name "' . $domainObject->getName() . '". Please use UpperCamelCase.', self::ERROR_DOMAINOBJECT_LOWER_FIRST_CHARACTER);
 			}
 
 			$this->validateProperties($domainObject);
+
+			$this->validateDomainObjectActions($domainObject);
 		}
 	}
+
+	/**
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @return void
+	 */
+	private function validateDomainObjectActions(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
+		$actionNames = array();
+		$actions = $domainObject->getActions();
+		foreach ($actions as $action) {
+			if (in_array($action->getName(), $actionNames)) {
+				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+					'Duplicate action name "' . $action->getName() . '" of ' . $domainObject->getName() . '. Action names have to be unique for each model',
+					self::ERROR_ACTIONNAME_DUPLICATE
+				);
+			}
+			/**
+			 * Character test
+			 * Allowed characters are: a-z (lowercase), A-Z (uppercase) and 0-9
+			 */
+			if (!preg_match("/^[a-zA-Z0-9]*$/", $action->getName())) {
+				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+					'Illegal action name "' . $action->getName() . '" of ' . $domainObject->getName() . '. Please use lowerCamelCase, no spaces or underscores.',
+					self::ERROR_ACTIONNAME_ILLEGAL_CHARACTER
+				);
+			}
+			$actionNames[] = $action->getName();
+		}
+		$this->validateDependentActions($actionNames, 'Domain object ' . $domainObject->getName());
+		$firstAction = reset($actionNames);
+		if ($firstAction == 'show' || $firstAction == 'edit') {
+			$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+			'Potential misconfiguration in Domain object ' . $domainObject->getName() . ':<br />First action could not be default action since ' . $firstAction . ' needs a parameter',
+			self::ERROR_MISCONFIGURATION);
+		}
+	}
+
 
 	/**
 	 * @author Sebastian Michaelsen <sebastian.gebhard@gmail.com>
@@ -460,7 +673,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			 * Allowed characters are: a-z (lowercase), A-Z (uppercase) and 0-9
 			 */
 			if (!preg_match("/^[a-zA-Z0-9]*$/", $propertyName)) {
-				$this->validationResult['errors'][] =  new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 					'Illegal property name "' . $propertyName . '" of ' . $domainObject->getName() . '. Please use lowerCamelCase, no spaces or underscores.',
 					self::ERROR_PROPERTY_ILLEGAL_CHARACTER
 				);
@@ -469,21 +682,21 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 
 			$firstChar = $propertyName{0};
 			if (strtoupper($firstChar) == $firstChar) {
-				$this->validationResult['errors'][] =  new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 					'Illegal first character of property name "' . $property->getName() . '" of domain object "' . $domainObject->getName() . '". Please use lowerCamelCase.',
 					self::ERROR_PROPERTY_UPPER_FIRST_CHARACTER
 				);
 			}
 
 			if (self::isReservedTYPO3Word($propertyName)) {
-				$this->validationResult['errors'][] =  new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 					'Using a reserved word as property name is not allowed. Please rename property "' . $propertyName . '" in Model "' . $domainObject->getName() . '".',
 					self::ERROR_PROPERTY_RESERVED_WORD
 				);
 			}
 
 			if (self::isReservedMYSQLWord($propertyName)) {
-				$this->validationResult['warnings'][] =  new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+				$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 					'Property "' . $propertyName . '" in Model "' . $domainObject->getName() . '".',
 					self::ERROR_PROPERTY_RESERVED_SQL_WORD
 				);
@@ -527,7 +740,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 		 * Allowed characters are: a-z (lowercase), 0-9 and '_' (underscore)
 		 */
 		if (!preg_match("/^[a-z0-9_]*$/", $key)) {
-			$this->validationResult['errors'][] =  new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal characters in extension key', self::ERROR_EXTKEY_ILLEGAL_CHARACTERS);
+			$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal characters in extension key', self::ERROR_EXTKEY_ILLEGAL_CHARACTERS);
 		}
 
 		/**
@@ -535,7 +748,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 		 * Extension keys cannot start or end with 0-9 and '_' (underscore)
 		 */
 		if (preg_match("/^[0-9_]/", $key)) {
-			$this->validationResult['errors'][] =  new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal first character of extension key', self::ERROR_EXTKEY_ILLEGAL_FIRST_CHARACTER);
+			$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal first character of extension key', self::ERROR_EXTKEY_ILLEGAL_FIRST_CHARACTER);
 		}
 
 		/**
@@ -544,7 +757,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 		 */
 		$keyLengthTest = str_replace('_', '', $key);
 		if (strlen($keyLengthTest) < 3 || strlen($keyLengthTest) > 30) {
-			$this->validationResult['errors'][] =  new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Invalid extension key length', self::ERROR_EXTKEY_LENGTH);
+			$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Invalid extension key length', self::ERROR_EXTKEY_LENGTH);
 		}
 
 		/**
@@ -552,7 +765,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 		 * The key must not being with one of the following prefixes: tx,u,user_,pages,tt_,sys_,ts_language_,csh_
 		 */
 		if (preg_match("/^(tx_|u_|user_|pages_|tt_|sys_|ts_language_|csh_)/", $key)) {
-			$this->validationResult['errors'][] =  new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal extension key prefix', self::ERROR_EXTKEY_ILLEGAL_PREFIX);
+			$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal extension key prefix', self::ERROR_EXTKEY_ILLEGAL_PREFIX);
 		}
 	}
 

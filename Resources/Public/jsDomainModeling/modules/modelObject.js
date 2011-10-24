@@ -77,25 +77,58 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 						name: "actionGroup",
 						fields: [
 							{
+								type: "boolean",
+								inputParams: {
+									name: "list",
+									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.list,
+									value: true
+								}
+							},
+							{
+								type: "boolean",
+								inputParams: {
+									name: "show",
+									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.show,
+									value: true
+								}
+							},
+							{
+								type: "boolean",
+								inputParams: {
+									name: "new_create",
+									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.create_new,
+									value: true
+								}
+							},
+							{
+								type: "boolean",
+								inputParams: {
+									name: "edit_update",
+									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.edit_update,
+									value: true
+								}
+							},
+							{
+								type: "boolean",
+								inputParams: {
+									name: "delete",
+									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.delete,
+									value: true
+								}
+							},
+							{
 								type: "list",
 								inputParams: {
-									label: "",
-									name: "actions",
+									label: "Custom actions",
+									name: "customActions",
 									sortable: false,
 									elementType: {
-										type: "select",
+										type: "input",
 										inputParams: {
-											name: "actionType",
-											label: TYPO3.settings.extensionBuilder._LOCAL_LANG.actionType,
-											description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_actionType,
-											selectValues: ["show","list","create","update","delete"],
-											selectOptions: [
-												TYPO3.settings.extensionBuilder._LOCAL_LANG.show,
-												TYPO3.settings.extensionBuilder._LOCAL_LANG.list,
-												TYPO3.settings.extensionBuilder._LOCAL_LANG.create_new,
-												TYPO3.settings.extensionBuilder._LOCAL_LANG.edit_update,
-												TYPO3.settings.extensionBuilder._LOCAL_LANG['delete']
-											]
+											name: "customAction",
+											label: TYPO3.settings.extensionBuilder._LOCAL_LANG.customAction,
+											forceAlphaNumeric: true,
+											lcFirst: true
 										}
 									}
 								}

@@ -53,7 +53,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 			throw new Exception('Extension properties not submitted!');
 		}
 
-		$this->setExtensionProperties($extension,$globalProperties);
+		$this->setExtensionProperties($extension, $globalProperties);
 
 		foreach ($globalProperties['persons'] as $personValues) {
 			$person = $this->buildPerson($personValues);
@@ -135,7 +135,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 
 		if (!empty($propertyConfiguration['emConf']['custom_category'])) {
 			$category = $propertyConfiguration['emConf']['custom_category'];
-		} else  {
+		} else {
 			$category = $propertyConfiguration['emConf']['category'];
 		}
 
@@ -214,23 +214,41 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		$plugin->setName($pluginValues['name']);
 		$plugin->setType($pluginValues['type']);
 		$plugin->setKey($pluginValues['key']);
-		if(!empty($pluginValues['cacheableActions'])){
+		if (!empty($pluginValues['actions']['cacheableActions'])) {
 			$cacheableControllerActions = array();
-			$lines = explode("\n",$pluginValues['cacheableActions']);
-			foreach($lines as $line){
-				list($controller,$actions) = explode('=>',str_replace(' ','',$line));
-				$cacheableControllerActions[] = array('controller'=>$controller,'actions'=>$actions);
+			$lines = explode("\n", $pluginValues['actions']['cacheableActions']);
+			foreach ($lines as $line) {
+				list($controllerName, $actionNames) = t3lib_div::trimExplode('=>', $line);
+				$cacheableControllerActions[$controllerName] = t3lib_div::trimExplode(',', $actionNames);
 			}
 			$plugin->setCacheableControllerActions($cacheableControllerActions);
 		}
-		if(!empty($pluginValues['noncacheableActions'])){
+		if (!empty($pluginValues['actions']['noncacheableActions'])) {
 			$noncacheableControllerActions = array();
-			$lines = explode("\n",$pluginValues['noncacheableActions']);
-			foreach($lines as $line){
-				list($controller,$actions) = explode('=>',str_replace(' ','',$line));
-				$noncacheableControllerActions[] = array('controller'=>$controller,'actions'=>$actions);
+			$lines = explode("\n", $pluginValues['actions']['noncacheableActions']);
+			foreach ($lines as $line) {
+				list($controllerName, $actionNames) = t3lib_div::trimExplode('=>', $line);
+				$noncacheableControllerActions[$controllerName] = t3lib_div::trimExplode(',', $actionNames);
 			}
 			$plugin->setNoncacheableControllerActions($noncacheableControllerActions);
+		}
+		if (!empty($pluginValues['actions']['switchableActions'])) {
+			$switchableControllerActions = array();
+			$lines = explode("\n", $pluginValues['actions']['switchableActions']);
+			$switchableAction = array();
+			foreach ($lines as $line) {
+				if (strpos($line, '->') === FALSE) {
+					if (isset($switchableAction['label'])) {
+						// start a new array
+						$switchableAction = array();
+					}
+					$switchableAction['label'] = trim($line);
+				} else {
+					$switchableAction['actions'] = t3lib_div::trimExplode(';', $line, TRUE);
+					$switchableControllerActions[] = $switchableAction;
+				}
+			}
+			$plugin->setSwitchableControllerActions($switchableControllerActions);
 		}
 		return $plugin;
 	}
