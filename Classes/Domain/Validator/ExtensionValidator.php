@@ -479,7 +479,6 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			foreach ($existingActions as $existingAction) {
 				$existingActionNames[] = $existingAction->getName();
 			}
-			t3lib_div::devLog('plugin validateActionConfiguration', 'extension_builder', 0, array($actionNames, $existingActionNames));
 
 			foreach ($actionNames as $actionName) {
 				if (!in_array($actionName, $existingActionNames)) {
@@ -560,7 +559,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			$test = explode('=>', $line);
 			if (count($test) != 2) {
 				$isValid = FALSE;
-			} else if (!preg_match("/^[a-zA-Z0-9_,]*$/", $test[1])) {
+			} else if (!preg_match("/^[a-zA-Z0-9_,\s]*$/", $test[1])) {
 				$isValid = FALSE;
 			}
 		}

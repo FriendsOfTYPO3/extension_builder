@@ -83,7 +83,7 @@
 			<label index="descr_actionType">For each selected action, the extension builder will generate a template and a action method in the controller of this model. If the model is an aggregate root the default CRUD actions will be generated per default.</label>
 			<label index="show">show</label>
 			<label index="list">list</label>
-			<label index="create_new">wew/create</label>
+			<label index="create_new">new/create</label>
 			<label index="edit_update">edit/update</label>
 			<label index="delete">delete</label>
 			<label index="properties">Properties</label>

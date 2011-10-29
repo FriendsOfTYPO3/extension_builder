@@ -201,11 +201,15 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 * @return array the modified configuration
 	 */
 	public function fixExtensionBuilderJSON($extensionConfigurationJSON, $prepareForModeler) {
+		$extBuilderVersion = tx_em_Tools::renderVersion($extensionConfigurationJSON['log']['extension_builder_version']);
 		$extensionConfigurationJSON['modules'] = $this->mapOldRelationTypesToNewRelationTypes($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->generateUniqueIDs($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->resetOutboundedPositions($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->mapAdvancedMode($extensionConfigurationJSON['modules'], $prepareForModeler);
 		$extensionConfigurationJSON['modules'] = $this->mapOldActions($extensionConfigurationJSON['modules']);
+		if ($extBuilderVersion['version_int'] < 2000100) {
+			$extensionConfigurationJSON = $this->importExistingActionConfiguration($extensionConfigurationJSON);
+		}
 		$extensionConfigurationJSON = $this->reArrangeRelations($extensionConfigurationJSON);
 		return $extensionConfigurationJSON;
 	}
@@ -463,6 +467,41 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		return $modules;
 	}
 
+	/**
+	 * Enable the import of actions configuration of installed extensions
+	 * by importing the settings from $TYPO3_CONF_VARS
+	 * @param array $extensionConfigurationJSON
+	 * @return array
+	 */
+	protected function importExistingActionConfiguration(array $extensionConfigurationJSON) {
+		if (isset($extensionConfigurationJSON['properties']['plugins'])) {
+			$extKey = $extensionConfigurationJSON['properties']['extensionKey'];
+			if (t3lib_extMgm::isLoaded($extKey)) {
+				foreach ($extensionConfigurationJSON['properties']['plugins'] as &$pluginJSON) {
+					if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][t3lib_div::underscoredToUpperCamelCase($extKey)]['plugins'][ucfirst($pluginJSON['key'])]['controllers'])) {
+						$controllerActionCombinationsConfig = "";
+						$nonCachableActionConfig = "";
+						$pluginJSON['actions'] = array();
+						foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][t3lib_div::underscoredToUpperCamelCase($extKey)]['plugins'][ucfirst($pluginJSON['key'])]['controllers'] as $controllerName => $controllerConfig) {
+							if (isset($controllerConfig['actions'])) {
+								$controllerActionCombinationsConfig .= $controllerName . '=>' . implode(',', $controllerConfig['actions']) . LF;
+							}
+							if (isset($controllerConfig['nonCacheableActions'])) {
+								$nonCachableActionConfig .= $controllerName . '=>' . implode(',', $controllerConfig['nonCacheableActions']) . LF;
+							}
+						}
+						if (!empty($controllerActionCombinationsConfig)) {
+							$pluginJSON['actions']['controllerActionCombinations'] = $controllerActionCombinationsConfig;
+						}
+						if (!empty($nonCachableActionConfig)) {
+							$pluginJSON['actions']['noncacheableActions'] = $nonCachableActionConfig;
+						}
+					}
+				}
+			}
+		}
+		return $extensionConfigurationJSON;
+	}
 }
 
 ?>	
