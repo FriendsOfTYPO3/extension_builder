@@ -214,14 +214,14 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		$plugin->setName($pluginValues['name']);
 		$plugin->setType($pluginValues['type']);
 		$plugin->setKey($pluginValues['key']);
-		if (!empty($pluginValues['actions']['cacheableActions'])) {
-			$cacheableControllerActions = array();
-			$lines = explode("\n", $pluginValues['actions']['cacheableActions']);
+		if (!empty($pluginValues['actions']['controllerActionCombinations'])) {
+			$controllerActionCombinations = array();
+			$lines = explode("\n", $pluginValues['actions']['controllerActionCombinations']);
 			foreach ($lines as $line) {
 				list($controllerName, $actionNames) = t3lib_div::trimExplode('=>', $line);
-				$cacheableControllerActions[$controllerName] = t3lib_div::trimExplode(',', $actionNames);
+				$controllerActionCombinations[$controllerName] = t3lib_div::trimExplode(',', $actionNames);
 			}
-			$plugin->setCacheableControllerActions($cacheableControllerActions);
+			$plugin->setControllerActionCombinations($controllerActionCombinations);
 		}
 		if (!empty($pluginValues['actions']['noncacheableActions'])) {
 			$noncacheableControllerActions = array();

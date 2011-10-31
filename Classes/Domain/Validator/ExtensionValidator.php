@@ -406,10 +406,10 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	 * @return void
 	 */
 	private function validatePluginConfiguration($plugin, $extension) {
-		$cachableActionConfiguration = $plugin->getCacheableControllerActions();
-		if (is_array($cachableActionConfiguration)) {
+		$controllerActionCombinationConfiguration = $plugin->getControllerActionCombinations();
+		if (is_array($controllerActionCombinationConfiguration)) {
 			$firstAction = TRUE;
-			foreach ($cachableActionConfiguration as $controllerName => $actionNames) {
+			foreach ($controllerActionCombinationConfiguration as $controllerName => $actionNames) {
 				if ($firstAction) {
 					$defaultAction = reset($actionNames);
 					if (in_array($defaultAction, array('show', 'edit'))) {
@@ -499,7 +499,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 		foreach ($configuration['properties']['plugins'] as $pluginConfiguration) {
 			$pluginName = $pluginConfiguration['name'];
 			if (!empty($pluginConfiguration['actions'])) {
-				$configTypes = array('cacheableActions', 'noncacheableActions');
+				$configTypes = array('controllerActionCombinations', 'noncacheableActions');
 				foreach ($configTypes as $configType) {
 					if (!empty($pluginConfiguration['actions'][$configType])) {
 						$isValid = $this->validateActionConfigFormat($pluginConfiguration['actions'][$configType], $configType);
