@@ -211,9 +211,9 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 									{
 										type: "text",
 										inputParams: {
-											name: "cacheableActions",
-											label: TYPO3.settings.extensionBuilder._LOCAL_LANG.cacheable_actions,
-											description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_cacheable_actions,
+											name: "controllerActionCombinations",
+											label: TYPO3.settings.extensionBuilder._LOCAL_LANG.controller_action_combinations,
+											description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_controller_action_combinations,
 											cols: 38,
 											rows: 3
 										}

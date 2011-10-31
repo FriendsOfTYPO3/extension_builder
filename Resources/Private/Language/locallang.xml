@@ -49,8 +49,8 @@
 			<label index="company">Company</label>
 			<label index="plugins">Frontend plugins</label>
 			<label index="descr_plugins">The frontend plugins which have to be registered in the extension</label>
-			<label index="cacheable_actions">Cacheable actions</label>
-			<label index="descr_cacheable_actions">Here you can configure, which cacheable actions this plugin should have. Example: <![CDATA[<br />]]>Blog => list,show <![CDATA[<br />]]>(one controller per line, actions comma separated) <![CDATA[<br />]]>If you leave this empty, all available actions are configured for this plugin.</label>
+			<label index="controller_action_combinations">Controller action combinations</label>
+			<label index="descr_controller_action_combinations">Here you can configure, which controller action combinations this plugin should have. Example: <![CDATA[<br />]]>Blog => list,show <![CDATA[<br />]]>(one controller per line, actions comma separated) <![CDATA[<br />]]>If you leave this empty, all available actions are configured for this plugin.</label>
 			<label index="noncacheable_actions">Non cacheable actions</label>
 			<label index="descr_noncacheable_actions">Typically create, delete and update actions should not be cached. (Same format as above)</label>
 			<label index="switchableActions">Switchable actions</label>

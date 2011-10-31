@@ -63,7 +63,7 @@ class Tx_ExtensionBuilder_Domain_Model_Plugin {
 	 *
 	 * @var array
 	 */
-	protected $cacheableControllerActions;
+	protected $controllerActionCombinations;
 
 	/**
 	 * array with configuration arrays
@@ -135,17 +135,17 @@ class Tx_ExtensionBuilder_Domain_Model_Plugin {
 	}
 
 	/**
-	 * @param array $cacheableControllerActions
+	 * @param array $controllerActionCombinations
 	 */
-	public function setCacheableControllerActions(array $cacheableControllerActions) {
-		$this->cacheableControllerActions = $cacheableControllerActions;
+	public function setControllerActionCombinations(array $controllerActionCombinations) {
+		$this->controllerActionCombinations = $controllerActionCombinations;
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getCacheableControllerActions() {
-		return $this->cacheableControllerActions;
+	public function getControllerActionCombinations() {
+		return $this->controllerActionCombinations;
 	}
 
 	/**
