@@ -42,15 +42,6 @@ class Tx_TestExtension_Domain_Model_Child3 extends Tx_Extbase_DomainObject_Abstr
 	protected $name;
 
 	/**
-	 * __construct
-	 *
-	 * @return void
-	 */
-	public function __construct() {
-
-	}
-
-	/**
 	 * Returns the name
 	 *
 	 * @return string $name

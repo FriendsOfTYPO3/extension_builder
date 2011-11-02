@@ -34,14 +34,5 @@
  */
 class Tx_TestExtension_Domain_Model_Child2 extends Tx_Extbase_DomainObject_AbstractEntity {
 
-	/**
-	 * __construct
-	 *
-	 * @return void
-	 */
-	public function __construct() {
-
-	}
-
 }
 ?>
