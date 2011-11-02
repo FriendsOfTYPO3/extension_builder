@@ -442,7 +442,6 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		// compare all old properties with new ones
 		foreach ($oldDomainObject->getProperties() as $oldProperty) {
 			if (isset($newProperties[$oldProperty->getUniqueIdentifier()])) {
-
 				$newProperty = $newProperties[$oldProperty->getUniqueIdentifier()];
 
 				// relation type changed
@@ -463,6 +462,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 				}
 				else {
 					$this->updateProperty($oldProperty, $newProperty);
+					$newDomainObject->getPropertyByName($newProperty->getName())->setNew(FALSE);
 				}
 			}
 			else {
@@ -529,8 +529,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		if ($this->extensionRenamed) {
 			return TRUE;
 		}
-		if ($newProperty->getName() != $this->updateExtensionKey($oldProperty->getName())) {
-			t3lib_div::devlog('property renamed:' . $this->updateExtensionKey($oldProperty->getName()) . ' ' . $newProperty->getName(), 'extension_builder', 0);
+		if ($newProperty->getName() != $oldProperty->getName()) {
+			t3lib_div::devlog('property renamed:' . $oldProperty->getName() . ' ' . $newProperty->getName(), 'extension_builder', 0);
 			return TRUE;
 		}
 		if ($newProperty->getTypeForComment() != $this->updateExtensionKey($oldProperty->getTypeForComment())) {
@@ -637,14 +637,14 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 						$methodParameter->setTypeHint($this->updateExtensionKey($this->getForeignClass($newProperty)->getClassName()));
 					}
 				}
-				$parameterTags[$methodParameter->getPosition()] =  Tx_ExtensionBuilder_Service_ClassBuilder::getParamTag($newProperty, $methodType);
+				$parameterTags[$methodParameter->getPosition()] = Tx_ExtensionBuilder_Service_ClassBuilder::getParamTag($newProperty, $methodType);
 				$mergedMethod->replaceParameter($methodParameter);
 			}
-			$mergedMethod->setTag('param',$parameterTags);
+			$mergedMethod->setTag('param', $parameterTags);
 		}
 
 		$returnTagValue = trim($mergedMethod->getTagsValues('return'));
-		if($returnTagValue != 'void'){
+		if ($returnTagValue != 'void') {
 			$mergedMethod->setTag('return', $newProperty->getTypeForComment() . ' ' . $newProperty->getName());
 		}
 

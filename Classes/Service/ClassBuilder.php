@@ -136,46 +136,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			$this->classObject->setDescription($domainObject->getDescription());
 		}
 
-		$anyToManyRelationProperties = $domainObject->getAnyToManyRelationProperties();
+		$this->addInitStorageObjectCalls($domainObject);
 
-		if (!$this->classObject->methodExists('__construct')) {
-			$constructorMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method('__construct');
-			//$constructorMethod->setDescription('The constructor of this '.$domainObject->getName());
-			if (count($anyToManyRelationProperties) > 0) {
-				$constructorMethod->setBody($this->codeGenerator->getDefaultMethodBody($domainObject, NULL, 'Model', '', 'construct'));
-			}
-			$constructorMethod->addModifier('public');
-			$constructorMethod->setTag('return', 'void');
-			$this->classObject->addMethod($constructorMethod);
-		}
-		else if (count($anyToManyRelationProperties) > 0) {
-			$constructorMethod = $this->classObject->getMethod('__construct');
-			if (preg_match('/\$this->initStorageObjects()/', $constructorMethod->getBody()) < 1) {
-				t3lib_div::devLog('Constructor method in Class ' . $this->classObject->getName() . ' was overwritten since the initStorageObjectCall was missing', 'extension_builder', 2, array('Original method' => $constructorMethod->getBody()));
-				$constructorMethod->setBody($this->initStorageObjectCall);
-				$this->classObject->setMethod($constructorMethod);
-
-			}
-			//initStorageObjects
-		}
-		else {
-		}
-
-		if (count($anyToManyRelationProperties) > 0) {
-			$initStorageObjectsMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method('initStorageObjects');
-			$initStorageObjectsMethod->setDescription('Initializes all Tx_Extbase_Persistence_ObjectStorage properties.');
-			$methodBody = "/**\n* Do not modify this method!\n* It will be rewritten on each save in the extension builder\n* You may modify the constructor of this class instead\n*/\n";
-			foreach ($anyToManyRelationProperties as $relationProperty) {
-				$methodBody .= "\$this->" . $relationProperty->getName() . " = new Tx_Extbase_Persistence_ObjectStorage();\n";
-			}
-			$initStorageObjectsMethod->setBody($this->codeGenerator->getDefaultMethodBody($domainObject, NULL, 'Model', '', 'initStorageObjects'));
-			$initStorageObjectsMethod->addModifier('protected');
-			$initStorageObjectsMethod->setTag('return', 'void');
-			$this->classObject->setMethod($initStorageObjectsMethod);
-		}
-		else if ($this->classObject->methodExists('initStorageObjects')) {
-			$this->classObject->getMethod('initStorageObjects')->setBody('// empty');
-		}
 		//TODO the following part still needs some enhancement:
 		//what should be obligatory in existing properties and methods
 		foreach ($domainObject->getProperties() as $domainProperty) {
@@ -202,12 +164,53 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 				}
 			}
 			$this->classObject->setProperty($classProperty);
-
-			$this->setPropertyRelatedMethods($domainProperty);
+			if ($domainProperty->isNew()) {
+				$this->setPropertyRelatedMethods($domainProperty);
+			}
 		}
 		//t3lib_div::devlog('Methods before sorting','extension_builder',0,array_keys($this->classObject->getMethods()));
 		//$this->sortMethods($domainObject);
 		return $this->classObject;
+	}
+
+	/**
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @return void
+	 */
+	protected function addInitStorageObjectCalls(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
+		$anyToManyRelationProperties = $domainObject->getAnyToManyRelationProperties();
+
+		if (count($anyToManyRelationProperties) > 0) {
+			if (!$this->classObject->methodExists('__construct')) {
+				$constructorMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method('__construct');
+				//$constructorMethod->setDescription('The constructor of this '.$domainObject->getName());
+				if (count($anyToManyRelationProperties) > 0) {
+					$constructorMethod->setBody($this->codeGenerator->getDefaultMethodBody($domainObject, NULL, 'Model', '', 'construct'));
+				}
+				$constructorMethod->addModifier('public');
+				$constructorMethod->setTag('return', 'void');
+				$this->classObject->addMethod($constructorMethod);
+			}
+			$constructorMethod = $this->classObject->getMethod('__construct');
+			if (preg_match('/\$this->initStorageObjects()/', $constructorMethod->getBody()) < 1) {
+				t3lib_div::devLog('Constructor method in Class ' . $this->classObject->getName() . ' was overwritten since the initStorageObjectCall was missing', 'extension_builder', 2, array('Original method' => $constructorMethod->getBody()));
+				$constructorMethod->setBody($this->initStorageObjectCall);
+				$this->classObject->setMethod($constructorMethod);
+			}
+			//initStorageObjects
+			$initStorageObjectsMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method('initStorageObjects');
+			$initStorageObjectsMethod->setDescription('Initializes all Tx_Extbase_Persistence_ObjectStorage properties.');
+			$methodBody = "/**\n* Do not modify this method!\n* It will be rewritten on each save in the extension builder\n* You may modify the constructor of this class instead\n*/\n";
+			foreach ($anyToManyRelationProperties as $relationProperty) {
+				$methodBody .= "\$this->" . $relationProperty->getName() . " = new Tx_Extbase_Persistence_ObjectStorage();\n";
+			}
+			$initStorageObjectsMethod->setBody($this->codeGenerator->getDefaultMethodBody($domainObject, NULL, 'Model', '', 'initStorageObjects'));
+			$initStorageObjectsMethod->addModifier('protected');
+			$initStorageObjectsMethod->setTag('return', 'void');
+			$this->classObject->setMethod($initStorageObjectsMethod);
+		} else if ($this->classObject->methodExists('initStorageObjects')) {
+			$this->classObject->getMethod('initStorageObjects')->setBody('// empty');
+		}
 	}
 
 	/**
@@ -285,7 +288,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			$setterMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($setterMethodName);
 			// default method body
 			$setterMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'set', ''));
-			$setterMethod->setTag('param', self::getParamTag($domainProperty, 'set' ));
+			$setterMethod->setTag('param', self::getParamTag($domainProperty, 'set'));
 			$setterMethod->setTag('return', 'void');
 			$setterMethod->addModifier('public');
 		}
@@ -326,7 +329,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			$addMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($addMethodName);
 			// default method body
 			$addMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'add', ''));
-			$addMethod->setTag('param', self::getParamTag($domainProperty, 'add' ));
+			$addMethod->setTag('param', self::getParamTag($domainProperty, 'add'));
 
 			$addMethod->setTag('return', 'void');
 			$addMethod->addModifier('public');
@@ -366,7 +369,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			$removeMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($removeMethodName);
 			// default method body
 			$removeMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'remove', ''));
-			$removeMethod->setTag('param', self::getParamTag($domainProperty, 'remove' ));
+			$removeMethod->setTag('param', self::getParamTag($domainProperty, 'remove'));
 			$removeMethod->setTag('return', 'void');
 			$removeMethod->addModifier('public');
 		}
@@ -500,7 +503,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 		}
 	}
 
-	public static function getParamTag($domainProperty, $methodType ) {
+	public static function getParamTag($domainProperty, $methodType) {
 
 		switch ($methodType) {
 			case 'set'		:
