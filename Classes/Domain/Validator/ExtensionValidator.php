@@ -408,24 +408,16 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	private function validatePluginConfiguration($plugin, $extension) {
 		$controllerActionCombinationConfiguration = $plugin->getControllerActionCombinations();
 		if (is_array($controllerActionCombinationConfiguration)) {
-			$firstAction = TRUE;
+			$firstControllerAction = TRUE;
 			foreach ($controllerActionCombinationConfiguration as $controllerName => $actionNames) {
-				if ($firstAction) {
-					$defaultAction = reset($actionNames);
-					if (in_array($defaultAction, array('show', 'edit'))) {
-						$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
-							'Potential misconfiguration in plugin ' . $plugin->getName() . ':<br />Default action ' . $controllerName . '->' . $defaultAction . '  can not be called without a domain object parameter',
-							self::ERROR_MISCONFIGURATION);
-					}
-					$firstAction = FALSE;
-				}
-				$this->validateActionConfiguration($controllerName, $actionNames, $plugin, $extension);
+				$this->validateActionConfiguration($controllerName, $actionNames, 'plugin ' . $plugin->getName(), $extension, $firstControllerAction);
+				$firstControllerAction = FALSE;
 			}
 		}
 		$noncachableActionConfiguration = $plugin->getNoncacheableControllerActions();
 		if (is_array($noncachableActionConfiguration)) {
 			foreach ($noncachableActionConfiguration as $controllerName => $actionNames) {
-				$this->validateActionConfiguration($controllerName, $actionNames, $plugin, $extension);
+				$this->validateActionConfiguration($controllerName, $actionNames, 'plugin ' . $plugin->getName(), $extension);
 			}
 		}
 		$switchableActionConfiguration = $plugin->getSwitchableControllerActions();
@@ -437,41 +429,71 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 					// Format should be: Controller->action
 					list($controllerName, $actionName) = explode('->', $actions);
 					$configuredActions[] = $actionName;
-					t3lib_div::devLog('Controller'.$controllerName, 'extension_builder', 0, array($actionName));
-					$this->validateActionConfiguration($controllerName, array($actionName), $plugin, $extension);
+					t3lib_div::devLog('Controller' . $controllerName, 'extension_builder', 0, array($actionName));
+					$this->validateActionConfiguration($controllerName, array($actionName), 'plugin ' . $plugin->getName(), $extension);
 				}
 				$this->validateDependentActions($configuredActions, 'plugin ' . $plugin->getName());
 			}
 		}
 	}
 
-	private function validateDependentActions($actionNames, $name){
-		if((in_array('new',$actionNames) && !in_array('create',$actionNames)) ||
-			(in_array('create',$actionNames) && !in_array('new',$actionNames))){
-			$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
-			'Potential misconfiguration in ' . $name . ':<br />Actions new and create usually depend on each other',
-			self::ERROR_MISCONFIGURATION);
+	/**
+	 * @param Tx_ExtensionBuilder_Domain_Model_BackendModule $backendModule
+	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
+	 * @return void
+	 */
+	private function validateBackendModuleConfiguration($backendModule, $extension) {
+		$controllerActionCombinationConfiguration = $backendModule->getControllerActionCombinations();
+		if (is_array($controllerActionCombinationConfiguration)) {
+			$firstControllerAction = TRUE;
+			foreach ($controllerActionCombinationConfiguration as $controllerName => $actionNames) {
+				$this->validateActionConfiguration($controllerName, $actionNames, 'module ' . $backendModule->getName(), $extension, $firstControllerAction);
+				$firstControllerAction = FALSE;
+			}
 		}
-		if((in_array('edit',$actionNames) && !in_array('update',$actionNames)) ||
-			(in_array('update',$actionNames) && !in_array('edit',$actionNames))){
+	}
+
+	private function validateDependentActions($actionNames, $name) {
+		if ((in_array('new', $actionNames) && !in_array('create', $actionNames)) ||
+			(in_array('create', $actionNames) && !in_array('new', $actionNames))
+		) {
 			$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
-			'Potential misconfiguration in ' . $name . ':<br />Actions edit and update usually depend on each other',
-			self::ERROR_MISCONFIGURATION);
+				'Potential misconfiguration in ' . $name . ':<br />Actions new and create usually depend on each other',
+				self::ERROR_MISCONFIGURATION);
+		}
+		if ((in_array('edit', $actionNames) && !in_array('update', $actionNames)) ||
+			(in_array('update', $actionNames) && !in_array('edit', $actionNames))
+		) {
+			$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+				'Potential misconfiguration in ' . $name . ':<br />Actions edit and update usually depend on each other',
+				self::ERROR_MISCONFIGURATION);
 		}
 	}
 
 	/**
 	 * @param string $controllerName
 	 * @param array $actionNames
-	 * @param Tx_ExtensionBuilder_Domain_Model_Plugin $plugin
+	 * @param string $label related plugin or module
 	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
+	 * @param boolean $firstControllerAction
 	 * @return void
 	 */
-	private function validateActionConfiguration($controllerName, $actionNames, $plugin, $extension) {
+	private function validateActionConfiguration($controllerName, $actionNames, $label, $extension, $firstControllerAction = FALSE) {
+		if ($firstControllerAction) {
+			// the first Controller action config is the default Controller action
+			// we show a warning if that's an action that requires a domain object as parameter
+			$defaultAction = reset($actionNames);
+			if (in_array($defaultAction, array('show', 'edit'))) {
+				$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+					'Potential misconfiguration in ' . $label . ':<br />Default action ' . $controllerName . '->' . $defaultAction . '  can not be called without a domain object parameter',
+					self::ERROR_MISCONFIGURATION);
+			}
+		}
+
 		$relatedDomainObject = $extension->getDomainObjectByName($controllerName);
 		if (!$relatedDomainObject) {
 			$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
-				'Potential misconfiguration in plugin ' . $plugin->getName() . ':<br />Controller ' . $controllerName . ' has no related Domain Object',
+				'Potential misconfiguration in ' . $label . ':<br />Controller ' . $controllerName . ' has no related Domain Object',
 				self::ERROR_MISCONFIGURATION);
 		} else {
 			$existingActions = $relatedDomainObject->getActions();
@@ -483,7 +505,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			foreach ($actionNames as $actionName) {
 				if (!in_array($actionName, $existingActionNames)) {
 					$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
-						'Potential misconfiguration in plugin ' . $plugin->getName() . ':<br />Controller ' . $controllerName . ' has no action named ' . $actionName,
+						'Potential misconfiguration in ' . $label . ':<br />Controller ' . $controllerName . ' has no action named ' . $actionName,
 						self::ERROR_MISCONFIGURATION);
 				}
 			}
@@ -503,7 +525,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 					if (!empty($pluginConfiguration['actions'][$configType])) {
 						$isValid = $this->validateActionConfigFormat($pluginConfiguration['actions'][$configType], $configType);
 						if (!$isValid) {
-							t3lib_div::devlog('validateActionConfigFormat failed','extension_builder',2,array($pluginConfiguration['actions'][$configType]));
+							t3lib_div::devlog('validateActionConfigFormat failed', 'extension_builder', 2, array($pluginConfiguration['actions'][$configType]));
 							$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 								'Wrong format in configuration for ' . $configType . ' in plugin ' . $pluginName,
 								self::ERROR_MISCONFIGURATION);
@@ -519,20 +541,20 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 							// label for flexform select
 							if (!preg_match("/^[a-zA-Z0-9_-\s]*$/", $line)) {
 								$isValid = FALSE;
-								t3lib_div::devlog('Label in switchable Actions contained disallowed character:'.$line,'extension_builder',2);
+								t3lib_div::devlog('Label in switchable Actions contained disallowed character:' . $line, 'extension_builder', 2);
 							}
 							$firstLine = FALSE;
 						} else {
 							$parts = t3lib_div::trimExplode(';', $line, TRUE);
-							t3lib_div::devlog('switchable Actions line even:' . $line,'extension_builder',0,$parts);
+							t3lib_div::devlog('switchable Actions line even:' . $line, 'extension_builder', 0, $parts);
 							if (count($parts) < 1) {
 								$isValid = FALSE;
-								t3lib_div::devlog('Wrong count for explode(";") switchable Actions line:'.$line,'extension_builder',2,$parts);
+								t3lib_div::devlog('Wrong count for explode(";") switchable Actions line:' . $line, 'extension_builder', 2, $parts);
 							}
 							foreach ($parts as $part) {
 								if (!empty($part) && count(t3lib_div::trimExplode('->', $part, TRUE)) != 2) {
 									$isValid = FALSE;
-									t3lib_div::devlog('Wrong count for explode("->") switchable Actions line:'.$part,'extension_builder',2);
+									t3lib_div::devlog('Wrong count for explode("->") switchable Actions line:' . $part, 'extension_builder', 2);
 								}
 							}
 							$firstLine = TRUE;
@@ -546,6 +568,24 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 				}
 			}
 		}
+		foreach ($configuration['properties']['backendModules'] as $moduleConfiguration) {
+			$moduleName = $moduleConfiguration['name'];
+			if (!empty($moduleConfiguration['actions'])) {
+				$configTypes = array('controllerActionCombinations');
+				foreach ($configTypes as $configType) {
+					if (!empty($moduleConfiguration['actions'][$configType])) {
+						$isValid = $this->validateActionConfigFormat($moduleConfiguration['actions'][$configType], $configType);
+						if (!$isValid) {
+							t3lib_div::devlog('validateActionConfigFormat failed', 'extension_builder', 2, array($moduleConfiguration['actions'][$configType]));
+							$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+								'Wrong format in configuration for ' . $configType . ' in module ' . $moduleName,
+								self::ERROR_MISCONFIGURATION);
+						}
+					}
+				}
+			}
+		}
+
 		return $this->validationResult;
 	}
 
@@ -560,10 +600,10 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			$test = t3lib_div::trimExplode('=>', $line, TRUE);
 			if (count($test) != 2) {
 				$isValid = FALSE;
-				t3lib_div::devlog('Wrong count for explode("=>") switchable Actions line:'.$line,'extension_builder',2);
+				t3lib_div::devlog('Wrong count for explode("=>") switchable Actions line:' . $line, 'extension_builder', 2);
 			} else if (!preg_match("/^[a-zA-Z0-9_,\s]*$/", $test[1])) {
 				$isValid = FALSE;
-				t3lib_div::devlog('Regex failed:'.$test[1],'extension_builder',2);
+				t3lib_div::devlog('Regex failed:' . $test[1], 'extension_builder', 2);
 			}
 		}
 		return $isValid;
@@ -583,6 +623,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 				$this->validationResult['errors'][] = new Exception('Duplicate backend module key: "' . $backendModule->getKey() . '". Backend module keys must be unique.', self::ERROR_BACKENDMODULE_DUPLICATE_KEY);
 			}
 			$backendModuleKeys[] = $backendModule->getKey();
+			$this->validateBackendModuleConfiguration($backendModule, $extension);
 		}
 	}
 
@@ -650,8 +691,8 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 		$firstAction = reset($actionNames);
 		if ($firstAction == 'show' || $firstAction == 'edit') {
 			$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
-			'Potential misconfiguration in Domain object ' . $domainObject->getName() . ':<br />First action could not be default action since ' . $firstAction . ' needs a parameter',
-			self::ERROR_MISCONFIGURATION);
+				'Potential misconfiguration in Domain object ' . $domainObject->getName() . ':<br />First action could not be default action since ' . $firstAction . ' needs a parameter',
+				self::ERROR_MISCONFIGURATION);
 		}
 	}
 

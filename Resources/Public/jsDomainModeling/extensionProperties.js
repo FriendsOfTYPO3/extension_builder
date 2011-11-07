@@ -304,6 +304,28 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 								required: true,
 								selectValues: ["web", "user","tools","help"]
 							}
+						},
+						{
+							type: 'group',
+							inputParams: {
+								collapsible: true,
+								collapsed: true,
+								legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.advancedOptions,
+								name: "actions",
+								className:"wideTextfields",
+								fields: [
+									{
+										type: "text",
+										inputParams: {
+											name: "controllerActionCombinations",
+											label: TYPO3.settings.extensionBuilder._LOCAL_LANG.controller_action_combinations,
+											description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_controller_action_combinations,
+											cols: 38,
+											rows: 3
+										}
+									}
+								]
+							}
 						}
 					]
 				}
