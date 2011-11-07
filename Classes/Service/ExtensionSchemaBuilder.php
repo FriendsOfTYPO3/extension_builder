@@ -216,7 +216,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		$plugin->setKey($pluginValues['key']);
 		if (!empty($pluginValues['actions']['controllerActionCombinations'])) {
 			$controllerActionCombinations = array();
-			$lines = explode("\n", $pluginValues['actions']['controllerActionCombinations']);
+			$lines = t3lib_div::trimExplode("\n", $pluginValues['actions']['controllerActionCombinations'], TRUE);
 			foreach ($lines as $line) {
 				list($controllerName, $actionNames) = t3lib_div::trimExplode('=>', $line);
 				$controllerActionCombinations[$controllerName] = t3lib_div::trimExplode(',', $actionNames);
@@ -225,7 +225,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		}
 		if (!empty($pluginValues['actions']['noncacheableActions'])) {
 			$noncacheableControllerActions = array();
-			$lines = explode("\n", $pluginValues['actions']['noncacheableActions']);
+			$lines = t3lib_div::trimExplode("\n", $pluginValues['actions']['noncacheableActions'], TRUE);
 			foreach ($lines as $line) {
 				list($controllerName, $actionNames) = t3lib_div::trimExplode('=>', $line);
 				$noncacheableControllerActions[$controllerName] = t3lib_div::trimExplode(',', $actionNames);
@@ -234,7 +234,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		}
 		if (!empty($pluginValues['actions']['switchableActions'])) {
 			$switchableControllerActions = array();
-			$lines = explode("\n", $pluginValues['actions']['switchableActions']);
+			$lines = t3lib_div::trimExplode("\n", $pluginValues['actions']['switchableActions'], TRUE);
 			$switchableAction = array();
 			foreach ($lines as $line) {
 				if (strpos($line, '->') === FALSE) {
