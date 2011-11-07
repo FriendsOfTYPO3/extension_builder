@@ -145,7 +145,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 
 		$extension->setPriority($propertyConfiguration['emConf']['priority']);
 
-			// state
+		// state
 		$state = 0;
 		switch ($propertyConfiguration['emConf']['state']) {
 			case 'alpha':
@@ -266,6 +266,15 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		$backendModule->setTabLabel($backendModuleValues['tabLabel']);
 		$backendModule->setKey($backendModuleValues['key']);
 		$backendModule->setDescription($backendModuleValues['description']);
+		if (!empty($backendModuleValues['actions']['controllerActionCombinations'])) {
+			$controllerActionCombinations = array();
+			$lines = t3lib_div::trimExplode("\n", $backendModuleValues['actions']['controllerActionCombinations'], TRUE);
+			foreach ($lines as $line) {
+				list($controllerName, $actionNames) = t3lib_div::trimExplode('=>', $line);
+				$controllerActionCombinations[$controllerName] = t3lib_div::trimExplode(',', $actionNames);
+			}
+			$backendModule->setControllerActionCombinations($controllerActionCombinations);
+		}
 		return $backendModule;
 	}
 }

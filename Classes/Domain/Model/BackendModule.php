@@ -68,6 +68,14 @@ class Tx_ExtensionBuilder_Domain_Model_BackendModule {
 	protected $key = '';
 
 	/**
+	 * array with configuration arrays
+	 * array('controller' => 'MyController', 'actions' => 'action1,action2')
+	 *
+	 * @var array
+	 */
+	protected $controllerActionCombinations;
+
+	/**
 	 * Gets the Name
 	 *
 	 * @return string
@@ -160,6 +168,20 @@ class Tx_ExtensionBuilder_Domain_Model_BackendModule {
 	 */
 	public function getMainModule() {
 		return $this->mainModule;
+	}
+
+	/**
+	 * @param array $controllerActionCombinations
+	 */
+	public function setControllerActionCombinations(array $controllerActionCombinations) {
+		$this->controllerActionCombinations = $controllerActionCombinations;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getControllerActionCombinations() {
+		return $this->controllerActionCombinations;
 	}
 }
 
