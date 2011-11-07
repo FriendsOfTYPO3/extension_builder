@@ -6,8 +6,8 @@ if (!defined('TYPO3_MODE')) {
 Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
 	'<k:format.uppercaseFirst>{plugin.key}</k:format.uppercaseFirst>',
-	array(<f:if condition="{plugin.cacheableControllerActions}"><f:then>
-		<f:for each="{plugin.cacheableControllerActions}" as="cachableActionNames" key="cachableControllerName">'{cachableControllerName}' => '<f:for each="{cachableActionNames}" as="actionName" iteration="i">{actionName}<f:if condition="{i.isLast} == 0">, </f:if></f:for>',
+	array(<f:if condition="{plugin.controllerActionCombinations}"><f:then>
+		<f:for each="{plugin.controllerActionCombinations}" as="actionNames" key="controllerName">'{controllerName}' => '<f:for each="{actionNames}" as="actionName" iteration="i">{actionName}<f:if condition="{i.isLast} == 0">, </f:if></f:for>',
 		</f:for></f:then><f:else>
 		<f:for each="{extension.domainObjectsForWhichAControllerShouldBeBuilt}" as="domainObject">'{domainObject.name}' => '<f:for each="{domainObject.actions}" as="action" iteration="actionIterator">{action.name}<f:if condition="{actionIterator.isLast} == 0">, </f:if></f:for>',
 		</f:for></f:else></f:if>
