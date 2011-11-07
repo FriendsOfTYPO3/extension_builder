@@ -503,6 +503,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 					if (!empty($pluginConfiguration['actions'][$configType])) {
 						$isValid = $this->validateActionConfigFormat($pluginConfiguration['actions'][$configType], $configType);
 						if (!$isValid) {
+							t3lib_div::devlog('validateActionConfigFormat failed','extension_builder',2,array($pluginConfiguration['actions'][$configType]));
 							$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 								'Wrong format in configuration for ' . $configType . ' in plugin ' . $pluginName,
 								self::ERROR_MISCONFIGURATION);
@@ -511,7 +512,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 				}
 				if (!empty($pluginConfiguration['actions']['switchableActions'])) {
 					$isValid = TRUE;
-					$lines = explode("\n", $pluginConfiguration['actions']['switchableActions']);
+					$lines = t3lib_div::trimExplode("\n", $pluginConfiguration['actions']['switchableActions'], TRUE);
 					$firstLine = TRUE;
 					foreach ($lines as $line) {
 						if ($firstLine) {
@@ -522,14 +523,14 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 							}
 							$firstLine = FALSE;
 						} else {
-							$parts = explode(';', $line);
+							$parts = t3lib_div::trimExplode(';', $line, TRUE);
 							t3lib_div::devlog('switchable Actions line even:' . $line,'extension_builder',0,$parts);
 							if (count($parts) < 1) {
 								$isValid = FALSE;
 								t3lib_div::devlog('Wrong count for explode(";") switchable Actions line:'.$line,'extension_builder',2,$parts);
 							}
 							foreach ($parts as $part) {
-								if (!empty($part) && count(explode('->', $part)) != 2) {
+								if (!empty($part) && count(t3lib_div::trimExplode('->', $part, TRUE)) != 2) {
 									$isValid = FALSE;
 									t3lib_div::devlog('Wrong count for explode("->") switchable Actions line:'.$part,'extension_builder',2);
 								}
@@ -554,13 +555,15 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	 */
 	protected function validateActionConfigFormat($configuration) {
 		$isValid = TRUE;
-		$lines = explode("\n", $configuration);
+		$lines = t3lib_div::trimExplode("\n", $configuration, TRUE);
 		foreach ($lines as $line) {
-			$test = explode('=>', $line);
+			$test = t3lib_div::trimExplode('=>', $line, TRUE);
 			if (count($test) != 2) {
 				$isValid = FALSE;
+				t3lib_div::devlog('Wrong count for explode("=>") switchable Actions line:'.$line,'extension_builder',2);
 			} else if (!preg_match("/^[a-zA-Z0-9_,\s]*$/", $test[1])) {
 				$isValid = FALSE;
+				t3lib_div::devlog('Regex failed:'.$test[1],'extension_builder',2);
 			}
 		}
 		return $isValid;
