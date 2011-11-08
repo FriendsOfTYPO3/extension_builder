@@ -118,59 +118,7 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 	}
 
 
-	/**
-	 * @test
-	 */
-	public function conversionExtractsSingleDomainObjectMetadata() {
-		$name = 'MyDomainObject';
-		$description = 'My long domain object description';
 
-		$input = array(
-			'name' => $name,
-			'objectsettings' => array(
-				'description' => $description,
-				'aggregateRoot' => TRUE,
-				'type' => 'Entity'
-			),
-			'propertyGroup' => array(
-				'properties' => array(
-					0 => array(
-						'propertyName' => 'name',
-						'propertyType' => 'String',
-						'propertyIsRequired' => 'true'
-					),
-					1 => array(
-						'propertyName' => 'type',
-						'propertyType' => 'Integer'
-					)
-				)
-			),
-			'relationGroup' => array()
-		);
-
-		$expected = new Tx_ExtensionBuilder_Domain_Model_DomainObject();
-		$expected->setName($name);
-		$expected->setDescription($description);
-		$expected->setEntity(TRUE);
-		$expected->setAggregateRoot(TRUE);
-
-		$property0 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty('name');
-		$property0->setRequired(TRUE);
-		$property1 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_IntegerProperty('type');
-		$expected->addProperty($property0);
-		$expected->addProperty($property1);
-
-		$extension = new Tx_ExtensionBuilder_Domain_Model_Extension();
-		$extension->setExtensionKey('my_ext_key');
-		$this->extensionSchemaBuilder->extension = $extension;
-
-		$actual = $this->extensionSchemaBuilder->_call('buildDomainObject', $input);
-		//$this->codeGenerator = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_CodeGenerator'), array('dummy'));
-		//$this->codeGenerator->build($this->extensionSchemaBuilder->extension);
-		$domainObjects = $this->extensionSchemaBuilder->extension->getDomainObjects();
-
-		//$this->assertEquals($actual, $expected, 'Domain Object not built correctly.');
-	}
 	/**
 	 * @test
 	 */
