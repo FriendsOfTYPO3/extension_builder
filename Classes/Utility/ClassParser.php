@@ -64,7 +64,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 	 * The regular expression to detect a method in a line
 	 * @var string regular expression
 	 */
-	public $methodRegex = '/\s*function\s*(\w*)/';
+	public $methodRegex = '/^\s*(?P<visibility>public|protected|private)?\s*function\s*(?P<methodName>\w*)\s*\(/';
 
 	/**
 	 * The regular expression to detect a property (or multiple) in a line
@@ -389,7 +389,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 	 */
 	protected function onMethodFound($methodMatches) {
 		$this->inMethodBody = TRUE;
-		$methodName = $methodMatches[1][0];
+		$methodName = $methodMatches['methodName'][0];
 
 		try {
 			// the method has to exist in the classReflection
