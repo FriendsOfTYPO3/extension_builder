@@ -64,7 +64,19 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 	 * The regular expression to detect a method in a line
 	 * @var string regular expression
 	 */
-	public $methodRegex = '/^\s*(?P<visibility>public|protected|private)?\s*function\s*(?P<methodName>\w*)\s*\(/';
+	public $methodRegex = "/^
+		\s*															# Some possible whitespace
+		(
+			((?P<visibility>public|protected|private)\s*)			# Visibility declaration
+			|
+			((?P<static>static)\s*)									# Static declaration
+		){0,2}														# Visiblity and Static can both occur, in any order
+		\s*															# Some possible whitespace
+		function													# Literal string 'function'
+		\s*															# Some possible whitespace
+		(?P<methodName>\w*)											# The method name
+		\s*\(														# Some possible whitespace followed by a (
+	/x";
 
 	/**
 	 * The regular expression to detect a property (or multiple) in a line
