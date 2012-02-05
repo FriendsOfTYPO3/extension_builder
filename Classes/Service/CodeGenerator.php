@@ -246,7 +246,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
 		// Generate Static TypoScript
 		try {
-			if ($this->extension->hasPropertiesThatNeedMapping()) {
+			if ($this->extension->getDomainObjectsThatNeedMappingStatements()) {
 				$fileContents = $this->generateStaticTyposcript();
 				$this->writeFile($this->extensionDirectory . 'ext_typoscript_setup.txt', $fileContents);
 			}
@@ -484,6 +484,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 *
 	 * @param string $filePath
 	 * @param array $variables
+	 *
+	 * @return string rendered content
 	 */
 	protected function renderTemplate($filePath, $variables) {
 		//$codeTemplateRootPath = $this->getCodeTemplateRootPath();
@@ -497,7 +499,9 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			throw(new Exception('TemplateFile ' . $this->codeTemplateRootPath . $filePath . ' has no content'));
 		}
 		$parsedTemplate = $this->templateParser->parse($templateCode);
-		return trim($parsedTemplate->render($this->buildRenderingContext($variables)));
+		$renderedContent = trim($parsedTemplate->render($this->buildRenderingContext($variables)));
+
+		return str_replace("\n\n", "\n", $renderedContent);
 	}
 
 

@@ -60,7 +60,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 
 	/**
 	 * interfaceNames
-	 * @var string
+	 * @var array
 	 */
 	protected $interfaceNames;
 
@@ -445,7 +445,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * Setter for interfaceNames
 	 *
-	 * @param string $interfaceNames interfaceNames
+	 * @param array $interfaceNames interfaceNames
 	 * @return void
 	 */
 	public function setInterfaceNames($interfaceNames) {
@@ -455,7 +455,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * Getter for interfaceNames
 	 *
-	 * @return string interfaceNames
+	 * @return array interfaceNames
 	 */
 	public function getInterfaceNames() {
 		return $this->interfaceNames;

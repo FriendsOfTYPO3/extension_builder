@@ -39,7 +39,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * Parse a basic class from a file
 	 * @test
 	 */
-	public function ParseBasicClass(){
+	public function ParseBasicClass() {
 		require_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');
 		$this->parseClass('Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClass');
 	}
@@ -48,7 +48,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * Parse a complex class from a file
 	 * @test
 	 */
-	public function ParseComplexClass(){
+	public function ParseComplexClass() {
 		require_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ClassParser/ComplexClass.php');
 		$classObject = $this->parseClass('Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass');
 		$getters = $classObject->getGetters();
@@ -85,7 +85,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 		);
 		$this->assertEquals(
 			$params2[3]->getDefaultValue(),
-			array('test'=>array(1,2,3))
+			array('test' => array(1, 2, 3))
 		);
 		$this->assertEquals(
 			$classObject->getAppendedBlock(),
@@ -98,7 +98,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * Parse a basic class from a file
 	 * @test
 	 */
-	public function ParseExtendedClass(){
+	public function ParseExtendedClass() {
 		$this->parseClass('Tx_ExtensionBuilder_Controller_BuilderModuleController');
 	}
 
@@ -106,21 +106,21 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * Parse a complex class from a file
 	 * @test
 	 */
-	public function ParseAnotherComplexClass(){
+	public function ParseAnotherComplexClass() {
 		require_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ClassParser/AnotherComplexClass.php');
 		$classObject = $this->parseClass('Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass');
 
 		/**  here we could include some more tests
 		$p = $classObject->getMethod('methodWithStrangePrecedingBlock')->getPrecedingBlock();
 		$a = $classObject->getAppendedBlock();
-		*/
+		 */
 	}
 
 	/**
 	 * Parse a big class from a file
 	 * @test
 	 */
-	public function Parse_t3lib_div(){
+	public function Parse_t3lib_div() {
 		//require_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/BasicClass.php');
 		$this->parseClass('t3lib_div');
 	}
@@ -130,15 +130,15 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * @param $className
 	 * @return unknown_type
 	 */
-	protected function parseClass($className){
+	protected function parseClass($className) {
 		$classParser = new Tx_ExtensionBuilder_Utility_ClassParser();
 		$classParser->debugMode = $this->debugMode;
 		$classObject = $classParser->parse($className);
 		$this->assertTrue($classObject instanceof Tx_ExtensionBuilder_Domain_Model_Class_Class);
 		$classReflection = new Tx_ExtensionBuilder_Reflection_ClassReflection($className);
-		$this->ParserFindsAllConstants($classObject,$classReflection);
-		$this->ParserFindsAllMethods($classObject,$classReflection);
-		$this->ParserFindsAllProperties($classObject,$classReflection);
+		$this->ParserFindsAllConstants($classObject, $classReflection);
+		$this->ParserFindsAllMethods($classObject, $classReflection);
+		$this->ParserFindsAllProperties($classObject, $classReflection);
 		return $classObject;
 	}
 
@@ -148,13 +148,13 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * @param Tx_ExtensionBuilder_Reflection_ClassReflection $classReflection
 	 * @return void
 	 */
-	public function ParserFindsAllConstants($classObject,$classReflection){
+	public function ParserFindsAllConstants($classObject, $classReflection) {
 		$reflectionConstantCount = count($classReflection->getConstants());
-		if($classReflection->getParentClass()){
-			$reflectionConstantCount -=  count($classReflection->getParentClass()->getConstants());
+		if ($classReflection->getParentClass()) {
+			$reflectionConstantCount -= count($classReflection->getParentClass()->getConstants());
 		}
 		$classObjectConstantCount = count($classObject->getConstants());
-		$this->assertEquals($reflectionConstantCount, $classObjectConstantCount, 'Not all Constants were found: '.$classObject->getName().serialize($classReflection->getConstants()));
+		$this->assertEquals($reflectionConstantCount, $classObjectConstantCount, 'Not all Constants were found: ' . $classObject->getName() . serialize($classReflection->getConstants()));
 	}
 
 	/**
@@ -163,7 +163,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * @param Tx_ExtensionBuilder_Reflection_ClassReflection $classReflection
 	 * @return void
 	 */
-	public function ParserFindsAllMethods($classObject,$classReflection){
+	public function ParserFindsAllMethods($classObject, $classReflection) {
 		$reflectionMethodCount = count($classReflection->getNotInheritedMethods());
 		$classObjectMethodCount = count($classObject->getMethods());
 		$this->assertEquals($classObjectMethodCount, $reflectionMethodCount, 'Not all Methods were found!');
@@ -175,7 +175,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * @param Tx_ExtensionBuilder_Reflection_ClassReflection $classReflection
 	 * @return void
 	 */
-	public function ParserFindsAllProperties($classObject,$classReflection){
+	public function ParserFindsAllProperties($classObject, $classReflection) {
 		$reflectionPropertyCount = count($classReflection->getNotInheritedProperties());
 		$classObjectPropertCount = count($classObject->getProperties());
 		$this->assertEquals($classObjectPropertCount, $reflectionPropertyCount, 'Not all Properties were found!');

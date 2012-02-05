@@ -31,6 +31,10 @@
  */
 class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_singleton {
 
+	/**
+	 * @var Tx_ExtensionBuilder_Configuration_ConfigurationManager
+	 */
+	protected $configurationManager;
 
 	/**
 	 * @param Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager
@@ -73,7 +77,30 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		if (is_array($extensionBuildConfiguration['modules'])) {
 			foreach ($extensionBuildConfiguration['modules'] as $singleModule) {
 				$domainObject = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::build($singleModule['value']);
+				if ($domainObject->isSubClass() && !$domainObject->isMappedToExistingTable()) {
+					// we try to get the table from Extbase configuration
+					$classSettings = $this->configurationManager->getExtbaseClassConfiguration($domainObject->getParentClass());
+					t3lib_div::devlog('!isMappedToExistingTable:' . strtolower($domainObject->getParentClass()), 'extension_builder', 0, $classSettings);
+					if (isset($classSettings['tableName'])) {
+						$tableName = $classSettings['tableName'];
+					} else {
+						// we use the default table name
+						$tableName = strtolower($domainObject->getParentClass());
+					}
+					if (!isset($GLOBALS['TCA'][$tableName])) {
+						throw new Exception('Table definitions for table ' . $tableName . ' could not be loaded. You can only map to tables with existing TCA or extend classes of installed extensions!');
+					}
+					$domainObject->setMapToTable($tableName);
+				}
 				$extension->addDomainObject($domainObject);
+			}
+			$classHierarchy = $extension->getClassHierarchy();
+			foreach ($extension->getDomainObjects() as $domainObject) {
+				if (isset($classHierarchy[$domainObject->getClassName()])) {
+					foreach ($classHierarchy[$domainObject->getClassName()] as $directChild) {
+						$domainObject->addChildObject($directChild);
+					}
+				}
 			}
 		}
 

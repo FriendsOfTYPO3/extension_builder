@@ -75,7 +75,7 @@ class Tx_ExtensionBuilder_ViewHelpers_ClassViewHelper extends Tx_Fluid_Core_View
 	 */
 	private function renderInterfaceDeclaration($classObject) {
 		$interfaceNames = $classObject->getInterfaceNames();
-		if (count($interfaces) > 0) {
+		if (count($interfaceNames) > 0) {
 			return ' implements ' . implode(',', $interfaceNames);
 		}
 		else return '';

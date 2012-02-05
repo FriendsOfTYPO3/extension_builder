@@ -37,10 +37,10 @@ class  Tx_ExtensionBuilder_Domain_Model_ExtensionTest extends Tx_ExtensionBuilde
 	protected $extension;
 
 	function setUp() {
-		$this->extension=t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Extension');
-		$this->persons[]=t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
-		$this->persons[]=t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
-		$this->persons[]=t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
+		$this->extension = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Extension');
+		$this->persons[] = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
+		$this->persons[] = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
+		$this->persons[] = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
 		$this->persons[0]->setName("0");
 		$this->persons[1]->setName("1");
 		$this->persons[2]->setName("2");

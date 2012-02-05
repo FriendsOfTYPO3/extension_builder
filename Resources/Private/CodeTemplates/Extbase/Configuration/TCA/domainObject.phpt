@@ -2,7 +2,10 @@
 if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
-
+<f:if condition="{domainObject.mapToTable}"><f:then>
+<k:mapping domainObject="{domainObject}" renderCondition="isMappedToInternalTable">
+<k:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
+</k:mapping></f:then><f:else>
 $TCA['{domainObject.databaseTableName}'] = array(
 	'ctrl' => $TCA['{domainObject.databaseTableName}']['ctrl'],
 	'interface' => array(
@@ -107,4 +110,12 @@ $TCA['{domainObject.databaseTableName}'] = array(
 		),</f:for>
 	),
 );
+
+<f:if condition="{domainObject.childObjects}">
+<k:render partial="TCA/TypeField.phpt" arguments="{domainObject:domainObject, settings:settings}" />
+</f:if>
+
+</f:else></f:if>
+
+<f:for each="{domainObject.childObjects}" as="childObject">require_once("{childObject.name}.php");</f:for>
 ?>

@@ -112,7 +112,9 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 			$yamlParser = new Tx_ExtensionBuilder_Utility_SpycYAMLParser();
 			$settings = $yamlParser->YAMLLoadString(file_get_contents($settingsFile));
 		}
-		else t3lib_div::devlog('No settings found: ' . $settingsFile, 'extension_builder', 2);
+		else {
+			t3lib_div::devlog('No settings found: ' . $settingsFile, 'extension_builder', 2);
+		}
 
 		return $settings;
 	}
@@ -142,6 +144,44 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		} else {
 			return NULL;
 		}
+	}
+
+	/**
+	 * This is mainly copied from DataMapFactory
+	 *
+	 * @param string $className
+	 * @return array with configuration values
+	 */
+	public function getExtbaseClassConfiguration($className) {
+		$classConfiguration = array();
+		$frameworkConfiguration = $this->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+		$classSettings = $frameworkConfiguration['persistence']['classes'][$className];
+		if ($classSettings !== NULL) {
+			if (isset($classSettings['subclasses']) && is_array($classSettings['subclasses'])) {
+				$classConfiguration['subclasses'] = $classSettings['subclasses'];
+			}
+			if (isset($classSettings['mapping']['recordType']) && strlen($classSettings['mapping']['recordType']) > 0) {
+				$classConfiguration['recordType'] = $classSettings['mapping']['recordType'];
+			}
+			if (isset($classSettings['mapping']['tableName']) && strlen($classSettings['mapping']['tableName']) > 0) {
+				$classConfiguration['tableName'] = $classSettings['mapping']['tableName'];
+			}
+			/**
+			$classHierachy = array_merge(array($className), class_parents($className));
+			foreach ($classHierachy as $currentClassName) {
+				if (in_array($currentClassName, array('Tx_Extbase_DomainObject_AbstractEntity', 'Tx_Extbase_DomainObject_AbstractValueObject'))) {
+					break;
+				}
+				$currentClassSettings = $frameworkConfiguration['persistence']['classes'][$currentClassName];
+				if ($currentClassSettings !== NULL) {
+					if (isset($currentClassSettings['mapping']['columns']) && is_array($currentClassSettings['mapping']['columns'])) {
+						$columnMapping = t3lib_div::array_merge_recursive_overrule($columnMapping, $currentClassSettings['mapping']['columns'], 0, FALSE); // FALSE means: do not include empty values form 2nd array
+					}
+				}
+			}
+			*/
+		}
+		return $classConfiguration;
 	}
 
 	/**

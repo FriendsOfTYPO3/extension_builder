@@ -263,9 +263,15 @@ div.helpAvailable{
 }
 
 
-div#propertiesForm div.bottomBorder {
+div#propertiesForm div.bottomBorder{
 	border-bottom: 2px solid #999;
 	padding-bottom: 10px;
+}
+
+div.WiringEditor-module-New  div.bottomBorder {
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #999;
 }
 
 div#propertiesForm div.smallBottomBorder {

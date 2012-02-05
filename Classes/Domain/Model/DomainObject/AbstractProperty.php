@@ -87,8 +87,10 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 * @param string $propertyName
 	 * @return void
 	 */
-	public function __construct($propertyName) {
-		$this->name = $propertyName;
+	public function __construct($propertyName = '') {
+		if (!empty($propertyName)) {
+			$this->name = $propertyName;
+		}
 	}
 
 	/**

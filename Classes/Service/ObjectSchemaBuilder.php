@@ -50,10 +50,24 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 		}
 		$domainObject->setAggregateRoot($jsonDomainObject['objectsettings']['aggregateRoot']);
 
+		// extended settings
+
+		if (!empty($jsonDomainObject['objectsettings']['mapToTable'])) {
+			$domainObject->setMapToTable($jsonDomainObject['objectsettings']['mapToTable']);
+		}
+		if (!empty($jsonDomainObject['objectsettings']['parentClass'])) {
+			$domainObject->setParentClass($jsonDomainObject['objectsettings']['parentClass']);
+		}
+
+		// properties
+
 		foreach ($jsonDomainObject['propertyGroup']['properties'] as $jsonProperty) {
 			$propertyType = $jsonProperty['propertyType'];
 			$propertyClassName = 'Tx_ExtensionBuilder_Domain_Model_DomainObject_' . $propertyType . 'Property';
-			if (!class_exists($propertyClassName)) throw new Exception('Property of type ' . $propertyType . ' not found');
+			if (!class_exists($propertyClassName)) {
+				t3lib_div::devlog('Property of type ' . $propertyType . ' not found', 'extension_builder', 2, $jsonProperty);
+				throw new Exception('Property of type ' . $propertyType . ' not found');
+			}
 			$property = t3lib_div::makeInstance($propertyClassName);
 			$property->setUniqueIdentifier($jsonProperty['uid']);
 			$property->setName($jsonProperty['propertyName']);
@@ -71,6 +85,8 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 
 			$domainObject->addProperty($property);
 		}
+
+		//actions
 
 		foreach ($jsonDomainObject['actionGroup'] as $jsonActionName => $actionValue) {
 			if ($jsonActionName == 'customActions' && !empty($actionValue)) {
@@ -92,8 +108,8 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 					$domainObject->addAction($action);
 				}
 			}
-
 		}
+
 
 		return $domainObject;
 	}
