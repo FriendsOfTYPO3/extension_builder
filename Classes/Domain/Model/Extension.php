@@ -93,14 +93,6 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	protected $category;
 
 	/**
-	 * flag that is set to TRUE if there are domain objects with
-	 * properties that need mapping (because they use MYSQL protected words etc.
-	 *
-	 * @var boolean
-	 */
-	protected $propertiesThatNeedMapping = FALSE;
-
-	/**
 	 * The extension's state. One of the STATE_* constants.
 	 * @var integer
 	 */
@@ -330,14 +322,81 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	}
 
 	/**
+	 * get all domainobjects that are mapped to existing tables
+	 * @return array|null
+	 */
+	public function getDomainObjectsThatNeedMappingStatements() {
+		$domainObjectsThatNeedMappingStatements = array();
+		foreach ($this->domainObjects as $domainObject) {
+			if ($domainObject->getNeedsMappingStatement()) {
+				$domainObjectsThatNeedMappingStatements[] = $domainObject;
+			}
+		}
+		if (!empty($domainObjectsThatNeedMappingStatements)) {
+			return $domainObjectsThatNeedMappingStatements;
+		} else {
+			return NULL;
+		}
+	}
+
+	/**
+	 * get all domainobjects that are mapped to existing tables
+	 * @return array|null
+	 */
+	public function getClassHierarchy() {
+		$classHierarchy = array();
+		foreach ($this->domainObjects as $domainObject) {
+			if ($domainObject->isSubclass()) {
+				if (!is_array($classHierarchy[$domainObject->getParentClass()])) {
+					$classHierarchy[$domainObject->getParentClass()] = array();
+				}
+				$classHierarchy[$domainObject->getParentClass()][] = $domainObject;
+			}
+		}
+		if (!empty($classHierarchy)) {
+			return $classHierarchy;
+		} else {
+			return NULL;
+		}
+	}
+
+	public function getDomainObjectsInHierarchicalOrder() {
+		$domainObjects = $this->getDomainObjects();
+		$classHierarchy = $this->getClassHierarchy();
+		for ($i = 0; $i < count($domainObjects); $i++) {
+			for ($j = 0; $j < count($domainObjects); $j++) {
+				if (isParentOf($domainObjects[$i], $domainObjects[$j], $classHierarchy)) {
+					$tmp = $domainObjects[$j];
+					$domainObjects[$j] = $domainObjects[$i];
+					$domainObjects[$i] = $tmp;
+				}
+			}
+		}
+	}
+
+	protected function isParentOf($domainObject1, $domainObject2, $classHierarchy) {
+		if (isset($classHierarchy[$domainObject1->getClassName()])) {
+			foreach ($classHierarchy[$domainObject1->getClassName()] as $subClass) {
+				if ($subClass->getClassName() == $domainObject2->getClassName()) {
+					// $domainObject2 is parent of $domainObject1
+					return TRUE;
+				} else {
+					if ($this->isParentOf($subClass, $domainObject2, $classHierarchy)) {
+						// if a subclass of object1 is a parent class
+						return TRUE;
+					}
+				}
+			}
+		}
+		return FALSE;
+	}
+
+	/**
 	 * Add a domain object to the extension. Creates the reverse link as well.
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
 	 */
 	public function addDomainObject(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
 		$domainObject->setExtension($this);
-		if (count($domainObject->getPropertiesWithMappingStatements()) > 0) {
-			$this->propertiesThatNeedMapping = TRUE;
-		}
 		if (in_array($domainObject->getName(), array_keys($this->domainObjects))) {
 			throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
 		}
@@ -532,14 +591,6 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	}
 
 	/**
-	 *
-	 * @reutn boolean
-	 */
-	public function hasPropertiesThatNeedMapping() {
-		return $this->propertiesThatNeedMapping;
-	}
-
-	/**
 	 * Get the previous extension directory
 	 * if the extension was renamed it is different from $this->extensionDir
 	 *
@@ -608,7 +659,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	/**
 	 * @return boolean
 	 */
-	public function getShy(){
+	public function getShy() {
 		return $this->shy;
 	}
 
@@ -616,7 +667,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 * @param boolean $shy
 	 * @return void
 	 */
-	public function setShy($shy){
+	public function setShy($shy) {
 		$this->shy = $shy;
 	}
 

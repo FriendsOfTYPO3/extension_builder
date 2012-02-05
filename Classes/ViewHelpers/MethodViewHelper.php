@@ -54,51 +54,50 @@ class Tx_ExtensionBuilder_ViewHelpers_MethodViewHelper extends Tx_Fluid_Core_Vie
 	 * @return string parameters
 	 */
 	private function renderMethodParameter($methodObject) {
-		$content = '';
 		$parameters = array();
-
-		foreach ($methodObject->getParameters() as $parameter) {
-			$parameterName = $parameter->getName();
-			$typeHint = $parameter->getTypeHint();
-			if ($parameter->isOptional()) {
-				$defaultValue = $parameter->getDefaultValue();
-				// optional parameters have a default value
-				if (!empty($typeHint)) {
-					// typeHints of optional parameter have the format "typeHint or defaultValue"
-					$typeHintParts = explode(' ', $typeHint);
-					$typeHint = $typeHintParts[0];
-				}
-
-				// the default value has to be json_encoded to render its string representation
-				if (is_array($defaultValue)) {
-					if (!empty($defaultValue)) {
-						$defaultValue = json_encode($defaultValue);
-						// now we render php notation from JSON notation
-						$defaultValue = Tx_ExtensionBuilder_Utility_Tools::convertJSONArrayToPHPArray($defaultValue);
-
-						//t3lib_div::devLog('default Value: '. $defaultValue, 'parameter debug');
+		if (is_array($methodObject->getParameters())) {
+			foreach ($methodObject->getParameters() as $parameter) {
+				$parameterName = $parameter->getName();
+				$typeHint = $parameter->getTypeHint();
+				if ($parameter->isOptional()) {
+					$defaultValue = $parameter->getDefaultValue();
+					// optional parameters have a default value
+					if (!empty($typeHint)) {
+						// typeHints of optional parameter have the format "typeHint or defaultValue"
+						$typeHintParts = explode(' ', $typeHint);
+						$typeHint = $typeHintParts[0];
 					}
-					else $defaultValue = 'array()';
-				} elseif ($defaultValue === NULL) {
-					$defaultValue = 'NULL';
-				} else {
-					$defaultValue = json_encode($defaultValue);
+
+					// the default value has to be json_encoded to render its string representation
+					if (is_array($defaultValue)) {
+						if (!empty($defaultValue)) {
+							$defaultValue = json_encode($defaultValue);
+							// now we render php notation from JSON notation
+							$defaultValue = Tx_ExtensionBuilder_Utility_Tools::convertJSONArrayToPHPArray($defaultValue);
+
+							//t3lib_div::devLog('default Value: '. $defaultValue, 'parameter debug');
+						}
+						else $defaultValue = 'array()';
+					} elseif ($defaultValue === NULL) {
+						$defaultValue = 'NULL';
+					} else {
+						$defaultValue = json_encode($defaultValue);
+					}
+					$parameterName .= ' = ' . $defaultValue;
 				}
-				$parameterName .= ' = ' . $defaultValue;
-			}
 
-			$parameterName = '$' . $parameterName;
+				$parameterName = '$' . $parameterName;
 
-			if ($parameter->isPassedByReference()) {
-				$parameterName = '&' . $parameterName;
+				if ($parameter->isPassedByReference()) {
+					$parameterName = '&' . $parameterName;
+				}
+				if (!empty($typeHint)) {
+					$parameterName = $typeHint . ' ' . $parameterName;
+				}
+				$parameters[] = $parameterName;
+				//t3lib_div::devLog($methodSchemaObject->getName().':'.$parameter->getName(), 'parameter debug');
 			}
-			if (!empty($typeHint)) {
-				$parameterName = $typeHint . ' ' . $parameterName;
-			}
-			$parameters[] = $parameterName;
-			//t3lib_div::devLog($methodSchemaObject->getName().':'.$parameter->getName(), 'parameter debug');
 		}
-
 		return implode(', ', $parameters);
 	}
 

@@ -87,6 +87,22 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	protected $needsUploadFolder = FALSE;
 
 	/**
+	 * @var string
+	 */
+	protected $mapToTable = '';
+
+	/**
+	 * @var string
+	 */
+	protected $parentClass = '';
+
+	/**
+	 * Domain objects that extend the current object (as declared in this extension)
+	 * @var array<Tx_ExtensionBuilder_Domain_Model_DomainObject>
+	 */
+	protected $childObjects = array();
+
+	/**
 	 * Set name
 	 * @return string
 	 */
@@ -103,15 +119,19 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	}
 
 	public function getClassName() {
-		return 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Model_' . $this->getName();
+		return 'Tx_' . t3lib_div::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Model_' . $this->getName();
 	}
 
 	public function getControllerName() {
-		return 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey()) . '_Controller_' . $this->getName() . 'Controller';
+		return 'Tx_' . t3lib_div::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_Controller_' . $this->getName() . 'Controller';
 	}
 
 	public function getDatabaseTableName() {
-		return 'tx_' . strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey())) . '_domain_model_' . strtolower($this->getName());
+		if (!empty($this->mapToTable)) {
+			return $this->mapToTable;
+		} else {
+			return 'tx_' . strtolower(t3lib_div::underscoredToUpperCamelCase($this->extension->getExtensionKey())) . '_domain_model_' . strtolower($this->getName());
+		}
 	}
 
 	/**
@@ -357,7 +377,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	 */
 	public function getDomainRepositoryClassName() {
 		if (!$this->aggregateRoot) return '';
-		return 'Tx_' . Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Repository_' . $this->getName() . 'Repository';
+		return 'Tx_' . t3lib_div::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Repository_' . $this->getName() . 'Repository';
 	}
 
 	/**
@@ -406,7 +426,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	/**
 	 * @return array
 	 */
-	public function getPropertiesWithMappingStatements() {
+	public function hasPropertiesThatNeedMappingStatements() {
 		$propertiesWithMappingStatements = array();
 		foreach ($this->properties as $property) {
 			if ($property->getMappingStatement()) {
@@ -424,6 +444,91 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	public function getNeedsUploadFolder() {
 		return $this->needsUploadFolder;
 	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getMapToTable() {
+		return $this->mapToTable;
+	}
+
+	/**
+	 * @param string $mapToTable
+	 */
+	public function setMapToTable($mapToTable) {
+		$this->mapToTable = $mapToTable;
+	}
+
+	/**
+	 * is this domain object mapped to an existing table?
+	 * @return bool
+	 */
+	public function getNeedsMappingStatement() {
+		if (!empty($this->mapToTable)) {
+			return TRUE;
+		} else if ($this->hasPropertiesThatNeedMappingStatements()) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+
+	/**
+	 * is this domain object mapped to a table?
+	 * @return bool
+	 */
+	public function isMappedToExistingTable() {
+		if (!empty($this->mapToTable)) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+
+	/**
+	 * @param string $parentClass
+	 */
+	public function setParentClass($parentClass) {
+		$this->parentClass = $parentClass;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getParentClass() {
+		return $this->parentClass;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getRecordType() {
+		return str_replace('Domain_Model_', '', $this->getClassName());
+	}
+
+	public function isSubClass() {
+		if (empty($this->parentClass)) {
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}
+
+	/**
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $childObject
+	 */
+	public function addChildObject(Tx_ExtensionBuilder_Domain_Model_DomainObject $childObject) {
+		$this->childObjects[] = $childObject;
+	}
+
+	/**
+	 * @return array Tx_ExtensionBuilder_Domain_Model_DomainObject
+	 */
+	public function getChildObjects() {
+		return $this->childObjects;
+	}
+
 }
 
 ?>

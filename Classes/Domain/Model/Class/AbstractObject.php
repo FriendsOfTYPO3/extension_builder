@@ -57,9 +57,9 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 
 	/**
 	 * modifiers  (privat, static abstract etc. not to mix up with "isModified" )
-	 * @var int
+	 * @var array
 	 */
-	protected $modifiers;
+	protected $modifiers = array();
 
 	/**
 	 * @var array An array of tag names and their values (multiple values are possible)
@@ -253,7 +253,11 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 * @return void
 	 */
 	public function setModifiers($modifiers) {
-		$this->modifiers = $modifiers;
+		if (is_array($modifiers)) {
+			$this->modifiers = $modifiers;
+		} else {
+			$this->modifiers = explode(' ', $modifiers);
+		}
 	}
 
 	/**
@@ -269,7 +273,6 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 		if (!in_array($modifier, $this->modifiers)) {
 			$this->modifiers[] = $modifier;
 		}
-
 	}
 
 
@@ -290,7 +293,9 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 				$modifierNames[] = array_shift(Reflection::getModifierNames($modifier));
 			}
 		}
-		else $modifierNames = Reflection::getModifierNames($modifiers);
+		else {
+			$modifierNames = Reflection::getModifierNames($modifiers);
+		}
 		return $modifierNames;
 	}
 
@@ -344,7 +349,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	public function getPrecedingBlock() {
 		$cleanPrecedingBlock = str_replace($this->docComment, '', $this->precedingBlock);
 		$cleanPrecedingBlock = str_replace('<?php', '', $cleanPrecedingBlock);
-		if(strlen(trim($cleanPrecedingBlock)) == 0){
+		if (strlen(trim($cleanPrecedingBlock)) == 0) {
 			return NULL;
 		} else {
 			return $cleanPrecedingBlock;

@@ -117,10 +117,13 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 		if ($this->classObject == NULL) {
 			$this->classObject = new Tx_ExtensionBuilder_Domain_Model_Class_Class($className);
 			if ($domainObject->isEntity()) {
-				if (isset($this->settings['Model']['AbstractEntity']['parentClass'])) {
-					$parentClass = $this->settings['Model']['AbstractEntity']['parentClass'];
-				} else {
-					$parentClass = 'Tx_Extbase_DomainObject_AbstractEntity';
+				$parentClass = $domainObject->getParentClass();
+				if (empty($parentClass)) {
+					if (isset($this->settings['Model']['AbstractEntity']['parentClass'])) {
+						$parentClass = $this->settings['Model']['AbstractEntity']['parentClass'];
+					} else {
+						$parentClass = 'Tx_Extbase_DomainObject_AbstractEntity';
+					}
 				}
 			} else {
 				if (isset($this->settings['Model']['AbstractValueObject']['parentClass'])) {

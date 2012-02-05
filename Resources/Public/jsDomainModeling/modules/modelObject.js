@@ -61,7 +61,26 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								type: "string",
 								inputParams: {
 									name: "description",
+									className: 'bottomBorder',
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
+									required: false
+								}
+							},
+							{
+								type: "string",
+								inputParams: {
+									name: "mapToTable",
+									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.mapToTable,
+									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_mapToTable,
+									required: false
+								}
+							},
+							{
+								type: "string",
+								inputParams: {
+									name: "parentClass",
+									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.parentClass,
+									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_parentClass,
 									required: false
 								}
 							}

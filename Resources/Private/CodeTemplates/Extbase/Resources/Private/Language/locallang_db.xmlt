@@ -7,7 +7,11 @@
 	<data type="array">
 		<languageKey index="default" type="array"><f:for each="{extension.domainObjects}" as="domainObject">
 			<label index="{domainObject.labelNamespace}"><k:humanize>{domainObject.name}</k:humanize></label><f:for each="{domainObject.properties}" as="property">
-			<label index="{property.labelNamespace}"><k:humanize>{property.name}</k:humanize></label></f:for></f:for>
+			<label index="{property.labelNamespace}"><k:humanize>{property.name}</k:humanize></label></f:for>
+			<f:if condition="{domainObject.mapToTable}"><label index="{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}">{extension.name} {domainObject.name}</label></f:if>
+			<f:if condition="{domainObject.childObjects}"><label index="{domainObject.labelNamespace}.tx_extbase_type">Record Type</label>
+			<label index="{domainObject.labelNamespace}.tx_extbase_type.0">Default</label>
+			<label index="{domainObject.labelNamespace}.tx_extbase_type.{domainObject.recordType}">{domainObject.extension.extensionName} {domainObject.name}</label></f:if></f:for>
 		</languageKey>
 	</data>
 </T3locallang>

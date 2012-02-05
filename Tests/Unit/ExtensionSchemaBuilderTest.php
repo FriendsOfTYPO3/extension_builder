@@ -32,11 +32,12 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 
 	public function setUp() {
 		//parent::setUp();
-		$this->extension = $this->getMock('Tx_ExtensionBuilder_Domain_Model_Extension',array('getOverWriteSettings'));
+		$this->extension = $this->getMock('Tx_ExtensionBuilder_Domain_Model_Extension', array('getOverWriteSettings'));
 		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder'), array('dummy'));
-		$this->extensionSchemaBuilder->injectConfigurationManager(new Tx_ExtensionBuilder_Configuration_ConfigurationManager()); 
+		$this->extensionSchemaBuilder->injectConfigurationManager(new Tx_ExtensionBuilder_Configuration_ConfigurationManager());
 		$this->extensionKey = 'dummy';
 	}
+
 	/**
 	 * @test
 	 */
@@ -69,7 +70,7 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 		$extension->setExtensionDir('');
 
 		$actual = $this->extensionSchemaBuilder->build($input);
-		$this->assertEquals($extension,$actual, 'Extension properties were not extracted.');
+		$this->assertEquals($extension, $actual, 'Extension properties were not extracted.');
 	}
 
 	/**
@@ -98,16 +99,16 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 				),
 				'persons' => array(
 					array(
-						'company'=>'company0',
-						'email'=>'email0',
-						'name'=>'name0',
-						'role'=>'role0'
+						'company' => 'company0',
+						'email' => 'email0',
+						'name' => 'name0',
+						'role' => 'role0'
 					),
 					array(
-						'company'=>'company1',
-						'email'=>'email1',
-						'name'=>'name1',
-						'role'=>'role1'
+						'company' => 'company1',
+						'email' => 'email1',
+						'name' => 'name1',
+						'role' => 'role1'
 					),
 				),
 				'state' => 'beta'
@@ -116,7 +117,6 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 		$extension = $this->extensionSchemaBuilder->build($input);
 		$this->assertEquals($extension->getPersons(), $persons, 'Persons set wrong in ObjectBuilder.');
 	}
-
 
 
 	/**
@@ -128,7 +128,7 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 				0 => array(
 					// config
 					// name
-					'value' =>  array(
+					'value' => array(
 						'name' => 'Blog',
 						'objectsettings' => array(
 							'description' => 'A blog object',
@@ -161,7 +161,7 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 				1 => array(
 					// config
 					// name
-					'value' =>  array(
+					'value' => array(
 						'name' => 'Post',
 						'objectsettings' => array(
 							'description' => 'A blog post',
@@ -186,7 +186,7 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 				2 => array(
 					// config
 					// name
-					'value' =>  array(
+					'value' => array(
 						'name' => 'Comment',
 						'objectsettings' => array(
 							'description' => '',

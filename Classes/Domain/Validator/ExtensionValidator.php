@@ -59,7 +59,24 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	ERROR_ACTIONNAME_DUPLICATE = 501,
 	ERROR_ACTIONNAME_ILLEGAL_CHARACTER = 502,
 	ERROR_MISCONFIGURATION = 503,
-	EXTENSION_DIR_EXISTS = 500;
+	EXTENSION_DIR_EXISTS = 500,
+	ERROR_MAPPING_NO_TCA = 600,
+	ERROR_MAPPING_NO_PARENTCLASS = 601,
+	ERROR_MAPPING_NO_TABLE = 602;
+
+	/**
+	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
+	 */
+	protected $configurationManager;
+
+	/**
+	 * @param Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager
+	 * @return void
+	 */
+	public function injectConfigurationManager(Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager) {
+		$this->configurationManager = $configurationManager;
+	}
+
 
 	/**
 	 * TODO: Check this list if it's still up to date
@@ -351,7 +368,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 
 		$this->validationResult = array('errors' => array(), 'warnings' => array());
 
-		$this->validateExtensionKey($extension->getExtensionKey());
+		//$this->validateExtensionKey($extension->getExtensionKey());
 
 		$this->checkExistingExtensions($extension);
 
@@ -386,6 +403,9 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	 * @return void
 	 */
 	private function validatePlugins($extension) {
+		if (count($extension->getPlugins()) < 1) {
+			return;
+		}
 		$pluginKeys = array();
 		foreach ($extension->getPlugins() as $plugin) {
 			if (self::validatePluginKey($plugin->getKey()) === 0) {
@@ -484,6 +504,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			// we show a warning if that's an action that requires a domain object as parameter
 			$defaultAction = reset($actionNames);
 			if (in_array($defaultAction, array('show', 'edit'))) {
+				t3lib_div::devlog('Invalid action configurations', 'extension_builder', 1, array($controllerName, $actionNames));
 				$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 					'Potential misconfiguration in ' . $label . ':<br />Default action ' . $controllerName . '->' . $defaultAction . '  can not be called without a domain object parameter',
 					self::ERROR_MISCONFIGURATION);
@@ -614,6 +635,9 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	 * @return void
 	 */
 	private function validateBackendModules($extension) {
+		if (count($extension->getBackendModules()) < 1) {
+			return;
+		}
 		$backendModuleKeys = array();
 		foreach ($extension->getBackendModules() as $backendModule) {
 			if (self::validateModuleKey($backendModule->getKey()) === 0) {
@@ -635,7 +659,6 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	 */
 	private function validateDomainObjects($extension) {
 		foreach ($extension->getDomainObjects() as $domainObject) {
-
 			// Check if domainObject name is given
 			if (!$domainObject->getName()) {
 				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('A Domain Object has no name', self::ERROR_DOMAINOBJECT_NO_NAME);
@@ -654,10 +677,62 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			if (strtolower($firstChar) == $firstChar) {
 				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal first character of domain object name "' . $domainObject->getName() . '". Please use UpperCamelCase.', self::ERROR_DOMAINOBJECT_LOWER_FIRST_CHARACTER);
 			}
-
 			$this->validateProperties($domainObject);
-
 			$this->validateDomainObjectActions($domainObject);
+			$this->validateMapping($domainObject);
+		}
+	}
+
+	/**
+	 * cover all cases:
+	 * 1. extend TYPO3 class like fe_users (no mapping table needed)
+	 *
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 */
+	private function validateMapping(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
+		$parentClass = $domainObject->getParentClass();
+		$tableName = $domainObject->getMapToTable();
+		$extensionPrefix = 'Tx_' . t3lib_div::underscoredToUpperCamelCase($domainObject->getExtension()->getExtensionKey()) . '_Domain_Model_';
+		if (!empty($parentClass)) {
+			$classConfiguration = $this->configurationManager->getExtbaseClassConfiguration($parentClass);
+			t3lib_div::devlog('class settings ' . $parentClass, 'extension_builder', 0, $classConfiguration);
+
+			if (!isset($classConfiguration['tableName'])) {
+				if (!$tableName) {
+					$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+						'Mapping configuration error in domain object ' . $domainObject->getName() . ': The mapping table could not be detected from Extbase Configuration. Please enter a table name',
+						self::ERROR_MAPPING_NO_TABLE
+					);
+				}
+			} else {
+				// get the table name from the parent class configuration
+				$tableName = $classConfiguration['tableName'];
+			}
+
+			if (!class_exists($parentClass, TRUE)) {
+				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+					'Mapping configuration error in domain object ' . $domainObject->getName() . ': the parent class ' . $parentClass . 'seems not to exist ',
+					self::ERROR_MAPPING_NO_PARENTCLASS
+				);
+			}
+		}
+		if ($tableName) {
+			if (strpos($extensionPrefix, $tableName) !== FALSE) {
+				// the domainObject extends a class of the same extension
+				if (!$parentClass) {
+					$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+						'Mapping configuration error in domain object ' . $domainObject->getName() . ': you have to define a parent class if you map to a table of another domain object of the same extension ',
+						self::ERROR_MAPPING_NO_PARENTCLASS
+					);
+				}
+			}
+			if (!isset($GLOBALS['TCA'][$tableName])) {
+				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+					'There is no entry for table "' . $tableName . '" of ' . $domainObject->getName() . ' in TCA. For technical reasons you can only extend tables with TCA configuration.',
+					self::ERROR_MAPPING_NO_TCA
+				);
+			}
+
 		}
 	}
 
@@ -688,12 +763,15 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			$actionNames[] = $action->getName();
 		}
 		$this->validateDependentActions($actionNames, 'Domain object ' . $domainObject->getName());
+		/**
 		$firstAction = reset($actionNames);
+		// TODO: this does not make too much sense right now, since the order get lost in YUI inputex
 		if ($firstAction == 'show' || $firstAction == 'edit') {
-			$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
-				'Potential misconfiguration in Domain object ' . $domainObject->getName() . ':<br />First action could not be default action since ' . $firstAction . ' needs a parameter',
-				self::ERROR_MISCONFIGURATION);
+		$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+		'Potential misconfiguration in Domain object ' . $domainObject->getName() . ':<br />First action could not be default action since "' . $firstAction . '" action needs a parameter',
+		self::ERROR_MISCONFIGURATION);
 		}
+		 * */
 	}
 
 
@@ -819,7 +897,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	 * @return boolean
 	 */
 	static public function isReservedTYPO3Word($word) {
-		if (in_array(Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($word), self::$reservedTYPO3ColumnNames)) {
+		if (in_array(t3lib_div::camelCaseToLowerCaseUnderscored($word), self::$reservedTYPO3ColumnNames)) {
 			return TRUE;
 		}
 		else {

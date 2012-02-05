@@ -211,6 +211,31 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 					// remove the controller
 					$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Controller'), $oldDomainObject->getName() . 'Controller.php');
 				}
+
+				$parentClass = $currentDomainObject->getParentClass();
+				$oldParentClass = $oldDomainObject->getParentClass();
+				if (!empty($parentClass)) {
+					if ($oldParentClass != $parentClass) {
+						// the parent class was just new added
+						$this->classObject->setParentClass($parentClass);
+					}
+				} else if (!empty($oldParentClass)) {
+					// the old object had a parent class setting, but it's removed now
+					if ($currentDomainObject->isEntity()) {
+						if (isset($this->settings['Model']['AbstractEntity']['parentClass'])) {
+							$parentClass = $this->settings['Model']['AbstractEntity']['parentClass'];
+						} else {
+							$parentClass = 'Tx_Extbase_DomainObject_AbstractEntity';
+						}
+					} else {
+						if (isset($this->settings['Model']['AbstractValueObject']['parentClass'])) {
+							$parentClass = $this->settings['Model']['AbstractValueObject']['parentClass'];
+						} else {
+							$parentClass = 'Tx_Extbase_DomainObject_AbstractValueObject';
+						}
+					}
+					$this->classObject->setParentClass($parentClass);
+				}
 				return $this->classObject;
 			}
 			else {

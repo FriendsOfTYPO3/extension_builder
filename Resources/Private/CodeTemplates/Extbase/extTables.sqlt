@@ -4,13 +4,17 @@
 # Table structure for table '{domainObject.databaseTableName}'
 #
 CREATE TABLE {domainObject.databaseTableName} (
+<f:if condition="{domainObject.mapToTable}"><f:then></f:then><f:else>
 	uid int(11) NOT NULL auto_increment,
-	pid int(11) DEFAULT '0' NOT NULL,
+	pid int(11) DEFAULT '0' NOT NULL,</f:else></f:if>
 <f:for each="{k:listForeignKeyRelations(extension: extension, domainObject:domainObject)}" as="relation">
 	{relation.foreignKeyName} int(11) unsigned DEFAULT '0' NOT NULL,</f:for>
 <f:for each="{domainObject.properties}" as="property">
 	{property.sqlDefinition}</f:for>
-
+<f:if condition="{domainObject.childObjects}">
+	tx_{extension.extensionKey}_type varchar(255) DEFAULT '' NOT NULL,
+</f:if>
+<f:if condition="{domainObject.mapToTable}"><f:then></f:then><f:else>
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
 	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,
@@ -38,6 +42,8 @@ CREATE TABLE {domainObject.databaseTableName} (
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
 	KEY language (l10n_parent,sys_language_uid)
+	</f:else>
+</f:if>
 );
 </f:for>
 </k:format.trim>

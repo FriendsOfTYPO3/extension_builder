@@ -78,6 +78,10 @@
 			<label index="valueObject">Value object</label>
 			<label index="isAggregateRoot">Is aggregate root?</label>
 			<label index="descr_isAggregateRoot">If true, the extension builder will generate a repository and default controller actions for this model</label>
+			<label index="mapToTable">Map to existing table</label>
+			<label index="descr_mapToTable">If the model should extend an existing table, you can configure this here</label>
+			<label index="parentClass">Extend existing model class</label>
+			<label index="descr_parentClass">If this model should extend an existing other model, name it here</label>
 			<label index="defaultActions">Default actions</label>
 			<label index="actionType">Action type</label>
 			<label index="descr_actionType">For each selected action, the extension builder will generate a template and a action method in the controller of this model. If the model is an aggregate root the default CRUD actions will be generated per default.</label>

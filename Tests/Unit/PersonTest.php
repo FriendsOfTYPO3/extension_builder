@@ -30,17 +30,17 @@ class Tx_ExtensionBuilder_Domain_Model_PersonTest extends Tx_ExtensionBuilder_Te
 	protected $person;
 
 	function setUp() {
-		$this->person=t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
+		$this->person = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
 	}
 
 	/**
 	 * @test
 	 */
-	function GettersSettersTest () {
-		$name="John Doe";
-		$role="Tester";
-		$email="e@mail.com";
-		$company="none";
+	function GettersSettersTest() {
+		$name = "John Doe";
+		$role = "Tester";
+		$email = "e@mail.com";
+		$company = "none";
 
 		$this->person->setName($name);
 		$this->person->setRole($role);
