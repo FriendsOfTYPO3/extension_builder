@@ -228,7 +228,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 * @return string the field name in lowercase underscore
 	 */
 	public function getFieldName() {
-		$fieldName = Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($this->name);
+		$fieldName = t3lib_div::camelCaseToLowerCaseUnderscored($this->name);
 		if (Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::isReservedMYSQLWord($fieldName)) {
 			$fieldName = $this->domainObject->getExtension()->getShortExtensionKey() . '_' . $fieldName;
 		}
@@ -380,7 +380,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 * @return string $mappingStatement
 	 */
 	public function getMappingStatement() {
-		if ($this->getFieldName() != Tx_Extbase_Utility_Extension::convertCamelCaseToLowerCaseUnderscored($this->name)) {
+		if ($this->getFieldName() != t3lib_div::camelCaseToLowerCaseUnderscored($this->name)) {
 			return $this->getFieldName() . '.mapOnProperty = ' . $this->name;
 		}
 		else return NULL;
