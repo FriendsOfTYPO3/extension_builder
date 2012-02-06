@@ -503,6 +503,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			// the first Controller action config is the default Controller action
 			// we show a warning if that's an action that requires a domain object as parameter
 			$defaultAction = reset($actionNames);
+			//t3lib_div::devlog('Invalid action configuration:'.$defaultAction, 'extension_builder', 1, array($controllerName, $actionNames));
 			if (in_array($defaultAction, array('show', 'edit'))) {
 				t3lib_div::devlog('Invalid action configurations', 'extension_builder', 1, array($controllerName, $actionNames));
 				$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
@@ -763,15 +764,15 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			$actionNames[] = $action->getName();
 		}
 		$this->validateDependentActions($actionNames, 'Domain object ' . $domainObject->getName());
-		/**
+
 		$firstAction = reset($actionNames);
 		// TODO: this does not make too much sense right now, since the order get lost in YUI inputex
-		if ($firstAction == 'show' || $firstAction == 'edit') {
-		$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
-		'Potential misconfiguration in Domain object ' . $domainObject->getName() . ':<br />First action could not be default action since "' . $firstAction . '" action needs a parameter',
-		self::ERROR_MISCONFIGURATION);
+		if ($firstAction == 'show' || $firstAction == 'edit' || $firstAction == 'delete') {
+			$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+				'Potential misconfiguration in Domain object ' . $domainObject->getName() . ':<br />First action could not be default action since "' . $firstAction . '" action needs a parameter',
+				self::ERROR_MISCONFIGURATION
+			);
 		}
-		 * */
 	}
 
 
