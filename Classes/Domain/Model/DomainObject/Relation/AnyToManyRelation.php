@@ -55,7 +55,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyR
 			return $this->relationTableName;
 		}
 		$relationTableName = 'tx_'
-							 . strtolower(Tx_Extbase_Utility_Extension::convertLowerUnderscoreToUpperCamelCase($this->domainObject->getExtension()->getExtensionKey()))
+							 . strtolower(t3lib_div::underscoredToUpperCamelCase($this->domainObject->getExtension()->getExtensionKey()))
 							 . '_'
 							 . strtolower($this->domainObject->getName());
 
