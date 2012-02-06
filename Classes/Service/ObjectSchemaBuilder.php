@@ -92,6 +92,7 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 			if ($jsonActionName == 'customActions' && !empty($actionValue)) {
 				$actionNames = $actionValue;
 			} else if ($actionValue == 1) {
+				$jsonActionName = preg_replace('/^_default[0-9]_*/', '', $jsonActionName);
 				if ($jsonActionName == 'edit_update' || $jsonActionName == 'new_create') {
 					$actionNames = explode('_', $jsonActionName);
 				} else {

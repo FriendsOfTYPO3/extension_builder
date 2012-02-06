@@ -129,10 +129,6 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	 * @return void
 	 */
 	public function indexAction() {
-		//$frameworkConfiguration = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-		//$frameworkConfiguration = $this->configurationManager->getExtbaseClassConfiguration('Tx_Extbase_Domain_Model_FrontendUser');
-		//var_dump($frameworkConfiguration);
-		//die();
 		if (!$this->request->hasArgument('action')) {
 			$userSettings = $GLOBALS['BE_USER']->getModuleData('extensionbuilder');
 			if ($userSettings['firstTime'] === 0) {
@@ -201,6 +197,7 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	protected function generateCodeAction_saveWiring() {
 		try {
 			$extensionBuildConfiguration = $this->configurationManager->getConfigurationFromModeler();
+			//t3lib_div::devlog('Modeler Configuration','extension_builder',0,$extensionBuildConfiguration);
 			$validationConfigurationResult = $this->extensionValidator->validateConfigurationFormat($extensionBuildConfiguration);
 			if (!empty($validationConfigurationResult['warnings'])) {
 				$confirmationRequired = $this->handleValidationWarnings($validationConfigurationResult['warnings']);
@@ -303,6 +300,7 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 				continue;
 			}
 			$extensionBuilderConfiguration = $this->configurationManager->getExtensionBuilderConfiguration($singleExtensionDirectory);
+			//t3lib_div::devlog('Modeler Configuration','extension_builder',0,$extensionBuilderConfiguration);
 			if ($extensionBuilderConfiguration !== NULL) {
 				$result[] = array(
 					'name' => $singleExtensionDirectory,

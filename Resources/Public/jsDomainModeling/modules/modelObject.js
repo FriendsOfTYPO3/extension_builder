@@ -98,7 +98,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 							{
 								type: "boolean",
 								inputParams: {
-									name: "list",
+									name: "_default0_list",
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.list,
 									value: true
 								}
@@ -106,7 +106,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 							{
 								type: "boolean",
 								inputParams: {
-									name: "show",
+									name: "_default1_show",
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.show,
 									value: true
 								}
@@ -114,7 +114,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 							{
 								type: "boolean",
 								inputParams: {
-									name: "new_create",
+									name: "_default2_new_create",
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.create_new,
 									value: true
 								}
@@ -122,7 +122,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 							{
 								type: "boolean",
 								inputParams: {
-									name: "edit_update",
+									name: "_default3_edit_update",
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.edit_update,
 									value: true
 								}
@@ -130,7 +130,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 							{
 								type: "boolean",
 								inputParams: {
-									name: "delete",
+									name: "_default4_delete",
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.delete,
 									value: true
 								}

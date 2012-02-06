@@ -476,8 +476,16 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		}
 	}
 
+	/**
+	 * this method should adapt the changes in action configuration
+	 * 1. version: list with dropdowns
+	 * 2. version: checkboxes for default actions and list with textfields for custom actions
+	 * 3. version: prefix for default actions to enable sorting
+	 * @param $modules
+	 * @return mixed
+	 */
 	protected function mapOldActions($modules) {
-		$newActionNames = array('list', 'show', 'new_create', 'edit_update', 'delete');
+		$newActionNames = array('list' => '_default0_list', 'show' => '_default1_show', 'new_create' => '_default2_new_create', 'edit_update' => '_default3_edit_update', 'delete' => '_default4_delete');
 		foreach ($modules as &$module) {
 			if (isset($module['value']['actionGroup']['actions'])) {
 				foreach ($newActionNames as $defaultAction) {
@@ -502,6 +510,15 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 					}
 				}
 				unset($module['value']['actionGroup']['actions']);
+			}
+			//foreach($module['value']['actionGroup'] as $actionName => $value) {
+			foreach($newActionNames as $oldActionKey => $newActionKey){
+				if(isset($module['value']['actionGroup'][$oldActionKey])) {
+					$module['value']['actionGroup'][$newActionKey] = $module['value']['actionGroup'][$oldActionKey];
+					unset($module['value']['actionGroup'][$oldActionKey]);
+				} else if(!isset($module['value']['actionGroup'][$newActionKey])){
+					$module['value']['actionGroup'][$newActionKey] = FALSE;
+				}
 			}
 		}
 		return $modules;
