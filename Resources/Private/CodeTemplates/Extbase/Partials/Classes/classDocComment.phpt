@@ -4,7 +4,7 @@
  * {classSchema.description}</f:if>
  *
  * @package {extension.extensionKey}
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *<f:for each="{classSchema.annotations}" as="annotation">
  * @{annotation}</f:for>
  */
