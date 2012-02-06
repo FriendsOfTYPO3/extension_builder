@@ -42,11 +42,11 @@ if (TYPO3_MODE === 'BE') {
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '<k:format.quoteString>{extension.name}</k:format.quoteString>');
 
 <f:for each="{extension.domainObjects}" as="domainObject">
-	<f:if condition="{domainObject.childObjects}">
+	<k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">
 		if (!isset($TCA['{domainObject.databaseTableName}']['ctrl']['type'])) {
 			$TCA['{domainObject.databaseTableName}']['ctrl']['type'] = 'tx_{domainObject.extension.extensionKey}_type';
 		}
-	</f:if>
+	</k:mapping>
 	<f:if condition="{domainObject.mapToTable}">
 		<f:then>
 			<k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">
