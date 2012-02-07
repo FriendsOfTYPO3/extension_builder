@@ -43,15 +43,10 @@ t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '<k:format.quo
 
 <f:for each="{extension.domainObjects}" as="domainObject">
 	<k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">
-		if (!isset($TCA['{domainObject.databaseTableName}']['ctrl']['type'])) {
-			$TCA['{domainObject.databaseTableName}']['ctrl']['type'] = 'tx_{domainObject.extension.extensionKey}_type';
-		}
+<k:render partial="TCA/TypeField.phpt" arguments="{domainObject:domainObject, settings:settings}" />
 	</k:mapping>
 	<f:if condition="{domainObject.mapToTable}">
 		<f:then>
-			<k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">
-				<k:render partial="TCA/TypeField.phpt" arguments="{domainObject:domainObject, settings:settings}" />
-			</k:mapping>
 			<k:mapping domainObject="{domainObject}" renderCondition="isMappedToExternalTable">
 				<k:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
 			</k:mapping>
