@@ -7,21 +7,21 @@ config.tx_extbase{
 <f:for each="{extension.classHierarchy}" as="subClasses" key="parentClass">
             {parentClass} {
                 subclasses {
-                    <f:for each="{subClasses}" as="domainObject">{domainObject.recordType} = {domainObject.className}
-          			</f:for>
+                    <f:for each="{subClasses}" as="domainObject">{domainObject.recordType} = {domainObject.className}</f:for>
           		}
             }
-            </f:for><f:for each="{extension.domainObjectsThatNeedMappingStatements}" as="domainObject">
+            </f:for>
+            <f:for each="{extension.domainObjectsThatNeedMappingStatements}" as="domainObject">
             {domainObject.className} {
                 mapping {
                     <f:if condition="{domainObject.mapToTable}">tableName = {domainObject.databaseTableName}
-                    recordType = {domainObject.recordType}</f:if>
-                    <f:if condition="{domainObject.propertiesWithMappingStatements}">columns <![CDATA[{]]><f:for each="{domainObject.propertiesWithMappingStatements}" as="property">
+                    recordType = {domainObject.recordType}</f:if><f:if condition="{domainObject.propertiesWithMappingStatements}">columns <![CDATA[{]]><f:for each="{domainObject.propertiesWithMappingStatements}" as="property">
                         {property.mappingStatement}</f:for>
                     }</f:if>
                 }
-            }</f:for>
-       }
+            }
+            </f:for>
+    	}
     }
 }</f:if>
 

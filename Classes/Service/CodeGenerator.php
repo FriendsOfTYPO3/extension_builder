@@ -500,8 +500,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		}
 		$parsedTemplate = $this->templateParser->parse($templateCode);
 		$renderedContent = trim($parsedTemplate->render($this->buildRenderingContext($variables)));
-
-		return str_replace("\n\n\n", "\n", $renderedContent);
+		// remove all double empty lines (coming from fluid)
+		return preg_replace('/^\s*\n[\t ]*$/m','',$renderedContent);
 	}
 
 
