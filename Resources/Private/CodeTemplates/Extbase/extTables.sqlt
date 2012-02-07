@@ -12,7 +12,7 @@ CREATE TABLE {domainObject.databaseTableName} (
 <f:for each="{domainObject.properties}" as="property">
 	{property.sqlDefinition}</f:for>
 <k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">
-	tx_{extension.extensionKey}_type varchar(255) DEFAULT '' NOT NULL,
+	tx_extbase_type varchar(255) DEFAULT '' NOT NULL,
 </k:mapping>
 <f:if condition="{domainObject.mapToTable}"><f:then></f:then><f:else>
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,

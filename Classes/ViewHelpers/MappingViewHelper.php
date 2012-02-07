@@ -92,10 +92,14 @@ class Tx_ExtensionBuilder_ViewHelpers_MappingViewHelper extends Tx_Fluid_Core_Vi
 		$needsTypeField = FALSE;
 		if ($domainObject->getChildObjects() || ($domainObject->getParentClass() && $isMappedToExternalTable)) {
 			$tableName = $domainObject->getDatabaseTableName();
-			if (!isset($GLOBALS['TCA'][$tableName]['ctrl']['type']) || $GLOBALS['TCA'][$tableName]['ctrl']['type'] == 'tx_' . $domainObject->getExtension()->getExtensionKey() . '_recordtype') {
-				// if the type field is set but equals the domain objects type, it was defined by the
-				// current extension and thus has to be defined again when rewriting TCA definitions
-				// the tricky part is, that in edit mode, the type definition will also be there, if the extension itself defined it
+			//t3lib_div::devlog('TCA: '.$tableName,'extension_builder',0,$GLOBALS['TCA'][$tableName]['ctrl']);
+			if (!isset($GLOBALS['TCA'][$tableName]['ctrl']['type']) || $GLOBALS['TCA'][$tableName]['ctrl']['type'] == 'tx_extbase_type') {
+				/**
+				 * if the type field is set but equals the default extbase record type field name it might
+				 * have been defined by the current extension and thus has to be defined again when rewriting TCA definitions
+				 * this might result in duplicate definition, but the type field definition is always wrapped in a condition
+				 * "if(!isset($TCA[table][ctrl][type]){ ..."
+				 */
 				$needsTypeField = TRUE;
 			}
 		}
