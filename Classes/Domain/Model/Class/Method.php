@@ -111,8 +111,10 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 	 */
 	public function getParameterNames() {
 		$parameterNames = array();
-		foreach ($this->parameters as $parameter) {
-			$parameterNames[] = $parameter->getName();
+		if(is_array($this->parameters)) {
+			foreach ($this->parameters as $parameter) {
+				$parameterNames[] = $parameter->getName();
+			}
 		}
 		return $parameterNames;
 	}
@@ -192,7 +194,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 	 */
 	public function getAnnotations() {
 		$annotations = parent::getAnnotations();
-		if (count($this->parameters) > 0 && !$this->isTaggedWith('param')) {
+		if (is_array($this->parameters) && count($this->parameters) > 0 && !$this->isTaggedWith('param')) {
 			$paramTags = array();
 			foreach ($this->parameters as $parameter) {
 				$paramTags[] = 'param ' . strtolower($parameter->getVarType()) . '$' . $parameter->getName();
