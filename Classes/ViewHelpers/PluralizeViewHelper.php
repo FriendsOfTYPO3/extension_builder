@@ -54,7 +54,11 @@ class Tx_ExtensionBuilder_ViewHelpers_PluralizeViewHelper extends Tx_Fluid_Core_
 	 */
 	public function render() {
 		$content = $this->renderChildren();
-		return $this->inflector->pluralize($content);
+		$pluralizedContent = $this->inflector->pluralize($content);
+		if($pluralizedContent == $content) {
+			$pluralizedContent .= 's';
+		}
+		return $pluralizedContent;
 	}
 }
 
