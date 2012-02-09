@@ -50,7 +50,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.category,
 							name: "category",
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_category,
-							selectValues: [ "plugin", "module", "misc", "backend", "frontend", "services","templates", "examples", "doc"],
+							selectValues: [ "plugin", "module", "misc", "be", "fe", "services","templates", "example", "doc"],
 							selectOptions: [
 								TYPO3.settings.extensionBuilder._LOCAL_LANG.plugins,
 								TYPO3.settings.extensionBuilder._LOCAL_LANG.backendModules,
