@@ -80,7 +80,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 				if ($domainObject->isSubClass() && !$domainObject->isMappedToExistingTable()) {
 					// we try to get the table from Extbase configuration
 					$classSettings = $this->configurationManager->getExtbaseClassConfiguration($domainObject->getParentClass());
-					t3lib_div::devlog('!isMappedToExistingTable:' . strtolower($domainObject->getParentClass()), 'extension_builder', 0, $classSettings);
+					//t3lib_div::devlog('!isMappedToExistingTable:' . strtolower($domainObject->getParentClass()), 'extension_builder', 0, $classSettings);
 					if (isset($classSettings['tableName'])) {
 						$tableName = $classSettings['tableName'];
 					} else {
@@ -106,42 +106,66 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 
 		// relations
 		if (is_array($extensionBuildConfiguration['wires'])) {
-			foreach ($extensionBuildConfiguration['wires'] as $wire) {
-
-				if ($wire['tgt']['terminal'] !== 'SOURCES') {
-					if ($wire['src']['terminal'] == 'SOURCES') {
-						// this happens if a relation wire was drawn from child to parent
-						// swap the two arrays
-						$tgtModuleId = $wire['src']['moduleId'];
-						$wire['src'] = $wire['tgt'];
-						$wire['tgt'] = array('moduleId' => $tgtModuleId, 'terminal' => 'SOURCES');
-					}
-					else {
-						throw new Exception('A wire has always to connect a relation with a model, not with another relation');
-					}
-				}
-				$srcModuleId = $wire['src']['moduleId'];
-				$relationId = substr($wire['src']['terminal'], 13); // strip "relationWire_"
-				$relationJsonConfiguration = $extensionBuildConfiguration['modules'][$srcModuleId]['value']['relationGroup']['relations'][$relationId];
-				if (!is_array($relationJsonConfiguration)) {
-					t3lib_div::devlog('Error in JSON relation configuration!', 'extension_builder', 3, $extensionBuildConfiguration);
-					$errorMessage = 'Missing relation config in domain object: ' . $extensionBuildConfiguration['modules'][$srcModuleId]['value']['name'];
-					throw new Exception($errorMessage);
-				}
-
-				$foreignClassName = $extensionBuildConfiguration['modules'][$wire['tgt']['moduleId']]['value']['name'];
-				$localClassName = $extensionBuildConfiguration['modules'][$wire['src']['moduleId']]['value']['name'];
-
-				$relation = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
-
-				$relation->setForeignClass($extension->getDomainObjectByName($foreignClassName));
-
-				$extension->getDomainObjectByName($localClassName)->addProperty($relation);
-			}
+			$this->setExtensionRelations($extensionBuildConfiguration, $extension);
 		}
 
 		return $extension;
+
 	}
+
+	/**
+	 * @param array $extensionBuildConfiguration
+	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
+	 * @throws Exception
+	 */
+	protected function setExtensionRelations($extensionBuildConfiguration, &$extension) {
+		$existingRelations = array();
+
+		foreach ($extensionBuildConfiguration['wires'] as $wire) {
+
+			if ($wire['tgt']['terminal'] !== 'SOURCES') {
+				if ($wire['src']['terminal'] == 'SOURCES') {
+					// this happens if a relation wire was drawn from child to parent
+					// swap the two arrays
+					$tgtModuleId = $wire['src']['moduleId'];
+					$wire['src'] = $wire['tgt'];
+					$wire['tgt'] = array('moduleId' => $tgtModuleId, 'terminal' => 'SOURCES');
+				}
+				else {
+					throw new Exception('A wire has always to connect a relation with a model, not with another relation');
+				}
+			}
+			$srcModuleId = $wire['src']['moduleId'];
+			$relationId = substr($wire['src']['terminal'], 13); // strip "relationWire_"
+			$relationJsonConfiguration = $extensionBuildConfiguration['modules'][$srcModuleId]['value']['relationGroup']['relations'][$relationId];
+			if (!is_array($relationJsonConfiguration)) {
+				t3lib_div::devlog('Error in JSON relation configuration!', 'extension_builder', 3, $extensionBuildConfiguration);
+				$errorMessage = 'Missing relation config in domain object: ' . $extensionBuildConfiguration['modules'][$srcModuleId]['value']['name'];
+				throw new Exception($errorMessage);
+			}
+
+			$foreignClassName = $extensionBuildConfiguration['modules'][$wire['tgt']['moduleId']]['value']['name'];
+			$localClassName = $extensionBuildConfiguration['modules'][$wire['src']['moduleId']]['value']['name'];
+
+			$relation = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
+
+			if(!isset($existingRelations[$localClassName])) {
+				$existingRelations[$localClassName] = array();
+			}
+
+			// get unique foreign key names for multiple relations to the same foreign class
+			if(in_array($foreignClassName, $existingRelations[$localClassName])) {
+				$relation->setForeignKeyName(strtolower($localClassName) . count($existingRelations[$localClassName]));
+			}
+
+			$existingRelations[$localClassName][] = $foreignClassName;
+
+			$relation->setForeignClass($extension->getDomainObjectByName($foreignClassName));
+
+			$extension->getDomainObjectByName($localClassName)->addProperty($relation);
+		}
+	}
+
 
 	/**
 	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension

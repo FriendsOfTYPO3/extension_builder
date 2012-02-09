@@ -33,6 +33,11 @@
  */
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation extends Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation {
 
+	/**
+	 * @var string
+	 */
+	protected $foreignKeyName;
+
 	public function getTypeForComment() {
 		return 'Tx_Extbase_Persistence_ObjectStorage<' . $this->getForeignClass()->getClassName() . '>';
 	}
@@ -42,7 +47,15 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation 
 	}
 
 	public function getForeignKeyName() {
-		return strtolower($this->getDomainObject()->getName());
+		if(empty($this->foreignKeyName)) {
+			return strtolower($this->getDomainObject()->getName());
+		} else {
+			return $this->foreignKeyName;
+		}
+	}
+
+	public function setForeignKeyName($foreignKeyName) {
+		$this->foreignKeyName = $foreignKeyName;
 	}
 
 	/**

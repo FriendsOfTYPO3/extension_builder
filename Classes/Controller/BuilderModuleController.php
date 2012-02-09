@@ -300,7 +300,7 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 				continue;
 			}
 			$extensionBuilderConfiguration = $this->configurationManager->getExtensionBuilderConfiguration($singleExtensionDirectory);
-			//t3lib_div::devlog('Modeler Configuration','extension_builder',0,$extensionBuilderConfiguration);
+			//t3lib_div::devlog('Modeler Configuration: '.$singleExtensionDirectory,'extension_builder',0,$extensionBuilderConfiguration);
 			if ($extensionBuilderConfiguration !== NULL) {
 				$result[] = array(
 					'name' => $singleExtensionDirectory,
