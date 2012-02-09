@@ -7,7 +7,8 @@ config.tx_extbase{
 <f:for each="{extension.classHierarchy}" as="subClasses" key="parentClass">
             {parentClass} {
                 subclasses {
-                    <f:for each="{subClasses}" as="domainObject">{domainObject.recordType} = {domainObject.className}</f:for>
+                    <f:for each="{subClasses}" as="domainObject">{domainObject.recordType} = {domainObject.className}
+					</f:for>
           		}
             }
             </f:for>
