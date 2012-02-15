@@ -47,7 +47,16 @@ var advancedFields = {
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_lazyLoading,
 							value: false
 						}
-					}
+					},
+                    {
+                        type: "string",
+                        inputParams: {
+                            label: TYPO3.settings.extensionBuilder._LOCAL_LANG.foreignRelationClass,
+                            name: "foreignRelationClass",
+                            description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_foreignRelationClass
+                        }
+                    }
+
 			]
 		}
 	};

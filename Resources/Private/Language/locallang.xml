@@ -111,6 +111,8 @@
 			<label index="tab_label">Tab label</label>
 			<label index="lazyLoading">Lazy loading</label>
 			<label index="descr_lazyLoading">Make this relation lazy loading</label>
+            <label index="foreignRelationClass">Relation to external class</label>
+            <label index="descr_foreignRelationClass">If this is a relation to an external model, enter the class name here (The class must exist and be loadable)</label>
 		</languageKey>
 	</data>
 </T3locallang>

@@ -1,5 +1,5 @@
 'type' => 'select',
-'foreign_table' => '{property.foreignClass.databaseTableName}',
+'foreign_table' => '{property.foreignDatabaseTableName}',
 'MM' => '{property.relationTableName}',
 'size' => 10,
 'autoSizeMax' => 30,
@@ -21,7 +21,7 @@
 		'title' => 'Create new',
 		'icon' => 'add.gif',
 		'params' => array(
-			'table' => '{property.foreignClass.databaseTableName}',
+			'table' => '{property.foreignDatabaseTableName}',
 			'pid' => '###CURRENT_PID###',
 			'setValue' => 'prepend'
 			),

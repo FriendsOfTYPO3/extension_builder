@@ -34,11 +34,11 @@
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToOneRelation extends Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation {
 
 	public function getTypeForComment() {
-		return $this->getForeignClass()->getClassName();
+		return $this->getForeignClassName();
 	}
 
 	public function getTypeHint() {
-		return $this->getForeignClass()->getClassName();
+		return $this->getForeignClassName();
 	}
 
 	public function getSqlDefinition() {

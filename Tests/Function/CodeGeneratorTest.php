@@ -130,7 +130,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
 		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToOneRelation($propertyName);
-		$relation->setForeignClass($relatedDomainObject);
+		$relation->setForeignModel($relatedDomainObject);
 		$domainObject->addProperty($relation);
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,TRUE);
 
@@ -176,7 +176,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
 		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation($propertyName);
-		$relation->setForeignClass($relatedDomainObject);
+		$relation->setForeignModel($relatedDomainObject);
 		$domainObject->addProperty($relation);
 
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
@@ -247,7 +247,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
 		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation($propertyName);
-		$relation->setForeignClass($relatedDomainObject);
+		$relation->setForeignModel($relatedDomainObject);
 		$relation->setInlineEditing(false);
 		$domainObject->addProperty($relation);
 
@@ -376,7 +376,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName,true);
 		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation($propertyName);
-		$relation->setForeignClass($relatedDomainObject);
+		$relation->setForeignModel($relatedDomainObject);
 		$relation->setInlineEditing(false);
 		$domainObject->addProperty($relation);
 

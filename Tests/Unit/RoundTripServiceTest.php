@@ -102,7 +102,7 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 
 		$uniqueIdentifier1 = md5(microtime() . 'children');
 		$relation->setUniqueIdentifier($uniqueIdentifier1);
-		$relation->setForeignClass($this->buildDomainObject('ChildModel'));
+		$relation->setForeignModel($this->buildDomainObject('ChildModel'));
 		$domainObject->addProperty($relation);
 		$uniqueIdentifier2 = md5(microtime() . 'Model8');
 		$domainObject->setUniqueIdentifier($uniqueIdentifier2);
@@ -127,7 +127,7 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 
 		$newRelation = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
 		$newRelation->setUniqueIdentifier($uniqueIdentifier1);
-		$newRelation->setForeignClass($this->buildDomainObject('ChildModel'));
+		$newRelation->setForeignModel($this->buildDomainObject('ChildModel'));
 
 		$newRelation->setName('posts');
 
@@ -168,7 +168,7 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 
 		$uniqueIdentifier1 = md5(microtime() . 'children');
 		$relation->setUniqueIdentifier($uniqueIdentifier1);
-		$relation->setForeignClass($this->buildDomainObject('ChildModel'));
+		$relation->setForeignModel($this->buildDomainObject('ChildModel'));
 		$domainObject->addProperty($relation);
 		$uniqueIdentifier2 = md5(microtime() . 'Model8');
 		$domainObject->setUniqueIdentifier($uniqueIdentifier2);
@@ -193,7 +193,7 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 
 		$newRelation = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
 		$newRelation->setUniqueIdentifier($uniqueIdentifier1);
-		$newRelation->setForeignClass($this->buildDomainObject('RenamedModel'));
+		$newRelation->setForeignModel($this->buildDomainObject('RenamedModel'));
 
 		$newRelation->setName('children');
 

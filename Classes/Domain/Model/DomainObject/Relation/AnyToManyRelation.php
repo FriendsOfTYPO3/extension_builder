@@ -54,15 +54,14 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyR
 		if (!empty($this->relationTableName)) {
 			return $this->relationTableName;
 		}
-		$relationTableName = 'tx_'
-							 . strtolower(t3lib_div::underscoredToUpperCamelCase($this->domainObject->getExtension()->getExtensionKey()))
-							 . '_'
-							 . strtolower($this->domainObject->getName());
+		$relationTableName = 'tx_' . str_replace('_','',$this->domainObject->getExtension()->getExtensionKey()) . '_';
+		$relationTableName .= strtolower($this->domainObject->getName());
 
 		if ($this->useExtendedRelationTableName) {
 			$relationTableName .= '_' . strtolower($this->getName());
 		}
-		$relationTableName .= '_' . strtolower($this->foreignClass->getName()) . '_mm';
+		$relationTableName .= '_' . strtolower($this->getForeignModelName()) . '_mm';
+
 		return $relationTableName;
 	}
 

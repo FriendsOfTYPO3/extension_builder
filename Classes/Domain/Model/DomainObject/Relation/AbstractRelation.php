@@ -37,7 +37,18 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRe
 	 * The schema of the foreign class
 	 * @var Tx_ExtensionBuilder_Domain_Model_DomainObject
 	 */
-	protected $foreignClass;
+	protected $foreignModel;
+
+	/**
+	 * The schema of the foreign class
+	 * @var string
+	 */
+	protected $foreignClassName;
+
+	/**
+	 * @var string
+	 */
+	protected $foreignDatabaseTableName;
 
 	/**
 	 * If this flag is set to TRUE the relation is rendered as IRRE field (Inline Relational Record Editing). Default is FALSE.
@@ -50,20 +61,78 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRe
 	 */
 	protected $lazyLoading = FALSE;
 
+	protected $relatedToExternalModel = FALSE;
+
+	public function setRelatedToExternalModel($relatedToExternalModel) {
+		$this->relatedToExternalModel = $relatedToExternalModel;
+	}
+
+	public function getRelatedToExternalModel() {
+		return $this->relatedToExternalModel;
+	}
+
 	/**
 	 *
 	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject The foreign class
 	 */
-	public function getForeignClass() {
-		return $this->foreignClass;
+	public function getForeignModel() {
+		return $this->foreignModel;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getForeignDatabaseTableName() {
+		if(is_object($this->foreignModel)) {
+			return $this->foreignModel->getDatabaseTableName();
+		} else {
+			return $this->foreignDatabaseTableName;
+		}
+	}
+
+	/**
+	 * @param string
+	 */
+	public function setForeignDatabaseTableName( $foreignDatabaseTableName) {
+		$this->foreignDatabaseTableName = $foreignDatabaseTableName;
+	}
+
+	/**
+	 *
+	 * @return string The foreign class
+	 */
+	public function getForeignClassName() {
+		if(isset($this->foreignClassName)) {
+			return $this->foreignClassName;
+		}
+		if(is_object($this->foreignModel)) {
+			return $this->foreignModel->getClassName();
+		}
+		return NULL;
+	}
+
+	public function getForeignModelName() {
+		if(is_object($this->foreignModel)) {
+			return $this->foreignModel->getName();
+		}
+		$parts = explode('_Domain_Model_', $this->foreignClassName);
+		return $parts[1];
 	}
 
 	/**
 	 *
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $foreignClass Set the foreign class of the relation
 	 */
-	public function setForeignClass(Tx_ExtensionBuilder_Domain_Model_DomainObject $foreignClass) {
-		$this->foreignClass = $foreignClass;
+	public function setForeignModel(Tx_ExtensionBuilder_Domain_Model_DomainObject $foreignClass) {
+		$this->foreignModel = $foreignClass;
+	}
+
+	/**
+	 *
+	 * @param string  Set the foreign class nsme of the relation
+	 */
+	public function setForeignClassName( $foreignClassName) {
+		$this->foreignClassName = $foreignClassName;
 	}
 
 	/**
@@ -111,6 +180,8 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRe
 	public function getIsDisplayable() {
 		return FALSE;
 	}
+
+
 }
 
 ?>
