@@ -67,13 +67,13 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 	public $methodRegex = "/^
 		\s*															# Some possible whitespace
 		(
-			((?P<visibility>public|protected|private)\s*)			# Visibility declaration
+			((?P<visibility>public|protected|private)\s+)			# Visibility declaration
 			|
-			((?P<static>static)\s*)									# Static declaration
+			((?P<static>static)\s+)									# Static declaration
 		){0,2}														# Visiblity and Static can both occur, in any order
 		\s*															# Some possible whitespace
 		function													# Literal string 'function'
-		\s*															# Some possible whitespace
+		\s+															# One or multiple whitespaces
 		(?P<methodName>\w*)											# The method name
 		\s*\(														# Some possible whitespace followed by a (
 	/x";
