@@ -45,6 +45,19 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 	}
 
 	/**
+	 * @var Tx_ExtensionBuilder_Service_ObjectSchemaBuilder
+	 */
+	protected $objectSchemaBuilder;
+
+	/**
+	 * @param Tx_ExtensionBuilder_Service_ObjectSchemaBuilder $objectSchemaBuilder
+	 * @return void
+	 */
+	public function injectObjectSchemaBuilder(Tx_ExtensionBuilder_Service_ObjectSchemaBuilder $objectSchemaBuilder) {
+		$this->objectSchemaBuilder = $objectSchemaBuilder;
+	}
+
+	/**
 	 *
 	 * @param array $extensionBuildConfiguration
 	 * @return Tx_ExtensionBuilder_Domain_Model_Extension $extension
@@ -76,7 +89,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		// classes
 		if (is_array($extensionBuildConfiguration['modules'])) {
 			foreach ($extensionBuildConfiguration['modules'] as $singleModule) {
-				$domainObject = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::build($singleModule['value']);
+				$domainObject = $this->objectSchemaBuilder->build($singleModule['value']);
 				if ($domainObject->isSubClass() && !$domainObject->isMappedToExistingTable()) {
 					// we try to get the table from Extbase configuration
 					$classSettings = $this->configurationManager->getExtbaseClassConfiguration($domainObject->getParentClass());
@@ -120,9 +133,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 	 */
 	protected function setExtensionRelations($extensionBuildConfiguration, &$extension) {
 		$existingRelations = array();
-
 		foreach ($extensionBuildConfiguration['wires'] as $wire) {
-
 			if ($wire['tgt']['terminal'] !== 'SOURCES') {
 				if ($wire['src']['terminal'] == 'SOURCES') {
 					// this happens if a relation wire was drawn from child to parent
@@ -138,32 +149,37 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 			$srcModuleId = $wire['src']['moduleId'];
 			$relationId = substr($wire['src']['terminal'], 13); // strip "relationWire_"
 			$relationJsonConfiguration = $extensionBuildConfiguration['modules'][$srcModuleId]['value']['relationGroup']['relations'][$relationId];
+
 			if (!is_array($relationJsonConfiguration)) {
 				t3lib_div::devlog('Error in JSON relation configuration!', 'extension_builder', 3, $extensionBuildConfiguration);
 				$errorMessage = 'Missing relation config in domain object: ' . $extensionBuildConfiguration['modules'][$srcModuleId]['value']['name'];
 				throw new Exception($errorMessage);
 			}
 
-			$foreignClassName = $extensionBuildConfiguration['modules'][$wire['tgt']['moduleId']]['value']['name'];
-			$localClassName = $extensionBuildConfiguration['modules'][$wire['src']['moduleId']]['value']['name'];
+			$foreignModelName = $extensionBuildConfiguration['modules'][$wire['tgt']['moduleId']]['value']['name'];
+			$localModelName = $extensionBuildConfiguration['modules'][$wire['src']['moduleId']]['value']['name'];
 
-			$relation = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
+			//$relation = $this->objectSchemaBuilder->buildRelation($relationJsonConfiguration);
 
-			if(!isset($existingRelations[$localClassName])) {
-				$existingRelations[$localClassName] = array();
+			if (!isset($existingRelations[$localModelName])) {
+				$existingRelations[$localModelName] = array();
 			}
-
+			$domainObject = $extension->getDomainObjectByName($localModelName);
+			$relation = $domainObject->getPropertyByName($relationJsonConfiguration['relationName']);
+			if (!$relation) {
+				t3lib_div::devlog('Relation not found: ' . $localModelName . '->' . $relationJsonConfiguration['relationName'],'extension_builder',2,$relationJsonConfiguration);
+				throw new Exception('Relation not found: ' . $localModelName . '->' . $relationJsonConfiguration['relationName']);
+			}
 			// get unique foreign key names for multiple relations to the same foreign class
-			if(in_array($foreignClassName, $existingRelations[$localClassName])) {
-				$relation->setForeignKeyName(strtolower($localClassName) . count($existingRelations[$localClassName]));
+			if (in_array($foreignModelName, $existingRelations[$localModelName])) {
+				$relation->setForeignKeyName(strtolower($localModelName) . count($existingRelations[$localModelName]));
+				$relation->setUseExtendedRelationTableName(TRUE);
 			}
+			$existingRelations[$localModelName][] = $foreignModelName;
 
-			$existingRelations[$localClassName][] = $foreignClassName;
-
-			$relation->setForeignClass($extension->getDomainObjectByName($foreignClassName));
-
-			$extension->getDomainObjectByName($localClassName)->addProperty($relation);
+			$relation->setForeignModel($extension->getDomainObjectByName($foreignModelName));
 		}
+
 	}
 
 

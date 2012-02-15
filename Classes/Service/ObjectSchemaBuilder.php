@@ -33,11 +33,25 @@
 class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton {
 
 	/**
+	 * @var Tx_ExtensionBuilder_Configuration_ConfigurationManager
+	 */
+	protected $configurationManager;
+
+	/**
+	 * @param Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager
+	 * @return void
+	 */
+	public function injectConfigurationManager(Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager) {
+		$this->configurationManager = $configurationManager;
+	}
+
+	/**
 	 *
 	 * @param array $jsonDomainObject
 	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
 	 */
-	static public function build(array $jsonDomainObject) {
+	public function build(array $jsonDomainObject) {
+		//t3lib_div::devlog('Building domain object '.$jsonDomainObject['name'],'extension_builder',0,$jsonDomainObject);
 		$domainObject = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject');
 		$domainObject->setUniqueIdentifier($jsonDomainObject['objectsettings']['uid']);
 
@@ -82,8 +96,37 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 			if (isset($jsonProperty['propertyIsExcludeField'])) {
 				$property->setExcludeField($jsonProperty['propertyIsExcludeField']);
 			}
-
+			//t3lib_div::devlog('Adding property ' . $jsonProperty['propertyName'] . ' to domain object '.$jsonDomainObject['name'],'extension_builder',0,$jsonDomainObject);
 			$domainObject->addProperty($property);
+		}
+
+		$relatedForeignTables = array();
+		foreach ($jsonDomainObject['relationGroup']['relations'] as $jsonRelation) {
+			$relation = self::buildRelation($jsonRelation);
+			if (!empty($jsonRelation['foreignRelationClass'])) {
+				// relations without wires
+				$relation->setForeignClassName($jsonRelation['foreignRelationClass']);
+				$relation->setRelatedToExternalModel(TRUE);
+				$extbaseClassConfiguration = $this->configurationManager->getExtbaseClassConfiguration($jsonRelation['foreignRelationClass']);
+				if (isset($extbaseClassConfiguration['tableName'])) {
+					$foreignDatabaseTableName = $extbaseClassConfiguration['tableName'];
+				} else {
+					$foreignDatabaseTableName = strtolower($jsonRelation['foreignRelationClass']);
+				}
+				$relation->setForeignDatabaseTableName($foreignDatabaseTableName);
+				if (is_a($relation, Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation)) {
+					$foreignKeyName = strtolower($domainObject->getName());
+					if (isset($relatedForeignTables[$foreignDatabaseTableName])) {
+						$foreignKeyName .= $relatedForeignTables[$foreignDatabaseTableName];
+						$relatedForeignTables[$foreignDatabaseTableName] += 1;
+					} else {
+						$relatedForeignTables[$foreignDatabaseTableName] = 1;
+					}
+					$relation->setForeignKeyName($foreignKeyName);
+				}
+			}
+			//t3lib_div::devlog('Adding relation ' . $jsonRelation['relationName'] . ' to domain object '.$jsonDomainObject['name'],'extension_builder',0,$jsonRelation);
+			$domainObject->addProperty($relation);
 		}
 
 		//actions
@@ -123,7 +166,9 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 	public static function buildRelation($relationJsonConfiguration) {
 		$relationSchemaClassName = 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_' . ucfirst($relationJsonConfiguration['relationType']) . 'Relation';
 		if (!class_exists($relationSchemaClassName)) {
-			throw new Exception('Relation of type ' . $relationSchemaClassName . ' not found');
+
+			t3lib_div::devlog('Relation misconfiguration','extension_builder',2,$relationJsonConfiguration);
+			throw new Exception('Relation of type ' . $relationSchemaClassName . ' not found (configured in "' . $relationJsonConfiguration['relationName'] . '")');
 		}
 		$relation = new $relationSchemaClassName;
 		$relation->setName($relationJsonConfiguration['relationName']);

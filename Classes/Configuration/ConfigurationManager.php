@@ -363,7 +363,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 * @return array modified json
 	 */
 	protected function mapAdvancedMode($jsonConfig, $prepareForModeler) {
-		$fieldsToMap = array('relationType', 'propertyIsExcludeField', 'propertyIsExcludeField', 'lazyLoading', 'relationDescription');
+		$fieldsToMap = array('relationType', 'propertyIsExcludeField', 'propertyIsExcludeField', 'lazyLoading', 'relationDescription','foreignRelationClass');
 		foreach ($jsonConfig as &$module) {
 			for ($i = 0; $i < count($module['value']['relationGroup']['relations']); $i++) {
 				if ($prepareForModeler) {
@@ -376,6 +376,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 						$module['value']['relationGroup']['relations'][$i]['advancedSettings']['propertyIsExcludeField'] = $module['value']['relationGroup']['relations'][$i]['propertyIsExcludeField'];
 						$module['value']['relationGroup']['relations'][$i]['advancedSettings']['lazyLoading'] = $module['value']['relationGroup']['relations'][$i]['lazyLoading'];
 						$module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationDescription'] = $module['value']['relationGroup']['relations'][$i]['relationDescription'];
+						$module['value']['relationGroup']['relations'][$i]['advancedSettings']['foreignRelationClass'] = $module['value']['relationGroup']['relations'][$i]['foreignRelationClass'];
 					}
 				} else if (isset($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
 					foreach ($fieldsToMap as $fieldToMap) {

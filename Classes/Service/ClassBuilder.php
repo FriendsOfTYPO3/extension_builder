@@ -223,7 +223,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 * @return void
 	 */
 	protected function setPropertyRelatedMethods($domainProperty) {
-		//t3lib_div::devlog('setPropertyRelatedMethods:' . $domainProperty->getName(), 'extension_builder', 0, (array)$domainProperty);
+		t3lib_div::devlog('setPropertyRelatedMethods:' . $domainProperty->getName(), 'extension_builder', 0, (array)$domainProperty);
 		if (is_subclass_of($domainProperty, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
 			$addMethod = $this->buildAddMethod($domainProperty);
 			$removeMethod = $this->buildRemoveMethod($domainProperty);
@@ -341,12 +341,12 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 
 		if (!in_array(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName), $addParameters)) {
 			$addParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter(self::getParameterName($domainProperty, 'add'));
-			$addParameter->setVarType($domainProperty->getForeignClass()->getClassName());
-			$addParameter->setTypeHint($domainProperty->getForeignClass()->getClassName());
+			$addParameter->setVarType($domainProperty->getForeignClassName());
+			$addParameter->setTypeHint($domainProperty->getForeignClassName());
 			$addMethod->setParameter($addParameter);
 		}
 		if (!$addMethod->hasDescription()) {
-			$addMethod->setDescription('Adds a ' . ucfirst($domainProperty->getForeignClass()->getName()));
+			$addMethod->setDescription('Adds a ' . $domainProperty->getForeignModelName());
 		}
 		return $addMethod;
 	}
@@ -381,13 +381,13 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 
 		if (!in_array(self::getParameterName($domainProperty, 'remove'), $removeParameters)) {
 			$removeParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter(self::getParameterName($domainProperty, 'remove'));
-			$removeParameter->setVarType($domainProperty->getForeignClass()->getClassName());
-			$removeParameter->setTypeHint($domainProperty->getForeignClass()->getClassName());
+			$removeParameter->setVarType($domainProperty->getForeignClassName());
+			$removeParameter->setTypeHint($domainProperty->getForeignClassName());
 			$removeMethod->setParameter($removeParameter);
 		}
 
 		if (!$removeMethod->hasDescription()) {
-			$removeMethod->setDescription('Removes a ' . ucfirst($domainProperty->getForeignClass()->getName()));
+			$removeMethod->setDescription('Removes a ' . $domainProperty->getForeignModelName());
 		}
 		return $removeMethod;
 	}
@@ -513,14 +513,14 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 				return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
 
 			case 'add'		:
-				$paramTag = $domainProperty->getForeignClass()->getClassName();
+				$paramTag = $domainProperty->getForeignClassName();
 				$paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
 				return $paramTag;
 
 			case 'remove'	:
-				$paramTag = $domainProperty->getForeignClass()->getClassName();
+				$paramTag = $domainProperty->getForeignClassName();
 				$paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
-				$paramTag .= ' The ' . $domainProperty->getForeignClass()->getName() . ' to be removed';
+				$paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';
 				return $paramTag;
 		}
 	}

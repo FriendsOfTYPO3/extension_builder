@@ -28,6 +28,17 @@
 
 class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Tests_BaseTest {
 
+	public function setUp() {
+		//parent::setUp();
+		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_ObjectSchemaBuilder'), array('dummy'));
+		$concreteConfigurationManager = new Tx_Extbase_Configuration_BackendConfigurationManager();
+		$typoscriptService = new Tx_Extbase_Service_TypoScriptService();
+		$concreteConfigurationManager->injectTypoScriptService($typoscriptService);
+		$configurationManager = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Configuration_ConfigurationManager'),array('dummy'));
+		$configurationManager->_set('concreteConfigurationManager',$concreteConfigurationManager);
+		$this->objectSchemaBuilder->injectConfigurationManager($configurationManager);
+	}
+
 
 	/**
 	 * @test
@@ -83,9 +94,193 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 		$listAction->setName('list');
 		$expected->addAction($listAction);
 
-		$actual = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::build($input);
+		$actual = $this->objectSchemaBuilder->build($input);
 
 		$this->assertEquals($actual, $expected, 'Domain Object not built correctly.');
+
+	}
+
+	/**
+	 * @test
+	 */
+	public function domainObjectHasExpectedRelations() {
+		$name = 'MyDomainObject';
+		$description = 'My long domain object description';
+
+		$input = array(
+			'name' => $name,
+			'objectsettings' => array(
+				'description' => $description,
+				'aggregateRoot' => TRUE,
+				'type' => 'Entity'
+			),
+			'relationGroup' => array(
+				'relations' => array(
+					0 => array(
+						'relationName' => 'relation 1',
+						'relationType' => 'manyToMany',
+						'propertyIsExcludeField' => FALSE,
+						'foreignRelationClass' => 'Tx_Extbase_Domain_Model_FrontendUser'
+					),
+					1 => array(
+						'relationName' => 'relation 2',
+						'relationType' => 'manyToMany',
+						'propertyIsExcludeField' => FALSE,
+						'foreignRelationClass' => 'Tx_Extbase_Domain_Model_FrontendUser'
+					),
+				)
+			),
+		);
+
+		$expected = new Tx_ExtensionBuilder_Domain_Model_DomainObject();
+		$expected->setName($name);
+		$expected->setDescription($description);
+		$expected->setEntity(TRUE);
+		$expected->setAggregateRoot(TRUE);
+
+		$relation1 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation('relation 1');
+		$relation1->setForeignClassName('Tx_Extbase_Domain_Model_FrontendUser');
+		$relation1->setRelatedToExternalModel(TRUE);
+		$relation1->setExcludeField(FALSE);
+		$relation1->setForeignDatabaseTableName('fe_users');
+		$relation2 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation('relation 2');
+		$relation2->setForeignClassName('Tx_Extbase_Domain_Model_FrontendUser');
+		$relation2->setRelatedToExternalModel(TRUE);
+		$relation2->setExcludeField(FALSE);
+		$relation2->setForeignDatabaseTableName('fe_users');
+		$expected->addProperty($relation1);
+		$expected->addProperty($relation2);
+
+
+		$actual = $this->objectSchemaBuilder->build($input);
+		$this->assertEquals($actual, $expected, 'Domain Object not built correctly.');
+
+	}
+
+	/**
+	 * @test
+	 */
+	public function manyToManyRelationReturnsCorrectRelationTable() {
+		$name = 'MyDomainObject';
+		$description = 'My long domain object description';
+		$relationName = 'Relation1';
+		$input = array(
+			'name' => $name,
+			'objectsettings' => array(
+				'description' => $description,
+				'aggregateRoot' => TRUE,
+				'type' => 'Entity'
+			),
+			'relationGroup' => array(
+				'relations' => array(
+					0 => array(
+						'relationName' => $relationName,
+						'relationType' => 'manyToMany',
+						'propertyIsExcludeField' => FALSE,
+						'foreignRelationClass' => 'Tx_Extbase_Domain_Model_FrontendUser'
+					),
+				)
+			),
+		);
+
+		$domainObject = $this->objectSchemaBuilder->build($input);
+		$dummyExtension = new Tx_ExtensionBuilder_Domain_Model_Extension();
+		$dummyExtension->setExtensionKey('dummy');
+		$domainObject->setExtension($dummyExtension);
+
+		$relation = $domainObject->getPropertyByName($relationName);
+
+		$this->assertTrue($relation->getUseMMTable(), 'ManyToMany Relation->getUseMMTable() returned FALSE.');
+
+		$this->assertEquals('tx_dummy_mydomainobject_frontenduser_mm',$relation->getRelationTableName());
+
+		$relation->setUseExtendedRelationTableName(TRUE);
+
+		$this->assertEquals('tx_dummy_mydomainobject_relation1_frontenduser_mm',$relation->getRelationTableName());
+
+		$this->assertEquals('fe_users',$relation->getForeignDatabaseTableName());
+
+	}
+
+	/**
+	 * @test
+	 */
+	public function anyToManyRelationHasExpectedProperties() {
+		$domainObjectName1 = 'DomainObject1';
+		$domainObjectName2 = 'DomainObject2';
+		$description = 'My long domain object description';
+		$relationName = 'Relation1';
+		$input = array(
+			'name' => $domainObjectName1,
+			'objectsettings' => array(
+				'description' => $description,
+				'aggregateRoot' => TRUE,
+				'type' => 'Entity'
+			),
+			'relationGroup' => array(
+				'relations' => array(
+					0 => array(
+						'relationName' => $relationName,
+						'relationType' => 'zeroToMany',
+						'propertyIsExcludeField' => FALSE,
+					),
+				)
+			),
+		);
+
+		$domainObject1 = $this->objectSchemaBuilder->build($input);
+		$input['name'] = $domainObjectName2;
+		$domainObject2 = $this->objectSchemaBuilder->build($input);
+
+		$dummyExtension = new Tx_ExtensionBuilder_Domain_Model_Extension();
+		$dummyExtension->setExtensionKey('dummy');
+		$domainObject1->setExtension($dummyExtension);
+		$domainObject2->setExtension($dummyExtension);
+
+		$relation = $domainObject1->getPropertyByName($relationName);
+
+		$relation->setForeignModel($domainObject2);
+
+		$this->assertFalse($relation->getUseMMTable(), 'ZeroToMany Relation->getUseMMTable() returned TRUE.');
+
+		$this->assertEquals('tx_dummy_domain_model_domainobject2',$relation->getForeignDatabaseTableName());
+
+	}
+
+	/**
+	 * Find the mapped table for a foreign related class
+	 * @test
+	 */
+	public function anyToManyRelationToForeignClassBuildsCorrectRelationTableName() {
+		$domainObjectName1 = 'DomainObject1';
+		$description = 'My long domain object description';
+		$relationName = 'Relation1';
+		$input = array(
+			'name' => $domainObjectName1,
+			'objectsettings' => array(
+				'description' => $description,
+				'aggregateRoot' => TRUE,
+				'type' => 'Entity'
+			),
+			'relationGroup' => array(
+				'relations' => array(
+					0 => array(
+						'relationName' => $relationName,
+						'relationType' => 'zeroToMany',
+						'propertyIsExcludeField' => FALSE,
+						'foreignRelationClass' => 'Tx_Extbase_Domain_Model_FrontendUser'
+					),
+				)
+			),
+		);
+
+		$domainObject1 = $this->objectSchemaBuilder->build($input);
+
+		$relation = $domainObject1->getPropertyByName($relationName);
+
+		$this->assertFalse($relation->getUseMMTable(), 'ZeroToMany Relation->getUseMMTable() returned TRUE.');
+
+		$this->assertEquals('fe_users',$relation->getForeignDatabaseTableName());
 
 	}
 }

@@ -109,7 +109,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 		$relatedDomainObject = $this->buildDomainObject($modelName2);
 
 		$relationProperty = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation($propertyName);
-		$relationProperty->setForeignClass($relatedDomainObject);
+		$relationProperty->setForeignModel($relatedDomainObject);
 		$domainObject1->addProperty($relationProperty);
 
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject1);

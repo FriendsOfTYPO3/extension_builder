@@ -62,7 +62,9 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	EXTENSION_DIR_EXISTS = 500,
 	ERROR_MAPPING_NO_TCA = 600,
 	ERROR_MAPPING_NO_PARENTCLASS = 601,
-	ERROR_MAPPING_NO_TABLE = 602;
+	ERROR_MAPPING_NO_TABLE = 602,
+	ERROR_MAPPING_NO_FOREIGNCLASS = 603,
+	ERROR_MAPPING_WIRE_AND_FOREIGNCLASS = 604;
 
 	/**
 	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
@@ -766,7 +768,6 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 		$this->validateDependentActions($actionNames, 'Domain object ' . $domainObject->getName());
 
 		$firstAction = reset($actionNames);
-		// TODO: this does not make too much sense right now, since the order get lost in YUI inputex
 		if ($firstAction == 'show' || $firstAction == 'edit' || $firstAction == 'delete') {
 			$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 				'Potential misconfiguration in Domain object ' . $domainObject->getName() . ':<br />First action could not be default action since "' . $firstAction . '" action needs a parameter',
@@ -829,6 +830,24 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Property "' . $property->getName() . '" of ' . $domainObject->getName() . ' exists twice.', self::ERROR_PROPERTY_DUPLICATE);
 			}
 			$propertyNames[] = $propertyName;
+
+			if( is_subclass_of($property, Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation)) {
+				if(!$property->getForeignModel() && $property->getForeignClassName()){
+					if(!class_exists($property->getForeignClassName())) {
+						$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+							'Related class not loadable: "' . $property->getForeignClassName() . '" configured in relation "' .$property->getName() . '".',
+							self::ERROR_MAPPING_NO_FOREIGNCLASS
+						);
+					}
+				}
+				if($property->getForeignModel() && ($property->getForeignModel()->getClassName() != $property->getForeignClassName())){
+					$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+						'Relation "' .$property->getName() . '" in model "' . $domainObject->getName() . '" has a external class relation and a wire to '.$property->getForeignModel()->getName() ,
+						self::ERROR_MAPPING_WIRE_AND_FOREIGNCLASS
+					);
+				}
+			}
+
 		}
 	}
 

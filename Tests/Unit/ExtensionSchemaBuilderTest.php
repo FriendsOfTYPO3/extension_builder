@@ -35,6 +35,9 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 		$this->extension = $this->getMock('Tx_ExtensionBuilder_Domain_Model_Extension', array('getOverWriteSettings'));
 		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder'), array('dummy'));
 		$this->extensionSchemaBuilder->injectConfigurationManager(new Tx_ExtensionBuilder_Configuration_ConfigurationManager());
+		$objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_ObjectSchemaBuilder'), array('dummy'));
+		$objectSchemaBuilder->injectConfigurationManager(new Tx_ExtensionBuilder_Configuration_ConfigurationManager());
+		$this->extensionSchemaBuilder->injectObjectSchemaBuilder($objectSchemaBuilder);
 		$this->extensionKey = 'dummy';
 	}
 
@@ -269,12 +272,12 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 		$extension->addDomainObject($comment);
 
 		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation('posts');
-		$relation->setForeignClass($post);
+		$relation->setForeignModel($post);
 		$relation->setExcludeField(1);
 		$blog->addProperty($relation);
 
 		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation('comments');
-		$relation->setForeignClass($comment);
+		$relation->setForeignModel($comment);
 		$relation->setExcludeField(1);
 		$post->addProperty($relation);
 		$actualExtension = $this->extensionSchemaBuilder->build($input);
