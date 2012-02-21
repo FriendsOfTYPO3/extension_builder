@@ -172,7 +172,9 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 			}
 			// get unique foreign key names for multiple relations to the same foreign class
 			if (in_array($foreignModelName, $existingRelations[$localModelName])) {
-				$relation->setForeignKeyName(strtolower($localModelName) . count($existingRelations[$localModelName]));
+				if (is_a($relation, Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation)) {
+					$relation->setForeignKeyName(strtolower($localModelName) . count($existingRelations[$localModelName]));
+				}
 				$relation->setUseExtendedRelationTableName(TRUE);
 			}
 			$existingRelations[$localModelName][] = $foreignModelName;
