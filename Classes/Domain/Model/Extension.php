@@ -155,6 +155,11 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	private $renamed = FALSE;
 
 	/**
+	 * @var array
+	 */
+	private $dependencies = array();
+
+	/**
 	 *
 	 * @return string
 	 */
@@ -702,6 +707,20 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 */
 	public function getSupportVersioning() {
 		return $this->supportVersioning;
+	}
+
+	/**
+	 * @param array $dependencies
+	 */
+	public function setDependencies($dependencies) {
+		$this->dependencies = $dependencies;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getDependencies() {
+		return $this->dependencies;
 	}
 
 }

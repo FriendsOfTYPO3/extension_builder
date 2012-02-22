@@ -43,6 +43,8 @@
 			<label index="descr_shy">If the extension is marked as shy, it won't be displayed in the extension manager by default</label>
 			<label index="disableVersioning">Disable versioning</label>
 			<label index="descr_disableVersioning">Check this if your extension needs no support for versioning. This will skip the creation of versioning related columns in the database</label>
+			<label index="dependsOn">Depends on</label>
+			<label index="descr_dependsOn">If the extension is depending on other extensions, enter the extension keys here (one per line followed by a double arrow and the lowest version number). Please leave extbase and fluid since they are required always</label>
 			<label index="persons">Persons</label>
 			<label index="role">Role</label>
 			<label index="developer">Developer</label>

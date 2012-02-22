@@ -29,10 +29,8 @@ $EM_CONF[$_EXTKEY] = array(
 	'lockType' => '',
 	'version' => '{extension.version}',
 	'constraints' => array(
-		'depends' => array(
-			'cms' => '',
-			'extbase' => '',
-			'fluid' => '',
+		'depends' => array(<f:for each="{extension.dependencies}" as="version" key="extensionKey">
+			'{extensionKey}' => '{version}',</f:for>
 		),
 		'conflicts' => array(
 		),
