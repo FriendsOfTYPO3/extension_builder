@@ -115,6 +115,15 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							value: 0,
 							postText: TYPO3.settings.extensionBuilder._LOCAL_LANG.extension_api_link
 						}
+					},
+					{
+						type: "boolean",
+						inputParams: {
+							name: "disableVersioning",
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.disableVersioning,
+							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_disableVersioning,
+							value: 0,
+						}
 					}
 			]
 		}

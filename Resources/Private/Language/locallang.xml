@@ -41,6 +41,8 @@
 			<label index="descr_priority">This tells the EM to try to load the extension as the very first or last of all extensions. Possible values: top or bottom</label>
 			<label index="shy">Shy</label>
 			<label index="descr_shy">If the extension is marked as shy, it won't be displayed in the extension manager by default</label>
+			<label index="disableVersioning">Disable versioning</label>
+			<label index="descr_disableVersioning">Check this if your extension needs no support for versioning. This will skip the creation of versioning related columns in the database</label>
 			<label index="persons">Persons</label>
 			<label index="role">Role</label>
 			<label index="developer">Developer</label>
