@@ -29,11 +29,14 @@
 class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Tests_BaseTest {
 
 	public function setUp() {
-		//parent::setUp();
+
 		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_ObjectSchemaBuilder'), array('dummy'));
 		$concreteConfigurationManager = new Tx_Extbase_Configuration_BackendConfigurationManager();
-		$typoscriptService = new Tx_Extbase_Service_TypoScriptService();
-		$concreteConfigurationManager->injectTypoScriptService($typoscriptService);
+		if(class_exists(Tx_Extbase_Service_TypoScriptService)) {
+			// this is needed in TYPO3 versions > 4.5
+			$typoscriptService = new Tx_Extbase_Service_TypoScriptService();
+			$concreteConfigurationManager->injectTypoScriptService($typoscriptService);
+		}
 		$configurationManager = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Configuration_ConfigurationManager'),array('dummy'));
 		$configurationManager->_set('concreteConfigurationManager',$concreteConfigurationManager);
 		$this->objectSchemaBuilder->injectConfigurationManager($configurationManager);

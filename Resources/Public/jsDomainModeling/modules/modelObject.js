@@ -202,24 +202,38 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 														selectValues: [
 															"String",
 															"Text",
+															"RichText",
 															"Integer",
 															"Float",
 															"Boolean",
 															"DateTime",
+															"Date",
+															"Time",
+															"TimeSec",
 															"Select",
 															"File",
-															"Image"
+															"Image",
+															"FileReference",
+															"Folder",
+															"Password"
 														],
 														selectOptions: [
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.string,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.text,
+															TYPO3.settings.extensionBuilder._LOCAL_LANG.richText,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.integer,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.floatingPoint,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.boolean,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.dateTime,
+															TYPO3.settings.extensionBuilder._LOCAL_LANG.date,
+															TYPO3.settings.extensionBuilder._LOCAL_LANG.time,
+															TYPO3.settings.extensionBuilder._LOCAL_LANG.timeSec,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.selectList,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.file,
-															TYPO3.settings.extensionBuilder._LOCAL_LANG.image
+															TYPO3.settings.extensionBuilder._LOCAL_LANG.image,
+															TYPO3.settings.extensionBuilder._LOCAL_LANG.fileReference,
+															TYPO3.settings.extensionBuilder._LOCAL_LANG.folder,
+															TYPO3.settings.extensionBuilder._LOCAL_LANG.password
 														]
 													}
 												},
