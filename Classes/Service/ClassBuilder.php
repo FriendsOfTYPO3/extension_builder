@@ -67,6 +67,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 */
 	public function injectRoundtripService(Tx_ExtensionBuilder_Service_RoundTrip $roundTripService) {
 		$this->roundTripService = $roundTripService;
+		$this->roundTripService->injectClassBuilder($this);
 	}
 
 	/**
@@ -278,7 +279,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 */
 	protected function buildSetterMethod($domainProperty) {
 
-		$propertyName = self::getParameterName($domainProperty, 'set');
+		$propertyName = $this->getParameterName($domainProperty, 'set');
 		// add (or update) a setter method
 		$setterMethodName = $this->getMethodName($domainProperty, 'set');
 		if ($this->classObject->methodExists($setterMethodName)) {
@@ -291,7 +292,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			$setterMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($setterMethodName);
 			// default method body
 			$setterMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'set', ''));
-			$setterMethod->setTag('param', self::getParamTag($domainProperty, 'set'));
+			$setterMethod->setTag('param', $this->getParamTag($domainProperty, 'set'));
 			$setterMethod->setTag('return', 'void');
 			$setterMethod->addModifier('public');
 		}
@@ -332,7 +333,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			$addMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($addMethodName);
 			// default method body
 			$addMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'add', ''));
-			$addMethod->setTag('param', self::getParamTag($domainProperty, 'add'));
+			$addMethod->setTag('param', $this->getParamTag($domainProperty, 'add'));
 
 			$addMethod->setTag('return', 'void');
 			$addMethod->addModifier('public');
@@ -340,7 +341,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 		$addParameters = $addMethod->getParameterNames();
 
 		if (!in_array(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName), $addParameters)) {
-			$addParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter(self::getParameterName($domainProperty, 'add'));
+			$addParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($this->getParameterName($domainProperty, 'add'));
 			$addParameter->setVarType($domainProperty->getForeignClassName());
 			$addParameter->setTypeHint($domainProperty->getForeignClassName());
 			$addMethod->setParameter($addParameter);
@@ -372,15 +373,15 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			$removeMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($removeMethodName);
 			// default method body
 			$removeMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'remove', ''));
-			$removeMethod->setTag('param', self::getParamTag($domainProperty, 'remove'));
+			$removeMethod->setTag('param', $this->getParamTag($domainProperty, 'remove'));
 			$removeMethod->setTag('return', 'void');
 			$removeMethod->addModifier('public');
 		}
 
 		$removeParameters = $removeMethod->getParameterNames();
 
-		if (!in_array(self::getParameterName($domainProperty, 'remove'), $removeParameters)) {
-			$removeParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter(self::getParameterName($domainProperty, 'remove'));
+		if (!in_array($this->getParameterName($domainProperty, 'remove'), $removeParameters)) {
+			$removeParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($this->getParameterName($domainProperty, 'remove'));
 			$removeParameter->setVarType($domainProperty->getForeignClassName());
 			$removeParameter->setTypeHint($domainProperty->getForeignClassName());
 			$removeMethod->setParameter($removeParameter);
@@ -463,7 +464,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 * @param string $methodType (get,set,add,remove,is)
 	 * @return string method name
 	 */
-	public static function getMethodName($domainProperty, $methodType) {
+	public function getMethodName($domainProperty, $methodType) {
 		$propertyName = $domainProperty->getName();
 		switch ($methodType) {
 			case 'set'		:
@@ -489,7 +490,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 * @param string $methodType (set,add,remove)
 	 * @return string method body
 	 */
-	public static function getParameterName($domainProperty, $methodType) {
+	public function getParameterName($domainProperty, $methodType) {
 
 		$propertyName = $domainProperty->getName();
 
@@ -506,7 +507,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 		}
 	}
 
-	public static function getParamTag($domainProperty, $methodType) {
+	public function getParamTag($domainProperty, $methodType) {
 
 		switch ($methodType) {
 			case 'set'		:
@@ -514,12 +515,12 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 
 			case 'add'		:
 				$paramTag = $domainProperty->getForeignClassName();
-				$paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
+				$paramTag .= ' $' . $this->getParameterName($domainProperty, 'add');
 				return $paramTag;
 
 			case 'remove'	:
 				$paramTag = $domainProperty->getForeignClassName();
-				$paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
+				$paramTag .= ' $' . $this->getParameterName($domainProperty, 'remove');
 				$paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';
 				return $paramTag;
 		}

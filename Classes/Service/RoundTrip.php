@@ -71,6 +71,10 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 */
 	protected $classParser;
 
+	/**
+	 * @var Tx_ExtensionBuilder_Service_ClassBuilder
+	 */
+	protected $classBuilder;
 
 	/**
 	 * was the extension renamed?
@@ -85,6 +89,14 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 */
 	public function injectClassParser(Tx_ExtensionBuilder_Utility_ClassParser $classParser) {
 		$this->classParser = $classParser;
+	}
+
+	/**
+	 * @param Tx_ExtensionBuilder_Service_ClassBuilder $classBuilder
+	 * @return void
+	 */
+	public function injectClassBuilder(Tx_ExtensionBuilder_Service_ClassBuilder $classBuilder) {
+		$this->classBuilder = $classBuilder;
 	}
 
 	/**
@@ -603,8 +615,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		}
 		if ($newProperty->getTypeForComment() != $this->updateExtensionKey($oldProperty->getTypeForComment())) {
 			if ($oldProperty->isBoolean() && !$newProperty->isBoolean()) {
-				$this->classObject->removeMethod(Tx_ExtensionBuilder_Service_ClassBuilder::getMethodName($oldProperty, 'is'));
-				t3lib_div::devlog('Method removed:' . Tx_ExtensionBuilder_Service_ClassBuilder::getMethodName($oldProperty, 'is'),
+				$this->classObject->removeMethod($this->classBuilder->getMethodName($oldProperty, 'is'));
+				t3lib_div::devlog('Method removed:' . $this->classBuilder->getMethodName($oldProperty, 'is'),
 								  'extension_builder', 1, $this->classObject->getMethods());
 			}
 		}
@@ -621,7 +633,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 */
 	protected function updateMethod($oldProperty, $newProperty, $methodType) {
 
-		$oldMethodName = Tx_ExtensionBuilder_Service_ClassBuilder::getMethodName($oldProperty, $methodType);
+		$oldMethodName = $this->classBuilder->getMethodName($oldProperty, $methodType);
 		// the method to be merged
 		$mergedMethod = $this->classObject->getMethod($oldMethodName);
 
@@ -629,7 +641,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 			// no previous version of the method exists
 			return;
 		}
-		$newMethodName = Tx_ExtensionBuilder_Service_ClassBuilder::getMethodName($newProperty, $methodType);
+		$newMethodName = $this->classBuilder->getMethodName($newProperty, $methodType);
 		t3lib_div::devlog('updateMethod:' . $oldMethodName . '=>' . $newMethodName, 'extension_builder');
 
 		if ($oldProperty->getName() != $newProperty->getName()) {
@@ -650,8 +662,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 			$parameterTags = $mergedMethod->getTagsValues('param');
 			foreach ($methodParameters as $methodParameter) {
 				$oldParameterName = $methodParameter->getName();
-				if ($oldParameterName == Tx_ExtensionBuilder_Service_ClassBuilder::getParameterName($oldProperty, $methodType)) {
-					$newParameterName = Tx_ExtensionBuilder_Service_ClassBuilder::getParameterName($newProperty, $methodType);
+				if ($oldParameterName == $this->classBuilder->getParameterName($oldProperty, $methodType)) {
+					$newParameterName = $this->classBuilder->getParameterName($newProperty, $methodType);
 					$methodParameter->setName($newParameterName);
 					$newMethodBody = $this->replacePropertyNameInMethodBody($oldParameterName, $newParameterName, $mergedMethod->getBody());
 					$mergedMethod->setBody($newMethodBody);
@@ -662,7 +674,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 						$methodParameter->setTypeHint($this->updateExtensionKey($this->getForeignClassName($newProperty)));
 					}
 				}
-				$parameterTags[$methodParameter->getPosition()] = Tx_ExtensionBuilder_Service_ClassBuilder::getParamTag($newProperty, $methodType);
+				$parameterTags[$methodParameter->getPosition()] = $this->classBuilder->getParamTag($newProperty, $methodType);
 				$mergedMethod->replaceParameter($methodParameter);
 			}
 			$mergedMethod->setTag('param', $parameterTags);
