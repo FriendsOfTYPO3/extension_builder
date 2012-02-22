@@ -229,6 +229,7 @@ div.inputEx-description {
 	padding: 8px;
 	position: absolute;
 	z-index: 100;
+	box-shadow: -10px 10px 8px #999;
 }
 
 div.inputEx-label {

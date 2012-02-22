@@ -122,7 +122,18 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							name: "disableVersioning",
 							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.disableVersioning,
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_disableVersioning,
-							value: 0,
+							value: 0
+						}
+					},
+					{
+						type: "text",
+						inputParams: {
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.dependsOn,
+							name: "dependsOn",
+							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_dependsOn,
+							cols:20,
+							rows:6,
+							value : "extbase => 1.3.0-0.0.0,\nfluid => 1.3.0-0.0.0,"
 						}
 					}
 			]
