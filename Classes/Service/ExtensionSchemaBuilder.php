@@ -198,6 +198,9 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		// extensionKey
 		$extension->setExtensionKey(trim($propertyConfiguration['extensionKey']));
 
+		if($propertyConfiguration['emConf']['disableVersioning']) {
+			$extension->setSupportVersioning(FALSE);
+		}
 
 		// various extension properties
 		$extension->setVersion($propertyConfiguration['emConf']['version']);

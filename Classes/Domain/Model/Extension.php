@@ -93,6 +93,11 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	protected $category;
 
 	/**
+	 * @var bool
+	 */
+	protected $supportVersioning = TRUE;
+
+	/**
 	 * The extension's state. One of the STATE_* constants.
 	 * @var integer
 	 */
@@ -683,6 +688,20 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 */
 	public function setCategory($category) {
 		$this->category = $category;
+	}
+
+	/**
+	 * @param boolean $supportVersioning
+	 */
+	public function setSupportVersioning($supportVersioning) {
+		$this->supportVersioning = $supportVersioning;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getSupportVersioning() {
+		return $this->supportVersioning;
 	}
 
 }

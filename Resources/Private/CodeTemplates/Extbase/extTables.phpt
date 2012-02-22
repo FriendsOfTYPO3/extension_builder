@@ -62,8 +62,8 @@ t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '<k:format.quo
 					'crdate' => 'crdate',
 					'cruser_id' => 'cruser_id',
 					'dividers2tabs' => TRUE,
-					'versioningWS' => 2,
-					'versioning_followPages' => TRUE,
+<f:if condition="{extension.supportVersioning}">					'versioningWS' => 2,
+					'versioning_followPages' => TRUE,</f:if>
 					'origUid' => 't3_origuid',
 					'languageField' => 'sys_language_uid',
 					'transOrigPointerField' => 'l10n_parent',
