@@ -133,7 +133,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_dependsOn,
 							cols:20,
 							rows:6,
-							value : "extbase => 1.3.0-0.0.0,\nfluid => 1.3.0-0.0.0,"
+							value : "extbase => 1.3.0\nfluid => 1.3.0"
 						}
 					}
 			]
