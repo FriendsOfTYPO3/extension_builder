@@ -59,6 +59,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	ERROR_ACTIONNAME_DUPLICATE = 501,
 	ERROR_ACTIONNAME_ILLEGAL_CHARACTER = 502,
 	ERROR_MISCONFIGURATION = 503,
+	ERROR_ACTION_MISCONFIGURATION = 504,
 	EXTENSION_DIR_EXISTS = 500,
 	ERROR_MAPPING_NO_TCA = 600,
 	ERROR_MAPPING_NO_PARENTCLASS = 601,
@@ -661,7 +662,10 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	 * @throws Tx_ExtensionBuilder_Domain_Exception_ExtensionException
 	 */
 	private function validateDomainObjects($extension) {
+
+		$actionCounter = 0;
 		foreach ($extension->getDomainObjects() as $domainObject) {
+			$actionCounter .= count($domainObject->getActions());
 			// Check if domainObject name is given
 			if (!$domainObject->getName()) {
 				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('A Domain Object has no name', self::ERROR_DOMAINOBJECT_NO_NAME);
@@ -683,6 +687,20 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			$this->validateProperties($domainObject);
 			$this->validateDomainObjectActions($domainObject);
 			$this->validateMapping($domainObject);
+		}
+		if($actionCounter < 1) {
+			if (count($extension->getBackendModules()) < 1) {
+				$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+					"Potential misconfiguration: No actions configured, this will result in a missing default action in your backend module",
+					self::ERROR_ACTION_MISCONFIGURATION
+				);
+			}
+			if (count($extension->getPlugins()) < 1) {
+				$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+					"Potential misconfiguration: No actions configured, this will result in a missing default action in your plugin",
+					self::ERROR_ACTION_MISCONFIGURATION
+				);
+			}
 		}
 	}
 
@@ -739,7 +757,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 		}
 	}
 
-	/**
+	/**$actions = $domainObject->getActions();
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
 	 * @return void
 	 */
