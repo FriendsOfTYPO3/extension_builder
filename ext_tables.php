@@ -14,7 +14,7 @@ Tx_Extbase_Utility_Extension::registerModule(
 	'extensionbuilder',
 	'',
 	array(
-		 'BuilderModule' => 'index,domainmodelling,generateCode',
+		 'BuilderModule' => 'index,domainmodelling,dispatchRpc',
 	),
 	array(
 		 'access' => 'user,group',
