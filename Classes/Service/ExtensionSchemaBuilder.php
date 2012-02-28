@@ -175,7 +175,9 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 				if (is_a($relation, Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation)) {
 					$relation->setForeignKeyName(strtolower($localModelName) . count($existingRelations[$localModelName]));
 				}
-				$relation->setUseExtendedRelationTableName(TRUE);
+				if(is_a($relation, Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation)) {
+					$relation->setUseExtendedRelationTableName(TRUE);
+				}
 			}
 			$existingRelations[$localModelName][] = $foreignModelName;
 
