@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2012-02-29T20:53:46Z" product-name="extension_builder">
+		<header/>
+		<body>
+			<trans-unit id="mlang_tabs_tab">
+				<source>Extension Builder</source>
+			</trans-unit>
+			<trans-unit id="mlang_labels_tabdescr">
+				<source>View / Modify Extension Objects</source>
+			</trans-unit>
+			<trans-unit id="mlang_Tx_ExtensionBuilder_domain_model_person_developer">
+				<source>Developer</source>
+			</trans-unit>
+			<trans-unit id="mlang_Tx_ExtensionBuilder_domain_model_person_product_manager">
+				<source>Product Manager</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
