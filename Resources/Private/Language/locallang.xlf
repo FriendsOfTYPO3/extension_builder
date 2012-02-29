@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2012-02-29T20:52:35Z" product-name="extension_builder">
+		<header/>
+		<body>
+			<trans-unit id="error.extension.0">
+				<source>An extension key must have minimum 3, maximum 30 characters (not counting underscores)</source>
+			</trans-unit>
+			<trans-unit id="error.extension.1">
+				<source>Illegal character(s) in extension key. Allowed characters are: a-z (lowercase), 0-9 and '_' (underscore)</source>
+			</trans-unit>
+			<trans-unit id="error.extension.2">
+				<source>The key may not begin with one of the following prefixes: tx,u,user_,pages,tt_,sys_,ts_language_,csh_</source>
+			</trans-unit>
+			<trans-unit id="error.extension.3">
+				<source>Extension keys cannot start or end with 0-9 and '_' (underscore)</source>
+			</trans-unit>
+			<trans-unit id="error.extension.500">
+				<source>There is an existing piBased extension with this extension key. Please choose another extension key or rename the existing extension directory</source>
+			</trans-unit>
+			<trans-unit id="name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="key">
+				<source>Key</source>
+			</trans-unit>
+			<trans-unit id="extensionTitle">
+				<source>Extension title</source>
+			</trans-unit>
+			<trans-unit id="extensionKey">
+				<source>Extension Key</source>
+			</trans-unit>
+			<trans-unit id="descr_extensionKey">
+				<source>The extensionkey should be lowercase and without spaces. It will be the unique identifier for this extension.</source>
+			</trans-unit>
+			<trans-unit id="short_description">
+				<source>Descr.</source>
+			</trans-unit>
+			<trans-unit id="description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="version">
+				<source>Version</source>
+			</trans-unit>
+			<trans-unit id="state">
+				<source>State</source>
+			</trans-unit>
+			<trans-unit id="alpha">
+				<source>Alpha</source>
+			</trans-unit>
+			<trans-unit id="beta">
+				<source>Beta</source>
+			</trans-unit>
+			<trans-unit id="stable">
+				<source>Stable</source>
+			</trans-unit>
+			<trans-unit id="experimental">
+				<source>Experimental</source>
+			</trans-unit>
+			<trans-unit id="test">
+				<source>Test</source>
+			</trans-unit>
+			<trans-unit id="category">
+				<source>Category</source>
+			</trans-unit>
+			<trans-unit id="custom_category">
+				<source>OR custom</source>
+			</trans-unit>
+			<trans-unit id="descr_custom_category">
+				<source>You can define an own category here</source>
+			</trans-unit>
+			<trans-unit id="descr_category">
+				<source>The category this extension belongs to in the extension manager.</source>
+			</trans-unit>
+			<trans-unit id="misc">
+				<source>Miscellaneous</source>
+			</trans-unit>
+			<trans-unit id="services">
+				<source>Services</source>
+			</trans-unit>
+			<trans-unit id="backend">
+				<source>Backend</source>
+			</trans-unit>
+			<trans-unit id="frontend">
+				<source>Frontend</source>
+			</trans-unit>
+			<trans-unit id="templates">
+				<source>Templates</source>
+			</trans-unit>
+			<trans-unit id="examples">
+				<source>Examples</source>
+			</trans-unit>
+			<trans-unit id="documentation">
+				<source>Documentation</source>
+			</trans-unit>
+			<trans-unit id="priority">
+				<source>Priority</source>
+			</trans-unit>
+			<trans-unit id="descr_priority">
+				<source>This tells the EM to try to load the extension as the very first or last of all extensions. Possible values: top or bottom</source>
+			</trans-unit>
+			<trans-unit id="shy">
+				<source>Shy</source>
+			</trans-unit>
+			<trans-unit id="descr_shy">
+				<source>If the extension is marked as shy, it won't be displayed in the extension manager by default</source>
+			</trans-unit>
+			<trans-unit id="disableVersioning">
+				<source>Disable versioning</source>
+			</trans-unit>
+			<trans-unit id="descr_disableVersioning">
+				<source>Check this if your extension needs no support for versioning. This will skip the creation of versioning related columns in the database</source>
+			</trans-unit>
+			<trans-unit id="dependsOn">
+				<source>Depends on</source>
+			</trans-unit>
+			<trans-unit id="descr_dependsOn">
+				<source>If the extension is depending on other extensions, enter the extension keys here (one per line followed by a double arrow and the lowest version number). Please leave extbase and fluid since they are required always</source>
+			</trans-unit>
+			<trans-unit id="persons">
+				<source>Persons</source>
+			</trans-unit>
+			<trans-unit id="role">
+				<source>Role</source>
+			</trans-unit>
+			<trans-unit id="developer">
+				<source>Developer</source>
+			</trans-unit>
+			<trans-unit id="product_manager">
+				<source>Product Manager</source>
+			</trans-unit>
+			<trans-unit id="email">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="company">
+				<source>Company</source>
+			</trans-unit>
+			<trans-unit id="plugins">
+				<source>Frontend plugins</source>
+			</trans-unit>
+			<trans-unit id="descr_plugins">
+				<source>The frontend plugins which have to be registered in the extension</source>
+			</trans-unit>
+			<trans-unit id="controller_action_combinations">
+				<source>Controller action combinations</source>
+			</trans-unit>
+			<trans-unit id="descr_controller_action_combinations">
+				<source>Here you can configure, which controller action combinations this plugin/module should have. Example: &lt;br /&gt;Blog =&gt; list,show &lt;br /&gt;(one controller per line, actions comma separated) &lt;br /&gt;If you leave this empty, all available actions are configured for this plugin.</source>
+			</trans-unit>
+			<trans-unit id="noncacheable_actions">
+				<source>Non cacheable actions</source>
+			</trans-unit>
+			<trans-unit id="descr_noncacheable_actions">
+				<source>Typically create, delete and update actions should not be cached. (Same format as above)</source>
+			</trans-unit>
+			<trans-unit id="switchableActions">
+				<source>Switchable actions</source>
+			</trans-unit>
+			<trans-unit id="descr_switchableActions">
+				<source>Make actions switchable in the plugin's form. One line for the label, one for the list of allowed Controller-&gt;action pairs (semicolon separated). Example: &lt;br /&gt;Display items&lt;br /&gt;Model-&gt;list; Model-&gt;show;&lt;br /&gt;Admin&lt;br /&gt;Model-&gt;new; Model-&gt;create; Model-&gt;edit; Model-&gt;update;</source>
+			</trans-unit>
+			<trans-unit id="backendModules">
+				<source>Backend modules</source>
+			</trans-unit>
+			<trans-unit id="mainModule">
+				<source>Main module</source>
+			</trans-unit>
+			<trans-unit id="uniqueInThisModel">
+				<source>Should be unique for this model</source>
+			</trans-unit>
+			<trans-unit id="type">
+				<source>Type</source>
+			</trans-unit>
+			<trans-unit id="more">
+				<source>More</source>
+			</trans-unit>
+			<trans-unit id="moreOptions">
+				<source>More options</source>
+			</trans-unit>
+			<trans-unit id="advancedOptions">
+				<source>Advanced options</source>
+			</trans-unit>
+			<trans-unit id="remove">
+				<source>Remove</source>
+			</trans-unit>
+			<trans-unit id="add">
+				<source>Add</source>
+			</trans-unit>
+			<trans-unit id="zeroToOne">
+				<source>1:1</source>
+			</trans-unit>
+			<trans-unit id="manyToOne">
+				<source>n:1</source>
+			</trans-unit>
+			<trans-unit id="zeroToMany">
+				<source>1:n</source>
+			</trans-unit>
+			<trans-unit id="manyToMany">
+				<source>m:n</source>
+			</trans-unit>
+			<trans-unit id="isExcludeField">
+				<source>Is exclude field?</source>
+			</trans-unit>
+			<trans-unit id="descr_isExcludeField">
+				<source>If set to true, this field will only be visible for admin users per default</source>
+			</trans-unit>
+			<trans-unit id="newModelObject">
+				<source>New model object</source>
+			</trans-unit>
+			<trans-unit id="domainObjectSettings">
+				<source>Domain object settings</source>
+			</trans-unit>
+			<trans-unit id="objectType">
+				<source>Object type</source>
+			</trans-unit>
+			<trans-unit id="descr_objectType">
+				<source>Value objects are simple objects that are defined by their value and have no 'identity'</source>
+			</trans-unit>
+			<trans-unit id="entity">
+				<source>Entity</source>
+			</trans-unit>
+			<trans-unit id="valueObject">
+				<source>Value object</source>
+			</trans-unit>
+			<trans-unit id="isAggregateRoot">
+				<source>Is aggregate root?</source>
+			</trans-unit>
+			<trans-unit id="descr_isAggregateRoot">
+				<source>If true, the extension builder will generate a repository and default controller actions for this model</source>
+			</trans-unit>
+			<trans-unit id="mapToTable">
+				<source>Map to existing table</source>
+			</trans-unit>
+			<trans-unit id="descr_mapToTable">
+				<source>If the model should extend an existing table, you can configure this here</source>
+			</trans-unit>
+			<trans-unit id="parentClass">
+				<source>Extend existing model class</source>
+			</trans-unit>
+			<trans-unit id="descr_parentClass">
+				<source>If this model should extend an existing other model, name it here</source>
+			</trans-unit>
+			<trans-unit id="defaultActions">
+				<source>Default actions</source>
+			</trans-unit>
+			<trans-unit id="actionType">
+				<source>Action type</source>
+			</trans-unit>
+			<trans-unit id="descr_actionType">
+				<source>For each selected action, the extension builder will generate a template and a action method in the controller of this model. If the model is an aggregate root the default CRUD actions will be generated per default.</source>
+			</trans-unit>
+			<trans-unit id="show">
+				<source>show</source>
+			</trans-unit>
+			<trans-unit id="list">
+				<source>list</source>
+			</trans-unit>
+			<trans-unit id="create_new">
+				<source>new/create</source>
+			</trans-unit>
+			<trans-unit id="edit_update">
+				<source>edit/update</source>
+			</trans-unit>
+			<trans-unit id="delete">
+				<source>delete</source>
+			</trans-unit>
+			<trans-unit id="properties">
+				<source>Properties</source>
+			</trans-unit>
+			<trans-unit id="propertyName">
+				<source>Property name</source>
+			</trans-unit>
+			<trans-unit id="descr_propertyName">
+				<source>The name should be lowerCamelCase and unique in this model</source>
+			</trans-unit>
+			<trans-unit id="propertyType">
+				<source>Property type</source>
+			</trans-unit>
+			<trans-unit id="string">
+				<source>String</source>
+			</trans-unit>
+			<trans-unit id="text">
+				<source>Text</source>
+			</trans-unit>
+			<trans-unit id="richText">
+				<source>Rich text</source>
+			</trans-unit>
+			<trans-unit id="integer">
+				<source>Integer</source>
+			</trans-unit>
+			<trans-unit id="floatingPoint">
+				<source>Floating point</source>
+			</trans-unit>
+			<trans-unit id="boolean">
+				<source>Boolean</source>
+			</trans-unit>
+			<trans-unit id="dateTime">
+				<source>Date time</source>
+			</trans-unit>
+			<trans-unit id="date">
+				<source>Date</source>
+			</trans-unit>
+			<trans-unit id="time">
+				<source>Time</source>
+			</trans-unit>
+			<trans-unit id="timeSec">
+				<source>Time/Sec</source>
+			</trans-unit>
+			<trans-unit id="selectList">
+				<source>Select list</source>
+			</trans-unit>
+			<trans-unit id="file">
+				<source>File</source>
+			</trans-unit>
+			<trans-unit id="image">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="fileReference">
+				<source>File reference</source>
+			</trans-unit>
+			<trans-unit id="folder">
+				<source>Folder</source>
+			</trans-unit>
+			<trans-unit id="isRequired">
+				<source>Is required?</source>
+			</trans-unit>
+			<trans-unit id="relations">
+				<source>Relations</source>
+			</trans-unit>
+			<trans-unit id="relationName">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="descr_relationName">
+				<source>The name should be lowerCamelCase and unique in this model</source>
+			</trans-unit>
+			<trans-unit id="extensionProperties">
+				<source>Extension properties</source>
+			</trans-unit>
+			<trans-unit id="tab_label">
+				<source>Tab label</source>
+			</trans-unit>
+			<trans-unit id="lazyLoading">
+				<source>Lazy loading</source>
+			</trans-unit>
+			<trans-unit id="descr_lazyLoading">
+				<source>Make this relation lazy loading</source>
+			</trans-unit>
+			<trans-unit id="foreignRelationClass">
+				<source>Relation to external class</source>
+			</trans-unit>
+			<trans-unit id="descr_foreignRelationClass">
+				<source>If this is a relation to an external model, enter the class name here (The class must exist and be loadable)</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
