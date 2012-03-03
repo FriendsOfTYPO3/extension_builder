@@ -5,9 +5,11 @@
 		<description>Language labels for the {extension.name} extension in the FRONTEND</description>
 	</meta>
 	<data type="array">
-		<languageKey index="default" type="array"><f:for each="{extension.domainObjects}" as="domainObject">
+		<languageKey index="default" type="array"><f:if condition="{labelArray}"><f:then>
+             <f:for each="{labelArray}" as="label" key="index"><label index="{index}"><k:format.htmlSpecialChars>{label}</k:format.htmlSpecialChars></label>
+             </f:for></f:then><f:else><f:for each="{extension.domainObjects}" as="domainObject">
 			<label index="{domainObject.labelNamespace}"><k:format.htmlSpecialChars>{domainObject.description}</k:format.htmlSpecialChars></label><f:for each="{domainObject.properties}" as="property">
-			<label index="{property.labelNamespace}"><k:format.htmlSpecialChars>{property.description}</k:format.htmlSpecialChars></label></f:for></f:for>
+			<label index="{property.labelNamespace}"><k:format.htmlSpecialChars>{property.description}</k:format.htmlSpecialChars></label></f:for></f:for></f:else></f:if>
 		</languageKey>
 	</data>
 </T3locallang>

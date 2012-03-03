@@ -42,6 +42,12 @@
 			<trans-unit id="version">
 				<source>Version</source>
 			</trans-unit>
+			<trans-unit id="target_version">
+				<source>Target version</source>
+			</trans-unit>
+			<trans-unit id="descr_target_version">
+				<source>If your extension uses features of Extbase/Fluid versions higher than 1.3 you can select your target version here. You have to add the dependency manually in the "Depends on" field.</source>
+			</trans-unit>
 			<trans-unit id="state">
 				<source>State</source>
 			</trans-unit>

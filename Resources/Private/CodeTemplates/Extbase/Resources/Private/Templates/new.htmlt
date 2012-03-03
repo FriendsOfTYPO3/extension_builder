@@ -17,7 +17,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
 <k:openingTag>f:flashMessages /</k:openingTag>
 
-<k:openingTag>f:render partial="FormErrors" /</k:openingTag>
+<k:openingTag>f:render partial="FormErrors" <f:if condition="{extension.targetVersion}>4.6">arguments="<k:curlyBrackets>object:{domainObject.name}</k:curlyBrackets>"</f:if>/</k:openingTag>
 
 <k:format.removeMultipleNewlines>
 <k:openingTag>f:form method="post" action="create" {f:if(condition:extension.needsUploadFolder,then:' enctype="multipart/form-data" ')} name="new{domainObject.name}" object="<k:curlyBrackets>new{domainObject.name}</k:curlyBrackets>"</k:openingTag>

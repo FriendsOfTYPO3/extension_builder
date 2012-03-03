@@ -816,7 +816,6 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		);
 
 		$settings = $extension->getSettings();
-		//t3lib_div::devlog('Overwrite settings for:'.$path,'extension_builder',0,$settings);
 		if (!is_array($settings)) {
 			throw new Exception('overWrite settings could not be parsed');
 		}
@@ -958,50 +957,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		closedir($dir);
 	}
 
-	/**
-	 * TODO: Adapt to new xlf format!
-	 * @static
-	 * @param string $locallangFile
-	 * @param string $newXmlString
-	 * @return string merged label in XML format
-	 */
-	static public function mergeLocallangXml($locallangFile, $newXmlString) {
-		$existingLabelArr = t3lib_div::xml2array(t3lib_div::getUrl($locallangFile));
-		$newLabelArr = t3lib_div::xml2array($newXmlString);
-		if (is_array($existingLabelArr)) {
-			$mergedLabelArr = t3lib_div::array_merge_recursive_overrule($newLabelArr, $existingLabelArr);
-		} else {
-			$mergedLabelArr = $newLabelArr;
-		}
-		$xml = self::createXML($mergedLabelArr);
-		return $xml;
-	}
 
-	/**
-	 *
-	 * @param $outputArray
-	 * @return string xml
-	 */
-	function createXML($outputArray) {
 
-		// Options:
-		$options = array(
-			#'useIndexTagForAssoc'=>'key',
-			'parentTagMap' => array(
-				'data' => 'languageKey',
-				'orig_hash' => 'languageKey',
-				'orig_text' => 'languageKey',
-				'labelContext' => 'label',
-				'languageKey' => 'label'
-			)
-		);
-
-		// Creating XML file from $outputArray:
-		$XML = '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>' . chr(10);
-		$XML .= t3lib_div::array2xml($outputArray, '', 0, 'T3locallang', 0, $options);
-
-		return $XML;
-	}
 
 }
 

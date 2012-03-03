@@ -123,3 +123,38 @@ var roundtrip = {
 										}
 									}
 }
+
+var versionMap = {
+    '4.5' : '1.3',
+    '4.6' : '1.4',
+    '4.7' : '1.5'
+}
+
+Ext.onReady(
+    function() {
+        Ext.get(Ext.query('select[name=targetVersion]')[0]).addListener(
+            "change",
+            function(ev,target){
+                var updatedDependencies = '';
+                var dependencies = Ext.query('textarea[name=dependsOn]')[0].value.split("\n");
+                for(i=0;i<dependencies.length;i++) {
+                    parts = dependencies[i].split('=>');
+                    if(parts.length==2) {
+                        if(parts[0].indexOf('fluid')> -1) {
+                            parts[1] = versionMap[target.value];
+                        }
+                        if(parts[0].indexOf('extbase')> -1) {
+                            parts[1] = versionMap[target.value];
+                        }
+                        if(parts[0].indexOf('typo3')> -1) {
+                           parts[1] = target.value;
+                        }
+                        updatedDependencies += parts[0] + '=> ' + parts[1] + "\n";
+                    }
+
+                }
+                Ext.query('textarea[name=dependsOn]')[0].value = updatedDependencies;
+            }
+         );
+    }
+);

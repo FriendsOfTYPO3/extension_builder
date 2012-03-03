@@ -6,9 +6,11 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="mlang_tabs_tab">{backendModule.name}</label>
+		<f:if condition="{labelArray}"><f:then>
+			<f:for each="{labelArray}" as="label" key="index"><label index="{index}"><k:format.htmlSpecialChars>{label}</k:format.htmlSpecialChars></label>
+            </f:for></f:then><f:else><label index="mlang_tabs_tab">{backendModule.name}</label>
 			<label index="mlang_labels_tabdescr"><k:format.htmlSpecialChars>{backendModule.description}</k:format.htmlSpecialChars></label>
-			<label index="mlang_labels_tablabel"><k:format.htmlSpecialChars>{backendModule.tabLabel}</k:format.htmlSpecialChars></label>
+			<label index="mlang_labels_tablabel"><k:format.htmlSpecialChars>{backendModule.tabLabel}</k:format.htmlSpecialChars></label></f:else></f:if>
 		</languageKey>
 	</data>
 </T3locallang>

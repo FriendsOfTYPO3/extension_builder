@@ -6,8 +6,11 @@
 		<csh_table>{domainObject.databaseTableName}</csh_table>
 	</meta>
 	<data type="array">
-	<languageKey index="default" type="array"><f:for each="{domainObject.properties}" as="property">
-			<label index="{property.fieldName}.description"><k:format.htmlSpecialChars>{property.description}</k:format.htmlSpecialChars></label></f:for>
+	<languageKey index="default" type="array"><f:if condition="{labelArray}"><f:then>
+	   <f:for each="{labelArray}" as="label" key="index"><label index="{index}"><k:format.htmlSpecialChars>{label}</k:format.htmlSpecialChars></label>
+	   </f:for></f:then><f:else>
+	   <f:for each="{domainObject.properties}" as="property">
+			<label index="{property.fieldName}.description"><k:format.htmlSpecialChars>{property.description}</k:format.htmlSpecialChars></label></f:for></f:else></f:if>
 		</languageKey>
 	</data>
 </T3locallang>

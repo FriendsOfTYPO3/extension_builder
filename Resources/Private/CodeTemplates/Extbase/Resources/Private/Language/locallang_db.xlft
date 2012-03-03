@@ -1,0 +1,33 @@
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="{f:format.date(format:'Y-m-s\TH:i:s\Z',date:'now')}" product-name="{extension.extensionKey}">
+		<header/>
+		<body>
+			<f:if condition="{labelArray}"><f:then>
+			<f:for each="{labelArray}" as="label" key="index">
+			<trans-unit id="{index}">
+            	<source>{label}</source>
+            </trans-unit></f:for></f:then><f:else>
+			<f:for each="{extension.domainObjects}" as="domainObject">
+			<trans-unit id="{domainObject.labelNamespace}">
+				<source><k:humanize>{domainObject.name}</k:humanize></source>
+			</trans-unit><f:for each="{domainObject.properties}" as="property">
+			<trans-unit id="{property.labelNamespace}">
+				<source><k:humanize>{property.name}</k:humanize></source>
+			</trans-unit></f:for>
+			<f:if condition="{domainObject.mapToTable}">
+			<trans-unit id="{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}">
+				<source>{extension.name} {domainObject.name}</source>
+			</trans-unit></f:if>
+			<f:if condition="{domainObject.childObjects}"><trans-unit id="{domainObject.labelNamespace}.tx_extbase_type">
+				<source>Record Type</source>
+			</trans-unit>
+			<trans-unit id="{domainObject.labelNamespace}.tx_extbase_type.0">
+				<source>Default</source>
+			</trans-unit>
+			<trans-unit id="{domainObject.labelNamespace}.tx_extbase_type.{domainObject.recordType}">
+				<source>{domainObject.extension.extensionName} {domainObject.name}</source>
+			</trans-unit></f:if></f:for></f:else></f:if>
+		</body>
+	</file>
+</xliff>

@@ -159,6 +159,13 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 */
 	private $dependencies = array();
 
+
+	/**
+	 * the lowest required TYPO3 version
+	 * @var float
+	 */
+	private $targetVersion = 4.5;
+
 	/**
 	 *
 	 * @return string
@@ -721,6 +728,20 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 */
 	public function getDependencies() {
 		return $this->dependencies;
+	}
+
+	/**
+	 * @param float $targetVersion
+	 */
+	public function setTargetVersion($targetVersion) {
+		$this->targetVersion = $targetVersion;
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getTargetVersion() {
+		return $this->targetVersion;
 	}
 
 }
