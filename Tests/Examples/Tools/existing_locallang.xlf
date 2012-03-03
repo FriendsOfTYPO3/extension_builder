@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2012-03-47T19:00:47Z" product-name="test123">
+		<header/>
+		<body>
+			<trans-unit id="tx_test_index1">
+				<source>Label 1 modified</source>
+			</trans-unit>
+			<trans-unit id="tx_test_index2">
+				<source>Label 2</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

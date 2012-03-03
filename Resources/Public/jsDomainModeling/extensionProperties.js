@@ -125,6 +125,20 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							value: 0
 						}
 					},
+                    {
+                        type: "select",
+                        inputParams: {
+                            name: "targetVersion",
+                            label: TYPO3.settings.extensionBuilder._LOCAL_LANG.target_version,
+                            description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_target_version,
+                            selectOptions: [
+                                'TYPO3 v 4.5',
+                                'TYPO3 v 4.6',
+                                'TYPO3 v 4.7'
+                            ],
+                            selectValues: ["4.5","4.6","4.7"]
+                        }
+                    },
 					{
 						type: "text",
 						inputParams: {
@@ -133,7 +147,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_dependsOn,
 							cols:20,
 							rows:6,
-							value : "extbase => 1.3.0\nfluid => 1.3.0"
+							value : "extbase => 1.3\nfluid => 1.3\ntypo3 => 4.5\n"
 						}
 					}
 			]

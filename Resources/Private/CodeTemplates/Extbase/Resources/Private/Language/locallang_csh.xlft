@@ -1,0 +1,17 @@
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="{f:format.date(format:'Y-m-s\TH:i:s\Z',date:'now')}" product-name="{extension.extensionKey}">
+		<header/>
+		<body>
+			<f:if condition="{labelArray}"><f:then>
+            <f:for each="{labelArray}" as="label" key="index">
+            <trans-unit id="{index}">
+				<source>{label}</source>
+			</trans-unit></f:for></f:then><f:else>
+            <f:for each="{domainObject.properties}" as="property">
+			<trans-unit id="{property.fieldName}.description">
+				<source><k:format.htmlSpecialChars>{property.description}</k:format.htmlSpecialChars></source>
+			</trans-unit></f:for></f:else></f:if>
+		</body>
+	</file>
+</xliff>

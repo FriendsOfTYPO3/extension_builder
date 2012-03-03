@@ -29,7 +29,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	/**
 	 * set to true to see an overview of the parsed class objects in the backend
 	 */
-	protected $debugMode = false;
+	protected $debugMode = FALSE;
 
 	public function setUp() {
 		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder'), array('dummy'));

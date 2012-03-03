@@ -86,6 +86,21 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	);
 
 	/**
+	 * alle file types where a split token makes sense
+	 * @var array
+	 */
+	protected $filesSupportingSplitToken = array(
+		'php', //ext_tables, tca, localconf
+		'sql',
+		'txt' // Typoscript
+	);
+
+	/**
+	 * @var string
+	 */
+	protected $locallangFileFormat = 'xlf';
+
+	/**
 	 * @param Tx_ExtensionBuilder_Service_ClassBuilder $classBuilder
 	 */
 	public function injectClassBuilder(Tx_ExtensionBuilder_Service_ClassBuilder $classBuilder) {
@@ -135,6 +150,9 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			throw new Exception('No codeTemplateRootPath configured');
 		}
 
+		if ($this->extension->getTargetVersion() == 4.5) {
+			$this->locallangFileFormat = 'xml';
+		}
 		// Base directory already exists at this point
 		$this->extensionDirectory = $this->extension->getExtensionDir();
 		if (!is_dir($this->extensionDirectory)) {
@@ -248,15 +266,20 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		try {
 			t3lib_div::mkdir_deep($this->privateResourcesDirectory, 'Language');
 			$this->languageDirectory = $this->privateResourcesDirectory . 'Language/';
-			$fileContents = $this->generateLocallang();
-			$this->writeFile($this->languageDirectory . 'locallang.xml', $fileContents);
-			$fileContents = $this->generateLocallangDB();
-			$this->writeFile($this->languageDirectory . 'locallang_db.xml', $fileContents);
+			$fileContents = $this->generateLocallangFileContent();
+			$this->writeFile($this->languageDirectory . 'locallang.' . $this->locallangFileFormat, $fileContents);
+			$fileContents = $this->generateLocallangFileContent('_db');
+			$this->writeFile($this->languageDirectory . 'locallang_db.' . $this->locallangFileFormat, $fileContents);
 			if ($this->extension->hasBackendModules()) {
 				foreach ($this->extension->getBackendModules() as $backendModule) {
-					$fileContents = $this->generateLocallangModule($backendModule);
-					$this->writeFile($this->languageDirectory . 'locallang_' . $backendModule->getKey() . '.xml', $fileContents);
+					$fileContents = $this->generateLocallangFileContent('_mod', 'backendModule', $backendModule);
+					$this->writeFile($this->languageDirectory . 'locallang_' . $backendModule->getKey() . '.' . $this->locallangFileFormat, $fileContents);
 				}
+
+			}
+			foreach ($this->extension->getDomainObjects() as $domainObject) {
+				$fileContents = $this->generateLocallangFileContent('_csh', 'domainObject', $domainObject);
+				$this->writeFile($this->languageDirectory . 'locallang_csh_' . $domainObject->getDatabaseTableName() . '.' . $this->locallangFileFormat, $fileContents);
 
 			}
 		} catch (Exception $e) {
@@ -339,7 +362,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				throw new Exception('Could not generate typoscript constants, error: ' . $e->getMessage());
 			}
 		}
-		
+
 		// Generate Static TypoScript
 		try {
 			if ($this->extension->getDomainObjectsThatNeedMappingStatements()) {
@@ -390,9 +413,6 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 						$iconFileName = 'value_object.gif';
 					}
 					$this->upload_copy_move(t3lib_extMgm::extPath('extension_builder') . 'Resources/Private/Icons/' . $iconFileName, $this->iconsDirectory . $domainObject->getDatabaseTableName() . '.gif');
-
-					$fileContents = $this->generateLocallangCsh($domainObject);
-					$this->writeFile($this->languageDirectory . 'locallang_csh_' . $domainObject->getDatabaseTableName() . '.xml', $fileContents);
 
 					if ($domainObject->isAggregateRoot()) {
 						$destinationFile = $domainRepositoryDirectory . $domainObject->getName() . 'Repository.php';
@@ -680,28 +700,53 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	}
 
 	public function generateFormErrorsPartial($templateRootFolder) {
-		$codeTemplateRootPath = $this->codeTemplateRootPath . $templateRootFolder;
-		return file_get_contents($codeTemplateRootPath . 'formErrors.htmlt');
+		return $this->renderTemplate($templateRootFolder . 'formErrors.htmlt', array('extension' => $this->extension));
 	}
 
 	public function generateLayout($templateRootFolder) {
 		return $this->renderTemplate($templateRootFolder . 'default.htmlt', array('extension' => $this->extension));
 	}
 
-	public function generateLocallang() {
-		return $this->renderTemplate('Resources/Private/Language/locallang.xmlt', array('extension' => $this->extension));
-	}
 
-	public function generateLocallangDB() {
-		return $this->renderTemplate('Resources/Private/Language/locallang_db.xmlt', array('extension' => $this->extension));
-	}
+	/**
+	 * @param string $fileNameSuffix
+	 * @param string $variableName
+	 * @param null $variable
+	 * @return mixed
+	 */
+	protected function generateLocallangFileContent($fileNameSuffix = '', $variableName = '', $variable = NULL) {
+		$targetFile = 'Resources/Private/Language/locallang' . $fileNameSuffix;
 
-	public function generateLocallangModule($backendModule) {
-		return $this->renderTemplate('Resources/Private/Language/locallang_mod.xmlt', array('extension' => $this->extension, 'backendModule' => $backendModule));
-	}
+		$variableArray = array('extension' => $this->extension);
+		if (strlen($variableName) > 0) {
+			$variableArray[$variableName] = $variable;
+		}
 
-	public function generateLocallangCsh(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
-		return $this->renderTemplate('Resources/Private/Language/locallang_csh.xmlt', array('extension' => $this->extension, 'domainObject' => $domainObject));
+		if ($this->roundTripEnabled && Tx_ExtensionBuilder_Service_RoundTrip::getOverWriteSettingForPath($targetFile . '.' . $this->locallangFileFormat, $this->extension) == 1) {
+			$existingFile = NULL;
+			$filenameToLookFor = $this->extensionDirectory . $targetFile;
+			if ($variableName == 'domainObject') {
+				$filenameToLookFor .= '_' . $variable->getDatabaseTableName();
+			}
+			if (file_exists($filenameToLookFor . '.xlf')) {
+				$existingFile = $filenameToLookFor . '.xlf';
+			} else if (file_exists($filenameToLookFor . '.xml')) {
+				$existingFile = $filenameToLookFor . '.xml';
+			}
+			if ($existingFile != NULL) {
+				$defaultFileContent = $this->renderTemplate($targetFile  . '.' . $this->locallangFileFormat . 't', $variableArray);
+				if($this->locallangFileFormat == 'xlf') {
+					throw new Exception('Merging xlf files is not yet supported. Please set overwrite settings to "keep" or "overwrite"');
+					// this is prepared already but still needs some improvements
+					//$labelArray = Tx_ExtensionBuilder_Utility_Tools::mergeLocallangXml($existingFile, $defaultFileContent, $this->locallangFileFormat);
+					//$variableArray['labelArray'] = $labelArray;
+				} else {
+					return  Tx_ExtensionBuilder_Utility_Tools::mergeLocallangXml($existingFile, $defaultFileContent);
+				}
+
+			}
+		}
+		return $this->renderTemplate($targetFile . '.' . $this->locallangFileFormat . 't', $variableArray);
 	}
 
 	public function generatePrivateResourcesHtaccess() {
@@ -806,11 +851,12 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				return; // skip file creation
 			}
 			if ($overWriteMode == 1 && strpos($targetFile, 'Classes') === FALSE) { // classes are merged by the class builder
-				if (strtolower(pathinfo($targetFile, PATHINFO_EXTENSION)) == 'html') {
+				$fileExtension = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+				if ($fileExtension == 'html') {
 					//TODO: We need some kind of protocol to be displayed after code generation
 					t3lib_div::devlog('File ' . basename($targetFile) . ' was not written. Template files can\'t be merged!', 'extension_builder', 1);
 					return;
-				} else {
+				} elseif (in_array($fileExtension, $this->filesSupportingSplitToken)) {
 					$fileContents = $this->insertSplitToken($targetFile, $fileContents);
 				}
 			}
@@ -858,8 +904,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			$fileContents = str_replace('?>', '', $fileContents);
 			$fileContents .= Tx_ExtensionBuilder_Service_RoundTrip::SPLIT_TOKEN;
 		}
-		else if ($fileExtension == 'xml') {
-			$fileContents = Tx_ExtensionBuilder_Service_RoundTrip::mergeLocallangXml($targetFile, $fileContents);
+		else if ($fileExtension == $this->locallangFileFormat) {
+			//$fileContents = Tx_ExtensionBuilder_Utility_Tools::mergeLocallangXml($targetFile, $fileContents, $this->locallangFileFormat);
 		}
 		else {
 			$fileContents .= "\n" . Tx_ExtensionBuilder_Service_RoundTrip::SPLIT_TOKEN;
