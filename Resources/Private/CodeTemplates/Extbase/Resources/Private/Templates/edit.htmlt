@@ -20,7 +20,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 <k:openingTag>f:render partial="FormErrors" <f:if condition="{extension.targetVersion}>4.6">arguments="<k:curlyBrackets>object:{domainObject.name}</k:curlyBrackets>"</f:if>/</k:openingTag>
 
 <k:format.removeMultipleNewlines>
-<k:openingTag>f:form method="post" action="update" name="{domainObject.name -> k:format.lowercaseFirst()}" object="{domainObject.name -> k:format.lowercaseFirst() -> k:curlyBrackets()}" </k:openingTag>
+<k:openingTag>f:form action="update" name="{domainObject.name -> k:format.lowercaseFirst()}" object="{domainObject.name -> k:format.lowercaseFirst() -> k:curlyBrackets()}" </k:openingTag>
 <k:openingTag>f:render partial="{domainObject.name}/FormFields" arguments="<k:curlyBrackets>{domainObject.name-> k:format.lowercaseFirst()}:{domainObject.name-> k:format.lowercaseFirst()}</k:curlyBrackets>" /</k:openingTag>
 </k:format.removeMultipleNewlines>
 	<k:openingTag>f:form.submit value="Save" /</k:openingTag>
