@@ -282,6 +282,9 @@
 			<trans-unit id="propertyType">
 				<source>Property type</source>
 			</trans-unit>
+			<trans-unit id="descr_propertyType">
+				<source>All types with * are not yet supported by the frontend form generation/validation</source>
+			</trans-unit>
 			<trans-unit id="string">
 				<source>String</source>
 			</trans-unit>
@@ -289,7 +292,7 @@
 				<source>Text</source>
 			</trans-unit>
 			<trans-unit id="richText">
-				<source>Rich text</source>
+				<source>Rich text*</source>
 			</trans-unit>
 			<trans-unit id="integer">
 				<source>Integer</source>
@@ -304,28 +307,31 @@
 				<source>Date time</source>
 			</trans-unit>
 			<trans-unit id="date">
-				<source>Date</source>
+				<source>Date*</source>
 			</trans-unit>
 			<trans-unit id="time">
-				<source>Time</source>
+				<source>Time*</source>
 			</trans-unit>
 			<trans-unit id="timeSec">
-				<source>Time/Sec</source>
+				<source>Time/Sec*</source>
 			</trans-unit>
 			<trans-unit id="selectList">
 				<source>Select list</source>
 			</trans-unit>
 			<trans-unit id="file">
-				<source>File</source>
+				<source>File*</source>
 			</trans-unit>
 			<trans-unit id="image">
-				<source>Image</source>
+				<source>Image*</source>
 			</trans-unit>
 			<trans-unit id="fileReference">
-				<source>File reference</source>
+				<source>File reference*</source>
 			</trans-unit>
 			<trans-unit id="folder">
-				<source>Folder</source>
+				<source>Folder*</source>
+			</trans-unit>
+			<trans-unit id="password">
+				<source>Password</source>
 			</trans-unit>
 			<trans-unit id="isRequired">
 				<source>Is required?</source>
