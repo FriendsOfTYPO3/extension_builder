@@ -199,7 +199,8 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 													inputParams: {
 														name: "propertyType",
 														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.propertyType,
-														selectValues: [
+                                                        description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_propertyType,
+                                                        selectValues: [
 															"String",
 															"Text",
 															"RichText",
