@@ -167,6 +167,9 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 					$classProperty->setTag('validate', $validateTag[1]);
 				}
 			}
+			if ($domainProperty->getHasDefaultValue()) {
+				$classProperty->setDefault($domainProperty->getDefaultValue());
+			}
 			$this->classObject->setProperty($classProperty);
 			if ($domainProperty->isNew()) {
 				$this->setPropertyRelatedMethods($domainProperty);

@@ -17,7 +17,7 @@
 	 *<f:for each="{property.annotations}" as="annotation">
 	 * @{annotation}</f:for>
 	 */
-	<f:for each="{property.modifierNames}" as="modifierName">{modifierName} </f:for>${property.name}<f:if condition="{property.default}"> = {property.value}</f:if>;
+	<f:for each="{property.modifierNames}" as="modifierName">{modifierName} </f:for>${property.name}<f:if condition="{property.hasValue}"><f:then> = {property.value}</f:then><f:else><f:if condition="{property.hasDefaultValue}"> = {property.default}</f:if></f:else></f:if>;
 </f:for><f:for each="{classObject.methods}" as="method"><f:if condition="{method.precedingBlock}">
 	<k:format.removeMultipleNewlines>{method.precedingBlock}</k:format.removeMultipleNewlines>
 	</f:if>

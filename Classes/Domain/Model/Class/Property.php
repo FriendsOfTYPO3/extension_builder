@@ -201,6 +201,29 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Property extends Tx_ExtensionBuilde
 		$this->value = $value;
 	}
 
+	/**
+	 * This is a helper function to be called in fluid if conditions
+	 * it returns TRUE even if the default value is 0 or an empty string or "FALSE"
+	 * @return bool
+	 */
+	public function getHasDefaultValue() {
+		if(isset($this->default) && $this->default !== NULL) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * This is a helper function to be called in fluid if conditions
+	 * it returns TRUE even if the value is 0 or an empty string or "FALSE"
+	 * @return bool
+	 */
+	public function getHasValue() {
+		if(isset($this->value) && $this->value !== NULL) {
+			return TRUE;
+		}
+		return FALSE;
+	}
 
 }
 
