@@ -46,11 +46,15 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Extbase_Tests_Unit_
 		$yamlParser = new Tx_ExtensionBuilder_Utility_SpycYAMLParser();
 		$settings = $yamlParser->YAMLLoadString(file_get_contents(PATH_typo3conf.'ext/extension_builder/Tests/Examples/Settings/settings1.yaml'));
 		$this->extension->setSettings($settings);
+		$configurationManager = t3lib_div::makeInstance('Tx_ExtensionBuilder_Configuration_ConfigurationManager');
 
 		$this->classParser = t3lib_div::makeInstance('Tx_ExtensionBuilder_Utility_ClassParser');
 		$this->roundTripService =  $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_RoundTrip'),array('dummy'));
 		$this->classBuilder = t3lib_div::makeInstance('Tx_ExtensionBuilder_Service_ClassBuilder');
+		$this->classBuilder->injectConfigurationManager($configurationManager);
+
 		$this->roundTripService->injectClassBuilder($this->classBuilder);
+		$this->roundTripService->injectConfigurationManager($configurationManager);
 		$this->templateParser = $this->getMock($this->buildAccessibleProxy('Tx_Fluid_Core_Parser_TemplateParser'),array('dummy'));
 		$this->codeGenerator = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_CodeGenerator'),array('dummy'));
 		

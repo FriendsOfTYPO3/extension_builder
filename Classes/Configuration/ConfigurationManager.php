@@ -560,6 +560,26 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		}
 		return $extensionConfigurationJSON;
 	}
+
+	public function getParentClassForValueObject() {
+		$settings = self::getExtensionBuilderSettings();
+		if (isset($settings['Model']['AbstractValueObject']['parentClass'])) {
+			$parentClass = $settings['Model']['AbstractValueObject']['parentClass'];
+		} else {
+			$parentClass = 'Tx_Extbase_DomainObject_AbstractValueObject';
+		}
+		return $parentClass;
+	}
+
+	public function getParentClassForEntityObject() {
+		$settings = self::getExtensionBuilderSettings();
+		if (isset($this->settings['Model']['AbstractEntity']['parentClass'])) {
+			$parentClass = $this->settings['Model']['AbstractEntity']['parentClass'];
+		} else {
+			$parentClass = 'Tx_Extbase_DomainObject_AbstractEntity';
+		}
+		return $parentClass;
+	}
 }
 
 ?>	

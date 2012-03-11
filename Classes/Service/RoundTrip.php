@@ -77,6 +77,11 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	protected $classBuilder;
 
 	/**
+	 * @var Tx_ExtensionBuilder_Configuration_ConfigurationManager
+	 */
+	protected $configurationManager;
+
+	/**
 	 * was the extension renamed?
 	 *
 	 * @var boolean
@@ -123,7 +128,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		if (!$this->classParser instanceof Tx_ExtensionBuilder_Utility_ClassParser) {
 			$this->injectClassParser(t3lib_div::makeInstance('Tx_ExtensionBuilder_Utility_ClassParser'));
 		}
-		$this->settings = Tx_ExtensionBuilder_Configuration_ConfigurationManager::getExtensionBuilderSettings();
+		$this->settings = $this->configurationManager->getExtensionBuilderSettings();
 		// defaults
 		$this->previousExtensionDirectory = $this->extensionDirectory;
 		$this->previousExtensionKey = $this->extension->getExtensionKey();
@@ -224,6 +229,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 					$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Controller'), $oldDomainObject->getName() . 'Controller.php');
 				}
 
+				// the parent class settings configuration
 				$parentClass = $currentDomainObject->getParentClass();
 				$oldParentClass = $oldDomainObject->getParentClass();
 				if (!empty($parentClass)) {
@@ -234,19 +240,19 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 				} else if (!empty($oldParentClass)) {
 					// the old object had a parent class setting, but it's removed now
 					if ($currentDomainObject->isEntity()) {
-						if (isset($this->settings['Model']['AbstractEntity']['parentClass'])) {
-							$parentClass = $this->settings['Model']['AbstractEntity']['parentClass'];
-						} else {
-							$parentClass = 'Tx_Extbase_DomainObject_AbstractEntity';
-						}
+						$parentClass = $this->configurationManager->getParentClassForEntityObject();
 					} else {
-						if (isset($this->settings['Model']['AbstractValueObject']['parentClass'])) {
-							$parentClass = $this->settings['Model']['AbstractValueObject']['parentClass'];
-						} else {
-							$parentClass = 'Tx_Extbase_DomainObject_AbstractValueObject';
-						}
+						$parentClass = $this->configurationManager->getParentClassForValueObject();
 					}
 					$this->classObject->setParentClass($parentClass);
+				}
+
+				if($currentDomainObject->isEntity() && !$oldDomainObject->isEntity()) {
+					// the object type was changed in the modeler
+					$this->classObject->setParentClass($this->configurationManager->getParentClassForEntityObject());
+				} elseif (!$currentDomainObject->isEntity() && $oldDomainObject->isEntity()) {
+					// the object type was changed in the modeler
+					$this->classObject->setParentClass($this->configurationManager->getParentClassForValueObject());
 				}
 				return $this->classObject;
 			}
@@ -956,9 +962,6 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		}
 		closedir($dir);
 	}
-
-
-
 
 }
 

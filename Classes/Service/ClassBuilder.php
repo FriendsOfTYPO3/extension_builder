@@ -48,6 +48,10 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 */
 	protected $roundTripService;
 
+	/**
+	 * @var Tx_ExtensionBuilder_Configuration_ConfigurationManager
+	 */
+	protected $configurationManager;
 
 	/**
 	 * This line is added to the constructor if there are storage objects to initialize
@@ -60,6 +64,16 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 	 * @var Tx_ExtensionBuilder_Service_CodeGenerator
 	 */
 	protected $codeGenerator;
+
+
+
+	/**
+	 * @param Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager
+	 * @return void
+	 */
+	public function injectConfigurationManager(Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager) {
+		$this->configurationManager = $configurationManager;
+	}
 
 	/**
 	 * @param Tx_ExtensionBuilder_Service_RoundTrip $roundTripService
@@ -119,19 +133,11 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			$this->classObject = new Tx_ExtensionBuilder_Domain_Model_Class_Class($className);
 			if ($domainObject->isEntity()) {
 				$parentClass = $domainObject->getParentClass();
-				if (empty($parentClass)) {
-					if (isset($this->settings['Model']['AbstractEntity']['parentClass'])) {
-						$parentClass = $this->settings['Model']['AbstractEntity']['parentClass'];
-					} else {
-						$parentClass = 'Tx_Extbase_DomainObject_AbstractEntity';
-					}
+				if(empty($parentClass)) {
+					$parentClass = $this->configurationManager->getParentClassForEntityObject();
 				}
 			} else {
-				if (isset($this->settings['Model']['AbstractValueObject']['parentClass'])) {
-					$parentClass = $this->settings['Model']['AbstractValueObject']['parentClass'];
-				} else {
-					$parentClass = 'Tx_Extbase_DomainObject_AbstractValueObject';
-				}
+				$parentClass = $this->configurationManager->getParentClassForValueObject();
 			}
 			$this->classObject->setParentClass($parentClass);
 		}
