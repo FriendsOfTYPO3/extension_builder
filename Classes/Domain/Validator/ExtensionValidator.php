@@ -65,7 +65,8 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	ERROR_MAPPING_NO_PARENTCLASS = 601,
 	ERROR_MAPPING_NO_TABLE = 602,
 	ERROR_MAPPING_NO_FOREIGNCLASS = 603,
-	ERROR_MAPPING_WIRE_AND_FOREIGNCLASS = 604;
+	ERROR_MAPPING_WIRE_AND_FOREIGNCLASS = 604,
+	ERROR_MAPPING_WRONG_TYPEFIELD_CONFIGURATION = 605;
 
 	/**
 	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
@@ -753,7 +754,15 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 					self::ERROR_MAPPING_NO_TCA
 				);
 			}
-
+		}
+		if (isset($GLOBALS['TCA'][$tableName]['ctrl']['type'])) {
+			$dataType = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('DATA_TYPE','INFORMATION_SCHEMA.COLUMNS','`table_name` = "' . $tableName . '" AND `column_name` LIKE "' . $GLOBALS['TCA'][$tableName]['ctrl']['type'] . '"');
+			if( $dataType[0]['DATA_TYPE'] == 'int') {
+				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+					'The configured type field for table "' . $tableName . '" is of type integer. This means the type field can not be used for defining the record type. You have to change this if you want to map to this table or extend the correlated class',
+					self::ERROR_MAPPING_WRONG_TYPEFIELD_CONFIGURATION
+				);
+			}
 		}
 	}
 
