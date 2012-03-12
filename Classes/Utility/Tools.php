@@ -129,14 +129,14 @@ class Tx_ExtensionBuilder_Utility_Tools implements t3lib_singleton {
 			throw new Exception('File not found: ' . $locallangFile);
 		}
 		if (pathinfo($locallangFile, PATHINFO_EXTENSION) == 'xlf') {
-			$existingXml = simplexml_load_file($locallangFile, 'SimpleXmlElement', \LIBXML_NOWARNING);
+			$existingXml = simplexml_load_file($locallangFile, 'SimpleXmlElement', LIBXML_NOWARNING);
 			$existingLabelArr = self::flattenLocallangArray(self::parseXliff($existingXml), 'xlf');
 		} else {
 			$existingLabelArr = self::flattenLocallangArray(t3lib_div::xml2array(t3lib_div::getUrl($locallangFile)), 'xml');
 		}
 
 		if ($fileFormat == 'xlf') {
-			$newXml = simplexml_load_string($newXmlString, 'SimpleXmlElement', \LIBXML_NOWARNING);
+			$newXml = simplexml_load_string($newXmlString, 'SimpleXmlElement', LIBXML_NOWARNING);
 			$newLabelArr = self::flattenLocallangArray(self::parseXliff($newXml), 'xlf');
 		} else {
 			$newLabelArr = self::flattenLocallangArray(t3lib_div::xml2array($newXmlString), 'xml');
