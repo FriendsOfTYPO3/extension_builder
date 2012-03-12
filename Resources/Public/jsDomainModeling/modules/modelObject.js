@@ -132,7 +132,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								inputParams: {
 									name: "_default4_delete",
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.delete,
-									value: true
+									value: false
 								}
 							},
 							{
