@@ -134,10 +134,10 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			if ($domainObject->isEntity()) {
 				$parentClass = $domainObject->getParentClass();
 				if(empty($parentClass)) {
-					$parentClass = $this->configurationManager->getParentClassForEntityObject();
+					$parentClass = $this->configurationManager->getParentClassForEntityObject($this->extension->getExtensionKey());
 				}
 			} else {
-				$parentClass = $this->configurationManager->getParentClassForValueObject();
+				$parentClass = $this->configurationManager->getParentClassForValueObject($this->extension->getExtensionKey());
 			}
 			$this->classObject->setParentClass($parentClass);
 		}
