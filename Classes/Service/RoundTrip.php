@@ -240,19 +240,19 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 				} else if (!empty($oldParentClass)) {
 					// the old object had a parent class setting, but it's removed now
 					if ($currentDomainObject->isEntity()) {
-						$parentClass = $this->configurationManager->getParentClassForEntityObject();
+						$parentClass = $this->configurationManager->getParentClassForEntityObject($this->extension->getExtensionKey());
 					} else {
-						$parentClass = $this->configurationManager->getParentClassForValueObject();
+						$parentClass = $this->configurationManager->getParentClassForValueObject($this->extension->getExtensionKey());
 					}
 					$this->classObject->setParentClass($parentClass);
 				}
 
 				if($currentDomainObject->isEntity() && !$oldDomainObject->isEntity()) {
 					// the object type was changed in the modeler
-					$this->classObject->setParentClass($this->configurationManager->getParentClassForEntityObject());
+					$this->classObject->setParentClass($this->configurationManager->getParentClassForEntityObject($this->extension->getExtensionKey()));
 				} elseif (!$currentDomainObject->isEntity() && $oldDomainObject->isEntity()) {
 					// the object type was changed in the modeler
-					$this->classObject->setParentClass($this->configurationManager->getParentClassForValueObject());
+					$this->classObject->setParentClass($this->configurationManager->getParentClassForValueObject($this->extension->getExtensionKey()));
 				}
 				return $this->classObject;
 			}
