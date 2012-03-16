@@ -6,7 +6,8 @@ $tmp_{domainObject.extension.extensionKey}_columns = array(
 		'label' => 'LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xml:{property.labelNamespace}',
 		'config' => array(
 			<k:format.indent indentation="3"><k:render partial="TCA/{property.dataType}.phpt" arguments="{property: property,extension:domainObject.extension,settings:settings}" /></k:format.indent>
-		),
+		),<f:if condition="{property.useRTE}">
+		'defaultExtras' => 'richtext[]',</f:if>
 	),</f:for>
 );
 <f:for each="{k:listForeignKeyRelations(extension: domainObject.extension, domainObject: domainObject)}" as="relation">
