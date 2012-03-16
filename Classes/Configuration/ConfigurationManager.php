@@ -561,20 +561,20 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		return $extensionConfigurationJSON;
 	}
 
-	public function getParentClassForValueObject() {
-		$settings = self::getExtensionBuilderSettings();
-		if (isset($settings['Model']['AbstractValueObject']['parentClass'])) {
-			$parentClass = $settings['Model']['AbstractValueObject']['parentClass'];
+	public function getParentClassForValueObject($extensionKey) {
+		$settings = self::getExtensionSettings($extensionKey);
+		if (isset($settings['classBuilder']['Model']['AbstractValueObject']['parentClass'])) {
+			$parentClass = $settings['classBuilder']['Model']['AbstractValueObject']['parentClass'];
 		} else {
 			$parentClass = 'Tx_Extbase_DomainObject_AbstractValueObject';
 		}
 		return $parentClass;
 	}
 
-	public function getParentClassForEntityObject() {
-		$settings = self::getExtensionBuilderSettings();
-		if (isset($this->settings['Model']['AbstractEntity']['parentClass'])) {
-			$parentClass = $this->settings['Model']['AbstractEntity']['parentClass'];
+	public function getParentClassForEntityObject($extensionKey) {
+		$settings = self::getExtensionSettings($extensionKey);
+		if (isset($settings['classBuilder']['Model']['AbstractEntity']['parentClass'])) {
+			$parentClass = $settings['classBuilder']['Model']['AbstractEntity']['parentClass'];
 		} else {
 			$parentClass = 'Tx_Extbase_DomainObject_AbstractEntity';
 		}
