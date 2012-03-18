@@ -690,13 +690,13 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			$this->validateMapping($domainObject);
 		}
 		if($actionCounter < 1) {
-			if (count($extension->getBackendModules()) < 1) {
+			if (count($extension->getBackendModules()) > 0) {
 				$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 					"Potential misconfiguration: No actions configured, this will result in a missing default action in your backend module",
 					self::ERROR_ACTION_MISCONFIGURATION
 				);
 			}
-			if (count($extension->getPlugins()) < 1) {
+			if (count($extension->getPlugins()) > 0) {
 				$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 					"Potential misconfiguration: No actions configured, this will result in a missing default action in your plugin",
 					self::ERROR_ACTION_MISCONFIGURATION
