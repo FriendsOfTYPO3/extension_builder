@@ -756,12 +756,16 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			}
 		}
 		if (isset($GLOBALS['TCA'][$tableName]['ctrl']['type'])) {
-			$dataType = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('DATA_TYPE','INFORMATION_SCHEMA.COLUMNS','`table_name` = "' . $tableName . '" AND `column_name` LIKE "' . $GLOBALS['TCA'][$tableName]['ctrl']['type'] . '"');
-			if( $dataType[0]['DATA_TYPE'] == 'int') {
-				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
-					'The configured type field for table "' . $tableName . '" is of type integer. This means the type field can not be used for defining the record type. You have to change this if you want to map to this table or extend the correlated class',
-					self::ERROR_MAPPING_WRONG_TYPEFIELD_CONFIGURATION
-				);
+			$dataTypeRes = $GLOBALS['TYPO3_DB']->sql_query('DESCRIBE ' . $tableName);
+			while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dataTypeRes)) {
+				if($row['Field'] == $GLOBALS['TCA'][$tableName]['ctrl']['type']) {
+					if(strpos($row['Type'],'int') !== FALSE) {
+						$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+							'The configured type field for table "' . $tableName . '" is of type ' .$row['Type'] . 'This means the type field can not be used for defining the record type. You have to change this if you want to map to this table or extend the correlated class',
+							self::ERROR_MAPPING_WRONG_TYPEFIELD_CONFIGURATION
+						);
+					}
+				}
 			}
 		}
 	}
