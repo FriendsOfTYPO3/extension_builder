@@ -843,8 +843,8 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			}
 
 			if (self::isReservedTYPO3Word($propertyName)) {
-				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
-					'Using a reserved word as property name is not allowed. Please rename property "' . $propertyName . '" in Model "' . $domainObject->getName() . '".',
+				$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+					'The name of property "' . $propertyName . '" in Model "' . $domainObject->getName() . '" will result in a TYPO3 specific column name.<br /> This might result in unexpected behaviour. If you didn\'t choose that name by purpose<br /> it is recommended to use another name',
 					self::ERROR_PROPERTY_RESERVED_WORD
 				);
 			}
