@@ -9,7 +9,7 @@ plugin.{extension.shortExtensionKey} {
 		layoutRootPath = EXT:{extension.extensionKey}/Resources/Private/Layouts/
 	}
 	persistence {
-		# cat=plugin.{extension.shortExtensionKey}//a; type=int+; label=Default storage PID
+		# cat=plugin.{extension.shortExtensionKey}//a; type=string; label=Default storage PID
 		storagePid = 
 	}
 }
@@ -25,7 +25,7 @@ module.{extension.shortExtensionKey} {
 		layoutRootPath = EXT:{extension.extensionKey}/Resources/Private/Backend/Layouts/
 	}
 	persistence {
-		# cat=module.{extension.shortExtensionKey}//a; type=int+; label=Default storage PID
+		# cat=module.{extension.shortExtensionKey}//a; type=string; label=Default storage PID
 		storagePid = 
 	}
 }
