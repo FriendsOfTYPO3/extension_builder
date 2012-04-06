@@ -141,8 +141,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 		foreach ($tagNames as $tagName) {
 			if (empty($this->tags[$tagName])) {
 				$annotations[] = $tagName;
-			}
-			if (is_array($this->tags[$tagName])) {
+			} elseif (is_array($this->tags[$tagName])) {
 				foreach ($this->tags[$tagName] as $tagValue) {
 					$annotations[] = $tagName . ' ' . $tagValue;
 				}
