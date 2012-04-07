@@ -8,7 +8,7 @@ plugin.tx_testextension {
 		layoutRootPath = EXT:test_extension/Resources/Private/Layouts/
 	}
 	persistence {
-		# cat=plugin.tx_testextension//a; type=int+; label=Default storage PID
+		# cat=plugin.tx_testextension//a; type=string; label=Default storage PID
 		storagePid = 
 	}
 }
@@ -24,7 +24,7 @@ module.tx_testextension {
 		layoutRootPath = EXT:test_extension/Resources/Private/Backend/Layouts/
 	}
 	persistence {
-		# cat=module.tx_testextension//a; type=int+; label=Default storage PID
+		# cat=module.tx_testextension//a; type=string; label=Default storage PID
 		storagePid = 
 	}
 }
