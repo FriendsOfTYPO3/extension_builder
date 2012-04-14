@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2012-04-14T17:43:11Z" product-name="extension_builder">
+		<header/>
+		<body>
+			<trans-unit id="Tx_ExtensionBuilder_extension">
+				<source>Extension Builder: Extension</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_extension.extensionkey">
+				<source>extensionKey</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_extension.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_extension.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_extension.state">
+				<source>State</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_extension.languages">
+				<source>Languages</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_extension.persons">
+				<source>Persons</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_extension.domainobjects">
+				<source>Domain Objects</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_person">
+				<source>Extension Builder: Person</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_person.name">
+				<source>Person Name</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_person.email">
+				<source>Person Email</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_person.role">
+				<source>Role</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_person.extension">
+				<source>Extension</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_domainObjects">
+				<source>Extension Builder: Domain Objects</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_domainObjects.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_domainObjects.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_domainObjects.relateddomainobjects">
+				<source>Related Domain Objects</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_domainObjects.extension">
+				<source>Extension this Domain Object belongs to</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_domainObjects.backendconfigurationoptions">
+				<source>Backend Configuration Options</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_domainObjects.properties">
+				<source>Properties</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_properties">
+				<source>Extension Builder: Properties</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_properties.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_properties.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_properties.validationrules">
+				<source>validationRules</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_properties.isrequired">
+				<source>isRequired</source>
+			</trans-unit>
+			<trans-unit id="Tx_ExtensionBuilder_properties.accessmethods">
+				<source>Access Methods</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
