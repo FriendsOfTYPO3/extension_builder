@@ -464,6 +464,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements t3lib_Singleton {
 			}
 			$parameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($parameterName);
 			$parameter->setTypeHint($domainObject->getClassName());
+			$parameter->setVarType($domainObject->getClassName());
 			$parameter->setPosition(0);
 			if ($actionName == 'new') {
 				$parameter->setOptional(TRUE);
