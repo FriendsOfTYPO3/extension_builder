@@ -118,5 +118,5 @@ $TCA['{domainObject.databaseTableName}'] = array(
 
 </f:else></f:if>
 
-<f:for each="{domainObject.childObjects}" as="childObject">require_once("{childObject.name}.php");</f:for>
+<f:for each="{domainObject.childObjects}" as="childObject">require("{childObject.name}.php");</f:for>
 ?>
