@@ -760,8 +760,8 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dataTypeRes)) {
 				if($row['Field'] == $GLOBALS['TCA'][$tableName]['ctrl']['type']) {
 					if(strpos($row['Type'],'int') !== FALSE) {
-						$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
-							'The configured type field for table "' . $tableName . '" is of type ' .$row['Type'] . 'This means the type field can not be used for defining the record type. You have to change this if you want to map to this table or extend the correlated class',
+						$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
+							'The configured type field for table "' . $tableName . '" is of type ' .$row['Type'] . '<br />This means the type field can not be used for defining the record type. <br />You have to configure the mappings yourself if you want to map to this<br /> table or extend the correlated class',
 							self::ERROR_MAPPING_WRONG_TYPEFIELD_CONFIGURATION
 						);
 					}
