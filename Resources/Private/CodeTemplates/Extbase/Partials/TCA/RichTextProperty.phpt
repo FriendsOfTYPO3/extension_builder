@@ -8,7 +8,7 @@
 		'notNewRecords'=> 1,
 		'RTEonly' => 1,
 		'script' => 'wizard_rte.php',
-		'title' => 'LLL:EXT:cms/locallang_ttc.xml:bodytext.W.RTE',
+		'title' => 'LLL:EXT:cms/locallang_ttc.{locallangFileFormat}:bodytext.W.RTE',
 		'type' => 'script'
 	)
 )
