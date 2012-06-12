@@ -11,7 +11,7 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 <f:if condition="{plugin.switchableControllerActions}">
 $pluginSignature = str_replace('_','',$_EXTKEY) . '_' . {plugin.key};
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_' .{plugin.key}. '.xml');
+t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_' .{plugin.key}. '.{locallangFileFormat}');
 </f:if></f:for>
 
 <f:if condition="{extension.BackendModules}">
@@ -33,7 +33,7 @@ if (TYPO3_MODE === 'BE') {
 		array(
 			'access' => 'user,group',
 			'icon'   => 'EXT:' . $_EXTKEY . '/ext_icon.gif',
-			'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_{backendModule.key}.xml',
+			'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_{backendModule.key}.{locallangFileFormat}',
 		)
 	);
 </f:for>
@@ -43,41 +43,41 @@ t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '<k:format.quo
 
 <f:for each="{extension.domainObjects}" as="domainObject">
 	<k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">
-<k:render partial="TCA/TypeField.phpt" arguments="{domainObject:domainObject, settings:settings}" />
+<k:render partial="TCA/TypeField.phpt" arguments="{domainObject:domainObject, settings:settings, locallangFileFormat:locallangFileFormat}" />
 	</k:mapping>
 	<f:if condition="{domainObject.mapToTable}">
 		<f:then>
 			<k:mapping domainObject="{domainObject}" renderCondition="isMappedToExternalTable">
-				<k:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
+<k:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings, locallangFileFormat:locallangFileFormat}" />
 			</k:mapping>
 		</f:then>
 		<f:else>
-			t3lib_extMgm::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xml');
-			t3lib_extMgm::allowTableOnStandardPages('{domainObject.databaseTableName}');
-			$TCA['{domainObject.databaseTableName}'] = array(
-				'ctrl' => array(
-					'title'	=> 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xml:{domainObject.databaseTableName}',
-					'label' => '{domainObject.listModuleValueLabel}',
-					'tstamp' => 'tstamp',
-					'crdate' => 'crdate',
-					'cruser_id' => 'cruser_id',
-					'dividers2tabs' => TRUE,
+t3lib_extMgm::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.{locallangFileFormat}');
+t3lib_extMgm::allowTableOnStandardPages('{domainObject.databaseTableName}');
+$TCA['{domainObject.databaseTableName}'] = array(
+	'ctrl' => array(
+		'title'	=> 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.{locallangFileFormat}:{domainObject.databaseTableName}',
+		'label' => '{domainObject.listModuleValueLabel}',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
 <f:if condition="{extension.supportVersioning}">					'versioningWS' => 2,
-					'versioning_followPages' => TRUE,</f:if>
-					'origUid' => 't3_origuid',
-					'languageField' => 'sys_language_uid',
-					'transOrigPointerField' => 'l10n_parent',
-					'transOrigDiffSourceField' => 'l10n_diffsource',
-					'delete' => 'deleted',
-					'enablecolumns' => array(
-						'disabled' => 'hidden',
-						'starttime' => 'starttime',
-						'endtime' => 'endtime',
-					),
-					'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/{domainObject.name}.php',
-					'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif'
-				),
-			);
+		'versioning_followPages' => TRUE,</f:if>
+		'origUid' => 't3_origuid',
+		'languageField' => 'sys_language_uid',
+		'transOrigPointerField' => 'l10n_parent',
+		'transOrigDiffSourceField' => 'l10n_diffsource',
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'endtime' => 'endtime',
+		),
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/{domainObject.name}.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif'
+	),
+);
 		</f:else>
 	</f:if>
 </f:for>
