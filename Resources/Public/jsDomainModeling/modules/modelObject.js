@@ -58,6 +58,15 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								}
 							},
 							{
+								type: "boolean",
+								inputParams: {
+									name: "sorting",
+									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.enableSorting,
+									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_enableSorting,
+									value: false
+								}
+							},
+							{
 								type: "string",
 								inputParams: {
 									name: "description",
