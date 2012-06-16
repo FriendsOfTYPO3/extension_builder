@@ -64,7 +64,7 @@ class Tx_TestExtension_Controller_MainController extends Tx_Extbase_MVC_Controll
 	/**
 	 * action show
 	 *
-	 * @param $main
+	 * @param Tx_TestExtension_Domain_Model_Main $main
 	 * @return void
 	 */
 	public function showAction(Tx_TestExtension_Domain_Model_Main $main) {
@@ -74,7 +74,7 @@ class Tx_TestExtension_Controller_MainController extends Tx_Extbase_MVC_Controll
 	/**
 	 * action new
 	 *
-	 * @param $newMain
+	 * @param Tx_TestExtension_Domain_Model_Main $newMain
 	 * @dontvalidate $newMain
 	 * @return void
 	 */
@@ -85,7 +85,7 @@ class Tx_TestExtension_Controller_MainController extends Tx_Extbase_MVC_Controll
 	/**
 	 * action create
 	 *
-	 * @param $newMain
+	 * @param Tx_TestExtension_Domain_Model_Main $newMain
 	 * @return void
 	 */
 	public function createAction(Tx_TestExtension_Domain_Model_Main $newMain) {
@@ -97,7 +97,7 @@ class Tx_TestExtension_Controller_MainController extends Tx_Extbase_MVC_Controll
 	/**
 	 * action edit
 	 *
-	 * @param $main
+	 * @param Tx_TestExtension_Domain_Model_Main $main
 	 * @return void
 	 */
 	public function editAction(Tx_TestExtension_Domain_Model_Main $main) {
@@ -107,7 +107,7 @@ class Tx_TestExtension_Controller_MainController extends Tx_Extbase_MVC_Controll
 	/**
 	 * action update
 	 *
-	 * @param $main
+	 * @param Tx_TestExtension_Domain_Model_Main $main
 	 * @return void
 	 */
 	public function updateAction(Tx_TestExtension_Domain_Model_Main $main) {
@@ -119,7 +119,7 @@ class Tx_TestExtension_Controller_MainController extends Tx_Extbase_MVC_Controll
 	/**
 	 * action delete
 	 *
-	 * @param $main
+	 * @param Tx_TestExtension_Domain_Model_Main $main
 	 * @return void
 	 */
 	public function deleteAction(Tx_TestExtension_Domain_Model_Main $main) {

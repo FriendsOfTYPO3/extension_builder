@@ -197,7 +197,11 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 		if (is_array($this->parameters) && count($this->parameters) > 0 && !$this->isTaggedWith('param')) {
 			$paramTags = array();
 			foreach ($this->parameters as $parameter) {
-				$paramTags[] = 'param ' . strtolower($parameter->getVarType()) . '$' . $parameter->getName();
+				$varType = $parameter->getVarType();
+				if(in_array(strtolower($varType), array('string','boolean','integer','doubler','float'))) {
+					$varType = strtolower(strtolower);
+				}
+				$paramTags[] = 'param ' . $varType . ' $' . $parameter->getName();
 			}
 			$annotations = array_merge($paramTags, $annotations);
 		}
