@@ -55,6 +55,12 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	protected $aggregateRoot;
 
 	/**
+	 * If TRUE, the element is sortable in the TYPO3 backend
+	 * @var boolean
+	 */
+	protected $sorting;
+
+	/**
 	 * If TRUE, this is an entity. If FALSE, it is a ValueObject
 	 * @var boolean
 	 */
@@ -502,6 +508,20 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	 */
 	public function getChildObjects() {
 		return $this->childObjects;
+	}
+
+	/**
+	 * @param boolean $sorting
+	 */
+	public function setSorting($sorting) {
+		$this->sorting = $sorting;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getSorting() {
+		return $this->sorting;
 	}
 
 }

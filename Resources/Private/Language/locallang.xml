@@ -84,6 +84,8 @@
 			<label index="valueObject">Value object</label>
 			<label index="isAggregateRoot">Is aggregate root?</label>
 			<label index="descr_isAggregateRoot">If true, the extension builder will generate a repository and default controller actions for this model</label>
+			<label index="enableSorting">Enable sorting?</label>
+			<label index="descr_enableSorting">If true, sorting in the backend is enabled</label>
 			<label index="mapToTable">Map to existing table</label>
 			<label index="descr_mapToTable">If the model should extend an existing table, you can configure this here</label>
 			<label index="parentClass">Extend existing model class</label>

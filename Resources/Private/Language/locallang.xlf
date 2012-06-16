@@ -234,6 +234,12 @@
 			<trans-unit id="descr_isAggregateRoot">
 				<source>If true, the extension builder will generate a repository and default controller actions for this model</source>
 			</trans-unit>
+			<trans-unit id="enableSorting">
+				<source>Enable sorting?</source>
+			</trans-unit>
+			<trans-unit id="descr_enableSorting">
+				<source>If true, sorting in the backend is enabled</source>
+			</trans-unit>
 			<trans-unit id="mapToTable">
 				<source>Map to existing table</source>
 			</trans-unit>

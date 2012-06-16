@@ -63,6 +63,7 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 			$domainObject->setEntity(FALSE);
 		}
 		$domainObject->setAggregateRoot($jsonDomainObject['objectsettings']['aggregateRoot']);
+		$domainObject->setSorting($jsonDomainObject['objectsettings']['sorting']);
 
 		// extended settings
 
