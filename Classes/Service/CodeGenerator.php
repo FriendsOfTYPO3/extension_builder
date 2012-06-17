@@ -185,6 +185,10 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
 		$this->generateDomainObjectRelatedFiles();
 
+		if(floatval($this->extension->getTargetVersion()) > 4.6) {
+			$this->generateDocumentationFiles();
+		}
+
 	}
 
 	protected function generateYamlSettingsFile() {
@@ -229,7 +233,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				foreach ($this->extension->getPlugins() as $plugin) {
 					if ($plugin->getSwitchableControllerActions()) {
 						if (!is_dir($this->extensionDirectory . 'Configuration/FlexForms')) {
-							t3lib_div::mkdir_deep($this->extensionDirectory, 'Configuration/FlexForms');
+							$this->mkdir_deep($this->extensionDirectory, 'Configuration/FlexForms');
 						}
 						$currentPluginKey = $plugin->getKey();
 						$fileContents = $this->renderTemplate('Configuration/Flexforms/flexform.xmlt', array('plugin' => $plugin));
@@ -306,14 +310,14 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
 				) {
 					$hasTemplates = TRUE;
-					t3lib_div::mkdir_deep($this->extensionDirectory, $templateRootFolder . 'Templates/' . $domainObject->getName());
+					$this->mkdir_deep($this->extensionDirectory, $templateRootFolder . 'Templates/' . $domainObject->getName());
 					$fileContents = $this->generateDomainTemplate($templateRootFolder . 'Templates/', $domainObject, $action);
 					$this->writeFile($domainTemplateDirectory . ucfirst($action->getName()) . '.html', $fileContents);
 					// generate partials for formfields
 					if ($action->getNeedsForm()) {
-						t3lib_div::mkdir_deep($absoluteTemplateRootFolder, 'Partials');
+						$this->mkdir_deep($absoluteTemplateRootFolder, 'Partials');
 						$partialDirectory = $absoluteTemplateRootFolder . 'Partials/';
-						t3lib_div::mkdir_deep($partialDirectory, $domainObject->getName());
+						$this->mkdir_deep($partialDirectory, $domainObject->getName());
 						$formfieldsPartial = $partialDirectory . $domainObject->getName() . '/FormFields.html';
 						$fileContents = $this->generateDomainFormFieldsPartial($templateRootFolder . 'Partials/', $domainObject);
 						$this->writeFile($formfieldsPartial, $fileContents);
@@ -323,9 +327,9 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 					}
 					// generate partials for properties
 					if ($action->getNeedsPropertyPartial()) {
-						t3lib_div::mkdir_deep($absoluteTemplateRootFolder, 'Partials');
+						$this->mkdir_deep($absoluteTemplateRootFolder, 'Partials');
 						$partialDirectory = $absoluteTemplateRootFolder . 'Partials/';
-						t3lib_div::mkdir_deep($partialDirectory, $domainObject->getName());
+						$this->mkdir_deep($partialDirectory, $domainObject->getName());
 						$propertiesPartial = $partialDirectory . $domainObject->getName() . '/Properties.html';
 						$fileContents = $this->generateDomainPropertiesPartial($templateRootFolder . 'Partials/', $domainObject);
 						$this->writeFile($propertiesPartial, $fileContents);
@@ -335,7 +339,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		}
 		if ($hasTemplates) {
 			// Generate Layouts directory
-			t3lib_div::mkdir_deep($absoluteTemplateRootFolder, 'Layouts');
+			$this->mkdir_deep($absoluteTemplateRootFolder, 'Layouts');
 			$layoutsDirectory = $absoluteTemplateRootFolder . 'Layouts/';
 			$this->writeFile($layoutsDirectory . 'Default.html', $this->generateLayout($templateRootFolder . 'Layouts/'));
 		}
@@ -345,7 +349,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		if ($this->extension->hasPlugins() || $this->extension->hasBackendModules()) {
 			// Generate TypoScript setup
 			try {
-				t3lib_div::mkdir_deep($this->extensionDirectory, 'Configuration/TypoScript');
+				$this->mkdir_deep($this->extensionDirectory, 'Configuration/TypoScript');
 				$typoscriptDirectory = $this->extensionDirectory . 'Configuration/TypoScript/';
 				$fileContents = $this->generateTyposcriptSetup();
 				$this->writeFile($typoscriptDirectory . 'setup.txt', $fileContents);
@@ -382,15 +386,15 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			try {
 
 				$domainModelDirectory = 'Classes/Domain/Model/';
-				t3lib_div::mkdir_deep($this->extensionDirectory, $domainModelDirectory);
+				$this->mkdir_deep($this->extensionDirectory, $domainModelDirectory);
 
 				$domainRepositoryDirectory = 'Classes/Domain/Repository/';
-				t3lib_div::mkdir_deep($this->extensionDirectory, $domainRepositoryDirectory);
+				$this->mkdir_deep($this->extensionDirectory, $domainRepositoryDirectory);
 
-				t3lib_div::mkdir_deep($this->extensionDirectory, 'Tests/Unit/Domain/Model');
+				$this->mkdir_deep($this->extensionDirectory, 'Tests/Unit/Domain/Model');
 				$domainModelTestsDirectory = $this->extensionDirectory . 'Tests/Unit/Domain/Model/';
 
-				t3lib_div::mkdir_deep($this->extensionDirectory, 'Tests/Unit/Controller');
+				$this->mkdir_deep($this->extensionDirectory, 'Tests/Unit/Controller');
 				$crudEnabledControllerTestsDirectory = $this->extensionDirectory . 'Tests/Unit/Controller/';
 
 				foreach ($this->extension->getDomainObjects() as $domainObject) {
@@ -437,7 +441,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
 			// Generate Action Controller
 			try {
-				t3lib_div::mkdir_deep($this->extensionDirectory, 'Classes/Controller');
+				$this->mkdir_deep($this->extensionDirectory, 'Classes/Controller');
 				$controllerDirectory = 'Classes/Controller/';
 				foreach ($this->extension->getDomainObjectsForWhichAControllerShouldBeBuilt() as $domainObject) {
 					$destinationFile = $controllerDirectory . $domainObject->getName() . 'Controller.php';
@@ -507,7 +511,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		// insert a manual template
 		try {
 			if (!file_exists($this->extensionDirectory . 'doc/manual.sxw') && file_exists($this->codeTemplateRootPath . 'doc/manual.sxw')) {
-				t3lib_div::mkdir_deep($this->extensionDirectory, 'doc');
+				$this->mkdir_deep($this->extensionDirectory, 'doc');
 				$this->upload_copy_move($this->codeTemplateRootPath . 'doc/manual.sxw', $this->extensionDirectory . 'doc/manual.sxw');
 			}
 		} catch (Exception $e) {
@@ -515,14 +519,36 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		}
 
 		try {
-			t3lib_div::mkdir_deep($this->extensionDirectory, 'Resources/Public');
+			$this->mkdir_deep($this->extensionDirectory, 'Resources/Public');
 			$publicResourcesDirectory = $this->extensionDirectory . 'Resources/Public/';
-			t3lib_div::mkdir_deep($publicResourcesDirectory, 'Icons');
+			$this->mkdir_deep($publicResourcesDirectory, 'Icons');
 			$this->iconsDirectory = $publicResourcesDirectory . 'Icons/';
 			$this->upload_copy_move(t3lib_extMgm::extPath('extension_builder') . 'Resources/Private/Icons/relation.gif', $this->iconsDirectory . 'relation.gif');
 		} catch (Exception $e) {
 			throw new Exception('Could not create public resources folder, error: ' . $e->getMessage());
 		}
+
+
+	}
+
+	/**
+	 * generate the folder structure for reST documentation
+	 */
+	protected function generateDocumentationFiles() {
+		$this->mkdir_deep($this->extensionDirectory, 'Documentation');
+		$docFiles = array();
+		$docFiles = t3lib_div::getAllFilesAndFoldersInPath($docFiles,t3lib_extMgm::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Extbase/Documentation/', '', TRUE, 5, '/.*rstt/');
+		foreach($docFiles as $docFile) {
+			if(is_dir($docFile)) {
+				$this->mkdir_deep($this->extensionDirectory, 'Documentation/' . str_replace($this->codeTemplateRootPath . 'Documentation/','',$docFile));
+			} else if(strpos($docFile,'.rstt') === FALSE) {
+				$this->upload_copy_move($docFile, str_replace(t3lib_extMgm::extPath('extension_builder').'Resources/Private/CodeTemplates/Extbase/', $this->extensionDirectory, $docFile));
+			}
+		}
+		$this->upload_copy_move(t3lib_extMgm::extPath('extension_builder').'Resources/Private/CodeTemplates/Extbase/Readme.rst', $this->extensionDirectory . 'Readme.rst');
+		$fileContents = $this->renderTemplate('Documentation/Index.rstt', array('extension' => $this->extension));
+		$this->writeFile($this->extensionDirectory . 'Documentation/Index.rst', $fileContents);
+
 	}
 
 
@@ -935,6 +961,31 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		if (!file_exists($targetFile) || ($this->roundTripEnabled && $overWriteMode < 2)) {
 			t3lib_div::upload_copy_move($sourceFile, $targetFile);
 		}
+	}
+
+	/**
+	 * wrapper for t3lib_div::mkdir_deep
+	 * checks for overwrite settings
+	 *
+	 * @param string $directory base path
+	 * @param string $deepDirectory
+	 */
+	protected function mkdir_deep($directory, $deepDirectory) {
+		$subDirectories = explode('/',$deepDirectory);
+		$tmpBasePath = $directory;
+		foreach($subDirectories as $subDirectory) {
+			$overWriteMode = Tx_ExtensionBuilder_Service_RoundTrip::getOverWriteSettingForPath($tmpBasePath . $subDirectory, $this->extension);
+			//throw new Exception($directory . $subDirectory . '/' . $overWriteMode);
+			if ($overWriteMode === -1) {
+				// skip creation
+				return;
+			}
+			if (!is_dir($deepDirectory) || ($this->roundTripEnabled && $overWriteMode < 2)) {
+				t3lib_div::mkdir_deep($tmpBasePath, $subDirectory);
+			}
+			$tmpBasePath .= $subDirectory . '/';
+		}
+
 	}
 
 
