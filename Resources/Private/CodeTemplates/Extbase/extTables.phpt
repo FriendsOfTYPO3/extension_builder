@@ -48,37 +48,37 @@ t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '<k:format.quo
 	<f:if condition="{domainObject.mapToTable}">
 		<f:then>
 			<k:mapping domainObject="{domainObject}" renderCondition="isMappedToExternalTable">
-				<k:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
+<k:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
 			</k:mapping>
 		</f:then>
 		<f:else>
-			t3lib_extMgm::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xml');
-			t3lib_extMgm::allowTableOnStandardPages('{domainObject.databaseTableName}');
-			$TCA['{domainObject.databaseTableName}'] = array(
-				'ctrl' => array(
-					'title'	=> 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xml:{domainObject.databaseTableName}',
-					'label' => '{domainObject.listModuleValueLabel}',
-					'tstamp' => 'tstamp',
-					'crdate' => 'crdate',
-					'cruser_id' => 'cruser_id',
-					'dividers2tabs' => TRUE,
-<f:if condition="{domainObject.sorting}">							'sortby' => 'sorting',</f:if>
-<f:if condition="{extension.supportVersioning}">					'versioningWS' => 2,
-					'versioning_followPages' => TRUE,</f:if>
-					'origUid' => 't3_origuid',
-					'languageField' => 'sys_language_uid',
-					'transOrigPointerField' => 'l10n_parent',
-					'transOrigDiffSourceField' => 'l10n_diffsource',
-					'delete' => 'deleted',
-					'enablecolumns' => array(
-						'disabled' => 'hidden',
-						'starttime' => 'starttime',
-						'endtime' => 'endtime',
-					),
-					'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/{domainObject.name}.php',
-					'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif'
-				),
-			);
+t3lib_extMgm::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xml');
+t3lib_extMgm::allowTableOnStandardPages('{domainObject.databaseTableName}');
+$TCA['{domainObject.databaseTableName}'] = array(
+	'ctrl' => array(
+		'title'	=> 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xml:{domainObject.databaseTableName}',
+		'label' => '{domainObject.listModuleValueLabel}',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+<f:if condition="{domainObject.sorting}">		'sortby' => 'sorting',</f:if>
+<f:if condition="{extension.supportVersioning}">		'versioningWS' => 2,
+		'versioning_followPages' => TRUE,</f:if>
+		'origUid' => 't3_origuid',
+		'languageField' => 'sys_language_uid',
+		'transOrigPointerField' => 'l10n_parent',
+		'transOrigDiffSourceField' => 'l10n_diffsource',
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'endtime' => 'endtime',
+		),
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/{domainObject.name}.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif'
+	),
+);
 		</f:else>
 	</f:if>
 </f:for>

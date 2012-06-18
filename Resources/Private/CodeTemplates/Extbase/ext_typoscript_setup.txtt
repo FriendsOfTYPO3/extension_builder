@@ -1,6 +1,6 @@
 {namespace k=Tx_ExtensionBuilder_ViewHelpers}
 
-<f:if condition="{extension.classHierarchy}">
+<f:if condition="{extension.domainObjectsThatNeedMappingStatements}">
 config.tx_extbase{
     persistence{
         classes{
@@ -10,9 +10,7 @@ config.tx_extbase{
                     <f:for each="{subClasses}" as="domainObject">{domainObject.recordType} = {domainObject.className}
 					</f:for>
           		}
-            }
-            </f:for>
-            <f:for each="{extension.domainObjectsThatNeedMappingStatements}" as="domainObject">
+            }</f:for><f:for each="{extension.domainObjectsThatNeedMappingStatements}" as="domainObject">
             {domainObject.className} {
                 mapping {
                     <f:if condition="{domainObject.mapToTable}">tableName = {domainObject.databaseTableName}
@@ -25,4 +23,3 @@ config.tx_extbase{
     	}
     }
 }</f:if>
-
