@@ -1,5 +1,0 @@
-Enable multiple tags with the same name. We need for example multiple @param tags, which is not possible right now.
-
-Enable sorting of methods
-
-Move class.phpt from Partials to Classes
