@@ -60,6 +60,7 @@ $TCA['tx_testextension_domain_model_main'] = array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
+		'searchFields' => 'name,identifier,child1,children2,child3,children4,',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Main.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_main.gif'
 	),
@@ -87,6 +88,7 @@ $TCA['tx_testextension_domain_model_child1'] = array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
+		'searchFields' => 'name,',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Child1.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_child1.gif'
 	),
@@ -114,6 +116,7 @@ $TCA['tx_testextension_domain_model_child2'] = array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
+		'searchFields' => '',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Child2.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_child2.gif'
 	),
@@ -141,6 +144,7 @@ $TCA['tx_testextension_domain_model_child3'] = array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
+		'searchFields' => 'name,',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Child3.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_child3.gif'
 	),
@@ -168,6 +172,7 @@ $TCA['tx_testextension_domain_model_child4'] = array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
+		'searchFields' => 'name,',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Child4.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_child4.gif'
 	),
