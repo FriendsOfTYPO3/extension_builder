@@ -62,7 +62,7 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 					0 => array(
 						'propertyName' => 'name',
 						'propertyType' => 'String',
-						'propertyIsRequired' => 'true'
+						'propertyIsRequired' => TRUE
 					),
 					1 => array(
 						'propertyName' => 'type',
