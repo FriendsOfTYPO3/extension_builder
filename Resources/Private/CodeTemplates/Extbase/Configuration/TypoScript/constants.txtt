@@ -10,7 +10,7 @@ plugin.{extension.shortExtensionKey} {
 	}
 	persistence {
 		# cat=plugin.{extension.shortExtensionKey}//a; type=string; label=Default storage PID
-		storagePid = 
+		storagePid =
 	}
 }
 </f:if>
@@ -26,7 +26,7 @@ module.{extension.shortExtensionKey} {
 	}
 	persistence {
 		# cat=module.{extension.shortExtensionKey}//a; type=string; label=Default storage PID
-		storagePid = 
+		storagePid =
 	}
 }
 
