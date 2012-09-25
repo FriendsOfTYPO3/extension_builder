@@ -69,7 +69,7 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Extbase_Tests_Unit_
 		$this->roundTripService->initialize($this->extension);
 
 		$this->classBuilder->injectRoundtripService($this->roundTripService);
-		$this->classBuilder->initialize($this->codeGenerator,$this->extension);
+		$this->classBuilder->initialize($this->codeGenerator, $this->extension, TRUE);
 
 		$this->codeGenerator->injectTemplateParser($this->templateParser);
 		$this->codeGenerator->injectClassBuilder($this->classBuilder);

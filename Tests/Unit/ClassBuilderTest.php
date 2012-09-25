@@ -52,7 +52,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 		$property0 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty('name');
 		$domainObject->addProperty($property0);
 
-		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
+		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject, TRUE);
 
 		$this->assertTrue(is_object($modelClassObject), 'No model class object');
 		$this->assertTrue($modelClassObject->methodExists('setName'), 'No method: setName');
@@ -76,7 +76,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 		$property0->setRequired(TRUE);
 		$domainObject->addProperty($property0);
 
-		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
+		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject, TRUE);
 		$this->assertTrue($modelClassObject->methodExists('getName'), 'No method: getName');
 
 	}
@@ -93,7 +93,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
 
-		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
+		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject, TRUE);
 		$this->assertTrue($modelClassObject->methodExists('isBlue'), 'No method: isBlue');
 
 	}
@@ -112,7 +112,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 		$relationProperty->setForeignModel($relatedDomainObject);
 		$domainObject1->addProperty($relationProperty);
 
-		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject1);
+		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject1, TRUE);
 
 		$this->assertTrue($modelClassObject->methodExists('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))), 'Add method was not generated');
 		$this->assertTrue($modelClassObject->methodExists('remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))), 'Remove method was not generated');
