@@ -65,7 +65,7 @@ class Tx_ExtensionBuilder_CompatibilityFunctionTest extends Tx_ExtensionBuilder_
 		if (file_exists($jsonFile)) {
 			// compatibility adaptions for configurations from older versions
 			$extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), TRUE);
-			$extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON($extensionConfigurationJSON);
+			$extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON($extensionConfigurationJSON, FALSE);
 
 		} else {
 			$this->fail('JSON file not found');
