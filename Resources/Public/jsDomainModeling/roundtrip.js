@@ -156,5 +156,6 @@ Ext.onReady(
                 Ext.query('textarea[name=dependsOn]')[0].value = updatedDependencies;
             }
          );
+		Ext.get(Ext.query('body')[0]).addClass('yui-skin-sam');
     }
 );

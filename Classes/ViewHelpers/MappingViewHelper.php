@@ -21,7 +21,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class Tx_ExtensionBuilder_ViewHelpers_MappingViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * @var Tx_ExtensionBuilder_Configuration_ConfigurationManager
@@ -44,7 +44,7 @@ class Tx_ExtensionBuilder_ViewHelpers_MappingViewHelper extends Tx_Fluid_Core_Vi
 	 */
 	public function render(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject, $renderCondition) {
 		$content = '';
-		$extensionPrefix = 'Tx_' . t3lib_div::underscoredToUpperCamelCase($domainObject->getExtension()->getExtensionKey());
+		$extensionPrefix = 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($domainObject->getExtension()->getExtensionKey());
 
 		// an external table should have a loadable TCA configuration and the column definitions
 		// for external tables have to be declared in ext_tables.php
@@ -92,7 +92,7 @@ class Tx_ExtensionBuilder_ViewHelpers_MappingViewHelper extends Tx_Fluid_Core_Vi
 		$needsTypeField = FALSE;
 		if ($domainObject->getChildObjects() || ($domainObject->getParentClass() && $isMappedToExternalTable)) {
 			$tableName = $domainObject->getDatabaseTableName();
-			//t3lib_div::devlog('TCA: '.$tableName,'extension_builder',0,$GLOBALS['TCA'][$tableName]['ctrl']);
+			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('TCA: '.$tableName,'extension_builder',0,$GLOBALS['TCA'][$tableName]['ctrl']);
 			if (!isset($GLOBALS['TCA'][$tableName]['ctrl']['type']) || $GLOBALS['TCA'][$tableName]['ctrl']['type'] == 'tx_extbase_type') {
 				/**
 				 * if the type field is set but equals the default extbase record type field name it might

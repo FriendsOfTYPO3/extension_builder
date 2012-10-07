@@ -28,7 +28,7 @@
  * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtensionBuilder_Utility_Tools implements t3lib_singleton {
+class Tx_ExtensionBuilder_Utility_Tools implements \TYPO3\CMS\Core\SingletonInterface {
 
 	static public function convertJSONArrayToPHPArray($encodedArray) {
 		if (strpos($encodedArray, '}') > -1) {
@@ -132,22 +132,22 @@ class Tx_ExtensionBuilder_Utility_Tools implements t3lib_singleton {
 			$existingXml = simplexml_load_file($locallangFile, 'SimpleXmlElement', LIBXML_NOWARNING);
 			$existingLabelArr = self::flattenLocallangArray(self::parseXliff($existingXml), 'xlf');
 		} else {
-			$existingLabelArr = self::flattenLocallangArray(t3lib_div::xml2array(t3lib_div::getUrl($locallangFile)), 'xml');
+			$existingLabelArr = self::flattenLocallangArray(\TYPO3\CMS\Core\Utility\GeneralUtility::xml2array(\TYPO3\CMS\Core\Utility\GeneralUtility::getUrl($locallangFile)), 'xml');
 		}
 
 		if ($fileFormat == 'xlf') {
 			$newXml = simplexml_load_string($newXmlString, 'SimpleXmlElement', LIBXML_NOWARNING);
 			$newLabelArr = self::flattenLocallangArray(self::parseXliff($newXml), 'xlf');
 		} else {
-			$newLabelArr = self::flattenLocallangArray(t3lib_div::xml2array($newXmlString), 'xml');
+			$newLabelArr = self::flattenLocallangArray(\TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($newXmlString), 'xml');
 		}
-		t3lib_div::devlog('mergeLocallang', 'extension_builder', 0, array('new' => $newLabelArr, 'existing' => $existingLabelArr));
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('mergeLocallang', 'extension_builder', 0, array('new' => $newLabelArr, 'existing' => $existingLabelArr));
 		if (is_array($existingLabelArr)) {
-			$mergedLabelArr = t3lib_div::array_merge_recursive_overrule($newLabelArr, $existingLabelArr);
+			$mergedLabelArr = \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge_recursive_overrule($newLabelArr, $existingLabelArr);
 		} else {
 			$mergedLabelArr = $newLabelArr;
 		}
-		t3lib_div::devlog('mergeLocallang', 'extension_builder', 0, $mergedLabelArr);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('mergeLocallang', 'extension_builder', 0, $mergedLabelArr);
 
 		return $mergedLabelArr;
 	}
@@ -159,10 +159,10 @@ class Tx_ExtensionBuilder_Utility_Tools implements t3lib_singleton {
 	 * @return string merged label in XML format
 	 */
 	static public function mergeLocallangXml($locallangFile, $newXmlString) {
-		$existingLabelArr = t3lib_div::xml2array(t3lib_div::getUrl($locallangFile));
-		$newLabelArr = t3lib_div::xml2array($newXmlString);
+		$existingLabelArr = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array(\TYPO3\CMS\Core\Utility\GeneralUtility::getUrl($locallangFile));
+		$newLabelArr = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($newXmlString);
 		if (is_array($existingLabelArr)) {
-			$mergedLabelArr = t3lib_div::array_merge_recursive_overrule($newLabelArr, $existingLabelArr);
+			$mergedLabelArr = \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge_recursive_overrule($newLabelArr, $existingLabelArr);
 		} else {
 			$mergedLabelArr = $newLabelArr;
 		}
@@ -171,7 +171,7 @@ class Tx_ExtensionBuilder_Utility_Tools implements t3lib_singleton {
 	}
 
 	/**
-	 * reduces an array coming from t3lib_div::xml2array or parseXliff
+	 * reduces an array coming from \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array or parseXliff
 	 * to a simple index => label array
 	 *
 	 * @static
@@ -211,7 +211,7 @@ class Tx_ExtensionBuilder_Utility_Tools implements t3lib_singleton {
 
 		 // Creating XML file from $outputArray:
 		 $XML = '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>' . chr(10);
-		 $XML .= t3lib_div::array2xml($outputArray, '', 0, 'T3locallang', 0, $options);
+		 $XML .= \TYPO3\CMS\Core\Utility\GeneralUtility::array2xml($outputArray, '', 0, 'T3locallang', 0, $options);
 
 		 return $XML;
      }

@@ -1,6 +1,6 @@
 <?php
 
-class Tx_ExtensionBuilder_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Fluid_ViewHelpers_Be_AbstractBackendViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_Be_ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBackendViewHelper {
 
 	/**
 	 * @var t3lib_PageRenderer
@@ -17,9 +17,10 @@ class Tx_ExtensionBuilder_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Flui
 	public function render() {
 
 		$doc = $this->getDocInstance();
-		$doc->bodyTagAdditions .= 'class="yui-skin-sam"';
+			// this does not work anymore, so we have to add the class with javascript
+		//$doc->bodyTagAdditions .= 'class="yui-skin-sam"';
 
-		$baseUrl = '../' . t3lib_extMgm::siteRelPath('extension_builder');
+		$baseUrl = '../' . \TYPO3\CMS\Core\Extension\ExtensionManager::siteRelPath('extension_builder');
 
 		$this->pageRenderer->disableCompressJavascript();
 		$this->pageRenderer->loadExtJS(FALSE, FALSE);
@@ -119,13 +120,13 @@ class Tx_ExtensionBuilder_ViewHelpers_Be_ConfigurationViewHelper extends Tx_Flui
 	 * @return void
 	 */
 	private function setLocallangSettings() {
-		$LL = t3lib_div::readLLfile('EXT:extension_builder/Resources/Private/Language/locallang.xml', 'default');
+		$LL = \TYPO3\CMS\Core\Utility\GeneralUtility::readLLfile('EXT:extension_builder/Resources/Private/Language/locallang.xml', 'default');
 		if (!empty($LL['default']) && is_array($LL['default'])) {
 			foreach ($LL['default'] as $key => $value) {
 				$this->pageRenderer->addInlineSetting(
 					'extensionBuilder._LOCAL_LANG',
 					str_replace('.', '_', $key),
-					Tx_Extbase_Utility_Localization::translate($key, 'extension_builder')
+					\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($key, 'extension_builder')
 				);
 			}
 		}

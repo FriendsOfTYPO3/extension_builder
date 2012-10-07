@@ -98,7 +98,6 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 		$expected->addAction($listAction);
 
 		$actual = $this->objectSchemaBuilder->build($input);
-
 		$this->assertEquals($actual, $expected, 'Domain Object not built correctly.');
 
 	}
@@ -123,13 +122,13 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 						'relationName' => 'relation 1',
 						'relationType' => 'manyToMany',
 						'propertyIsExcludeField' => FALSE,
-						'foreignRelationClass' => 'Tx_Extbase_Domain_Model_FrontendUser'
+						'foreignRelationClass' => 'TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser'
 					),
 					1 => array(
 						'relationName' => 'relation 2',
 						'relationType' => 'manyToMany',
 						'propertyIsExcludeField' => FALSE,
-						'foreignRelationClass' => 'Tx_Extbase_Domain_Model_FrontendUser'
+						'foreignRelationClass' => 'TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser'
 					),
 				)
 			),
@@ -142,12 +141,12 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 		$expected->setAggregateRoot(TRUE);
 
 		$relation1 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation('relation 1');
-		$relation1->setForeignClassName('Tx_Extbase_Domain_Model_FrontendUser');
+		$relation1->setForeignClassName('TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser');
 		$relation1->setRelatedToExternalModel(TRUE);
 		$relation1->setExcludeField(FALSE);
 		$relation1->setForeignDatabaseTableName('fe_users');
 		$relation2 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation('relation 2');
-		$relation2->setForeignClassName('Tx_Extbase_Domain_Model_FrontendUser');
+		$relation2->setForeignClassName('TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser');
 		$relation2->setRelatedToExternalModel(TRUE);
 		$relation2->setExcludeField(FALSE);
 		$relation2->setForeignDatabaseTableName('fe_users');
@@ -180,7 +179,7 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 						'relationName' => $relationName,
 						'relationType' => 'manyToMany',
 						'propertyIsExcludeField' => FALSE,
-						'foreignRelationClass' => 'Tx_Extbase_Domain_Model_FrontendUser'
+						'foreignRelationClass' => 'TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser'
 					),
 				)
 			),
@@ -271,7 +270,7 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 						'relationName' => $relationName,
 						'relationType' => 'zeroToMany',
 						'propertyIsExcludeField' => FALSE,
-						'foreignRelationClass' => 'Tx_Extbase_Domain_Model_FrontendUser'
+						'foreignRelationClass' => 'TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser'
 					),
 				)
 			),

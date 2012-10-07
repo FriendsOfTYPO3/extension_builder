@@ -34,7 +34,7 @@
  * @version	 SVN: $Id:
  *
  */
-class Tx_ExtensionBuilder_ViewHelpers_BeFuncViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_BeFuncViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	protected $objectAccessorPostProcessorEnabled = FALSE;
 

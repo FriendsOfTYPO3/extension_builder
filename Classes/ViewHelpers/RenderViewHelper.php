@@ -25,7 +25,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @scope prototype
  */
-class Tx_ExtensionBuilder_ViewHelpers_RenderViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_RenderViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 *
@@ -46,18 +46,18 @@ class Tx_ExtensionBuilder_ViewHelpers_RenderViewHelper extends Tx_Fluid_Core_Vie
 	protected $extension;
 
 	/**
-	 * @param Tx_Fluid_Core_Parser_TemplateParser $templateParser
+	 * @param TYPO3\CMS\Fluid\Core\Parser\TemplateParser $templateParser
 	 * @return void
 	 */
-	public function injectTemplateParser(Tx_Fluid_Core_Parser_TemplateParser $templateParser) {
+	public function injectTemplateParser(TYPO3\CMS\Fluid\Core\Parser\TemplateParser $templateParser) {
 		$this->templateParser = $templateParser;
 	}
 
 	/**
-	 * @param Tx_Extbase_Object_ObjectManager $objectManager
+	 * @param TYPO3\CMS\Extbase\Object\ObjectManager $objectManager
 	 * @return void
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManager $objectManager) {
+	public function injectObjectManager(TYPO3\CMS\Extbase\Object\ObjectManager $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 
@@ -98,11 +98,11 @@ class Tx_ExtensionBuilder_ViewHelpers_RenderViewHelper extends Tx_Fluid_Core_Vie
 	 */
 	protected function renderTemplate($filePath, $variables) {
 		if (!isset($variables['settings']['codeTemplateRootPath'])) {
-			t3lib_div::devlog('Render: ' . $filePath, 'builder', 2, $variables);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Render: ' . $filePath, 'builder', 2, $variables);
 			throw new Exception('No template root path configured: ' . $filePath);
 		}
 		if (!file_exists($variables['settings']['codeTemplateRootPath'] . $filePath)) {
-			t3lib_div::devlog('No template file found: ' . $variables['settings']['codeTemplateRootPath'] . $filePath, 'extension_builder', 2, $variables);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('No template file found: ' . $variables['settings']['codeTemplateRootPath'] . $filePath, 'extension_builder', 2, $variables);
 			throw new Exception('No template file found: ' . $variables['settings']['codeTemplateRootPath'] . $filePath);
 		}
 		$parsedTemplate = $this->templateParser->parse(file_get_contents($variables['settings']['codeTemplateRootPath'] . $filePath));

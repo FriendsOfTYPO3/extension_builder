@@ -30,14 +30,12 @@ class Tx_ExtensionBuilder_Utility_ExtensionInstallationStatus {
 	protected $extension;
 
 	/**
-	 * @var tx_em_Install
+	 * @var \TYPO3\CMS\Install\Install
 	 */
 	protected $installTool;
 
 	public function __construct() {
-		if (t3lib_extMgm::isLoaded('install')) {
-			$this->installTool = t3lib_div::makeInstance('tx_em_Install');
-		}
+		$this->installTool = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extensionmanager\\Utility\\InstallUtility');
 	}
 
 	/**
@@ -54,7 +52,7 @@ class Tx_ExtensionBuilder_Utility_ExtensionInstallationStatus {
 			$statusMessage .= '<p>Please update the database in the Extension Manager!</p>';
 		}
 
-		if (!t3lib_extMgm::isLoaded($this->extension->getExtensionKey())) {
+		if (!\TYPO3\CMS\Core\Extension\ExtensionManager::isLoaded($this->extension->getExtensionKey())) {
 			$statusMessage .= '<p>Your Extension is not installed yet.</p>';
 		}
 
@@ -66,10 +64,22 @@ class Tx_ExtensionBuilder_Utility_ExtensionInstallationStatus {
 	 * @return boolean
 	 */
 	protected function dbUpdateNeeded() {
-		if (t3lib_extMgm::isLoaded($this->extension->getExtensionKey()) && !empty($this->installTool)) {
-			$updateNeeded = $this->installTool->checkDBupdates($this->extension->getExtensionKey(), array('type' => 'L', 'files' => array('ext_tables.sql')), 1);
-			if (!empty($updateNeeded['structure']['diff']['extra'])) {
-				return TRUE;
+		// TODO
+		$sqlFile = $this->extension->getExtensionDir().'ext_tables.sql';
+		if (\TYPO3\CMS\Core\Extension\ExtensionManager::isLoaded($this->extension->getExtensionKey()) && file_exists($sqlFile)) {
+			$this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+			$installToolSqlParser = $this->objectManager->get('TYPO3\\CMS\\Install\\Sql\\SchemaMigrator');
+			$sqlContent = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl($sqlFile);
+			$GLOBALS['typo3CacheManager']->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
+			$sqlContent .= \TYPO3\CMS\Core\Cache\Cache::getDatabaseTableDefinitions();
+			$fieldDefinitionsFromFile = $installToolSqlParser->getFieldDefinitions_fileContent($sqlContent);
+			if (count($fieldDefinitionsFromFile)) {
+				$fieldDefinitionsFromCurrentDatabase = $installToolSqlParser->getFieldDefinitions_database();
+				$diff = $installToolSqlParser->getDatabaseExtra($fieldDefinitionsFromFile, $fieldDefinitionsFromCurrentDatabase);
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('diff','extension_builder',0,$diff);
+				if(!empty($diff['extra']) || !empty($diff['diff']) || !empty($diff['diff_currentValues'])) {
+					return TRUE;
+				}
 			}
 		}
 		return FALSE;

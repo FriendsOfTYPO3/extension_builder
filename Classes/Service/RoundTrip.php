@@ -30,7 +30,7 @@
  * @package ExtensionBuilder
  *
  */
-class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
+class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 
 	const SPLIT_TOKEN = '## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder';
 
@@ -123,10 +123,10 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 
 		$this->extension = $extension;
 		$this->extensionDirectory = $this->extension->getExtensionDir();
-		$this->extClassPrefix = 'Tx_' . t3lib_div::underscoredToUpperCamelCase($this->extension->getExtensionKey());
+		$this->extClassPrefix = 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey());
 
 		if (!$this->classParser instanceof Tx_ExtensionBuilder_Utility_ClassParser) {
-			$this->injectClassParser(t3lib_div::makeInstance('Tx_ExtensionBuilder_Utility_ClassParser'));
+			$this->injectClassParser(\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Utility_ClassParser'));
 		}
 		$this->settings = $this->configurationManager->getExtensionBuilderSettings();
 		// defaults
@@ -137,7 +137,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 			$this->previousExtensionDirectory = $extension->getPreviousExtensionDirectory();
 			$this->previousExtensionKey = $extension->getOriginalExtensionKey();
 			$this->extensionRenamed = TRUE;
-			t3lib_div::devlog('Extension renamed: ' . $this->previousExtensionKey . ' => ' . $this->extension->getExtensionKey(), 'extension_builder', 1, array('$previousExtensionDirectory ' => $this->previousExtensionDirectory));
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Extension renamed: ' . $this->previousExtensionKey . ' => ' . $this->extension->getExtensionKey(), 'extension_builder', 1, array('$previousExtensionDirectory ' => $this->previousExtensionDirectory));
 		}
 
 		// Rename the old kickstarter.json file to ExtensionBuilder.json
@@ -149,14 +149,14 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		}
 
 		if (file_exists($this->previousExtensionDirectory . Tx_ExtensionBuilder_Configuration_ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE)) {
-			$extensionSchemaBuilder = t3lib_div::makeInstance('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder');
+			$extensionSchemaBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder');
 			$jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey, FALSE);
-			t3lib_div::devlog('old JSON:' . $this->previousExtensionDirectory . 'ExtensionBuilder.json', 'extension_builder', 0, $jsonConfig);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('old JSON:' . $this->previousExtensionDirectory . 'ExtensionBuilder.json', 'extension_builder', 0, $jsonConfig);
 			$this->previousExtension = $extensionSchemaBuilder->build($jsonConfig);
 			$oldDomainObjects = $this->previousExtension->getDomainObjects();
 			foreach ($oldDomainObjects as $oldDomainObject) {
 				$this->oldDomainObjects[$oldDomainObject->getUniqueIdentifier()] = $oldDomainObject;
-				t3lib_div::devlog('Old domain object: ' . $oldDomainObject->getName() . ' - ' . $oldDomainObject->getUniqueIdentifier(), 'extension_builder');
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Old domain object: ' . $oldDomainObject->getName() . ' - ' . $oldDomainObject->getUniqueIdentifier(), 'extension_builder');
 			}
 
 			// now we store all renamed domainObjects in an array to enable detection of renaming in
@@ -195,7 +195,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 */
 	public function getDomainModelClass(Tx_ExtensionBuilder_Domain_Model_DomainObject $currentDomainObject) {
 		if (isset($this->oldDomainObjects[$currentDomainObject->getUniqueIdentifier()])) {
-			t3lib_div::devlog('domainObject identified:' . $currentDomainObject->getName(), 'extension_builder', 0);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('domainObject identified:' . $currentDomainObject->getName(), 'extension_builder', 0);
 			$oldDomainObject = $this->oldDomainObjects[$currentDomainObject->getUniqueIdentifier()];
 			$extensionDir = $this->previousExtensionDirectory;
 			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Model', FALSE) . $oldDomainObject->getName() . '.php';
@@ -204,9 +204,9 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 				include_once($fileName);
 				$className = $oldDomainObject->getClassName();
 				$this->classObject = $this->classParser->parse($className);
-				//t3lib_div::devlog('Model class methods','extension_builder',0,$this->classObject->getMethods());
+				//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Model class methods','extension_builder',0,$this->classObject->getMethods());
 				if ($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed) {
-					if (!$this->extensionRenamed) t3lib_div::devlog('domainObject renamed. old: ' . $oldDomainObject->getName() . ' new: ' . $currentDomainObject->getName(), 'extension_builder');
+					if (!$this->extensionRenamed) \TYPO3\CMS\Core\Utility\GeneralUtility::devlog('domainObject renamed. old: ' . $oldDomainObject->getName() . ' new: ' . $currentDomainObject->getName(), 'extension_builder');
 
 					$newClassName = $currentDomainObject->getClassName();
 					$this->classObject->setName($newClassName);
@@ -257,18 +257,18 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 				return $this->classObject;
 			}
 			else {
-				t3lib_div::devLog('class file didn\'t exist:' . $fileName, 'extension_builder', 0);
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('class file didn\'t exist:' . $fileName, 'extension_builder', 0);
 			}
 		}
 		else {
-			t3lib_div::devlog('domainObject not identified:' . $currentDomainObject->getName(), 'extension_builder', 0, $this->oldDomainObjects);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('domainObject not identified:' . $currentDomainObject->getName(), 'extension_builder', 0, $this->oldDomainObjects);
 			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($this->extensionDirectory, 'Model', FALSE) . $currentDomainObject->getName() . '.php';
 			if (file_exists($fileName)) {
 				// import the classObject from the existing file
 				include_once($fileName);
 				$className = $currentDomainObject->getClassName();
 				$this->classObject = $this->classParser->parse($className);
-				t3lib_div::devLog('class file found:' . $currentDomainObject->getName() . '.php', 'extension_builder', 0, (array)$this->classObject->getAnnotations());
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('class file found:' . $currentDomainObject->getName() . '.php', 'extension_builder', 0, (array)$this->classObject->getAnnotations());
 				return $this->classObject;
 			}
 		}
@@ -287,16 +287,16 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 			$oldDomainObject = $this->oldDomainObjects[$currentDomainObject->getUniqueIdentifier()];
 			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Controller', FALSE) . $oldDomainObject->getName() . 'Controller.php';
 			if (file_exists($fileName)) {
-				t3lib_div::devlog('existing controller class:' . $fileName, 'extension_builder', 0);
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('existing controller class:' . $fileName, 'extension_builder', 0);
 				include_once($fileName);
 				$className = $oldDomainObject->getControllerName();
 				$this->classObject = $this->classParser->parse($className);
 
-				//t3lib_div::devlog('Controller class methods','extension_builder',0,$this->classObject->getMethods());
+				//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Controller class methods','extension_builder',0,$this->classObject->getMethods());
 				if ($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed) {
 					$this->mapOldControllerToCurrentClassObject($oldDomainObject, $currentDomainObject);
 				} else if ($oldDomainObject->isAggregateRoot() && !$currentDomainObject->isAggregateRoot()) {
-					$injectMethodName = 'inject' . t3lib_div::lcfirst($oldDomainObject->getName()) . 'Repository';
+					$injectMethodName = 'inject' . \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($oldDomainObject->getName()) . 'Repository';
 					$this->classObject->removeMethod($injectMethodName);
 				}
 
@@ -311,7 +311,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 						if (!isset($newActions[$oldAction->getName()])) {
 							// an action was removed
 							$this->classObject->removeMethod($oldAction->getName() . 'Action');
-							t3lib_div::devlog('Action method removed:' . $oldAction->getName(), 'extension_builder', 0, $this->classObject->getMethods());
+							\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Action method removed:' . $oldAction->getName(), 'extension_builder', 0, $this->classObject->getMethods());
 						}
 					}
 					// we don't have to add new ones, this will be done automatically by the class builder
@@ -319,7 +319,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 				return $this->classObject;
 			}
 			else {
-				t3lib_div::devLog('class file didn\'t exist:' . $fileName, 'extension_builder', 2);
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('class file didn\'t exist:' . $fileName, 'extension_builder', 2);
 				return NULL;
 			}
 		}
@@ -331,9 +331,9 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 				$this->classObject = $this->classParser->parse($className);
 				return $this->classObject;
 			}
-			else t3lib_div::devlog('No existing controller class:' . $fileName, 'extension_builder', 2);
+			else \TYPO3\CMS\Core\Utility\GeneralUtility::devlog('No existing controller class:' . $fileName, 'extension_builder', 2);
 		}
-		t3lib_div::devlog('No existing controller class:' . $currentDomainObject->getName(), 'extension_builder', 2);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('No existing controller class:' . $currentDomainObject->getName(), 'extension_builder', 2);
 		return NULL;
 	}
 
@@ -354,7 +354,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		if ($oldDomainObject->isAggregateRoot()) {
 
 			// should we keep the old properties comments and tags?
-			$this->classObject->removeProperty(t3lib_div::lcfirst($oldName) . 'Repository');
+			$this->classObject->removeProperty(\TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($oldName) . 'Repository');
 			$injectMethodName = 'inject' . $oldName . 'Repository';
 			if ($currentDomainObject->isAggregateRoot()) {
 				// update the initializeAction method body
@@ -362,7 +362,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 				if ($initializeMethod != NULL) {
 					$initializeMethodBody = $initializeMethod->getBody();
 					$newInitializeMethodBody = str_replace($oldDomainObject->getDomainRepositoryClassName(), $currentDomainObject->getDomainRepositoryClassName(), $initializeMethodBody);
-					$newInitializeMethodBody = str_replace(t3lib_div::lcfirst($oldName) . 'Repository', t3lib_div::lcfirst($newName) . 'Repository', $newInitializeMethodBody);
+					$newInitializeMethodBody = str_replace(\TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($oldName) . 'Repository', \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($newName) . 'Repository', $newInitializeMethodBody);
 					$initializeMethod->setBody($newInitializeMethodBody);
 					$this->classObject->setMethod($initializeMethod);
 				}
@@ -370,11 +370,11 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 				$injectMethod = $this->classObject->getMethod($injectMethodName);
 				if ($injectMethod != NULL) {
 					$this->classObject->removeMethod($injectMethodName);
-					$newInjectMethodBody = str_replace(t3lib_div::lcfirst($oldName), t3lib_div::lcfirst($newName), $injectMethod->getBody());
+					$newInjectMethodBody = str_replace(\TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($oldName), \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($newName), $injectMethod->getBody());
 					$injectMethod->setBody($newInjectMethodBody);
 					$injectMethod->setTag('param', $currentDomainObject->getDomainRepositoryClassName() . ' $' . $newName . 'Repository');
 					$injectMethod->setName('inject' . $newName . 'Repository');
-					$parameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter(t3lib_div::lcfirst($newName) . 'Repository');
+					$parameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter(\TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($newName) . 'Repository');
 					$parameter->setTypeHint($currentDomainObject->getDomainRepositoryClassName());
 					$parameter->setPosition(0);
 					$injectMethod->replaceParameter($parameter);
@@ -386,7 +386,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 					$actionMethod = $this->classObject->getMethod($action->getName() . 'Action');
 					if ($actionMethod != NULL) {
 						$actionMethodBody = $actionMethod->getBody();
-						$newActionMethodBody = str_replace(t3lib_div::lcfirst($oldName) . 'Repository', t3lib_div::lcfirst($newName) . 'Repository', $actionMethodBody);
+						$newActionMethodBody = str_replace(\TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($oldName) . 'Repository', \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($newName) . 'Repository', $actionMethodBody);
 						$actionMethod->setBody($newActionMethodBody);
 						$actionMethod->setTag('param', $currentDomainObject->getClassName());
 
@@ -448,7 +448,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 				return $this->classObject;
 			}
 			else {
-				t3lib_div::devLog('class file didn\'t exist:' . $fileName, 'extension_builder', 2);
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('class file didn\'t exist:' . $fileName, 'extension_builder', 2);
 			}
 		}
 		else {
@@ -457,12 +457,12 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 				include_once($fileName);
 				$className = $currentDomainObject->getDomainRepositoryClassName();
 				$this->classObject = $this->classParser->parse($className);
-				t3lib_div::devlog('existing Repository class:' . $fileName, 'extension_builder', 0, (array)$this->classObject);
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('existing Repository class:' . $fileName, 'extension_builder', 0, (array)$this->classObject);
 				return $this->classObject;
 			}
 
 		}
-		t3lib_div::devlog('No existing Repository class:' . $currentDomainObject->getName(), 'extension_builder', 2);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('No existing Repository class:' . $currentDomainObject->getName(), 'extension_builder', 2);
 		return NULL;
 	}
 
@@ -480,7 +480,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		foreach ($newDomainObject->getProperties() as $property) {
 			$newProperties[$property->getUniqueIdentifier()] = $property;
 		}
-		//t3lib_div::devlog('properties new:','extension_builder',0,$newProperties);
+		//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('properties new:','extension_builder',0,$newProperties);
 
 		// compare all old properties with new ones
 		foreach ($oldDomainObject->getProperties() as $oldProperty) {
@@ -489,7 +489,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 
 				// relation type changed
 				if ($oldProperty->isAnyToManyRelation() != $newProperty->isAnyToManyRelation()) {
-					t3lib_div::devlog('property type changed:' . $oldProperty->getName() . ' ' . $newProperty->getName(), 'extension_builder', 0, $newProperties);
+					\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('property type changed:' . $oldProperty->getName() . ' ' . $newProperty->getName(), 'extension_builder', 0, $newProperties);
 					// remove old methods since we won't convert getter and setter methods to add/remove methods
 					if ($oldProperty->isAnyToManyRelation()) {
 						$this->classObject->removeMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($oldProperty->getName())));
@@ -501,7 +501,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 						$this->classObject->removeMethod('is' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($oldProperty->getName())));
 					}
 					$this->classObject->removeProperty($oldProperty->getName());
-					t3lib_div::devlog('property type changed => removed old property:' . $oldProperty->getName(), 'extension_builder', 1);
+					\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('property type changed => removed old property:' . $oldProperty->getName(), 'extension_builder', 1);
 				}
 				else {
 					$this->updateProperty($oldProperty, $newProperty);
@@ -526,14 +526,14 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		if ($propertyToRemove->isAnyToManyRelation()) {
 			$this->classObject->removeMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
 			$this->classObject->removeMethod('remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
-			t3lib_div::devLog('Methods removed: ' . 'add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)), 'extension_builder');
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Methods removed: ' . 'add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)), 'extension_builder');
 		}
 		$this->classObject->removeMethod('get' . ucfirst($propertyName));
 		$this->classObject->removeMethod('set' . ucfirst($propertyName));
 		if ($propertyToRemove->isBoolean()) {
 			$this->classObject->removeMethod('is' . ucfirst($propertyName));
 		}
-		t3lib_div::devLog('Methods removed: ' . 'get' . ucfirst($propertyName), 'extension_builder');
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Methods removed: ' . 'get' . ucfirst($propertyName), 'extension_builder');
 	}
 
 	/**
@@ -573,17 +573,17 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 			return TRUE;
 		}
 		if ($newProperty->getName() != $oldProperty->getName()) {
-			t3lib_div::devlog('property renamed:' . $oldProperty->getName() . ' ' . $newProperty->getName(), 'extension_builder', 0);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('property renamed:' . $oldProperty->getName() . ' ' . $newProperty->getName(), 'extension_builder', 0);
 			return TRUE;
 		}
 		if ($newProperty->getTypeForComment() != $this->updateExtensionKey($oldProperty->getTypeForComment())) {
-			t3lib_div::devlog('property type changed from ' . $this->updateExtensionKey($oldProperty->getTypeForComment()) . ' to ' . $newProperty->getTypeForComment(), 'extension_builder', 0);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('property type changed from ' . $this->updateExtensionKey($oldProperty->getTypeForComment()) . ' to ' . $newProperty->getTypeForComment(), 'extension_builder', 0);
 			return TRUE;
 		}
 		if ($newProperty->isRelation()) {
 			// if only the related domain object was renamed
 			if ($this->getForeignClassName($newProperty) != $this->updateExtensionKey($oldProperty->getForeignClassName())) {
-				t3lib_div::devlog('related domainObject was renamed:' . $this->updateExtensionKey($oldProperty->getForeignClassName()) . ' ->' . $this->getForeignClassName($newProperty), 'extension_builder');
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('related domainObject was renamed:' . $this->updateExtensionKey($oldProperty->getForeignClassName()) . ' ->' . $this->getForeignClassName($newProperty), 'extension_builder');
 				return TRUE;
 			}
 		}
@@ -622,7 +622,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		if ($newProperty->getTypeForComment() != $this->updateExtensionKey($oldProperty->getTypeForComment())) {
 			if ($oldProperty->isBoolean() && !$newProperty->isBoolean()) {
 				$this->classObject->removeMethod($this->classBuilder->getMethodName($oldProperty, 'is'));
-				t3lib_div::devlog('Method removed:' . $this->classBuilder->getMethodName($oldProperty, 'is'),
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Method removed:' . $this->classBuilder->getMethodName($oldProperty, 'is'),
 								  'extension_builder', 1, $this->classObject->getMethods());
 			}
 		}
@@ -648,7 +648,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 			return;
 		}
 		$newMethodName = $this->classBuilder->getMethodName($newProperty, $methodType);
-		t3lib_div::devlog('updateMethod:' . $oldMethodName . '=>' . $newMethodName, 'extension_builder');
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('updateMethod:' . $oldMethodName . '=>' . $newMethodName, 'extension_builder');
 
 		if ($oldProperty->getName() != $newProperty->getName()) {
 			// rename the method
@@ -709,7 +709,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 */
 	protected function replaceUpperAndLowerCase($search, $replace, $haystack) {
 		$result = str_replace(ucfirst($search), ucfirst($replace), $haystack);
-		$result = str_replace(t3lib_div::lcfirst($search), t3lib_div::lcfirst($replace), $result);
+		$result = str_replace(\TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($search), \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($replace), $result);
 		return $result;
 	}
 
@@ -749,7 +749,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 * @return void
 	 */
 	protected function removeDomainObjectFiles($domainObject) {
-		t3lib_div::devlog('Remove domainObject ' . $domainObject->getName(), 'extension_builder', 0);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Remove domainObject ' . $domainObject->getName(), 'extension_builder', 0);
 		$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($this->previousExtensionDirectory, 'Model', FALSE), $domainObject->getName() . '.php');
 		$this->cleanUp($this->previousExtensionDirectory . 'Configuration/TCA/', $domainObject->getName() . '.php');
 		if ($domainObject->isAggregateRoot()) {
@@ -767,11 +767,11 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		if (file_exists($locallang_cshFile)) {
 			// no overwrite settings check here...
 			unlink($locallang_cshFile);
-			t3lib_div::devLog('locallang_csh file removed: ' . $locallang_cshFile, 'extension_builder', 1);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('locallang_csh file removed: ' . $locallang_cshFile, 'extension_builder', 1);
 		}
 		if (file_exists($iconFile)) {
 			unlink($iconFile);
-			t3lib_div::devLog('icon file removed: ' . $iconFile, 'extension_builder', 1);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('icon file removed: ' . $iconFile, 'extension_builder', 1);
 		}
 	}
 
@@ -787,7 +787,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 			return;
 		}
 		if (!is_file($path . $fileName)) {
-			t3lib_div::devLog('cleanUp File not found: ' . $path . $fileName, 'extension_builder', 1);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('cleanUp File not found: ' . $path . $fileName, 'extension_builder', 1);
 			return;
 		}
 		unlink($path . $fileName);
@@ -857,7 +857,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 			if ($existingTca) {
 				foreach ($domainObject->getAnyToManyRelationProperties() as $relationProperty) {
 					if (isset($existingTca['columns'][$relationProperty->getName()]['config']['MM'])) {
-						t3lib_div::devlog('Relation table for Model ' . $domainObject->getName() . ' relation ' . $relationProperty->getName(), 'extension_builder', 0, $existingTca['columns'][$relationProperty->getName()]['config']);
+						\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Relation table for Model ' . $domainObject->getName() . ' relation ' . $relationProperty->getName(), 'extension_builder', 0, $existingTca['columns'][$relationProperty->getName()]['config']);
 						$relationProperty->setRelationTableName($existingTca['columns'][$relationProperty->getName()]['config']['MM']);
 					}
 				}
@@ -875,7 +875,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 	 */
 	protected static function getTcaForDomainObject($domainObject, $extension) {
 		$tableName = $domainObject->getDatabaseTableName();
-		t3lib_div::loadTca($tableName);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::loadTca($tableName);
 		if (isset($GLOBALS['TCA'][$tableName])) {
 			return $GLOBALS['TCA'][$tableName];
 		}
@@ -893,11 +893,11 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		if (empty($backupDir)) {
 			throw new Exception('Please define a backup directory in extension configuration!');
 		}
-		else if (!t3lib_div::validPathStr($backupDir)) {
+		else if (!\TYPO3\CMS\Core\Utility\GeneralUtility::validPathStr($backupDir)) {
 			throw new Exception('Backup directory is not a valid path: ' . $backupDir);
 		}
-		else if (t3lib_div::isAbsPath($backupDir)) {
-			if (!t3lib_div::isAllowedAbsPath($backupDir)) {
+		else if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAbsPath($backupDir)) {
+			if (!\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($backupDir)) {
 				throw new Exception('Backup directory is not an allowed absolute path: ' . $backupDir);
 			}
 		}
@@ -918,14 +918,14 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		$backupDir .= $extension->getExtensionKey();
 		// create a subdirectory for this extension
 		if (!is_dir($backupDir)) {
-			t3lib_div::mkdir($backupDir);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir($backupDir);
 		}
 		if (strrpos($backupDir, '/') < strlen($backupDir) - 1) {
 			$backupDir .= '/';
 		}
 		$backupDir .= date('Y-m-d-') . time();
 		if (!is_dir($backupDir)) {
-			t3lib_div::mkdir($backupDir);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir($backupDir);
 		}
 		$extensionDir = substr($extension->getExtensionDir(), 0, strlen($extension->getExtensionDir()) - 1);
 		try {
@@ -934,7 +934,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements t3lib_singleton {
 		catch (Exception $e) {
 			throw new Exception('Code generation aborted:' . $e->getMessage());
 		}
-		t3lib_div::devlog('Backup created in ' . $backupDir, 'extension_builder', 0);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Backup created in ' . $backupDir, 'extension_builder', 0);
 	}
 
 	/**

@@ -30,7 +30,7 @@
  * @package ExtensionBuilder
  *
  */
-class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton {
+class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * @var Tx_ExtensionBuilder_Configuration_ConfigurationManager
@@ -51,8 +51,8 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
 	 */
 	public function build(array $jsonDomainObject) {
-		//t3lib_div::devlog('Building domain object '.$jsonDomainObject['name'],'extension_builder',0,$jsonDomainObject);
-		$domainObject = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject');
+		//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Building domain object '.$jsonDomainObject['name'],'extension_builder',0,$jsonDomainObject);
+		$domainObject = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject');
 		$domainObject->setUniqueIdentifier($jsonDomainObject['objectsettings']['uid']);
 
 		$domainObject->setName($jsonDomainObject['name']);
@@ -80,10 +80,10 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 			$propertyType = $jsonProperty['propertyType'];
 			$propertyClassName = 'Tx_ExtensionBuilder_Domain_Model_DomainObject_' . $propertyType . 'Property';
 			if (!class_exists($propertyClassName)) {
-				t3lib_div::devlog('Property of type ' . $propertyType . ' not found', 'extension_builder', 2, $jsonProperty);
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Property of type ' . $propertyType . ' not found', 'extension_builder', 2, $jsonProperty);
 				throw new Exception('Property of type ' . $propertyType . ' not found');
 			}
-			$property = t3lib_div::makeInstance($propertyClassName);
+			$property = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($propertyClassName);
 			$property->setUniqueIdentifier($jsonProperty['uid']);
 			$property->setName($jsonProperty['propertyName']);
 			$property->setDescription($jsonProperty['propertyDescription']);
@@ -94,7 +94,7 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 			if (isset($jsonProperty['propertyIsExcludeField'])) {
 				$property->setExcludeField($jsonProperty['propertyIsExcludeField']);
 			}
-			//t3lib_div::devlog('Adding property ' . $jsonProperty['propertyName'] . ' to domain object '.$jsonDomainObject['name'],'extension_builder',0,$jsonDomainObject);
+			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Adding property ' . $jsonProperty['propertyName'] . ' to domain object '.$jsonDomainObject['name'],'extension_builder',0,$jsonDomainObject);
 			$domainObject->addProperty($property);
 		}
 
@@ -123,7 +123,7 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 					$relation->setForeignKeyName($foreignKeyName);
 				}
 			}
-			//t3lib_div::devlog('Adding relation ' . $jsonRelation['relationName'] . ' to domain object '.$jsonDomainObject['name'],'extension_builder',0,$jsonRelation);
+			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Adding relation ' . $jsonRelation['relationName'] . ' to domain object '.$jsonDomainObject['name'],'extension_builder',0,$jsonRelation);
 			$domainObject->addProperty($relation);
 		}
 
@@ -145,7 +145,7 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 
 			if (!empty($actionNames)) {
 				foreach ($actionNames as $actionName) {
-					$action = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
+					$action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
 					$action->setName($actionName);
 					$domainObject->addAction($action);
 				}
@@ -165,7 +165,7 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements t3lib_singleton
 		$relationSchemaClassName = 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_' . ucfirst($relationJsonConfiguration['relationType']) . 'Relation';
 		if (!class_exists($relationSchemaClassName)) {
 
-			t3lib_div::devlog('Relation misconfiguration','extension_builder',2,$relationJsonConfiguration);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Relation misconfiguration','extension_builder',2,$relationJsonConfiguration);
 			throw new Exception('Relation of type ' . $relationSchemaClassName . ' not found (configured in "' . $relationJsonConfiguration['relationName'] . '")');
 		}
 		$relation = new $relationSchemaClassName;

@@ -28,7 +28,7 @@
  * @package ExtensionBuilder
  * @subpackage Reflectionn $
  */
-class Tx_ExtensionBuilder_Reflection_MethodReflection extends Tx_Extbase_Reflection_MethodReflection {
+class Tx_ExtensionBuilder_Reflection_MethodReflection extends TYPO3\CMS\Extbase\Reflection\MethodReflection {
 
 
 	protected $tags;
@@ -82,12 +82,12 @@ class Tx_ExtensionBuilder_Reflection_MethodReflection extends Tx_Extbase_Reflect
 	protected function getTypeHintFromReflectionParameter($reflectionParameter) {
 		$paramAsString = (string)$reflectionParameter;
 		$paramRegex = '/^Parameter\s\#[0-9]\s\[\s<(required|optional)>\s*.*\$.*]$/';
-		//t3lib_div::devLog('ReflectionParameter in method '.$this->getName().' : '.$paramAsString,'extension_builder',2);
+		//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('ReflectionParameter in method '.$this->getName().' : '.$paramAsString,'extension_builder',2);
 
 		if (!preg_match($paramRegex, $paramAsString)) {
 			// since the approach to cast the reflection parameter as a string is not part of the official PHP API
 			// this might not work anymore in future versions
-			t3lib_div::devLog('ReflectionParameter in method ' . $this->getName() . ' casted as string has not the expected format: ' . $paramAsString, 'extension_builder', 2);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('ReflectionParameter in method ' . $this->getName() . ' casted as string has not the expected format: ' . $paramAsString, 'extension_builder', 2);
 			return '';
 		}
 		$typeHintRegex = '/>\s*([a-zA-Z0-9_&\s]*)\s*\$/';

@@ -31,7 +31,7 @@
  * @subpackage  extension_builder
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
-class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_MVC_Controller_ActionController {
+class Tx_ExtensionBuilder_Controller_BuilderModuleController extends TYPO3\CMS\Extbase\MVC\Controller\ActionController {
 
 	/**
 	 * @var Tx_ExtensionBuilder_Service_CodeGenerator
@@ -124,13 +124,7 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	 * @return void
 	 */
 	public function initializeAction() {
-
 		$this->codeGenerator->setSettings($this->settings);
-
-		if (floatval(t3lib_extMgm::getExtensionVersion('extbase')) < 1.3) {
-			die('The Extension Builder requires at least Extbase/Fluid Version 1.3. Sorry!');
-		}
-
 	}
 
 	/**
@@ -199,7 +193,7 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 	protected function rpcAction_save() {
 		try {
 			$extensionBuildConfiguration = $this->configurationManager->getConfigurationFromModeler();
-			t3lib_div::devlog('Modeler Configuration', 'extension_builder', 0, $extensionBuildConfiguration);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Modeler Configuration', 'extension_builder', 0, $extensionBuildConfiguration);
 			$validationConfigurationResult = $this->extensionValidator->validateConfigurationFormat($extensionBuildConfiguration);
 			if (!empty($validationConfigurationResult['warnings'])) {
 				$confirmationRequired = $this->handleValidationWarnings($validationConfigurationResult['warnings']);
@@ -233,7 +227,7 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends Tx_Extbase_
 		$extensionDirectory = $extension->getExtensionDir();
 
 		if (!is_dir($extensionDirectory)) {
-			t3lib_div::mkdir($extensionDirectory);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir($extensionDirectory);
 		} else {
 			if ($this->settings['extConf']['backupExtension'] == 1) {
 				try {

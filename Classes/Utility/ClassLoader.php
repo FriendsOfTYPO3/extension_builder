@@ -42,12 +42,12 @@ class Tx_ExtensionBuilder_Utility_ClassLoader {
 	 * an extension.
 	 *
 	 * @param string $className: Name of the class/interface to load
-	 * @uses t3lib_extMgm::extPath()
+	 * @uses \TYPO3\CMS\Core\Extension\ExtensionManager::extPath()
 	 * @return void
 	 */
 	public static function loadClass($className) {
 		$classNameParts = explode('_', $className, 3);
-		$extensionKey = t3lib_div::underscoredToLowerCamelCase($classNameParts[1]);
+		$extensionKey = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($classNameParts[1]);
 		$classFilePathAndName = PATH_typo3conf . 'ext/' . $extensionKey . '/Classes/' . strtr($classNameParts[2], '_', '/') . '.php';
 		if (file_exists($classFilePathAndName)) {
 			require_once($classFilePathAndName);

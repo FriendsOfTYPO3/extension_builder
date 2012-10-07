@@ -29,7 +29,7 @@
  * @version $ID:$
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
-class Tx_ExtensionBuilder_Exception extends Tx_Extbase_Exception {
+class Tx_ExtensionBuilder_Exception extends TYPO3\CMS\Extbase\Exception {
 
 	/**
 	 * @var string
@@ -53,7 +53,7 @@ class Tx_ExtensionBuilder_Exception extends Tx_Extbase_Exception {
 		$translationKey .= $code;
 
 		// Get the translated message
-		$translated = Tx_Extbase_Utility_Localization::translate($translationKey, 'ExtbaseBuilder');
+		$translated = TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($translationKey, 'ExtbaseBuilder');
 		if (!empty($translated)) {
 			$message = $translated;
 		}
@@ -68,7 +68,7 @@ class Tx_ExtensionBuilder_Exception extends Tx_Extbase_Exception {
 		preg_match("/_([^_]*)Exception$/", get_class($this), $subKey);
 
 		if (!empty($subKey[1])) {
-			$this->subKey = t3lib_div::camelCaseToLowerCaseUnderscored($subKey[1]);
+			$this->subKey = \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($subKey[1]);
 		}
 	}
 }

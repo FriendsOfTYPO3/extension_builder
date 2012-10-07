@@ -32,7 +32,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_TestExtension_Domain_Model_Child1 extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_TestExtension_Domain_Model_Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * name

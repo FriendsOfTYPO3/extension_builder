@@ -125,18 +125,18 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	}
 
 	public function getClassName() {
-		return 'Tx_' . t3lib_div::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Model_' . $this->getName();
+		return 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Model_' . $this->getName();
 	}
 
 	public function getControllerName() {
-		return 'Tx_' . t3lib_div::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_Controller_' . $this->getName() . 'Controller';
+		return 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_Controller_' . $this->getName() . 'Controller';
 	}
 
 	public function getDatabaseTableName() {
 		if (!empty($this->mapToTable)) {
 			return $this->mapToTable;
 		} else {
-			return 'tx_' . strtolower(t3lib_div::underscoredToUpperCamelCase($this->extension->getExtensionKey())) . '_domain_model_' . strtolower($this->getName());
+			return 'tx_' . strtolower(\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey())) . '_domain_model_' . strtolower($this->getName());
 		}
 	}
 
@@ -345,9 +345,9 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	 */
 	public function getBaseClass() {
 		if ($this->entity) {
-			return 'Tx_Extbase_DomainObject_AbstractEntity';
+			return 'TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity';
 		} else {
-			return 'Tx_Extbase_DomainObject_AbstractValueObject';
+			return 'TYPO3\\CMS\\Extbase\\DomainObject\\AbstractValueObject';
 		}
 	}
 
@@ -358,7 +358,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	 */
 	public function getDomainRepositoryClassName() {
 		if (!$this->aggregateRoot) return '';
-		return 'Tx_' . t3lib_div::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Repository_' . $this->getName() . 'Repository';
+		return 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Repository_' . $this->getName() . 'Repository';
 	}
 
 	/**

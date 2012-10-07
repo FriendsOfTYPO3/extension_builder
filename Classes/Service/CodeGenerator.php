@@ -28,7 +28,7 @@
  *
  * @package ExtensionBuilder
  */
-class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
+class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * @var Tx_ExtensionBuilder_Service_ClassBuilder
@@ -51,7 +51,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	protected $extensionDirectory;
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManager
+	 * @var TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
@@ -71,7 +71,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	protected $settings;
 
 	/**
-	 * @var Tx_Fluid_Core_Parser_TemplateParser
+	 * @var TYPO3\CMS\Fluid\Core\Parser\TemplateParser
 	 */
 	protected $templateParser;
 
@@ -108,16 +108,16 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	}
 
 	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @param TYPO3\CMS\Extbase\Object\ObjectManagerInterface  $objectManager
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 
 	/**
-	 * @param Tx_Fluid_Core_Parser_TemplateParser $templateParser
+	 * @param TYPO3\CMS\Fluid\Core\Parser\TemplateParser $templateParser
 	 */
-	public function injectTemplateParser(Tx_Fluid_Core_Parser_TemplateParser $templateParser) {
+	public function injectTemplateParser(TYPO3\CMS\Fluid\Core\Parser\TemplateParser $templateParser) {
 		$this->templateParser = $templateParser;
 	}
 
@@ -139,10 +139,10 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		$this->extension = $extension;
 		if ($this->settings['extConf']['enableRoundtrip'] == 1) {
 			$this->roundTripEnabled = TRUE;
-			t3lib_div::devLog('roundtrip enabled', 'extension_builder', 0, $this->settings);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('roundtrip enabled', 'extension_builder', 0, $this->settings);
 		}
 		else {
-			t3lib_div::devLog('roundtrip disabled', 'extension_builder', 0, $this->settings);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('roundtrip disabled', 'extension_builder', 0, $this->settings);
 		}
 		if (isset($this->settings['codeTemplateRootPath'])) {
 			$this->codeTemplateRootPath = $this->settings['codeTemplateRootPath'];
@@ -156,14 +156,14 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		// Base directory already exists at this point
 		$this->extensionDirectory = $this->extension->getExtensionDir();
 		if (!is_dir($this->extensionDirectory)) {
-			t3lib_div::mkdir($this->extensionDirectory);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir($this->extensionDirectory);
 		}
 
-		t3lib_div::mkdir_deep($this->extensionDirectory, 'Configuration');
+		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extensionDirectory, 'Configuration');
 
 		$this->configurationDirectory = $this->extensionDirectory . 'Configuration/';
 
-		t3lib_div::mkdir_deep($this->extensionDirectory, 'Resources/Private');
+		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extensionDirectory, 'Resources/Private');
 
 		$this->privateResourcesDirectory = $this->extensionDirectory . 'Resources/Private/';
 
@@ -194,10 +194,10 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	protected function generateYamlSettingsFile() {
 
 		if (!file_exists($this->configurationDirectory . 'ExtensionBuilder/settings.yaml')) {
-			t3lib_div::mkdir($this->configurationDirectory . 'ExtensionBuilder');
+			\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir($this->configurationDirectory . 'ExtensionBuilder');
 			$fileContents = $this->generateYamlSettings();
 			$targetFile = $this->configurationDirectory . 'ExtensionBuilder/settings.yaml';
-			t3lib_div::writeFile($targetFile, $fileContents);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($targetFile, $fileContents);
 		}
 
 	}
@@ -207,9 +207,9 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		$extensionFiles = array('ext_emconf.php', 'ext_tables.php', 'ext_tables.sql');
 		foreach ($extensionFiles as $extensionFile) {
 			try {
-				$fileContents = $this->renderTemplate(t3lib_div::underscoredToLowerCamelCase($extensionFile) . 't', array('extension' => $this->extension, 'locallangFileFormat' => $this->locallangFileFormat));
+				$fileContents = $this->renderTemplate(\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($extensionFile) . 't', array('extension' => $this->extension, 'locallangFileFormat' => $this->locallangFileFormat));
 				$this->writeFile($this->extensionDirectory . $extensionFile, $fileContents);
-				t3lib_div::devlog('Generated ' . $extensionFile, 'extension_builder', 0, array('Content' => $fileContents));
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Generated ' . $extensionFile, 'extension_builder', 0, array('Content' => $fileContents));
 			}
 			catch (Exception $e) {
 				throw new Exception('Could not write ' . $extensionFile . ', error: ' . $e->getMessage());
@@ -221,9 +221,9 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	protected function generatePluginFiles() {
 		if ($this->extension->getPlugins()) {
 			try {
-				$fileContents = $this->renderTemplate(t3lib_div::underscoredToLowerCamelCase('ext_localconf.phpt'), array('extension' => $this->extension));
+				$fileContents = $this->renderTemplate(\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase('ext_localconf.phpt'), array('extension' => $this->extension));
 				$this->writeFile($this->extensionDirectory . 'ext_localconf.php', $fileContents);
-				t3lib_div::devlog('Generated ext_localconf.php', 'extension_builder', 0, array('Content' => $fileContents));
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Generated ext_localconf.php', 'extension_builder', 0, array('Content' => $fileContents));
 			}
 			catch (Exception $e) {
 				throw new Exception('Could not write ext_localconf.php. Error: ' . $e->getMessage());
@@ -238,7 +238,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 						$currentPluginKey = $plugin->getKey();
 						$fileContents = $this->renderTemplate('Configuration/Flexforms/flexform.xmlt', array('plugin' => $plugin));
 						$this->writeFile($this->extensionDirectory . 'Configuration/FlexForms/flexform_' . $currentPluginKey . '.xml', $fileContents);
-						t3lib_div::devlog('Generated flexform_' . $currentPluginKey . '.xml', 'extension_builder', 0, array('Content' => $fileContents));
+						\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Generated flexform_' . $currentPluginKey . '.xml', 'extension_builder', 0, array('Content' => $fileContents));
 					}
 				}
 			}
@@ -251,7 +251,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	protected function generateTCAFiles() {
 		// Generate TCA
 		try {
-			t3lib_div::mkdir_deep($this->extensionDirectory, 'Configuration/TCA');
+			\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extensionDirectory, 'Configuration/TCA');
 
 			$domainObjects = $this->extension->getDomainObjects();
 
@@ -268,7 +268,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	protected function generateLocallangFiles() {
 		// Generate locallang*.xml files
 		try {
-			t3lib_div::mkdir_deep($this->privateResourcesDirectory, 'Language');
+			\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->privateResourcesDirectory, 'Language');
 			$this->languageDirectory = $this->privateResourcesDirectory . 'Language/';
 			$fileContents = $this->generateLocallangFileContent();
 			$this->writeFile($this->languageDirectory . 'locallang.' . $this->locallangFileFormat, $fileContents);
@@ -406,7 +406,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 					}
 					$fileContents = $this->generateDomainObjectCode($domainObject, $mergeWithExistingClass);
 					$this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
-					t3lib_div::devlog('Generated ' . $domainObject->getName() . '.php', 'extension_builder', 0);
+					\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Generated ' . $domainObject->getName() . '.php', 'extension_builder', 0);
 					$this->extension->setMD5Hash($this->extensionDirectory . $destinationFile);
 
 					if ($domainObject->isAggregateRoot()) {
@@ -416,7 +416,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 					} else {
 						$iconFileName = 'value_object.gif';
 					}
-					$this->upload_copy_move(t3lib_extMgm::extPath('extension_builder') . 'Resources/Private/Icons/' . $iconFileName, $this->iconsDirectory . $domainObject->getDatabaseTableName() . '.gif');
+					$this->upload_copy_move(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Resources/Private/Icons/' . $iconFileName, $this->iconsDirectory . $domainObject->getDatabaseTableName() . '.gif');
 
 					if ($domainObject->isAggregateRoot()) {
 						$destinationFile = $domainRepositoryDirectory . $domainObject->getName() . 'Repository.php';
@@ -427,7 +427,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 						}
 						$fileContents = $this->generateDomainRepositoryCode($domainObject, $mergeWithExistingClass);
 						$this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
-						t3lib_div::devlog('Generated ' . $domainObject->getName() . 'Repository.php', 'extension_builder', 0);
+						\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Generated ' . $domainObject->getName() . 'Repository.php', 'extension_builder', 0);
 						$this->extension->setMD5Hash($this->extensionDirectory . $destinationFile);
 					}
 
@@ -452,7 +452,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 					}
 					$fileContents = $this->generateActionControllerCode($domainObject, $mergeWithExistingClass);
 					$this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
-					t3lib_div::devlog('Generated ' . $domainObject->getName() . 'Controller.php', 'extension_builder', 0);
+					\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Generated ' . $domainObject->getName() . 'Controller.php', 'extension_builder', 0);
 					$this->extension->setMD5Hash($this->extensionDirectory . $destinationFile);
 
 					// Generate basic UnitTests
@@ -478,7 +478,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			try {
 				$settings = $this->extension->getSettings();
 				if (isset($settings['createAutoloadRegistry']) && $settings['createAutoloadRegistry'] == TRUE) {
-					Tx_Extbase_Utility_Extension::createAutoloadRegistryForExtension($this->extension->getExtensionKey(), $this->extensionDirectory);
+					//\TYPO3\CMS\Extbase\Utility\Extension::createAutoloadRegistryForExtension($this->extension->getExtensionKey(), $this->extensionDirectory);
 				}
 			} catch (Exception $e) {
 				throw new Exception('Could not generate ext_autoload.php, error: ' . $e->getMessage());
@@ -487,7 +487,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
 		}
 		else {
-			t3lib_div::devlog('No domainObjects in this extension', 'extension_builder', 3, (array)$this->extension);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('No domainObjects in this extension', 'extension_builder', 3, (array)$this->extension);
 		}
 	}
 
@@ -503,7 +503,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 
 	protected function copyStaticFiles() {
 		try {
-			$this->upload_copy_move(t3lib_extMgm::extPath('extension_builder') . 'Resources/Private/Icons/ext_icon.gif', $this->extensionDirectory . 'ext_icon.gif');
+			$this->upload_copy_move(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Resources/Private/Icons/ext_icon.gif', $this->extensionDirectory . 'ext_icon.gif');
 		} catch (Exception $e) {
 			throw new Exception('Could not copy ext_icon.gif, error: ' . $e->getMessage());
 		}
@@ -523,7 +523,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			$publicResourcesDirectory = $this->extensionDirectory . 'Resources/Public/';
 			$this->mkdir_deep($publicResourcesDirectory, 'Icons');
 			$this->iconsDirectory = $publicResourcesDirectory . 'Icons/';
-			$this->upload_copy_move(t3lib_extMgm::extPath('extension_builder') . 'Resources/Private/Icons/relation.gif', $this->iconsDirectory . 'relation.gif');
+			$this->upload_copy_move(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Resources/Private/Icons/relation.gif', $this->iconsDirectory . 'relation.gif');
 		} catch (Exception $e) {
 			throw new Exception('Could not create public resources folder, error: ' . $e->getMessage());
 		}
@@ -537,15 +537,15 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	protected function generateDocumentationFiles() {
 		$this->mkdir_deep($this->extensionDirectory, 'Documentation');
 		$docFiles = array();
-		$docFiles = t3lib_div::getAllFilesAndFoldersInPath($docFiles,t3lib_extMgm::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Extbase/Documentation/', '', TRUE, 5, '/.*rstt/');
+		$docFiles = \TYPO3\CMS\Core\Utility\GeneralUtility::getAllFilesAndFoldersInPath($docFiles,\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Extbase/Documentation/', '', TRUE, 5, '/.*rstt/');
 		foreach($docFiles as $docFile) {
 			if(is_dir($docFile)) {
 				$this->mkdir_deep($this->extensionDirectory, 'Documentation/' . str_replace($this->codeTemplateRootPath . 'Documentation/','',$docFile));
 			} else if(strpos($docFile,'.rstt') === FALSE) {
-				$this->upload_copy_move($docFile, str_replace(t3lib_extMgm::extPath('extension_builder').'Resources/Private/CodeTemplates/Extbase/', $this->extensionDirectory, $docFile));
+				$this->upload_copy_move($docFile, str_replace(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder').'Resources/Private/CodeTemplates/Extbase/', $this->extensionDirectory, $docFile));
 			}
 		}
-		$this->upload_copy_move(t3lib_extMgm::extPath('extension_builder').'Resources/Private/CodeTemplates/Extbase/Readme.rst', $this->extensionDirectory . 'Readme.rst');
+		$this->upload_copy_move(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder').'Resources/Private/CodeTemplates/Extbase/Readme.rst', $this->extensionDirectory . 'Readme.rst');
 		$fileContents = $this->renderTemplate('Documentation/Index.rstt', array('extension' => $this->extension));
 		$this->writeFile($this->extensionDirectory . 'Documentation/Index.rst', $fileContents);
 
@@ -590,6 +590,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			throw(new Exception('TemplateFile ' . $this->codeTemplateRootPath . $filePath . ' has no content'));
 		}
 		$parsedTemplate = $this->templateParser->parse($templateCode);
+
 		$renderedContent = trim($parsedTemplate->render($this->buildRenderingContext($variables)));
 		// remove all double empty lines (coming from fluid)
 		return preg_replace('/^\s*\n[\t ]*$/m', '', $renderedContent);
@@ -626,6 +627,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	 */
 	public function generateDomainObjectCode(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject, $mergeWithExistingClass) {
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject, $mergeWithExistingClass);
+
 		if ($modelClassObject) {
 			$classDocComment = $this->renderDocComment($modelClassObject, $domainObject);
 			$modelClassObject->setDocComment($classDocComment);
@@ -853,7 +855,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		}
 		if (!empty($classPath)) {
 			if (!is_dir($extensionDirectory . $classPath) && $createDirIfNotExist) {
-				t3lib_div::mkdir_deep($extensionDirectory, $classPath);
+				\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($extensionDirectory, $classPath);
 			}
 			if (!is_dir($extensionDirectory . $classPath) && $createDirIfNotExist) {
 				throw new Exception('folder could not be created:' . $extensionDirectory . $classPath);
@@ -864,7 +866,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	}
 
 	/**
-	 * wrapper for t3lib_div::writeFile
+	 * wrapper for \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile
 	 * checks for overwrite settings
 	 *
 	 * @param string $targetFile the path and filename of the targetFile (relative to extension dir)
@@ -880,7 +882,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				$fileExtension = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 				if ($fileExtension == 'html') {
 					//TODO: We need some kind of protocol to be displayed after code generation
-					t3lib_div::devlog('File ' . basename($targetFile) . ' was not written. Template files can\'t be merged!', 'extension_builder', 1);
+					\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('File ' . basename($targetFile) . ' was not written. Template files can\'t be merged!', 'extension_builder', 1);
 					return;
 				} elseif (in_array($fileExtension, $this->filesSupportingSplitToken)) {
 					$fileContents = $this->insertSplitToken($targetFile, $fileContents);
@@ -893,9 +895,9 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 		}
 
 		if (empty($fileContents)) {
-			t3lib_div::devLog('No file content! File ' . $targetFile . ' had no content', 'extension_builder', 0, $this->settings);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('No file content! File ' . $targetFile . ' had no content', 'extension_builder', 0, $this->settings);
 		}
-		$success = t3lib_div::writeFile($targetFile, $fileContents);
+		$success = \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($targetFile, $fileContents);
 		if (!$success) {
 			throw new Exception('File ' . $targetFile . ' could not be created!');
 		}
@@ -946,7 +948,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 	}
 
 	/**
-	 * wrapper for t3lib_div::writeFile
+	 * wrapper for \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile
 	 * checks for overwrite settings
 	 *
 	 * @param string $targetFile the path and filename of the targetFile
@@ -959,12 +961,12 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 			return;
 		}
 		if (!file_exists($targetFile) || ($this->roundTripEnabled && $overWriteMode < 2)) {
-			t3lib_div::upload_copy_move($sourceFile, $targetFile);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::upload_copy_move($sourceFile, $targetFile);
 		}
 	}
 
 	/**
-	 * wrapper for t3lib_div::mkdir_deep
+	 * wrapper for \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep
 	 * checks for overwrite settings
 	 *
 	 * @param string $directory base path
@@ -981,7 +983,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements t3lib_Singleton {
 				return;
 			}
 			if (!is_dir($deepDirectory) || ($this->roundTripEnabled && $overWriteMode < 2)) {
-				t3lib_div::mkdir_deep($tmpBasePath, $subDirectory);
+				\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($tmpBasePath, $subDirectory);
 			}
 			$tmpBasePath .= $subDirectory . '/';
 		}

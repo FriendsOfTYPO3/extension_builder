@@ -115,7 +115,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRe
 		if(is_object($this->foreignModel)) {
 			return $this->foreignModel->getName();
 		}
-		$parts = explode('_Domain_Model_', $this->foreignClassName);
+		$parts = explode('\\Domain\\Model\\', $this->foreignClassName);
 		return $parts[1];
 	}
 

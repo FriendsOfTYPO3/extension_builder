@@ -27,7 +27,7 @@
  *
  * @package ExtensionBuilder
  */
-class Tx_ExtensionBuilder_Exception_ParseError extends Tx_Extbase_Exception {
+class Tx_ExtensionBuilder_Exception_ParseError extends TYPO3\CMS\Extbase\Exception{
 
 }
 

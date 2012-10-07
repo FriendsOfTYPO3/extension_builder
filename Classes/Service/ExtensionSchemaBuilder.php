@@ -29,7 +29,7 @@
  * @package ExtensionBuilder
  *
  */
-class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_singleton {
+class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * @var Tx_ExtensionBuilder_Configuration_ConfigurationManager
@@ -63,10 +63,10 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 	 * @return Tx_ExtensionBuilder_Domain_Model_Extension $extension
 	 */
 	public function build(array $extensionBuildConfiguration) {
-		$extension = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Extension');
+		$extension = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_Extension');
 		$globalProperties = $extensionBuildConfiguration['properties'];
 		if (!is_array($globalProperties)) {
-			t3lib_div::devlog('Error: Extension properties not submitted! ' . $extension->getOriginalExtensionKey(), 'builder', 3, $globalProperties);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Error: Extension properties not submitted! ' . $extension->getOriginalExtensionKey(), 'builder', 3, $globalProperties);
 			throw new Exception('Extension properties not submitted!');
 		}
 
@@ -93,7 +93,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 				if ($domainObject->isSubClass() && !$domainObject->isMappedToExistingTable()) {
 					// we try to get the table from Extbase configuration
 					$classSettings = $this->configurationManager->getExtbaseClassConfiguration($domainObject->getParentClass());
-					//t3lib_div::devlog('!isMappedToExistingTable:' . strtolower($domainObject->getParentClass()), 'extension_builder', 0, $classSettings);
+					//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('!isMappedToExistingTable:' . strtolower($domainObject->getParentClass()), 'extension_builder', 0, $classSettings);
 					if (isset($classSettings['tableName'])) {
 						$tableName = $classSettings['tableName'];
 					} else {
@@ -151,7 +151,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 			$relationJsonConfiguration = $extensionBuildConfiguration['modules'][$srcModuleId]['value']['relationGroup']['relations'][$relationId];
 
 			if (!is_array($relationJsonConfiguration)) {
-				t3lib_div::devlog('Error in JSON relation configuration!', 'extension_builder', 3, $extensionBuildConfiguration);
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Error in JSON relation configuration!', 'extension_builder', 3, $extensionBuildConfiguration);
 				$errorMessage = 'Missing relation config in domain object: ' . $extensionBuildConfiguration['modules'][$srcModuleId]['value']['name'];
 				throw new Exception($errorMessage);
 			}
@@ -167,7 +167,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 			$domainObject = $extension->getDomainObjectByName($localModelName);
 			$relation = $domainObject->getPropertyByName($relationJsonConfiguration['relationName']);
 			if (!$relation) {
-				t3lib_div::devlog('Relation not found: ' . $localModelName . '->' . $relationJsonConfiguration['relationName'],'extension_builder',2,$relationJsonConfiguration);
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Relation not found: ' . $localModelName . '->' . $relationJsonConfiguration['relationName'],'extension_builder',2,$relationJsonConfiguration);
 				throw new Exception('Relation not found: ' . $localModelName . '->' . $relationJsonConfiguration['relationName']);
 			}
 			// get unique foreign key names for multiple relations to the same foreign class
@@ -209,10 +209,10 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 
 		if(!empty($propertyConfiguration['emConf']['dependsOn'])) {
 			$dependencies = array();
-			$lines = t3lib_div::trimExplode("\n",$propertyConfiguration['emConf']['dependsOn']);
+			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",$propertyConfiguration['emConf']['dependsOn']);
 			foreach($lines as $line) {
 				if(strpos($line, '=>')) {
-					list($extensionKey,$version) = t3lib_div::trimExplode('=>',$line);
+					list($extensionKey,$version) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>',$line);
 					$dependencies[$extensionKey] = $version;
 				}
 			}
@@ -260,7 +260,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 			// handle renaming of extensions
 			// original extensionKey
 			$extension->setOriginalExtensionKey($propertyConfiguration['originalExtensionKey']);
-			t3lib_div::devlog('Extension setOriginalExtensionKey:' . $extension->getOriginalExtensionKey(), 'extbase', 0, $propertyConfiguration);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Extension setOriginalExtensionKey:' . $extension->getOriginalExtensionKey(), 'extbase', 0, $propertyConfiguration);
 		}
 
 		if (!empty($propertyConfiguration['originalExtensionKey']) && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()) {
@@ -275,7 +275,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 
 		if (!empty($settings)) {
 			$extension->setSettings($settings);
-			t3lib_div::devlog('Extension settings:' . $extension->getExtensionKey(), 'extbase', 0, $extension->getSettings());
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Extension settings:' . $extension->getExtensionKey(), 'extbase', 0, $extension->getSettings());
 		}
 
 	}
@@ -286,7 +286,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 	 * @return Tx_ExtensionBuilder_Domain_Model_Person
 	 */
 	protected function buildPerson($personValues) {
-		$person = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
+		$person = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
 		$person->setName($personValues['name']);
 		$person->setRole($personValues['role']);
 		$person->setEmail($personValues['email']);
@@ -300,31 +300,31 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 	 * @return Tx_ExtensionBuilder_Domain_Model_Plugin
 	 */
 	protected function buildPlugin($pluginValues) {
-		$plugin = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Plugin');
+		$plugin = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_Plugin');
 		$plugin->setName($pluginValues['name']);
 		$plugin->setType($pluginValues['type']);
 		$plugin->setKey($pluginValues['key']);
 		if (!empty($pluginValues['actions']['controllerActionCombinations'])) {
 			$controllerActionCombinations = array();
-			$lines = t3lib_div::trimExplode("\n", $pluginValues['actions']['controllerActionCombinations'], TRUE);
+			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n", $pluginValues['actions']['controllerActionCombinations'], TRUE);
 			foreach ($lines as $line) {
-				list($controllerName, $actionNames) = t3lib_div::trimExplode('=>', $line);
-				$controllerActionCombinations[$controllerName] = t3lib_div::trimExplode(',', $actionNames);
+				list($controllerName, $actionNames) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>', $line);
+				$controllerActionCombinations[$controllerName] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $actionNames);
 			}
 			$plugin->setControllerActionCombinations($controllerActionCombinations);
 		}
 		if (!empty($pluginValues['actions']['noncacheableActions'])) {
 			$noncacheableControllerActions = array();
-			$lines = t3lib_div::trimExplode("\n", $pluginValues['actions']['noncacheableActions'], TRUE);
+			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n", $pluginValues['actions']['noncacheableActions'], TRUE);
 			foreach ($lines as $line) {
-				list($controllerName, $actionNames) = t3lib_div::trimExplode('=>', $line);
-				$noncacheableControllerActions[$controllerName] = t3lib_div::trimExplode(',', $actionNames);
+				list($controllerName, $actionNames) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>', $line);
+				$noncacheableControllerActions[$controllerName] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $actionNames);
 			}
 			$plugin->setNoncacheableControllerActions($noncacheableControllerActions);
 		}
 		if (!empty($pluginValues['actions']['switchableActions'])) {
 			$switchableControllerActions = array();
-			$lines = t3lib_div::trimExplode("\n", $pluginValues['actions']['switchableActions'], TRUE);
+			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n", $pluginValues['actions']['switchableActions'], TRUE);
 			$switchableAction = array();
 			foreach ($lines as $line) {
 				if (strpos($line, '->') === FALSE) {
@@ -334,7 +334,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 					}
 					$switchableAction['label'] = trim($line);
 				} else {
-					$switchableAction['actions'] = t3lib_div::trimExplode(';', $line, TRUE);
+					$switchableAction['actions'] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(';', $line, TRUE);
 					$switchableControllerActions[] = $switchableAction;
 				}
 			}
@@ -350,7 +350,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 	 * @return Tx_ExtensionBuilder_Domain_Model_BackendModule
 	 */
 	protected function buildBackendModule($backendModuleValues) {
-		$backendModule = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_BackendModule');
+		$backendModule = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_BackendModule');
 		$backendModule->setName($backendModuleValues['name']);
 		$backendModule->setMainModule($backendModuleValues['mainModule']);
 		$backendModule->setTabLabel($backendModuleValues['tabLabel']);
@@ -358,10 +358,10 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements t3lib_single
 		$backendModule->setDescription($backendModuleValues['description']);
 		if (!empty($backendModuleValues['actions']['controllerActionCombinations'])) {
 			$controllerActionCombinations = array();
-			$lines = t3lib_div::trimExplode("\n", $backendModuleValues['actions']['controllerActionCombinations'], TRUE);
+			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n", $backendModuleValues['actions']['controllerActionCombinations'], TRUE);
 			foreach ($lines as $line) {
-				list($controllerName, $actionNames) = t3lib_div::trimExplode('=>', $line);
-				$controllerActionCombinations[$controllerName] = t3lib_div::trimExplode(',', $actionNames);
+				list($controllerName, $actionNames) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>', $line);
+				$controllerActionCombinations[$controllerName] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $actionNames);
 			}
 			$backendModule->setControllerActionCombinations($controllerActionCombinations);
 		}
