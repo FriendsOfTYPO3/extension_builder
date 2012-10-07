@@ -29,7 +29,7 @@
  * @version $ID:$
  */
 
-class Tx_ExtensionBuilder_ViewHelpers_ClassViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_ClassViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 *

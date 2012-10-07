@@ -28,7 +28,7 @@
  * Later it should be the parent class for importing from various model formats
  * @package ExtensionBuilder
  */
-class Tx_ExtensionBuilder_Utility_ModelImport implements t3lib_Singleton {
+class Tx_ExtensionBuilder_Utility_ModelImport implements \TYPO3\CMS\Core\SingletonInterface {
 
 	const EXTENSION_BUILDER_JSON = 'default';
 

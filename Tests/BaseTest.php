@@ -25,45 +25,77 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Phpunit_TestCase {
 
 	var $modelClassDir = 'Classes/Domain/Model/';
+
+	/**
+	 * @var Tx_ExtensionBuilder_Utility_ClassParser
+	 */
+	protected $classParser;
+
+	/**
+	 * @var Tx_ExtensionBuilder_Service_RoundTrip
+	 */
+	protected $roundTripService;
+
+	/**
+	 * @var TYPO3\CMS\Fluid\Core\Parser\TemplateParser
+	 */
+	protected $templateParser;
+
+	/**
+	 * @var TYPO3\CMS\Extbase\Object\ObjectManager
+	 */
+	protected $objectManager;
+
+	/**
+	 * @var Tx_ExtensionBuilder_Domain_Model_Extension
+	 */
+	protected $extension;
+
+	/**
+	 * @var Tx_ExtensionBuilder_Service_CodeGenerator
+	 */
+	protected $codeGenerator;
+
 
 	function setUp($settingFile = ''){
 
 		$this->extension = $this->getMock('Tx_ExtensionBuilder_Domain_Model_Extension',array('getExtensionDir'));
 		$extensionKey = 'dummy';
-		//$dummyExtensionDir = PATH_typo3conf.'ext/extension_builder/Tests/Examples/'.$extensionKey.'/';
+		$dummyExtensionDir = PATH_typo3conf.'ext/extension_builder/Tests/Examples/'.$extensionKey.'/';
 		vfsStream::setup('testDir');
-		$dummyExtensionDir = vfsStream::url('testDir').'/';
+		//$dummyExtensionDir = vfsStream::url('testDir').'/';
 
 		$this->extension->setExtensionKey($extensionKey);
 		$this->extension->expects(
 			$this->any())
 				->method('getExtensionDir')
 				->will($this->returnValue($dummyExtensionDir));
-
+		if(is_dir($dummyExtensionDir)) {
+			\TYPO3\CMS\Core\Utility\GeneralUtility::rmdir($dummyExtensionDir, TRUE);
+		}
 		$yamlParser = new Tx_ExtensionBuilder_Utility_SpycYAMLParser();
 		$settings = $yamlParser->YAMLLoadString(file_get_contents(PATH_typo3conf.'ext/extension_builder/Tests/Examples/Settings/settings1.yaml'));
 		$this->extension->setSettings($settings);
-		$configurationManager = t3lib_div::makeInstance('Tx_ExtensionBuilder_Configuration_ConfigurationManager');
+		$configurationManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Configuration_ConfigurationManager');
 
-		$this->classParser = t3lib_div::makeInstance('Tx_ExtensionBuilder_Utility_ClassParser');
+		$this->classParser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Utility_ClassParser');
 		$this->roundTripService =  $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_RoundTrip'),array('dummy'));
-		$this->classBuilder = t3lib_div::makeInstance('Tx_ExtensionBuilder_Service_ClassBuilder');
+		$this->classBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Service_ClassBuilder');
 		$this->classBuilder->injectConfigurationManager($configurationManager);
 
 		$this->roundTripService->injectClassBuilder($this->classBuilder);
 		$this->roundTripService->injectConfigurationManager($configurationManager);
-		$this->templateParser = $this->getMock($this->buildAccessibleProxy('Tx_Fluid_Core_Parser_TemplateParser'),array('dummy'));
+		$this->templateParser = $this->getMock($this->buildAccessibleProxy('TYPO3\\CMS\\Fluid\\Core\\Parser\\TemplateParser'),array('dummy'));
 		$this->codeGenerator = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_CodeGenerator'),array('dummy'));
 		
-		if (class_exists('Tx_Extbase_Object_ObjectManager')) {
-			$this->objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
-			//parent::runBare(); causes a memory exhausted error??
-			$this->codeGenerator->injectObjectManager($this->objectManager);
-			$this->templateParser->injectObjectManager($this->objectManager);
-		}
+		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+		$this->objectManager = clone $objectManager;
+		//parent::runBare(); causes a memory exhausted error??
+		$this->codeGenerator->injectObjectManager($this->objectManager);
+		$this->templateParser->injectObjectManager($this->objectManager);
 
 		$this->roundTripService->injectClassParser($this->classParser);
 		$this->roundTripService->initialize($this->extension);
@@ -86,7 +118,12 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Extbase_Tests_Unit_
 		$this->codeGenerator->_set('extension',$this->extension);
 	}
 
-
+	public function tearDown() {
+		parent::tearDown();
+		if(isset($this->extension) && $this->extension->getExtensionKey() != NULL) {
+			//\TYPO3\CMS\Core\Utility\GeneralUtility::rmdir($this->extension->getExtensionDir(), TRUE);
+		}
+	}
 
 	/**
 	 * Helper function
@@ -104,7 +141,7 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Extbase_Tests_Unit_
 		if($aggregateRoot){
 			$defaultActions = array('list','show','new','create','edit','update','delete');
 			foreach($defaultActions as $actionName){
-				$action = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
+				$action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
 				$action->setName($actionName);
 				if($actionName == 'deleted'){
 					$action->setNeedsTemplate = false;
@@ -125,12 +162,12 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Extbase_Tests_Unit_
 		$domainObject = $this->buildDomainObject($modelName);
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
 		$modelClassDir = 'Classes/Domain/Model/';
-		$result = t3lib_div::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
+		$result = \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
 		$this->assertTrue(is_dir($absModelClassDir),'Directory ' . $absModelClassDir . ' was not created');
 
 		$modelClassPath =  $absModelClassDir . $domainObject->getName() . '.php';
-		t3lib_div::writeFile($modelClassPath,$classFileContent);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath,$classFileContent);
 	}
 
 	function removeInitialModelClassFile($modelName){

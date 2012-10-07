@@ -36,7 +36,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @scope prototype
  */
-class Tx_ExtensionBuilder_ViewHelpers_Format_LowercaseFirstViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_Format_LowercaseFirstViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * Lowercase first character
@@ -45,7 +45,7 @@ class Tx_ExtensionBuilder_ViewHelpers_Format_LowercaseFirstViewHelper extends Tx
 	 */
 	public function render() {
 		$content = $this->renderChildren();
-		return t3lib_div::lcfirst($content);
+		return \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($content);
 	}
 }
 

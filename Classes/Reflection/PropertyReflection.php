@@ -28,7 +28,7 @@
  * @package ExtensionBuilder
  * @subpackage Reflection
  */
-class Tx_ExtensionBuilder_Reflection_PropertyReflection extends Tx_Extbase_Reflection_PropertyReflection {
+class Tx_ExtensionBuilder_Reflection_PropertyReflection extends TYPO3\CMS\Extbase\Reflection\PropertyReflection {
 
 	/**
 	 * the line number where this property is declared in the class file

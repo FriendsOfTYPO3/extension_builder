@@ -234,7 +234,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 * @return string the field name in lowercase underscore
 	 */
 	public function getFieldName() {
-		$fieldName = t3lib_div::camelCaseToLowerCaseUnderscored($this->name);
+		$fieldName = \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($this->name);
 		if (Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::isReservedMYSQLWord($fieldName)) {
 			$fieldName = $this->domainObject->getExtension()->getShortExtensionKey() . '_' . $fieldName;
 		}
@@ -252,7 +252,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	/**
 	 * Template Method which should return the type hinting information
 	 * being used in PHPDoc Comments.
-	 * Examples: integer, string, Tx_FooBar_Something, Tx_Extbase_Persistence_ObjectStorage<Tx_FooBar_Something>
+	 * Examples: integer, string, Tx_FooBar_Something, \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_FooBar_Something>
 	 *
 	 * @return string
 	 */
@@ -260,7 +260,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
 	/**
 	 * Template method which should return the PHP type hint
-	 * Example: Tx_Extbase_Persistence_ObjectStorage, array, Tx_FooBar_Something
+	 * Example: \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage, array, Tx_FooBar_Something
 	 *
 	 * @return string
 	 */
@@ -386,7 +386,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 * @return string $mappingStatement
 	 */
 	public function getMappingStatement() {
-		if ($this->getFieldName() != t3lib_div::camelCaseToLowerCaseUnderscored($this->name)) {
+		if ($this->getFieldName() != \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($this->name)) {
 			return $this->getFieldName() . '.mapOnProperty = ' . $this->name;
 		}
 		else return NULL;

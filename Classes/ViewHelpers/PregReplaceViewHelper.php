@@ -31,7 +31,7 @@
  * @package TYPO3
  * @subpackage ExtensionBuilder
  */
-class Tx_ExtensionBuilder_ViewHelpers_PregReplaceViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_PregReplaceViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * Execute the preg_replace

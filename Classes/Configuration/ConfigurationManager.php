@@ -28,7 +28,7 @@
  *
  * @package extension_builder
  */
-class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_Configuration_ConfigurationManager {
+class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends TYPO3\CMS\Extbase\Configuration\ConfigurationManager  {
 
 	const SETTINGS_DIR = 'Configuration/ExtensionBuilder/';
 	const OLD_SETTINGS_DIR = 'Configuration/Kickstarter/';
@@ -76,7 +76,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 */
 	public function getSettings($typoscript = NULL) {
 		if ($typoscript == NULL) {
-			$typoscript = $this->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+			$typoscript = $this->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		}
 		$settings = $typoscript['module.']['extension_builder.']['settings.'];
 		if (empty($settings['codeTemplateRootPath'])) {
@@ -113,7 +113,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 			$settings = $yamlParser->YAMLLoadString(file_get_contents($settingsFile));
 		}
 		else {
-			t3lib_div::devlog('No settings found: ' . $settingsFile, 'extension_builder', 2);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('No settings found: ' . $settingsFile, 'extension_builder', 2);
 		}
 
 		return $settings;
@@ -139,7 +139,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 			$extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), TRUE);
 			$extensionConfigurationJSON = $this->fixExtensionBuilderJSON($extensionConfigurationJSON, $prepareForModeler);
 			$extensionConfigurationJSON['properties']['originalExtensionKey'] = $extensionKey;
-			//t3lib_div::writeFile($jsonFile, json_encode($extensionConfigurationJSON));
+			//\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($jsonFile, json_encode($extensionConfigurationJSON));
 			return $extensionConfigurationJSON;
 		} else {
 			return NULL;
@@ -154,7 +154,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 */
 	public function getExtbaseClassConfiguration($className) {
 		$classConfiguration = array();
-		$frameworkConfiguration = $this->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+		$frameworkConfiguration = $this->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 		$classSettings = $frameworkConfiguration['persistence']['classes'][$className];
 		if ($classSettings !== NULL) {
 			if (isset($classSettings['subclasses']) && is_array($classSettings['subclasses'])) {
@@ -175,7 +175,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 				$currentClassSettings = $frameworkConfiguration['persistence']['classes'][$currentClassName];
 				if ($currentClassSettings !== NULL) {
 					if (isset($currentClassSettings['mapping']['columns']) && is_array($currentClassSettings['mapping']['columns'])) {
-						$columnMapping = t3lib_div::array_merge_recursive_overrule($columnMapping, $currentClassSettings['mapping']['columns'], 0, FALSE); // FALSE means: do not include empty values form 2nd array
+						$columnMapping = \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge_recursive_overrule($columnMapping, $currentClassSettings['mapping']['columns'], 0, FALSE); // FALSE means: do not include empty values form 2nd array
 					}
 				}
 			}
@@ -207,11 +207,11 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 * @param string $codeTemplateRootPath
 	 */
 	public function createInitialSettingsFile($extension, $codeTemplateRootPath) {
-		t3lib_div::mkdir_deep($extension->getExtensionDir(), self::SETTINGS_DIR);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($extension->getExtensionDir(), self::SETTINGS_DIR);
 		$settings = file_get_contents($codeTemplateRootPath . 'Configuration/ExtensionBuilder/settings.yamlt');
 		$settings = str_replace('{extension.extensionKey}', $extension->getExtensionKey(), $settings);
 		$settings = str_replace('<f:format.date>now</f:format.date>', date('Y-m-d H:i'), $settings);
-		t3lib_div::writeFile($extension->getExtensionDir() . self::SETTINGS_DIR . 'settings.yaml', $settings);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($extension->getExtensionDir() . self::SETTINGS_DIR . 'settings.yaml', $settings);
 	}
 
 	/**
@@ -219,12 +219,12 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 * @param string $encodedTemplateRootPath
 	 */
 	static public function substituteExtensionPath($encodedTemplateRootPath) {
-		if (t3lib_div::isFirstPartOfStr($encodedTemplateRootPath, 'EXT:')) {
+		if (\TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($encodedTemplateRootPath, 'EXT:')) {
 			list($extKey, $script) = explode('/', substr($encodedTemplateRootPath, 4), 2);
-			if ($extKey && t3lib_extMgm::isLoaded($extKey)) {
-				return t3lib_extMgm::extPath($extKey) . $script;
+			if ($extKey && \TYPO3\CMS\Core\Extension\ExtensionManager::isLoaded($extKey)) {
+				return \TYPO3\CMS\Core\Extension\ExtensionManager::extPath($extKey) . $script;
 			}
-		} else if (t3lib_div::isAbsPath($encodedTemplateRootPath)) {
+		} else if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAbsPath($encodedTemplateRootPath)) {
 			return $encodedTemplateRootPath;
 		} else {
 			return PATH_site . $encodedTemplateRootPath;
@@ -241,7 +241,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	 * @return array the modified configuration
 	 */
 	public function fixExtensionBuilderJSON($extensionConfigurationJSON, $prepareForModeler) {
-		$extBuilderVersion = tx_em_Tools::renderVersion($extensionConfigurationJSON['log']['extension_builder_version']);
+		$extBuilderVersion = \TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionsStringToVersionNumbers($extensionConfigurationJSON['log']['extension_builder_version']);
 		$extensionConfigurationJSON['modules'] = $this->mapOldRelationTypesToNewRelationTypes($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->generateUniqueIDs($extensionConfigurationJSON['modules']);
 		$extensionConfigurationJSON['modules'] = $this->resetOutboundedPositions($extensionConfigurationJSON['modules']);
@@ -534,13 +534,13 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 	protected function importExistingActionConfiguration(array $extensionConfigurationJSON) {
 		if (isset($extensionConfigurationJSON['properties']['plugins'])) {
 			$extKey = $extensionConfigurationJSON['properties']['extensionKey'];
-			if (t3lib_extMgm::isLoaded($extKey)) {
+			if (\TYPO3\CMS\Core\Extension\ExtensionManager::isLoaded($extKey)) {
 				foreach ($extensionConfigurationJSON['properties']['plugins'] as &$pluginJSON) {
-					if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][t3lib_div::underscoredToUpperCamelCase($extKey)]['plugins'][ucfirst($pluginJSON['key'])]['controllers'])) {
+					if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($extKey)]['plugins'][ucfirst($pluginJSON['key'])]['controllers'])) {
 						$controllerActionCombinationsConfig = "";
 						$nonCachableActionConfig = "";
 						$pluginJSON['actions'] = array();
-						foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][t3lib_div::underscoredToUpperCamelCase($extKey)]['plugins'][ucfirst($pluginJSON['key'])]['controllers'] as $controllerName => $controllerConfig) {
+						foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($extKey)]['plugins'][ucfirst($pluginJSON['key'])]['controllers'] as $controllerName => $controllerConfig) {
 							if (isset($controllerConfig['actions'])) {
 								$controllerActionCombinationsConfig .= $controllerName . '=>' . implode(',', $controllerConfig['actions']) . LF;
 							}
@@ -566,7 +566,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		if (isset($settings['classBuilder']['Model']['AbstractValueObject']['parentClass'])) {
 			$parentClass = $settings['classBuilder']['Model']['AbstractValueObject']['parentClass'];
 		} else {
-			$parentClass = 'Tx_Extbase_DomainObject_AbstractValueObject';
+			$parentClass = '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractValueObject';
 		}
 		return $parentClass;
 	}
@@ -576,7 +576,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends Tx_Extbase_
 		if (isset($settings['classBuilder']['Model']['AbstractEntity']['parentClass'])) {
 			$parentClass = $settings['classBuilder']['Model']['AbstractEntity']['parentClass'];
 		} else {
-			$parentClass = 'Tx_Extbase_DomainObject_AbstractEntity';
+			$parentClass = '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity';
 		}
 		return $parentClass;
 	}

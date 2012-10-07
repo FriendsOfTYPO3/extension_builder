@@ -39,7 +39,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation 
 	 * @return string The type.
 	 */
 	public function getTypeForComment() {
-		return 'Tx_Extbase_Persistence_ObjectStorage<' . $this->getForeignClassName() . '>';
+		return '\\TYPO3\\CMS\\Extbase\\Persistence\\Generic\\ObjectStorage<' . $this->getForeignClassName() . '>';
 	}
 
 	/**
@@ -48,7 +48,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation 
 	 * @return string The type hint.
 	 */
 	public function getTypeHint() {
-		return 'Tx_Extbase_Persistence_ObjectStorage';
+		return '\\TYPO3\\CMS\\Extbase\\Persistence\\Generic\\ObjectStorage';
 	}
 
 

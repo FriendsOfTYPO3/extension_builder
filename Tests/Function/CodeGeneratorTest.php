@@ -36,6 +36,10 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		parent::setUp();
 	}
 
+	function tearDown(){
+		parent::tearDown();
+	}
+
 	/**
 	 * @test
 	 */
@@ -52,23 +56,24 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 	function writeModelClassWithBooleanProperty(){
 		$modelName = 'ModelCgt1';
 		$propertyName = 'blue';
-		$domainObject = $this->buildDomainObject($modelName);
+		$domainObject = $this->buildDomainObject($modelName, TRUE);
 		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty($propertyName);
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
 		$modelClassDir =  'Classes/Domain/Model/';
-		$result = t3lib_div::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
 		$this->assertTrue(is_dir($absModelClassDir),'Directory ' . $absModelClassDir . ' was not created');
 
 		$modelClassPath =  $absModelClassDir . $domainObject->getName() . '.php';
-		t3lib_div::writeFile($modelClassPath,$classFileContent);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath,$classFileContent);
 		$this->assertFileExists($modelClassPath,'File was not generated: ' . $modelClassPath);
 		$className = $domainObject->getClassName();
-		include($modelClassPath);
+		if(!class_exists($className)) {
+			include_once($modelClassPath);
+		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
-
 		$reflection = new ReflectionClass($className);
 		$this->assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)),'Getter was not generated');
 		$this->assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)),'Setter was not generated');
@@ -95,15 +100,17 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
 
 		$modelClassDir =  'Classes/Domain/Model/';
-		$result = t3lib_div::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
+		$result = \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
 		$this->assertTrue(is_dir($absModelClassDir),'Directory ' . $absModelClassDir . ' was not created');
 
 		$modelClassPath =  $absModelClassDir . $domainObject->getName() . '.php';
-		t3lib_div::writeFile($modelClassPath,$classFileContent);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath,$classFileContent);
 		$this->assertFileExists($modelClassPath,'File was not generated: ' . $modelClassPath);
 		$className = $domainObject->getClassName();
-		include($modelClassPath);
+		if(!class_exists($className)) {
+			include($modelClassPath);
+		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 
 		$reflection = new ReflectionClass($className);
@@ -135,16 +142,18 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,TRUE);
 
 		$modelClassDir =  'Classes/Domain/Model/';
-		$result = t3lib_div::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
+		$result = \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
 		$this->assertTrue(is_dir($absModelClassDir),'Directory ' . $absModelClassDir . ' was not created');
 
 		$modelClassPath =  $absModelClassDir . $domainObject->getName() . '.php';
-		t3lib_div::devlog('Class Content','extension_builder',0,array('c'=>$classFileContent));
-		t3lib_div::writeFile($modelClassPath,$classFileContent);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Class Content','extension_builder',0,array('c'=>$classFileContent));
+		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath,$classFileContent);
 		$this->assertFileExists($modelClassPath,'File was not generated: ' . $modelClassPath);
 		$className = $domainObject->getClassName();
-		include($modelClassPath);
+		if(!class_exists($className)) {
+			include($modelClassPath);
+		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 
 		$reflection = new Tx_ExtensionBuilder_Reflection_ClassReflection($className);
@@ -166,7 +175,6 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 	/**
 	 * Write a simple model class for a non aggregate root domain object with zero to many relation
 	 *
-	 * @depends checkRequirements
 	 * @test
 	 */
 	function writeModelClassWithZeroToManyRelation(){
@@ -182,15 +190,17 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
 
 		$modelClassDir =  'Classes/Domain/Model/';
-		$result = t3lib_div::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
+		$result = \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
 		$this->assertTrue(is_dir($absModelClassDir),'Directory ' . $absModelClassDir . ' was not created');
 
 		$modelClassPath =  $absModelClassDir . $domainObject->getName() . '.php';
-		t3lib_div::writeFile($modelClassPath,$classFileContent);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath,$classFileContent);
 		$this->assertFileExists($modelClassPath,'File was not generated: ' . $modelClassPath);
 		$className = $domainObject->getClassName();
-		include($modelClassPath);
+		if(!class_exists($className)) {
+			include($modelClassPath);
+		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 
 		$reflection = new Tx_ExtensionBuilder_Reflection_ClassReflection($className);
@@ -203,13 +213,12 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
 		$this->assertTrue($setterMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $setterMethod->getTagValues('param');
-		$this->assertTrue((strpos($paramTagValues[0],'Tx_Extbase_Persistence_ObjectStorage<' . $relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
+		$this->assertTrue((strpos($paramTagValues[0],'\\TYPO3\\CMS\\Extbase\\Persistence\\Generic\\ObjectStorage<' . $relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
 
 		$parameters = $setterMethod->getParameters();
 		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in setter method');
 		$parameter = current($parameters);
-		$this->assertTrue(($parameter->getName() == $propertyName),'Wrong parameter name in setter method');
-		$this->assertTrue(($parameter->getTypeHint() == 'Tx_Extbase_Persistence_ObjectStorage'),'Wrong type hint for setter parameter:'.$parameter->getTypeHint());
+		$this->assertEquals($parameter->getName(), $propertyName,'Wrong parameter name in setter method');
 
 		$addMethod = $reflection->getMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
 		$this->assertTrue($addMethod->isTaggedWith('param'),'No param tag set for setter method');
@@ -254,15 +263,17 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
 
 		$modelClassDir =  'Classes/Domain/Model/';
-		$result = t3lib_div::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
 		$this->assertTrue(is_dir($absModelClassDir),'Directory ' . $absModelClassDir . ' was not created');
 
 		$modelClassPath =  $absModelClassDir . $domainObject->getName() . '.php';
-		t3lib_div::writeFile($modelClassPath,$classFileContent);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath,$classFileContent);
 		$this->assertFileExists($modelClassPath,'File was not generated: ' . $modelClassPath);
 		$className = $domainObject->getClassName();
-		include($modelClassPath);
+		if(!class_exists($className)) {
+			include($modelClassPath);
+		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 
 		$reflection = new Tx_ExtensionBuilder_Reflection_ClassReflection($className);
@@ -276,13 +287,12 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
 		$this->assertTrue($setterMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $setterMethod->getTagValues('param');
-		$this->assertTrue((strpos($paramTagValues[0],'Tx_Extbase_Persistence_ObjectStorage<' . $relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
+		$this->assertTrue((strpos($paramTagValues[0],'\\TYPO3\\CMS\\Extbase\\Persistence\\Generic\\ObjectStorage<' . $relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
 
 		$parameters = $setterMethod->getParameters();
-		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in setter method');
+		$this->assertEquals(1, count($parameters),'Wrong parameter count in setter method');
 		$parameter = current($parameters);
 		$this->assertTrue(($parameter->getName() == $propertyName),'Wrong parameter name in setter method');
-		$this->assertTrue(($parameter->getTypeHint() == 'Tx_Extbase_Persistence_ObjectStorage'),'Wrong type hint for setter parameter:'.$parameter->getTypeHint());
 
 		$addMethod = $reflection->getMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
 		$this->assertTrue($addMethod->isTaggedWith('param'),'No param tag set for setter method');
@@ -317,22 +327,24 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 	 */
 	function writeSimpleControllerClassFromDomainObject(){
 		$domainObject = $this->buildDomainObject('ModelCgt6',true);
-		$action = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
+		$action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
 		$action->setName('list');
 		$domainObject->addAction($action);
 
 		$classFileContent = $this->codeGenerator->generateActionControllerCode($domainObject,$this->extension);
 
 		$controllerClassDir =  'Classes/Controller/';
-		$result = t3lib_div::mkdir_deep($this->extension->getExtensionDir(),$controllerClassDir);
+		$result = \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$controllerClassDir);
 		$absControllerClassDir = $this->extension->getExtensionDir().$controllerClassDir;
 		$this->assertTrue(is_dir($absControllerClassDir),'Directory ' . $absControllerClassDir . ' was not created');
 
 		$controllerClassPath =  $absControllerClassDir . $domainObject->getName() . 'Controller.php';
-		t3lib_div::writeFile($controllerClassPath,$classFileContent);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($controllerClassPath,$classFileContent);
 		$this->assertFileExists($controllerClassPath,'File was not generated: ' . $controllerClassPath);
 		$className = $domainObject->getControllerName();
-		include($controllerClassPath);
+		if(!class_exists($className)) {
+			include($controllerClassPath);
+		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 
 	}

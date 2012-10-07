@@ -28,7 +28,7 @@
  * @package ExtensionBuilder
  * @subpackage Reflection
  */
-class Tx_ExtensionBuilder_Reflection_ClassReflection extends Tx_Extbase_Reflection_ClassReflection {
+class Tx_ExtensionBuilder_Reflection_ClassReflection extends TYPO3\CMS\Extbase\Reflection\ClassReflection {
 
 	/**
 	 *
@@ -265,7 +265,7 @@ class Tx_ExtensionBuilder_Reflection_ClassReflection extends Tx_Extbase_Reflecti
 	 */
 	protected function getDocCommentParser() {
 		if (!is_object($this->docCommentParser)) {
-			$this->docCommentParser = new Tx_Extbase_Reflection_DocCommentParser;
+			$this->docCommentParser = new \TYPO3\CMS\Extbase\Reflection\DocCommentParser;
 			$this->docCommentParser->parseDocComment($this->getDocComment());
 		}
 		return $this->docCommentParser;

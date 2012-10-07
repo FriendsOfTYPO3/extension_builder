@@ -79,15 +79,15 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Property extends Tx_ExtensionBuilde
 
 			$tags = $propertyReflection->getTagsValues(); // just to initialize the docCommentParser
 			foreach ($this as $key => $value) {
-				$setterMethodName = 'set' . t3lib_div::underscoredToUpperCamelCase($key);
-				$getterMethodName = 'get' . t3lib_div::underscoredToUpperCamelCase($key);
+				$setterMethodName = 'set' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($key);
+				$getterMethodName = 'get' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($key);
 
 				// map properties of reflection class to this class
 				if (method_exists($propertyReflection, $getterMethodName) && method_exists($this, $setterMethodName) && $key != 'value') {
 					$this->$setterMethodName($propertyReflection->$getterMethodName());
 				}
 
-				$isMethodName = 'is' . t3lib_div::underscoredToUpperCamelCase($key);
+				$isMethodName = 'is' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($key);
 
 				// map properties of reflection class to this class
 				if (method_exists($propertyReflection, $setterMethodName) && method_exists($this, $isMethodName)) {
@@ -101,7 +101,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Property extends Tx_ExtensionBuilde
 				$this->varType = $parts[0];
 			}
 			else {
-				t3lib_div::devLog('No var type set for property $' . $this->name . ' in class ' . $propertyReflection->getDeclaringClass()->name, 'extension_builder');
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('No var type set for property $' . $this->name . ' in class ' . $propertyReflection->getDeclaringClass()->name, 'extension_builder');
 			}
 
 			if (empty($this->tags)) {

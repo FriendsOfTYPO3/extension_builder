@@ -28,7 +28,7 @@
  * @package ExtensionBuilder
  * @version $ID:$
  */
-class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
+class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
@@ -430,7 +430,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 		}
 		catch (ReflectionException $e) {
 			// ReflectionClass throws an exception if a method was not found
-			t3lib_div::devlog('Exception: ' . $e->getMessage(), 'extension_builder', 2);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Exception: ' . $e->getMessage(), 'extension_builder', 2);
 		}
 	}
 
@@ -489,7 +489,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 			}
 			catch (ReflectionException $e) {
 				// ReflectionClass throws an exception if a property was not found
-				t3lib_div::devlog('Exception in line : ' . $e->getMessage() . ' Constant ' . $constantName . ' found in line ' . $this->lineCount, 'extension_builder');
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Exception in line : ' . $e->getMessage() . ' Constant ' . $constantName . ' found in line ' . $this->lineCount, 'extension_builder');
 			}
 		}
 	}
@@ -549,7 +549,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements t3lib_singleton {
 			}
 			catch (ReflectionException $e) {
 				// ReflectionClass throws an exception if a property was not found
-				t3lib_div::devlog('Exception in line : ' . $e->getMessage() . 'Property ' . $propertyName . ' found in line ' . $this->lineCount, 'extension_builder');
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Exception in line : ' . $e->getMessage() . 'Property ' . $propertyName . ' found in line ' . $this->lineCount, 'extension_builder');
 			}
 		}
 	}

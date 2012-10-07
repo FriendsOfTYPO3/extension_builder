@@ -50,12 +50,12 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 		if ($methodReflection instanceof Tx_ExtensionBuilder_Reflection_MethodReflection) {
 			$methodReflection->getTagsValues(); // just to initialize the docCommentParser
 			foreach ($this as $key => $value) {
-				$setterMethodName = 'set' . t3lib_div::underscoredToUpperCamelCase($key);
-				$getterMethodName = 'get' . t3lib_div::underscoredToUpperCamelCase($key);
+				$setterMethodName = 'set' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($key);
+				$getterMethodName = 'get' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($key);
 				// map properties of reflection class to this class
 				if (method_exists($methodReflection, $getterMethodName) && method_exists($this, $setterMethodName)) {
 					$this->$setterMethodName($methodReflection->$getterMethodName());
-					//t3lib_div::print_array($getterMethodName);
+					//\TYPO3\CMS\Core\Utility\GeneralUtility::print_array($getterMethodName);
 				}
 
 			}

@@ -30,7 +30,7 @@
  * @version $ID:$
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
-class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator {
 
 	/**
 	 * Error Codes:
@@ -445,7 +445,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			}
 		}
 		$switchableActionConfiguration = $plugin->getSwitchableControllerActions();
-		// t3lib_div::devLog('validate switchableActionConfiguration', 'extension_builder', 0, $switchableActionConfiguration);
+		// \TYPO3\CMS\Core\Utility\GeneralUtility::devlog('validate switchableActionConfiguration', 'extension_builder', 0, $switchableActionConfiguration);
 		if (is_array($switchableActionConfiguration)) {
 			foreach ($switchableActionConfiguration as $switchableAction) {
 				$configuredActions = array();
@@ -453,7 +453,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 					// Format should be: Controller->action
 					list($controllerName, $actionName) = explode('->', $actions);
 					$configuredActions[] = $actionName;
-					t3lib_div::devLog('Controller' . $controllerName, 'extension_builder', 0, array($actionName));
+					\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Controller' . $controllerName, 'extension_builder', 0, array($actionName));
 					$this->validateActionConfiguration($controllerName, array($actionName), 'plugin ' . $plugin->getName(), $extension);
 				}
 				$this->validateDependentActions($configuredActions, 'plugin ' . $plugin->getName());
@@ -507,9 +507,9 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 			// the first Controller action config is the default Controller action
 			// we show a warning if that's an action that requires a domain object as parameter
 			$defaultAction = reset($actionNames);
-			//t3lib_div::devlog('Invalid action configuration:'.$defaultAction, 'extension_builder', 1, array($controllerName, $actionNames));
+			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Invalid action configuration:'.$defaultAction, 'extension_builder', 1, array($controllerName, $actionNames));
 			if (in_array($defaultAction, array('show', 'edit'))) {
-				t3lib_div::devlog('Invalid action configurations', 'extension_builder', 1, array($controllerName, $actionNames));
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Invalid action configurations', 'extension_builder', 1, array($controllerName, $actionNames));
 				$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 					'Potential misconfiguration in ' . $label . ':<br />Default action ' . $controllerName . '->' . $defaultAction . '  can not be called without a domain object parameter',
 					self::ERROR_MISCONFIGURATION);
@@ -551,7 +551,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 					if (!empty($pluginConfiguration['actions'][$configType])) {
 						$isValid = $this->validateActionConfigFormat($pluginConfiguration['actions'][$configType], $configType);
 						if (!$isValid) {
-							t3lib_div::devlog('validateActionConfigFormat failed', 'extension_builder', 2, array($pluginConfiguration['actions'][$configType]));
+							\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('validateActionConfigFormat failed', 'extension_builder', 2, array($pluginConfiguration['actions'][$configType]));
 							$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 								'Wrong format in configuration for ' . $configType . ' in plugin ' . $pluginName,
 								self::ERROR_MISCONFIGURATION);
@@ -560,27 +560,27 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 				}
 				if (!empty($pluginConfiguration['actions']['switchableActions'])) {
 					$isValid = TRUE;
-					$lines = t3lib_div::trimExplode("\n", $pluginConfiguration['actions']['switchableActions'], TRUE);
+					$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n", $pluginConfiguration['actions']['switchableActions'], TRUE);
 					$firstLine = TRUE;
 					foreach ($lines as $line) {
 						if ($firstLine) {
 							// label for flexform select
 							if (!preg_match("/^[a-zA-Z0-9_-\s]*$/", $line)) {
 								$isValid = FALSE;
-								t3lib_div::devlog('Label in switchable Actions contained disallowed character:' . $line, 'extension_builder', 2);
+								\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Label in switchable Actions contained disallowed character:' . $line, 'extension_builder', 2);
 							}
 							$firstLine = FALSE;
 						} else {
-							$parts = t3lib_div::trimExplode(';', $line, TRUE);
-							t3lib_div::devlog('switchable Actions line even:' . $line, 'extension_builder', 0, $parts);
+							$parts = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(';', $line, TRUE);
+							\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('switchable Actions line even:' . $line, 'extension_builder', 0, $parts);
 							if (count($parts) < 1) {
 								$isValid = FALSE;
-								t3lib_div::devlog('Wrong count for explode(";") switchable Actions line:' . $line, 'extension_builder', 2, $parts);
+								\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Wrong count for explode(";") switchable Actions line:' . $line, 'extension_builder', 2, $parts);
 							}
 							foreach ($parts as $part) {
-								if (!empty($part) && count(t3lib_div::trimExplode('->', $part, TRUE)) != 2) {
+								if (!empty($part) && count(\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('->', $part, TRUE)) != 2) {
 									$isValid = FALSE;
-									t3lib_div::devlog('Wrong count for explode("->") switchable Actions line:' . $part, 'extension_builder', 2);
+									\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Wrong count for explode("->") switchable Actions line:' . $part, 'extension_builder', 2);
 								}
 							}
 							$firstLine = TRUE;
@@ -602,7 +602,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 					if (!empty($moduleConfiguration['actions'][$configType])) {
 						$isValid = $this->validateActionConfigFormat($moduleConfiguration['actions'][$configType], $configType);
 						if (!$isValid) {
-							t3lib_div::devlog('validateActionConfigFormat failed', 'extension_builder', 2, array($moduleConfiguration['actions'][$configType]));
+							\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('validateActionConfigFormat failed', 'extension_builder', 2, array($moduleConfiguration['actions'][$configType]));
 							$this->validationResult['warnings'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 								'Wrong format in configuration for ' . $configType . ' in module ' . $moduleName,
 								self::ERROR_MISCONFIGURATION);
@@ -621,15 +621,15 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	 */
 	protected function validateActionConfigFormat($configuration) {
 		$isValid = TRUE;
-		$lines = t3lib_div::trimExplode("\n", $configuration, TRUE);
+		$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n", $configuration, TRUE);
 		foreach ($lines as $line) {
-			$test = t3lib_div::trimExplode('=>', $line, TRUE);
+			$test = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>', $line, TRUE);
 			if (count($test) != 2) {
 				$isValid = FALSE;
-				t3lib_div::devlog('Wrong count for explode("=>") switchable Actions line:' . $line, 'extension_builder', 2);
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Wrong count for explode("=>") switchable Actions line:' . $line, 'extension_builder', 2);
 			} else if (!preg_match("/^[a-zA-Z0-9_,\s]*$/", $test[1])) {
 				$isValid = FALSE;
-				t3lib_div::devlog('Regex failed:' . $test[1], 'extension_builder', 2);
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Regex failed:' . $test[1], 'extension_builder', 2);
 			}
 		}
 		return $isValid;
@@ -714,10 +714,10 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	private function validateMapping(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
 		$parentClass = $domainObject->getParentClass();
 		$tableName = $domainObject->getMapToTable();
-		$extensionPrefix = 'Tx_' . t3lib_div::underscoredToUpperCamelCase($domainObject->getExtension()->getExtensionKey()) . '_Domain_Model_';
+		$extensionPrefix = 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($domainObject->getExtension()->getExtensionKey()) . '_Domain_Model_';
 		if (!empty($parentClass)) {
 			$classConfiguration = $this->configurationManager->getExtbaseClassConfiguration($parentClass);
-			t3lib_div::devlog('class settings ' . $parentClass, 'extension_builder', 0, $classConfiguration);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('class settings ' . $parentClass, 'extension_builder', 0, $classConfiguration);
 
 			if (!isset($classConfiguration['tableName'])) {
 				if (!$tableName) {
@@ -948,7 +948,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends Tx_Extbase
 	 * @return boolean
 	 */
 	static public function isReservedTYPO3Word($word) {
-		if (in_array(t3lib_div::camelCaseToLowerCaseUnderscored($word), self::$reservedTYPO3ColumnNames)) {
+		if (in_array(\TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($word), self::$reservedTYPO3ColumnNames)) {
 			return TRUE;
 		}
 		else {

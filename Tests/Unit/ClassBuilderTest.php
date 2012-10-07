@@ -46,7 +46,6 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 	 * @test
 	 */
 	public function classBuilderGeneratesSetterMethodForSimpleProperty() {
-
 		$domainObject = $this->buildDomainObject($this->modelName, true, true);
 
 		$property0 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty('name');

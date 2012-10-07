@@ -32,7 +32,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_TestExtension_Domain_Model_Main extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_TestExtension_Domain_Model_Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * This is not required
@@ -59,7 +59,7 @@ class Tx_TestExtension_Domain_Model_Main extends Tx_Extbase_DomainObject_Abstrac
 	/**
 	 * This is a 1:n relation
 	 *
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_TestExtension_Domain_Model_Child2>
+	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_TestExtension_Domain_Model_Child2>
 	 */
 	protected $children2;
 
@@ -73,7 +73,7 @@ class Tx_TestExtension_Domain_Model_Main extends Tx_Extbase_DomainObject_Abstrac
 	/**
 	 * This is a m:n relation
 	 *
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_TestExtension_Domain_Model_Child4>
+	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_TestExtension_Domain_Model_Child4>
 	 */
 	protected $children4;
 
@@ -88,7 +88,7 @@ class Tx_TestExtension_Domain_Model_Main extends Tx_Extbase_DomainObject_Abstrac
 	}
 
 	/**
-	 * Initializes all Tx_Extbase_Persistence_ObjectStorage properties.
+	 * Initializes all ObjectStorage properties.
 	 *
 	 * @return void
 	 */
@@ -98,9 +98,9 @@ class Tx_TestExtension_Domain_Model_Main extends Tx_Extbase_DomainObject_Abstrac
 		 * It will be rewritten on each save in the extension builder
 		 * You may modify the constructor of this class instead
 		 */
-		$this->children2 = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->children2 = new \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage();
 
-		$this->children4 = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->children4 = new \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage();
 	}
 
 	/**
@@ -183,7 +183,7 @@ class Tx_TestExtension_Domain_Model_Main extends Tx_Extbase_DomainObject_Abstrac
 	/**
 	 * Returns the children2
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_TestExtension_Domain_Model_Child2> $children2
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_TestExtension_Domain_Model_Child2> $children2
 	 */
 	public function getChildren2() {
 		return $this->children2;
@@ -192,10 +192,10 @@ class Tx_TestExtension_Domain_Model_Main extends Tx_Extbase_DomainObject_Abstrac
 	/**
 	 * Sets the children2
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_TestExtension_Domain_Model_Child2> $children2
+	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_TestExtension_Domain_Model_Child2> $children2
 	 * @return void
 	 */
-	public function setChildren2(Tx_Extbase_Persistence_ObjectStorage $children2) {
+	public function setChildren2(\TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage $children2) {
 		$this->children2 = $children2;
 	}
 
@@ -241,7 +241,7 @@ class Tx_TestExtension_Domain_Model_Main extends Tx_Extbase_DomainObject_Abstrac
 	/**
 	 * Returns the children4
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_TestExtension_Domain_Model_Child4> $children4
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_TestExtension_Domain_Model_Child4> $children4
 	 */
 	public function getChildren4() {
 		return $this->children4;
@@ -250,10 +250,10 @@ class Tx_TestExtension_Domain_Model_Main extends Tx_Extbase_DomainObject_Abstrac
 	/**
 	 * Sets the children4
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_TestExtension_Domain_Model_Child4> $children4
+	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_TestExtension_Domain_Model_Child4> $children4
 	 * @return void
 	 */
-	public function setChildren4(Tx_Extbase_Persistence_ObjectStorage $children4) {
+	public function setChildren4(\TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage $children4) {
 		$this->children4 = $children4;
 	}
 

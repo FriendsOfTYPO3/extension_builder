@@ -28,7 +28,7 @@
  * @package ExtensionBuilder
  */
 
-class Tx_ExtensionBuilder_ViewHelpers_MethodViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_MethodViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 *
@@ -38,7 +38,7 @@ class Tx_ExtensionBuilder_ViewHelpers_MethodViewHelper extends Tx_Fluid_Core_Vie
 	 */
 	public function render($methodObject, $renderElement) {
 		$content = '';
-		//t3lib_div::devLog(serialize($methodObject), $renderElement);
+		//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog(serialize($methodObject), $renderElement);
 		switch ($renderElement) {
 			case 'parameter'		:
 				$content = $this->renderMethodParameter($methodObject);
@@ -75,7 +75,7 @@ class Tx_ExtensionBuilder_ViewHelpers_MethodViewHelper extends Tx_Fluid_Core_Vie
 							// now we render php notation from JSON notation
 							$defaultValue = Tx_ExtensionBuilder_Utility_Tools::convertJSONArrayToPHPArray($defaultValue);
 
-							//t3lib_div::devLog('default Value: '. $defaultValue, 'parameter debug');
+							//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('default Value: '. $defaultValue, 'parameter debug');
 						}
 						else $defaultValue = 'array()';
 					} elseif ($defaultValue === NULL) {
@@ -95,7 +95,7 @@ class Tx_ExtensionBuilder_ViewHelpers_MethodViewHelper extends Tx_Fluid_Core_Vie
 					$parameterName = $typeHint . ' ' . $parameterName;
 				}
 				$parameters[] = $parameterName;
-				//t3lib_div::devLog($methodSchemaObject->getName().':'.$parameter->getName(), 'parameter debug');
+				//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog($methodSchemaObject->getName().':'.$parameter->getName(), 'parameter debug');
 			}
 		}
 		return implode(', ', $parameters);

@@ -29,7 +29,7 @@
  * @package ExtensionBuilder
  * @subpackage Reflection
  */
-class Tx_ExtensionBuilder_Reflection_ParameterReflection extends Tx_Extbase_Reflection_ParameterReflection {
+class Tx_ExtensionBuilder_Reflection_ParameterReflection extends TYPO3\CMS\Extbase\Reflection\ParameterReflection {
 
 	/**
 	 * typeHint is missing in PHP Reflection (at least in 5.3)

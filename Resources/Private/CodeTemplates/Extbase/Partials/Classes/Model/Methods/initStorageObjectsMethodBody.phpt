@@ -6,6 +6,6 @@
  */
 <k:format.trim>
 <f:for each="{domainObject.AnyToManyRelationProperties}" as="anyToManyRelationProperty">
-$this->{anyToManyRelationProperty.name} = new Tx_Extbase_Persistence_ObjectStorage();
+$this->{anyToManyRelationProperty.name} = new \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage();
 </f:for>
 </k:format.trim>

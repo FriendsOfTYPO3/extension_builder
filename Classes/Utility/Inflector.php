@@ -19,7 +19,7 @@
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-require(t3lib_extMgm::extPath('extension_builder') . 'Resources/Private/PHP/Sho_Inflect.php');
+require(TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Resources/Private/PHP/Sho_Inflect.php');
 
 /**
  * Inflector utilities for the Extension Builder. This is a basic conversion from PHP

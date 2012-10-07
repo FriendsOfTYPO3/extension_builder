@@ -213,7 +213,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 * @return string Property description
 	 */
 	public function getDescriptionLines() {
-		return t3lib_div::trimExplode("\n", trim($this->getDescription()));
+		return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n", trim($this->getDescription()));
 	}
 
 	/**

@@ -84,7 +84,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 		//TODO the parameter hints (or casts?) are not yet evaluated since the reflection does not recognize the
 		// maybe we can get them by a reg expression from the import tool?
 
-		if ($parameterReflection && $parameterReflection instanceof Tx_Extbase_Reflection_ParameterReflection) {
+		if ($parameterReflection && $parameterReflection instanceof \TYPO3\CMS\Extbase\Reflection\ParameterReflection ) {
 			foreach ($this as $key => $value) {
 				$setterMethodName = 'set' . ucfirst($key);
 				$getterMethodName = 'get' . ucfirst($key);
@@ -214,7 +214,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 	/**
 	 * Sets $typeHint.
 	 *
-	 * @param object $typeHint
+	 * @param string $typeHint
 	 * @see Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter::$typeHint
 	 */
 	public function setTypeHint($typeHint) {

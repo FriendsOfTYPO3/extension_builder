@@ -32,7 +32,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_TestExtension_Controller_MainController extends Tx_Extbase_MVC_Controller_ActionController {
+class Tx_TestExtension_Controller_MainController extends \TYPO3\CMS\Extbase\MVC\Controller\ActionController {
 
 	/**
 	 * mainRepository
