@@ -31,7 +31,7 @@
  * @subpackage  extension_builder
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
-class Tx_ExtensionBuilder_Controller_BuilderModuleController extends TYPO3\CMS\Extbase\MVC\Controller\ActionController {
+class Tx_ExtensionBuilder_Controller_BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
 	 * @var Tx_ExtensionBuilder_Service_CodeGenerator

@@ -1,4 +1,5 @@
 <?php
+namespace TYPO3\TestExtension\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
@@ -24,7 +25,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
 /**
  *
  *
@@ -32,19 +32,19 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_TestExtension_Domain_Model_Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * This is not required
 	 *
-	 * @var string
+	 * @var \string
 	 */
 	protected $name;
 
 	/**
 	 * This is required
 	 *
-	 * @var string
+	 * @var \string
 	 * @validate NotEmpty
 	 */
 	protected $identifier;
@@ -52,35 +52,35 @@ class Tx_TestExtension_Domain_Model_Main extends \TYPO3\CMS\Extbase\DomainObject
 	/**
 	 * This is a 1:1 relation
 	 *
-	 * @var Tx_TestExtension_Domain_Model_Child1
+	 * @var \TYPO3\TestExtension\Domain\Model\Child1
 	 */
 	protected $child1;
 
 	/**
 	 * This is a 1:n relation
 	 *
-	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_TestExtension_Domain_Model_Child2>
+	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child2>
 	 */
 	protected $children2;
 
 	/**
 	 * This is a n:1 relation
 	 *
-	 * @var Tx_TestExtension_Domain_Model_Child3
+	 * @var \TYPO3\TestExtension\Domain\Model\Child3
 	 */
 	protected $child3;
 
 	/**
 	 * This is a m:n relation
 	 *
-	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_TestExtension_Domain_Model_Child4>
+	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child4>
 	 */
 	protected $children4;
 
 	/**
 	 * __construct
 	 *
-	 * @return void
+	 * @return Main
 	 */
 	public function __construct() {
 		//Do not remove the next line: It would break the functionality
@@ -106,7 +106,7 @@ class Tx_TestExtension_Domain_Model_Main extends \TYPO3\CMS\Extbase\DomainObject
 	/**
 	 * Returns the name
 	 *
-	 * @return string $name
+	 * @return \string $name
 	 */
 	public function getName() {
 		return $this->name;
@@ -115,7 +115,7 @@ class Tx_TestExtension_Domain_Model_Main extends \TYPO3\CMS\Extbase\DomainObject
 	/**
 	 * Sets the name
 	 *
-	 * @param string $name
+	 * @param \string $name
 	 * @return void
 	 */
 	public function setName($name) {
@@ -125,7 +125,7 @@ class Tx_TestExtension_Domain_Model_Main extends \TYPO3\CMS\Extbase\DomainObject
 	/**
 	 * Returns the identifier
 	 *
-	 * @return string $identifier
+	 * @return \string $identifier
 	 */
 	public function getIdentifier() {
 		return $this->identifier;
@@ -134,7 +134,7 @@ class Tx_TestExtension_Domain_Model_Main extends \TYPO3\CMS\Extbase\DomainObject
 	/**
 	 * Sets the identifier
 	 *
-	 * @param string $identifier
+	 * @param \string $identifier
 	 * @return void
 	 */
 	public function setIdentifier($identifier) {
@@ -144,7 +144,7 @@ class Tx_TestExtension_Domain_Model_Main extends \TYPO3\CMS\Extbase\DomainObject
 	/**
 	 * Returns the child1
 	 *
-	 * @return Tx_TestExtension_Domain_Model_Child1 $child1
+	 * @return \TYPO3\TestExtension\Domain\Model\Child1 $child1
 	 */
 	public function getChild1() {
 		return $this->child1;
@@ -153,37 +153,37 @@ class Tx_TestExtension_Domain_Model_Main extends \TYPO3\CMS\Extbase\DomainObject
 	/**
 	 * Sets the child1
 	 *
-	 * @param Tx_TestExtension_Domain_Model_Child1 $child1
+	 * @param \TYPO3\TestExtension\Domain\Model\Child1 $child1
 	 * @return void
 	 */
-	public function setChild1(Tx_TestExtension_Domain_Model_Child1 $child1) {
+	public function setChild1(\TYPO3\TestExtension\Domain\Model\Child1 $child1) {
 		$this->child1 = $child1;
 	}
 
 	/**
 	 * Adds a Child2
 	 *
-	 * @param Tx_TestExtension_Domain_Model_Child2 $children2
+	 * @param \TYPO3\TestExtension\Domain\Model\Child2 $children2
 	 * @return void
 	 */
-	public function addChildren2(Tx_TestExtension_Domain_Model_Child2 $children2) {
+	public function addChildren2(\TYPO3\TestExtension\Domain\Model\Child2 $children2) {
 		$this->children2->attach($children2);
 	}
 
 	/**
 	 * Removes a Child2
 	 *
-	 * @param Tx_TestExtension_Domain_Model_Child2 $children2ToRemove The Child2 to be removed
+	 * @param \TYPO3\TestExtension\Domain\Model\Child2 $children2ToRemove The Child2 to be removed
 	 * @return void
 	 */
-	public function removeChildren2(Tx_TestExtension_Domain_Model_Child2 $children2ToRemove) {
+	public function removeChildren2(\TYPO3\TestExtension\Domain\Model\Child2 $children2ToRemove) {
 		$this->children2->detach($children2ToRemove);
 	}
 
 	/**
 	 * Returns the children2
 	 *
-	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_TestExtension_Domain_Model_Child2> $children2
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child2> $children2
 	 */
 	public function getChildren2() {
 		return $this->children2;
@@ -192,7 +192,7 @@ class Tx_TestExtension_Domain_Model_Main extends \TYPO3\CMS\Extbase\DomainObject
 	/**
 	 * Sets the children2
 	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_TestExtension_Domain_Model_Child2> $children2
+	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child2> $children2
 	 * @return void
 	 */
 	public function setChildren2(\TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage $children2) {
@@ -202,7 +202,7 @@ class Tx_TestExtension_Domain_Model_Main extends \TYPO3\CMS\Extbase\DomainObject
 	/**
 	 * Returns the child3
 	 *
-	 * @return Tx_TestExtension_Domain_Model_Child3 $child3
+	 * @return \TYPO3\TestExtension\Domain\Model\Child3 $child3
 	 */
 	public function getChild3() {
 		return $this->child3;
@@ -211,37 +211,37 @@ class Tx_TestExtension_Domain_Model_Main extends \TYPO3\CMS\Extbase\DomainObject
 	/**
 	 * Sets the child3
 	 *
-	 * @param Tx_TestExtension_Domain_Model_Child3 $child3
+	 * @param \TYPO3\TestExtension\Domain\Model\Child3 $child3
 	 * @return void
 	 */
-	public function setChild3(Tx_TestExtension_Domain_Model_Child3 $child3) {
+	public function setChild3(\TYPO3\TestExtension\Domain\Model\Child3 $child3) {
 		$this->child3 = $child3;
 	}
 
 	/**
 	 * Adds a Child4
 	 *
-	 * @param Tx_TestExtension_Domain_Model_Child4 $children4
+	 * @param \TYPO3\TestExtension\Domain\Model\Child4 $children4
 	 * @return void
 	 */
-	public function addChildren4(Tx_TestExtension_Domain_Model_Child4 $children4) {
+	public function addChildren4(\TYPO3\TestExtension\Domain\Model\Child4 $children4) {
 		$this->children4->attach($children4);
 	}
 
 	/**
 	 * Removes a Child4
 	 *
-	 * @param Tx_TestExtension_Domain_Model_Child4 $children4ToRemove The Child4 to be removed
+	 * @param \TYPO3\TestExtension\Domain\Model\Child4 $children4ToRemove The Child4 to be removed
 	 * @return void
 	 */
-	public function removeChildren4(Tx_TestExtension_Domain_Model_Child4 $children4ToRemove) {
+	public function removeChildren4(\TYPO3\TestExtension\Domain\Model\Child4 $children4ToRemove) {
 		$this->children4->detach($children4ToRemove);
 	}
 
 	/**
 	 * Returns the children4
 	 *
-	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_TestExtension_Domain_Model_Child4> $children4
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child4> $children4
 	 */
 	public function getChildren4() {
 		return $this->children4;
@@ -250,7 +250,7 @@ class Tx_TestExtension_Domain_Model_Main extends \TYPO3\CMS\Extbase\DomainObject
 	/**
 	 * Sets the children4
 	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_TestExtension_Domain_Model_Child4> $children4
+	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child4> $children4
 	 * @return void
 	 */
 	public function setChildren4(\TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage $children4) {

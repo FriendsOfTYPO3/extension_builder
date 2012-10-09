@@ -87,12 +87,13 @@ class Tx_ExtensionBuilder_Reflection_MethodReflection extends TYPO3\CMS\Extbase\
 		if (!preg_match($paramRegex, $paramAsString)) {
 			// since the approach to cast the reflection parameter as a string is not part of the official PHP API
 			// this might not work anymore in future versions
-			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('ReflectionParameter in method ' . $this->getName() . ' casted as string has not the expected format: ' . $paramAsString, 'extension_builder', 2);
+			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('ReflectionParameter in method ' . $this->getName() . ' casted as string has not the expected format: ' . $paramAsString, 'extension_builder', 2);
 			return '';
 		}
-		$typeHintRegex = '/>\s*([a-zA-Z0-9_&\s]*)\s*\$/';
+		$typeHintRegex = '/>\s*([a-zA-Z0-9_&\\\s]*)\s*\$/';
 		$matches = array();
 		if (preg_match($typeHintRegex, $paramAsString, $matches)) {
+			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Typehint for parameter ' . $reflectionParameter->getName() . ' in method '.$this->getName().' : '.$paramAsString,'extension_builder',0,$matches);
 			if (!empty($matches[1])) {
 				$typeHint = $matches[1];
 				if ($reflectionParameter->isPassedByReference()) {
@@ -100,6 +101,11 @@ class Tx_ExtensionBuilder_Reflection_MethodReflection extends TYPO3\CMS\Extbase\
 					$typeHint = str_replace('&', '', $typeHint);
 				}
 				$typeHint = trim($typeHint);
+				if(strpos($typeHint, 'TYPO3') === 0) {
+						// this is a hack, since there is no differnce between full qalified and qualified name of thze type hint
+						// so if it starts with TYPO3 we assume the /TYPO3 namespace is appropriate
+					$typeHint = '\\' . $typeHint;
+				}
 				return $typeHint;
 			}
 		}

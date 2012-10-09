@@ -51,7 +51,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_ImageProperty extends Tx_Ext
 	protected $disallowedFileTypes = '';
 
 	public function getTypeForComment() {
-		return 'string';
+		return '\\string';
 	}
 
 	public function getTypeHint() {

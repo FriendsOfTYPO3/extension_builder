@@ -44,6 +44,10 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToOneRelation e
 	public function getSqlDefinition() {
 		return $this->getFieldName() . " int(11) unsigned DEFAULT '0',";
 	}
+
+	public function getUnqualifiedType() {
+		return $this->foreignModel->getName();
+	}
 }
 
 ?>

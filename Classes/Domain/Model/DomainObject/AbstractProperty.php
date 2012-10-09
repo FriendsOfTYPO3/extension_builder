@@ -267,17 +267,6 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	abstract public function getTypeHint();
 
 	/**
-	 * Get PHP type hint with a single trailing whitespace appended if needed, or if no type hint is set, omit this trailing whitespace.
-	 *
-	 * @return string
-	 */
-	public function getTypeHintWithTrailingWhiteSpace() {
-		if ($typehint = $this->getTypeHint()) {
-			return $typehint . ' ';
-		}
-	}
-
-	/**
 	 * TRUE if this property is required, FALSE otherwise.
 	 *
 	 * @return boolean
@@ -426,6 +415,10 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 */
 	public function getUseRTE() {
 		return $this->useRTE;
+	}
+
+	public function getUnqualifiedType() {
+		return substr($this->getTypeForComment(),1);
 	}
 
 }

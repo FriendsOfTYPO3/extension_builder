@@ -106,7 +106,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRe
 			return $this->foreignClassName;
 		}
 		if(is_object($this->foreignModel)) {
-			return $this->foreignModel->getClassName();
+			return $this->foreignModel->getFullQualifiedClassName();
 		}
 		return NULL;
 	}

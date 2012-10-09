@@ -65,6 +65,11 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 	 */
 	protected $codeGenerator;
 
+	/**
+	 * @var Tx_ExtensionBuilder_Domain_Model_Extension
+	 */
+	protected $extension;
+
 
 
 	/**
@@ -101,7 +106,6 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 		}
 		$this->settings = $settings['classBuilder'];
 		$this->extensionDirectory = $this->extension->getExtensionDir();
-		$this->extClassPrefix = 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey());
 	}
 
 	/**
@@ -117,19 +121,20 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 	public function generateModelClassObject($domainObject, $mergeWithExistingClass) {
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('------------------------------------- generateModelClassObject(' . $domainObject->getName() . ') ---------------------------------', 'extension_builder', 0);
 		$this->classObject = NULL; // reference to the resulting class file,
-		$className = $domainObject->getClassName();
+		$fullQualifiedClassName = $domainObject->getFullQualifiedClassName();
 
 		if ($mergeWithExistingClass) {
 			try {
 				$this->classObject = $this->roundTripService->getDomainModelClass($domainObject);
 			}
 			catch (Exception $e) {
-				\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Class ' . $className . ' could not be imported: ' . $e->getMessage(), 'extension_builder', 2);
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Class ' . $fullQualifiedClassName . ' could not be imported: ' . $e->getMessage(), 'extension_builder', 2);
 			}
 		}
 
 		if ($this->classObject == NULL) {
-			$this->classObject = new Tx_ExtensionBuilder_Domain_Model_Class_Class($className);
+			$this->classObject = new Tx_ExtensionBuilder_Domain_Model_Class_Class($domainObject->getName());
+			$this->classObject->setNameSpace($this->extension->getNameSpace() . '\\Domain\\Model');
 			if ($domainObject->isEntity()) {
 				$parentClass = $domainObject->getParentClass();
 				if(empty($parentClass)) {
@@ -207,7 +212,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 					$constructorMethod->setBody($this->codeGenerator->getDefaultMethodBody($domainObject, NULL, 'Model', '', 'construct'));
 				}
 				$constructorMethod->addModifier('public');
-				$constructorMethod->setTag('return', 'void');
+				$constructorMethod->setTag('return', $domainObject->getName());
 				$this->classObject->addMethod($constructorMethod);
 			}
 			$constructorMethod = $this->classObject->getMethod('__construct');
@@ -461,8 +466,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 				$parameterName = \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($domainObject->getName());
 			}
 			$parameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($parameterName);
-			$parameter->setTypeHint($domainObject->getClassName());
-			$parameter->setVarType($domainObject->getClassName());
+			$parameter->setTypeHint($domainObject->getFullQualifiedClassName());
+			$parameter->setVarType($domainObject->getFullQualifiedClassName());
 			$parameter->setPosition(0);
 			if ($actionName == 'new') {
 				$parameter->setOptional(TRUE);
@@ -557,7 +562,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('------------------------------------- generateControllerClassObject(' . $domainObject->getName() . ') ---------------------------------', 'extension_builder', 1);
 
 		$this->classObject = NULL;
-		$className = $domainObject->getControllerName();
+		$className = $domainObject->getName() . 'Controller';
 
 		if ($mergeWithExistingClass) {
 			try {
@@ -570,10 +575,11 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 		if ($this->classObject == NULL) {
 			$this->classObject = new Tx_ExtensionBuilder_Domain_Model_Class_Class($className);
+			$this->classObject->setNameSpace($this->extension->getNameSpace() . '\\Controller');
 			if (isset($this->settings['Controller']['parentClass'])) {
 				$parentClass = $this->settings['Controller']['parentClass'];
 			} else {
-				$parentClass = '\\TYPO3\\CMS\\Extbase\\MVC\\Controller\\ActionController';
+				$parentClass = '\\TYPO3\\CMS\\Extbase\\Mvc\\Controller\\ActionController';
 			}
 			$this->classObject->setParentClass($parentClass);
 		}
@@ -602,6 +608,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 				$parameter->setPosition(0);
 				$injectMethod->setParameter($parameter);
 				$this->classObject->addMethod($injectMethod);
+				t3lib_div::devlog('inject Method added','extension_builder');
 			}
 		}
 		foreach ($domainObject->getActions() as $action) {
@@ -628,7 +635,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('------------------------------------- generateRepositoryClassObject(' . $domainObject->getName() . ') ---------------------------------', 'extension_builder', 1);
 
 		$this->classObject = NULL;
-		$className = $domainObject->getDomainRepositoryClassName();
+		$className = $domainObject->getName() . 'Repository';
 		if ($mergeWithExistingClass) {
 			try {
 				$this->classObject = $this->roundTripService->getRepositoryClass($domainObject);
@@ -640,6 +647,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 		if ($this->classObject == NULL) {
 			$this->classObject = new Tx_ExtensionBuilder_Domain_Model_Class_Class($className);
+			$this->classObject->setNameSpace($this->extension->getNameSpace() . '\\Domain\\Repository');
 			if (isset($this->settings['Repository']['parentClass'])) {
 				$parentClass = $this->settings['Repository']['parentClass'];
 			} else {

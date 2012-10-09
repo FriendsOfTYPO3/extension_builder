@@ -69,7 +69,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$modelClassPath =  $absModelClassDir . $domainObject->getName() . '.php';
 		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath,$classFileContent);
 		$this->assertFileExists($modelClassPath,'File was not generated: ' . $modelClassPath);
-		$className = $domainObject->getClassName();
+		$className = $domainObject->getFullQualifiedClassName();
 		if(!class_exists($className)) {
 			include_once($modelClassPath);
 		}
@@ -80,9 +80,9 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$this->assertTrue($reflection->hasMethod('is' . ucfirst($propertyName)),'isMethod was not generated');
 		$setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
 		$parameters = $setterMethod->getParameters();
-		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in setter method');
+		$this->assertEquals(1, count($parameters),'Wrong parameter count in setter method');
 		$parameter = current($parameters);
-		$this->assertTrue(($parameter->getName() == $propertyName),'Wrong parameter name in setter method');
+		$this->assertEquals($parameter->getName(), $propertyName,'Wrong parameter name in setter method');
 	}
 
 	/**
@@ -100,14 +100,14 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
 
 		$modelClassDir =  'Classes/Domain/Model/';
-		$result = \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
 		$this->assertTrue(is_dir($absModelClassDir),'Directory ' . $absModelClassDir . ' was not created');
 
 		$modelClassPath =  $absModelClassDir . $domainObject->getName() . '.php';
 		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath,$classFileContent);
 		$this->assertFileExists($modelClassPath,'File was not generated: ' . $modelClassPath);
-		$className = $domainObject->getClassName();
+		$className = $domainObject->getFullQualifiedClassName();
 		if(!class_exists($className)) {
 			include($modelClassPath);
 		}
@@ -119,9 +119,9 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$this->assertFalse($reflection->hasMethod('is' . ucfirst($propertyName)),'isMethod should not be generated');
 		$setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
 		$parameters = $setterMethod->getParameters();
-		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in setter method');
+		$this->assertEquals(1, count($parameters),'Wrong parameter count in setter method');
 		$parameter = current($parameters);
-		$this->assertTrue(($parameter->getName() == $propertyName),'Wrong parameter name in setter method');
+		$this->assertEquals($parameter->getName(), $propertyName,'Wrong parameter name in setter method');
 
 	}
 
@@ -132,7 +132,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 	 */
 	function writeModelClassWithZeroToOneRelation(){
 		$modelName = 'ModelCgt3';
-		$relatedModelName = 'relatedModel';
+		$relatedModelName = 'RelatedModel';
 		$propertyName = 'relName';
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
@@ -142,15 +142,15 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,TRUE);
 
 		$modelClassDir =  'Classes/Domain/Model/';
-		$result = \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
 		$this->assertTrue(is_dir($absModelClassDir),'Directory ' . $absModelClassDir . ' was not created');
 
 		$modelClassPath =  $absModelClassDir . $domainObject->getName() . '.php';
-		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Class Content','extension_builder',0,array('c'=>$classFileContent));
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Class Content','extension_builder',0,array('c'=>$classFileContent, 'path' => $absModelClassDir));
 		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath,$classFileContent);
 		$this->assertFileExists($modelClassPath,'File was not generated: ' . $modelClassPath);
-		$className = $domainObject->getClassName();
+		$className = $domainObject->getFullQualifiedClassName();
 		if(!class_exists($className)) {
 			include($modelClassPath);
 		}
@@ -162,14 +162,13 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
 		$this->assertTrue($setterMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $setterMethod->getTagValues('param');
-		$this->assertTrue((strpos($paramTagValues[0],$relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
+		$this->assertEquals(0, strpos($paramTagValues[0],$relatedDomainObject->getFullQualifiedClassName()),'Wrong param tag:'.$paramTagValues[0]);
 
 		$parameters = $setterMethod->getParameters();
-		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in setter method');
+		$this->assertEquals(1, count($parameters),'Wrong parameter count in setter method');
 		$parameter = current($parameters);
-		$this->assertTrue(($parameter->getName() == $propertyName),'Wrong parameter name in setter method');
-		$this->assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getClassName()),'Wrong type hint for setter parameter:'.$parameter->getTypeHint());
-
+		$this->assertEquals($parameter->getName(), $propertyName,'Wrong parameter name in setter method');
+		$this->assertEquals($parameter->getTypeHint(), $relatedDomainObject->getFullQualifiedClassName(),'Wrong type hint for setter parameter:'.$parameter->getTypeHint());
 	}
 
 	/**
@@ -179,7 +178,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 	 */
 	function writeModelClassWithZeroToManyRelation(){
 		$modelName = 'ModelCgt4';
-		$relatedModelName = 'relatedModel';
+		$relatedModelName = 'RelatedModel';
 		$propertyName = 'relNames';
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
@@ -190,14 +189,14 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
 
 		$modelClassDir =  'Classes/Domain/Model/';
-		$result = \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
 		$this->assertTrue(is_dir($absModelClassDir),'Directory ' . $absModelClassDir . ' was not created');
 
 		$modelClassPath =  $absModelClassDir . $domainObject->getName() . '.php';
 		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath,$classFileContent);
 		$this->assertFileExists($modelClassPath,'File was not generated: ' . $modelClassPath);
-		$className = $domainObject->getClassName();
+		$className = $domainObject->getFullQualifiedClassName();
 		if(!class_exists($className)) {
 			include($modelClassPath);
 		}
@@ -213,34 +212,34 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
 		$this->assertTrue($setterMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $setterMethod->getTagValues('param');
-		$this->assertTrue((strpos($paramTagValues[0],'\\TYPO3\\CMS\\Extbase\\Persistence\\Generic\\ObjectStorage<' . $relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
+		$this->assertEquals(0, strpos($paramTagValues[0],'\\TYPO3\\CMS\\Extbase\\Persistence\\Generic\\ObjectStorage<' . $relatedDomainObject->getFullQualifiedClassName()),'Wrong param tag:'.$paramTagValues[0]);
 
 		$parameters = $setterMethod->getParameters();
-		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in setter method');
+		$this->assertEquals(1, count($parameters),'Wrong parameter count in setter method');
 		$parameter = current($parameters);
 		$this->assertEquals($parameter->getName(), $propertyName,'Wrong parameter name in setter method');
 
 		$addMethod = $reflection->getMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
 		$this->assertTrue($addMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $addMethod->getTagValues('param');
-		$this->assertTrue((strpos($paramTagValues[0],$relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
+		$this->assertEquals(0, strpos($paramTagValues[0],$relatedDomainObject->getFullQualifiedClassName()),'Wrong param tag:'.$paramTagValues[0]);
 
 		$parameters = $addMethod->getParameters();
-		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in add method');
+		$this->assertEquals(1, count($parameters),'Wrong parameter count in add method');
 		$parameter = current($parameters);
-		$this->assertTrue(($parameter->getName() == Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)),'Wrong parameter name in add method');
-		$this->assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getClassName()),'Wrong type hint for add method parameter:'.$parameter->getTypeHint());
+		$this->assertEquals($parameter->getName(), Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName),'Wrong parameter name in add method');
+		$this->assertEquals($parameter->getTypeHint(), $relatedDomainObject->getFullQualifiedClassName(),'Wrong type hint for add method parameter:'.$parameter->getTypeHint());
 
 		$removeMethod = $reflection->getMethod('remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
 		$this->assertTrue($removeMethod->isTaggedWith('param'),'No param tag set for remove method');
 		$paramTagValues = $removeMethod->getTagValues('param');
-		$this->assertTrue((strpos($paramTagValues[0],$relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
+		$this->assertEquals(0, strpos($paramTagValues[0],$relatedDomainObject->getFullQualifiedClassName()),'Wrong param tag:'.$paramTagValues[0]);
 
 		$parameters = $removeMethod->getParameters();
-		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in remove method');
+		$this->assertEquals(1, count($parameters),'Wrong parameter count in remove method');
 		$parameter = current($parameters);
-		$this->assertTrue(($parameter->getName() == Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName).'ToRemove'),'Wrong parameter name in remove method');
-		$this->assertTrue(($parameter->getTypeHint() ==  $relatedDomainObject->getClassName()),'Wrong type hint for remove method parameter:'.$parameter->getTypeHint());
+		$this->assertEquals($parameter->getName(), Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName).'ToRemove','Wrong parameter name in remove method');
+		$this->assertEquals($parameter->getTypeHint(), $relatedDomainObject->getFullQualifiedClassName(),'Wrong type hint for remove method parameter:'.$parameter->getTypeHint());
 	}
 
 	/**
@@ -251,7 +250,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 	 */
 	function writeModelClassWithManyToManyRelation(){
 		$modelName = 'ModelCgt5';
-		$relatedModelName = 'relatedModel';
+		$relatedModelName = 'RelatedModel';
 		$propertyName = 'relNames';
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
@@ -270,7 +269,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$modelClassPath =  $absModelClassDir . $domainObject->getName() . '.php';
 		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath,$classFileContent);
 		$this->assertFileExists($modelClassPath,'File was not generated: ' . $modelClassPath);
-		$className = $domainObject->getClassName();
+		$className = $domainObject->getFullQualifiedClassName();
 		if(!class_exists($className)) {
 			include($modelClassPath);
 		}
@@ -287,34 +286,34 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
 		$this->assertTrue($setterMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $setterMethod->getTagValues('param');
-		$this->assertTrue((strpos($paramTagValues[0],'\\TYPO3\\CMS\\Extbase\\Persistence\\Generic\\ObjectStorage<' . $relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
+		$this->assertEquals(0, strpos($paramTagValues[0],'\\TYPO3\\CMS\\Extbase\\Persistence\\Generic\\ObjectStorage<' . $relatedDomainObject->getFullQualifiedClassName()),'Wrong param tag:'.$paramTagValues[0]);
 
 		$parameters = $setterMethod->getParameters();
 		$this->assertEquals(1, count($parameters),'Wrong parameter count in setter method');
 		$parameter = current($parameters);
-		$this->assertTrue(($parameter->getName() == $propertyName),'Wrong parameter name in setter method');
+		$this->assertEquals($parameter->getName(), $propertyName,'Wrong parameter name in setter method');
 
 		$addMethod = $reflection->getMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
 		$this->assertTrue($addMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $addMethod->getTagValues('param');
-		$this->assertTrue((strpos($paramTagValues[0],$relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
+		$this->assertEquals(0, strpos($paramTagValues[0],$relatedDomainObject->getFullQualifiedClassName()),'Wrong param tag:'.$paramTagValues[0]);
 
 		$parameters = $addMethod->getParameters();
-		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in add method');
+		$this->assertEquals(1, count($parameters),'Wrong parameter count in add method');
 		$parameter = current($parameters);
-		$this->assertTrue(($parameter->getName() == Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)),'Wrong parameter name in add method');
-		$this->assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getClassName()),'Wrong type hint for add method parameter:'.$parameter->getTypeHint());
+		$this->assertEquals($parameter->getName(), Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName),'Wrong parameter name in add method');
+		$this->assertEquals($parameter->getTypeHint(), $relatedDomainObject->getFullQualifiedClassName(),'Wrong type hint for add method parameter:'.$parameter->getTypeHint());
 
 		$removeMethod = $reflection->getMethod('remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
 		$this->assertTrue($removeMethod->isTaggedWith('param'),'No param tag set for remove method');
 		$paramTagValues = $removeMethod->getTagValues('param');
-		$this->assertTrue((strpos($paramTagValues[0],$relatedDomainObject->getClassName()) === 0),'Wrong param tag:'.$paramTagValues[0]);
+		$this->assertEquals(0, strpos($paramTagValues[0],$relatedDomainObject->getFullQualifiedClassName()),'Wrong param tag:'.$paramTagValues[0]);
 
 		$parameters = $removeMethod->getParameters();
-		$this->assertTrue((count($parameters) == 1),'Wrong parameter count in remove method');
+		$this->assertEquals(1, count($parameters),'Wrong parameter count in remove method');
 		$parameter = current($parameters);
-		$this->assertTrue(($parameter->getName() == Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName).'ToRemove'),'Wrong parameter name in remove method');
-		$this->assertTrue(($parameter->getTypeHint() ==  $relatedDomainObject->getClassName()),'Wrong type hint for remove method parameter:'.$parameter->getTypeHint());
+		$this->assertEquals($parameter->getName(), Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName).'ToRemove','Wrong parameter name in remove method');
+		$this->assertEquals($parameter->getTypeHint(), $relatedDomainObject->getFullQualifiedClassName(),'Wrong type hint for remove method parameter:'.$parameter->getTypeHint());
 	}
 
 
@@ -322,7 +321,6 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 	/**
 	 * Write a simple model class for a non aggregate root domain object
 	 *
-	 * @depends checkRequirements
 	 * @test
 	 */
 	function writeSimpleControllerClassFromDomainObject(){
@@ -330,18 +328,15 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
 		$action->setName('list');
 		$domainObject->addAction($action);
-
 		$classFileContent = $this->codeGenerator->generateActionControllerCode($domainObject,$this->extension);
-
 		$controllerClassDir =  'Classes/Controller/';
-		$result = \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$controllerClassDir);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$controllerClassDir);
 		$absControllerClassDir = $this->extension->getExtensionDir().$controllerClassDir;
 		$this->assertTrue(is_dir($absControllerClassDir),'Directory ' . $absControllerClassDir . ' was not created');
-
 		$controllerClassPath =  $absControllerClassDir . $domainObject->getName() . 'Controller.php';
 		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($controllerClassPath,$classFileContent);
 		$this->assertFileExists($controllerClassPath,'File was not generated: ' . $controllerClassPath);
-		$className = $domainObject->getControllerName();
+		$className = $domainObject->getControllerClassName();
 		if(!class_exists($className)) {
 			include($controllerClassPath);
 		}

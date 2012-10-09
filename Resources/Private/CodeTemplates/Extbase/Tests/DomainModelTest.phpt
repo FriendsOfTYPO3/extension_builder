@@ -1,5 +1,6 @@
 <?php
-
+{namespace k=Tx_ExtensionBuilder_ViewHelpers}
+namespace {extension.nameSpace}\Tests;
 /***************************************************************
  *  Copyright notice
  *
@@ -25,7 +26,7 @@
  ***************************************************************/
 
 /**
- * Test case for class {domainObject.className}.
+ * Test case for class {domainObject.fullQualifiedClassName}.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
@@ -35,15 +36,15 @@
  * @subpackage {extension.name}
  *
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
-</f:for> */{namespace k=Tx_ExtensionBuilder_ViewHelpers}
-class {domainObject.className}Test extends Tx_Extbase_Tests_Unit_BaseTestCase {
+</f:for> */
+class {domainObject.name}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
-	 * @var {domainObject.className}
+	 * @var {domainObject.fullQualifiedClassName}
 	 */
 	protected $fixture;
 
 	public function setUp() {
-		$this->fixture = new {domainObject.className}();
+		$this->fixture = new {domainObject.fullQualifiedClassName}();
 	}
 
 	public function tearDown() {
@@ -55,28 +56,28 @@ class {domainObject.className}Test extends Tx_Extbase_Tests_Unit_BaseTestCase {
 	/**
 	 * @test
 	 */
-	public function get{property.name -> k:format.uppercaseFirst()}ReturnsInitialValueFor{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.typeForComment)}", then:"{k:pregReplace(match:'/^.*<(.*)>$/', replace:'ObjectStorageContaining\1', subject:property.typeForComment)}", else:"{property.typeForComment -> k:format.uppercaseFirst()}")}() { <f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'integer')}">
+	public function get{property.name -> k:format.uppercaseFirst()}ReturnsInitialValueFor{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}() { <f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'integer')}">
 		$this->assertSame(
 			0,
 			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
-	</f:if><f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'float')}">
+	</f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'float')}">
 		$this->assertSame(
 			0.0,
 			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
-	</f:if><f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'boolean')}">
+	</f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'boolean')}">
 		$this->assertSame(
 			TRUE,
 			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
-	</f:if><f:if condition="{k:matchString(match:'ObjectStorage', in:property.typeForComment)}"><f:then>
-		$newObjectStorage = new Tx_Extbase_Persistence_ObjectStorage();
+	</f:if><f:if condition="{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}"><f:then>
+		$newObjectStorage = new \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage();
 		$this->assertEquals(
 			$newObjectStorage,
 			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
-	</f:then><f:else><f:if condition="{k:matchString(match:extension.extensionKey, in:property.typeForComment)}">
+	</f:then><f:else><f:if condition="{k:matchString(match:extension.extensionKey, in:property.unqualifiedType)}">
 		$this->assertEquals(
 			NULL,
 			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
@@ -86,37 +87,37 @@ class {domainObject.className}Test extends Tx_Extbase_Tests_Unit_BaseTestCase {
 	/**
 	 * @test
 	 */
-	public function set{property.name -> k:format.uppercaseFirst()}For{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.typeForComment)}", then:"{k:pregReplace(match:'/^.*<(.*)>$/', replace:'ObjectStorageContaining\1', subject:property.typeForComment)}", else:"{property.typeForComment -> k:format.uppercaseFirst()}")}Sets{property.name -> k:format.uppercaseFirst()}() { <f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'string')}">
+	public function set{property.name -> k:format.uppercaseFirst()}For{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"ObjectStorageContaining{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}Sets{property.name -> k:format.uppercaseFirst()}() { <f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'string')}">
 		$this->fixture->set{property.name -> k:format.uppercaseFirst()}('Conceived at T3CON10');
 
 		$this->assertSame(
 			'Conceived at T3CON10',
 			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
-	</f:if><f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'integer')}">
+	</f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'integer')}">
 		$this->fixture->set{property.name -> k:format.uppercaseFirst()}(12);
 
 		$this->assertSame(
 			12,
 			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
-	</f:if><f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'float')}">
+	</f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'float')}">
 		$this->fixture->set{property.name -> k:format.uppercaseFirst()}(3.14159265);
 
 		$this->assertSame(
 			3.14159265,
 			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
-	</f:if><f:if condition="{k:compareStrings(firstString:property.typeForComment, secondString:'boolean')}">
+	</f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'boolean')}">
 		$this->fixture->set{property.name -> k:format.uppercaseFirst()}(TRUE);
 
 		$this->assertSame(
 			TRUE,
 			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
-	</f:if><f:if condition="{k:matchString(match:'ObjectStorage', in:property.typeForComment)}"><f:then>
-		${property.name -> k:singularize()} = new {k:pregReplace(match:'/^.*<(.*)>$/', replace:'\1', subject:property.typeForComment)}();
-		$objectStorageHoldingExactlyOne{property.name -> k:format.uppercaseFirst()} = new Tx_Extbase_Persistence_ObjectStorage();
+	</f:if><f:if condition="{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}"><f:then>
+		${property.name -> k:singularize()} = new {k:pregReplace(match:'/^.*<(.*)>$/', replace:'\1', subject:property.unqualifiedType)}();
+		$objectStorageHoldingExactlyOne{property.name -> k:format.uppercaseFirst()} = new \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage();
 		$objectStorageHoldingExactlyOne{property.name -> k:format.uppercaseFirst()}->attach(${property.name -> k:singularize()});
 		$this->fixture->set{property.name -> k:format.uppercaseFirst()}($objectStorageHoldingExactlyOne{property.name -> k:format.uppercaseFirst()});
 
@@ -124,8 +125,8 @@ class {domainObject.className}Test extends Tx_Extbase_Tests_Unit_BaseTestCase {
 			$objectStorageHoldingExactlyOne{property.name -> k:format.uppercaseFirst()},
 			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
-	</f:then><f:else><f:if condition="{k:matchString(match:extension.extensionKey, in:property.typeForComment)}">
-		$dummyObject = new {f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.typeForComment)}", then:"{k:pregReplace(match:'/^.*<(.*)>$/', replace:'ObjectStorageContaining\1'}, subject:property.typeForComment)}", else:"{property.typeForComment -> k:format.uppercaseFirst()}")}();
+	</f:then><f:else><f:if condition="{k:matchString(match:extension.extensionKey, in:property.unqualifiedType)}">
+		$dummyObject = new {f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"ObjectStorageContaining{property.foreignModelName)}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}();
 		$this->fixture->set{property.name -> k:format.uppercaseFirst()}($dummyObject);
 
 		$this->assertSame(
@@ -133,13 +134,13 @@ class {domainObject.className}Test extends Tx_Extbase_Tests_Unit_BaseTestCase {
 			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
 	</f:if></f:else></f:if>}
-	<f:if condition="{k:matchString(match:'ObjectStorage', in:property.typeForComment)}">
+	<f:if condition="{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}">
 	/**
 	 * @test
 	 */
 	public function add{property.name -> k:singularize() -> k:format.uppercaseFirst()}ToObjectStorageHolding{property.name -> k:format.uppercaseFirst()}() {
-		${property.name -> k:singularize()} = new {k:pregReplace(match:'/^.*<(.*)>$/', replace:'\1', subject:property.typeForComment)}();
-		$objectStorageHoldingExactlyOne{property.name -> k:singularize() -> k:format.uppercaseFirst()} = new Tx_Extbase_Persistence_ObjectStorage();
+		${property.name -> k:singularize()} = new {property.foreignClassName}();
+		$objectStorageHoldingExactlyOne{property.name -> k:singularize() -> k:format.uppercaseFirst()} = new \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage();
 		$objectStorageHoldingExactlyOne{property.name -> k:singularize() -> k:format.uppercaseFirst()}->attach(${property.name -> k:singularize()});
 		$this->fixture->add{property.name -> k:singularize() -> k:format.uppercaseFirst()}(${property.name -> k:singularize()});
 
@@ -153,8 +154,8 @@ class {domainObject.className}Test extends Tx_Extbase_Tests_Unit_BaseTestCase {
 	 * @test
 	 */
 	public function remove{property.name -> k:singularize() -> k:format.uppercaseFirst()}FromObjectStorageHolding{property.name -> k:format.uppercaseFirst()}() {
-		${property.name -> k:singularize()} = new {k:pregReplace(match:'/^.*<(.*)>$/', replace:'\1', subject:property.typeForComment)}();
-		$localObjectStorage = new Tx_Extbase_Persistence_ObjectStorage();
+		${property.name -> k:singularize()} = new {property.foreignClassName}();
+		$localObjectStorage = new \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage();
 		$localObjectStorage->attach(${property.name -> k:singularize()});
 		$localObjectStorage->detach(${property.name -> k:singularize()});
 		$this->fixture->add{property.name -> k:singularize() -> k:format.uppercaseFirst()}(${property.name -> k:singularize()});

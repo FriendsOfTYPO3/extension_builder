@@ -208,13 +208,13 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 		$parameters = $newAddMethod->getParameters();
 		$this->assertEquals(count($parameters), 1);
 		$addParameter = current($parameters);
-		$this->assertEquals($addParameter->getTypeHint(), 'Tx_Dummy_Domain_Model_RenamedModel');
+		$this->assertEquals($addParameter->getTypeHint(), '\\TYPO3\\Dummy\\Domain\\Model\\RenamedModel');
 
 		$newRemoveMethod = $modifiedModelClassObject->getMethod('removeChild');
 		$parameters = $newRemoveMethod->getParameters();
 		$this->assertEquals(count($parameters), 1);
 		$addParameter = current($parameters);
-		$this->assertEquals($addParameter->getTypeHint(), 'Tx_Dummy_Domain_Model_RenamedModel');
+		$this->assertEquals($addParameter->getTypeHint(), '\\TYPO3\\Dummy\\Domain\\Model\\RenamedModel');
 
 	}
 

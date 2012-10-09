@@ -71,6 +71,11 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	protected $appendedBlock;
 
 	/**
+	 * @var array
+	 */
+	protected $aliasDeclarations = array();
+
+	/**
 	 * parentClass
 	 * @var string
 	 */
@@ -539,6 +544,16 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 		$infoArray['Tags'] = $this->getTags();
 		//$infoArray['Methods'] = count($this->getMethods());
 		return $infoArray;
+	}
+
+	public function addAliasDeclaration($alias) {
+		if(!in_array($alias, $this->aliasDeclarations)) {
+			$this->aliasDeclarations[] = $alias;
+		}
+	}
+
+	public function getAliasDeclarations() {
+		return $this->aliasDeclarations;
 	}
 
 }

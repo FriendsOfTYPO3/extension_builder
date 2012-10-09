@@ -56,6 +56,11 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	protected $name;
 
 	/**
+	 * @var string
+	 */
+	protected $nameSpace;
+
+	/**
 	 * modifiers  (privat, static abstract etc. not to mix up with "isModified" )
 	 * @var array
 	 */
@@ -109,6 +114,10 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 */
 	public function getName() {
 		return $this->name;
+	}
+
+	public function getQualifiedName() {
+		return $this->getNameSpace() . '\\' . $this->getName();
 	}
 
 	/**
@@ -372,6 +381,20 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 */
 	public function getIsModified() {
 		return $this->isModified;
+	}
+
+	/**
+	 * @param string $nameSpace
+	 */
+	public function setNameSpace($nameSpace) {
+		$this->nameSpace = $nameSpace;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getNameSpace() {
+		return $this->nameSpace;
 	}
 
 }

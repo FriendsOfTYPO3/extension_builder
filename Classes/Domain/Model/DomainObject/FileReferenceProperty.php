@@ -44,7 +44,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_FileReferenceProperty extend
 	protected $disallowedFileTypes = 'php';
 
 	public function getTypeForComment() {
-		return 'string';
+		return '\\string';
 	}
 
 	public function getTypeHint() {

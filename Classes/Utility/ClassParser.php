@@ -100,7 +100,9 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 	public $constantRegex = '/\s*const\s+(\w*)\s*\=\s*\'*\"*([^;"\']*)\'*\"*;/';
 
 	// TODO parse definitions of namespaces
-	public $namespaceRegex = '/^namespace|^use|^declare/';
+	public $aliasRegex = '/^use(.*);/';
+
+	public $declareRegex = '/^declare(.*);/';
 
 	/**
 	 * Reference to the current line in the parser
@@ -191,9 +193,11 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 		if (count($interfaceNames) > 0) {
 			if ($this->classReflection->getParentClass() && count($this->classReflection->getParentClass()->getInterfaceNames()) > 0) {
 				$interfaceNames = array_diff($interfaceNames, $this->classReflection->getParentClass()->getInterfaceNames());
-
 			}
 			$this->classObject->setInterfaceNames($interfaceNames);
+		}
+		if($this->classReflection->getNamespaceName()) {
+			$this->classObject->setNameSpace($this->classReflection->getNamespaceName());
 		}
 		// reset class properties
 		$this->lines = array();
@@ -271,6 +275,14 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 							$this->multiLinePropertyMatches = $propertyMatches;
 							$this->multiLinePropertyMatches['startLine'] = $this->lineCount;
 							$this->lastMatchedLineNumber = $this->lineCount;
+						}
+
+						if (preg_match_all($this->aliasRegex, $trimmedLine, $aliasMatches)) {
+							t3lib_div::devlog('Alias Matches','extension_builder',0,$aliasMatches);
+							if(!empty($aliasMatches[1])) {
+								$this->classObject->addAliasDeclaration(trim($aliasMatches[1][0]));
+							}
+
 						}
 					}
 				} // end of not in comment

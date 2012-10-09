@@ -33,7 +33,7 @@ class Tx_ExtensionBuilder_ToolsTest extends Tx_ExtensionBuilder_Tests_BaseTest {
 		$this->markTestSkipped(
 		  'The support for merging xml and xfl files is postponed.'
 		);
-		$existingFile = t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/Tools/existing_locallang.xlf';
+		$existingFile = \TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/Tools/existing_locallang.xlf';
 
 		$newXlf = "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
 		<xliff version='1.0'>
@@ -65,7 +65,7 @@ class Tx_ExtensionBuilder_ToolsTest extends Tx_ExtensionBuilder_Tests_BaseTest {
 		$this->markTestSkipped(
 		  'The support for merging xml files with the new mergeing method is postponed.'
 		);
-		$existingFile = t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/Tools/existing_locallang.xml';
+		$existingFile = \TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/Tools/existing_locallang.xml';
 
 		$newXml = "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
 		<T3locallang>
@@ -96,7 +96,7 @@ class Tx_ExtensionBuilder_ToolsTest extends Tx_ExtensionBuilder_Tests_BaseTest {
 		$this->markTestSkipped(
 		  'The support for merging xml files with xlf is postponed.'
 		);
-		$existingFile = t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/Tools/existing_locallang.xml';
+		$existingFile = \TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/Tools/existing_locallang.xml';
 
 		$newXlf = "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
 			<xliff version='1.0'>

@@ -89,11 +89,11 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 		$expected->addProperty($property0);
 		$expected->addProperty($property1);
 
-		$testAction = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
+		$testAction = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
 		$testAction->setName('test');
 		$expected->addAction($testAction);
 
-		$listAction = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
+		$listAction = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
 		$listAction->setName('list');
 		$expected->addAction($listAction);
 

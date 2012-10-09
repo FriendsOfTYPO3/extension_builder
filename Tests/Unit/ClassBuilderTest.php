@@ -121,13 +121,13 @@ class Tx_ExtensionBuilder_Service_ClassBuilderTest extends Tx_ExtensionBuilder_T
 		$addMethod = $modelClassObject->getMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
 		$this->assertTrue($addMethod->isTaggedWith('param'), 'No param tag set for setter method');
 		$paramTagValues = $addMethod->getTagsValues('param');
-		$this->assertTrue((strpos($paramTagValues, $relatedDomainObject->getClassName()) === 0), 'Wrong param tag:' . $paramTagValues);
+		$this->assertTrue((strpos($paramTagValues, $relatedDomainObject->getFullQualifiedClassName()) === 0), 'Wrong param tag:' . $paramTagValues);
 
 		$parameters = $addMethod->getParameters();
 		$this->assertTrue((count($parameters) == 1), 'Wrong parameter count in add method');
 		$parameter = current($parameters);
 		$this->assertTrue(($parameter->getName() == Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)), 'Wrong parameter name in add method');
-		$this->assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getClassName()), 'Wrong type hint for add method parameter:' . $parameter->getTypeHint());
+		$this->assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getFullQualifiedClassName()), 'Wrong type hint for add method parameter:' . $parameter->getTypeHint());
 
 	}
 

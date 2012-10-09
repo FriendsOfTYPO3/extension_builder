@@ -67,7 +67,7 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Phpunit_TestCase {
 		$dummyExtensionDir = PATH_typo3conf.'ext/extension_builder/Tests/Examples/'.$extensionKey.'/';
 		vfsStream::setup('testDir');
 		//$dummyExtensionDir = vfsStream::url('testDir').'/';
-
+		$this->extension->setVendorName('TYPO3');
 		$this->extension->setExtensionKey($extensionKey);
 		$this->extension->expects(
 			$this->any())
@@ -121,7 +121,7 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Phpunit_TestCase {
 	public function tearDown() {
 		parent::tearDown();
 		if(isset($this->extension) && $this->extension->getExtensionKey() != NULL) {
-			//\TYPO3\CMS\Core\Utility\GeneralUtility::rmdir($this->extension->getExtensionDir(), TRUE);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::rmdir($this->extension->getExtensionDir(), TRUE);
 		}
 	}
 

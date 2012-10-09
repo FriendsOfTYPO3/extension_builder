@@ -1,4 +1,5 @@
 <?php
+namespace TYPO3\TestExtension\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
@@ -24,7 +25,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
 /**
  *
  *
@@ -32,7 +32,33 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_TestExtension_Domain_Model_Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+
+	/**
+	 * name
+	 *
+	 * @var \string
+	 */
+	protected $name;
+
+	/**
+	 * Returns the name
+	 *
+	 * @return \string $name
+	 */
+	public function getName() {
+		return $this->name;
+	}
+
+	/**
+	 * Sets the name
+	 *
+	 * @param \string $name
+	 * @return void
+	 */
+	public function setName($name) {
+		$this->name = $name;
+	}
 
 }
 ?>

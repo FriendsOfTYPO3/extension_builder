@@ -1,5 +1,5 @@
 <?php
-
+namespace {extension.nameSpace}\Tests;
 /***************************************************************
  *  Copyright notice
  *
@@ -36,14 +36,14 @@
  *
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
 </f:for> */{namespace k=Tx_ExtensionBuilder_ViewHelpers}
-class Tx_{extension.extensionKey -> k:format.uppercaseFirst()}_Controller_{controllerName}Test extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class {controllerName}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
 	 * @var {domainObject.className}
 	 */
 	protected $fixture;
 
 	public function setUp() {
-		$this->fixture = new {domainObject.className}();
+		$this->fixture = new {domainObject.fullQualifiedClassName}();
 	}
 
 	public function tearDown() {

@@ -29,7 +29,7 @@
  */
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_FloatProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	public function getTypeForComment() {
-		return 'float';
+		return '\\float';
 	}
 
 	public function getTypeHint() {

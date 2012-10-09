@@ -29,11 +29,17 @@
  */
 class Tx_ExtensionBuilder_Domain_Model_Extension {
 
+
 	/**
 	 * The extension key
 	 * @var string
 	 */
 	protected $extensionKey;
+
+	/**
+	 * @var string
+	 */
+	protected $vendorName;
 
 	/**
 	 * Extension's name
@@ -96,6 +102,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 * @var bool
 	 */
 	protected $supportVersioning = TRUE;
+
 
 	/**
 	 * The extension's state. One of the STATE_* constants.
@@ -265,6 +272,20 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	}
 
 	/**
+	 * @param string $vendorName
+	 */
+	public function setVendorName($vendorName) {
+		$this->vendorName = $vendorName;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getVendorName() {
+		return $this->vendorName;
+	}
+
+	/**
 	 *
 	 * @return string
 	 */
@@ -392,9 +413,9 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	}
 
 	protected function isParentOf($domainObject1, $domainObject2, $classHierarchy) {
-		if (isset($classHierarchy[$domainObject1->getClassName()])) {
-			foreach ($classHierarchy[$domainObject1->getClassName()] as $subClass) {
-				if ($subClass->getClassName() == $domainObject2->getClassName()) {
+		if (isset($classHierarchy[$domainObject1->getQualifiedClassName()])) {
+			foreach ($classHierarchy[$domainObject1->getQualifiedClassName()] as $subClass) {
+				if ($subClass->getQualifiedClassName() == $domainObject2->getQualifiedClassName()) {
 					// $domainObject2 is parent of $domainObject1
 					return TRUE;
 				} else {
@@ -742,6 +763,13 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 */
 	public function getTargetVersion() {
 		return $this->targetVersion;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getNameSpace() {
+		return $this->getVendorName() . '\\' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->getExtensionKey());
 	}
 
 }
