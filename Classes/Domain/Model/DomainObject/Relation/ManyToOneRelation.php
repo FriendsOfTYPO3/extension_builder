@@ -46,7 +46,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToOneRelation e
 	}
 
 	public function getUnqualifiedType() {
-		return $this->foreignModel->getName();
+		return $this->getForeignModelName();
 	}
 }
 

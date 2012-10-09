@@ -82,17 +82,16 @@ class Tx_ExtensionBuilder_Reflection_MethodReflection extends TYPO3\CMS\Extbase\
 	protected function getTypeHintFromReflectionParameter($reflectionParameter) {
 		$paramAsString = (string)$reflectionParameter;
 		$paramRegex = '/^Parameter\s\#[0-9]\s\[\s<(required|optional)>\s*.*\$.*]$/';
-		//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('ReflectionParameter in method '.$this->getName().' : '.$paramAsString,'extension_builder',2);
-
-		if (!preg_match($paramRegex, $paramAsString)) {
+		if (!preg_match($paramRegex, $paramAsString, $match1)) {
 			// since the approach to cast the reflection parameter as a string is not part of the official PHP API
 			// this might not work anymore in future versions
 			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('ReflectionParameter in method ' . $this->getName() . ' casted as string has not the expected format: ' . $paramAsString, 'extension_builder', 2);
 			return '';
 		}
+		//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('ReflectionParameter in method '.$this->getName().' : '.$paramAsString,'extension_builder',0,$match1);
 		$typeHintRegex = '/>\s*([a-zA-Z0-9_&\\\s]*)\s*\$/';
 		$matches = array();
-		if (preg_match($typeHintRegex, $paramAsString, $matches)) {
+		if (preg_match($typeHintRegex, str_replace('or NULL','',$paramAsString), $matches)) {
 			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Typehint for parameter ' . $reflectionParameter->getName() . ' in method '.$this->getName().' : '.$paramAsString,'extension_builder',0,$matches);
 			if (!empty($matches[1])) {
 				$typeHint = $matches[1];

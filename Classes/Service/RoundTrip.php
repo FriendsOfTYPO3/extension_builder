@@ -203,9 +203,15 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\Singleton
 				include_once($fileName);
 				$className = $oldDomainObject->getFullQualifiedClassName();
 				$this->classObject = $this->classParser->parse($className);
-				//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Model class methods','extension_builder',0,$this->classObject->getMethods());
+					// it seems there is no way to distinguish between full qualified and qualified namespace in reflection
+				$this->classObject->setParentClass('\\' . $this->classObject->getParentClass());
+
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Model class namespace: '. $this->classObject->getNameSpace(),'extension_builder',0);
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Model class parent: '. $this->classObject->getParentClass(),'extension_builder',0);
 				if ($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed) {
-					if (!$this->extensionRenamed) \TYPO3\CMS\Core\Utility\GeneralUtility::devlog('domainObject renamed. old: ' . $oldDomainObject->getName() . ' new: ' . $currentDomainObject->getName(), 'extension_builder');
+					if (!$this->extensionRenamed) {
+						\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('domainObject renamed. old: ' . $oldDomainObject->getName() . ' new: ' . $currentDomainObject->getName(), 'extension_builder');
+					}
 
 					$newClassName = $currentDomainObject->getName();
 					$this->classObject->setName($newClassName);
@@ -213,6 +219,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\Singleton
 					$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Model'), $oldDomainObject->getName() . '.php');
 					$this->cleanUp($extensionDir . 'Configuration/TCA/', $oldDomainObject->getName() . '.php');
 
+				} else {
+					$this->classObject->setName($currentDomainObject->getName());
 				}
 
 				$this->updateModelClassProperties($oldDomainObject, $currentDomainObject);
@@ -267,7 +275,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\Singleton
 				include_once($fileName);
 				$className = $currentDomainObject->getQualifiedClassName();
 				$this->classObject = $this->classParser->parse($className);
-				\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('class file found:' . $currentDomainObject->getName() . '.php', 'extension_builder', 0, (array)$this->classObject->getAnnotations());
+				$this->classObject->setName($currentDomainObject->getName());
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('class file found:' . $currentDomainObject->getName() . '.php', 'extension_builder', 0, (array)$this->classObject->getNameSpace());
 				return $this->classObject;
 			}
 		}
@@ -288,9 +297,10 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\Singleton
 			if (file_exists($fileName)) {
 				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('existing controller class:' . $fileName, 'extension_builder', 0);
 				include_once($fileName);
-				$className = $oldDomainObject->getControllerName();
+				$className = $this->extension->getNameSpace() . '\\Controller\\' . $oldDomainObject->getName() . 'Controller';
 				$this->classObject = $this->classParser->parse($className);
-
+				$this->classObject->setName($currentDomainObject->getName() . 'Controller');
+				$this->classObject->setParentClass('\\' . $this->classObject->getParentClass());
 				//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Controller class methods','extension_builder',0,$this->classObject->getMethods());
 				if ($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed) {
 					$this->mapOldControllerToCurrentClassObject($oldDomainObject, $currentDomainObject);
@@ -345,7 +355,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\Singleton
 	 */
 	protected function mapOldControllerToCurrentClassObject(Tx_ExtensionBuilder_Domain_Model_DomainObject $oldDomainObject, Tx_ExtensionBuilder_Domain_Model_DomainObject $currentDomainObject) {
 		$extensionDir = $this->previousExtensionDirectory;
-		$newClassName = $currentDomainObject->getControllerClassName();
+		$newClassName = $currentDomainObject->getName() . 'Controller';
 		$newName = $currentDomainObject->getName();
 		$oldName = $oldDomainObject->getName();
 		$this->classObject->setName($newClassName);
@@ -438,10 +448,12 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\Singleton
 				include_once($fileName);
 				$className = $oldDomainObject->getDomainRepositoryClassName();
 				$this->classObject = $this->classParser->parse($className);
+				$this->classObject->setName($currentDomainObject->getName() . 'Repository');
+				$this->classObject->setParentClass('\\' . $this->classObject->getParentClass());
 				if ($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed) {
 					$newClassName = $currentDomainObject->getDomainRepositoryClassName();
 					$this->classObject->setName($newClassName);
-					$this->classObject->setFileName($currentDomainObject->getName() . '_Repository.php');
+					$this->classObject->setFileName($currentDomainObject->getName() . 'Repository.php');
 					$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Repository'), $oldDomainObject->getName() . 'Repository.php');
 				}
 				return $this->classObject;

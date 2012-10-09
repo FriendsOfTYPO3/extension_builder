@@ -99,7 +99,8 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 	 */
 	public $constantRegex = '/\s*const\s+(\w*)\s*\=\s*\'*\"*([^;"\']*)\'*\"*;/';
 
-	// TODO parse definitions of namespaces
+	public $nameSpaceRegex = '/^namespace(.*);/';
+
 	public $aliasRegex = '/^use(.*);/';
 
 	public $declareRegex = '/^declare(.*);/';
@@ -178,7 +179,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 
 		$this->classReflection = new Tx_ExtensionBuilder_Reflection_ClassReflection($className);
 
-		$propertiesToMap = array('FileName', 'Modifiers', 'Tags', 'ParentClass', 'DocComment');
+		$propertiesToMap = array('FileName', 'Modifiers', 'Tags', 'DocComment');
 
 		// map class variables from ClassReflection to classObject
 		foreach ($propertiesToMap as $propertyToMap) {
@@ -187,6 +188,10 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 			$setterMethod = 'set' . $propertyToMap;
 
 			$this->classObject->$setterMethod($this->classReflection->$getterMethod());
+		}
+
+		if(is_object($this->classReflection->getParentClass())) {
+			$this->classObject->setParentClass($this->classReflection->getParentClass()->getName());
 		}
 
 		$interfaceNames = $this->classReflection->getInterfaceNames();
@@ -268,8 +273,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 						if (preg_match_all($this->propertyRegex, $trimmedLine, $propertyMatches)) {
 							$this->addProperty($propertyMatches);
 							$this->lastMatchedLineNumber = $this->lineCount;
-						}
-						elseif (preg_match_all($this->multiLinePropertyRegex, $trimmedLine, $propertyMatches)) {
+						} elseif (preg_match_all($this->multiLinePropertyRegex, $trimmedLine, $propertyMatches)) {
 							// a multiline property is a property that has a multiline devault value (like an array for example)
 							$this->inMultiLineProperty = TRUE;
 							$this->multiLinePropertyMatches = $propertyMatches;
@@ -282,7 +286,6 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 							if(!empty($aliasMatches[1])) {
 								$this->classObject->addAliasDeclaration(trim($aliasMatches[1][0]));
 							}
-
 						}
 					}
 				} // end of not in comment
@@ -320,7 +323,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 		if (count($this->classObject->getProperties()) != count($this->classReflection->getNotInheritedProperties())) {
 			throw new Exception('Class ' . $className . ' could not be parsed properly. Property count does not equal reflection property count');
 		}
-
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Class Info','extension_builder',0,$this->classObject->getInfo());
 		return $this->classObject;
 	}
 
@@ -333,7 +336,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 	protected function onClassDefinitionFound() {
 		$classPreComment = '';
 		foreach (array_values($this->lines) as $line) {
-			if (strlen(trim($line)) > 0) {
+			if (strlen(trim($line)) > 0 && !preg_match($this->nameSpaceRegex, $line)) {
 				$classPreComment .= $line;
 			}
 		}

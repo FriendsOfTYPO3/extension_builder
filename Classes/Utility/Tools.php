@@ -216,6 +216,19 @@ class Tx_ExtensionBuilder_Utility_Tools implements \TYPO3\CMS\Core\SingletonInte
 		 return $XML;
      }
 
+	public static function parseTableNameFromClassName($className) {
+		if(strpos($className,'\\') !== FALSE) {
+			$classNameParts = explode('\\', $className, 6);
+		} else {
+			$classNameParts = explode('_', $className, 6);
+		}
+		if (isset($classNameParts[0]) && $classNameParts[0] === 'TYPO3' && isset($classNameParts[1]) && $classNameParts[1] === 'CMS') {
+			$tableName= strtolower('tx_' .  implode('_',array_slice($classNameParts,2)));
+		} else {
+			$tableName= strtolower('tx_' .  implode('_',array_slice($classNameParts,1)));
+		}
+		return $tableName;
+	}
 
 }
 

@@ -524,6 +524,8 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	public function getInfo() {
 		$infoArray = array();
 		$infoArray['className'] = $this->getName();
+		$infoArray['nameSpace'] = $this->getNameSpace();
+		$infoArray['parentClass'] = $this->getParentClass();
 		$infoArray['fileName'] = $this->getFileName();
 
 		$methodArray = array();

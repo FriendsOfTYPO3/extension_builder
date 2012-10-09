@@ -154,7 +154,11 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends TYPO3\CMS\E
 	 */
 	public function getExtbaseClassConfiguration($className) {
 		$classConfiguration = array();
+		if(strpos($className,'\\') === 0) {
+			$className = substr($className,1);
+		}
 		$frameworkConfiguration = $this->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+		//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Extbase configuration for className: ' . $className,'extension_builder',0,$frameworkConfiguration);
 		$classSettings = $frameworkConfiguration['persistence']['classes'][$className];
 		if ($classSettings !== NULL) {
 			if (isset($classSettings['subclasses']) && is_array($classSettings['subclasses'])) {

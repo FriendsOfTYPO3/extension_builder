@@ -91,9 +91,9 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements \TYPO3\CMS\C
 			foreach ($extensionBuildConfiguration['modules'] as $singleModule) {
 				$domainObject = $this->objectSchemaBuilder->build($singleModule['value']);
 				if ($domainObject->isSubClass() && !$domainObject->isMappedToExistingTable()) {
-					// we try to get the table from Extbase configuration
+						// we try to get the table from Extbase configuration
 					$classSettings = $this->configurationManager->getExtbaseClassConfiguration($domainObject->getParentClass());
-					//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('!isMappedToExistingTable:' . strtolower($domainObject->getParentClass()), 'extension_builder', 0, $classSettings);
+						//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('!isMappedToExistingTable:' . strtolower($domainObject->getParentClass()), 'extension_builder', 0, $classSettings);
 					if (isset($classSettings['tableName'])) {
 						$tableName = $classSettings['tableName'];
 					} else {
@@ -158,8 +158,6 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements \TYPO3\CMS\C
 
 			$foreignModelName = $extensionBuildConfiguration['modules'][$wire['tgt']['moduleId']]['value']['name'];
 			$localModelName = $extensionBuildConfiguration['modules'][$wire['src']['moduleId']]['value']['name'];
-
-			//$relation = $this->objectSchemaBuilder->buildRelation($relationJsonConfiguration);
 
 			if (!isset($existingRelations[$localModelName])) {
 				$existingRelations[$localModelName] = array();
