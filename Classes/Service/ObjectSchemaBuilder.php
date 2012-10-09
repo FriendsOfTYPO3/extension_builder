@@ -109,7 +109,7 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements \TYPO3\CMS\Core
 				if (isset($extbaseClassConfiguration['tableName'])) {
 					$foreignDatabaseTableName = $extbaseClassConfiguration['tableName'];
 				} else {
-					$foreignDatabaseTableName = strtolower($jsonRelation['foreignRelationClass']);
+					$foreignDatabaseTableName = Tx_ExtensionBuilder_Utility_Tools::parseTableNameFromClassName($jsonRelation['foreignRelationClass']);
 				}
 				$relation->setForeignDatabaseTableName($foreignDatabaseTableName);
 				if (is_a($relation, Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation)) {
@@ -123,7 +123,7 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements \TYPO3\CMS\Core
 					$relation->setForeignKeyName($foreignKeyName);
 				}
 			}
-			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Adding relation ' . $jsonRelation['relationName'] . ' to domain object '.$jsonDomainObject['name'],'extension_builder',0,$jsonRelation);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Adding relation ' . $jsonRelation['relationName'] . ' to domain object '.$jsonDomainObject['name'],'extension_builder',0,$jsonRelation);
 			$domainObject->addProperty($relation);
 		}
 

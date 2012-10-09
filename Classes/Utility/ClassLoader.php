@@ -46,9 +46,15 @@ class Tx_ExtensionBuilder_Utility_ClassLoader {
 	 * @return void
 	 */
 	public static function loadClass($className) {
-		$classNameParts = explode('_', $className, 3);
-		$extensionKey = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($classNameParts[1]);
-		$classFilePathAndName = PATH_typo3conf . 'ext/' . $extensionKey . '/Classes/' . strtr($classNameParts[2], '_', '/') . '.php';
+		$delimiter = '\\';
+		$index = 1;
+		if(strpos($delimiter, $className) === FALSE) {
+			$delimiter = '_';
+			$index = 2;
+		}
+		$classNameParts = explode($delimiter, $className, 4);
+		$extensionKey = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($classNameParts[$index]);
+		$classFilePathAndName = PATH_typo3conf . 'ext/' . $extensionKey . '/Classes/' . strtr($classNameParts[$index + 1], $delimiter, '/') . '.php';
 		if (file_exists($classFilePathAndName)) {
 			require_once($classFilePathAndName);
 		}

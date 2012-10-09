@@ -57,7 +57,11 @@ class Tx_ExtensionBuilder_Utility_Inflector {
 	 */
 	public static function humanize($string) {
 		$string = strtolower(preg_replace('/(?<=\w)([A-Z])/', '_\\1', $string));
-		$string = str_replace('_', ' ', $string);
+		$delimiter = '\\';
+		if(strpos($delimiter, $string) === FALSE) {
+			$delimiter = '_';
+		}
+		$string = str_replace($delimiter, ' ', $string);
 		$string = ucwords($string);
 		return $string;
 	}

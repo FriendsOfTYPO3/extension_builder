@@ -70,8 +70,6 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 	 */
 	protected $extension;
 
-
-
 	/**
 	 * @param Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager
 	 * @return void
@@ -590,25 +588,11 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 			if (!$this->classObject->propertyExists($propertyName)) {
 				$classProperty = new Tx_ExtensionBuilder_Domain_Model_Class_Property($propertyName);
 				$classProperty->setTag('var', $domainObject->getDomainRepositoryClassName());
+				$classProperty->setTag('inject', '');
 				$classProperty->addModifier('protected');
 				$this->classObject->setProperty($classProperty);
-			}
-
-			$injectMethodName = 'inject' . $domainObject->getName() . 'Repository';
-			if (!$this->classObject->methodExists($injectMethodName)) {
-				$repositoryVarName = \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($domainObject->getName()) . 'Repository';
-				$injectMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($injectMethodName);
-				$injectMethod->setBody('$this->' . $repositoryVarName . ' = $' . $repositoryVarName . ';');
-				$injectMethod->setTag('param', $domainObject->getDomainRepositoryClassName() . ' $' . $repositoryVarName);
-				$injectMethod->setTag('return', 'void');
-				$injectMethod->addModifier('public');
-				$parameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($repositoryVarName);
-				$parameter->setVarType($domainObject->getDomainRepositoryClassName());
-				$parameter->setTypeHint($domainObject->getDomainRepositoryClassName());
-				$parameter->setPosition(0);
-				$injectMethod->setParameter($parameter);
-				$this->classObject->addMethod($injectMethod);
-				t3lib_div::devlog('inject Method added','extension_builder');
+			} if($this->classObject->getProperty($propertyName)->isTaggedWith('inject')) {
+				$this->classObject->getProperty($propertyName)->setTag('inject');
 			}
 		}
 		foreach ($domainObject->getActions() as $action) {
