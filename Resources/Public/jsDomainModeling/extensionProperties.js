@@ -11,6 +11,18 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 	{
 		type: "string",
 		inputParams: {
+			name: "vendorName",
+			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.vendorName,
+			value: 'TYPO3',
+			forceLowerCase: false,
+			forceAlphaNumericUnderscore: true,
+			cols: 30,
+			description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_vendorName
+		}
+	},
+	{
+		type: "string",
+		inputParams: {
 			name: "extensionKey",
 			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.key,
 			typeInvite: TYPO3.settings.extensionBuilder._LOCAL_LANG.extensionKey,

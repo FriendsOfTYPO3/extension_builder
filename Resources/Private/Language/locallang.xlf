@@ -33,6 +33,12 @@
 			<trans-unit id="descr_extensionKey">
 				<source>The extensionkey should be lowercase and without spaces. It will be the unique identifier for this extension.</source>
 			</trans-unit>
+			<trans-unit id="vendorName">
+				<source>Vendor name</source>
+			</trans-unit>
+			<trans-unit id="descr_vendorName">
+				<source>The vendor name is the first part of the new package identifier</source>
+			</trans-unit>
 			<trans-unit id="short_description">
 				<source>Descr.</source>
 			</trans-unit>

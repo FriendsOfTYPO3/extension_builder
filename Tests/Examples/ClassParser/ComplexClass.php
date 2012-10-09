@@ -16,7 +16,7 @@
  *
  * @test testtag
  */
-require_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');
+require_once(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');
 
 
 final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass extends Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClass{
@@ -99,7 +99,7 @@ var $testProperty4 = 123;
 /**
  *  dfg dfg dfg dfg
  */
-require_once(t3lib_extmgm:: extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');   include_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ComplexClass.php'); // test
+require_once(\TYPO3\CMS\Core\Extension\ExtensionManager:: extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');   include_once(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/ComplexClass.php'); // test
 
-include_once(t3lib_extmgm::extPath('extension_builder') . 'Tests/Examples/ClassParser/ComplexClass.php'); // test
+include_once(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/ClassParser/ComplexClass.php'); // test
 ?>

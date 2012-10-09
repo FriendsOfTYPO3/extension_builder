@@ -1,4 +1,5 @@
 <?php
+namespace TYPO3\TestExtension\Controller;
 
 /***************************************************************
  *  Copyright notice
@@ -24,7 +25,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
 /**
  *
  *
@@ -32,22 +32,22 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_TestExtension_Controller_MainController extends \TYPO3\CMS\Extbase\MVC\Controller\ActionController {
+class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
 	 * mainRepository
 	 *
-	 * @var Tx_TestExtension_Domain_Repository_MainRepository
+	 * @var \TYPO3\TestExtension\Domain\Repository\MainRepository
 	 */
 	protected $mainRepository;
 
 	/**
 	 * injectMainRepository
 	 *
-	 * @param Tx_TestExtension_Domain_Repository_MainRepository $mainRepository
+	 * @param \TYPO3\TestExtension\Domain\Repository\MainRepository $mainRepository
 	 * @return void
 	 */
-	public function injectMainRepository(Tx_TestExtension_Domain_Repository_MainRepository $mainRepository) {
+	public function injectMainRepository(\TYPO3\TestExtension\Domain\Repository\MainRepository $mainRepository) {
 		$this->mainRepository = $mainRepository;
 	}
 
@@ -64,31 +64,31 @@ class Tx_TestExtension_Controller_MainController extends \TYPO3\CMS\Extbase\MVC\
 	/**
 	 * action show
 	 *
-	 * @param Tx_TestExtension_Domain_Model_Main $main
+	 * @param \TYPO3\TestExtension\Domain\Model\Main $main
 	 * @return void
 	 */
-	public function showAction(Tx_TestExtension_Domain_Model_Main $main) {
+	public function showAction(\TYPO3\TestExtension\Domain\Model\Main $main) {
 		$this->view->assign('main', $main);
 	}
 
 	/**
 	 * action new
 	 *
-	 * @param Tx_TestExtension_Domain_Model_Main $newMain
+	 * @param \TYPO3\TestExtension\Domain\Model\Main $newMain
 	 * @dontvalidate $newMain
 	 * @return void
 	 */
-	public function newAction(Tx_TestExtension_Domain_Model_Main $newMain = NULL) {
+	public function newAction(\TYPO3\TestExtension\Domain\Model\Main $newMain = NULL) {
 		$this->view->assign('newMain', $newMain);
 	}
 
 	/**
 	 * action create
 	 *
-	 * @param Tx_TestExtension_Domain_Model_Main $newMain
+	 * @param \TYPO3\TestExtension\Domain\Model\Main $newMain
 	 * @return void
 	 */
-	public function createAction(Tx_TestExtension_Domain_Model_Main $newMain) {
+	public function createAction(\TYPO3\TestExtension\Domain\Model\Main $newMain) {
 		$this->mainRepository->add($newMain);
 		$this->flashMessageContainer->add('Your new Main was created.');
 		$this->redirect('list');
@@ -97,20 +97,20 @@ class Tx_TestExtension_Controller_MainController extends \TYPO3\CMS\Extbase\MVC\
 	/**
 	 * action edit
 	 *
-	 * @param Tx_TestExtension_Domain_Model_Main $main
+	 * @param \TYPO3\TestExtension\Domain\Model\Main $main
 	 * @return void
 	 */
-	public function editAction(Tx_TestExtension_Domain_Model_Main $main) {
+	public function editAction(\TYPO3\TestExtension\Domain\Model\Main $main) {
 		$this->view->assign('main', $main);
 	}
 
 	/**
 	 * action update
 	 *
-	 * @param Tx_TestExtension_Domain_Model_Main $main
+	 * @param \TYPO3\TestExtension\Domain\Model\Main $main
 	 * @return void
 	 */
-	public function updateAction(Tx_TestExtension_Domain_Model_Main $main) {
+	public function updateAction(\TYPO3\TestExtension\Domain\Model\Main $main) {
 		$this->mainRepository->update($main);
 		$this->flashMessageContainer->add('Your Main was updated.');
 		$this->redirect('list');
@@ -119,10 +119,10 @@ class Tx_TestExtension_Controller_MainController extends \TYPO3\CMS\Extbase\MVC\
 	/**
 	 * action delete
 	 *
-	 * @param Tx_TestExtension_Domain_Model_Main $main
+	 * @param \TYPO3\TestExtension\Domain\Model\Main $main
 	 * @return void
 	 */
-	public function deleteAction(Tx_TestExtension_Domain_Model_Main $main) {
+	public function deleteAction(\TYPO3\TestExtension\Domain\Model\Main $main) {
 		$this->mainRepository->remove($main);
 		$this->flashMessageContainer->add('Your Main was removed.');
 		$this->redirect('list');

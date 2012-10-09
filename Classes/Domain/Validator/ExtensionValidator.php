@@ -871,7 +871,7 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends TYPO3\CMS\
 						);
 					}
 				}
-				if($property->getForeignModel() && ($property->getForeignModel()->getClassName() != $property->getForeignClassName())){
+				if($property->getForeignModel() && ($property->getForeignModel()->getFullQualifiedClassName() != $property->getForeignClassName())){
 					$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException(
 						'Relation "' .$property->getName() . '" in model "' . $domainObject->getName() . '" has a external class relation and a wire to '.$property->getForeignModel()->getName() ,
 						self::ERROR_MAPPING_WIRE_AND_FOREIGNCLASS

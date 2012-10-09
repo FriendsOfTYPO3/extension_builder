@@ -55,11 +55,11 @@ class Tx_ExtensionBuilder_CompatibilityFunctionTest extends Tx_ExtensionBuilder_
 	 *
 	 * @test
 	 */
-	function generateExtensionFromVersion1Configuration() {
+	function generateExtensionFromVersion3Configuration() {
 		$this->configurationManager = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Configuration_ConfigurationManager'), array('dummy'));
 		$this->extensionSchemaBuilder = $this->objectManager->get('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder');
 
-		$testExtensionDir = PATH_typo3conf . 'ext/extension_builder/Tests/Examples/TestExtensions/test_extension_v1/';
+		$testExtensionDir = PATH_typo3conf . 'ext/extension_builder/Tests/Examples/TestExtensions/test_extension_v3/';
 		$jsonFile = $testExtensionDir . Tx_ExtensionBuilder_Configuration_ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
 
 		if (file_exists($jsonFile)) {
@@ -81,12 +81,12 @@ class Tx_ExtensionBuilder_CompatibilityFunctionTest extends Tx_ExtensionBuilder_
 			)
 		);
 		$newExtensionDir = vfsStream::url('testDir') . '/';
-
+		$newExtensionDir = PATH_typo3conf.'ext/extension_builder/Tests/Examples/tmp/';
 		$this->extension->setExtensionDir($newExtensionDir . 'test_extension/');
 
 		$this->codeGenerator->build($this->extension);
 
-		$referenceFiles = t3lib_div::getAllFilesAndFoldersInPath(array(), $testExtensionDir);
+		$referenceFiles = \TYPO3\CMS\Core\Utility\GeneralUtility::getAllFilesAndFoldersInPath(array(), $testExtensionDir);
 
 		foreach ($referenceFiles as $referenceFile) {
 			$createdFile = str_replace($testExtensionDir, $this->extension->getExtensionDir(), $referenceFile);
@@ -96,11 +96,11 @@ class Tx_ExtensionBuilder_CompatibilityFunctionTest extends Tx_ExtensionBuilder_
 					array(date('Y-m-d'), date('Y')),
 					file_get_contents($referenceFile)
 				);
-				//t3lib_div::writeFile(PATH_site.'fileadmin/'.basename($createdFile), file_get_contents($createdFile));
+				//\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile(PATH_site.'fileadmin/'.basename($createdFile), file_get_contents($createdFile));
 				$this->assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');
 				$this->assertEquals(
-					t3lib_div::trimExplode("\n",$referenceFileContent, TRUE),
-					t3lib_div::trimExplode("\n",file_get_contents($createdFile), TRUE),
+					\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",$referenceFileContent, TRUE),
+					\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($createdFile), TRUE),
 					'File ' . $createdFile . ' was not equal to original file.'
 				);
 			}

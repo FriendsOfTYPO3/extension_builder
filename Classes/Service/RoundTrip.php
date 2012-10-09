@@ -123,7 +123,6 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\Singleton
 
 		$this->extension = $extension;
 		$this->extensionDirectory = $this->extension->getExtensionDir();
-		$this->extClassPrefix = 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey());
 
 		if (!$this->classParser instanceof Tx_ExtensionBuilder_Utility_ClassParser) {
 			$this->injectClassParser(\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Utility_ClassParser'));
@@ -202,13 +201,13 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\Singleton
 			if (file_exists($fileName)) {
 				// import the classObject from the existing file
 				include_once($fileName);
-				$className = $oldDomainObject->getClassName();
+				$className = $oldDomainObject->getFullQualifiedClassName();
 				$this->classObject = $this->classParser->parse($className);
 				//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Model class methods','extension_builder',0,$this->classObject->getMethods());
 				if ($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed) {
 					if (!$this->extensionRenamed) \TYPO3\CMS\Core\Utility\GeneralUtility::devlog('domainObject renamed. old: ' . $oldDomainObject->getName() . ' new: ' . $currentDomainObject->getName(), 'extension_builder');
 
-					$newClassName = $currentDomainObject->getClassName();
+					$newClassName = $currentDomainObject->getName();
 					$this->classObject->setName($newClassName);
 					$this->classObject->setFileName($currentDomainObject->getName() . '.php');
 					$this->cleanUp(Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Model'), $oldDomainObject->getName() . '.php');
@@ -266,7 +265,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\Singleton
 			if (file_exists($fileName)) {
 				// import the classObject from the existing file
 				include_once($fileName);
-				$className = $currentDomainObject->getClassName();
+				$className = $currentDomainObject->getQualifiedClassName();
 				$this->classObject = $this->classParser->parse($className);
 				\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('class file found:' . $currentDomainObject->getName() . '.php', 'extension_builder', 0, (array)$this->classObject->getAnnotations());
 				return $this->classObject;
@@ -327,7 +326,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\Singleton
 			$fileName = Tx_ExtensionBuilder_Service_CodeGenerator::getFolderForClassFile($extensionDir, 'Controller', FALSE) . $currentDomainObject->getName() . 'Controller.php';
 			if (file_exists($fileName)) {
 				include_once($fileName);
-				$className = $currentDomainObject->getControllerName();
+				$className = $currentDomainObject->getControllerClassName();
 				$this->classObject = $this->classParser->parse($className);
 				return $this->classObject;
 			}
@@ -346,7 +345,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\Singleton
 	 */
 	protected function mapOldControllerToCurrentClassObject(Tx_ExtensionBuilder_Domain_Model_DomainObject $oldDomainObject, Tx_ExtensionBuilder_Domain_Model_DomainObject $currentDomainObject) {
 		$extensionDir = $this->previousExtensionDirectory;
-		$newClassName = $currentDomainObject->getControllerName();
+		$newClassName = $currentDomainObject->getControllerClassName();
 		$newName = $currentDomainObject->getName();
 		$oldName = $oldDomainObject->getName();
 		$this->classObject->setName($newClassName);
@@ -388,12 +387,12 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\Singleton
 						$actionMethodBody = $actionMethod->getBody();
 						$newActionMethodBody = str_replace(\TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($oldName) . 'Repository', \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($newName) . 'Repository', $actionMethodBody);
 						$actionMethod->setBody($newActionMethodBody);
-						$actionMethod->setTag('param', $currentDomainObject->getClassName());
+						$actionMethod->setTag('param', $currentDomainObject->getQualifiedClassName());
 
 						$parameters = $actionMethod->getParameters();
 						foreach ($parameters as &$parameter) {
-							if (strpos($parameter->getTypeHint(), $oldDomainObject->getClassName()) > -1) {
-								$parameter->setTypeHint($currentDomainObject->getClassName());
+							if (strpos($parameter->getTypeHint(), $oldDomainObject->getQualifiedClassName()) > -1) {
+								$parameter->setTypeHint($currentDomainObject->getQualifiedClassName());
 								$parameter->setName($this->replaceUpperAndLowerCase($oldName, $newName, $parameter->getName()));
 								$actionMethod->replaceParameter($parameter);
 							}
@@ -738,7 +737,7 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\Singleton
 	public function getForeignClassName($relation) {
 		if ($relation->getForeignModel() && isset($this->renamedDomainObjects[$relation->getForeignModel()->getUniqueIdentifier()])) {
 			$renamedObject = $this->renamedDomainObjects[$relation->getForeignModel()->getUniqueIdentifier()];
-			return $renamedObject->getClassName;
+			return $renamedObject->getQualifiedClassName;
 		}
 		else return $relation->getForeignClassName();
 	}

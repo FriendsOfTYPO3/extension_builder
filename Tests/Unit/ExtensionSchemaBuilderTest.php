@@ -81,8 +81,8 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 	 */
 	public function conversionExtractsPersons() {
 		$persons = array();
-		$persons[] = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
-		$persons[] = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
+		$persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
+		$persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
 		$persons[0]->setName('name0');
 		$persons[0]->setRole('role0');
 		$persons[0]->setEmail('email0');

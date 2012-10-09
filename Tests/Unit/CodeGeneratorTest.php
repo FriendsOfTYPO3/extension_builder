@@ -51,16 +51,36 @@ class Tx_ExtensionBuilder_CodeGeneratorUnitTest extends Tx_ExtensionBuilder_Test
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject, FALSE);
-		$this->assertRegExp("/.*class Tx_Dummy_Domain_Model_ModelCgt1.*/", $classFileContent, 'Class declaration was not generated');
+		$this->assertRegExp("/.*class ModelCgt1.*/", $classFileContent, 'Class declaration was not generated');
 		$this->assertRegExp('/.*protected \\$blue.*/', $classFileContent, 'boolean property was not generated');
 		$this->assertRegExp('/.*\* \@var boolean.*/', $classFileContent, 'var tag for boolean property was not generated');
 		$this->assertRegExp('/.*\* \@validate NotEmpty.*/', $classFileContent, 'validate tag for required property was not generated');
 		$this->assertRegExp('/.*public function getBlue\(\).*/', $classFileContent, 'Getter for boolean property was not generated');
 		$this->assertRegExp('/.*public function setBlue\(\$blue\).*/', $classFileContent, 'Setter for boolean property was not generated');
 		$this->assertRegExp('/.*public function isBlue\(\).*/', $classFileContent, 'is method for boolean property was not generated');
-
 	}
 
+	/**
+	 * @test
+	 */
+	function parseAndWriteClass() {
+		require_once(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicAliasClass.php');
+		$className = '\\Bar\\Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicAliasClass';
+		$classParser = new Tx_ExtensionBuilder_Utility_ClassParser();
+		$classObject = $classParser->parse($className);
+		$classObject->setNameSpace('Foo');
+		$classObject->setName('Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicAliasClass');
+		$this->assertEquals(array('\\TYPO3\\CMS\\Core\\Utility','\\TYPO3\\CMS\\Core\\Utility\\GeneralUtility' ),$classObject->getAliasDeclarations());
+		$tmpDir = 'tmp/';
+		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$tmpDir);
+		$absTmpDir = $this->extension->getExtensionDir().$tmpDir;
+		$this->assertTrue(is_dir($absTmpDir),'Directory ' . $absTmpDir . ' was not created');
+
+		$targetFile =  $absTmpDir . 'BasicAliasClass.php';
+		$classFileContent = $this->codeGenerator->renderTemplate('Classes/class.phpt', array( 'extension' => $this->extension, 'classObject' => $classObject));
+		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($targetFile,$classFileContent);
+		$this->assertFileExists($targetFile,'File was not generated: ' . $targetFile);
+	}
 
 }
 

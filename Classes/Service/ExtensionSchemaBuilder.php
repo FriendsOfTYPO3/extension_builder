@@ -109,8 +109,8 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements \TYPO3\CMS\C
 			}
 			$classHierarchy = $extension->getClassHierarchy();
 			foreach ($extension->getDomainObjects() as $domainObject) {
-				if (isset($classHierarchy[$domainObject->getClassName()])) {
-					foreach ($classHierarchy[$domainObject->getClassName()] as $directChild) {
+				if (isset($classHierarchy[$domainObject->getQualifiedClassName()])) {
+					foreach ($classHierarchy[$domainObject->getQualifiedClassName()] as $directChild) {
 						$domainObject->addChildObject($directChild);
 					}
 				}
@@ -199,6 +199,9 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements \TYPO3\CMS\C
 		$extension->setDescription($propertyConfiguration['description']);
 		// extensionKey
 		$extension->setExtensionKey(trim($propertyConfiguration['extensionKey']));
+
+		// vendorName
+		$extension->setVendorName(trim($propertyConfiguration['vendorName']));
 
 		if($propertyConfiguration['emConf']['disableVersioning']) {
 			$extension->setSupportVersioning(FALSE);

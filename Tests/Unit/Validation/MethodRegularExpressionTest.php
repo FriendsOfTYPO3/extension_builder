@@ -33,7 +33,7 @@ class Tx_ExtensionBuilder_Validation_MethodRegularExpressionTest extends Tx_Exte
 	protected $classParser;
 
 	public function setUp() {
-		$this->classParser = t3lib_div::makeInstance('Tx_ExtensionBuilder_Utility_ClassParser');
+		$this->classParser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Utility_ClassParser');
 	}
 
 	/**

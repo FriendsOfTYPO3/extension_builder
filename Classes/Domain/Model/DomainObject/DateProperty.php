@@ -30,11 +30,11 @@
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_DateProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
 	public function getTypeForComment() {
-		return 'DateTime';
+		return '\\DateTime';
 	}
 
 	public function getTypeHint() {
-		return 'DateTime';
+		return '\\DateTime';
 	}
 
 	public function getSqlDefinition() {

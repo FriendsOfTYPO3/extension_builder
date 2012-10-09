@@ -78,12 +78,12 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
      * Loads the TypoScript config/setup for the formhandler on the current page.
      */
     private function loadTypoScriptConfig() {
-    	$sysPageObj = t3lib_div::makeInstance('t3lib_pageSelect');
+		$sysPageObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('t3lib_pageSelect');
 		if(!$GLOBALS['TSFE']->sys_page) {
 			$GLOBALS['TSFE']->sys_page = $sysPageObj;
 		}
 		$rootLine = $sysPageObj->getRootLine($GLOBALS['TSFE']->id);
-		$TSObj = t3lib_div::makeInstance('t3lib_tsparser_ext');
+		$TSObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('t3lib_tsparser_ext');
 		$TSObj->tt_track = 0;
 		$TSObj->init();
 		$TSObj->runThroughTemplates($rootLine);
@@ -406,9 +406,9 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 
 	protected function getPackagePath($packageKey) {
 		if(strpos($packageKey, '/') === FALSE) {
-			$path = t3lib_extMgm::extPath(strtolower($packageKey));
+			$path = \TYPO3\CMS\Core\Extension\ExtensionManager::extPath(strtolower($packageKey));
 		} else {
-			$path = t3lib_div::getFileAbsFileName($packageKey);
+			$path = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($packageKey);
 			if(substr($path,strlen($path) -1) !== '/') {
 				$path .= '/';
 			}

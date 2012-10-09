@@ -124,12 +124,16 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 		$this->name = $name;
 	}
 
-	public function getClassName() {
-		return 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Model_' . $this->getName();
+	public function getQualifiedClassName() {
+		return $this->extension->getNameSpace() . '\\Domain\\Model\\' . $this->getName();
 	}
 
-	public function getControllerName() {
-		return 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_Controller_' . $this->getName() . 'Controller';
+	public function getFullQualifiedClassName() {
+		return '\\' . $this->getQualifiedClassName();
+	}
+
+	public function getControllerClassName() {
+		return $this->extension->getNameSpace() . '\\Controller\\' . $this->getName() . 'Controller';
 	}
 
 	public function getDatabaseTableName() {
@@ -345,9 +349,9 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	 */
 	public function getBaseClass() {
 		if ($this->entity) {
-			return 'TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity';
+			return '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity';
 		} else {
-			return 'TYPO3\\CMS\\Extbase\\DomainObject\\AbstractValueObject';
+			return '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractValueObject';
 		}
 	}
 
@@ -358,7 +362,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	 */
 	public function getDomainRepositoryClassName() {
 		if (!$this->aggregateRoot) return '';
-		return 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_Domain_Repository_' . $this->getName() . 'Repository';
+		return '\\' . $this->extension->getNameSpace() . '\\Domain\\Repository\\' . $this->getName() . 'Repository';
 	}
 
 	/**
@@ -485,7 +489,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	 * @return string
 	 */
 	public function getRecordType() {
-		return str_replace('Domain_Model_', '', $this->getClassName());
+		return 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_' . $this->getName();
 	}
 
 	public function isSubClass() {

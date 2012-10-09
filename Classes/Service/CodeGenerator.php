@@ -578,7 +578,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	 * @param string $filePath
 	 * @param array $variables
 	 */
-	protected function renderTemplate($filePath, $variables) {
+	public function renderTemplate($filePath, $variables) {
 		//$codeTemplateRootPath = $this->getCodeTemplateRootPath();
 		$variables['settings'] = $this->settings;
 		//$variables['settings']['codeTemplateRootPath'] = $this->codeTemplateRootPath;
@@ -627,7 +627,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	 */
 	public function generateDomainObjectCode(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject, $mergeWithExistingClass) {
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject, $mergeWithExistingClass);
-
+		t3lib_div::devlog('Namespace: ' . $modelClassObject->getNameSpace(),'extension_builder');
 		if ($modelClassObject) {
 			$classDocComment = $this->renderDocComment($modelClassObject, $domainObject);
 			$modelClassObject->setDocComment($classDocComment);

@@ -1,4 +1,5 @@
 <?php
+namespace TYPO3\TestExtension\Domain\Repository;
 
 /***************************************************************
  *  Copyright notice
@@ -24,7 +25,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
 /**
  *
  *
@@ -32,7 +32,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_TestExtension_Domain_Repository_MainRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class MainRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 
 }
 ?>

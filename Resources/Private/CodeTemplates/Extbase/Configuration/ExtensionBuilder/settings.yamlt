@@ -80,7 +80,7 @@ createAutoloadRegistry: false
 classBuilder:
 
   Controller:
-    parentClass: \TYPO3\CMS\Extbase\MVC\Controller\ActionController
+    parentClass: \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
   Model:
     AbstractEntity:
@@ -90,4 +90,4 @@ classBuilder:
       parentClass: \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject
 
   Repository:
-    parentClass: \TYPO3\CMS\Extbase\MVC\Controller\ActionControllerPersistence\Repository
+    parentClass: \TYPO3\CMS\Extbase\Mvc\Controller\ActionControllerPersistence\Repository

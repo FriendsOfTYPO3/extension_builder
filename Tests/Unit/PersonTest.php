@@ -30,7 +30,7 @@ class Tx_ExtensionBuilder_Domain_Model_PersonTest extends Tx_ExtensionBuilder_Te
 	protected $person;
 
 	function setUp() {
-		$this->person = t3lib_div::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
+		$this->person = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
 	}
 
 	/**
