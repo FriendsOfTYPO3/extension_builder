@@ -122,6 +122,20 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	}
 
 	/**
+	 * Parse a with interfaces
+	 * @test
+	 */
+	public function ParseClassWithInterfaces() {
+		require_once(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/ClassParser/ClassWithInterfaces.php');
+		$classObject = $this->parseClass('Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithInterfaces');
+		$this->assertEquals($classObject->getInterfaceNames(), array('PHPUnit_Framework_IncompleteTest','PHPUnit_Framework_MockObject_Stub','PHPUnit_Framework_SelfDescribing'));
+		/**  here we could include some more tests
+		$p = $classObject->getMethod('methodWithStrangePrecedingBlock')->getPrecedingBlock();
+		$a = $classObject->getAppendedBlock();
+		 */
+	}
+
+	/**
 	 * Parse a complex class from a file
 	 * @test
 	 */
