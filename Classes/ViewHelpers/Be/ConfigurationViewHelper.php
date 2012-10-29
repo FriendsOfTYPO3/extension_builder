@@ -7,18 +7,9 @@ class Tx_ExtensionBuilder_ViewHelpers_Be_ConfigurationViewHelper extends \TYPO3\
 	 */
 	private $pageRenderer;
 
-	/**
-	 * @return void
-	 */
-	public function __construct() {
-		$this->pageRenderer = $this->getDocInstance()->getPageRenderer();
-	}
-
 	public function render() {
 
-		$doc = $this->getDocInstance();
-			// this does not work anymore, so we have to add the class with javascript
-		//$doc->bodyTagAdditions .= 'class="yui-skin-sam"';
+		$this->pageRenderer = $this->getDocInstance()->getPageRenderer();
 
 		$baseUrl = '../' . \TYPO3\CMS\Core\Extension\ExtensionManager::siteRelPath('extension_builder');
 
