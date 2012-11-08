@@ -102,7 +102,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			'config' => array(
 				<k:format.indent indentation="4"><k:render partial="TCA/{property.dataType}.phpt" arguments="{property: property,extension:extension,settings:settings,locallangFileFormat:locallangFileFormat}" /></k:format.indent>
 			),<f:if condition="{property.useRTE}">
-			'defaultExtras' => 'richtext[]',</f:if>
+			'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts]',</f:if>
 		),</f:for><f:for each="{k:listForeignKeyRelations(extension: extension, domainObject: domainObject)}" as="relation">
 		'{relation.foreignKeyName}' => array(
 			'config' => array(
