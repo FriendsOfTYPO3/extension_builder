@@ -52,7 +52,7 @@ class Tx_ExtensionBuilder_Utility_ExtensionInstallationStatus {
 			$statusMessage .= '<p>Please update the database in the Extension Manager!</p>';
 		}
 
-		if (!\TYPO3\CMS\Core\Extension\ExtensionManager::isLoaded($this->extension->getExtensionKey())) {
+		if (!\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($this->extension->getExtensionKey())) {
 			$statusMessage .= '<p>Your Extension is not installed yet.</p>';
 		}
 
@@ -66,7 +66,7 @@ class Tx_ExtensionBuilder_Utility_ExtensionInstallationStatus {
 	protected function dbUpdateNeeded() {
 		// TODO
 		$sqlFile = $this->extension->getExtensionDir().'ext_tables.sql';
-		if (\TYPO3\CMS\Core\Extension\ExtensionManager::isLoaded($this->extension->getExtensionKey()) && file_exists($sqlFile)) {
+		if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($this->extension->getExtensionKey()) && file_exists($sqlFile)) {
 			$this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 			$installToolSqlParser = $this->objectManager->get('TYPO3\\CMS\\Install\\Sql\\SchemaMigrator');
 			$sqlContent = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl($sqlFile);

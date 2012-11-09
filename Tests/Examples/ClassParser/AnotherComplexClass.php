@@ -406,7 +406,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 
 	protected function getPackagePath($packageKey) {
 		if(strpos($packageKey, '/') === FALSE) {
-			$path = \TYPO3\CMS\Core\Extension\ExtensionManager::extPath(strtolower($packageKey));
+			$path = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath(strtolower($packageKey));
 		} else {
 			$path = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($packageKey);
 			if(substr($path,strlen($path) -1) !== '/') {

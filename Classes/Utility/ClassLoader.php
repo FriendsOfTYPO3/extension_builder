@@ -42,7 +42,7 @@ class Tx_ExtensionBuilder_Utility_ClassLoader {
 	 * an extension.
 	 *
 	 * @param string $className: Name of the class/interface to load
-	 * @uses \TYPO3\CMS\Core\Extension\ExtensionManager::extPath()
+	 * @uses \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath()
 	 * @return void
 	 */
 	public static function loadClass($className) {

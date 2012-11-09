@@ -11,7 +11,7 @@ if (!defined('TYPO3_MODE')) {
 <f:if condition="{plugin.switchableControllerActions}">
 $pluginSignature = str_replace('_','',$_EXTKEY) . '_{plugin.key}';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-\TYPO3\CMS\Core\Extension\ExtensionManager::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_{plugin.key}.xml');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_{plugin.key}.xml');
 </f:if></f:for>
 
 <f:if condition="{extension.BackendModules}">
@@ -39,7 +39,7 @@ if (TYPO3_MODE === 'BE') {
 </f:for>
 }
 </f:if>
-\TYPO3\CMS\Core\Extension\ExtensionManager::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '<k:format.quoteString>{extension.name}</k:format.quoteString>');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '<k:format.quoteString>{extension.name}</k:format.quoteString>');
 
 <f:for each="{extension.domainObjects}" as="domainObject">
 	<k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">
@@ -52,8 +52,8 @@ if (TYPO3_MODE === 'BE') {
 			</k:mapping>
 		</f:then>
 		<f:else>
-\TYPO3\CMS\Core\Extension\ExtensionManager::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.{locallangFileFormat}');
-\TYPO3\CMS\Core\Extension\ExtensionManager::allowTableOnStandardPages('{domainObject.databaseTableName}');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.{locallangFileFormat}');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('{domainObject.databaseTableName}');
 $TCA['{domainObject.databaseTableName}'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.{locallangFileFormat}:{domainObject.databaseTableName}',
@@ -76,8 +76,8 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			'endtime' => 'endtime',
 		),
 		'searchFields' => '<f:for each="{domainObject.properties}" as="property">{property.fieldName},</f:for>',
-		'dynamicConfigFile' => \TYPO3\CMS\Core\Extension\ExtensionManager::extPath($_EXTKEY) . 'Configuration/TCA/{domainObject.name}.php',
-		'iconfile' => \TYPO3\CMS\Core\Extension\ExtensionManager::extRelPath($_EXTKEY) . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif'
+		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/{domainObject.name}.php',
+		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif'
 	),
 );
 		</f:else>

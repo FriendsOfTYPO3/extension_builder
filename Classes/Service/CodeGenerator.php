@@ -416,7 +416,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 					} else {
 						$iconFileName = 'value_object.gif';
 					}
-					$this->upload_copy_move(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Resources/Private/Icons/' . $iconFileName, $this->iconsDirectory . $domainObject->getDatabaseTableName() . '.gif');
+					$this->upload_copy_move(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/Icons/' . $iconFileName, $this->iconsDirectory . $domainObject->getDatabaseTableName() . '.gif');
 
 					if ($domainObject->isAggregateRoot()) {
 						$destinationFile = $domainRepositoryDirectory . $domainObject->getName() . 'Repository.php';
@@ -503,7 +503,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 
 	protected function copyStaticFiles() {
 		try {
-			$this->upload_copy_move(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Resources/Private/Icons/ext_icon.gif', $this->extensionDirectory . 'ext_icon.gif');
+			$this->upload_copy_move(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/Icons/ext_icon.gif', $this->extensionDirectory . 'ext_icon.gif');
 		} catch (Exception $e) {
 			throw new Exception('Could not copy ext_icon.gif, error: ' . $e->getMessage());
 		}
@@ -523,7 +523,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 			$publicResourcesDirectory = $this->extensionDirectory . 'Resources/Public/';
 			$this->mkdir_deep($publicResourcesDirectory, 'Icons');
 			$this->iconsDirectory = $publicResourcesDirectory . 'Icons/';
-			$this->upload_copy_move(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Resources/Private/Icons/relation.gif', $this->iconsDirectory . 'relation.gif');
+			$this->upload_copy_move(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/Icons/relation.gif', $this->iconsDirectory . 'relation.gif');
 		} catch (Exception $e) {
 			throw new Exception('Could not create public resources folder, error: ' . $e->getMessage());
 		}
@@ -537,15 +537,15 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	protected function generateDocumentationFiles() {
 		$this->mkdir_deep($this->extensionDirectory, 'Documentation');
 		$docFiles = array();
-		$docFiles = \TYPO3\CMS\Core\Utility\GeneralUtility::getAllFilesAndFoldersInPath($docFiles,\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Extbase/Documentation/', '', TRUE, 5, '/.*rstt/');
+		$docFiles = \TYPO3\CMS\Core\Utility\GeneralUtility::getAllFilesAndFoldersInPath($docFiles,\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Extbase/Documentation/', '', TRUE, 5, '/.*rstt/');
 		foreach($docFiles as $docFile) {
 			if(is_dir($docFile)) {
 				$this->mkdir_deep($this->extensionDirectory, 'Documentation/' . str_replace($this->codeTemplateRootPath . 'Documentation/','',$docFile));
 			} else if(strpos($docFile,'.rstt') === FALSE) {
-				$this->upload_copy_move($docFile, str_replace(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder').'Resources/Private/CodeTemplates/Extbase/', $this->extensionDirectory, $docFile));
+				$this->upload_copy_move($docFile, str_replace(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder').'Resources/Private/CodeTemplates/Extbase/', $this->extensionDirectory, $docFile));
 			}
 		}
-		$this->upload_copy_move(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder').'Resources/Private/CodeTemplates/Extbase/Readme.rst', $this->extensionDirectory . 'Readme.rst');
+		$this->upload_copy_move(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder').'Resources/Private/CodeTemplates/Extbase/Readme.rst', $this->extensionDirectory . 'Readme.rst');
 		$fileContents = $this->renderTemplate('Documentation/Index.rstt', array('extension' => $this->extension));
 		$this->writeFile($this->extensionDirectory . 'Documentation/Index.rst', $fileContents);
 
