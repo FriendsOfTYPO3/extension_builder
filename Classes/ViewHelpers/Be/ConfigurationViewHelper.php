@@ -11,7 +11,7 @@ class Tx_ExtensionBuilder_ViewHelpers_Be_ConfigurationViewHelper extends \TYPO3\
 
 		$this->pageRenderer = $this->getDocInstance()->getPageRenderer();
 
-		$baseUrl = '../' . \TYPO3\CMS\Core\Extension\ExtensionManager::siteRelPath('extension_builder');
+		$baseUrl = '../' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath('extension_builder');
 
 		$this->pageRenderer->disableCompressJavascript();
 		$this->pageRenderer->loadExtJS(FALSE, FALSE);

@@ -77,7 +77,7 @@ class Tx_ExtensionBuilder_Domain_Repository_ExtensionRepository implements \TYPO
 		$extensionBuildConfiguration = $this->configurationManager->getConfigurationFromModeler();
 		$extensionBuildConfiguration['log'] = array(
 			'last_modified' => date('Y-m-d h:i'),
-			'extension_builder_version' => \TYPO3\CMS\Core\Extension\ExtensionManager::getExtensionVersion('extension_builder'),
+			'extension_builder_version' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getExtensionVersion('extension_builder'),
 			'be_user' => $GLOBALS['BE_USER']->user['realName'] . ' (' . $GLOBALS['BE_USER']->user['uid'] . ')'
 		);
 		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($extension->getExtensionDir() . Tx_ExtensionBuilder_Configuration_ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE, json_encode($extensionBuildConfiguration));

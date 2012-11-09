@@ -225,8 +225,8 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends TYPO3\CMS\E
 	static public function substituteExtensionPath($encodedTemplateRootPath) {
 		if (\TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($encodedTemplateRootPath, 'EXT:')) {
 			list($extKey, $script) = explode('/', substr($encodedTemplateRootPath, 4), 2);
-			if ($extKey && \TYPO3\CMS\Core\Extension\ExtensionManager::isLoaded($extKey)) {
-				return \TYPO3\CMS\Core\Extension\ExtensionManager::extPath($extKey) . $script;
+			if ($extKey && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($extKey)) {
+				return \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($extKey) . $script;
 			}
 		} else if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAbsPath($encodedTemplateRootPath)) {
 			return $encodedTemplateRootPath;
@@ -538,7 +538,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends TYPO3\CMS\E
 	protected function importExistingActionConfiguration(array $extensionConfigurationJSON) {
 		if (isset($extensionConfigurationJSON['properties']['plugins'])) {
 			$extKey = $extensionConfigurationJSON['properties']['extensionKey'];
-			if (\TYPO3\CMS\Core\Extension\ExtensionManager::isLoaded($extKey)) {
+			if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($extKey)) {
 				foreach ($extensionConfigurationJSON['properties']['plugins'] as &$pluginJSON) {
 					if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($extKey)]['plugins'][ucfirst($pluginJSON['key'])]['controllers'])) {
 						$controllerActionCombinationsConfig = "";

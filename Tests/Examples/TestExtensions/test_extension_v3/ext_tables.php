@@ -35,11 +35,11 @@ if (TYPO3_MODE === 'BE') {
 }
 
 
-\TYPO3\CMS\Core\Extension\ExtensionManager::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Compatibility Test Extension Version 1.0');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Compatibility Test Extension Version 1.0');
 
 
-\TYPO3\CMS\Core\Extension\ExtensionManager::addLLrefForTCAdescr('tx_testextension_domain_model_main', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_main.xml');
-\TYPO3\CMS\Core\Extension\ExtensionManager::allowTableOnStandardPages('tx_testextension_domain_model_main');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_testextension_domain_model_main', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_main.xml');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_testextension_domain_model_main');
 $TCA['tx_testextension_domain_model_main'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xml:tx_testextension_domain_model_main',
@@ -61,13 +61,13 @@ $TCA['tx_testextension_domain_model_main'] = array(
 			'endtime' => 'endtime',
 		),
 		'searchFields' => 'name,identifier,child1,children2,child3,children4,',
-		'dynamicConfigFile' => \TYPO3\CMS\Core\Extension\ExtensionManager::extPath($_EXTKEY) . 'Configuration/TCA/Main.php',
-		'iconfile' => \TYPO3\CMS\Core\Extension\ExtensionManager::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_main.gif'
+		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Main.php',
+		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_main.gif'
 	),
 );
 
-\TYPO3\CMS\Core\Extension\ExtensionManager::addLLrefForTCAdescr('tx_testextension_domain_model_child1', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_child1.xml');
-\TYPO3\CMS\Core\Extension\ExtensionManager::allowTableOnStandardPages('tx_testextension_domain_model_child1');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_testextension_domain_model_child1', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_child1.xml');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_testextension_domain_model_child1');
 $TCA['tx_testextension_domain_model_child1'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xml:tx_testextension_domain_model_child1',
@@ -89,13 +89,13 @@ $TCA['tx_testextension_domain_model_child1'] = array(
 			'endtime' => 'endtime',
 		),
 		'searchFields' => 'name,',
-		'dynamicConfigFile' => \TYPO3\CMS\Core\Extension\ExtensionManager::extPath($_EXTKEY) . 'Configuration/TCA/Child1.php',
-		'iconfile' => \TYPO3\CMS\Core\Extension\ExtensionManager::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_child1.gif'
+		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Child1.php',
+		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_child1.gif'
 	),
 );
 
-\TYPO3\CMS\Core\Extension\ExtensionManager::addLLrefForTCAdescr('tx_testextension_domain_model_child2', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_child2.xml');
-\TYPO3\CMS\Core\Extension\ExtensionManager::allowTableOnStandardPages('tx_testextension_domain_model_child2');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_testextension_domain_model_child2', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_child2.xml');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_testextension_domain_model_child2');
 $TCA['tx_testextension_domain_model_child2'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xml:tx_testextension_domain_model_child2',
@@ -117,13 +117,13 @@ $TCA['tx_testextension_domain_model_child2'] = array(
 			'endtime' => 'endtime',
 		),
 		'searchFields' => '',
-		'dynamicConfigFile' => \TYPO3\CMS\Core\Extension\ExtensionManager::extPath($_EXTKEY) . 'Configuration/TCA/Child2.php',
-		'iconfile' => \TYPO3\CMS\Core\Extension\ExtensionManager::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_child2.gif'
+		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Child2.php',
+		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_child2.gif'
 	),
 );
 
-\TYPO3\CMS\Core\Extension\ExtensionManager::addLLrefForTCAdescr('tx_testextension_domain_model_child3', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_child3.xml');
-\TYPO3\CMS\Core\Extension\ExtensionManager::allowTableOnStandardPages('tx_testextension_domain_model_child3');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_testextension_domain_model_child3', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_child3.xml');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_testextension_domain_model_child3');
 $TCA['tx_testextension_domain_model_child3'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xml:tx_testextension_domain_model_child3',
@@ -145,13 +145,13 @@ $TCA['tx_testextension_domain_model_child3'] = array(
 			'endtime' => 'endtime',
 		),
 		'searchFields' => 'name,',
-		'dynamicConfigFile' => \TYPO3\CMS\Core\Extension\ExtensionManager::extPath($_EXTKEY) . 'Configuration/TCA/Child3.php',
-		'iconfile' => \TYPO3\CMS\Core\Extension\ExtensionManager::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_child3.gif'
+		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Child3.php',
+		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_child3.gif'
 	),
 );
 
-\TYPO3\CMS\Core\Extension\ExtensionManager::addLLrefForTCAdescr('tx_testextension_domain_model_child4', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_child4.xml');
-\TYPO3\CMS\Core\Extension\ExtensionManager::allowTableOnStandardPages('tx_testextension_domain_model_child4');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_testextension_domain_model_child4', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_child4.xml');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_testextension_domain_model_child4');
 $TCA['tx_testextension_domain_model_child4'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xml:tx_testextension_domain_model_child4',
@@ -173,8 +173,8 @@ $TCA['tx_testextension_domain_model_child4'] = array(
 			'endtime' => 'endtime',
 		),
 		'searchFields' => 'name,',
-		'dynamicConfigFile' => \TYPO3\CMS\Core\Extension\ExtensionManager::extPath($_EXTKEY) . 'Configuration/TCA/Child4.php',
-		'iconfile' => \TYPO3\CMS\Core\Extension\ExtensionManager::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_child4.gif'
+		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Child4.php',
+		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_child4.gif'
 	),
 );
 

@@ -40,7 +40,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * @test
 	 */
 	public function ParseBasicClass() {
-		require_once(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');
+		require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');
 		$this->parseClass('Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClass');
 	}
 
@@ -49,7 +49,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * @test
 	 */
 	public function ParseBasicNameSpacedClass() {
-		require_once(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicNameSpacedClass.php');
+		require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicNameSpacedClass.php');
 		$this->parseClass('\\Foo\\Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicNameSpacedClass');
 	}
 
@@ -58,7 +58,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * @test
 	 */
 	public function ParseBasicAliasClass() {
-		require_once(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicAliasClass.php');
+		require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicAliasClass.php');
 		$classObject = $this->parseClass('\\Bar\\Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicAliasClass');
 		$this->assertEquals(array('\\TYPO3\\CMS\\Core\\Utility','\\TYPO3\\CMS\\Core\\Utility\\GeneralUtility'),$classObject->getAliasDeclarations());
 	}
@@ -68,7 +68,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * @test
 	 */
 	public function ParseComplexClass() {
-		require_once(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/ClassParser/ComplexClass.php');
+		require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ClassParser/ComplexClass.php');
 		$classObject = $this->parseClass('Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass');
 		$getters = $classObject->getGetters();
 		$this->assertEquals(1, count($getters));
@@ -81,7 +81,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 			"\n\tempty line in multiline comment\n	// single comment in multiline" .
 			"\n\t *\n	some keywords: \$property  function\n\tstatic\n *" .
 			"\n * @test testtag\n */" .
-			"\nrequire_once(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') ." .
+			"\nrequire_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') ." .
 			" 'Tests/Examples/ClassParser/BasicClass.php');\n",
 			'Preceding block in complex class not properly parsed');
 
@@ -126,7 +126,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * @test
 	 */
 	public function ParseClassWithInterfaces() {
-		require_once(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/ClassParser/ClassWithInterfaces.php');
+		require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ClassParser/ClassWithInterfaces.php');
 		$classObject = $this->parseClass('Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithInterfaces');
 		$this->assertEquals($classObject->getInterfaceNames(), array('PHPUnit_Framework_IncompleteTest','PHPUnit_Framework_MockObject_Stub','PHPUnit_Framework_SelfDescribing'));
 		/**  here we could include some more tests
@@ -140,7 +140,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * @test
 	 */
 	public function ParseAnotherComplexClass() {
-		require_once(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/ClassParser/AnotherComplexClass.php');
+		require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ClassParser/AnotherComplexClass.php');
 		$classObject = $this->parseClass('Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass');
 
 		/**  here we could include some more tests
@@ -154,7 +154,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * @test
 	 */
 	public function Parse_t3lib_div() {
-		//require_once(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/BasicClass.php');
+		//require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/BasicClass.php');
 		$this->parseClass('\\TYPO3\\CMS\\Core\\Utility\\GeneralUtility');
 	}
 

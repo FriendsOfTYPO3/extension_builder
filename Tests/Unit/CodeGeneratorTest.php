@@ -64,7 +64,7 @@ class Tx_ExtensionBuilder_CodeGeneratorUnitTest extends Tx_ExtensionBuilder_Test
 	 * @test
 	 */
 	function parseAndWriteClass() {
-		require_once(\TYPO3\CMS\Core\Extension\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicAliasClass.php');
+		require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicAliasClass.php');
 		$className = '\\Bar\\Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicAliasClass';
 		$classParser = new Tx_ExtensionBuilder_Utility_ClassParser();
 		$classObject = $classParser->parse($className);
