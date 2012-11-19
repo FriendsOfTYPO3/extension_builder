@@ -150,9 +150,6 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 			throw new Exception('No codeTemplateRootPath configured');
 		}
 
-		if ($this->extension->getTargetVersion() == 4.5) {
-			$this->locallangFileFormat = 'xml';
-		}
 		// Base directory already exists at this point
 		$this->extensionDirectory = $this->extension->getExtensionDir();
 		if (!is_dir($this->extensionDirectory)) {
@@ -185,10 +182,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 
 		$this->generateDomainObjectRelatedFiles();
 
-		if(floatval($this->extension->getTargetVersion()) > 4.6) {
-			$this->generateDocumentationFiles();
-		}
-
+		$this->generateDocumentationFiles();
 	}
 
 	protected function generateYamlSettingsFile() {

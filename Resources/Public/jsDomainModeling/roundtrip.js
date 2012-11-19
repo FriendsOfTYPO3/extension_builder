@@ -125,9 +125,7 @@ var roundtrip = {
 }
 
 var versionMap = {
-    '4.5' : '1.3',
-    '4.6' : '1.4',
-    '4.7' : '1.5'
+    '6.0' : '6.0'
 }
 
 Ext.onReady(
