@@ -31,8 +31,6 @@
  * Needed to avoid errors when loading classes that have references or parent classes
  * to other classes in a not installed extension
  *
- * @package TYPO3
- * @subpackage ExtensionBuilder
  * @version $Id: ClassLoader.php 1729 2009-11-25 21:37:20Z stucki $
  */
 class Tx_ExtensionBuilder_Utility_ClassLoader {

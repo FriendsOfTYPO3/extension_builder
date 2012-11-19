@@ -25,8 +25,6 @@
 /**
  * JSON view helper
  * enables access to json_encode and json_decode in fluid templates
- *
- * @package ExtensionBuilder
  */
 
 class Tx_ExtensionBuilder_ViewHelpers_JsonViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {

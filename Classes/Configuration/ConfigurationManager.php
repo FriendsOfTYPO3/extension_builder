@@ -25,8 +25,6 @@
 
 /**
  * Load settings from yaml file and from TYPO3_CONF_VARS extConf
- *
- * @package extension_builder
  */
 class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends TYPO3\CMS\Extbase\Configuration\ConfigurationManager  {
 

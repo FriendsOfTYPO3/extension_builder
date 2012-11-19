@@ -25,7 +25,6 @@
 /**
  * A plugin in the extension
  *
- * @package ExtensionBuilder
  * @version $ID:$
  */
 

@@ -26,7 +26,6 @@
  * abstract object representing a class, method or property in the context of
  * software development
  *
- * @package ExtensionBuilder
  * @version $ID:$
  */
 abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {

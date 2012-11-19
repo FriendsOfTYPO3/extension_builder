@@ -25,8 +25,6 @@
 
 /**
  * Creates (or updates) all the required files for an extension
- *
- * @package ExtensionBuilder
  */
 class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 

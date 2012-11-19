@@ -25,7 +25,6 @@
 /**
  * provides methods to import a class object
  *
- * @package ExtensionBuilder
  * @version $ID:$
  */
 class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\SingletonInterface {

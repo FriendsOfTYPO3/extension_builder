@@ -26,7 +26,6 @@
  * <k:compareStrings firstString="this" secondString="that" />
  * {k:compareStrings(firstString:'this', secondString:'that')}
  *
- * @package	 ExtensionBuilder
  * @author	 Andreas Lappe
  * @version $ID:$
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later

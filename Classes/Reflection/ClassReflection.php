@@ -24,9 +24,6 @@
 
 /**
  * Extended version of the Tx_Extbase_Reflection_ClassReflection
- *
- * @package ExtensionBuilder
- * @subpackage Reflection
  */
 class Tx_ExtensionBuilder_Reflection_ClassReflection extends TYPO3\CMS\Extbase\Reflection\ClassReflection {
 

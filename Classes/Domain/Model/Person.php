@@ -25,7 +25,6 @@
 /**
  * A person participating in the project somehow (i.e. as a developer).
  *
- * @package ExtensionBuilder
  * @version $ID:$
  */
 

@@ -24,7 +24,6 @@
 
 /**
  *
- * @package ExtensionBuilder
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_TimeSecProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {

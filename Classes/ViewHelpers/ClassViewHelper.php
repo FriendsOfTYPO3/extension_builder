@@ -25,7 +25,6 @@
 /**
  * class view helper
  *
- * @package ExtensionBuilder
  * @version $ID:$
  */
 

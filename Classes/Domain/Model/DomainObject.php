@@ -25,7 +25,6 @@
 /**
  * Schema for a Domain Object.
  *
- * @package ExtensionBuilder
  * @version $ID:$
  */
 class Tx_ExtensionBuilder_Domain_Model_DomainObject {

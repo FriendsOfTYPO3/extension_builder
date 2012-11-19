@@ -25,7 +25,6 @@
 /**
  * provides helper methods
  *
- * @package ExtensionBuilder
  * @version $ID:$
  */
 class Tx_ExtensionBuilder_Utility_Tools implements \TYPO3\CMS\Core\SingletonInterface {

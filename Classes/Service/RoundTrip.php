@@ -23,12 +23,8 @@
  ***************************************************************/
 
 /**
- *
  * Performs all changes that are required to adapt the
  * existing classes and methods to the changes in the configurations
- *
- * @package ExtensionBuilder
- *
  */
 class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 

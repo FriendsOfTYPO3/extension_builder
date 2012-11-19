@@ -25,9 +25,6 @@
 /**
  * Extended version of the Tx_Extbase_Reflection_ParameterReflection
  * implements typeHint
- *
- * @package ExtensionBuilder
- * @subpackage Reflection
  */
 class Tx_ExtensionBuilder_Reflection_ParameterReflection extends TYPO3\CMS\Extbase\Reflection\ParameterReflection {
 

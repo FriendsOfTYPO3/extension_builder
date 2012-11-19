@@ -26,7 +26,6 @@
  * provides methods to import a model
  * currently this class is not used anymore
  * Later it should be the parent class for importing from various model formats
- * @package ExtensionBuilder
  */
 class Tx_ExtensionBuilder_Utility_ModelImport implements \TYPO3\CMS\Core\SingletonInterface {
 

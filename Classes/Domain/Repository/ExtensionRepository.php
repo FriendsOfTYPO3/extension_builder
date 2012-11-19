@@ -25,8 +25,6 @@
 
 /**
  * Repository for existing Extbase Extensions
- *
- * @package ExtensionBuilder
  */
 class Tx_ExtensionBuilder_Domain_Repository_ExtensionRepository implements \TYPO3\CMS\Core\SingletonInterface {
 

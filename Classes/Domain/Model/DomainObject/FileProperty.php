@@ -26,7 +26,6 @@
  *
  * File property
  *
- * @package ExtensionBuilder
  * @version $ID:$
  */
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_FileProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
