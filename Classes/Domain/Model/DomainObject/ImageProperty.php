@@ -26,7 +26,6 @@
  *
  * Image property
  *
- * @package ExtensionBuilder
  * @version $ID:$
  */
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_ImageProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {

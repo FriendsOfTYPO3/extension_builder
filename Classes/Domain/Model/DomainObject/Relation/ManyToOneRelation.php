@@ -28,7 +28,6 @@
  *
  * This class is the main entry point for extbase extensions in the frontend.
  *
- * @package ExtensionBuilder
  * @version $ID:$
  */
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToOneRelation extends Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation {

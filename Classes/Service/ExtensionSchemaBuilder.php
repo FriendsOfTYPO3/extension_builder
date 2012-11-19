@@ -24,10 +24,7 @@
  ***************************************************************/
 
 /**
- *
  * Builds an extension object based on the buildConfiguration
- * @package ExtensionBuilder
- *
  */
 class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 

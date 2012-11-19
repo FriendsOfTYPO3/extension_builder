@@ -27,8 +27,6 @@
  * Controller of the Extension Builder extension
  *
  * @category    Controller
- * @package     TYPO3
- * @subpackage  extension_builder
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
 class Tx_ExtensionBuilder_Controller_BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {

@@ -25,7 +25,6 @@
 /**
  * method representing a "method" in the context of software development
  *
- * @package ExtensionBuilder
  * @version $ID:$
  */
 class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {

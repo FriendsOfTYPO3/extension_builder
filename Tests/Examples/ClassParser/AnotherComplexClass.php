@@ -15,9 +15,6 @@
 /**
  * Component Manager of the extension 'gimmefive'. This is a backport of the Component Manager of FLOW3. It's based
  * on code mainly written by Robert Lemke. Thanx to the FLOW3 team for all the great stuff!
- *
- * @package	TYPO3
- * @subpackage	Tx_GimmeFive
  */
 class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	const PACKAGE_PREFIX = 'Tx';

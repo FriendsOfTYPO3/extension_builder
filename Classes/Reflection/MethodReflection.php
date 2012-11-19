@@ -24,9 +24,6 @@
 
 /**
  * Extended version of the ReflectionMethod
- *
- * @package ExtensionBuilder
- * @subpackage Reflectionn $
  */
 class Tx_ExtensionBuilder_Reflection_MethodReflection extends TYPO3\CMS\Extbase\Reflection\MethodReflection {
 

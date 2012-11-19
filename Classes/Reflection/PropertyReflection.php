@@ -24,9 +24,6 @@
 
 /**
  * Extended version of the ReflectionProperty
- *
- * @package ExtensionBuilder
- * @subpackage Reflection
  */
 class Tx_ExtensionBuilder_Reflection_PropertyReflection extends TYPO3\CMS\Extbase\Reflection\PropertyReflection {
 

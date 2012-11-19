@@ -24,11 +24,7 @@
  ***************************************************************/
 
 /**
- *
  * Builder for domain objects
- *
- * @package ExtensionBuilder
- *
  */
 class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 

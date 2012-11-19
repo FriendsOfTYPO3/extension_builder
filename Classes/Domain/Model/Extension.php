@@ -24,8 +24,6 @@
 
 /**
  * Schema for a whole extension
- *
- * @package ExtensionBuilder
  */
 class Tx_ExtensionBuilder_Domain_Model_Extension {
 

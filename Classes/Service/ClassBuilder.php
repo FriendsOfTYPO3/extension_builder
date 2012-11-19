@@ -26,8 +26,6 @@
  * Builds the required class objects for extbase extensions
  * If roundtrip is enabled (second parameter in initialize method) the roundtrip service
  * is requested to provide a class object parsed from an existing class
- *
- * @package ExtensionBuilder
  */
 
 class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {

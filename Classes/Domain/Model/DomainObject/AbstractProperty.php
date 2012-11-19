@@ -25,7 +25,6 @@
 /**
  * property representing a "property" in the context of software development
  *
- * @package ExtensionBuilder
  * @version $ID:$
  */
 abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {

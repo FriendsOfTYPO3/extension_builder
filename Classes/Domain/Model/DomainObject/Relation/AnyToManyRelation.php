@@ -24,7 +24,6 @@
 
 /**
  *
- * @package ExtensionBuilder
  * @version $ID:$
  */
 abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation extends Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation {

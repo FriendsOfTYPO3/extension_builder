@@ -24,8 +24,6 @@
 
 /**
  * method view helper
- *
- * @package ExtensionBuilder
  */
 
 class Tx_ExtensionBuilder_ViewHelpers_MethodViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {

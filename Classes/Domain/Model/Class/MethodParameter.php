@@ -25,7 +25,6 @@
 /**
  * parameter representing a method parameterin the context of software development
  *
- * @package ExtensionBuilder
  * @version $ID:$
  */
 class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {

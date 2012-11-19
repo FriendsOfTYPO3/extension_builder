@@ -24,8 +24,6 @@
 
 /**
  * An exception thrown if an error occured during parsing a php file
- *
- * @package ExtensionBuilder
  */
 class Tx_ExtensionBuilder_Exception_ParseError extends TYPO3\CMS\Extbase\Exception{
 

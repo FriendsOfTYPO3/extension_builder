@@ -25,7 +25,6 @@
 /**
  * class schema representing a "class" in the context of software development
  *
- * @package ExtensionBuilder
  * @version $ID:$
  */
 

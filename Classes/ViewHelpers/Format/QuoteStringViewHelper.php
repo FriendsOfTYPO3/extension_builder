@@ -27,7 +27,6 @@
  * <f:quoteString>{anyString}</f:quoteString>
  *
  *
- * @package	 ExtensionBuilder
  * @author	 Rens Admiraal
  * @version $ID:$
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
