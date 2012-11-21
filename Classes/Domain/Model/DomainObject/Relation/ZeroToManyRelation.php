@@ -38,11 +38,11 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation 
 	protected $foreignKeyName;
 
 	public function getTypeForComment() {
-		return '\\TYPO3\\CMS\\Extbase\\Persistence\\Generic\\ObjectStorage<' . $this->getForeignClassName() . '>';
+		return '\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage<' . $this->getForeignClassName() . '>';
 	}
 
 	public function getTypeHint() {
-		return '\\TYPO3\\CMS\\Extbase\\Persistence\\Generic\\ObjectStorage';
+		return '\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage';
 	}
 
 	public function getForeignKeyName() {
