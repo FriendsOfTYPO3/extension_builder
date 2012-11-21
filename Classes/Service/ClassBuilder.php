@@ -222,7 +222,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 			$initStorageObjectsMethod->setDescription('Initializes all ObjectStorage properties.');
 			$methodBody = "/**\n* Do not modify this method!\n* It will be rewritten on each save in the extension builder\n* You may modify the constructor of this class instead\n*/\n";
 			foreach ($anyToManyRelationProperties as $relationProperty) {
-				$methodBody .= "\$this->" . $relationProperty->getName() . " = new \\TYPO3\\CMS\\Extbase\\Persistence\\Generic\\ObjectStorage();\n";
+				$methodBody .= "\$this->" . $relationProperty->getName() . " = new \\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage();\n";
 			}
 			$initStorageObjectsMethod->setBody($this->codeGenerator->getDefaultMethodBody($domainObject, NULL, 'Model', '', 'initStorageObjects'));
 			$initStorageObjectsMethod->addModifier('protected');

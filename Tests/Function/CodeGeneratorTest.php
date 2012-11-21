@@ -212,7 +212,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
 		$this->assertTrue($setterMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $setterMethod->getTagValues('param');
-		$this->assertEquals(0, strpos($paramTagValues[0],'\\TYPO3\\CMS\\Extbase\\Persistence\\Generic\\ObjectStorage<' . $relatedDomainObject->getFullQualifiedClassName()),'Wrong param tag:'.$paramTagValues[0]);
+		$this->assertEquals(0, strpos($paramTagValues[0],'\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage<' . $relatedDomainObject->getFullQualifiedClassName()),'Wrong param tag:'.$paramTagValues[0]);
 
 		$parameters = $setterMethod->getParameters();
 		$this->assertEquals(1, count($parameters),'Wrong parameter count in setter method');
@@ -286,7 +286,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
 		$this->assertTrue($setterMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $setterMethod->getTagValues('param');
-		$this->assertEquals(0, strpos($paramTagValues[0],'\\TYPO3\\CMS\\Extbase\\Persistence\\Generic\\ObjectStorage<' . $relatedDomainObject->getFullQualifiedClassName()),'Wrong param tag:'.$paramTagValues[0]);
+		$this->assertEquals(0, strpos($paramTagValues[0],'\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage<' . $relatedDomainObject->getFullQualifiedClassName()),'Wrong param tag:'.$paramTagValues[0]);
 
 		$parameters = $setterMethod->getParameters();
 		$this->assertEquals(1, count($parameters),'Wrong parameter count in setter method');
