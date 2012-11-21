@@ -224,7 +224,13 @@ class Tx_ExtensionBuilder_Utility_Tools implements \TYPO3\CMS\Core\SingletonInte
 		if (isset($classNameParts[0]) && $classNameParts[0] === 'TYPO3' && isset($classNameParts[1]) && $classNameParts[1] === 'CMS') {
 			$tableName= strtolower('tx_' .  implode('_',array_slice($classNameParts,2)));
 		} else {
-			$tableName= strtolower('tx_' .  implode('_',array_slice($classNameParts,1)));
+				// 2 possibilities: \\VENDOR\\Extkey\\Domain\Model\MyModel or tx_extkey_domain_model_mymodel
+			if($classNameParts == 'tx') {
+				$offset = 1;
+			} else {
+				$offset = 2;
+			}
+			$tableName= strtolower('tx_' .  implode('_',array_slice($classNameParts, $offset)));
 		}
 		return $tableName;
 	}
