@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2012-11-24T16:57:24Z" product-name="test_extension">
+		<header/>
+		<body>
+
+			<trans-unit id="name.description">
+				<source>This is not required</source>
+			</trans-unit>
+			<trans-unit id="identifier.description">
+				<source>This is required</source>
+			</trans-unit>
+			<trans-unit id="child1.description">
+				<source>This is a 1:1 relation</source>
+			</trans-unit>
+			<trans-unit id="children2.description">
+				<source>This is a 1:n relation</source>
+			</trans-unit>
+			<trans-unit id="child3.description">
+				<source>This is a n:1 relation</source>
+			</trans-unit>
+			<trans-unit id="children4.description">
+				<source>This is a m:n relation</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
