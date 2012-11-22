@@ -9,7 +9,7 @@ $TCA['tx_testextension_domain_model_main'] = array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, identifier, child1, children2, child3, children4',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, name, identifier, child1, children2, child3, children4,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, name, identifier, child1, children2, child3, children4,--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access,starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -17,21 +17,21 @@ $TCA['tx_testextension_domain_model_main'] = array(
 	'columns' => array(
 		'sys_language_uid' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'sys_language',
 				'foreign_table_where' => 'ORDER BY sys_language.title',
 				'items' => array(
-					array('LLL:EXT:lang/locallang_general.xml:LGL.allLanguages', -1),
-					array('LLL:EXT:lang/locallang_general.xml:LGL.default_value', 0)
+					array('LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages', -1),
+					array('LLL:EXT:lang/locallang_general.xlf:LGL.default_value', 0)
 				),
 			),
 		),
 		'l10n_parent' => array(
 			'displayCond' => 'FIELD:sys_language_uid:>:0',
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
 			'config' => array(
 				'type' => 'select',
 				'items' => array(
@@ -47,7 +47,7 @@ $TCA['tx_testextension_domain_model_main'] = array(
 			),
 		),
 		't3ver_label' => array(
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.versionLabel',
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -56,7 +56,7 @@ $TCA['tx_testextension_domain_model_main'] = array(
 		),
 		'hidden' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
 			'config' => array(
 				'type' => 'check',
 			),
@@ -64,7 +64,7 @@ $TCA['tx_testextension_domain_model_main'] = array(
 		'starttime' => array(
 			'exclude' => 1,
 			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.starttime',
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
 			'config' => array(
 				'type' => 'input',
 				'size' => 13,
@@ -80,7 +80,7 @@ $TCA['tx_testextension_domain_model_main'] = array(
 		'endtime' => array(
 			'exclude' => 1,
 			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.endtime',
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
 			'config' => array(
 				'type' => 'input',
 				'size' => 13,
@@ -95,7 +95,7 @@ $TCA['tx_testextension_domain_model_main'] = array(
 		),
 		'name' => array(
 			'exclude' => 0,
-			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xml:tx_testextension_domain_model_main.name',
+			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.name',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -104,7 +104,7 @@ $TCA['tx_testextension_domain_model_main'] = array(
 		),
 		'identifier' => array(
 			'exclude' => 0,
-			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xml:tx_testextension_domain_model_main.identifier',
+			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.identifier',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -113,7 +113,7 @@ $TCA['tx_testextension_domain_model_main'] = array(
 		),
 		'child1' => array(
 			'exclude' => 0,
-			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xml:tx_testextension_domain_model_main.child1',
+			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.child1',
 			'config' => array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_testextension_domain_model_child1',
@@ -130,7 +130,7 @@ $TCA['tx_testextension_domain_model_main'] = array(
 		),
 		'children2' => array(
 			'exclude' => 0,
-			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xml:tx_testextension_domain_model_main.children2',
+			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.children2',
 			'config' => array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_testextension_domain_model_child2',
@@ -147,7 +147,7 @@ $TCA['tx_testextension_domain_model_main'] = array(
 		),
 		'child3' => array(
 			'exclude' => 0,
-			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xml:tx_testextension_domain_model_main.child3',
+			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.child3',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_testextension_domain_model_child3',
@@ -157,7 +157,7 @@ $TCA['tx_testextension_domain_model_main'] = array(
 		),
 		'children4' => array(
 			'exclude' => 0,
-			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xml:tx_testextension_domain_model_main.children4',
+			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.children4',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_testextension_domain_model_child4',

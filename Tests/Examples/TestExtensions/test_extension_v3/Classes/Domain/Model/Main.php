@@ -59,7 +59,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * This is a 1:n relation
 	 *
-	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child2>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child2>
 	 */
 	protected $children2;
 
@@ -73,7 +73,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * This is a m:n relation
 	 *
-	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child4>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child4>
 	 */
 	protected $children4;
 
@@ -98,9 +98,9 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		 * It will be rewritten on each save in the extension builder
 		 * You may modify the constructor of this class instead
 		 */
-		$this->children2 = new \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage();
+		$this->children2 = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 
-		$this->children4 = new \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage();
+		$this->children4 = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 	}
 
 	/**
@@ -183,7 +183,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Returns the children2
 	 *
-	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child2> $children2
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child2> $children2
 	 */
 	public function getChildren2() {
 		return $this->children2;
@@ -192,10 +192,10 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Sets the children2
 	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child2> $children2
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child2> $children2
 	 * @return void
 	 */
-	public function setChildren2(\TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage $children2) {
+	public function setChildren2(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $children2) {
 		$this->children2 = $children2;
 	}
 
@@ -241,7 +241,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Returns the children4
 	 *
-	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child4> $children4
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child4> $children4
 	 */
 	public function getChildren4() {
 		return $this->children4;
@@ -250,10 +250,10 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Sets the children4
 	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child4> $children4
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child4> $children4
 	 * @return void
 	 */
-	public function setChildren4(\TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage $children4) {
+	public function setChildren4(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $children4) {
 		$this->children4 = $children4;
 	}
 

@@ -235,7 +235,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 	/**
 	 * add all setter/getter/add/remove etc. methods
-	 * @param Tx_ExtensionBuilder_Domain_Model_AbstractDomainObjectProperty $domainProperty
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $domainProperty
 	 *
 	 * @return void
 	 */
@@ -275,7 +275,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 		}
 		else {
 			$getterMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($getterMethodName);
-			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('new getMethod:' . $getterMethodName, 'extension_builder', 0);
+			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('new getMethod:' . $getterMethodName, 'extension_builder', 0);
 			// default method body
 			$getterMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'get', ''));
 			$getterMethod->setTag('return', $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName());
@@ -289,12 +289,11 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 	/**
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_AbstractDomainObjectProperty $domainProperty
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $domainProperty
 	 *
 	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
 	 */
 	protected function buildSetterMethod($domainProperty) {
-
 		$propertyName = $this->getParameterName($domainProperty, 'set');
 		// add (or update) a setter method
 		$setterMethodName = $this->getMethodName($domainProperty, 'set');
@@ -316,7 +315,6 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 			$setterMethod->setDescription('Sets the ' . $propertyName);
 		}
 		$setterParameters = $setterMethod->getParameterNames();
-
 		if (!in_array($propertyName, $setterParameters)) {
 			$setterParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($propertyName);
 			$setterParameter->setVarType($domainProperty->getTypeForComment());
@@ -324,6 +322,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 				$setterParameter->setTypeHint($domainProperty->getTypeHint());
 			}
 			$setterMethod->setParameter($setterParameter);
+		} else {
+			current($setterMethod->getParameters())->setTypeHint($domainProperty->getTypeHint());
 		}
 		return $setterMethod;
 	}
@@ -331,7 +331,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 	/**
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_AbstractDomainObjectProperty $domainProperty
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation $domainProperty
 	 *
 	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
 	 */
@@ -343,10 +343,10 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 		if ($this->classObject->methodExists($addMethodName)) {
 			$addMethod = $this->classObject->getMethod($addMethodName);
-			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Existing addMethod imported:' . $addMethodName, 'extension_builder', 0, array('methodBody' => $addMethod->getBody()));
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Existing addMethod imported:' . $addMethodName, 'extension_builder', 0, array('methodBody' => $addMethod->getBody()));
 		}
 		else {
-			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('new addMethod:' . $addMethodName, 'extension_builder', 0);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('new addMethod:' . $addMethodName, 'extension_builder', 0);
 			$addMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($addMethodName);
 			// default method body
 			$addMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'add', ''));
@@ -356,12 +356,15 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 			$addMethod->addModifier('public');
 		}
 		$addParameters = $addMethod->getParameterNames();
-
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Existing setter parameter:','extension_builder', 0, $addParameters);
 		if (!in_array(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName), $addParameters)) {
 			$addParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($this->getParameterName($domainProperty, 'add'));
 			$addParameter->setVarType($domainProperty->getForeignClassName());
 			$addParameter->setTypeHint($domainProperty->getForeignClassName());
 			$addMethod->setParameter($addParameter);
+		} else {
+				// we expect always the first (!) parameter to represent the object to add
+			current($addMethod->getParameters())->setTypeHint($domainProperty->getForeignClassName());
 		}
 		if (!$addMethod->hasDescription()) {
 			$addMethod->setDescription('Adds a ' . $domainProperty->getForeignModelName());
@@ -371,13 +374,11 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 	/**
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $domainProperty
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation $domainProperty
 	 *
 	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
 	 */
 	protected function buildRemoveMethod($domainProperty) {
-
-		$propertyName = $domainProperty->getName();
 
 		$removeMethodName = $this->getMethodName($domainProperty, 'remove');
 
@@ -402,6 +403,9 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 			$removeParameter->setVarType($domainProperty->getForeignClassName());
 			$removeParameter->setTypeHint($domainProperty->getForeignClassName());
 			$removeMethod->setParameter($removeParameter);
+		} else {
+				// we expect always the first (!) parameter to represent the object to add
+			current($removeMethod->getParameters())->setTypeHint($domainProperty->getForeignClassName());
 		}
 
 		if (!$removeMethod->hasDescription()) {

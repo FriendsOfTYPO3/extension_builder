@@ -70,7 +70,6 @@ class Tx_ExtensionBuilder_CodeGeneratorUnitTest extends Tx_ExtensionBuilder_Test
 		$classObject = $classParser->parse($className);
 		$classObject->setNameSpace('Foo');
 		$classObject->setName('Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicAliasClass');
-		$this->assertEquals(array('\\TYPO3\\CMS\\Core\\Utility','\\TYPO3\\CMS\\Core\\Utility\\GeneralUtility' ),$classObject->getAliasDeclarations());
 		$tmpDir = 'tmp/';
 		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$tmpDir);
 		$absTmpDir = $this->extension->getExtensionDir().$tmpDir;

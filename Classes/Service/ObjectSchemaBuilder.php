@@ -108,7 +108,7 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements \TYPO3\CMS\Core
 					$foreignDatabaseTableName = Tx_ExtensionBuilder_Utility_Tools::parseTableNameFromClassName($jsonRelation['foreignRelationClass']);
 				}
 				$relation->setForeignDatabaseTableName($foreignDatabaseTableName);
-				if (is_a($relation, Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation)) {
+				if (is_a($relation, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation')) {
 					$foreignKeyName = strtolower($domainObject->getName());
 					if (isset($relatedForeignTables[$foreignDatabaseTableName])) {
 						$foreignKeyName .= $relatedForeignTables[$foreignDatabaseTableName];

@@ -407,8 +407,8 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$this->assertFileExists($extensionDir.'Configuration/TCA/'. $domainObject->getName() . '.php');
 		$this->assertFileExists($extensionDir.'Configuration/ExtensionBuilder/settings.yaml');
 
-		$this->assertFileExists($extensionDir.'Resources/Private/Language/locallang_db.xml');
-		$this->assertFileExists($extensionDir.'Resources/Private/Language/locallang.xml');
+		$this->assertFileExists($extensionDir.'Resources/Private/Language/locallang_db.xlf');
+		$this->assertFileExists($extensionDir.'Resources/Private/Language/locallang.xlf');
 		$this->assertFileExists($extensionDir.'Resources/Private/Partials/'. $domainObject->getName() .'/Properties.html');
 		$this->assertFileExists($extensionDir.'Resources/Private/Partials/'. $domainObject->getName() .'/FormFields.html');
 	}

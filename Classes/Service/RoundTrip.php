@@ -397,8 +397,8 @@ class Tx_ExtensionBuilder_Service_RoundTrip implements \TYPO3\CMS\Core\Singleton
 
 						$parameters = $actionMethod->getParameters();
 						foreach ($parameters as &$parameter) {
-							if (strpos($parameter->getTypeHint(), $oldDomainObject->getQualifiedClassName()) > -1) {
-								$parameter->setTypeHint($currentDomainObject->getQualifiedClassName());
+							if (strpos($parameter->getTypeHint(), $oldDomainObject->getFullQualifiedClassName()) > -1) {
+								$parameter->setTypeHint($currentDomainObject->getFullQualifiedClassName());
 								$parameter->setName($this->replaceUpperAndLowerCase($oldName, $newName, $parameter->getName()));
 								$actionMethod->replaceParameter($parameter);
 							}

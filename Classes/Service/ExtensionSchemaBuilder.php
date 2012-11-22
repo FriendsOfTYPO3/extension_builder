@@ -167,10 +167,10 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements \TYPO3\CMS\C
 			}
 			// get unique foreign key names for multiple relations to the same foreign class
 			if (in_array($foreignModelName, $existingRelations[$localModelName])) {
-				if (is_a($relation, Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation)) {
+				if (is_a($relation, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation')) {
 					$relation->setForeignKeyName(strtolower($localModelName) . count($existingRelations[$localModelName]));
 				}
-				if(is_a($relation, Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation)) {
+				if(is_a($relation, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
 					$relation->setUseExtendedRelationTableName(TRUE);
 				}
 			}

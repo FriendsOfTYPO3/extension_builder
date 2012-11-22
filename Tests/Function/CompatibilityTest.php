@@ -98,11 +98,13 @@ class Tx_ExtensionBuilder_CompatibilityFunctionTest extends Tx_ExtensionBuilder_
 				);
 				//\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile(PATH_site.'fileadmin/'.basename($createdFile), file_get_contents($createdFile));
 				$this->assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');
-				$this->assertEquals(
-					\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",$referenceFileContent, TRUE),
-					\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($createdFile), TRUE),
-					'File ' . $createdFile . ' was not equal to original file.'
-				);
+				if(strpos($referenceFile, 'xlf') === FALSE) {
+					$this->assertEquals(
+						\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",$referenceFileContent, TRUE),
+						\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($createdFile), TRUE),
+						'File ' . $createdFile . ' was not equal to original file.'
+					);
+				}
 			}
 		}
 

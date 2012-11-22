@@ -121,7 +121,7 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Phpunit_TestCase {
 	public function tearDown() {
 		parent::tearDown();
 		if(isset($this->extension) && $this->extension->getExtensionKey() != NULL) {
-			\TYPO3\CMS\Core\Utility\GeneralUtility::rmdir($this->extension->getExtensionDir(), TRUE);
+			//\TYPO3\CMS\Core\Utility\GeneralUtility::rmdir($this->extension->getExtensionDir(), TRUE);
 		}
 	}
 
@@ -172,7 +172,7 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Phpunit_TestCase {
 
 	function removeInitialModelClassFile($modelName){
 		if(@file_exists($this->extension->getExtensionDir().$this->modelClassDir.$modelName . '.php')){
-			//unlink($this->extension->getExtensionDir().$this->modelClassDir.$modelName . '.php');
+			unlink($this->extension->getExtensionDir().$this->modelClassDir.$modelName . '.php');
 		}
 		$this->assertFalse(file_exists($this->extension->getExtensionDir().$this->modelClassDir. $modelName . '.php'),'Dummy files could not be removed:'.$this->extension->getExtensionDir().$this->modelClassDir. $modelName . '.php');
 	}

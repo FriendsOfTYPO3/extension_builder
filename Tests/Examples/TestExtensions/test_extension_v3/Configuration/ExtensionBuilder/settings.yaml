@@ -90,4 +90,4 @@ classBuilder:
       parentClass: \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject
 
   Repository:
-    parentClass: \TYPO3\CMS\Extbase\Mvc\Controller\ActionControllerPersistence\Repository
+    parentClass: \TYPO3\CMS\Extbase\Persistence\Repository

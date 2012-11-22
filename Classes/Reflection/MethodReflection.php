@@ -89,7 +89,7 @@ class Tx_ExtensionBuilder_Reflection_MethodReflection extends TYPO3\CMS\Extbase\
 		$typeHintRegex = '/>\s*([a-zA-Z0-9_&\\\s]*)\s*\$/';
 		$matches = array();
 		if (preg_match($typeHintRegex, str_replace('or NULL','',$paramAsString), $matches)) {
-			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Typehint for parameter ' . $reflectionParameter->getName() . ' in method '.$this->getName().' : '.$paramAsString,'extension_builder',0,$matches);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Typehint for parameter ' . $reflectionParameter->getName() . ' in method '.$this->getName().' : '.$paramAsString . ' namespace: ' . $reflectionParameter->getDeclaringClass()->getNamespaceName(),'extension_builder',0,$matches);
 			if (!empty($matches[1])) {
 				$typeHint = $matches[1];
 				if ($reflectionParameter->isPassedByReference()) {
@@ -97,9 +97,10 @@ class Tx_ExtensionBuilder_Reflection_MethodReflection extends TYPO3\CMS\Extbase\
 					$typeHint = str_replace('&', '', $typeHint);
 				}
 				$typeHint = trim($typeHint);
-				if(strpos($typeHint, 'TYPO3') === 0) {
-						// this is a hack, since there is no differnce between full qalified and qualified name of thze type hint
-						// so if it starts with TYPO3 we assume the /TYPO3 namespace is appropriate
+
+				if(strpos($typeHint, '\\') > 0) {
+						// this is a hack, since there is no differnce between full qalified and qualified name of the type hint
+						// so if it contains a backslash we assume the typehint is a namespaced class name and we can use a full qualified typeHint
 					$typeHint = '\\' . $typeHint;
 				}
 				return $typeHint;
