@@ -53,15 +53,6 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 		$this->parseClass('\\Foo\\Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicNameSpacedClass');
 	}
 
-	/**
-	 * Parse a basic class from a file
-	 * @test
-	 */
-	public function ParseBasicAliasClass() {
-		require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicAliasClass.php');
-		$classObject = $this->parseClass('\\Bar\\Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicAliasClass');
-		$this->assertEquals(array('\\TYPO3\\CMS\\Core\\Utility','\\TYPO3\\CMS\\Core\\Utility\\GeneralUtility'),$classObject->getAliasDeclarations());
-	}
 
 	/**
 	 * Parse a complex class from a file
@@ -108,7 +99,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 		);
 		$this->assertEquals(
 			$classObject->getAppendedBlock(),
-			"\n/**\n *  dfg dfg dfg dfg\n */\nrequire_once(\\TYPO3\\CMS\\Core\\Extension\\ExtensionManager:: extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');   include_once(\\TYPO3\\CMS\\Core\\Extension\\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/ComplexClass.php'); // test\n\ninclude_once(\\TYPO3\\CMS\\Core\\Extension\\ExtensionManager::extPath('extension_builder') . 'Tests/Examples/ClassParser/ComplexClass.php'); // test\n\n",
+			"\n/**\n *  dfg dfg dfg dfg\n */\nrequire_once(\\TYPO3\\CMS\\Core\\Utility\ExtensionManagementUtility:: extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');   include_once(\\TYPO3\\CMS\\Core\\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ComplexClass.php'); // test\n\ninclude_once(\\TYPO3\\CMS\\Core\\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ClassParser/ComplexClass.php'); // test\n\n",
 			'Appended block was not properly parsed'
 		);
 	}

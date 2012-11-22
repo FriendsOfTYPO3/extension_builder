@@ -120,10 +120,10 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRe
 
 	/**
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $foreignClass Set the foreign class of the relation
+	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $foreignModel Set the foreign DomainObject of the relation
 	 */
-	public function setForeignModel(Tx_ExtensionBuilder_Domain_Model_DomainObject $foreignClass) {
-		$this->foreignModel = $foreignClass;
+	public function setForeignModel(Tx_ExtensionBuilder_Domain_Model_DomainObject $foreignModel) {
+		$this->foreignModel = $foreignModel;
 	}
 
 	/**
