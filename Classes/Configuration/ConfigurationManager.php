@@ -138,6 +138,10 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends TYPO3\CMS\E
 			$extensionConfigurationJSON = $this->fixExtensionBuilderJSON($extensionConfigurationJSON, $prepareForModeler);
 			$extensionConfigurationJSON['properties']['originalExtensionKey'] = $extensionKey;
 			//\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($jsonFile, json_encode($extensionConfigurationJSON));
+			if(floatval($extensionConfigurationJSON['log']['extension_builder_version']) < 2.5) {
+				return NULL;
+			}
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog($extensionConfigurationJSON['log']['extension_builder_version'] . floatval($extensionConfigurationJSON['log']['extension_builder_version']), 'extension_builder', 0);
 			return $extensionConfigurationJSON;
 		} else {
 			return NULL;
