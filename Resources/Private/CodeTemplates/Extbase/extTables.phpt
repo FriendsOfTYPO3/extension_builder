@@ -33,7 +33,7 @@ if (TYPO3_MODE === 'BE') {
 		array(
 			'access' => 'user,group',
 			'icon'   => 'EXT:' . $_EXTKEY . '/ext_icon.gif',
-			'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_{backendModule.key}.{locallangFileFormat}',
+			'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_{backendModule.key}.xlf',
 		)
 	);
 </f:for>
@@ -43,20 +43,22 @@ if (TYPO3_MODE === 'BE') {
 
 <f:for each="{extension.domainObjects}" as="domainObject">
 	<k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">
-<k:render partial="TCA/TypeField.phpt" arguments="{domainObject:domainObject, settings:settings, locallangFileFormat:locallangFileFormat}" />
-	</k:mapping>
-	<f:if condition="{domainObject.mapToTable}">
 		<f:then>
 			<k:mapping domainObject="{domainObject}" renderCondition="isMappedToExternalTable">
-<k:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings, locallangFileFormat:locallangFileFormat}" />
+				<f:then>
+					<k:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
+				</f:then>
+				<f:else>
+					<k:render partial="TCA/TypeField.phpt" arguments="{domainObject:domainObject, settings:settings}" />
+				</f:else>
 			</k:mapping>
 		</f:then>
 		<f:else>
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.{locallangFileFormat}');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xlf');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('{domainObject.databaseTableName}');
 $TCA['{domainObject.databaseTableName}'] = array(
 	'ctrl' => array(
-		'title'	=> 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.{locallangFileFormat}:{domainObject.databaseTableName}',
+		'title'	=> 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.databaseTableName}',
 		'label' => '{domainObject.listModuleValueLabel}',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
@@ -81,6 +83,6 @@ $TCA['{domainObject.databaseTableName}'] = array(
 	),
 );
 		</f:else>
-	</f:if>
+	</k:mapping>
 </f:for>
 ?>
