@@ -44,9 +44,9 @@ class Tx_ExtensionBuilder_ViewHelpers_RecordTypeViewHelper extends \TYPO3\CMS\Fl
 	public function render(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
 		$classSettings = $this->configurationManager->getExtbaseClassConfiguration($domainObject->getParentClass());
 		if (isset($classSettings['recordType'])) {
-			$parentRecordType = $classSettings['recordType'];
+			$parentRecordType = $this->convertClassNameToRecordType($classSettings['recordType']);
 		} else {
-			$parentRecordType = str_replace('Domain_Model_', '', $domainObject->getParentClass());
+			$parentRecordType = $this->convertClassNameToRecordType($domainObject->getParentClass());
 			if (!isset($TCA[$domainObject->getDatabaseTableName()]['types'][$parentRecordType])) {
 				$parentRecordType = 1;
 			}
@@ -57,6 +57,17 @@ class Tx_ExtensionBuilder_ViewHelpers_RecordTypeViewHelper extends \TYPO3\CMS\Fl
 		$this->templateVariableContainer->remove('parentRecordType');
 
 		return $content;
+	}
+
+	protected function convertClassNameToRecordType($className) {
+		$classNameParts = explode('\\', $className);
+		if(count($classNameParts) > 5) {
+			return 'Tx_' . $classNameParts[2] . '_Domain_Model_' . $classNameParts[5];
+		} elseif(count($classNameParts) == 5) {
+			return 'Tx_' . $classNameParts[1] . '_Domain_Model_' . $classNameParts[4];
+		} else {
+			return $className;
+		}
 	}
 
 }

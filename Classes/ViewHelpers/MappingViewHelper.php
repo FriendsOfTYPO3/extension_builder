@@ -21,7 +21,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class Tx_ExtensionBuilder_ViewHelpers_MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class Tx_ExtensionBuilder_ViewHelpers_MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper {
 
 	/**
 	 * @var Tx_ExtensionBuilder_Configuration_ConfigurationManager
@@ -61,19 +61,25 @@ class Tx_ExtensionBuilder_ViewHelpers_MappingViewHelper extends \TYPO3\CMS\Fluid
 
 			case 'isMappedToInternalTable'	:
 				if (!$isMappedToExternalTable) {
-					$content = $this->renderChildren();
+					$content = $this->renderThenChild();
+				} else {
+					$content = $this->renderElseChild();
 				}
 				break;
 
 			case 'isMappedToExternalTable'	:
 				if ($isMappedToExternalTable) {
-					$content = $this->renderChildren();
+					$content = $this->renderThenChild();
+				} else {
+					$content = $this->renderElseChild();
 				}
 				break;
 
 			case 'needsTypeField'			:
 				if ($this->needsTypeField($domainObject, $isMappedToExternalTable)) {
-					$content = $this->renderChildren();
+					$content = $this->renderThenChild();
+				} else {
+					$content = $this->renderElseChild();
 				}
 				break;
 		}
