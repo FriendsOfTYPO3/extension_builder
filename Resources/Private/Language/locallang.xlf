@@ -327,6 +327,12 @@
 			<trans-unit id="date">
 				<source>Date*</source>
 			</trans-unit>
+			<trans-unit id="NativeDateTime">
+				<source>Naive DateTime*</source>
+			</trans-unit>
+			<trans-unit id="NativeDate">
+				<source>Native Date*</source>
+			</trans-unit>
 			<trans-unit id="time">
 				<source>Time*</source>
 			</trans-unit>
