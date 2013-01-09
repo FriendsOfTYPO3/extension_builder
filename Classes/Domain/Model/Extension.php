@@ -383,10 +383,14 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 		$classHierarchy = array();
 		foreach ($this->domainObjects as $domainObject) {
 			if ($domainObject->isSubclass()) {
-				if (!is_array($classHierarchy[$domainObject->getParentClass()])) {
-					$classHierarchy[$domainObject->getParentClass()] = array();
+				$parentClass = $domainObject->getParentClass();
+				if(strpos($parentClass, '\\') === 0) {
+					$parentClass = substr($parentClass, 1);
 				}
-				$classHierarchy[$domainObject->getParentClass()][] = $domainObject;
+				if (!is_array($classHierarchy[$parentClass])) {
+					$classHierarchy[$parentClass] = array();
+				}
+				$classHierarchy[$parentClass][] = $domainObject;
 			}
 		}
 		if (!empty($classHierarchy)) {

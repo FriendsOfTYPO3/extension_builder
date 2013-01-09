@@ -99,6 +99,10 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements \TYPO3\CMS\Core
 			$relation = self::buildRelation($jsonRelation);
 			if (!empty($jsonRelation['foreignRelationClass'])) {
 				// relations without wires
+				if(strpos($jsonRelation['foreignRelationClass'], '\\') > 0) {
+					// add trailing slash if not set
+					$jsonRelation['foreignRelationClass'] = '\\' . $jsonRelation['foreignRelationClass'];
+				}
 				$relation->setForeignClassName($jsonRelation['foreignRelationClass']);
 				$relation->setRelatedToExternalModel(TRUE);
 				$extbaseClassConfiguration = $this->configurationManager->getExtbaseClassConfiguration($jsonRelation['foreignRelationClass']);

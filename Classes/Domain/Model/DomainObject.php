@@ -124,7 +124,11 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	}
 
 	public function getQualifiedClassName() {
-		return $this->extension->getNameSpace() . '\\Domain\\Model\\' . $this->getName();
+		$qualifiedClassName = $this->extension->getNameSpace() . '\\Domain\\Model\\' . $this->getName();
+		if(strpos($qualifiedClassName, '\\') === 0) {
+			$qualifiedClassName = substr($qualifiedClassName, 1);
+		}
+		return $qualifiedClassName;
 	}
 
 	public function getFullQualifiedClassName() {

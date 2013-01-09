@@ -373,7 +373,7 @@
 				<source>Relation to external class</source>
 			</trans-unit>
 			<trans-unit id="descr_foreignRelationClass">
-				<source>If this is a relation to an external model, enter the class name here (The class must exist and be loadable)</source>
+				<source>If this is a relation to an external model, enter the (full qualified) class name here. The class must exist and be loadable</source>
 			</trans-unit>
 		</body>
 	</file>
