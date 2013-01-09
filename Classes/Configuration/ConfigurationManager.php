@@ -170,10 +170,10 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends TYPO3\CMS\E
 			if (isset($classSettings['mapping']['tableName']) && strlen($classSettings['mapping']['tableName']) > 0) {
 				$classConfiguration['tableName'] = $classSettings['mapping']['tableName'];
 			}
-			/**
 			$classHierachy = array_merge(array($className), class_parents($className));
+			$columnMapping = array();
 			foreach ($classHierachy as $currentClassName) {
-				if (in_array($currentClassName, array('Tx_Extbase_DomainObject_AbstractEntity', 'Tx_Extbase_DomainObject_AbstractValueObject'))) {
+				if (in_array($currentClassName, array('TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity', 'TYPO3\\CMS\\Extbase\\DomainObject\\AbstractValueObject'))) {
 					break;
 				}
 				$currentClassSettings = $frameworkConfiguration['persistence']['classes'][$currentClassName];
@@ -183,7 +183,6 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends TYPO3\CMS\E
 					}
 				}
 			}
-			*/
 		}
 		return $classConfiguration;
 	}
