@@ -437,8 +437,10 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 */
 	public function addDomainObject(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
 		$domainObject->setExtension($this);
-		if (in_array($domainObject->getName(), array_keys($this->domainObjects))) {
-			throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
+		foreach(array_keys($this->domainObjects) as $existingDomainObjectName) {
+			if(strtolower($domainObject->getName()) == strtolower($existingDomainObjectName) ) {
+				throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
+			}
 		}
 		if ($domainObject->getNeedsUploadFolder()) {
 			$this->needsUploadFolder = TRUE;
