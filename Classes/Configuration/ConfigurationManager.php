@@ -542,7 +542,9 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends TYPO3\CMS\E
 					if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($extKey)]['plugins'][ucfirst($pluginJSON['key'])]['controllers'])) {
 						$controllerActionCombinationsConfig = "";
 						$nonCachableActionConfig = "";
-						$pluginJSON['actions'] = array();
+						if(!is_array($pluginJSON['actions'])) {
+							$pluginJSON['actions'] = array();
+						}
 						foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($extKey)]['plugins'][ucfirst($pluginJSON['key'])]['controllers'] as $controllerName => $controllerConfig) {
 							if (isset($controllerConfig['actions'])) {
 								$controllerActionCombinationsConfig .= $controllerName . '=>' . implode(',', $controllerConfig['actions']) . LF;
