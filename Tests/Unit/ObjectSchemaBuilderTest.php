@@ -141,12 +141,12 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 		$expected->setAggregateRoot(TRUE);
 
 		$relation1 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation('relation 1');
-		$relation1->setForeignClassName('TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser');
+		$relation1->setForeignClassName('\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser');
 		$relation1->setRelatedToExternalModel(TRUE);
 		$relation1->setExcludeField(FALSE);
 		$relation1->setForeignDatabaseTableName('fe_users');
 		$relation2 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation('relation 2');
-		$relation2->setForeignClassName('TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser');
+		$relation2->setForeignClassName('\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser');
 		$relation2->setRelatedToExternalModel(TRUE);
 		$relation2->setExcludeField(FALSE);
 		$relation2->setForeignDatabaseTableName('fe_users');

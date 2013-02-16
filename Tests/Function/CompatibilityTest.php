@@ -81,7 +81,7 @@ class Tx_ExtensionBuilder_CompatibilityFunctionTest extends Tx_ExtensionBuilder_
 			)
 		);
 		$newExtensionDir = vfsStream::url('testDir') . '/';
-		$newExtensionDir = PATH_typo3conf.'ext/extension_builder/Tests/Examples/tmp/';
+		//$newExtensionDir = PATH_typo3conf.'ext/extension_builder/Tests/Examples/tmp/';
 		$this->extension->setExtensionDir($newExtensionDir . 'test_extension/');
 
 		$this->codeGenerator->build($this->extension);
