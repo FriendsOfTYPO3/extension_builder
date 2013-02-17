@@ -95,7 +95,7 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements \TYPO3\CMS\C
 						$tableName = $classSettings['tableName'];
 					} else {
 						// we use the default table name
-						$tableName = strtolower($domainObject->getParentClass());
+						$tableName = Tx_ExtensionBuilder_Utility_Tools::parseTableNameFromClassName($domainObject->getParentClass());
 					}
 					if (!isset($GLOBALS['TCA'][$tableName])) {
 						throw new Exception('Table definitions for table ' . $tableName . ' could not be loaded. You can only map to tables with existing TCA or extend classes of installed extensions!');
