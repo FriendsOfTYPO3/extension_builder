@@ -64,9 +64,9 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Phpunit_TestCase {
 
 		$this->extension = $this->getMock('Tx_ExtensionBuilder_Domain_Model_Extension',array('getExtensionDir'));
 		$extensionKey = 'dummy';
-		$dummyExtensionDir = PATH_typo3conf.'ext/extension_builder/Tests/Examples/'.$extensionKey.'/';
+		//$dummyExtensionDir = PATH_typo3conf.'ext/extension_builder/Tests/Examples/'.$extensionKey.'/';
 		vfsStream::setup('testDir');
-		//$dummyExtensionDir = vfsStream::url('testDir').'/';
+		$dummyExtensionDir = vfsStream::url('testDir').'/';
 		$this->extension->setVendorName('TYPO3');
 		$this->extension->setExtensionKey($extensionKey);
 		$this->extension->expects(
