@@ -8,7 +8,8 @@ if (!defined('TYPO3_MODE')) {
  * Register Backend Module
  */
 
-Tx_Extbase_Utility_Extension::registerModule(
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
 	$_EXTKEY,
 	'tools',
 	'extensionbuilder',
