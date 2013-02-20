@@ -619,7 +619,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	 */
 	public function generateDomainObjectCode(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject, $mergeWithExistingClass) {
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject, $mergeWithExistingClass);
-		t3lib_div::devlog('Namespace: ' . $modelClassObject->getNameSpace(),'extension_builder');
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Namespace: ' . $modelClassObject->getNameSpace(),'extension_builder');
 		if ($modelClassObject) {
 			$classDocComment = $this->renderDocComment($modelClassObject, $domainObject);
 			$modelClassObject->setDocComment($classDocComment);

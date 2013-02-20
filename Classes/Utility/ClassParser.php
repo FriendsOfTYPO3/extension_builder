@@ -281,7 +281,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 						}
 
 						if (preg_match_all($this->aliasRegex, $trimmedLine, $aliasMatches)) {
-							t3lib_div::devlog('Alias Matches','extension_builder',0,$aliasMatches);
+							\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Alias Matches','extension_builder',0,$aliasMatches);
 							if(!empty($aliasMatches[1])) {
 								//$this->classObject->addAliasDeclaration(trim($aliasMatches[1][0]));
 							}
