@@ -392,11 +392,17 @@
 
 			var value = this.getValue();
 
-			if (value.name == "") {
+			var extensionProperties = this.propertiesForm.getValue();
+
+			if (extensionProperties.name == "") {
 				this.alert('Extension name missing', "Please enter an extension name in the left panel");
 				return;
 			}
-			if (value.extensionKey == "") {
+			if (extensionProperties.vendorName == "") {
+				this.alert('Extension vendor name missing', "Please enter a vendor name in the left panel");
+				return;
+			}
+			if (extensionProperties.extensionKey == "") {
 				this.alert('Extension key missing', "Please enter an extension key in the left panel");
 				return;
 			}
