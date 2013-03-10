@@ -137,6 +137,15 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							value: 0
 						}
 					},
+					{
+						type: "boolean",
+						inputParams: {
+							name: "disableLocalization",
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.disableLocalization,
+							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_disableLocalization,
+							value: 0
+						}
+					},
                     {
                         type: "select",
                         inputParams: {

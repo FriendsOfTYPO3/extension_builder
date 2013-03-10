@@ -123,6 +123,12 @@
 			<trans-unit id="descr_disableVersioning">
 				<source>Check this if your extension needs no support for versioning. This will skip the creation of versioning related columns in the database</source>
 			</trans-unit>
+			<trans-unit id="disableLocalization">
+				<source>Disable localization</source>
+			</trans-unit>
+			<trans-unit id="descr_disableLocalization">
+				<source>Check this if your extension needs no support for localization. This will skip the creation of localization related columns in the database</source>
+			</trans-unit>
 			<trans-unit id="dependsOn">
 				<source>Depends on</source>
 			</trans-unit>

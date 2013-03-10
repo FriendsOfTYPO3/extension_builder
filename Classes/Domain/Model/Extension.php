@@ -101,6 +101,13 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 */
 	protected $supportVersioning = TRUE;
 
+	/**
+	 * @var bool
+	 */
+	protected $supportLocalization = TRUE;
+
+
+
 
 	/**
 	 * The extension's state. One of the STATE_* constants.
@@ -774,6 +781,20 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	 */
 	public function getNameSpace() {
 		return $this->getVendorName() . '\\' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->getExtensionKey());
+	}
+
+	/**
+	 * @param boolean $supportLocalization
+	 */
+	public function setSupportLocalization($supportLocalization) {
+		$this->supportLocalization = $supportLocalization;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getSupportLocalization() {
+		return $this->supportLocalization;
 	}
 
 }

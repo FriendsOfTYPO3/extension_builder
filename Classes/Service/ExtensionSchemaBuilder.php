@@ -202,6 +202,10 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements \TYPO3\CMS\C
 			$extension->setSupportVersioning(FALSE);
 		}
 
+		if($propertyConfiguration['emConf']['disableLocalization']) {
+			$extension->setSupportLocalization(FALSE);
+		}
+
 		// various extension properties
 		$extension->setVersion($propertyConfiguration['emConf']['version']);
 
