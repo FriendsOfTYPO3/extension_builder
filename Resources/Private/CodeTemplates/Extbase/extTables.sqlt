@@ -33,15 +33,16 @@ CREATE TABLE {domainObject.databaseTableName} (
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
 </f:if><f:if condition="{domainObject.sorting}">	sorting int(11) DEFAULT '0' NOT NULL,</f:if>
+<f:if condition="{extension.supportLocalization}">
 	t3_origuid int(11) DEFAULT '0' NOT NULL,
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
 	l10n_diffsource mediumblob,
-
+</f:if>
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 <f:if condition="{extension.supportVersioning}">	KEY t3ver_oid (t3ver_oid,t3ver_wsid),</f:if>
-	KEY language (l10n_parent,sys_language_uid)
+<f:if condition="{extension.supportLocalization}"> KEY language (l10n_parent,sys_language_uid)</f:if>
 </f:else>
 </f:if>
 );
