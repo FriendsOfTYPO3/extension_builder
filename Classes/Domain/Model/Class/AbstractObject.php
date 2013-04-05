@@ -175,10 +175,10 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 * sets a tags
 	 *
 	 * @param string $tagName
-	 * @param mixed $tagValue
+	 * @param mixed $tagValue (optional)
 	 * @return void
 	 */
-	public function setTag($tagName, $tagValue, $override = TRUE) {
+	public function setTag($tagName, $tagValue = '', $override = TRUE) {
 		if (!$override && isset($this->tags[$tagName])) {
 			if (!is_array($this->tags[$tagName])) {
 				// build an array with the existing value as first element
