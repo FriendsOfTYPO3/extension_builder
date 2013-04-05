@@ -356,6 +356,17 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends TYPO3\CMS\
 	);
 
 	/**
+	 *
+	 * column names used by TYPO3
+	 * @var array
+	 */
+	static protected $reservedExtbaseNames = array(
+		'Format',
+		'Action',
+		'Controller'
+	);
+
+	/**
 	 * keeping warnings (which will result in a confirmation)
 	 * @var array
 	 */
@@ -683,6 +694,9 @@ class Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator extends TYPO3\CMS\
 			$firstChar = $objectName{0};
 			if (strtolower($firstChar) == $firstChar) {
 				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Illegal first character of domain object name "' . $domainObject->getName() . '". Please use UpperCamelCase.', self::ERROR_DOMAINOBJECT_LOWER_FIRST_CHARACTER);
+			}
+			if(in_array($objectName, self::$reservedExtbaseNames)) {
+				$this->validationResult['errors'][] = new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Domain object name "' . $domainObject->getName() . '" can\'t be used in extbase.', self::ERROR_PROPERTY_RESERVED_WORD);
 			}
 			$this->validateProperties($domainObject);
 			$this->validateDomainObjectActions($domainObject);
