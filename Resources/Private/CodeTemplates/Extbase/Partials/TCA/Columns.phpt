@@ -1,4 +1,5 @@
 {namespace k=Tx_ExtensionBuilder_ViewHelpers}
+<f:if condition="{domainObject.properties}">
 $tmp_{domainObject.extension.extensionKey}_columns = array(
 <f:for each="{domainObject.properties}" as="property">
 	'{property.fieldName}' => array(
@@ -18,6 +19,7 @@ $tmp_{domainObject.extension.extensionKey}_columns['{relation.foreignKeyName}'] 
 );</f:for>
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('{domainObject.databaseTableName}',$tmp_{domainObject.extension.extensionKey}_columns);
+</f:if>
 <f:if condition="{domainObject.mapToTable}">
 $TCA['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = array('LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}','{domainObject.recordType}');
 </f:if>
