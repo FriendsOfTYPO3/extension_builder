@@ -51,7 +51,7 @@ class Tx_ExtensionBuilder_Domain_Repository_ExtensionRepository implements \TYPO
 		$result = array();
 		$extensionDirectoryHandle = opendir(PATH_typo3conf . 'ext/');
 		while (FALSE !== ($singleExtensionDirectory = readdir($extensionDirectoryHandle))) {
-			if ($singleExtensionDirectory[0] == '.') {
+			if ($singleExtensionDirectory[0] == '.' || $singleExtensionDirectory[0] == '..' || !is_dir(PATH_typo3conf . 'ext/'.$singleExtensionDirectory)) {
 				continue;
 			}
 			$extensionBuilderConfiguration = $this->configurationManager->getExtensionBuilderConfiguration($singleExtensionDirectory);
