@@ -14,7 +14,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 			name: "vendorName",
 			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.vendorName,
 			value: '',
-			forceLowerCase: false,
+			ucFirst: true,
 			forceAlphaNumeric: true,
 			cols: 30,
 			description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_vendorName
