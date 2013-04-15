@@ -75,7 +75,7 @@ class Tx_ExtensionBuilder_ViewHelpers_ClassViewHelper extends \TYPO3\CMS\Fluid\C
 	private function renderInterfaceDeclaration($classObject) {
 		$interfaceNames = $classObject->getInterfaceNames();
 		if (count($interfaceNames) > 0) {
-			return ' implements ' . implode(',', $interfaceNames);
+			return ' implements \\' . implode(', \\', $interfaceNames);
 		}
 		else return '';
 	}
