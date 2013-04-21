@@ -251,7 +251,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	/**
 	 * Template Method which should return the type hinting information
 	 * being used in PHPDoc Comments.
-	 * Examples: integer, string, Tx_FooBar_Something, \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_FooBar_Something>
+	 * Examples: integer, string, Tx_FooBar_Something, \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_FooBar_Something>
 	 *
 	 * @return string
 	 */
@@ -259,7 +259,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
 	/**
 	 * Template method which should return the PHP type hint
-	 * Example: \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage, array, Tx_FooBar_Something
+	 * Example: \TYPO3\CMS\Extbase\Persistence\ObjectStorage, array, Tx_FooBar_Something
 	 *
 	 * @return string
 	 */
