@@ -9,15 +9,16 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['{domainObject.databaseTableName}'] = array(
 	'ctrl' => $TCA['{domainObject.databaseTableName}']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden<f:for each="{domainObject.properties}" as="property">, {property.fieldName}</f:for>',
+		'showRecordFieldList' => '<f:if condition="{extension.supportLocalization}">sys_language_uid, l10n_parent, l10n_diffsource, </f:if>hidden<f:for each="{domainObject.properties}" as="property">, {property.fieldName}</f:for>',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1<f:for each="{domainObject.properties}" as="property">, {property.fieldName}</f:for>,--div--;LLL:EXT:cms/locallang_ttc.{locallangFileFormat}:tabs.access,starttime, endtime'),
+		'1' => array('showitem' => '<f:if condition="{extension.supportLocalization}">sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, </f:if>hidden;;1<f:for each="{domainObject.properties}" as="property">, {property.fieldName}</f:for>,--div--;LLL:EXT:cms/locallang_ttc.{locallangFileFormat}:tabs.access,starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
 	),
 	'columns' => array(
+		<f:if condition="{extension.supportLocalization}">
 		'sys_language_uid' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.{locallangFileFormat}:LGL.language',
@@ -49,6 +50,8 @@ $TCA['{domainObject.databaseTableName}'] = array(
 				'type' => 'passthrough',
 			),
 		),
+		</f:if>
+		<f:if condition="{extension.supportVersioning}">
 		't3ver_label' => array(
 			'label' => 'LLL:EXT:lang/locallang_general.{locallangFileFormat}:LGL.versionLabel',
 			'config' => array(
@@ -57,6 +60,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 				'max' => 255,
 			)
 		),
+		</f:if>
 		'hidden' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.{locallangFileFormat}:LGL.hidden',
