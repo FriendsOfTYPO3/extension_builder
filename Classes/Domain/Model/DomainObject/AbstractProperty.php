@@ -234,7 +234,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 */
 	public function getFieldName() {
 		$fieldName = \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($this->name);
-		if (Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::isReservedMYSQLWord($fieldName)) {
+		if (Tx_ExtensionBuilder_Service_ValidationService::isReservedMYSQLWord($fieldName)) {
 			$fieldName = $this->domainObject->getExtension()->getShortExtensionKey() . '_' . $fieldName;
 		}
 		return $fieldName;

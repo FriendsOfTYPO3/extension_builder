@@ -47,7 +47,11 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation 
 
 	public function getForeignKeyName() {
 		if(empty($this->foreignKeyName)) {
-			return strtolower($this->getDomainObject()->getName());
+			$foreignKeyName = strtolower($this->getDomainObject()->getName());
+			if(Tx_ExtensionBuilder_Service_ValidationService::isReservedMYSQLWord($foreignKeyName)) {
+				$foreignKeyName = 'tx_' . $foreignKeyName;
+			}
+			return $foreignKeyName;
 		} else {
 			return $this->foreignKeyName;
 		}

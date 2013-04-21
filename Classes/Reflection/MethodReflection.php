@@ -89,7 +89,7 @@ class Tx_ExtensionBuilder_Reflection_MethodReflection extends TYPO3\CMS\Extbase\
 		$typeHintRegex = '/>\s*([a-zA-Z0-9_&\\\s]*)\s*\$/';
 		$matches = array();
 		if (preg_match($typeHintRegex, str_replace('or NULL','',$paramAsString), $matches)) {
-			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Typehint for parameter ' . $reflectionParameter->getName() . ' in method '.$this->getName().' : '.$paramAsString . ' namespace: ' . $reflectionParameter->getDeclaringClass()->getNamespaceName(),'extension_builder',0,$matches);
+			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Typehint for parameter ' . $reflectionParameter->getName() . ' in method '.$this->getName().' : '.$paramAsString . ' namespace: ' . $reflectionParameter->getDeclaringClass()->getNamespaceName(),'extension_builder',0,$matches);
 			if (!empty($matches[1])) {
 				$typeHint = $matches[1];
 				if ($reflectionParameter->isPassedByReference()) {

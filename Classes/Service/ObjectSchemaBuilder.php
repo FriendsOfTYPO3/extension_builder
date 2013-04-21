@@ -114,6 +114,10 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements \TYPO3\CMS\Core
 				$relation->setForeignDatabaseTableName($foreignDatabaseTableName);
 				if (is_a($relation, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation')) {
 					$foreignKeyName = strtolower($domainObject->getName());
+					if(Tx_ExtensionBuilder_Service_ValidationService::isReservedMYSQLWord($foreignKeyName)) {
+						$foreignKeyName = 'tx_' . $foreignKeyName;
+					}
+					\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Foreign key name','extension_builder',1);
 					if (isset($relatedForeignTables[$foreignDatabaseTableName])) {
 						$foreignKeyName .= $relatedForeignTables[$foreignDatabaseTableName];
 						$relatedForeignTables[$foreignDatabaseTableName] += 1;
