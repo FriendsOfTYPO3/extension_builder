@@ -506,17 +506,17 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	/**
 	 * Setter for plugin
 	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage()<Tx_ExtensionBuilder_Domain_Model_Plugin> $plugins
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage()<Tx_ExtensionBuilder_Domain_Model_Plugin> $plugins
 	 * @return void
 	 */
-	public function setPlugins(\TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage $plugins) {
+	public function setPlugins(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $plugins) {
 		$this->plugins = $plugins;
 	}
 
 	/**
 	 * Getter for $plugin
 	 *
-	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_ExtensionBuilder_Domain_Model_Plugin>
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_ExtensionBuilder_Domain_Model_Plugin>
 	 */
 	public function getPlugins() {
 		return $this->plugins;
@@ -547,17 +547,17 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	/**
 	 * Setter for backendModule
 	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_ExtensionBuilder_Domain_Model_BackendModule> $backendModules
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_ExtensionBuilder_Domain_Model_BackendModule> $backendModules
 	 * @return void
 	 */
-	public function setBackendModules(\TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage $backendModules) {
+	public function setBackendModules(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $backendModules) {
 		$this->backendModules = $backendModules;
 	}
 
 	/**
 	 * Getter for $backendModule
 	 *
-	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\ObjectStorage<Tx_ExtensionBuilder_Domain_Model_Plugin>
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_ExtensionBuilder_Domain_Model_Plugin>
 	 */
 	public function getBackendModules() {
 		return $this->backendModules;
