@@ -127,6 +127,20 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	}
 
 	/**
+	 * Parse a with interfaces
+	 * @test
+	 */
+	public function ParseClassWithAliasDeclarations() {
+		require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ClassParser/ClassWithAlias.php');
+		$classObject = $this->parseClass('Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithAlias');
+		$this->assertEquals($classObject->getAliasDeclarations(), array('TYPO3\\CMS\\Core\\Utility\\GeneralUtility', 'TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager as Config'));
+		/**  here we could include some more tests
+		$p = $classObject->getMethod('methodWithStrangePrecedingBlock')->getPrecedingBlock();
+		$a = $classObject->getAppendedBlock();
+		 */
+	}
+
+	/**
 	 * Parse a complex class from a file
 	 * @test
 	 */

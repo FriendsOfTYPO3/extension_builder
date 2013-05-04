@@ -283,7 +283,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 						if (preg_match_all($this->aliasRegex, $trimmedLine, $aliasMatches)) {
 							\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Alias Matches','extension_builder',0,$aliasMatches);
 							if(!empty($aliasMatches[1])) {
-								//$this->classObject->addAliasDeclaration(trim($aliasMatches[1][0]));
+								$this->classObject->addAliasDeclaration(trim($aliasMatches[1][0]));
 							}
 						}
 					}
@@ -335,7 +335,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 	protected function onClassDefinitionFound() {
 		$classPreComment = '';
 		foreach (array_values($this->lines) as $line) {
-			if (strlen(trim($line)) > 0 && !preg_match($this->nameSpaceRegex, $line)) {
+			if (strlen(trim($line)) > 0 && !preg_match($this->nameSpaceRegex, $line) && !preg_match($this->aliasRegex, $line)) {
 				$classPreComment .= $line;
 			}
 		}
