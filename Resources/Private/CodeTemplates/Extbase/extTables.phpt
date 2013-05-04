@@ -42,18 +42,7 @@ if (TYPO3_MODE === 'BE') {
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '<k:format.quoteString>{extension.name}</k:format.quoteString>');
 
 <f:for each="{extension.domainObjects}" as="domainObject">
-	<k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">
-		<f:then>
-			<k:mapping domainObject="{domainObject}" renderCondition="isMappedToExternalTable">
-				<f:then>
-					<k:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
-				</f:then>
-				<f:else>
-					<k:render partial="TCA/TypeField.phpt" arguments="{domainObject:domainObject, settings:settings}" />
-				</f:else>
-			</k:mapping>
-		</f:then>
-		<f:else>
+	<f:if condition="{domainObject.needsTableCtrlDefinition}">
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xlf');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('{domainObject.databaseTableName}');
 $TCA['{domainObject.databaseTableName}'] = array(
@@ -84,7 +73,19 @@ $TCA['{domainObject.databaseTableName}'] = array(
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif'
 	),
 );
-		</f:else>
-	</k:mapping>
+	</f:if>
 </f:for>
+
+<f:for each="{extension.domainObjects}" as="domainObject">
+	<k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">
+		<k:render partial="TCA/TypeField.phpt" arguments="{domainObject:domainObject, settings:settings}" />
+	</k:mapping>
+	<k:mapping renderCondition="isMappedToExternalTable" domainObject="{domainObject}">
+    	<k:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
+	</k:mapping>
+	<f:for each="{domainObject.childObjects}" as="childObject">
+		<k:render partial="TCA/Columns.phpt" arguments="{domainObject:childObject, settings:settings}" />
+	</f:for>
+</f:for>
+
 ?>

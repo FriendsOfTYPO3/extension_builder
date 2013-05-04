@@ -1,5 +1,4 @@
 {namespace k=Tx_ExtensionBuilder_ViewHelpers}
-\TYPO3\CMS\Core\Utility\GeneralUtility::loadTCA('{domainObject.databaseTableName}');
 if (!isset($TCA['{domainObject.databaseTableName}']['ctrl']['type'])) {
 	// no type field defined, so we define it here. This will only happen the first time the extension is installed!!
 	$TCA['{domainObject.databaseTableName}']['ctrl']['type'] = 'tx_extbase_type';
@@ -23,5 +22,5 @@ if (!isset($TCA['{domainObject.databaseTableName}']['ctrl']['type'])) {
 <k:recordType domainObject="{domainObject}" >
 $TCA['{domainObject.databaseTableName}']['types']['{domainObject.recordType}']['showitem'] = $TCA['{domainObject.databaseTableName}']['types']['{parentRecordType}']['showitem'];
 $TCA['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = array('LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.labelNamespace}','{domainObject.recordType}');
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('{domainObject.databaseTableName}', $TCA['{domainObject.databaseTableName}']['ctrl']['type'],'','after:hidden');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('{domainObject.databaseTableName}', $TCA['{domainObject.databaseTableName}']['ctrl']['type'],'','after:hidden');
 </k:recordType>

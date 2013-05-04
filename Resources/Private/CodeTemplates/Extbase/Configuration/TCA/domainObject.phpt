@@ -18,7 +18,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 		'1' => array('showitem' => ''),
 	),
 	'columns' => array(
-		<f:if condition="{extension.supportLocalization}">
+	<f:if condition="{extension.supportLocalization}">
 		'sys_language_uid' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.{locallangFileFormat}:LGL.language',
@@ -60,7 +60,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 				'max' => 255,
 			)
 		),
-		</f:if>
+	</f:if>
 		'hidden' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.{locallangFileFormat}:LGL.hidden',
@@ -116,11 +116,9 @@ $TCA['{domainObject.databaseTableName}'] = array(
 	),
 );
 
-<f:if condition="{domainObject.childObjects}">
-<k:render partial="TCA/TypeField.phpt" arguments="{domainObject:domainObject, settings:settings}" />
-</f:if>
-
 </f:else></f:if>
 
-<f:for each="{domainObject.childObjects}" as="childObject">require("{childObject.name}.php");</f:for>
+<f:for each="{domainObject.childObjects}" as="childObject">
+<k:render partial="TCA/Columns.phpt" arguments="{domainObject:childObject, settings:settings}" />
+</f:for>
 ?>

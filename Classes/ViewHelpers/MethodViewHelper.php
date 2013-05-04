@@ -48,7 +48,7 @@ class Tx_ExtensionBuilder_ViewHelpers_MethodViewHelper extends \TYPO3\CMS\Fluid\
 	/**
 	 * This methods renders the parameters of a method, including typeHints and default values.
 	 *
-	 * @param $methodObject
+	 * @param Tx_ExtensionBuilder_Reflection_MethodReflection $methodObject
 	 * @return string parameters
 	 */
 	private function renderMethodParameter($methodObject) {
@@ -74,8 +74,9 @@ class Tx_ExtensionBuilder_ViewHelpers_MethodViewHelper extends \TYPO3\CMS\Fluid\
 							$defaultValue = Tx_ExtensionBuilder_Utility_Tools::convertJSONArrayToPHPArray($defaultValue);
 
 							//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('default Value: '. $defaultValue, 'parameter debug');
+						} else {
+							$defaultValue = 'array()';
 						}
-						else $defaultValue = 'array()';
 					} elseif ($defaultValue === NULL) {
 						$defaultValue = 'NULL';
 					} else {
@@ -93,7 +94,7 @@ class Tx_ExtensionBuilder_ViewHelpers_MethodViewHelper extends \TYPO3\CMS\Fluid\
 					$parameterName = $typeHint . ' ' . $parameterName;
 				}
 				$parameters[] = $parameterName;
-				//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog($methodSchemaObject->getName().':'.$parameter->getName(), 'parameter debug');
+				//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog($methodObject->getName().':'.$parameterName, 'extension_builder',3, $parameters);
 			}
 		}
 		return implode(', ', $parameters);
