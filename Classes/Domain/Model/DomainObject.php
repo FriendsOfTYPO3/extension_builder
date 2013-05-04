@@ -474,6 +474,15 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 		}
 	}
 
+	public function getNeedsTableCtrlDefinition() {
+		if($this->mapToTable || $this->isSubClass()) {
+			// ctrl definitions should already be defined in both cases
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}
+
 	/**
 	 * @param string $parentClass
 	 */
@@ -495,6 +504,9 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 		return 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_' . $this->getName();
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isSubClass() {
 		if (empty($this->parentClass)) {
 			return FALSE;
@@ -502,6 +514,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 			return TRUE;
 		}
 	}
+
 
 	/**
 	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $childObject
