@@ -32,9 +32,6 @@ namespace {extension.nameSpace}\Tests;
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
- * @package TYPO3
- * @subpackage {extension.name}
- *
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
 </f:for> */
 class {domainObject.name}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
