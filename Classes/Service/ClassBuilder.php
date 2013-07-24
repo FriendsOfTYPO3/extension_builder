@@ -55,7 +55,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 	 * This line is added to the constructor if there are storage objects to initialize
 	 * @var string
 	 */
-	protected $initStorageObjectCall = "//Do not remove the next line: It would break the functionality\n\$this->initStorageObjects();";
+	protected $initStorageObjectCall = "// Do not remove the next line: It would break the functionality\n\$this->initStorageObjects();";
 
 	/**
 	 *
