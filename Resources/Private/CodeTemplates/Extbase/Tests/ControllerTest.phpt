@@ -53,6 +53,5 @@ class {controllerName}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	public function dummyMethod() {
 		$this->markTestIncomplete();
 	}
-
 }
 ?>
