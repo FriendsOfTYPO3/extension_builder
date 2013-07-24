@@ -25,7 +25,7 @@ namespace {extension.nameSpace}\Tests;
  ***************************************************************/
 
 /**
- * Test case for class Tx_{extension.extensionKey -> k:format.uppercaseFirst()}_Controller_{controllerName}.
+ * Test case for class {domainObject.fullQualifiedClassName}.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
@@ -35,7 +35,7 @@ namespace {extension.nameSpace}\Tests;
 </f:for> */{namespace k=Tx_ExtensionBuilder_ViewHelpers}
 class {controllerName}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
-	 * @var {domainObject.className}
+	 * @var {domainObject.fullQualifiedClassName}
 	 */
 	protected $fixture;
 
