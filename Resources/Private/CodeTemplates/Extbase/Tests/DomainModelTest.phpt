@@ -63,6 +63,11 @@ class {domainObject.name}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase
 			0.0,
 			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
 		);
+	</f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'string')}">
+		$this->assertSame(
+			NULL,
+			$this->fixture->get{property.name -> k:format.uppercaseFirst()}()
+		);
 	</f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'boolean')}">
 		$this->assertSame(
 			TRUE,
