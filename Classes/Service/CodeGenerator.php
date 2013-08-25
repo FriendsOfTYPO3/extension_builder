@@ -657,11 +657,11 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	 * generate the folder structure for reST documentation
 	 */
 	protected function generateDocumentationFiles() {
-		$this->mkdir_deep($this->extensionDirectory, 'Documentation');
+		$this->mkdir_deep($this->extensionDirectory, 'Documentation.tmpl');
 		$docFiles = array();
 		$docFiles = \TYPO3\CMS\Core\Utility\GeneralUtility::getAllFilesAndFoldersInPath(
 			$docFiles,
-			ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Extbase/Documentation/',
+			ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Extbase/Documentation.tmpl/',
 			'',
 			TRUE,
 			5,
@@ -671,7 +671,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 			if(is_dir($docFile)) {
 				$this->mkdir_deep(
 					$this->extensionDirectory,
-					'Documentation/' . str_replace($this->codeTemplateRootPath . 'Documentation/','',$docFile)
+					'Documentation.tmpl/' . str_replace($this->codeTemplateRootPath . 'Documentation.tmpl/','',$docFile)
 				);
 			} else if(strpos($docFile,'.rstt') === FALSE && strpos($docFile,'.ymlt') === FALSE) {
 				$this->upload_copy_move(
@@ -684,10 +684,10 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 				);
 			}
 		}
-		$fileContents = $this->renderTemplate('Documentation/Index.rstt', array('extension' => $this->extension));
-		$this->writeFile($this->extensionDirectory . 'Documentation/Index.rst', $fileContents);
-		$fileContents = $this->renderTemplate('Documentation/Settings.ymlt', array('extension' => $this->extension));
-		$this->writeFile($this->extensionDirectory . 'Documentation/Settings.yml', $fileContents);
+		$fileContents = $this->renderTemplate('Documentation.tmpl/Index.rstt', array('extension' => $this->extension));
+		$this->writeFile($this->extensionDirectory . 'Documentation.tmpl/Index.rst', $fileContents);
+		$fileContents = $this->renderTemplate('Documentation.tmpl/Settings.ymlt', array('extension' => $this->extension));
+		$this->writeFile($this->extensionDirectory . 'Documentation.tmpl/Settings.yml', $fileContents);
 
 	}
 
