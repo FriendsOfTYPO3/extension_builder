@@ -665,7 +665,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 			'',
 			TRUE,
 			5,
-			'/.*rstt/'
+			'/.*(rstt|ymlt)/'
 		);
 		foreach($docFiles as $docFile) {
 			if(is_dir($docFile)) {
@@ -673,7 +673,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 					$this->extensionDirectory,
 					'Documentation/' . str_replace($this->codeTemplateRootPath . 'Documentation/','',$docFile)
 				);
-			} else if(strpos($docFile,'.rstt') === FALSE) {
+			} else if(strpos($docFile,'.rstt') === FALSE && strpos($docFile,'.ymlt') === FALSE) {
 				$this->upload_copy_move(
 					$docFile,
 					str_replace(
@@ -684,12 +684,10 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 				);
 			}
 		}
-		$this->upload_copy_move(
-			ExtensionManagementUtility::extPath('extension_builder').'Resources/Private/CodeTemplates/Extbase/Readme.rst',
-			$this->extensionDirectory . 'Readme.rst'
-		);
 		$fileContents = $this->renderTemplate('Documentation/Index.rstt', array('extension' => $this->extension));
 		$this->writeFile($this->extensionDirectory . 'Documentation/Index.rst', $fileContents);
+		$fileContents = $this->renderTemplate('Documentation/Settings.ymlt', array('extension' => $this->extension));
+		$this->writeFile($this->extensionDirectory . 'Documentation/Settings.yml', $fileContents);
 
 	}
 

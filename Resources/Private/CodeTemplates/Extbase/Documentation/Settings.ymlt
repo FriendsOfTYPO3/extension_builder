@@ -1,0 +1,11 @@
+# This is the project specific Settings.yml file.
+# Place Sphinx specific build information here.
+# Settings given here will replace the settings of 'conf.py'.
+
+---
+conf.py:
+  copyright: <f:format.date format="Y">NOW</f:format.date>
+  project: {extension.name}
+  version: {extension.version}
+  release: {extension.version}
+...
