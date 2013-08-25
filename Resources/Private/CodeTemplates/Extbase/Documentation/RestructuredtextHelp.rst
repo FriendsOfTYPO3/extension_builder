@@ -1,6 +1,13 @@
-﻿====================================
+﻿.. ==================================================
+.. FOR YOUR INFORMATION
+.. --------------------------------------------------
+.. -*- coding: utf-8 -*- with BOM.
+
+.. include:: Includes.txt
+
+
 Help writing reStructuredText
-====================================
+=============================
 
 The reStructuredText (frequently abbreviated as reST) is a lightweight markup language intended to be highly readable in source format. This chapter is a brief introduction to reStructuredText syntax, intended to provide authors with enough information to start writing their documentation. Some example below are taken from the `official documentation`_. More resources are to be found online:
 
@@ -16,14 +23,14 @@ The reStructuredText (frequently abbreviated as reST) is a lightweight markup la
 
 
 ReST editors
--------------
+------------
 
 Since reST is meant to be readable by "designed", a basic editor is enough to start writing documentation. However, there are editors providing facilities towards reST support such as syntax highlighting, conversion to HTML on the fly, ... Please, refer and contribute to this `Wiki page`_
 
 .. _Wiki page: http://wiki.typo3.org/Editors_%28reST%29
 
 Inline Markup
-=============
+^^^^^^^^^^^^^
 
 Inside paragraphs and other bodies of text::
 
@@ -32,29 +39,28 @@ Inside paragraphs and other bodies of text::
 	If you want something to appear as a fixed-space literal, use ``double back-quotes``.
 
 Heading
-========
+^^^^^^^
 
 The title of the whole document are defined as follows::
 
-	==========
 	heading 1
-	==========
+	=========
 
 	heading 2
-	==========
-
-	heading 3
 	---------
 
+	heading 3
+	^^^^^^^^^
+
 	heading 4
-	~~~~~~~~~~~
+	"""""""""
 
 	heading 5
-	^^^^^^^^^
+	~~~~~~~~~
 
 
 Internal Links
-===============
+^^^^^^^^^^^^^^
 
 It exists different method for providing a link. The "alias" method is generally preferred for the sake of clarity. However, the target should be kept close to the reference to prevent them going out of sync::
 
@@ -64,7 +70,7 @@ It exists different method for providing a link. The "alias" method is generally
 
 
 Cross linking
-===============
+^^^^^^^^^^^^^
 
 Cross linking can be achieved by the means of a plugin called Intersphinx_ which generate links across projects::
 
@@ -77,7 +83,7 @@ Cross linking can be achieved by the means of a plugin called Intersphinx_ which
 .. _Intersphinx: http://sphinx.pocoo.org/latest/ext/intersphinx.html
 
 List
-=====
+^^^^
 
 Lists of items come in three main flavours: enumerated, bulleted and definitions. In all list cases, you may have as many paragraphs, sublists, etc.
 
@@ -93,7 +99,7 @@ Lists of items come in three main flavours: enumerated, bulleted and definitions
 	#. It has two items too
 
 Image
-======
+^^^^^
 
 Whenever dealing with images, it is often recommended to use the `..figure:: directive`. A "figure" consists of image data, an optional caption (a single paragraph), and an optional legend (arbitrary body elements)::
 
@@ -108,7 +114,7 @@ Whenever dealing with images, it is often recommended to use the `..figure:: dir
 		table:
 
 Code
-====
+^^^^
 
 The "code" directive constructs a literal block. If the code language is specified, the content is parsed by the Pygments_ syntax highlighter.
 
@@ -127,7 +133,7 @@ The "code" directive constructs a literal block. If the code language is specifi
 .. _Pygments: http://pygments.org/
 
 TypoScript Reference
-=====================
+^^^^^^^^^^^^^^^^^^^^
 
 Defining TypoScript reference can be achieved by using the "container" directive::
 
@@ -146,7 +152,7 @@ Defining TypoScript reference can be achieved by using the "container" directive
 			Default:
 
 Admonitions
-============
+^^^^^^^^^^^
 
 Admonitions are specially marked "topics" such as "warning", "important", "tip", "note"::
 
@@ -167,7 +173,7 @@ Admonitions are specially marked "topics" such as "warning", "important", "tip",
 
 
 Table
-======
+^^^^^
 
 The "table" directive is used to create a titled table, to associate a title with a table::
 
@@ -219,7 +225,7 @@ Alternatively a grid table can be used. As tip, Emacs editor provides some facil
 .. _facilities: http://table.sourceforge.net/
 
 Side bar
-=========
+^^^^^^^^
 
 A sidebar is typically offset by a border and "floats" to the side of the page; the document's main text may flow around::
 
@@ -229,9 +235,11 @@ A sidebar is typically offset by a border and "floats" to the side of the page; 
 
 
 Substitutions
-========================
+^^^^^^^^^^^^^
 
-ReST supports “substitutions”, which are pieces of text and/or markup referred to in the text by |name|. Substitution are to be included in file ``_IncludedDirectives`` to be avaiable across the documentation. They are defined like footnotes with explicit markup blocks, like this::
+ReST supports "substitutions", which are pieces of text and/or markup referred to in the text by :code:`|name|`.
+Substitution are to be included in file ``_IncludedDirectives`` to be avaiable across the documentation.
+They are defined like footnotes with explicit markup blocks, like this::
 
 	.. |name| replace:: replacement *text*
 
