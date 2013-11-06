@@ -591,7 +591,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			$actionMethod->setDescription('action ' . $action->getName());
 		}
 		if (in_array($actionName, array('show', 'edit', 'create', 'new', 'update', 'delete'))) {
-			// these actions need a parameter
+				// these actions need a parameter
 			if (in_array($actionName, array('create', 'new'))) {
 				$parameterName = 'new' . $domainObject->getName();
 			} else {
@@ -602,6 +602,12 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 				->setVarType($domainObject->getFullQualifiedClassName())
 				->setTypeHint($domainObject->getFullQualifiedClassName());
 			$actionMethod->updateParamTags();
+
+			if ($actionName === 'new') {
+				$actionMethod->setTag('ignorevalidation', '$' . $parameterName);
+			} elseif ($actionName === 'edit') {
+				$actionMethod->setTag('ignorevalidation', '$' . $parameterName);
+			}
 		}
 
 		$replacements = array(
