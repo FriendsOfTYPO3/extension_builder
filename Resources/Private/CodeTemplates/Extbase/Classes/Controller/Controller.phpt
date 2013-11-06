@@ -37,7 +37,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController{
 	 * action new
 	 *
 	 * @param \VENDOR\Package\Domain\Model\DomainObject $newDomainObject
-	 * @dontvalidate $newDomainObject
+	 * @ignorevalidation $newDomainObject
 	 * @return void
 	 */
 	public function newAction(\VENDOR\Package\Domain\Model\DomainObject $newDomainObject = NULL) {

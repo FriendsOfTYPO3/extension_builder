@@ -63,7 +63,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 	 * action new
 	 *
 	 * @param \TYPO3\TestExtension\Domain\Model\Main $newMain
-	 * @dontvalidate $newMain
+	 * @ignorevalidation $newMain
 	 * @return void
 	 */
 	public function newAction(\TYPO3\TestExtension\Domain\Model\Main $newMain = NULL) {
@@ -85,6 +85,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 	 * action edit
 	 *
 	 * @param \TYPO3\TestExtension\Domain\Model\Main $main
+	 * @ignorevalidation $main
 	 * @return void
 	 */
 	public function editAction(\TYPO3\TestExtension\Domain\Model\Main $main) {
