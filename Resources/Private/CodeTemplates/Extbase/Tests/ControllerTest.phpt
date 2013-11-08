@@ -37,14 +37,14 @@ class {controllerName}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
 	 * @var {domainObject.fullQualifiedClassName}
 	 */
-	protected $fixture;
+	protected $subject;
 
 	public function setUp() {
-		$this->fixture = new {domainObject.fullQualifiedClassName}();
+		$this->subject = new {domainObject.fullQualifiedClassName}();
 	}
 
 	public function tearDown() {
-		unset($this->fixture);
+		unset($this->subject);
 	}
 
 	/**
