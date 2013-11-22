@@ -29,11 +29,11 @@
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_TimeProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
 	public function getTypeForComment() {
-		return '\\int';
+		return 'integer';
 	}
 
 	public function getTypeHint() {
-		return '\\int';
+		return 'integer';
 	}
 
 	public function getSqlDefinition() {

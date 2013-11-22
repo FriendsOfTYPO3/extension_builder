@@ -31,7 +31,7 @@
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_FolderProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
 	public function getTypeForComment() {
-		return '\\string';
+		return 'string';
 	}
 
 	public function getTypeHint() {
