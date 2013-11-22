@@ -29,9 +29,9 @@
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_RichTextProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
 	protected $useRTE = TRUE;
-	
+
 	public function getTypeForComment() {
-		return '\\string';
+		return 'string';
 	}
 
 	public function getTypeHint() {
@@ -41,7 +41,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_RichTextProperty extends Tx_
 	public function getSqlDefinition() {
 		return $this->getFieldName() . " text NOT NULL,";
 	}
-	
+
 }
 
 ?>

@@ -50,7 +50,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_FileProperty extends Tx_Exte
 	protected $needsUploadFolder = TRUE;
 
 	public function getTypeForComment() {
-		return '\\string';
+		return 'string';
 	}
 
 	public function getTypeHint() {
