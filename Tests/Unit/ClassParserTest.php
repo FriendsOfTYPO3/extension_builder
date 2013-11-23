@@ -79,7 +79,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 		$defaultOrderingsPropertyValue = $classObject->getProperty('defaultOrderings')->getValue();
 		$this->assertEquals(
 			$defaultOrderingsPropertyValue,
-			"array(\n\t\t'title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING,\n\t\t'subtitle' =>  Tx_Extbase_Persistence_QueryInterface::ORDER_DESCENDING,\n\t\t'test' => 'test;',\n\t)",
+			"array(\n\t\t'title' => \\TYPO3\\CMS\\Extbase\\Persistence\\QueryInterface::ORDER_ASCENDING,\n\t\t'subtitle' =>  \\TYPO3\\CMS\\Extbase\\Persistence\\QueryInterface::ORDER_DESCENDING,\n\t\t'test' => 'test;',\n\t)",
 			'Failed to parse multiline property definition:'
 		);
 		$params2 = $classObject->getMethod('methodWithVariousParameter')->getParameters();

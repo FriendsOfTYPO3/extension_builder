@@ -74,7 +74,7 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Phpunit_TestCase {
 				->method('getExtensionDir')
 				->will($this->returnValue($dummyExtensionDir));
 		if(is_dir($dummyExtensionDir)) {
-			\TYPO3\CMS\Core\Utility\GeneralUtility::rmdir($dummyExtensionDir, TRUE);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir($dummyExtensionDir, TRUE);
 		}
 		$yamlParser = new Tx_ExtensionBuilder_Utility_SpycYAMLParser();
 		$settings = $yamlParser->YAMLLoadString(file_get_contents(PATH_typo3conf.'ext/extension_builder/Tests/Examples/Settings/settings1.yaml'));
@@ -90,12 +90,11 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Phpunit_TestCase {
 		$this->roundTripService->injectConfigurationManager($configurationManager);
 		$this->templateParser = $this->getMock($this->buildAccessibleProxy('TYPO3\\CMS\\Fluid\\Core\\Parser\\TemplateParser'),array('dummy'));
 		$this->codeGenerator = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_CodeGenerator'),array('dummy'));
-		
+
 		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 		$this->objectManager = clone $objectManager;
 		//parent::runBare(); causes a memory exhausted error??
 		$this->codeGenerator->injectObjectManager($this->objectManager);
-		$this->templateParser->injectObjectManager($this->objectManager);
 
 		$this->roundTripService->injectClassParser($this->classParser);
 		$this->roundTripService->initialize($this->extension);
@@ -103,7 +102,6 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Phpunit_TestCase {
 		$this->classBuilder->injectRoundtripService($this->roundTripService);
 		$this->classBuilder->initialize($this->codeGenerator, $this->extension, TRUE);
 
-		$this->codeGenerator->injectTemplateParser($this->templateParser);
 		$this->codeGenerator->injectClassBuilder($this->classBuilder);
 		$this->codeGenerator->setSettings(
 			array(
@@ -121,7 +119,7 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Phpunit_TestCase {
 	public function tearDown() {
 		parent::tearDown();
 		if(isset($this->extension) && $this->extension->getExtensionKey() != NULL) {
-			//\TYPO3\CMS\Core\Utility\GeneralUtility::rmdir($this->extension->getExtensionDir(), TRUE);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::rmdir($this->extension->getExtensionDir(), TRUE);
 		}
 	}
 

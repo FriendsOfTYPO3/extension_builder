@@ -14,8 +14,8 @@ $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Extension Builder',
 	'description' => 'The Extension Builder helps you build and manage your Extbase based TYPO3 extensions.',
 	'category' => 'module',
-	'author' => 'Ingmar Schlecht, Nico de Haen',
-	'author_email' => 'ingmar@typo3.org,mail@ndh-websolutions.de',
+	'author' => 'Nico de Haen',
+	'author_email' => 'mail@ndh-websolutions.de',
 	'shy' => '',
 	'dependencies' => 'extbase,fluid',
 	'conflicts' => '',
@@ -32,9 +32,9 @@ $EM_CONF[$_EXTKEY] = array(
 	'version' => '2.5.2',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '6.0-0.0.0',
-			'extbase' => '6.0',
-			'fluid' => '6.0',
+			'typo3' => '6.0-6.2.99',
+			'extbase' => '6.0-6.2.99',
+			'fluid' => '6.0-6.2.99',
 		),
 		'conflicts' => array(
 		),
