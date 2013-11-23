@@ -78,13 +78,13 @@ $TCA['{domainObject.databaseTableName}'] = array(
 
 <f:for each="{extension.domainObjects}" as="domainObject">
 	<k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">
-		<k:render partial="TCA/TypeField.phpt" arguments="{domainObject:domainObject, settings:settings}" />
+		<f:render partial="TCA/TypeField.phpt" arguments="{domainObject:domainObject, settings:settings}" />
 	</k:mapping>
 	<k:mapping renderCondition="isMappedToExternalTable" domainObject="{domainObject}">
-    	<k:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
+		<f:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
 	</k:mapping>
 	<f:for each="{domainObject.childObjects}" as="childObject">
-		<k:render partial="TCA/Columns.phpt" arguments="{domainObject:childObject, settings:settings}" />
+		<f:render partial="TCA/Columns.phpt" arguments="{domainObject:childObject, settings:settings}" />
 	</f:for>
 </f:for>
 

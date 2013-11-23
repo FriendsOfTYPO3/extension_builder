@@ -36,14 +36,14 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * This is not required
 	 *
-	 * @var \string
+	 * @var string
 	 */
 	protected $name;
 
 	/**
 	 * This is required
 	 *
-	 * @var \string
+	 * @var string
 	 * @validate NotEmpty
 	 */
 	protected $identifier;
@@ -105,7 +105,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Returns the name
 	 *
-	 * @return \string $name
+	 * @return string $name
 	 */
 	public function getName() {
 		return $this->name;
@@ -114,7 +114,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Sets the name
 	 *
-	 * @param \string $name
+	 * @param string $name
 	 * @return void
 	 */
 	public function setName($name) {
@@ -124,7 +124,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Returns the identifier
 	 *
-	 * @return \string $identifier
+	 * @return string $identifier
 	 */
 	public function getIdentifier() {
 		return $this->identifier;
@@ -133,7 +133,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Sets the identifier
 	 *
-	 * @param \string $identifier
+	 * @param string $identifier
 	 * @return void
 	 */
 	public function setIdentifier($identifier) {

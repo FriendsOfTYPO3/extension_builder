@@ -26,8 +26,8 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass extends 
 	const testConstant = "123"; const testConstant2 = 0.56;
 
 	protected $defaultOrderings = array(
-		'title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING,
-		'subtitle' =>  Tx_Extbase_Persistence_QueryInterface::ORDER_DESCENDING,
+		'title' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING,
+		'subtitle' =>  \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING,
 		'test' => 'test;',
 	);
 

@@ -535,7 +535,6 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 			} catch (Exception $e) {
 				throw new Exception('Could not generate domain model, error: ' . $e->getMessage());
 			}
-
 				// Generate Action Controller
 			try {
 				$this->mkdir_deep($this->extensionDirectory, 'Classes/Controller');
@@ -649,8 +648,6 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 		} catch (Exception $e) {
 			throw new Exception('Could not create public resources folder, error: ' . $e->getMessage());
 		}
-
-
 	}
 
 	/**
@@ -691,27 +688,6 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 
 	}
 
-
-	/**
-	 * Build the rendering context
-	 * @author Sebastian Kurfürst <sebastian@typo3.org>
-	 */
-	protected function buildRenderingContext($templateVariables) {
-		$templateVariables['settings'] = $this->settings;
-		$variableContainer = $this->objectManager->create('Tx_Fluid_Core_ViewHelper_TemplateVariableContainer', $templateVariables);
-
-		$renderingContext = $this->objectManager->create('Tx_Fluid_Core_Rendering_RenderingContext');
-		$viewHelperVariableContainer = $this->objectManager->create('Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer');
-		if (method_exists($renderingContext, 'setTemplateVariableContainer')) {
-			$renderingContext->setTemplateVariableContainer($variableContainer);
-			$renderingContext->setViewHelperVariableContainer($viewHelperVariableContainer);
-		} else {
-			$renderingContext->injectTemplateVariableContainer($variableContainer);
-			$renderingContext->injectViewHelperVariableContainer($viewHelperVariableContainer);
-		}
-		return $renderingContext;
-	}
-
 	/**
 	 * Render a template with variables
 	 *
@@ -719,19 +695,17 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	 * @param array $variables
 	 */
 	public function renderTemplate($filePath, $variables) {
-			//$codeTemplateRootPath = $this->getCodeTemplateRootPath();
 		$variables['settings'] = $this->settings;
-			//$variables['settings']['codeTemplateRootPath'] = $this->codeTemplateRootPath;
-		if (!is_file($this->codeTemplateRootPath . $filePath)) {
-			throw(new Exception('TemplateFile ' . $this->codeTemplateRootPath . $filePath . ' not found'));
-		}
-		$templateCode = file_get_contents($this->codeTemplateRootPath . $filePath);
-		if (empty($templateCode)) {
-			throw(new Exception('TemplateFile ' . $this->codeTemplateRootPath . $filePath . ' has no content'));
-		}
-		$parsedTemplate = $this->templateParser->parse($templateCode);
+		$standAloneView = $this->objectManager->get('\\TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+		$standAloneView->setLayoutRootPath($this->codeTemplateRootPath);
+		$standAloneView->setPartialRootPath($this->codeTemplateRootPath . '/Partials');
+		$standAloneView->setFormat('txt');
+		$templatePathAndFilename = $this->codeTemplateRootPath .  $filePath;
+		$standAloneView->setTemplatePathAndFilename($templatePathAndFilename);
+		$standAloneView->assignMultiple($variables);
+		$renderedContent = $standAloneView->render();
 
-		$renderedContent = trim($parsedTemplate->render($this->buildRenderingContext($variables)));
+
 			// remove all double empty lines (coming from fluid)
 		return preg_replace('/^\s*\n[\t ]*$/m', '', $renderedContent);
 

@@ -4,7 +4,7 @@ if (!defined ('TYPO3_MODE')) {
 }
 <f:if condition="{domainObject.mapToTable}"><f:then>
 <k:mapping domainObject="{domainObject}" renderCondition="isMappedToInternalTable">
-<k:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
+<f:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
 </k:mapping></f:then><f:else>
 $TCA['{domainObject.databaseTableName}'] = array(
 	'ctrl' => $TCA['{domainObject.databaseTableName}']['ctrl'],
@@ -104,7 +104,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			'exclude' => <f:if condition="{property.excludeField}"><f:then>1</f:then><f:else>0</f:else></f:if>,
 			'label' => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.{locallangFileFormat}:{property.labelNamespace}',
 			'config' => array(
-				<k:format.indent indentation="4"><k:render partial="TCA/{property.dataType}.phpt" arguments="{property: property,extension:extension,settings:settings,locallangFileFormat:locallangFileFormat}" /></k:format.indent>
+				<k:format.indent indentation="4"><f:render partial="TCA/{property.dataType}.phpt" arguments="{property: property,extension:extension,settings:settings,locallangFileFormat:locallangFileFormat}" /></k:format.indent>
 			),<f:if condition="{property.useRTE}">
 			'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts]',</f:if>
 		),</f:for><f:for each="{k:listForeignKeyRelations(extension: extension, domainObject: domainObject)}" as="relation">
@@ -119,6 +119,6 @@ $TCA['{domainObject.databaseTableName}'] = array(
 </f:else></f:if>
 
 <f:for each="{domainObject.childObjects}" as="childObject">
-<k:render partial="TCA/Columns.phpt" arguments="{domainObject:childObject, settings:settings}" />
+<f:render partial="TCA/Columns.phpt" arguments="{domainObject:childObject, settings:settings}" />
 </f:for>
 ?>

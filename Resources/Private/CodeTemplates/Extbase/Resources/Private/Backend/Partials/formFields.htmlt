@@ -5,7 +5,7 @@
 <label for="{property.name}">
 	<k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag><f:if condition="{property.required}"> <span class="required">(required)</span></f:if>
 </label><br />
-	<k:openingTag><k:render partial="Form/{property.dataType}.htmlt" arguments="{domainObject:domainObject,property: property,settings:settings}" /> /</k:openingTag><br />
+	<k:openingTag><f:render partial="Form/{property.dataType}.htmlt" arguments="{domainObject:domainObject,property: property,settings:settings}" /> /</k:openingTag><br />
 </f:if>
 </f:for>
 </k:format.removeMultipleNewlines>

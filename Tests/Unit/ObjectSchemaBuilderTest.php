@@ -28,15 +28,16 @@
 
 class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Tests_BaseTest {
 
-	public function setUp() {
+	protected $configurationManager;
 
+	public function setUp() {
 		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_ObjectSchemaBuilder'), array('dummy'));
-		$concreteConfigurationManager = new \TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager ();
-		$typoscriptService = new \TYPO3\CMS\Extbase\Service\TypoScriptService ();
-		$concreteConfigurationManager->injectTypoScriptService($typoscriptService);
-		$configurationManager = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Configuration_ConfigurationManager'),array('dummy'));
-		$configurationManager->_set('concreteConfigurationManager',$concreteConfigurationManager);
-		$this->objectSchemaBuilder->injectConfigurationManager($configurationManager);
+		$concreteConfigurationManager = $this->getMock($this->buildAccessibleProxy('TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager'));
+		$typoScriptService = new \TYPO3\CMS\Extbase\Service\TypoScriptService ();
+		$concreteConfigurationManager->_set('typoScriptService',$typoScriptService);
+		$this->configurationManager = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Configuration_ConfigurationManager'),array('getExtbaseClassConfiguration'));
+		$this->configurationManager->_set('concreteConfigurationManager',$concreteConfigurationManager);
+		$this->objectSchemaBuilder->injectConfigurationManager($this->configurationManager);
 	}
 
 
@@ -105,6 +106,7 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 	public function domainObjectHasExpectedRelations() {
 		$name = 'MyDomainObject';
 		$description = 'My long domain object description';
+		$className = '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser';
 
 		$input = array(
 			'name' => $name,
@@ -119,13 +121,13 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 						'relationName' => 'relation 1',
 						'relationType' => 'manyToMany',
 						'propertyIsExcludeField' => FALSE,
-						'foreignRelationClass' => 'TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser'
+						'foreignRelationClass' => $className
 					),
 					1 => array(
 						'relationName' => 'relation 2',
 						'relationType' => 'manyToMany',
 						'propertyIsExcludeField' => FALSE,
-						'foreignRelationClass' => 'TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser'
+						'foreignRelationClass' => $className
 					),
 				)
 			),
@@ -138,19 +140,22 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 		$expected->setAggregateRoot(TRUE);
 
 		$relation1 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation('relation 1');
-		$relation1->setForeignClassName('\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser');
+		$relation1->setForeignClassName($className);
 		$relation1->setRelatedToExternalModel(TRUE);
 		$relation1->setExcludeField(FALSE);
 		$relation1->setForeignDatabaseTableName('fe_users');
 		$relation2 = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation('relation 2');
-		$relation2->setForeignClassName('\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser');
+		$relation2->setForeignClassName($className);
 		$relation2->setRelatedToExternalModel(TRUE);
 		$relation2->setExcludeField(FALSE);
 		$relation2->setForeignDatabaseTableName('fe_users');
 		$expected->addProperty($relation1);
 		$expected->addProperty($relation2);
 
-
+		$extbaseConfiguration = array(
+			'tableName' => 'fe_users'
+		);
+		$this->configurationManager->expects($this->atLeastOnce())->method('getExtbaseClassConfiguration')->with($className)->will($this->returnValue($extbaseConfiguration));
 		$actual = $this->objectSchemaBuilder->build($input);
 		$this->assertEquals($actual, $expected, 'Domain Object not built correctly.');
 
@@ -163,6 +168,8 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 		$name = 'MyDomainObject';
 		$description = 'My long domain object description';
 		$relationName = 'Relation1';
+		$className = '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser';
+
 		$input = array(
 			'name' => $name,
 			'objectsettings' => array(
@@ -176,11 +183,16 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 						'relationName' => $relationName,
 						'relationType' => 'manyToMany',
 						'propertyIsExcludeField' => FALSE,
-						'foreignRelationClass' => 'TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser'
+						'foreignRelationClass' => $className
 					),
 				)
 			),
 		);
+
+		$extbaseConfiguration = array(
+			'tableName' => 'fe_users'
+		);
+		$this->configurationManager->expects($this->atLeastOnce())->method('getExtbaseClassConfiguration')->with($className)->will($this->returnValue($extbaseConfiguration));
 
 		$domainObject = $this->objectSchemaBuilder->build($input);
 		$dummyExtension = new Tx_ExtensionBuilder_Domain_Model_Extension();
@@ -254,6 +266,8 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 		$domainObjectName1 = 'DomainObject1';
 		$description = 'My long domain object description';
 		$relationName = 'Relation1';
+		$className = '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser';
+
 		$input = array(
 			'name' => $domainObjectName1,
 			'objectsettings' => array(
@@ -267,11 +281,16 @@ class Tx_ExtensionBuilder_ObjectSchemaBuilderTest extends Tx_ExtensionBuilder_Te
 						'relationName' => $relationName,
 						'relationType' => 'zeroToMany',
 						'propertyIsExcludeField' => FALSE,
-						'foreignRelationClass' => 'TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser'
+						'foreignRelationClass' => $className
 					),
 				)
 			),
 		);
+
+		$extbaseConfiguration = array(
+			'tableName' => 'fe_users'
+		);
+		$this->configurationManager->expects($this->atLeastOnce())->method('getExtbaseClassConfiguration')->with($className)->will($this->returnValue($extbaseConfiguration));
 
 		$domainObject1 = $this->objectSchemaBuilder->build($input);
 

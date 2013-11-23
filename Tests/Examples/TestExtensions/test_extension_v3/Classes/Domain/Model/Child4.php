@@ -36,14 +36,14 @@ class Child4 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * name
 	 *
-	 * @var \string
+	 * @var string
 	 */
 	protected $name;
 
 	/**
 	 * Returns the name
 	 *
-	 * @return \string $name
+	 * @return string $name
 	 */
 	public function getName() {
 		return $this->name;
@@ -52,7 +52,7 @@ class Child4 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Sets the name
 	 *
-	 * @param \string $name
+	 * @param string $name
 	 * @return void
 	 */
 	public function setName($name) {
