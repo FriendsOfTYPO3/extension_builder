@@ -131,5 +131,3 @@ class Tx_ExtensionBuilder_Reflection_MethodReflection extends TYPO3\CMS\Extbase\
 	}
 
 }
-
-?>

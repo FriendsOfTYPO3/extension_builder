@@ -42,5 +42,3 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_FolderProperty extends Tx_Ex
 		return $this->getFieldName() . " text NOT NULL,";
 	}
 }
-
-?>

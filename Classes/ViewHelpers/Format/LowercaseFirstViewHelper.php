@@ -48,5 +48,3 @@ class Tx_ExtensionBuilder_ViewHelpers_Format_LowercaseFirstViewHelper extends \T
 		return \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($content);
 	}
 }
-
-?>

@@ -220,5 +220,3 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 		$this->typeHint = $typeHint;
 	}
 }
-
-?>

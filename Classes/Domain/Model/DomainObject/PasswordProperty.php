@@ -40,5 +40,3 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_PasswordProperty extends Tx_
 		return $this->getFieldName() . " varchar(255) DEFAULT '' NOT NULL,";
 	}
 }
-
-?>

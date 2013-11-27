@@ -28,5 +28,3 @@ class Tx_ExtensionBuilder_ViewHelpers_CurlyBracketsViewHelper extends \TYPO3\CMS
 	}
 
 }
-
-?>

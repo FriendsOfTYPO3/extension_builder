@@ -24,5 +24,3 @@ class Tx_ExtensionBuilder_Utility_Naming {
 		return 'Tx_' . $extensionName . '_Domain_Model_' . $domainObjectName;
 	}
 }
-
-?>

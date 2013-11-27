@@ -38,5 +38,3 @@ class Tx_ExtensionBuilder_ViewHelpers_Format_HtmlSpecialCharsViewHelper extends 
 	}
 
 }
-
-?>

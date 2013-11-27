@@ -102,5 +102,3 @@ class Tx_ExtensionBuilder_ViewHelpers_MethodViewHelper extends \TYPO3\CMS\Fluid\
 
 
 }
-
-?>

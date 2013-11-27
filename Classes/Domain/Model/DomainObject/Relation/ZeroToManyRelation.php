@@ -64,12 +64,10 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation 
 	/**
 	 * Overwrite parent function
 	 *
-	 * @return void
+	 * @return boolean
 	 */
 	public function getUseMMTable() {
 		return FALSE;
 	}
 
 }
-
-?>

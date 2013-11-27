@@ -183,5 +183,3 @@ class Tx_ExtensionBuilder_Domain_Model_BackendModule {
 		return $this->controllerActionCombinations;
 	}
 }
-
-?>

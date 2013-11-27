@@ -51,5 +51,3 @@ class Tx_ExtensionBuilder_ViewHelpers_JsonViewHelper extends \TYPO3\CMS\Fluid\Co
 
 
 }
-
-?>

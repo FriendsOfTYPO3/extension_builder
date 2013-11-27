@@ -51,5 +51,3 @@ class Tx_ExtensionBuilder_ViewHelpers_ListForeignKeyRelationsViewHelper extends 
 	}
 
 }
-
-?>

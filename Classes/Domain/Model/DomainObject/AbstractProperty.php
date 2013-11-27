@@ -101,16 +101,16 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_Class_Schema $class the class this property belongs to
+	 * @param Tx_ExtensionBuilder_Domain_Model_Class_Class $class the class this property belongs to
 	 */
-	public function setClass(Tx_ExtensionBuilder_Domain_Model_Class_Schema $class) {
+	public function setClass(Tx_ExtensionBuilder_Domain_Model_Class_Class $class) {
 		$this->class = $class;
 	}
 
 	/**
 	 * Get the domain object this property belongs to.
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Schema
+	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Class
 	 */
 	public function getClass() {
 		return $this->class;
@@ -172,7 +172,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	/**
 	 * Set property uniqueIdentifier
 	 *
-	 * @param string Property uniqueIdentifier
+	 * @param string $uniqueIdentifier
 	 */
 	public function setUniqueIdentifier($uniqueIdentifier) {
 		$this->uniqueIdentifier = $uniqueIdentifier;
@@ -421,5 +421,3 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	}
 
 }
-
-?>

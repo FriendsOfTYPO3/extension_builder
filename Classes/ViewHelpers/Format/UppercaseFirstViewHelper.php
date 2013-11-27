@@ -49,5 +49,3 @@ class Tx_ExtensionBuilder_ViewHelpers_Format_UppercaseFirstViewHelper extends \T
 		return ucfirst($content);
 	}
 }
-
-?>

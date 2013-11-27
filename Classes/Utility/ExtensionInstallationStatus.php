@@ -30,7 +30,7 @@ class Tx_ExtensionBuilder_Utility_ExtensionInstallationStatus {
 	protected $extension;
 
 	/**
-	 * @var \TYPO3\CMS\Install\Install
+	 * @var \TYPO3\CMS\Extensionmanager\Utility\InstallUtility
 	 */
 	protected $installTool;
 

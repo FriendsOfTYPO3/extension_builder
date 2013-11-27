@@ -135,5 +135,3 @@ class Tx_ExtensionBuilder_Reflection_PropertyReflection extends TYPO3\CMS\Extbas
 
 
 }
-
-?>

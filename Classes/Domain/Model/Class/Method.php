@@ -211,5 +211,3 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 	}
 
 }
-
-?>

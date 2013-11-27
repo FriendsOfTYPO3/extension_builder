@@ -128,7 +128,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRe
 
 	/**
 	 *
-	 * @param string  Set the foreign class nsme of the relation
+	 * @param string $foreignClassName Set the foreign class nsme of the relation
 	 */
 	public function setForeignClassName( $foreignClassName) {
 		$this->foreignClassName = $foreignClassName;
@@ -182,5 +182,3 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRe
 
 
 }
-
-?>

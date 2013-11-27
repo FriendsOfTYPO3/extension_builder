@@ -44,5 +44,3 @@ class Tx_ExtensionBuilder_ViewHelpers_PregReplaceViewHelper extends \TYPO3\CMS\F
 		return preg_replace($match, $replace, $subject);
 	}
 }
-
-?>

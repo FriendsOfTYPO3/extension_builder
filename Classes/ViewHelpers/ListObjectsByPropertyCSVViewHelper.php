@@ -56,5 +56,3 @@ class Tx_ExtensionBuilder_ViewHelpers_ListObjectsByPropertyCSVViewHelper extends
 		return join(',', $values);
 	}
 }
-
-?>

@@ -49,5 +49,3 @@ class Tx_ExtensionBuilder_ViewHelpers_IsOfTypeViewHelper extends \TYPO3\CMS\Flui
 	}
 
 }
-
-?>

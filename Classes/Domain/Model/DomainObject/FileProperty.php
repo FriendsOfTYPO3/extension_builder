@@ -97,5 +97,3 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_FileProperty extends Tx_Exte
 		return $this->disallowedFileTypes = $disallowedFileTypes;
 	}
 }
-
-?>

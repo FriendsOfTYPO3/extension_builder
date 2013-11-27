@@ -45,5 +45,3 @@ class Tx_ExtensionBuilder_ViewHelpers_Format_QuoteStringViewHelper extends \TYPO
 	}
 
 }
-
-?>

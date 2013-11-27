@@ -123,5 +123,3 @@ class Tx_ExtensionBuilder_ViewHelpers_Be_ConfigurationViewHelper extends \TYPO3\
 		}
 	}
 }
-
-?>

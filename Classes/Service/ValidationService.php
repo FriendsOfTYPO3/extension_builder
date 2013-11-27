@@ -414,5 +414,3 @@ class Tx_ExtensionBuilder_Service_ValidationService implements \TYPO3\CMS\Core\S
 		}
 	}
 }
-
-?>
