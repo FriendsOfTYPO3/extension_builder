@@ -60,5 +60,3 @@ class Tx_ExtensionBuilder_ViewHelpers_HumanizeViewHelper extends \TYPO3\CMS\Flui
 		return $this->inflector->humanize($string);
 	}
 }
-
-?>

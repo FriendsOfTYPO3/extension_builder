@@ -76,7 +76,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Property extends Tx_ExtensionBuilde
 	public function mapToReflectionProperty($propertyReflection) {
 		if ($propertyReflection instanceof Tx_ExtensionBuilder_Reflection_PropertyReflection) {
 
-			$tags = $propertyReflection->getTagsValues(); // just to initialize the docCommentParser
+			$propertyReflection->getTagsValues(); // just to initialize the docCommentParser
 			foreach ($this as $key => $value) {
 				$setterMethodName = 'set' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($key);
 				$getterMethodName = 'get' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($key);
@@ -225,5 +225,3 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Property extends Tx_ExtensionBuilde
 	}
 
 }
-
-?>

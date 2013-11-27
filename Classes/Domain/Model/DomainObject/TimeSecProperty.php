@@ -41,5 +41,3 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_TimeSecProperty extends Tx_E
 	}
 
 }
-
-?>

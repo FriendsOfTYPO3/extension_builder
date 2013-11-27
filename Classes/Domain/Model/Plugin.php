@@ -175,5 +175,3 @@ class Tx_ExtensionBuilder_Domain_Model_Plugin {
 		return $this->switchableControllerActions;
 	}
 }
-
-?>

@@ -61,5 +61,3 @@ class Tx_ExtensionBuilder_ViewHelpers_PluralizeViewHelper extends \TYPO3\CMS\Flu
 		return $pluralizedContent;
 	}
 }
-
-?>

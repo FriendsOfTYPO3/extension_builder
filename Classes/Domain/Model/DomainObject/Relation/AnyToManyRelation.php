@@ -47,7 +47,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyR
 	 * Returns the relation table name. It is build by having 'tx_myextension_' followed by the
 	 * first domain object name followed by the second domain object name followed by '_mm'.
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public function getRelationTableName() {
 		if (!empty($this->relationTableName)) {
@@ -86,7 +86,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyR
 	/**
 	 * Is a MM table needed for this relation?
 	 *
-	 * @return void
+	 * @return boolean
 	 */
 	public function getUseMMTable() {
 		if ($this->getInlineEditing()) {
@@ -96,7 +96,4 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyR
 			return TRUE;
 		}
 	}
-
 }
-
-?>

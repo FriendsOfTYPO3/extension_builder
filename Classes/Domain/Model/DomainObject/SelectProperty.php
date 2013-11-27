@@ -40,5 +40,3 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_SelectProperty extends Tx_Ex
 		return $this->getFieldName() . " int(11) DEFAULT '0' NOT NULL,";
 	}
 }
-
-?>

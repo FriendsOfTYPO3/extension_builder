@@ -40,5 +40,3 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_TextProperty extends Tx_Exte
 		return $this->getFieldName() . " text NOT NULL,";
 	}
 }
-
-?>

@@ -81,5 +81,3 @@ class Tx_ExtensionBuilder_Domain_Repository_ExtensionRepository implements \TYPO
 		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($extension->getExtensionDir() . Tx_ExtensionBuilder_Configuration_ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE, json_encode($extensionBuildConfiguration));
 	}
 }
-
-?>

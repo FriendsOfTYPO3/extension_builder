@@ -113,5 +113,3 @@ class Tx_ExtensionBuilder_ViewHelpers_MappingViewHelper extends \TYPO3\CMS\Fluid
 	}
 
 }
-
-?>

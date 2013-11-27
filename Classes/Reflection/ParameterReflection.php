@@ -70,5 +70,3 @@ class Tx_ExtensionBuilder_Reflection_ParameterReflection extends TYPO3\CMS\Extba
 
 
 }
-
-?>

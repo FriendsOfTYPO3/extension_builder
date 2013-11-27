@@ -403,7 +403,6 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	 * @return boolean
 	 */
 	public function propertyExists($propertyName) {
-		$propertyNames = $this->getPropertyNames();
 		if (!is_array($this->methods)) {
 			return FALSE;
 		}
@@ -558,5 +557,3 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	}
 
 }
-
-?>

@@ -82,5 +82,3 @@ class Tx_ExtensionBuilder_ViewHelpers_ClassViewHelper extends \TYPO3\CMS\Fluid\C
 
 
 }
-
-?>

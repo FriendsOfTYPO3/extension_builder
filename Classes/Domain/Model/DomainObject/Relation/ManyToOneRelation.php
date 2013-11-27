@@ -48,5 +48,3 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToOneRelation e
 		return $this->getForeignModelName();
 	}
 }
-
-?>

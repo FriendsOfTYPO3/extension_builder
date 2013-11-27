@@ -44,5 +44,3 @@ class Tx_ExtensionBuilder_ViewHelpers_Format_RemoveMultipleNewlinesViewHelper ex
 		return $content;
 	}
 }
-
-?>

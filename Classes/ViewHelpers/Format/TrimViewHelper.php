@@ -38,5 +38,3 @@ class Tx_ExtensionBuilder_ViewHelpers_Format_TrimViewHelper extends \TYPO3\CMS\F
 		return trim($content);
 	}
 }
-
-?>

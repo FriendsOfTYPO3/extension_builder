@@ -44,5 +44,3 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_NativeDateProperty extends T
 		return $this->name . ' -> f:format.date()';
 	}
 }
-
-?>

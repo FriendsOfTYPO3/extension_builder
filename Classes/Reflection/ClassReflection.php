@@ -278,5 +278,3 @@ class Tx_ExtensionBuilder_Reflection_ClassReflection extends TYPO3\CMS\Extbase\R
 		return $this->docCommentParser->getRawComments($this->getFileName());
 	}
 }
-
-?>

@@ -67,5 +67,3 @@ class Tx_ExtensionBuilder_Utility_Inflector {
 	}
 
 }
-
-?>

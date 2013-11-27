@@ -26,5 +26,3 @@ class Tx_ExtensionBuilder_ViewHelpers_CommentViewHelper extends \TYPO3\CMS\Fluid
 		return '';
 	}
 }
-
-?>

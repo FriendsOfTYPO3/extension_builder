@@ -57,5 +57,3 @@ class Tx_ExtensionBuilder_ViewHelpers_SingularizeViewHelper extends \TYPO3\CMS\F
 		return $this->inflector->singularize($content);
 	}
 }
-
-?>

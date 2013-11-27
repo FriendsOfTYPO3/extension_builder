@@ -28,5 +28,3 @@ class Tx_ExtensionBuilder_ViewHelpers_OpeningTagViewHelper extends \TYPO3\CMS\Fl
 	}
 
 }
-
-?>

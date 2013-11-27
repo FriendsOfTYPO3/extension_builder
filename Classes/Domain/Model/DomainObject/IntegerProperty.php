@@ -39,5 +39,3 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_IntegerProperty extends Tx_E
 		return $this->getFieldName() . " int(11) DEFAULT '0' NOT NULL,";
 	}
 }
-
-?>

@@ -46,5 +46,3 @@ class Tx_ExtensionBuilder_ViewHelpers_BeFuncViewHelper extends \TYPO3\CMS\Fluid\
 		return $this->renderChildren();
 	}
 }
-
-?>

@@ -39,5 +39,3 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_FloatProperty extends Tx_Ext
 		return $this->getFieldName() . " double(11,2) DEFAULT '0.00' NOT NULL,";
 	}
 }
-
-?>
