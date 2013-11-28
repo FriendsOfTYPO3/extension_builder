@@ -1,6 +1,6 @@
 <?php
 {namespace k=Tx_ExtensionBuilder_ViewHelpers}
-namespace {extension.nameSpace}\Tests;
+namespace {extension.nameSpace}\Tests\Unit\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *

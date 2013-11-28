@@ -1,5 +1,5 @@
 <?php
-namespace {extension.nameSpace}\Tests;
+namespace {extension.nameSpace}\Tests\Unit\Controller;
 /***************************************************************
  *  Copyright notice
  *
