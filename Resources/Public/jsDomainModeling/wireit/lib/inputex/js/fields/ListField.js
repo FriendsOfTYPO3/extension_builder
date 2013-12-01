@@ -219,7 +219,7 @@
 						var subFieldEl = el.getEl();
 						Dom.setStyle(subFieldEl, 'margin-left', '4px');
 						Dom.setStyle(subFieldEl, 'float', 'left');
-						newDiv.appendChild(subFieldEl);
+						//newDiv.appendChild(subFieldEl);
 
 						// Subscribe the onChange event to resend it
 						el.updatedEvt.subscribe(this.onChange, this, true);

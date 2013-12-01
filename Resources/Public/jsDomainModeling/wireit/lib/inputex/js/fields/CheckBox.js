@@ -52,6 +52,7 @@
 
 						this.rightLabelEl = inputEx.cn('label', {"for": checkBoxId, className: 'inputEx-CheckBox-rightLabel'}, null, this.options.rightLabel);
 						this.fieldContainer.appendChild(this.rightLabelEl);
+						Dom.addClass(this.divEl,'checkBoxFieldWrapper');
 
 						// Keep state of checkbox in a hidden field (format : this.checkedValue or this.uncheckedValue)
 						this.hiddenEl = inputEx.cn('input', {type: 'hidden', name: this.options.name || '', value: this.el.checked ? this.checkedValue : this.uncheckedValue});

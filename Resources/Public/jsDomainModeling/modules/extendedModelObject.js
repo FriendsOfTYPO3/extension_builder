@@ -5,6 +5,7 @@ var advancedFields = {
 			flatten:true,
 			collapsed: true,
 			legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.more,
+			className:"advancedSettings",
 			name: "advancedSettings",
 			fields: [
 					{
@@ -27,7 +28,7 @@ var advancedFields = {
 							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
 							name: "relationDescription",
 							cols:20,
-							rows:1
+							rows:2
 						}
 					},
 					{

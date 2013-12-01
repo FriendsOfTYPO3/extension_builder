@@ -27,6 +27,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 						collapsible: true,
 						collapsed: true,
 						legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.domainObjectSettings,
+						className:'objectSettings',
 						name: "objectsettings",
 						fields: [
 							{
@@ -67,12 +68,14 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								}
 							},
 							{
-								type: "string",
+								type: "text",
 								inputParams: {
 									name: "description",
 									className: 'bottomBorder',
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
-									required: false
+									required: false,
+									cols:20,
+									rows:2
 								}
 							},
 							{
@@ -103,6 +106,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 						collapsed: true,
 						legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.defaultActions,
 						name: "actionGroup",
+						className: 'actionGroup',
 						fields: [
 							{
 								type: "boolean",
@@ -169,6 +173,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 					inputParams: {
 						collapsible: true,
 						collapsed: true,
+						className:'properties',
 						legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.properties,
 						name: "propertyGroup",
 						fields: [
@@ -257,7 +262,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
 														name: "propertyDescription",
 														cols:20,
-														rows:1
+														rows:2
 													}
 												},
 												{
@@ -339,7 +344,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
 														required: false,
 														cols:20,
-														rows:1
+														rows:3
 													}
 												},
 												{
@@ -383,8 +388,8 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 					name: "SOURCES",
 					direction: [0,-1],
 					offsetPosition: {
-						left: 20,
-						top: -15
+						left: 5,
+						top: -2
 					},
 					ddConfig: {
 						type: "output",

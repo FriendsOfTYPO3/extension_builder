@@ -52,7 +52,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 		inputParams: {
 			collapsible: true,
 			collapsed: true,
-			className: 'bottomBorder',
+			className: 'emConf mainGroup',
 			legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.moreOptions,
 			name: "emConf",
 			fields: [
@@ -178,7 +178,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.persons,
 			name: "persons",
 			sortable: true,
-			className: 'bottomBorder',
+			className: 'persons mainGroup',
 			elementType: {
 				type: "group",
 				inputParams: {
@@ -229,7 +229,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.plugins,
 			description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_plugins,
 			sortable: true,
-			className: 'bottomBorder',
+			className: 'plugins mainGroup',
 			elementType: {
 				type: "group",
 				inputParams: {

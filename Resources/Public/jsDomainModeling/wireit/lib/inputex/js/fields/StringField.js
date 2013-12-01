@@ -75,6 +75,7 @@
 
 				// Append it to the main element
 				this.wrapEl.appendChild(this.el);
+				Dom.addClass(this.divEl,'textfieldWrapper');
 				this.fieldContainer.appendChild(this.wrapEl);
 			},
 
@@ -114,7 +115,7 @@
 			 */
 			setValue: function(value, sendUpdatedEvt) {
 				this.el.value = value;
-
+				this.el.setAttribute('title', value);
 				// call parent class method to set style and fire updatedEvt
 				inputEx.StringField.superclass.setValue.call(this, value, sendUpdatedEvt);
 			},

@@ -26,7 +26,7 @@ inputEx.Group = function(options) {
 };
 lang.extend(inputEx.Group, inputEx.Field, 
 /**
- * @scope inputEx.Group.prototype   
+ * @scope inputEx.Group.prototype
  */   
 {
    
@@ -71,9 +71,12 @@ lang.extend(inputEx.Group, inputEx.Field,
     * Render the group
     */
    render: function() {
-   
-      // Create the div wrapper for this group
-	   this.divEl = inputEx.cn('div', {className: this.options.className});
+	   var className = this.options.className;
+		if (this.options.collapsible) {
+			className += ' expanded';
+		}
+		// Create the div wrapper for this group
+		this.divEl = inputEx.cn('div', {className: className});
 	   if(this.options.id) {
    	   this.divEl.id = this.options.id;
    	}
@@ -181,9 +184,23 @@ lang.extend(inputEx.Group, inputEx.Field,
    toggleCollapse: function() {
       if(Dom.hasClass(this.fieldset, 'inputEx-Expanded')) {
          Dom.replaceClass(this.fieldset, 'inputEx-Expanded', 'inputEx-Collapsed');
+		  Dom.replaceClass(this.divEl, 'expanded', 'collapsed');
       }
       else {
-         Dom.replaceClass(this.fieldset, 'inputEx-Collapsed','inputEx-Expanded');
+		  if(Dom.getAncestorByClassName(this.divEl, 'WireIt-Container')) {
+			  console.log(Dom.getAncestorByClassName(this.divEl, 'WireIt-Container').id);
+				var containerId = Dom.getAncestorByClassName(this.divEl, 'WireIt-Container').id;
+			  Dom.getElementsByClassName('inputEx-Expanded', 'fieldset', containerId).each(function(el) {
+				  console.log(el);
+				Dom.replaceClass(el, 'inputEx-Expanded', 'inputEx-Collapsed');
+			  });
+			  Dom.getElementsByClassName('expanded').each(function(el) {
+				  console.log(el);
+				  Dom.replaceClass(el, 'expanded', 'collapsed');
+			  });
+		  }
+		  Dom.replaceClass(this.fieldset, 'inputEx-Collapsed','inputEx-Expanded');
+		  Dom.replaceClass(this.divEl, 'collapsed', 'expanded');
       }
    },
    

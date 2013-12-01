@@ -64,6 +64,7 @@
 							this.optionEls[this.options.selectOptions[i]] = optionEl;
 							this.el.appendChild(optionEl);
 						}
+						YAHOO.util.Dom.addClass(this.divEl,'selectFieldWrapper');
 						this.fieldContainer.appendChild(this.el);
 					},
 
