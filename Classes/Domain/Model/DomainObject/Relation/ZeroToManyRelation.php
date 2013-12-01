@@ -37,6 +37,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation 
 	 */
 	protected $foreignKeyName;
 
+
 	public function getTypeForComment() {
 		return '\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage<' . $this->getForeignClassName() . '>';
 	}
@@ -68,6 +69,14 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation 
 	 */
 	public function getUseMMTable() {
 		return FALSE;
+	}
+
+	/**
+	 *
+	 * @return boolean TRUE (if property is of type relation any to many)
+	 */
+	public function isZeroToManyRelation() {
+		return TRUE;
 	}
 
 }
