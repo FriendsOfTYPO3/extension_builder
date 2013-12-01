@@ -186,6 +186,14 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 		return is_subclass_of($this, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation');
 	}
 
+	/**
+	 *
+	 * @return boolean TRUE (if property is of type relation any to many)
+	 */
+	public function isZeroToManyRelation() {
+		return FALSE;
+	}
+
 
 	/**
 	 *

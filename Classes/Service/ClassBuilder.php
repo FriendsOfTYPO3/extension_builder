@@ -159,6 +159,9 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 			else {
 				$classProperty = new Tx_ExtensionBuilder_Domain_Model_Class_Property($propertyName);
 				$classProperty->setTag('var', $domainProperty->getTypeForComment());
+				if($domainProperty->isZeroToManyRelation()) {
+					$classProperty->setTag('cascade','remove');
+				}
 				$classProperty->addModifier('protected');
 				//\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('New property: ' . $propertyName . ':' . $domainProperty->getTypeForComment(), 'extension_builder', 1);
 			}
