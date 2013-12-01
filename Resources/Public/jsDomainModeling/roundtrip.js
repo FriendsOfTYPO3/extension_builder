@@ -1,5 +1,5 @@
 var roundtrip = {
-		debugMode			:	true,
+		debugMode			:	false,
 		renderFieldHook 	:	function(input){
 									if(input.inputParams.name == 'uid' && typeof input.inputParams.value == 'undefined'){
 										input.inputParams.value = this.createUniqueId();
@@ -30,7 +30,6 @@ var roundtrip = {
 								}
 		
 		,updateEvtListener	:	function(params){
-									//console.log('updateEvtListener called');
 									if(typeof params[0] != 'object'){
 										//console.log(params[1]);
 									}
@@ -91,7 +90,7 @@ var roundtrip = {
 														roundtrip.showHelp(target,false);
 													}
 												);
-											l.addClass('helpAvailable')
+											l.addClass('helpAvailable');
 										}
 									}
 		,getUidForTerminal		:	function(terminal){
@@ -105,6 +104,7 @@ var roundtrip = {
 		}
 		,showHelp				:	function(targetEl,show){
 										var descriptionElement = Ext.get(targetEl.id.replace('label','desc'));
+										//console.log(targetEl);
 										if(descriptionElement && descriptionElement.dom.innerHTML.length){
 											if(show){
 												descriptionElement.show();

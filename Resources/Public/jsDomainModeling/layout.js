@@ -1,11 +1,10 @@
 // Configuration of the whole layout. See documentation of YUI's widget.Layout()
 extbaseModeling_wiringEditorLanguage.layoutOptions =
 {
-	units:
-	[
+	units: [
 		{
 			position: 'left',
-			width: 350,
+			width: 280,
 			resize: true,
 			body: 'left',
 			gutter: '5px',

@@ -168,6 +168,8 @@
 					 * Toggle the collapse state
 					 */
 					toggleCollapse: function() {
+						alert(Dom.getAncestorByTagName('WireIt-Container'));
+						console.log('TEST');
 						if (Dom.hasClass(this.fieldset, 'inputEx-Expanded')) {
 							Dom.replaceClass(this.fieldset, 'inputEx-Expanded', 'inputEx-Collapsed');
 						}

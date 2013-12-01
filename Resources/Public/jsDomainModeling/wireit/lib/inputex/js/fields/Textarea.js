@@ -53,6 +53,7 @@
 
 							  // Append it to the main element
 							  this.wrapEl.appendChild(this.el);
+							  YAHOO.util.Dom.addClass(this.divEl,'textfieldWrapper');
 							  this.fieldContainer.appendChild(this.wrapEl);
 						  },
 
