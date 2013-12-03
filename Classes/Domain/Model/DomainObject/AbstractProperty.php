@@ -416,8 +416,16 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 		return $this->useRTE;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getUnqualifiedType() {
-		return substr($this->getTypeForComment(),1);
+		$type = $this->getTypeForComment();
+		if (substr($type, 0, 1) === chr(92)) {
+			return substr($type, 1);
+		} else {
+			return $type;
+		}
 	}
 
 }
