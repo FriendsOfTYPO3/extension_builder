@@ -93,30 +93,36 @@ class {domainObject.name}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase
 	public function set{property.name -> k:format.uppercaseFirst()}For{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"ObjectStorageContaining{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}Sets{property.name -> k:format.uppercaseFirst()}() {<f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'string')}">
 		$this->subject->set{property.name -> k:format.uppercaseFirst()}('Conceived at T3CON10');
 
-		$this->assertSame(
+		$this->assertAttributeEquals(
 			'Conceived at T3CON10',
-			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
+			'{property.name}',
+			$this->subject
 		);
 </f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'integer')}">
 		$this->subject->set{property.name -> k:format.uppercaseFirst()}(12);
 
-		$this->assertSame(
+		$this->assertAttributeEquals(
 			12,
-			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
+			'{property.name}',
+			$this->subject
 		);
 </f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'float')}">
 		$this->subject->set{property.name -> k:format.uppercaseFirst()}(3.14159265);
 
-		$this->assertSame(
+		$this->assertAttributeEquals(
 			3.14159265,
-			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
+			'{property.name}',
+			$this->subject,
+			'',
+			0.000000001
 		);
 </f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'boolean')}">
 		$this->subject->set{property.name -> k:format.uppercaseFirst()}(TRUE);
 
-		$this->assertSame(
+		$this->assertAttributeEquals(
 			TRUE,
-			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
+			'{property.name}',
+			$this->subject
 		);
 </f:if><f:if condition="{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}"><f:then>
 		${property.name -> k:singularize()} = new {k:pregReplace(match:'/^.*<(.*)>$/', replace:'\1', subject:property.unqualifiedType)}();
@@ -124,17 +130,19 @@ class {domainObject.name}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase
 		$objectStorageHoldingExactlyOne{property.name -> k:format.uppercaseFirst()}->attach(${property.name -> k:singularize()});
 		$this->subject->set{property.name -> k:format.uppercaseFirst()}($objectStorageHoldingExactlyOne{property.name -> k:format.uppercaseFirst()});
 
-		$this->assertSame(
+		$this->assertAttributeEquals(
 			$objectStorageHoldingExactlyOne{property.name -> k:format.uppercaseFirst()},
-			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
+			'{property.name}',
+			$this->subject
 		);
 </f:then><f:else><f:if condition="{k:matchString(match:extension.extensionKey, in:property.unqualifiedType)}">
 		$dummyObject = new {f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"ObjectStorageContaining{property.foreignModelName)}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}();
 		$this->subject->set{property.name -> k:format.uppercaseFirst()}($dummyObject);
 
-		$this->assertSame(
+		$this->assertAttributeEquals(
 			$dummyObject,
-			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
+			'{property.name}',
+			$this->subject
 		);
 </f:if></f:else></f:if>	}<f:if condition="{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}">
 
@@ -147,9 +155,10 @@ class {domainObject.name}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase
 		$objectStorageHoldingExactlyOne{property.name -> k:singularize() -> k:format.uppercaseFirst()}->attach(${property.name -> k:singularize()});
 		$this->subject->add{property.name -> k:singularize() -> k:format.uppercaseFirst()}(${property.name -> k:singularize()});
 
-		$this->assertEquals(
+		$this->assertAttributeEquals(
 			$objectStorageHoldingExactlyOne{property.name -> k:singularize() -> k:format.uppercaseFirst()},
-			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
+			'{property.name}',
+			$this->subject
 		);
 	}
 
@@ -164,9 +173,10 @@ class {domainObject.name}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase
 		$this->subject->add{property.name -> k:singularize() -> k:format.uppercaseFirst()}(${property.name -> k:singularize()});
 		$this->subject->remove{property.name -> k:singularize() -> k:format.uppercaseFirst()}(${property.name -> k:singularize()});
 
-		$this->assertEquals(
+		$this->assertAttributeEquals(
 			$localObjectStorage,
-			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
+			'{property.name}',
+			$this->subject
 		);
 	}</f:if></f:for></f:then><f:else>
 	/**
