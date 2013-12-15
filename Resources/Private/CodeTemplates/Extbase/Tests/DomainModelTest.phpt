@@ -151,15 +151,11 @@ class {domainObject.name}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase
 	 */
 	public function add{property.name -> k:singularize() -> k:format.uppercaseFirst()}ToObjectStorageHolding{property.name -> k:format.uppercaseFirst()}() {
 		${property.name -> k:singularize()} = new {property.foreignClassName}();
-		$objectStorageHoldingExactlyOne{property.name -> k:singularize() -> k:format.uppercaseFirst()} = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-		$objectStorageHoldingExactlyOne{property.name -> k:singularize() -> k:format.uppercaseFirst()}->attach(${property.name -> k:singularize()});
-		$this->subject->add{property.name -> k:singularize() -> k:format.uppercaseFirst()}(${property.name -> k:singularize()});
+		${property.name}ObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('attach'), array(), '', FALSE);
+		${property.name}ObjectStorageMock->expects($this->once())->method('attach')->with($this->equalTo(${property.name -> k:singularize()}));
+		$this->inject($this->subject, '{property.name}', ${property.name}ObjectStorageMock);
 
-		$this->assertAttributeEquals(
-			$objectStorageHoldingExactlyOne{property.name -> k:singularize() -> k:format.uppercaseFirst()},
-			'{property.name}',
-			$this->subject
-		);
+		$this->subject->add{property.name -> k:singularize() -> k:format.uppercaseFirst()}(${property.name -> k:singularize()});
 	}
 
 	/**
@@ -167,17 +163,12 @@ class {domainObject.name}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase
 	 */
 	public function remove{property.name -> k:singularize() -> k:format.uppercaseFirst()}FromObjectStorageHolding{property.name -> k:format.uppercaseFirst()}() {
 		${property.name -> k:singularize()} = new {property.foreignClassName}();
-		$localObjectStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-		$localObjectStorage->attach(${property.name -> k:singularize()});
-		$localObjectStorage->detach(${property.name -> k:singularize()});
-		$this->subject->add{property.name -> k:singularize() -> k:format.uppercaseFirst()}(${property.name -> k:singularize()});
+		${property.name}ObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('detach'), array(), '', FALSE);
+		${property.name}ObjectStorageMock->expects($this->once())->method('detach')->with($this->equalTo(${property.name -> k:singularize()}));
+		$this->inject($this->subject, '{property.name}', ${property.name}ObjectStorageMock);
+
 		$this->subject->remove{property.name -> k:singularize() -> k:format.uppercaseFirst()}(${property.name -> k:singularize()});
 
-		$this->assertAttributeEquals(
-			$localObjectStorage,
-			'{property.name}',
-			$this->subject
-		);
 	}</f:if></f:for></f:then><f:else>
 	/**
 	 * @test
