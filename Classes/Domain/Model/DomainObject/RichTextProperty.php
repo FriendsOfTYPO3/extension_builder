@@ -28,6 +28,13 @@
  */
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_RichTextProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
+	/**
+	 * string representation of the default value
+	 *
+	 * @var string
+	 */
+	protected $defaultValue = '\'\'';
+
 	protected $useRTE = TRUE;
 
 	public function getTypeForComment() {

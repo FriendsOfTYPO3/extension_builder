@@ -28,6 +28,13 @@
  */
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_SelectProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
+	/**
+	 * string representation of the default value
+	 *
+	 * @var string
+	 */
+	protected $defaultValue = '0';
+
 	public function getTypeForComment() {
 		return 'integer';
 	}

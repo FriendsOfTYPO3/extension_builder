@@ -38,7 +38,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 *
 	 * @var string
 	 */
-	protected $name;
+	protected $name = '';
 
 	/**
 	 * This is required
@@ -46,7 +46,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @var string
 	 * @validate NotEmpty
 	 */
-	protected $identifier;
+	protected $identifier = '';
 
 	/**
 	 * This is a 1:1 relation

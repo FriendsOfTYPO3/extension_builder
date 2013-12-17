@@ -31,6 +31,13 @@
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_ImageProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
 	/**
+	 * string representation of the default value
+	 *
+	 * @var string
+	 */
+	protected $defaultValue = '\'\'';
+
+	/**
 	 * flag that this property needs an upload folder
 	 *
 	 * @var boolean

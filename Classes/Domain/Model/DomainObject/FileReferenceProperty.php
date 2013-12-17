@@ -31,6 +31,13 @@
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_FileReferenceProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
 	/**
+	 * string representation of the default value
+	 *
+	 * @var string
+	 */
+	protected $defaultValue = '\'\'';
+
+	/**
 	 * allowed file types for this property
 	 * @var string (comma separated filetypes)
 	 */
