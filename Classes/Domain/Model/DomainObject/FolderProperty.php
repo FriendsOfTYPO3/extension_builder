@@ -30,6 +30,13 @@
  */
 class Tx_ExtensionBuilder_Domain_Model_DomainObject_FolderProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
+	/**
+	 * string representation of the default value
+	 *
+	 * @var string
+	 */
+	protected $defaultValue = '\'\'';
+
 	public function getTypeForComment() {
 		return 'string';
 	}

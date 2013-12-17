@@ -38,7 +38,7 @@ class Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 *
 	 * @var string
 	 */
-	protected $name;
+	protected $name = '';
 
 	/**
 	 * Returns the name

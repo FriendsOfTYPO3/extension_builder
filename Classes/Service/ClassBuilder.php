@@ -162,6 +162,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 				if($domainProperty->isZeroToManyRelation()) {
 					$classProperty->setTag('cascade','remove');
 				}
+				$classProperty->setValue($domainProperty->getDefaultValue());
 				$classProperty->addModifier('protected');
 				//\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('New property: ' . $propertyName . ':' . $domainProperty->getTypeForComment(), 'extension_builder', 1);
 			}
