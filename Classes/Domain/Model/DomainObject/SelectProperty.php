@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
 /***************************************************************
  *  Copyright notice
  *
@@ -26,7 +27,7 @@
  *
  * @version $ID:$
  */
-class Tx_ExtensionBuilder_Domain_Model_DomainObject_SelectProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
+class SelectProperty extends AbstractProperty {
 
 	/**
 	 * string representation of the default value

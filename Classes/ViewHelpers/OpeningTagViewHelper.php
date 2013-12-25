@@ -1,4 +1,6 @@
 <?php
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -21,7 +23,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class Tx_ExtensionBuilder_ViewHelpers_OpeningTagViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class OpeningTagViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	public function render() {
 		return '<' . $this->renderChildren() . '>';

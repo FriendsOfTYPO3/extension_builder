@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Tests\Unit;
 /***************************************************************
  *  Copyright notice
  *
@@ -29,7 +30,7 @@
  * @author Nico de Haen
  *
  */
-class Tx_ExtensionBuilder_CodeGeneratorUnitTest extends Tx_ExtensionBuilder_Tests_BaseTest {
+class CodeGeneratorUnitTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	function setUp() {
 		parent::setUp();
@@ -46,7 +47,7 @@ class Tx_ExtensionBuilder_CodeGeneratorUnitTest extends Tx_ExtensionBuilder_Test
 		$modelName = 'ModelCgt1';
 		$propertyName = 'blue';
 		$domainObject = $this->buildDomainObject($modelName);
-		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty();
+		$property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty();
 		$property->setName($propertyName);
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
@@ -66,7 +67,7 @@ class Tx_ExtensionBuilder_CodeGeneratorUnitTest extends Tx_ExtensionBuilder_Test
 	function parseAndWriteClass() {
 		require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicAliasClass.php');
 		$className = '\\Bar\\Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicAliasClass';
-		$classParser = new Tx_ExtensionBuilder_Utility_ClassParser();
+		$classParser = new \EBT\ExtensionBuilder\Utility\ClassParser();
 		$classObject = $classParser->parse($className);
 		$classObject->setNameSpace('Foo');
 		$classObject->setName('Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicAliasClass');

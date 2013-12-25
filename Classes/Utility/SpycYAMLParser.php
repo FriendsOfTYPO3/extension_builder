@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Utility;
 /**
  * Spyc -- A Simple PHP YAML Class
  * @version 0.4.5
@@ -33,7 +34,7 @@
  * </code>
  * @package Spyc
  */
-class Tx_ExtensionBuilder_Utility_SpycYAMLParser {
+class SpycYAMLParser {
 
 	// SETTINGS
 
@@ -136,7 +137,7 @@ class Tx_ExtensionBuilder_Utility_SpycYAMLParser {
 	 * @param string $input String containing YAML
 	 */
 	public static function YAMLLoadString($input) {
-		$Spyc = new Tx_ExtensionBuilder_Utility_SpycYAMLParser;
+		$Spyc = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser();
 		return $Spyc->__loadString($input);
 	}
 
@@ -298,7 +299,7 @@ class Tx_ExtensionBuilder_Utility_SpycYAMLParser {
 			// It's a sequence
 			$string = $spaces . '- ' . $value . "\n";
 		} else {
-			if ($first_key === 0) throw new Exception('Keys are all screwy.  The first one was zero, now it\'s "' . $key . '"');
+			if ($first_key === 0) throw new \Exception('Keys are all screwy.  The first one was zero, now it\'s "' . $key . '"');
 			// It's mapped
 			if (strpos($key, ":") !== false) {
 				$key = '"' . $key . '"';

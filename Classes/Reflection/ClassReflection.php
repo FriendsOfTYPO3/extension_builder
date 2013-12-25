@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Reflection;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,9 +24,9 @@
  ***************************************************************/
 
 /**
- * Extended version of the Tx_Extbase_Reflection_ClassReflection
+ * Extended version of the \TYPO3\CMS\Extbase\Reflection\ClassReflection
  */
-class Tx_ExtensionBuilder_Reflection_ClassReflection extends TYPO3\CMS\Extbase\Reflection\ClassReflection {
+class ClassReflection extends \TYPO3\CMS\Extbase\Reflection\ClassReflection {
 
 	/**
 	 *
@@ -44,11 +45,11 @@ class Tx_ExtensionBuilder_Reflection_ClassReflection extends TYPO3\CMS\Extbase\R
 
 	/**
 	 * Replacement for the original getMethods() method which makes sure
-	 * that Tx_Extbase_Reflection_MethodReflection objects are returned instead of the
+	 * that MethodReflection objects are returned instead of the
 	 * orginal ReflectionMethod instances.
 	 *
 	 * @param  long $filter: A filter mask
-	 * @return Tx_Extbase_Reflection_MethodReflection Method reflection objects of the methods in this class
+	 * @return MethodReflection Method reflection objects of the methods in this class
 	 */
 	public function getMethods($filter = NULL) {
 		$extendedMethods = array();
@@ -56,7 +57,7 @@ class Tx_ExtensionBuilder_Reflection_ClassReflection extends TYPO3\CMS\Extbase\R
 		$methods = ($filter === NULL ? parent::getMethods() : parent::getMethods($filter));
 
 		foreach ($methods as $method) {
-			$extendedMethods[] = new Tx_ExtensionBuilder_Reflection_MethodReflection($this->getName(), $method->getName());
+			$extendedMethods[] = new MethodReflection($this->getName(), $method->getName());
 		}
 		return $extendedMethods;
 	}
@@ -105,57 +106,57 @@ class Tx_ExtensionBuilder_Reflection_ClassReflection extends TYPO3\CMS\Extbase\R
 
 	/**
 	 * Replacement for the original getMethod() method which makes sure
-	 * that Tx_Extbase_Reflection_MethodReflection objects are returned instead of the
+	 * that MethodReflection objects are returned instead of the
 	 * orginal ReflectionMethod instances.
 	 *
-	 * @return Tx_ExtensionBuilder_Reflection_MethodReflection Method reflection object of the named method
+	 * @return MethodReflection Method reflection object of the named method
 	 */
 	public function getMethod($name) {
 		$parentMethod = parent::getMethod($name);
 		if (!is_object($parentMethod)) return $parentMethod;
-		return new Tx_ExtensionBuilder_Reflection_MethodReflection($this->getName(), $parentMethod->getName());
+		return new MethodReflection($this->getName(), $parentMethod->getName());
 	}
 
 	/**
 	 * Replacement for the original getConstructor() method which makes sure
-	 * that Tx_Extbase_Reflection_MethodReflection objects are returned instead of the
+	 * that MethodReflection objects are returned instead of the
 	 * orginal ReflectionMethod instances.
 	 *
-	 * @return Tx_ExtensionBuilder_Reflection_MethodReflection Method reflection object of the constructor method
+	 * @return MethodReflection Method reflection object of the constructor method
 	 */
 	public function getConstructor() {
 		$parentConstructor = parent::getConstructor();
 		if (!is_object($parentConstructor)) return $parentConstructor;
-		return new Tx_ExtensionBuilder_Reflection_MethodReflection($this->getName(), $parentConstructor->getName());
+		return new MethodReflection($this->getName(), $parentConstructor->getName());
 	}
 
 	/**
 	 * Replacement for the original getProperties() method which makes sure
-	 * that Tx_Extbase_Reflection_PropertyReflection objects are returned instead of the
+	 * that PropertyReflection objects are returned instead of the
 	 * orginal ReflectionProperty instances.
 	 *
 	 * @param  long $filter: A filter mask
-	 * @return array of Tx_Extbase_Reflection_PropertyReflection Property reflection objects of the properties in this class
+	 * @return array of PropertyReflection Property reflection objects of the properties in this class
 	 */
 	public function getProperties($filter = NULL) {
 		$extendedProperties = array();
 		$properties = ($filter === NULL ? parent::getProperties() : parent::getProperties($filter));
 		foreach ($properties as $property) {
-			$extendedProperties[] = new Tx_ExtensionBuilder_Reflection_PropertyReflection($this->getName(), $property->getName());
+			$extendedProperties[] = new PropertyReflection($this->getName(), $property->getName());
 		}
 		return $extendedProperties;
 	}
 
 	/**
 	 * Replacement for the original getProperty() method which makes sure
-	 * that a Tx_Extbase_Reflection_PropertyReflection object is returned instead of the
+	 * that a PropertyReflection object is returned instead of the
 	 * orginal ReflectionProperty instance.
 	 *
 	 * @param  string $name: Name of the property
-	 * @return Tx_Extbase_Reflection_PropertyReflection Property reflection object of the specified property in this class
+	 * @return PropertyReflection Property reflection object of the specified property in this class
 	 */
 	public function getProperty($name) {
-		return new Tx_ExtensionBuilder_Reflection_PropertyReflection($this->getName(), $name);
+		return new PropertyReflection($this->getName(), $name);
 	}
 
 	/**
@@ -203,15 +204,15 @@ class Tx_ExtensionBuilder_Reflection_ClassReflection extends TYPO3\CMS\Extbase\R
 	 * that a Tx_Extbase_Reflection_ClassReflection object is returned instead of the
 	 * orginal ReflectionClass instance.
 	 *
-	 * @return Tx_Extbase_Reflection_ClassReflection Reflection of the parent class - if any
+	 * @return ClassReflection Reflection of the parent class - if any
 	 */
 	public function getParentClass() {
 		//$parentClass = parent::getParentClass();
 		// workaround for bug #8800 in Tx_Extbase_Reflection_ClassReflection
-		$phpReflectionClass = new ReflectionClass($this->getName());
+		$phpReflectionClass = new \ReflectionClass($this->getName());
 		$parentClass = $phpReflectionClass->getParentClass();
 		if ($parentClass) {
-			return new Tx_ExtensionBuilder_Reflection_ClassReflection($parentClass->getName());
+			return new ClassReflection($parentClass->getName());
 		}
 		else return FALSE;
 	}

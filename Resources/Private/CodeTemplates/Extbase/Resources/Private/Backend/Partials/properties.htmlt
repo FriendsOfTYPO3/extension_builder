@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}
 <table class="{extension.cssClassName}" >
 	<k:format.removeMultipleNewlines>
 	<f:for each="{domainObject.properties}" as="property">

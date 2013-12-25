@@ -1,4 +1,6 @@
 <?php
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -27,7 +29,7 @@
  * enables access to json_encode and json_decode in fluid templates
  */
 
-class Tx_ExtensionBuilder_ViewHelpers_JsonViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class JsonViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 *

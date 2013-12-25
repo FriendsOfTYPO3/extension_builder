@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}<?php
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<?php
 <f:if condition="{classObject.nameSpace}">namespace {classObject.nameSpace};</f:if>
 <f:if condition="{classObject.aliasDeclarations}"><f:for each="{classObject.aliasDeclarations}" as="aliasDeclaration">
 use {aliasDeclaration};</f:for></f:if>

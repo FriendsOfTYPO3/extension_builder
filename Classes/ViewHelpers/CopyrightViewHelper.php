@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\ViewHelpers;
 /*                                                                        *
  * This script belongs to the TYPO3 package "Extension Builder".          *
  *                                                                        *
@@ -25,7 +26,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @scope prototype
  */
-class Tx_ExtensionBuilder_ViewHelpers_CopyrightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class CopyrightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * Format the copyright holder's name(s)

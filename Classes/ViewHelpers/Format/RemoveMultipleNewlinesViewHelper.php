@@ -1,6 +1,8 @@
 <?php
+namespace EBT\ExtensionBuilder\ViewHelpers\Format;
+
 /*                                                                        *
- * This script belongs to the TYPO3 package "Extension Builder".                  *
+ * This script belongs to the TYPO3 package "Extension Builder".          *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -26,7 +28,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @scope prototype
  */
-class Tx_ExtensionBuilder_ViewHelpers_Format_RemoveMultipleNewlinesViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class RemoveMultipleNewlinesViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * Uppercase first character

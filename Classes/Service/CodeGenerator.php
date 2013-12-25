@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Service;
 /***************************************************************
  *  Copyright notice
  *
@@ -27,10 +28,10 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 /**
  * Creates (or updates) all the required files for an extension
  */
-class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\SingletonInterface {
+class CodeGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
-	 * @var Tx_ExtensionBuilder_Service_ClassBuilder
+	 * @var \EBT\ExtensionBuilder\Service\ClassBuilder
 	 */
 	protected $classBuilder;
 
@@ -40,7 +41,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	protected $codeTemplateRootPath;
 
 	/**
-	 * @var Tx_ExtensionBuilder_Domain_Model_Extension
+	 * @var \EBT\ExtensionBuilder\Domain\Model\Extension
 	 */
 	protected $extension;
 
@@ -70,7 +71,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	protected $iconsDirectory;
 
 	/**
-	 * @var TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
@@ -90,7 +91,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	protected $settings;
 
 	/**
-	 * @var TYPO3\CMS\Fluid\Core\Parser\TemplateParser
+	 * @var \TYPO3\CMS\Fluid\Core\Parser\TemplateParser
 	 */
 	protected $templateParser;
 
@@ -120,23 +121,23 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	protected $locallangFileFormat = 'xlf';
 
 	/**
-	 * @param Tx_ExtensionBuilder_Service_ClassBuilder $classBuilder
+	 * @param \EBT\ExtensionBuilder\Service\ClassBuilder $classBuilder
 	 */
-	public function injectClassBuilder(Tx_ExtensionBuilder_Service_ClassBuilder $classBuilder) {
+	public function injectClassBuilder(\EBT\ExtensionBuilder\Service\ClassBuilder $classBuilder) {
 		$this->classBuilder = $classBuilder;
 	}
 
 	/**
-	 * @param TYPO3\CMS\Extbase\Object\ObjectManagerInterface  $objectManager
+	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface  $objectManager
 	 */
-	public function injectObjectManager(TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 
 	/**
-	 * @param TYPO3\CMS\Fluid\Core\Parser\TemplateParser $templateParser
+	 * @param \TYPO3\CMS\Fluid\Core\Parser\TemplateParser $templateParser
 	 */
-	public function injectTemplateParser(TYPO3\CMS\Fluid\Core\Parser\TemplateParser $templateParser) {
+	public function injectTemplateParser(\TYPO3\CMS\Fluid\Core\Parser\TemplateParser $templateParser) {
 		$this->templateParser = $templateParser;
 	}
 
@@ -152,9 +153,9 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	/**
 	 * The entry point to the class
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
+	 * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
 	 */
-	public function build(Tx_ExtensionBuilder_Domain_Model_Extension $extension) {
+	public function build(\EBT\ExtensionBuilder\Domain\Model\Extension $extension) {
 		$this->extension = $extension;
 		if ($this->settings['extConf']['enableRoundtrip'] == 1) {
 			$this->roundTripEnabled = TRUE;
@@ -165,7 +166,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 		if (isset($this->settings['codeTemplateRootPath'])) {
 			$this->codeTemplateRootPath = $this->settings['codeTemplateRootPath'];
 		} else {
-			throw new Exception('No codeTemplateRootPath configured');
+			throw new \Exception('No codeTemplateRootPath configured');
 		}
 
 			// Base directory already exists at this point
@@ -234,8 +235,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 					array('Content' => $fileContents)
 				);
 			}
-			catch (Exception $e) {
-				throw new Exception('Could not write ' . $extensionFile . ', error: ' . $e->getMessage());
+			catch (\Exception $e) {
+				throw new \Exception('Could not write ' . $extensionFile . ', error: ' . $e->getMessage());
 			}
 		}
 
@@ -256,14 +257,14 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 					array('Content' => $fileContents)
 				);
 			}
-			catch (Exception $e) {
-				throw new Exception('Could not write ext_localconf.php. Error: ' . $e->getMessage());
+			catch (\Exception $e) {
+				throw new \Exception('Could not write ext_localconf.php. Error: ' . $e->getMessage());
 			}
 			$currentPluginKey = '';
 			try {
 				foreach ($this->extension->getPlugins() as $plugin) {
 					/**
-					 * @var $plugin Tx_ExtensionBuilder_Domain_Model_Plugin
+					 * @var $plugin \EBT\ExtensionBuilder\Domain\Model\Plugin
 					 */
 					if ($plugin->getSwitchableControllerActions()) {
 						if (!is_dir($this->extensionDirectory . 'Configuration/FlexForms')) {
@@ -286,8 +287,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 					}
 				}
 			}
-			catch (Exception $e) {
-				throw new Exception('Could not write  flexform_' . $currentPluginKey . '.xml. Error: ' . $e->getMessage());
+			catch (\Exception $e) {
+				throw new \Exception('Could not write  flexform_' . $currentPluginKey . '.xml. Error: ' . $e->getMessage());
 			}
 		}
 	}
@@ -301,7 +302,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 
 			foreach ($domainObjects as $domainObject) {
 				/**
-				 * @var $domainObject Tx_ExtensionBuilder_Domain_Model_DomainObject
+				 * @var $domainObject \EBT\ExtensionBuilder\Domain\Model\DomainObject
 				 */
 				if(!$domainObject->getMapToTable()) {
 					$fileContents = $this->generateTCA($domainObject);
@@ -312,8 +313,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 				}
 			}
 
-		} catch (Exception $e) {
-			throw new Exception('Could not generate Tca.php, error: ' . $e->getMessage() . $e->getFile());
+		} catch (\Exception $e) {
+			throw new \Exception('Could not generate Tca.php, error: ' . $e->getMessage() . $e->getFile());
 		}
 	}
 
@@ -346,8 +347,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 				);
 
 			}
-		} catch (Exception $e) {
-			throw new Exception('Could not generate locallang files, error: ' . $e->getMessage());
+		} catch (\Exception $e) {
+			throw new \Exception('Could not generate locallang files, error: ' . $e->getMessage());
 		}
 	}
 
@@ -360,7 +361,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 			//$actionsUsingPropertiesPartial = array('show');
 		foreach ($this->extension->getDomainObjects() as $domainObject) {
 			/**
-			 * @var Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+			 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 			 */
 				// Do not generate anyting if $domainObject is not an
 				// Entity or has no actions defined
@@ -370,7 +371,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 			$domainTemplateDirectory = $absoluteTemplateRootFolder . 'Templates/' . $domainObject->getName() . '/';
 			foreach ($domainObject->getActions() as $action) {
 				/**
-				 * @var Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action
+				 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action
 				 */
 				if ($action->getNeedsTemplate()
 						&& file_exists($this->codeTemplateRootPath . $templateRootFolder . 'Templates/' . $action->getName() . '.htmlt')
@@ -435,8 +436,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 				$typoscriptDirectory = $this->extensionDirectory . 'Configuration/TypoScript/';
 				$fileContents = $this->generateTyposcriptSetup();
 				$this->writeFile($typoscriptDirectory . 'setup.txt', $fileContents);
-			} catch (Exception $e) {
-				throw new Exception('Could not generate typoscript setup, error: ' . $e->getMessage());
+			} catch (\Exception $e) {
+				throw new \Exception('Could not generate typoscript setup, error: ' . $e->getMessage());
 			}
 
 				// Generate TypoScript constants
@@ -444,8 +445,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 				$typoscriptDirectory = $this->extensionDirectory . 'Configuration/TypoScript/';
 				$fileContents = $this->generateTyposcriptConstants();
 				$this->writeFile($typoscriptDirectory . 'constants.txt', $fileContents);
-			} catch (Exception $e) {
-				throw new Exception('Could not generate typoscript constants, error: ' . $e->getMessage());
+			} catch (\Exception $e) {
+				throw new \Exception('Could not generate typoscript constants, error: ' . $e->getMessage());
 			}
 		}
 
@@ -455,8 +456,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 				$fileContents = $this->generateStaticTyposcript();
 				$this->writeFile($this->extensionDirectory . 'ext_typoscript_setup.txt', $fileContents);
 			}
-		} catch (Exception $e) {
-			throw new Exception('Could not generate static typoscript, error: ' . $e->getMessage());
+		} catch (\Exception $e) {
+			throw new \Exception('Could not generate static typoscript, error: ' . $e->getMessage());
 		}
 	}
 
@@ -481,7 +482,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 
 				foreach ($this->extension->getDomainObjects() as $domainObject) {
 					/**
-					 * @var Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+					 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 					 */
 					$destinationFile = $domainModelDirectory . $domainObject->getName() . '.php';
 					if ($this->fileShouldBeMerged($destinationFile)) {
@@ -532,8 +533,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 					$fileContents = $this->generateDomainModelTests($domainObject);
 					$this->writeFile($domainModelTestsDirectory . $domainObject->getName() . 'Test.php', $fileContents);
 				}
-			} catch (Exception $e) {
-				throw new Exception('Could not generate domain model, error: ' . $e->getMessage());
+			} catch (\Exception $e) {
+				throw new \Exception('Could not generate domain model, error: ' . $e->getMessage());
 			}
 				// Generate Action Controller
 			try {
@@ -565,8 +566,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 						$fileContents
 					);
 				}
-			} catch (Exception $e) {
-				throw new Exception('Could not generate action controller, error: ' . $e->getMessage());
+			} catch (\Exception $e) {
+				throw new \Exception('Could not generate action controller, error: ' . $e->getMessage());
 			}
 
 				// Generate Domain Templates
@@ -577,8 +578,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 				if ($this->extension->getBackendModules()) {
 					$this->generateTemplateFiles('Backend/');
 				}
-			} catch (Exception $e) {
-				throw new Exception('Could not generate domain templates, error: ' . $e->getMessage());
+			} catch (\Exception $e) {
+				throw new \Exception('Could not generate domain templates, error: ' . $e->getMessage());
 			}
 
 			try {
@@ -586,8 +587,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 				if (isset($settings['createAutoloadRegistry']) && $settings['createAutoloadRegistry'] == TRUE) {
 					//\TYPO3\CMS\Extbase\Utility\Extension::createAutoloadRegistryForExtension($this->extension->getExtensionKey(), $this->extensionDirectory);
 				}
-			} catch (Exception $e) {
-				throw new Exception('Could not generate ext_autoload.php, error: ' . $e->getMessage());
+			} catch (\Exception $e) {
+				throw new \Exception('Could not generate ext_autoload.php, error: ' . $e->getMessage());
 			}
 
 
@@ -607,8 +608,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 		try {
 			$fileContents = $this->generatePrivateResourcesHtaccess();
 			$this->writeFile($this->privateResourcesDirectory . '.htaccess', $fileContents);
-		} catch (Exception $e) {
-			throw new Exception('Could not create private resources folder, error: ' . $e->getMessage());
+		} catch (\Exception $e) {
+			throw new \Exception('Could not create private resources folder, error: ' . $e->getMessage());
 		}
 	}
 
@@ -618,8 +619,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 				ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/Icons/ext_icon.gif',
 				$this->extensionDirectory . 'ext_icon.gif'
 			);
-		} catch (Exception $e) {
-			throw new Exception('Could not copy ext_icon.gif, error: ' . $e->getMessage());
+		} catch (\Exception $e) {
+			throw new \Exception('Could not copy ext_icon.gif, error: ' . $e->getMessage());
 		}
 
 			// insert a manual template
@@ -632,8 +633,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 					$this->extensionDirectory . 'doc/manual.sxw'
 				);
 			}
-		} catch (Exception $e) {
-			throw new Exception('An error occurred when copying the manual template: ' . $e->getMessage() . $e->getFile());
+		} catch (\Exception $e) {
+			throw new \Exception('An error occurred when copying the manual template: ' . $e->getMessage() . $e->getFile());
 		}
 
 		try {
@@ -645,8 +646,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 				ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/Icons/relation.gif',
 				$this->iconsDirectory . 'relation.gif'
 			);
-		} catch (Exception $e) {
-			throw new Exception('Could not create public resources folder, error: ' . $e->getMessage());
+		} catch (\Exception $e) {
+			throw new \Exception('Could not create public resources folder, error: ' . $e->getMessage());
 		}
 	}
 
@@ -716,11 +717,11 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	 * Generates the code for the controller class
 	 * Either from ectionController template or from class partial
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @param boolean $mergeWithExistingClass
 	 */
 	public function generateActionControllerCode(
-		Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject, $mergeWithExistingClass) {
+		\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject, $mergeWithExistingClass) {
 		$controllerClassObject = $this->classBuilder->generateControllerClassObject(
 			$domainObject,
 			$mergeWithExistingClass
@@ -739,7 +740,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 				)
 			);
 		} else {
-			throw new Exception('Class file for controller could not be generated');
+			throw new \Exception('Class file for controller could not be generated');
 		}
 	}
 
@@ -747,11 +748,11 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	 * Generates the code for the domain model class
 	 * Either from domainObject template or from class partial
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @param boolean $mergeWithExistingClass
 	 */
 	public function generateDomainObjectCode(
-		Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject, $mergeWithExistingClass) {
+		\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject, $mergeWithExistingClass) {
 		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject, $mergeWithExistingClass);
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog(
 			'Namespace: ' . $modelClassObject->getNameSpace(),
@@ -769,7 +770,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 				)
 			);
 		} else {
-			throw new Exception('Class file for domain object could not be generated');
+			throw new \Exception('Class file for domain object could not be generated');
 		}
 
 	}
@@ -778,11 +779,11 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	 * Generates the code for the repository class
 	 * Either from domainRepository template or from class partial
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @param boolean $mergeWithExistingClass
 	 */
 	public function generateDomainRepositoryCode(
-		Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject, $mergeWithExistingClass) {
+		\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject, $mergeWithExistingClass) {
 		$repositoryClassObject = $this->classBuilder->generateRepositoryClassObject(
 			$domainObject,
 			$mergeWithExistingClass
@@ -796,18 +797,18 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 				array('domainObject' => $domainObject, 'classObject' => $repositoryClassObject)
 			);
 		} else {
-			throw new Exception('Class file for repository could not be generated');
+			throw new \Exception('Class file for repository could not be generated');
 		}
 	}
 
 	/**
 	 * Generate the tests for a model
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 *
 	 * @return string
 	 */
-	public function generateDomainModelTests(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
+	public function generateDomainModelTests(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject) {
 		return $this->renderTemplate(
 			'Tests/DomainModelTest.phpt',
 			array('extension' => $this->extension, 'domainObject' => $domainObject)
@@ -819,13 +820,13 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	 *
 	 * @param array $extensionProperties
 	 * @param string $controllerName
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 *
 	 * @return string
 	 */
 	public function generateControllerTests(
 		$controllerName,
-		Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
+		\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject) {
 			return $this->renderTemplate(
 				'Tests/ControllerTest.phpt',
 				array(
@@ -838,8 +839,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 
 	/**
 	 * generate a docComment for class files. Add a license haeder if none found
-	 * @param Tx_ExtensionBuilder_Domain_Model_Class_Class $classObject
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 */
 	protected function renderDocComment($classObject, $domainObject) {
 		if (!$classObject->hasDocComment()) {
@@ -873,14 +874,14 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	 * other Action templates will just be created emtpy
 	 *
 	 * @param string $templateRootFolder
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action
 	 * @return string The generated Template code (might be empty)
 	 */
 	public function generateDomainTemplate(
 		$templateRootFolder,
-		Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject,
-		Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action) {
+		\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject,
+		\EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action) {
 		return $this->renderTemplate(
 			$templateRootFolder . $action->getName() . '.htmlt',
 			array('domainObject' => $domainObject, 'action' => $action, 'extension' => $this->extension));
@@ -888,7 +889,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 
 	public function generateDomainFormFieldsPartial(
 		$templateRootFolder,
-		Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
+		\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject) {
 		return $this->renderTemplate(
 			$templateRootFolder . 'formFields.htmlt',
 			array('extension' => $this->extension, 'domainObject' => $domainObject)
@@ -897,7 +898,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 
 	public function generateDomainPropertiesPartial(
 		$templateRootFolder,
-		Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
+		\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject) {
 		return $this->renderTemplate(
 			$templateRootFolder . 'properties.htmlt',
 			array('extension' => $this->extension, 'domainObject' => $domainObject)
@@ -928,7 +929,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 		}
 
 		if ($this->roundTripEnabled
-				&& Tx_ExtensionBuilder_Service_RoundTrip::getOverWriteSettingForPath(
+				&& RoundTrip::getOverWriteSettingForPath(
 					$targetFile . '.' . $this->locallangFileFormat, $this->extension
 				) == 1) {
 			$existingFile = NULL;
@@ -947,13 +948,13 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 					$variableArray
 				);
 				if($this->locallangFileFormat == 'xlf') {
-					throw new Exception(
+					throw new \Exception(
 						'Merging xlf files is not yet supported. Please set overwrite settings to "keep" or "overwrite"'
 					);
 					// this is prepared already but still needs some improvements
 					//$variableArray['labelArray'] = $labelArray;
 				} else {
-					return  Tx_ExtensionBuilder_Utility_Tools::mergeLocallangXml($existingFile, $defaultFileContent);
+					return  \EBT\ExtensionBuilder\Utility\Tools::mergeLocallangXml($existingFile, $defaultFileContent);
 				}
 
 			}
@@ -965,7 +966,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 		return $this->renderTemplate('Resources/Private/htaccess.t', array());
 	}
 
-	public function generateTCA(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
+	public function generateTCA(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject) {
 		return $this->renderTemplate(
 			'Configuration/TCA/domainObject.phpt',
 			array(
@@ -999,8 +1000,8 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 
 	/**
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
 	 * @param string $classType
 	 * @param string $methodType (used for add, get set etc.)
 	 * @param string $methodName (used for concrete methods like createAction, initialze etc.)
@@ -1055,12 +1056,12 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 				\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($extensionDirectory, $classPath);
 			}
 			if (!is_dir($extensionDirectory . $classPath) && $createDirIfNotExist) {
-				throw new Exception('folder could not be created:' . $extensionDirectory . $classPath);
+				throw new \Exception('folder could not be created:' . $extensionDirectory . $classPath);
 			}
 			return $extensionDirectory . $classPath;
 		}
 		else {
-			throw new Exception('Unexpected classPath:' . $classPath);
+			throw new \Exception('Unexpected classPath:' . $classPath);
 		}
 	}
 
@@ -1071,13 +1072,13 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	 * path and filename of the targetFile, relative to extension dir:
 	 * @param string $targetFile
 	 * @param string $fileContents
-	 * @throws Exception
+	 * @throws \Exception
 	 *
 	 * @return void
 	 */
 	protected function writeFile($targetFile, $fileContents) {
 		if ($this->roundTripEnabled) {
-			$overWriteMode = Tx_ExtensionBuilder_Service_RoundTrip::getOverWriteSettingForPath(
+			$overWriteMode = RoundTrip::getOverWriteSettingForPath(
 				$targetFile,
 				$this->extension
 			);
@@ -1115,7 +1116,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 		}
 		$success = \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($targetFile, $fileContents);
 		if (!$success) {
-			throw new Exception('File ' . $targetFile . ' could not be created!');
+			throw new \Exception('File ' . $targetFile . ' could not be created!');
 		}
 	}
 
@@ -1124,7 +1125,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	 * @return bool
 	 */
 	protected function fileShouldBeMerged($destinationFile) {
-		$overwriteSettings = Tx_ExtensionBuilder_Service_RoundTrip::getOverWriteSettingForPath($destinationFile, $this->extension);
+		$overwriteSettings = RoundTrip::getOverWriteSettingForPath($destinationFile, $this->extension);
 		if ($this->roundTripEnabled && $overwriteSettings > 0) {
 			return TRUE;
 		} else {
@@ -1146,13 +1147,13 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 
 				// merge the files means append everything behind the split token
 			$existingFileContent = file_get_contents($targetFile);
-			if (strpos($existingFileContent, Tx_ExtensionBuilder_Service_RoundTrip::OLD_SPLIT_TOKEN)) {
+			if (strpos($existingFileContent, RoundTrip::OLD_SPLIT_TOKEN)) {
 				$existingFileContent = str_replace(
-					Tx_ExtensionBuilder_Service_RoundTrip::OLD_SPLIT_TOKEN,
-					Tx_ExtensionBuilder_Service_RoundTrip::SPLIT_TOKEN, $existingFileContent
+					RoundTrip::OLD_SPLIT_TOKEN,
+					RoundTrip::SPLIT_TOKEN, $existingFileContent
 				);
 			}
-			$fileParts = explode(Tx_ExtensionBuilder_Service_RoundTrip::SPLIT_TOKEN, $existingFileContent);
+			$fileParts = explode(RoundTrip::SPLIT_TOKEN, $existingFileContent);
 			if (count($fileParts) == 2) {
 				$customFileContent = str_replace('?>', '', $fileParts[1]);
 			}
@@ -1162,13 +1163,13 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 
 		if ($fileExtension == 'php') {
 			$fileContents = str_replace('?>', '', $fileContents);
-			$fileContents .= Tx_ExtensionBuilder_Service_RoundTrip::SPLIT_TOKEN;
+			$fileContents .= RoundTrip::SPLIT_TOKEN;
 		}
 		else if ($fileExtension == $this->locallangFileFormat) {
 			//TODO: implement merge routine for xliff files
 		}
 		else {
-			$fileContents .= "\n" . Tx_ExtensionBuilder_Service_RoundTrip::SPLIT_TOKEN;
+			$fileContents .= "\n" . RoundTrip::SPLIT_TOKEN;
 		}
 
 		$fileContents .= rtrim($customFileContent);
@@ -1187,7 +1188,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 	 * @param string $fileContents
 	 */
 	protected function upload_copy_move($sourceFile, $targetFile) {
-		$overWriteMode = Tx_ExtensionBuilder_Service_RoundTrip::getOverWriteSettingForPath($targetFile, $this->extension);
+		$overWriteMode = RoundTrip::getOverWriteSettingForPath($targetFile, $this->extension);
 		if ($overWriteMode === -1) {
 			// skip creation
 			return;
@@ -1208,11 +1209,11 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 		$subDirectories = explode('/',$deepDirectory);
 		$tmpBasePath = $directory;
 		foreach($subDirectories as $subDirectory) {
-			$overWriteMode = Tx_ExtensionBuilder_Service_RoundTrip::getOverWriteSettingForPath(
+			$overWriteMode = RoundTrip::getOverWriteSettingForPath(
 				$tmpBasePath . $subDirectory,
 				$this->extension
 			);
-			//throw new Exception($directory . $subDirectory . '/' . $overWriteMode);
+			//throw new \Exception($directory . $subDirectory . '/' . $overWriteMode);
 			if ($overWriteMode === -1) {
 				// skip creation
 				return;

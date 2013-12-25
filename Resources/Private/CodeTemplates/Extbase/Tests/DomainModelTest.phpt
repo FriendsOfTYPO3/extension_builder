@@ -1,5 +1,5 @@
 <?php
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}
 namespace {extension.nameSpace}\Tests\Unit\Domain\Model;
 
 /***************************************************************

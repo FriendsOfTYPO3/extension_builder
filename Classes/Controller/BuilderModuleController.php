@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Controller;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,6 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
 
 /**
  * Controller of the Extension Builder extension
@@ -29,35 +31,35 @@
  * @category    Controller
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
-class Tx_ExtensionBuilder_Controller_BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
-	 * @var Tx_ExtensionBuilder_Service_CodeGenerator
+	 * @var \EBT\ExtensionBuilder\Service\CodeGenerator
 	 */
 	protected $codeGenerator;
 
 	/**
-	 * @var Tx_ExtensionBuilder_Configuration_ConfigurationManager
+	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
 	 */
 	protected $configurationManager;
 
 	/**
-	 * @var Tx_ExtensionBuilder_Utility_ExtensionInstallationStatus
+	 * @var (\EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus
 	 */
 	protected $extensionInstallationStatus;
 
 	/**
-	 * @var Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder
+	 * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
 	 */
 	protected $extensionSchemaBuilder;
 
 	/**
-	 * @var Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator
+	 * @var ExtensionValidator::
 	 */
 	protected $extensionValidator;
 
 	/**
-	 * @var Tx_ExtensionBuilder_Domain_Repository_ExtensionRepository
+	 * @var \EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository
 	 */
 	protected $extensionRepository;
 
@@ -70,51 +72,51 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends \TYPO3\CMS\
 	protected $settings;
 
 	/**
-	 * @param Tx_ExtensionBuilder_Service_CodeGenerator $codeGenerator
+	 * @param \EBT\ExtensionBuilder\Service\CodeGenerator $codeGenerator
 	 * @return void
 	 */
-	public function injectCodeGenerator(Tx_ExtensionBuilder_Service_CodeGenerator $codeGenerator) {
+	public function injectCodeGenerator(\EBT\ExtensionBuilder\Service\CodeGenerator $codeGenerator) {
 		$this->codeGenerator = $codeGenerator;
 	}
 
 	/**
-	 * @param Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager
+	 * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager
 	 * @return void
 	 */
-	public function injectConfigurationManager(Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager) {
+	public function injectConfigurationManager(\EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager) {
 		$this->configurationManager = $configurationManager;
 		$this->settings = $this->configurationManager->getSettings();
 	}
 
 	/**
-	 * @param Tx_ExtensionBuilder_Utility_ExtensionInstallationStatus $extensionInstallationStatus
+	 * @param \EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus $extensionInstallationStatus
 	 * @return void
 	 */
-	public function injectExtensionInstallationStatus(Tx_ExtensionBuilder_Utility_ExtensionInstallationStatus $extensionInstallationStatus) {
+	public function injectExtensionInstallationStatus(\EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus $extensionInstallationStatus) {
 		$this->extensionInstallationStatus = $extensionInstallationStatus;
 	}
 
 	/**
-	 * @param Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder $extensionSchemaBuilder
+	 * @param \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder $extensionSchemaBuilder
 	 * @return void
 	 */
-	public function injectExtensionSchemaBuilder(Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder $extensionSchemaBuilder) {
+	public function injectExtensionSchemaBuilder(\EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder $extensionSchemaBuilder) {
 		$this->extensionSchemaBuilder = $extensionSchemaBuilder;
 	}
 
 	/**
-	 * @param Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator $extensionValidator
+	 * @param ExtensionValidator $extensionValidator
 	 * @return void
 	 */
-	public function injectExtensionValidator(Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator $extensionValidator) {
+	public function injectExtensionValidator(ExtensionValidator $extensionValidator) {
 		$this->extensionValidator = $extensionValidator;
 	}
 
 	/**
-	 * @param Tx_ExtensionBuilder_Domain_Repository_ExtensionRepository $extensionRepository
+	 * @param \EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository $extensionRepository
 	 * @return void
 	 */
-	public function injectExtensionRepository(Tx_ExtensionBuilder_Domain_Repository_ExtensionRepository $extensionRepository) {
+	public function injectExtensionRepository(\EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository $extensionRepository) {
 		$this->extensionRepository = $extensionRepository;
 	}
 
@@ -229,7 +231,7 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends \TYPO3\CMS\
 		} else {
 			if ($this->settings['extConf']['backupExtension'] == 1) {
 				try {
-					Tx_ExtensionBuilder_Service_RoundTrip::backupExtension($extension, $this->settings['extConf']['backupDir']);
+					\EBT\ExtensionBuilder\Service\RoundTrip::backupExtension($extension, $this->settings['extConf']['backupDir']);
 				}
 				catch (Exception $e) {
 					throw $e;
@@ -244,7 +246,7 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends \TYPO3\CMS\
 					return array('warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the extension builder the first time for this extension. <br />A settings file was generated in <br /><b>typo3conf/ext/" . $extension->getExtensionKey() . "/Configuration/ExtensionBuilder/settings.yaml.</b><br />Configure the overwrite settings, then save again.");
 				}
 				try {
-					Tx_ExtensionBuilder_Service_RoundTrip::prepareExtensionForRoundtrip($extension);
+					\EBT\ExtensionBuilder\Service\RoundTrip::prepareExtensionForRoundtrip($extension);
 				} catch (Exception $e) {
 					throw $e;
 				}
@@ -292,7 +294,7 @@ class Tx_ExtensionBuilder_Controller_BuilderModuleController extends \TYPO3\CMS\
 		}
 		foreach ($messagesPerErrorcode as $errorCode => $messages) {
 			if (!$this->configurationManager->isConfirmed('allow' . $errorCode)) {
-				if ($errorCode == Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::ERROR_PROPERTY_RESERVED_SQL_WORD) {
+				if ($errorCode == \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::ERROR_PROPERTY_RESERVED_SQL_WORD) {
 					$confirmMessage = 'SQL reserved names were found for these properties:<br />' .
 							'<ol class="warnings"><li>' . implode('</li><li>', $messages) . '</li></ol>' .
 							'This will result in a different column name in the database.<br />' .

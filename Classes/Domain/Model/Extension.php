@@ -1,4 +1,6 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Model;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -25,7 +27,7 @@
 /**
  * Schema for a whole extension
  */
-class Tx_ExtensionBuilder_Domain_Model_Extension {
+class Extension {
 
 
 	/**
@@ -138,25 +140,25 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 
 	/**
 	 * All domain objects
-	 * @var array<Tx_ExtensionBuilder_Domain_Model_DomainObject>
+	 * @var array<\EBT\ExtensionBuilder\Domain\Model\DomainObject>
 	 */
 	protected $domainObjects = array();
 
 	/**
 	 * The Persons working on the Extension
-	 * @var array<Tx_ExtensionBuilder_Domain_Model_Person>
+	 * @var array<\EBT\ExtensionBuilder\Domain\Model\Person>
 	 */
 	protected $persons = array();
 
 	/**
 	 * plugins
-	 * @var array<Tx_ExtensionBuilder_Domain_Model_Plugin>
+	 * @var array<\EBT\ExtensionBuilder\Domain\Model\Plugin>
 	 */
 	private $plugins;
 
 	/**
 	 * backend modules
-	 * @var array<Tx_ExtensionBuilder_Domain_Model_BackendModule>
+	 * @var array<\EBT\ExtensionBuilder\Domain\Model\BackendModule>
 	 */
 	private $backendModules;
 
@@ -340,7 +342,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 
 	/**
 	 *
-	 * @return array<Tx_ExtensionBuilder_Domain_Model_DomainObject>
+	 * @return array<\EBT\ExtensionBuilder\Domain\Model\DomainObject>
 	 */
 	public function getDomainObjects() {
 		return $this->domainObjects;
@@ -440,13 +442,13 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 
 	/**
 	 * Add a domain object to the extension. Creates the reverse link as well.
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 */
-	public function addDomainObject(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
+	public function addDomainObject(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject) {
 		$domainObject->setExtension($this);
 		foreach(array_keys($this->domainObjects) as $existingDomainObjectName) {
 			if(strtolower($domainObject->getName()) == strtolower($existingDomainObjectName) ) {
-				throw new Tx_ExtensionBuilder_Domain_Exception_ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', Tx_ExtensionBuilder_Domain_Validator_ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
+				throw new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
 			}
 		}
 		if ($domainObject->getNeedsUploadFolder()) {
@@ -458,7 +460,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	/**
 	 *
 	 * @param string $domainObjectName
-	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
 	 */
 	public function getDomainObjectByName($domainObjectName) {
 		if (isset($this->domainObjects[$domainObjectName])) {
@@ -477,7 +479,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	/**
 	 * Returns the Persons
 	 *
-	 * @return array<Tx_ExtensionBuilder_Domain_Model_Person>
+	 * @return array<\EBT\ExtensionBuilder\Domain\Model\Person>
 	 */
 	public function getPersons() {
 		return $this->persons;
@@ -486,7 +488,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	/**
 	 * Sets the Persons
 	 *
-	 * @param array<Tx_ExtensionBuilder_Domain_Model_Person> $persons
+	 * @param array<\EBT\ExtensionBuilder\Domain\Model\Person> $persons
 	 * @return void
 	 */
 	public function setPersons($persons) {
@@ -496,7 +498,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	/**
 	 * Adds a Person to the end of the current Set of Persons.
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_Person $person
+	 * @param \EBT\ExtensionBuilder\Domain\Model\Person $person
 	 * @return void
 	 */
 	public function addPerson($person) {
@@ -506,7 +508,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	/**
 	 * Setter for plugin
 	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage()<Tx_ExtensionBuilder_Domain_Model_Plugin> $plugins
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage()<\EBT\ExtensionBuilder\Domain\Model\Plugin> $plugins
 	 * @return void
 	 */
 	public function setPlugins(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $plugins) {
@@ -516,7 +518,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	/**
 	 * Getter for $plugin
 	 *
-	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_ExtensionBuilder_Domain_Model_Plugin>
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\Plugin>
 	 */
 	public function getPlugins() {
 		return $this->plugins;
@@ -537,17 +539,17 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	/**
 	 * Add $plugin
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_Plugin
+	 * @param \EBT\ExtensionBuilder\Domain\Model\Plugin
 	 * @return void
 	 */
-	public function addPlugin(Tx_ExtensionBuilder_Domain_Model_Plugin $plugin) {
+	public function addPlugin(\EBT\ExtensionBuilder\Domain\Model\Plugin $plugin) {
 		$this->plugins[] = $plugin;
 	}
 
 	/**
 	 * Setter for backendModule
 	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_ExtensionBuilder_Domain_Model_BackendModule> $backendModules
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\BackendModule> $backendModules
 	 * @return void
 	 */
 	public function setBackendModules(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $backendModules) {
@@ -557,7 +559,7 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	/**
 	 * Getter for $backendModule
 	 *
-	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_ExtensionBuilder_Domain_Model_Plugin>
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\Plugin>
 	 */
 	public function getBackendModules() {
 		return $this->backendModules;
@@ -566,10 +568,10 @@ class Tx_ExtensionBuilder_Domain_Model_Extension {
 	/**
 	 * Add $backendModule
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_BackendModule
+	 * @param \EBT\ExtensionBuilder\Domain\Model\BackendModule
 	 * @return void
 	 */
-	public function addBackendModule(Tx_ExtensionBuilder_Domain_Model_BackendModule $backendModule) {
+	public function addBackendModule(\EBT\ExtensionBuilder\Domain\Model\BackendModule $backendModule) {
 		$this->backendModules[] = $backendModule;
 	}
 

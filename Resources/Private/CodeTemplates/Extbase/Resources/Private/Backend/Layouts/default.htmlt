@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}
 <k:openingTag>f:be.container</k:openingTag>
 	<div class="typo3-fullDoc">
 		<div id="typo3-docheader">

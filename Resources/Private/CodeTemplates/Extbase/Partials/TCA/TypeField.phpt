@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}
 if (!isset($TCA['{domainObject.databaseTableName}']['ctrl']['type'])) {
 	// no type field defined, so we define it here. This will only happen the first time the extension is installed!!
 	$TCA['{domainObject.databaseTableName}']['ctrl']['type'] = 'tx_extbase_type';

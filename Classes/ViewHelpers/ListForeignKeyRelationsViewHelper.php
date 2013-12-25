@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\ViewHelpers;
 /*                                                                        *
  * This script belongs to the TYPO3 package "Extension Builder".                  *
  *                                                                        *
@@ -26,7 +27,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @scope prototype
  */
-class Tx_ExtensionBuilder_ViewHelpers_ListForeignKeyRelationsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class ListForeignKeyRelationsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 *
@@ -40,7 +41,7 @@ class Tx_ExtensionBuilder_ViewHelpers_ListForeignKeyRelationsViewHelper extends 
 		foreach ($extension->getDomainObjects() as $domainObject) {
 			if (!count($domainObject->getProperties())) continue;
 			foreach ($domainObject->getProperties() as $property) {
-				if ($property instanceof Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation
+				if ($property instanceof \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation
 					&& $property->getForeignClassName() === $expectedDomainObject->getFullQualifiedClassName()
 				) {
 					$results[] = $property;

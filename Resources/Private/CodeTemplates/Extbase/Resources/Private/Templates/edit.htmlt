@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}
 <k:openingTag>f:layout name="Default" /</k:openingTag>
 
 This template displays a EDIT form for the current domain object.

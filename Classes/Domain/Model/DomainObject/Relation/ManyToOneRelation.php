@@ -1,8 +1,9 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009 Ingmar Schlecht
+ *  (c) 2009 Ingmar Schlecht, 2013 Nico de Haen
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +31,7 @@
  *
  * @version $ID:$
  */
-class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToOneRelation extends Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation {
+class ManyToOneRelation extends AbstractRelation {
 
 	public function getTypeForComment() {
 		return $this->getForeignClassName();

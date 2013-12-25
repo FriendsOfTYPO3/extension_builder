@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Service;
 /***************************************************************
  *  Copyright notice
  *
@@ -21,6 +22,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\Property;
+use EBT\ExtensionBuilder\Utility\Inflector;
 
 /**
  * Builds the required class objects for extbase extensions
@@ -28,26 +31,26 @@
  * is requested to provide a class object parsed from an existing class
  */
 
-class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
+class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * The current class object
-	 * @var Tx_ExtensionBuilder_Domain_Model_Class_Class
+	 * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	protected $classObject = NULL;
 
 	/**
-	 * @var Tx_ExtensionBuilder_Utility_ClassParser
+	 * @var \EBT\ExtensionBuilder\Utility\ClassParser
 	 */
 	protected $classParser;
 
 	/**
-	 * @var Tx_ExtensionBuilder_Service_RoundTrip
+	 * @var (\EBT\ExtensionBuilder\Service\RoundTrip
 	 */
 	protected $roundTripService;
 
 	/**
-	 * @var Tx_ExtensionBuilder_Configuration_ConfigurationManager
+	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
 	 */
 	protected $configurationManager;
 
@@ -59,41 +62,41 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 	/**
 	 *
-	 * @var Tx_ExtensionBuilder_Service_CodeGenerator
+	 * @var (\EBT\ExtensionBuilder\Service\CodeGenerator
 	 */
 	protected $codeGenerator;
 
 	/**
-	 * @var Tx_ExtensionBuilder_Domain_Model_Extension
+	 * @var \EBT\ExtensionBuilder\Domain\Model\Extension
 	 */
 	protected $extension;
 
 	/**
-	 * @param Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager
+	 * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager
 	 * @return void
 	 */
-	public function injectConfigurationManager(Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager) {
+	public function injectConfigurationManager(\EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager) {
 		$this->configurationManager = $configurationManager;
 	}
 
 	/**
-	 * @param Tx_ExtensionBuilder_Service_RoundTrip $roundTripService
+	 * @param \EBT\ExtensionBuilder\Service\RoundTrip $roundTripService
 	 * @return void
 	 */
-	public function injectRoundtripService(Tx_ExtensionBuilder_Service_RoundTrip $roundTripService) {
+	public function injectRoundtripService(\EBT\ExtensionBuilder\Service\RoundTrip $roundTripService) {
 		$this->roundTripService = $roundTripService;
 		$this->roundTripService->injectClassBuilder($this);
 	}
 
 	/**
 	 *
-	 * @param Tx_ExtensionBuilder_Service_CodeGenerator $codeGenerator
-	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
+	 * @param \EBT\ExtensionBuilder\Service\CodeGenerator $codeGenerator
+	 * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
 	 * @param boolean roundtrip enabled?
 	 *
 	 * @return void
 	 */
-	public function initialize(Tx_ExtensionBuilder_Service_CodeGenerator $codeGenerator, Tx_ExtensionBuilder_Domain_Model_Extension $extension, $roundTripEnabled) {
+	public function initialize(\EBT\ExtensionBuilder\Service\CodeGenerator $codeGenerator, \EBT\ExtensionBuilder\Domain\Model\Extension $extension, $roundTripEnabled) {
 		$this->codeGenerator = $codeGenerator;
 		$this->extension = $extension;
 		$settings = $extension->getSettings();
@@ -109,10 +112,10 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 	 * it keeps all methods and properties including user modified method bodies and comments
 	 * needed to create a domain object class file
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @param boolean mergeWithExistingClass
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Class
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function generateModelClassObject($domainObject, $mergeWithExistingClass) {
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('------------------------------------- generateModelClassObject(' . $domainObject->getName() . ') ---------------------------------', 'extension_builder', 0);
@@ -123,13 +126,13 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 			try {
 				$this->classObject = $this->roundTripService->getDomainModelClass($domainObject);
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Class ' . $fullQualifiedClassName . ' could not be imported: ' . $e->getMessage(), 'extension_builder', 2);
 			}
 		}
 
 		if ($this->classObject == NULL) {
-			$this->classObject = new Tx_ExtensionBuilder_Domain_Model_Class_Class($domainObject->getName());
+			$this->classObject = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject($domainObject->getName());
 			$this->classObject->setNameSpace($this->extension->getNameSpace() . '\\Domain\\Model');
 			if ($domainObject->isEntity()) {
 				$parentClass = $domainObject->getParentClass();
@@ -157,7 +160,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 				//\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Property found: ' . $propertyName . ':' . $domainProperty->getTypeForComment(), 'extension_builder', 1, (array)$classProperty);
 			}
 			else {
-				$classProperty = new Tx_ExtensionBuilder_Domain_Model_Class_Property($propertyName);
+				$classProperty = new Property($propertyName);
 				$classProperty->setTag('var', $domainProperty->getTypeForComment());
 				if($domainProperty->isZeroToManyRelation()) {
 					$classProperty->setTag('cascade','remove');
@@ -198,15 +201,15 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 	}
 
 	/**
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @return void
 	 */
-	protected function addInitStorageObjectCalls(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
+	protected function addInitStorageObjectCalls(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject) {
 		$anyToManyRelationProperties = $domainObject->getAnyToManyRelationProperties();
 
 		if (count($anyToManyRelationProperties) > 0) {
 			if (!$this->classObject->methodExists('__construct')) {
-				$constructorMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method('__construct');
+				$constructorMethod = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method('__construct');
 				//$constructorMethod->setDescription('The constructor of this '.$domainObject->getName());
 				if (count($anyToManyRelationProperties) > 0) {
 					$constructorMethod->setBody($this->codeGenerator->getDefaultMethodBody($domainObject, NULL, 'Model', '', 'construct'));
@@ -222,7 +225,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 				$this->classObject->setMethod($constructorMethod);
 			}
 			//initStorageObjects
-			$initStorageObjectsMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method('initStorageObjects');
+			$initStorageObjectsMethod = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method('initStorageObjects');
 			$initStorageObjectsMethod->setDescription('Initializes all ObjectStorage properties.');
 			$methodBody = "/**\n* Do not modify this method!\n* It will be rewritten on each save in the extension builder\n* You may modify the constructor of this class instead\n*/\n";
 			foreach ($anyToManyRelationProperties as $relationProperty) {
@@ -239,13 +242,13 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 	/**
 	 * add all setter/getter/add/remove etc. methods
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
 	 *
 	 * @return void
 	 */
 	protected function setPropertyRelatedMethods($domainProperty) {
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('setPropertyRelatedMethods:' . $domainProperty->getName(), 'extension_builder', 0, (array)$domainProperty);
-		if (is_subclass_of($domainProperty, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
+		if (is_subclass_of($domainProperty, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation')) {
 			$addMethod = $this->buildAddMethod($domainProperty);
 			$removeMethod = $this->buildRemoveMethod($domainProperty);
 			$this->classObject->setMethod($addMethod);
@@ -264,9 +267,9 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 	/**
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 	 */
 	protected function buildGetterMethod($domainProperty) {
 
@@ -278,7 +281,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Existing getterMethod imported:' . $getterMethodName, 'extension_builder', 0, array('methodBody' => $getterMethod->getBody()));
 		}
 		else {
-			$getterMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($getterMethodName);
+			$getterMethod = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method($getterMethodName);
 			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('new getMethod:' . $getterMethodName, 'extension_builder', 0);
 			// default method body
 			$getterMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'get', ''));
@@ -293,9 +296,9 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 	/**
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 	 */
 	protected function buildSetterMethod($domainProperty) {
 		$propertyName = $this->getParameterName($domainProperty, 'set');
@@ -308,7 +311,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 		}
 		else {
 			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('new setMethod:' . $setterMethodName, 'extension_builder', 0);
-			$setterMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($setterMethodName);
+			$setterMethod = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method($setterMethodName);
 			// default method body
 			$setterMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'set', ''));
 			$setterMethod->setTag('param', $this->getParamTag($domainProperty, 'set'));
@@ -320,9 +323,9 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 		}
 		$setterParameters = $setterMethod->getParameterNames();
 		if (!in_array($propertyName, $setterParameters)) {
-			$setterParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($propertyName);
+			$setterParameter = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter($propertyName);
 			$setterParameter->setVarType($domainProperty->getTypeForComment());
-			if (is_subclass_of($domainProperty, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation')) {
+			if (is_subclass_of($domainProperty, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation')) {
 				$setterParameter->setTypeHint($domainProperty->getTypeHint());
 			}
 			$setterMethod->setParameter($setterParameter);
@@ -335,9 +338,9 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 	/**
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation $domainProperty
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 	 */
 	protected function buildAddMethod($domainProperty) {
 
@@ -351,7 +354,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 		}
 		else {
 			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('new addMethod:' . $addMethodName, 'extension_builder', 0);
-			$addMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($addMethodName);
+			$addMethod = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method($addMethodName);
 			// default method body
 			$addMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'add', ''));
 			$addMethod->setTag('param', $this->getParamTag($domainProperty, 'add'));
@@ -361,8 +364,8 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 		}
 		$addParameters = $addMethod->getParameterNames();
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Existing setter parameter:','extension_builder', 0, $addParameters);
-		if (!in_array(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName), $addParameters)) {
-			$addParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($this->getParameterName($domainProperty, 'add'));
+		if (!in_array(Inflector::singularize($propertyName), $addParameters)) {
+			$addParameter = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter($this->getParameterName($domainProperty, 'add'));
 			$addParameter->setVarType($domainProperty->getForeignClassName());
 			$addParameter->setTypeHint($domainProperty->getForeignClassName());
 			$addMethod->setParameter($addParameter);
@@ -378,9 +381,9 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 	/**
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation $domainProperty
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 	 */
 	protected function buildRemoveMethod($domainProperty) {
 
@@ -392,7 +395,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 		}
 		else {
 			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('new removeMethod:' . $removeMethodName, 'extension_builder', 0);
-			$removeMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($removeMethodName);
+			$removeMethod = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method($removeMethodName);
 			// default method body
 			$removeMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'remove', ''));
 			$removeMethod->setTag('param', $this->getParamTag($domainProperty, 'remove'));
@@ -403,7 +406,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 		$removeParameters = $removeMethod->getParameterNames();
 
 		if (!in_array($this->getParameterName($domainProperty, 'remove'), $removeParameters)) {
-			$removeParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($this->getParameterName($domainProperty, 'remove'));
+			$removeParameter = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter($this->getParameterName($domainProperty, 'remove'));
 			$removeParameter->setVarType($domainProperty->getForeignClassName());
 			$removeParameter->setTypeHint($domainProperty->getForeignClassName());
 			$removeMethod->setParameter($removeParameter);
@@ -421,9 +424,9 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 	/**
 	 * Builds a method that checks the current boolean state of a property
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 	 */
 	protected function buildIsMethod($domainProperty) {
 
@@ -435,7 +438,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 		}
 		else {
 			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('new isMethod:' . $isMethodName, 'extension_builder', 1);
-			$isMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($isMethodName);
+			$isMethod = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method($isMethodName);
 			// default method body
 			$isMethod->setBody($this->codeGenerator->getDefaultMethodBody(NULL, $domainProperty, 'Model', 'is', ''));
 			$isMethod->setTag('return', 'boolean');
@@ -450,15 +453,15 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 	/**
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 	 */
-	protected function buildActionMethod(Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action, Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
+	protected function buildActionMethod(\EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action, \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject) {
 		$actionName = $action->getName();
 		$actionMethodName = $actionName . 'Action';
-		$actionMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($actionMethodName);
+		$actionMethod = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method($actionMethodName);
 		$actionMethod->setDescription('action ' . $action->getName());
 		$actionMethod->setBody($this->codeGenerator->getDefaultMethodBody($domainObject, NULL, 'Controller', '', $actionMethodName));
 		$actionMethod->addModifier('public');
@@ -469,7 +472,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 			} else {
 				$parameterName = \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($domainObject->getName());
 			}
-			$parameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($parameterName);
+			$parameter = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter($parameterName);
 			$parameter->setTypeHint($domainObject->getFullQualifiedClassName());
 			$parameter->setVarType($domainObject->getFullQualifiedClassName());
 			$parameter->setPosition(0);
@@ -486,7 +489,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 	/**
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $property
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property
 	 * @param string $methodType (get,set,add,remove,is)
 	 * @return string method name
 	 */
@@ -500,10 +503,10 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 				return 'get' . ucfirst($propertyName);
 
 			case 'add'		:
-				return 'add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName));
+				return 'add' . ucfirst(Inflector::singularize($propertyName));
 
 			case 'remove'	:
-				return 'remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName));
+				return 'remove' . ucfirst(Inflector::singularize($propertyName));
 
 			case 'is'		:
 				return 'is' . ucfirst($propertyName);
@@ -512,7 +515,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 
 	/**
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $property
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property
 	 * @param string $methodType (set,add,remove)
 	 * @return string method body
 	 */
@@ -526,10 +529,10 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 				return $propertyName;
 
 			case 'add'			:
-				return Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName);
+				return Inflector::singularize($propertyName);
 
 			case 'remove'		:
-				return Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName) . 'ToRemove';
+				return Inflector::singularize($propertyName) . 'ToRemove';
 		}
 	}
 
@@ -557,10 +560,10 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 	 * it keeps all methods and properties including user modified method bodies and
 	 * comments that are required to create a controller class file
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @param boolean $mergeWithExistingClass
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Class
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function generateControllerClassObject($domainObject, $mergeWithExistingClass) {
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('------------------------------------- generateControllerClassObject(' . $domainObject->getName() . ') ---------------------------------', 'extension_builder', 1);
@@ -572,13 +575,13 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 			try {
 				$this->classObject = $this->roundTripService->getControllerClass($domainObject);
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Class ' . $className . ' could not be imported: ' . $e->getMessage(), 'extension_builder');
 			}
 		}
 
 		if ($this->classObject == NULL) {
-			$this->classObject = new Tx_ExtensionBuilder_Domain_Model_Class_Class($className);
+			$this->classObject = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject($className);
 			$this->classObject->setNameSpace($this->extension->getNameSpace() . '\\Controller');
 			if (isset($this->settings['Controller']['parentClass'])) {
 				$parentClass = $this->settings['Controller']['parentClass'];
@@ -592,7 +595,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 			$propertyName = \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($domainObject->getName()) . 'Repository';
 			// now add the property to class Object (or update an existing class Object property)
 			if (!$this->classObject->propertyExists($propertyName)) {
-				$classProperty = new Tx_ExtensionBuilder_Domain_Model_Class_Property($propertyName);
+				$classProperty = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property($propertyName);
 				$classProperty->setTag('var', $domainObject->getDomainRepositoryClassName());
 				$classProperty->setTag('inject', '');
 				$classProperty->addModifier('protected');
@@ -616,10 +619,10 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 	 * it keeps all methods and properties including user modified method bodies and comments
 	 * needed to create a repository class file
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @param boolean $mergeWithExistingClass
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Class
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function generateRepositoryClassObject($domainObject, $mergeWithExistingClass) {
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('------------------------------------- generateRepositoryClassObject(' . $domainObject->getName() . ') ---------------------------------', 'extension_builder', 1);
@@ -630,13 +633,13 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 			try {
 				$this->classObject = $this->roundTripService->getRepositoryClass($domainObject);
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Class ' . $className . ' could not be imported: ' . $e->getMessage(), 'extension_builder');
 			}
 		}
 
 		if ($this->classObject == NULL) {
-			$this->classObject = new Tx_ExtensionBuilder_Domain_Model_Class_Class($className);
+			$this->classObject = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject($className);
 			$this->classObject->setNameSpace($this->extension->getNameSpace() . '\\Domain\\Repository');
 			if (isset($this->settings['Repository']['parentClass'])) {
 				$parentClass = $this->settings['Repository']['parentClass'];
@@ -652,7 +655,7 @@ class Tx_ExtensionBuilder_Service_ClassBuilder implements \TYPO3\CMS\Core\Single
 	/**
 	 * Not used right now
 	 * TODO: Needs better implementation
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @return void
 	 */
 	public function sortMethods($domainObject) {

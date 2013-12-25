@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Tests\Functional;
 /***************************************************************
  *  Copyright notice
  *
@@ -33,7 +34,7 @@
  * @author Nico de Haen
  *
  */
-class Tx_ExtensionBuilder_CompatibilityFunctionTest extends Tx_ExtensionBuilder_Tests_BaseTest {
+class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	function setUp() {
 		parent::setUp();
@@ -56,11 +57,11 @@ class Tx_ExtensionBuilder_CompatibilityFunctionTest extends Tx_ExtensionBuilder_
 	 * @test
 	 */
 	function generateExtensionFromVersion3Configuration() {
-		$this->configurationManager = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Configuration_ConfigurationManager'), array('dummy'));
-		$this->extensionSchemaBuilder = $this->objectManager->get('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder');
+		$this->configurationManager = $this->getMock($this->buildAccessibleProxy('\EBT\ExtensionBuilder\Configuration\ConfigurationManager'), array('dummy'));
+		$this->extensionSchemaBuilder = $this->objectManager->get('\EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder');
 
 		$testExtensionDir = PATH_typo3conf . 'ext/extension_builder/Tests/Examples/TestExtensions/test_extension_v3/';
-		$jsonFile = $testExtensionDir . Tx_ExtensionBuilder_Configuration_ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
+		$jsonFile = $testExtensionDir . \EBT\ExtensionBuilder\Configuration\ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
 
 		if (file_exists($jsonFile)) {
 			// compatibility adaptions for configurations from older versions
@@ -80,7 +81,7 @@ class Tx_ExtensionBuilder_CompatibilityFunctionTest extends Tx_ExtensionBuilder_
 				 )
 			)
 		);
-		$newExtensionDir = vfsStream::url('testDir') . '/';
+		$newExtensionDir = \vfsStream::url('testDir') . '/';
 		//$newExtensionDir = PATH_typo3conf.'ext/extension_builder/Tests/Examples/tmp/';
 		$this->extension->setExtensionDir($newExtensionDir . 'test_extension/');
 

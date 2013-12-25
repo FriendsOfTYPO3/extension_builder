@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\ViewHelpers;
 /***************************************************************
  *  Copyright notice
  *
@@ -28,7 +29,7 @@
  * @version $ID:$
  */
 
-class Tx_ExtensionBuilder_ViewHelpers_ClassViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class ClassViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 *

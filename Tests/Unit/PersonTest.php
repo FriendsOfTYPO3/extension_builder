@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Tests\Unit;
 /***************************************************************
  *  Copyright notice
  *
@@ -25,12 +26,12 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class Tx_ExtensionBuilder_Domain_Model_PersonTest extends Tx_ExtensionBuilder_Tests_BaseTest {
+class PersonTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	protected $person;
 
 	function setUp() {
-		$this->person = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
+		$this->person = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Person');
 	}
 
 	/**

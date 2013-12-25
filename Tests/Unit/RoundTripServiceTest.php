@@ -1,4 +1,8 @@
 <?php
+namespace EBT\ExtensionBuilder\Tests\Unit;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
+use EBT\ExtensionBuilder\Service\ObjectSchemaBuilder;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -24,7 +28,7 @@
  ***************************************************************/
 
 
-class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests_BaseTest {
+class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	function setUp() {
 		parent::setUp();
@@ -42,7 +46,7 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 		$domainObject = $this->buildDomainObject($modelName);
 		$this->assertTrue(is_object($domainObject), 'No domain object');
 
-		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty('prop1');
+		$property = new StringProperty('prop1');
 		$uniqueIdentifier1 = md5(microtime() . 'prop1');
 		$property->setUniqueIdentifier($uniqueIdentifier1);
 		$domainObject->addProperty($property);
@@ -64,7 +68,7 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 
 		// build a new domain object with the same unique identifiers
 		$newDomainObject = $this->buildDomainObject('Dummy');
-		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty('newProp1Name');
+		$property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty('newProp1Name');
 		$property->setUniqueIdentifier($uniqueIdentifier1);
 		$property->setRequired(TRUE);
 		$newDomainObject->addProperty($property);
@@ -97,7 +101,7 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 			'relationType' => 'manyToMany',
 		);
 
-		$relation = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
+		$relation = ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
 
 
 		$uniqueIdentifier1 = md5(microtime() . 'children');
@@ -125,7 +129,7 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 		// build a new domain object with the same unique identifiers
 		$newDomainObject = $this->buildDomainObject('Model8');
 
-		$newRelation = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
+		$newRelation = ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
 		$newRelation->setUniqueIdentifier($uniqueIdentifier1);
 		$newRelation->setForeignModel($this->buildDomainObject('ChildModel'));
 
@@ -163,7 +167,7 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 			'relationType' => 'manyToMany',
 		);
 
-		$relation = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
+		$relation = ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
 
 
 		$uniqueIdentifier1 = md5(microtime() . 'children');
@@ -191,7 +195,7 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 		// build a new domain object with the same unique identifiers
 		$newDomainObject = $this->buildDomainObject('Model8');
 
-		$newRelation = Tx_ExtensionBuilder_Service_ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
+		$newRelation = ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
 		$newRelation->setUniqueIdentifier($uniqueIdentifier1);
 		$newRelation->setForeignModel($this->buildDomainObject('RenamedModel'));
 

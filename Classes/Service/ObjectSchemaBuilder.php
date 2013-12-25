@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Service;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,34 +23,35 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use EBT\ExtensionBuilder\Utility\Tools;
 
 /**
  * Builder for domain objects
  */
-class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
+class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
-	 * @var Tx_ExtensionBuilder_Configuration_ConfigurationManager
+	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
 	 */
 	protected $configurationManager;
 
 	/**
-	 * @param Tx_ExtensionBuilder_Configuration_ConfigurationManager
+	 * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager
 	 * @return void
 	 */
-	public function injectConfigurationManager(Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager) {
+	public function injectConfigurationManager(\EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager) {
 		$this->configurationManager = $configurationManager;
 	}
 
 	/**
 	 *
 	 * @param array $jsonDomainObject
-	 * @throws Exception
-	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @throws \Exception
+	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 */
 	public function build(array $jsonDomainObject) {
 		$domainObject = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-			'Tx_ExtensionBuilder_Domain_Model_DomainObject'
+			'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject'
 		);
 		$domainObject->setUniqueIdentifier($jsonDomainObject['objectsettings']['uid']);
 
@@ -73,11 +75,12 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements \TYPO3\CMS\Core
 
 			// properties
 		if (isset($jsonDomainObject['propertyGroup']['properties'])) {
+
 			foreach ($jsonDomainObject['propertyGroup']['properties'] as $jsonProperty) {
 				$propertyType = $jsonProperty['propertyType'];
-				$propertyClassName = 'Tx_ExtensionBuilder_Domain_Model_DomainObject_' . $propertyType . 'Property';
+				$propertyClassName = 'EBT\\ExtensionBuilder\\Domain\Model\\DomainObject\\' . $propertyType . 'Property';
 				if (!class_exists($propertyClassName)) {
-					throw new Exception('Property of type ' . $propertyType . ' not found');
+					throw new \Exception('Property of type ' . $propertyType . ' not found');
 				}
 				$property = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($propertyClassName);
 				$property->setUniqueIdentifier($jsonProperty['uid']);
@@ -111,15 +114,16 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements \TYPO3\CMS\Core
 					);
 					if (isset($extbaseClassConfiguration['tableName'])) {
 						$foreignDatabaseTableName = $extbaseClassConfiguration['tableName'];
+						$relatedForeignTables[$foreignDatabaseTableName] = 1;
 					} else {
-						$foreignDatabaseTableName = Tx_ExtensionBuilder_Utility_Tools::parseTableNameFromClassName(
+						$foreignDatabaseTableName = Tools::parseTableNameFromClassName(
 							$jsonRelation['foreignRelationClass']
 						);
 					}
 					$relation->setForeignDatabaseTableName($foreignDatabaseTableName);
-					if (is_a($relation, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation')) {
+					if (is_a($relation, 'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Relation\\ZeroToManyRelation')) {
 						$foreignKeyName = strtolower($domainObject->getName());
-						if (Tx_ExtensionBuilder_Service_ValidationService::isReservedMYSQLWord($foreignKeyName)) {
+						if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($foreignKeyName)) {
 							$foreignKeyName = 'tx_' . $foreignKeyName;
 						}
 						\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Foreign key name', 'extension_builder', 1);
@@ -127,9 +131,11 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements \TYPO3\CMS\Core
 							$foreignKeyName .= $relatedForeignTables[$foreignDatabaseTableName];
 							$relatedForeignTables[$foreignDatabaseTableName] += 1;
 						} else {
-							$relatedForeignTables[$foreignDatabaseTableName] = 1;
+							$foreignDatabaseTableName = Tools::parseTableNameFromClassName(
+								$jsonRelation['foreignRelationClass']
+							);
 						}
-						$relation->setForeignKeyName($foreignKeyName);
+						$relation->setForeignDatabaseTableName($foreignDatabaseTableName);
 					}
 				}
 				$domainObject->addProperty($relation);
@@ -151,10 +157,11 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements \TYPO3\CMS\Core
 				} else {
 					$actionNames = array();
 				}
+
 				if (!empty($actionNames)) {
 					foreach ($actionNames as $actionName) {
 						$action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-							'Tx_ExtensionBuilder_Domain_Model_DomainObject_Action'
+							'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Action'
 						);
 						$action->setName($actionName);
 						$domainObject->addAction($action);
@@ -168,20 +175,20 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements \TYPO3\CMS\Core
 	/**
 	 *
 	 * @param $relationJsonConfiguration
-	 * @throws Exception
-	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation
+	 * @throws \Exception
+	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation
 	 */
 	public static function buildRelation($relationJsonConfiguration) {
-		$relationSchemaClassName = 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_';
+		$relationSchemaClassName = 'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Relation\\';
 		$relationSchemaClassName .= ucfirst($relationJsonConfiguration['relationType']) . 'Relation';
 		if (!class_exists($relationSchemaClassName)) {
-			throw new Exception(
+			throw new \Exception(
 				'Relation of type ' . $relationSchemaClassName . ' not found (configured in "' .
 					$relationJsonConfiguration['relationName'] . '")'
 			);
 		}
 		/**
-		 * @var $relation Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation
+		 * @var $relation \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation
 		 */
 		$relation = new $relationSchemaClassName;
 		$relation->setName($relationJsonConfiguration['relationName']);

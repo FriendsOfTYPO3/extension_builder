@@ -1,4 +1,6 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Model;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -28,7 +30,7 @@
  * @version $ID:$
  */
 
-class Tx_ExtensionBuilder_Domain_Model_Plugin {
+class Plugin {
 
 	/**
 	 * @var array

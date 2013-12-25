@@ -1,5 +1,6 @@
 <?php
-/***************************************************************
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+	/***************************************************************
  *  Copyright notice
  *
  *  (c) 2010 Nico de Haen, Ingmar Schlecht, Stephan Petzl
@@ -27,7 +28,7 @@
  *
  * @version $ID:$
  */
-abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
+abstract class AbstractProperty {
 
 
 	/**
@@ -69,7 +70,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 
 	/**
 	 * The domain object this property belongs to.
-	 * @var Tx_ExtensionBuilder_Domain_Model_DomainObject
+	 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
 	 */
 	protected $class;
 
@@ -101,16 +102,16 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_Class_Class $class the class this property belongs to
+	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $class the class this property belongs to
 	 */
-	public function setClass(Tx_ExtensionBuilder_Domain_Model_Class_Class $class) {
+	public function setClass(\EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $class) {
 		$this->class = $class;
 	}
 
 	/**
 	 * Get the domain object this property belongs to.
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Class
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function getClass() {
 		return $this->class;
@@ -183,7 +184,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 * @return boolean TRUE (if property is of type relation any to many)
 	 */
 	public function isAnyToManyRelation() {
-		return is_subclass_of($this, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation');
+		return is_subclass_of($this, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation');
 	}
 
 	/**
@@ -200,7 +201,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 * @return boolean TRUE (if property is of type relation)
 	 */
 	public function isRelation() {
-		return is_subclass_of($this, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation');
+		return is_subclass_of($this, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation');
 	}
 
 	/**
@@ -208,7 +209,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 * @return boolean TRUE (if property is of type boolean)
 	 */
 	public function isBoolean() {
-		return is_a($this, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty');
+		return is_a($this, '\EBT\ExtensionBuilder\Domain_Model\DomainObject\BooleanProperty');
 	}
 
 
@@ -242,7 +243,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	 */
 	public function getFieldName() {
 		$fieldName = \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($this->name);
-		if (Tx_ExtensionBuilder_Service_ValidationService::isReservedMYSQLWord($fieldName)) {
+		if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($fieldName)) {
 			$fieldName = $this->domainObject->getExtension()->getShortExtensionKey() . '_' . $fieldName;
 		}
 		return $fieldName;
@@ -323,12 +324,14 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	}
 
 	/**
-	 * Get the data type of this property. This is the last part after Tx_ExtensionBuilder_Domain_Model_DomainObject_*
+	 * Get the data type of this property. This is the last part after EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject_*
 	 *
 	 * @return string the data type of this property
 	 */
 	public function getDataType() {
-		return substr(get_class($this), strlen('Tx_ExtensionBuilder_Domain_Model_DomainObject_'));
+		$shortClassNameParts = explode('\\', get_class($this));
+		return end($shortClassNameParts);
+		//return get_class($this);
 	}
 
 	/**
@@ -361,15 +364,15 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject the domain object this property belongs to
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject the domain object this property belongs to
 	 */
-	public function setDomainObject(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
+	public function setDomainObject(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject) {
 		$this->domainObject = $domainObject;
 	}
 
 	/**
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 */
 	public function getDomainObject() {
 		return $this->domainObject;

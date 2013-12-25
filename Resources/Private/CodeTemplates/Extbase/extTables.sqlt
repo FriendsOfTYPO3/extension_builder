@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}<k:format.trim>
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<k:format.trim>
 <f:for each="{extension.domainObjects}" as="domainObject">
 #
 # Table structure for table '{domainObject.databaseTableName}'

@@ -1,5 +1,5 @@
 <?php
-
+namespace EBT\ExtensionBuilder\Utility;
 /*                                                                        *
  * This script belongs to the TYPO3 package "Extension Builder".                  *
  *                                                                        *
@@ -19,7 +19,7 @@
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  */
-class Tx_ExtensionBuilder_Utility_Naming {
+class Naming {
 	public static function getDomainObjectClassName($extensionName, $domainObjectName) {
 		return 'Tx_' . $extensionName . '_Domain_Model_' . $domainObjectName;
 	}

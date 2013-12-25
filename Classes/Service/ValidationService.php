@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Service;
 /***************************************************************
  *  Copyright notice
  *
@@ -26,7 +27,7 @@
  * provides validation against reserved words
  */
 
-class Tx_ExtensionBuilder_Service_ValidationService implements \TYPO3\CMS\Core\SingletonInterface {
+class ValidationService implements \TYPO3\CMS\Core\SingletonInterface {
 
 
 	/**

@@ -1,4 +1,6 @@
 <?php
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -21,28 +23,28 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class Tx_ExtensionBuilder_ViewHelpers_MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper {
+class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper {
 
 	/**
-	 * @var Tx_ExtensionBuilder_Configuration_ConfigurationManager
+	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
 	 */
 	protected $configurationManager;
 
 	/**
-	 * @param Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager
+	 * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager
 	 * @return void
 	 */
-	public function injectConfigurationManager(Tx_ExtensionBuilder_Configuration_ConfigurationManager $configurationManager) {
+	public function injectConfigurationManager(\EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager) {
 		$this->configurationManager = $configurationManager;
 	}
 
 	/**
 	 * Helper function to verify various conditions around possible mapping/inheritance configurations
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @param string $renderCondition
 	 * @return string
 	 */
-	public function render(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject, $renderCondition) {
+	public function render(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject, $renderCondition) {
 		$content = '';
 		$extensionPrefix = 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($domainObject->getExtension()->getExtensionKey());
 
@@ -94,7 +96,7 @@ class Tx_ExtensionBuilder_ViewHelpers_MappingViewHelper extends \TYPO3\CMS\Fluid
 	 * @param bool $isMappedToExternalTable
 	 * @return bool
 	 */
-	protected function needsTypeField(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject, $isMappedToExternalTable) {
+	protected function needsTypeField(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject, $isMappedToExternalTable) {
 		$needsTypeField = FALSE;
 		if ($domainObject->getChildObjects() || ($domainObject->getParentClass() && $isMappedToExternalTable)) {
 			$tableName = $domainObject->getDatabaseTableName();

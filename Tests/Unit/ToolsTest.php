@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Tests\Unit;
 /***************************************************************
  *  Copyright notice
  *
@@ -24,7 +25,7 @@
  ***************************************************************/
 
 
-class Tx_ExtensionBuilder_ToolsTest extends Tx_ExtensionBuilder_Tests_BaseTest {
+class ToolsTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	/**
 	 * @test

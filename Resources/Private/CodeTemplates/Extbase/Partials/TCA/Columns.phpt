@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}
 <f:if condition="{domainObject.properties}">
 $tmp_{domainObject.extension.extensionKey}_columns = array(
 <f:for each="{domainObject.properties}" as="property">

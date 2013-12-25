@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Tests\Unit;
 /***************************************************************
  *  Copyright notice
  *
@@ -26,17 +27,17 @@
  ***************************************************************/
 
 
-class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder_Tests_BaseTest {
+class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	protected $extensionSchemaBuilder;
 
 	public function setUp() {
 		//parent::setUp();
-		$this->extension = $this->getMock('Tx_ExtensionBuilder_Domain_Model_Extension', array('getOverWriteSettings'));
-		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder'), array('dummy'));
-		$this->extensionSchemaBuilder->injectConfigurationManager(new Tx_ExtensionBuilder_Configuration_ConfigurationManager());
-		$objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_ObjectSchemaBuilder'), array('dummy'));
-		$objectSchemaBuilder->injectConfigurationManager(new Tx_ExtensionBuilder_Configuration_ConfigurationManager());
+		$this->extension = $this->getMock('EBT\ExtensionBuilder\Domain\Model\Extension', array('getOverWriteSettings'));
+		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('\EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder'), array('dummy'));
+		$this->extensionSchemaBuilder->injectConfigurationManager(new \EBT\ExtensionBuilder\Configuration\ConfigurationManager());
+		$objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\ObjectSchemaBuilder'), array('dummy'));
+		$objectSchemaBuilder->injectConfigurationManager(new \EBT\ExtensionBuilder\Configuration\ConfigurationManager());
 		$this->extensionSchemaBuilder->injectObjectSchemaBuilder($objectSchemaBuilder);
 		$this->extensionKey = 'dummy';
 	}
@@ -64,7 +65,7 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 			)
 		);
 
-		$extension = new Tx_ExtensionBuilder_Domain_Model_Extension();
+		$extension = new \EBT\ExtensionBuilder\Domain\Model\Extension();
 		$extension->setDescription($description);
 		$extension->setName($name);
 		$extension->setExtensionKey($extensionKey);
@@ -81,8 +82,8 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 	 */
 	public function conversionExtractsPersons() {
 		$persons = array();
-		$persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
-		$persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
+		$persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Person');
+		$persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Person');
 		$persons[0]->setName('name0');
 		$persons[0]->setRole('role0');
 		$persons[0]->setEmail('email0');
@@ -238,45 +239,45 @@ class Tx_ExtensionBuilder_ExtensionSchemaBuilderTest extends Tx_ExtensionBuilder
 			)
 		);
 
-		$extension = new Tx_ExtensionBuilder_Domain_Model_Extension();
+		$extension = new \EBT\ExtensionBuilder\Domain\Model\Extension();
 		$extension->setName('My ext name');
-		$extension->setState(Tx_ExtensionBuilder_Domain_Model_Extension::STATE_BETA);
+		$extension->setState(\EBT\ExtensionBuilder\Domain\Model\Extension::STATE_BETA);
 		$extension->setExtensionKey($this->extensionKey);
 		$extension->setDescription('Some description');
 		$extension->setExtensionDir('');
 
-		$blog = new Tx_ExtensionBuilder_Domain_Model_DomainObject();
+		$blog = new \EBT\ExtensionBuilder\Domain\Model\DomainObject();
 		$blog->setName('Blog');
 		$blog->setDescription('A blog object');
 		$blog->setEntity(TRUE);
 		$blog->setAggregateRoot(FALSE);
-		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty('name');
+		$property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty('name');
 		$blog->addProperty($property);
-		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty('description');
+		$property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty('description');
 		$blog->addProperty($property);
 
 		$extension->addDomainObject($blog);
 
-		$post = new Tx_ExtensionBuilder_Domain_Model_DomainObject();
+		$post = new \EBT\ExtensionBuilder\Domain\Model\DomainObject();
 		$post->setName('Post');
 		$post->setDescription('A blog post');
 		$post->setEntity(TRUE);
 		$post->setAggregateRoot(FALSE);
 		$extension->addDomainObject($post);
 
-		$comment = new Tx_ExtensionBuilder_Domain_Model_DomainObject();
+		$comment = new \EBT\ExtensionBuilder\Domain\Model\DomainObject();
 		$comment->setName('Comment');
 		$comment->setDescription('');
 		$comment->setEntity(TRUE);
 		$comment->setAggregateRoot(FALSE);
 		$extension->addDomainObject($comment);
 
-		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation('posts');
+		$relation = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation('posts');
 		$relation->setForeignModel($post);
 		$relation->setExcludeField(1);
 		$blog->addProperty($relation);
 
-		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation('comments');
+		$relation = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation('comments');
 		$relation->setForeignModel($comment);
 		$relation->setExcludeField(1);
 		$post->addProperty($relation);

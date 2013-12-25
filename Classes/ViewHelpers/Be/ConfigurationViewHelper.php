@@ -1,9 +1,12 @@
 <?php
+namespace EBT\ExtensionBuilder\ViewHelpers\Be;
 
-class Tx_ExtensionBuilder_ViewHelpers_Be_ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBackendViewHelper {
+use TYPO3\CMS\Core\Page\PageRenderer;
+
+class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBackendViewHelper {
 
 	/**
-	 * @var t3lib_PageRenderer
+	 * @var PageRenderer
 	 */
 	private $pageRenderer;
 

@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Tests\Unit;
 /***************************************************************
  *  Copyright notice
  *
@@ -24,7 +25,7 @@
  ***************************************************************/
 
 
-class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_BaseTest {
+class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	/**
 	 * set to true to see an overview of the parsed class objects in the backend
@@ -32,7 +33,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	protected $debugMode = FALSE;
 
 	public function setUp() {
-		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder'), array('dummy'));
+		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('\EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder'), array('dummy'));
 	}
 
 	/**
@@ -72,7 +73,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 			"\n\tempty line in multiline comment\n	// single comment in multiline" .
 			"\n\t *\n	some keywords: \$property  function\n\tstatic\n *" .
 			"\n * @test testtag\n */" .
-			"\nrequire_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') ." .
+			"\nrequire_once(\\TYPO3\\CMS\Core\\Utility\\ExtensionManagementUtility::extPath('extension_builder') ." .
 			" 'Tests/Examples/ClassParser/BasicClass.php');\n",
 			'Preceding block in complex class not properly parsed');
 
@@ -109,7 +110,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * @test
 	 */
 	public function ParseExtendedClass() {
-		$this->parseClass('Tx_ExtensionBuilder_Controller_BuilderModuleController');
+		$this->parseClass('\\EBT\\ExtensionBuilder\\Controller\\BuilderModuleController');
 	}
 
 	/**
@@ -159,7 +160,6 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * @test
 	 */
 	public function Parse_t3lib_div() {
-		//require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/BasicClass.php');
 		$this->parseClass('\\TYPO3\\CMS\\Core\\Utility\\GeneralUtility');
 	}
 
@@ -169,11 +169,11 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Class
 	 */
 	protected function parseClass($className) {
-		$classParser = new Tx_ExtensionBuilder_Utility_ClassParser();
+		$classParser = new \EBT\ExtensionBuilder\Utility\ClassParser();
 		$classParser->debugMode = $this->debugMode;
 		$classObject = $classParser->parse($className);
-		$this->assertTrue($classObject instanceof Tx_ExtensionBuilder_Domain_Model_Class_Class);
-		$classReflection = new Tx_ExtensionBuilder_Reflection_ClassReflection($className);
+		$this->assertTrue($classObject instanceof \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject);
+		$classReflection = new \EBT\ExtensionBuilder\Reflection\ClassReflection($className);
 		$this->ParserFindsAllConstants($classObject, $classReflection);
 		$this->ParserFindsAllMethods($classObject, $classReflection);
 		$this->ParserFindsAllProperties($classObject, $classReflection);
@@ -184,7 +184,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	/**
 	 * compares the number of methods found by parsing with those retrieved from the reflection class
 	 * @param Tx_ExtensionBuilder_Domain_Model_Class $classObject
-	 * @param Tx_ExtensionBuilder_Reflection_ClassReflection $classReflection
+	 * @param \EBT\ExtensionBuilder\Reflection\ClassReflection $classReflection
 	 * @return void
 	 */
 	public function ParserFindsAllConstants($classObject, $classReflection) {
@@ -199,19 +199,19 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 	/**
 	 * compares the number of methods found by parsing with those retrieved from the reflection class
 	 * @param Tx_ExtensionBuilder_Domain_Model_Class $classObject
-	 * @param Tx_ExtensionBuilder_Reflection_ClassReflection $classReflection
+	 * @param \EBT\ExtensionBuilder\Reflection\ClassReflection $classReflection
 	 * @return void
 	 */
 	public function ParserFindsAllMethods($classObject, $classReflection) {
 		$reflectionMethodCount = count($classReflection->getNotInheritedMethods());
 		$classObjectMethodCount = count($classObject->getMethods());
-		$this->assertEquals($classObjectMethodCount, $reflectionMethodCount, 'Not all Methods were found!');
+		$this->assertEquals($classObjectMethodCount, $reflectionMethodCount, 'Not all Methods were found!: ' . $reflectionMethodCount);
 	}
 
 	/**
 	 * compares the number of properties found by parsing with those retrieved from the reflection class
 	 * @param Tx_ExtensionBuilder_Domain_Model_Class $classObject
-	 * @param Tx_ExtensionBuilder_Reflection_ClassReflection $classReflection
+	 * @param \EBT\ExtensionBuilder\Reflection\ClassReflection $classReflection
 	 * @return void
 	 */
 	public function ParserFindsAllProperties($classObject, $classReflection) {

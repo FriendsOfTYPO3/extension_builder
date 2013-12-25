@@ -1,6 +1,8 @@
 <?php
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
 /*                                                                        *
- * This script belongs to the TYPO3 package "Extension Builder".                  *
+ * This script belongs to the TYPO3 package "Extension Builder".          *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -35,15 +37,15 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @scope prototype
  */
-class Tx_ExtensionBuilder_ViewHelpers_SingularizeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class SingularizeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
-	 * @var Tx_ExtensionBuilder_Utility_Inflector
+	 * @var \EBT\ExtensionBuilder\Utility\Inflector
 	 */
 	protected $inflector;
 
 	public function __construct() {
-		$this->inflector = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Utility_Inflector');
+		$this->inflector = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Utility\\Inflector');
 	}
 
 	/**
