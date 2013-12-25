@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
 /***************************************************************
  *  Copyright notice
  *
@@ -27,7 +28,7 @@
  *
  * @version $ID:$
  */
-class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
+class Method extends AbstractObject {
 
 	/**
 	 * body
@@ -46,7 +47,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 
 	public function __construct($methodName, $methodReflection = NULL) {
 		$this->setName($methodName);
-		if ($methodReflection instanceof Tx_ExtensionBuilder_Reflection_MethodReflection) {
+		if ($methodReflection instanceof \EBT\ExtensionBuilder\Reflection\MethodReflection) {
 			$methodReflection->getTagsValues(); // just to initialize the docCommentParser
 			foreach ($this as $key => $value) {
 				$setterMethodName = 'set' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($key);
@@ -120,12 +121,12 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Method extends Tx_ExtensionBuilder_
 
 	/**
 	 * adder for parameters
-	 * @param array $parameters of type Tx_ExtensionBuilder_Reflection_ParameterReflection
+	 * @param array $parameters of type EBT\ExtensionBuilder\Reflection\ParameterReflection
 	 * @return void
 	 */
 	public function setParameters($parameters) {
 		foreach ($parameters as $parameter) {
-			$methodParameter = new Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter($parameter->getName(), $parameter);
+			$methodParameter = new MethodParameter($parameter->getName(), $parameter);
 			$this->parameters[$methodParameter->getPosition()] = $methodParameter;
 		}
 

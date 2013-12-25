@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Exception;
 /***************************************************************
  *  Copyright notice
  *
@@ -28,7 +29,7 @@
  * @version $ID:$
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
-class Tx_ExtensionBuilder_Domain_Exception_ExtensionException extends Tx_ExtensionBuilder_Exception {
+class ExtensionException extends \EBT\ExtensionBuilder\Exception {
 }
 
 ?>

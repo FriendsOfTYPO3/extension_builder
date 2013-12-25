@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
 /***************************************************************
  *  Copyright notice
  *
@@ -27,7 +28,7 @@
  *
  * @version $ID:$
  */
-class Tx_ExtensionBuilder_Domain_Model_Class_Property extends Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
+class Property extends AbstractObject {
 
 
 	/**
@@ -70,11 +71,11 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Property extends Tx_ExtensionBuilde
 	 *
 	 * all properties that have a setter in this class and a getter in the reflection class will be set here
 	 *
-	 * @param Tx_ExtensionBuilder_Reflection_PropertyReflection $propertyReflection
+	 * @param \EBT\ExtensionBuilder\Reflection\PropertyReflection $propertyReflection
 	 * @return void
 	 */
 	public function mapToReflectionProperty($propertyReflection) {
-		if ($propertyReflection instanceof Tx_ExtensionBuilder_Reflection_PropertyReflection) {
+		if ($propertyReflection instanceof \EBT\ExtensionBuilder\Reflection\PropertyReflection) {
 
 			$propertyReflection->getTagsValues(); // just to initialize the docCommentParser
 			foreach ($this as $key => $value) {

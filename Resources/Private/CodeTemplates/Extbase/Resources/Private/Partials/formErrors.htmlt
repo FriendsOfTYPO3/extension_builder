@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}
 <f:if condition="{extension.targetVersion}< 4.6">
 	<f:then>
 	<k:openingTag>f:form.errors</k:openingTag>

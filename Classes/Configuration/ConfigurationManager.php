@@ -1,4 +1,6 @@
 <?php
+namespace EBT\ExtensionBuilder\Configuration;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -26,7 +28,7 @@
 /**
  * Load settings from yaml file and from TYPO3_CONF_VARS extConf
  */
-class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends TYPO3\CMS\Extbase\Configuration\ConfigurationManager {
+class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\ConfigurationManager {
 
 	const SETTINGS_DIR = 'Configuration/ExtensionBuilder/';
 	const OLD_SETTINGS_DIR = 'Configuration/Kickstarter/';
@@ -108,7 +110,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends TYPO3\CMS\E
 		$settings = array();
 		$settingsFile = $this->getSettingsFile($extensionKey);
 		if (file_exists($settingsFile)) {
-			$yamlParser = new Tx_ExtensionBuilder_Utility_SpycYAMLParser();
+			$yamlParser = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser();
 			$settings = $yamlParser->YAMLLoadString(file_get_contents($settingsFile));
 		} else {
 			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('No settings found: ' . $settingsFile, 'extension_builder', 2);
@@ -216,7 +218,7 @@ class Tx_ExtensionBuilder_Configuration_ConfigurationManager extends TYPO3\CMS\E
 
 	/**
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
+	 * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
 	 * @param string $codeTemplateRootPath
 	 */
 	public function createInitialSettingsFile($extension, $codeTemplateRootPath) {

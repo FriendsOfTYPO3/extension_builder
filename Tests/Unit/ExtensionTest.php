@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Tests\Unit;
 /***************************************************************
  *  Copyright notice
  *
@@ -31,16 +32,16 @@
  * @author Christoph Dhen
  *
  */
-class  Tx_ExtensionBuilder_Domain_Model_ExtensionTest extends Tx_ExtensionBuilder_Tests_BaseTest {
+class  ExtensionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	protected $persons = array();
 	protected $extension;
 
 	function setUp() {
-		$this->extension = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_Extension');
-		$this->persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
-		$this->persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
-		$this->persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_Person');
+		$this->extension = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Extension');
+		$this->persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Person');
+		$this->persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Person');
+		$this->persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Person');
 		$this->persons[0]->setName("0");
 		$this->persons[1]->setName("1");
 		$this->persons[2]->setName("2");

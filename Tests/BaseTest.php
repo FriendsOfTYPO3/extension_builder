@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Tests;
 /***************************************************************
  *  Copyright notice
  *
@@ -25,48 +26,48 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Phpunit_TestCase {
+abstract class BaseTest extends \Tx_Phpunit_TestCase {
 
 	var $modelClassDir = 'Classes/Domain/Model/';
 
 	/**
-	 * @var Tx_ExtensionBuilder_Utility_ClassParser
+	 * @var \EBT\ExtensionBuilder\Utility\ClassParser
 	 */
 	protected $classParser;
 
 	/**
-	 * @var Tx_ExtensionBuilder_Service_RoundTrip
+	 * @var \EBT\ExtensionBuilder\Service\RoundTrip
 	 */
 	protected $roundTripService;
 
 	/**
-	 * @var TYPO3\CMS\Fluid\Core\Parser\TemplateParser
+	 * @var \TYPO3\CMS\Fluid\Core\Parser\TemplateParser
 	 */
 	protected $templateParser;
 
 	/**
-	 * @var TYPO3\CMS\Extbase\Object\ObjectManager
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
 	 */
 	protected $objectManager;
 
 	/**
-	 * @var Tx_ExtensionBuilder_Domain_Model_Extension
+	 * @var \EBT\ExtensionBuilder\Domain\Model\Extension
 	 */
 	protected $extension;
 
 	/**
-	 * @var Tx_ExtensionBuilder_Service_CodeGenerator
+	 * @var \EBT\ExtensionBuilder\Service\CodeGenerator
 	 */
 	protected $codeGenerator;
 
 
 	function setUp($settingFile = ''){
 
-		$this->extension = $this->getMock('Tx_ExtensionBuilder_Domain_Model_Extension',array('getExtensionDir'));
+		$this->extension = $this->getMock('EBT\\ExtensionBuilder\\Domain\\Model\\Extension',array('getExtensionDir'));
 		$extensionKey = 'dummy';
-		//$dummyExtensionDir = PATH_typo3conf.'ext/extension_builder/Tests/Examples/'.$extensionKey.'/';
-		vfsStream::setup('testDir');
-		$dummyExtensionDir = vfsStream::url('testDir').'/';
+		$dummyExtensionDir = PATH_typo3conf.'ext/extension_builder/Tests/Examples/'.$extensionKey.'/';
+		\vfsStream::setup('testDir');
+		$dummyExtensionDir = \vfsStream::url('testDir').'/';
 		$this->extension->setVendorName('TYPO3');
 		$this->extension->setExtensionKey($extensionKey);
 		$this->extension->expects(
@@ -76,20 +77,20 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Phpunit_TestCase {
 		if(is_dir($dummyExtensionDir)) {
 			\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir($dummyExtensionDir, TRUE);
 		}
-		$yamlParser = new Tx_ExtensionBuilder_Utility_SpycYAMLParser();
+		$yamlParser = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser();
 		$settings = $yamlParser->YAMLLoadString(file_get_contents(PATH_typo3conf.'ext/extension_builder/Tests/Examples/Settings/settings1.yaml'));
 		$this->extension->setSettings($settings);
-		$configurationManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Configuration_ConfigurationManager');
+		$configurationManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Configuration\\ConfigurationManager');
 
-		$this->classParser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Utility_ClassParser');
-		$this->roundTripService =  $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_RoundTrip'),array('dummy'));
-		$this->classBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Service_ClassBuilder');
+		$this->classParser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Utility\\ClassParser');
+		$this->roundTripService =  $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\RoundTrip'),array('dummy'));
+		$this->classBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Service\\ClassBuilder');
 		$this->classBuilder->injectConfigurationManager($configurationManager);
 
 		$this->roundTripService->injectClassBuilder($this->classBuilder);
 		$this->roundTripService->injectConfigurationManager($configurationManager);
 		$this->templateParser = $this->getMock($this->buildAccessibleProxy('TYPO3\\CMS\\Fluid\\Core\\Parser\\TemplateParser'),array('dummy'));
-		$this->codeGenerator = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Service_CodeGenerator'),array('dummy'));
+		$this->codeGenerator = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\CodeGenerator'),array('dummy'));
 
 		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 		$this->objectManager = clone $objectManager;
@@ -128,10 +129,10 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Phpunit_TestCase {
 	 * @param $name
 	 * @param $entity
 	 * @param $aggregateRoot
-	 * @return object Tx_ExtensionBuilder_Domain_Model_DomainObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
 	 */
 	protected function buildDomainObject($name, $entity = false, $aggregateRoot = false){
-		$domainObject = $this->getMock($this->buildAccessibleProxy('Tx_ExtensionBuilder_Domain_Model_DomainObject'),array('dummy'));
+		$domainObject = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject'),array('dummy'));
 		$domainObject->setExtension($this->extension);
 		$domainObject->setName($name);
 		$domainObject->setEntity($entity);
@@ -139,7 +140,7 @@ abstract class Tx_ExtensionBuilder_Tests_BaseTest extends Tx_Phpunit_TestCase {
 		if($aggregateRoot){
 			$defaultActions = array('list','show','new','create','edit','update','delete');
 			foreach($defaultActions as $actionName){
-				$action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
+				$action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Action');
 				$action->setName($actionName);
 				if($actionName == 'deleted'){
 					$action->setNeedsTemplate = false;

@@ -1,4 +1,6 @@
 <?php
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
 /*                                                                        *
  * This script belongs to the FLOW3 package "Fluid".                      *
  *                                                                        *
@@ -32,7 +34,7 @@
  * @version	 SVN: $Id:
  *
  */
-class Tx_ExtensionBuilder_ViewHelpers_BeFuncViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class BeFuncViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	protected $objectAccessorPostProcessorEnabled = FALSE;
 

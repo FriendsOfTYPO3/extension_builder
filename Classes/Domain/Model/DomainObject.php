@@ -1,4 +1,6 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Model;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -27,7 +29,7 @@
  *
  * @version $ID:$
  */
-class Tx_ExtensionBuilder_Domain_Model_DomainObject {
+class DomainObject {
 
 	/**
 	 * Name of the domain object
@@ -67,19 +69,19 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 
 	/**
 	 * The extension this domain object belongs to.
-	 * @var Tx_ExtensionBuilder_Domain_Model_Extension
+	 * @var \EBT\ExtensionBuilder\Domain\Model\Extension
 	 */
 	protected $extension;
 
 	/**
 	 * List of properties the domain object has
-	 * @var array<Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty>
+	 * @var array<\EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty>
 	 */
 	protected $properties = array();
 
 	/**
 	 * List of actions the domain object has
-	 * @var array<Tx_ExtensionBuilder_Domain_Model_DomainObject_Action>
+	 * @var array<\EBT\ExtensionBuilder\Domain\Model\DomainObject\Action>
 	 */
 	protected $actions = array();
 
@@ -103,7 +105,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 
 	/**
 	 * Domain objects that extend the current object (as declared in this extension)
-	 * @var array<Tx_ExtensionBuilder_Domain_Model_DomainObject>
+	 * @var array<\EBT\ExtensionBuilder\Domain\Model\DomainObject>
 	 */
 	protected $childObjects = array();
 
@@ -233,11 +235,11 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 
 	/**
 	 * Adding a new property
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $property The new property to add
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property The new property to add
 	 *
 	 * @return void
 	 */
-	public function addProperty(Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty $property) {
+	public function addProperty(\EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property) {
 		$property->setDomainObject($this);
 		if ($property->getNeedsUploadFolder()) {
 			$this->needsUploadFolder = TRUE;
@@ -247,7 +249,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 
 	/**
 	 * Get all properties
-	 * @return array<Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty>
+	 * @return array<\EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty>
 	 */
 	public function getProperties() {
 		return $this->properties;
@@ -256,7 +258,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	/**
 	 * Get property
 	 *
-	 * @return object <Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty>
+	 * @return object <\EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty>
 	 */
 	public function getPropertyByName($propertyName) {
 		foreach ($this->properties as $property) {
@@ -270,12 +272,12 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	/**
 	 * Get all properties holding relations of type Property_Relation_ZeroToManyRelation
 	 *
-	 * @return array<Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation>
+	 * @return array<\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation>
 	 */
 	public function getZeroToManyRelationProperties() {
 		$relationProperties = array();
 		foreach ($this->properties as $property) {
-			if (is_a($property, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation')) {
+			if (is_a($property, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation')) {
 				$relationProperties[] = $property;
 			}
 		}
@@ -285,12 +287,12 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	/**
 	 * Get all properties holding relations of type Property_Relation_AnyToManyRelation
 	 *
-	 * @return array<Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation>
+	 * @return array<\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation>
 	 */
 	public function getAnyToManyRelationProperties() {
 		$relationProperties = array();
 		foreach ($this->properties as $property) {
-			if (is_subclass_of($property, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation')) {
+			if (is_subclass_of($property, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation')) {
 				$relationProperties[] = $property;
 			}
 		}
@@ -299,11 +301,11 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 
 	/**
 	 * Adding a new action
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action The new action to add
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action The new action to add
 	 *
 	 * @return void
 	 */
-	public function addAction(Tx_ExtensionBuilder_Domain_Model_DomainObject_Action $action) {
+	public function addAction(\EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action) {
 		$action->setDomainObject($this);
 		if (!in_array($action, $this->actions)) {
 			$this->actions[] = $action;
@@ -314,7 +316,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 	/**
 	 * Get all actions
 	 *
-	 * @return array<Tx_ExtensionBuilder_Domain_Model_DomainObject_Action>
+	 * @return array<\EBT\ExtensionBuilder\Domain\Model\DomainObject\Action>
 	 */
 	public function getActions() {
 		return $this->actions;
@@ -331,14 +333,14 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addDomainModel() automatically.
-	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension the extension this domain model belongs to.
+	 * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension the extension this domain model belongs to.
 	 */
-	public function setExtension(Tx_ExtensionBuilder_Domain_Model_Extension $extension) {
+	public function setExtension(\EBT\ExtensionBuilder\Domain\Model\Extension $extension) {
 		$this->extension = $extension;
 	}
 
 	/**
-	 * @return Tx_ExtensionBuilder_Domain_Model_Extension
+	 * @return \EBT\ExtensionBuilder\Domain\Model\Extension
 	 */
 	public function getExtension() {
 		return $this->extension;
@@ -517,14 +519,14 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject {
 
 
 	/**
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $childObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $childObject
 	 */
-	public function addChildObject(Tx_ExtensionBuilder_Domain_Model_DomainObject $childObject) {
+	public function addChildObject(\EBT\ExtensionBuilder\Domain\Model\DomainObject $childObject) {
 		$this->childObjects[] = $childObject;
 	}
 
 	/**
-	 * @return array Tx_ExtensionBuilder_Domain_Model_DomainObject
+	 * @return array \EBT\ExtensionBuilder\Domain\Model\DomainObject
 	 */
 	public function getChildObjects() {
 		return $this->childObjects;

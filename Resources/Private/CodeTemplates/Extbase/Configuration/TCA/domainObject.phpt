@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}<?php
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<?php
 if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }

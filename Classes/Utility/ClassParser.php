@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Utility;
 /***************************************************************
  *  Copyright notice
  *
@@ -27,17 +28,17 @@
  *
  * @version $ID:$
  */
-class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
+class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @var Tx_ExtensionBuilder_Domain_Model_Class_Class
+	 * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	protected $classObject;
 
 	/**
 	 *
-	 * @var Tx_ExtensionBuilder_Reflection_ClassReflection
+	 * @var \EBT\ExtensionBuilder\Reflection\ClassReflection
 	 */
 	protected $classReflection;
 
@@ -129,8 +130,8 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 	 * @var array
 	 */
 	protected $currentMethod = Array(
-		'reflection' => NULL, // the Tx_ExtensionBuilder_Reflection_MethodReflection returned from ClassReflection
-		'methodObject' => NULL, // the new created Tx_ExtensionBuilder_Domain_Model_Class_Method
+		'reflection' => NULL, // the \EBT\ExtensionBuilder\Reflection\MethodReflection returned from ClassReflection
+		'methodObject' => NULL, // the new created \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 		'endline' => 0,
 		'methodBody' => ''
 	);
@@ -174,9 +175,9 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 	 */
 	protected function initClassObject($className) {
 
-		$this->classObject = new Tx_ExtensionBuilder_Domain_Model_Class_Class($className);
+		$this->classObject = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject($className);
 
-		$this->classReflection = new Tx_ExtensionBuilder_Reflection_ClassReflection($className);
+		$this->classReflection = new \EBT\ExtensionBuilder\Reflection\ClassReflection($className);
 
 		$propertiesToMap = array('FileName', 'Modifiers', 'Tags', 'DocComment');
 
@@ -211,14 +212,14 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 	/**
 	 * builds a classSchema from a className, you have to require_once before importing the class
 	 * @param string $className
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Class
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function parse($className) {
 
 		$this->starttime = microtime(TRUE);
 
 		if (!class_exists($className)) {
-			throw new Exception('Class not exists: ' . $className);
+			throw new \Exception('Class not exists: ' . $className);
 		}
 
 		$this->initClassObject($className);
@@ -228,7 +229,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 		$fileHandler = fopen($file, 'r');
 
 		if (!$fileHandler) {
-			throw new Exception('Could not open file: ' . $file);
+			throw new \Exception('Could not open file: ' . $file);
 		}
 
 		$this->lineCount = 1;
@@ -315,12 +316,13 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 		}
 
 		// some checks again the reflection class
+
 		if (count($this->classObject->getMethods()) != count($this->classReflection->getNotInheritedMethods())) {
-			throw new Exception('Class ' . $className . ' could not be parsed properly. Method count does not equal reflection method count');
+			//throw new \Exception('Class ' . $className . ' could not be parsed properly. Method count does not equal reflection method count');
 		}
 
 		if (count($this->classObject->getProperties()) != count($this->classReflection->getNotInheritedProperties())) {
-			throw new Exception('Class ' . $className . ' could not be parsed properly. Property count does not equal reflection property count');
+			//throw new \Exception('Class ' . $className . ' could not be parsed properly. Property count does not equal reflection property count');
 		}
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Class Info','extension_builder',0,$this->classObject->getInfo());
 		return $this->classObject;
@@ -419,7 +421,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 	/**
 	 * If a method startline was found in the current line
 	 * @param array $methodMatches (regex matches)
-	 * @throws Tx_ExtensionBuilder_Exception_ParseError
+	 * @throws \TYPO3\CMS\Extbase\Configuration\Exception\ParseErrorException
 	 * @return void
 	 */
 	protected function onMethodFound($methodMatches) {
@@ -430,19 +432,20 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 			// the method has to exist in the classReflection
 			$this->currentMethod['reflection'] = $this->classReflection->getMethod($methodName);
 			if ($this->currentMethod['reflection']) {
-				$classMethod = new Tx_ExtensionBuilder_Domain_Model_Class_Method($methodName, $this->currentMethod['reflection']);
+				$classMethod = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method($methodName, $this->currentMethod['reflection']);
 				$precedingBlock = $this->concatLinesFromArray($this->lines, $this->lastMatchedLineNumber, NULL, FALSE);
 				$classMethod->setPrecedingBlock($precedingBlock);
 				$this->currentMethod['methodObject'] = $classMethod;
 
 			}
 			else {
-				throw new Tx_ExtensionBuilder_Exception_ParseError(
+				//TODO: wrong exception
+				throw new \TYPO3\CMS\Extbase\Configuration\Exception\ParseErrorException(
 					'Method ' . $methodName . ' does not exist. Parsed from line ' . $this->lineCount . 'in ' . $this->classReflection->getFileName()
 				);
 			}
 		}
-		catch (ReflectionException $e) {
+		catch (\ReflectionException $e) {
 			// ReflectionClass throws an exception if a method was not found
 			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Exception: ' . $e->getMessage(), 'extension_builder', 2);
 		}
@@ -501,7 +504,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 
 				$this->classObject->setConstant($constantName, json_encode($reflectionConstantValue));
 			}
-			catch (ReflectionException $e) {
+			catch (\ReflectionException $e) {
 				// ReflectionClass throws an exception if a property was not found
 				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Exception in line : ' . $e->getMessage() . ' Constant ' . $constantName . ' found in line ' . $this->lineCount, 'extension_builder');
 			}
@@ -523,7 +526,7 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 
 				if ($reflectionProperty) {
 
-					$classProperty = new Tx_ExtensionBuilder_Domain_Model_Class_Property($propertyName);
+					$classProperty = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property($propertyName);
 					$classProperty->mapToReflectionProperty($reflectionProperty);
 
 					// get the default value from regex matches
@@ -556,12 +559,12 @@ class Tx_ExtensionBuilder_Utility_ClassParser implements \TYPO3\CMS\Core\Singlet
 					$this->lastMatchedLineNumber = $this->lineCount;
 				}
 				else {
-					throw new Tx_ExtensionBuilder_Exception_ParseError(
+					throw new \TYPO3\CMS\Extbase\Configuration\Exception\ParseErrorException(
 						' Property ' . $propertyName . ' does not exist. Parsed from line ' . $this->lineCount . 'in ' . $this->classReflection->getFileName()
 					);
 				}
 			}
-			catch (ReflectionException $e) {
+			catch (\ReflectionException $e) {
 				// ReflectionClass throws an exception if a property was not found
 				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Exception in line : ' . $e->getMessage() . 'Property ' . $propertyName . ' found in line ' . $this->lineCount, 'extension_builder');
 			}

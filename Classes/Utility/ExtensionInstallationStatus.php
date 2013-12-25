@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Utility;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,10 +23,10 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class Tx_ExtensionBuilder_Utility_ExtensionInstallationStatus {
+class ExtensionInstallationStatus {
 
 	/**
-	 * @var Tx_ExtensionBuilder_Domain_Model_Extension
+	 * @var \EBT\ExtensionBuilder\Domain\Model\Extension
 	 */
 	protected $extension;
 
@@ -39,7 +40,7 @@ class Tx_ExtensionBuilder_Utility_ExtensionInstallationStatus {
 	}
 
 	/**
-	 * @param Tx_ExtensionBuilder_Domain_Model_Extension $extension
+	 * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
 	 */
 	public function setExtension($extension) {
 		$this->extension = $extension;

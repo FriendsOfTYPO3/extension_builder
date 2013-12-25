@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
 /***************************************************************
  *  Copyright notice
  *
@@ -27,7 +28,7 @@
  *
  * @version $ID:$
  */
-class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
+class MethodParameter {
 
 
 	/**
@@ -76,7 +77,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 	 *
 	 * @param $propertyName
 	 * @param $propertyReflection (optional)
-	 * @return unknown_type
+	 * @return void
 	 */
 	public function __construct($parameterName, $parameterReflection = NULL) {
 		$this->name = $parameterName;
@@ -95,7 +96,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 						$this->$setterMethodName($parameterReflection->$getterMethodName());
 					}
 				}
-				catch (ReflectionException $e) {
+				catch (\ReflectionException $e) {
 					// the getDefaultValue throws an exception if the parameter is not optional
 				}
 
@@ -214,7 +215,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter {
 	 * Sets $typeHint.
 	 *
 	 * @param string $typeHint
-	 * @see Tx_ExtensionBuilder_Domain_Model_Class_MethodParameter::$typeHint
+	 * @see MethodParameter::$typeHint
 	 */
 	public function setTypeHint($typeHint) {
 		$this->typeHint = $typeHint;

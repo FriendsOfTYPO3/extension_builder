@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}
 	persistence {
 		classes {<f:for each="{extension.domainObjectsThatNeedMappingStatements}" as="domainObject">
 			{domainObject.className} {

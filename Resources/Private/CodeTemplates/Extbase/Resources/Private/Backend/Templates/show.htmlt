@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}
 <k:openingTag>f:layout name="Default" /</k:openingTag>
 
 This Template is responsible for displaying a single view for a domain object

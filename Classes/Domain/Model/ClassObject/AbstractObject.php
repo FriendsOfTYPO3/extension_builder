@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
 /***************************************************************
  *  Copyright notice
  *
@@ -21,14 +22,13 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 /**
  * abstract object representing a class, method or property in the context of
  * software development
  *
  * @version $ID:$
  */
-abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
+abstract class AbstractObject {
 
 	/**
 	 * 1	ReflectionMethod::IS_STATIC
@@ -39,12 +39,12 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 	 * 1024	ReflectionMethod::IS_PRIVATE
 	 */
 	private $mapModifierNames = array(
-		'static' => ReflectionMethod::IS_STATIC,
-		'abstract' => ReflectionMethod::IS_ABSTRACT,
-		'final' => ReflectionMethod::IS_FINAL,
-		'public' => ReflectionMethod::IS_PUBLIC,
-		'protected' => ReflectionMethod::IS_PROTECTED,
-		'private' => ReflectionMethod::IS_PRIVATE
+		'static' => \ReflectionMethod::IS_STATIC,
+		'abstract' => \ReflectionMethod::IS_ABSTRACT,
+		'final' => \ReflectionMethod::IS_FINAL,
+		'public' => \ReflectionMethod::IS_PUBLIC,
+		'protected' => \ReflectionMethod::IS_PROTECTED,
+		'private' => \ReflectionMethod::IS_PRIVATE
 
 	);
 
@@ -297,11 +297,11 @@ abstract class Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
 		$modifierNames = array();
 		if (is_array($modifiers)) {
 			foreach ($modifiers as $modifier) {
-				$modifierNames[] = array_shift(Reflection::getModifierNames($modifier));
+				$modifierNames[] = array_shift(\Reflection::getModifierNames($modifier));
 			}
 		}
 		else {
-			$modifierNames = Reflection::getModifierNames($modifiers);
+			$modifierNames = \Reflection::getModifierNames($modifiers);
 		}
 		return $modifierNames;
 	}

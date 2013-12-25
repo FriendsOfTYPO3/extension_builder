@@ -1,4 +1,6 @@
 <?php
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
 /*                                                                        *
  * This script belongs to the TYPO3 package "Extension Builder".         *
  *                                                                        *
@@ -30,7 +32,7 @@
  * @version $ID:$
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
-class Tx_ExtensionBuilder_ViewHelpers_CompareStringsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class CompareStringsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * @param string $firstString

@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}
 /**
  *<f:if condition="{classSchema}">
  * {classSchema.description}</f:if>

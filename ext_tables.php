@@ -10,7 +10,7 @@ if (!defined('TYPO3_MODE')) {
 
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-	$_EXTKEY,
+	'EBT.' . $_EXTKEY,
 	'tools',
 	'extensionbuilder',
 	'',

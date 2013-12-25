@@ -1,8 +1,10 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
 /***************************************************************
  *  Copyright notice
  *
  *  (c) 2009 Sebastian Gebhard <sebastian.gebhard@gmail.com>
+ *  (c) 2013 Nico de Haen
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,7 +29,7 @@
  *
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_ExtensionBuilder_Domain_Model_DomainObject_Action {
+class Action {
 
 	/**
 	 * The action's name
@@ -37,7 +39,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Action {
 
 	/**
 	 * The domain object this action belongs to.
-	 * @var Tx_ExtensionBuilder_Domain_Model_DomainObject
+	 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
 	 */
 	protected $domainObject;
 
@@ -115,15 +117,15 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Action {
 
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addAction() automatically.
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject the domain object this actions belongs to
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject the domain object this actions belongs to
 	 */
-	public function setDomainObject(Tx_ExtensionBuilder_Domain_Model_DomainObject $domainObject) {
+	public function setDomainObject(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject) {
 		$this->domainObject = $domainObject;
 	}
 
 	/**
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
 	 */
 	public function getDomainObject() {
 		return $this->domainObject;

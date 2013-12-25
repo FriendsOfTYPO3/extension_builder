@@ -32,7 +32,7 @@ namespace {extension.nameSpace}\Tests\Unit\Controller;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
-</f:for> */{namespace k=Tx_ExtensionBuilder_ViewHelpers}
+</f:for> */{namespace k=EBT\ExtensionBuilder\ViewHelpers}
 class {controllerName}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
 	 * @var {domainObject.fullQualifiedClassName}

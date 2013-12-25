@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Tests\Unit\Validation;
 /***************************************************************
  *  Copyright notice
  *
@@ -25,15 +26,15 @@
 
 /**
  */
-class Tx_ExtensionBuilder_Validation_MethodRegularExpressionTest extends Tx_ExtensionBuilder_Tests_BaseTest {
+class MethodRegularExpressionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	/**
-	 * @var Tx_ExtensionBuilder_Utility_ClassParser
+	 * @var \EBT\ExtensionBuilder\Utility\ClassParser
 	 */
 	protected $classParser;
 
 	public function setUp() {
-		$this->classParser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Utility_ClassParser');
+		$this->classParser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('\EBT\ExtensionBuilder\Utility\ClassParser');
 	}
 
 	/**

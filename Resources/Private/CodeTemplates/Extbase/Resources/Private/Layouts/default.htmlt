@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}
 <div class="{extension.cssClassName}">
 	<k:openingTag>f:render section="main" /</k:openingTag>
 </div>

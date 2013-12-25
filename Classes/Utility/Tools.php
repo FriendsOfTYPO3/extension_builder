@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Utility;
 /***************************************************************
  *  Copyright notice
  *
@@ -27,7 +28,7 @@
  *
  * @version $ID:$
  */
-class Tx_ExtensionBuilder_Utility_Tools implements \TYPO3\CMS\Core\SingletonInterface {
+class Tools implements \TYPO3\CMS\Core\SingletonInterface {
 
 	static public function convertJSONArrayToPHPArray($encodedArray) {
 		if (strpos($encodedArray, '}') > -1) {

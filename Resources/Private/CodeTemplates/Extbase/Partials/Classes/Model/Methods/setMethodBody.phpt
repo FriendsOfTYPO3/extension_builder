@@ -1,2 +1,2 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}
 $this->{property.name} = ${property.name};

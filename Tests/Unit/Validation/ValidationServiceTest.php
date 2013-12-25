@@ -1,5 +1,5 @@
 <?php
-
+namespace EBT\ExtensionBuilder\Tests\Unit\Validation;
 
 /***************************************************************
  *  Copyright notice
@@ -28,7 +28,7 @@
 /**
  * test for validation service
  */
-class Tx_ExtensionBuilder_ValidationServiceTest extends Tx_ExtensionBuilder_Tests_BaseTest {
+class ValidationServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	/**
 	 * @return void
@@ -43,7 +43,7 @@ class Tx_ExtensionBuilder_ValidationServiceTest extends Tx_ExtensionBuilder_Test
 	 */
 	public function propertyRenamesFieldIfItMatchesReservedWord() {
 		$domainObject = $this->buildDomainObject('SomeModel', TRUE, TRUE);
-		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty();
+		$property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty();
 		$property->setName('Order');
 		$property->setDomainObject($domainObject);
 		$this->assertEquals('tx_dummy_order', $property->getFieldName());

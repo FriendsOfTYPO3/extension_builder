@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Reflection;
 /***************************************************************
  *  Copyright notice
  *
@@ -25,7 +26,7 @@
 /**
  * Extended version of the ReflectionProperty
  */
-class Tx_ExtensionBuilder_Reflection_PropertyReflection extends TYPO3\CMS\Extbase\Reflection\PropertyReflection {
+class PropertyReflection extends \TYPO3\CMS\Extbase\Reflection\PropertyReflection {
 
 	/**
 	 * the line number where this property is declared in the class file

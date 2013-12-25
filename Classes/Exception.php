@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder;
 /***************************************************************
  *  Copyright notice
  *
@@ -28,7 +29,7 @@
  * @version $ID:$
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
-class Tx_ExtensionBuilder_Exception extends TYPO3\CMS\Extbase\Exception {
+class Exception extends \TYPO3\CMS\Extbase\Exception {
 
 	/**
 	 * @var string

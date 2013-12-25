@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
 /***************************************************************
  *  Copyright notice
  *
@@ -29,7 +30,7 @@
  */
 
 
-class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_Domain_Model_Class_AbstractObject {
+class ClassObject extends AbstractObject {
 
 	/**
 	 * constants
@@ -39,7 +40,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 
 	/**
 	 * properties
-	 * @var Tx_ExtensionBuilder_Domain_Model_Class_Property[]
+	 * @var Property[]
 	 */
 	protected $properties = array();
 
@@ -52,7 +53,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 
 	/**
 	 * methods
-	 * @var Tx_ExtensionBuilder_Domain_Model_Class_Method[]
+	 * @var Method[]
 	 */
 	protected $methods = array();
 
@@ -96,7 +97,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 
 	/**
 	 * is instantiated only if the class is imported from a file
-	 * @var Tx_ExtensionBuilder_Reflection_ClassReflection
+	 * @var \EBT\ExtensionBuilder\Reflection\ClassReflection
 	 */
 	protected $classReflection = NULL;
 
@@ -108,7 +109,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * constructor of this class
 	 * @param string $className
-	 * @return unknown_type
+	 * @return void
 	 */
 	public function __construct($className) {
 		$this->name = $className;
@@ -186,7 +187,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * Setter for methods
 	 *
-	 * @param array $methods (Tx_ExtensionBuilder_Domain_Model_Class_Method[])
+	 * @param array $methods (Method[])
 	 * @return void
 	 */
 	public function setMethods(array $methods) {
@@ -196,17 +197,17 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * Setter for a single method (allows to override an existing method)
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_Class_Method $method
+	 * @param Method $method
 	 * @return void
 	 */
-	public function setMethod(Tx_ExtensionBuilder_Domain_Model_Class_Method $classMethod) {
+	public function setMethod(Method $classMethod) {
 		$this->methods[$classMethod->getName()] = $classMethod;
 	}
 
 	/**
 	 * Getter for methods
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method[]
+	 * @return Method[]
 	 */
 	public function getMethods() {
 		return $this->methods;
@@ -215,7 +216,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * Getter for method
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method
+	 * @return Method
 	 */
 	public function getMethod($methodName) {
 		if ($this->methodExists($methodName)) {
@@ -227,7 +228,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * Add a method
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_Class_Method $classMethod
+	 * @param Method $classMethod
 	 * @return void
 	 */
 	public function addMethod($classMethod) {
@@ -270,7 +271,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 
 	/**
 	 * returns all methods starting with "get"
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method[]
+	 * @return Method[]
 	 */
 	public function getGetters() {
 		$getterMethods = array();
@@ -289,7 +290,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 
 	/**
 	 * returnes all methods starting with "set"
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Method[]
+	 * @return Method[]
 	 */
 	public function getSetters() {
 		$setterMethods = array();
@@ -309,7 +310,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * Getter for property
 	 * @param string $propertyName the name of the property
-	 * @return Tx_ExtensionBuilder_Reflection_PropertyReflection
+	 * @return \EBT\ExtensionBuilder\Reflection\PropertyReflection
 	 */
 	public function getProperty($propertyName) {
 		if ($this->propertyExists($propertyName)) {
@@ -331,7 +332,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * Getter for properties
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_Class_Property[]
+	 * @return Property[]
 	 */
 	public function getProperties() {
 		return $this->properties;
@@ -415,10 +416,10 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * add a property (returns TRUE if successfull added)
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_Class_Property
+	 * @param Property
 	 * @return boolean success
 	 */
-	public function addProperty(Tx_ExtensionBuilder_Domain_Model_Class_Property $classProperty) {
+	public function addProperty(Property $classProperty) {
 		if (!$this->propertyExists($classProperty->getName())) {
 			$this->propertyNames[] = $classProperty->getName();
 			$this->properties[$classProperty->getName()] = $classProperty;
@@ -437,7 +438,7 @@ class Tx_ExtensionBuilder_Domain_Model_Class_Class extends Tx_ExtensionBuilder_D
 	/**
 	 * Setter for property
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_Class_Property
+	 * @param Property
 	 * @return boolean success
 	 */
 	public function setProperty($classProperty) {

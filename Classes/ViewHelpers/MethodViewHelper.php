@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\ViewHelpers;
 /***************************************************************
  *  Copyright notice
  *
@@ -26,7 +27,7 @@
  * method view helper
  */
 
-class Tx_ExtensionBuilder_ViewHelpers_MethodViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class MethodViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 *
@@ -48,7 +49,7 @@ class Tx_ExtensionBuilder_ViewHelpers_MethodViewHelper extends \TYPO3\CMS\Fluid\
 	/**
 	 * This methods renders the parameters of a method, including typeHints and default values.
 	 *
-	 * @param Tx_ExtensionBuilder_Reflection_MethodReflection $methodObject
+	 * @param \EBT\ExtensionBuilder\Reflection\MethodReflection $methodObject
 	 * @return string parameters
 	 */
 	private function renderMethodParameter($methodObject) {

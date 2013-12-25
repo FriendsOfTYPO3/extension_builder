@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
 /***************************************************************
  *  Copyright notice
  *
@@ -26,8 +27,7 @@
  *
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_ExtensionBuilder_Domain_Model_DomainObject_IntegerProperty extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
-
+class IntegerProperty extends AbstractProperty {
 	/**
 	 * string representation of the default value
 	 *

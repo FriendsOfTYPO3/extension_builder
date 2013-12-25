@@ -1,8 +1,9 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009 Ingmar Schlecht
+ *  (c) 2009 Ingmar Schlecht, 2013 Nico de Haen
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +31,7 @@
  *
  * @version $ID:$
  */
-class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation extends Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation {
+class ZeroToManyRelation extends AnyToManyRelation {
 
 	/**
 	 * @var string
@@ -49,7 +50,7 @@ class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation 
 	public function getForeignKeyName() {
 		if(empty($this->foreignKeyName)) {
 			$foreignKeyName = strtolower($this->getDomainObject()->getName());
-			if(Tx_ExtensionBuilder_Service_ValidationService::isReservedMYSQLWord($foreignKeyName)) {
+			if(\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($foreignKeyName)) {
 				$foreignKeyName = 'tx_' . $foreignKeyName;
 			}
 			return $foreignKeyName;

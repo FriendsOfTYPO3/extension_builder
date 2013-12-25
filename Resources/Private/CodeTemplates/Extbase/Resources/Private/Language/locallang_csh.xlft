@@ -1,4 +1,4 @@
-{namespace k=Tx_ExtensionBuilder_ViewHelpers}<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
 	<file source-language="en" datatype="plaintext" original="messages" date="{f:format.date(format:'Y-m-d\TH:i:s\Z',date:'now')}" product-name="{extension.extensionKey}">
 		<header/>

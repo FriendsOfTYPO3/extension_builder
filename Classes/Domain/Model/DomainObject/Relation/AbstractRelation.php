@@ -1,8 +1,9 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009 Ingmar Schlecht
+ *  (c) 2009 Ingmar Schlecht, 2013 Nico de Haen
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,11 +31,11 @@
  *
  * @version $ID:$
  */
-abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation extends Tx_ExtensionBuilder_Domain_Model_DomainObject_AbstractProperty {
+abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty {
 
 	/**
 	 * The schema of the foreign class
-	 * @var Tx_ExtensionBuilder_Domain_Model_DomainObject
+	 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
 	 */
 	protected $foreignModel;
 
@@ -72,7 +73,7 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRe
 
 	/**
 	 *
-	 * @return Tx_ExtensionBuilder_Domain_Model_DomainObject The foreign class
+	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject The foreign class
 	 */
 	public function getForeignModel() {
 		return $this->foreignModel;
@@ -120,9 +121,9 @@ abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRe
 
 	/**
 	 *
-	 * @param Tx_ExtensionBuilder_Domain_Model_DomainObject $foreignModel Set the foreign DomainObject of the relation
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $foreignModel Set the foreign DomainObject of the relation
 	 */
-	public function setForeignModel(Tx_ExtensionBuilder_Domain_Model_DomainObject $foreignModel) {
+	public function setForeignModel(\EBT\ExtensionBuilder\Domain\Model\DomainObject $foreignModel) {
 		$this->foreignModel = $foreignModel;
 	}
 

@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Utility;
 /***************************************************************
  *  Copyright notice
  *
@@ -27,7 +28,7 @@
  * currently this class is not used anymore
  * Later it should be the parent class for importing from various model formats
  */
-class Tx_ExtensionBuilder_Utility_ModelImport implements \TYPO3\CMS\Core\SingletonInterface {
+class ModelImport implements \TYPO3\CMS\Core\SingletonInterface {
 
 	const EXTENSION_BUILDER_JSON = 'default';
 

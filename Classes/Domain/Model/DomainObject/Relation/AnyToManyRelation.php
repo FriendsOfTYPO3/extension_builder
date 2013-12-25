@@ -1,8 +1,9 @@
 <?php
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010 Jochen Rau
+ *  (c) 2010 Jochen Rau, 2013 Nico de Haen
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,7 +27,7 @@
  *
  * @version $ID:$
  */
-abstract class Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AnyToManyRelation extends Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_AbstractRelation {
+abstract class AnyToManyRelation extends AbstractRelation {
 
 	/**
 	 * The mm relation table name

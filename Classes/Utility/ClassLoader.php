@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Utility;
 /***************************************************************
  *  Copyright notice
  *
@@ -33,7 +34,7 @@
  *
  * @version $Id: ClassLoader.php 1729 2009-11-25 21:37:20Z stucki $
  */
-class Tx_ExtensionBuilder_Utility_ClassLoader {
+class ClassLoader {
 
 	/**
 	 * Loads php files containing classes or interfaces found in the classes directory of

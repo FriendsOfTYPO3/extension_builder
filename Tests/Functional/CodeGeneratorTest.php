@@ -1,4 +1,5 @@
 <?php
+namespace EBT\ExtensionBuilder\Tests\Functional;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,7 +23,10 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
+use EBT\ExtensionBuilder\Domain\Model\Plugin;
+use EBT\ExtensionBuilder\Reflection\ClassReflection;
+use EBT\ExtensionBuilder\Utility\Inflector;
 
 
 /**
@@ -30,7 +34,7 @@
  * @author Nico de Haen
  *
  */
-class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_Tests_BaseTest {
+class CodeGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	function setUp(){
 		parent::setUp();
@@ -57,7 +61,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$modelName = 'ModelCgt1';
 		$propertyName = 'blue';
 		$domainObject = $this->buildDomainObject($modelName, TRUE);
-		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty($propertyName);
+		$property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty($propertyName);
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
@@ -74,7 +78,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 			include_once($modelClassPath);
 		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
-		$reflection = new ReflectionClass($className);
+		$reflection = new ClassReflection($className);
 		$this->assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)),'Getter was not generated');
 		$this->assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)),'Setter was not generated');
 		$this->assertTrue($reflection->hasMethod('is' . ucfirst($propertyName)),'isMethod was not generated');
@@ -94,7 +98,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$modelName = 'ModelCgt2';
 		$propertyName = 'title';
 		$domainObject = $this->buildDomainObject($modelName);
-		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_StringProperty($propertyName);
+		$property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty($propertyName);
 		//$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,$this->extension);
@@ -113,7 +117,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 
-		$reflection = new ReflectionClass($className);
+		$reflection = new ClassReflection($className);
 		$this->assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)),'Getter was not generated');
 		$this->assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)),'Setter was not generated');
 		$this->assertFalse($reflection->hasMethod('is' . ucfirst($propertyName)),'isMethod should not be generated');
@@ -136,7 +140,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$propertyName = 'relName';
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
-		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToOneRelation($propertyName);
+		$relation = new Relation\ZeroToOneRelation($propertyName);
 		$relation->setForeignModel($relatedDomainObject);
 		$domainObject->addProperty($relation);
 		$classFileContent = $this->codeGenerator->generateDomainObjectCode($domainObject,TRUE);
@@ -156,7 +160,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 
-		$reflection = new Tx_ExtensionBuilder_Reflection_ClassReflection($className);
+		$reflection = new ClassReflection($className);
 		$this->assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)),'Getter was not generated');
 		$this->assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)),'Setter was not generated');
 		$setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
@@ -182,7 +186,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$propertyName = 'relNames';
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
-		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation($propertyName);
+		$relation = new Relation\ZeroToManyRelation($propertyName);
 		$relation->setForeignModel($relatedDomainObject);
 		$domainObject->addProperty($relation);
 
@@ -202,9 +206,9 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 
-		$reflection = new Tx_ExtensionBuilder_Reflection_ClassReflection($className);
-		$this->assertTrue($reflection->hasMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))),'Add method was not generated');
-		$this->assertTrue($reflection->hasMethod('remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))),'Remove method was not generated');
+		$reflection = new ClassReflection($className);
+		$this->assertTrue($reflection->hasMethod('add' . ucfirst(Inflector::singularize($propertyName))),'Add method was not generated');
+		$this->assertTrue($reflection->hasMethod('remove' . ucfirst(Inflector::singularize($propertyName))),'Remove method was not generated');
 		$this->assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)),'Getter was not generated');
 		$this->assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)),'Setter was not generated');
 
@@ -219,7 +223,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$parameter = current($parameters);
 		$this->assertEquals($parameter->getName(), $propertyName,'Wrong parameter name in setter method');
 
-		$addMethod = $reflection->getMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
+		$addMethod = $reflection->getMethod('add' . ucfirst(Inflector::singularize($propertyName)));
 		$this->assertTrue($addMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $addMethod->getTagValues('param');
 		$this->assertEquals(0, strpos($paramTagValues[0],$relatedDomainObject->getFullQualifiedClassName()),'Wrong param tag:'.$paramTagValues[0]);
@@ -227,10 +231,10 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$parameters = $addMethod->getParameters();
 		$this->assertEquals(1, count($parameters),'Wrong parameter count in add method');
 		$parameter = current($parameters);
-		$this->assertEquals($parameter->getName(), Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName),'Wrong parameter name in add method');
+		$this->assertEquals($parameter->getName(), Inflector::singularize($propertyName),'Wrong parameter name in add method');
 		$this->assertEquals($parameter->getTypeHint(), $relatedDomainObject->getFullQualifiedClassName(),'Wrong type hint for add method parameter:'.$parameter->getTypeHint());
 
-		$removeMethod = $reflection->getMethod('remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
+		$removeMethod = $reflection->getMethod('remove' . ucfirst(Inflector::singularize($propertyName)));
 		$this->assertTrue($removeMethod->isTaggedWith('param'),'No param tag set for remove method');
 		$paramTagValues = $removeMethod->getTagValues('param');
 		$this->assertEquals(0, strpos($paramTagValues[0],$relatedDomainObject->getFullQualifiedClassName()),'Wrong param tag:'.$paramTagValues[0]);
@@ -238,7 +242,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$parameters = $removeMethod->getParameters();
 		$this->assertEquals(1, count($parameters),'Wrong parameter count in remove method');
 		$parameter = current($parameters);
-		$this->assertEquals($parameter->getName(), Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName).'ToRemove','Wrong parameter name in remove method');
+		$this->assertEquals($parameter->getName(), Inflector::singularize($propertyName).'ToRemove','Wrong parameter name in remove method');
 		$this->assertEquals($parameter->getTypeHint(), $relatedDomainObject->getFullQualifiedClassName(),'Wrong type hint for remove method parameter:'.$parameter->getTypeHint());
 	}
 
@@ -254,7 +258,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$propertyName = 'relNames';
 		$domainObject = $this->buildDomainObject($modelName);
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName);
-		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation($propertyName);
+		$relation = new Relation\ManyToManyRelation($propertyName);
 		$relation->setForeignModel($relatedDomainObject);
 		$relation->setInlineEditing(false);
 		$domainObject->addProperty($relation);
@@ -275,9 +279,9 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 
-		$reflection = new Tx_ExtensionBuilder_Reflection_ClassReflection($className);
-		$this->assertTrue($reflection->hasMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))),'Add method was not generated');
-		$this->assertTrue($reflection->hasMethod('remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName))),'Remove method was not generated');
+		$reflection = new ClassReflection($className);
+		$this->assertTrue($reflection->hasMethod('add' . ucfirst(Inflector::singularize($propertyName))),'Add method was not generated');
+		$this->assertTrue($reflection->hasMethod('remove' . ucfirst(Inflector::singularize($propertyName))),'Remove method was not generated');
 		$this->assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)),'Getter was not generated');
 		$this->assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)),'Setter was not generated');
 		$this->assertTrue($reflection->hasMethod('initStorageObjects'),'initStorageObjects was not generated');
@@ -293,7 +297,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$parameter = current($parameters);
 		$this->assertEquals($parameter->getName(), $propertyName,'Wrong parameter name in setter method');
 
-		$addMethod = $reflection->getMethod('add' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
+		$addMethod = $reflection->getMethod('add' . ucfirst(Inflector::singularize($propertyName)));
 		$this->assertTrue($addMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $addMethod->getTagValues('param');
 		$this->assertEquals(0, strpos($paramTagValues[0],$relatedDomainObject->getFullQualifiedClassName()),'Wrong param tag:'.$paramTagValues[0]);
@@ -301,10 +305,10 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$parameters = $addMethod->getParameters();
 		$this->assertEquals(1, count($parameters),'Wrong parameter count in add method');
 		$parameter = current($parameters);
-		$this->assertEquals($parameter->getName(), Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName),'Wrong parameter name in add method');
+		$this->assertEquals($parameter->getName(), Inflector::singularize($propertyName),'Wrong parameter name in add method');
 		$this->assertEquals($parameter->getTypeHint(), $relatedDomainObject->getFullQualifiedClassName(),'Wrong type hint for add method parameter:'.$parameter->getTypeHint());
 
-		$removeMethod = $reflection->getMethod('remove' . ucfirst(Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName)));
+		$removeMethod = $reflection->getMethod('remove' . ucfirst(Inflector::singularize($propertyName)));
 		$this->assertTrue($removeMethod->isTaggedWith('param'),'No param tag set for remove method');
 		$paramTagValues = $removeMethod->getTagValues('param');
 		$this->assertEquals(0, strpos($paramTagValues[0],$relatedDomainObject->getFullQualifiedClassName()),'Wrong param tag:'.$paramTagValues[0]);
@@ -312,7 +316,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$parameters = $removeMethod->getParameters();
 		$this->assertEquals(1, count($parameters),'Wrong parameter count in remove method');
 		$parameter = current($parameters);
-		$this->assertEquals($parameter->getName(), Tx_ExtensionBuilder_Utility_Inflector::singularize($propertyName).'ToRemove','Wrong parameter name in remove method');
+		$this->assertEquals($parameter->getName(), Inflector::singularize($propertyName).'ToRemove','Wrong parameter name in remove method');
 		$this->assertEquals($parameter->getTypeHint(), $relatedDomainObject->getFullQualifiedClassName(),'Wrong type hint for remove method parameter:'.$parameter->getTypeHint());
 	}
 
@@ -325,7 +329,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 	 */
 	function writeSimpleControllerClassFromDomainObject(){
 		$domainObject = $this->buildDomainObject('ModelCgt6',true);
-		$action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_ExtensionBuilder_Domain_Model_DomainObject_Action');
+		$action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Action');
 		$action->setName('list');
 		$domainObject->addAction($action);
 		$classFileContent = $this->codeGenerator->generateActionControllerCode($domainObject,$this->extension);
@@ -353,7 +357,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 	 */
 	function writeAggregateRootClassesFromDomainObject(){
 		$domainObject = $this->buildDomainObject('ModelCgt7',true,true);
-		$property = new Tx_ExtensionBuilder_Domain_Model_DomainObject_BooleanProperty('blue');
+		$property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty('blue');
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
 
@@ -382,7 +386,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$domainObject = $this->buildDomainObject($modelName,true,true);
 
 		$relatedDomainObject = $this->buildDomainObject($relatedModelName,true);
-		$relation = new Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ManyToManyRelation($propertyName);
+		$relation = new Relation\ManyToManyRelation($propertyName);
 		$relation->setForeignModel($relatedDomainObject);
 		$relation->setInlineEditing(false);
 		$domainObject->addProperty($relation);
@@ -390,7 +394,7 @@ class Tx_ExtensionBuilder_CodeGeneratorFunctionTest extends Tx_ExtensionBuilder_
 		$this->extension->addDomainObject($domainObject);
 		$this->extension->addDomainObject($relatedDomainObject);
 
-		$plugin = new Tx_ExtensionBuilder_Domain_Model_Plugin();
+		$plugin = new Plugin();
 		$plugin->setName('Test');
 		$plugin->setKey('test');
 		$this->extension->addPlugin($plugin);
