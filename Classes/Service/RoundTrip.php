@@ -375,7 +375,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 				$initializeMethod = $this->classObject->getMethod('initializeAction');
 				if ($initializeMethod != NULL) {
 					$initializeMethodBody = $initializeMethod->getBody();
-					$newInitializeMethodBody = str_replace($oldDomainObject->getDomainRepositoryClassName(), $currentDomainObject->getDomainRepositoryClassName(), $initializeMethodBody);
+					$newInitializeMethodBody = str_replace($oldDomainObject->getFullyQualifiedDomainRepositoryClassName(), $currentDomainObject->getFullyQualifiedDomainRepositoryClassName(), $initializeMethodBody);
 					$newInitializeMethodBody = str_replace(\TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($oldName) . 'Repository', \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($newName) . 'Repository', $newInitializeMethodBody);
 					$initializeMethod->setBody($newInitializeMethodBody);
 					$this->classObject->setMethod($initializeMethod);
@@ -386,10 +386,10 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 					$this->classObject->removeMethod($injectMethodName);
 					$newInjectMethodBody = str_replace(\TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($oldName), \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($newName), $injectMethod->getBody());
 					$injectMethod->setBody($newInjectMethodBody);
-					$injectMethod->setTag('param', $currentDomainObject->getDomainRepositoryClassName() . ' $' . $newName . 'Repository');
+					$injectMethod->setTag('param', $currentDomainObject->getFullyQualifiedDomainRepositoryClassName() . ' $' . $newName . 'Repository');
 					$injectMethod->setName('inject' . $newName . 'Repository');
 					$parameter = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter(\TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($newName) . 'Repository');
-					$parameter->setTypeHint($currentDomainObject->getDomainRepositoryClassName());
+					$parameter->setTypeHint($currentDomainObject->getFullyQualifiedDomainRepositoryClassName());
 					$parameter->setPosition(0);
 					$injectMethod->replaceParameter($parameter);
 					$this->classObject->setMethod($injectMethod);
@@ -451,12 +451,12 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 			$fileName = CodeGenerator::getFolderForClassFile($extensionDir, 'Repository', FALSE) . $oldDomainObject->getName() . 'Repository.php';
 			if (file_exists($fileName)) {
 				include_once($fileName);
-				$className = $oldDomainObject->getDomainRepositoryClassName();
+				$className = $oldDomainObject->getFullQualifiedDomainRepositoryClassName();
 				$this->classObject = $this->classParser->parse($className);
 				$this->classObject->setName($currentDomainObject->getName() . 'Repository');
 				$this->classObject->setParentClass('\\' . $this->classObject->getParentClass());
 				if ($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed) {
-					$newClassName = $currentDomainObject->getDomainRepositoryClassName();
+					$newClassName = $currentDomainObject->getFullyQualifiedDomainRepositoryClassName();
 					$this->classObject->setName($newClassName);
 					$this->classObject->setFileName($currentDomainObject->getName() . 'Repository.php');
 					$this->cleanUp(CodeGenerator::getFolderForClassFile($extensionDir, 'Repository'), $oldDomainObject->getName() . 'Repository.php');
@@ -471,7 +471,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 			$fileName = CodeGenerator::getFolderForClassFile($extensionDir, 'Repository', FALSE) . $currentDomainObject->getName() . 'Repository.php';
 			if (file_exists($fileName)) {
 				include_once($fileName);
-				$className = $currentDomainObject->getDomainRepositoryClassName();
+				$className = $currentDomainObject->getFullyQualifiedDomainRepositoryClassName();
 				$this->classObject = $this->classParser->parse($className);
 				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('existing Repository class:' . $fileName, 'extension_builder', 0, (array)$this->classObject);
 				return $this->classObject;
