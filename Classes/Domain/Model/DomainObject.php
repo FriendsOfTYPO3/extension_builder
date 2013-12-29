@@ -364,10 +364,37 @@ class DomainObject {
 	 * returns the name of the domain repository class name, if it is an aggregateroot.
 	 *
 	 * @return string
+	 * @deprecated Use getFullyQualifiedDomainRepositoryClassName() instead
 	 */
 	public function getDomainRepositoryClassName() {
 		if (!$this->aggregateRoot) return '';
 		return '\\' . $this->extension->getNameSpace() . '\\Domain\\Repository\\' . $this->getName() . 'Repository';
+	}
+
+	/**
+	 * Returns the name of the domain repository class name, if it is an aggregate root.
+	 *
+	 * @return string
+	 */
+	public function getQualifiedDomainRepositoryClassName() {
+		if (!$this->aggregateRoot) {
+			return '';
+		}
+
+		return $this->extension->getNameSpace() . '\\Domain\\Repository\\' . $this->getName() . 'Repository';
+	}
+
+	/**
+	 * Returns the fully qualified name of the domain repository class name, if it is an aggregate root.
+	 *
+	 * @return string
+	 */
+	public function getFullyQualifiedDomainRepositoryClassName() {
+		if (!$this->aggregateRoot) {
+			return '';
+		}
+
+		return '\\' . $this->getQualifiedDomainRepositoryClassName();
 	}
 
 	/**

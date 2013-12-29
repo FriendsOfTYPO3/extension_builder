@@ -25,32 +25,232 @@ namespace {extension.nameSpace}\Tests\Unit\Controller;
  ***************************************************************/
 
 /**
- * Test case for class {domainObject.fullQualifiedClassName}.
- *
- * @version $Id$
- * @copyright Copyright belongs to the respective authors
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * Test case for class {domainObject.controllerClassName}.
  *
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
 </f:for> */{namespace k=EBT\ExtensionBuilder\ViewHelpers}
 class {controllerName}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+
 	/**
-	 * @var {domainObject.fullQualifiedClassName}
+	 * @var {domainObject.controllerClassName}
 	 */
 	protected $subject;
 
 	public function setUp() {
-		$this->subject = new {domainObject.fullQualifiedClassName}();
+		$this->subject = $this->getMock('{domainObject.controllerClassName -> k:format.escapeBackslashes()}', array('redirect', 'forward'), array(), '', FALSE);
 	}
 
 	public function tearDown() {
 		unset($this->subject);
 	}
 
+<f:for each="{domainObject.actions}" as="action"><f:if condition="{k:matchString(match:'list', in:action.name)}">
+
 	/**
 	 * @test
 	 */
-	public function dummyMethod() {
-		$this->markTestIncomplete();
+	public function listActionFetchesAll{domainObject.name -> k:pluralize()}FromRepositoryAndAssignsThemToView() {
+
+		$all{domainObject.name -> k:pluralize()} = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array(), array(), '', FALSE);
+
+		${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock('{domainObject.qualifiedDomainRepositoryClassName -> k:format.escapeBackslashes()}', array('findAll'), array(), '', FALSE);
+		${domainObject.name -> k:format.lowercaseFirst()}Repository->expects($this->once())->method('findAll')->will($this->returnValue($all{domainObject.name -> k:pluralize()}));
+		$this->inject($this->subject, '{domainObject.name -> k:format.lowercaseFirst()}Repository', ${domainObject.name -> k:format.lowercaseFirst()}Repository);
+
+		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
+		$view->expects($this->once())->method('assign')->with('{domainObject.name -> k:pluralize() -> k:format.lowercaseFirst()}', $all{domainObject.name -> k:pluralize()});
+		$this->inject($this->subject, 'view', $view);
+
+		$this->subject->listAction();
+	}</f:if><f:if condition="{k:matchString(match:'show', in:action.name)}">
+
+	/**
+	 * @test
+	 */
+	public function showActionAssignsTheGiven{domainObject.name}ToView() {
+		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
+
+		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
+		$this->inject($this->subject, 'view', $view);
+		$view->expects($this->once())->method('assign')->with('{domainObject.name -> k:format.lowercaseFirst()}', ${domainObject.name -> k:format.lowercaseFirst()});
+
+		$this->subject->showAction(${domainObject.name -> k:format.lowercaseFirst()});
+	}</f:if><f:if condition="{k:matchString(match:'new', in:action.name)}">
+
+	/**
+	 * @test
+	 */
+	public function newActionAssignsTheGiven{domainObject.name}ToView() {
+		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
+
+		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
+		$view->expects($this->once())->method('assign')->with('new{domainObject.name}', ${domainObject.name -> k:format.lowercaseFirst()});
+		$this->inject($this->subject, 'view', $view);
+
+		$this->subject->newAction(${domainObject.name -> k:format.lowercaseFirst()});
+	}</f:if><f:if condition="{k:matchString(match:'create', in:action.name)}">
+
+	/**
+	 * @test
+	 */
+	public function createActionAddsTheGiven{domainObject.name}To{domainObject.name}Repository() {
+		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
+
+		${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock('{domainObject.qualifiedDomainRepositoryClassName -> k:format.escapeBackslashes()}', array('add'), array(), '', FALSE);
+		${domainObject.name -> k:format.lowercaseFirst()}Repository->expects($this->once())->method('add')->with(${domainObject.name -> k:format.lowercaseFirst()});
+		$this->inject($this->subject, '{domainObject.name -> k:format.lowercaseFirst()}Repository', ${domainObject.name -> k:format.lowercaseFirst()}Repository);
+
+		$flashMessageContainer = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\Controller\\FlashMessageContainer', array('add'), array(), '', FALSE);
+		$this->inject($this->subject, 'flashMessageContainer', $flashMessageContainer);
+
+		$this->subject->createAction(${domainObject.name -> k:format.lowercaseFirst()});
 	}
+
+	/**
+	 * @test
+	 */
+	public function createActionAddsMessageToFlashMessageContainer() {
+		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
+
+		${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock('{domainObject.qualifiedDomainRepositoryClassName -> k:format.escapeBackslashes()}', array('add'), array(), '', FALSE);
+		$this->inject($this->subject, '{domainObject.name -> k:format.lowercaseFirst()}Repository', ${domainObject.name -> k:format.lowercaseFirst()}Repository);
+
+		$flashMessageContainer = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\Controller\\FlashMessageContainer', array('add'), array(), '', FALSE);
+		$flashMessageContainer->expects($this->once())->method('add');
+		$this->inject($this->subject, 'flashMessageContainer', $flashMessageContainer);
+
+		$this->subject->createAction(${domainObject.name -> k:format.lowercaseFirst()});
+	}
+
+	/**
+	 * @test
+	 */
+	public function createActionRedirectsToListAction() {
+		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
+
+		${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock('{domainObject.qualifiedDomainRepositoryClassName -> k:format.escapeBackslashes()}', array('add'), array(), '', FALSE);
+		$this->inject($this->subject, '{domainObject.name -> k:format.lowercaseFirst()}Repository', ${domainObject.name -> k:format.lowercaseFirst()}Repository);
+
+		$flashMessageContainer = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\Controller\\FlashMessageContainer', array('add'), array(), '', FALSE);
+		$this->inject($this->subject, 'flashMessageContainer', $flashMessageContainer);
+
+		$this->subject->expects($this->once())->method('redirect')->with('list');
+		$this->subject->createAction(${domainObject.name -> k:format.lowercaseFirst()});
+	}</f:if><f:if condition="{k:matchString(match:'edit', in:action.name)}">
+
+	/**
+	 * @test
+	 */
+	public function editActionAssignsTheGiven{domainObject.name}ToView() {
+		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
+
+		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
+		$this->inject($this->subject, 'view', $view);
+		$view->expects($this->once())->method('assign')->with('{domainObject.name -> k:format.lowercaseFirst()}', ${domainObject.name -> k:format.lowercaseFirst()});
+
+		$this->subject->editAction(${domainObject.name -> k:format.lowercaseFirst()});
+	}
+</f:if><f:if condition="{k:matchString(match:'update', in:action.name)}">
+
+	/**
+	 * @test
+	 */
+	public function updateActionUpdatesTheGiven{domainObject.name}In{domainObject.name}Repository() {
+		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
+
+		${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock('{domainObject.qualifiedDomainRepositoryClassName -> k:format.escapeBackslashes()}', array('update'), array(), '', FALSE);
+		${domainObject.name -> k:format.lowercaseFirst()}Repository->expects($this->once())->method('update')->with(${domainObject.name -> k:format.lowercaseFirst()});
+		$this->inject($this->subject, '{domainObject.name -> k:format.lowercaseFirst()}Repository', ${domainObject.name -> k:format.lowercaseFirst()}Repository);
+
+		$flashMessageContainer = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\Controller\\FlashMessageContainer', array('add'), array(), '', FALSE);
+		$this->inject($this->subject, 'flashMessageContainer', $flashMessageContainer);
+
+		$this->subject->updateAction(${domainObject.name -> k:format.lowercaseFirst()});
+	}
+
+	/**
+	 * @test
+	 */
+	public function updateActionAddsMessageToFlashMessageContainer() {
+		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
+
+		${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock('{domainObject.qualifiedDomainRepositoryClassName -> k:format.escapeBackslashes()}', array('update'), array(), '', FALSE);
+		$this->inject($this->subject, '{domainObject.name -> k:format.lowercaseFirst()}Repository', ${domainObject.name -> k:format.lowercaseFirst()}Repository);
+
+		$flashMessageContainer = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\Controller\\FlashMessageContainer', array('add'), array(), '', FALSE);
+		$flashMessageContainer->expects($this->once())->method('add');
+		$this->inject($this->subject, 'flashMessageContainer', $flashMessageContainer);
+
+		$this->subject->updateAction(${domainObject.name -> k:format.lowercaseFirst()});
+	}
+
+	/**
+	 * @test
+	 */
+	public function updateActionRedirectsToListAction() {
+		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
+
+		${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock('{domainObject.qualifiedDomainRepositoryClassName -> k:format.escapeBackslashes()}', array('update'), array(), '', FALSE);
+		$this->inject($this->subject, '{domainObject.name -> k:format.lowercaseFirst()}Repository', ${domainObject.name -> k:format.lowercaseFirst()}Repository);
+
+		$flashMessageContainer = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\Controller\\FlashMessageContainer', array('add'), array(), '', FALSE);
+		$this->inject($this->subject, 'flashMessageContainer', $flashMessageContainer);
+
+		$this->subject->expects($this->once())->method('redirect')->with('list');
+		$this->subject->updateAction(${domainObject.name -> k:format.lowercaseFirst()});
+	}</f:if><f:if condition="{k:matchString(match:'delete', in:action.name)}">
+
+	/**
+	 * @test
+	 */
+	public function deleteActionRemovesTheGiven{domainObject.name}From{domainObject.name}Repository() {
+		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
+
+		${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock('{domainObject.qualifiedDomainRepositoryClassName -> k:format.escapeBackslashes()}', array('remove'), array(), '', FALSE);
+		${domainObject.name -> k:format.lowercaseFirst()}Repository->expects($this->once())->method('remove')->with(${domainObject.name -> k:format.lowercaseFirst()});
+		$this->inject($this->subject, '{domainObject.name -> k:format.lowercaseFirst()}Repository', ${domainObject.name -> k:format.lowercaseFirst()}Repository);
+
+		$flashMessageContainer = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\Controller\\FlashMessageContainer', array('add'), array(), '', FALSE);
+		$this->inject($this->subject, 'flashMessageContainer', $flashMessageContainer);
+
+		$this->subject->deleteAction(${domainObject.name -> k:format.lowercaseFirst()});
+	}
+
+	/**
+	 * @test
+	 */
+	public function deleteActionAddsMessageToFlashMessageContainer() {
+		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
+
+		${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock('{domainObject.qualifiedDomainRepositoryClassName -> k:format.escapeBackslashes()}', array('remove'), array(), '', FALSE);
+		$this->inject($this->subject, '{domainObject.name -> k:format.lowercaseFirst()}Repository', ${domainObject.name -> k:format.lowercaseFirst()}Repository);
+
+		$flashMessageContainer = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\Controller\\FlashMessageContainer', array('add'), array(), '', FALSE);
+		$flashMessageContainer->expects($this->once())->method('add');
+		$this->inject($this->subject, 'flashMessageContainer', $flashMessageContainer);
+
+		$this->subject->deleteAction(${domainObject.name -> k:format.lowercaseFirst()});
+	}
+
+	/**
+	 * @test
+	 */
+	public function deleteActionRedirectsToListAction() {
+		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
+
+		${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock('{domainObject.qualifiedDomainRepositoryClassName -> k:format.escapeBackslashes()}', array('remove'), array(), '', FALSE);
+		$this->inject($this->subject, '{domainObject.name -> k:format.lowercaseFirst()}Repository', ${domainObject.name -> k:format.lowercaseFirst()}Repository);
+
+		$flashMessageContainer = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\Controller\\FlashMessageContainer', array('add'), array(), '', FALSE);
+		$this->inject($this->subject, 'flashMessageContainer', $flashMessageContainer);
+
+		$this->subject->expects($this->once())->method('redirect')->with('list');
+		$this->subject->deleteAction(${domainObject.name -> k:format.lowercaseFirst()});
+	}</f:if></f:for><f:if condition="{domainObject.actions}"><f:then></f:then><f:else>
+	/**
+	 * @test
+	 */
+	public function dummyTestToNotLeaveThisFileEmpty() {
+		$this->markTestIncomplete();
+	}</f:else></f:if>
 }

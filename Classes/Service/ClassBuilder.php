@@ -596,7 +596,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			// now add the property to class Object (or update an existing class Object property)
 			if (!$this->classObject->propertyExists($propertyName)) {
 				$classProperty = new \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property($propertyName);
-				$classProperty->setTag('var', $domainObject->getDomainRepositoryClassName());
+				$classProperty->setTag('var', $domainObject->getFullyQualifiedDomainRepositoryClassName());
 				$classProperty->setTag('inject', '');
 				$classProperty->addModifier('protected');
 				$this->classObject->setProperty($classProperty);
