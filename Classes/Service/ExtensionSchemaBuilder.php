@@ -69,18 +69,24 @@ class Tx_ExtensionBuilder_Service_ExtensionSchemaBuilder implements \TYPO3\CMS\C
 
 		$this->setExtensionProperties($extension, $globalProperties);
 
-		foreach ($globalProperties['persons'] as $personValues) {
-			$person = $this->buildPerson($personValues);
-			$extension->addPerson($person);
+		if (is_array($globalProperties['persons'])) {
+			foreach ($globalProperties['persons'] as $personValues) {
+				$person = $this->buildPerson($personValues);
+				$extension->addPerson($person);
+			}
 		}
-		foreach ($globalProperties['plugins'] as $pluginValues) {
-			$plugin = $this->buildPlugin($pluginValues);
-			$extension->addPlugin($plugin);
+		if (is_array($globalProperties['plugins'])) {
+			foreach ($globalProperties['plugins'] as $pluginValues) {
+				$plugin = $this->buildPlugin($pluginValues);
+				$extension->addPlugin($plugin);
+			}
 		}
 
-		foreach ($globalProperties['backendModules'] as $backendModuleValues) {
-			$backendModule = $this->buildBackendModule($backendModuleValues);
-			$extension->addBackendModule($backendModule);
+		if (is_array($globalProperties['backendModules'])) {
+			foreach ($globalProperties['backendModules'] as $backendModuleValues) {
+				$backendModule = $this->buildBackendModule($backendModuleValues);
+				$extension->addBackendModule($backendModule);
+			}
 		}
 
 		// classes

@@ -52,7 +52,7 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 		$this->roundTripService->_set('oldDomainObjects', array($domainObject->getUniqueIdentifier() => $domainObject));
 
 		// create an "old" class object.
-		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
+		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject, FALSE);
 		$this->assertTrue(is_object($modelClassObject), 'No class object');
 
 		// Check that the getter/methods exist
@@ -110,7 +110,7 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 		$this->roundTripService->_set('oldDomainObjects', array($domainObject->getUniqueIdentifier() => $domainObject));
 
 		// create an "old" class object.
-		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
+		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject, FALSE);
 		$this->assertTrue(is_object($modelClassObject), 'No class object');
 
 		// Check that the property related methods exist
@@ -176,7 +176,7 @@ class Tx_ExtensionBuilder_RoundTripServiceTest extends Tx_ExtensionBuilder_Tests
 		$this->roundTripService->_set('oldDomainObjects', array($domainObject->getUniqueIdentifier() => $domainObject));
 
 		// create an "old" class object.
-		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject);
+		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject, FALSE);
 		$this->assertTrue(is_object($modelClassObject), 'No class object');
 
 		// Check that the property related methods exist
