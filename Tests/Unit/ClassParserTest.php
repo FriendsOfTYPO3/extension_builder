@@ -99,7 +99,7 @@ class Tx_ExtensionBuilder_ClassParserTest extends Tx_ExtensionBuilder_Tests_Base
 		);
 		$this->assertEquals(
 			$classObject->getAppendedBlock(),
-			"\n/**\n *  dfg dfg dfg dfg\n */\nrequire_once(\\TYPO3\\CMS\\Core\\Utility\ExtensionManagementUtility:: extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');   include_once(\\TYPO3\\CMS\\Core\\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ComplexClass.php'); // test\n\ninclude_once(\\TYPO3\\CMS\\Core\\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ClassParser/ComplexClass.php'); // test\n\n",
+			"\n/**\n *  dfg dfg dfg dfg\n */\nrequire_once(\\TYPO3\\CMS\\Core\\Utility\ExtensionManagementUtility:: extPath('extension_builder') . 'Tests/Examples/ClassParser/BasicClass.php');   include_once(\\TYPO3\\CMS\\Core\\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ClassParser/ComplexClass.php'); // test\n\ninclude_once(\\TYPO3\\CMS\\Core\\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Examples/ClassParser/ComplexClass.php'); // test\n\n",
 			'Appended block was not properly parsed'
 		);
 	}

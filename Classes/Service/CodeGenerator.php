@@ -662,7 +662,7 @@ class Tx_ExtensionBuilder_Service_CodeGenerator implements \TYPO3\CMS\Core\Singl
 			'',
 			TRUE,
 			5,
-			'/.*(rstt|ymlt)/'
+			'.*(rstt|ymlt)'
 		);
 		foreach($docFiles as $docFile) {
 			if(is_dir($docFile)) {

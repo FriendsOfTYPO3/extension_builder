@@ -59,6 +59,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * This is a 1:n relation
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child2>
+	 * @cascade remove
 	 */
 	protected $children2;
 

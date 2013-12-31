@@ -72,87 +72,93 @@ class Tx_ExtensionBuilder_Service_ObjectSchemaBuilder implements \TYPO3\CMS\Core
 		}
 
 			// properties
-		foreach ($jsonDomainObject['propertyGroup']['properties'] as $jsonProperty) {
-			$propertyType = $jsonProperty['propertyType'];
-			$propertyClassName = 'Tx_ExtensionBuilder_Domain_Model_DomainObject_' . $propertyType . 'Property';
-			if (!class_exists($propertyClassName)) {
-				throw new Exception('Property of type ' . $propertyType . ' not found');
-			}
-			$property = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($propertyClassName);
-			$property->setUniqueIdentifier($jsonProperty['uid']);
-			$property->setName($jsonProperty['propertyName']);
-			$property->setDescription($jsonProperty['propertyDescription']);
+		if (isset($jsonDomainObject['propertyGroup']['properties'])) {
+			foreach ($jsonDomainObject['propertyGroup']['properties'] as $jsonProperty) {
+				$propertyType = $jsonProperty['propertyType'];
+				$propertyClassName = 'Tx_ExtensionBuilder_Domain_Model_DomainObject_' . $propertyType . 'Property';
+				if (!class_exists($propertyClassName)) {
+					throw new Exception('Property of type ' . $propertyType . ' not found');
+				}
+				$property = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($propertyClassName);
+				$property->setUniqueIdentifier($jsonProperty['uid']);
+				$property->setName($jsonProperty['propertyName']);
+				$property->setDescription($jsonProperty['propertyDescription']);
 
-			if (isset($jsonProperty['propertyIsRequired'])) {
-				$property->setRequired($jsonProperty['propertyIsRequired']);
+				if (isset($jsonProperty['propertyIsRequired'])) {
+					$property->setRequired($jsonProperty['propertyIsRequired']);
+				}
+				if (isset($jsonProperty['propertyIsExcludeField'])) {
+					$property->setExcludeField($jsonProperty['propertyIsExcludeField']);
+				}
+				$domainObject->addProperty($property);
 			}
-			if (isset($jsonProperty['propertyIsExcludeField'])) {
-				$property->setExcludeField($jsonProperty['propertyIsExcludeField']);
-			}
-			$domainObject->addProperty($property);
 		}
 
 		$relatedForeignTables = array();
-		foreach ($jsonDomainObject['relationGroup']['relations'] as $jsonRelation) {
-			$relation = self::buildRelation($jsonRelation);
-			if (!empty($jsonRelation['foreignRelationClass'])) {
+		if (isset($jsonDomainObject['relationGroup']['relations'])) {
+			foreach ($jsonDomainObject['relationGroup']['relations'] as $jsonRelation) {
+				$relation = self::buildRelation($jsonRelation);
+				if (!empty($jsonRelation['foreignRelationClass'])) {
 					// relations without wires
-				if (strpos($jsonRelation['foreignRelationClass'], '\\') > 0) {
+					if (strpos($jsonRelation['foreignRelationClass'], '\\') > 0) {
 						// add trailing slash if not set
-					$jsonRelation['foreignRelationClass'] = '\\' . $jsonRelation['foreignRelationClass'];
-				}
-				$relation->setForeignClassName($jsonRelation['foreignRelationClass']);
-				$relation->setRelatedToExternalModel(TRUE);
-				$extbaseClassConfiguration = $this->configurationManager->getExtbaseClassConfiguration(
-					$jsonRelation['foreignRelationClass']
-				);
-				if (isset($extbaseClassConfiguration['tableName'])) {
-					$foreignDatabaseTableName = $extbaseClassConfiguration['tableName'];
-				} else {
-					$foreignDatabaseTableName = Tx_ExtensionBuilder_Utility_Tools::parseTableNameFromClassName(
+						$jsonRelation['foreignRelationClass'] = '\\' . $jsonRelation['foreignRelationClass'];
+					}
+					$relation->setForeignClassName($jsonRelation['foreignRelationClass']);
+					$relation->setRelatedToExternalModel(TRUE);
+					$extbaseClassConfiguration = $this->configurationManager->getExtbaseClassConfiguration(
 						$jsonRelation['foreignRelationClass']
 					);
-				}
-				$relation->setForeignDatabaseTableName($foreignDatabaseTableName);
-				if (is_a($relation, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation')) {
-					$foreignKeyName = strtolower($domainObject->getName());
-					if (Tx_ExtensionBuilder_Service_ValidationService::isReservedMYSQLWord($foreignKeyName)) {
-						$foreignKeyName = 'tx_' . $foreignKeyName;
-					}
-					\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Foreign key name', 'extension_builder', 1);
-					if (isset($relatedForeignTables[$foreignDatabaseTableName])) {
-						$foreignKeyName .= $relatedForeignTables[$foreignDatabaseTableName];
-						$relatedForeignTables[$foreignDatabaseTableName] += 1;
+					if (isset($extbaseClassConfiguration['tableName'])) {
+						$foreignDatabaseTableName = $extbaseClassConfiguration['tableName'];
 					} else {
-						$relatedForeignTables[$foreignDatabaseTableName] = 1;
+						$foreignDatabaseTableName = Tx_ExtensionBuilder_Utility_Tools::parseTableNameFromClassName(
+							$jsonRelation['foreignRelationClass']
+						);
 					}
-					$relation->setForeignKeyName($foreignKeyName);
+					$relation->setForeignDatabaseTableName($foreignDatabaseTableName);
+					if (is_a($relation, 'Tx_ExtensionBuilder_Domain_Model_DomainObject_Relation_ZeroToManyRelation')) {
+						$foreignKeyName = strtolower($domainObject->getName());
+						if (Tx_ExtensionBuilder_Service_ValidationService::isReservedMYSQLWord($foreignKeyName)) {
+							$foreignKeyName = 'tx_' . $foreignKeyName;
+						}
+						\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Foreign key name', 'extension_builder', 1);
+						if (isset($relatedForeignTables[$foreignDatabaseTableName])) {
+							$foreignKeyName .= $relatedForeignTables[$foreignDatabaseTableName];
+							$relatedForeignTables[$foreignDatabaseTableName] += 1;
+						} else {
+							$relatedForeignTables[$foreignDatabaseTableName] = 1;
+						}
+						$relation->setForeignKeyName($foreignKeyName);
+					}
 				}
+				$domainObject->addProperty($relation);
 			}
-			$domainObject->addProperty($relation);
 		}
 
 			//actions
-		foreach ($jsonDomainObject['actionGroup'] as $jsonActionName => $actionValue) {
-			if ($jsonActionName == 'customActions' && !empty($actionValue)) {
-				$actionNames = $actionValue;
-			} elseif ($actionValue == 1) {
-				$jsonActionName = preg_replace('/^_default[0-9]_*/', '', $jsonActionName);
-				if ($jsonActionName == 'edit_update' || $jsonActionName == 'new_create') {
-					$actionNames = explode('_', $jsonActionName);
+		if (isset($jsonDomainObject['actionGroup'])) {
+			foreach ($jsonDomainObject['actionGroup'] as $jsonActionName => $actionValue) {
+				if ($jsonActionName == 'customActions' && !empty($actionValue)) {
+					$actionNames = $actionValue;
+				} elseif ($actionValue == 1) {
+					$jsonActionName = preg_replace('/^_default[0-9]_*/', '', $jsonActionName);
+					if ($jsonActionName == 'edit_update' || $jsonActionName == 'new_create') {
+						$actionNames = explode('_', $jsonActionName);
+					} else {
+						$actionNames = array($jsonActionName);
+					}
 				} else {
-					$actionNames = array($jsonActionName);
+					$actionNames = array();
 				}
-			} else {
-				$actionNames = array();
-			}
-			if (!empty($actionNames)) {
-				foreach ($actionNames as $actionName) {
-					$action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-						'Tx_ExtensionBuilder_Domain_Model_DomainObject_Action'
-					);
-					$action->setName($actionName);
-					$domainObject->addAction($action);
+				if (!empty($actionNames)) {
+					foreach ($actionNames as $actionName) {
+						$action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+							'Tx_ExtensionBuilder_Domain_Model_DomainObject_Action'
+						);
+						$action->setName($actionName);
+						$domainObject->addAction($action);
+					}
 				}
 			}
 		}
