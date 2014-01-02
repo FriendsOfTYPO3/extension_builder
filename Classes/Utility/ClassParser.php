@@ -190,7 +190,7 @@ class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 			$this->classObject->$setterMethod($this->classReflection->$getterMethod());
 		}
 
-		if(is_object($this->classReflection->getParentClass())) {
+		if (is_object($this->classReflection->getParentClass())) {
 			$this->classObject->setParentClass($this->classReflection->getParentClass()->getName());
 		}
 
@@ -201,8 +201,8 @@ class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 			}
 			$this->classObject->setInterfaceNames($interfaceNames);
 		}
-		if($this->classReflection->getNamespaceName()) {
-			$this->classObject->setNameSpace($this->classReflection->getNamespaceName());
+		if ($this->classReflection->getNamespaceName()) {
+			$this->classObject->setNamespaceName($this->classReflection->getNamespaceName());
 		}
 		// reset class properties
 		$this->lines = array();
@@ -283,7 +283,7 @@ class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 
 						if (preg_match_all($this->aliasRegex, $trimmedLine, $aliasMatches)) {
 							\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Alias Matches','extension_builder',0,$aliasMatches);
-							if(!empty($aliasMatches[1])) {
+							if (!empty($aliasMatches[1])) {
 								$this->classObject->addAliasDeclaration(trim($aliasMatches[1][0]));
 							}
 						}

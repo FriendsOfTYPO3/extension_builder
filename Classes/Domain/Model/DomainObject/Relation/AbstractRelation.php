@@ -83,7 +83,7 @@ abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\Domai
 	 * @return string
 	 */
 	public function getForeignDatabaseTableName() {
-		if(is_object($this->foreignModel)) {
+		if (is_object($this->foreignModel)) {
 			return $this->foreignModel->getDatabaseTableName();
 		} else {
 			return $this->foreignDatabaseTableName;
@@ -102,17 +102,17 @@ abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\Domai
 	 * @return string The foreign class
 	 */
 	public function getForeignClassName() {
-		if(isset($this->foreignClassName)) {
+		if (isset($this->foreignClassName)) {
 			return $this->foreignClassName;
 		}
-		if(is_object($this->foreignModel)) {
+		if (is_object($this->foreignModel)) {
 			return $this->foreignModel->getFullQualifiedClassName();
 		}
 		return NULL;
 	}
 
 	public function getForeignModelName() {
-		if(is_object($this->foreignModel)) {
+		if (is_object($this->foreignModel)) {
 			return $this->foreignModel->getName();
 		}
 		$parts = explode('\\Domain\\Model\\', $this->foreignClassName);

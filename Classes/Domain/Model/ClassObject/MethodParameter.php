@@ -24,18 +24,11 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  ***************************************************************/
 
 /**
- * parameter representing a method parameterin the context of software development
+ * parameter representing a method parameter in
+ * the context of software development
  *
- * @version $ID:$
  */
-class MethodParameter {
-
-
-	/**
-	 *
-	 * @var string
-	 */
-	protected $name;
+class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
 
 	/**
 	 *
@@ -48,6 +41,10 @@ class MethodParameter {
 	 */
 	protected $typeHint = NULL;
 
+	/**
+	 * @var null
+	 */
+	protected $typeForParamTag = NULL;
 
 	/**
 	 *
@@ -68,44 +65,28 @@ class MethodParameter {
 	protected $optional;
 
 	/**
+	 * @var int
+	 */
+	protected $startLine = -1;
+
+	/**
+	 * @var int
+	 */
+	protected $endLine = -1;
+
+	/**
 	 *
 	 * @var boolean
 	 */
 	protected $passedByReference;
 
 	/**
+	 * __construct
 	 *
-	 * @param $propertyName
-	 * @param $propertyReflection (optional)
 	 * @return void
 	 */
-	public function __construct($parameterName, $parameterReflection = NULL) {
-		$this->name = $parameterName;
-		//TODO the parameter hints (or casts?) are not yet evaluated since the reflection does not recognize the
-		// maybe we can get them by a reg expression from the import tool?
-
-		if ($parameterReflection && $parameterReflection instanceof \TYPO3\CMS\Extbase\Reflection\ParameterReflection ) {
-			foreach ($this as $key => $value) {
-				$setterMethodName = 'set' . ucfirst($key);
-				$getterMethodName = 'get' . ucfirst($key);
-				$getBooleanMethodName = 'is' . ucfirst($key);
-
-				// map properties of reflection parmeter to this parameter
-				try {
-					if (method_exists($parameterReflection, $getterMethodName) && method_exists($this, $setterMethodName)) {
-						$this->$setterMethodName($parameterReflection->$getterMethodName());
-					}
-				}
-				catch (\ReflectionException $e) {
-					// the getDefaultValue throws an exception if the parameter is not optional
-				}
-
-				if (method_exists($parameterReflection, $getBooleanMethodName)) {
-					$this->$key = $parameterReflection->$getBooleanMethodName();
-				}
-
-			}
-		}
+	public function __construct($name) {
+		$this->name = $name;
 	}
 
 
@@ -118,18 +99,13 @@ class MethodParameter {
 	}
 
 	/**
-	 *
-	 * @param string $name
-	 */
-	public function setName($name) {
-		$this->name = $name;
-	}
-
-	/**
 	 * Returns $varType.
 	 *
 	 */
 	public function getVarType() {
+		if (empty($this->varType) && !empty($this->typeHint)) {
+			return $this->typeHint;
+		}
 		return $this->varType;
 	}
 
@@ -140,6 +116,7 @@ class MethodParameter {
 	 */
 	public function setVarType($varType) {
 		$this->varType = $varType;
+		return $this;
 	}
 
 	/**
@@ -172,10 +149,11 @@ class MethodParameter {
 	/**
 	 * setter for defaultValue
 	 * @param $defaultValue
-	 * @return void
+	 * @return $this
 	 */
 	public function setDefaultValue($defaultValue = NULL) {
 		$this->defaultValue = $defaultValue;
+		return $this;
 	}
 
 	/**
@@ -204,6 +182,20 @@ class MethodParameter {
 	}
 
 	/**
+	 * @return boolean
+	 */
+	public function getPassedByReference() {
+		return $this->passedByReference;
+	}
+
+	/**
+	 * @param boolean $passedByReference
+	 */
+	public function setPassedByReference($passedByReference) {
+		$this->passedByReference = $passedByReference;
+	}
+
+	/**
 	 *
 	 * @return
 	 */
@@ -215,9 +207,60 @@ class MethodParameter {
 	 * Sets $typeHint.
 	 *
 	 * @param string $typeHint
-	 * @see MethodParameter::$typeHint
+	 * @return $this
 	 */
 	public function setTypeHint($typeHint) {
 		$this->typeHint = $typeHint;
+		return $this;
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function hasTypeHint() {
+		return !empty($this->typeHint);
+	}
+
+	/**
+	 * @param string $typeForParamTag
+	 */
+	public function setTypeForParamTag($typeForParamTag) {
+		$this->typeForParamTag = $typeForParamTag;
+	}
+
+	/**
+	 * @return string|null
+	 */
+	public function getTypeForParamTag() {
+		return $this->typeForParamTag;
+	}
+
+	/**
+	 * @param int $startLine
+	 */
+	public function setStartLine($startLine) {
+		$this->startLine = $startLine;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getStartLine() {
+		return $this->startLine;
+	}
+
+	/**
+	 * @param int $endLine
+	 */
+	public function setEndLine($endLine) {
+		$this->endLine = $endLine;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getEndLine() {
+		return $this->endLine;
+	}
+
 }

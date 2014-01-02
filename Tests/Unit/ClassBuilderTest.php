@@ -33,7 +33,9 @@ use EBT\ExtensionBuilder\Utility\Inflector;
  */
 class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
-	var $modelName = 'Model1';
+	protected $modelName = 'Model1';
+
+	protected $modelClassTemplatePath = '';
 
 	function setUp() {
 		parent::setUp();
@@ -53,7 +55,7 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$property0 = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty('name');
 		$domainObject->addProperty($property0);
 
-		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject, TRUE);
+		$modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $this->modelClassTemplatePath, FALSE)->getFirstClass();
 
 		$this->assertTrue(is_object($modelClassObject), 'No model class object');
 		$this->assertTrue($modelClassObject->methodExists('setName'), 'No method: setName');
@@ -77,7 +79,7 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$property0->setRequired(TRUE);
 		$domainObject->addProperty($property0);
 
-		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject, TRUE);
+		$modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $this->modelClassTemplatePath, FALSE)->getFirstClass();
 		$this->assertTrue($modelClassObject->methodExists('getName'), 'No method: getName');
 
 	}
@@ -94,7 +96,7 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
 
-		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject, TRUE);
+		$modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $this->modelClassTemplatePath, FALSE)->getFirstClass();
 		$this->assertTrue($modelClassObject->methodExists('isBlue'), 'No method: isBlue');
 
 	}
@@ -113,7 +115,7 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$relationProperty->setForeignModel($relatedDomainObject);
 		$domainObject1->addProperty($relationProperty);
 
-		$modelClassObject = $this->classBuilder->generateModelClassObject($domainObject1, TRUE);
+		$modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject1, $this->modelClassTemplatePath, FALSE)->getFirstClass();
 
 		$this->assertTrue($modelClassObject->methodExists('add' . ucfirst(Inflector::singularize($propertyName))), 'Add method was not generated');
 		$this->assertTrue($modelClassObject->methodExists('remove' . ucfirst(Inflector::singularize($propertyName))), 'Remove method was not generated');
@@ -122,7 +124,7 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 		$addMethod = $modelClassObject->getMethod('add' . ucfirst(Inflector::singularize($propertyName)));
 		$this->assertTrue($addMethod->isTaggedWith('param'), 'No param tag set for setter method');
-		$paramTagValues = $addMethod->getTagsValues('param');
+		$paramTagValues = $addMethod->getTagValues('param');
 		$this->assertTrue((strpos($paramTagValues, $relatedDomainObject->getFullQualifiedClassName()) === 0), 'Wrong param tag:' . $paramTagValues);
 
 		$parameters = $addMethod->getParameters();

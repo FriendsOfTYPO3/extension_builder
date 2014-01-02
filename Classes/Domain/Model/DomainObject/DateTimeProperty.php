@@ -33,7 +33,7 @@ class DateTimeProperty extends AbstractProperty {
 	 *
 	 * @var string
 	 */
-	protected $defaultValue = 'NULL';
+	protected $defaultValue = NULL;
 
 	public function getTypeForComment() {
 		return '\\DateTime';

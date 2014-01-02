@@ -39,9 +39,9 @@ class Exception extends \TYPO3\CMS\Extbase\Exception {
 	/**
 	 * @param string $message
 	 * @param integer $code
-	 * @param Exception $previous
+	 * @param \Exception $previous
 	 */
-	public function __construct($message, $code, Exception $previous = null) {
+	public function __construct($message, $code, \Exception $previous = null) {
 
 		$this->findTranslationSubKeyByExceptionClassName();
 

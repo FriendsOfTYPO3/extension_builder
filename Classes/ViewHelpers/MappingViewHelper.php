@@ -106,7 +106,7 @@ class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditi
 				 * if the type field is set but equals the default extbase record type field name it might
 				 * have been defined by the current extension and thus has to be defined again when rewriting TCA definitions
 				 * this might result in duplicate definition, but the type field definition is always wrapped in a condition
-				 * "if(!isset($TCA[table][ctrl][type]){ ..."
+				 * "if (!isset($TCA[table][ctrl][type]){ ..."
 				 */
 				$needsTypeField = TRUE;
 			}

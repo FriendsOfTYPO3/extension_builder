@@ -138,10 +138,10 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 		$pluginKeys = array();
 		foreach ($extension->getPlugins() as $plugin) {
 			if (self::validatePluginKey($plugin->getKey()) === 0) {
-				$this->validationResult['errors'][] = new Exception('Invalid plugin key in plugin ' . $plugin->getName() . ': "' . $plugin->getKey() . '". Only alphanumeric character without spaces are allowed', self::ERROR_PLUGIN_INVALID_KEY);
+				$this->validationResult['errors'][] = new \Exception('Invalid plugin key in plugin ' . $plugin->getName() . ': "' . $plugin->getKey() . '". Only alphanumeric character without spaces are allowed', self::ERROR_PLUGIN_INVALID_KEY);
 			}
 			if (in_array($plugin->getKey(), $pluginKeys)) {
-				$this->validationResult['errors'][] = new Exception('Duplicate plugin key: "' . $plugin->getKey() . '". Plugin keys must be unique.', self::ERROR_PLUGIN_DUPLICATE_KEY);
+				$this->validationResult['errors'][] = new \Exception('Duplicate plugin key: "' . $plugin->getKey() . '". Plugin keys must be unique.', self::ERROR_PLUGIN_DUPLICATE_KEY);
 			}
 			$pluginKeys[] = $plugin->getKey();
 
@@ -371,10 +371,10 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 		$backendModuleKeys = array();
 		foreach ($extension->getBackendModules() as $backendModule) {
 			if (self::validateModuleKey($backendModule->getKey()) === 0) {
-				$this->validationResult['errors'][] = new Exception('Invalid key in backend module ' . $backendModule->getName() . '. Only alphanumeric character without spaces are allowed', self::ERROR_BACKENDMODULE_INVALID_KEY);
+				$this->validationResult['errors'][] = new \Exception('Invalid key in backend module ' . $backendModule->getName() . '. Only alphanumeric character without spaces are allowed', self::ERROR_BACKENDMODULE_INVALID_KEY);
 			}
 			if (in_array($backendModule->getKey(), $backendModuleKeys)) {
-				$this->validationResult['errors'][] = new Exception('Duplicate backend module key: "' . $backendModule->getKey() . '". Backend module keys must be unique.', self::ERROR_BACKENDMODULE_DUPLICATE_KEY);
+				$this->validationResult['errors'][] = new \Exception('Duplicate backend module key: "' . $backendModule->getKey() . '". Backend module keys must be unique.', self::ERROR_BACKENDMODULE_DUPLICATE_KEY);
 			}
 			$backendModuleKeys[] = $backendModule->getKey();
 			$this->validateBackendModuleConfiguration($backendModule, $extension);
@@ -410,7 +410,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 			if (strtolower($firstChar) == $firstChar) {
 				$this->validationResult['errors'][] = new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException('Illegal first character of domain object name "' . $domainObject->getName() . '". Please use UpperCamelCase.', self::ERROR_DOMAINOBJECT_LOWER_FIRST_CHARACTER);
 			}
-			if(\EBT\ExtensionBuilder\Service\ValidationService::isReservedExtbaseWord($objectName)) {
+			if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedExtbaseWord($objectName)) {
 				$this->validationResult['errors'][] = new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException('Domain object name "' . $domainObject->getName() . '" may not be used in extbase.', self::ERROR_PROPERTY_RESERVED_WORD);
 			}
 
@@ -418,7 +418,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 			$this->validateDomainObjectActions($domainObject);
 			$this->validateMapping($domainObject);
 		}
-		if($actionCounter < 1) {
+		if ($actionCounter < 1) {
 			if (count($extension->getBackendModules()) > 0) {
 				$this->validationResult['warnings'][] = new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException(
 					"Potential misconfiguration: No actions configured, this will result in a missing default action in your backend module",
@@ -487,8 +487,8 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 		if (isset($GLOBALS['TCA'][$tableName]['ctrl']['type'])) {
 			$dataTypeRes = $GLOBALS['TYPO3_DB']->sql_query('DESCRIBE ' . $tableName);
 			while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dataTypeRes)) {
-				if($row['Field'] == $GLOBALS['TCA'][$tableName]['ctrl']['type']) {
-					if(strpos($row['Type'],'int') !== FALSE) {
+				if ($row['Field'] == $GLOBALS['TCA'][$tableName]['ctrl']['type']) {
+					if (strpos($row['Type'],'int') !== FALSE) {
 						$this->validationResult['warnings'][] = new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException(
 							'The configured type field for table "' . $tableName . '" is of type ' .$row['Type'] . '<br />This means the type field can not be used for defining the record type. <br />You have to configure the mappings yourself if you want to map to this<br /> table or extend the correlated class',
 							self::ERROR_MAPPING_WRONG_TYPEFIELD_CONFIGURATION
@@ -591,16 +591,16 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 			}
 			$propertyNames[] = $propertyName;
 
-			if( is_subclass_of($property, 'EBT\\ExtensionBuilder\\Domain\Model\\DomainObject\\Relation\\AbstractRelation')) {
-				if(!$property->getForeignModel() && $property->getForeignClassName()){
-					if(!class_exists($property->getForeignClassName())) {
+			if ( is_subclass_of($property, 'EBT\\ExtensionBuilder\\Domain\Model\\DomainObject\\Relation\\AbstractRelation')) {
+				if (!$property->getForeignModel() && $property->getForeignClassName()){
+					if (!class_exists($property->getForeignClassName())) {
 						$this->validationResult['errors'][] = new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException(
 							'Related class not loadable: "' . $property->getForeignClassName() . '" configured in relation "' .$property->getName() . '".',
 							self::ERROR_MAPPING_NO_FOREIGNCLASS
 						);
 					}
 				}
-				if($property->getForeignModel() && ($property->getForeignModel()->getFullQualifiedClassName() != $property->getForeignClassName())){
+				if ($property->getForeignModel() && ($property->getForeignModel()->getFullQualifiedClassName() != $property->getForeignClassName())){
 					$this->validationResult['errors'][] = new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException(
 						'Relation "' .$property->getName() . '" in model "' . $domainObject->getName() . '" has a external class relation and a wire to '.$property->getForeignModel()->getName() ,
 						self::ERROR_MAPPING_WIRE_AND_FOREIGNCLASS

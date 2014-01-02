@@ -28,7 +28,7 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  *
  * @version $ID:$
  */
-class Property extends AbstractObject {
+class Property extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
 
 
 	/**
@@ -59,60 +59,35 @@ class Property extends AbstractObject {
 	protected $value;
 
 	/**
+	 * in case of properties of type array
+	 * we need to preserve the parsed statements
+	 * to be able to reapply the original
+	 * linebrakes
 	 *
-	 * @param string $propertyName
+	 * @var \PHPParser_NodeAbstract
+	 */
+	protected $defaultValueNode;
+
+	/**
+	 * __construct
+	 *
+	 * @param string
 	 * @return void
 	 */
-	public function __construct($propertyName) {
-		$this->name = $propertyName;
+	public function __construct($name) {
+		$this->name = $name;
 	}
 
 	/**
+	 * Setter for name
 	 *
-	 * all properties that have a setter in this class and a getter in the reflection class will be set here
-	 *
-	 * @param \EBT\ExtensionBuilder\Reflection\PropertyReflection $propertyReflection
-	 * @return void
+	 * @param string $name name
+	 * @return Property
 	 */
-	public function mapToReflectionProperty($propertyReflection) {
-		if ($propertyReflection instanceof \EBT\ExtensionBuilder\Reflection\PropertyReflection) {
-
-			$propertyReflection->getTagsValues(); // just to initialize the docCommentParser
-			foreach ($this as $key => $value) {
-				$setterMethodName = 'set' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($key);
-				$getterMethodName = 'get' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($key);
-
-				// map properties of reflection class to this class
-				if (method_exists($propertyReflection, $getterMethodName) && method_exists($this, $setterMethodName) && $key != 'value') {
-					$this->$setterMethodName($propertyReflection->$getterMethodName());
-				}
-
-				$isMethodName = 'is' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($key);
-
-				// map properties of reflection class to this class
-				if (method_exists($propertyReflection, $setterMethodName) && method_exists($this, $isMethodName)) {
-					$this->$setterMethodName($propertyReflection->$isMethodName());
-				}
-			}
-
-			// This is not yet used later on. The type is not validated, so it might be anything!!
-			if (isset($this->tags['var'])) {
-				$parts = preg_split('/\s/', $this->tags['var'][0], 2);
-				$this->varType = $parts[0];
-			}
-			else {
-				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('No var type set for property $' . $this->name . ' in class ' . $propertyReflection->getDeclaringClass()->name, 'extension_builder');
-			}
-
-			if (empty($this->tags)) {
-				// strange behaviour in php ReflectionProperty->getDescription(). A backslash is added to the description
-				$this->description = str_replace("\n/", '', $this->description);
-				$this->description = trim($this->description);
-				$this->setTag('var', 'mixed // please define a var type here');
-			}
-		}
+	public function setName($name) {
+		$this->name = $name;
+		return $this;
 	}
-
 
 	/**
 	 *
@@ -128,7 +103,7 @@ class Property extends AbstractObject {
 	 * @param string $type
 	 */
 	public function setVarType($varType) {
-		$this->tags['var'] = array($varType);
+		$this->setTag('var', array($varType));
 		$this->varType = $varType;
 	}
 
@@ -207,7 +182,7 @@ class Property extends AbstractObject {
 	 * @return bool
 	 */
 	public function getHasDefaultValue() {
-		if(isset($this->default) && $this->default !== NULL) {
+		if (isset($this->default) && $this->default !== NULL) {
 			return TRUE;
 		}
 		return FALSE;
@@ -219,10 +194,26 @@ class Property extends AbstractObject {
 	 * @return bool
 	 */
 	public function getHasValue() {
-		if(isset($this->value) && $this->value !== NULL) {
+		if (isset($this->value) && $this->value !== NULL) {
 			return TRUE;
 		}
 		return FALSE;
+	}
+
+
+	/**
+	 * @param \PHPParser_NodeAbstract $defaultValueNode
+	 */
+	public function setDefaultValueNode($defaultValueNode) {
+		$this->defaultValueNode = $defaultValueNode;
+	}
+
+	/**
+	 *
+	 * @return \PHPParser_NodeAbstract
+	 */
+	public function getDefaultValueNode() {
+		return $this->defaultValueNode;
 	}
 
 }

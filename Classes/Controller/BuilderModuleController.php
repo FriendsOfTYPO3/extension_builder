@@ -34,9 +34,9 @@ use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
 class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
-	 * @var \EBT\ExtensionBuilder\Service\CodeGenerator
+	 * @var \EBT\ExtensionBuilder\Service\FileGenerator
 	 */
-	protected $codeGenerator;
+	protected $fileGenerator;
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
@@ -72,11 +72,11 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 	protected $settings;
 
 	/**
-	 * @param \EBT\ExtensionBuilder\Service\CodeGenerator $codeGenerator
+	 * @param \EBT\ExtensionBuilder\Service\FileGenerator $fileGenerator
 	 * @return void
 	 */
-	public function injectCodeGenerator(\EBT\ExtensionBuilder\Service\CodeGenerator $codeGenerator) {
-		$this->codeGenerator = $codeGenerator;
+	public function injectFileGenerator(\EBT\ExtensionBuilder\Service\FileGenerator $fileGenerator) {
+		$this->fileGenerator = $fileGenerator;
 	}
 
 	/**
@@ -124,7 +124,7 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 	 * @return void
 	 */
 	public function initializeAction() {
-		$this->codeGenerator->setSettings($this->settings);
+		$this->fileGenerator->setSettings($this->settings);
 	}
 
 	/**
@@ -165,7 +165,7 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 			$this->configurationManager->parseRequest();
 			$subAction = $this->configurationManager->getSubActionFromRequest();
 			if (empty($subAction)) {
-				throw new Exception('No Sub Action!');
+				throw new \Exception('No Sub Action!');
 			}
 			switch ($subAction) {
 				case 'saveWiring':
@@ -177,7 +177,7 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 				default:
 					$response = array('error' => 'Sub Action not found.');
 			}
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$response = array('error' => $e->getMessage());
 		}
 		return json_encode($response);
@@ -187,7 +187,7 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 	/**
 	 * Generate the code files according to the transferred JSON configuration
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @return array (status => message)
 	 */
 	protected function rpcAction_save() {
@@ -203,7 +203,7 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 			}
 			$extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
 		}
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			throw $e;
 		}
 
@@ -214,7 +214,7 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 			foreach ($validationResult['errors'] as $exception) {
 				$errorMessage .= '<br />' . $exception->getMessage();
 			}
-			throw new Exception($errorMessage);
+			throw new \Exception($errorMessage);
 		}
 		if (!empty($validationResult['warnings'])) {
 			$confirmationRequired = $this->handleValidationWarnings($validationResult['warnings']);
@@ -233,7 +233,7 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 				try {
 					\EBT\ExtensionBuilder\Service\RoundTrip::backupExtension($extension, $this->settings['extConf']['backupDir']);
 				}
-				catch (Exception $e) {
+				catch (\Exception $e) {
 					throw $e;
 				}
 			}
@@ -241,26 +241,26 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 			if ($this->settings['extConf']['enableRoundtrip'] == 1) {
 				if (empty($extensionSettings)) {
 					// no config file in an existing extension!
-					// this would result in a total overwrite so we create one and give a warning
+					// this would result in a	 total overwrite so we create one and give a warning
 					$this->configurationManager->createInitialSettingsFile($extension, $this->settings['codeTemplateRootPath']);
 					return array('warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the extension builder the first time for this extension. <br />A settings file was generated in <br /><b>typo3conf/ext/" . $extension->getExtensionKey() . "/Configuration/ExtensionBuilder/settings.yaml.</b><br />Configure the overwrite settings, then save again.");
 				}
 				try {
 					\EBT\ExtensionBuilder\Service\RoundTrip::prepareExtensionForRoundtrip($extension);
-				} catch (Exception $e) {
+				} catch (\Exception $e) {
 					throw $e;
 				}
 			}
 		}
 		try {
-			$this->codeGenerator->build($extension);
+			$this->fileGenerator->build($extension);
 			$this->extensionInstallationStatus->setExtension($extension);
 			$message = '<p>The Extension was saved</p>' . $this->extensionInstallationStatus->getStatusMessage();
 			if ($extension->getNeedsUploadFolder()) {
 				$message .= '<br />Notice: File upload is not yet implemented.';
 			}
 			$result = array('success' => $message);
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			throw $e;
 		}
 

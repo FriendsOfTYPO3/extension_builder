@@ -48,9 +48,9 @@ class ZeroToManyRelation extends AnyToManyRelation {
 	}
 
 	public function getForeignKeyName() {
-		if(empty($this->foreignKeyName)) {
+		if (empty($this->foreignKeyName)) {
 			$foreignKeyName = strtolower($this->getDomainObject()->getName());
-			if(\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($foreignKeyName)) {
+			if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($foreignKeyName)) {
 				$foreignKeyName = 'tx_' . $foreignKeyName;
 			}
 			return $foreignKeyName;

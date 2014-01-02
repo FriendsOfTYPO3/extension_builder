@@ -47,7 +47,7 @@ class ClassLoader {
 	public static function loadClass($className) {
 		$delimiter = '\\';
 		$index = 1;
-		if(strpos($delimiter, $className) === FALSE) {
+		if (strpos($delimiter, $className) === FALSE) {
 			$delimiter = '_';
 			$index = 2;
 		}

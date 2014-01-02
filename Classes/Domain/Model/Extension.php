@@ -247,7 +247,7 @@ class Extension {
 	public function getExtensionDir() {
 		if (empty($this->extensionDir)) {
 			if (empty($this->extensionKey)) {
-				throw new Exception('ExtensionDir can only be created if an extensionKey is defined first');
+				throw new \Exception('ExtensionDir can only be created if an extensionKey is defined first');
 			}
 			$this->extensionDir = PATH_typo3conf . 'ext/' . $this->extensionKey . '/';
 		}
@@ -342,7 +342,7 @@ class Extension {
 
 	/**
 	 *
-	 * @return array<\EBT\ExtensionBuilder\Domain\Model\DomainObject>
+	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject[]
 	 */
 	public function getDomainObjects() {
 		return $this->domainObjects;
@@ -393,7 +393,7 @@ class Extension {
 		foreach ($this->domainObjects as $domainObject) {
 			if ($domainObject->isSubclass()) {
 				$parentClass = $domainObject->getParentClass();
-				if(strpos($parentClass, '\\') === 0) {
+				if (strpos($parentClass, '\\') === 0) {
 					$parentClass = substr($parentClass, 1);
 				}
 				if (!is_array($classHierarchy[$parentClass])) {
@@ -447,7 +447,7 @@ class Extension {
 	public function addDomainObject(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject) {
 		$domainObject->setExtension($this);
 		foreach(array_keys($this->domainObjects) as $existingDomainObjectName) {
-			if(strtolower($domainObject->getName()) == strtolower($existingDomainObjectName) ) {
+			if (strtolower($domainObject->getName()) == strtolower($existingDomainObjectName) ) {
 				throw new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
 			}
 		}
@@ -645,7 +645,7 @@ class Extension {
 	 * Get the previous extension directory
 	 * if the extension was renamed it is different from $this->extensionDir
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public function getPreviousExtensionDirectory() {
 		if ($this->isRenamed()) {
@@ -781,7 +781,7 @@ class Extension {
 	/**
 	 * @return string
 	 */
-	public function getNameSpace() {
+	public function getNamespaceName() {
 		return $this->getVendorName() . '\\' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->getExtensionKey());
 	}
 

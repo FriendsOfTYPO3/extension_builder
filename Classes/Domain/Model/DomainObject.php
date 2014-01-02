@@ -69,19 +69,19 @@ class DomainObject {
 
 	/**
 	 * The extension this domain object belongs to.
-	 * @var \EBT\ExtensionBuilder\Domain\Model\Extension
+	 * @var Extension
 	 */
 	protected $extension;
 
 	/**
 	 * List of properties the domain object has
-	 * @var array<\EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty>
+	 * @var DomainObject\AbstractProperty[]
 	 */
 	protected $properties = array();
 
 	/**
 	 * List of actions the domain object has
-	 * @var array<\EBT\ExtensionBuilder\Domain\Model\DomainObject\Action>
+	 * @var DomainObject\Action[]
 	 */
 	protected $actions = array();
 
@@ -105,7 +105,7 @@ class DomainObject {
 
 	/**
 	 * Domain objects that extend the current object (as declared in this extension)
-	 * @var array<\EBT\ExtensionBuilder\Domain\Model\DomainObject>
+	 * @var DomainObject[]
 	 */
 	protected $childObjects = array();
 
@@ -126,8 +126,8 @@ class DomainObject {
 	}
 
 	public function getQualifiedClassName() {
-		$qualifiedClassName = $this->extension->getNameSpace() . '\\Domain\\Model\\' . $this->getName();
-		if(strpos($qualifiedClassName, '\\') === 0) {
+		$qualifiedClassName = $this->extension->getNamespaceName() . '\\Domain\\Model\\' . $this->getName();
+		if (strpos($qualifiedClassName, '\\') === 0) {
 			$qualifiedClassName = substr($qualifiedClassName, 1);
 		}
 		return $qualifiedClassName;
@@ -138,7 +138,7 @@ class DomainObject {
 	}
 
 	public function getControllerClassName() {
-		return $this->extension->getNameSpace() . '\\Controller\\' . $this->getName() . 'Controller';
+		return $this->extension->getNamespaceName() . '\\Controller\\' . $this->getName() . 'Controller';
 	}
 
 	public function getDatabaseTableName() {
@@ -235,11 +235,11 @@ class DomainObject {
 
 	/**
 	 * Adding a new property
-	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property The new property to add
+	 * @param DomainObject\AbstractProperty $property The new property to add
 	 *
 	 * @return void
 	 */
-	public function addProperty(\EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property) {
+	public function addProperty(DomainObject\AbstractProperty $property) {
 		$property->setDomainObject($this);
 		if ($property->getNeedsUploadFolder()) {
 			$this->needsUploadFolder = TRUE;
@@ -249,7 +249,7 @@ class DomainObject {
 
 	/**
 	 * Get all properties
-	 * @return array<\EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty>
+	 * @return array<DomainObject\AbstractProperty>
 	 */
 	public function getProperties() {
 		return $this->properties;
@@ -258,7 +258,7 @@ class DomainObject {
 	/**
 	 * Get property
 	 *
-	 * @return object <\EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty>
+	 * @return object <DomainObject\AbstractProperty>
 	 */
 	public function getPropertyByName($propertyName) {
 		foreach ($this->properties as $property) {
@@ -272,7 +272,7 @@ class DomainObject {
 	/**
 	 * Get all properties holding relations of type Property_Relation_ZeroToManyRelation
 	 *
-	 * @return array<\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation>
+	 * @return DomainObject\Relation\ZeroToManyRelation[]
 	 */
 	public function getZeroToManyRelationProperties() {
 		$relationProperties = array();
@@ -285,9 +285,10 @@ class DomainObject {
 	}
 
 	/**
-	 * Get all properties holding relations of type Property_Relation_AnyToManyRelation
+	 * Get all properties holding relations of type 
+	 * AnyToManyRelation
 	 *
-	 * @return array<\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation>
+	 * @return DomainObject\Relation\AnyToManyRelation[]
 	 */
 	public function getAnyToManyRelationProperties() {
 		$relationProperties = array();
@@ -301,11 +302,11 @@ class DomainObject {
 
 	/**
 	 * Adding a new action
-	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action The new action to add
+	 * @param DomainObject\Action $action The new action to add
 	 *
 	 * @return void
 	 */
-	public function addAction(\EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action) {
+	public function addAction(DomainObject\Action $action) {
 		$action->setDomainObject($this);
 		if (!in_array($action, $this->actions)) {
 			$this->actions[] = $action;
@@ -316,7 +317,7 @@ class DomainObject {
 	/**
 	 * Get all actions
 	 *
-	 * @return array<\EBT\ExtensionBuilder\Domain\Model\DomainObject\Action>
+	 * @return array<DomainObject\Action>
 	 */
 	public function getActions() {
 		return $this->actions;
@@ -333,14 +334,14 @@ class DomainObject {
 
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addDomainModel() automatically.
-	 * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension the extension this domain model belongs to.
+	 * @param Extension $extension the extension this domain model belongs to.
 	 */
-	public function setExtension(\EBT\ExtensionBuilder\Domain\Model\Extension $extension) {
+	public function setExtension(Extension $extension) {
 		$this->extension = $extension;
 	}
 
 	/**
-	 * @return \EBT\ExtensionBuilder\Domain\Model\Extension
+	 * @return Extension
 	 */
 	public function getExtension() {
 		return $this->extension;
@@ -368,7 +369,7 @@ class DomainObject {
 	 */
 	public function getDomainRepositoryClassName() {
 		if (!$this->aggregateRoot) return '';
-		return '\\' . $this->extension->getNameSpace() . '\\Domain\\Repository\\' . $this->getName() . 'Repository';
+		return '\\' . $this->extension->getNamespaceName() . '\\Domain\\Repository\\' . $this->getName() . 'Repository';
 	}
 
 	/**
@@ -381,7 +382,7 @@ class DomainObject {
 			return '';
 		}
 
-		return $this->extension->getNameSpace() . '\\Domain\\Repository\\' . $this->getName() . 'Repository';
+		return $this->extension->getNamespaceName() . '\\Domain\\Repository\\' . $this->getName() . 'Repository';
 	}
 
 	/**
@@ -504,7 +505,7 @@ class DomainObject {
 	}
 
 	public function getNeedsTableCtrlDefinition() {
-		if($this->mapToTable || $this->isSubClass()) {
+		if ($this->mapToTable || $this->isSubClass()) {
 			// ctrl definitions should already be defined in both cases
 			return FALSE;
 		} else {
@@ -546,14 +547,14 @@ class DomainObject {
 
 
 	/**
-	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $childObject
+	 * @param DomainObject $childObject
 	 */
-	public function addChildObject(\EBT\ExtensionBuilder\Domain\Model\DomainObject $childObject) {
+	public function addChildObject(DomainObject $childObject) {
 		$this->childObjects[] = $childObject;
 	}
 
 	/**
-	 * @return array \EBT\ExtensionBuilder\Domain\Model\DomainObject
+	 * @return array DomainObject
 	 */
 	public function getChildObjects() {
 		return $this->childObjects;

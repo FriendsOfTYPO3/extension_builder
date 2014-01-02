@@ -63,9 +63,9 @@ class RecordTypeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
 
 	protected function convertClassNameToRecordType($className) {
 		$classNameParts = explode('\\', $className);
-		if(count($classNameParts) > 5) {
+		if (count($classNameParts) > 5) {
 			return 'Tx_' . $classNameParts[2] . '_Domain_Model_' . $classNameParts[5];
-		} elseif(count($classNameParts) == 5) {
+		} elseif (count($classNameParts) == 5) {
 			return 'Tx_' . $classNameParts[1] . '_Domain_Model_' . $classNameParts[4];
 		} else {
 			return $className;

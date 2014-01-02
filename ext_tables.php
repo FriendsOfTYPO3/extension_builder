@@ -8,6 +8,7 @@ if (!defined('TYPO3_MODE')) {
  * Register Backend Module
  */
 
+\EBT\ExtensionBuilder\Parser\AutoLoader::register();
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
 	'EBT.' . $_EXTKEY,

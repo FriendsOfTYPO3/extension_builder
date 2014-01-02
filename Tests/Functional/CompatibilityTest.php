@@ -28,7 +28,8 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
 /**
  *
  * This tests takes a extension configuration generated with Version 1.0
- * generates a complete Extension and compares it with the one generated with Version 1
+ * generates a complete Extension and compares it with the
+ * one generated with Version 1
  *
  *
  * @author Nico de Haen
@@ -44,7 +45,10 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 * @test
 	 */
 	public function checkRequirements() {
-		$this->assertTrue(class_exists(vfsStream), 'Requirements not fulfilled: vfsStream is needed for file operation tests. Please make sure you are using at least phpunit Version 3.5.6');
+		$this->assertTrue(
+			class_exists(vfsStream),
+			'Requirements not fulfilled: vfsStream is needed for file operation tests. '
+			. 'Please make sure you are using at least phpunit Version 3.5.6');
 	}
 
 
@@ -57,10 +61,14 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 * @test
 	 */
 	function generateExtensionFromVersion3Configuration() {
-		$this->configurationManager = $this->getMock($this->buildAccessibleProxy('\EBT\ExtensionBuilder\Configuration\ConfigurationManager'), array('dummy'));
+		//$this->markTestSkipped('Compatibility not yet possible');
+		$this->configurationManager = $this->getMock(
+			$this->buildAccessibleProxy('\EBT\ExtensionBuilder\Configuration\ConfigurationManager'),
+			array('dummy')
+		);
 		$this->extensionSchemaBuilder = $this->objectManager->get('\EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder');
 
-		$testExtensionDir = PATH_typo3conf . 'ext/extension_builder/Tests/Examples/TestExtensions/test_extension_v3/';
+		$testExtensionDir = $this->fixturesPath . 'TestExtensions/test_extension_v3/';
 		$jsonFile = $testExtensionDir . \EBT\ExtensionBuilder\Configuration\ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
 
 		if (file_exists($jsonFile)) {
@@ -73,7 +81,7 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		}
 
 		$this->extension = $this->extensionSchemaBuilder->build($extensionConfigurationJSON);
-		$this->codeGenerator->setSettings(
+		$this->fileGenerator->setSettings(
 			array(
 				 'codeTemplateRootPath' => PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/',
 				 'extConf' => array(
@@ -85,7 +93,7 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		//$newExtensionDir = PATH_typo3conf.'ext/extension_builder/Tests/Examples/tmp/';
 		$this->extension->setExtensionDir($newExtensionDir . 'test_extension/');
 
-		$this->codeGenerator->build($this->extension);
+		$this->fileGenerator->build($this->extension);
 
 		$referenceFiles = \TYPO3\CMS\Core\Utility\GeneralUtility::getAllFilesAndFoldersInPath(array(), $testExtensionDir);
 
@@ -100,6 +108,10 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 				//\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile(PATH_site.'fileadmin/'.basename($createdFile), file_get_contents($createdFile));
 				$this->assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');
 				if(strpos($referenceFile, 'xlf') === FALSE) {
+					if(\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",$referenceFileContent, TRUE) !=
+											\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($createdFile), TRUE)) {
+						//die('<pre>' . htmlspecialchars(file_get_contents($createdFile)) . '</pre>');
+					}
 					$this->assertEquals(
 						\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",$referenceFileContent, TRUE),
 						\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($createdFile), TRUE),

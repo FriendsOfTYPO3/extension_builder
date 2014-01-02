@@ -440,9 +440,9 @@
 				message = "Extension could not be saved:\n " + o.error;
 			}
 			else if (typeof o.warning != 'undefined') {
-					title = 'Warning';
-					message = o.warning;
-				}
+				title = 'Warning';
+				message = o.warning;
+			}
 
 			this.alert(title, message);
 

@@ -75,7 +75,7 @@ var roundtrip = {
 		,onFieldRendered		:	function(fieldId){
 										//this._debug('onFieldRendered called: ' + fieldId);
 										var l = Ext.get(
-											Ext.query('div#' + fieldId + '-label')
+											Ext.query('div#' + fieldId + '-label label')
 										);
 										if(l && Ext.query('div#' + fieldId + '-desc').length){
 											l.addListener(
@@ -90,7 +90,7 @@ var roundtrip = {
 														roundtrip.showHelp(target,false);
 													}
 												);
-											l.addClass('helpAvailable');
+											l.parent().addClass('helpAvailable');
 										}
 									}
 		,getUidForTerminal		:	function(terminal){
@@ -103,8 +103,8 @@ var roundtrip = {
 										}
 		}
 		,showHelp				:	function(targetEl,show){
-										var descriptionElement = Ext.get(targetEl.id.replace('label','desc'));
-										//console.log(targetEl);
+										var descriptionElement = Ext.get(targetEl.parentNode.id.replace('label','desc'));
+										console.log(targetEl.parentNode);
 										if(descriptionElement && descriptionElement.dom.innerHTML.length){
 											if(show){
 												descriptionElement.show();
