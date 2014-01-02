@@ -66,12 +66,12 @@ class {domainObject.name}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase
 		);
 </f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'string')}">
 		$this->assertSame(
-			NULL,
+			'',
 			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
 		);
 </f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'boolean')}">
 		$this->assertSame(
-			TRUE,
+			FALSE,
 			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
 		);
 </f:if><f:if condition="{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}"><f:then>
