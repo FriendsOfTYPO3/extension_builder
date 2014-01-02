@@ -53,7 +53,7 @@ class Exception extends \TYPO3\CMS\Extbase\Exception {
 		$translationKey .= $code;
 
 		// Get the translated message
-		$translated = TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($translationKey, 'ExtbaseBuilder');
+		$translated = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($translationKey, 'ExtbaseBuilder');
 		if (!empty($translated)) {
 			$message = $translated;
 		}
