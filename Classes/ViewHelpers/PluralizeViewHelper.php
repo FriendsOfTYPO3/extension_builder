@@ -57,7 +57,7 @@ class PluralizeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
 	public function render() {
 		$content = $this->renderChildren();
 		$pluralizedContent = $this->inflector->pluralize($content);
-		if($pluralizedContent == $content) {
+		if ($pluralizedContent == $content) {
 			$pluralizedContent .= 's';
 		}
 		return $pluralizedContent;

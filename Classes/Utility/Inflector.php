@@ -59,7 +59,7 @@ class Inflector {
 	public static function humanize($string) {
 		$string = strtolower(preg_replace('/(?<=\w)([A-Z])/', '_\\1', $string));
 		$delimiter = '\\';
-		if(strpos($delimiter, $string) === FALSE) {
+		if (strpos($delimiter, $string) === FALSE) {
 			$delimiter = '_';
 		}
 		$string = str_replace($delimiter, ' ', $string);

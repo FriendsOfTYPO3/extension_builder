@@ -99,7 +99,7 @@ class MethodReflection extends \TYPO3\CMS\Extbase\Reflection\MethodReflection {
 				}
 				$typeHint = trim($typeHint);
 
-				if(strpos($typeHint, '\\') > 0 || class_exists($typeHint)) {
+				if (strpos($typeHint, '\\') > 0 || class_exists($typeHint)) {
 						// this is a hack, since there is no difference between full qalified and qualified name of the type hint
 						// so if it contains a backslash we assume the typehint is a namespaced class name and we can use a full qualified typeHint
 					$typeHint = '\\' . $typeHint;

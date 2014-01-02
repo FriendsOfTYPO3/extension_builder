@@ -126,7 +126,6 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 						if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($foreignKeyName)) {
 							$foreignKeyName = 'tx_' . $foreignKeyName;
 						}
-						\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Foreign key name', 'extension_builder', 1);
 						if (isset($relatedForeignTables[$foreignDatabaseTableName])) {
 							$foreignKeyName .= $relatedForeignTables[$foreignDatabaseTableName];
 							$relatedForeignTables[$foreignDatabaseTableName] += 1;

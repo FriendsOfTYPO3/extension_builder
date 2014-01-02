@@ -55,7 +55,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 	 */
 	public function getConfigurationFromModeler() {
 		if (empty($this->inputData)) {
-			throw new Exception('No inputData!');
+			throw new \Exception('No inputData!');
 		}
 		$extensionConfigurationJSON = json_decode($this->inputData['params']['working'], TRUE);
 		$extensionConfigurationJSON = $this->reArrangeRelations($extensionConfigurationJSON);

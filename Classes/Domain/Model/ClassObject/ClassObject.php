@@ -3,7 +3,7 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010 Nico de Haen
+ *  (c) 2014 Nico de Haen
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,13 +24,12 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  ***************************************************************/
 
 /**
- * class schema representing a "class" in the context of software development
+ * class schema representing a "PHP class" in the context of software development
  *
- * @version $ID:$
  */
 
 
-class ClassObject extends AbstractObject {
+class ClassObject extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
 
 	/**
 	 * constants
@@ -62,7 +61,7 @@ class ClassObject extends AbstractObject {
 	 * interfaceNames
 	 * @var array
 	 */
-	protected $interfaceNames;
+	protected $interfaceNames = array();
 
 	/**
 	 * all lines that were found below the class declaration
@@ -74,12 +73,6 @@ class ClassObject extends AbstractObject {
 	 * @var array
 	 */
 	protected $aliasDeclarations = array();
-
-	/**
-	 * parentClass
-	 * @var string
-	 */
-	//protected $parent_class;
 
 
 	/**
@@ -102,17 +95,41 @@ class ClassObject extends AbstractObject {
 	protected $classReflection = NULL;
 
 	/**
-	 * @var object parentClass
+	 * parentClass
+	 * @var ClassObject
 	 */
 	protected $parentClass = NULL;
 
 	/**
-	 * constructor of this class
-	 * @param string $className
-	 * @return void
+	 * parentClassname
+	 * @var string
 	 */
-	public function __construct($className) {
-		$this->name = $className;
+	protected $parentClassName = NULL;
+
+
+	/**
+	 * constructor of this class
+	 *
+	 * @param string $name
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+	 */
+	public function __construct($name) {
+		$this->name = $name;
+	}
+
+	/**
+	 */
+	public function __clone() {
+		$clonedProperties = array();
+		$clonedMethods = array();
+		foreach($this->properties as $property) {
+			$clonedProperties[] = clone($property);
+		}
+		$this->properties = $clonedProperties;
+		foreach($this->methods as $method) {
+			$clonedMethods[] = clone($method);
+		}
+		$this->methods = $clonedMethods;
 	}
 
 	/**
@@ -122,7 +139,7 @@ class ClassObject extends AbstractObject {
 	 * @return void
 	 */
 	public function setConstant($constantName, $constantValue) {
-		$this->constants[$constantName] = array('name' => $constantName, 'value' => $constantValue);
+		$this->constants[$constantName] = $constantValue;
 	}
 
 	/**
@@ -138,7 +155,7 @@ class ClassObject extends AbstractObject {
 	/**
 	 * Getter for constants
 	 *
-	 * @return string constants
+	 * @return array constants
 	 */
 	public function getConstants() {
 		return $this->constants;
@@ -151,7 +168,7 @@ class ClassObject extends AbstractObject {
 	 */
 	public function getConstant($constantName) {
 		if (isset($this->constants[$constantName])) {
-			return $this->constants[$constantName]['value'];
+			return $this->constants[$constantName];
 		}
 		else return NULL;
 	}
@@ -214,32 +231,33 @@ class ClassObject extends AbstractObject {
 	}
 
 	/**
-	 * Getter for method
-	 *
-	 * @return Method
+	 * @param string $methodName
+	 * @return null|Method
 	 */
 	public function getMethod($methodName) {
 		if ($this->methodExists($methodName)) {
 			return $this->methods[$methodName];
+		} else {
+			return NULL;
 		}
-		else return NULL;
 	}
 
 	/**
 	 * Add a method
 	 *
-	 * @param Method $classMethod
-	 * @return void
+	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method $classMethod
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function addMethod($classMethod) {
 		if (!$this->methodExists($classMethod->getName())) {
 			$this->methods[$classMethod->getName()] = $classMethod;
 		}
-
+		return $this;
 	}
 
 	/**
 	 * removes a method
+	 *
 	 * @param string $methodName
 	 * @return boolean TRUE (if successfull removed)
 	 */
@@ -253,6 +271,7 @@ class ClassObject extends AbstractObject {
 
 	/**
 	 * rename a method
+	 *
 	 * @param string $oldName
 	 * @param string $newName
 	 * @return boolean success
@@ -264,8 +283,9 @@ class ClassObject extends AbstractObject {
 			$this->methods[$newName] = $method;
 			$this->removeMethod($oldName);
 			return TRUE;
+		} else {
+			return FALSE;
 		}
-		else return FALSE;
 	}
 
 
@@ -310,11 +330,17 @@ class ClassObject extends AbstractObject {
 	/**
 	 * Getter for property
 	 * @param string $propertyName the name of the property
-	 * @return \EBT\ExtensionBuilder\Reflection\PropertyReflection
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property
 	 */
 	public function getProperty($propertyName) {
 		if ($this->propertyExists($propertyName)) {
-			return $this->properties[$propertyName];
+			if ($this->isTemplate) {
+				$propertyTemplate = clone($this->properties[$propertyName]);
+				$propertyTemplate->setIsTemplate(TRUE);
+				return $propertyTemplate;
+			} else {
+				return $this->properties[$propertyName];
+			}
 		}
 		else return NULL;
 	}
@@ -322,7 +348,7 @@ class ClassObject extends AbstractObject {
 	/**
 	 * Setter for properties
 	 *
-	 * @param select $properties properties
+	 * @param array $properties properties
 	 * @return void
 	 */
 	public function setProperties($properties) {
@@ -379,25 +405,6 @@ class ClassObject extends AbstractObject {
 		}
 	}
 
-	/**
-	 * Setter for staticProperties
-	 *
-	 * @param string $staticProperties
-	 * @return void
-	 */
-	public function setStaticProperties($staticProperties) {
-		$this->staticProperties = $staticProperties;
-	}
-
-	/**
-	 * Getter for staticProperties
-	 *
-	 * @return string staticProperties
-	 */
-	public function getStaticProperties() {
-		return $this->staticProperties;
-	}
-
 
 	/**
 	 * @param string $propertyName
@@ -423,8 +430,11 @@ class ClassObject extends AbstractObject {
 		if (!$this->propertyExists($classProperty->getName())) {
 			$this->propertyNames[] = $classProperty->getName();
 			$this->properties[$classProperty->getName()] = $classProperty;
+			return TRUE;
 		}
-		else return FALSE;
+		else {
+			return FALSE;
+		}
 	}
 
 	/**
@@ -447,39 +457,19 @@ class ClassObject extends AbstractObject {
 
 
 	/**
-	 * Setter for interfaceNames
-	 *
-	 * @param array $interfaceNames interfaceNames
-	 * @return void
-	 */
-	public function setInterfaceNames($interfaceNames) {
-		$this->interfaceNames = $interfaceNames;
-	}
-
-	/**
-	 * Getter for interfaceNames
-	 *
-	 * @return array interfaceNames
-	 */
-	public function getInterfaceNames() {
-		return $this->interfaceNames;
-	}
-
-
-	/**
 	 * Setter for parentClass
 	 *
-	 * @param string $parentClass parentClass
+	 * @param ClassObject $parentClass parentClass
 	 * @return void
 	 */
-	public function setParentClass($parentClass) {
+	public function setParentClass(ClassObject $parentClass) {
 		$this->parentClass = $parentClass;
 	}
 
 	/**
 	 * Getter for parentClass
 	 *
-	 * @return string parentClass
+	 * @return ClassObject parentClass
 	 */
 	public function getParentClass() {
 		return $this->parentClass;
@@ -523,8 +513,8 @@ class ClassObject extends AbstractObject {
 	public function getInfo() {
 		$infoArray = array();
 		$infoArray['className'] = $this->getName();
-		$infoArray['nameSpace'] = $this->getNameSpace();
-		$infoArray['parentClass'] = $this->getParentClass();
+		$infoArray['nameSpace'] = $this->getNamespaceName();
+		$infoArray['parentClass'] = $this->getParentClassName();
 		$infoArray['fileName'] = $this->getFileName();
 
 		$methodArray = array();
@@ -548,13 +538,109 @@ class ClassObject extends AbstractObject {
 	}
 
 	public function addAliasDeclaration($alias) {
-		if(!in_array($alias, $this->aliasDeclarations)) {
+		if (!in_array($alias, $this->aliasDeclarations)) {
 			$this->aliasDeclarations[] = $alias;
 		}
 	}
 
 	public function getAliasDeclarations() {
 		return $this->aliasDeclarations;
+	}
+
+	/**
+	 * Setter for interfaceNames
+	 *
+	 * @param array $interfaceNames interfaceNames
+	 * @return void
+	 */
+	public function setInterfaceNames($interfaceNames) {
+		$this->interfaceNames = $interfaceNames;
+	}
+
+	/**
+	 * Getter for interfaceNames
+	 *
+	 * @return array interfaceNames
+	 */
+	public function getInterfaceNames() {
+		return $this->interfaceNames;
+	}
+
+	/**
+	 * Adds a interface node, based on a string
+	 *
+	 * @param string $interfaceName
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+	 */
+	public function addInterfaceName($interfaceName) {
+		if (!in_array($interfaceName, $this->interfaceNames)) {
+			$this->interfaceNames[] = $interfaceName;
+		}
+		return $this;
+	}
+
+	/**
+	 * @param string $interfaceName
+	 * @return bool
+	 */
+	public function hasInterface($interfaceName) {
+		return in_array($interfaceName, $this->interfaceNames);
+	}
+
+	/**
+	 * @param $interfaceNameToRemove
+	 */
+	public function removeInterface($interfaceNameToRemove) {
+		$interfaceNames = array();
+		$interfaceNodes = array();
+		foreach ($this->interfaceNames as $interfaceName) {
+			if ($interfaceName != $interfaceNameToRemove) {
+				$interfaceNames[] = $interfaceName;
+			}
+		}
+		$this->interfaceNames = $interfaceNames;
+	}
+
+	public function removeAllInterfaces() {
+		$this->interfaceNames = array();
+	}
+
+	/**
+	 * Setter for parentClassName
+	 *
+	 * @param string $parentClassName
+	 * @return $this
+	 */
+	public function setParentClassName($parentClassName) {
+		$this->parentClassName = $parentClassName;
+		return $this;
+	}
+
+	/**
+	 * Getter for parentClass
+	 *
+	 * @return string parentClass
+	 */
+	public function getParentClassName() {
+		return $this->parentClassName;
+	}
+
+	/**
+	 * removes the parent class
+	 *
+	 * @return void
+	 */
+	public function removeParentClassName() {
+		$this->parentClassName = '';
+	}
+
+	/**
+	 * @return void
+	 */
+	public function resetAll() {
+		$this->constants = array();
+		$this->properties = array();
+		$this->methods = array();
 	}
 
 }

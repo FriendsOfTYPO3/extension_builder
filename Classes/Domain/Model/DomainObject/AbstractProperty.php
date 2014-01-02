@@ -62,6 +62,11 @@ abstract class AbstractProperty {
 	protected $defaultValue;
 
 	/**
+	 * @var
+	 */
+	protected $value;
+
+	/**
 	 * Is an upload folder required for this property
 	 *
 	 * @var boolean
@@ -438,5 +443,21 @@ abstract class AbstractProperty {
 			return $type;
 		}
 	}
+
+	/**
+	 * @param mixed $value
+	 */
+	public function setValue($value) {
+		$this->value = $value;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getValue() {
+		return $this->value;
+	}
+
+
 
 }

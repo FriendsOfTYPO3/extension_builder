@@ -34,7 +34,7 @@ class TextProperty extends AbstractProperty {
 	 *
 	 * @var string
 	 */
-	protected $defaultValue = '\'\'';
+	protected $defaultValue = '';
 
 	public function getTypeForComment() {
 		return 'string';

@@ -33,7 +33,7 @@ class IntegerProperty extends AbstractProperty {
 	 *
 	 * @var string
 	 */
-	protected $defaultValue = '0';
+	protected $defaultValue = 0;
 
 	public function getTypeForComment() {
 		return 'integer';

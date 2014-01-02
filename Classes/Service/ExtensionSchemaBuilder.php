@@ -177,7 +177,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 				if (is_a($relation, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation')) {
 					$relation->setForeignKeyName(strtolower($localModelName) . count($existingRelations[$localModelName]));
 				}
-				if(is_a($relation, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation')) {
+				if (is_a($relation, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation')) {
 					$relation->setUseExtendedRelationTableName(TRUE);
 				}
 			}
@@ -205,22 +205,22 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		// vendorName
 		$extension->setVendorName(trim($propertyConfiguration['vendorName']));
 
-		if($propertyConfiguration['emConf']['disableVersioning']) {
+		if ($propertyConfiguration['emConf']['disableVersioning']) {
 			$extension->setSupportVersioning(FALSE);
 		}
 
-		if($propertyConfiguration['emConf']['disableLocalization']) {
+		if ($propertyConfiguration['emConf']['disableLocalization']) {
 			$extension->setSupportLocalization(FALSE);
 		}
 
 		// various extension properties
 		$extension->setVersion($propertyConfiguration['emConf']['version']);
 
-		if(!empty($propertyConfiguration['emConf']['dependsOn'])) {
+		if (!empty($propertyConfiguration['emConf']['dependsOn'])) {
 			$dependencies = array();
 			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",$propertyConfiguration['emConf']['dependsOn']);
 			foreach($lines as $line) {
-				if(strpos($line, '=>')) {
+				if (strpos($line, '=>')) {
 					list($extensionKey,$version) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>',$line);
 					$dependencies[$extensionKey] = $version;
 				}
@@ -228,7 +228,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			$extension->setDependencies($dependencies);
 		}
 
-		if(!empty($propertyConfiguration['emConf']['targetVersion'])) {
+		if (!empty($propertyConfiguration['emConf']['targetVersion'])) {
 			$extension->setTargetVersion(floatval($propertyConfiguration['emConf']['targetVersion']));
 		}
 

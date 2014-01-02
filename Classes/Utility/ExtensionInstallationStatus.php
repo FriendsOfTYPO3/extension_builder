@@ -69,16 +69,16 @@ class ExtensionInstallationStatus {
 		$sqlFile = $this->extension->getExtensionDir().'ext_tables.sql';
 		if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($this->extension->getExtensionKey()) && file_exists($sqlFile)) {
 			$this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
-			$installToolSqlParser = $this->objectManager->get('TYPO3\\CMS\\Install\\Sql\\SchemaMigrator');
+			/* @var \TYPO3\CMS\Install\Service\SqlSchemaMigrationService $sqlHandler */
+			$sqlHandler = $this->objectManager->get('TYPO3\\CMS\\Install\\Service\\SqlSchemaMigrationService');
 			$sqlContent = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl($sqlFile);
 			$GLOBALS['typo3CacheManager']->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
 			$sqlContent .= \TYPO3\CMS\Core\Cache\Cache::getDatabaseTableDefinitions();
-			$fieldDefinitionsFromFile = $installToolSqlParser->getFieldDefinitions_fileContent($sqlContent);
+			$fieldDefinitionsFromFile = $sqlHandler->getFieldDefinitions_fileContent($sqlContent);
 			if (count($fieldDefinitionsFromFile)) {
-				$fieldDefinitionsFromCurrentDatabase = $installToolSqlParser->getFieldDefinitions_database();
-				$diff = $installToolSqlParser->getDatabaseExtra($fieldDefinitionsFromFile, $fieldDefinitionsFromCurrentDatabase);
-				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('diff','extension_builder',0,$diff);
-				if(!empty($diff['extra']) || !empty($diff['diff']) || !empty($diff['diff_currentValues'])) {
+				$fieldDefinitionsFromCurrentDatabase = $sqlHandler->getFieldDefinitions_database();
+				$updateTableDefinition = $sqlHandler->getDatabaseExtra($fieldDefinitionsFromFile, $fieldDefinitionsFromCurrentDatabase);
+				if (!empty($updateTableDefinition['extra']) || !empty($updateTableDefinition['diff']) || !empty($updateTableDefinition['diff_currentValues'])) {
 					return TRUE;
 				}
 			}
