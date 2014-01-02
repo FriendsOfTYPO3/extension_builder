@@ -51,6 +51,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase
 <f:if condition="{f:count(subject:domainObject.properties)} > 0">
 <f:then>
 <f:for each="{domainObject.properties}" as="property">
+
 	/**
 	 * @test
 	 */
@@ -80,7 +81,12 @@ class {domainObject.name}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase
 			$newObjectStorage,
 			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
 		);
-</f:then><f:else><f:if condition="{k:matchString(match:extension.extensionKey, in:property.unqualifiedType)}">
+</f:then><f:else><f:if condition="{property.foreignModel}">
+		$this->assertEquals(
+			NULL,
+			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
+		);
+</f:if><f:if condition="{k:matchString(match:'DateTime', in:property.unqualifiedType)}">
 		$this->assertEquals(
 			NULL,
 			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
@@ -135,12 +141,21 @@ class {domainObject.name}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase
 			'{property.name}',
 			$this->subject
 		);
-</f:then><f:else><f:if condition="{k:matchString(match:extension.extensionKey, in:property.unqualifiedType)}">
-		$dummyObject = new {f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"ObjectStorageContaining{property.foreignModelName)}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}();
-		$this->subject->set{property.name -> k:format.uppercaseFirst()}($dummyObject);
+</f:then><f:else><f:if condition="{property.foreignModel}">
+		${property.name}Fixture = new {f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"ObjectStorageContaining{property.foreignModelName)}", else:"{property.foreignModel.fullQualifiedClassName}")}();
+		$this->subject->set{property.name -> k:format.uppercaseFirst()}(${property.name}Fixture);
 
 		$this->assertAttributeEquals(
-			$dummyObject,
+			${property.name}Fixture,
+			'{property.name}',
+			$this->subject
+		);
+</f:if><f:if condition="{k:matchString(match:'DateTime', in:property.unqualifiedType)}">
+		$dateTimeFixture = new \DateTime();
+		$this->subject->set{property.name -> k:format.uppercaseFirst()}($dateTimeFixture);
+
+		$this->assertAttributeEquals(
+			$dateTimeFixture,
 			'{property.name}',
 			$this->subject
 		);
@@ -177,4 +192,3 @@ class {domainObject.name}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase
 		$this->markTestIncomplete();
 	}</f:else></f:if>
 }
-?>
