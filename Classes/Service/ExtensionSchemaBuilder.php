@@ -102,7 +102,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 						$tableName = $classSettings['tableName'];
 					} else {
 						// we use the default table name
-						$tableName = Tx_ExtensionBuilder_Utility_Tools::parseTableNameFromClassName($domainObject->getParentClass());
+						$tableName =  \EBT\ExtensionBuilder\Utility\Tools::parseTableNameFromClassName($domainObject->getParentClass());
 					}
 					if (!isset($GLOBALS['TCA'][$tableName])) {
 						throw new \Exception('Table definitions for table ' . $tableName . ' could not be loaded. You can only map to tables with existing TCA or extend classes of installed extensions!');
