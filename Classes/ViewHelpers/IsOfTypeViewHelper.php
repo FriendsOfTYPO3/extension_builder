@@ -1,6 +1,7 @@
 <?php
+namespace EBT\ExtensionBuilder\ViewHelpers;
 /*                                                                        *
- * This script belongs to the TYPO3 package "Extension Builder".                  *
+ * This script belongs to the TYPO3 package "Extension Builder".          *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -32,11 +33,8 @@
  * Output:
  * TextWithMixedCase
  *
- * @version $Id: $
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
- * @scope prototype
  */
-class Tx_ExtensionBuilder_ViewHelpers_IsOfTypeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class IsOfTypeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * Checks if $object is of type $type and returns TRUE or FALSE respectively
@@ -45,7 +43,7 @@ class Tx_ExtensionBuilder_ViewHelpers_IsOfTypeViewHelper extends \TYPO3\CMS\Flui
 	 * @return boolean TRUE or FALSE
 	 */
 	public function render($object, $type) {
-		return is_a($object, 'Tx_ExtensionBuilder_Domain_Model_' . $type);
+		return is_a($object, 'EBT\\ExtensionBuilder\\Domain\\Model\\' . $type);
 	}
 
 }

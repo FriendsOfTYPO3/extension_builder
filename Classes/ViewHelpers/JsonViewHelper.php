@@ -45,7 +45,7 @@ class JsonViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 		else {
 			$content = json_encode($content);
 			if ($arraysAsPhpNotation) {
-				$content = Tx_ExtensionBuilder_Utility_Tools::convertJSONArrayToPHPArray($content);
+				$content = \EBT\ExtensionBuilder\Utility\SpycYAMLParser::convertJSONArrayToPHPArray($content);
 			}
 			return $content;
 		}

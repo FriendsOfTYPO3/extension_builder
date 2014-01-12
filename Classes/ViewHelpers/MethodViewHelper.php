@@ -37,7 +37,6 @@ class MethodViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
 	 */
 	public function render($methodObject, $renderElement) {
 		$content = '';
-		//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog(serialize($methodObject), $renderElement);
 		switch ($renderElement) {
 			case 'parameter'		:
 				$content = $this->renderMethodParameter($methodObject);
@@ -47,7 +46,8 @@ class MethodViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
 	}
 
 	/**
-	 * This methods renders the parameters of a method, including typeHints and default values.
+	 * This methods renders the parameters of a method,
+	 * including typeHints and default values.
 	 *
 	 * @param \EBT\ExtensionBuilder\Reflection\MethodReflection $methodObject
 	 * @return string parameters
@@ -72,7 +72,7 @@ class MethodViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
 						if (!empty($defaultValue)) {
 							$defaultValue = json_encode($defaultValue);
 							// now we render php notation from JSON notation
-							$defaultValue = Tx_ExtensionBuilder_Utility_Tools::convertJSONArrayToPHPArray($defaultValue);
+							$defaultValue = \EBT\ExtensionBuilder\Utility\SpycYAMLParser::convertJSONArrayToPHPArray($defaultValue);
 
 							//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('default Value: '. $defaultValue, 'parameter debug');
 						} else {

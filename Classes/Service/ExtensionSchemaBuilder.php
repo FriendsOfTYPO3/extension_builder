@@ -292,7 +292,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 *
 	 * @param array $personValues
-	 * @return Tx_ExtensionBuilder_Domain_Model_Person
+	 * @return \EBT\ExtensionBuilder\Domain\Model\Person
 	 */
 	protected function buildPerson($personValues) {
 		$person = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Person');
