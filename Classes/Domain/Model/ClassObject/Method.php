@@ -60,7 +60,8 @@ class Method extends AbstractObject {
 
 			}
 			if (empty($this->tags)) {
-				// strange behaviour in php ReflectionProperty->getDescription(). A backslash is added to the description
+				// strange behaviour in php ReflectionProperty->getDescription().
+				// A backslash is added to the description
 				$this->description = str_replace("\n/", '', $this->description);
 				$this->description = trim($this->description);
 				//$this->setTag('return','void');
@@ -99,7 +100,7 @@ class Method extends AbstractObject {
 
 	/**
 	 * getter for parameters
-	 * @return array parameters
+	 * @return MethodParameter[]
 	 */
 	public function getParameters() {
 		return $this->parameters;
@@ -121,10 +122,10 @@ class Method extends AbstractObject {
 
 	/**
 	 * adder for parameters
-	 * @param array $parameters of type EBT\ExtensionBuilder\Reflection\ParameterReflection
+	 * @param MethodParameter[] $parameters
 	 * @return void
 	 */
-	public function setParameters($parameters) {
+	public function setParameters(array $parameters) {
 		foreach ($parameters as $parameter) {
 			$methodParameter = new MethodParameter($parameter->getName(), $parameter);
 			$this->parameters[$methodParameter->getPosition()] = $methodParameter;
@@ -134,10 +135,10 @@ class Method extends AbstractObject {
 
 	/**
 	 * setter for a single parameter
-	 * @param array $parameter
+	 * @param MethodParameter $parameter
 	 * @return void
 	 */
-	public function setParameter($parameter) {
+	public function setParameter(MethodParameter $parameter) {
 		if (!in_array($parameter->getName(), $this->getParameterNames())) {
 			$this->parameters[$parameter->getPosition()] = $parameter;
 		}

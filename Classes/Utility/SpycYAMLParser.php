@@ -113,7 +113,7 @@ class SpycYAMLParser {
 	 * @param string $input Path of YAML file or string containing YAML
 	 */
 	public static function YAMLLoad($input) {
-		$Spyc = new Tx_ExtensionBuilder_Utility_SpycYAMLParser;
+		$Spyc = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 		return $Spyc->__load($input);
 	}
 
@@ -162,7 +162,7 @@ class SpycYAMLParser {
 	 * @param int $wordwrap Pass in 0 for no wordwrap, false for default (40)
 	 */
 	public static function YAMLDump($array, $indent = false, $wordwrap = false) {
-		$spyc = new Tx_ExtensionBuilder_Utility_SpycYAMLParser;
+		$spyc = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 		return $spyc->dump($array, $indent, $wordwrap);
 	}
 

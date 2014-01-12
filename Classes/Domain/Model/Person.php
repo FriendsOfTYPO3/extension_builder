@@ -27,7 +27,6 @@ namespace EBT\ExtensionBuilder\Domain\Model;
 /**
  * A person participating in the project somehow (i.e. as a developer).
  *
- * @version $ID:$
  */
 
 class Person {
@@ -54,7 +53,7 @@ class Person {
 	 * The Persons role.
 	 *
 	 * @var string
-	 * @see Tx_ExtensionBuilder_Domain_Model_Person::ROLES
+	 * @see \EBT\ExtensionBuilder\Domain\Model\Person::ROLES
 	 */
 	protected $role = '';
 
