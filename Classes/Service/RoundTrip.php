@@ -451,7 +451,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 			$fileName = CodeGenerator::getFolderForClassFile($extensionDir, 'Repository', FALSE) . $oldDomainObject->getName() . 'Repository.php';
 			if (file_exists($fileName)) {
 				include_once($fileName);
-				$className = $oldDomainObject->getFullQualifiedDomainRepositoryClassName();
+				$className = $oldDomainObject->getFullyQualifiedDomainRepositoryClassName();
 				$this->classObject = $this->classParser->parse($className);
 				$this->classObject->setName($currentDomainObject->getName() . 'Repository');
 				$this->classObject->setParentClass('\\' . $this->classObject->getParentClass());
