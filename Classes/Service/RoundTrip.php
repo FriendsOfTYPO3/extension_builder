@@ -130,7 +130,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 		$this->extensionDirectory = $this->extension->getExtensionDir();
 
 		if (!$this->classParser instanceof \EBT\ExtensionBuilder\Utility\ClassParser) {
-			$this->injectClassParser(\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('\EBT\ExtensionBuilder\Utility\ClassParser'));
+			$this->injectClassParser(\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Utility\\ClassParser'));
 		}
 		$this->settings = $this->configurationManager->getExtensionBuilderSettings();
 		// defaults

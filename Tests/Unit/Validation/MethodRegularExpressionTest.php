@@ -34,7 +34,7 @@ class MethodRegularExpressionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	protected $classParser;
 
 	public function setUp() {
-		$this->classParser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('\EBT\ExtensionBuilder\Utility\ClassParser');
+		$this->classParser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Utility\\ClassParser');
 	}
 
 	/**
