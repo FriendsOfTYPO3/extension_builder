@@ -61,7 +61,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return \EBT\ExtensionBuilder\Domain\Model\Extension $extension
 	 */
 	public function build(array $extensionBuildConfiguration) {
-		$extension = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('\EBT\ExtensionBuilder\Domain\Model\Extension');
+		$extension = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Extension');
 		$globalProperties = $extensionBuildConfiguration['properties'];
 		if (!is_array($globalProperties)) {
 			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Error: Extension properties not submitted! ' . $extension->getOriginalExtensionKey(), 'builder', 3, $globalProperties);
