@@ -3,6 +3,7 @@
 
 // Clone function for all objects. From: http://my.opera.com/GreyWyvern/blog/show.dml/1725165
 // This is needed for function renderForm() in wireit/js/util/inputex/FormContainer-beta.js, where the option object needs to be cloned
+/**
 Object.prototype.cloneObject = function() {
 	var newObj = (this instanceof Array) ? [] : {};
 	for (i in this) {
@@ -13,6 +14,24 @@ Object.prototype.cloneObject = function() {
 	}
 	return newObj;
 };
+ */
+
+/**
+ * extending objects prototype causes error in ExtJS
+ * since there is an unfiltered for key in object call...
+ * @param obj
+ * @returns {Array}
+ */
+function cloneObject(obj) {
+	var newObj = (obj instanceof Array) ? [] : {};
+	for (var i in obj) {
+		if (i == 'cloneObject') continue;
+		if (obj[i] && typeof obj[i] == "object") {
+			newObj[i] = cloneObject(obj[i]);
+		} else newObj[i] = obj[i];
+	}
+	return newObj;
+}
 
 
 /**
@@ -58,7 +77,7 @@ YAHOO.lang.extend(WireIt.FormContainer, WireIt.Container, {
 
 		// IS:
 		// Clone field options, so we have our own copy here.
-		this.options = this.options.cloneObject();
+		this.options = cloneObject(this.options);
 
 		this.setBackReferenceOnFieldOptionsRecursively(this.options.fields);
 
