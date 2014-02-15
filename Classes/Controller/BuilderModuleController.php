@@ -174,6 +174,9 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 				case 'listWirings':
 					$response = $this->rpcAction_list();
 					break;
+				case 'updateDb':
+					$response = $this->rpcAction_performDbUpdate();
+					break;
 				default:
 					$response = array('error' => 'Sub Action not found.');
 			}
@@ -260,6 +263,9 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 				$message .= '<br />Notice: File upload is not yet implemented.';
 			}
 			$result = array('success' => $message);
+			if($this->extensionInstallationStatus->isDbUpdateNeeded()) {
+				$result['confirmUpdate'] = TRUE;
+			}
 		} catch (\Exception $e) {
 			throw $e;
 		}
@@ -306,10 +312,16 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 				}
 				return array(
 					'confirm' => '<span style="color:red">Warning!</span></br>' . $confirmMessage,
-					'confirmFieldName' => 'allow' . $errorCode);
+					'confirmFieldName' => 'allow' . $errorCode
+				);
 			}
 		}
 		return array();
+	}
+
+	protected function rpcAction_performDbUpdate() {
+		$params = $this->configurationManager->getParamsFromRequest();
+		return $this->extensionInstallationStatus->performDbUpdates($params);
 	}
 
 }

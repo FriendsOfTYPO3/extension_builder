@@ -119,15 +119,24 @@
 		this.confirmPanel.setBody("<div id='wireEditorConfirmMessageBox'></div><button id='confirmPanelButton'>Ok</button>&nbsp;&nbsp;<button id='confirmPanelCancelButton'>Cancel</button>");
 		this.confirmPanel.render(document.body);
 
+		this.confirmUpdatesPanel = new widget.Panel('confirmUpdatesPanel', {
+			fixedcenter: true,
+			draggable: true,
+			visible: false,
+			modal: true
+		});
+		this.confirmUpdatesPanel.setBody("<div id='wireEditorConfirmUpdatesMessageBox'></div><button id='confirmUpdatePanelButton'>Ok</button>&nbsp;&nbsp;<button id='confirmUpdatePanelCancelButton'>Cancel</button>");
+		this.confirmUpdatesPanel.render(document.body);
+
 		this.showSpinnerPanel = new YAHOO.widget.Panel("wait",
-													   { width:"240px",
-														   fixedcenter:true,
-														   close:true,
-														   draggable:false,
-														   zindex:4,
-														   modal:true,
-														   visible:false
-													   }
+			{ width:"240px",
+				fixedcenter:true,
+				close:true,
+				draggable:false,
+				zindex:4,
+				modal:true,
+				visible:false
+			}
 		);
 
 		this.showSpinnerPanel.setHeader("Saving, please wait...");
@@ -323,7 +332,7 @@
 		 * WiringEditor uses a SMD to connect to the backend
 		 * @method loadSMD
 		 */
-		loadSMD: function() {
+			loadSMD: function() {
 
 			this.service = new YAHOO.rpc.Service(this.options.smdUrl, {
 				success: this.onSMDsuccess,
@@ -423,11 +432,18 @@
 		 */
 		saveModuleSuccess: function(o) {
 			this.showSpinnerPanel.hide();
-
+			console.log(o);
 			if (typeof o.confirm != 'undefined') {
 				title = 'Please confirm';
 				message = o.confirm;
 				this.confirm(title, message, o.confirmFieldName);
+				return;
+			}
+
+			if (typeof o.confirmUpdate != 'undefined') {
+				title = 'Success';
+				message = o.success;
+				this.confirmUpdates(title, message);
 				return;
 			}
 
@@ -473,6 +489,55 @@
 			Event.addListener('confirmPanelCancelButton', 'click', function() {
 				this.confirmPanel.hide();
 			}, this, true);
+		},
+
+		updateEventListenerAdded: false,
+
+		confirmUpdates: function(title, message) {
+			this.confirmPanel.setHeader(title);
+			Dom.get('wireEditorConfirmUpdatesMessageBox').innerHTML = message;
+			this.confirmUpdatesPanel.show();
+			if (!this.updateEventListenerAdded) {
+				Event.addListener(
+						'confirmUpdatePanelButton',
+						'click',
+						function() {
+							console.log('confirmUpdatePanelButton clicked');
+							this.confirmUpdatesPanel.hide();
+							this.performDbUpdates();
+						}, this, true);
+				Event.addListener('confirmUpdatePanelCancelButton', 'click', function() {
+					this.confirmUpdatesPanel.hide();
+				}, this, true);
+				this.updateEventListenerAdded = true;
+			}
+
+		},
+
+		performDbUpdates: function() {
+			var extensionProperties = this.propertiesForm.getValue();
+			var updateStatements = [];
+			Dom.getElementsBy(
+				function(el){
+					if (el.checked) {
+						updateStatements.push(el.value);
+					}
+				},
+				'input',
+				'confirmUpdatesPanel'
+			);
+
+			this.dataToSubmit.updateStatements = updateStatements;
+			this.dataToSubmit.extensionKey = extensionProperties.extensionKey;
+			this.dataToSubmit.vendorName = extensionProperties.vendorName;
+			console.log(this.service);
+			this.showSpinnerPanel.show();
+			this.service.updateDb(this.dataToSubmit, {
+				success: this.saveModuleSuccess,
+				failure: this.saveModuleFailure,
+				scope: this
+			});
+			this.updatePerformed  = true;
 		},
 
 		/**
