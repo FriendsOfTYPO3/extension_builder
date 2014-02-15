@@ -183,7 +183,20 @@ div.WireIt-InputExTerminal div.WireIt-Terminal {
 
 input.buttonreset,
 a.buttonreset {
-   border: none;
-   background-color: transparent;
-   margin-top:0px;
+	border: none;
+	background-color: transparent;
+	margin-top: 0px;
+}
+
+#confirmUpdatesPanel {
+	width:600px;
+	max-height:400px
+}
+
+#dbUpdateStatementsWrapper {
+	max-height: 400px;
+	overflow: scroll;
+	box-shadow: inset 2px 2px 6px 0px #999;
+	margin-top: 15px;
+	padding: 18px 10px;
 }

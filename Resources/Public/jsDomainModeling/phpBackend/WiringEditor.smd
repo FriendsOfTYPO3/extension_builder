@@ -32,8 +32,8 @@
          ]
       },
 
-      "deleteWiring" : {
-         "description": "Delete the module",
+      "updateDb" : {
+         "description": "Perform DB updates",
          "parameters": [
             {"name":"name","type":"string"},
             {"name":"language","type":"text"}

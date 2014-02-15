@@ -50,6 +50,11 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 		$this->inputData = json_decode($jsonString, TRUE);
 	}
 
+	public function getParamsFromRequest() {
+		$params = $this->inputData['params'];
+		return $params;
+	}
+
 	/**
 	 * reads the configuration from this->inputData
 	 * and returns it as array
