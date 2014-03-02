@@ -1,6 +1,6 @@
 #
 # Extension Builder settings for extension {extension.extensionKey}
-# generated <f:format.date>now</f:format.date>
+# generated <f:format.date format="Y-m-d">now</f:format.date>
 #
 # See http://www.yaml.org/spec/1.2/spec.html
 #
