@@ -69,8 +69,13 @@ class ExtensionInstallationStatus {
 		$sqlFile = $this->extension->getExtensionDir().'ext_tables.sql';
 		if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($this->extension->getExtensionKey()) && file_exists($sqlFile)) {
 			$this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
-			/* @var \TYPO3\CMS\Install\Service\SqlSchemaMigrationService $sqlHandler */
-			$sqlHandler = $this->objectManager->get('TYPO3\\CMS\\Install\\Service\\SqlSchemaMigrationService');
+			if (class_exists(\TYPO3\CMS\Install\Service\SqlSchemaMigrationService)) {
+				/* @var \TYPO3\CMS\Install\Service\SqlSchemaMigrationService $sqlHandler */
+				$sqlHandler = $this->objectManager->get('TYPO3\\CMS\\Install\\Service\\SqlSchemaMigrationService');
+			} else {
+				/* @var \TYPO3\CMS\Install\Sql\SchemaMigrator $sqlHandler */
+				$sqlHandler = $this->objectManager->get('TYPO3\\CMS\\Install\\Sql\\SchemaMigrator');
+			}
 			$sqlContent = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl($sqlFile);
 			$GLOBALS['typo3CacheManager']->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
 			$sqlContent .= \TYPO3\CMS\Core\Cache\Cache::getDatabaseTableDefinitions();
