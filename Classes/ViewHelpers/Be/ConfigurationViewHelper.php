@@ -67,7 +67,10 @@ class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBa
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/LayerMap.js');
 
 		$this->pageRenderer->addInlineSettingArray('extensionBuilder', array(
-																			'baseUrl' => $baseUrl
+																			'baseUrl' => $baseUrl,
+																			// To stay backwards compatible we hard code the Ajax URL here. Can be changed once compatibility for < 6.2 is dropped
+																			// 'wiringEditorSmdEndpointUrl' => \TYPO3\CMS\Backend\Utility\BackendUtility::getAjaxUrl('ExtensionBuilder::wiringEditorSmdEndpoint'),
+																			'wiringEditorSmdEndpointUrl' => 'ajax.php?ajaxID=ExtensionBuilder%3A%3AwiringEditorSmdEndpoint',
 																	   ));
 		$this->setLocallangSettings();
 

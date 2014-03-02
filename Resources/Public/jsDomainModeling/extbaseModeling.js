@@ -1,7 +1,7 @@
 var extbaseModeling_wiringEditorLanguage = {
 	parentEl: 'domainModelEditor',
 	languageName: "extbaseModeling",
-	smdUrl: TYPO3.settings.extensionBuilder.baseUrl + 'Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd',
+	smdUrl: TYPO3.settings.extensionBuilder.wiringEditorSmdEndpointUrl,
 	layerOptions: {
 	},
 	modules: []
