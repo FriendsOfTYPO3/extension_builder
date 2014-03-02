@@ -63,10 +63,10 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	function generateExtensionFromVersion3Configuration() {
 		//$this->markTestSkipped('Compatibility not yet possible');
 		$this->configurationManager = $this->getMock(
-			$this->buildAccessibleProxy('\EBT\ExtensionBuilder\Configuration\ConfigurationManager'),
+			$this->buildAccessibleProxy('EBT\ExtensionBuilder\Configuration\ConfigurationManager'),
 			array('dummy')
 		);
-		$this->extensionSchemaBuilder = $this->objectManager->get('\EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder');
+		$this->extensionSchemaBuilder = $this->objectManager->get('EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder');
 
 		$testExtensionDir = $this->fixturesPath . 'TestExtensions/test_extension_v3/';
 		$jsonFile = $testExtensionDir . \EBT\ExtensionBuilder\Configuration\ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
