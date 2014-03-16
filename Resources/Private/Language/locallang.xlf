@@ -270,6 +270,12 @@
 			<trans-unit id="descr_addStarttimeEndtimeFields">
 				<source>If set, the related records will have a startime and endtime as "enable" field</source>
 			</trans-unit>
+			<trans-unit id="enableCategorizable">
+				<source>Enable categorization?</source>
+			</trans-unit>
+			<trans-unit id="descr_enableCategorizable">
+				<source>If true, categorization in the backend is enabled for this model</source>
+			</trans-unit>
 			<trans-unit id="mapToTable">
 				<source>Map to existing table</source>
 			</trans-unit>

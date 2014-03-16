@@ -67,6 +67,7 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		$domainObject->setAddDeletedField($jsonDomainObject['objectsettings']['addDeletedField']);
 		$domainObject->setAddHiddenField($jsonDomainObject['objectsettings']['addHiddenField']);
 		$domainObject->setAddStarttimeEndtimeFields($jsonDomainObject['objectsettings']['addStarttimeEndtimeFields']);
+		$domainObject->setCategorizable($jsonDomainObject['objectsettings']['categorizable']);
 
 			// extended settings
 		if (!empty($jsonDomainObject['objectsettings']['mapToTable'])) {

@@ -89,4 +89,12 @@ $TCA['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.database
 <f:for each="{extension.tablesForTypeFieldDefinitions}" as="databaseTableName">
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('{databaseTableName}', $TCA['{databaseTableName}']['ctrl']['type'],'','after:' . $TCA['{databaseTableName}']['ctrl']['label']);
 </f:for>
+<f:for each="{extension.domainObjects}" as="domainObject">
+	<f:if condition="{domainObject.categorizable}">
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
+    $extensionKey,
+    '{domainObject.databaseTableName}'
+);
+	</f:if>
+</f:for>
 ?>
