@@ -64,6 +64,9 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		}
 		$domainObject->setAggregateRoot($jsonDomainObject['objectsettings']['aggregateRoot']);
 		$domainObject->setSorting($jsonDomainObject['objectsettings']['sorting']);
+		$domainObject->setAddDeletedField($jsonDomainObject['objectsettings']['addDeletedField']);
+		$domainObject->setAddHiddenField($jsonDomainObject['objectsettings']['addHiddenField']);
+		$domainObject->setAddStarttimeEndtimeFields($jsonDomainObject['objectsettings']['addStarttimeEndtimeFields']);
 
 			// extended settings
 		if (!empty($jsonDomainObject['objectsettings']['mapToTable'])) {

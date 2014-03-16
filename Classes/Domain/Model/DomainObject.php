@@ -62,6 +62,24 @@ class DomainObject {
 	protected $sorting;
 
 	/**
+	 * If TRUE, the related record has a "deleted" enable field
+	 * @var boolean
+	 */
+	protected $addDeletedField;
+
+	/**
+	 * If TRUE, the related record has a "hidden" enable field
+	 * @var boolean
+	 */
+	protected $addHiddenField;
+
+	/**
+	 * If TRUE, the related record has a "starttime/endtime" enable field
+	 * @var boolean
+	 */
+	protected $addStarttimeEndtimeFields;
+
+	/**
 	 * If TRUE, this is an entity. If FALSE, it is a ValueObject
 	 * @var boolean
 	 */
@@ -572,6 +590,48 @@ class DomainObject {
 	 */
 	public function getSorting() {
 		return $this->sorting;
+	}
+
+	/**
+	 * @param boolean $addDeletedField
+	 */
+	public function setAddDeletedField($AddDeletedField) {
+		$this->addDeletedField = $AddDeletedField;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getAddDeletedField() {
+		return $this->addDeletedField;
+	}
+
+	/**
+	 * @param boolean $addHiddenField
+	 */
+	public function setAddHiddenField($addHiddenField) {
+		$this->addHiddenField = $addHiddenField;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getAddHiddenField() {
+		return $this->addHiddenField;
+	}
+
+	/**
+	 * @param boolean $addStarttimeEndtimeFields
+	 */
+	public function setAddStarttimeEndtimeFields($addStarttimeEndtimeFields) {
+		$this->addStarttimeEndtimeFields = $addStarttimeEndtimeFields;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getAddStarttimeEndtimeFields() {
+		return $this->addStarttimeEndtimeFields;
 	}
 
 }

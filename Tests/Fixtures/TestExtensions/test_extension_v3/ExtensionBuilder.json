@@ -12,6 +12,9 @@
 			"objectsettings":{
 				"aggregateRoot":true,
 				"description":"",
+				"addDeletedField":true,
+				"addHiddenField":true,
+				"addStarttimeEndtimeFields":true,
 				"type":"Entity",
 				"uid":"877343797042"
 			},
@@ -90,6 +93,9 @@
 			"objectsettings":{
 				"aggregateRoot":false,
 				"description":"",
+				"addDeletedField":true,
+				"addHiddenField":true,
+				"addStarttimeEndtimeFields":true,
 				"type":"Entity",
 				"uid":"580070446343"
 			},
@@ -123,6 +129,9 @@
 			"objectsettings":{
 				"aggregateRoot":false,
 				"description":"",
+				"addDeletedField":true,
+				"addHiddenField":true,
+				"addStarttimeEndtimeFields":true,
 				"type":"Entity",
 				"uid":"1151927100825"
 			},
@@ -147,6 +156,9 @@
 			"objectsettings":{
 				"aggregateRoot":false,
 				"description":"",
+				"addDeletedField":true,
+				"addHiddenField":true,
+				"addStarttimeEndtimeFields":true,
 				"type":"Entity",
 				"uid":"803683251320"
 			},
@@ -180,6 +192,9 @@
 			"objectsettings":{
 				"aggregateRoot":false,
 				"description":"",
+				"addDeletedField":true,
+				"addHiddenField":true,
+				"addStarttimeEndtimeFields":true,
 				"type":"Entity",
 				"uid":"769202700442"
 			},

@@ -252,6 +252,24 @@
 			<trans-unit id="descr_enableSorting">
 				<source>If true, sorting in the backend is enabled</source>
 			</trans-unit>
+			<trans-unit id="addDeletedField">
+				<source>Add deleted field</source>
+			</trans-unit>
+			<trans-unit id="descr_addDeletedField">
+				<source>Deleting a record with "delete" field will not really delete the record, but just set the delete flag to true</source>
+			</trans-unit>
+			<trans-unit id="addHiddenField">
+				<source>Add hidden field</source>
+			</trans-unit>
+			<trans-unit id="descr_addHiddenField">
+				<source>The hidden field is an "enable" field. Only records which are not hidden will be displayed</source>
+			</trans-unit>
+			<trans-unit id="addStarttimeEndtimeFields">
+				<source>Add starttime/endtime fields</source>
+			</trans-unit>
+			<trans-unit id="descr_addStarttimeEndtimeFields">
+				<source>If set, the related records will have a startime and endtime as "enable" field</source>
+			</trans-unit>
 			<trans-unit id="mapToTable">
 				<source>Map to existing table</source>
 			</trans-unit>
