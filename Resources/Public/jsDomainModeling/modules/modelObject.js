@@ -68,6 +68,33 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								}
 							},
 							{
+								type: "boolean",
+								inputParams: {
+									name: "addDeletedField",
+									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.addDeletedField,
+									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_addDeletedField,
+									value: true
+								}
+							},
+							{
+								type: "boolean",
+								inputParams: {
+									name: "addHiddenField",
+									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.addHiddenField,
+									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_addHiddenField,
+									value: true
+								}
+							},
+							{
+								type: "boolean",
+								inputParams: {
+									name: "addStarttimeEndtimeFields",
+									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.addStarttimeEndtimeFields,
+									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_addStarttimeEndtimeFields,
+									value: true
+								}
+							},
+							{
 								type: "text",
 								inputParams: {
 									name: "description",

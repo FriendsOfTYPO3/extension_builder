@@ -60,13 +60,12 @@ $TCA['{domainObject.databaseTableName}'] = array(
 		'origUid' => 't3_origuid',
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
-		'transOrigDiffSourceField' => 'l10n_diffsource',
-</f:if>
-		'delete' => 'deleted',
+		'transOrigDiffSourceField' => 'l10n_diffsource',</f:if>
+<f:if condition="{domainObject.addDeletedField}">		'delete' => 'deleted',</f:if>
 		'enablecolumns' => array(
-			'disabled' => 'hidden',
-			'starttime' => 'starttime',
-			'endtime' => 'endtime',
+<f:if condition="{domainObject.addHiddenField}">			'disabled' => 'hidden',</f:if>
+<f:if condition="{domainObject.addStarttimeEndtimeFields}">			'starttime' => 'starttime',
+			'endtime' => 'endtime',</f:if>
 		),
 		'searchFields' => '<f:for each="{domainObject.properties}" as="property">{property.fieldName},</f:for>',
 		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/{domainObject.name}.php',

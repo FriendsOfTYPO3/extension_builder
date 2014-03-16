@@ -9,10 +9,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['{domainObject.databaseTableName}'] = array(
 	'ctrl' => $TCA['{domainObject.databaseTableName}']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => '<f:if condition="{extension.supportLocalization}">sys_language_uid, l10n_parent, l10n_diffsource, </f:if>hidden<f:for each="{domainObject.properties}" as="property">, {property.fieldName}</f:for>',
+		'showRecordFieldList' => '<f:if condition="{extension.supportLocalization}">sys_language_uid, l10n_parent, l10n_diffsource</f:if><f:if condition="{domainObject.addHiddenField}">, hidden</f:if><f:for each="{domainObject.properties}" as="property" iteration="i">, {property.fieldName}</f:for>',
 	),
 	'types' => array(
-		'1' => array('showitem' => '<f:if condition="{extension.supportLocalization}">sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, </f:if>hidden;;1<f:for each="{domainObject.properties}" as="property">, {property.fieldName}</f:for>,--div--;LLL:EXT:cms/locallang_ttc.{locallangFileFormat}:tabs.access,starttime, endtime'),
+		'1' => array('showitem' => '<f:if condition="{extension.supportLocalization}">sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource</f:if><f:if condition="{domainObject.addHiddenField}">, hidden;;1</f:if><f:for each="{domainObject.properties}" as="property" iteration="i">, {property.fieldName}</f:for>, --div--;LLL:EXT:cms/locallang_ttc.{locallangFileFormat}:tabs.access<f:if condition="{domainObject.addStarttimeEndtimeFields}">, starttime, endtime</f:if>'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -61,14 +61,14 @@ $TCA['{domainObject.databaseTableName}'] = array(
 			)
 		),
 	</f:if>
-		'hidden' => array(
+<f:if condition="{domainObject.addHiddenField}">		'hidden' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.{locallangFileFormat}:LGL.hidden',
 			'config' => array(
 				'type' => 'check',
 			),
-		),
-		'starttime' => array(
+		),</f:if>
+<f:if condition="{domainObject.addStarttimeEndtimeFields}">		'starttime' => array(
 			'exclude' => 1,
 			'l10n_mode' => 'mergeIfNotBlank',
 			'label' => 'LLL:EXT:lang/locallang_general.{locallangFileFormat}:LGL.starttime',
@@ -99,7 +99,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
 				),
 			),
-		),<f:for each="{domainObject.properties}" as="property">
+		),</f:if><f:for each="{domainObject.properties}" as="property">
 		'{property.fieldName}' => array(
 			'exclude' => <f:if condition="{property.excludeField}"><f:then>1</f:then><f:else>0</f:else></f:if>,
 			'label' => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.{locallangFileFormat}:{property.labelNamespace}',
