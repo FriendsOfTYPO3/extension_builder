@@ -80,6 +80,12 @@ class DomainObject {
 	protected $addStarttimeEndtimeFields;
 
 	/**
+	 * If TRUE, the element is categorizable in the TYPO3 backend
+	 * @var boolean
+	 */
+	protected $categorizable;
+
+	/**
 	 * If TRUE, this is an entity. If FALSE, it is a ValueObject
 	 * @var boolean
 	 */
@@ -619,6 +625,13 @@ class DomainObject {
 	}
 
 	/**
+	 * @param boolean $categorizable
+	 */
+	public function setCategorizable($categorizable) {
+		$this->categorizable = $categorizable;
+	}
+
+	/**
 	 * @return boolean
 	 */
 	public function getAddDeletedField() {
@@ -651,6 +664,13 @@ class DomainObject {
 	 */
 	public function getAddStarttimeEndtimeFields() {
 		return $this->addStarttimeEndtimeFields;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getCategorizable() {
+		return $this->categorizable;
 	}
 
 }

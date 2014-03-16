@@ -100,6 +100,16 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								}
 							},
 							{
+								type: "boolean",
+								inputParams: {
+									name: "categorizable",
+									advancedMode: true,
+									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.enableCategorizable,
+									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_enableCategorizable,
+									value: false
+								}
+							},
+							{
 								type: "text",
 								inputParams: {
 									name: "description",
@@ -392,8 +402,8 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 														wirable: true,
 														className: 'terminalFieldWrap',
 														ddConfig: {
-													 		type: "input",
-													 		allowedTypes: ["output", "input"]
+															type: "input",
+															allowedTypes: ["output", "input"]
 														}
 													}
 												},

@@ -62,6 +62,15 @@ CREATE TABLE {tableName} (
 );
       </f:if>
    </f:groupedFor>
+   <f:if condition="{domainObject.categorizable}">
+#
+# Table structure for table '{domainObject.databaseTableName}'
+#
+CREATE TABLE {domainObject.databaseTableName} (
+	categories int(11) unsigned DEFAULT '0' NOT NULL,
+);
+   </f:if>
+
    <f:for each="{domainObject.anyToManyRelationProperties}" as="relation">
       <f:if condition="{relation.useMMTable}">
 #
