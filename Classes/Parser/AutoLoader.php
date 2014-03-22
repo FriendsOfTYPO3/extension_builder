@@ -48,12 +48,12 @@ class AutoLoader {
     */
     static public function autoload($class){
 		if (0 === strpos($class, '\\EBT\\ExtensionBuilder\\Parser')) {
-			$file = dirname(__FILE__) . '/'  . strtr(str_replace('EBT\\ExtensionBuilder\\Parser', '', $class), '\\', '/') . '.php';
+			$file = static::getCurrentDirectoryName() . '/'  . strtr(str_replace('EBT\\ExtensionBuilder\\Parser', '', $class), '\\', '/') . '.php';
 			if (is_file($file)) {
 				require $file;
 			}
 		} elseif (0 === strpos($class, 'PHPParser_')) {
-			$file =  str_replace('Classes/Parser', '', dirname(__FILE__)) . 'Resources/Private/PHP/PHP-Parser/lib/'  . strtr($class, '_', '/') . '.php';
+			$file =  str_replace('Classes/Parser', '', static::getCurrentDirectoryName()) . 'Resources/Private/PHP/PHP-Parser/lib/'  . strtr($class, '_', '/') . '.php';
 			if (is_file($file)) {
 				require $file;
 			} else {
@@ -61,5 +61,9 @@ class AutoLoader {
 			}
 		}
     }
+
+	static protected function getCurrentDirectoryName() {
+		return str_replace('\\', '/', dirname(__FILE__));
+	}
 }
 
