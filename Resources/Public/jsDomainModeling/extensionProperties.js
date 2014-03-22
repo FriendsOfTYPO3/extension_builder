@@ -314,7 +314,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 		inputParams: {
 			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.backendModules,
 			name: "backendModules",
-			className: 'bottomBorder',
+			className: 'bottomBorder mainGroup',
 			sortable: true,
 			elementType: {
 				type: "group",
