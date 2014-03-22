@@ -17,28 +17,28 @@
 	</style>
 	<div class="typo3-fullDoc">
 		<div id="typo3-docheader">
-			<div id="typo3-docheader-row1">
-				<div class="buttonsleft">
-					<f:render section="iconButtons" />
-				</div>
-				<div class="buttonsright">
-					<a id="opennewwindow" href="" onclick="ebtbeWin=window.open(window.location.href,'domainModeling','width=790,status=0,menubar=1,resizable=1,location=0,scrollbars=1,toolbar=0');domainModeling.focus();return false;" accesskey="n">
-							<img src="sysext/t3skin/icons/gfx/open_in_new_window.gif" width="16" height="16" title="In neuem Fenster öffnen" class="absmiddle" alt="">
-								Ope<span class="access-key">n</span> in separate window.</a>
-					<script type="text/javascript">/*<![CDATA[*/if (window.name === "domainModeling") { document.getElementById("opennewwindow").style.display = "none"; }/*]]>*/</script>
-					<f:be.buttons.shortcut />
-				</div>
-			</div>
-			<div id="typo3-docheader-row2">
-				<div class="docheader-row2-left">
+			<div class="typo3-docheader-functions">
+				<div class="left">
 					<f:be.buttons.csh />
 					<f:be.menus.actionMenu>
 						<f:be.menus.actionMenuItem label="Introduction" controller="BuilderModule" action="index" />
 						<f:be.menus.actionMenuItem label="Domain Modelling" controller="BuilderModule" action="domainmodelling"/>
 					</f:be.menus.actionMenu>
 				</div>
-				<div class="docheader-row2-right">
+				<div class="right">
 					<span class="logo">Extension Builder</span>
+				</div>
+			</div>
+			<div class="typo3-docheader-buttons">
+				<div class="left">
+					<f:render section="iconButtons" />
+				</div>
+				<div class="right">
+					<a id="opennewwindow" href="" onclick="ebtbeWin=window.open(window.location.href,'domainModeling','width=790,status=0,menubar=1,resizable=1,location=0,scrollbars=1,toolbar=0');domainModeling.focus();return false;" accesskey="n">
+							<img src="sysext/t3skin/icons/gfx/open_in_new_window.gif" width="16" height="16" title="In neuem Fenster öffnen" class="absmiddle" alt="">
+								Ope<span class="access-key">n</span> in separate window.</a>
+					<script type="text/javascript">/*<![CDATA[*/if (window.name === "domainModeling") { document.getElementById("opennewwindow").style.display = "none"; }/*]]>*/</script>
+					<f:be.buttons.shortcut />
 				</div>
 			</div>
 		</div>

@@ -2,16 +2,8 @@
 <k:openingTag>f:be.container</k:openingTag>
 	<div class="typo3-fullDoc">
 		<div id="typo3-docheader">
-			<div id="typo3-docheader-row1">
-				<div class="buttonsleft">
-
-				</div>
-				<div class="buttonsright">
-					<k:openingTag>f:be.buttons.shortcut /</k:openingTag>
-				</div>
-			</div>
-			<div id="typo3-docheader-row2">
-				<div class="docheader-row2-left">
+			<div class="typo3-docheader-functions">
+				<div class="left">
 					<k:openingTag>f:be.buttons.csh /</k:openingTag>
 					<k:openingTag>f:be.menus.actionMenu</k:openingTag>
 						<k:openingTag>f:be.menus.actionMenuItem label="Overview" controller="{domainObject.name}" action="list" /</k:openingTag>
@@ -24,9 +16,17 @@
 						</k:format.removeMultipleNewlines>
 					<k:openingTag>/f:be.menus.actionMenu</k:openingTag>
 				</div>
-				<div class="docheader-row2-right">
+				<div class="right">
 					<k:openingTag>f:be.pagePath /</k:openingTag>
 					<k:openingTag>f:be.pageInfo /</k:openingTag>
+				</div>
+			</div>
+			<div class="typo3-docheader-buttons">
+				<div class="left">
+
+				</div>
+				<div class="right">
+					<k:openingTag>f:be.buttons.shortcut /</k:openingTag>
 				</div>
 			</div>
 
