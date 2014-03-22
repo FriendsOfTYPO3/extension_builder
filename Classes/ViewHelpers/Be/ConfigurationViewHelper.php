@@ -66,12 +66,16 @@ class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBa
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/util/inputex/FormContainer-beta.js');
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/LayerMap.js');
 
-		$this->pageRenderer->addInlineSettingArray('extensionBuilder', array(
-																			'baseUrl' => $baseUrl,
-																			// To stay backwards compatible we hard code the Ajax URL here. Can be changed once compatibility for < 6.2 is dropped
-																			// 'wiringEditorSmdEndpointUrl' => \TYPO3\CMS\Backend\Utility\BackendUtility::getAjaxUrl('ExtensionBuilder::wiringEditorSmdEndpoint'),
-																			'wiringEditorSmdEndpointUrl' => 'ajax.php?ajaxID=ExtensionBuilder%3A%3AwiringEditorSmdEndpoint',
-																	   ));
+		$this->pageRenderer->addInlineSettingArray(
+			'extensionBuilder',
+			array('baseUrl' => $baseUrl)
+		);
+		// This call is only done for backwards compatibility for TYPO3 versions below 6.2
+		// It can be removed once compatibility for these versions is dropped as since 6.2 this is populated automatically
+		$this->pageRenderer->addInlineSettingArray(
+			'ajaxUrls',
+			array('ExtensionBuilder::wiringEditorSmdEndpoint' => 'ajax.php?ajaxID=ExtensionBuilder%3A%3AwiringEditorSmdEndpoint')
+		);
 		$this->setLocallangSettings();
 
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/WiringEditor.js');
