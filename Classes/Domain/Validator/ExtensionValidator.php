@@ -74,6 +74,11 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 	protected $configurationManager;
 
 	/**
+	 * @var boolean advancdedMode setting from extension_builder configuration
+	 */
+	protected $advancedMode = FALSE;
+
+	/**
 	 * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager
 	 * @return void
 	 */
@@ -94,6 +99,12 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 	 * @return boolean
 	 */
 	public function isValid($extension) {
+
+		$extSettings = $this->configurationManager->getSettings();
+
+		if(isset($extSettings['extConf']['advancedMode']) && $extSettings['extConf']['advancedMode'] == 1) {
+			$this->advancedMode = TRUE;
+		}
 
 		$this->validationResult = array('errors' => array(), 'warnings' => array());
 
@@ -418,16 +429,16 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 			$this->validateDomainObjectActions($domainObject);
 			$this->validateMapping($domainObject);
 		}
-		if ($actionCounter < 1) {
+		if ($actionCounter < 1 && !$this->advancedMode) {
 			if (count($extension->getBackendModules()) > 0) {
 				$this->validationResult['warnings'][] = new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException(
-					"Potential misconfiguration: No actions configured, this will result in a missing default action in your backend module",
+					"Potential misconfiguration: No actions configured!<br />This will result in a missing default action in your backend module",
 					self::ERROR_ACTION_MISCONFIGURATION
 				);
 			}
 			if (count($extension->getPlugins()) > 0) {
 				$this->validationResult['warnings'][] = new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException(
-					"Potential misconfiguration: No actions configured, this will result in a missing default action in your plugin",
+					"Potential misconfiguration: No actions configured!<br />This will result in a missing default action in your plugin",
 					self::ERROR_ACTION_MISCONFIGURATION
 				);
 			}
