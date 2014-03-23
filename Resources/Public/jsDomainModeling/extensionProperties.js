@@ -153,9 +153,11 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
                             label: TYPO3.settings.extensionBuilder._LOCAL_LANG.target_version,
                             description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_target_version,
                             selectOptions: [
-                                'TYPO3 v 6.0'
+                                'TYPO3 v 6.0',
+								'TYPO3 v 6.1',
+								'TYPO3 v 6.2'
                             ],
-                            selectValues: ["6.0"]
+                            selectValues: ["6.0","6.1","6.2"]
                         }
                     },
 					{
@@ -166,7 +168,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_dependsOn,
 							cols:20,
 							rows:6,
-							value : "extbase => 6.0\nfluid => 6.0\ntypo3 => 6.0\n"
+							value : "extbase => 6.2\nfluid => 6.2\ntypo3 => 6.2\n"
 						}
 					}
 			]

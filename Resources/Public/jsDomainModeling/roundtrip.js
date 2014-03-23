@@ -138,16 +138,7 @@ Ext.onReady(
                 for(i=0;i<dependencies.length;i++) {
                     parts = dependencies[i].split('=>');
                     if(parts.length==2) {
-                        if(parts[0].indexOf('fluid')> -1) {
-                            parts[1] = versionMap[target.value];
-                        }
-                        if(parts[0].indexOf('extbase')> -1) {
-                            parts[1] = versionMap[target.value];
-                        }
-                        if(parts[0].indexOf('typo3')> -1) {
-                           parts[1] = target.value;
-                        }
-                        updatedDependencies += parts[0] + '=> ' + parts[1] + "\n";
+                        updatedDependencies += parts[0] + '=> ' + target.value + "\n";
                     }
 
                 }
