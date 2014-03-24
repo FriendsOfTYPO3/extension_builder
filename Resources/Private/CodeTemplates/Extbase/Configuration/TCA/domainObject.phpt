@@ -2,17 +2,14 @@
 if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
-<f:if condition="{domainObject.mapToTable}"><f:then>
-<k:mapping domainObject="{domainObject}" renderCondition="isMappedToInternalTable">
-<f:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
-</k:mapping></f:then><f:else>
+<f:if condition="{domainObject.mapToTable}"><f:else>
 $TCA['{domainObject.databaseTableName}'] = array(
 	'ctrl' => $TCA['{domainObject.databaseTableName}']['ctrl'],
 	'interface' => array(
 		'showRecordFieldList' => '<f:if condition="{extension.supportLocalization}">sys_language_uid, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addHiddenField}">hidden, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}<f:if condition="{i.isLast}"><f:else>, </f:else></f:if></f:for>',
 	),
 	'types' => array(
-		'1' => array('showitem' => '<f:if condition="{extension.supportLocalization}">sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addHiddenField}">hidden;;1, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}, </f:for><f:if condition="{domainObject.addStarttimeEndtimeFields}">--div--;LLL:EXT:cms/locallang_ttc.{locallangFileFormat}:tabs.access, starttime, endtime</f:if>'),
+		<f:if condition="{domainObject.hasChildren}"><f:then>'{domainObject.recordType}'</f:then><f:else>'1'</f:else></f:if> => array('showitem' => '<f:if condition="{extension.supportLocalization}">sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addDeletedField}">hidden;;1, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}, </f:for><f:if condition="{domainObject.addStarttimeEndtimeFields}">--div--;LLL:EXT:cms/locallang_ttc.{locallangFileFormat}:tabs.access, starttime, endtime</f:if>'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -99,15 +96,9 @@ $TCA['{domainObject.databaseTableName}'] = array(
 					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
 				),
 			),
-		),</f:if><f:for each="{domainObject.properties}" as="property">
-		'{property.fieldName}' => array(
-			'exclude' => <f:if condition="{property.excludeField}"><f:then>1</f:then><f:else>0</f:else></f:if>,
-			'label' => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.{locallangFileFormat}:{property.labelNamespace}',
-			'config' => array(
-				<k:format.indent indentation="4"><f:render partial="TCA/{property.dataType}.phpt" arguments="{property: property,extension:extension,settings:settings,locallangFileFormat:locallangFileFormat}" /></k:format.indent>
-			),<f:if condition="{property.useRTE}">
-			'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts]',</f:if>
-		),</f:for><f:for each="{k:listForeignKeyRelations(extension: extension, domainObject: domainObject)}" as="relation">
+		),</f:if>
+		<k:format.indent indentation="1"><f:render partial="TCA/PropertiesDefinition.phpt" arguments="{domainObject:domainObject,settings:settings}"/></k:format.indent>
+		<f:for each="{k:listForeignKeyRelations(extension: extension, domainObject: domainObject)}" as="relation">
 		'{relation.foreignKeyName}' => array(
 			'config' => array(
 				'type' => 'passthrough',
@@ -117,8 +108,4 @@ $TCA['{domainObject.databaseTableName}'] = array(
 );
 
 </f:else></f:if>
-
-<f:for each="{domainObject.childObjects}" as="childObject">
-<f:render partial="TCA/Columns.phpt" arguments="{domainObject:childObject, settings:settings}" />
-</f:for>
 ?>

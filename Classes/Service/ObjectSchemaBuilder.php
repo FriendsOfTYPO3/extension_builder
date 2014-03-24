@@ -75,7 +75,6 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		if (!empty($jsonDomainObject['objectsettings']['parentClass'])) {
 			$domainObject->setParentClass($jsonDomainObject['objectsettings']['parentClass']);
 		}
-
 			// properties
 		if (isset($jsonDomainObject['propertyGroup']['properties'])) {
 

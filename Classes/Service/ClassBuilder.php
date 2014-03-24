@@ -388,7 +388,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		$propertyName = $domainProperty->getName();
 		// add (or update) a setter method
 		$setterMethodName = \EBT\ExtensionBuilder\Utility\Tools::getMethodName($domainProperty, 'set');
-		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Building setter method:' . $setterMethodName, 'extension_builder', 2);;
+		//\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Building setter method:' . $setterMethodName, 'extension_builder', 2);;
 		if ($this->classObject->methodExists($setterMethodName)) {
 			$setterMethod = $this->classObject->getMethod($setterMethodName);
 			//$setterMethodTags = $setterMethod->getTags();

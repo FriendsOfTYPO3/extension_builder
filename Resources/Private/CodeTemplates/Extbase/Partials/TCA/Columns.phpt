@@ -1,15 +1,6 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}
 <f:if condition="{domainObject.properties}">
-$tmp_{domainObject.extension.extensionKey}_columns = array(
-<f:for each="{domainObject.properties}" as="property">
-	'{property.fieldName}' => array(
-		'exclude' => <f:if condition="{property.excludeField}"><f:then>1</f:then><f:else>0</f:else></f:if>,
-		'label' => 'LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{property.labelNamespace}',
-		'config' => array(
-			<k:format.indent indentation="3"><f:render partial="TCA/{property.dataType}.phpt" arguments="{property: property,extension:domainObject.extension,settings:settings}" /></k:format.indent>
-		),<f:if condition="{property.useRTE}">
-		'defaultExtras' => 'richtext[]',</f:if>
-	),</f:for>
+$tmp_{domainObject.extension.extensionKey}_columns = array(<f:render partial="TCA/PropertiesDefinition.phpt" arguments="{domainObject:domainObject,settings:settings}"/>
 );
 <f:for each="{k:listForeignKeyRelations(extension: domainObject.extension, domainObject: domainObject)}" as="relation">
 $tmp_{domainObject.extension.extensionKey}_columns['{relation.foreignKeyName}'] = array(
@@ -19,9 +10,6 @@ $tmp_{domainObject.extension.extensionKey}_columns['{relation.foreignKeyName}'] 
 );</f:for>
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('{domainObject.databaseTableName}',$tmp_{domainObject.extension.extensionKey}_columns);
-</f:if>
-<f:if condition="{domainObject.mapToTable}">
-$TCA['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = array('LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}','{domainObject.recordType}');
 </f:if>
 <k:recordType domainObject="{domainObject}">
 $TCA['{domainObject.databaseTableName}']['types']['{domainObject.recordType}']['showitem'] = $TCA['{domainObject.databaseTableName}']['types']['{parentRecordType}']['showitem'];

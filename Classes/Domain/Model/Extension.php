@@ -385,59 +385,50 @@ class Extension {
 	}
 
 	/**
-	 * get all domainobjects that are mapped to existing tables
-	 * @return array|null
+	 * return tables that need a type field to enable
+	 * single table inheritance or mapping to an existing table
 	 */
-	public function getClassHierarchy() {
-		$classHierarchy = array();
-		foreach ($this->domainObjects as $domainObject) {
-			if ($domainObject->isSubclass()) {
-				$parentClass = $domainObject->getParentClass();
-				if (strpos($parentClass, '\\') === 0) {
-					$parentClass = substr($parentClass, 1);
-				}
-				if (!is_array($classHierarchy[$parentClass])) {
-					$classHierarchy[$parentClass] = array();
-				}
-				$classHierarchy[$parentClass][] = $domainObject;
+	public function getTablesForTypeFieldDefinitions() {
+		$tableNames = array();
+		foreach ($this->getDomainObjects() as $domainObject) {
+			if ($domainObject->isMappedToExistingTable() || $domainObject->getParentClass()) {
+				$tableNames[] = $domainObject->getMapToTable();
 			}
 		}
-		if (!empty($classHierarchy)) {
-			return $classHierarchy;
-		} else {
-			return NULL;
-		}
+		return array_unique($tableNames);
 	}
 
+	/**
+	 * needed to get the right order for models
+	 * extending other models parents have to be ordered before their children
+	 */
 	public function getDomainObjectsInHierarchicalOrder() {
 		$domainObjects = $this->getDomainObjects();
-		$classHierarchy = $this->getClassHierarchy();
-		for ($i = 0; $i < count($domainObjects); $i++) {
-			for ($j = 0; $j < count($domainObjects); $j++) {
-				if (isParentOf($domainObjects[$i], $domainObjects[$j], $classHierarchy)) {
-					$tmp = $domainObjects[$j];
-					$domainObjects[$j] = $domainObjects[$i];
-					$domainObjects[$i] = $tmp;
-				}
+		$sortByParent = function ($domainObject1, $domainObject2) {
+			if ($domainObject1->getParentClass() === $domainObject2->getFullQualifiedClassName()) {
+				return 1;
 			}
-		}
+			if ($domainObject2->getParentClass() === $domainObject1->getFullQualifiedClassName()) {
+				return -1;
+			}
+			return 0;
+		};
+		usort($domainObjects, $sortByParent);
+		return $domainObjects;
 	}
 
+	/**
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject1
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject2
+	 * @param array $classHierarchy
+	 * @return bool
+	 */
 	protected function isParentOf($domainObject1, $domainObject2, $classHierarchy) {
-		if (isset($classHierarchy[$domainObject1->getQualifiedClassName()])) {
-			foreach ($classHierarchy[$domainObject1->getQualifiedClassName()] as $subClass) {
-				if ($subClass->getQualifiedClassName() == $domainObject2->getQualifiedClassName()) {
-					// $domainObject2 is parent of $domainObject1
-					return TRUE;
-				} else {
-					if ($this->isParentOf($subClass, $domainObject2, $classHierarchy)) {
-						// if a subclass of object1 is a parent class
-						return TRUE;
-					}
-				}
-			}
+		if ($domainObject2->getParentClass() === $domainObject1->getFullQualifiedClassName()) {
+			return TRUE;
+		} else {
+			return FALSE;
 		}
-		return FALSE;
 	}
 
 	/**

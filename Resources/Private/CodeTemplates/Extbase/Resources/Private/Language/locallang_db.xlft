@@ -19,10 +19,10 @@
 			<trans-unit id="{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}">
 				<source>{extension.name} {domainObject.name}</source>
 			</trans-unit></f:if>
-			<f:if condition="{domainObject.childObjects}"><trans-unit id="{domainObject.labelNamespace}.tx_extbase_type">
+			<f:if condition="{domainObject.childObjects}"><trans-unit id="{extension.shortExtensionKey}.tx_extbase_type">
 				<source>Record Type</source>
 			</trans-unit>
-			<trans-unit id="{domainObject.labelNamespace}.tx_extbase_type.0">
+			<trans-unit id="{extension.shortExtensionKey}.tx_extbase_type.0">
 				<source>Default</source>
 			</trans-unit>
 			<trans-unit id="{domainObject.labelNamespace}.tx_extbase_type.{domainObject.recordType}">
