@@ -111,11 +111,11 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 				}
 				$extension->addDomainObject($domainObject);
 			}
-			$classHierarchy = $extension->getClassHierarchy();
-			foreach ($extension->getDomainObjects() as $domainObject) {
-				if (isset($classHierarchy[$domainObject->getQualifiedClassName()])) {
-					foreach ($classHierarchy[$domainObject->getQualifiedClassName()] as $directChild) {
-						$domainObject->addChildObject($directChild);
+			// add child objects - needed to generate correct TCA for inheritance
+			foreach ($extension->getDomainObjects() as $domainObject1) {
+				foreach ($extension->getDomainObjects() as $domainObject2) {
+					if ($domainObject2->getParentClass() === $domainObject1->getFullQualifiedClassName()) {
+						$domainObject1->addChildObject($domainObject2);
 					}
 				}
 			}

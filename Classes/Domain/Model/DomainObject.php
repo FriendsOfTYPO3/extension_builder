@@ -416,6 +416,7 @@ class DomainObject {
 		return '\\' . $this->getQualifiedDomainRepositoryClassName();
 	}
 
+
 	/**
 	 * @return string
 	 */
@@ -549,7 +550,10 @@ class DomainObject {
 	 * @return string
 	 */
 	public function getRecordType() {
-		return 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_' . $this->getName();
+		$recordType = 'Tx_' .
+				\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_' .
+				$this->getName();
+		return $recordType;
 	}
 
 	/**
@@ -569,6 +573,21 @@ class DomainObject {
 	 */
 	public function addChildObject(DomainObject $childObject) {
 		$this->childObjects[] = $childObject;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function hasChildren() {
+		return count($this->childObjects) > 0;
+	}
+
+	/**
+	 * wrapper for fluid
+	 * @return bool
+	 */
+	public function getHasChildren() {
+		return $this->hasChildren();
 	}
 
 	/**

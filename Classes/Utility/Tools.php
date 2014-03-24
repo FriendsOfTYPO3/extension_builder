@@ -237,77 +237,94 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-		 *
-		 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property
-		 * @param string $methodType (get,set,add,remove,is)
-		 * @return string method name
-		 */
-		static public function getMethodName($domainProperty, $methodType) {
-			$propertyName = $domainProperty->getName();
-			switch ($methodType) {
-				case 'set'        :
-					return 'set' . ucfirst($propertyName);
+	 *
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property
+	 * @param string $methodType (get,set,add,remove,is)
+	 * @return string method name
+	 */
+	static public function getMethodName($domainProperty, $methodType) {
+		$propertyName = $domainProperty->getName();
+		switch ($methodType) {
+			case 'set'        :
+				return 'set' . ucfirst($propertyName);
 
-				case 'get'        :
-					return 'get' . ucfirst($propertyName);
+			case 'get'        :
+				return 'get' . ucfirst($propertyName);
 
-				case 'add'        :
-					return 'add' . ucfirst(\EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName));
+			case 'add'        :
+				return 'add' . ucfirst(\EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName));
 
-				case 'remove'    :
-					return 'remove' . ucfirst(\EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName));
+			case 'remove'    :
+				return 'remove' . ucfirst(\EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName));
 
-				case 'is'        :
-					return 'is' . ucfirst($propertyName);
-			}
+			case 'is'        :
+				return 'is' . ucfirst($propertyName);
 		}
+	}
 
-		/**
-		 *
-		 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property
-		 * @param string $methodType (set,add,remove)
-		 * @return string method body
-		 */
-		static public function getParameterName($domainProperty, $methodType) {
+	/**
+	 *
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property
+	 * @param string $methodType (set,add,remove)
+	 * @return string method body
+	 */
+	static public function getParameterName($domainProperty, $methodType) {
 
-			$propertyName = $domainProperty->getName();
+		$propertyName = $domainProperty->getName();
 
-			switch ($methodType) {
+		switch ($methodType) {
 
-				case 'set'            :
-					return $propertyName;
+			case 'set'            :
+				return $propertyName;
 
-				case 'add'            :
-					return \EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName);
+			case 'add'            :
+				return \EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName);
 
-				case 'remove'        :
-					return \EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName) . 'ToRemove';
-			}
+			case 'remove'        :
+				return \EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName) . 'ToRemove';
 		}
+	}
 
-		/**
-		 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
-		 * @param string $methodType
-		 * @return string
-		 */
-		static public function getParamTag($domainProperty, $methodType) {
+	/**
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
+	 * @param string $methodType
+	 * @return string
+	 */
+	static public function getParamTag($domainProperty, $methodType) {
 
-			switch ($methodType) {
-				case 'set'        :
-					return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
+		switch ($methodType) {
+			case 'set'        :
+				return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
 
-				case 'add'        :
-					$paramTag = $domainProperty->getForeignClassName();
-					$paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
-					return $paramTag;
+			case 'add'        :
+				$paramTag = $domainProperty->getForeignClassName();
+				$paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
+				return $paramTag;
 
-				case 'remove'    :
-					$paramTag = $domainProperty->getForeignClassName();
-					$paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
-					$paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';
-					return $paramTag;
-			}
+			case 'remove'    :
+				$paramTag = $domainProperty->getForeignClassName();
+				$paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
+				$paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';
+				return $paramTag;
 		}
+	}
+
+	/**
+	 *
+	 * Build record type from TX_Vendor_Package_Modelname
+	 * @param $className
+	 * @return string
+	 */
+	static public function convertClassNameToRecordType($className) {
+		$classNameParts = explode('\\', $className);
+		if (count($classNameParts) > 6) {
+			return 'Tx_' . $classNameParts[3] . '_' . $classNameParts[6];
+		} elseif (count($classNameParts) == 6) {
+			return 'Tx_' . $classNameParts[2] . '_' . $classNameParts[5];
+		} else {
+			return $className;
+		}
+	}
 
 }
 

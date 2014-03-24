@@ -91,6 +91,11 @@ class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditi
 
 	/**
 	 * Do we have to create a typefield in database and configuration?
+	 *
+	 * A typefield is needed if either the domain objects extends another class
+	 * or if other domain objects of this extension extend it or if it is mapped
+	 * to an existing table
+	 *
 	 * @param string $tableName
 	 * @param string $parentClass
 	 * @param bool $isMappedToExternalTable
@@ -98,7 +103,7 @@ class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditi
 	 */
 	protected function needsTypeField(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject, $isMappedToExternalTable) {
 		$needsTypeField = FALSE;
-		if ($domainObject->getChildObjects() || ($domainObject->getParentClass() && $isMappedToExternalTable)) {
+		if ($domainObject->getChildObjects() || $isMappedToExternalTable) {
 			$tableName = $domainObject->getDatabaseTableName();
 			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('TCA: '.$tableName,'extension_builder',0,$GLOBALS['TCA'][$tableName]['ctrl']);
 			if (!isset($GLOBALS['TCA'][$tableName]['ctrl']['type']) || $GLOBALS['TCA'][$tableName]['ctrl']['type'] == 'tx_extbase_type') {
@@ -107,6 +112,9 @@ class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditi
 				 * have been defined by the current extension and thus has to be defined again when rewriting TCA definitions
 				 * this might result in duplicate definition, but the type field definition is always wrapped in a condition
 				 * "if (!isset($TCA[table][ctrl][type]){ ..."
+				 *
+				 * If we don't check the TCA at runtime it would result in a repetition of type field definitions
+				 * in case an extension has multiple models extending other models of the same extension
 				 */
 				$needsTypeField = TRUE;
 			}

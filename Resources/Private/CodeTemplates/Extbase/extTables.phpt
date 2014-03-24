@@ -72,19 +72,21 @@ $TCA['{domainObject.databaseTableName}'] = array(
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif'
 	),
 );
-	</f:if>
+</f:if>
+</f:for>
+<f:for each="{extension.tablesForTypeFieldDefinitions}" as="databaseTableName">
+	<f:render partial="TCA/TypeField.phpt" arguments="{databaseTableName:databaseTableName, extension:extension, settings:settings}" />
 </f:for>
 
-<f:for each="{extension.domainObjects}" as="domainObject">
-	<k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">
-		<f:render partial="TCA/TypeField.phpt" arguments="{domainObject:domainObject, settings:settings}" />
-	</k:mapping>
-	<k:mapping renderCondition="isMappedToExternalTable" domainObject="{domainObject}">
-		<f:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
-	</k:mapping>
-	<f:for each="{domainObject.childObjects}" as="childObject">
-		<f:render partial="TCA/Columns.phpt" arguments="{domainObject:childObject, settings:settings}" />
-	</f:for>
+<f:for each="{extension.domainObjectsInHierarchicalOrder}" as="domainObject"><f:if condition="{domainObject.mappedToExistingTable}"><f:then>
+<f:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
+$TCA['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = array('LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}','{domainObject.recordType}');
+</f:then><f:else><f:if condition="{domainObject.hasChildren}">
+$TCA['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = array('LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.databaseTableName}.tx_extbase_type.{domainObject.recordType}','{domainObject.recordType}');
+$TCA['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['default'] = '{domainObject.recordType}';
+</f:if></f:else></f:if>
 </f:for>
-
+<f:for each="{extension.tablesForTypeFieldDefinitions}" as="databaseTableName">
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('{databaseTableName}', $TCA['{databaseTableName}']['ctrl']['type'],'','after:' . $TCA['{databaseTableName}']['ctrl']['label']);
+</f:for>
 ?>
