@@ -188,14 +188,11 @@ lang.extend(inputEx.Group, inputEx.Field,
       }
       else {
 		  if(Dom.getAncestorByClassName(this.divEl, 'WireIt-Container')) {
-			  console.log(Dom.getAncestorByClassName(this.divEl, 'WireIt-Container').id);
 				var containerId = Dom.getAncestorByClassName(this.divEl, 'WireIt-Container').id;
 			  Dom.getElementsByClassName('inputEx-Expanded', 'fieldset', containerId).each(function(el) {
-				  console.log(el);
 				Dom.replaceClass(el, 'inputEx-Expanded', 'inputEx-Collapsed');
 			  });
 			  Dom.getElementsByClassName('expanded').each(function(el) {
-				  console.log(el);
 				  Dom.replaceClass(el, 'expanded', 'collapsed');
 			  });
 		  }

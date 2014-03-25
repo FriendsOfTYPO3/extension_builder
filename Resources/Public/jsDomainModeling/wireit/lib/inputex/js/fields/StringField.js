@@ -35,7 +35,6 @@
 			 */
 			setOptions: function(options) {
 				inputEx.StringField.superclass.setOptions.call(this, options);
-
 				this.options.regexp = options.regexp;
 				this.options.size = options.size;
 				this.options.maxLength = options.maxLength;
@@ -48,7 +47,7 @@
 				this.options.noSpaces = options.noSpaces;
 				this.options.ucFirst = options.ucFirst;
 				this.options.lcFirst = options.lcFirst;
-
+				this.options.advancedMode = options.advancedMode ? options.advancedMode : false;
 			},
 
 
@@ -76,6 +75,9 @@
 				// Append it to the main element
 				this.wrapEl.appendChild(this.el);
 				Dom.addClass(this.divEl,'textfieldWrapper');
+				if(this.options.advancedMode) {
+				  Dom.addClass(this.divEl, "advancedMode");
+			   }
 				this.fieldContainer.appendChild(this.wrapEl);
 			},
 
