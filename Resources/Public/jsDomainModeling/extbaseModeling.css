@@ -21,7 +21,16 @@
 }
 
 .WireIt-Container .expanded {
-	box-shadow: 10px 10px 10px #aaa!important;
+	box-shadow: 10px 10px 10px #aaa !important;
+}
+
+#toggleAdvancedOptions .advancedMode {
+	display: none;
+}
+
+.typo3-docheader-buttons .access-key {
+	text-decoration: underline;
+	font-weight: bold;
 }
 
 div.WireIt-Container{
@@ -280,6 +289,15 @@ div.relationGroup div.inputEx-label{
 	clear: both;
 }
 
+#domainModelEditor.showAdvancedOptions fieldset.inputEx-Collapsed div.inputEx-fieldWrapper.advancedMode,
+#domainModelEditor .inputEx-fieldWrapper.advancedMode {
+	display:none;
+}
+
+#domainModelEditor.showAdvancedOptions .inputEx-fieldWrapper.advancedMode {
+	display:block;
+}
+
 .selectFieldWrapper .inputEx-label,
 .textfieldWrapper .inputEx-label{
 	float:none;
@@ -298,7 +316,7 @@ div.relationGroup fieldset fieldset .textfieldWrapper .inputEx-label{
 }
 
 .inputEx-Group .checkBoxFieldWrapper div.inputEx-label{
-	width:45%;
+	width:55%;
 }
 
 .inputEx-Group .checkBoxFieldWrapper div.inputEx-label label{
@@ -326,16 +344,16 @@ div.relationGroup .advancedSettings div.inputEx-label{
 div.objectSettings .inputEx-Field.inputEx-CheckBox,
 div.relationGroup .advancedSettings .inputEx-Field.inputEx-CheckBox{
 	float:left;
-	width:37%;
+	width:27%;
 }
 
 div.propertyGroup .inputEx-Field.inputEx-CheckBox{
 	float:left;
-	width:44%;
+	width:34%;
 }
 
 div.mainGroup .inputEx-Field.inputEx-CheckBox{
-	width:20%;
+	width:12%;
 }
 
 div.mainGroup .inputEx-Field.inputEx-CheckBox input,
@@ -363,7 +381,7 @@ div.actionGroup .inputEx-ListField{
 }
 
 a.inputEx-List-link.deleteButton{
-	background-image:url(/typo3/sysext/t3skin/images/sprites/t3skin.png?1378150256)!important;
+	background-image:url(/typo3/sysext/t3skin/images/sprites/t3skin.png)!important;
 	background-position:-162px -18px!important;
 	color:transparent;
 	height:16px;

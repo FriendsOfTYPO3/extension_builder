@@ -40,6 +40,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								type: "select",
 								inputParams: {
 									name: "type",
+									advancedMode: true,
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.objectType,
 									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_objectType,
 									selectValues: ["Entity", "ValueObject"],
@@ -62,6 +63,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								type: "boolean",
 								inputParams: {
 									name: "sorting",
+									advancedMode: true,
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.enableSorting,
 									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_enableSorting,
 									value: false
@@ -71,6 +73,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								type: "boolean",
 								inputParams: {
 									name: "addDeletedField",
+									advancedMode: true,
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.addDeletedField,
 									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_addDeletedField,
 									value: true
@@ -80,6 +83,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								type: "boolean",
 								inputParams: {
 									name: "addHiddenField",
+									advancedMode: true,
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.addHiddenField,
 									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_addHiddenField,
 									value: true
@@ -89,6 +93,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								type: "boolean",
 								inputParams: {
 									name: "addStarttimeEndtimeFields",
+									advancedMode: true,
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.addStarttimeEndtimeFields,
 									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_addStarttimeEndtimeFields,
 									value: true
@@ -109,6 +114,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								type: "string",
 								inputParams: {
 									name: "mapToTable",
+									advancedMode: true,
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.mapToTable,
 									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_mapToTable,
 									required: false
@@ -118,6 +124,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								type: "string",
 								inputParams: {
 									name: "parentClass",
+									advancedMode: true,
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.parentClass,
 									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_parentClass,
 									required: false
@@ -304,9 +311,10 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 													type: "boolean",
 													inputParams: {
 														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isExcludeField,
+														advancedMode: true,
 														name: "propertyIsExcludeField",
 														description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_isExcludeField,
-														value: false
+														value: true
 													}
 												}
 											]
@@ -359,9 +367,10 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 													type: "boolean",
 													inputParams: {
 														name: "propertyIsExcludeField",
+														advancedMode: true,
 														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isExcludeField,
 														description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_isExcludeField,
-														value: false
+														value: true
 													}
 												},
 												{

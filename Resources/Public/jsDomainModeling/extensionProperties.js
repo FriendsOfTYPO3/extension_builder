@@ -157,7 +157,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 								'TYPO3 v 6.1',
 								'TYPO3 v 6.2'
                             ],
-                            selectValues: ["6.0","6.1","6.2"]
+                            selectValues: ["6.0","6.1","6.2"],
+							value: '6.2'
                         }
                     },
 					{

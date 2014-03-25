@@ -104,7 +104,6 @@ var roundtrip = {
 		}
 		,showHelp				:	function(targetEl,show){
 										var descriptionElement = Ext.get(targetEl.parentNode.id.replace('label','desc'));
-										console.log(targetEl.parentNode);
 										if(descriptionElement && descriptionElement.dom.innerHTML.length){
 											if(show){
 												descriptionElement.show();
@@ -113,6 +112,21 @@ var roundtrip = {
 												descriptionElement.hide();
 											}
 										}
+									}
+		,advancedMode			:	false
+		,toggleAdvancedMode	:	function() {
+										if (!this.advancedMode) {
+											$('domainModelEditor').addClassName('showAdvancedOptions');
+											Ext.query('#toggleAdvancedOptions .simpleMode')[0].style.display = 'none';
+											Ext.query('#toggleAdvancedOptions .advancedMode')[0].style.display = 'inline';
+											this.advancedMode = true;
+										} else {
+											$('domainModelEditor').removeClassName('showAdvancedOptions');
+											Ext.query('#toggleAdvancedOptions .simpleMode')[0].style.display = 'inline';
+											Ext.query('#toggleAdvancedOptions .advancedMode')[0].style.display = 'none';
+											this.advancedMode = false;
+										}
+										return false;
 									}
 		,_debug					:	function(o){
 										if(!this.debugMode){
@@ -146,5 +160,14 @@ Ext.onReady(
             }
          );
 		Ext.get(Ext.query('body')[0]).addClass('yui-skin-sam');
+
+		Ext.get('toggleAdvancedOptions').addListener(
+			"click",
+			function(ev,target){
+				roundtrip.toggleAdvancedMode();
+				return false;
+			}
+		);
+
     }
 );

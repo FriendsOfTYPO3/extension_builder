@@ -36,7 +36,8 @@ var advancedFields = {
 						inputParams: {
 							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isExcludeField,
 							name: "propertyIsExcludeField",
-							value: false,
+							advancedMode: true,
+							value: true,
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_isExcludeField
 						}
 					},
@@ -45,6 +46,7 @@ var advancedFields = {
 						inputParams: {
 							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.lazyLoading,
 							name: 'lazyLoading',
+							advancedMode: true,
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_lazyLoading,
 							value: false
 						}
@@ -54,6 +56,7 @@ var advancedFields = {
                         inputParams: {
                             label: TYPO3.settings.extensionBuilder._LOCAL_LANG.foreignRelationClass,
                             name: "foreignRelationClass",
+							advancedMode: true,
                             description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_foreignRelationClass
                         }
                     }

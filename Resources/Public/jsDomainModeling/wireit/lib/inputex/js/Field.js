@@ -60,7 +60,6 @@
 		 * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
 		 */
 		setOptions: function(options) {
-
 			/**
 			 * Configuration object to set the options for this class and the parent classes. See constructor details for options added by this class.
 			 */
@@ -83,6 +82,7 @@
 			this.options.className = options.className ? options.className : 'inputEx-Field';
 			this.options.required = lang.isUndefined(options.required) ? false : options.required;
 			this.options.showMsg = lang.isUndefined(options.showMsg) ? false : options.showMsg;
+			this.options.advancedMode = lang.isUndefined(options.advancedMode) ? false : options.advancedMode;
 		},
 
 		/**
@@ -92,12 +92,16 @@
 
 			// Create a DIV element to wrap the editing el and the image
 			this.divEl = inputEx.cn('div', {className: 'inputEx-fieldWrapper'});
+			//qwertz
 			if (this.options.id) {
 				this.divEl.id = this.options.id;
 			}
 			if (this.options.required) {
 				Dom.addClass(this.divEl, "inputEx-required");
 			}
+			if(this.options.advancedMode) {
+			  Dom.addClass(this.divEl, "advancedMode");
+		   }
 
 			// Label element
 			if (this.options.label) {

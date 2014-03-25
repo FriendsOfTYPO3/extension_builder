@@ -1,4 +1,4 @@
-(function() {
+	(function() {
 
 	var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event;
 
@@ -29,6 +29,7 @@
 							  inputEx.Textarea.superclass.setOptions.call(this, options);
 							  this.options.rows = options.rows || 6;
 							  this.options.cols = options.cols || 23;
+							  this.options.advancedMode = options.advancedMode ? false : options.advancedMode;
 						  },
 
 						  /**
@@ -54,6 +55,9 @@
 							  // Append it to the main element
 							  this.wrapEl.appendChild(this.el);
 							  YAHOO.util.Dom.addClass(this.divEl,'textfieldWrapper');
+							  if(this.options.advancedMode) {
+								  YAHOO.util.Dom.addClass(this.divEl, "advancedMode");
+							   }
 							  this.fieldContainer.appendChild(this.wrapEl);
 						  },
 
