@@ -20,6 +20,10 @@
 	border-bottom:2px solid #999;
 }
 
+.WireIt-Container .expanded {
+	box-shadow: 10px 10px 10px #aaa!important;
+}
+
 div.WireIt-Container{
 	box-shadow:6px 6px 10px #aaa;
 	filter:alpha(opacity=80);
@@ -492,10 +496,6 @@ div#propertiesForm div.smallBottomBorder{
 
 div#propertiesForm fieldset{
 	padding-top:10px;
-}
-
-fieldset.inputEx-Expanded{
-	border-bottom:1px solid #999;
 }
 
 #propertiesForm div.inputEx-Group div.wideTextfields div.inputEx-label{
