@@ -57,11 +57,11 @@
 						this.editorContainer.appendChild(this.editorField.getEl());
 						Dom.setStyle(this.editorField.getEl(), 'float', 'left');
 
-						this.okButton = inputEx.cn('input', {type: 'button', value: inputEx.messages.okEditor, className: 'inputEx-InPlaceEdit-OkButton'});
+						this.okButton = inputEx.cn('input', {type: 'button', value: inputEx.messages.okEditor, className: 'inputEx-InPlaceEdit-OkButton buttonreset t3-icon t3-icon-actions t3-icon-document-close'});
 						Dom.setStyle(this.okButton, 'float', 'left');
 						this.editorContainer.appendChild(this.okButton);
 
-						this.cancelLink = inputEx.cn('a', {className: 'inputEx-InPlaceEdit-CancelLink'}, null, inputEx.messages.cancelEditor);
+						this.cancelLink = inputEx.cn('a', {className: 'inputEx-InPlaceEdit-CancelLink buttonreset t3-icon t3-icon-actions t3-icon-document-save'}, null, inputEx.messages.cancelEditor);
 						this.cancelLink.href = ""; // IE required (here, not in the cn fct)
 						Dom.setStyle(this.cancelLink, 'float', 'left');
 						this.editorContainer.appendChild(this.cancelLink);

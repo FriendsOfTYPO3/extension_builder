@@ -103,9 +103,9 @@ div.WireIt-Container-resizehandle {
 }
 
 div.WireIt-Container-closebutton {
-   background-image: url(../images/close.png);
+   /*background-image: url(../images/close.png);
    width: 25px;
-   height: 15px;
+   height: 15px;*/
    position: absolute;
    top: 4px;
    right: 4px;
@@ -181,3 +181,9 @@ div.WireIt-InputExTerminal div.WireIt-Terminal {
    top: -5px;
 }
 
+input.buttonreset,
+a.buttonreset {
+   border: none;
+   background-color: transparent;
+   margin-top:0px;
+}

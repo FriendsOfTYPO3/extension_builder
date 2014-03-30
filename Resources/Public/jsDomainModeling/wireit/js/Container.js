@@ -143,7 +143,7 @@
 			this.options.height = options.height;
 
 			this.options.close = (typeof options.close == "undefined") ? true : options.close;
-			this.options.closeButtonClassName = options.closeButtonClassName || CSS_PREFIX + "Container-closebutton";
+			this.options.closeButtonClassName = options.closeButtonClassName || CSS_PREFIX + "Container-closebutton t3-icon t3-icon-actions t3-icon-edit-delete";
 
 			this.options.title = options.title; // no default
 
