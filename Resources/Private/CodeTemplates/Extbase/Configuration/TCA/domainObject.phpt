@@ -9,10 +9,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['{domainObject.databaseTableName}'] = array(
 	'ctrl' => $TCA['{domainObject.databaseTableName}']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => '<f:if condition="{extension.supportLocalization}">sys_language_uid, l10n_parent, l10n_diffsource</f:if><f:if condition="{domainObject.addHiddenField}">, hidden</f:if><f:for each="{domainObject.properties}" as="property" iteration="i">, {property.fieldName}</f:for>',
+		'showRecordFieldList' => '<f:if condition="{extension.supportLocalization}">sys_language_uid, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addHiddenField}">hidden, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}<f:if condition="{i.isLast}"><f:else>, </f:else></f:if></f:for>',
 	),
 	'types' => array(
-		'1' => array('showitem' => '<f:if condition="{extension.supportLocalization}">sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource</f:if><f:if condition="{domainObject.addHiddenField}">, hidden;;1</f:if><f:for each="{domainObject.properties}" as="property" iteration="i">, {property.fieldName}</f:for>, --div--;LLL:EXT:cms/locallang_ttc.{locallangFileFormat}:tabs.access<f:if condition="{domainObject.addStarttimeEndtimeFields}">, starttime, endtime</f:if>'),
+		'1' => array('showitem' => '<f:if condition="{extension.supportLocalization}">sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addHiddenField}">hidden;;1, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}, </f:for><f:if condition="{domainObject.addStarttimeEndtimeFields}">--div--;LLL:EXT:cms/locallang_ttc.{locallangFileFormat}:tabs.access, starttime, endtime</f:if>'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
