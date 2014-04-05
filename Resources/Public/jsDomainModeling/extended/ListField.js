@@ -259,7 +259,7 @@
 
 		   // Delete link
 		   if(!this.options.useButtons) {
-		      var delButton = inputEx.cn('a', {className: 'inputEx-List-link deleteButton'}, null, this.options.listRemoveLabel);
+		      var delButton = inputEx.cn('div', {className: 'inputEx-List-link deleteButton t3-icon t3-icon-actions t3-icon-edit-delete'}, null, this.options.listRemoveLabel);
 		      Event.addListener( delButton, 'click', this.onDelete, this, true);
 		      newDiv.appendChild( delButton );
 	      }

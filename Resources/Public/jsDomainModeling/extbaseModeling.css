@@ -392,14 +392,11 @@ div.actionGroup .inputEx-ListField{
 	width:98%;
 }
 
-a.inputEx-List-link.deleteButton{
-	background-image:url(/typo3/sysext/t3skin/images/sprites/t3skin.png)!important;
-	background-position:-162px -18px!important;
-	color:transparent;
-	height:16px;
-	position:absolute;
-	right:0;
-	width:16px;
+div.inputEx-List-link.deleteButton{
+	position: absolute;
+	right: 0;
+	cursor:pointer;
+	float:left;
 }
 
 .inputEx-StringField-wrapper input[type=text],.inputEx-StringField-wrapper textarea{
