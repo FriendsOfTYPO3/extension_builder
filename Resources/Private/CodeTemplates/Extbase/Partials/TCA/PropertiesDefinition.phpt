@@ -5,6 +5,5 @@
 		'label' => 'LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{property.labelNamespace}',
 		'config' => array(
 			<k:format.indent indentation="3"><f:render partial="TCA/{property.dataType}.phpt" arguments="{property: property,extension:domainObject.extension,settings:settings}" /></k:format.indent>
-		),<f:if condition="{property.useRTE}">
-		'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts]',</f:if>
+		),
 	),</f:for>
