@@ -244,7 +244,7 @@
 				<source>Is aggregate root?</source>
 			</trans-unit>
 			<trans-unit id="descr_isAggregateRoot">
-				<source>If true, the extension builder will generate a repository and default controller actions for this model</source>
+				<source>If true, the extension builder will generate a repository for this model</source>
 			</trans-unit>
 			<trans-unit id="enableSorting">
 				<source>Enable sorting?</source>

@@ -350,16 +350,14 @@ class Extension {
 
 	/**
 	 * An array of domain objects for which a controller should be built.
-	 * This is done in the following two cases:
-	 * - Domain Objects which are aggregate roots
-	 * - Actions defined for these domain objects
+	 * Retruns tTRUE if there are any actions defined for these domain objects
 	 *
 	 * @return array
 	 */
 	public function getDomainObjectsForWhichAControllerShouldBeBuilt() {
 		$domainObjects = array();
 		foreach ($this->domainObjects as $domainObject) {
-			if (count($domainObject->getActions()) || $domainObject->isAggregateRoot()) {
+			if (count($domainObject->getActions()) > 0) {
 				$domainObjects[] = $domainObject;
 			}
 		}
