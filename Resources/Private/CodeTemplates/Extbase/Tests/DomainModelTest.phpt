@@ -1,6 +1,6 @@
 <?php
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}
-namespace {extension.nameSpace}\Tests\Unit\Domain\Model;
+namespace {extension.nameSpaceName}\Tests\Unit\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
@@ -35,7 +35,7 @@ namespace {extension.nameSpace}\Tests\Unit\Domain\Model;
  *
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
 </f:for> */
-class {domainObject.name}Test extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @var {domainObject.fullQualifiedClassName}
 	 */
