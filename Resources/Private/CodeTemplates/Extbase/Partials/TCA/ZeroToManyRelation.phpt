@@ -7,5 +7,6 @@
 	'levelLinksPosition' => 'top',
 	'showSynchronizationLink' => 1,
 	'showPossibleLocalizationRecords' => 1,
+	<f:if condition="{property.foreignModel.sorting}">'useSortable' => 1,</f:if>
 	'showAllLocalizationLink' => 1
 ),
