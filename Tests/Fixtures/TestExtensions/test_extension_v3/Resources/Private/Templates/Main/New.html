@@ -14,9 +14,9 @@ Otherwise your changes will be overwritten the next time you save the extension 
 <f:section name="main">
 <h1>New Main</h1>
 
-<f:flashMessages />
+<f:flashMessages renderMode="div" />
 
-<f:render partial="FormErrors" />
+<f:render partial="FormErrors" arguments="{object:Main}" />
 
 <f:form action="create"  name="newMain" object="{newMain}">
 <f:render partial="Main/FormFields" />

@@ -36,6 +36,14 @@ plugin.tx_testextension._CSS_DEFAULT_STYLE (
 	.tx-test-extension table td {
 		vertical-align:top;
 	}
+
+	.typo3-messages .message-error {
+		color:red;
+	}
+
+	.typo3-messages .message-ok {
+		color:green;
+	}
 )
 
 

@@ -99,7 +99,7 @@ $TCA['tx_testextension_domain_model_child1'] = array(
 $TCA['tx_testextension_domain_model_child2'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2',
-		'label' => 'uid',
+		'label' => 'name',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
@@ -116,7 +116,7 @@ $TCA['tx_testextension_domain_model_child2'] = array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'searchFields' => '',
+		'searchFields' => 'name,',
 		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Child2.php',
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_child2.gif'
 	),

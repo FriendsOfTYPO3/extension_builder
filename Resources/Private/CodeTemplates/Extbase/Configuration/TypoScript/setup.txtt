@@ -37,6 +37,15 @@ plugin.{extension.shortExtensionKey}._CSS_DEFAULT_STYLE (
 	.{extension.cssClassName} table td {
 		vertical-align:top;
 	}
+
+	.typo3-messages .message-error {
+		color:red;
+	}
+
+	.typo3-messages .message-ok {
+		color:green;
+	}
+
 )
 </f:if>
 
