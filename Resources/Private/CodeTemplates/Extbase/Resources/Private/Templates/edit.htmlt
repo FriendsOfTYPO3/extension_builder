@@ -15,9 +15,9 @@ Otherwise your changes will be overwritten the next time you save the extension 
 <k:openingTag>f:section name="main"</k:openingTag>
 <h1>Edit {domainObject.name}</h1>
 
-<k:openingTag>f:flashMessages /</k:openingTag>
+<k:openingTag>f:flashMessages renderMode="div" /</k:openingTag>
 
-<k:openingTag>f:render partial="FormErrors" <f:if condition="{extension.targetVersion}>4.6">arguments="<k:curlyBrackets>object:{domainObject.name}</k:curlyBrackets>"</f:if>/</k:openingTag>
+<k:openingTag>f:render partial="FormErrors" arguments="<k:curlyBrackets>object:{domainObject.name}</k:curlyBrackets>" /</k:openingTag>
 
 <k:format.removeMultipleNewlines>
 <k:openingTag>f:form action="update" name="{domainObject.name -> k:format.lowercaseFirst()}" object="{domainObject.name -> k:format.lowercaseFirst() -> k:curlyBrackets()}" </k:openingTag>

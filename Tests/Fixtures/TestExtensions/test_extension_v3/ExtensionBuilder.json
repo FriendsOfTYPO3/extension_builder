@@ -136,7 +136,16 @@
 				"uid":"1151927100825"
 			},
 			"propertyGroup":{
-				"properties":[]
+				"properties":[
+					{
+						"propertyDescription":"",
+						"propertyIsExcludeField":false,
+						"propertyIsRequired":false,
+						"propertyName":"name",
+						"propertyType":"String",
+						"uid":"1131693273869"
+					}
+				]
 			},
 			"relationGroup":{
 				"relations":[]
