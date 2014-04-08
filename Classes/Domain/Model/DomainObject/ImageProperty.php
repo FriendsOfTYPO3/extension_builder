@@ -36,7 +36,7 @@ class ImageProperty extends AbstractProperty {
 	 *
 	 * @var string
 	 */
-	protected $defaultValue = '\'\'';
+	protected $defaultValue = '';
 
 	/**
 	 * flag that this property needs an upload folder

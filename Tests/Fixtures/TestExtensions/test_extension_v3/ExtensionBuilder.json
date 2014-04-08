@@ -35,6 +35,14 @@
 						"propertyName":"identifier",
 						"propertyType":"String",
 						"uid":"597834289225"
+					},
+					{
+						"propertyDescription":"Just a date",
+						"propertyIsExcludeField":false,
+						"propertyIsRequired":false,
+						"propertyName":"myDate",
+						"propertyType":"NativeDate",
+						"uid":"597834287725"
 					}
 				]
 			},

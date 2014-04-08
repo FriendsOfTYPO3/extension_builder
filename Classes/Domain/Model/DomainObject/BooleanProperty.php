@@ -34,7 +34,7 @@ class BooleanProperty extends AbstractProperty {
 	 *
 	 * @var string
 	 */
-	protected $defaultValue = 'FALSE';
+	protected $defaultValue = FALSE;
 
 	/*
 	 * @return string

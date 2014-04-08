@@ -87,6 +87,8 @@ class NodeConverter {
 			return implode('\\', $node->parts);
 		} elseif ($node instanceof \PHPParser_Node_Expr_ConstFetch) {
 			return self::getValueFromNode($node->name);
+		} elseif ($node instanceof \PHPParser_Node_Expr_UnaryMinus) {
+			return -1 * self::getValueFromNode($node->expr);
 		} elseif ($node instanceof \PHPParser_Node_Expr_Array) {
 			$value = array();
 			$arrayItems = $node->items;
@@ -169,8 +171,10 @@ class NodeConverter {
 		$constantsArray = array();
 		$consts = $node->consts;
 		foreach ($consts as $const) {
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('$const1: ', 'extension_builder', 1, (array)$const);
 			$constantsArray[] = array('name' => $const->name,'value' => self::getValueFromNode($const->value));
 		}
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('$const2: ', 'extension_builder', 1, (array)$constantsArray);
 		return $constantsArray;
 	}
 

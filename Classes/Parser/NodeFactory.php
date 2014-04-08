@@ -218,17 +218,16 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface{
 		$propertyNode = $propertyNodeBuilder->getNode();
 		$propertyNode->type = $property->getModifiers();
 
-		if (!is_null($property->getDefaultValueNode()) || !is_null($property->getDefault())) {
-			foreach($propertyNode->props as $subNode) {
-				if ($subNode instanceof \PHPParser_Node_Stmt_PropertyProperty) {
-					if (!is_null($property->getDefaultValueNode())) {
-						$subNode->default = $property->getDefaultValueNode();
-					} else {
-						$subNode->default = $this->buildNodeFromValue($property->getDefault());
-					}
+		foreach($propertyNode->props as $subNode) {
+			if ($subNode instanceof \PHPParser_Node_Stmt_PropertyProperty) {
+				if (!is_null($property->getDefaultValueNode())) {
+					$subNode->default = $property->getDefaultValueNode();
+				} else {
+					$subNode->default = $this->buildNodeFromValue($property->getDefault());
 				}
 			}
 		}
+
 		$this->addCommentAttributes($property, $propertyNode);
 		$propertyNode->default = $property->getDefault();
 		return $propertyNode;
@@ -300,11 +299,11 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface{
             return $value;
         } elseif (is_null($value)) {
             return new \PHPParser_Node_Expr_ConstFetch(
-                new \PHPParser_Node_Name('null')
+                new \PHPParser_Node_Name('NULL')
             );
         } elseif (is_bool($value)) {
             return new \PHPParser_Node_Expr_ConstFetch(
-                new \PHPParser_Node_Name($value ? 'true' : 'false')
+                new \PHPParser_Node_Name($value ? 'TRUE' : 'FALSE')
             );
         } elseif (is_int($value)) {
             return new \PHPParser_Node_Scalar_LNumber($value);

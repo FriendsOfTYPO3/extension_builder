@@ -108,13 +108,21 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 				//\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile(PATH_site.'fileadmin/'.basename($createdFile), file_get_contents($createdFile));
 				$this->assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');
 				if(strpos($referenceFile, 'xlf') === FALSE) {
-					if(\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",$referenceFileContent, TRUE) !=
-											\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($createdFile), TRUE)) {
+
+					$originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",$referenceFileContent, TRUE);
+					$generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($createdFile), TRUE);
+					/** uncomment to find the difference
+					if ($originalLines != $generatedLines) {
+						for($i = 0;$i < count($originalLines);$i++) {
+							if ($originalLines[$i] != $generatedLines[$i]) {
+								//die('Line ' . $i . ':<br />|' . $originalLines[$i] . '| !=<br />|' . $generatedLines[$i] . '|');
+							}
+						}
 						//die('<pre>' . htmlspecialchars(file_get_contents($createdFile)) . '</pre>');
-					}
+					} */
 					$this->assertEquals(
-						\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",$referenceFileContent, TRUE),
-						\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($createdFile), TRUE),
+						$originalLines,
+						$generatedLines,
 						'File ' . $createdFile . ' was not equal to original file.'
 					);
 				}

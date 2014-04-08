@@ -88,8 +88,7 @@ class PHPParser_Builder_Class extends PHPParser_BuilderAbstract
      */
     public function addStmt($stmt) {
         $stmt = $this->normalizeNode($stmt);
-
-        $targets = array(
+		$targets = array(
             'Stmt_TraitUse'    => &$this->uses,
             'Stmt_ClassConst'  => &$this->constants,
             'Stmt_Property'    => &$this->properties,
