@@ -47,11 +47,18 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $identifier = '';
 
 	/**
+	 * Just a date
+	 *
+	 * @var \DateTime
+	 */
+	protected $myDate = NULL;
+
+	/**
 	 * This is a 1:1 relation
 	 *
 	 * @var \TYPO3\TestExtension\Domain\Model\Child1
 	 */
-	protected $child1;
+	protected $child1 = NULL;
 
 	/**
 	 * This is a 1:n relation
@@ -59,21 +66,21 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child2>
 	 * @cascade remove
 	 */
-	protected $children2;
+	protected $children2 = NULL;
 
 	/**
 	 * This is a n:1 relation
 	 *
 	 * @var \TYPO3\TestExtension\Domain\Model\Child3
 	 */
-	protected $child3;
+	protected $child3 = NULL;
 
 	/**
 	 * This is a m:n relation
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\TestExtension\Domain\Model\Child4>
 	 */
-	protected $children4;
+	protected $children4 = NULL;
 
 	/**
 	 * __construct
@@ -132,6 +139,25 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function setIdentifier($identifier) {
 		$this->identifier = $identifier;
+	}
+
+	/**
+	 * Returns the myDate
+	 *
+	 * @return \DateTime $myDate
+	 */
+	public function getMyDate() {
+		return $this->myDate;
+	}
+
+	/**
+	 * Sets the myDate
+	 *
+	 * @param \DateTime $myDate
+	 * @return void
+	 */
+	public function setMyDate(\DateTime $myDate) {
+		$this->myDate = $myDate;
 	}
 
 	/**

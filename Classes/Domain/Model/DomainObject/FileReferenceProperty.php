@@ -36,7 +36,7 @@ class FileReferenceProperty extends AbstractProperty {
 	 *
 	 * @var string
 	 */
-	protected $defaultValue = '\'\'';
+	protected $defaultValue = '';
 
 	/**
 	 * allowed file types for this property

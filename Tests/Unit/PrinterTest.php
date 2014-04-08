@@ -44,10 +44,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$fileName = 'SimpleProperty.php';
 		$classFileObject = $this->parseAndWrite($fileName);
 		$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
-		$this->assertEquals(
-			explode(PHP_EOL, file_get_contents($this->fixturesPath.$fileName)),
-			explode(PHP_EOL, file_get_contents($this->tmpDir . $fileName))
-		);
+		$this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
 	}
 
 	/**
@@ -66,6 +63,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$fileName = 'ClassMethodWithManyParameter.php';
 		$classFileObject = $this->parseAndWrite($fileName);
 		$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
+		$this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
 	}
 
 	/**
@@ -88,7 +86,17 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$this->assertTrue(copy($this->fixturesPath.'DummyIncludeFile2.php',$this->tmpDir.'DummyIncludeFile2.php'));
 		$classFileObject = $this->parseAndWrite($fileName);
 		$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
+		$this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
+	}
 
+	/**
+	 * @test
+	 */
+	public function printClassWithDefaultValuesInProperties() {
+		$fileName = 'BasicClassWithDefaultValuesInProperties.php';
+		$classFileObject = $this->parseAndWrite($fileName);
+		$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
+		$this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
 	}
 
 	/**
@@ -100,6 +108,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
 		$this->assertEquals(TX_PHPPARSER_TEST_FOO,'BAR');
 		$this->assertEquals('FOO',TX_PHPPARSER_TEST_BAR);
+		$this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
 	}
 
 	/**
@@ -112,6 +121,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
 		$this->assertEquals(TX_PHPPARSER_TEST_FOO_POST,'BAR');
 		$this->assertEquals('FOO',TX_PHPPARSER_TEST_BAR_POST);
+		$this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
 	}
 
 	/**
@@ -124,6 +134,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
 		$this->assertEquals(TX_PHPPARSER_TEST_FOO_PRE2,'BAR');
 		$this->assertEquals('FOO',TX_PHPPARSER_TEST_BAR_POST2);
+		$this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
 	}
 
 
@@ -134,6 +145,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$fileName = 'SimpleNamespace.php';
 		$classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
 		$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
+		$this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
 	}
 
 	/**
@@ -143,6 +155,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$fileName = 'SimpleNamespaceExtendingOtherClass.php';
 		$classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
 		$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
+		$this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
 	}
 
 
@@ -153,6 +166,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$fileName = 'SimpleNamespaceWithUseStatement.php';
 		$classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
 		$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
+		$this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
 	}
 
 	/**
@@ -164,6 +178,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
 		$this->assertTrue(class_exists('PhpParser\Test\Model\MultipleNamespaces'));
 		$this->assertTrue(class_exists('PhpParser\Test\Model2\MultipleNamespaces'));
+		$this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
 	}
 
 
@@ -184,14 +199,8 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	public function printMultiLineArray() {
 		$fileName = 'ClassWithArrayProperty.php';
 		$classFileObject = $this->parseAndWrite($fileName);
-	}
-
-	/**
-	 * @test
-	 */
-	public function printMultiLineProperty() {
-		$fileName = 'ComplexClass.php';
-		$classFileObject = $this->parseAndWrite($fileName);
+		$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
+		$this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
 	}
 
 	/**
@@ -226,6 +235,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 			$testMethod->getParameterByPosition(0)->getTypeHint(),
 			'\EBT\ExtensionBuilder\Domain\Model\DomainObject'
 		);
+		$this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
 	}
 
 	/**
@@ -245,6 +255,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 				5 => 'n',
 			)
 		);
+		$this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
 	}
 
 
@@ -295,6 +306,31 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	protected function parseFile($relativeFilePath) {
 		return $this->parserService->parseFile($this->fixturesPath . $relativeFilePath);
+	}
+
+	/**
+	 * @param string $originalFile
+	 * @param string $pathToGeneratedFile
+	 */
+	protected function compareGeneratedCodeWithOriginal($originalFile, $pathToGeneratedFile) {
+		$originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($this->fixturesPath . $originalFile), TRUE);
+		$generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($pathToGeneratedFile), TRUE);
+		/** uncomment to find the difference
+		if ($originalLines != $generatedLines) {
+			for($i = 0;$i < count($originalLines);$i++) {
+				if ($originalLines[$i] != $generatedLines[$i]) {
+					die('Line ' . $i . ':<br />|' . $originalLines[$i] . '| !=<br />|' . $generatedLines[$i] . '|');
+				}
+			}
+			die('<pre>' . htmlspecialchars(file_get_contents($pathToGeneratedFile)) . '</pre>');
+		}
+		 * */
+		$this->assertEquals(
+			$originalLines,
+			$generatedLines,
+			'File ' . $originalFile . ' was not equal to original file.'
+		);
+
 	}
 }
 

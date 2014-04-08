@@ -30,22 +30,18 @@
 
 // just some stuff for testing
 
-define('TX_PHPPARSER_TEST_FOO_PRE2','BAR');
+define('TX_PHPPARSER_TEST_FOO_PRE2', 'BAR');
 
-
-if(!isset($foo3) && !isset($bar3)) {
+if (!isset($foo3) && !isset($bar3)) {
 	$foo3 = 23;
 	$bar3 = 42;
 }
 
-
 abstract class Tx_PhpParser_Tests_ClassWithPreAndPostStatement {
 }
 
-
-
-if($bar3 > $foo3) {
-	if($foo3 == 23) {
-		define('TX_PHPPARSER_TEST_BAR_POST2','FOO');
+if ($bar3 > $foo3) {
+	if ($foo3 == 23) {
+		define('TX_PHPPARSER_TEST_BAR_POST2', 'FOO');
 	}
 }

@@ -60,7 +60,7 @@ $TCA['tx_testextension_domain_model_main'] = array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'searchFields' => 'name,identifier,child1,children2,child3,children4,',
+		'searchFields' => 'name,identifier,my_date,child1,children2,child3,children4,',
 		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Main.php',
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_testextension_domain_model_main.gif'
 	),

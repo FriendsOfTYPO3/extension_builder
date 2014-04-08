@@ -34,7 +34,7 @@ class RichTextProperty extends AbstractProperty {
 	 *
 	 * @var string
 	 */
-	protected $defaultValue = '\'\'';
+	protected $defaultValue = '';
 
 	protected $useRTE = TRUE;
 

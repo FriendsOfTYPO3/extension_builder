@@ -6,3 +6,7 @@
 	<f:translate key="tx_testextension_domain_model_main.identifier" /> <span class="required">(required)</span>
 </label><br />
 	<f:form.textfield property="identifier" /><br />
+<label for="myDate">
+	<f:translate key="tx_testextension_domain_model_main.my_date" />
+</label><br />
+	<f:form.textfield property="myDate"  value="{main.myDate->f:format.date()}" /><br />
