@@ -1,3 +1,3 @@
-'type' => 'group',
-'internal_type' => 'folder',
-'size' => 5,
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+	'{property.name}'
+)
