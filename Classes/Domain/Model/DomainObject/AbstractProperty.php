@@ -459,5 +459,4 @@ abstract class AbstractProperty {
 	}
 
 
-
 }

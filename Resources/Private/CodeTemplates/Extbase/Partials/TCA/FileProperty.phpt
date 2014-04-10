@@ -1,6 +1,3 @@
-'type' => 'group',
-'internal_type' => 'file',
-'uploadfolder' => '{extension.uploadFolder}',
-'allowed' => '{property.allowedFileTypes}',
-'disallowed' => '{property.disallowedFileTypes}',
-'size' => 5,
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+	'{property.name}'
+)

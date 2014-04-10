@@ -1,2 +1,4 @@
-'type' => 'check',
-'default' => 0
+array(
+	'type' => 'check',
+	'default' => 0
+)
