@@ -48,6 +48,7 @@
 				this.options.ucFirst = options.ucFirst;
 				this.options.lcFirst = options.lcFirst;
 				this.options.advancedMode = options.advancedMode ? options.advancedMode : false;
+				this.options.classname = options.classname;
 			},
 
 
@@ -77,7 +78,10 @@
 				Dom.addClass(this.divEl,'textfieldWrapper');
 				if(this.options.advancedMode) {
 				  Dom.addClass(this.divEl, "advancedMode");
-			   }
+			    }
+				if(this.options.classname) {
+				  Dom.addClass(this.divEl, this.options.classname);
+				}
 				this.fieldContainer.appendChild(this.wrapEl);
 			},
 

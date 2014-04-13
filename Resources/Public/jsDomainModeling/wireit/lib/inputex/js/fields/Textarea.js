@@ -29,7 +29,7 @@
 							  inputEx.Textarea.superclass.setOptions.call(this, options);
 							  this.options.rows = options.rows || 6;
 							  this.options.cols = options.cols || 23;
-							  this.options.advancedMode = options.advancedMode ? false : options.advancedMode;
+							  this.options.advancedMode = options.advancedMode ? options.advancedMode : false;
 						  },
 
 						  /**

@@ -8,6 +8,8 @@ var roundtrip = {
 								}
 							
 		,addFieldSetHook	:	function(fieldset){
+									// add unique ids to inputs to track changed values
+									this.addFieldsetClass(Ext.get(fieldset.divEl).child('select').dom)
 									if(typeof fieldset['inputs'] !='undefined'){
 										for(i = 0;i <  fieldset['inputs'].length;i++){
 											fieldName =  fieldset['inputs'][i]['options']['name'];
@@ -16,9 +18,7 @@ var roundtrip = {
 												fieldset['inputs'][i].setValue('');
 											}
 											else if (fieldName == 'uid') {
-												//console.log('Old:' + fieldset['inputs'][i].getValue());
 												fieldset['inputs'][i].setValue(this.createUniqueId());
-												//console.log('New:' + fieldset['inputs'][i].getValue());
 											}
 										}
 									}
@@ -31,8 +31,17 @@ var roundtrip = {
 		
 		,updateEvtListener	:	function(params){
 									if(typeof params[0] != 'object'){
-										//console.log(params[1]);
+										if(params[1].options && params[1].options.name == 'propertyType') {
+											this.addFieldsetClass(params[1].el);
+										}
 									}
+								}
+		,addFieldsetClass	:	function(selectElement) {
+									// add the selected property type as classname to the parent fieldset
+									// this enables show/hide of property type specific fields
+									var parentFieldset = Ext.get(selectElement).up('fieldset');
+									parentFieldset.dom.removeAttribute('class');
+									parentFieldset.addClass(selectElement.getValue());
 								}
 		,onAddWire			:	function(e, params, terminal){
 									var uid1 = this.getUidForTerminal(params[0].terminal1);
@@ -73,7 +82,7 @@ var roundtrip = {
 										}
 									}
 		,onFieldRendered		:	function(fieldId){
-										//this._debug('onFieldRendered called: ' + fieldId);
+										//console.log('onFieldRendered called: ' + fieldId);
 										var l = Ext.get(
 											Ext.query('div#' + fieldId + '-label label')
 										);
@@ -135,6 +144,17 @@ var roundtrip = {
 										if(typeof console != 'undefined' && typeof console.log == 'function'){
 											console.log(o);
 										}
+									}
+		,onModuleLoaded	: 			function() {
+										// set the fieldset class depending on the selected property type
+										var propertyTypeSelects = Ext.query('.propertyGroup select');
+										var self = this;
+										if(propertyTypeSelects) {
+											propertyTypeSelects.each(function(el) {
+												self.addFieldsetClass(el);
+											});
+										}
+
 									}
 }
 
