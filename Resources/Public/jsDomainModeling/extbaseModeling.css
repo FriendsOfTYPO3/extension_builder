@@ -305,7 +305,8 @@ div.relationGroup div.inputEx-label{
 }
 
 #domainModelEditor.showAdvancedOptions fieldset.File .inputEx-fieldWrapper.dependant.fileOnly.advancedMode,
-#domainModelEditor.showAdvancedOptions fieldset.String .inputEx-fieldWrapper.dependant.stringOnly.advancedMode{
+#domainModelEditor.showAdvancedOptions fieldset.Image .inputEx-fieldWrapper.dependant.imageOnly.advancedMode,
+#domainModelEditor.showAdvancedOptions fieldset.String .inputEx-fieldWrapper.dependant.stringOnly.advancedMode {
 	display:block;
 }
 
@@ -408,6 +409,10 @@ a.inputEx-List-link.deleteButton{
 div.relationGroup textarea,div.propertyGroup textarea,
 div.propertyGroup input[type=text],div.propertyGroup select{
 	width:100%;
+}
+
+div.propertyGroup .textfieldWrapper.small input[type=text] {
+	width: 40px;
 }
 
 div.relationGroup input[type=text]{

@@ -94,6 +94,11 @@ abstract class AbstractProperty {
 	protected $useRTE = FALSE;
 
 	/**
+	 * @var string the property type of this property
+	 */
+	protected $type = '';
+
+	/**
 	 *
 	 * @param string $propertyName
 	 * @return void
@@ -458,5 +463,25 @@ abstract class AbstractProperty {
 		return $this->value;
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getType() {
+		return $this->type;
+	}
+
+	/**
+	 * @param string $type
+	 */
+	public function setType($type) {
+		$this->type = $type;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isFileReference() {
+		return in_array($this->type, array('Image', 'File'));
+	}
 
 }

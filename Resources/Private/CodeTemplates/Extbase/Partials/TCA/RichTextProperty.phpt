@@ -13,4 +13,4 @@ array(
 			'type' => 'script'
 		)
 	)
-)
+),

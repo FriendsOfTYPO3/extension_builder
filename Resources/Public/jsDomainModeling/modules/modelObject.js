@@ -262,41 +262,37 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 															"String",
 															"Text",
 															"RichText",
+															"Password",
 															"Integer",
 															"Float",
 															"Boolean",
-															"Date",
-															"DateTime",
 															"NativeDate",
 															"NativeDateTime",
+															"Date",
+															"DateTime",
 															"Time",
 															"TimeSec",
 															"Select",
 															"File",
-															"Image",
-															"FileReference",
-															"Folder",
-															"Password"
+															"Image"
 														],
 														selectOptions: [
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.string,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.text,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.richText,
+															TYPO3.settings.extensionBuilder._LOCAL_LANG.password,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.integer,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.floatingPoint,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.boolean,
-															TYPO3.settings.extensionBuilder._LOCAL_LANG.date,
-															TYPO3.settings.extensionBuilder._LOCAL_LANG.dateTime,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.nativeDate,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.nativeDateTime,
+															TYPO3.settings.extensionBuilder._LOCAL_LANG.date,
+															TYPO3.settings.extensionBuilder._LOCAL_LANG.dateTime,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.time,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.timeSec,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.selectList,
 															TYPO3.settings.extensionBuilder._LOCAL_LANG.file,
-															TYPO3.settings.extensionBuilder._LOCAL_LANG.image,
-															TYPO3.settings.extensionBuilder._LOCAL_LANG.fileReference,
-															TYPO3.settings.extensionBuilder._LOCAL_LANG.folder,
-															TYPO3.settings.extensionBuilder._LOCAL_LANG.password
+															TYPO3.settings.extensionBuilder._LOCAL_LANG.image
 														]
 													}
 												},
@@ -304,15 +300,37 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 													type:'text',
 													inputParams: {
 														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
+														advancedMode: true,
 														name: "propertyDescription",
-														cols:20,
+														cols:23,
 														rows:2
+													}
+												},
+												{
+													type:'string',
+													inputParams: {
+														classname: 'textfieldWrapper dependant fileOnly',
+														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.allowedFileTypes,
+														description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_allowedFileTypes,
+														advancedMode: true,
+														name: "allowedFileTypes"
+													}
+												},
+												{
+													type:'string',
+													inputParams: {
+														classname: 'textfieldWrapper dependant fileOnly imageOnly small',
+														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.maxItems,
+														advancedMode: true,
+														name: "maxItems",
+														value: 1
 													}
 												},
 												{
 													type: "boolean",
 													inputParams: {
 														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isRequired,
+														advancedMode: true,
 														name: "propertyIsRequired",
 														value: false
 													}

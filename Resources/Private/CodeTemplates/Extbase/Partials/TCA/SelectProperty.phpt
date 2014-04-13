@@ -6,4 +6,4 @@ array(
 	'size' => 1,
 	'maxitems' => 1,
 	'eval' => '<f:if condition="{property.required}">required</f:if>'
-)
+),

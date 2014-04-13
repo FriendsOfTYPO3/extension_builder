@@ -177,9 +177,25 @@ abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\Domai
 		return $this->getFieldName() . " int(11) unsigned DEFAULT '0' NOT NULL,";
 	}
 
+	/**
+	 * is displayable in the auto generated properties template
+	 *
+	 * this is only true for files and images
+	 *
+	 * @return bool
+	 */
 	public function getIsDisplayable() {
-		return FALSE;
+		return $this->isFileReference();
 	}
 
+	/**
+	 * @return bool
+	 */
+	public function isFileReference() {
+		if ($this->foreignClassName == '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference') {
+			return TRUE;
+		}
+		return FALSE;
+	}
 
 }

@@ -29,4 +29,4 @@ array(
 			'script' => 'wizard_add.php',
 		),
 	),
-)
+),

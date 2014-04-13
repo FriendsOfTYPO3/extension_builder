@@ -1,1 +1,1 @@
-f:form.textarea property="{property.name}" cols="40" rows="15"
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<k:openingTag>f:form.textarea property="{property.name}" cols="40" rows="15" /</k:openingTag>

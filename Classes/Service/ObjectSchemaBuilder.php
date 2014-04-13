@@ -35,6 +35,8 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	protected $configurationManager;
 
+	protected $relatedForeignTables = array();
+
 	/**
 	 * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager
 	 * @return void
@@ -79,67 +81,27 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			// properties
 		if (isset($jsonDomainObject['propertyGroup']['properties'])) {
 
-			foreach ($jsonDomainObject['propertyGroup']['properties'] as $jsonProperty) {
-				$propertyType = $jsonProperty['propertyType'];
-				$propertyClassName = 'EBT\\ExtensionBuilder\\Domain\Model\\DomainObject\\' . $propertyType . 'Property';
-				if (!class_exists($propertyClassName)) {
-					throw new \Exception('Property of type ' . $propertyType . ' not found');
-				}
-				$property = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($propertyClassName);
-				$property->setUniqueIdentifier($jsonProperty['uid']);
-				$property->setName($jsonProperty['propertyName']);
-				$property->setDescription($jsonProperty['propertyDescription']);
+			foreach ($jsonDomainObject['propertyGroup']['properties'] as $propertyJsonConfiguration) {
+				$propertyType = $propertyJsonConfiguration['propertyType'];
+				if (in_array($propertyType, array('Image', 'File')) && !empty($propertyJsonConfiguration['maxItems']) && $propertyJsonConfiguration['maxItems'] > 1) {
+					$propertyJsonConfiguration['relationType'] = 'zeroToMany';
+					$propertyJsonConfiguration['relationName'] = $propertyJsonConfiguration['propertyName'];
+					$propertyJsonConfiguration['relationDescription'] = $propertyJsonConfiguration['propertyDescription'];
+					$propertyJsonConfiguration['foreignRelationClass'] = '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference';
+					$propertyJsonConfiguration['type'] = $propertyJsonConfiguration['propertyType'];
+					$propertyJsonConfiguration['maxItems'] = $propertyJsonConfiguration['maxItems'];
 
-				if (isset($jsonProperty['propertyIsRequired'])) {
-					$property->setRequired($jsonProperty['propertyIsRequired']);
-				}
-				if (isset($jsonProperty['propertyIsExcludeField'])) {
-					$property->setExcludeField($jsonProperty['propertyIsExcludeField']);
+					$property = $this->buildRelation($propertyJsonConfiguration, $domainObject);
+				} else {
+					$property = self::buildProperty($propertyJsonConfiguration);
 				}
 				$domainObject->addProperty($property);
 			}
 		}
 
-		$relatedForeignTables = array();
 		if (isset($jsonDomainObject['relationGroup']['relations'])) {
-			foreach ($jsonDomainObject['relationGroup']['relations'] as $jsonRelation) {
-				$relation = self::buildRelation($jsonRelation);
-				if (!empty($jsonRelation['foreignRelationClass'])) {
-					// relations without wires
-					if (strpos($jsonRelation['foreignRelationClass'], '\\') > 0) {
-						// add trailing slash if not set
-						$jsonRelation['foreignRelationClass'] = '\\' . $jsonRelation['foreignRelationClass'];
-					}
-					$relation->setForeignClassName($jsonRelation['foreignRelationClass']);
-					$relation->setRelatedToExternalModel(TRUE);
-					$extbaseClassConfiguration = $this->configurationManager->getExtbaseClassConfiguration(
-						$jsonRelation['foreignRelationClass']
-					);
-					if (isset($extbaseClassConfiguration['tableName'])) {
-						$foreignDatabaseTableName = $extbaseClassConfiguration['tableName'];
-						$relatedForeignTables[$foreignDatabaseTableName] = 1;
-					} else {
-						$foreignDatabaseTableName = Tools::parseTableNameFromClassName(
-							$jsonRelation['foreignRelationClass']
-						);
-					}
-					$relation->setForeignDatabaseTableName($foreignDatabaseTableName);
-					if (is_a($relation, 'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Relation\\ZeroToManyRelation')) {
-						$foreignKeyName = strtolower($domainObject->getName());
-						if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($foreignKeyName)) {
-							$foreignKeyName = 'tx_' . $foreignKeyName;
-						}
-						if (isset($relatedForeignTables[$foreignDatabaseTableName])) {
-							$foreignKeyName .= $relatedForeignTables[$foreignDatabaseTableName];
-							$relatedForeignTables[$foreignDatabaseTableName] += 1;
-						} else {
-							$foreignDatabaseTableName = Tools::parseTableNameFromClassName(
-								$jsonRelation['foreignRelationClass']
-							);
-						}
-						$relation->setForeignDatabaseTableName($foreignDatabaseTableName);
-					}
-				}
+			foreach ($jsonDomainObject['relationGroup']['relations'] as $relationJsonConfiguration) {
+				$relation = $this->buildRelation($relationJsonConfiguration, $domainObject);
 				$domainObject->addProperty($relation);
 			}
 		}
@@ -180,7 +142,7 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @throws \Exception
 	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation
 	 */
-	public static function buildRelation($relationJsonConfiguration) {
+	public function buildRelation($relationJsonConfiguration, $domainObject) {
 		$relationSchemaClassName = 'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Relation\\';
 		$relationSchemaClassName .= ucfirst($relationJsonConfiguration['relationType']) . 'Relation';
 		if (!class_exists($relationSchemaClassName)) {
@@ -198,7 +160,81 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		$relation->setExcludeField($relationJsonConfiguration['propertyIsExcludeField']);
 		$relation->setDescription($relationJsonConfiguration['relationDescription']);
 		$relation->setUniqueIdentifier($relationJsonConfiguration['uid']);
+		$relation->setType($relationJsonConfiguration['type']);
+
+		if (!empty($relationJsonConfiguration['foreignRelationClass'])) {
+			// relations without wires
+			if (strpos($relationJsonConfiguration['foreignRelationClass'], '\\') > 0) {
+				// add trailing slash if not set
+				$relationJsonConfiguration['foreignRelationClass'] = '\\' . $relationJsonConfiguration['foreignRelationClass'];
+			}
+			$relation->setForeignClassName($relationJsonConfiguration['foreignRelationClass']);
+			$relation->setRelatedToExternalModel(TRUE);
+			$extbaseClassConfiguration = $this->configurationManager->getExtbaseClassConfiguration(
+					$relationJsonConfiguration['foreignRelationClass']
+			);
+			if (isset($extbaseClassConfiguration['tableName'])) {
+				$foreignDatabaseTableName = $extbaseClassConfiguration['tableName'];
+				$this->relatedForeignTables[$foreignDatabaseTableName] = 1;
+			} else {
+				$foreignDatabaseTableName = Tools::parseTableNameFromClassName(
+						$relationJsonConfiguration['foreignRelationClass']
+				);
+			}
+			$relation->setForeignDatabaseTableName($foreignDatabaseTableName);
+			if (is_a($relation, 'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Relation\\ZeroToManyRelation')) {
+				$foreignKeyName = strtolower($domainObject->getName());
+				if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($foreignKeyName)) {
+					$foreignKeyName = 'tx_' . $foreignKeyName;
+				}
+				if (isset($this->relatedForeignTables[$foreignDatabaseTableName])) {
+					$foreignKeyName .= $this->relatedForeignTables[$foreignDatabaseTableName];
+					$this->relatedForeignTables[$foreignDatabaseTableName] += 1;
+				} else {
+					$foreignDatabaseTableName = Tools::parseTableNameFromClassName(
+							$relationJsonConfiguration['foreignRelationClass']
+					);
+				}
+				$relation->setForeignDatabaseTableName($foreignDatabaseTableName);
+			}
+			if ($relation->isFileReference() && !empty($relationJsonConfiguration['maxItems'])) {
+				$relation->setMaxItems($relationJsonConfiguration['maxItems']);
+			}
+		}
 		return $relation;
+	}
+
+	/**
+	 * @param $propertyJsonConfiguration
+	 * @return object
+	 * @throws \InvalidArgumentException
+	 * @throws \Exception
+	 */
+	public static function buildProperty($propertyJsonConfiguration) {
+		$propertyType = $propertyJsonConfiguration['propertyType'];
+		$propertyClassName = 'EBT\\ExtensionBuilder\\Domain\Model\\DomainObject\\' . $propertyType . 'Property';
+		if (!class_exists($propertyClassName)) {
+			throw new \Exception('Property of type ' . $propertyType . ' not found');
+		}
+		$property = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($propertyClassName);
+		$property->setUniqueIdentifier($propertyJsonConfiguration['uid']);
+		$property->setName($propertyJsonConfiguration['propertyName']);
+		$property->setDescription($propertyJsonConfiguration['propertyDescription']);
+
+		if ($propertyType == 'File' && !empty($propertyJsonConfiguration['allowedFileTypes'])) {
+			$property->setAllowedFileTypes($propertyJsonConfiguration['allowedFileTypes']);
+		}
+
+		if (isset($propertyJsonConfiguration['propertyIsRequired'])) {
+			$property->setRequired($propertyJsonConfiguration['propertyIsRequired']);
+		}
+		if (isset($propertyJsonConfiguration['propertyIsExcludeField'])) {
+			$property->setExcludeField($propertyJsonConfiguration['propertyIsExcludeField']);
+		}
+		if ($property->isFileReference() && !empty($propertyJsonConfiguration['maxItems'])) {
+			$property->setMaxItems($propertyJsonConfiguration['maxItems']);
+		}
+		return $property;
 	}
 }
 

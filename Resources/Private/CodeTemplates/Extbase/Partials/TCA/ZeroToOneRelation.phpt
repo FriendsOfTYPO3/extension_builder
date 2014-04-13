@@ -10,4 +10,4 @@ array(
 		'showPossibleLocalizationRecords' => 1,
 		'showAllLocalizationLink' => 1
 	),
-)
+),

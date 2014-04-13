@@ -45,6 +45,11 @@ abstract class AnyToManyRelation extends AbstractRelation {
 	protected $useExtendedRelationTableName = FALSE;
 
 	/**
+	 * @var int
+	 */
+	protected $maxItems = 1;
+
+	/**
 	 * Returns the relation table name. It is build by having 'tx_myextension_' followed by the
 	 * first domain object name followed by the second domain object name followed by '_mm'.
 	 *
@@ -97,4 +102,20 @@ abstract class AnyToManyRelation extends AbstractRelation {
 			return TRUE;
 		}
 	}
+
+	/**
+	 * @return int
+	 */
+	public function getMaxItems() {
+		return $this->maxItems;
+	}
+
+	/**
+	 * @param int $maxItems
+	 */
+	public function setMaxItems($maxItems) {
+		$this->maxItems = $maxItems;
+	}
+
+	
 }
