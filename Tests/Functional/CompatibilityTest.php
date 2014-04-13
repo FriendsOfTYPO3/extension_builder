@@ -111,15 +111,15 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 					$originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",$referenceFileContent, TRUE);
 					$generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($createdFile), TRUE);
-					/** uncomment to find the difference
+					/** uncomment to find the difference*/
 					if ($originalLines != $generatedLines) {
 						for($i = 0;$i < count($originalLines);$i++) {
 							if ($originalLines[$i] != $generatedLines[$i]) {
 								//die('Line ' . $i . ':<br />|' . $originalLines[$i] . '| !=<br />|' . $generatedLines[$i] . '|');
 							}
 						}
-						//die('<pre>' . htmlspecialchars(file_get_contents($createdFile)) . '</pre>');
-					} */
+						die('<pre>' . htmlspecialchars(file_get_contents($createdFile)) . '</pre>');
+					}
 					$this->assertEquals(
 						$originalLines,
 						$generatedLines,

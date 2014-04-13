@@ -346,16 +346,16 @@
 				<source>Boolean</source>
 			</trans-unit>
 			<trans-unit id="dateTime">
-				<source>Date time</source>
+				<source>DateTime (timestamp)</source>
 			</trans-unit>
 			<trans-unit id="date">
-				<source>Date*</source>
+				<source>Date (timestamp)</source>
 			</trans-unit>
-			<trans-unit id="NativeDateTime">
-				<source>Naive DateTime*</source>
+			<trans-unit id="nativeDateTime">
+				<source>DateTime</source>
 			</trans-unit>
-			<trans-unit id="NativeDate">
-				<source>Native Date*</source>
+			<trans-unit id="nativeDate">
+				<source>Date</source>
 			</trans-unit>
 			<trans-unit id="time">
 				<source>Time*</source>
@@ -380,6 +380,15 @@
 			</trans-unit>
 			<trans-unit id="password">
 				<source>Password</source>
+			</trans-unit>
+			<trans-unit id="allowedFileTypes">
+				<source>Allowed file types</source>
+			</trans-unit>
+			<trans-unit id="descr_allowedFileTypes">
+				<source>Comma separated file endings like: doc,ods</source>
+			</trans-unit>
+			<trans-unit id="maxItems">
+				<source>Allowed number of files</source>
 			</trans-unit>
 			<trans-unit id="isRequired">
 				<source>Is required?</source>

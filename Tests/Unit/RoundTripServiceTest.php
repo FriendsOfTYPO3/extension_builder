@@ -30,8 +30,14 @@ use EBT\ExtensionBuilder\Service\ObjectSchemaBuilder;
 
 class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
+	/*
+	 * @var \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder
+	 */
+	protected $objectSchemaBuilder;
+
 	function setUp() {
 		parent::setUp();
+		$this->objectSchemaBuilder = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\\ObjectSchemaBuilder');
 	}
 
 	/**
@@ -107,7 +113,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 			'relationType' => 'manyToMany',
 		);
 
-		$relation = ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
+		$relation = $this->objectSchemaBuilder->buildRelation($relationJsonConfiguration, $domainObject);
 
 
 		$uniqueIdentifier1 = md5(microtime() . 'children');
@@ -135,7 +141,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		// build a new domain object with the same unique identifiers
 		$newDomainObject = $this->buildDomainObject('Model8');
 
-		$newRelation = ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
+		$newRelation = $this->objectSchemaBuilder->buildRelation($relationJsonConfiguration, $newDomainObject);
 		$newRelation->setUniqueIdentifier($uniqueIdentifier1);
 		$newRelation->setForeignModel($this->buildDomainObject('ChildModel'));
 
@@ -173,7 +179,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 			'relationType' => 'manyToMany',
 		);
 
-		$relation = ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
+		$relation = $this->objectSchemaBuilder->buildRelation($relationJsonConfiguration, $domainObject);
 
 		$uniqueIdentifier1 = md5(microtime() . 'children');
 		$relation->setUniqueIdentifier($uniqueIdentifier1);
@@ -206,7 +212,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		// build a new domain object with the same unique identifiers
 		$newDomainObject = $this->buildDomainObject('Model8');
 
-		$newRelation = ObjectSchemaBuilder::buildRelation($relationJsonConfiguration);
+		$newRelation = $this->objectSchemaBuilder->buildRelation($relationJsonConfiguration, $domainObject);
 		$newRelation->setUniqueIdentifier($uniqueIdentifier1);
 		$newRelation->setForeignModel($this->buildDomainObject('RenamedModel'));
 

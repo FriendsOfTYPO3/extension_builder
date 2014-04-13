@@ -36,7 +36,7 @@ class FileProperty extends AbstractProperty {
 	 *
 	 * @var string
 	 */
-	protected $defaultValue = '';
+	protected $defaultValue = NULL;
 
 	/**
 	 * allowed file types for this property
@@ -57,16 +57,26 @@ class FileProperty extends AbstractProperty {
 	 */
 	protected $needsUploadFolder = TRUE;
 
+	/**
+	 * @var int
+	 */
+	protected $maxItems = 1;
+
+	/**
+	 * @var string
+	 */
+	protected $type = 'File';
+
 	public function getTypeForComment() {
-		return 'string';
+		return '\TYPO3\CMS\Extbase\Domain\Model\FileReference';
 	}
 
 	public function getTypeHint() {
-		return '';
+		return '\TYPO3\CMS\Extbase\Domain\Model\FileReference';
 	}
 
 	public function getSqlDefinition() {
-		return $this->getFieldName() . " text NOT NULL,";
+		return $this->getFieldName() . " int(11) unsigned NOT NULL default '0',";
 	}
 
 	/**
@@ -104,4 +114,28 @@ class FileProperty extends AbstractProperty {
 	public function setDisallowedFileTypes($disallowedFileTypes) {
 		return $this->disallowedFileTypes = $disallowedFileTypes;
 	}
+
+	/**
+	 * The string to be used inside object accessors to display this property.
+	 *
+	 * @return string
+	 */
+	public function getNameToBeDisplayedInFluidTemplate() {
+		return $this->name . '.originalResource.name';
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getMaxItems() {
+		return $this->maxItems;
+	}
+
+	/**
+	 * @param int $maxItems
+	 */
+	public function setMaxItems($maxItems) {
+		$this->maxItems = $maxItems;
+	}
+
 }
