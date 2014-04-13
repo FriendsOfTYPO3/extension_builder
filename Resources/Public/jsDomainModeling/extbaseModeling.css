@@ -298,6 +298,17 @@ div.relationGroup div.inputEx-label{
 	display:block;
 }
 
+
+#domainModelEditor.showAdvancedOptions .inputEx-fieldWrapper.dependant,
+#domainModelEditor.showAdvancedOptions .inputEx-fieldWrapper.dependant.advancedMode {
+	display:none;
+}
+
+#domainModelEditor.showAdvancedOptions fieldset.File .inputEx-fieldWrapper.dependant.fileOnly.advancedMode,
+#domainModelEditor.showAdvancedOptions fieldset.String .inputEx-fieldWrapper.dependant.stringOnly.advancedMode{
+	display:block;
+}
+
 .selectFieldWrapper .inputEx-label,
 .textfieldWrapper .inputEx-label{
 	float:none;

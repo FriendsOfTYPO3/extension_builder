@@ -333,7 +333,6 @@
 		 * @method loadSMD
 		 */
 			loadSMD: function() {
-
 			this.service = new YAHOO.rpc.Service(this.options.smdUrl, {
 				success: this.onSMDsuccess,
 				failure: this.onSMDfailure,
@@ -646,18 +645,22 @@
 		onLoad: function() {
 
 			this.service.listWirings({language: this.options.languageName}, {
-										 success: function(result) {
-											 this.pipes = result.result;
-											 this.pipesByName = {};
-											 this.renderLoadPanel();
-											 this.updateLoadPanelList();
-											 this.loadPanel.show();
-											 this.layout.getUnitById('left').collapse();
-										 },
-										 scope: this
-									 }
+				 success: function(result) {
+					 this.pipes = result.result;
+					 this.pipesByName = {};
+					 this.renderLoadPanel();
+					 this.updateLoadPanelList();
+					 this.loadPanel.show();
+					 this.layout.getUnitById('left').collapse();
+				 },
+				 scope: this
+			 }
 			);
 
+		},
+
+		onPipeLoaded: function() {
+			roundtrip.onModuleLoaded();
 		},
 
 		/**
@@ -727,6 +730,7 @@
 			}
 
 			this.loadPanel.hide();
+			this.onPipeLoaded();
 		},
 
 
