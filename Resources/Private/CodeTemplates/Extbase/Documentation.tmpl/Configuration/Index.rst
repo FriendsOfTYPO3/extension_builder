@@ -27,51 +27,73 @@ TypoScript Reference
 --------------------
 
 Possible subsections: Reference of TypoScript options.
+The construct below show the recommended structure for
+TypoScript properties listing and description.
 
-.. note::
+Properties should be listed in the order in which they
+are executed by your extension, but the first should be
+alphabetical for easier access.
 
-   Leave out the "Default" property when it is empty, otherwise it will
-   not render properly.
+When detailing data types or standard TypoScript
+features, don't hesitate to cross-link to the TypoScript
+Reference as shown below. See the :file:`Settings.yml`
+file for the declaration of cross-linking keys.
 
 
-.. ..................................
-.. container:: table-row
+Properties
+^^^^^^^^^^
 
-	Property
-		allWrap / +stdWrap
+.. container:: ts-properties
 
-	Data type
-		wrap
+	=========================== ===================================== ======================= ====================
+	Property                    Data type                             :ref:`t3tsref:stdwrap`  Default
+	=========================== ===================================== ======================= ====================
+	allWrap_                    :ref:`t3tsref:data-type-wrap`         yes                     :code:`<div>|</div>`
+	`subst\_elementUid`_        :ref:`t3tsref:data-type-boolean`      no                      0
+	wrapItemAndSub_             :ref:`t3tsref:data-type-wrap`
+	=========================== ===================================== ======================= ====================
 
-	Description
-		Wraps the whole item.
 
-	Default
-	    :code:`<div>|</div>`
+Property details
+^^^^^^^^^^^^^^^^
 
-.. ..................................
-.. container:: table-row
+.. only:: html
 
-	Property
-		wrapItemAndSub
+	.. contents::
+		:local:
+		:depth: 1
 
-	Data type
-		wrap
 
-	Description
-		Wraps the whole item and any submenu concatenated to it.
+.. _ts-plugin-tx-extensionkey-stdwrap:
 
-.. ..................................
-.. container:: table-row
+allWrap
+"""""""
 
-	Property
-		subst_elementUid
+:typoscript:`plugin.tx_extensionkey.allWrap =` :ref:`t3tsref:data-type-wrap`
 
-	Data type
-		boolean
+Wraps the whole item.
 
-	Description
-		If set, all appearances of the string '{elementUid}' in the total element html-code (after wrapped in .allWrap} is substituted with the uid number of the menu item. This is useful if you want to insert an identification code in the HTML in order to manipulate properties with JavaScript.
+
+.. _ts-plugin-tx-extensionkey-wrapitemandsub:
+
+wrapItemAndSub
+""""""""""""""
+
+:typoscript:`plugin.tx_extensionkey.wrapItemAndSub =` :ref:`t3tsref:data-type-wrap`
+
+Wraps the whole item and any submenu concatenated to it.
+
+
+.. _ts-plugin-tx-extensionkey-substelementUid:
+
+subst_elementUid
+""""""""""""""""
+
+:typoscript:`plugin.tx_extensionkey.subst_elementUid =` :ref:`t3tsref:data-type-boolean`
+
+If set, all appearances of the string ``{elementUid}`` in the total element html-code (after wrapped in allWrap_)
+is substituted with the uid number of the menu item. This is useful if you want to insert an identification code
+in the HTML in order to manipulate properties with JavaScript.
 
 
 .. _configuration-faq:
