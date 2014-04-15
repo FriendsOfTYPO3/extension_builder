@@ -135,9 +135,12 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 		$this->printerService = new \EBT\ExtensionBuilder\Service\Printer();
 		$this->printerService->injectNodeFactory(new \EBT\ExtensionBuilder\Parser\NodeFactory());
 
+		$localizationService = $this->objectManager->get('\EBT\ExtensionBuilder\Service\LocalizationService');
+
 		//parent::runBare(); causes a memory exhausted error??
 		$this->fileGenerator->injectObjectManager($this->objectManager);
 		$this->fileGenerator->injectPrinterService($this->printerService);
+		$this->fileGenerator->injectLocalizationService($localizationService);
 
 		$this->roundTripService->injectParserService($this->parserService);
 		$this->roundTripService->initialize($this->extension);

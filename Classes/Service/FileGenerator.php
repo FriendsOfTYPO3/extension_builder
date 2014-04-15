@@ -116,9 +116,9 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	);
 
 	/**
-	 * @var string
+	 * @var LocalizationService
 	 */
-	protected $locallangFileFormat = 'xlf';
+	protected $localizationService;
 
 	/**
 	 * @param ClassBuilder $classBuilder
@@ -142,6 +142,13 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
+	 * @param LocalizationService $localizationService
+	 */
+	public function injectLocalizationService(LocalizationService $localizationService) {
+		$this->localizationService = $localizationService;
+	}
+
+	/**
 	 * called by controller
 	 * @param Array $settings
 	 */
@@ -159,9 +166,6 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 		$this->extension = $extension;
 		if ($this->settings['extConf']['enableRoundtrip'] == 1) {
 			$this->roundTripEnabled = TRUE;
-			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('roundtrip enabled', 'extension_builder', 0, $this->settings);
-		} else {
-			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('roundtrip disabled', 'extension_builder', 0, $this->settings);
 		}
 		if (isset($this->settings['codeTemplateRootPath'])) {
 			$this->codeTemplateRootPath = $this->settings['codeTemplateRootPath'];
@@ -223,8 +227,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 				$fileContents = $this->renderTemplate(
 					\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($extensionFile) . 't',
 					array(
-						'extension' => $this->extension,
-						'locallangFileFormat' => $this->locallangFileFormat
+						'extension' => $this->extension
 					)
 				);
 				$this->writeFile($this->extensionDirectory . $extensionFile, $fileContents);
@@ -319,20 +322,19 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	protected function generateLocallangFiles() {
-		// Generate locallang*.xml files
+		// Generate locallang*.xlf files
 		try {
 			\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->privateResourcesDirectory, 'Language');
 			$this->languageDirectory = $this->privateResourcesDirectory . 'Language/';
 			$fileContents = $this->generateLocallangFileContent();
-			$this->writeFile($this->languageDirectory . 'locallang.' . $this->locallangFileFormat, $fileContents);
+			$this->writeFile($this->languageDirectory . 'locallang.xlf', $fileContents);
 			$fileContents = $this->generateLocallangFileContent('_db');
-			$this->writeFile($this->languageDirectory . 'locallang_db.' . $this->locallangFileFormat, $fileContents);
+			$this->writeFile($this->languageDirectory . 'locallang_db.xlf', $fileContents);
 			if ($this->extension->hasBackendModules()) {
 				foreach ($this->extension->getBackendModules() as $backendModule) {
 					$fileContents = $this->generateLocallangFileContent('_mod', 'backendModule', $backendModule);
 					$this->writeFile(
-						$this->languageDirectory . 'locallang_' . $backendModule->getKey() . '.'
-								. $this->locallangFileFormat,
+						$this->languageDirectory . 'locallang_' . $backendModule->getKey() . '.xlf',
 						$fileContents
 					);
 				}
@@ -341,8 +343,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 			foreach ($this->extension->getDomainObjects() as $domainObject) {
 				$fileContents = $this->generateLocallangFileContent('_csh', 'domainObject', $domainObject);
 				$this->writeFile(
-					$this->languageDirectory . 'locallang_csh_' . $domainObject->getDatabaseTableName() . '.'
-							. $this->locallangFileFormat,
+					$this->languageDirectory . 'locallang_csh_' . $domainObject->getDatabaseTableName() . '.xlf',
 					$fileContents
 				);
 
@@ -891,7 +892,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 
 
 	/**
-	 * @param string $fileNameSuffix
+	 * @param string $fileNameSuffix (_db, _csh, _mod)
 	 * @param string $variableName
 	 * @param null $variable
 	 * @return mixed
@@ -903,39 +904,40 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 		if (strlen($variableName) > 0) {
 			$variableArray[$variableName] = $variable;
 		}
+		$languageLabels = array();
+		if ($variableName == 'domainObject') {
+			$languageLabels = $this->localizationService->prepareLabelArrayForContextHelp($variable);
+		} else if($variableName == 'backendModule') {
+			$languageLabels = $this->localizationService->prepareLabelArrayForBackendModule($variable);
+		} else {
+			$languageLabels = $this->localizationService->prepareLabelArray($this->extension, 'locallang' . $fileNameSuffix);
+		}
 
-		if ($this->roundTripEnabled
-				&& RoundTrip::getOverWriteSettingForPath(
-					$targetFile . '.' . $this->locallangFileFormat, $this->extension
-				) == 1) {
+		if ($this->fileShouldBeMerged($targetFile . '.xlf')) {
 			$existingFile = NULL;
 			$filenameToLookFor = $this->extensionDirectory . $targetFile;
 			if ($variableName == 'domainObject') {
 				$filenameToLookFor .= '_' . $variable->getDatabaseTableName();
 			}
-			if (file_exists($filenameToLookFor . '.xlf')) {
-				$existingFile = $filenameToLookFor . '.xlf';
-			} else if (file_exists($filenameToLookFor . '.xml')) {
-				$existingFile = $filenameToLookFor . '.xml';
-			}
-			if ($existingFile != NULL) {
-				$defaultFileContent = $this->renderTemplate(
-					$targetFile  . '.' . $this->locallangFileFormat . 't',
-					$variableArray
+			$existingFile = $filenameToLookFor . '.xlf';
+
+			if (@file_exists($existingFile)) {
+				$existingLabels = $this->localizationService->getLabelArrayFromFile($existingFile, 'default');
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog(
+					'locallang' . $fileNameSuffix . ' existing labels',
+					'extension_builder',
+					1,
+					$existingLabels
 				);
-				if ($this->locallangFileFormat == 'xlf') {
-					throw new \Exception(
-						'Merging xlf files is not yet supported. Please set overwrite settings to "keep" or "overwrite"'
-					);
-					// this is prepared already but still needs some improvements
-					//$variableArray['labelArray'] = $labelArray;
-				} else {
-					return  \EBT\ExtensionBuilder\Utility\Tools::mergeLocallangXml($existingFile, $defaultFileContent);
+				if (is_array($existingLabels)) {
+					\TYPO3\CMS\Core\Utility\ArrayUtility::mergeRecursiveWithOverrule($existingLabels, $languageLabels);
+					$languageLabels = $existingLabels;
 				}
 
 			}
 		}
-		return $this->renderTemplate($targetFile . '.' . $this->locallangFileFormat . 't', $variableArray);
+		$variableArray['labelArray'] = $languageLabels;
+		return $this->renderTemplate('Resources/Private/Language/locallang.xlf' . 't', $variableArray);
 	}
 
 	public function generatePrivateResourcesHtaccess() {
@@ -947,8 +949,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 			'Configuration/TCA/domainObject.phpt',
 			array(
 				'extension' => $this->extension,
-				'domainObject' => $domainObject,
-				'locallangFileFormat' => $this->locallangFileFormat
+				'domainObject' => $domainObject
 			)
 		);
 	}
@@ -1135,11 +1136,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 		if ($fileExtension == 'php') {
 			$fileContents = str_replace('?>', '', $fileContents);
 			$fileContents .= RoundTrip::SPLIT_TOKEN;
-		}
-		else if ($fileExtension == $this->locallangFileFormat) {
-			//TODO: implement merge routine for xliff files
-		}
-		else {
+		} else {
 			$fileContents .= "\n" . RoundTrip::SPLIT_TOKEN;
 		}
 
