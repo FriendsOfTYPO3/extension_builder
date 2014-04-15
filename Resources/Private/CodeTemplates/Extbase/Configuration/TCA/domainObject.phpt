@@ -9,7 +9,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 		'showRecordFieldList' => '<f:if condition="{extension.supportLocalization}">sys_language_uid, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addHiddenField}">hidden, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}<f:if condition="{i.isLast}"><f:else>, </f:else></f:if></f:for>',
 	),
 	'types' => array(
-		<f:if condition="{domainObject.hasChildren}"><f:then>'{domainObject.recordType}'</f:then><f:else>'1'</f:else></f:if> => array('showitem' => '<f:if condition="{extension.supportLocalization}">sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addDeletedField}">hidden;;1, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}<f:if condition="{property.useRTE}">;;;richtext:rte_transform[mode=ts_links]</f:if>, </f:for><f:if condition="{domainObject.addStarttimeEndtimeFields}">--div--;LLL:EXT:cms/locallang_ttc.{locallangFileFormat}:tabs.access, starttime, endtime</f:if>'),
+		<f:if condition="{domainObject.hasChildren}"><f:then>'{domainObject.recordType}'</f:then><f:else>'1'</f:else></f:if> => array('showitem' => '<f:if condition="{extension.supportLocalization}">sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addDeletedField}">hidden;;1, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}<f:if condition="{property.useRTE}">;;;richtext:rte_transform[mode=ts_links]</f:if>, </f:for><f:if condition="{domainObject.addStarttimeEndtimeFields}">--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime</f:if>'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -18,21 +18,21 @@ $TCA['{domainObject.databaseTableName}'] = array(
 	<f:if condition="{extension.supportLocalization}">
 		'sys_language_uid' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.{locallangFileFormat}:LGL.language',
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'sys_language',
 				'foreign_table_where' => 'ORDER BY sys_language.title',
 				'items' => array(
-					array('LLL:EXT:lang/locallang_general.{locallangFileFormat}:LGL.allLanguages', -1),
-					array('LLL:EXT:lang/locallang_general.{locallangFileFormat}:LGL.default_value', 0)
+					array('LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages', -1),
+					array('LLL:EXT:lang/locallang_general.xlf:LGL.default_value', 0)
 				),
 			),
 		),
 		'l10n_parent' => array(
 			'displayCond' => 'FIELD:sys_language_uid:>:0',
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.{locallangFileFormat}:LGL.l18n_parent',
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
 			'config' => array(
 				'type' => 'select',
 				'items' => array(
@@ -50,7 +50,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 		</f:if>
 		<f:if condition="{extension.supportVersioning}">
 		't3ver_label' => array(
-			'label' => 'LLL:EXT:lang/locallang_general.{locallangFileFormat}:LGL.versionLabel',
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -60,7 +60,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 	</f:if>
 <f:if condition="{domainObject.addHiddenField}">		'hidden' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.{locallangFileFormat}:LGL.hidden',
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
 			'config' => array(
 				'type' => 'check',
 			),
@@ -68,7 +68,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 <f:if condition="{domainObject.addStarttimeEndtimeFields}">		'starttime' => array(
 			'exclude' => 1,
 			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.{locallangFileFormat}:LGL.starttime',
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
 			'config' => array(
 				'type' => 'input',
 				'size' => 13,
@@ -84,7 +84,7 @@ $TCA['{domainObject.databaseTableName}'] = array(
 		'endtime' => array(
 			'exclude' => 1,
 			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.{locallangFileFormat}:LGL.endtime',
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
 			'config' => array(
 				'type' => 'input',
 				'size' => 13,
