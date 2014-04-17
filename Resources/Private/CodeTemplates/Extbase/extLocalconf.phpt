@@ -1,6 +1,6 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}<?php
 if (!defined('TYPO3_MODE')) {
-	die ('Access denied.');
+	die('Access denied.');
 }
 <f:for each="{extension.plugins}" as="plugin">
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
@@ -21,4 +21,3 @@ if (!defined('TYPO3_MODE')) {
 	)
 );
 </f:for>
-?>
