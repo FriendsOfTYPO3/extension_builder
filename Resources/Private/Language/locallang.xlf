@@ -102,6 +102,9 @@
 			<trans-unit id="examples">
 				<source>Examples</source>
 			</trans-unit>
+			<trans-unit id="distribution">
+				<source>Distribution</source>
+			</trans-unit>
 			<trans-unit id="documentation">
 				<source>Documentation</source>
 			</trans-unit>
