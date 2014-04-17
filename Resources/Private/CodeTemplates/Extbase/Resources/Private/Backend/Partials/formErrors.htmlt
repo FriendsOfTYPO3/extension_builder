@@ -1,21 +1,4 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}
-<f:if condition="{extension.targetVersion}< 4.6">
-	<f:then>
-	<k:openingTag>f:form.errors</k:openingTag>
-	<div class="error">
-		<k:curlyBrackets>error.message</k:curlyBrackets>
-		<k:openingTag>f:if condition="<k:curlyBrackets>error.propertyName</k:curlyBrackets>"</k:openingTag>
-			<p>
-				<strong><k:curlyBrackets>error.propertyName</k:curlyBrackets></strong>:
-				<k:openingTag>f:for each="<k:curlyBrackets>error.errors</k:curlyBrackets>" as="errorDetail"</k:openingTag>
-					<k:curlyBrackets>errorDetail.message</k:curlyBrackets>
-				<k:openingTag>/f:for</k:openingTag>
-			</p>
-		<k:openingTag>/f:if</k:openingTag>
-	</div>
-<k:openingTag>/f:form.errors</k:openingTag>
-	</f:then>
-	<f:else>
 <k:openingTag>f:form.validationResults for="<k:curlyBrackets>object</k:curlyBrackets>"</k:openingTag>
 	<k:openingTag>f:if condition="<k:curlyBrackets>validationResults.flattenedErrors</k:curlyBrackets>"</k:openingTag>
 		<ul>
@@ -28,5 +11,3 @@
 		<k:openingTag>/f:for</k:openingTag></ul>
 <k:openingTag>/f:if</k:openingTag>
 <k:openingTag>/f:form.validationResults</k:openingTag>
-	</f:else>
-</f:if>

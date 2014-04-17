@@ -178,7 +178,7 @@ class Extension {
 	 * the lowest required TYPO3 version
 	 * @var float
 	 */
-	private $targetVersion = 4.5;
+	private $targetVersion = 6.0;
 
 	/**
 	 *
