@@ -21,7 +21,7 @@ if (TYPO3_MODE === 'BE' && !(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_INSTALL)) {
 		array(
 			 'access' => 'user,group',
 			 'icon' => 'EXT:extension_builder/ext_icon.gif',
-			 'labels' => 'LLL:EXT:extension_builder/Resources/Private/Language/locallang_mod.xml',
+			 'labels' => 'LLL:EXT:extension_builder/Resources/Private/Language/locallang_mod.xlf',
 		)
 	);
 
