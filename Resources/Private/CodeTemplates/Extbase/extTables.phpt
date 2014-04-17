@@ -1,6 +1,6 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}<?php
 if (!defined('TYPO3_MODE')) {
-	die ('Access denied.');
+	die('Access denied.');
 }
 <f:for each="{extension.Plugins}" as="plugin">
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
@@ -97,4 +97,3 @@ $TCA['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.database
 );
 	</f:if>
 </f:for>
-?>

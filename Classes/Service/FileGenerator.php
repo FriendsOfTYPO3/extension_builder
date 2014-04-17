@@ -1142,9 +1142,6 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 
 		$fileContents .= rtrim($customFileContent);
 
-		if ($fileExtension == 'php') {
-			$fileContents .= "\n?>";
-		}
 		return $fileContents;
 	}
 
@@ -1196,5 +1193,3 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 
 
 }
-
-?>
