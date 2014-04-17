@@ -629,20 +629,6 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 			throw new \Exception('Could not copy ext_icon.gif, error: ' . $e->getMessage());
 		}
 
-			// insert a manual template
-		try {
-			if (!file_exists($this->extensionDirectory . 'doc/manual.sxw')
-					&& file_exists($this->codeTemplateRootPath . 'doc/manual.sxw')) {
-				$this->mkdir_deep($this->extensionDirectory, 'doc');
-				$this->upload_copy_move(
-					$this->codeTemplateRootPath . 'doc/manual.sxw',
-					$this->extensionDirectory . 'doc/manual.sxw'
-				);
-			}
-		} catch (\Exception $e) {
-			throw new \Exception('An error occurred when copying the manual template: ' . $e->getMessage() . $e->getFile());
-		}
-
 		try {
 			$this->mkdir_deep($this->extensionDirectory, 'Resources/Public');
 			$publicResourcesDirectory = $this->extensionDirectory . 'Resources/Public/';
