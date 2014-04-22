@@ -32,12 +32,10 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
  * @version $ID:$
  */
 class ZeroToManyRelation extends AnyToManyRelation {
-
 	/**
 	 * @var string
 	 */
-	protected $foreignKeyName;
-
+	protected $foreignKeyName = '';
 
 	public function getTypeForComment() {
 		return '\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage<' . $this->getForeignClassName() . '>';

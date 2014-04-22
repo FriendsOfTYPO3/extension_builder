@@ -32,7 +32,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * existing classes and methods to the changes in the configurations
  */
 class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
-
+	/**
+	 * @var string
+	 */
 	const SPLIT_TOKEN = '## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder';
 
 	/**
@@ -43,22 +45,23 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * @var Model\Extension
 	 */
-	protected $extension;
+	protected $extension = NULL;
 
 	/**
 	 * if an extension was renamed this property keeps the
 	 * original extensionDirectory
 	 * otherwise it is set to the current extensionDir
 	 *
-	 * @var string path
+	 * @var string
 	 */
-	protected $previousExtensionDirectory;
+	protected $previousExtensionDirectory = '';
 
 	/**
 	 * the directory of the current extension
-	 * @var string path
+	 *
+	 * @var string
 	 */
-	protected $extensionDirectory;
+	protected $extensionDirectory = '';
 
 	/**
 	 * if an extension was renamed this property keeps the old key
@@ -66,7 +69,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 	 *
 	 * @var string
 	 */
-	protected $previousExtensionKey;
+	protected $previousExtensionKey = '';
 
 	/**
 	 * @var Model\DomainObject[]
@@ -81,17 +84,17 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\Parser
 	 */
-	protected $parserService;
+	protected $parserService = NULL;
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\ClassBuilder
 	 */
-	protected $classBuilder;
+	protected $classBuilder = NULL;
 
 	/**
 	 * @var ConfigurationManager
 	 */
-	protected $configurationManager;
+	protected $configurationManager = NULL;
 
 	/**
 	 * was the extension renamed?
@@ -103,14 +106,13 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * @var Model\ClassObject\ClassObject
 	 */
-	protected $classObject;
+	protected $classObject = NULL;
 
 	/**
 	 * The file object parsed from existing files
 	 * @var Model\File
 	 */
 	protected $classFileObject = NULL;
-
 
 	/**
 	 * @param \EBT\ExtensionBuilder\Service\Parser $parserService
@@ -449,7 +451,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 				}
 
 				foreach ($oldDomainObject->getActions() as $action) {
-					// here we have to update all the occurences of domain object names in action methods 
+					// here we have to update all the occurences of domain object names in action methods
 					$actionMethod = $this->classObject->getMethod($action->getName() . 'Action');
 					if ($actionMethod != NULL) {
 						$actionMethodBody = $actionMethod->getBodyStmts();

@@ -31,50 +31,138 @@ namespace EBT\ExtensionBuilder\Domain\Validator;
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
 class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator {
-
-	/**
+	/*
 	 * Error Codes:
 	 * 0 - 99: Errors concerning the Extension configuration
 	 * 100 - 199: Errors concerning the Domain Objects directly
 	 * 200 - 299: Errors concerning the Properties
 	 */
-	const	ERROR_EXTKEY_LENGTH = 0,
-	ERROR_EXTKEY_ILLEGAL_CHARACTERS = 1,
-	ERROR_EXTKEY_ILLEGAL_PREFIX = 2,
-	ERROR_EXTKEY_ILLEGAL_FIRST_CHARACTER = 3,
-	ERROR_DOMAINOBJECT_ILLEGAL_CHARACTER = 100,
-	ERROR_DOMAINOBJECT_NO_NAME = 101,
-	ERROR_DOMAINOBJECT_LOWER_FIRST_CHARACTER = 102,
-	ERROR_DOMAINOBJECT_DUPLICATE = 103,
-	ERROR_PROPERTY_NO_NAME = 200,
-	ERROR_PROPERTY_DUPLICATE = 201,
-	ERROR_PROPERTY_ILLEGAL_CHARACTER = 202,
-	ERROR_PROPERTY_UPPER_FIRST_CHARACTER = 203,
-	ERROR_PROPERTY_RESERVED_WORD = 204,
-	ERROR_PROPERTY_RESERVED_SQL_WORD = 205,
-	ERROR_PLUGIN_DUPLICATE_KEY = 300,
-	ERROR_PLUGIN_INVALID_KEY = 301,
-	ERROR_BACKENDMODULE_DUPLICATE_KEY = 400,
-	ERROR_BACKENDMODULE_INVALID_KEY = 401,
-	ERROR_ACTIONNAME_DUPLICATE = 501,
-	ERROR_ACTIONNAME_ILLEGAL_CHARACTER = 502,
-	ERROR_MISCONFIGURATION = 503,
-	ERROR_ACTION_MISCONFIGURATION = 504,
-	EXTENSION_DIR_EXISTS = 500,
-	ERROR_MAPPING_NO_TCA = 600,
-	ERROR_MAPPING_NO_PARENTCLASS = 601,
-	ERROR_MAPPING_NO_TABLE = 602,
-	ERROR_MAPPING_NO_FOREIGNCLASS = 603,
-	ERROR_MAPPING_WIRE_AND_FOREIGNCLASS = 604,
-	ERROR_MAPPING_WRONG_TYPEFIELD_CONFIGURATION = 605;
+	/**
+	 * @var int
+	 */
+	const ERROR_EXTKEY_LENGTH = 0;
+	/**
+	 * @var int
+	 */
+	const ERROR_EXTKEY_ILLEGAL_CHARACTERS = 1;
+	/**
+	 * @var int
+	 */
+	const ERROR_EXTKEY_ILLEGAL_PREFIX = 2;
+	/**
+	 * @var int
+	 */
+	const ERROR_EXTKEY_ILLEGAL_FIRST_CHARACTER = 3;
+	/**
+	 * @var int
+	 */
+	const ERROR_DOMAINOBJECT_ILLEGAL_CHARACTER = 100;
+	/**
+	 * @var int
+	 */
+	const ERROR_DOMAINOBJECT_NO_NAME = 101;
+	/**
+	 * @var int
+	 */
+	const ERROR_DOMAINOBJECT_LOWER_FIRST_CHARACTER = 102;
+	/**
+	 * @var int
+	 */
+	const ERROR_DOMAINOBJECT_DUPLICATE = 103;
+	/**
+	 * @var int
+	 */
+	const ERROR_PROPERTY_NO_NAME = 200;
+	/**
+	 * @var int
+	 */
+	const ERROR_PROPERTY_DUPLICATE = 201;
+	/**
+	 * @var int
+	 */
+	const ERROR_PROPERTY_ILLEGAL_CHARACTER = 202;
+	/**
+	 * @var int
+	 */
+	const ERROR_PROPERTY_UPPER_FIRST_CHARACTER = 203;
+	/**
+	 * @var int
+	 */
+	const ERROR_PROPERTY_RESERVED_WORD = 204;
+	/**
+	 * @var int
+	 */
+	const ERROR_PROPERTY_RESERVED_SQL_WORD = 205;
+	/**
+	 * @var int
+	 */
+	const ERROR_PLUGIN_DUPLICATE_KEY = 300;
+	/**
+	 * @var int
+	 */
+	const ERROR_PLUGIN_INVALID_KEY = 301;
+	/**
+	 * @var int
+	 */
+	const ERROR_BACKENDMODULE_DUPLICATE_KEY = 400;
+	/**
+	 * @var int
+	 */
+	const ERROR_BACKENDMODULE_INVALID_KEY = 401;
+	/**
+	 * @var int
+	 */
+	const ERROR_ACTIONNAME_DUPLICATE = 501;
+	/**
+	 * @var int
+	 */
+	const ERROR_ACTIONNAME_ILLEGAL_CHARACTER = 502;
+	/**
+	 * @var int
+	 */
+	const ERROR_MISCONFIGURATION = 503;
+	/**
+	 * @var int
+	 */
+	const ERROR_ACTION_MISCONFIGURATION = 504;
+	/**
+	 * @var int
+	 */
+	const EXTENSION_DIR_EXISTS = 500;
+	/**
+	 * @var int
+	 */
+	const ERROR_MAPPING_NO_TCA = 600;
+	/**
+	 * @var int
+	 */
+	const ERROR_MAPPING_NO_PARENTCLASS = 601;
+	/**
+	 * @var int
+	 */
+	const ERROR_MAPPING_NO_TABLE = 602;
+	/**
+	 * @var int
+	 */
+	const ERROR_MAPPING_NO_FOREIGNCLASS = 603;
+	/**
+	 * @var int
+	 */
+	const ERROR_MAPPING_WIRE_AND_FOREIGNCLASS = 604;
+	/**
+	 * @var int
+	 */
+	const ERROR_MAPPING_WRONG_TYPEFIELD_CONFIGURATION = 605;
 
 	/**
 	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
 	 */
-	protected $configurationManager;
+	protected $configurationManager = NULL;
 
 	/**
-	 * @var boolean advancdedMode setting from extension_builder configuration
+	 * advancdedMode setting from extension_builder configuration
+	 *
+	 * @var bool
 	 */
 	protected $advancedMode = FALSE;
 
@@ -88,7 +176,8 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 
 	/**
 	 * keeping warnings (which will result in a confirmation)
-	 * @var array
+	 *
+	 * @var array[]
 	 */
 	protected $validationResult = array('errors' => array(), 'warnings' => array());
 

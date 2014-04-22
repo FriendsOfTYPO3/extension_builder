@@ -30,43 +30,45 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 class Action {
-
 	/**
-	 * The action's name
+	 * the action's name
+	 *
 	 * @var string
 	 */
-	protected $name;
+	protected $name = '';
 
 	/**
-	 * The domain object this action belongs to.
+	 * the domain object this action belongs to
+	 *
 	 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
 	 */
-	protected $domainObject;
+	protected $domainObject = NULL;
 
 	/**
 	 * Is a template required for this action?
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $needsTemplate = FALSE;
 
 	/**
 	 * Is a form required in the template for this action?
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $needsForm = FALSE;
 
 	/**
 	 * Is a property partial required in the template for this action?
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $needsPropertyPartial = FALSE;
 
 	/**
 	 * these actions do not need a template since they are never rendered
-	 * @var array
+	 *
+	 * @var string[]
 	 */
 	protected $actionNamesWithNoRendering = array(
 		'create',
@@ -76,7 +78,8 @@ class Action {
 
 	/**
 	 * these actions need a form
-	 * @var array
+	 *
+	 * @var string[]
 	 */
 	protected $actionNamesWithForm = array(
 		'new',
@@ -85,7 +88,8 @@ class Action {
 
 	/**
 	 * these actions should not be cached
-	 * @var array
+	 *
+	 * @var string[]
 	 */
 	protected $actionNamesThatShouldNotBeCached = array(
 		'create',
@@ -95,9 +99,10 @@ class Action {
 
 	/**
 	 * flag: TRUE if the action is cacheable
-	 * @var boolean
+	 *
+	 * @var bool|NULL
 	 */
-	protected $cacheable;
+	protected $cacheable = NULL;
 
 	/**
 	 *
@@ -188,7 +193,7 @@ class Action {
 	/**
 	 * Getter for cacheable
 	 *
-	 * @return boolean $cacheable
+	 * @return boolean|NULL $cacheable
 	 */
 	public function getCacheable() {
 		return $this->isCacheable();

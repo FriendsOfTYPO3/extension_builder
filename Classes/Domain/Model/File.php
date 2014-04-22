@@ -28,14 +28,15 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  *
  */
 class File extends Container {
-
+	/**
+	 * @var string
+	 */
 	protected $filePathAndName = '';
 
 	/**
 	 * @var NamespaceObject[]
 	 */
 	protected $namespaces = array();
-
 
 	/**
 	 * @var array all statements
@@ -48,14 +49,14 @@ class File extends Container {
 	protected $aliasDeclarations = array();
 
 	/**
-	 * @var array of FunctionObject
+	 * @var FunctionObject[]
 	 */
 	protected $functions = array();
 
 	/**
 	 * @var string
 	 */
-	protected $comment;
+	protected $comment = '';
 
 	/**
 	 */

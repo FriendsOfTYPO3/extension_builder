@@ -35,7 +35,9 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  *
  */
 class BeFuncViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-
+	/**
+	 * @var bool
+	 */
 	protected $objectAccessorPostProcessorEnabled = FALSE;
 
 	/**

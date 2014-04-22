@@ -28,58 +28,60 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * Schema for a whole extension
  */
 class Extension {
-
-
 	/**
-	 * The extension key
-	 * @var string
-	 */
-	protected $extensionKey;
-
-	/**
-	 * @var string
-	 */
-	protected $vendorName;
-
-	/**
-	 * Extension's name
-	 * @var string
-	 */
-	protected $name;
-
-	/**
-	 * Extension dir
-	 * @var string
-	 */
-	protected $extensionDir;
-
-	/**
-	 * Extension's version
-	 * @var string
-	 */
-	protected $version;
-
-	/**
+	 * the extension key
 	 *
 	 * @var string
 	 */
-	protected $description;
+	protected $extensionKey = '';
+
+	/**
+	 * @var string
+	 */
+	protected $vendorName = '';
+
+	/**
+	 * extension's name
+	 *
+	 * @var string
+	 */
+	protected $name = '';
+
+	/**
+	 * extension directory
+	 *
+	 * @var string
+	 */
+	protected $extensionDir = '';
+
+	/**
+	 * extension's version
+	 *
+	 * @var string
+	 */
+	protected $version = '';
+
+	/**
+	 * @var string
+	 */
+	protected $description = '';
 
 	/**
 	 * The original extension key (if an extension was renamed)
+	 *
 	 * @var string
 	 */
-	protected $originalExtensionKey;
+	protected $originalExtensionKey = '';
 
 	/**
-	 *
 	 * @var array
 	 */
 	protected $settings = array();
 
 	/**
 	 * default settings for em_conf
-	 * @var array
+	 *
+	 * @var string[]
 	 */
 	protected $emConfDefaults = array('dependencies' => 'cms,extbase,fluid', 'category' => 'plugin');
 
@@ -113,7 +115,6 @@ class Extension {
 	 */
 	protected $sourceLanguage = 'en';
 
-
 	/**
 	 * The extension's state. One of the STATE_* constants.
 	 * @var integer
@@ -137,31 +138,35 @@ class Extension {
 	 *
 	 * an array keeping all md5 hashes of all files in the extension to detect modifications
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	protected $md5Hashes = array();
 
 	/**
-	 * All domain objects
-	 * @var array<\EBT\ExtensionBuilder\Domain\Model\DomainObject>
+	 * all domain objects
+	 *
+	 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject[]
 	 */
 	protected $domainObjects = array();
 
 	/**
-	 * The Persons working on the Extension
-	 * @var array<\EBT\ExtensionBuilder\Domain\Model\Person>
+	 * the Persons working on the Extension
+	 *
+	 * @var \EBT\ExtensionBuilder\Domain\Model\Person[]
 	 */
 	protected $persons = array();
 
 	/**
 	 * plugins
-	 * @var array<\EBT\ExtensionBuilder\Domain\Model\Plugin>
+	 *
+	 * @var \EBT\ExtensionBuilder\Domain\Model\Plugin[]
 	 */
 	private $plugins;
 
 	/**
 	 * backend modules
-	 * @var array<\EBT\ExtensionBuilder\Domain\Model\BackendModule>
+	 *
+	 * @var \EBT\ExtensionBuilder\Domain\Model\BackendModule[]
 	 */
 	private $backendModules;
 
@@ -175,7 +180,6 @@ class Extension {
 	 * @var array
 	 */
 	private $dependencies = array();
-
 
 	/**
 	 * the lowest required TYPO3 version

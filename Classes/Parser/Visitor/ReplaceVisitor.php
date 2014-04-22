@@ -36,8 +36,6 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
 
 
 class ReplaceVisitor extends \PHPParser_NodeVisitorAbstract {
-
-
 	/**
 	 * @var string
 	 */
@@ -52,7 +50,6 @@ class ReplaceVisitor extends \PHPParser_NodeVisitorAbstract {
 	 * @var array
 	 */
 	protected $replacements = array();
-
 
 	/**
 	 * @param \PHPParser_Node $node

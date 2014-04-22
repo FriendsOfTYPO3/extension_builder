@@ -32,35 +32,43 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
  * @version $ID:$
  */
 abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty {
-
 	/**
-	 * The schema of the foreign class
+	 * the schema of the foreign class
+	 *
 	 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
 	 */
-	protected $foreignModel;
+	protected $foreignModel = NULL;
 
 	/**
-	 * The schema of the foreign class
+	 * the schema of the foreign class
+	 *
 	 * @var string
 	 */
-	protected $foreignClassName;
+	protected $foreignClassName = NULL;
 
 	/**
 	 * @var string
 	 */
-	protected $foreignDatabaseTableName;
+	protected $foreignDatabaseTableName = '';
 
 	/**
-	 * If this flag is set to TRUE the relation is rendered as IRRE field (Inline Relational Record Editing). Default is FALSE.
-	 * @var boolean
+	 * If this flag is set to TRUE, the relation is rendered as IRRE field (Inline Relational Record Editing).
+	 * Default is FALSE.
+	 *
+	 * @var bool
 	 */
 	protected $inlineEditing = FALSE;
 
 	/**
-	 * If this flag is set to TRUE the relation will be lazy loading. Default is FALSE
+	 * If this flag is set to TRUE, the relation will be lazy loading. Default is FALSE
+	 *
+	 * @var bool
 	 */
 	protected $lazyLoading = FALSE;
 
+	/**
+	 * @var bool
+	 */
 	protected $relatedToExternalModel = FALSE;
 
 	public function setRelatedToExternalModel($relatedToExternalModel) {

@@ -31,28 +31,27 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  */
 
 class Plugin {
-
 	/**
-	 * @var array
+	 * @var string[]
 	 */
 	protected static $TYPES = array('list_type', 'CType');
 
 	/**
-	 * The plugin name
+	 * the plugin name
 	 *
 	 * @var string
 	 */
 	protected $name = '';
 
 	/**
-	 * The type
+	 * the type
 	 *
 	 * @var string
 	 */
 	protected $type = '';
 
 	/**
-	 * The plugin key
+	 * the plugin key
 	 *
 	 * @var string
 	 */
@@ -62,21 +61,22 @@ class Plugin {
 	 * array with configuration arrays
 	 * array('controller' => 'MyController', 'actions' => 'action1,action2')
 	 *
-	 * @var array
+	 * @var string[]
 	 */
-	protected $controllerActionCombinations;
+	protected $controllerActionCombination = array();
 
 	/**
 	 * array with configuration arrays
 	 * array('controller' => 'MyController', 'actions' => 'action1,action2')
-	 * @var array
+	 *
+	 * @var string[]
 	 */
-	protected $noncacheableControllerActions;
+	protected $noncacheableControllerActions = array();
 
 	/**
-	 * @var array
+	 * @var string[]
 	 */
-	protected $switchableControllerActions;
+	protected $switchableControllerActions = array();
 
 	/**
 	 * Gets the Name

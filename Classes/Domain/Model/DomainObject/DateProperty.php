@@ -28,11 +28,10 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 class DateProperty extends AbstractProperty {
-
 	/**
-	 * string representation of the default value
+	 * the property's default value
 	 *
-	 * @var string
+	 * @var \DateTime
 	 */
 	protected $defaultValue = NULL;
 

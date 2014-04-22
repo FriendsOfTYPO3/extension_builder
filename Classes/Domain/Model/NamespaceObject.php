@@ -32,15 +32,14 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  *
  */
 class NamespaceObject extends Container{
-
 	/**
 	 * array with alias declarations
 	 * each declaration is an array of type
 	 * array(name => alias)
-	 * @var array
+	 *
+	 * @var string[]
 	 */
 	protected $aliasDeclarations = array();
-
 
 	/**
 	 * @param string $name

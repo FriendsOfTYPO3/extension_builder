@@ -38,11 +38,10 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * @scope prototype
  */
 class SingularizeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-
 	/**
 	 * @var \EBT\ExtensionBuilder\Utility\Inflector
 	 */
-	protected $inflector;
+	protected $inflector = NULL;
 
 	public function __construct() {
 		$this->inflector = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Utility\\Inflector');

@@ -26,19 +26,18 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  ***************************************************************/
 
 class ExtensionInstallationStatus {
-
 	/**
 	 * @var \EBT\ExtensionBuilder\Domain\Model\Extension
 	 */
-	protected $extension;
+	protected $extension = NULL;
 
 	/**
 	 * @var \TYPO3\CMS\Extensionmanager\Utility\InstallUtility
 	 */
-	protected $installTool;
+	protected $installTool = NULL;
 
 	/**
-	 * @var array
+	 * @var array[]
 	 */
 	protected $updateStatements = array();
 

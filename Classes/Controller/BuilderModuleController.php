@@ -32,44 +32,44 @@ use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
 class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
-
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\FileGenerator
 	 */
-	protected $fileGenerator;
+	protected $fileGenerator = NULL;
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
 	 */
-	protected $configurationManager;
+	protected $configurationManager = NULL;
 
 	/**
-	 * @var (\EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus
+	 * @var \EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus
 	 */
-	protected $extensionInstallationStatus;
+	protected $extensionInstallationStatus = NULL;
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
 	 */
-	protected $extensionSchemaBuilder;
+	protected $extensionSchemaBuilder = NULL;
 
 	/**
-	 * @var ExtensionValidator::
+	 * @var ExtensionValidator
 	 */
-	protected $extensionValidator;
+	protected $extensionValidator = NULL;
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository
 	 */
-	protected $extensionRepository;
+	protected $extensionRepository = NULL;
 
 	/**
 	 * settings from various sources:
 	 * settings configured in module.extension_builder typoscript
 	 * Module settings configured in the extension manager
-	 * @var array settings
+	 *
+	 * @var array
 	 */
-	protected $settings;
+	protected $settings = array();
 
 	/**
 	 * @param \EBT\ExtensionBuilder\Service\FileGenerator $fileGenerator

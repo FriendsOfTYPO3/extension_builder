@@ -29,11 +29,10 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  */
 
 class RecordTypeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-
 	/**
 	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
 	 */
-	protected $configurationManager;
+	protected $configurationManager = NULL;
 
 	/**
 	 * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager

@@ -28,16 +28,15 @@ namespace EBT\ExtensionBuilder\Reflection;
  * implements typeHint
  */
 class ParameterReflection extends \TYPO3\CMS\Extbase\Reflection\ParameterReflection {
-
 	/**
-	 * typeHint is missing in PHP Reflection (at least in 5.3)
-	 * In the constructor of \EBT\ExtensionBuilder\Reflection\MethodReflection
-	 * is a workaround implemented and each parameter gets a typeHint injected
+	 * typeHint is missing in PHP Reflection (at least in 5.3).
 	 *
+	 * In the constructor of \EBT\ExtensionBuilder\Reflection\MethodReflection
+	 * is a workaround implemented and each parameter gets a typeHint injected.
 	 *
 	 * @var string
 	 */
-	var $typeHint;
+	var $typeHint = '';
 
 	/**
 	 * The constructor, initializes the reflection parameter

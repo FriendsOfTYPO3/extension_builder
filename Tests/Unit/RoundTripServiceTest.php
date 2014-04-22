@@ -29,11 +29,10 @@ use EBT\ExtensionBuilder\Service\ObjectSchemaBuilder;
 
 
 class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
-
-	/*
+	/**
 	 * @var \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder
 	 */
-	protected $objectSchemaBuilder;
+	protected $objectSchemaBuilder = NULL;
 
 	protected function setUp() {
 		parent::setUp();

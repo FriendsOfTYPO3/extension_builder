@@ -30,7 +30,6 @@ use EBT\ExtensionBuilder\Service\ClassBuilder;
  *
  */
 abstract class AbstractObject {
-
 	/**
 	 *  const MODIFIER_PUBLIC    =  1;
 	 *  const MODIFIER_PROTECTED =  2;
@@ -39,7 +38,7 @@ abstract class AbstractObject {
 	 *  const MODIFIER_ABSTRACT  = 16;
 	 *  const MODIFIER_FINAL     = 32;
 	 *
-	 * @var array
+	 * @var int[]
 	 */
 	private $mapModifierNames = array(
 		'public' => \PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC,
@@ -51,62 +50,53 @@ abstract class AbstractObject {
 	);
 
 	/**
-	 * name
 	 * @var string
 	 */
-	protected $name;
+	protected $name = '';
 
 	/**
 	 * @var string
 	 */
-	protected $namespaceName;
+	protected $namespaceName = '';
 
 	/**
 	 * modifiers  (privat, static abstract etc. not to mix up with "isModified" )
-	 * @var array
+	 *
+	 * @var string[]
 	 */
 	protected $modifiers = array();
 
-
 	/**
-	 * docComment
-	 *
 	 * @var string
 	 */
 	protected $docComment = NULL;
 
 	/**
-	 * @var array
+	 * @var string[]
 	 */
 	protected $comments = array();
 
 	/**
-	 * Contains description
-	 *
 	 * @var string
 	 */
-	protected $description;
+	protected $description = '';
 
 	/**
-	 * @var array
+	 * @var string[]
 	 */
 	protected $descriptionLines = array();
 
 	/**
-	 * Contains tags
-	 *
-	 * @var array
+	 * @var string[]
 	 */
 	protected $tags = array();
 
 	/**
-	 * isModified
-	 * this flag is set to TRUE, if a modification of an object was detected
+	 * this flag is set to TRUE if a modification of an object was detected
 	 *
-	 * @var string
+	 * @var bool
 	 */
 	protected $isModified = FALSE;
-
 
 	/**
 	 * Setter for name

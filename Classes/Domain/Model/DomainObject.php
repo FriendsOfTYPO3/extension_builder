@@ -30,72 +30,80 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * @version $ID:$
  */
 class DomainObject {
-
 	/**
-	 * Name of the domain object
-	 * @var string
-	 */
-	protected $name;
-
-	/**
+	 * name of the domain object
 	 *
 	 * @var string
 	 */
-	protected $uniqueIdentifier = NULL;
+	protected $name = '';
 
 	/**
-	 * Description of the domain object
 	 * @var string
 	 */
-	protected $description;
+	protected $uniqueIdentifier = '';
+
+	/**
+	 * description of the domain object
+	 *
+	 * @var string
+	 */
+	protected $description = '';
 
 	/**
 	 * If TRUE, this is an aggregate root.
-	 * @var boolean
+	 *
+	 * @var bool
 	 */
-	protected $aggregateRoot;
+	protected $aggregateRoot = FALSE;
 
 	/**
-	 * If TRUE, the element is sortable in the TYPO3 backend
-	 * @var boolean
+	 * If TRUE, the element is sortable in the TYPO3 backend.
+	 *
+	 * @var bool
 	 */
-	protected $sorting;
+	protected $sorting = FALSE;
 
 	/**
-	 * If TRUE, the related record has a "deleted" enable field
-	 * @var boolean
+	 * If TRUE, the related record has a "deleted" enable field.
+	 *
+	 * @var bool
 	 */
-	protected $addDeletedField;
+	protected $addDeletedField = FALSE;
 
 	/**
 	 * If TRUE, the related record has a "hidden" enable field
-	 * @var boolean
+	 *
+	 * @var bool
 	 */
-	protected $addHiddenField;
+	protected $addHiddenField = FALSE;
 
 	/**
 	 * If TRUE, the related record has a "starttime/endtime" enable field
-	 * @var boolean
+	 *
+	 * @var bool
 	 */
-	protected $addStarttimeEndtimeFields;
+	protected $addStarttimeEndtimeFields = FALSE;
 
 	/**
 	 * If TRUE, the element is categorizable in the TYPO3 backend
-	 * @var boolean
+	 *
+	 * @var bool
 	 */
-	protected $categorizable;
+	protected $categorizable = FALSE;
 
 	/**
-	 * If TRUE, this is an entity. If FALSE, it is a ValueObject
-	 * @var boolean
+	 * If TRUE, this is an entity. If FALSE, it is a ValueObject.
+	 *
+	 * @var bool
 	 */
-	protected $entity;
+	protected $entity = FALSE;
 
 	/**
 	 * The extension this domain object belongs to.
+	 *
 	 * @var Extension
 	 */
-	protected $extension;
+	protected $extension = NULL;
 
 	/**
 	 * List of properties the domain object has
@@ -109,11 +117,10 @@ class DomainObject {
 	 */
 	protected $actions = array();
 
-
 	/**
 	 * Is an upload folder required for this domain object
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $needsUploadFolder = FALSE;
 
@@ -309,7 +316,7 @@ class DomainObject {
 	}
 
 	/**
-	 * Get all properties holding relations of type 
+	 * Get all properties holding relations of type
 	 * AnyToManyRelation
 	 *
 	 * @return DomainObject\Relation\AnyToManyRelation[]

@@ -29,17 +29,16 @@ use TYPO3\CMS\Core\Utility;
  */
 
 class LocalizationService implements \TYPO3\CMS\Core\SingletonInterface {
-
 	/**
 	 * @var \TYPO3\CMS\Core\Localization\Parser\XliffParser
 	 */
-	protected $xliffParser;
+	protected $xliffParser = NULL;
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Utility\Inflector
 	 * @inject
 	 */
-	protected $inflector;
+	protected $inflector = NULL;
 
 	/**
 	 * @param \TYPO3\CMS\Core\Localization\Parser\XliffParser $xlifflParser

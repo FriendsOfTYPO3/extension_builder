@@ -31,7 +31,9 @@ use \EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 * @author Nico de Haen
 */
 class FileVisitor extends \PHPParser_NodeVisitorAbstract implements FileVisitorInterface{
-
+	/**
+	 * @var array
+	 */
 	protected $properties = array();
 
 	/**
@@ -59,6 +61,9 @@ class FileVisitor extends \PHPParser_NodeVisitorAbstract implements FileVisitorI
 	 */
 	protected $classFactory = NULL;
 
+	/**
+	 * @var bool
+	 */
 	protected $onFirstLevel = TRUE;
 
 	/**
@@ -69,6 +74,9 @@ class FileVisitor extends \PHPParser_NodeVisitorAbstract implements FileVisitorI
 	 */
 	protected $contextStack = array();
 
+	/**
+	 * @var \PHPParser_Node
+	 */
 	protected $lastNode = NULL;
 
 	public function getFileObject() {

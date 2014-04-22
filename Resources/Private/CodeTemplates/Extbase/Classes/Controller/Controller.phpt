@@ -10,7 +10,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController{
 	 * @var \TYPO3\CMS\Extbase\Persistence\Repository
 	 * @inject
 	 */
-	protected $domainObjectRepository;
+	protected $domainObjectRepository = NULL;
 
 	/**
 	 * action list

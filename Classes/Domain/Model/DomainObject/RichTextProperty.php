@@ -28,14 +28,16 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 class RichTextProperty extends AbstractProperty {
-
 	/**
-	 * string representation of the default value
+	 * the property's default value
 	 *
 	 * @var string
 	 */
 	protected $defaultValue = '';
 
+	/**
+	 * @var bool
+	 */
 	protected $useRTE = TRUE;
 
 	public function getTypeForComment() {

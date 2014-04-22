@@ -30,30 +30,31 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * @version $ID:$
  */
 class FileProperty extends AbstractProperty {
-
 	/**
-	 * string representation of the default value
+	 * the property's default value
 	 *
-	 * @var string
+	 * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
 	 */
 	protected $defaultValue = NULL;
 
 	/**
 	 * allowed file types for this property
+	 *
 	 * @var string (comma separated filetypes)
 	 */
 	protected $allowedFileTypes = '*';
 
 	/**
-	 * not allowed file types for this property
-	 * @var string (comma separated filetypes)
+	 * not allowed file types for this property (comma-separated file types)
+	 *
+	 * @var string
 	 */
 	protected $disallowedFileTypes = 'php';
 
 	/**
 	 * flag that this property needs an upload folder
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $needsUploadFolder = TRUE;
 

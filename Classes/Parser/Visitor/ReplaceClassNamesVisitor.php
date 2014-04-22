@@ -34,15 +34,25 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  */
 
 class ReplaceClassNamesVisitor extends \PHPParser_NodeVisitorAbstract {
+	/**
+	 * @var string
+	 */
+	protected $nodeType = '';
 
+	/**
+	 * @var string
+	 */
+	protected $nodeProperty = '';
 
-	protected $nodeType;
+	/**
+	 * @var string
+	 */
+	protected $oldClassPrefix = '';
 
-	protected $nodeProperty;
-
-	protected $oldClassPrefix;
-
-	protected $newClassPrefix;
+	/**
+	 * @var string
+	 */
+	protected $newClassPrefix = '';
 
 	public function getClassObject() {
 		return $this->classObject;

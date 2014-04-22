@@ -30,11 +30,10 @@ namespace EBT\ExtensionBuilder;
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
 class Exception extends \TYPO3\CMS\Extbase\Exception {
-
 	/**
-	 * @var string
+	 * @var string|NULL
 	 */
-	protected $subKey = null;
+	protected $subKey = NULL;
 
 	/**
 	 * @param string $message
@@ -47,7 +46,7 @@ class Exception extends \TYPO3\CMS\Extbase\Exception {
 
 		// Build the locallang label index
 		$translationKey = 'error.';
-		if ($this->subKey !== null) {
+		if ($this->subKey !== NULL) {
 			$translationKey .= $this->subKey . '.';
 		}
 		$translationKey .= $code;

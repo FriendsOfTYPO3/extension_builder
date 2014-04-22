@@ -35,7 +35,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 
 class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
-
 	/**
 	 * The class file object created to container the generated class
 	 *
@@ -66,38 +65,37 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * @var \EBT\ExtensionBuilder\Parser\ClassFactory
 	 */
-	protected $classFactory;
+	protected $classFactory = NULL;
 
 	/**
 	 * @var Parser
 	 */
-	protected $parserService;
+	protected $parserService = NULL;
 
 	/**
 	 * @var Printer
 	 */
-	protected $printerService;
+	protected $printerService = NULL;
 
 	/**
 	 * @var RoundTrip
 	 */
-	protected $roundTripService;
+	protected $roundTripService = NULL;
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
 	 */
-	protected $configurationManager;
+	protected $configurationManager = NULL;
 
 	/**
-	 *
 	 * @var FileGenerator
 	 */
-	protected $fileGenerator;
+	protected $fileGenerator = NULL;
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Domain\Model\Extension
 	 */
-	protected $extension;
+	protected $extension = NULL;
 
 	/**
 	 * @var array

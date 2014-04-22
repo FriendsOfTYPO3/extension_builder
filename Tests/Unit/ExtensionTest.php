@@ -33,9 +33,15 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  *
  */
 class  ExtensionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
-
+	/**
+	 * @var \EBT\ExtensionBuilder\Domain\Model\Person[]
+	 */
 	protected $persons = array();
-	protected $extension;
+
+	/**
+	 * @var \EBT\ExtensionBuilder\Domain\Model\Extension
+	 */
+	protected $extension = NULL;
 
 	protected function setUp() {
 		$this->extension = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Extension');

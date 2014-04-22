@@ -27,33 +27,34 @@ namespace EBT\ExtensionBuilder\Reflection;
  * Extended version of the ReflectionProperty
  */
 class PropertyReflection extends \TYPO3\CMS\Extbase\Reflection\PropertyReflection {
-
 	/**
 	 * the line number where this property is declared in the class file
+	 *
 	 * @var int
 	 */
-	protected $lineNumber;
+	protected $lineNumber = 0;
 
 	/**
-	 * @var string description as found in docComment
+	 * description as found in docComment
+	 *
+	 * @var string
 	 */
-	protected $description;
+	protected $description = '';
 
 	/**
 	 * @var string
 	 */
-	protected $rawComment;
+	protected $rawComment = '';
 
 	/**
 	 * @var boolean
 	 */
-	protected $default;
+	protected $default = FALSE;
 
 	/**
-	 *
 	 * @var mixed
 	 */
-	protected $value;
+	protected $value = NULL;
 
 	/**
 	 * getter for line number

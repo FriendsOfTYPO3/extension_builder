@@ -24,7 +24,7 @@ namespace EBT\ExtensionBuilder\Exception;
  ***************************************************************/
 
 /**
- * An exception thrown if an error occured during parsing a php file
+ * An exception thrown if an error occurred during parsing a php file
  */
 class ParseError extends TYPO3\CMS\Extbase\Exception{
 

@@ -28,22 +28,17 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  * Class DocComment
  */
 class DocComment extends Comment {
-
 	/**
-	 * Contains description
-	 *
 	 * @var string
 	 */
-	protected $description;
+	protected $description = '';
 
 	/**
-	 * @var array
+	 * @var string[]
 	 */
 	protected $descriptionLines = array();
 
 	/**
-	 * Contains tags
-	 *
 	 * @var array
 	 */
 	protected $tags = array();

@@ -4,11 +4,10 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Be;
 use TYPO3\CMS\Core\Page\PageRenderer;
 
 class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBackendViewHelper {
-
 	/**
 	 * @var PageRenderer
 	 */
-	private $pageRenderer;
+	private $pageRenderer = NULL;
 
 	public function render() {
 

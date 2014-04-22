@@ -29,8 +29,9 @@ namespace EBT\ExtensionBuilder\Parser\Utility;
  */
 
 class NodeConverter {
-
-
+	/**
+	 * @var int[]
+	 */
 	public static $accessorModifiers = array(
 		\PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC,
 		\PHPParser_Node_Stmt_Class::MODIFIER_PROTECTED,
