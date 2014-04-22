@@ -36,11 +36,11 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 */
 	protected $subject;
 
-	public function setUp() {
+	protected function setUp() {
 		$this->subject = $this->getMock('{domainObject.controllerClassName -> k:format.escapeBackslashes()}', array('redirect', 'forward', 'addFlashMessage'), array(), '', FALSE);
 	}
 
-	public function tearDown() {
+	protected function tearDown() {
 		unset($this->subject);
 	}
 

@@ -32,7 +32,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 */
 	protected $debugMode = FALSE;
 
-	public function setUp() {
+	protected function setUp() {
 		parent::setUp();
 		$this->fixturesPath = PATH_typo3conf . 'ext/extension_builder/Tests/Fixtures/ClassParser/';
 	}

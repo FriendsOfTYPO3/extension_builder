@@ -29,14 +29,6 @@ namespace EBT\ExtensionBuilder\Tests\Unit\Validation;
  * test for validation service
  */
 class ValidationServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
-
-	/**
-	 * @return void
-	 */
-	public function setUp() {
-		parent::setUp();
-	}
-
 	/**
 	 * @test
 	 * @return void

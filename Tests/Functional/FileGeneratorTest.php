@@ -35,15 +35,6 @@ use EBT\ExtensionBuilder\Utility\Inflector;
  *
  */
 class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
-
-	function setUp(){
-		parent::setUp();
-	}
-
-	function tearDown(){
-		parent::tearDown();
-	}
-
 	/**
 	 * @test
 	 */
@@ -372,7 +363,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 * This test is too generic, since it creates the required classes
 	 * with a whole fileGenerator->build call
 	 *
-	 * 
+	 *
 	 * @test
 	 */
 	function writeAggregateRootClassesFromDomainObject(){

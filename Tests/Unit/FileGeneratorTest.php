@@ -31,12 +31,6 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  *
  */
 class FileGeneratorUnitTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
-
-	function setUp() {
-		parent::setUp();
-	}
-
-
 	/**
 	 * Generate the appropriate code for a simple model class
 	 * for a non aggregate root domain object with one boolean property

@@ -90,8 +90,7 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 	protected $fileGenerator;
 
 
-	function setUp($settingFile = ''){
-
+	protected function setUp($settingFile = ''){
 		if(!class_exists('PHPParser_Parser')) {
 			\EBT\ExtensionBuilder\Parser\AutoLoader::register();
 		}
@@ -156,7 +155,7 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 
 		$this->codeTemplateRootPath = PATH_typo3conf.'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
 		$this->modelClassTemplatePath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
-		
+
 		$this->fileGenerator->setSettings(
 			array(
 				'codeTemplateRootPath' => $this->codeTemplateRootPath,
@@ -170,8 +169,7 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 		$this->fileGenerator->_set('extension',$this->extension);
 	}
 
-	public function tearDown() {
-		parent::tearDown();
+	protected function tearDown() {
 		if(isset($this->extension) && $this->extension->getExtensionKey() != NULL) {
 			\TYPO3\CMS\Core\Utility\GeneralUtility::rmdir($this->extension->getExtensionDir(), TRUE);
 		}
