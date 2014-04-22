@@ -34,7 +34,7 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  */
 class ParseAndPrintTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
-	public function setUp() {
+	protected function setUp() {
 		parent::setUp();
 		$this->fixturesPath .= 'ClassParser/';
 	}

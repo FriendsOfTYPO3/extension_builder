@@ -32,7 +32,7 @@ class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 */
 	protected $debugMode = FALSE;
 
-	public function setUp() {
+	protected function setUp() {
 		parent::setUp();
 		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('\EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder'), array('dummy'));
 	}

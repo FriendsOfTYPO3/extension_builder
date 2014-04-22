@@ -36,11 +36,6 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  *
  */
 class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
-
-	function setUp() {
-		parent::setUp();
-	}
-
 	/**
 	 * @test
 	 */

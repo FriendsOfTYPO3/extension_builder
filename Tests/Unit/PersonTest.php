@@ -30,7 +30,7 @@ class PersonTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	protected $person;
 
-	function setUp() {
+	protected function setUp() {
 		$this->person = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Person');
 	}
 

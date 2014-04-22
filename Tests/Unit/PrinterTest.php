@@ -26,10 +26,10 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
 
 class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
-	
+
 	protected $tmpDir = '';
-	
-	public function setUp() {
+
+	protected function setUp() {
 		parent::setUp();
 		$this->fixturesPath = PATH_typo3conf . 'ext/extension_builder/Tests/Fixtures/ClassParser/';
 		\vfsStream::setup('tmpDir');
