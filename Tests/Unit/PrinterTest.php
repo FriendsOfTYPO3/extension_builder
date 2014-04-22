@@ -25,8 +25,9 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  ***************************************************************/
 
 class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
-
-
+	/**
+	 * @var string
+	 */
 	protected $tmpDir = '';
 
 	protected function setUp() {

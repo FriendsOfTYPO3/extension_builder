@@ -29,56 +29,55 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  * Creates (or updates) all the required files for an extension
  */
 class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
-
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\ClassBuilder
 	 */
-	protected $classBuilder;
+	protected $classBuilder = NULL;
 
 	/**
 	 * @var string
 	 */
-	protected $codeTemplateRootPath;
+	protected $codeTemplateRootPath = '';
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Domain\Model\Extension
 	 */
-	protected $extension;
+	protected $extension = NULL;
 
 	/**
 	 * @var string
 	 */
-	protected $extensionDirectory;
+	protected $extensionDirectory = '';
 
 	/**
 	 * @var string
 	 */
-	protected $configurationDirectory;
+	protected $configurationDirectory = '';
 
 	/**
 	 * @var string
 	 */
-	protected $languageDirectory;
+	protected $languageDirectory = '';
 
 	/**
 	 * @var string
 	 */
-	protected $privateResourcesDirectory;
+	protected $privateResourcesDirectory = '';
 
 	/**
 	 * @var string
 	 */
-	protected $iconsDirectory;
+	protected $iconsDirectory = '';
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
-	protected $objectManager;
+	protected $objectManager = NULL;
 
 	/**
 	 * @var array
 	 */
-	protected $overWriteSettings;
+	protected $overWriteSettings = array();
 
 	/**
 	 * @var boolean
@@ -86,15 +85,18 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	protected $roundTripEnabled = FALSE;
 
 	/**
-	 * @var array Settings
+	 * @var array
 	 */
-	protected $settings;
+	protected $settings = array();
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\Printer
 	 */
-	protected $printerService;
+	protected $printerService = NULL;
 
+	/**
+	 * @var string[]
+	 */
 	static public $defaultActions = array(
 		'createAction',
 		'deleteAction',
@@ -106,8 +108,9 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	);
 
 	/**
-	 * alle file types where a split token makes sense
-	 * @var array
+	 * all file types where a split token makes sense
+	 *
+	 * @var string[]
 	 */
 	protected $filesSupportingSplitToken = array(
 		'php', //ext_tables, tca, localconf
@@ -118,7 +121,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * @var LocalizationService
 	 */
-	protected $localizationService;
+	protected $localizationService = NULL;
 
 	/**
 	 * @param ClassBuilder $classBuilder
@@ -1123,7 +1126,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 
 				// merge the files means append everything behind the split token
 			$existingFileContent = file_get_contents($targetFile);
-			
+
 			$fileParts = explode(RoundTrip::SPLIT_TOKEN, $existingFileContent);
 			if (count($fileParts) == 2) {
 				$customFileContent = str_replace('?>', '', $fileParts[1]);

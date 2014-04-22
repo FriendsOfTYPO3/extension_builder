@@ -4,7 +4,7 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  *  Copyright notice
  *
  *  (c) 2014 Nico de Haen <mail@ndh-websolutions.de>, ndh websolutions
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,13 +25,12 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  ***************************************************************/
 
 class Comment {
-
 	/**
-	 * Contains raw comment content
+	 * the raw comment content
 	 *
 	 * @var string
 	 */
-	protected $text;
+	protected $text = '';
 
 	/**
 	 * @var int

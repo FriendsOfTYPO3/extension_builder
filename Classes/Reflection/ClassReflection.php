@@ -27,10 +27,10 @@ namespace EBT\ExtensionBuilder\Reflection;
  * Extended version of the \TYPO3\CMS\Extbase\Reflection\ClassReflection
  */
 class ClassReflection extends \TYPO3\CMS\Extbase\Reflection\ClassReflection {
-
 	/**
+	 * keeps all methods that are inherited from parent classes
 	 *
-	 * @var array to keep all methods that are inherited from parent classes
+	 * @var MethodReflection[]
 	 */
 	protected $inheritedMethods = array();
 

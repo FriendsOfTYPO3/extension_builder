@@ -39,7 +39,6 @@ if (!class_exists('PHPParser_Parser')) {
  *
  */
 class Parser extends \PHPParser_Parser implements \TYPO3\CMS\Core\SingletonInterface {
-
 	/**
 	 * @var \EBT\ExtensionBuilder\\Parser\Visitor\FileVisitorInterface
 	 */
@@ -54,7 +53,6 @@ class Parser extends \PHPParser_Parser implements \TYPO3\CMS\Core\SingletonInter
 	 * @var \EBT\ExtensionBuilder\\Parser\ClassFactoryInterface
 	 */
 	protected $classFactory = NULL;
-
 
 	/**
 	 * @param string $code

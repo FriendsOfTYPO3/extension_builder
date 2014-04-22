@@ -32,9 +32,14 @@ use EBT\ExtensionBuilder\Utility\Inflector;
  *
  */
 class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
-
+	/**
+	 * @var string
+	 */
 	protected $modelName = 'Model1';
 
+	/**
+	 * @var string
+	 */
 	protected $modelClassTemplatePath = '';
 
 	protected function setUp() {

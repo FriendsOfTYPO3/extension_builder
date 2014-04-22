@@ -30,8 +30,10 @@ namespace EBT\ExtensionBuilder\Parser;
  * Class AutoLoader for PHP_Parser
  */
 class AutoLoader {
-
-	static public $autoloadRegistry;
+	/**
+	 * @var mixed
+	 */
+	static public $autoloadRegistry = NULL;
 
 	/**
     * Registers \PHPParser_Autoloader as an SPL autoloader.

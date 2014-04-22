@@ -24,11 +24,10 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  ***************************************************************/
 
 class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper {
-
 	/**
 	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
 	 */
-	protected $configurationManager;
+	protected $configurationManager = NULL;
 
 	/**
 	 * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager

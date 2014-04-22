@@ -52,42 +52,42 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\Parser
 	 */
-	protected $parserService;
+	protected $parserService = NULL;
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\Printer
 	 */
-	protected $printerService;
+	protected $printerService = NULL;
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\ClassBuilder
 	 */
-	protected $classBuilder;
+	protected $classBuilder = NULL;
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\RoundTrip
 	 */
-	protected $roundTripService;
+	protected $roundTripService = NULL;
 
 	/**
 	 * @var \TYPO3\CMS\Fluid\Core\Parser\TemplateParser
 	 */
-	protected $templateParser;
+	protected $templateParser = NULL;
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
 	 */
-	protected $objectManager;
+	protected $objectManager = NULL;
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Domain\Model\Extension
 	 */
-	protected $extension;
+	protected $extension = NULL;
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\FileGenerator
 	 */
-	protected $fileGenerator;
+	protected $fileGenerator = NULL;
 
 
 	protected function setUp($settingFile = ''){

@@ -28,8 +28,15 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
 
 
 class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
+	/**
+	 * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
+	 */
+	protected $extensionSchemaBuilder = NULL;
 
-	protected $extensionSchemaBuilder;
+	/**
+	 * @var string
+	 */
+	protected $extensionKey = '';
 
 	protected function setUp() {
 		//parent::setUp();

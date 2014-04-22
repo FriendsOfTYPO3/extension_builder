@@ -29,40 +29,41 @@ namespace EBT\ExtensionBuilder\Utility;
  * @version $ID:$
  */
 class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
-
 	/**
-	 *
 	 * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
-	protected $classObject;
+	protected $classObject = NULL;
 
 	/**
-	 *
 	 * @var \EBT\ExtensionBuilder\Reflection\ClassReflection
 	 */
-	protected $classReflection;
+	protected $classReflection = NULL;
 
 	/**
 	 * the current line number
+	 *
 	 * @var int
 	 */
-	protected $lineCount;
+	protected $lineCount = 0;
 
 	/**
 	 * might be set to TRUE from "outside"
-	 * @var boolean
+	 *
+	 * @var bool
 	 */
 	public $debugMode = FALSE;
 
 	/**
-	 * The default indent for lines in method bodies
+	 * the default indent for lines in method bodies
+	 *
 	 * @var string
 	 */
 	public $indentToken = "\t\t";
 
 	/**
-	 * The regular expression to detect a method in a line
-	 * @var string regular expression
+	 * the regular expression to detect a method in a line
+	 *
+	 * @var string
 	 */
 	public $methodRegex = "/^
 		\s*															# Some possible whitespace
@@ -83,53 +84,69 @@ class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 	 * TODO: the regex fails in at least 2 cases:
 	 *		 1. if a value contains a string with a semicolon AND an escaped quote; "test;\""
 	 *		 2. if an array contains a string with a semicolon in it: array(foo => 'bar;');
-	 * @var string regular expression
+	 *
+	 * @var string
 	 */
 	public $propertyRegex = '/\s*\\$(?<name>\w*)\s*(\=(?<value>\s*([^;\"\']|\"[^\"]*\"|\'[^\']*\'|[^;]*)))?;/';
 
 	/**
-	 * The regular expression to detect a property with a multiline default value (for example an array)
-	 * @var string regular expression
+	 * the regular expression to detect a property with a multiline default value (for example an array)
+	 *
+	 * @var string
 	 */
 	public $multiLinePropertyRegex = '/\s*\\$(?<name>\w*)\s*(\=(?<value>\s*(.*)))?/';
 
 	/**
-	 * The regular expression to detect a constant in a line
-	 * @var string regular expression
+	 * the regular expression to detect a constant in a line
+	 *
+	 * @var string
 	 */
 	public $constantRegex = '/\s*const\s+(\w*)\s*\=\s*\'*\"*([^;"\']*)\'*\"*;/';
 
+	/**
+	 * @var string
+	 */
 	public $nameSpaceRegex = '/^namespace(.*);/';
 
+	/**
+	 * @var string
+	 */
 	public $aliasRegex = '/^use(.*);/';
 
+	/**
+	 * @var string
+	 */
 	public $declareRegex = '/^declare(.*);/';
 
 	/**
-	 * Reference to the current line in the parser
-	 * @var String
+	 * reference to the current line in the parser
+	 *
+	 * @var string
 	 */
-	protected $currentLine;
+	protected $currentLine = '';
 
 	/**
 	 * remember the last line that matched either a property, a constant or a method end
 	 * this is needed to get all comments between two methods or properties
 	 * (not only the doc comment)
+	 *
 	 * @var int
 	 */
-	protected $lastMatchedLineNumber;
+	protected $lastMatchedLineNumber = 0;
 
 	/**
 	 * for profiling
+	 *
 	 * @var float
 	 */
-	protected $starttime;
+	protected $starttime = 0.0;
 
 	/**
 	 * Array with various data about the currently parsed method
+	 *
 	 * @var array
 	 */
-	protected $currentMethod = Array(
+	protected $currentMethod = array(
 		'reflection' => NULL, // the \EBT\ExtensionBuilder\Reflection\MethodReflection returned from ClassReflection
 		'methodObject' => NULL, // the new created \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 		'endline' => 0,
@@ -139,18 +156,23 @@ class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * If the current parser position is in a method body we
 	 * can skip parsing except for method endings
+	 *
 	 * @var bool
 	 */
 	protected $inMethodBody = FALSE;
 
 	/**
-	 * @var bool true if we are in a multiline comment (since alsmost everything is
+	 * TRUE if we are in a multiline comment (since almost everything is
 	 * allowed in multi line comments we skip parsing except for comment endings)
+	 *
+	 * @var bool
 	 */
 	protected $inMultiLineComment = FALSE;
 
 	/**
-	 * @var bool true if we are in a multiline property
+	 * TRUE if we are in a multiline property
+	 *
+	 * @var bool
 	 */
 	protected $inMultiLineProperty = FALSE;
 
@@ -160,12 +182,13 @@ class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 	 * a multiline property is a property that has a multiline
 	 * devault value (like an array for example)
 	 * The additional lines are added to the "value" when the end(;) is parsed
+	 *
 	 * @var array
 	 */
 	protected $multiLinePropertyMatches = array();
 
 	/**
-	 * @var array
+	 * @var string[]
 	 */
 	protected $lines = array();
 

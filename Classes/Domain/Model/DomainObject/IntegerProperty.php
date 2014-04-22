@@ -29,9 +29,9 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  */
 class IntegerProperty extends AbstractProperty {
 	/**
-	 * string representation of the default value
+	 * the property's default value
 	 *
-	 * @var string
+	 * @var int
 	 */
 	protected $defaultValue = 0;
 

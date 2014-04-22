@@ -29,14 +29,12 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  * @version $ID:$
  */
 class Property extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
-
-
 	/**
-	 * php var type of this property (read from @var annotation in doc comment)
+	 * PHP var type of this property (read from @var annotation in doc comment)
 	 *
-	 * @var string type
+	 * @var string
 	 */
-	protected $varType;
+	protected $varType = '';
 
 	/**
 	 * if there is a domain object property associated
@@ -48,15 +46,14 @@ class Property extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
 	protected $associatedDomainObjectProperty = NULL;
 
 	/**
-	 * @var boolean
-	 */
-	protected $default;
-
-	/**
-	 *
 	 * @var mixed
 	 */
-	protected $value;
+	protected $default = NULL;
+
+	/**
+	 * @var mixed
+	 */
+	protected $value = NULL;
 
 	/**
 	 * in case of properties of type array
@@ -66,7 +63,7 @@ class Property extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
 	 *
 	 * @var \PHPParser_NodeAbstract
 	 */
-	protected $defaultValueNode;
+	protected $defaultValueNode = NULL;
 
 	/**
 	 * __construct
@@ -145,16 +142,16 @@ class Property extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
 	}
 
 	/**
+	 * @param mixed $default
 	 *
-	 * @param boolean $default
+	 * @return void
 	 */
 	public function setDefault($default) {
 		$this->default = $default;
 	}
 
 	/**
-	 *
-	 * @return boolean
+	 * @return mixed
 	 */
 	public function getDefault() {
 		return $this->default;

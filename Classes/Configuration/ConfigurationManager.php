@@ -31,13 +31,22 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  * Load settings from yaml file and from TYPO3_CONF_VARS extConf
  */
 class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\ConfigurationManager {
-
+	/**
+	 * @var string
+	 */
 	const SETTINGS_DIR = 'Configuration/ExtensionBuilder/';
+
+	/**
+	 * @var string
+	 */
 	const OLD_SETTINGS_DIR = 'Configuration/Kickstarter/';
+
+	/**
+	 * @var string
+	 */
 	const EXTENSION_BUILDER_SETTINGS_FILE = 'ExtensionBuilder.json';
 
 	/**
-	 *
 	 * @var array
 	 */
 	private $inputData = array();

@@ -30,19 +30,18 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  */
 
 class Person {
-
 	/**
 	 * TODO make that work
 	 * This Array contains all valid values for the role of a person.
 	 * Extend here and in the locallang (mlang_Tx_ExtensionBuilder_domain_model_person_[rolekey from array]) to add new Roles.
 	 *
-	 * @var array
+	 * @var string[]
 	 * @transient
 	 */
 	protected static $ROLES = array('developer', 'product_manager');
 
 	/**
-	 * The Persons name.
+	 * The persons's name.
 	 *
 	 * @var string
 	 */
@@ -50,7 +49,7 @@ class Person {
 
 	/**
 	 * TODO validation?
-	 * The Persons role.
+	 * The person's role.
 	 *
 	 * @var string
 	 * @see \EBT\ExtensionBuilder\Domain\Model\Person::ROLES
@@ -58,14 +57,14 @@ class Person {
 	protected $role = '';
 
 	/**
-	 * The Emailadress.
+	 * The email address.
 	 *
 	 * @var string
 	 */
 	protected $email = '';
 
 	/**
-	 * The Persons company.
+	 * The person's company.
 	 *
 	 * @var string
 	 */

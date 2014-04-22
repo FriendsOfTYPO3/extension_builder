@@ -29,7 +29,6 @@ use \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter;
  * Class FunctionObject
  */
 class FunctionObject extends AbstractObject {
-
 	/**
 	 * stmts of this methods body
 	 *

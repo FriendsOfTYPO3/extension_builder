@@ -25,7 +25,10 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
 ***************************************************************/
 
 class FormatVisitor extends \PHPParser_NodeVisitorAbstract {
-    public static $first = true;
+	/**
+	 * @var bool
+	 */
+	public static $first = TRUE;
 
     public function enterNode(\PHPParser_Node $node){
         if (self::$first && $node instanceof \PHPParser_Node_Expr_FuncCall) {

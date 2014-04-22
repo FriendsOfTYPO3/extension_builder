@@ -39,7 +39,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @var {domainObject.fullQualifiedClassName}
 	 */
-	protected $subject;
+	protected $subject = NULL;
 
 	protected function setUp() {
 		$this->subject = new {domainObject.fullQualifiedClassName}();

@@ -35,49 +35,78 @@ namespace EBT\ExtensionBuilder\Utility;
  * @package Spyc
  */
 class SpycYAMLParser {
-
-	// SETTINGS
-
 	/**
-	 * Setting this to true will force YAMLDump to enclose any string value in
-	 * quotes.  False by default.
+	 * Setting this to TRUE will force YAMLDump to enclose any string value in
+	 * quotes. FALSE by default.
 	 *
 	 * @var bool
 	 */
-	public $setting_dump_force_quotes = false;
+	public $setting_dump_force_quotes = FALSE;
 
 	/**
-	 * Setting this to true will forse YAMLLoad to use syck_load function when
-	 * possible. False by default.
+	 * Setting this to TRUE will force YAMLLoad to use syck_load function when
+	 * possible. FALSE by default.
+	 *
 	 * @var bool
 	 */
-	public $setting_use_syck_is_possible = false;
+	public $setting_use_syck_is_possible = FALSE;
 
-
-	/**#@+
-	 * @access private
-	 * @var mixed
+	/**
+	 * @var int
 	 */
-	private $_dumpIndent;
-	private $_dumpWordWrap;
-	private $_containsGroupAnchor = false;
-	private $_containsGroupAlias = false;
-	private $path;
-	private $result;
+	private $_dumpIndent = 0;
+
+	/**
+	 * @var int
+	 */
+	private $_dumpWordWrap = 0;
+
+	/**
+	 * @var bool
+	 */
+	private $_containsGroupAnchor = FALSE;
+
+	/**
+	 * @var bool
+	 */
+	private $_containsGroupAlias = FALSE;
+
+	/**
+	 * @var array
+	 */
+	private $path = array();
+
+	/**
+	 * @var array
+	 */
+	private $result = array();
+
+	/**
+	 * @var string
+	 */
 	private $LiteralPlaceHolder = '___YAML_Literal_Block___';
+
+	/**
+	 * @var array
+	 */
 	private $SavedGroups = array();
-	private $indent;
+
+	/**
+	 * @var int
+	 */
+	private $indent = 0;
+
 	/**
 	 * Path modifier that should be applied after adding current element.
-	 * @var array
+	 *
+	 * @var int[]
 	 */
 	private $delayedPath = array();
 
-	/**#@+
-	 * @access public
+	/**
 	 * @var mixed
 	 */
-	public $_nodeId;
+	public $_nodeId = NULL;
 
 	/**
 	 * Load a valid YAML string to Spyc.

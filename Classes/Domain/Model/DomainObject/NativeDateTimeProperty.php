@@ -29,9 +29,9 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  */
 class NativeDateTimeProperty extends AbstractProperty {
 	/**
-	 * string representation of the default value
+	 * the property's default value
 	 *
-	 * @var string
+	 * @var \DateTime
 	 */
 	protected $defaultValue = NULL;
 

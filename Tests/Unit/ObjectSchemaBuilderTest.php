@@ -28,8 +28,10 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
 
 
 class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
-
-	protected $configurationManager;
+	/**
+	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
+	 */
+	protected $configurationManager = NULL;
 
 	protected function setUp() {
 		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\ObjectSchemaBuilder'), array('dummy'));

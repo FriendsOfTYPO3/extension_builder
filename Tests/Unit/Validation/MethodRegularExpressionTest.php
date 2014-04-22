@@ -27,11 +27,10 @@ namespace EBT\ExtensionBuilder\Tests\Unit\Validation;
 /**
  */
 class MethodRegularExpressionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
-
 	/**
 	 * @var \EBT\ExtensionBuilder\Utility\ClassParser
 	 */
-	protected $classParser;
+	protected $classParser = NULL;
 
 	protected function setUp() {
 		$this->classParser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Utility\\ClassParser');

@@ -27,14 +27,15 @@ namespace EBT\ExtensionBuilder\Reflection;
  * Extended version of the ReflectionMethod
  */
 class MethodReflection extends \TYPO3\CMS\Extbase\Reflection\MethodReflection {
-
-
-	protected $tags;
+	/**
+	 * @var array
+	 */
+	protected $tags = array();
 
 	/**
 	 * @var string description as found in docComment
 	 */
-	protected $description;
+	protected $description = '';
 
 	/**
 	 * The constructor, initializes the reflection class

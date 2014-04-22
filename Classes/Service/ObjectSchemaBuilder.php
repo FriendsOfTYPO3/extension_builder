@@ -29,12 +29,14 @@ use EBT\ExtensionBuilder\Utility\Tools;
  * Builder for domain objects
  */
 class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
-
 	/**
 	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
 	 */
-	protected $configurationManager;
+	protected $configurationManager = NULL;
 
+	/**
+	 * @var string[]
+	 */
 	protected $relatedForeignTables = array();
 
 	/**

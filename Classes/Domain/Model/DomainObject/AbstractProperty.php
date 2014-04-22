@@ -29,55 +29,57 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * @version $ID:$
  */
 abstract class AbstractProperty {
-
+	/**
+	 * @var string
+	 */
+	protected $uniqueIdentifier = '';
 
 	/**
+	 * name of the property
 	 *
 	 * @var string
 	 */
-	protected $uniqueIdentifier;
+	protected $name = '';
 
 	/**
-	 * Name of the property
+	 * description of property
+	 *
 	 * @var string
 	 */
-	protected $name;
+	protected $description = '';
 
 	/**
-	 * Description of property
-	 * @var string
+	 * whether the property is required
+	 *
+	 * @var bool
 	 */
-	protected $description;
+	protected $required = FALSE;
 
 	/**
-	 * Whether the property is required
-	 * @var boolean
+	 * property's default value
+	 *
+	 * @var mixed
 	 */
-	protected $required;
+	protected $defaultValue = NULL;
 
 	/**
-	 * The string representation of the properties default value
-	 * @var string
+	 * @var mixed
 	 */
-	protected $defaultValue;
-
-	/**
-	 * @var
-	 */
-	protected $value;
+	protected $value = NULL;
 
 	/**
 	 * Is an upload folder required for this property
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $needsUploadFolder = FALSE;
 
 	/**
 	 * The domain object this property belongs to.
+	 *
 	 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
 	 */
-	protected $class;
+	protected $class = NULL;
 
 	/**
 	 * is set to TRUE, if this property was new added
@@ -89,7 +91,7 @@ abstract class AbstractProperty {
 	/**
 	 * use RTE in Backend
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $useRTE = FALSE;
 

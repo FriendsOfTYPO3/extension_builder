@@ -28,12 +28,11 @@ namespace EBT\ExtensionBuilder\Service;
  */
 
 class ValidationService implements \TYPO3\CMS\Core\SingletonInterface {
-
-
 	/**
 	 * TODO: Check this list if it's still up to date
 	 * Reserved words by MySQL
-	 * @var array
+	 *
+	 * @var string[]
 	 */
 	static public $reservedMYSQLWords = array(
 		'ACCESSIBLE',
@@ -272,9 +271,9 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface {
 	);
 
 	/**
-	 *
 	 * column names used by TYPO3
-	 * @var array
+	 *
+	 * @var string[]
 	 */
 	static public $reservedTYPO3ColumnNames = array(
 		'uid',
@@ -305,9 +304,9 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface {
 	);
 
 	/**
+	 * all these words may not be used as class or domain object names
 	 *
-	 * all these words may not be uses as class or domain object names
-	 * @var array
+	 * @var string[]
 	 */
 	static public $reservedExtbaseNames = array(
 		'Class',
@@ -356,7 +355,6 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface {
 		'RecursiveRegexIterator',
 		'RecursiveTreeIterator',
 		'RegexIterator',
-
 	);
 
 	/**

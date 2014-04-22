@@ -28,19 +28,18 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
  * @version $ID:$
  */
 abstract class AnyToManyRelation extends AbstractRelation {
-
 	/**
 	 * The mm relation table name
 	 *
 	 * @var string
 	 */
-	protected $relationTableName;
+	protected $relationTableName = '';
 
 	/**
 	 * Use tbl1_field1_tbl2_mm as table name to enable multiple relations
 	 * to the same foreign class
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $useExtendedRelationTableName = FALSE;
 
@@ -117,5 +116,5 @@ abstract class AnyToManyRelation extends AbstractRelation {
 		$this->maxItems = $maxItems;
 	}
 
-	
+
 }

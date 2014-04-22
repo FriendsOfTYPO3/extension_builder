@@ -31,9 +31,7 @@ use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
  */
 
 class Container extends AbstractObject {
-
 	/**
-	 * constants
 	 * associative array constName => constValue
 	 *
 	 * @var array
@@ -51,7 +49,7 @@ class Container extends AbstractObject {
 	protected $postIncludes = array();
 
 	/**
-	 * @var array FunctionObject[]
+	 * @var FunctionObject[]
 	 */
 	protected $functions = array();
 
@@ -70,12 +68,10 @@ class Container extends AbstractObject {
 	 */
 	protected $postClassStatements = array();
 
-
 	/**
-	 * @var array ClassObject[]
+	 * @var ClassObject[]
 	 */
 	protected $classes = array();
-
 
 	/**
 	 * @return ClassObject

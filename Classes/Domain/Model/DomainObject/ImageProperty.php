@@ -30,18 +30,17 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * @version $ID:$
  */
 class ImageProperty extends AbstractProperty {
-
 	/**
-	 * string representation of the default value
+	 * the property's default value
 	 *
-	 * @var string
+	 * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
 	 */
 	protected $defaultValue = NULL;
 
 	/**
 	 * flag that this property needs an upload folder
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $needsUploadFolder = TRUE;
 

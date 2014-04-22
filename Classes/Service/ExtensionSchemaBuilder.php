@@ -28,11 +28,10 @@ namespace EBT\ExtensionBuilder\Service;
  * Builds an extension object based on the buildConfiguration
  */
 class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
-
 	/**
 	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
 	 */
-	protected $configurationManager;
+	protected $configurationManager = NULL;
 
 	/**
 	 * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager

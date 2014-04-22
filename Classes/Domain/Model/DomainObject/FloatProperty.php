@@ -29,9 +29,9 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  */
 class FloatProperty extends AbstractProperty {
 	/**
-	 * string representation of the default value
+	 * the property's default value
 	 *
-	 * @var string
+	 * @var float
 	 */
 	protected $defaultValue = 0.0;
 

@@ -32,18 +32,20 @@ if (!class_exists('PHPParser_PrettyPrinter_Default')) {
  * provides methods to render the sourcecode for statements
  */
 class Printer extends \PHPParser_PrettyPrinter_Default {
-
 	/**
 	 * @var \EBT\ExtensionBuilder\Parser\NodeFactory
 	 */
-	protected $nodeFactory;
+	protected $nodeFactory = NULL;
 
 	/**
 	 * @var bool
 	 */
 	protected $canUseSemicolonNamespaces = TRUE;
 
-	protected $indentToken = "\t";
+	/**
+	 * @var string
+	 */
+	protected $indentToken = TAB;
 
 	/**
 	 * @param \EBT\ExtensionBuilder\Parser\NodeFactory $nodeFactory
@@ -174,7 +176,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param array $stmts
 	 * @return int
 	 */

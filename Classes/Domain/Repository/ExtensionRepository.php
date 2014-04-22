@@ -28,12 +28,10 @@ namespace EBT\ExtensionBuilder\Domain\Repository;
  * Repository for existing Extbase Extensions
  */
 class ExtensionRepository implements \TYPO3\CMS\Core\SingletonInterface {
-
-
 	/**
 	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
 	 */
-	protected $configurationManager;
+	protected $configurationManager = NULL;
 
 	/**
 	 * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager

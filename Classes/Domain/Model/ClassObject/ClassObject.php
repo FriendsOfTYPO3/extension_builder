@@ -30,28 +30,31 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
 
 
 class ClassObject extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
-
 	/**
 	 * constants
+	 *
 	 * @var array
 	 */
-	protected $constants;
+	protected $constants = array();
 
 	/**
 	 * properties
+	 *
 	 * @var Property[]
 	 */
 	protected $properties = array();
 
 	/**
 	 * propertyNames - deprecated -> use this->getPropertyNames() instead
-	 * @var array
+	 *
+	 * @var string[]
 	 */
 	protected $propertyNames = array();
 
 
 	/**
 	 * methods
+	 *
 	 * @var Method[]
 	 */
 	protected $methods = array();
@@ -59,43 +62,43 @@ class ClassObject extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
 
 	/**
 	 * interfaceNames
-	 * @var array
+	 *
+	 * @var string[]
 	 */
 	protected $interfaceNames = array();
 
 	/**
 	 * all lines that were found below the class declaration
+	 *
 	 * @var string
 	 */
-	protected $appendedBlock;
+	protected $appendedBlock = '';
 
 	/**
 	 * @var array
 	 */
 	protected $aliasDeclarations = array();
 
-
 	/**
-	 * isFileBased
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $isFileBased = FALSE;
 
-
 	/**
 	 * the path to the file this class was defined in
+	 *
 	 * @var string
 	 */
-	protected $fileName;
+	protected $fileName = '';
 
 	/**
 	 * is instantiated only if the class is imported from a file
+	 *
 	 * @var \EBT\ExtensionBuilder\Reflection\ClassReflection
 	 */
 	protected $classReflection = NULL;
 
 	/**
-	 * parentClass
 	 * @var ClassObject
 	 */
 	protected $parentClass = NULL;

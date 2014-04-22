@@ -31,8 +31,6 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  */
 
 class BackendModule {
-
-
 	/**
 	 * The name of the module
 	 *
@@ -72,9 +70,9 @@ class BackendModule {
 	 * array with configuration arrays
 	 * array('controller' => 'MyController', 'actions' => 'action1,action2')
 	 *
-	 * @var array
+	 * @var string[]
 	 */
-	protected $controllerActionCombinations;
+	protected $controllerActionCombinations = array();
 
 	/**
 	 * Gets the Name

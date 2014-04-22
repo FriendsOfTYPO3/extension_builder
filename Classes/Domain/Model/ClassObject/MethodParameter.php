@@ -29,40 +29,35 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  *
  */
 class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
-
 	/**
-	 *
 	 * @var string
 	 */
-	protected $varType;
+	protected $varType = '';
+
+	/**
+	 * @var string
+	 */
+	protected $typeHint = '';
+
+	/**
+	 * @var string
+	 */
+	protected $typeForParamTag = '';
 
 	/**
 	 * @var mixed
 	 */
-	protected $typeHint = NULL;
+	protected $defaultValue = NULL;
 
 	/**
-	 * @var null
-	 */
-	protected $typeForParamTag = NULL;
-
-	/**
-	 *
-	 * @var mixed
-	 */
-	protected $defaultValue;
-
-	/**
-	 *
 	 * @var int
 	 */
-	protected $position;
+	protected $position = 0;
 
 	/**
-	 *
-	 * @var boolean
+	 * @var bool
 	 */
-	protected $optional;
+	protected $optional = FALSE;
 
 	/**
 	 * @var int
@@ -75,10 +70,9 @@ class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
 	protected $endLine = -1;
 
 	/**
-	 *
-	 * @var boolean
+	 * @var bool
 	 */
-	protected $passedByReference;
+	protected $passedByReference = FALSE;
 
 	/**
 	 * __construct
