@@ -15,9 +15,8 @@ class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBa
 		$this->pageRenderer = $this->getDocInstance()->getPageRenderer();
 
 		$baseUrl = '../' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath('extension_builder');
-
 		$this->pageRenderer->disableCompressJavascript();
-		$this->pageRenderer->loadExtJS(FALSE, FALSE);
+		//$this->pageRenderer->enableDebugMode();
 
 		// SECTION: JAVASCRIPT FILES
 		// YUI Basis Files
@@ -51,7 +50,6 @@ class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBa
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/MenuField.js');
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/TypeField.js');
 
-
 		// WireIt
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/excanvas.js', 'text/javascript', TRUE, FALSE, '<!--[if IE]>|<![endif]-->');
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/WireIt.js');
@@ -79,8 +77,6 @@ class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBa
 		$this->setLocallangSettings();
 
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/WiringEditor.js');
-
-		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/roundtrip.js');
 
 		// Extbase Modelling definition
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/extbaseModeling.js');

@@ -758,8 +758,8 @@
 				}
 
 				var wireObj = {
-					src: {moduleId: WireIt.indexOf(wire.terminal1.container, this.layer.containers), terminal: wire.terminal1.options.name, uid:roundtrip.getUidForTerminal(wire.terminal1)},
-					tgt: {moduleId: WireIt.indexOf(wire.terminal2.container, this.layer.containers), terminal: wire.terminal2.options.name, uid:roundtrip.getUidForTerminal(wire.terminal2)}
+					src: {moduleId: WireIt.indexOf(wire.terminal1.container, this.layer.containers), terminal: wire.terminal1.options.name, uid:this.getUidForTerminal(wire.terminal1)},
+					tgt: {moduleId: WireIt.indexOf(wire.terminal2.container, this.layer.containers), terminal: wire.terminal2.options.name, uid:this.getUidForTerminal(wire.terminal2)}
 				};
 				obj.wires.push(wireObj);
 			}
@@ -770,6 +770,24 @@
 				name: obj.properties.name,
 				working: obj
 			};
+		},
+
+		// add uids to terminals to identify the connection from relations
+		// to other models
+		getUidForTerminal	:	function(terminal) {
+			var parentId,
+				terminalUid;
+			if (terminal.el.getAttribute('title') == 'SOURCES') {
+				// id of the module
+				parentId = terminal.el.parentNode.id;
+			}
+			else {
+				// id of the wrapper of the first field in the fieldset
+				parentId = YAHOO.util.Dom.getAncestorByTagName(terminal.el, 'fieldset').firstChild.id;
+			}
+			// find uid for terminal (needs prototype since YAHOO.util.Dom does not provide such function)
+			terminalUid = $$('#' + parentId + ' input[name="uid"]')[0].value;
+			return terminalUid;
 		}
 
 

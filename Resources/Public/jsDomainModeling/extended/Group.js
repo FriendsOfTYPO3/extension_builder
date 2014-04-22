@@ -118,18 +118,17 @@ lang.extend(inputEx.Group, inputEx.Field,
          var input = this.options.fields[i];
         
          // Render the field
-         if(typeof roundtrip != 'undefined'){
-        	 input = roundtrip.renderFieldHook(input);
-         }
-         
+		// input = this.createUniqueIdForUidField(input);
+
+		if(input.inputParams.name == 'uid' && typeof input.inputParams.value == 'undefined') {
+			var d = new Date,
+			uniqueUid = parseInt(d.getTime() * Math.random());
+			input.inputParams.value = uniqueUid;
+		}
+
          var field = this.renderField(input);
          
-         if(typeof roundtrip != 'undefined'){ 
-        	 field.updatedEvt.subscribe(function(e,params) {
-     			roundtrip.updateEvtListener(params);
-        	 });
-         }
-         
+
          this.fieldset.appendChild(field.getEl() );
   	   }
   	

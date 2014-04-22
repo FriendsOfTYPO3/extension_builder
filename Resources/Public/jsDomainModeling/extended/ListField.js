@@ -185,9 +185,23 @@
 		   Event.stopEvent(e);
 		   // Add a field with no value:
 		   var subFieldEl = this.addElement();
-		   if(typeof roundtrip != 'undefined'){
-			   roundtrip.addFieldSetHook(this.lastCopiedFieldSet);
-		   }
+		   var copiedFieldSet = this.lastCopiedFieldSet;
+			if(typeof copiedFieldSet['inputs'] !='undefined'){
+				for(i = 0;i <  copiedFieldSet['inputs'].length;i++){
+					fieldName =  copiedFieldSet['inputs'][i]['options']['name'];
+
+					if (fieldName == 'relationName' || fieldName == 'propertyName') {
+						copiedFieldSet['inputs'][i].setValue('');
+					} else if (fieldName == 'uid') {
+						copiedFieldSet['inputs'][i].setValue(parseInt(new Date().getTime() * Math.random(), 10));
+					} else if (fieldName == 'propertyType') {
+						var fieldset = copiedFieldSet.fieldset;
+						fieldset.removeAttribute('class');
+						Dom.addClass(fieldset, copiedFieldSet['inputs'][i].getValue());
+					}
+				}
+			}
+
 		   // Focus on this field
 		   subFieldEl.focus();
 
