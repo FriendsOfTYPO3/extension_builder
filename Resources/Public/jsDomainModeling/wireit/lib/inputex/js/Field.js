@@ -1,5 +1,5 @@
 (function() {
-	var inputEx = YAHOO.inputEx, Dom = YAHOO.util.Dom, lang = YAHOO.lang, util = YAHOO.util;
+	var inputEx = YAHOO.inputEx, Dom = YAHOO.util.Dom, lang = YAHOO.lang, util = YAHOO.util, Event = YAHOO.util.Event;
 
 	/**
 	 * @class An abstract class that contains the shared features for all fields
@@ -105,8 +105,12 @@
 
 			// Label element
 			if (this.options.label) {
+				var labelClassName = '';
+				if (this.options.description) {
+					labelClassName = 'helpAvailable';
+				}
 				this.labelDiv = inputEx.cn('div', {id: this.divEl.id + '-label', className: 'inputEx-label', 'for': this.divEl.id + '-field'});
-				this.labelEl = inputEx.cn('label');
+				this.labelEl = inputEx.cn('label', {className: labelClassName});
 				this.labelEl.appendChild(document.createTextNode(this.options.label));
 				this.labelDiv.appendChild(this.labelEl);
 				this.divEl.appendChild(this.labelDiv);
@@ -119,14 +123,23 @@
 
 			// Description
 			if (this.options.description) {
-				this.fieldContainer.appendChild(inputEx.cn('div', {id: this.divEl.id + '-desc', className: 'inputEx-description'}, null, this.options.description));
+				this.descriptionElement = inputEx.cn('div', {id: this.divEl.id + '-desc', className: 'inputEx-description'}, null, this.options.description);
+				this.fieldContainer.appendChild(this.descriptionElement);
+				Event.addListener(this.labelDiv, "mouseover", this.showDescription, this, true);
+				Event.addListener(this.labelDiv, "mouseout", this.hideDescription, this, true);
 			}
 
 			this.divEl.appendChild(this.fieldContainer);
 
 			// Insert a float breaker
 			this.divEl.appendChild(inputEx.cn('div', null, {clear: 'both'}, " "));
-			setTimeout('roundtrip.onFieldRendered("' + this.options.id + '")', 50);
+		},
+
+		showDescription: function() {
+			this.descriptionElement.style.display = 'block';
+		},
+		hideDescription: function() {
+			this.descriptionElement.style.display = 'none';
 		},
 
 		/**
@@ -369,7 +382,6 @@
 		isEmpty: function() {
 			return this.getValue() === '';
 		}
-
 	};
 
 })();

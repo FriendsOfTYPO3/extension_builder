@@ -30,9 +30,8 @@ YAHOO.extend(WireIt.util.DD, YAHOO.util.DD, {
 	 * @method onDrag
 	 */
 	onDrag: function(e) {
-		var leftPanel = Ext.query('.yui-layout-unit-left');
-		var leftWidth = Ext.get(leftPanel[0]).getWidth() + 10;
-
+		var leftPanel = YAHOO.util.Dom.getElementsByClassName('yui-layout-unit-left');
+		var leftWidth = $(leftPanel[0]).getWidth() + 10;
 //		Ext.select('.WireIt-Container').each(function(element) {
 //			var el = Ext.get(element);
 //			if (el.getX() < leftWidth) {
