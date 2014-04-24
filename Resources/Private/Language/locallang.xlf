@@ -132,6 +132,12 @@
 			<trans-unit id="descr_disableLocalization">
 				<source>Check this if your extension needs no support for localization. This will skip the creation of localization related columns in the database</source>
 			</trans-unit>
+			<trans-unit id="sourceLanguage">
+				<source>Source language for xliff files</source>
+			</trans-unit>
+			<trans-unit id="descr_sourceLanguage">
+				<source>The source language for xliff files is the language in which the "source" of a label is defined, which can be translated into other languages. In general it should be english.</source>
+			</trans-unit>
 			<trans-unit id="dependsOn">
 				<source>Depends on</source>
 			</trans-unit>
