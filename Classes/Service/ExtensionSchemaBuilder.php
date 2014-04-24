@@ -201,9 +201,12 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		$extension->setDescription($propertyConfiguration['description']);
 		// extensionKey
 		$extension->setExtensionKey(trim($propertyConfiguration['extensionKey']));
-
 		// vendorName
 		$extension->setVendorName(trim($propertyConfiguration['vendorName']));
+
+		if (!empty($propertyConfiguration['emConf']['sourceLanguage'])) {
+			$extension->setSourceLanguage($propertyConfiguration['emConf']['sourceLanguage']);
+		}
 
 		if ($propertyConfiguration['emConf']['disableVersioning']) {
 			$extension->setSupportVersioning(FALSE);

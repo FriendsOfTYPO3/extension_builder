@@ -108,7 +108,10 @@ class Extension {
 	 */
 	protected $supportLocalization = TRUE;
 
-
+	/**
+	 * @var string
+	 */
+	protected $sourceLanguage = 'en';
 
 
 	/**
@@ -786,6 +789,20 @@ class Extension {
 	 */
 	public function getSupportLocalization() {
 		return $this->supportLocalization;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getSourceLanguage() {
+		return $this->sourceLanguage;
+	}
+
+	/**
+	 * @param string $sourceLanguage
+	 */
+	public function setSourceLanguage($sourceLanguage) {
+		$this->sourceLanguage = $sourceLanguage;
 	}
 
 }

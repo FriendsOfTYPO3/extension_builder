@@ -147,6 +147,16 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							value: 0
 						}
 					},
+					{
+						type: "string",
+						inputParams: {
+							name: "sourceLanguage",
+							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_sourceLanguage,
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.sourceLanguage,
+							value: 'en',
+							cols: 30
+						}
+					},
                     {
                         type: "select",
                         inputParams: {
