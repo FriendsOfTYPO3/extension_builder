@@ -248,8 +248,9 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		// add the property to class Object (or update an existing class Object property)
 		if ($this->classObject->propertyExists($propertyName)) {
 			$classProperty = $this->classObject->getProperty($propertyName);
-			// $classPropertyTags = $classProperty->getTags();
-			// $this->logger->log('Property found: ' . $propertyName . ':' . $domainProperty->getTypeForComment(), 'extension_builder', 1, (array)$classProperty);
+			if ($this->settings['setDefaultValuesForClassProperties'] !== FALSE) {
+				$classProperty->setDefault($domainProperty->getDefaultValue());
+			}
 		} else {
 			$classProperty = clone($this->templateClassObject->getProperty('property'));
 			$classProperty->setName($propertyName);
@@ -286,9 +287,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		}
 
 		$this->classObject->setProperty($classProperty);
-		if ($this->classObject->getName() == 'Main') {
-			//var_dump($this->classObject->getProperties());
-		}
 
 	}
 
