@@ -2,8 +2,7 @@
 <xliff version="1.0">
 	<file source-language="en" datatype="plaintext" original="messages" date="{f:format.date(format:'Y-m-d\TH:i:s\Z',date:'now')}" product-name="{extension.extensionKey}">
 		<header/>
-		<body>
-			<f:for each="{labelArray}" as="label" key="index">
+		<body><f:for each="{labelArray}" as="label" key="index">
 			<trans-unit id="{index}">
 				<source>{label}</source>
 			</trans-unit></f:for>
