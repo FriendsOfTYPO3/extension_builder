@@ -57,7 +57,6 @@ $TCA['{domainObject.databaseTableName}'] = array(
 <f:if condition="{extension.supportVersioning}">		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,</f:if>
 <f:if condition="{extension.supportLocalization}">
-		'origUid' => 't3_origuid',
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
 		'transOrigDiffSourceField' => 'l10n_diffsource',</f:if>
