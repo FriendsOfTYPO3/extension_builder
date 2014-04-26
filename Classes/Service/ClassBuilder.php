@@ -876,5 +876,8 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 }
+<<<<<<< HEAD
 
 ?>
+=======
+>>>>>>> [CLEANUP] Drop the closing PHP tags

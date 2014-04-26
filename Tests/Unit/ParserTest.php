@@ -152,5 +152,3 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	}
 
 }
-
-?>

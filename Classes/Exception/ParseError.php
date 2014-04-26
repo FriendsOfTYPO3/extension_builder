@@ -29,5 +29,3 @@ namespace EBT\ExtensionBuilder\Exception;
 class ParseError extends \TYPO3\CMS\Extbase\Exception{
 
 }
-
-?>

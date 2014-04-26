@@ -41,5 +41,3 @@ class ValidationServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$this->assertEquals('tx_dummy_order', $property->getFieldName());
 	}
 }
-
-?>

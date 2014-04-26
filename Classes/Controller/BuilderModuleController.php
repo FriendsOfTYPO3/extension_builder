@@ -325,5 +325,3 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 	}
 
 }
-
-?>

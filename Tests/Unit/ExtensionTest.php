@@ -77,5 +77,3 @@ class  ExtensionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	}
 }
-
-?>

@@ -32,6 +32,3 @@ if (TYPO3_MODE === 'BE' && !(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_INSTALL)) {
 	$GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['ExtensionBuilder::wiringEditorSmdEndpoint'] = 'EBT\ExtensionBuilder\Configuration\ConfigurationManager->getWiringEditorSmd';
 
 }
-
-
-?>

@@ -29,7 +29,7 @@ namespace DUMMY\Dummy\Domain\Model;
 /**
  *
  *
- * @package 
+ * @package
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
@@ -104,4 +104,3 @@ class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 }
-?>

@@ -146,5 +146,3 @@ class Parser extends \PHPParser_Parser implements \TYPO3\CMS\Core\SingletonInter
 	}
 
 }
-
-?>

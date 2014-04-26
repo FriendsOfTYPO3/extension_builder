@@ -677,5 +677,3 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 		$ajaxRequestHandler->setContent(array($smdJsonString));
 	}
 }
-
-?>

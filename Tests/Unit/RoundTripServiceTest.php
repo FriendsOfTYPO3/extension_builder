@@ -250,5 +250,3 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	}
 
 }
-
-?>

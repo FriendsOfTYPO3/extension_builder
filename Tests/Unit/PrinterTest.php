@@ -323,5 +323,3 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	}
 }
-
-?>

@@ -29,5 +29,3 @@ namespace EBT\ExtensionBuilder\Exception;
 class SyntaxErrorException extends \TYPO3\CMS\Extbase\Exception{
 
 }
-
-?>

@@ -44,5 +44,3 @@ class Tx_PhpParser_Test_ClassMethodWithMissingParameterTag {
 	}
 
 }
-
-?>

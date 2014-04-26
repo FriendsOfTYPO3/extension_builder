@@ -29,5 +29,3 @@ namespace EBT\ExtensionBuilder\Exception;
 class FileNotFoundException extends \TYPO3\CMS\Extbase\Exception{
 
 }
-
-?>

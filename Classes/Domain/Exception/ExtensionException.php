@@ -31,5 +31,3 @@ namespace EBT\ExtensionBuilder\Domain\Exception;
  */
 class ExtensionException extends \EBT\ExtensionBuilder\Exception {
 }
-
-?>

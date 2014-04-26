@@ -205,4 +205,3 @@ $TCA['tx_testextension_domain_model_main'] = array(
 		),
 	),
 );
-?>
