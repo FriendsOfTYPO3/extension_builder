@@ -3,8 +3,8 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 <f:if condition="{domainObject.mapToTable}"><f:else>
-$TCA['{domainObject.databaseTableName}'] = array(
-	'ctrl' => $TCA['{domainObject.databaseTableName}']['ctrl'],
+$GLOBALS['TCA']['{domainObject.databaseTableName}'] = array(
+	'ctrl' => $GLOBALS['TCA']['{domainObject.databaseTableName}']['ctrl'],
 	'interface' => array(
 		'showRecordFieldList' => '<f:if condition="{extension.supportLocalization}">sys_language_uid, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addHiddenField}">hidden, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}<f:if condition="{i.isLast}"><f:else>, </f:else></f:if></f:for>',
 	),

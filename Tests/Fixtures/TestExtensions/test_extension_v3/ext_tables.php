@@ -40,7 +40,7 @@ if (TYPO3_MODE === 'BE') {
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_testextension_domain_model_main', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_main.xlf');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_testextension_domain_model_main');
-$TCA['tx_testextension_domain_model_main'] = array(
+$GLOBALS['TCA']['tx_testextension_domain_model_main'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main',
 		'label' => 'name',
@@ -67,7 +67,7 @@ $TCA['tx_testextension_domain_model_main'] = array(
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_testextension_domain_model_child1', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_child1.xlf');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_testextension_domain_model_child1');
-$TCA['tx_testextension_domain_model_child1'] = array(
+$GLOBALS['TCA']['tx_testextension_domain_model_child1'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child1',
 		'label' => 'name',
@@ -94,7 +94,7 @@ $TCA['tx_testextension_domain_model_child1'] = array(
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_testextension_domain_model_child2', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_child2.xlf');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_testextension_domain_model_child2');
-$TCA['tx_testextension_domain_model_child2'] = array(
+$GLOBALS['TCA']['tx_testextension_domain_model_child2'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2',
 		'label' => 'name',
@@ -121,7 +121,7 @@ $TCA['tx_testextension_domain_model_child2'] = array(
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_testextension_domain_model_child3', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_child3.xlf');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_testextension_domain_model_child3');
-$TCA['tx_testextension_domain_model_child3'] = array(
+$GLOBALS['TCA']['tx_testextension_domain_model_child3'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3',
 		'label' => 'name',
@@ -148,7 +148,7 @@ $TCA['tx_testextension_domain_model_child3'] = array(
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_testextension_domain_model_child4', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_child4.xlf');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_testextension_domain_model_child4');
-$TCA['tx_testextension_domain_model_child4'] = array(
+$GLOBALS['TCA']['tx_testextension_domain_model_child4'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child4',
 		'label' => 'name',

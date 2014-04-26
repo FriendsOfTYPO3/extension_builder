@@ -12,7 +12,7 @@ $tmp_{domainObject.extension.extensionKey}_columns['{relation.foreignKeyName}'] 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('{domainObject.databaseTableName}',$tmp_{domainObject.extension.extensionKey}_columns);
 </f:if>
 <k:recordType domainObject="{domainObject}">
-$TCA['{domainObject.databaseTableName}']['types']['{domainObject.recordType}']['showitem'] = $TCA['{domainObject.databaseTableName}']['types']['{parentRecordType}']['showitem'];
-$TCA['{domainObject.databaseTableName}']['types']['{domainObject.recordType}']['showitem'] .= ',--div--;LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.labelNamespace},';
-$TCA['{domainObject.databaseTableName}']['types']['{domainObject.recordType}']['showitem'] .= '<f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}<f:if condition="{i.isLast} == 0">, </f:if></f:for>';
+$GLOBALS['TCA']['{domainObject.databaseTableName}']['types']['{domainObject.recordType}']['showitem'] = $TCA['{domainObject.databaseTableName}']['types']['{parentRecordType}']['showitem'];
+$GLOBALS['TCA']['{domainObject.databaseTableName}']['types']['{domainObject.recordType}']['showitem'] .= ',--div--;LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.labelNamespace},';
+$GLOBALS['TCA']['{domainObject.databaseTableName}']['types']['{domainObject.recordType}']['showitem'] .= '<f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}<f:if condition="{i.isLast} == 0">, </f:if></f:for>';
 </k:recordType>
