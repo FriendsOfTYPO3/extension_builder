@@ -31,8 +31,6 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  *
  * @author Steffen Kamper <info@sk-typo3.de>
  * @license	 http://www.gnu.org/copyleft/gpl.html
- * @version	 SVN: $Id:
- *
  */
 class BeFuncViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 	/**

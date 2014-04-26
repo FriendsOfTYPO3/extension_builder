@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /**
  * @projectDescription An implementation of the <canvas> text functions in browsers that don't already have it
  * @author Fabien M�nager
