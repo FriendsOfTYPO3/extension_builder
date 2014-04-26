@@ -27,7 +27,6 @@ namespace EBT\ExtensionBuilder\Domain\Validator;
 /**
  * Schema for a whole extension
  *
- * @version $ID:$
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
 class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator {

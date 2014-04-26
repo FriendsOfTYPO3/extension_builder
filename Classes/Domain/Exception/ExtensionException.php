@@ -26,7 +26,6 @@ namespace EBT\ExtensionBuilder\Domain\Exception;
 /**
  * Schema for a whole extension
  *
- * @version $ID:$
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
 class ExtensionException extends \EBT\ExtensionBuilder\Exception {

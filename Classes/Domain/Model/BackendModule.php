@@ -26,10 +26,7 @@ namespace EBT\ExtensionBuilder\Domain\Model;
 
 /**
  * A plugin in the extension
- *
- * @version $ID:$
  */
-
 class BackendModule {
 	/**
 	 * The name of the module

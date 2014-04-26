@@ -26,8 +26,6 @@ namespace EBT\ExtensionBuilder\Domain\Model;
 
 /**
  * Schema for a Domain Object.
- *
- * @version $ID:$
  */
 class DomainObject {
 	/**

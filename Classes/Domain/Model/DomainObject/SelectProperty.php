@@ -23,10 +23,6 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- *
- * @version $ID:$
- */
 class SelectProperty extends AbstractProperty {
 	/**
 	 * the property's default value

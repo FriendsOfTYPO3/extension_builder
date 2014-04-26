@@ -25,12 +25,8 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
 
 /**
  * class view helper
- *
- * @version $ID:$
  */
-
 class ClassViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-
 	/**
 	 *
 	 * @param object $classObject

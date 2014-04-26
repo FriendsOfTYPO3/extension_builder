@@ -29,12 +29,11 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Format;
  * <f:quoteString>{anyString}</f:quoteString>
  *
  *
- * @author	 Rens Admiraal
- * @version $ID:$
+ * @author Rens Admiraal
+ *
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
 class QuoteStringViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-
 	/**
 	 * @param string $value
 	 */

@@ -25,8 +25,6 @@ namespace EBT\ExtensionBuilder\Utility;
 
 /**
  * provides methods to import a class object
- *
- * @version $ID:$
  */
 class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 	/**

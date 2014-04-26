@@ -23,10 +23,6 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- *
- * @version $ID:$
- */
 abstract class AnyToManyRelation extends AbstractRelation {
 	/**
 	 * The mm relation table name

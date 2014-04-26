@@ -24,10 +24,7 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  ***************************************************************/
 
 /**
- *
  * File property
- *
- * @version $ID:$
  */
 class FileProperty extends AbstractProperty {
 	/**

@@ -25,8 +25,6 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
 
 /**
  * property representing a "property" in the context of software development
- *
- * @version $ID:$
  */
 abstract class AbstractProperty {
 	/**
