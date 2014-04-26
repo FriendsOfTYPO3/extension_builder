@@ -40,4 +40,49 @@ class ValidationServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$property->setDomainObject($domainObject);
 		$this->assertEquals('tx_dummy_order', $property->getFieldName());
 	}
+
+	/**
+	 * @test
+	 */
+	public function validateConfigurationFormatReturnsExcpetionsOnDuplicatePropertyNames() {
+		$fixture = array(
+			'modules' => array(
+				array(
+					'value' => array(
+						'name' => 'Foo',
+						'propertyGroup' => array(
+							'properties' => array(
+								array(
+									'propertyName' => 'bar'
+								)
+							)
+						),
+						'relationGroup' => array(
+							'relations' => array(
+								array(
+									'relationName' => 'bar'
+								)
+							)
+						)
+					)
+				)
+			),
+			'properties' => array(
+				'plugins' => array(),
+				'backendModules' => array()
+			)
+
+		);
+		$extensionValidator = new \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator();
+		$result = $extensionValidator->validateConfigurationFormat($fixture);
+		$expected = array(
+			'errors' => array(),
+			'warnings' => array()
+		);
+		$expected['errors'][] =  new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException(
+				'Property "bar" of Model "Foo" exists twice.',
+				\EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::ERROR_PROPERTY_DUPLICATE
+		);
+		$this->assertEquals($result, $expected);
+	}
 }

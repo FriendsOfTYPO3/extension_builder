@@ -204,6 +204,13 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 					return $confirmationRequired;
 				}
 			}
+			if (!empty($validationConfigurationResult['errors'])) {
+				$errorMessage = '';
+				foreach ($validationConfigurationResult['errors'] as $exception) {
+					$errorMessage .= '<br />' . $exception->getMessage();
+				}
+				throw new \Exception($errorMessage);
+			}
 			$extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
 		}
 		catch (\Exception $e) {
