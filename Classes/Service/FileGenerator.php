@@ -697,7 +697,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 		$standAloneView->assignMultiple($variables);
 		$renderedContent = $standAloneView->render();
 			// remove all double empty lines (coming from fluid)
-		return preg_replace('/^\s*\n[\t ]*$/m', '', $renderedContent);
+		return preg_replace('/^\\s*\\n[\\t ]*$/m', '', $renderedContent);
 
 	}
 
@@ -1134,7 +1134,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 			$fileContents = str_replace('?>', '', $fileContents);
 			$fileContents .= RoundTrip::SPLIT_TOKEN;
 		} else {
-			$fileContents .= "\n" . RoundTrip::SPLIT_TOKEN;
+			$fileContents .= LF . RoundTrip::SPLIT_TOKEN;
 		}
 
 		$fileContents .= rtrim($customFileContent);

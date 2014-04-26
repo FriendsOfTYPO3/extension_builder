@@ -64,13 +64,13 @@ class DocComment extends Comment {
 	public function initialize($docComment) {
 		$lines = explode(chr(10), $docComment);
 		foreach ($lines as $line) {
-			$line = preg_replace('/(\s*\*\/\s*)?$/', '', $line);
+			$line = preg_replace('/(\\s*\\*\\/\\s*)?$/', '', $line);
 			$line = trim($line);
 			if (strlen($line) > 0 && strpos($line, '* @') !== FALSE) {
 				$this->parseTag(substr($line, strpos($line, '@')));
 			} else {
 				if (count($this->tags) === 0) {
-					$this->description .= preg_replace('/\s*\\/?[\\\\*]*\s?(.*)$/', '$1', $line) . chr(10);
+					$this->description .= preg_replace('/\\s*\\/?[\\\\*]*\\s?(.*)$/', '$1', $line) . chr(10);
 				}
 			}
 		}
@@ -181,7 +181,7 @@ class DocComment extends Comment {
 	protected function parseTag($line) {
 		$tagAndValue = array();
 		if (preg_match('/@([A-Za-z0-9\\\-]+)(\(.*\))? ?(.*)/', $line, $tagAndValue) === 0) {
-			$tagAndValue = preg_split('/\s/', $line, 2);
+			$tagAndValue = preg_split('/\\s/', $line, 2);
 		} else {
 			array_shift($tagAndValue);
 		}
@@ -246,7 +246,7 @@ class DocComment extends Comment {
 		if ($singleLineCommentAllowed && count($docCommentLines) === 1) {
 			return '/** ' . $docCommentLines[0] . ' */';
 		} else {
-			$docCommentLines = preg_replace('/\s+$/', '', $docCommentLines);
+			$docCommentLines = preg_replace('/\\s+$/', '', $docCommentLines);
 			$docCommentLines = preg_replace('/^/', ' * ', $docCommentLines);
 			return '/**' . PHP_EOL . implode(PHP_EOL, $docCommentLines) . PHP_EOL . ' */';
 		}

@@ -80,13 +80,13 @@ class MethodReflection extends \TYPO3\CMS\Extbase\Reflection\MethodReflection {
 	 */
 	protected function getTypeHintFromReflectionParameter($reflectionParameter) {
 		$paramAsString = (string)$reflectionParameter;
-		$paramRegex = '/^Parameter\s\#[0-9]\s\[\s<(required|optional)>\s*.*\$.*]$/';
+		$paramRegex = '/^Parameter\\s\\#[0-9]\\s\\[\\s<(required|optional)>\\s*.*\\$.*]$/';
 		if (!preg_match($paramRegex, $paramAsString, $match1)) {
 			// since the approach to cast the reflection parameter as a string is not part of the official PHP API
 			// this might not work anymore in future versions
 			return '';
 		}
-		$typeHintRegex = '/>\s*([a-zA-Z0-9_&\\\s]*)\s*\$/';
+		$typeHintRegex = '/>\\s*([a-zA-Z0-9_&\\\\\\s]*)\\s*\\$/';
 		$matches = array();
 		if (preg_match($typeHintRegex, str_replace('or NULL','',$paramAsString), $matches)) {
 			if (!empty($matches[1])) {

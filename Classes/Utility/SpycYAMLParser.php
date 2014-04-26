@@ -234,7 +234,7 @@ class SpycYAMLParser {
 		}
 
 		// New YAML document
-		$string = "---\n";
+		$string = '---' . LF;
 
 		// Start at the base of the array and move through it.
 		if ($array) {
@@ -308,7 +308,7 @@ class SpycYAMLParser {
 	 */
 	private function _dumpNode($key, $value, $indent, $previous_key = -1, $first_key = 0) {
 		// do some folding here, for blocks
-		if (is_string($value) && ((strpos($value, "\n") !== false || strpos($value, ": ") !== false || strpos($value, "- ") !== false ||
+		if (is_string($value) && ((strpos($value, LF) !== false || strpos($value, ": ") !== false || strpos($value, "- ") !== false ||
 								   strpos($value, "*") !== false || strpos($value, "#") !== false || strpos($value, "<") !== false || strpos($value, ">") !== false ||
 								   strpos($value, "[") !== false || strpos($value, "]") !== false || strpos($value, "{") !== false || strpos($value, "}") !== false) || substr($value, -1, 1) == ':')
 		) {
@@ -326,14 +326,14 @@ class SpycYAMLParser {
 
 		if (is_int($key) && $key - 1 == $previous_key && $first_key === 0) {
 			// It's a sequence
-			$string = $spaces . '- ' . $value . "\n";
+			$string = $spaces . '- ' . $value . LF;
 		} else {
 			if ($first_key === 0) throw new \Exception('Keys are all screwy.  The first one was zero, now it\'s "' . $key . '"');
 			// It's mapped
 			if (strpos($key, ":") !== false) {
 				$key = '"' . $key . '"';
 			}
-			$string = $spaces . $key . ': ' . $value . "\n";
+			$string = $spaces . $key . ': ' . $value . LF;
 		}
 		return $string;
 	}
@@ -346,18 +346,18 @@ class SpycYAMLParser {
 	 * @param $indent int The value of the indent
 	 */
 	private function _doLiteralBlock($value, $indent) {
-		if (strpos($value, "\n") === false && strpos($value, "'") === false) {
+		if (strpos($value, LF) === false && strpos($value, "'") === false) {
 			return sprintf("'%s'", $value);
 		}
-		if (strpos($value, "\n") === false && strpos($value, '"') === false) {
+		if (strpos($value, LF) === false && strpos($value, '"') === false) {
 			return sprintf('"%s"', $value);
 		}
-		$exploded = explode("\n", $value);
+		$exploded = explode(LF, $value);
 		$newValue = '|';
 		$indent += $this->_dumpIndent;
 		$spaces = str_repeat(' ', $indent);
 		foreach ($exploded as $line) {
-			$newValue .= "\n" . $spaces . trim($line);
+			$newValue .= LF . $spaces . trim($line);
 		}
 		return $newValue;
 	}
@@ -374,8 +374,8 @@ class SpycYAMLParser {
 		if ($this->_dumpWordWrap !== 0 && is_string($value) && strlen($value) > $this->_dumpWordWrap) {
 			$indent += $this->_dumpIndent;
 			$indent = str_repeat(' ', $indent);
-			$wrapped = wordwrap($value, $this->_dumpWordWrap, "\n$indent");
-			$value = ">\n" . $indent . $wrapped;
+			$wrapped = wordwrap($value, $this->_dumpWordWrap, LF . $indent);
+			$value = '>' . LF . $indent . $wrapped;
 		} else {
 			if ($this->setting_dump_force_quotes && is_string($value))
 				$value = '"' . $value . '"';
@@ -420,7 +420,7 @@ class SpycYAMLParser {
 
 			$literalBlockStyle = self::startsLiteralBlock($line);
 			if ($literalBlockStyle) {
-				$line = rtrim($line, $literalBlockStyle . " \n");
+				$line = rtrim($line, $literalBlockStyle . ' ' . LF);
 				$literalBlock = '';
 				$line .= $this->LiteralPlaceHolder;
 
@@ -431,14 +431,14 @@ class SpycYAMLParser {
 			}
 
 			while (++$i < $cnt && self::greedilyNeedNextLine($line)) {
-				$line = rtrim($line, " \n\t\r") . ' ' . ltrim($Source[$i], " \t");
+				$line = rtrim($line, ' ' . LF . TAB . CR) . ' ' . ltrim($Source[$i], ' ' . TAB);
 			}
 			$i--;
 
 
 			if (strpos($line, '#')) {
 				if (strpos($line, '"') === false && strpos($line, "'") === false)
-					$line = preg_replace('/\s+#(.+)$/', '', $line);
+					$line = preg_replace('/\\s+#(.+)$/', '', $line);
 			}
 
 			$lineArray = $this->_parseLine($line);
@@ -458,16 +458,16 @@ class SpycYAMLParser {
 	}
 
 	private function loadFromSource($input) {
-		if (!empty($input) && strpos($input, "\n") === false && file_exists($input))
+		if (!empty($input) && strpos($input, LF) === false && file_exists($input))
 			return file($input);
 
 		return $this->loadFromString($input);
 	}
 
 	private function loadFromString($input) {
-		$lines = explode("\n", $input);
+		$lines = explode(LF, $input);
 		foreach ($lines as $k => $_) {
-			$lines[$k] = rtrim($_, "\r");
+			$lines[$k] = rtrim($_, CR);
 		}
 		return $lines;
 	}
@@ -531,7 +531,7 @@ class SpycYAMLParser {
 			return strtr(substr($value, 1, -1), array('\\"' => '"', '\'\'' => '\'', '\\\'' => '\''));
 
 		if (strpos($value, ' #') !== false)
-			$value = preg_replace('/\s+#(.+)$/', '', $value);
+			$value = preg_replace('/\\s+#(.+)$/', '', $value);
 
 		if ($first_character == '[' && $last_character == ']') {
 			// Take out strings sequences and mappings
@@ -846,23 +846,23 @@ class SpycYAMLParser {
 		if (!strlen($line)) return false;
 		if (substr($line, -1, 1) == ']') return false;
 		if ($line[0] == '[') return true;
-		if (preg_match('#^[^:]+?:\s*\[#', $line)) return true;
+		if (preg_match('#^[^:]+?:\\s*\\[#', $line)) return true;
 		return false;
 	}
 
 	private function addLiteralLine($literalBlock, $line, $literalBlockStyle) {
 		$line = self::stripIndent($line);
-		$line = rtrim($line, "\r\n\t ") . "\n";
+		$line = rtrim($line, CRLF . TAB) . LF;
 		if ($literalBlockStyle == '|') {
 			return $literalBlock . $line;
 		}
 		if (strlen($line) == 0)
-			return rtrim($literalBlock, ' ') . "\n";
-		if ($line == "\n" && $literalBlockStyle == '>') {
-			return rtrim($literalBlock, " \t") . "\n";
+			return rtrim($literalBlock, ' ') . LF;
+		if ($line == LF && $literalBlockStyle == '>') {
+			return rtrim($literalBlock, " \t") . LF;
 		}
-		if ($line != "\n")
-			$line = trim($line, "\r\n ") . " ";
+		if ($line != LF)
+			$line = trim($line, CRLF . ' ') . " ";
 		return $literalBlock . $line;
 	}
 
@@ -871,7 +871,7 @@ class SpycYAMLParser {
 			if (is_array($_))
 				$lineArray[$k] = $this->revertLiteralPlaceHolder($_, $literalBlock);
 			else if (substr($_, -1 * strlen($this->LiteralPlaceHolder)) == $this->LiteralPlaceHolder)
-				$lineArray[$k] = rtrim($literalBlock, " \r\n");
+				$lineArray[$k] = rtrim($literalBlock, ' ' . CRLF);
 		}
 		return $lineArray;
 	}
@@ -910,7 +910,7 @@ class SpycYAMLParser {
 	private static function isComment($line) {
 		if (!$line) return false;
 		if ($line[0] == '#') return true;
-		if (trim($line, " \r\n\t") == '---') return true;
+		if (trim($line, ' ' . CRLF . TAB) == '---') return true;
 		return false;
 	}
 
@@ -984,7 +984,7 @@ class SpycYAMLParser {
 		if (strpos($line, ':')) {
 			// It's a key/value pair most likely
 			// If the key is in double quotes pull it out
-			if (($line[0] == '"' || $line[0] == "'") && preg_match('/^(["\'](.*)["\'](\s)*:)/', $line, $matches)) {
+			if (($line[0] == '"' || $line[0] == "'") && preg_match('/^(["\'](.*)["\'](\\s)*:)/', $line, $matches)) {
 				$value = trim(str_replace($matches[1], '', $line));
 				$key = $matches[2];
 			} else {
@@ -1023,7 +1023,7 @@ class SpycYAMLParser {
 		if ($line[0] == '*' && preg_match('/^(\*[' . $symbolsForReference . ']+)/', $line, $matches)) return $matches[1];
 		if (preg_match('/(&[' . $symbolsForReference . ']+)$/', $line, $matches)) return $matches[1];
 		if (preg_match('/(\*[' . $symbolsForReference . ']+$)/', $line, $matches)) return $matches[1];
-		if (preg_match('#^\s*<<\s*:\s*(\*[^\s]+).*$#', $line, $matches)) return $matches[1];
+		if (preg_match('#^\\s*<<\\s*:\\s*(\\*[^\\s]+).*$#', $line, $matches)) return $matches[1];
 		return false;
 
 	}
@@ -1050,6 +1050,6 @@ do {
 	if (empty ($_SERVER['argc']) || $_SERVER['argc'] < 2) break;
 	if (empty ($_SERVER['PHP_SELF']) || $_SERVER['PHP_SELF'] != 'spyc.php') break;
 	$file = $argv[1];
-	printf("Spyc loading file: %s\n", $file);
+	printf('Spyc loading file: %s' . LF, $file);
 	print_r(spyc_load_file($file));
 } while (0);

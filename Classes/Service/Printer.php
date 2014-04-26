@@ -84,7 +84,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		$stmts = $this->nodeFactory->getFileStatements($fileObject);
 		$resultingCode = $this->render($stmts);
 		if ($prependPHPTag) {
-			return "<?php\n" . $resultingCode;
+			return '<?php' . LF . $resultingCode;
 		} else {
 			return $resultingCode;
 		}
@@ -121,21 +121,21 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 
 		if ($indent) {
 			$result = $this->indentToken . preg_replace(
-					'~\n(?!$|' . $this->noIndentToken . ')~',
-					"\n" . $this->indentToken,
-					implode("\n", $pNodes)
+					'~\\n(?!$|' . $this->noIndentToken . ')~',
+					LF . $this->indentToken,
+					implode(LF, $pNodes)
 			);
 			// remove spaces in empty lines
-			return \preg_replace('/\n\s\n/', "\n\n", $result);
+			return \preg_replace('/\\n\\s\\n/', LF . LF, $result);
 		} else {
-			return implode("\n", $pNodes);
+			return implode(LF, $pNodes);
 		}
 	}
 
 	public function pStmt_Interface(\PHPParser_Node_Stmt_Interface $node) {
 		return 'interface ' . $node->name .
 			(!empty($node->extends) ? ' extends ' . $this->pCommaSeparated($node->extends) : '') .
-			'{' . "\n" . $this->pStmts($node->stmts) . "\n" . '}';
+			'{' . LF . $this->pStmts($node->stmts) . LF . '}';
 	}
 
 	public function pStmt_Class(\PHPParser_Node_Stmt_Class $node) {
@@ -143,15 +143,15 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 			'class ' . $node->name .
 			(null !== $node->extends ? ' extends ' . $this->p($node->extends) : '') .
 			(!empty($node->implements) ? ' implements ' . $this->pCommaSeparated($node->implements) : '') .
-			' {' . "\n\n" . $this->pStmts($node->stmts) . "\n" . '}';
+			' {' . LF . LF . $this->pStmts($node->stmts) . LF . '}';
 	}
 
 	public function pStmt_ClassConst(\PHPParser_Node_Stmt_ClassConst $node) {
-		return 'const ' . $this->pCommaSeparated($node->consts) . ';' . "\n";
+		return 'const ' . $this->pCommaSeparated($node->consts) . ';' . LF;
 	}
 
 	public function pStmt_Property(\PHPParser_Node_Stmt_Property $node) {
-		return $this->pModifiers($node->type) . $this->pCommaSeparated($node->props) . ';' . "\n";
+		return $this->pModifiers($node->type) . $this->pCommaSeparated($node->props) . ';' . LF;
 	}
 
 	public function pStmt_ClassMethod(\PHPParser_Node_Stmt_ClassMethod $node) {
@@ -159,19 +159,19 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		$lastToken = '';
 		if (count($node->params) > 0) {
 			if ($node->getAttribute('startLine') != reset($node->params)->getAttribute('startLine')) {
-				$firstToken = "\n" .  $this->indentToken;
+				$firstToken = LF .  $this->indentToken;
 			}
 			// if the last parameters endline is 2 lines above the first statements
 			// startLine, the closing bracket is in a new line (except if there is a comment)
 			if ($this->getFirstLineOfMoethodBody($node->stmts) - end($node->params)->getAttribute('endLine') > 1) {
-				$lastToken = "\n";
+				$lastToken = LF;
 			}
 		}
 		return $this->pModifiers($node->type) .
 			'function ' . ($node->byRef ? '&' : '') . $node->name .
 			'(' . $firstToken . $this->pParameterNodes($node->params) . $lastToken . ')' .
 			(null !== $node->stmts
-				? ' {' . "\n" . $this->pStmts($node->stmts) . "\n" . '}' . "\n"
+				? ' {' . LF . $this->pStmts($node->stmts) . LF . '}' . LF
 				: ';');
 	}
 
@@ -201,10 +201,10 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		$lastToken = '';
 		if (count($node->args) > 0) {
 			if ($node->getAttribute('startLine') != reset($node->args)->getAttribute('startLine')) {
-				$firstToken = "\n" .  $this->indentToken;
+				$firstToken = LF .  $this->indentToken;
 			}
 			if ($node->getAttribute('startLine') != end($node->args)->getAttribute('startLine')) {
-				$lastToken = "\n";
+				$lastToken = LF;
 			}
 		}
 		return $this->p($node->name) . '(' . $firstToken . $this->pParameterNodes($node->args) . $lastToken. ')';
@@ -215,10 +215,10 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		$lastToken = '';
 		if (count($node->args) > 0) {
 			if ($node->getAttribute('startLine') != reset($node->args)->getAttribute('startLine')) {
-				$firstToken = "\n" .  $this->indentToken;
+				$firstToken = LF .  $this->indentToken;
 			}
 			if ($node->getAttribute('startLine') != end($node->args)->getAttribute('startLine')) {
-				$lastToken = "\n";
+				$lastToken = LF;
 			}
 		}
 		return $this->pVarOrNewExpr($node->var) . '->' . $this->pObjectProperty($node->name) .
@@ -230,10 +230,10 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		$lastToken = '';
 		if (count($node->args) > 0) {
 			if ($node->getAttribute('startLine') != reset($node->args)->getAttribute('startLine')) {
-				$firstToken = "\n" .  $this->indentToken;
+				$firstToken = LF .  $this->indentToken;
 			}
 			if ($node->getAttribute('startLine') != end($node->args)->getAttribute('startLine')) {
-				$lastToken = "\n";
+				$lastToken = LF;
 			}
 		}
 		return $this->p($node->class) . '::' .
@@ -269,7 +269,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		foreach ($nodes as $node) {
 			$glueToken = ", ";
 			if ($node->getAttribute('startLine') != $startLine) {
-				$glueToken = ",\n";
+				$glueToken = ',' . LF;
 				$startLine = $node->getAttribute('startLine');
 			}
 			if (!empty($printedNodes)) {
@@ -279,8 +279,8 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 			}
 		}
 		return preg_replace(
-			'~\n(?!$|' . $this->noIndentToken . ')~',
-			"\n" . $this->indentToken,
+			'~\\n(?!$|' . $this->noIndentToken . ')~',
+			LF . $this->indentToken,
 			$printedNodes
 		);
 	}
@@ -288,7 +288,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 	public function pStmt_Function(\PHPParser_Node_Stmt_Function $node) {
 		return 'function ' . ($node->byRef ? '&' : '') . $node->name .
 			'(' . $this->pParameterNodes($node->params) . ')' .
-			' {' . "\n" . $this->pStmts($node->stmts) . "\n" . '}' . "\n";
+			' {' . LF . $this->pStmts($node->stmts) . LF . '}' . LF;
 	}
 
 	/**
@@ -299,22 +299,22 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		$result = '';
 
 		foreach ($comments as $comment) {
-			$content = preg_replace('/(\*|\/|\s)/', '', $comment->getText());
+			$content = preg_replace('/(\\*|\\/|\\s)/', '', $comment->getText());
 			if (empty($content)) {
 				// don't output empty comments
 				continue;
 			}
-			$result .= $comment->getReformattedText() . "\n";
+			$result .= $comment->getReformattedText() . LF;
 			if (!$comment instanceof \PHPParser_Comment_Doc &&
-				count(explode("\n",$comment->getReformattedText())) > 1
+				count(explode(LF, $comment->getReformattedText())) > 1
 			) {
 				// one blank line after comments except for doc comments and single line comments
-				$result .= "\n";
+				$result .= LF;
 			}
 
 		}
 		// remove whitespaces at end of lines
-		$result = preg_replace('/ +\n/', "\n", $result);
+		$result = preg_replace('/ +\\n/', LF, $result);
 		return $result;
 	}
 
@@ -332,7 +332,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		foreach ($node->items as $itemNode) {
 			$glueToken = ", ";
 			if ($itemNode->getAttribute('startLine') != $startLine) {
-				$glueToken = ",\n";
+				$glueToken = ',' . LF;
 				$startLine = $itemNode->getAttribute('startLine');
 			}
 			if (!empty($printedNodes)) {
@@ -343,11 +343,11 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		}
 		if ($multiLine) {
 			$multiLinedItems = $this->indentToken . preg_replace(
-				'~\n(?!$|' . $this->noIndentToken . ')~',
-				"\n" . $this->indentToken,
+				'~\\n(?!$|' . $this->noIndentToken . ')~',
+				LF . $this->indentToken,
 				$printedNodes
 			);
-			return  'array(' . "\n" . $multiLinedItems . "\n" . ')';
+			return  'array(' . LF . $multiLinedItems . LF . ')';
 		} else {
 			return parent::pExpr_Array($node);
 		}
@@ -355,10 +355,10 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 
 	public function pStmt_Namespace(\PHPParser_Node_Stmt_Namespace $node) {
 		if ($this->canUseSemicolonNamespaces) {
-			return 'namespace ' . $this->p($node->name) . ';' . "\n" . $this->pStmts($node->stmts, FALSE);
+			return 'namespace ' . $this->p($node->name) . ';' . LF . $this->pStmts($node->stmts, FALSE);
 		} else {
 		return 'namespace' . (NULL !== $node->name ? ' ' . $this->p($node->name) : '') .
-			' {' . "\n" . $this->pStmts($node->stmts) . "\n" . '}';
+			' {' . LF . $this->pStmts($node->stmts) . LF . '}';
 		}
 	}
 
