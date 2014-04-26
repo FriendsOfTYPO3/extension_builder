@@ -101,8 +101,8 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 				$this->assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');
 				if(strpos($referenceFile, 'xlf') === FALSE) {
 
-					$originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",$referenceFileContent, TRUE);
-					$generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($createdFile), TRUE);
+					$originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $referenceFileContent, TRUE);
+					$generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, file_get_contents($createdFile), TRUE);
 					$this->assertEquals(
 						$originalLines,
 						$generatedLines,
@@ -111,10 +111,7 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 				}
 			}
 		}
-
 	}
-
-
 }
 
 ?>

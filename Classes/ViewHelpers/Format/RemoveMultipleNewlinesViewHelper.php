@@ -39,8 +39,8 @@ class RemoveMultipleNewlinesViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\
 		$content = trim($this->renderChildren());
 
 		// Collapse whitespace lines
-		$content = preg_replace('/^\s+$/m', '', $content);
-		$content = preg_replace("/\n\n+/", "\n", $content);
+		$content = preg_replace('/^\\s+$/m', '', $content);
+		$content = preg_replace('/\\n\\n+/', LF, $content);
 
 		return $content;
 	}

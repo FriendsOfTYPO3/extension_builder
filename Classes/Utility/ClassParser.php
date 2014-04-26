@@ -65,19 +65,19 @@ class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 	 *
 	 * @var string
 	 */
-	public $methodRegex = "/^
-		\s*															# Some possible whitespace
+	public $methodRegex = '/^
+		\\s*														# Some possible whitespace
 		(
-			((?P<visibility>public|protected|private)\s+)			# Visibility declaration
+			((?P<visibility>public|protected|private)\\s+)			# Visibility declaration
 			|
-			((?P<static>static)\s+)									# Static declaration
+			((?P<static>static)\\s+)								# Static declaration
 		){0,2}														# Visiblity and Static can both occur, in any order
-		\s*															# Some possible whitespace
-		function													# Literal string 'function'
-		\s+															# One or multiple whitespaces
-		(?P<methodName>\w*)											# The method name
-		\s*\(														# Some possible whitespace followed by a (
-	/x";
+		\\s*														# Some possible whitespace
+		function													# Literal string \'function\'
+		\\s+														# One or multiple whitespaces
+		(?P<methodName>\\w*)										# The method name
+		\\s*\\(														# Some possible whitespace followed by a (
+	/x';
 
 	/**
 	 * The regular expression to detect a property (or multiple) in a line
@@ -87,21 +87,21 @@ class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 	 *
 	 * @var string
 	 */
-	public $propertyRegex = '/\s*\\$(?<name>\w*)\s*(\=(?<value>\s*([^;\"\']|\"[^\"]*\"|\'[^\']*\'|[^;]*)))?;/';
+	public $propertyRegex = '/\\s*\\\\$(?<name>\\w*)\\s*(\\=(?<value>\\s*([^;\"\']|\\"[^\\"]*\\"|\'[^\']*\'|[^;]*)))?;/';
 
 	/**
 	 * the regular expression to detect a property with a multiline default value (for example an array)
 	 *
 	 * @var string
 	 */
-	public $multiLinePropertyRegex = '/\s*\\$(?<name>\w*)\s*(\=(?<value>\s*(.*)))?/';
+	public $multiLinePropertyRegex = '/\\s*\\\\$(?<name>\\w*)\\s*(\\=(?<value>\\s*(.*)))?/';
 
 	/**
 	 * the regular expression to detect a constant in a line
 	 *
 	 * @var string
 	 */
-	public $constantRegex = '/\s*const\s+(\w*)\s*\=\s*\'*\"*([^;"\']*)\'*\"*;/';
+	public $constantRegex = '/\\s*const\\s+(\\w*)\\s*\\=\\s*\'*\\"*([^;"\']*)\'*\"*;/';
 
 	/**
 	 * @var string
@@ -364,7 +364,7 @@ class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	protected function onMultiLinePropertyEnd() {
 		// add all lines from startline to current line as value of the multiline property
-		$this->multiLinePropertyMatches['value'][0] .= "\n" . $this->concatLinesFromArray($this->lines, $this->multiLinePropertyMatches['startLine']);
+		$this->multiLinePropertyMatches['value'][0] .= LF . $this->concatLinesFromArray($this->lines, $this->multiLinePropertyMatches['startLine']);
 		$this->multiLinePropertyMatches['value'][0] .= str_replace(';', '', $this->currentLine);
 		$this->addProperty($this->multiLinePropertyMatches, $this->multiLinePropertyMatches['startLine']);
 		// reset the array
@@ -473,7 +473,7 @@ class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	protected function isSingleLineComment() {
 		// single comment line
-		if (preg_match('/^\s*\/\\//', $this->currentLine)) {
+		if (preg_match('/^\\s*\\/\\\\//', $this->currentLine)) {
 			return TRUE;
 		}
 		return FALSE;

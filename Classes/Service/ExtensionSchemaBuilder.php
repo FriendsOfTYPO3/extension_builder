@@ -219,7 +219,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 		if (!empty($propertyConfiguration['emConf']['dependsOn'])) {
 			$dependencies = array();
-			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",$propertyConfiguration['emConf']['dependsOn']);
+			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $propertyConfiguration['emConf']['dependsOn']);
 			foreach($lines as $line) {
 				if (strpos($line, '=>')) {
 					list($extensionKey,$version) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>',$line);
@@ -316,7 +316,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		$plugin->setKey($pluginValues['key']);
 		if (!empty($pluginValues['actions']['controllerActionCombinations'])) {
 			$controllerActionCombinations = array();
-			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n", $pluginValues['actions']['controllerActionCombinations'], TRUE);
+			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $pluginValues['actions']['controllerActionCombinations'], TRUE);
 			foreach ($lines as $line) {
 				list($controllerName, $actionNames) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>', $line);
 				$controllerActionCombinations[$controllerName] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $actionNames);
@@ -325,7 +325,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		}
 		if (!empty($pluginValues['actions']['noncacheableActions'])) {
 			$noncacheableControllerActions = array();
-			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n", $pluginValues['actions']['noncacheableActions'], TRUE);
+			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $pluginValues['actions']['noncacheableActions'], TRUE);
 			foreach ($lines as $line) {
 				list($controllerName, $actionNames) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>', $line);
 				$noncacheableControllerActions[$controllerName] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $actionNames);
@@ -334,7 +334,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		}
 		if (!empty($pluginValues['actions']['switchableActions'])) {
 			$switchableControllerActions = array();
-			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n", $pluginValues['actions']['switchableActions'], TRUE);
+			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $pluginValues['actions']['switchableActions'], TRUE);
 			$switchableAction = array();
 			foreach ($lines as $line) {
 				if (strpos($line, '->') === FALSE) {
@@ -368,7 +368,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		$backendModule->setDescription($backendModuleValues['description']);
 		if (!empty($backendModuleValues['actions']['controllerActionCombinations'])) {
 			$controllerActionCombinations = array();
-			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n", $backendModuleValues['actions']['controllerActionCombinations'], TRUE);
+			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $backendModuleValues['actions']['controllerActionCombinations'], TRUE);
 			foreach ($lines as $line) {
 				list($controllerName, $actionNames) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>', $line);
 				$controllerActionCombinations[$controllerName] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $actionNames);

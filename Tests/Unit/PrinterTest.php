@@ -313,8 +313,8 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 * @param string $pathToGeneratedFile
 	 */
 	protected function compareGeneratedCodeWithOriginal($originalFile, $pathToGeneratedFile) {
-		$originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($this->fixturesPath . $originalFile), TRUE);
-		$generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($pathToGeneratedFile), TRUE);
+		$originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, file_get_contents($this->fixturesPath . $originalFile), TRUE);
+		$generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, file_get_contents($pathToGeneratedFile), TRUE);
 		$this->assertEquals(
 			$originalLines,
 			$generatedLines,

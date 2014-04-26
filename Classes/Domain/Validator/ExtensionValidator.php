@@ -381,12 +381,12 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 				}
 				if (!empty($pluginConfiguration['actions']['switchableActions'])) {
 					$isValid = TRUE;
-					$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n", $pluginConfiguration['actions']['switchableActions'], TRUE);
+					$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $pluginConfiguration['actions']['switchableActions'], TRUE);
 					$firstLine = TRUE;
 					foreach ($lines as $line) {
 						if ($firstLine) {
 							// label for flexform select
-							if (!preg_match("/^[a-zA-Z0-9_-\s]*$/", $line)) {
+							if (!preg_match('/^[a-zA-Z0-9_-\\s]*$/', $line)) {
 								$isValid = FALSE;
 								\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Label in switchable Actions contained disallowed character:' . $line, 'extension_builder', 2);
 							}
@@ -442,13 +442,13 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 	 */
 	protected function validateActionConfigFormat($configuration) {
 		$isValid = TRUE;
-		$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n", $configuration, TRUE);
+		$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $configuration, TRUE);
 		foreach ($lines as $line) {
 			$test = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>', $line, TRUE);
 			if (count($test) != 2) {
 				$isValid = FALSE;
 				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Wrong count for explode("=>") switchable Actions line:' . $line, 'extension_builder', 2);
-			} else if (!preg_match("/^[a-zA-Z0-9_,\s]*$/", $test[1])) {
+			} else if (!preg_match('/^[a-zA-Z0-9_,\\s]*$/', $test[1])) {
 				$isValid = FALSE;
 				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Regex failed:' . $test[1], 'extension_builder', 2);
 			}
