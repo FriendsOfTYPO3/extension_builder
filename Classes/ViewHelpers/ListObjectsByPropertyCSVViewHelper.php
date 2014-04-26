@@ -36,7 +36,6 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * Output:
  * Anthony,Billy,Chris
  *
- * @version $Id: $
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @scope prototype
  */

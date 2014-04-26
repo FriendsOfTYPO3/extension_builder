@@ -31,8 +31,6 @@ namespace EBT\ExtensionBuilder\Utility;
  *
  * Needed to avoid errors when loading classes that have references or parent classes
  * to other classes in a not installed extension
- *
- * @version $Id: ClassLoader.php 1729 2009-11-25 21:37:20Z stucki $
  */
 class ClassLoader {
 

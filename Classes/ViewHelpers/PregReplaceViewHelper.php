@@ -28,7 +28,6 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * <k:pregReplace match="/this/" replace="that" subject="this" />
  * {k:pregReplace(match:'/this/', replace:'that', subject:'this')}
  *
- * @version $Id:$
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
 class PregReplaceViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {

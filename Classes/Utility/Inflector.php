@@ -26,7 +26,6 @@ require(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_b
  * Inflector utilities for the Extension Builder. This is a basic conversion from PHP
  * class and field names to a human readable form.
  *
- * @version $Id: $
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 class Inflector {
