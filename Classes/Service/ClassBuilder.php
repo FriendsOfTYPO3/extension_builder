@@ -874,10 +874,4 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		$this->classObject->setProperties($sortedProperties);
 		$this->classObject->setMethods($sortedMethods);
 	}
-
 }
-<<<<<<< HEAD
-
-?>
-=======
->>>>>>> [CLEANUP] Drop the closing PHP tags
