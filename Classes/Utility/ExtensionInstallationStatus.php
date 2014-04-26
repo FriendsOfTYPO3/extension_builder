@@ -75,10 +75,10 @@ class ExtensionInstallationStatus {
 				foreach($statements as $key => $statement) {
 					if($type == 'add') {
 						$statusMessage .= '<tr><td><input type="checkbox" name="dbUpdateStatements[]" value="' . $key . '" checked="checked" /></td><td style="text-align:left;padding-left:15px">' . $statement . '</td></tr>';
-					} else if($type=== 'change') {
+					} elseif ($type=== 'change') {
 						$statusMessage .= '<tr><td><input type="checkbox" name="dbUpdateStatements[]" value="' . $key . '" checked="checked" /></td><td style="text-align:left;padding-left:15px">' . $statement . '</td></tr>';
 						$statusMessage .= '<tr><td></td><td style="text-align:left;padding-left:15px">Current value: ' . $this->updateStatements['change_currentValue'][$key] . '</td></tr>';
-					} else if($type=== 'create_table') {
+					} elseif ($type=== 'create_table') {
 						$statusMessage .= '<tr><td><input type="checkbox" name="dbUpdateStatements[]" value="' . $key . '" checked="checked" /></td><td style="text-align:left;padding-left:15px;">' . nl2br($statement) . '</td></tr>';
 					}
 				}

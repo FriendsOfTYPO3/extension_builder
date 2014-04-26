@@ -662,7 +662,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 					$this->extensionDirectory,
 					'Documentation.tmpl/' . str_replace($this->codeTemplateRootPath . 'Documentation.tmpl/','',$docFile)
 				);
-			} else if (strpos($docFile,'.rstt') === FALSE && strpos($docFile,'.ymlt') === FALSE) {
+			} elseif (strpos($docFile, '.rstt') === FALSE && strpos($docFile, '.ymlt') === FALSE) {
 				$this->upload_copy_move(
 					$docFile,
 					str_replace(
@@ -905,7 +905,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 		$languageLabels = array();
 		if ($variableName == 'domainObject') {
 			$languageLabels = $this->localizationService->prepareLabelArrayForContextHelp($variable);
-		} else if($variableName == 'backendModule') {
+		} elseif($variableName == 'backendModule') {
 			$languageLabels = $this->localizationService->prepareLabelArrayForBackendModule($variable);
 		} else {
 			$languageLabels = $this->localizationService->prepareLabelArray($this->extension, 'locallang' . $fileNameSuffix);
@@ -1074,7 +1074,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 				} elseif (in_array($fileExtension, $this->filesSupportingSplitToken)) {
 					$fileContents = $this->insertSplitToken($targetFile, $fileContents);
 				}
-			} else if (file_exists($targetFile) && $overWriteMode == 2) {
+			} elseif (file_exists($targetFile) && $overWriteMode == 2) {
 					// keep the existing file
 				return;
 			}

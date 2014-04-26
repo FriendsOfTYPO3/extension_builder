@@ -517,11 +517,9 @@ class DomainObject {
 	public function getNeedsMappingStatement() {
 		if (!empty($this->mapToTable)) {
 			return TRUE;
-		} else if ($this->hasPropertiesThatNeedMappingStatements()) {
-			return TRUE;
-		} else {
-			return FALSE;
 		}
+
+		return $this->hasPropertiesThatNeedMappingStatements();
 	}
 
 	/**

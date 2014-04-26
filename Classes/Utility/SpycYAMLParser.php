@@ -794,7 +794,7 @@ class SpycYAMLParser {
 			}
 
 			$_arr = array_merge($_arr, $value);
-		} else if ($key || $key === '' || $key === '0') {
+		} elseif ($key || $key === '' || $key === '0') {
 			$_arr[$key] = $value;
 		} else {
 			if (!is_array($_arr)) {
@@ -868,10 +868,11 @@ class SpycYAMLParser {
 
 	function revertLiteralPlaceHolder($lineArray, $literalBlock) {
 		foreach ($lineArray as $k => $_) {
-			if (is_array($_))
+			if (is_array($_)) {
 				$lineArray[$k] = $this->revertLiteralPlaceHolder($_, $literalBlock);
-			else if (substr($_, -1 * strlen($this->LiteralPlaceHolder)) == $this->LiteralPlaceHolder)
+			} elseif (substr($_, -1 * strlen($this->LiteralPlaceHolder)) == $this->LiteralPlaceHolder) {
 				$lineArray[$k] = rtrim($literalBlock, ' ' . CRLF);
+			}
 		}
 		return $lineArray;
 	}

@@ -257,7 +257,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 			if ($extKey && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($extKey)) {
 				return \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($extKey) . $script;
 			}
-		} else if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAbsPath($encodedTemplateRootPath)) {
+		} elseif (\TYPO3\CMS\Core\Utility\GeneralUtility::isAbsPath($encodedTemplateRootPath)) {
 			return $encodedTemplateRootPath;
 		} else {
 			return PATH_site . $encodedTemplateRootPath;
@@ -327,7 +327,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 				// don't save empty properties
 				if (empty($module['value']['propertyGroup']['properties'][$i]['propertyName'])) {
 					unset($module['value']['propertyGroup']['properties'][$i]);
-				} else if (empty($module['value']['propertyGroup']['properties'][$i]['uid'])) {
+				} elseif (empty($module['value']['propertyGroup']['properties'][$i]['uid'])) {
 					$module['value']['propertyGroup']['properties'][$i]['uid'] = md5(
 						microtime() . $module['value']['propertyGroup']['properties'][$i]['propertyName']
 					);
@@ -337,7 +337,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 				// don't save empty relations
 				if (empty($module['value']['relationGroup']['relations'][$i]['relationName'])) {
 					unset($module['value']['relationGroup']['relations'][$i]);
-				} else if (empty($module['value']['relationGroup']['relations'][$i]['uid'])) {
+				} elseif (empty($module['value']['relationGroup']['relations'][$i]['uid'])) {
 					$module['value']['relationGroup']['relations'][$i]['uid'] = md5(microtime() . $module['value']['relationGroup']['relations'][$i]['relationName']);
 				}
 			}
@@ -438,7 +438,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 							$module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationDescription'] = $module['value']['relationGroup']['relations'][$i]['relationDescription'];
 							$module['value']['relationGroup']['relations'][$i]['advancedSettings']['foreignRelationClass'] = $module['value']['relationGroup']['relations'][$i]['foreignRelationClass'];
 						}
-					} else if (isset($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
+					} elseif (isset($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
 						foreach ($fieldsToMap as $fieldToMap) {
 							$module['value']['relationGroup']['relations'][$i][$fieldToMap] = $module['value']['relationGroup']['relations'][$i]['advancedSettings'][$fieldToMap];
 						}
@@ -523,7 +523,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 					}
 				}
 			}
-		} else if ($modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid'] == $uid) {
+		} elseif ($modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid'] == $uid) {
 			$result['terminal'] = 'relationWire_' . $supposedRelationIndex;
 				// everything as expected
 			return $result;
@@ -576,7 +576,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 					foreach ($module['value']['actionGroup']['actions'] as $oldActionName) {
 						if ($oldActionName == 'create') {
 							$module['value']['actionGroup']['new_create'] = TRUE;
-						} else if ($oldActionName == 'update') {
+						} elseif ($oldActionName == 'update') {
 							$module['value']['actionGroup']['edit_update'] = TRUE;
 						} else {
 							$module['value']['actionGroup'][$oldActionName] = TRUE;
@@ -590,7 +590,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 				if (isset($module['value']['actionGroup'][$oldActionKey])) {
 					$module['value']['actionGroup'][$newActionKey] = $module['value']['actionGroup'][$oldActionKey];
 					unset($module['value']['actionGroup'][$oldActionKey]);
-				} else if (!isset($module['value']['actionGroup'][$newActionKey])) {
+				} elseif (!isset($module['value']['actionGroup'][$newActionKey])) {
 					$module['value']['actionGroup'][$newActionKey] = FALSE;
 				}
 			}
