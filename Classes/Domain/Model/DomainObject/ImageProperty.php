@@ -24,10 +24,7 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  ***************************************************************/
 
 /**
- *
  * Image property
- *
- * @version $ID:$
  */
 class ImageProperty extends AbstractProperty {
 	/**

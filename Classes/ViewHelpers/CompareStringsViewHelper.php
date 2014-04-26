@@ -28,12 +28,11 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * <k:compareStrings firstString="this" secondString="that" />
  * {k:compareStrings(firstString:'this', secondString:'that')}
  *
- * @author	 Andreas Lappe
- * @version $ID:$
+ * @author Andreas Lappe
+ *
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
 class CompareStringsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-
 	/**
 	 * @param string $firstString
 	 * @param string $secondString

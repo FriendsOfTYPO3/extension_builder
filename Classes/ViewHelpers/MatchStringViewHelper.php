@@ -28,12 +28,11 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * <k:matchString match="this" in="this and that" />
  * {k:matchString(match:'this', in:'this and that')}
  *
- * @author	 Andreas Lappe
- * @version $ID:$
+ * @author Andreas Lappe
+ *
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
 class MatchStringViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-
 	/**
 	 * @param string $match
 	 * @param string $in

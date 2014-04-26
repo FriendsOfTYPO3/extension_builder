@@ -28,8 +28,6 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
  * by TS Setup, Flexform and returns the content to the v4 framework.
  *
  * This class is the main entry point for extbase extensions in the frontend.
- *
- * @version $ID:$
  */
 abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty {
 	/**

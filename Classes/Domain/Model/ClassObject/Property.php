@@ -25,8 +25,6 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
 
 /**
  * property representing a "property" in the context of software development
- *
- * @version $ID:$
  */
 class Property extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
 	/**
