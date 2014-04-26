@@ -781,5 +781,3 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 		}
 	}
 }
-
-?>

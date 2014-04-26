@@ -63,4 +63,3 @@ class CopyrightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
 		return $copyright;
 	}
 }
-?>

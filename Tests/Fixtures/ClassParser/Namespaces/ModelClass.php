@@ -101,4 +101,3 @@ class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 }
-?>

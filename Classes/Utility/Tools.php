@@ -141,5 +141,3 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 }
-
-?>

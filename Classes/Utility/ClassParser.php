@@ -616,5 +616,3 @@ class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 		return $result;
 	}
 }
-
-?>

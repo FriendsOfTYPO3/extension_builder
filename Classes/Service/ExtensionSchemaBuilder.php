@@ -378,5 +378,3 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		return $backendModule;
 	}
 }
-
-?>

@@ -305,5 +305,3 @@ class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	}
 }
-
-?>

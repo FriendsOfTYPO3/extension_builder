@@ -56,5 +56,3 @@ class FileGeneratorUnitTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	}
 
 }
-
-?>

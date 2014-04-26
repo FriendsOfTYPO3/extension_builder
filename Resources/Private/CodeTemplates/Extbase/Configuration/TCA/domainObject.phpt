@@ -108,4 +108,3 @@ $TCA['{domainObject.databaseTableName}'] = array(
 );
 
 </f:else></f:if>
-?>

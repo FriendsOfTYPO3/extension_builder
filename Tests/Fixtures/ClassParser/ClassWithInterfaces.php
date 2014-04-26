@@ -44,4 +44,3 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithInterfaces impleme
 
 	}
 }
-?>

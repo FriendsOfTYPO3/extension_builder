@@ -34,4 +34,4 @@ use {aliasDeclaration};</f:for></f:if>
 	<![CDATA[}]]>
 </f:for>
 }
-{classObject.appendedBlock}?>
+{classObject.appendedBlock}

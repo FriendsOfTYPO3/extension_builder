@@ -102,4 +102,3 @@ var $testProperty4 = 123;
 require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility:: extPath('extension_builder') . 'Tests/Fixtures/ClassParser/BasicClass.php');   include_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Fixtures/ClassParser/ComplexClass.php'); // test
 
 include_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Fixtures/ClassParser/ComplexClass.php'); // test
-?>

@@ -1102,5 +1102,3 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 }
-
-?>

@@ -71,5 +71,3 @@ class Exception extends \TYPO3\CMS\Extbase\Exception {
 		}
 	}
 }
-
-?>

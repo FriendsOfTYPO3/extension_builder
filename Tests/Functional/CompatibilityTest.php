@@ -113,5 +113,3 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		}
 	}
 }
-
-?>

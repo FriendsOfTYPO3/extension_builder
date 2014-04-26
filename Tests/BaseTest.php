@@ -226,5 +226,3 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 	}
 
 }
-
-?>

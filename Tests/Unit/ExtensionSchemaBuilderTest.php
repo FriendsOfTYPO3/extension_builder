@@ -291,5 +291,3 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$this->assertEquals($extension->getDomainObjects(), $actualExtension->getDomainObjects(), 'The extensions differ');
 	}
 }
-
-?>

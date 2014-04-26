@@ -15,5 +15,3 @@ function functionWithParameter($foo, $bar) {
 		return $bar;
 	}
 }
-
-?>

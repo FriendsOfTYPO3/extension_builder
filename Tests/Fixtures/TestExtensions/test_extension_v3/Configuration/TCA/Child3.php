@@ -104,4 +104,3 @@ $TCA['tx_testextension_domain_model_child3'] = array(
 		),
 	),
 );
-?>

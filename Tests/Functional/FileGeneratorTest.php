@@ -423,5 +423,3 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	}
 
 }
-
-?>

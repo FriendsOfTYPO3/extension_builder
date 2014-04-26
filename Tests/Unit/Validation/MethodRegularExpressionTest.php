@@ -102,5 +102,3 @@ class MethodRegularExpressionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$this->assertNotEmpty($matches, "Static declaration after visibility is not recognized");
 	}
 }
-
-?>

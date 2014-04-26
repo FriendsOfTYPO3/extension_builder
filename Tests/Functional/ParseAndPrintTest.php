@@ -144,5 +144,3 @@ class ParseAndPrintTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	}
 
 }
-
-?>

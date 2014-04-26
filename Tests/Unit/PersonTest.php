@@ -57,5 +57,3 @@ class PersonTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	}
 }
-
-?>

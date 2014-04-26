@@ -239,5 +239,3 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		return $property;
 	}
 }
-
-?>

@@ -372,5 +372,3 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		return $map[$node->type] . '(' . $this->p($node->expr) . ')';
 	}
 }
-
-?>

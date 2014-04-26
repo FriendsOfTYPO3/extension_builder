@@ -178,5 +178,3 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	}
 
 }
-
-?>
