@@ -96,7 +96,6 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 				if ($domainObject->isSubClass() && !$domainObject->isMappedToExistingTable()) {
 						// we try to get the table from Extbase configuration
 					$classSettings = $this->configurationManager->getExtbaseClassConfiguration($domainObject->getParentClass());
-						//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('!isMappedToExistingTable:' . strtolower($domainObject->getParentClass()), 'extension_builder', 0, $classSettings);
 					if (isset($classSettings['tableName'])) {
 						$tableName = $classSettings['tableName'];
 					} else {

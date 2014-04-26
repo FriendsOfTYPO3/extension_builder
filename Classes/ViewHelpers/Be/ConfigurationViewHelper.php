@@ -15,7 +15,6 @@ class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBa
 
 		$baseUrl = '../' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath('extension_builder');
 		$this->pageRenderer->disableCompressJavascript();
-		//$this->pageRenderer->enableDebugMode();
 
 		// SECTION: JAVASCRIPT FILES
 		// YUI Basis Files

@@ -104,7 +104,6 @@ class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditi
 		$needsTypeField = FALSE;
 		if ($domainObject->getChildObjects() || $isMappedToExternalTable) {
 			$tableName = $domainObject->getDatabaseTableName();
-			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('TCA: '.$tableName,'extension_builder',0,$GLOBALS['TCA'][$tableName]['ctrl']);
 			if (!isset($GLOBALS['TCA'][$tableName]['ctrl']['type']) || $GLOBALS['TCA'][$tableName]['ctrl']['type'] == 'tx_extbase_type') {
 				/**
 				 * if the type field is set but equals the default extbase record type field name it might

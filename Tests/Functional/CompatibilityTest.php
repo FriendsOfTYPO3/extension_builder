@@ -56,7 +56,6 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 * @test
 	 */
 	function generateExtensionFromVersion3Configuration() {
-		//$this->markTestSkipped('Compatibility not yet possible');
 		$this->configurationManager = $this->getMock(
 			$this->buildAccessibleProxy('EBT\ExtensionBuilder\Configuration\ConfigurationManager'),
 			array('dummy')
@@ -85,7 +84,6 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 			)
 		);
 		$newExtensionDir = \vfsStream::url('testDir') . '/';
-		//$newExtensionDir = PATH_typo3conf.'ext/extension_builder/Tests/Examples/tmp/';
 		$this->extension->setExtensionDir($newExtensionDir . 'test_extension/');
 
 		$this->fileGenerator->build($this->extension);
@@ -100,21 +98,11 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 					array(date('Y-m-d'), date('Y')),
 					file_get_contents($referenceFile)
 				);
-				//\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile(PATH_site.'fileadmin/'.basename($createdFile), file_get_contents($createdFile));
 				$this->assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');
 				if(strpos($referenceFile, 'xlf') === FALSE) {
 
 					$originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",$referenceFileContent, TRUE);
 					$generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($createdFile), TRUE);
-					/** uncomment to find the difference
-					if ($originalLines != $generatedLines) {
-						for($i = 0;$i < count($originalLines);$i++) {
-							if ($originalLines[$i] != $generatedLines[$i]) {
-								//die('Line ' . $i . ':<br />|' . $originalLines[$i] . '| !=<br />|' . $generatedLines[$i] . '|');
-							}
-						}
-						die('<pre>' . htmlspecialchars(file_get_contents($createdFile)) . '</pre>');
-					} */
 					$this->assertEquals(
 						$originalLines,
 						$generatedLines,

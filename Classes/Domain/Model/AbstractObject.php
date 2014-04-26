@@ -221,7 +221,6 @@ abstract class AbstractObject {
 				foreach ($tags[$tagName] as $tagValue) {
 					$annotations[] = $tagName . ' ' . $tagValue;
 				}
-				//$tagValue = implode(' ',$tagValue);
 			}
 			else {
 				$annotations[] = $tagName . ' ' . $tags[$tagName];
@@ -393,7 +392,6 @@ abstract class AbstractObject {
 		try {
 			\PHPParser_Node_Stmt_Class::verifyModifier($this->modifiers, $modifier);
 		} catch (\PHPParser_Error $e) {
-				// debug('Error: ' . $e->getMessage(), 'Error');
 			throw new \EBT\ExtensionBuilder\Exception\SyntaxErrorException(
 					'Only one access modifier can be applied to one object. Use setModifier to avoid this exception'
 			);

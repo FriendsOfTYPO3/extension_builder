@@ -585,7 +585,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 				}
 				unset($module['value']['actionGroup']['actions']);
 			}
-			//foreach($module['value']['actionGroup'] as $actionName => $value) {
+
 			foreach ($newActionNames as $oldActionKey => $newActionKey) {
 				if (isset($module['value']['actionGroup'][$oldActionKey])) {
 					$module['value']['actionGroup'][$newActionKey] = $module['value']['actionGroup'][$oldActionKey];

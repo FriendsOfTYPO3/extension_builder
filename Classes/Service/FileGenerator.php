@@ -361,8 +361,6 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 		$absoluteTemplateRootFolder = $this->extensionDirectory . $templateRootFolder;
 
 		$hasTemplates = FALSE;
-			//$actionsUsingFormFieldsPartial = array('edit', 'new');
-			//$actionsUsingPropertiesPartial = array('show');
 		foreach ($this->extension->getDomainObjects() as $domainObject) {
 			/**
 			 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
@@ -594,9 +592,6 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 
 			try {
 				$settings = $this->extension->getSettings();
-				if (isset($settings['createAutoloadRegistry']) && $settings['createAutoloadRegistry'] == TRUE) {
-					//\TYPO3\CMS\Extbase\Utility\Extension::createAutoloadRegistryForExtension($this->extension->getExtensionKey(), $this->extensionDirectory);
-				}
 			} catch (\Exception $e) {
 				throw new \Exception('Could not generate ext_autoload.php, error: ' . $e->getMessage());
 			}

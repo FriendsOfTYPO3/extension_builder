@@ -54,7 +54,6 @@ class ExtensionRepository implements \TYPO3\CMS\Core\SingletonInterface {
 				continue;
 			}
 			$extensionBuilderConfiguration = $this->configurationManager->getExtensionBuilderConfiguration($singleExtensionDirectory);
-			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Modeler Configuration: '.$singleExtensionDirectory,'extension_builder',0,$extensionBuilderConfiguration);
 			if ($extensionBuilderConfiguration !== NULL) {
 				$result[] = array(
 					'name' => $singleExtensionDirectory,
