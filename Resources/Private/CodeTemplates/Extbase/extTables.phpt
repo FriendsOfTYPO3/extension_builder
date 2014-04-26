@@ -10,7 +10,7 @@ if (!defined('TYPO3_MODE')) {
 );
 <f:if condition="{plugin.switchableControllerActions}">
 $pluginSignature = str_replace('_','',$_EXTKEY) . '_{plugin.key}';
-$TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_{plugin.key}.xml');
 </f:if></f:for>
 
@@ -45,7 +45,7 @@ if (TYPO3_MODE === 'BE') {
 	<f:if condition="{domainObject.needsTableCtrlDefinition}">
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xlf');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('{domainObject.databaseTableName}');
-$TCA['{domainObject.databaseTableName}'] = array(
+$GLOBALS['TCA']['{domainObject.databaseTableName}'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.databaseTableName}',
 		'label' => '{domainObject.listModuleValueLabel}',
@@ -79,14 +79,14 @@ $TCA['{domainObject.databaseTableName}'] = array(
 
 <f:for each="{extension.domainObjectsInHierarchicalOrder}" as="domainObject"><f:if condition="{domainObject.mappedToExistingTable}"><f:then>
 <f:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
-$TCA['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = array('LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}','{domainObject.recordType}');
+$GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = array('LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}','{domainObject.recordType}');
 </f:then><f:else><f:if condition="{domainObject.hasChildren}">
-$TCA['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = array('LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.databaseTableName}.tx_extbase_type.{domainObject.recordType}','{domainObject.recordType}');
-$TCA['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['default'] = '{domainObject.recordType}';
+$GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = array('LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.databaseTableName}.tx_extbase_type.{domainObject.recordType}','{domainObject.recordType}');
+$GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['default'] = '{domainObject.recordType}';
 </f:if></f:else></f:if>
 </f:for>
 <f:for each="{extension.tablesForTypeFieldDefinitions}" as="databaseTableName">
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('{databaseTableName}', $TCA['{databaseTableName}']['ctrl']['type'],'','after:' . $TCA['{databaseTableName}']['ctrl']['label']);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('{databaseTableName}', $GLOBALS['TCA']['{databaseTableName}']['ctrl']['type'],'','after:' . $TCA['{databaseTableName}']['ctrl']['label']);
 </f:for>
 <f:for each="{extension.domainObjects}" as="domainObject">
 	<f:if condition="{domainObject.categorizable}">

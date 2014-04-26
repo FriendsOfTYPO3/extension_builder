@@ -3,8 +3,8 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-$TCA['tx_testextension_domain_model_child1'] = array(
-	'ctrl' => $TCA['tx_testextension_domain_model_child1']['ctrl'],
+$GLOBALS['TCA']['tx_testextension_domain_model_child1'] = array(
+	'ctrl' => $GLOBALS['TCA']['tx_testextension_domain_model_child1']['ctrl'],
 	'interface' => array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name',
 	),
