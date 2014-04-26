@@ -54,10 +54,6 @@ class ReplaceClassNamesVisitor extends \PHPParser_NodeVisitorAbstract {
 	 */
 	protected $newClassPrefix = '';
 
-	public function getClassObject() {
-		return $this->classObject;
-	}
-
 	/**
 	 * @param \PHPParser_Node $node
 	 * @return \PHPParser_Node|void

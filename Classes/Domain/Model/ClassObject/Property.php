@@ -28,7 +28,7 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  */
 class Property extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
 	/**
-	 * PHP var type of this property (read from @var annotation in doc comment)
+	 * PHP var type of this property (read from "@var" annotation in doc comment)
 	 *
 	 * @var string
 	 */

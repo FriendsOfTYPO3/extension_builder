@@ -22,6 +22,7 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 
 /**
  * property representing a "property" in the context of software development
@@ -97,6 +98,16 @@ abstract class AbstractProperty {
 	 * @var string the property type of this property
 	 */
 	protected $type = '';
+
+	/**
+	 * @var DomainObject
+	 */
+	protected $domainObject = NULL;
+
+	/**
+	 * @var bool
+	 */
+	protected $excludeField = FALSE;
 
 	/**
 	 *

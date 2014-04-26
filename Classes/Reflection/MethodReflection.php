@@ -53,7 +53,7 @@ class MethodReflection extends \TYPO3\CMS\Extbase\Reflection\MethodReflection {
 	 * that Tx_Extbase_Reflection_ParameterReflection objects are returned instead of the
 	 * orginal ReflectionParameter instances.
 	 *
-	 * @return array of \EBT\ExtensionBuilder\Reflection\ParameterReflection Parameter reflection objects of the parameters of this method
+	 * @return \EBT\ExtensionBuilder\Reflection\ParameterReflection[] Parameter reflection objects of the parameters of this method
 	 */
 	public function getParameters() {
 
@@ -75,10 +75,10 @@ class MethodReflection extends \TYPO3\CMS\Extbase\Reflection\MethodReflection {
 	 * where index is the sort number and typeHint is optional
 	 * The parts in the brackets are splitted and counted
 	 *
-	 * @param $reflectionParameter
+	 * @param \ReflectionParameter $reflectionParameter
 	 * @return string typeHint
 	 */
-	protected function getTypeHintFromReflectionParameter($reflectionParameter) {
+	protected function getTypeHintFromReflectionParameter(\ReflectionParameter $reflectionParameter) {
 		$paramAsString = (string)$reflectionParameter;
 		$paramRegex = '/^Parameter\\s\\#[0-9]\\s\\[\\s<(required|optional)>\\s*.*\\$.*]$/';
 		if (!preg_match($paramRegex, $paramAsString, $match1)) {

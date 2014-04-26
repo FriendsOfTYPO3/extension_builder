@@ -133,6 +133,7 @@ class ClassFactory  {
 				$getVarTypeFromParamTag = TRUE;
 			}
 		}
+		/** @var $param \PHPParser_NodeAbstract */
 		foreach($node->params as $param) {
 			$parameter = new Model\ClassObject\MethodParameter($param->name);
 			$parameter->setPosition($position);

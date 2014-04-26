@@ -114,6 +114,7 @@ class FunctionObject extends AbstractObject {
 	public function getParameterNames() {
 		$parameterNames = array();
 		if (is_array($this->parameters)) {
+			/** @var $parameter MethodParameter */
 			foreach ($this->parameters as $parameter) {
 				$parameterNames[] = $parameter->getName();
 			}
@@ -210,6 +211,7 @@ class FunctionObject extends AbstractObject {
 		$annotations = parent::getAnnotations();
 		if (is_array($this->parameters) && count($this->parameters) > 0 && !$this->isTaggedWith('param')) {
 			$paramTags = array();
+			/** @var $parameter MethodParameter */
 			foreach ($this->parameters as $parameter) {
 				$paramTags[] = 'param ' . strtolower($parameter->getVarType()) . '$' . $parameter->getName();
 			}

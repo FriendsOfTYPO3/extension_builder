@@ -1,5 +1,7 @@
 <?php
 namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -43,6 +45,11 @@ abstract class AnyToManyRelation extends AbstractRelation {
 	 * @var int
 	 */
 	protected $maxItems = 1;
+
+	/**
+	 * @var DomainObject
+	 */
+	protected $domainObject = NULL;
 
 	/**
 	 * Returns the relation table name. It is build by having 'tx_myextension_' followed by the

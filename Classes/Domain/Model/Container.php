@@ -185,7 +185,7 @@ class Container extends AbstractObject {
 	}
 
 	/**
-	 * @return array FunctionObject[]
+	 * @return FunctionObject[]
 	 */
 	public function getFunctions() {
 		return $this->functions;

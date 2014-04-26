@@ -32,10 +32,10 @@ class Tx_PhpParser_Test_ClassMethodWithMissingParameterTag {
 	/**
 	 * This is the description
 	 *
-	 * @param Tx_PhpParser_Parser_Utility_NodeConverter $n
+	 * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n
 	 * @return string
 	 */
-	function testMethod($string, array $arr, Tx_PhpParser_Parser_Utility_NodeConverter $n) {
+	function testMethod($string, array $arr, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n) {
 		if ($string > 3) {
 			return 'bar';
 		} else {

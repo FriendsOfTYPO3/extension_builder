@@ -37,15 +37,24 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  */
 class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	/**
+	 * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
+	 */
+	protected $configurationManager = NULL;
+
+	/**
+	 * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
+	 */
+	protected $extensionSchemaBuilder = NULL;
+
+	/**
 	 * @test
 	 */
 	public function checkRequirements() {
 		$this->assertTrue(
-			class_exists(vfsStream),
+			class_exists('vfsStream'),
 			'Requirements not fulfilled: vfsStream is needed for file operation tests. '
 			. 'Please make sure you are using at least phpunit Version 3.5.6');
 	}
-
 
 	/**
 	 * This test creates an extension based on a JSON file, generated
@@ -69,8 +78,8 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 			// compatibility adaptions for configurations from older versions
 			$extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), TRUE);
 			$extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON($extensionConfigurationJSON, FALSE);
-
 		} else {
+			$extensionConfigurationJSON = array();
 			$this->fail('JSON file not found');
 		}
 

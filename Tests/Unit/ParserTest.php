@@ -104,7 +104,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$this->assertEquals( 6, count($parameters));
 		$this->assertEquals($parameters[3]->getName(), 'booleanParam');
 		$this->assertEquals($parameters[3]->getVarType(), 'boolean');
-		$this->assertEquals($parameters[5]->getTypeHint(), 'Tx_PhpParser_Parser_Utility_NodeConverter');
+		$this->assertEquals($parameters[5]->getTypeHint(), '\\EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter');
 	}
 
 	/**

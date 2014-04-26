@@ -60,7 +60,7 @@ class Plugin {
 	 *
 	 * @var string[]
 	 */
-	protected $controllerActionCombination = array();
+	protected $controllerActionCombinations = array();
 
 	/**
 	 * array with configuration arrays

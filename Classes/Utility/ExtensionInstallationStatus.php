@@ -1,5 +1,6 @@
 <?php
 namespace EBT\ExtensionBuilder\Utility;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /***************************************************************
@@ -26,6 +27,11 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  ***************************************************************/
 
 class ExtensionInstallationStatus {
+	/**
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+	 */
+	protected $objectManager = NULL;
+
 	/**
 	 * @var \EBT\ExtensionBuilder\Domain\Model\Extension
 	 */
@@ -113,7 +119,9 @@ class ExtensionInstallationStatus {
 					$sqlHandler = $this->objectManager->get('TYPO3\\CMS\\Install\\Sql\\SchemaMigrator');
 				}
 				$sqlContent = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl($sqlFile);
-				$GLOBALS['typo3CacheManager']->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
+				/** @var $cacheManager CacheManager */
+				$cacheManager = $GLOBALS['typo3CacheManager'];
+				$cacheManager->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
 				$sqlContent .= \TYPO3\CMS\Core\Cache\Cache::getDatabaseTableDefinitions();
 				$fieldDefinitionsFromFile = $sqlHandler->getFieldDefinitions_fileContent($sqlContent);
 				if (count($fieldDefinitionsFromFile)) {
@@ -136,12 +144,12 @@ class ExtensionInstallationStatus {
 				foreach($this->updateStatements as $type => $statements) {
 					foreach($statements as $key => $statement) {
 						if (in_array($type, array('change', 'add', 'create_table')) && in_array($key, $params['updateStatements'])) {
-							$res = $GLOBALS['TYPO3_DB']->admin_query($statement);
+							$res = $this->getDatabaseConnection()->admin_query($statement);
 							if ($res === FALSE) {
 								$hasErrors = TRUE;
-								\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('SQL error','extension_builder',0,array('statement' => $statement, 'error' => $GLOBALS['TYPO3_DB']->sql_error()));
+								\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('SQL error','extension_builder',0,array('statement' => $statement, 'error' => $this->getDatabaseConnection()->sql_error()));
 							} elseif (is_resource($res) || is_a($res, '\\mysqli_result')) {
-								$GLOBALS['TYPO3_DB']->sql_free_result($res);
+								$this->getDatabaseConnection()->sql_free_result($res);
 							}
 						}
 					}
@@ -167,5 +175,12 @@ class ExtensionInstallationStatus {
 	 */
 	public function getUpdateStatements() {
 		return $this->updateStatements;
+	}
+
+	/**
+	 * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+	 */
+	protected function getDatabaseConnection() {
+		return $GLOBALS['TYPO3_DB'];
 	}
 }

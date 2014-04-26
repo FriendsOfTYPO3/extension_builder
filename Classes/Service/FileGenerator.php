@@ -24,6 +24,8 @@ namespace EBT\ExtensionBuilder\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 /**
  * Creates (or updates) all the required files for an extension
@@ -334,6 +336,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 			$fileContents = $this->generateLocallangFileContent('_db');
 			$this->writeFile($this->languageDirectory . 'locallang_db.xlf', $fileContents);
 			if ($this->extension->hasBackendModules()) {
+				/** @var $backendModule \EBT\ExtensionBuilder\Domain\Model\Plugin */
 				foreach ($this->extension->getBackendModules() as $backendModule) {
 					$fileContents = $this->generateLocallangFileContent('_mod', 'backendModule', $backendModule);
 					$this->writeFile(
@@ -737,6 +740,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 		$modelTemplateClassPath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
 		$modelClassFileObject = $this->classBuilder->generateModelClassFileObject($domainObject, $modelTemplateClassPath, $mergeWithExistingClass);
 		if ($modelClassFileObject) {
+			/** @var $modelClassFileObject ClassObject */
 			$this->addLicenseHeader($modelClassFileObject->getFirstClass());
 			return $this->printerService->renderFileObject($modelClassFileObject, TRUE);
 		} else {
@@ -892,7 +896,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * @param string $fileNameSuffix (_db, _csh, _mod)
 	 * @param string $variableName
-	 * @param null $variable
+	 * @param DomainObject $variable
 	 * @return mixed
 	 */
 	protected function generateLocallangFileContent($fileNameSuffix = '', $variableName = '', $variable = NULL) {

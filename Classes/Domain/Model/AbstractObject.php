@@ -22,7 +22,6 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use EBT\ExtensionBuilder\Service\ClassBuilder;
 
 /**
  * abstract object representing a class, method or property in the context of

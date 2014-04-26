@@ -106,7 +106,7 @@ class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
 	/**
 	 * Sets $varType.
 	 *
-	 * @param object $varType
+	 * @param string $varType
 	 */
 	public function setVarType($varType) {
 		$this->varType = $varType;

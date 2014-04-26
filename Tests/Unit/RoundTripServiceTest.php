@@ -1,7 +1,6 @@
 <?php
 namespace EBT\ExtensionBuilder\Tests\Unit;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
-use EBT\ExtensionBuilder\Service\ObjectSchemaBuilder;
 
 /***************************************************************
  *  Copyright notice

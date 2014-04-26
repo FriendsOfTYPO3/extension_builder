@@ -55,6 +55,11 @@ class Parser extends \PHPParser_Parser implements \TYPO3\CMS\Core\SingletonInter
 	protected $classFactory = NULL;
 
 	/**
+	 * @var \EBT\ExtensionBuilder\Parser\Visitor\FileVisitorInterface
+	 */
+	protected $classFileVisitor = NULL;
+
+	/**
 	 * @param string $code
 	 * @return \EBT\ExtensionBuilder\Domain\Model\File
 	 */

@@ -33,6 +33,11 @@ class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 */
 	protected $configurationManager = NULL;
 
+	/**
+	 * @var \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder
+	 */
+	protected $objectSchemaBuilder = NULL;
+
 	protected function setUp() {
 		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\ObjectSchemaBuilder'), array('dummy'));
 		$concreteConfigurationManager = $this->getMock($this->buildAccessibleProxy('TYPO3\\CMS\Extbase\\Configuration\\BackendConfigurationManager'));

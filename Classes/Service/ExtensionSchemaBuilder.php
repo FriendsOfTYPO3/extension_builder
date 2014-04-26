@@ -60,6 +60,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return \EBT\ExtensionBuilder\Domain\Model\Extension $extension
 	 */
 	public function build(array $extensionBuildConfiguration) {
+		/** @var $extension \EBT\ExtensionBuilder\Domain\Model\Extension */
 		$extension = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Extension');
 		$globalProperties = $extensionBuildConfiguration['properties'];
 		if (!is_array($globalProperties)) {

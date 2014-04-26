@@ -212,7 +212,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$classFileObject = $this->parseAndWrite($fileName);
 		$tags = $classFileObject->getFirstClass()->getMethod('testMethod')->getTagValues('param');
 		$this->assertEquals(count($tags), 3);
-		$this->assertSame($tags, array('$string', 'array $arr', 'Tx_PhpParser_Parser_Utility_NodeConverter $n'));
+		$this->assertSame($tags, array('$string', 'array $arr', '\\EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter $n'));
 	}
 
 
