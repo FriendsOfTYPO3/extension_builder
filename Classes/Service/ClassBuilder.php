@@ -311,7 +311,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			}
 			$initStorageObjectsMethod->setBodyStmts($methodBodyStmts);
 			$this->classObject->setMethod($initStorageObjectsMethod);
-		} else if ($this->classObject->methodExists('initStorageObjects')) {
+		} elseif ($this->classObject->methodExists('initStorageObjects')) {
 			$this->classObject->getMethod('initStorageObjects')->setBodyStmts(array());
 		}
 	}

@@ -496,8 +496,7 @@ class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 			else {
 				$this->inMultiLineComment = FALSE;
 			}
-		}
-		else if (strrpos($this->currentLine, '/**') > -1) {
+		} elseif (strrpos($this->currentLine, '/**') > -1) {
 			// multiline comment start
 			$this->inMultiLineComment = TRUE;
 		}

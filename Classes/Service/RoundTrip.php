@@ -283,7 +283,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 						// the parent class was just new added
 						$this->classObject->setParentClassName($parentClass);
 					}
-				} else if (!empty($oldParentClass)) {
+				} elseif (!empty($oldParentClass)) {
 					// the old object had a parent class setting, but it's removed now
 					if ($currentDomainObject->isEntity()) {
 						$parentClass = $this->configurationManager->getParentClassForEntityObject($this->extension->getExtensionKey());
@@ -347,7 +347,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 				$this->classObject->setName($currentDomainObject->getName() . 'Controller');
 				if ($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed) {
 					$this->mapOldControllerToCurrentClassObject($oldDomainObject, $currentDomainObject);
-				} else if ($oldDomainObject->isAggregateRoot() && !$currentDomainObject->isAggregateRoot()) {
+				} elseif ($oldDomainObject->isAggregateRoot() && !$currentDomainObject->isAggregateRoot()) {
 					$injectMethodName = 'inject' . GeneralUtility::lcfirst($oldDomainObject->getName()) . 'Repository';
 					$this->classObject->removeMethod($injectMethodName);
 				}
@@ -1021,11 +1021,9 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 	static function backupExtension(Model\Extension $extension, $backupDir) {
 		if (empty($backupDir)) {
 			throw new \Exception('Please define a backup directory in extension configuration!');
-		}
-		else if (!GeneralUtility::validPathStr($backupDir)) {
+		} elseif (!GeneralUtility::validPathStr($backupDir)) {
 			throw new \Exception('Backup directory is not a valid path: ' . $backupDir);
-		}
-		else if (GeneralUtility::isAbsPath($backupDir)) {
+		} elseif (GeneralUtility::isAbsPath($backupDir)) {
 			if (!GeneralUtility::isAllowedAbsPath($backupDir)) {
 				throw new \Exception('Backup directory is not an allowed absolute path: ' . $backupDir);
 			}
@@ -1038,8 +1036,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 		}
 		if (!is_dir($backupDir)) {
 			throw new \Exception('Backup directory does not exist: ' . $backupDir);
-		}
-		else if (!is_writable($backupDir)) {
+		} elseif (!is_writable($backupDir)) {
 			throw new \Exception('Backup directory is not writable: ' . $backupDir);
 		}
 

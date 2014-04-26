@@ -257,7 +257,7 @@ class FunctionObject extends AbstractObject {
 				} else {
 					$updatedParamTags[$position] = $existingParamTagValues[$paramPosition];
 				}
-			} else if ($paramTagsMissing) {
+			} elseif ($paramTagsMissing) {
 				// we insert a param tag
 				if (!empty($varType)) {
 					$varType .= ' ';

@@ -448,7 +448,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 			if (count($test) != 2) {
 				$isValid = FALSE;
 				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Wrong count for explode("=>") switchable Actions line:' . $line, 'extension_builder', 2);
-			} else if (!preg_match('/^[a-zA-Z0-9_,\\s]*$/', $test[1])) {
+			} elseif (!preg_match('/^[a-zA-Z0-9_,\\s]*$/', $test[1])) {
 				$isValid = FALSE;
 				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Regex failed:' . $test[1], 'extension_builder', 2);
 			}
