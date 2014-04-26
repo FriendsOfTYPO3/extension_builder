@@ -320,7 +320,7 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface {
 		'Traversable',
 		'SeekableIterator',
 		'Countable',
-		'Reflectionexception',
+		'ReflectionException',
 		'Reflection',
 		'ReflectionFunction',
 		'ReflectionParameter',
