@@ -266,10 +266,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			if ($domainProperty->isZeroToManyRelation()) {
 					$classProperty->setTag('cascade','remove');
 			}
-			// $this->logger->log('New property: ' . $propertyName . ':' . $domainProperty->getTypeForComment(), 'extension_builder', 1);
 		}
-
-		//$classProperty->setAssociatedDomainObjectProperty($domainProperty);
 
 		if ($domainProperty->getRequired()) {
 			if (!$classProperty->isTaggedWith('validate')) {
@@ -298,23 +295,19 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			if (!$this->classObject->methodExists('__construct')) {
 				$constructorMethod = $this->templateClassObject->getMethod('__construct');
 				$constructorMethod->setDescription('__construct');
-				//$constructorMethod->setTag('return', $domainObject->getName());
 				$this->classObject->addMethod($constructorMethod);
 			} else {
 				$constructorMethod = $this->classObject->getMethod('__construct');
 			}
 			if (preg_match('/\$this->initStorageObjects()/', $this->printerService->render($constructorMethod->getBodyStmts())) < 1) {
-				//\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Constructor method in Class ' . $this->classObject->getName() . ' was overwritten since the initStorageObjectCall was missing', 'extension_builder', 2, array('Original method' => $constructorMethod->getBody()));
 				$this->classObject->setMethod($this->classObject->getMethod('__construct'));
 			}
-			//initStorageObjects
 			$initStorageObjectsMethod = clone($this->templateClassObject->getMethod('initStorageObjects'));
 			$methodBodyStmts = array();
 			$templateBodyStmts = $initStorageObjectsMethod->getBodyStmts();
 			$initStorageObjectsMethod->setModifier('protected');
 			foreach ($anyToManyRelationProperties as $relationProperty) {
 				$methodBodyStmts = array_merge($methodBodyStmts, $this->parserService->replaceNodeProperty($templateBodyStmts, array('children' => $relationProperty->getName()), '\PHPParser_Node_Expr_PropertyFetch'));
-				//$methodBody .= "\$this->" . $relationProperty->getName() . " = new \\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage();\n";
 			}
 			$initStorageObjectsMethod->setBodyStmts($methodBodyStmts);
 			$this->classObject->setMethod($initStorageObjectsMethod);
@@ -330,7 +323,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return void
 	 */
 	protected function setPropertyRelatedMethods($domainProperty) {
-		//$this->logger->log('setPropertyRelatedMethods:' . $domainProperty->getName(), 'extension_builder', 0, (array)$domainProperty);
 		if ($domainProperty->isAnyToManyRelation()) {
 			$addMethod = $this->buildAddMethod($domainProperty);
 			$removeMethod = $this->buildRemoveMethod($domainProperty);
@@ -384,13 +376,10 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		$propertyName = $domainProperty->getName();
 		// add (or update) a setter method
 		$setterMethodName = \EBT\ExtensionBuilder\Utility\Tools::getMethodName($domainProperty, 'set');
-		//\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Building setter method:' . $setterMethodName, 'extension_builder', 2);;
 		if ($this->classObject->methodExists($setterMethodName)) {
 			$setterMethod = $this->classObject->getMethod($setterMethodName);
-			//$setterMethodTags = $setterMethod->getTags();
 			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Existing setter method imported!', 'extension_builder', 2, $setterMethod->getTags());
 		} else {
-			//$this->logger->log('new setMethod:' . $setterMethodName, 'extension_builder', 0);
 			$setterMethod = clone $this->templateClassObject->getMethod('setProperty');
 			$setterMethod->setName('set' . ucfirst($propertyName));
 			$replacements = array('property' => $propertyName);
@@ -432,9 +421,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 		if ($this->classObject->methodExists($addMethodName)) {
 			$addMethod = $this->classObject->getMethod($addMethodName);
-			//$this->logger->log('Existing addMethod imported:' . $addMethodName, 'extension_builder', 0, array('methodBody' => $addMethod->getBody()));
 		} else {
-			//$this->logger->log('new addMethod:' . $addMethodName, 'extension_builder', 0);
 			$addMethod = clone($this->templateClassObject->getMethod('addChild'));
 			$addMethod->setName('add' . ucfirst(\EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName)));
 
@@ -469,7 +456,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			$addParameter = new Model\Parameter();
 			$addParameter->setName(\EBT\ExtensionBuilder\Utility\Tools::getParameterName($domainProperty, 'add'));
 			$addParameter->setVarType($domainProperty->getForeignClassName());
-			//$addParameter->setTypeHint($domainProperty->getForeignClassName());
 			$addMethod->setParameter($addParameter);
 		}
 		if (!$addMethod->hasDescription()) {
@@ -491,9 +477,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 		if ($this->classObject->methodExists($removeMethodName)) {
 			$removeMethod = $this->classObject->getMethod($removeMethodName);
-			//$this->logger->log('Existing removeMethod imported:' . $removeMethodName, 'extension_builder', 0, array('methodBody' => $removeMethod->getBody()));
 		} else {
-			//$this->logger->log('new removeMethod:' . $removeMethodName, 'extension_builder', 0);
 			$removeMethod = clone($this->templateClassObject->getMethod('removeChild'));
 			$removeMethod->setName('remove' . ucfirst(\EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName)));
 			$removeMethod->setTag('param', \EBT\ExtensionBuilder\Utility\Tools::getParamTag($domainProperty, 'remove'), TRUE);
@@ -551,16 +535,13 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 		if ($this->classObject->methodExists($isMethodName)) {
 			$isMethod = $this->classObject->getMethod($isMethodName);
-			//$this->logger->log('Existing isMethod imported:' . $isMethodName, 'extension_builder', 0, array('methodBody' => $isMethod->getBody()));
 		} else {
-			//$this->logger->log('new isMethod:' . $isMethodName, 'extension_builder', 1);
 			$isMethod = clone($this->templateClassObject->getMethod('isProperty'));
 			$isMethod->setName('is' . ucfirst($domainProperty->getName()));
 			$isMethod->setTag('return', 'boolean');
 			$replacements =  array('property' => $domainProperty->getName());
 			$this->updateMethodBody($isMethod, $replacements);
 			$this->updateDocComment($isMethod, $replacements);
-			//$isMethod->addModifier('public');
 		}
 
 		if (!$isMethod->hasDescription()) {
@@ -889,7 +870,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			}
 		}
 		$sortedMethods = array_merge($customMethods, $propertyRelatedMethods);
-		//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Methods after sorting', 'extension_builder', 0, array_keys($sortedMethods));
 
 		$this->classObject->setProperties($sortedProperties);
 		$this->classObject->setMethods($sortedMethods);

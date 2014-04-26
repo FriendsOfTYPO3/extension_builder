@@ -197,8 +197,6 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 
 		$this->validationResult = array('errors' => array(), 'warnings' => array());
 
-		//$this->validateExtensionKey($extension->getExtensionKey());
-
 		$this->checkExistingExtensions($extension);
 
 		$this->validatePlugins($extension);
@@ -270,7 +268,6 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 			}
 		}
 		$switchableActionConfiguration = $plugin->getSwitchableControllerActions();
-		// \TYPO3\CMS\Core\Utility\GeneralUtility::devlog('validate switchableActionConfiguration', 'extension_builder', 0, $switchableActionConfiguration);
 		if (is_array($switchableActionConfiguration)) {
 			foreach ($switchableActionConfiguration as $switchableAction) {
 				$configuredActions = array();
@@ -332,7 +329,6 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 			// the first Controller action config is the default Controller action
 			// we show a warning if that's an action that requires a domain object as parameter
 			$defaultAction = reset($actionNames);
-			//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Invalid action configuration:'.$defaultAction, 'extension_builder', 1, array($controllerName, $actionNames));
 			if (in_array($defaultAction, array('show', 'edit'))) {
 				\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Invalid action configurations', 'extension_builder', 1, array($controllerName, $actionNames));
 				$this->validationResult['warnings'][] = new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException(

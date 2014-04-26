@@ -125,8 +125,6 @@ class FileVisitor extends \PHPParser_NodeVisitorAbstract implements FileVisitorI
 					$this->currentContainer = $this->fileObject;
 				} else {
 					//TODO: find how this could happen
-					//echo(NodeConverter::getValueFromNode($node));
-					//var_dump($node);
 				}
 			} elseif ($node instanceof \PHPParser_Node_Stmt_Use) {
 				$this->currentContainer->addAliasDeclaration(
@@ -184,7 +182,6 @@ class FileVisitor extends \PHPParser_NodeVisitorAbstract implements FileVisitorI
 		if ($this->lastNode === NULL) {
 			return;
 		}
-		//var_dump($this->lastNode);
 		if ($this->currentContainer->getFirstClass() === FALSE) {
 			$this->currentContainer->addPreClassStatements($this->lastNode);
 		} else {

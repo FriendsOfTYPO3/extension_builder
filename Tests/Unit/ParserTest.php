@@ -84,8 +84,6 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$this->parserService->setTraverser(new \EBT\ExtensionBuilder\Parser\Traverser);
 		$classFileObject = $this->parseFile('ClassWithArrayProperty.php');
 		$this->assertEquals(count($classFileObject->getFirstClass()->getProperties()), 1);
-		//$this->assertNotEquals($classFileObject->getFirstClass()->getProperty('arrProperty')->getValue(),array('a' => 'b','5' => 1223,'foo' => array('foo' => 'bar'),array(1,4,3)));
-		//$this->assertEquals($classFileObject->getFirstClass()->getProperty('arrProperty')->getValue(),array('a' => 'b','5' => 1223,'foo' => array('foo' => 'bar'),array(1,2,3)));
 		$this->assertEquals($classFileObject->getFirstClass()->getProperty('arrProperty')->getModifierNames(), array('protected'));
 	}
 

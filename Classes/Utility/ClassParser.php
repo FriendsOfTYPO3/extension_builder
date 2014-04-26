@@ -338,15 +338,6 @@ class ClassParser implements \TYPO3\CMS\Core\SingletonInterface {
 			$this->debugInfo();
 		}
 
-		// some checks again the reflection class
-
-		if (count($this->classObject->getMethods()) != count($this->classReflection->getNotInheritedMethods())) {
-			//throw new \Exception('Class ' . $className . ' could not be parsed properly. Method count does not equal reflection method count');
-		}
-
-		if (count($this->classObject->getProperties()) != count($this->classReflection->getNotInheritedProperties())) {
-			//throw new \Exception('Class ' . $className . ' could not be parsed properly. Property count does not equal reflection property count');
-		}
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Class Info','extension_builder',0,$this->classObject->getInfo());
 		return $this->classObject;
 	}

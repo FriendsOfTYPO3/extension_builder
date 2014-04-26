@@ -525,18 +525,13 @@ class ClassObject extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
 			$methodArray[$method->getName()] = array(
 				'parameter' => $method->getParameters()
 			);
-			//'body'=>$method->getBody()
 		}
 		$infoArray['Methods'] = $methodArray;
-		//$infoArray['Inherited Methods'] = count($this->getInheritedMethods());
-		//$infoArray['Not inherited Methods'] = count($this->getNotInheritedMethods());
 		$infoArray['Properties'] = $this->getProperties();
-		//$infoArray['Inherited Properties'] = count($this->getInheritedProperties());
-		//$infoArray['Not inherited Properties'] = count($this->getNotInheritedProperties());
 		$infoArray['Constants'] = $this->getConstants();
 		$infoArray['Modifiers'] = $this->getModifierNames();
 		$infoArray['Tags'] = $this->getTags();
-		//$infoArray['Methods'] = count($this->getMethods());
+
 		return $infoArray;
 	}
 

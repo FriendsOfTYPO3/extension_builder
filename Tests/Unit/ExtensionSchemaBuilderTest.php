@@ -39,7 +39,6 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	protected $extensionKey = '';
 
 	protected function setUp() {
-		//parent::setUp();
 		$this->extension = $this->getMock('EBT\ExtensionBuilder\Domain\Model\Extension', array('getOverWriteSettings'));
 		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('\EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder'), array('dummy'));
 		$this->extensionSchemaBuilder->injectConfigurationManager(new \EBT\ExtensionBuilder\Configuration\ConfigurationManager());

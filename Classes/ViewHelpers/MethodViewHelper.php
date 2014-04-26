@@ -73,8 +73,6 @@ class MethodViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
 							$defaultValue = json_encode($defaultValue);
 							// now we render php notation from JSON notation
 							$defaultValue = \EBT\ExtensionBuilder\Utility\SpycYAMLParser::convertJSONArrayToPHPArray($defaultValue);
-
-							//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('default Value: '. $defaultValue, 'parameter debug');
 						} else {
 							$defaultValue = 'array()';
 						}
@@ -95,7 +93,6 @@ class MethodViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
 					$parameterName = $typeHint . ' ' . $parameterName;
 				}
 				$parameters[] = $parameterName;
-				//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog($methodObject->getName().':'.$parameterName, 'extension_builder',3, $parameters);
 			}
 		}
 		return implode(', ', $parameters);

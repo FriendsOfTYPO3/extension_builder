@@ -101,7 +101,6 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 
 		$this->extension = $this->getMock('EBT\\ExtensionBuilder\\Domain\\Model\\Extension',array('getExtensionDir'));
 		$extensionKey = 'dummy';
-		//$dummyExtensionDir = $this->fixturesPath.$extensionKey.'/';
 		\vfsStream::setup('testDir');
 		$dummyExtensionDir = \vfsStream::url('testDir').'/';
 		$this->extension->setVendorName('EBT');
@@ -136,7 +135,6 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 
 		$localizationService = $this->objectManager->get('\EBT\ExtensionBuilder\Service\LocalizationService');
 
-		//parent::runBare(); causes a memory exhausted error??
 		$this->fileGenerator->injectObjectManager($this->objectManager);
 		$this->fileGenerator->injectPrinterService($this->printerService);
 		$this->fileGenerator->injectLocalizationService($localizationService);

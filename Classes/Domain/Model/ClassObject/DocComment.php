@@ -66,9 +66,6 @@ class DocComment extends Comment {
 		foreach ($lines as $line) {
 			$line = preg_replace('/(\s*\*\/\s*)?$/', '', $line);
 			$line = trim($line);
-			if ($line === '*/') {
-				//break;
-			}
 			if (strlen($line) > 0 && strpos($line, '* @') !== FALSE) {
 				$this->parseTag(substr($line, strpos($line, '@')));
 			} else {
@@ -240,9 +237,6 @@ class DocComment extends Comment {
 		}
 		if (!empty($this->description)) {
 			array_unshift($docCommentLines, PHP_EOL);
-			if (!empty($docCommentLines)) {
-				//array_unshift($docCommentLines, PHP_EOL);
-			}
 			if (!empty($this->descriptionLines)) {
 				$docCommentLines =  array_merge($this->descriptionLines, $docCommentLines);
 			} else {

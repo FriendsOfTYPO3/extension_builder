@@ -56,7 +56,6 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
 		$classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, FALSE);
-		//die('<pre>' . htmlspecialchars($classFileContent) . '</pre>');
 		$modelClassDir =  'Classes/Domain/Model/';
 		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
@@ -91,10 +90,8 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$propertyName = 'title';
 		$domainObject = $this->buildDomainObject($modelName);
 		$property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty($propertyName);
-		//$property->setRequired(TRUE);
 		$domainObject->addProperty($property);
 		$classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, FALSE);
-		//die('<pre>' . htmlspecialchars($classFileContent) . '</pre>');
 		$modelClassDir =  'Classes/Domain/Model/';
 		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
@@ -136,7 +133,6 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$relation->setForeignModel($relatedDomainObject);
 		$domainObject->addProperty($relation);
 		$classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, FALSE);
-		//die('<pre>' . htmlspecialchars($classFileContent) . '</pre>');
 		$modelClassDir =  'Classes/Domain/Model/';
 		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
@@ -181,7 +177,6 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$domainObject->addProperty($relation);
 
 		$classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, FALSE);
-		//die('<pre>' . htmlspecialchars($classFileContent) . '</pre>');
 		$modelClassDir =  'Classes/Domain/Model/';
 		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
@@ -252,7 +247,6 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$domainObject->addProperty($relation);
 
 		$classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, FALSE);
-		//die('<pre>' . htmlspecialchars($classFileContent) . '</pre>');
 		$modelClassDir =  'Classes/Domain/Model/';
 		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;

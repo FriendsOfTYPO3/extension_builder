@@ -207,7 +207,6 @@ class ClassReflection extends \TYPO3\CMS\Extbase\Reflection\ClassReflection {
 	 * @return ClassReflection Reflection of the parent class - if any
 	 */
 	public function getParentClass() {
-		//$parentClass = parent::getParentClass();
 		// workaround for bug #8800 in Tx_Extbase_Reflection_ClassReflection
 		$phpReflectionClass = new \ReflectionClass($this->getName());
 		$parentClass = $phpReflectionClass->getParentClass();

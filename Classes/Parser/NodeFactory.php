@@ -125,7 +125,6 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface{
 
 		foreach ($container->getFunctions() as $function) {
 			// TODO: not yet implemented
-			//$stmts[] = $function->getNode();
 		}
 
 		foreach ($container->getPostClassStatements() as $postInclude) {

@@ -271,7 +271,6 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 		$fileHandler = fopen($classFilePath, 'r');
 		$classFileObject = $this->parserService->parseFile($classFilePath);
-		//die('<pre>' . htmlspecialchars($this->printerService->renderFileObject($classFileObject, TRUE)) . '</pre>');
 		$newClassFilePath = $this->tmpDir . $fileName;
 		file_put_contents($newClassFilePath,$this->printerService->renderFileObject($classFileObject, TRUE));
 		return $classFileObject;
@@ -316,16 +315,6 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	protected function compareGeneratedCodeWithOriginal($originalFile, $pathToGeneratedFile) {
 		$originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($this->fixturesPath . $originalFile), TRUE);
 		$generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",file_get_contents($pathToGeneratedFile), TRUE);
-		/** uncomment to find the difference
-		if ($originalLines != $generatedLines) {
-			for($i = 0;$i < count($originalLines);$i++) {
-				if ($originalLines[$i] != $generatedLines[$i]) {
-					die('Line ' . $i . ':<br />|' . $originalLines[$i] . '| !=<br />|' . $generatedLines[$i] . '|');
-				}
-			}
-			die('<pre>' . htmlspecialchars(file_get_contents($pathToGeneratedFile)) . '</pre>');
-		}
-		 * */
 		$this->assertEquals(
 			$originalLines,
 			$generatedLines,
