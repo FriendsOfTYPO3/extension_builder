@@ -48,8 +48,8 @@ class ClassReflection extends \TYPO3\CMS\Extbase\Reflection\ClassReflection {
 	 * that MethodReflection objects are returned instead of the
 	 * orginal ReflectionMethod instances.
 	 *
-	 * @param  long $filter: A filter mask
-	 * @return MethodReflection Method reflection objects of the methods in this class
+	 * @param int $filter A filter mask
+	 * @return MethodReflection[] Method reflection objects of the methods in this class
 	 */
 	public function getMethods($filter = NULL) {
 		$extendedMethods = array();
@@ -81,7 +81,7 @@ class ClassReflection extends \TYPO3\CMS\Extbase\Reflection\ClassReflection {
 	/**
 	 * get all methods that are declared in the actual class and not inherited (or overwrite inherited methods)
 	 *
-	 * @param $includeOverridingMethods default is TRUE
+	 * @param bool $includeOverridingMethods default is TRUE
 	 *
 	 * @return array
 	 */
@@ -135,8 +135,8 @@ class ClassReflection extends \TYPO3\CMS\Extbase\Reflection\ClassReflection {
 	 * that PropertyReflection objects are returned instead of the
 	 * orginal ReflectionProperty instances.
 	 *
-	 * @param  long $filter: A filter mask
-	 * @return array of PropertyReflection Property reflection objects of the properties in this class
+	 * @param int $filter a filter mask
+	 * @return PropertyReflection[] Property reflection objects of the properties in this class
 	 */
 	public function getProperties($filter = NULL) {
 		$extendedProperties = array();
@@ -177,7 +177,7 @@ class ClassReflection extends \TYPO3\CMS\Extbase\Reflection\ClassReflection {
 	/**
 	 * get all Properties that are declared in the actual class and not inherited (or overwrite inherited Properties)
 	 *
-	 * @param $includeOverridingProperties default is TRUE
+	 * @param bool $includeOverridingProperties default is TRUE
 	 *
 	 * @return array
 	 */
@@ -258,7 +258,7 @@ class ClassReflection extends \TYPO3\CMS\Extbase\Reflection\ClassReflection {
 	 * Returns an instance of the doc comment parser and
 	 * runs the parse() method.
 	 *
-	 * @return Tx_Extbase_Reflection_DocCommentParser
+	 * @return \TYPO3\CMS\Extbase\Reflection\DocCommentParser
 	 */
 	protected function getDocCommentParser() {
 		if (!is_object($this->docCommentParser)) {

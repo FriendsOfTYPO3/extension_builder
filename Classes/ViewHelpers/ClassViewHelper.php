@@ -22,6 +22,7 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 
 /**
  * class view helper
@@ -29,7 +30,7 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
 class ClassViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 	/**
 	 *
-	 * @param object $classObject
+	 * @param ClassObject $classObject
 	 * @param string $renderElement
 	 * @return
 	 */
@@ -50,7 +51,7 @@ class ClassViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelpe
 
 	/**
 	 *
-	 * @param object $classObject
+	 * @param ClassObject $classObject
 	 * @return
 	 */
 	private function renderExtendClassDeclaration($classObject) {

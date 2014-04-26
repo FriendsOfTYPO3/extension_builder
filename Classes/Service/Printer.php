@@ -254,6 +254,8 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 	* @return string Comma separated pretty printed nodes
 	*/
 	protected function pParameterNodes(array $nodes) {
+		$startLine = '';
+
 		$multiLine = FALSE;
 		if (isset($nodes[0]) && $nodes[0]->hasAttribute('startLine')) {
 			$startLine = reset($nodes)->getAttribute('startLine');

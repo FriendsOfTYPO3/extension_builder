@@ -29,7 +29,7 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
 
 class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	/**
-	 * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
+	 * @var \EBT\ExtensionBuilder\Service;\ExtensionSchemaBuilder
 	 */
 	protected $extensionSchemaBuilder = NULL;
 
@@ -42,6 +42,7 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$this->extension = $this->getMock('EBT\ExtensionBuilder\Domain\Model\Extension', array('getOverWriteSettings'));
 		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('\EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder'), array('dummy'));
 		$this->extensionSchemaBuilder->injectConfigurationManager(new \EBT\ExtensionBuilder\Configuration\ConfigurationManager());
+		/** @var $objectSchemaBuilder \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder */
 		$objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\ObjectSchemaBuilder'), array('dummy'));
 		$objectSchemaBuilder->injectConfigurationManager(new \EBT\ExtensionBuilder\Configuration\ConfigurationManager());
 		$this->extensionSchemaBuilder->injectObjectSchemaBuilder($objectSchemaBuilder);

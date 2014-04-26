@@ -190,7 +190,7 @@ class DomainObject {
 	/**
 	 * Set property uniqueIdentifier
 	 *
-	 * @param string Property uniqueIdentifier
+	 * @param string $uniqueIdentifier
 	 */
 	public function setUniqueIdentifier($uniqueIdentifier) {
 		$this->uniqueIdentifier = $uniqueIdentifier;
@@ -278,7 +278,7 @@ class DomainObject {
 
 	/**
 	 * Get all properties
-	 * @return array<DomainObject\AbstractProperty>
+	 * @return DomainObject\AbstractProperty[]
 	 */
 	public function getProperties() {
 		return $this->properties;
@@ -346,7 +346,7 @@ class DomainObject {
 	/**
 	 * Get all actions
 	 *
-	 * @return array<DomainObject\Action>
+	 * @return DomainObject\Action[]
 	 */
 	public function getActions() {
 		return $this->actions;

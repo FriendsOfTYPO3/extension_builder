@@ -101,6 +101,10 @@ class ClassObject extends AbstractObject {
 	 */
 	protected $parentClassName = NULL;
 
+	/**
+	 * @var bool
+	 */
+	protected $isTemplate = FALSE;
 
 	/**
 	 * @param string $name
@@ -440,7 +444,7 @@ class ClassObject extends AbstractObject {
 	}
 
 	/**
-	 * @param Property
+	 * @param Property $classProperty
 	 * @return void
 	 */
 	public function setProperty($classProperty) {

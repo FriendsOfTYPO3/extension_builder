@@ -188,6 +188,16 @@ class Extension {
 	private $targetVersion = 6.0;
 
 	/**
+	 * @var string
+	 */
+	protected $previousExtensionDirectory = '';
+
+	/**
+	 * @var string
+	 */
+	protected $previousExtensionKey = '';
+
+	/**
 	 *
 	 * @return string
 	 */
@@ -409,7 +419,7 @@ class Extension {
 	 */
 	public function getDomainObjectsInHierarchicalOrder() {
 		$domainObjects = $this->getDomainObjects();
-		$sortByParent = function ($domainObject1, $domainObject2) {
+		$sortByParent = function(DomainObject $domainObject1, DomainObject $domainObject2) {
 			if ($domainObject1->getParentClass() === $domainObject2->getFullQualifiedClassName()) {
 				return 1;
 			}
@@ -504,7 +514,7 @@ class Extension {
 	/**
 	 * Setter for plugin
 	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage()<\EBT\ExtensionBuilder\Domain\Model\Plugin> $plugins
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\Plugin> $plugins
 	 * @return void
 	 */
 	public function setPlugins(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $plugins) {

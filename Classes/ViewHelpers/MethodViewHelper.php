@@ -69,13 +69,7 @@ class MethodViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
 
 					// the default value has to be json_encoded to render its string representation
 					if (is_array($defaultValue)) {
-						if (!empty($defaultValue)) {
-							$defaultValue = json_encode($defaultValue);
-							// now we render php notation from JSON notation
-							$defaultValue = \EBT\ExtensionBuilder\Utility\SpycYAMLParser::convertJSONArrayToPHPArray($defaultValue);
-						} else {
-							$defaultValue = 'array()';
-						}
+						$defaultValue = 'array()';
 					} elseif ($defaultValue === NULL) {
 						$defaultValue = 'NULL';
 					} else {

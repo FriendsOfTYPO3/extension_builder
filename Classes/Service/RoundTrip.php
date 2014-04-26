@@ -25,6 +25,7 @@ namespace EBT\ExtensionBuilder\Service;
 use EBT\ExtensionBuilder\Domain\Model;
 use EBT\ExtensionBuilder\Utility\Inflector;
 use EBT\ExtensionBuilder\Configuration\ConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -115,6 +116,11 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 	protected $classFileObject = NULL;
 
 	/**
+	 * @var array
+	 */
+	protected $settings = array();
+
+	/**
 	 * @param \EBT\ExtensionBuilder\Service\Parser $parserService
 	 * @return void
 	 */
@@ -184,6 +190,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 			);
 			$this->previousExtension = $extensionSchemaBuilder->build($jsonConfig);
 			$previousDomainObjects = $this->previousExtension->getDomainObjects();
+			/** @var $previousDomainObjects \EBT\ExtensionBuilder\Domain\Model\DomainObject[] */
 			foreach ($previousDomainObjects as $oldDomainObject) {
 				$this->previousDomainObjects[$oldDomainObject->getUniqueIdentifier()] = $oldDomainObject;
 				$this->log(
@@ -501,7 +508,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 	 *
 	 * @param Model\DomainObject $domainObject
 	 *
-	 * @return Model\ClassObject\ClassObject OR NULL
+	 * @return Model\ClassObject\ClassObject|NULL
 	 */
 	public function getRepositoryClassFile(Model\DomainObject $currentDomainObject) {
 		$extensionDir = $this->previousExtensionDirectory;
@@ -667,6 +674,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 			return TRUE;
 		}
 		if ($newProperty->isRelation()) {
+			/** @var $oldProperty AbstractRelation */
 			// if only the related domain object was renamed
 			$previousClassName = $this->updateExtensionKey($oldProperty->getForeignClassName());
 			if ($this->getForeignClassName($newProperty) != $previousClassName) {
@@ -777,8 +785,12 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 				}
 				$typeHint = $methodParameter->getTypeHint();
 				if ($typeHint) {
-					if ($oldProperty->isRelation() && $typeHint == $oldProperty->getForeignClassName()) {
-						$methodParameter->setTypeHint($this->updateExtensionKey($this->getForeignClassName($newProperty)));
+					if ($oldProperty->isRelation()) {
+						/** @var $oldProperty AbstractRelation */
+						if ($typeHint == $oldProperty->getForeignClassName()) {
+
+							$methodParameter->setTypeHint($this->updateExtensionKey($this->getForeignClassName($newProperty)));
+						}
 					}
 				}
 				$parameterTags[$methodParameter->getPosition()] = $this->classBuilder->getParamTag($newProperty, $methodType);
@@ -794,7 +806,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 
 		// replace property names in description
 		$mergedMethod->setDescription(str_replace($oldProperty->getName(), $newProperty->getName(), $mergedMethod->getDescription()));
-		if (method_exists($oldProperty, 'getForeignModel') && method_exists($newProperty, 'getForeignModel')) {
+		if ($oldProperty instanceof AbstractRelation && $newProperty instanceof AbstractRelation) {
 			$mergedMethod->setDescription(
 				str_replace(
 					$oldProperty->getForeignClassName(),
@@ -845,8 +857,9 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	public function getForeignClassName($relation) {
 		if ($relation->getForeignModel() && isset($this->renamedDomainObjects[$relation->getForeignModel()->getUniqueIdentifier()])) {
+			/** @var $renamedObject Model\DomainObject */
 			$renamedObject = $this->renamedDomainObjects[$relation->getForeignModel()->getUniqueIdentifier()];
-			return $renamedObject->getQualifiedClassName;
+			return $renamedObject->getQualifiedClassName();
 		}
 		else return $relation->getForeignClassName();
 	}

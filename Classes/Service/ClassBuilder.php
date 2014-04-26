@@ -25,7 +25,6 @@ namespace EBT\ExtensionBuilder\Service;
 use EBT\ExtensionBuilder\Domain\Model;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
 use EBT\ExtensionBuilder\Utility\Inflector;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Builds the required class objects for extbase extensions
@@ -101,6 +100,11 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @var array
 	 */
 	protected $settings = array();
+
+	/**
+	 * @var string
+	 */
+	protected $extensionDirectory = '';
 
 	/**
 	 * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager
@@ -275,9 +279,12 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			}
 		}
 
-		if ($domainProperty->isRelation() && $domainProperty->getLazyLoading()) {
-			if (!$classProperty->isTaggedWith('lazy')) {
-				$classProperty->setTag('lazy', '');
+		if ($domainProperty->isRelation()) {
+			/** @var $domainProperty Model\DomainObject\Relation\AbstractRelation */
+			if ($domainProperty->getLazyLoading()) {
+				if (!$classProperty->isTaggedWith('lazy')) {
+					$classProperty->setTag('lazy', '');
+				}
 			}
 		}
 
@@ -410,7 +417,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param Model\DomainObject\AbstractProperty $domainProperty
+	 * @param Model\DomainObject\Relation\AbstractRelation $domainProperty
 	 *
 	 * @return Model\ClassObject\Method
 	 */
@@ -466,7 +473,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param Model\DomainObject\AbstractProperty $domainProperty
+	 * @param Model\DomainObject\Relation\AbstractRelation $domainProperty
 	 *
 	 * @return Model\ClassObject\Method
 	 */
@@ -601,7 +608,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param Model\DomainObject\AbstractProperty $property
+	 * @param AbstractProperty $domainProperty
 	 * @param string $methodType (get,set,add,remove,is)
 	 * @return string method name
 	 */
@@ -653,7 +660,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param Model/AbstractObject $object
+	 * @param Model\AbstractObject $object
 	 * @param array $replacements
 	 */
 	protected function updateDocComment($object, $replacements) {
@@ -670,7 +677,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param Model\DomainObject\AbstractProperty $property
+	 * @param AbstractProperty $domainProperty
 	 * @param string $methodType (set,add,remove)
 	 * @return string method body
 	 */
@@ -691,6 +698,12 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		}
 	}
 
+	/**
+	 * @param AbstractProperty $domainProperty
+	 * @param string $methodType
+	 *
+	 * @return string
+	 */
 	public function getParamTag($domainProperty, $methodType) {
 
 		switch ($methodType) {
@@ -698,11 +711,13 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 				return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
 
 			case 'add'		:
+				/** @var $domainProperty Model\DomainObject\Relation\AbstractRelation */
 				$paramTag = $domainProperty->getForeignClassName();
 				$paramTag .= ' $' . $this->getParameterName($domainProperty, 'add');
 				return $paramTag;
 
 			case 'remove'	:
+				/** @var $domainProperty Model\DomainObject\Relation\AbstractRelation */
 				$paramTag = $domainProperty->getForeignClassName();
 				$paramTag .= ' $' . $this->getParameterName($domainProperty, 'remove');
 				$paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';
@@ -797,7 +812,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		if ($mergeWithExistingClass) {
 			try {
 				$this->classFileObject = $this->roundTripService->getRepositoryClassFile($domainObject);
-				if (!is_null($this->classFileObject)) {
+				if ($this->classFileObject instanceof Model\File) {
 					$this->classObject = $this->classFileObject->getFirstClass();
 				}
 			}

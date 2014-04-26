@@ -63,10 +63,10 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass extends 
 	 * @return void
 	 * @lazy
 	 */
-	public function methodWithStrangePrecedingBlock(string $name){
+	public function methodWithStrangePrecedingBlock($name){
 		/**
-		 * multi line comment in a method
-		 * @var unknown_type
+		 * multi-line comment in a method
+		 * explaining some strange things
 		 */
 		$this->name = $name;
 	}

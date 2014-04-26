@@ -37,10 +37,10 @@ class Tx_PhpParser_Test_ClassMethodWithManyParameter {
 	 * @param array $arr
 	 * @param boolean $booleanParam
 	 * @param float $float
-	 * @param Tx_PhpParser_Parser_Utility_NodeConverter $n
+	 * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n
 	 * @return string
 	 */
-	private static function testMethod($number, $stringParam, array $arr, $booleanParam = FALSE, $float = 0.2, Tx_PhpParser_Parser_Utility_NodeConverter $n) {
+	private static function testMethod($number, $stringParam, array $arr, $booleanParam = FALSE, $float = 0.2, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n) {
 		if ($number > 3) {
 			return 'bar';
 		} else {

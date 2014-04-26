@@ -254,9 +254,9 @@ class SpycYAMLParser {
 	 * Attempts to convert a key / value array item to YAML
 	 * @access private
 	 * @return string
-	 * @param $key The name of the key
-	 * @param $value The value of the item
-	 * @param $indent The indent of the current node
+	 * @param string $key The name of the key
+	 * @param mixed $value The value of the item
+	 * @param int $indent The indent of the current node
 	 */
 	private function _yamlize($key, $value, $indent, $previous_key = -1, $first_key = 0) {
 		if (is_array($value)) {
@@ -272,7 +272,10 @@ class SpycYAMLParser {
 		} elseif (!is_array($value)) {
 			// It doesn't have children.  Yip.
 			$string = $this->_dumpNode($key, $value, $indent, $previous_key, $first_key);
+		} else {
+			$string = '';
 		}
+
 		return $string;
 	}
 
@@ -280,8 +283,8 @@ class SpycYAMLParser {
 	 * Attempts to convert an array to YAML
 	 * @access private
 	 * @return string
-	 * @param $array The array you want to convert
-	 * @param $indent The indent of the current level
+	 * @param array $array The array you want to convert
+	 * @param int $indent The indent of the current level
 	 */
 	private function _yamlizeArray($array, $indent) {
 		if (is_array($array)) {
@@ -302,9 +305,9 @@ class SpycYAMLParser {
 	 * Returns YAML from a key and a value
 	 * @access private
 	 * @return string
-	 * @param $key The name of the key
-	 * @param $value The value of the item
-	 * @param $indent The indent of the current node
+	 * @param string $key The name of the key
+	 * @param mixed $value The value of the item
+	 * @param int $indent The indent of the current node
 	 */
 	private function _dumpNode($key, $value, $indent, $previous_key = -1, $first_key = 0) {
 		// do some folding here, for blocks
@@ -366,7 +369,7 @@ class SpycYAMLParser {
 	 * Folds a string of text, if necessary
 	 * @access private
 	 * @return string
-	 * @param $value The string you wish to fold
+	 * @param string $value The string you wish to fold
 	 */
 	private function _doFolding($value, $indent) {
 		// Don't do anything if wordwrap is set to 0
@@ -418,6 +421,7 @@ class SpycYAMLParser {
 			if (self::isEmpty($line)) continue;
 			$this->path = $tempPath;
 
+			$literalBlock = '';
 			$literalBlockStyle = self::startsLiteralBlock($line);
 			if ($literalBlockStyle) {
 				$line = rtrim($line, $literalBlockStyle . ' ' . LF);
@@ -725,6 +729,8 @@ class SpycYAMLParser {
 	}
 
 	private function referenceContentsByAlias($alias) {
+		$value = NULL;
+
 		do {
 			if (!isset($this->SavedGroups[$alias])) {
 				echo "Bad group name: $alias.";
@@ -1032,7 +1038,6 @@ class SpycYAMLParser {
 	private function addGroup($line, $group) {
 		if ($group[0] == '&') $this->_containsGroupAnchor = substr($group, 1);
 		if ($group[0] == '*') $this->_containsGroupAlias = substr($group, 1);
-		//print_r ($this->path);
 	}
 
 	private function stripGroup($line, $group) {
@@ -1040,17 +1045,3 @@ class SpycYAMLParser {
 		return $line;
 	}
 }
-
-// Enable use of Spyc from command line
-// The syntax is the following: php spyc.php spyc.yaml
-
-define ('SPYC_FROM_COMMAND_LINE', false);
-
-do {
-	if (!SPYC_FROM_COMMAND_LINE) break;
-	if (empty ($_SERVER['argc']) || $_SERVER['argc'] < 2) break;
-	if (empty ($_SERVER['PHP_SELF']) || $_SERVER['PHP_SELF'] != 'spyc.php') break;
-	$file = $argv[1];
-	printf('Spyc loading file: %s' . LF, $file);
-	print_r(spyc_load_file($file));
-} while (0);

@@ -26,7 +26,12 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	const SCOPE_PROTOTYPE = 'prototype';
 	const SCOPE_SINGLETON = 'singleton';
 
-		/**
+	/**
+	 * @var string[]
+	 */
+	protected $debugMessages = array();
+
+	/**
 	 * an array of fields that if changed require a reindexing of all the events
 	 *
 	 * @var array
@@ -45,7 +50,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	);
 
 	/**
-	 * @var Tx_GimmeFive_Component_Manager
+	 * @var Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
 	 */
 	private static $instance = NULL;
 
@@ -59,7 +64,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 
 	public static function getInstance() {
         if (self::$instance === NULL) {
-            self::$instance = new Tx_GimmeFive_Component_Manager();
+            self::$instance = new Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass();
         }
         return self::$instance;
     }
@@ -131,6 +136,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	 * @author adapted for TYPO3v4 by Jochen Rau <jochen.rau@typoplanet.de>
 	 */
 	protected function createComponentObject($componentName, array $overridingConstructorArguments) {
+		$componentObject = NULL;
 		$componentConfiguration = $this->getComponentConfiguration($componentName);
 		$className = $componentConfiguration['className'] ? $componentConfiguration['className'] : $componentName;
 
@@ -155,10 +161,6 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 
 		eval($instruction);
 
-		if (!is_object($componentObject)) {
-			$errorMessage = error_get_last();
-			throw new Exception('A parse error ocurred while trying to build a new object of type ' . $className . ' (' . $errorMessage['message'] . '). The evaluated PHP code was: ' . $instruction);
-		}
 		$scope = $this->getComponentScope($componentName, $componentConfiguration);
 
 		switch ($scope) {

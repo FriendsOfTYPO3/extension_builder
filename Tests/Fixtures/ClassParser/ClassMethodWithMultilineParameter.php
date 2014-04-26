@@ -37,11 +37,11 @@ class Tx_PhpParser_Test_ClassMethodWithMultilineParameter {
 	 * @param array $arr
 	 * @param boolean $booleanParam
 	 * @param float $float
-	 * @param Tx_PhpParser_Parser_Utility_NodeConverter $n
+	 * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n
 	 * @return string
 	 */
 	private static function testMethod($number, $stringParam, array $arr, $booleanParam = FALSE,
-		$float = 0.2, Tx_PhpParser_Parser_Utility_NodeConverter $n) {
+		$float = 0.2, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n) {
 		self::sendForDownload(
 			$arr,
 			'Foo-' . PHP_EOL . '-' . date('Y-m-d-H-i') . $stringParam,

@@ -213,6 +213,7 @@ class BuilderModuleController extends ActionController {
 			}
 			if (!empty($validationConfigurationResult['errors'])) {
 				$errorMessage = '';
+				/** @var $exception \Exception */
 				foreach ($validationConfigurationResult['errors'] as $exception) {
 					$errorMessage .= '<br />' . $exception->getMessage();
 				}
@@ -227,6 +228,7 @@ class BuilderModuleController extends ActionController {
 		$validationResult = $this->extensionValidator->isValid($extension);
 		if (!empty($validationResult['errors'])) {
 			$errorMessage = '';
+			/** @var $exception \Exception */
 			foreach ($validationResult['errors'] as $exception) {
 				$errorMessage .= '<br />' . $exception->getMessage();
 			}
@@ -300,10 +302,10 @@ class BuilderModuleController extends ActionController {
 	/**
 	 * This is a hack to handle confirm requests in the GUI.
 	 *
-	 * @param $warnings
+	 * @param \Exception[] $warnings
 	 * @return array confirm (Question to confirm), confirmFieldName (is set to TRUE if confirmed)
 	 */
-	protected function handleValidationWarnings($warnings) {
+	protected function handleValidationWarnings(array $warnings) {
 		$messagesPerErrorcode = array();
 		foreach ($warnings as $exception) {
 			if (!is_array($messagesPerErrorcode[$exception->getCode()])) {

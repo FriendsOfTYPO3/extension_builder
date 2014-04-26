@@ -23,6 +23,8 @@ namespace EBT\ExtensionBuilder\Utility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use TYPO3\CMS\Core\Utility;
 /**
  * provides helper methods
@@ -52,11 +54,11 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property
+	 * @param AbstractProperty $domainProperty
 	 * @param string $methodType (get,set,add,remove,is)
 	 * @return string method name
 	 */
-	static public function getMethodName($domainProperty, $methodType) {
+	static public function getMethodName(AbstractProperty $domainProperty, $methodType) {
 		$propertyName = $domainProperty->getName();
 		switch ($methodType) {
 			case 'set'        :
@@ -78,11 +80,11 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property
+	 * @param AbstractProperty $property
 	 * @param string $methodType (set,add,remove)
 	 * @return string method body
 	 */
-	static public function getParameterName($domainProperty, $methodType) {
+	static public function getParameterName(AbstractProperty $domainProperty, $methodType) {
 
 		$propertyName = $domainProperty->getName();
 
@@ -100,22 +102,24 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
+	 * @param AbstractProperty $domainProperty
 	 * @param string $methodType
 	 * @return string
 	 */
-	static public function getParamTag($domainProperty, $methodType) {
+	static public function getParamTag(AbstractProperty $domainProperty, $methodType) {
 
 		switch ($methodType) {
 			case 'set'        :
 				return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
 
 			case 'add'        :
+				/** @var $domainProperty AbstractRelation */
 				$paramTag = $domainProperty->getForeignClassName();
 				$paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
 				return $paramTag;
 
 			case 'remove'    :
+				/** @var $domainProperty AbstractRelation */
 				$paramTag = $domainProperty->getForeignClassName();
 				$paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
 				$paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';

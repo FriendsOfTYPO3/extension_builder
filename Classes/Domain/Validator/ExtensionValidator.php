@@ -23,7 +23,6 @@ namespace EBT\ExtensionBuilder\Domain\Validator;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Schema for a whole extension
@@ -155,12 +154,12 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 	const ERROR_MAPPING_WRONG_TYPEFIELD_CONFIGURATION = 605;
 
 	/**
-	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
 	 */
 	protected $configurationManager = NULL;
 
 	/**
-	 * advancdedMode setting from extension_builder configuration
+	 * advancedMode setting from extension_builder configuration
 	 *
 	 * @var bool
 	 */
@@ -185,7 +184,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 	 * Validate the given extension
 	 *
 	 * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-	 * @return boolean
+	 * @return array[]
 	 */
 	public function isValid($extension) {
 
@@ -234,6 +233,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 			return;
 		}
 		$pluginKeys = array();
+		/** @var $plugin \EBT\ExtensionBuilder\Domain\Model\Plugin */
 		foreach ($extension->getPlugins() as $plugin) {
 			if (self::validatePluginKey($plugin->getKey()) === 0) {
 				$this->validationResult['errors'][] = new \Exception('Invalid plugin key in plugin ' . $plugin->getName() . ': "' . $plugin->getKey() . '". Only alphanumeric character without spaces are allowed', self::ERROR_PLUGIN_INVALID_KEY);
@@ -488,6 +488,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 			return;
 		}
 		$backendModuleKeys = array();
+		/** @var $backendModule \EBT\ExtensionBuilder\Domain\Model\Plugin */
 		foreach ($extension->getBackendModules() as $backendModule) {
 			if (self::validateModuleKey($backendModule->getKey()) === 0) {
 				$this->validationResult['errors'][] = new \Exception('Invalid key in backend module ' . $backendModule->getName() . '. Only alphanumeric character without spaces are allowed', self::ERROR_BACKENDMODULE_INVALID_KEY);
@@ -502,7 +503,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 
 	/**
 	 * @author Sebastian Michaelsen <sebastian.gebhard@gmail.com>
-	 * @param	\EBT\ExtensionBuilder\Domain\Model\Extension
+	 * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
 	 * @return	 void
 	 * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
 	 */
@@ -604,8 +605,8 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 			}
 		}
 		if (isset($GLOBALS['TCA'][$tableName]['ctrl']['type'])) {
-			$dataTypeRes = $GLOBALS['TYPO3_DB']->sql_query('DESCRIBE ' . $tableName);
-			while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dataTypeRes)) {
+			$dataTypeRes = $this->getDatabaseConnection()->sql_query('DESCRIBE ' . $tableName);
+			while($row = $this->getDatabaseConnection()->sql_fetch_assoc($dataTypeRes)) {
 				if ($row['Field'] == $GLOBALS['TCA'][$tableName]['ctrl']['type']) {
 					if (strpos($row['Type'],'int') !== FALSE) {
 						$this->validationResult['warnings'][] = new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException(
@@ -657,9 +658,8 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 
 
 	/**
-	 * @author Sebastian Michaelsen <sebastian.gebhard@gmail.com>
-	 * @param	\EBT\ExtensionBuilder\Domain\Model\DomainObject
-	 * @return	 void
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+	 * @return void
 	 * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
 	 */
 	private function validateProperties($domainObject) {
@@ -710,7 +710,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 			}
 			$propertyNames[] = $propertyName;
 
-			if ( is_subclass_of($property, 'EBT\\ExtensionBuilder\\Domain\Model\\DomainObject\\Relation\\AbstractRelation')) {
+			if ($property instanceof \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation) {
 				if (!$property->getForeignModel() && $property->getForeignClassName()){
 					if (!class_exists($property->getForeignClassName())) {
 						$this->validationResult['errors'][] = new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException(
@@ -802,5 +802,12 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 		else {
 			return FALSE;
 		}
+	}
+
+	/**
+	 * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+	 */
+	protected function getDatabaseConnection() {
+		return $GLOBALS['TYPO3_DB'];
 	}
 }

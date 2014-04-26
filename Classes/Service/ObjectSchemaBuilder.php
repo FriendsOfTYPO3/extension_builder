@@ -23,7 +23,10 @@ namespace EBT\ExtensionBuilder\Service;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\FileProperty;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Utility\Tools;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
  * Builder for domain objects
@@ -140,7 +143,8 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param $relationJsonConfiguration
+	 * @param array $relationJsonConfiguration
+	 * @param DomainObject $domainObject
 	 * @throws \Exception
 	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation
 	 */
@@ -184,7 +188,7 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 				);
 			}
 			$relation->setForeignDatabaseTableName($foreignDatabaseTableName);
-			if (is_a($relation, 'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Relation\\ZeroToManyRelation')) {
+			if ($relation instanceof \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation) {
 				$foreignKeyName = strtolower($domainObject->getName());
 				if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($foreignKeyName)) {
 					$foreignKeyName = 'tx_' . $foreignKeyName;
@@ -200,6 +204,7 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 				$relation->setForeignDatabaseTableName($foreignDatabaseTableName);
 			}
 			if ($relation->isFileReference() && !empty($relationJsonConfiguration['maxItems'])) {
+				/** @var $relation FileProperty */
 				$relation->setMaxItems($relationJsonConfiguration['maxItems']);
 			}
 		}

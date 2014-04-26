@@ -170,7 +170,7 @@ class File extends Container {
 	}
 
 	/**
-	 * @param $parentObject either a file object or a namespace object
+	 * @param Container $parentObject either a file object or a namespace object
 	 */
 	protected function addSubStatements($parentObject) {
 
