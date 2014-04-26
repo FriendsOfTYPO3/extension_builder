@@ -5,7 +5,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 		inputParams: {
 			name: "name",
 			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.name,
-			typeInvite: TYPO3.settings.extensionBuilder._LOCAL_LANG.extensionTitle
+			typeInvite: TYPO3.settings.extensionBuilder._LOCAL_LANG.extensionTitle,
+			required: true
 		}
 	},
 	{
@@ -17,7 +18,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 			ucFirst: true,
 			forceAlphaNumeric: true,
 			cols: 30,
-			description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_vendorName
+			description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_vendorName,
+			required: true
 		}
 	},
 	{
@@ -29,7 +31,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 			forceLowerCase: true,
 			forceAlphaNumericUnderscore: true,
 			cols: 30,
-			description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_extensionKey
+			description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_extensionKey,
+			required: true
 		}
 	},
 	{

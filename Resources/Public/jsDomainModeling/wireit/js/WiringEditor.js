@@ -256,9 +256,9 @@
 		 */
 		renderPropertiesForm: function() {
 			this.propertiesForm = new inputEx.Group({
-														parentEl: YAHOO.util.Dom.get('propertiesForm'),
-														fields: this.options.propertiesFields
-													});
+				parentEl: YAHOO.util.Dom.get('propertiesForm'),
+				fields: this.options.propertiesFields
+			});
 		},
 
 		/**
@@ -401,19 +401,11 @@
 			var value = this.getValue();
 
 			var extensionProperties = this.propertiesForm.getValue();
+			if (!this.propertiesForm.validate()) {
+				this.alert('Invalid extension properties', "Please check the fields in the left panel");
+				return;
+			}
 
-			if (extensionProperties.name == "") {
-				this.alert('Extension name missing', "Please enter an extension name in the left panel");
-				return;
-			}
-			if (extensionProperties.vendorName == "") {
-				this.alert('Extension vendor name missing', "Please enter a vendor name in the left panel");
-				return;
-			}
-			if (extensionProperties.extensionKey == "") {
-				this.alert('Extension key missing', "Please enter an extension key in the left panel");
-				return;
-			}
 			this.showSpinnerPanel.show();
 			this.dataToSubmit.name = value.name;
 			this.dataToSubmit.working = JSON.stringify(value.working);

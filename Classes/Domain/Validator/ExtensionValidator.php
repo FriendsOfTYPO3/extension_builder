@@ -23,6 +23,7 @@ namespace EBT\ExtensionBuilder\Domain\Validator;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Schema for a whole extension
@@ -360,7 +361,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 
 	/**
 	 * @param array $configuration
-	 * @return void
+	 * @return array
 	 */
 	public function validateConfigurationFormat($configuration) {
 		foreach ($configuration['properties']['plugins'] as $pluginConfiguration) {
@@ -431,7 +432,30 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 				}
 			}
 		}
-
+		foreach ($configuration['modules'] as $domainObjectConfiguration) {
+			$propertyNames = array();
+			if (isset($domainObjectConfiguration['value']['propertyGroup']['properties'])) {
+				foreach ($domainObjectConfiguration['value']['propertyGroup']['properties'] as $property) {
+					\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('property', 'extension_builder', 0, $property);
+					if (in_array($property['propertyName'], $propertyNames)) {
+						$this->validationResult['errors'][] = new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException('Property "' . $property['propertyName'] . '" of Model "' . $domainObjectConfiguration['value']['name'] . '" exists twice.',
+																															self::ERROR_PROPERTY_DUPLICATE);
+					}
+					$propertyNames[] = $property['propertyName'];
+				}
+			}
+			// check relation names, since these will result in class properties too
+			if (isset($domainObjectConfiguration['value']['relationGroup']['relations'])) {
+				foreach ($domainObjectConfiguration['value']['relationGroup']['relations'] as $property) {
+					\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('relation', 'extension_builder', 0, $property);
+					if (in_array($property['relationName'], $propertyNames)) {
+						$this->validationResult['errors'][] = new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException('Property "' . $property['relationName'] . '" of Model "' . $domainObjectConfiguration['value']['name'] . '" exists twice.',
+																															self::ERROR_PROPERTY_DUPLICATE);
+					}
+					$propertyNames[] = $property['relationName'];
+				}
+			}
+		}
 		return $this->validationResult;
 	}
 
