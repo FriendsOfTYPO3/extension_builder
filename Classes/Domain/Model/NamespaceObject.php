@@ -24,17 +24,12 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- *
- * @author Nico de Haen
- * @package PhpParserApi
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
- */
-class NamespaceObject extends Container{
+class NamespaceObject extends Container {
+
 	/**
 	 * array with alias declarations
-	 * each declaration is an array of type
+	 *
+	 * Each declaration is an array of the following type:
 	 * array(name => alias)
 	 *
 	 * @var string[]
@@ -54,19 +49,26 @@ class NamespaceObject extends Container{
 	public function getFirstClass() {
 		$classes = $this->getClasses();
 		return reset($classes);
-
 	}
 
+	/**
+	 * @param string $aliasDeclaration
+	 * @return void
+	 */
 	public function addAliasDeclaration($aliasDeclaration) {
 		$this->aliasDeclarations[] = $aliasDeclaration;
 	}
 
+	/**
+	 * @return string[]
+	 */
 	public function getAliasDeclarations() {
 		return $this->aliasDeclarations;
 	}
 
 	/**
 	 * @param array $preIncludes
+	 * @return void
 	 */
 	public function setPreIncludes($preIncludes) {
 		$this->preIncludes = $preIncludes;
@@ -79,19 +81,33 @@ class NamespaceObject extends Container{
 		return $this->preIncludes;
 	}
 
+	/**
+	 * @param array $preInclude
+	 * @return void
+	 */
 	public function addPreInclude($preInclude) {
 		$this->preIncludes[] = $preInclude;
 	}
 
+	/**
+	 * @param array $postIncludes
+	 * @return void
+	 */
 	public function setPostIncludes($postIncludes) {
 		$this->postIncludes = $postIncludes;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getPostIncludes() {
 		return $this->postIncludes;
 	}
 
-
+	/**
+	 * @param array $postInclude
+	 * @return void
+	 */
 	public function addPostInclude($postInclude) {
 		$this->postIncludes[] = $postInclude;
 	}
