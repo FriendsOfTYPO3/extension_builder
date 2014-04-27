@@ -1,5 +1,6 @@
 <?php
 namespace EBT\ExtensionBuilder\Tests;
+use org\bovigo\vfs\vfsStream;
 
 /***************************************************************
  *  Copyright notice
@@ -101,8 +102,8 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 
 		$this->extension = $this->getMock('EBT\\ExtensionBuilder\\Domain\\Model\\Extension',array('getExtensionDir'));
 		$extensionKey = 'dummy';
-		\vfsStream::setup('testDir');
-		$dummyExtensionDir = \vfsStream::url('testDir').'/';
+		vfsStream::setup('testDir');
+		$dummyExtensionDir = vfsStream::url('testDir').'/';
 		$this->extension->setVendorName('EBT');
 		$this->extension->setExtensionKey($extensionKey);
 		$this->extension->expects(

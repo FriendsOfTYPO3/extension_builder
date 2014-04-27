@@ -23,7 +23,7 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use org\bovigo\vfs\vfsStream;
 
 /**
  *
@@ -51,7 +51,7 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 */
 	public function checkRequirements() {
 		$this->assertTrue(
-			class_exists('vfsStream'),
+			class_exists('org\\bovigo\\vfs\\vfsStream'),
 			'Requirements not fulfilled: vfsStream is needed for file operation tests. '
 			. 'Please make sure you are using at least phpunit Version 3.5.6');
 	}
@@ -92,7 +92,7 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 				 )
 			)
 		);
-		$newExtensionDir = \vfsStream::url('testDir') . '/';
+		$newExtensionDir = vfsStream::url('testDir') . '/';
 		$this->extension->setExtensionDir($newExtensionDir . 'test_extension/');
 
 		$this->fileGenerator->build($this->extension);
