@@ -23,11 +23,10 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * Class DocComment
- */
 class DocComment extends Comment {
+
 	/**
 	 * @var string
 	 */
@@ -44,21 +43,19 @@ class DocComment extends Comment {
 	protected $tags = array();
 
 	/**
-	  * Constructs a comment node.
-	  *
-	  * @param string $text Comment text (including comment delimiters like /*)
-	  */
+	 * @param string $text Comment text (including comment delimiters like /*)
+	 */
 	public function __construct($text) {
 		$this->text = $text;
 		$this->initialize($text);
 	}
 
 	/**
-	 * Parses the given doc comment and saves the result (description and
-	 * tags) in the parser's object. They can be retrieved by the
-	 * getTags() getTagValues() and getDescription() methods.
+	 * Parses the given doc comment and saves the result (description and tags) in
+	 * the parser's object. They can be retrieved by the getTags() getTagValues()
+	 * and getDescription() methods.
 	 *
-	 * @param string $docComment A doc comment
+	 * @param string $docComment
 	 * @return void
 	 */
 	public function initialize($docComment) {
@@ -74,7 +71,7 @@ class DocComment extends Comment {
 				}
 			}
 		}
-		$this->descriptionLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(chr(10), $this->description, TRUE);
+		$this->descriptionLines = GeneralUtility::trimExplode(chr(10), $this->description, TRUE);
 		$this->description = trim($this->description);
 	}
 
@@ -87,10 +84,11 @@ class DocComment extends Comment {
 
 	/**
 	 * @param string $description
+	 * @return void
 	 */
 	public function setDescription($description) {
 		$this->description = $description;
-		//TODO: enable automated splitting into lines after certain number of  characters?
+		// TODO: enable automated splitting into lines after certain number of characters?
 		$this->descriptionLines = array();
 	}
 
@@ -103,27 +101,26 @@ class DocComment extends Comment {
 
 	/**
 	 * @param array $tags
+	 * @return void
 	 */
 	public function setTags(array $tags) {
 		$this->tags = $tags;
 	}
 
 	/**
-	 * sets a tags
-	 *
 	 * @param string $tagName
-	 * @param mixed $tagValue (optional)
+	 * @param mixed $tagValue
+	 * @param bool $override
 	 * @return void
 	 */
-	public function setTag($tagName, $tagValue, $override) {
+	public function setTag($tagName, $tagValue = NULL, $override = FALSE) {
 		if (!$override && isset($this->tags[$tagName])) {
 			if (!is_array($this->tags[$tagName])) {
 				// build an array with the existing value as first element
 				$this->tags[$tagName] = array($this->tags[$tagName]);
 			}
 			$this->tags[$tagName][] = $tagValue;
-		}
-		else {
+		} else {
 			$this->tags[$tagName] = $tagValue;
 		}
 	}
@@ -136,11 +133,11 @@ class DocComment extends Comment {
 	}
 
 	/**
-	 * Returns the values of the specified tag. The doc comment
-	 * must be parsed with parseDocComment() before tags are
-	 * available.
+	 * Returns the values of the specified tag. The doc comment must be parsed with
+	 * parseDocComment() before tags are available.
 	 *
 	 * @param string $tagName The tag name to retrieve the values for
+	 * @throws \InvalidArgumentException
 	 * @return array The tag's values
 	 */
 	public function getTagValues($tagName) {
@@ -151,7 +148,7 @@ class DocComment extends Comment {
 	}
 
 	/**
-	 * unsets a tags
+	 * unsets a tag
 	 *
 	 * @param string $tagName
 	 * @return void
@@ -172,8 +169,8 @@ class DocComment extends Comment {
 	}
 
 	/**
-	 * Parses a line of a doc comment for a tag and its value.
-	 * The result is stored in the internal tags array.
+	 * Parses a line of a doc comment for a tag and its value. The result is stored
+	 * in the internal tags array.
 	 *
 	 * @param string $line A line of a doc comment which starts with an @-sign
 	 * @return void
@@ -185,7 +182,7 @@ class DocComment extends Comment {
 		} else {
 			array_shift($tagAndValue);
 		}
-		$tag = trim($tagAndValue[0].$tagAndValue[1], '@');
+		$tag = trim($tagAndValue[0] . $tagAndValue[1], '@');
 		if (count($tagAndValue) > 1) {
 			$this->tags[$tag][] = trim($tagAndValue[2], ' "');
 		} else {
@@ -196,6 +193,7 @@ class DocComment extends Comment {
 
 	/**
 	 * @param string $value
+	 * @return void
 	 */
 	public function setValue($value) {
 		$this->initialize($value);
@@ -216,6 +214,7 @@ class DocComment extends Comment {
 	 */
 	public function toString($singleLineCommentAllowed = FALSE) {
 		$docCommentLines = array();
+
 		if (is_array($this->tags)) {
 			if (isset($this->tags['return'])) {
 				$returnTagValue = $this->tags['return'];
@@ -235,6 +234,7 @@ class DocComment extends Comment {
 				}
 			}
 		}
+
 		if (!empty($this->description)) {
 			array_unshift($docCommentLines, PHP_EOL);
 			if (!empty($this->descriptionLines)) {
@@ -243,6 +243,7 @@ class DocComment extends Comment {
 				array_unshift($docCommentLines, $this->description);
 			}
 		}
+
 		if ($singleLineCommentAllowed && count($docCommentLines) === 1) {
 			return '/** ' . $docCommentLines[0] . ' */';
 		} else {
@@ -251,4 +252,5 @@ class DocComment extends Comment {
 			return '/**' . PHP_EOL . implode(PHP_EOL, $docCommentLines) . PHP_EOL . ' */';
 		}
 	}
+
 }

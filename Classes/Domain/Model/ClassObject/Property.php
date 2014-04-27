@@ -22,26 +22,20 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use EBT\ExtensionBuilder\Domain\Model\AbstractObject;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 
 /**
  * property representing a "property" in the context of software development
  */
-class Property extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
+class Property extends AbstractObject {
+
 	/**
 	 * PHP var type of this property (read from "@var" annotation in doc comment)
 	 *
 	 * @var string
 	 */
 	protected $varType = '';
-
-	/**
-	 * if there is a domain object property associated
-	 * with this ClassProperty this object holds all extbase related information
-	 * (like SQL, TYPO3 related stuff)
-	 *
-	 * @var object associatedDomainObjectProperty
-	 */
-	protected $associatedDomainObjectProperty = NULL;
 
 	/**
 	 * @var mixed
@@ -54,29 +48,23 @@ class Property extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
 	protected $value = NULL;
 
 	/**
-	 * in case of properties of type array
-	 * we need to preserve the parsed statements
-	 * to be able to reapply the original
-	 * linebrakes
+	 * In case of properties of type array we need to preserve the parsed statements
+	 * to be able to reapply the original linebrakes.
 	 *
 	 * @var \PHPParser_NodeAbstract
 	 */
 	protected $defaultValueNode = NULL;
 
 	/**
-	 * __construct
-	 *
+	 * @param string $name
 	 * @param string
-	 * @return void
 	 */
 	public function __construct($name) {
 		$this->name = $name;
 	}
 
 	/**
-	 * Setter for name
-	 *
-	 * @param string $name name
+	 * @param string $name
 	 * @return Property
 	 */
 	public function setName($name) {
@@ -85,55 +73,23 @@ class Property extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
 	}
 
 	/**
-	 *
-	 * @return string $type.
+	 * @return string
 	 */
 	public function getVarType() {
 		return $this->varType;
 	}
 
 	/**
-	 * Sets $type.
-	 *
-	 * @param string $type
+	 * @param string $varType
+	 * @return void
 	 */
 	public function setVarType($varType) {
 		$this->setTag('var', array($varType));
 		$this->varType = $varType;
 	}
 
-
 	/**
-	 * Returns $associatedDomainObjectProperty.
-	 *
-	 * @return object associatedDomainObjectProperty
-	 */
-	public function getAssociatedDomainObjectProperty() {
-		return $this->associatedDomainObjectProperty;
-	}
-
-	/**
-	 * Sets $associatedDomainObjectProperty.
-	 *
-	 * @param object $associatedDomainObjectProperty
-	 */
-	public function setAssociatedDomainObjectProperty($associatedDomainObjectProperty) {
-		$this->associatedDomainObjectProperty = $associatedDomainObjectProperty;
-		if (empty($this->description)) {
-			$this->description = $associatedDomainObjectProperty->getDescription();
-			if (empty($this->description)) {
-				$this->description = $this->name;
-			}
-		}
-	}
-
-	public function hasAssociatedDomainObjectProperty() {
-		return !is_null($this->associatedDomainObjectProperty);
-	}
-
-	/**
-	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isDefault() {
 		return $this->default;
@@ -141,7 +97,6 @@ class Property extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
 
 	/**
 	 * @param mixed $default
-	 *
 	 * @return void
 	 */
 	public function setDefault($default) {
@@ -163,17 +118,17 @@ class Property extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
 	}
 
 	/**
-	 * Setter for value
-	 *
-	 * @param mixed
+	 * @param mixed $value
+	 * @return void
 	 */
 	public function setValue($value) {
 		$this->value = $value;
 	}
 
 	/**
-	 * This is a helper function to be called in fluid if conditions
-	 * it returns TRUE even if the default value is 0 or an empty string or "FALSE"
+	 * This is a helper function to be called in fluid if conditions it returns TRUE
+	 * even if the default value is 0 or an empty string or "FALSE".
+	 *
 	 * @return bool
 	 */
 	public function getHasDefaultValue() {
@@ -184,8 +139,9 @@ class Property extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
 	}
 
 	/**
-	 * This is a helper function to be called in fluid if conditions
-	 * it returns TRUE even if the value is 0 or an empty string or "FALSE"
+	 * This is a helper function to be called in fluid if conditions it returns TRUE
+	 * even if the value is 0 or an empty string or "FALSE".
+	 *
 	 * @return bool
 	 */
 	public function getHasValue() {
@@ -195,16 +151,15 @@ class Property extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject {
 		return FALSE;
 	}
 
-
 	/**
 	 * @param \PHPParser_NodeAbstract $defaultValueNode
+	 * @return void
 	 */
 	public function setDefaultValueNode($defaultValueNode) {
 		$this->defaultValueNode = $defaultValueNode;
 	}
 
 	/**
-	 *
 	 * @return \PHPParser_NodeAbstract
 	 */
 	public function getDefaultValueNode() {

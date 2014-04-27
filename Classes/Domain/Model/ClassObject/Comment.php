@@ -25,6 +25,7 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  ***************************************************************/
 
 class Comment {
+
 	/**
 	 * the raw comment content
 	 *
@@ -37,13 +38,10 @@ class Comment {
 	 */
 	protected $line = -1;
 
-
 	/**
-	  * Constructs a comment node.
-	  *
-	  * @param string $text Comment text (including comment delimiters like /*)
-	  * @param int    $line Line number the comment started on
-	  */
+	 * @param string $text Comment text (including comment delimiters like /*)
+	 * @param int    $line Line number the comment started on
+	 */
 	public function __construct($text, $line = -1) {
 		$this->text = $text;
 		$this->line = $line;
@@ -51,6 +49,7 @@ class Comment {
 
 	/**
 	 * @param string $text
+	 * @return void
 	 */
 	public function setText($text) {
 		$this->text = $text;

@@ -22,11 +22,11 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use EBT\ExtensionBuilder\Domain\Model\FunctionObject;
 
 /**
  * method representing a "method" in the context of software development
- *
  */
-class Method extends \EBT\ExtensionBuilder\Domain\Model\FunctionObject {
+class Method extends FunctionObject {
 
 }
