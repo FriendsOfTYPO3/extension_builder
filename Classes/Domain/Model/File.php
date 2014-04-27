@@ -34,7 +34,7 @@ class File extends Container {
 	protected $filePathAndName = '';
 
 	/**
-	 * @var NamespaceObject[]
+	 * @var \EBT\ExtensionBuilder\Domain\Model\NamespaceObject[]
 	 */
 	protected $namespaces = array();
 
@@ -49,7 +49,7 @@ class File extends Container {
 	protected $aliasDeclarations = array();
 
 	/**
-	 * @var FunctionObject[]
+	 * @var \EBT\ExtensionBuilder\Domain\Model\FunctionObject[]
 	 */
 	protected $functions = array();
 
@@ -69,7 +69,7 @@ class File extends Container {
 	}
 
 	/**
-	 * @param ClassObject\ClassObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $class
 	 */
 	public function addClass(ClassObject\ClassObject $class) {
 		$this->classes[] = $class;
@@ -77,7 +77,7 @@ class File extends Container {
 
 	/**
 	 * @param string $className
-	 * @return ClassObject\ClassObject|NULL
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject|NULL
 	 */
 	public function getClassByName($className) {
 		foreach ($this->getClasses() as $class) {
@@ -89,7 +89,7 @@ class File extends Container {
 	}
 
 	/**
-	 * @return ClassObject\ClassObject[]
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject[]
 	 */
 	public function getClasses() {
 		if (count($this->namespaces) > 0) {
@@ -100,7 +100,7 @@ class File extends Container {
 	}
 
 	/**
-	 * @return ClassObject\ClassObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function getFirstClass() {
 		if ($this->hasNamespaces()) {
@@ -113,14 +113,14 @@ class File extends Container {
 
 
 	/**
-	 * @param NamespaceObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\NamespaceObject $namespace
 	 */
 	public function addNamespace(NamespaceObject $namespace) {
 		$this->namespaces[] = $namespace;
 	}
 
 	/**
-	 * @return NamespaceObject[]
+	 * @return \EBT\ExtensionBuilder\Domain\Model\NamespaceObject[]
 	 */
 	public function getNamespaces() {
 		return $this->namespaces;
@@ -170,7 +170,7 @@ class File extends Container {
 	}
 
 	/**
-	 * @param Container $parentObject either a file object or a namespace object
+	 * @param \EBT\ExtensionBuilder\Domain\Model\Container $parentObject either a file object or a namespace object
 	 */
 	protected function addSubStatements($parentObject) {
 

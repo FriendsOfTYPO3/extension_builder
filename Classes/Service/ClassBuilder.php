@@ -23,7 +23,6 @@ namespace EBT\ExtensionBuilder\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use EBT\ExtensionBuilder\Domain\Model;
-use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
 use EBT\ExtensionBuilder\Utility\Inflector;
 
 /**
@@ -37,27 +36,27 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * The class file object created to container the generated class
 	 *
-	 * @var Model\File
+	 * @var \EBT\ExtensionBuilder\Domain\Model\File
 	 */
 	protected $classFileObject = NULL;
 
 	/**
 	 * The current class object
 	 *
-	 * @var Model\ClassObject\ClassObject
+	 * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	protected $classObject = NULL;
 
 	/**
 	 * The template file object used for new created class files
 	 *
-	 * @var Model\File
+	 * @var \EBT\ExtensionBuilder\Domain\Model\File
 	 */
 	protected $templateFileObject = NULL;
 
 	/**
 	 * The template class object used for new created classes
-	 * @var Model\ClassObject\ClassObject
+	 * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	protected $templateClassObject = NULL;
 
@@ -67,17 +66,17 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	protected $classFactory = NULL;
 
 	/**
-	 * @var Parser
+	 * @var \EBT\ExtensionBuilder\Service\Parser
 	 */
 	protected $parserService = NULL;
 
 	/**
-	 * @var Printer
+	 * @var \EBT\ExtensionBuilder\Service\Printer
 	 */
 	protected $printerService = NULL;
 
 	/**
-	 * @var RoundTrip
+	 * @var \EBT\ExtensionBuilder\Service\RoundTrip
 	 */
 	protected $roundTripService = NULL;
 
@@ -87,7 +86,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	protected $configurationManager = NULL;
 
 	/**
-	 * @var FileGenerator
+	 * @var \EBT\ExtensionBuilder\Service\FileGenerator
 	 */
 	protected $fileGenerator = NULL;
 
@@ -115,7 +114,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param RoundTrip $roundTripService
+	 * @param \EBT\ExtensionBuilder\Service\RoundTrip $roundTripService
 	 * @return void
 	 */
 	public function injectRoundtripService(RoundTrip $roundTripService) {
@@ -124,7 +123,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param Parser $parserService
+	 * @param \EBT\ExtensionBuilder\Service\Parser $parserService
 	 * @return void
 	 */
 	public function injectParserService(Parser $parserService) {
@@ -132,7 +131,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param Printer $printerService
+	 * @param \EBT\ExtensionBuilder\Service\Printer $printerService
 	 * @return void
 	 */
 	public function injectPrinterService(Printer $printerService) {
@@ -149,8 +148,8 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param FileGenerator $fileGenerator
-	 * @param Model\Extension $extension
+	 * @param \EBT\ExtensionBuilder\Service\FileGenerator $fileGenerator
+	 * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
 	 * @param boolean roundtrip enabled?
 	 *
 	 * @return void
@@ -172,10 +171,10 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	 * it keeps all methods and properties including user modified method bodies and
 	 * comments needed to create a domain object class file
 	 *
-	 * @param Model\DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @param boolean $mergeWithExistingClass
 	 *
-	 * @return Model\ClassObject\ClassObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function generateModelClassFileObject($domainObject, $modelClassTemplatePath, $mergeWithExistingClass) {
 		$this->classObject = NULL;
@@ -218,7 +217,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	 *
 	 * create a new class object based on the template and the related domain object
 	 *
-	 * @param Model\DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 *
 	 * @return void
 	 */
@@ -240,7 +239,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param AbstractProperty $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
 	 * @return void
 	 */
 	protected function addClassProperty($domainProperty) {
@@ -280,7 +279,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		}
 
 		if ($domainProperty->isRelation()) {
-			/** @var $domainProperty Model\DomainObject\Relation\AbstractRelation */
+			/** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
 			if ($domainProperty->getLazyLoading()) {
 				if (!$classProperty->isTaggedWith('lazy')) {
 					$classProperty->setTag('lazy', '');
@@ -293,7 +292,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param Model\DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @return void
 	 */
 	protected function addInitStorageObjectCalls(Model\DomainObject $domainObject) {
@@ -325,7 +324,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * add all setter/getter/add/remove etc. methods
-	 * @param Model\DomainObject\AbstractProperty $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
 	 *
 	 * @return void
 	 */
@@ -349,9 +348,9 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param Model\DomainObject\AbstractProperty $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
 	 *
-	 * @return Model\ClassObject\Method
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 	 */
 	protected function buildGetterMethod($domainProperty) {
 		$propertyName = $domainProperty->getName();
@@ -374,9 +373,9 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param Model\DomainObject\AbstractProperty $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
 	 *
-	 * @return Model\ClassObject\Method
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 	 */
 	protected function buildSetterMethod($domainProperty) {
 
@@ -417,9 +416,9 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param Model\DomainObject\Relation\AbstractRelation $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation $domainProperty
 	 *
-	 * @return Model\ClassObject\Method
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 	 */
 	protected function buildAddMethod($domainProperty) {
 
@@ -473,9 +472,9 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param Model\DomainObject\Relation\AbstractRelation $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation $domainProperty
 	 *
-	 * @return Model\ClassObject\Method
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 	 */
 	protected function buildRemoveMethod($domainProperty) {
 		$propertyName = $domainProperty->getName();
@@ -532,9 +531,9 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * Builds a method that checks the current boolean state of a property
 	 *
-	 * @param Model\DomainObject\AbstractProperty $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
 	 *
-	 * @return Model\ClassObject\Method
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 	 */
 	protected function buildIsMethod($domainProperty) {
 
@@ -559,10 +558,10 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param Model\DomainObject\Action $action
-	 * @param Model\DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 *
-	 * @return Model\ClassObject\Method
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 	 */
 	protected function buildActionMethod(Model\DomainObject\Action $action, Model\DomainObject $domainObject) {
 		$actionName = $action->getName();
@@ -608,7 +607,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param AbstractProperty $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
 	 * @param string $methodType (get,set,add,remove,is)
 	 * @return string method name
 	 */
@@ -633,7 +632,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param Model\ClassObject\Method $method
+	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method $method
 	 * @param array $replacements
 	 * @return void
 	 */
@@ -660,7 +659,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param Model\AbstractObject $object
+	 * @param \EBT\ExtensionBuilder\Domain\Model\AbstractObject $object
 	 * @param array $replacements
 	 */
 	protected function updateDocComment($object, $replacements) {
@@ -677,7 +676,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param AbstractProperty $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
 	 * @param string $methodType (set,add,remove)
 	 * @return string method body
 	 */
@@ -699,7 +698,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param AbstractProperty $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
 	 * @param string $methodType
 	 *
 	 * @return string
@@ -711,13 +710,13 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 				return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
 
 			case 'add'		:
-				/** @var $domainProperty Model\DomainObject\Relation\AbstractRelation */
+				/** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
 				$paramTag = $domainProperty->getForeignClassName();
 				$paramTag .= ' $' . $this->getParameterName($domainProperty, 'add');
 				return $paramTag;
 
 			case 'remove'	:
-				/** @var $domainProperty Model\DomainObject\Relation\AbstractRelation */
+				/** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
 				$paramTag = $domainProperty->getForeignClassName();
 				$paramTag .= ' $' . $this->getParameterName($domainProperty, 'remove');
 				$paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';
@@ -730,10 +729,10 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	 * it keeps all methods and properties including user modified method bodies and
 	 * comments that are required to create a controller class file
 	 *
-	 * @param Model\DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @param boolean $mergeWithExistingClass
 	 *
-	 * @return Model\File
+	 * @return \EBT\ExtensionBuilder\Domain\Model\File
 	 */
 	public function generateControllerClassFileObject($domainObject, $controllerClassTemplatePath, $mergeWithExistingClass) {
 		$this->classObject = NULL;
@@ -799,10 +798,10 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	 * user modified method bodies and comments
 	 * needed to create a repository class file
 	 *
-	 * @param Model\DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @param boolean $mergeWithExistingClass
 	 *
-	 * @return Model\ClassObject\ClassObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function generateRepositoryClassFileObject($domainObject, $repositoryTemplateClassPath, $mergeWithExistingClass) {
 		$this->classObject = NULL;
@@ -844,7 +843,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * Not used right now
 	 * TODO: Needs better implementation
-	 * @param Model\DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @return void
 	 */
 	public function sortMethods($domainObject) {

@@ -44,7 +44,7 @@ class NamespaceObject extends Container {
 	}
 
 	/**
-	 * @return ClassObject\ClassObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function getFirstClass() {
 		$classes = $this->getClasses();

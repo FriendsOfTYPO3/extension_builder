@@ -285,7 +285,7 @@ abstract class AbstractObject {
 	 * since modifiers are claculated bitwise)
 	 *
 	 * @param int $modifiers modifiers
-	 * @return AbstractObject (for fluid interface)
+	 * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject (for fluid interface)
 	 */
 	public function setModifiers($modifiers) {
 		$this->modifiers = $modifiers;
@@ -296,7 +296,7 @@ abstract class AbstractObject {
 	 * adds a modifier
 	 *
 	 * @param string $modifierName
-	 * @return AbstractObject (for fluid interface)
+	 * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject (for fluid interface)
 	 */
 	public function addModifier($modifierName) {
 		$modifier = $this->mapModifierNames[$modifierName];
@@ -314,7 +314,7 @@ abstract class AbstractObject {
 	 * @param string $modifierName
 	 * @throws \EBT\ExtensionBuilder\Exception\SyntaxErrorException
 	 *
-	 * @return AbstractObject (for fluid interface)
+	 * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject (for fluid interface)
 	 */
 	public function setModifier($modifierName) {
 		if (in_array($modifierName, $this->getModifierNames())) {
@@ -337,7 +337,7 @@ abstract class AbstractObject {
 
 	/**
 	 * @param string $modifierName
-	 * @return AbstractObject (for fluid interface)
+	 * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject (for fluid interface)
 	 */
 	public function removeModifier($modifierName) {
 		$this->modifiers ^= $this->mapModifierNames[$modifierName];
@@ -345,7 +345,7 @@ abstract class AbstractObject {
 	}
 
 	/**
-	 * @return AbstractObject (for fluid interface)
+	 * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject (for fluid interface)
 	 */
 	public function removeAllModifiers() {
 		$this->modifiers = 0;

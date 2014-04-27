@@ -86,7 +86,7 @@ class ReplaceVisitor extends \PHPParser_NodeVisitorAbstract {
 
 	/**
 	 * @param array $replacements $oldValue => $newValue
-	 * @return ReplaceVisitor
+	 * @return \EBT\ExtensionBuilder\Parser\Visitor\ReplaceVisitor
 	 */
 	public function setReplacements(array $replacements) {
 		$this->replacements = $replacements;
@@ -96,7 +96,7 @@ class ReplaceVisitor extends \PHPParser_NodeVisitorAbstract {
 	/**
 	 * The property of a node that should be changed (defaults to 'name')
 	 * @param $nodeProperty
-	 * @return ReplaceVisitor
+	 * @return \EBT\ExtensionBuilder\Parser\Visitor\ReplaceVisitor
 	 */
 	public function setNodeProperty($nodeProperty) {
 		$this->nodeProperty = $nodeProperty;
@@ -105,7 +105,7 @@ class ReplaceVisitor extends \PHPParser_NodeVisitorAbstract {
 
 	/**
 	 * @param $nodeType
-	 * @return ReplaceVisitor
+	 * @return \EBT\ExtensionBuilder\Parser\Visitor\ReplaceVisitor
 	 */
 	public function setNodeType($nodeType) {
 		$this->nodeType = $nodeType;

@@ -65,7 +65,7 @@ class Property extends AbstractObject {
 
 	/**
 	 * @param string $name
-	 * @return Property
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property
 	 */
 	public function setName($name) {
 		$this->name = $name;

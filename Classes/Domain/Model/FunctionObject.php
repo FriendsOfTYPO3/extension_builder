@@ -39,7 +39,7 @@ class FunctionObject extends AbstractObject {
 	/**
 	 * parameters
 	 *
-	 * @var MethodParameter[]
+	 * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter[]
 	 */
 	protected $parameters = array();
 
@@ -78,7 +78,7 @@ class FunctionObject extends AbstractObject {
 	 * Setter for body statements
 	 *
 	 * @param array $stmts
-	 * @return FunctionObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\FunctionObject
 	 */
 	public function setBodyStmts($stmts) {
 		if (!is_array($stmts)) {
@@ -100,7 +100,7 @@ class FunctionObject extends AbstractObject {
 	/**
 	 * getter for parameters
 	 *
-	 * @return ClassObject\MethodParameter[]
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter[]
 	 */
 	public function getParameters() {
 		return $this->parameters;
@@ -114,7 +114,7 @@ class FunctionObject extends AbstractObject {
 	public function getParameterNames() {
 		$parameterNames = array();
 		if (is_array($this->parameters)) {
-			/** @var $parameter MethodParameter */
+			/** @var $parameter \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter */
 			foreach ($this->parameters as $parameter) {
 				$parameterNames[] = $parameter->getName();
 			}
@@ -137,8 +137,8 @@ class FunctionObject extends AbstractObject {
 	/**
 	 * adder for parameters
 	 *
-	 * @param MethodParameter[]
-	 * @return FunctionObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter[] $parameters
+	 * @return \EBT\ExtensionBuilder\Domain\Model\FunctionObject
 	 */
 	public function setParameters($parameters) {
 		$this->parameters = $parameters;
@@ -148,8 +148,8 @@ class FunctionObject extends AbstractObject {
 	/**
 	 * setter for a single parameter
 	 *
-	 * @param MethodParameter $parameter
-	 * @return FunctionObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter $parameter
+	 * @return \EBT\ExtensionBuilder\Domain\Model\FunctionObject
 	 */
 	public function setParameter(MethodParameter $parameter) {
 		$this->parameters[$parameter->getPosition()] = $parameter;
@@ -159,7 +159,7 @@ class FunctionObject extends AbstractObject {
 	/**
 	 * replace a single parameter, depending on position
 	 *
-	 * @param ClassObject\MethodParameter $parameter
+	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter $parameter
 	 * @return void
 	 */
 	public function replaceParameter(MethodParameter $parameter) {
@@ -211,7 +211,7 @@ class FunctionObject extends AbstractObject {
 		$annotations = parent::getAnnotations();
 		if (is_array($this->parameters) && count($this->parameters) > 0 && !$this->isTaggedWith('param')) {
 			$paramTags = array();
-			/** @var $parameter MethodParameter */
+			/** @var $parameter \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter */
 			foreach ($this->parameters as $parameter) {
 				$paramTags[] = 'param ' . strtolower($parameter->getVarType()) . '$' . $parameter->getName();
 			}
