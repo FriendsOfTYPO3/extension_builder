@@ -54,7 +54,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function get{property.name -> k:format.uppercaseFirst()}ReturnsInitialValueFor{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}() {<f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'integer')}">
+	public function get{property.name -> k:format.uppercaseFirst()}ReturnsInitialValueFor<f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}"><f:then>FileReference</f:then><f:else>{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}</f:else></f:if>() {<f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'integer')}">
 		$this->assertSame(
 			0,
 			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
@@ -90,12 +90,17 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			NULL,
 			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
 		);
+</f:if><f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}">
+		$this->assertEquals(
+			NULL,
+			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
+		);
 </f:if></f:else></f:if>	}
 
 	/**
 	 * @test
 	 */
-	public function set{property.name -> k:format.uppercaseFirst()}For{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"ObjectStorageContaining{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}Sets{property.name -> k:format.uppercaseFirst()}() {<f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'string')}">
+	public function set{property.name -> k:format.uppercaseFirst()}For<f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}"><f:then>FileReference</f:then><f:else>{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"ObjectStorageContaining{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}</f:else></f:if>Sets{property.name -> k:format.uppercaseFirst()}() {<f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'string')}">
 		$this->subject->set{property.name -> k:format.uppercaseFirst()}('Conceived at T3CON10');
 
 		$this->assertAttributeEquals(
@@ -155,6 +160,15 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 		$this->assertAttributeEquals(
 			$dateTimeFixture,
+			'{property.name}',
+			$this->subject
+		);
+</f:if><f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}">
+		$fileReferenceFixture = new \TYPO3\CMS\Extbase\Domain\Model\FileReference();
+		$this->subject->set{property.name -> k:format.uppercaseFirst()}($fileReferenceFixture);
+
+		$this->assertAttributeEquals(
+			$fileReferenceFixture,
 			'{property.name}',
 			$this->subject
 		);
