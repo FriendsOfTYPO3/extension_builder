@@ -40,7 +40,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 */
 	public function checkRequirements(){
 		$this->assertTrue(
-			class_exists('vfsStream'),
+			class_exists('org\\bovigo\\vfs\\vfsStream'),
 			'Requirements not fulfilled: vfsStream is needed for file operation tests. Please make sure you are using at least phpunit Version 3.5.6'
 		);
 	}

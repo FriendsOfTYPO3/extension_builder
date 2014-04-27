@@ -1,5 +1,7 @@
 <?php
 namespace EBT\ExtensionBuilder\Tests\Unit;
+use org\bovigo\vfs\vfsStream;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -33,8 +35,8 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	protected function setUp() {
 		parent::setUp();
 		$this->fixturesPath = PATH_typo3conf . 'ext/extension_builder/Tests/Fixtures/ClassParser/';
-		\vfsStream::setup('tmpDir');
-		$this->tmpDir = \vfsStream::url('tmpDir').'/';
+		vfsStream::setup('tmpDir');
+		$this->tmpDir = vfsStream::url('tmpDir').'/';
 	}
 
 	/**
