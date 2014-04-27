@@ -26,10 +26,9 @@ namespace EBT\ExtensionBuilder\Domain\Model;
 
 /**
  * A person participating in the project somehow (i.e. as a developer).
- *
  */
-
 class Person {
+
 	/**
 	 * TODO make that work
 	 * This Array contains all valid values for the role of a person.
@@ -41,15 +40,12 @@ class Person {
 	protected static $ROLES = array('developer', 'product_manager');
 
 	/**
-	 * The persons's name.
-	 *
 	 * @var string
 	 */
 	protected $name = '';
 
 	/**
 	 * TODO validation?
-	 * The person's role.
 	 *
 	 * @var string
 	 * @see \EBT\ExtensionBuilder\Domain\Model\Person::ROLES
@@ -57,22 +53,16 @@ class Person {
 	protected $role = '';
 
 	/**
-	 * The email address.
-	 *
 	 * @var string
 	 */
 	protected $email = '';
 
 	/**
-	 * The person's company.
-	 *
 	 * @var string
 	 */
 	protected $company = '';
 
 	/**
-	 * Gets the Name
-	 *
 	 * @return string
 	 */
 	public function getName() {
@@ -80,8 +70,6 @@ class Person {
 	}
 
 	/**
-	 * Sets the Name
-	 *
 	 * @param string $name
 	 * @return void
 	 */
@@ -90,8 +78,6 @@ class Person {
 	}
 
 	/**
-	 * Gets the role.
-	 *
 	 * @return string
 	 */
 	public function getRole() {
@@ -99,8 +85,6 @@ class Person {
 	}
 
 	/**
-	 * Sets the role.
-	 *
 	 * @param string $role
 	 * @return void
 	 */
@@ -109,8 +93,6 @@ class Person {
 	}
 
 	/**
-	 * Gets the email
-	 *
 	 * @return string
 	 */
 	public function getEmail() {
@@ -118,8 +100,6 @@ class Person {
 	}
 
 	/**
-	 * Sets the email
-	 *
 	 * @param string $email
 	 * @return void
 	 */
@@ -128,8 +108,6 @@ class Person {
 	}
 
 	/**
-	 * Gets the company
-	 *
 	 * @return string
 	 */
 	public function getCompany() {
@@ -137,12 +115,11 @@ class Person {
 	}
 
 	/**
-	 * Sets the company
-	 *
 	 * @param string $company
 	 * @return void
 	 */
 	public function setCompany($company) {
 		$this->company = $company;
 	}
+
 }
