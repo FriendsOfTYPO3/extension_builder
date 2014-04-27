@@ -24,8 +24,8 @@ namespace EBT\ExtensionBuilder\Utility;
  ***************************************************************/
 
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
-use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use TYPO3\CMS\Core\Utility;
+
 /**
  * provides helper methods
  *
@@ -54,7 +54,7 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param AbstractProperty $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
 	 * @param string $methodType (get,set,add,remove,is)
 	 * @return string method name
 	 */
@@ -80,7 +80,7 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param AbstractProperty $property
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property
 	 * @param string $methodType (set,add,remove)
 	 * @return string method body
 	 */
@@ -102,7 +102,7 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param AbstractProperty $domainProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
 	 * @param string $methodType
 	 * @return string
 	 */
@@ -113,13 +113,13 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface {
 				return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
 
 			case 'add'        :
-				/** @var $domainProperty AbstractRelation */
+				/** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
 				$paramTag = $domainProperty->getForeignClassName();
 				$paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
 				return $paramTag;
 
 			case 'remove'    :
-				/** @var $domainProperty AbstractRelation */
+				/** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
 				$paramTag = $domainProperty->getForeignClassName();
 				$paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
 				$paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';

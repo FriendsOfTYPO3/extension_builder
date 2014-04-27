@@ -23,9 +23,6 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use EBT\ExtensionBuilder\Domain\Model\AbstractObject;
-use EBT\ExtensionBuilder\Domain\Model\ClassObject\Method;
-use EBT\ExtensionBuilder\Domain\Model\ClassObject\Property;
-use EBT\ExtensionBuilder\Reflection\ClassReflection;
 
 /**
  * Class schema representing a "PHP class" in the context of software development
@@ -38,7 +35,7 @@ class ClassObject extends AbstractObject {
 	protected $constants = array();
 
 	/**
-	 * @var Property[]
+	 * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property[]
 	 */
 	protected $properties = array();
 
@@ -50,7 +47,7 @@ class ClassObject extends AbstractObject {
 
 
 	/**
-	 * @var Method[]
+	 * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method[]
 	 */
 	protected $methods = array();
 
@@ -87,12 +84,12 @@ class ClassObject extends AbstractObject {
 	/**
 	 * Is instantiated only if the class is imported from a file.
 	 *
-	 * @var ClassReflection
+	 * @var \EBT\ExtensionBuilder\Reflection\ClassReflection
 	 */
 	protected $classReflection = NULL;
 
 	/**
-	 * @var ClassObject
+	 * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	protected $parentClass = NULL;
 
@@ -213,7 +210,7 @@ class ClassObject extends AbstractObject {
 	/**
 	 * Allows to override an existing method.
 	 *
-	 * @param Method $classMethod
+	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method $classMethod
 	 * @return void
 	 */
 	public function setMethod(Method $classMethod) {
@@ -221,7 +218,7 @@ class ClassObject extends AbstractObject {
 	}
 
 	/**
-	 * @return Method[]
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method[]
 	 */
 	public function getMethods() {
 		return $this->methods;
@@ -242,8 +239,8 @@ class ClassObject extends AbstractObject {
 	}
 
 	/**
-	 * @param Method $classMethod
-	 * @return ClassObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method $classMethod
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function addMethod($classMethod) {
 		if (!$this->methodExists($classMethod->getName())) {
@@ -287,7 +284,7 @@ class ClassObject extends AbstractObject {
 	/**
 	 * Returns all methods starting with "get".
 	 *
-	 * @return Method[]
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method[]
 	 */
 	public function getGetters() {
 		$getterMethods = array();
@@ -307,7 +304,7 @@ class ClassObject extends AbstractObject {
 	/**
 	 * Returns all methods starting with "set".
 	 *
-	 * @return Method[]
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method[]
 	 */
 	public function getSetters() {
 		$setterMethods = array();
@@ -326,7 +323,7 @@ class ClassObject extends AbstractObject {
 
 	/**
 	 * @param string $propertyName
-	 * @return Property
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property
 	 */
 	public function getProperty($propertyName) {
 		if ($this->propertyExists($propertyName)) {
@@ -353,7 +350,7 @@ class ClassObject extends AbstractObject {
 	}
 
 	/**
-	 * @return Property[]
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property[]
 	 */
 	public function getProperties() {
 		return $this->properties;
@@ -421,7 +418,7 @@ class ClassObject extends AbstractObject {
 	}
 
 	/**
-	 * @param Property
+	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property $classProperty
 	 * @return bool TRUE if successfull added
 	 */
 	public function addProperty(Property $classProperty) {
@@ -444,7 +441,7 @@ class ClassObject extends AbstractObject {
 	}
 
 	/**
-	 * @param Property $classProperty
+	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property $classProperty
 	 * @return void
 	 */
 	public function setProperty($classProperty) {
@@ -453,7 +450,7 @@ class ClassObject extends AbstractObject {
 
 
 	/**
-	 * @param ClassObject $parentClass
+	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $parentClass
 	 * @return void
 	 */
 	public function setParentClass(ClassObject $parentClass) {
@@ -461,7 +458,7 @@ class ClassObject extends AbstractObject {
 	}
 
 	/**
-	 * @return ClassObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function getParentClass() {
 		return $this->parentClass;
@@ -556,7 +553,7 @@ class ClassObject extends AbstractObject {
 
 	/**
 	 * @param string $interfaceName
-	 * @return ClassObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function addInterfaceName($interfaceName) {
 		if (!in_array($interfaceName, $this->interfaceNames)) {
@@ -596,7 +593,7 @@ class ClassObject extends AbstractObject {
 
 	/**
 	 * @param string $parentClassName
-	 * @return ClassObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function setParentClassName($parentClassName) {
 		$this->parentClassName = $parentClassName;

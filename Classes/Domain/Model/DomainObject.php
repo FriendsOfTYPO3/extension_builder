@@ -97,21 +97,21 @@ class DomainObject {
 	/**
 	 * The extension this domain object belongs to.
 	 *
-	 * @var Extension
+	 * @var \EBT\ExtensionBuilder\Domain\Model\Extension
 	 */
 	protected $extension = NULL;
 
 	/**
 	 * List of properties the domain object has.
 	 *
-	 * @var DomainObject\AbstractProperty[]
+	 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty[]
 	 */
 	protected $properties = array();
 
 	/**
 	 * List of actions the domain object has.
 	 *
-	 * @var DomainObject\Action[]
+	 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action[]
 	 */
 	protected $actions = array();
 
@@ -135,7 +135,7 @@ class DomainObject {
 	/**
 	 * Domain objects that extend the current object (as declared in this extension).
 	 *
-	 * @var DomainObject[]
+	 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject[]
 	 */
 	protected $childObjects = array();
 
@@ -275,6 +275,7 @@ class DomainObject {
 
 	/**
 	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property
+	 *
 	 * @return void
 	 */
 	public function addProperty(DomainObject\AbstractProperty $property) {
@@ -286,7 +287,7 @@ class DomainObject {
 	}
 
 	/**
-	 * @return DomainObject\AbstractProperty[]
+	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty[]
 	 */
 	public function getProperties() {
 		return $this->properties;
@@ -294,7 +295,8 @@ class DomainObject {
 
 	/**
 	 * @param string $propertyName
-	 * @return DomainObject\AbstractProperty
+	 *
+	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty|NULL
 	 */
 	public function getPropertyByName($propertyName) {
 		foreach ($this->properties as $property) {
@@ -309,7 +311,7 @@ class DomainObject {
 	 * Get all properties holding relations of type
 	 * Property_Relation_ZeroToManyRelation
 	 *
-	 * @return DomainObject\Relation\ZeroToManyRelation[]
+	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation[]
 	 */
 	public function getZeroToManyRelationProperties() {
 		$relationProperties = array();
@@ -324,7 +326,7 @@ class DomainObject {
 	/**
 	 * Get all properties holding relations of type AnyToManyRelation
 	 *
-	 * @return DomainObject\Relation\AnyToManyRelation[]
+	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation[]
 	 */
 	public function getAnyToManyRelationProperties() {
 		$relationProperties = array();
@@ -338,6 +340,7 @@ class DomainObject {
 
 	/**
 	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action
+	 *
 	 * @return void
 	 */
 	public function addAction(DomainObject\Action $action) {
@@ -349,7 +352,7 @@ class DomainObject {
 	}
 
 	/**
-	 * @return DomainObject\Action[]
+	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action[]
 	 */
 	public function getActions() {
 		return $this->actions;
@@ -365,7 +368,8 @@ class DomainObject {
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addDomainModel() automatically.
 	 *
-	 * @param Extension $extension the extension this domain model belongs to
+	 * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension the extension this domain model belongs to.
+	 *
 	 * @return void
 	 */
 	public function setExtension(Extension $extension) {
@@ -592,7 +596,8 @@ class DomainObject {
 	}
 
 	/**
-	 * @param DomainObject $childObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $childObject
+	 *
 	 * @return void
 	 */
 	public function addChildObject(DomainObject $childObject) {

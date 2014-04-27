@@ -1,6 +1,6 @@
 <?php
 namespace EBT\ExtensionBuilder\Utility;
-use TYPO3\CMS\Core\Cache\CacheManager;
+
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /***************************************************************
@@ -119,7 +119,7 @@ class ExtensionInstallationStatus {
 					$sqlHandler = $this->objectManager->get('TYPO3\\CMS\\Install\\Sql\\SchemaMigrator');
 				}
 				$sqlContent = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl($sqlFile);
-				/** @var $cacheManager CacheManager */
+				/** @var $cacheManager \TYPO3\CMS\Core\Cache\CacheManager */
 				$cacheManager = $GLOBALS['typo3CacheManager'];
 				$cacheManager->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
 				$sqlContent .= \TYPO3\CMS\Core\Cache\Cache::getDatabaseTableDefinitions();

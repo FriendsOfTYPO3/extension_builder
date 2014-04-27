@@ -23,10 +23,8 @@ namespace EBT\ExtensionBuilder\Service;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use EBT\ExtensionBuilder\Domain\Model\DomainObject\FileProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Utility\Tools;
-use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
  * Builder for domain objects
@@ -144,7 +142,7 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 *
 	 * @param array $relationJsonConfiguration
-	 * @param DomainObject $domainObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @throws \Exception
 	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation
 	 */
@@ -204,7 +202,7 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 				$relation->setForeignDatabaseTableName($foreignDatabaseTableName);
 			}
 			if ($relation->isFileReference() && !empty($relationJsonConfiguration['maxItems'])) {
-				/** @var $relation FileProperty */
+				/** @var $relation \EBT\ExtensionBuilder\Domain\Model\DomainObject\FileProperty */
 				$relation->setMaxItems($relationJsonConfiguration['maxItems']);
 			}
 		}

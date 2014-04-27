@@ -48,7 +48,7 @@ class Container extends AbstractObject {
 	protected $postIncludes = array();
 
 	/**
-	 * @var FunctionObject[]
+	 * @var \EBT\ExtensionBuilder\Domain\Model\FunctionObject[]
 	 */
 	protected $functions = array();
 
@@ -68,12 +68,12 @@ class Container extends AbstractObject {
 	protected $postClassStatements = array();
 
 	/**
-	 * @var ClassObject[]
+	 * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject[]
 	 */
 	protected $classes = array();
 
 	/**
-	 * @return ClassObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function getFirstClass() {
 		$classes = $this->getClasses();
@@ -81,7 +81,7 @@ class Container extends AbstractObject {
 	}
 
 	/**
-	 * @param ClassObject $class
+	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $class
 	 * @return void
 	 */
 	public function addClass(ClassObject $class) {
@@ -89,7 +89,7 @@ class Container extends AbstractObject {
 	}
 
 	/**
-	 * @param array ClassObject[]
+	 * @param array \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject[]
 	 * @return void
 	 */
 	public function setClasses($classes) {
@@ -97,7 +97,7 @@ class Container extends AbstractObject {
 	}
 
 	/**
-	 * @return ClassObject[]
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject[]
 	 */
 	public function getClasses() {
 		return $this->classes;
@@ -182,7 +182,7 @@ class Container extends AbstractObject {
 	}
 
 	/**
-	 * @param FunctionObject $function
+	 * @param \EBT\ExtensionBuilder\Domain\Model\FunctionObject $function
 	 * @return void
 	 */
 	public function addFunction(FunctionObject $function) {
@@ -190,7 +190,7 @@ class Container extends AbstractObject {
 	}
 
 	/**
-	 * @return FunctionObject[]
+	 * @return \EBT\ExtensionBuilder\Domain\Model\FunctionObject[]
 	 */
 	public function getFunctions() {
 		return $this->functions;
@@ -198,7 +198,7 @@ class Container extends AbstractObject {
 
 	/**
 	 * @param string $name
-	 * @return FunctionObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\FunctionObject
 	 */
 	public function getFunction($name) {
 		if (isset($this->functions[$name])) {

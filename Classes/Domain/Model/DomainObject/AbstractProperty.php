@@ -100,7 +100,7 @@ abstract class AbstractProperty {
 	protected $type = '';
 
 	/**
-	 * @var DomainObject
+	 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
 	 */
 	protected $domainObject = NULL;
 

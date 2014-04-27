@@ -695,7 +695,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 	 * the module token.
 	 *
 	 * @param array $parameters (unused)
-	 * @param AjaxRequestHandler $ajaxRequestHandler
+	 * @param \TYPO3\CMS\Core\Http\AjaxRequestHandler $ajaxRequestHandler
 	 * @return void
 	 */
 	public function getWiringEditorSmd(array $parameters, AjaxRequestHandler $ajaxRequestHandler) {

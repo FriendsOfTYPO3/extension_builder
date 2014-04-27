@@ -19,7 +19,6 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
-use EBT\ExtensionBuilder\Domain\Model\Extension;
 
 /**
  * Indentation ViewHelper
@@ -31,7 +30,7 @@ class ListForeignKeyRelationsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper
 
 	/**
 	 *
-	 * @param Extension $extension
+	 * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
 	 * @param mixed $domainObject
 	 * @return boolean TRUE or FALSE
 	 */

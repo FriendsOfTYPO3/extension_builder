@@ -30,7 +30,7 @@ class ClassReflection extends \TYPO3\CMS\Extbase\Reflection\ClassReflection {
 	/**
 	 * keeps all methods that are inherited from parent classes
 	 *
-	 * @var MethodReflection[]
+	 * @var \EBT\ExtensionBuilder\Reflection\MethodReflection[]
 	 */
 	protected $inheritedMethods = array();
 
@@ -49,7 +49,7 @@ class ClassReflection extends \TYPO3\CMS\Extbase\Reflection\ClassReflection {
 	 * orginal ReflectionMethod instances.
 	 *
 	 * @param int $filter A filter mask
-	 * @return MethodReflection[] Method reflection objects of the methods in this class
+	 * @return \EBT\ExtensionBuilder\Reflection\MethodReflection[] Method reflection objects of the methods in this class
 	 */
 	public function getMethods($filter = NULL) {
 		$extendedMethods = array();
@@ -109,7 +109,7 @@ class ClassReflection extends \TYPO3\CMS\Extbase\Reflection\ClassReflection {
 	 * that MethodReflection objects are returned instead of the
 	 * orginal ReflectionMethod instances.
 	 *
-	 * @return MethodReflection Method reflection object of the named method
+	 * @return \EBT\ExtensionBuilder\Reflection\MethodReflection Method reflection object of the named method
 	 */
 	public function getMethod($name) {
 		$parentMethod = parent::getMethod($name);
@@ -122,7 +122,7 @@ class ClassReflection extends \TYPO3\CMS\Extbase\Reflection\ClassReflection {
 	 * that MethodReflection objects are returned instead of the
 	 * orginal ReflectionMethod instances.
 	 *
-	 * @return MethodReflection Method reflection object of the constructor method
+	 * @return \EBT\ExtensionBuilder\Reflection\MethodReflection Method reflection object of the constructor method
 	 */
 	public function getConstructor() {
 		$parentConstructor = parent::getConstructor();
@@ -136,7 +136,7 @@ class ClassReflection extends \TYPO3\CMS\Extbase\Reflection\ClassReflection {
 	 * orginal ReflectionProperty instances.
 	 *
 	 * @param int $filter a filter mask
-	 * @return PropertyReflection[] Property reflection objects of the properties in this class
+	 * @return \EBT\ExtensionBuilder\Reflection\PropertyReflection[] Property reflection objects of the properties in this class
 	 */
 	public function getProperties($filter = NULL) {
 		$extendedProperties = array();
@@ -153,7 +153,7 @@ class ClassReflection extends \TYPO3\CMS\Extbase\Reflection\ClassReflection {
 	 * orginal ReflectionProperty instance.
 	 *
 	 * @param  string $name: Name of the property
-	 * @return PropertyReflection Property reflection object of the specified property in this class
+	 * @return \EBT\ExtensionBuilder\Reflection\PropertyReflection Property reflection object of the specified property in this class
 	 */
 	public function getProperty($name) {
 		return new PropertyReflection($this->getName(), $name);
@@ -204,7 +204,7 @@ class ClassReflection extends \TYPO3\CMS\Extbase\Reflection\ClassReflection {
 	 * that a Tx_Extbase_Reflection_ClassReflection object is returned instead of the
 	 * orginal ReflectionClass instance.
 	 *
-	 * @return ClassReflection Reflection of the parent class - if any
+	 * @return \EBT\ExtensionBuilder\Reflection\ClassReflection Reflection of the parent class - if any
 	 */
 	public function getParentClass() {
 		// workaround for bug #8800 in Tx_Extbase_Reflection_ClassReflection

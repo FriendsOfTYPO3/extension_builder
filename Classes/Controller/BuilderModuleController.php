@@ -49,22 +49,22 @@ class BuilderModuleController extends ActionController {
 	protected $configurationManager = NULL;
 
 	/**
-	 * @var ExtensionInstallationStatus
+	 * @var \EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus
 	 */
 	protected $extensionInstallationStatus = NULL;
 
 	/**
-	 * @var ExtensionSchemaBuilder
+	 * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
 	 */
 	protected $extensionSchemaBuilder = NULL;
 
 	/**
-	 * @var ExtensionValidator
+	 * @var \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator
 	 */
 	protected $extensionValidator = NULL;
 
 	/**
-	 * @var ExtensionRepository
+	 * @var \EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository
 	 */
 	protected $extensionRepository = NULL;
 
@@ -96,7 +96,7 @@ class BuilderModuleController extends ActionController {
 	}
 
 	/**
-	 * @param ExtensionInstallationStatus $extensionInstallationStatus
+	 * @param \EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus $extensionInstallationStatus
 	 * @return void
 	 */
 	public function injectExtensionInstallationStatus(ExtensionInstallationStatus $extensionInstallationStatus) {
@@ -104,7 +104,7 @@ class BuilderModuleController extends ActionController {
 	}
 
 	/**
-	 * @param ExtensionSchemaBuilder $extensionSchemaBuilder
+	 * @param \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder $extensionSchemaBuilder
 	 * @return void
 	 */
 	public function injectExtensionSchemaBuilder(ExtensionSchemaBuilder $extensionSchemaBuilder) {
@@ -112,7 +112,7 @@ class BuilderModuleController extends ActionController {
 	}
 
 	/**
-	 * @param ExtensionValidator $extensionValidator
+	 * @param \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator $extensionValidator
 	 * @return void
 	 */
 	public function injectExtensionValidator(ExtensionValidator $extensionValidator) {
@@ -120,7 +120,7 @@ class BuilderModuleController extends ActionController {
 	}
 
 	/**
-	 * @param ExtensionRepository $extensionRepository
+	 * @param \EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository $extensionRepository
 	 * @return void
 	 */
 	public function injectExtensionRepository(ExtensionRepository $extensionRepository) {

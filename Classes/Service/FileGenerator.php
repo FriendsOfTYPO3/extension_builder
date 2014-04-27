@@ -24,7 +24,6 @@ namespace EBT\ExtensionBuilder\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 /**
@@ -121,12 +120,12 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	);
 
 	/**
-	 * @var LocalizationService
+	 * @var \EBT\ExtensionBuilder\Service\LocalizationService
 	 */
 	protected $localizationService = NULL;
 
 	/**
-	 * @param ClassBuilder $classBuilder
+	 * @param \EBT\ExtensionBuilder\Service\ClassBuilder $classBuilder
 	 */
 	public function injectClassBuilder(ClassBuilder $classBuilder) {
 		$this->classBuilder = $classBuilder;
@@ -140,14 +139,14 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param Printer $printer
+	 * @param \EBT\ExtensionBuilder\Service\Printer $printer
 	 */
 	public function injectPrinterService(Printer $printer) {
 		$this->printerService = $printer;
 	}
 
 	/**
-	 * @param LocalizationService $localizationService
+	 * @param \EBT\ExtensionBuilder\Service\LocalizationService $localizationService
 	 */
 	public function injectLocalizationService(LocalizationService $localizationService) {
 		$this->localizationService = $localizationService;
@@ -155,7 +154,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * called by controller
-	 * @param Array $settings
+	 * @param array $settings
 	 */
 	public function setSettings($settings) {
 		$this->settings = $settings;
@@ -740,7 +739,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 		$modelTemplateClassPath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
 		$modelClassFileObject = $this->classBuilder->generateModelClassFileObject($domainObject, $modelTemplateClassPath, $mergeWithExistingClass);
 		if ($modelClassFileObject) {
-			/** @var $modelClassFileObject ClassObject */
+			/** @var $modelClassFileObject \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject */
 			$this->addLicenseHeader($modelClassFileObject->getFirstClass());
 			return $this->printerService->renderFileObject($modelClassFileObject, TRUE);
 		} else {
@@ -896,7 +895,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * @param string $fileNameSuffix (_db, _csh, _mod)
 	 * @param string $variableName
-	 * @param DomainObject $variable
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $variable
 	 * @return mixed
 	 */
 	protected function generateLocallangFileContent($fileNameSuffix = '', $variableName = '', $variable = NULL) {

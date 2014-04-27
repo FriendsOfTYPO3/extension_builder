@@ -47,7 +47,7 @@ abstract class AnyToManyRelation extends AbstractRelation {
 	protected $maxItems = 1;
 
 	/**
-	 * @var DomainObject
+	 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
 	 */
 	protected $domainObject = NULL;
 

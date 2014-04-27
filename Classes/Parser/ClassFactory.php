@@ -25,7 +25,6 @@ namespace EBT\ExtensionBuilder\Parser;
 use \EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 use \EBT\ExtensionBuilder\Domain\Model;
 
-//require_once(__DIR__ . '/ClassFactoryInterface.php');
 /**
  * factory for class objects and related objects (methods, properties etc)
  *
@@ -37,7 +36,7 @@ class ClassFactory  {
 
 	/**
 	 * @param \PHPParser_Node_Stmt_Class $classNode
-	 * @return Model\ClassObject\ClassObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	public function buildClassObject(\PHPParser_Node_Stmt_Class $classNode) {
 		$classObject = new Model\ClassObject\ClassObject($classNode->name);
@@ -54,7 +53,7 @@ class ClassFactory  {
 
 	/**
 	 * @param \PHPParser_Node_Stmt_ClassMethod $methodNode
-	 * @return Model\ClassObject\Method
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 	 */
 	public function buildClassMethodObject (\PHPParser_Node_Stmt_ClassMethod $methodNode) {
 		$methodObject = new Model\ClassObject\Method($methodNode->name);
@@ -66,7 +65,7 @@ class ClassFactory  {
 
 	/**
 	 * @param \PHPParser_Node_Stmt_Function $functionNode
-	 * @return Model\FunctionObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\FunctionObject
 	 */
 	public function buildFunctionObject (\PHPParser_Node_Stmt_Function $functionNode) {
 		$functionObject = new Model\FunctionObject($functionNode->name);
@@ -77,7 +76,7 @@ class ClassFactory  {
 
 	/**
 	 * @param \PHPParser_Node_Stmt_Property $propertyNode
-	 * @return Model\ClassObject\Property
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property
 	 */
 	public function buildPropertyObject(\PHPParser_Node_Stmt_Property $propertyNode) {
 		$propertyName = '';
@@ -104,7 +103,7 @@ class ClassFactory  {
 
 	/**
 	 * @param \PHPParser_Node_Stmt_Namespace $nameSpaceNode
-	 * @return Model\NamespaceObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\NamespaceObject
 	 */
 	public function buildNamespaceObject(\PHPParser_Node_Stmt_Namespace $nameSpaceNode) {
 		$nameSpaceObject = new Model\NamespaceObject(NodeConverter::getValueFromNode($nameSpaceNode));
@@ -114,8 +113,8 @@ class ClassFactory  {
 
 	/**
 	 * @param \PHPParser_Node_Stmt $node
-	 * @param Model\FunctionObject
-	 * @return Model\AbstractObject
+	 * @param \EBT\ExtensionBuilder\Domain\Model\FunctionObject $object
+	 * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject
 	 */
 	protected function setFunctionProperties(\PHPParser_Node_Stmt $node, Model\FunctionObject $object) {
 		if (property_exists($node,'type')) {
@@ -164,7 +163,7 @@ class ClassFactory  {
 	}
 
 	/**
-	 * @param Model\AbstractObject $object
+	 * @param \EBT\ExtensionBuilder\Domain\Model\AbstractObject $object
 	 * @param \PHPParser_Node_Stmt $node
 	 */
 	protected function addCommentsFromAttributes(Model\AbstractObject $object, \PHPParser_Node_Stmt $node) {

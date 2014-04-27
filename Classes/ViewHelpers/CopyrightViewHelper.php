@@ -19,7 +19,6 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
-use EBT\ExtensionBuilder\Domain\Model\Person;
 
 /**
  * Format the Copyright notice
@@ -33,7 +32,7 @@ class CopyrightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
 	 * Format the copyright holder's name(s)
 	 *
 	 * @param string $date
-	 * @param Person[] $persons
+	 * @param \EBT\ExtensionBuilder\Domain\Model\Person[] $persons
 	 * @return string The copyright ownership
 	 * @author Andreas Lappe <nd@kaeufli.ch>
 	 */

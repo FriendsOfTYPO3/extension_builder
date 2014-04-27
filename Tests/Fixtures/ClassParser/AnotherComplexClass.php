@@ -50,7 +50,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	);
 
 	/**
-	 * @var Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
+	 * @var \Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
 	 */
 	private static $instance = NULL;
 
@@ -180,12 +180,12 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	 * them if possible.
 	 *
 	 * @param array $constructorArguments: Array of Tx_FLOW3_Component_ConfigurationArgument for the current component
-	 * @param ReflectionClass $class: The component class which contains the methods supposed to be analyzed
+	 * @param \ReflectionClass $class: The component class which contains the methods supposed to be analyzed
 	 * @return array The modified array of constructor arguments
 	 * @author Robert Lemke <robert@typo3.org>
 	 * @author adapted for TYPO3v4 by Jochen Rau <jochen.rau@typoplanet.de>
 	 */
-	protected function autoWireConstructorArguments(array $constructorArguments, ReflectionClass $class) {
+	protected function autoWireConstructorArguments(array $constructorArguments, \ReflectionClass $class) {
 		$className = $class->getName();
 		$constructor = $class->getConstructor();
 		if ($constructor !== NULL) {
@@ -253,7 +253,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	 * Returns the component configuration from cache or fetches it from scratch.
 	 *
 	 * @param string $componentName
-	 * @return Tx_Contentparser_Configuration
+	 * @return \Tx_Contentparser_Configuration
 	 */
 	protected function getComponentConfiguration($componentName) {
 		$componentNameParts = explode('_', $componentName,3);
@@ -308,7 +308,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass {
 	 * configuration, the scope is 'singleton'.
 	 *
 	 * @param string $componentName: Name of the component
-	 * @param Tx_FLOW3_Component_Configuration $componentConfiguration: The component configuration
+	 * @param \Tx_FLOW3_Component_Configuration $componentConfiguration: The component configuration
 	 * @return string The scope
 	 * @author Robert Lemke <robert@typo3.org>
 	 * @author adapted for TYPO3v4 by Jochen Rau <jochen.rau@typoplanet.de>
