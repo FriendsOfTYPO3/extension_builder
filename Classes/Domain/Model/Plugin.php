@@ -24,38 +24,24 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * A plugin in the extension
- */
 class Plugin {
-	/**
-	 * @var string[]
-	 */
-	protected static $TYPES = array('list_type', 'CType');
 
 	/**
-	 * the plugin name
-	 *
 	 * @var string
 	 */
 	protected $name = '';
 
 	/**
-	 * the type
-	 *
 	 * @var string
 	 */
 	protected $type = '';
 
 	/**
-	 * the plugin key
-	 *
 	 * @var string
 	 */
 	protected $key = '';
 
 	/**
-	 * array with configuration arrays
 	 * array('controller' => 'MyController', 'actions' => 'action1,action2')
 	 *
 	 * @var string[]
@@ -63,7 +49,6 @@ class Plugin {
 	protected $controllerActionCombinations = array();
 
 	/**
-	 * array with configuration arrays
 	 * array('controller' => 'MyController', 'actions' => 'action1,action2')
 	 *
 	 * @var string[]
@@ -76,8 +61,6 @@ class Plugin {
 	protected $switchableControllerActions = array();
 
 	/**
-	 * Gets the Name
-	 *
 	 * @return string
 	 */
 	public function getName() {
@@ -85,8 +68,6 @@ class Plugin {
 	}
 
 	/**
-	 * Sets the Name
-	 *
 	 * @param string $name
 	 * @return void
 	 */
@@ -95,8 +76,6 @@ class Plugin {
 	}
 
 	/**
-	 * Setter for type
-	 *
 	 * @param string $type
 	 * @return void
 	 */
@@ -105,17 +84,13 @@ class Plugin {
 	}
 
 	/**
-	 * Getter for type
-	 *
-	 * @return string type
+	 * @return string
 	 */
 	public function getType() {
 		return $this->type;
 	}
 
 	/**
-	 * Setter for key
-	 *
 	 * @param string $key
 	 * @return void
 	 */
@@ -124,9 +99,7 @@ class Plugin {
 	}
 
 	/**
-	 * Getter for key
-	 *
-	 * @return string key
+	 * @return string
 	 */
 	public function getKey() {
 		return $this->key;
@@ -134,6 +107,7 @@ class Plugin {
 
 	/**
 	 * @param array $controllerActionCombinations
+	 * @return void
 	 */
 	public function setControllerActionCombinations(array $controllerActionCombinations) {
 		$this->controllerActionCombinations = $controllerActionCombinations;
@@ -148,6 +122,7 @@ class Plugin {
 
 	/**
 	 * @param array $noncacheableControllerActions
+	 * @return void
 	 */
 	public function setNoncacheableControllerActions(array $noncacheableControllerActions) {
 		$this->noncacheableControllerActions = $noncacheableControllerActions;
@@ -162,6 +137,7 @@ class Plugin {
 
 	/**
 	 * @param array $switchableControllerActions
+	 * @return void
 	 */
 	public function setSwitchableControllerActions($switchableControllerActions) {
 		$this->switchableControllerActions = $switchableControllerActions;
@@ -173,4 +149,5 @@ class Plugin {
 	public function getSwitchableControllerActions() {
 		return $this->switchableControllerActions;
 	}
+
 }
