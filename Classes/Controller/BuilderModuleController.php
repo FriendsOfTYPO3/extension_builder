@@ -23,7 +23,13 @@ namespace EBT\ExtensionBuilder\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository;
 use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
+use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
+use EBT\ExtensionBuilder\Service\RoundTrip;
+use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
  * Controller of the Extension Builder extension
@@ -31,7 +37,7 @@ use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
  * @category    Controller
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
-class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+class BuilderModuleController extends ActionController {
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\FileGenerator
 	 */
@@ -43,12 +49,12 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 	protected $configurationManager = NULL;
 
 	/**
-	 * @var \EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus
+	 * @var ExtensionInstallationStatus
 	 */
 	protected $extensionInstallationStatus = NULL;
 
 	/**
-	 * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
+	 * @var ExtensionSchemaBuilder
 	 */
 	protected $extensionSchemaBuilder = NULL;
 
@@ -58,14 +64,15 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 	protected $extensionValidator = NULL;
 
 	/**
-	 * @var \EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository
+	 * @var ExtensionRepository
 	 */
 	protected $extensionRepository = NULL;
 
 	/**
-	 * settings from various sources:
-	 * settings configured in module.extension_builder typoscript
-	 * Module settings configured in the extension manager
+	 * Settings from various sources:
+	 *
+	 * - Settings configured in module.extension_builder typoscript
+	 * - Module settings configured in the extension manager
 	 *
 	 * @var array
 	 */
@@ -89,18 +96,18 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 	}
 
 	/**
-	 * @param \EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus $extensionInstallationStatus
+	 * @param ExtensionInstallationStatus $extensionInstallationStatus
 	 * @return void
 	 */
-	public function injectExtensionInstallationStatus(\EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus $extensionInstallationStatus) {
+	public function injectExtensionInstallationStatus(ExtensionInstallationStatus $extensionInstallationStatus) {
 		$this->extensionInstallationStatus = $extensionInstallationStatus;
 	}
 
 	/**
-	 * @param \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder $extensionSchemaBuilder
+	 * @param ExtensionSchemaBuilder $extensionSchemaBuilder
 	 * @return void
 	 */
-	public function injectExtensionSchemaBuilder(\EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder $extensionSchemaBuilder) {
+	public function injectExtensionSchemaBuilder(ExtensionSchemaBuilder $extensionSchemaBuilder) {
 		$this->extensionSchemaBuilder = $extensionSchemaBuilder;
 	}
 
@@ -113,10 +120,10 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 	}
 
 	/**
-	 * @param \EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository $extensionRepository
+	 * @param ExtensionRepository $extensionRepository
 	 * @return void
 	 */
-	public function injectExtensionRepository(\EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository $extensionRepository) {
+	public function injectExtensionRepository(ExtensionRepository $extensionRepository) {
 		$this->extensionRepository = $extensionRepository;
 	}
 
@@ -129,15 +136,15 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 
 	/**
 	 * Index action for this controller.
-	 * This is the default action, showing some introduction
-	 * but after the first loading the user should
-	 * immediately be redirected to the domainmodellingAction
+	 *
+	 * This is the default action, showing some introduction but after the first
+	 * loading the user should immediately be redirected to the domainmodellingAction.
 	 *
 	 * @return void
 	 */
 	public function indexAction() {
 		if (!$this->request->hasArgument('action')) {
-			$userSettings = $GLOBALS['BE_USER']->getModuleData('extensionbuilder');
+			$userSettings = $this->getBackendUserAuthentication()->getModuleData('extensionbuilder');
 			if ($userSettings['firstTime'] === 0) {
 				$this->forward('domainmodelling');
 			}
@@ -145,19 +152,20 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 	}
 
 	/**
+	 * Loads the Domainmodelling template.
 	 *
-	 * loads the Domainmodelling template
-	 * Nothing more to do here, since the next action is invoked
-	 * by the Javascript interface
+	 * Nothing more to do here, since the next action is invoked by the Javascript
+	 * interface.
 	 *
 	 * @return void
 	 */
 	public function domainmodellingAction() {
-		$GLOBALS['BE_USER']->pushModuleData('extensionbuilder', array('firstTime' => 0));
+		$this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', array('firstTime' => 0));
 	}
 
 	/**
-	 * Main entry point for the buttons in the Javascript frontend
+	 * Main entry point for the buttons in the Javascript frontend.
+	 *
 	 * @return string json encoded array
 	 */
 	public function dispatchRpcAction() {
@@ -169,13 +177,13 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 			}
 			switch ($subAction) {
 				case 'saveWiring':
-					$response = $this->rpcAction_save();
+					$response = $this->rpcActionSave();
 					break;
 				case 'listWirings':
-					$response = $this->rpcAction_list();
+					$response = $this->rpcActionList();
 					break;
 				case 'updateDb':
-					$response = $this->rpcAction_performDbUpdate();
+					$response = $this->rpcActionPerformDbUpdate();
 					break;
 				default:
 					$response = array('error' => 'Sub Action not found.');
@@ -186,17 +194,16 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 		return json_encode($response);
 	}
 
-
 	/**
-	 * Generate the code files according to the transferred JSON configuration
+	 * Generate the code files according to the transferred JSON configuration.
 	 *
 	 * @throws \Exception
 	 * @return array (status => message)
 	 */
-	protected function rpcAction_save() {
+	protected function rpcActionSave() {
 		try {
 			$extensionBuildConfiguration = $this->configurationManager->getConfigurationFromModeler();
-			\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Modeler Configuration', 'extension_builder', 0, $extensionBuildConfiguration);
+			GeneralUtility::devlog('Modeler Configuration', 'extension_builder', 0, $extensionBuildConfiguration);
 			$validationConfigurationResult = $this->extensionValidator->validateConfigurationFormat($extensionBuildConfiguration);
 			if (!empty($validationConfigurationResult['warnings'])) {
 				$confirmationRequired = $this->handleValidationWarnings($validationConfigurationResult['warnings']);
@@ -212,8 +219,7 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 				throw new \Exception($errorMessage);
 			}
 			$extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
-		}
-		catch (\Exception $e) {
+		} catch (\Exception $e) {
 			throw $e;
 		}
 
@@ -233,17 +239,15 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 			}
 		}
 
-
 		$extensionDirectory = $extension->getExtensionDir();
 
 		if (!is_dir($extensionDirectory)) {
-			\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir($extensionDirectory);
+			GeneralUtility::mkdir($extensionDirectory);
 		} else {
 			if ($this->settings['extConf']['backupExtension'] == 1) {
 				try {
-					\EBT\ExtensionBuilder\Service\RoundTrip::backupExtension($extension, $this->settings['extConf']['backupDir']);
-				}
-				catch (\Exception $e) {
+					RoundTrip::backupExtension($extension, $this->settings['extConf']['backupDir']);
+				} catch (\Exception $e) {
 					throw $e;
 				}
 			}
@@ -256,7 +260,7 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 					return array('warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the extension builder the first time for this extension. <br />A settings file was generated in <br /><b>typo3conf/ext/" . $extension->getExtensionKey() . "/Configuration/ExtensionBuilder/settings.yaml.</b><br />Configure the overwrite settings, then save again.");
 				}
 				try {
-					\EBT\ExtensionBuilder\Service\RoundTrip::prepareExtensionForRoundtrip($extension);
+					RoundTrip::prepareExtensionForRoundtrip($extension);
 				} catch (\Exception $e) {
 					throw $e;
 				}
@@ -270,7 +274,7 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 				$message .= '<br />Notice: File upload is not yet implemented.';
 			}
 			$result = array('success' => $message);
-			if($this->extensionInstallationStatus->isDbUpdateNeeded()) {
+			if ($this->extensionInstallationStatus->isDbUpdateNeeded()) {
 				$result['confirmUpdate'] = TRUE;
 			}
 		} catch (\Exception $e) {
@@ -282,18 +286,20 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 		return $result;
 	}
 
-
 	/**
-	 * Shows a list with available extensions (if they have an ExtensionBuilder.json file)
+	 * Shows a list with available extensions (if they have an ExtensionBuilder.json
+	 * file).
+	 *
 	 * @return array
 	 */
-	protected function rpcAction_list() {
+	protected function rpcActionList() {
 		$extensions = $this->extensionRepository->findAll();
 		return array('result' => $extensions, 'error' => NULL);
 	}
 
 	/**
-	 * This is a hack to handle confirm requests in the GUI
+	 * This is a hack to handle confirm requests in the GUI.
+	 *
 	 * @param $warnings
 	 * @return array confirm (Question to confirm), confirmFieldName (is set to TRUE if confirmed)
 	 */
@@ -307,7 +313,7 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 		}
 		foreach ($messagesPerErrorcode as $errorCode => $messages) {
 			if (!$this->configurationManager->isConfirmed('allow' . $errorCode)) {
-				if ($errorCode == \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::ERROR_PROPERTY_RESERVED_SQL_WORD) {
+				if ($errorCode == ExtensionValidator::ERROR_PROPERTY_RESERVED_SQL_WORD) {
 					$confirmMessage = 'SQL reserved names were found for these properties:<br />' .
 							'<ol class="warnings"><li>' . implode('</li><li>', $messages) . '</li></ol>' .
 							'This will result in a different column name in the database.<br />' .
@@ -326,9 +332,21 @@ class BuilderModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 		return array();
 	}
 
-	protected function rpcAction_performDbUpdate() {
+	/**
+	 * @return array
+	 */
+	protected function rpcActionPerformDbUpdate() {
 		$params = $this->configurationManager->getParamsFromRequest();
 		return $this->extensionInstallationStatus->performDbUpdates($params);
+	}
+
+	/**
+	 * Returns the global BackendUserAuthentication object.
+	 *
+	 * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
+	 */
+	protected function getBackendUserAuthentication() {
+		return $GLOBALS['BE_USER'];
 	}
 
 }
