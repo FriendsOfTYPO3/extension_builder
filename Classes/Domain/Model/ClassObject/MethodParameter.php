@@ -24,11 +24,11 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  ***************************************************************/
 
 /**
- * parameter representing a method parameter in
- * the context of software development
- *
+ * parameter representing a method parameter in the context of software
+ * development
  */
 class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
+
 	/**
 	 * @var string
 	 */
@@ -75,17 +75,13 @@ class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
 	protected $passedByReference = FALSE;
 
 	/**
-	 * __construct
-	 *
-	 * @return void
+	 * @param string $name
 	 */
 	public function __construct($name) {
 		$this->name = $name;
 	}
 
-
 	/**
-	 *
 	 * @return string $name
 	 */
 	public function getName() {
@@ -93,8 +89,7 @@ class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
 	}
 
 	/**
-	 * Returns $varType.
-	 *
+	 * @return string
 	 */
 	public function getVarType() {
 		if (empty($this->varType) && !empty($this->typeHint)) {
@@ -104,17 +99,14 @@ class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
 	}
 
 	/**
-	 * Sets $varType.
-	 *
 	 * @param string $varType
+	 * @return void
 	 */
 	public function setVarType($varType) {
 		$this->varType = $varType;
-		return $this;
 	}
 
 	/**
-	 *
 	 * @return int $position
 	 */
 	public function getPosition() {
@@ -122,8 +114,6 @@ class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
 	}
 
 	/**
-	 * setter for position
-	 *
 	 * @param int $position
 	 * @return void
 	 */
@@ -131,9 +121,7 @@ class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
 		$this->position = $position;
 	}
 
-
 	/**
-	 * getter for defaultValue
 	 * @return mixed
 	 */
 	public function getDefaultValue() {
@@ -141,26 +129,22 @@ class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
 	}
 
 	/**
-	 * setter for defaultValue
-	 * @param $defaultValue
-	 * @return $this
+	 * @param mixed $defaultValue
+	 * @return void
 	 */
 	public function setDefaultValue($defaultValue = NULL) {
 		$this->defaultValue = $defaultValue;
-		return $this;
 	}
 
 	/**
-	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isOptional() {
 		return $this->optional;
 	}
 
 	/**
-	 *
-	 * @param $optional
+	 * @param bool $optional
 	 * @return void
 	 */
 	public function setOptional($optional) {
@@ -168,44 +152,40 @@ class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
 	}
 
 	/**
-	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isPassedByReference() {
 		return $this->passedByReference;
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getPassedByReference() {
 		return $this->passedByReference;
 	}
 
 	/**
-	 * @param boolean $passedByReference
+	 * @param bool $passedByReference
+	 * @return void
 	 */
 	public function setPassedByReference($passedByReference) {
 		$this->passedByReference = $passedByReference;
 	}
 
 	/**
-	 *
-	 * @return
+	 * @return string
 	 */
 	public function getTypeHint() {
 		return $this->typeHint;
 	}
 
 	/**
-	 * Sets $typeHint.
-	 *
 	 * @param string $typeHint
-	 * @return $this
+	 * @return void
 	 */
 	public function setTypeHint($typeHint) {
 		$this->typeHint = $typeHint;
-		return $this;
 	}
 
 	/**
@@ -217,13 +197,14 @@ class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
 
 	/**
 	 * @param string $typeForParamTag
+	 * @return void
 	 */
 	public function setTypeForParamTag($typeForParamTag) {
 		$this->typeForParamTag = $typeForParamTag;
 	}
 
 	/**
-	 * @return string|null
+	 * @return string
 	 */
 	public function getTypeForParamTag() {
 		return $this->typeForParamTag;
@@ -231,6 +212,7 @@ class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
 
 	/**
 	 * @param int $startLine
+	 * @return void
 	 */
 	public function setStartLine($startLine) {
 		$this->startLine = $startLine;
@@ -245,6 +227,7 @@ class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
 
 	/**
 	 * @param int $endLine
+	 * @return void
 	 */
 	public function setEndLine($endLine) {
 		$this->endLine = $endLine;
