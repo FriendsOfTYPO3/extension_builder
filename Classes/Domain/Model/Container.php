@@ -1,5 +1,6 @@
 <?php
 namespace EBT\ExtensionBuilder\Domain\Model;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -22,15 +23,13 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 
 /**
  * Provides methods that are common to Class, File and Namespace objects
- *
  */
-
 class Container extends AbstractObject {
+
 	/**
 	 * associative array constName => constValue
 	 *
@@ -54,15 +53,15 @@ class Container extends AbstractObject {
 	protected $functions = array();
 
 	/**
-	 * contains all statements that occurred before the first class statement
+	 * Contains all statements that occurred before the first class statement.
 	 *
 	 * @var array
 	 */
 	protected $preClassStatements = array();
 
 	/**
-	 * contains all statements that occurred after the first class statement
-	 * they will be rewritten after the last class!!
+	 * Contains all statements that occurred after the first class statement they
+	 * will be rewritten after the last class!
 	 *
 	 * @var array
 	 */
@@ -79,11 +78,11 @@ class Container extends AbstractObject {
 	public function getFirstClass() {
 		$classes = $this->getClasses();
 		return reset($classes);
-
 	}
 
 	/**
 	 * @param ClassObject $class
+	 * @return void
 	 */
 	public function addClass(ClassObject $class) {
 		$this->classes[] = $class;
@@ -91,10 +90,10 @@ class Container extends AbstractObject {
 
 	/**
 	 * @param array ClassObject[]
+	 * @return void
 	 */
 	public function setClasses($classes) {
 		$this->classes = $classes;
-		return $this;
 	}
 
 	/**
@@ -104,23 +103,16 @@ class Container extends AbstractObject {
 		return $this->classes;
 	}
 
-
 	/**
-	 * Setter for a single constant
-	 *
 	 * @param string $name
 	 * @param mixed $value
-	 * @return Container
+	 * @return void
 	 */
 	public function setConstant($name, $value) {
 		$this->constants[$name] = $value;
-		return $this;
 	}
 
-
 	/**
-	 * Getter for constants
-	 *
 	 * @return string constants
 	 */
 	public function getConstants() {
@@ -128,23 +120,20 @@ class Container extends AbstractObject {
 	}
 
 	/**
-	 * Getter for a single constant
-	 *
 	 * @param $constantName
-	 * @return mixed constant value
+	 * @return mixed
 	 */
 	public function getConstant($constantName) {
 		if (isset($this->constants[$constantName])) {
 			return $this->constants[$constantName];
+		} else {
+			return NULL;
 		}
-		else return NULL;
 	}
 
 	/**
-	 * removes a constant
-	 *
 	 * @param string $constantName
-	 * @return boolean TRUE (if successfull removed)
+	 * @return boolean TRUE if successfully removed
 	 */
 	public function removeConstant($constantName) {
 		if (isset($this->constants[$constantName])) {
@@ -154,24 +143,39 @@ class Container extends AbstractObject {
 		return FALSE;
 	}
 
+	/**
+	 * @param $postInclude
+	 * @return void
+	 */
 	public function addPostInclude($postInclude) {
 		$this->postIncludes[] = $postInclude;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getPostIncludes() {
 		return $this->postIncludes;
 	}
 
+	/**
+	 * @param $preInclude
+	 * @return void
+	 */
 	public function addPreInclude($preInclude) {
 		$this->preIncludes[] = $preInclude;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getPreIncludes() {
 		return $this->preIncludes;
 	}
 
 	/**
 	 * @param array FunctionObject[]
+	 * @return void
 	 */
 	public function setFunctions(array $functions) {
 		$this->functions = $functions;
@@ -179,6 +183,7 @@ class Container extends AbstractObject {
 
 	/**
 	 * @param FunctionObject $function
+	 * @return void
 	 */
 	public function addFunction(FunctionObject $function) {
 		$this->functions[$function->getName()] = $function;
@@ -205,6 +210,7 @@ class Container extends AbstractObject {
 
 	/**
 	 * @param array $postClassStatements
+	 * @return void
 	 */
 	public function addPostClassStatements($postClassStatements) {
 		$this->postClassStatements[] = $postClassStatements;
@@ -219,6 +225,7 @@ class Container extends AbstractObject {
 
 	/**
 	 * @param array $preClassStatements
+	 * @return void
 	 */
 	public function addPreClassStatements($preClassStatements) {
 		$this->preClassStatements[] = $preClassStatements;
@@ -230,4 +237,5 @@ class Container extends AbstractObject {
 	public function getPreClassStatements() {
 		return $this->preClassStatements;
 	}
+
 }
