@@ -7,30 +7,34 @@ var extbaseModeling_wiringEditorLanguage = {
 	modules: []
 };
 
-YAHOO.util.Event.onDOMReady(function () {
+(function(){
 	var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event, lang = YAHOO.lang, dom = YAHOO.util.Dom;
 
-	function addFieldsetClass (selectElement) {
-		var fieldset = dom.getAncestorByTagName(selectElement, 'fieldset');
-		fieldset.removeAttribute('class');
-		dom.addClass(fieldset, selectElement.value);
-	}
-
-	inputEx.SelectField.prototype.onChange = function (evt) {
-		addFieldsetClass(dom.get(evt.target));
-	};
-
-	/**
-	 * add the selected propertyType as classname to all propertyGroup fieldsets
-	 */
-	WireIt.WiringEditor.prototype.onPipeLoaded = function () {
-		var propertyTypeSelects = $$('.propertyGroup select');
-		if (propertyTypeSelects) {
-			propertyTypeSelects.each(function (el) {
-				addFieldsetClass(dom.get(el));
-			});
+		function addFieldsetClass (selectElement) {
+			var fieldset = dom.getAncestorByTagName(selectElement, 'fieldset');
+			fieldset.removeAttribute('class');
+			dom.addClass(fieldset, selectElement.value);
 		}
-	};
+
+		inputEx.SelectField.prototype.onChange = function (evt) {
+			addFieldsetClass(dom.get(evt.target));
+		};
+
+		/**
+		 * add the selected propertyType as classname to all propertyGroup fieldsets
+		 */
+		WireIt.WiringEditor.prototype.onPipeLoaded = function () {
+			var propertyTypeSelects = $$('.propertyGroup select');
+			if (propertyTypeSelects) {
+				propertyTypeSelects.each(function (el) {
+					addFieldsetClass(dom.get(el));
+				});
+			}
+		};
+})();
+
+
+YAHOO.util.Event.onAvailable('toggleAdvancedOptions', function () {
 
 	$('typo3-mod-php').addClassName('yui-skin-sam');
 
