@@ -100,10 +100,11 @@ class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
 
 	/**
 	 * @param string $varType
-	 * @return void
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter This method is used in fluent interfaces!
 	 */
 	public function setVarType($varType) {
 		$this->varType = $varType;
+		return $this;
 	}
 
 	/**
@@ -182,10 +183,11 @@ class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject{
 
 	/**
 	 * @param string $typeHint
-	 * @return void
+	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter This method is used in fluent interfaces!
 	 */
 	public function setTypeHint($typeHint) {
 		$this->typeHint = $typeHint;
+		return $this;
 	}
 
 	/**
