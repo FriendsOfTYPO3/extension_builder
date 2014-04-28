@@ -23,14 +23,14 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Schema for a Domain Object.
+ * Schema for a Domain Object
  */
 class DomainObject {
+
 	/**
-	 * name of the domain object
-	 *
 	 * @var string
 	 */
 	protected $name = '';
@@ -41,8 +41,6 @@ class DomainObject {
 	protected $uniqueIdentifier = '';
 
 	/**
-	 * description of the domain object
-	 *
 	 * @var string
 	 */
 	protected $description = '';
@@ -69,21 +67,21 @@ class DomainObject {
 	protected $addDeletedField = FALSE;
 
 	/**
-	 * If TRUE, the related record has a "hidden" enable field
+	 * If TRUE, the related record has a "hidden" enable field.
 	 *
 	 * @var bool
 	 */
 	protected $addHiddenField = FALSE;
 
 	/**
-	 * If TRUE, the related record has a "starttime/endtime" enable field
+	 * If TRUE, the related record has a "starttime/endtime" enable field.
 	 *
 	 * @var bool
 	 */
 	protected $addStarttimeEndtimeFields = FALSE;
 
 	/**
-	 * If TRUE, the element is categorizable in the TYPO3 backend
+	 * If TRUE, the element is categorizable in the TYPO3 backend.
 	 *
 	 * @var bool
 	 */
@@ -104,19 +102,21 @@ class DomainObject {
 	protected $extension = NULL;
 
 	/**
-	 * List of properties the domain object has
+	 * List of properties the domain object has.
+	 *
 	 * @var DomainObject\AbstractProperty[]
 	 */
 	protected $properties = array();
 
 	/**
-	 * List of actions the domain object has
+	 * List of actions the domain object has.
+	 *
 	 * @var DomainObject\Action[]
 	 */
 	protected $actions = array();
 
 	/**
-	 * Is an upload folder required for this domain object
+	 * Is an upload folder required for this domain object?
 	 *
 	 * @var bool
 	 */
@@ -133,13 +133,13 @@ class DomainObject {
 	protected $parentClass = '';
 
 	/**
-	 * Domain objects that extend the current object (as declared in this extension)
+	 * Domain objects that extend the current object (as declared in this extension).
+	 *
 	 * @var DomainObject[]
 	 */
 	protected $childObjects = array();
 
 	/**
-	 * Set name
 	 * @return string
 	 */
 	public function getName() {
@@ -147,13 +147,16 @@ class DomainObject {
 	}
 
 	/**
-	 * Set name
-	 * @param string $name Name
+	 * @param string $name
+	 * @return void
 	 */
 	public function setName($name) {
 		$this->name = $name;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getQualifiedClassName() {
 		$qualifiedClassName = $this->extension->getNamespaceName() . '\\Domain\\Model\\' . $this->getName();
 		if (strpos($qualifiedClassName, '\\') === 0) {
@@ -162,25 +165,37 @@ class DomainObject {
 		return $qualifiedClassName;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getFullQualifiedClassName() {
 		return '\\' . $this->getQualifiedClassName();
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getControllerClassName() {
 		return $this->extension->getNamespaceName() . '\\Controller\\' . $this->getName() . 'Controller';
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getDatabaseTableName() {
+		$result = 'tx_' .
+			strtolower(GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey())) .
+			'_domain_model_' .
+			strtolower($this->getName());
+
 		if (!empty($this->mapToTable)) {
-			return $this->mapToTable;
-		} else {
-			return 'tx_' . strtolower(\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey())) . '_domain_model_' . strtolower($this->getName());
+			$result = $this->mapToTable;
 		}
+
+		return $result;
 	}
 
 	/**
-	 * Get property uniqueIdentifier
-	 *
 	 * @return string
 	 */
 	public function getUniqueIdentifier() {
@@ -188,16 +203,14 @@ class DomainObject {
 	}
 
 	/**
-	 * Set property uniqueIdentifier
-	 *
 	 * @param string $uniqueIdentifier
+	 * @return void
 	 */
 	public function setUniqueIdentifier($uniqueIdentifier) {
 		$this->uniqueIdentifier = $uniqueIdentifier;
 	}
 
 	/**
-	 * Get description
 	 * @return string
 	 */
 	public function getDescription() {
@@ -209,63 +222,59 @@ class DomainObject {
 	}
 
 	/**
-	 * Set description
-	 * @param string $description Description
+	 * @param string $description
+	 * @return void
 	 */
 	public function setDescription($description) {
 		$this->description = $description;
 	}
 
 	/**
-	 * get aggregate root
-	 * @return boolean TRUE if it is an aggregate root, FALSE otherwise.
+	 * @return bool TRUE if it is an aggregate root, FALSE otherwise.
 	 */
 	public function getAggregateRoot() {
 		return $this->aggregateRoot;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isAggregateRoot() {
 		return $this->getAggregateRoot();
 	}
 
 	/**
-	 * Setter for aggregate root flag
-	 * @param boolean $aggregateRoot TRUE if Domain Object should be aggregate root.
+	 * @param bool $aggregateRoot TRUE if Domain Object should be aggregate root
+	 * @return void
 	 */
 	public function setAggregateRoot($aggregateRoot) {
-		$this->aggregateRoot = (boolean)$aggregateRoot;
+		$this->aggregateRoot = (bool)$aggregateRoot;
 	}
 
 	/**
-	 *
-	 * @return boolean TRUE if it is an entity, FALSE if it is a ValueObject
+	 * @return bool TRUE if it is an entity, FALSE if it is a ValueObject
 	 */
 	public function getEntity() {
 		return $this->entity;
 	}
 
 	/**
-	 *
-	 * @return boolean TRUE if it is an entity, FALSE if it is a ValueObject
+	 * @return bool TRUE if it is an entity, FALSE if it is a ValueObject
 	 */
 	public function isEntity() {
 		return $this->getEntity();
 	}
 
 	/**
-	 *
 	 * @param $entity $entity TRUE if it is an entity, FALSE if it is a ValueObject
-	 *
 	 * @return void
 	 */
 	public function setEntity($entity) {
-		$this->entity = (boolean)$entity;
+		$this->entity = (bool)$entity;
 	}
 
 	/**
-	 * Adding a new property
-	 * @param DomainObject\AbstractProperty $property The new property to add
-	 *
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property
 	 * @return void
 	 */
 	public function addProperty(DomainObject\AbstractProperty $property) {
@@ -277,7 +286,6 @@ class DomainObject {
 	}
 
 	/**
-	 * Get all properties
 	 * @return DomainObject\AbstractProperty[]
 	 */
 	public function getProperties() {
@@ -285,9 +293,8 @@ class DomainObject {
 	}
 
 	/**
-	 * Get property
-	 *
-	 * @return object <DomainObject\AbstractProperty>
+	 * @param string $propertyName
+	 * @return DomainObject\AbstractProperty
 	 */
 	public function getPropertyByName($propertyName) {
 		foreach ($this->properties as $property) {
@@ -299,7 +306,8 @@ class DomainObject {
 	}
 
 	/**
-	 * Get all properties holding relations of type Property_Relation_ZeroToManyRelation
+	 * Get all properties holding relations of type
+	 * Property_Relation_ZeroToManyRelation
 	 *
 	 * @return DomainObject\Relation\ZeroToManyRelation[]
 	 */
@@ -314,8 +322,7 @@ class DomainObject {
 	}
 
 	/**
-	 * Get all properties holding relations of type
-	 * AnyToManyRelation
+	 * Get all properties holding relations of type AnyToManyRelation
 	 *
 	 * @return DomainObject\Relation\AnyToManyRelation[]
 	 */
@@ -330,9 +337,7 @@ class DomainObject {
 	}
 
 	/**
-	 * Adding a new action
-	 * @param DomainObject\Action $action The new action to add
-	 *
+	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action
 	 * @return void
 	 */
 	public function addAction(DomainObject\Action $action) {
@@ -344,8 +349,6 @@ class DomainObject {
 	}
 
 	/**
-	 * Get all actions
-	 *
 	 * @return DomainObject\Action[]
 	 */
 	public function getActions() {
@@ -353,9 +356,7 @@ class DomainObject {
 	}
 
 	/**
-	 * returns TRUE if the domainObject has actions
-	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasActions() {
 		return count($this->actions) > 0;
@@ -363,22 +364,24 @@ class DomainObject {
 
 	/**
 	 * DO NOT CALL DIRECTLY! This is being called by addDomainModel() automatically.
-	 * @param Extension $extension the extension this domain model belongs to.
+	 *
+	 * @param Extension $extension the extension this domain model belongs to
+	 * @return void
 	 */
 	public function setExtension(Extension $extension) {
 		$this->extension = $extension;
 	}
 
 	/**
-	 * @return Extension
+	 * @return \EBT\ExtensionBuilder\Domain\Model\Extension
 	 */
 	public function getExtension() {
 		return $this->extension;
 	}
 
-
 	/**
-	 * Get the base class for this Domain Object (different if it is entity or value object)
+	 * Get the base class for this Domain Object (different if it is entity or value
+	 * object)
 	 *
 	 * @return string name of the base class
 	 */
@@ -391,18 +394,23 @@ class DomainObject {
 	}
 
 	/**
-	 * returns the name of the domain repository class name, if it is an aggregateroot.
+	 * Returns the name of the domain repository class name, if it is an
+	 * aggregateroot.
 	 *
 	 * @return string
 	 * @deprecated Use getFullyQualifiedDomainRepositoryClassName() instead
 	 */
 	public function getDomainRepositoryClassName() {
-		if (!$this->aggregateRoot) return '';
-		return '\\' . $this->extension->getNamespaceName() . '\\Domain\\Repository\\' . $this->getName() . 'Repository';
+		if (!$this->aggregateRoot) {
+			return '';
+		} else {
+			return '\\' . $this->extension->getNamespaceName() . '\\Domain\\Repository\\' . $this->getName() . 'Repository';
+		}
 	}
 
 	/**
-	 * Returns the name of the domain repository class name, if it is an aggregate root.
+	 * Returns the name of the domain repository class name, if it is an aggregate
+	 * root.
 	 *
 	 * @return string
 	 */
@@ -415,7 +423,8 @@ class DomainObject {
 	}
 
 	/**
-	 * Returns the fully qualified name of the domain repository class name, if it is an aggregate root.
+	 * Returns the fully qualified name of the domain repository class name, if it
+	 * is an aggregate root.
 	 *
 	 * @return string
 	 */
@@ -426,7 +435,6 @@ class DomainObject {
 
 		return '\\' . $this->getQualifiedDomainRepositoryClassName();
 	}
-
 
 	/**
 	 * @return string
@@ -441,8 +449,11 @@ class DomainObject {
 
 	/**
 	 * Get the label to display in the list module.
-	 * TODO: Needs to be configurable. Currently, the first property is the label in the backend.
-	 * @return <type>
+	 *
+	 * TODO: Needs to be configurable. Currently, the first property is the label in
+	 *       the backend.
+	 *
+	 * @return string
 	 */
 	public function getListModuleValueLabel() {
 		if (isset($this->properties[0])) {
@@ -485,14 +496,11 @@ class DomainObject {
 	}
 
 	/**
-	 * Getter for $needsUploadFolder
-	 *
-	 * @return boolean $needsUploadFolder
+	 * @return bool
 	 */
 	public function getNeedsUploadFolder() {
 		return $this->needsUploadFolder;
 	}
-
 
 	/**
 	 * @return string
@@ -503,13 +511,15 @@ class DomainObject {
 
 	/**
 	 * @param string $mapToTable
+	 * @return void
 	 */
 	public function setMapToTable($mapToTable) {
 		$this->mapToTable = $mapToTable;
 	}
 
 	/**
-	 * is this domain object mapped to an existing table?
+	 * Is this domain object mapped to an existing table?
+	 *
 	 * @return bool
 	 */
 	public function getNeedsMappingStatement() {
@@ -521,7 +531,8 @@ class DomainObject {
 	}
 
 	/**
-	 * is this domain object mapped to a table?
+	 * Is this domain object mapped to a table?
+	 *
 	 * @return bool
 	 */
 	public function isMappedToExistingTable() {
@@ -532,6 +543,9 @@ class DomainObject {
 		}
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function getNeedsTableCtrlDefinition() {
 		if ($this->mapToTable || $this->isSubClass()) {
 			// ctrl definitions should already be defined in both cases
@@ -543,6 +557,7 @@ class DomainObject {
 
 	/**
 	 * @param string $parentClass
+	 * @return void
 	 */
 	public function setParentClass($parentClass) {
 		$this->parentClass = $parentClass;
@@ -560,8 +575,8 @@ class DomainObject {
 	 */
 	public function getRecordType() {
 		$recordType = 'Tx_' .
-				\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_' .
-				$this->getName();
+			GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_' .
+			$this->getName();
 		return $recordType;
 	}
 
@@ -576,9 +591,9 @@ class DomainObject {
 		}
 	}
 
-
 	/**
 	 * @param DomainObject $childObject
+	 * @return void
 	 */
 	public function addChildObject(DomainObject $childObject) {
 		$this->childObjects[] = $childObject;
@@ -607,63 +622,68 @@ class DomainObject {
 	}
 
 	/**
-	 * @param boolean $sorting
+	 * @param bool $sorting
+	 * @return void
 	 */
 	public function setSorting($sorting) {
 		$this->sorting = $sorting;
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getSorting() {
 		return $this->sorting;
 	}
 
 	/**
-	 * @param boolean $addDeletedField
+	 * @param bool $addDeletedField
+	 * @return void
 	 */
-	public function setAddDeletedField($AddDeletedField) {
-		$this->addDeletedField = $AddDeletedField;
+	public function setAddDeletedField($addDeletedField) {
+		$this->addDeletedField = $addDeletedField;
 	}
 
 	/**
-	 * @param boolean $categorizable
+	 * @param bool $categorizable
+	 * @return void
 	 */
 	public function setCategorizable($categorizable) {
 		$this->categorizable = $categorizable;
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getAddDeletedField() {
 		return $this->addDeletedField;
 	}
 
 	/**
-	 * @param boolean $addHiddenField
+	 * @param bool $addHiddenField
+	 * @return void
 	 */
 	public function setAddHiddenField($addHiddenField) {
 		$this->addHiddenField = $addHiddenField;
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getAddHiddenField() {
 		return $this->addHiddenField;
 	}
 
 	/**
-	 * @param boolean $addStarttimeEndtimeFields
+	 * @param bool $addStarttimeEndtimeFields
+	 * @return void
 	 */
 	public function setAddStarttimeEndtimeFields($addStarttimeEndtimeFields) {
 		$this->addStarttimeEndtimeFields = $addStarttimeEndtimeFields;
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getAddStarttimeEndtimeFields() {
 		return $this->addStarttimeEndtimeFields;
