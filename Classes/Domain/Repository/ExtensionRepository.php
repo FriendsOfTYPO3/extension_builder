@@ -76,6 +76,12 @@ class ExtensionRepository implements \TYPO3\CMS\Core\SingletonInterface {
 			'extension_builder_version' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getExtensionVersion('extension_builder'),
 			'be_user' => $GLOBALS['BE_USER']->user['realName'] . ' (' . $GLOBALS['BE_USER']->user['uid'] . ')'
 		);
-		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($extension->getExtensionDir() . \EBT\ExtensionBuilder\Configuration\ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE, json_encode($extensionBuildConfiguration));
+		$encodeOptions = 0;
+		// option JSON_PRETTY_PRINT is available since PHP 5.4.0
+		if (defined('JSON_PRETTY_PRINT')) {
+			$encodeOptions |= JSON_PRETTY_PRINT;
+		}
+		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($extension->getExtensionDir() . \EBT\ExtensionBuilder\Configuration\ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE, json_encode($extensionBuildConfiguration, $encodeOptions));
 	}
+
 }
