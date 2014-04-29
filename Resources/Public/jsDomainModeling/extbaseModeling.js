@@ -34,17 +34,15 @@ var extbaseModeling_wiringEditorLanguage = {
 })();
 
 
-YAHOO.util.Event.onAvailable('toggleAdvancedOptions', function () {
 
-	$('typo3-mod-php').addClassName('yui-skin-sam');
-
+YAHOO.util.Event.onAvailable('extensionDependencies-field', function () {
 	/**
 	 * Update dependencies in textarea
 	 */
-	$$('select[name=targetVersion]')[0].onchange =
+	$('targetVersionSelector-field').onchange =
 	function (event) {
 		var updatedDependencies = '';
-		var dependencies = $$('textarea[name=dependsOn]')[0].value.split("\n");
+		var dependencies = $('extensionDependencies-field').value.split("\n");
 		for (i = 0; i < dependencies.length; i++) {
 			parts = dependencies[i].split('=>');
 			if (parts[0].indexOf('typo3') > -1) {
@@ -54,8 +52,13 @@ YAHOO.util.Event.onAvailable('toggleAdvancedOptions', function () {
 			}
 
 		}
-		$$('textarea[name=dependsOn]')[0].value = updatedDependencies;
+		$('extensionDependencies-field').value = updatedDependencies;
 	};
+});
+
+YAHOO.util.Event.onAvailable('toggleAdvancedOptions', function () {
+
+	$('typo3-mod-php').addClassName('yui-skin-sam');
 
 	var advancedMode = false;
 	$('toggleAdvancedOptions').onclick =

@@ -164,6 +164,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
                         type: "select",
                         inputParams: {
                             name: "targetVersion",
+							id: 'targetVersionSelector',
                             label: TYPO3.settings.extensionBuilder._LOCAL_LANG.target_version,
                             description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_target_version,
                             selectOptions: [
@@ -180,6 +181,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 						inputParams: {
 							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.dependsOn,
 							name: "dependsOn",
+							id: 'extensionDependencies',
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_dependsOn,
 							cols:20,
 							rows:6,
