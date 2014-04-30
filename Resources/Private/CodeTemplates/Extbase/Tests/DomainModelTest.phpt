@@ -54,22 +54,22 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function get{property.name -> k:format.uppercaseFirst()}ReturnsInitialValueFor<f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}"><f:then>FileReference</f:then><f:else>{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}</f:else></f:if>() {<f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'integer')}">
+	public function get{property.name -> k:format.uppercaseFirst()}ReturnsInitialValueFor<f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}"><f:then>FileReference</f:then><f:else>{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}</f:else></f:if>() {<f:if condition="{property.unqualifiedType} == 'integer'">
 		$this->assertSame(
 			0,
 			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
 		);
-</f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'float')}">
+</f:if><f:if condition="{property.unqualifiedType} == 'float'">
 		$this->assertSame(
 			0.0,
 			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
 		);
-</f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'string')}">
+</f:if><f:if condition="{property.unqualifiedType} == 'string'">
 		$this->assertSame(
 			'',
 			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
 		);
-</f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'boolean')}">
+</f:if><f:if condition="{property.unqualifiedType} == 'boolean'">
 		$this->assertSame(
 			FALSE,
 			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
@@ -100,7 +100,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function set{property.name -> k:format.uppercaseFirst()}For<f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}"><f:then>FileReference</f:then><f:else>{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"ObjectStorageContaining{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}</f:else></f:if>Sets{property.name -> k:format.uppercaseFirst()}() {<f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'string')}">
+	public function set{property.name -> k:format.uppercaseFirst()}For<f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}"><f:then>FileReference</f:then><f:else>{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"ObjectStorageContaining{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}</f:else></f:if>Sets{property.name -> k:format.uppercaseFirst()}() {<f:if condition="{property.unqualifiedType} == 'string'">
 		$this->subject->set{property.name -> k:format.uppercaseFirst()}('Conceived at T3CON10');
 
 		$this->assertAttributeEquals(
@@ -108,7 +108,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			'{property.name}',
 			$this->subject
 		);
-</f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'integer')}">
+</f:if><f:if condition="{property.unqualifiedType}  == 'integer'">
 		$this->subject->set{property.name -> k:format.uppercaseFirst()}(12);
 
 		$this->assertAttributeEquals(
@@ -116,7 +116,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			'{property.name}',
 			$this->subject
 		);
-</f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'float')}">
+</f:if><f:if condition="{property.unqualifiedType} == 'float'">
 		$this->subject->set{property.name -> k:format.uppercaseFirst()}(3.14159265);
 
 		$this->assertAttributeEquals(
@@ -126,7 +126,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			'',
 			0.000000001
 		);
-</f:if><f:if condition="{k:compareStrings(firstString:property.unqualifiedType, secondString:'boolean')}">
+</f:if><f:if condition="{property.unqualifiedType} == 'boolean'">
 		$this->subject->set{property.name -> k:format.uppercaseFirst()}(TRUE);
 
 		$this->assertAttributeEquals(
