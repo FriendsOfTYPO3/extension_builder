@@ -710,6 +710,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	 *
 	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @param boolean $mergeWithExistingClass
+	 * @return string
 	 */
 	public function generateActionControllerCode(
 		\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject, $mergeWithExistingClass) {
@@ -734,12 +735,12 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	 *
 	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @param boolean $mergeWithExistingClass
+	 * @return string
 	 */
 	public function generateDomainObjectCode(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject, $mergeWithExistingClass) {
 		$modelTemplateClassPath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
 		$modelClassFileObject = $this->classBuilder->generateModelClassFileObject($domainObject, $modelTemplateClassPath, $mergeWithExistingClass);
 		if ($modelClassFileObject) {
-			/** @var $modelClassFileObject \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject */
 			$this->addLicenseHeader($modelClassFileObject->getFirstClass());
 			return $this->printerService->renderFileObject($modelClassFileObject, TRUE);
 		} else {
@@ -769,6 +770,8 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	 *
 	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @param boolean $mergeWithExistingClass
+	 *
+	 * @return string
 	 */
 	public function generateDomainRepositoryCode(
 		\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject, $mergeWithExistingClass) {

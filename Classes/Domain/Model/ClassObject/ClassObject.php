@@ -82,13 +82,6 @@ class ClassObject extends AbstractObject {
 	protected $fileName = '';
 
 	/**
-	 * Is instantiated only if the class is imported from a file.
-	 *
-	 * @var \EBT\ExtensionBuilder\Reflection\ClassReflection
-	 */
-	protected $classReflection = NULL;
-
-	/**
 	 * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
 	protected $parentClass = NULL;

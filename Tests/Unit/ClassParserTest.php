@@ -149,7 +149,7 @@ class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$classObject = $this->parserService->parseFile($file)->getFirstClass();
 		$this->assertTrue($classObject instanceof \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject);
 		require_once($file);
-		$classReflection = new \EBT\ExtensionBuilder\Reflection\ClassReflection($className);
+		$classReflection = new \TYPO3\CMS\Extbase\Reflection\ClassReflection($className);
 		$this->ParserFindsAllConstants($classObject, $classReflection);
 		$this->ParserFindsAllMethods($classObject, $classReflection);
 		$this->ParserFindsAllProperties($classObject, $classReflection);
@@ -162,7 +162,7 @@ class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 * retrieved from the reflection class
 	 *
 	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
-	 * @param \EBT\ExtensionBuilder\Reflection\ClassReflection $classReflection
+	 * @param \TYPO3\CMS\Extbase\Reflection\ClassReflection $classReflection
 	 * @return void
 	 */
 	public function ParserFindsAllConstants($classObject, $classReflection) {
@@ -183,11 +183,11 @@ class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 * with those retrieved from the reflection class
 	 *
 	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
-	 * @param \EBT\ExtensionBuilder\Reflection\ClassReflection $classReflection
+	 * @param \TYPO3\CMS\Extbase\Reflection\ClassReflection $classReflection
 	 * @return void
 	 */
 	public function ParserFindsAllMethods($classObject, $classReflection) {
-		$reflectionMethodCount = count($classReflection->getNotInheritedMethods());
+		$reflectionMethodCount = count($classReflection->getMethods());
 		$classObjectMethodCount = count($classObject->getMethods());
 		$this->assertEquals($classObjectMethodCount, $reflectionMethodCount, 'Not all Methods were found!: ' . $reflectionMethodCount);
 	}
@@ -197,11 +197,11 @@ class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 * with those retrieved from the reflection class
 	 *
 	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
-	 * @param \EBT\ExtensionBuilder\Reflection\ClassReflection $classReflection
+	 * @param \TYPO3\CMS\Extbase\Reflection\ClassReflection $classReflection
 	 * @return void
 	 */
 	public function ParserFindsAllProperties($classObject, $classReflection) {
-		$reflectionPropertyCount = count($classReflection->getNotInheritedProperties());
+		$reflectionPropertyCount = count($classReflection->getProperties());
 		$classObjectPropertCount = count($classObject->getProperties());
 		$this->assertEquals($classObjectPropertCount, $reflectionPropertyCount, 'Not all Properties were found!');
 	}

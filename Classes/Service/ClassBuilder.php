@@ -174,7 +174,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @param boolean $mergeWithExistingClass
 	 *
-	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\File
 	 */
 	public function generateModelClassFileObject($domainObject, $modelClassTemplatePath, $mergeWithExistingClass) {
 		$this->classObject = NULL;
@@ -799,7 +799,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
 	 * @param boolean $mergeWithExistingClass
 	 *
-	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+	 * @return \EBT\ExtensionBuilder\Domain\Model\File
 	 */
 	public function generateRepositoryClassFileObject($domainObject, $repositoryTemplateClassPath, $mergeWithExistingClass) {
 		$this->classObject = NULL;
