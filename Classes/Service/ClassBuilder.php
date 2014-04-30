@@ -459,8 +459,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		$addParameters = $addMethod->getParameterNames();
 
 		if (!in_array(\EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName), $addParameters)) {
-			$addParameter = new Model\Parameter();
-			$addParameter->setName(\EBT\ExtensionBuilder\Utility\Tools::getParameterName($domainProperty, 'add'));
+			$addParameter = new Model\ClassObject\MethodParameter(\EBT\ExtensionBuilder\Utility\Tools::getParameterName($domainProperty, 'add'));
 			$addParameter->setVarType($domainProperty->getForeignClassName());
 			$addMethod->setParameter($addParameter);
 		}
@@ -600,8 +599,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			'newDomainObject' => 'new' . $domainObject->getName()
 		);
 		$this->updateMethodBody($actionMethod, $replacements);
-		$updatedDocComment = $this->updateDocComment($actionMethod, $replacements);
-		$actionMethod->setDocComment($updatedDocComment);
+		$this->updateDocComment($actionMethod, $replacements);
 		return $actionMethod;
 	}
 
