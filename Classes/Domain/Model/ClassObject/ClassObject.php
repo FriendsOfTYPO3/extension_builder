@@ -226,7 +226,7 @@ class ClassObject extends AbstractObject {
 
 	/**
 	 * @param string $methodName
-	 * @return null|Method
+	 * @return NULL|Method
 	 */
 	public function getMethod($methodName) {
 		if ($this->methodExists($methodName)) {

@@ -383,7 +383,7 @@ class Extension {
 
 	/**
 	 * get all domainobjects that are mapped to existing tables
-	 * @return array|null
+	 * @return array|NULL
 	 */
 	public function getDomainObjectsThatNeedMappingStatements() {
 		$domainObjectsThatNeedMappingStatements = array();

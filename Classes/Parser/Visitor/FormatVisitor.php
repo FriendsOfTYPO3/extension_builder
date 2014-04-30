@@ -32,7 +32,7 @@ class FormatVisitor extends \PHPParser_NodeVisitorAbstract {
 
     public function enterNode(\PHPParser_Node $node){
         if (self::$first && $node instanceof \PHPParser_Node_Expr_FuncCall) {
-            self::$first = false;
+            self::$first = FALSE;
             return new \PHPParser_Node_Expr_Array(array(
                 new \PHPParser_Node_Expr_ArrayItem(
                     self::parseArgs($node),
