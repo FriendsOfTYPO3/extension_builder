@@ -111,7 +111,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 	 *
 	 * @return string Pretty printed statements
 	 */
-	protected function pStmts(array $nodes, $indent = true) {
+	protected function pStmts(array $nodes, $indent = TRUE) {
 		$pNodes = array();
 		foreach ($nodes as $node) {
 			$pNodes[] = $this->pComments($node->getAttribute('comments', array())) .
@@ -141,7 +141,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 	public function pStmt_Class(\PHPParser_Node_Stmt_Class $node) {
 		return $this->pModifiers($node->type) .
 			'class ' . $node->name .
-			(null !== $node->extends ? ' extends ' . $this->p($node->extends) : '') .
+			(NULL !== $node->extends ? ' extends ' . $this->p($node->extends) : '') .
 			(!empty($node->implements) ? ' implements ' . $this->pCommaSeparated($node->implements) : '') .
 			' {' . LF . LF . $this->pStmts($node->stmts) . LF . '}';
 	}
@@ -170,7 +170,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		return $this->pModifiers($node->type) .
 			'function ' . ($node->byRef ? '&' : '') . $node->name .
 			'(' . $firstToken . $this->pParameterNodes($node->params) . $lastToken . ')' .
-			(null !== $node->stmts
+			(NULL !== $node->stmts
 				? ' {' . LF . $this->pStmts($node->stmts) . LF . '}' . LF
 				: ';');
 	}

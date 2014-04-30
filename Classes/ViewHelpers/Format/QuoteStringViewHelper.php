@@ -37,8 +37,8 @@ class QuoteStringViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
 	/**
 	 * @param string $value
 	 */
-	public function render($value = null) {
-		if ($value == null) {
+	public function render($value = NULL) {
+		if ($value == NULL) {
 			$value = $this->renderChildren();
 		}
 

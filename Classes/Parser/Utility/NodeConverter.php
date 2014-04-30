@@ -123,11 +123,11 @@ class NodeConverter {
            return $value;
        } elseif (is_null($value)) {
            return new \PHPParser_Node_Expr_ConstFetch(
-               new \PHPParser_Node_Name('null')
+               new \PHPParser_Node_Name('NULL')
            );
        } elseif (is_bool($value)) {
            return new \PHPParser_Node_Expr_ConstFetch(
-               new \PHPParser_Node_Name($value ? 'true' : 'false')
+               new \PHPParser_Node_Name($value ? 'TRUE' : 'FALSE')
            );
        } elseif (is_int($value)) {
            return new \PHPParser_Node_Scalar_LNumber($value);
@@ -140,12 +140,12 @@ class NodeConverter {
            $lastKey = -1;
            foreach ($value as $itemKey => $itemValue) {
                // for consecutive, numeric keys don't generate keys
-               if (null !== $lastKey && ++$lastKey === $itemKey) {
+               if (NULL !== $lastKey && ++$lastKey === $itemKey) {
                    $items[] = new \PHPParser_Node_Expr_ArrayItem(
                        self::normalizeValue($itemValue)
                    );
                } else {
-                   $lastKey = null;
+                   $lastKey = NULL;
                    $items[] = new \PHPParser_Node_Expr_ArrayItem(
                        self::normalizeValue($itemValue),
                        self::normalizeValue($itemKey)
