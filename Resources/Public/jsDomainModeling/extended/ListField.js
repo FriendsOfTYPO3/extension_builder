@@ -396,6 +396,12 @@
 		 */
 		removeElement: function(index) {
 		   var elementDiv = this.subFields[index].getEl().parentNode;
+			var fieldToRemove = this.subFields[index];
+			for(var i = 0; i < fieldToRemove.inputs.length; i++) {
+				if(fieldToRemove.inputs[i].terminal !== undefined) {
+					fieldToRemove.inputs[i].terminal.removeAllWires();
+				}
+			}
 
 		   this.subFields[index] = undefined;
 		   this.subFields = inputEx.compactArray(this.subFields);

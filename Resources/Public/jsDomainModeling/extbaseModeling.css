@@ -555,3 +555,7 @@ div#propertiesForm fieldset{
 #wireEditorConfirmMessageBox strong{
 	font-weight:700;
 }
+
+div.inputEx-invalid>div.inputEx-label label {
+	background-position: 3px 1px;
+}
