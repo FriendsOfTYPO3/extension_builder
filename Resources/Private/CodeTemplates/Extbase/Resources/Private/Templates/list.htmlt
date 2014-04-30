@@ -21,7 +21,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 <table  class="{extension.shortExtensionKey}" >
 	<k:format.removeMultipleNewlines><tr>
 
-	<k:comment>Building up the table header</k:comment>
+	<f:comment>Building up the table header</f:comment>
 		<f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
 		<th><k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag></th>
 		</f:if></f:for>
@@ -31,7 +31,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 	</k:format.removeMultipleNewlines>
 
 	<k:format.removeMultipleNewlines>
-	<k:comment>Creating the f:for which loops through all objects</k:comment>
+	<f:comment>Creating the f:for which loops through all objects</f:comment>
 
 	<k:openingTag>f:for each="{domainObject.name -> k:format.lowercaseFirst() -> k:pluralize() -> k:curlyBrackets()}" as="{domainObject.name -> k:format.lowercaseFirst()}"</k:openingTag>
 
