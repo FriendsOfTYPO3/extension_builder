@@ -91,7 +91,7 @@ $GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$TCA['{domainObje
 <f:for each="{extension.domainObjects}" as="domainObject">
 	<f:if condition="{domainObject.categorizable}">
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
-    $extensionKey,
+    $_EXTKEY,
     '{domainObject.databaseTableName}'
 );
 	</f:if>
