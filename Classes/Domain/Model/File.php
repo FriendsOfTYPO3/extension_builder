@@ -151,47 +151,6 @@ class File extends Container {
 	}
 
 	/**
-	 * @return array
-	 */
-	public function getStmts() {
-		$this->stmts = array();
-		if ($this->hasNamespaces()) {
-			foreach ($this->namespaces as $namespace) {
-				$this->stmts[] = $namespace->getNode();
-				foreach ($namespace->getAliasDeclarations() as $aliasDeclaration) {
-					$this->stmts[] = $aliasDeclaration;
-				}
-				$this->addSubStatements($namespace);
-			}
-		} else {
-			$this->addSubStatements($this);
-		}
-		return $this->stmts;
-	}
-
-	/**
-	 * @param \EBT\ExtensionBuilder\Domain\Model\Container $parentObject either a file object or a namespace object
-	 */
-	protected function addSubStatements($parentObject) {
-
-		foreach ($parentObject->getPreClassStatements() as $preInclude) {
-			$this->stmts[] = $preInclude;
-		}
-
-		foreach ($parentObject->getClasses() as $class) {
-			$this->stmts[] = $class->getNode();
-		}
-
-		foreach ($parentObject->getFunctions() as $function) {
-			$this->stmts[] = $function->getNode();
-		}
-
-		foreach ($this->getPostClassStatements() as $postInclude) {
-			$this->stmts[] = $postInclude;
-		}
-	}
-
-	/**
 	 * @param array $aliasDeclarations PHPParser_Node_Stmt
 	 */
 	public function addAliasDeclarations($aliasDeclarations) {
