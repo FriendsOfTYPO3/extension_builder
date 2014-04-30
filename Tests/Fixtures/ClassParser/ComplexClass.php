@@ -19,7 +19,7 @@
 require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Fixtures/ClassParser/BasicClass.php');
 
 
-final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass extends Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClass{
+final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass {
 
 	protected $name="test;"; private $propertiesInOneLine;
 

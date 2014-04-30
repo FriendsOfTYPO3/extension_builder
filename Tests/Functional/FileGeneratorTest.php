@@ -25,7 +25,6 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  ***************************************************************/
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
 use EBT\ExtensionBuilder\Domain\Model\Plugin;
-use EBT\ExtensionBuilder\Reflection\ClassReflection;
 use EBT\ExtensionBuilder\Utility\Inflector;
 
 
@@ -72,7 +71,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 			include_once($modelClassPath);
 		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
-		$reflection = new ClassReflection($className);
+		$reflection = new \ReflectionClass($className);
 		$this->assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)),'Getter was not generated');
 		$this->assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)),'Setter was not generated');
 		$this->assertTrue($reflection->hasMethod('is' . ucfirst($propertyName)),'isMethod was not generated');
@@ -109,7 +108,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 
-		$reflection = new ClassReflection($className);
+		$reflection = new \ReflectionClass($className);
 		$this->assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)),'Getter was not generated');
 		$this->assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)),'Setter was not generated');
 		$this->assertFalse($reflection->hasMethod('is' . ucfirst($propertyName)),'isMethod should not be generated');
@@ -150,7 +149,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 			include($modelClassPath);
 		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
-		$reflection = new ClassReflection($className);
+		$reflection = new \TYPO3\CMS\Extbase\Reflection\ClassReflection($className);
 		$this->assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)),'Getter was not generated');
 		$this->assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)),'Setter was not generated');
 		$setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
@@ -194,13 +193,13 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 
-		$reflection = new ClassReflection($className);
+		$reflection = new \TYPO3\CMS\Extbase\Reflection\ClassReflection($className);
 		$this->assertTrue($reflection->hasMethod('add' . ucfirst(Inflector::singularize($propertyName))),'Add method was not generated');
 		$this->assertTrue($reflection->hasMethod('remove' . ucfirst(Inflector::singularize($propertyName))),'Remove method was not generated');
 		$this->assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)),'Getter was not generated');
 		$this->assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)),'Setter was not generated');
 
-		//checking methods
+			//checking methods
 		$setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
 		$this->assertTrue($setterMethod->isTaggedWith('param'),'No param tag set for setter method');
 		$paramTagValues = $setterMethod->getTagValues('param');
@@ -264,7 +263,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		}
 		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
 
-		$reflection = new ClassReflection($className);
+		$reflection = new \TYPO3\CMS\Extbase\Reflection\ClassReflection($className);
 		$this->assertTrue($reflection->hasMethod('add' . ucfirst(Inflector::singularize($propertyName))),'Add method was not generated');
 		$this->assertTrue($reflection->hasMethod('remove' . ucfirst(Inflector::singularize($propertyName))),'Remove method was not generated');
 		$this->assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)),'Getter was not generated');
