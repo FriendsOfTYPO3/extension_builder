@@ -1,6 +1,7 @@
 <?php
 namespace EBT\ExtensionBuilder\Tests;
 use org\bovigo\vfs\vfsStream;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /***************************************************************
  *  Copyright notice
@@ -92,49 +93,49 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 
 
 	protected function setUp($settingFile = ''){
-		if(!class_exists('PHPParser_Parser')) {
+		if (!class_exists('PHPParser_Parser')) {
 			\EBT\ExtensionBuilder\Parser\AutoLoader::register();
 		}
-		if(!class_exists('PHPParser_Parser')) {
+		if (!class_exists('PHPParser_Parser')) {
 			die('Parser not found!!');
 		}
-		$this->fixturesPath = PATH_typo3conf.'ext/extension_builder/Tests/Fixtures/';
+		$this->fixturesPath = PATH_typo3conf . 'ext/extension_builder/Tests/Fixtures/';
 
-		$this->extension = $this->getMock('EBT\\ExtensionBuilder\\Domain\\Model\\Extension',array('getExtensionDir'));
+		$this->extension = $this->getMock('EBT\\ExtensionBuilder\\Domain\\Model\\Extension', array('getExtensionDir'));
 		$extensionKey = 'dummy';
 		vfsStream::setup('testDir');
-		$dummyExtensionDir = vfsStream::url('testDir').'/';
+		$dummyExtensionDir = vfsStream::url('testDir') . '/';
 		$this->extension->setVendorName('EBT');
 		$this->extension->setExtensionKey($extensionKey);
 		$this->extension->expects(
 			$this->any())
 				->method('getExtensionDir')
 				->will($this->returnValue($dummyExtensionDir));
-		if(is_dir($dummyExtensionDir)) {
-			\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir($dummyExtensionDir, TRUE);
+		if (is_dir($dummyExtensionDir)) {
+			GeneralUtility::mkdir($dummyExtensionDir, TRUE);
 		}
 		$yamlParser = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser();
-		$settings = $yamlParser->YAMLLoadString(file_get_contents($this->fixturesPath.'Settings/settings1.yaml'));
+		$settings = $yamlParser->YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
 		$this->extension->setSettings($settings);
-		$configurationManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Configuration\\ConfigurationManager');
+		$configurationManager = GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Configuration\\ConfigurationManager');
 
-		$this->roundTripService =  $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\RoundTrip'),array('dummy'));
-		$this->classBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Service\\ClassBuilder');
+		$this->roundTripService =  $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\RoundTrip'), array('dummy'));
+		$this->classBuilder = GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Service\\ClassBuilder');
 		$this->classBuilder->injectConfigurationManager($configurationManager);
 
 		$this->roundTripService->injectClassBuilder($this->classBuilder);
 		$this->roundTripService->injectConfigurationManager($configurationManager);
-		$this->templateParser = $this->getMock($this->buildAccessibleProxy('TYPO3\\CMS\\Fluid\\Core\\Parser\\TemplateParser'),array('dummy'));
-		$this->fileGenerator = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\FileGenerator'),array('dummy'));
+		$this->templateParser = $this->getMock($this->buildAccessibleProxy('TYPO3\\CMS\\Fluid\\Core\\Parser\\TemplateParser'), array('dummy'));
+		$this->fileGenerator = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\FileGenerator'), array('dummy'));
 
-		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+		$objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 		$this->objectManager = clone $objectManager;
 
 		$this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PHPParser_Lexer());
 		$this->printerService = new \EBT\ExtensionBuilder\Service\Printer();
 		$this->printerService->injectNodeFactory(new \EBT\ExtensionBuilder\Parser\NodeFactory());
 
-		$localizationService = $this->objectManager->get('\EBT\ExtensionBuilder\Service\LocalizationService');
+		$localizationService = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\\LocalizationService');
 
 		$this->fileGenerator->injectObjectManager($this->objectManager);
 		$this->fileGenerator->injectPrinterService($this->printerService);
@@ -163,14 +164,14 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 				)
 			)
 		);
-		$this->fileGenerator->_set('codeTemplateRootPath',PATH_typo3conf.'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/');
-		$this->fileGenerator->_set('enableRoundtrip',true);
-		$this->fileGenerator->_set('extension',$this->extension);
+		$this->fileGenerator->_set('codeTemplateRootPath', PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/');
+		$this->fileGenerator->_set('enableRoundtrip', true);
+		$this->fileGenerator->_set('extension', $this->extension);
 	}
 
 	protected function tearDown() {
-		if(isset($this->extension) && $this->extension->getExtensionKey() != NULL) {
-			\TYPO3\CMS\Core\Utility\GeneralUtility::rmdir($this->extension->getExtensionDir(), TRUE);
+		if (isset($this->extension) && $this->extension->getExtensionKey() != NULL) {
+			GeneralUtility::rmdir($this->extension->getExtensionDir(), TRUE);
 		}
 	}
 
@@ -182,17 +183,21 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
 	 */
 	protected function buildDomainObject($name, $entity = false, $aggregateRoot = false){
-		$domainObject = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject'),array('dummy'));
+		$domainObject = $this->getMock(
+			$this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject'),
+			array('dummy')
+		);
+		/* @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
 		$domainObject->setExtension($this->extension);
 		$domainObject->setName($name);
 		$domainObject->setEntity($entity);
 		$domainObject->setAggregateRoot($aggregateRoot);
-		if($aggregateRoot){
-			$defaultActions = array('list','show','new','create','edit','update','delete');
-			foreach($defaultActions as $actionName){
-				$action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Action');
+		if ($aggregateRoot){
+			$defaultActions = ['list','show','new','create','edit','update','delete'];
+			foreach ($defaultActions as $actionName){
+				$action = GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Action');
 				$action->setName($actionName);
-				if($actionName == 'deleted'){
+				if ($actionName == 'deleted'){
 					$action->setNeedsTemplate = false;
 				}
 				$domainObject->addAction($action);
@@ -209,21 +214,21 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 	 */
 	function generateInitialModelClassFile($modelName){
 		$domainObject = $this->buildDomainObject($modelName);
-		$classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject,$this->extension);
+		$classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, $this->extension);
 		$modelClassDir = 'Classes/Domain/Model/';
-		$result = \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$modelClassDir);
-		$absModelClassDir = $this->extension->getExtensionDir().$modelClassDir;
+		GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
+		$absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
 		$this->assertTrue(is_dir($absModelClassDir),'Directory ' . $absModelClassDir . ' was not created');
 
 		$modelClassPath =  $absModelClassDir . $domainObject->getName() . '.php';
-		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath,$classFileContent);
+		GeneralUtility::writeFile($modelClassPath,$classFileContent);
 	}
 
 	function removeInitialModelClassFile($modelName){
-		if(@file_exists($this->extension->getExtensionDir().$this->modelClassDir.$modelName . '.php')){
-			unlink($this->extension->getExtensionDir().$this->modelClassDir.$modelName . '.php');
+		if (@file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php')){
+			unlink($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php');
 		}
-		$this->assertFalse(file_exists($this->extension->getExtensionDir().$this->modelClassDir. $modelName . '.php'),'Dummy files could not be removed:'.$this->extension->getExtensionDir().$this->modelClassDir. $modelName . '.php');
+		$this->assertFalse(file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php'), 'Dummy files could not be removed:' . $this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php');
 	}
 
 }
