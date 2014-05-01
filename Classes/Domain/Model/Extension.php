@@ -414,6 +414,31 @@ class Extension {
 	}
 
 	/**
+	* get all domainobjects that are mapped to existing tables
+	* @return array|null
+	*/
+	public function getClassHierarchy() {
+		$classHierarchy = array();
+		foreach ($this->domainObjects as $domainObject) {
+			if ($domainObject->isSubclass()) {
+				$parentClass = $domainObject->getParentClass();
+				if (strpos($parentClass, '\\') === 0) {
+					$parentClass = substr($parentClass, 1);
+				}
+				if (!is_array($classHierarchy[$parentClass])) {
+					$classHierarchy[$parentClass] = array();
+				}
+				$classHierarchy[$parentClass][] = $domainObject;
+			}
+		}
+		if (!empty($classHierarchy)) {
+			return $classHierarchy;
+		} else {
+			return NULL;
+		}
+	}
+
+	/**
 	 * needed to get the right order for models
 	 * extending other models parents have to be ordered before their children
 	 */
