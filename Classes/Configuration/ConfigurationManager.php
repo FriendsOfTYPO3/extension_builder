@@ -205,7 +205,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 				$currentClassSettings = $frameworkConfiguration['persistence']['classes'][$currentClassName];
 				if ($currentClassSettings !== NULL) {
 					if (isset($currentClassSettings['mapping']['columns']) && is_array($currentClassSettings['mapping']['columns'])) {
-						\TYPO3\CMS\Core\Utility\ArrayUtility::mergeRecursiveWithOverrule(
+						GeneralUtility::array_merge_recursive_overrule(
 							$columnMapping,
 							$currentClassSettings['mapping']['columns'],
 							0,
@@ -276,8 +276,60 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 	 */
 	public function fixExtensionBuilderJSON($extensionConfigurationJson) {
 		$extensionConfigurationJson['modules'] = $this->resetOutboundedPositions($extensionConfigurationJson['modules']);
+		$extensionConfigurationJson['modules'] = $this->mapAdvancedMode($extensionConfigurationJson['modules']);
 		$extensionConfigurationJson = $this->reArrangeRelations($extensionConfigurationJson);
 		return $extensionConfigurationJson;
+	}
+
+
+	/**
+	 * Copy values from simple mode fieldset to advanced fieldset.
+	 *
+	 * Enables compatibility with JSON from older versions of the extension builder.
+	 *
+	 * @param array $jsonConfig
+	 * @param boolean $prepareForModeler
+	 *
+	 * @return array modified json
+	 */
+	protected function mapAdvancedMode($jsonConfig, $prepareForModeler = TRUE) {
+		$fieldsToMap = array(
+			'relationType',
+			'propertyIsExcludeField',
+			'propertyIsExcludeField',
+			'lazyLoading',
+			'relationDescription',
+			'foreignRelationClass'
+		);
+		foreach ($jsonConfig as &$module) {
+			for ($i = 0; $i < count($module['value']['relationGroup']['relations']); $i++) {
+				if ($prepareForModeler) {
+					if (empty($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
+						$module['value']['relationGroup']['relations'][$i]['advancedSettings'] = array();
+						foreach ($fieldsToMap as $fieldToMap) {
+							$module['value']['relationGroup']['relations'][$i]['advancedSettings'][$fieldToMap] =
+								$module['value']['relationGroup']['relations'][$i][$fieldToMap];
+						}
+
+						$module['value']['relationGroup']['relations'][$i]['advancedSettings']['propertyIsExcludeField'] =
+							$module['value']['relationGroup']['relations'][$i]['propertyIsExcludeField'];
+						$module['value']['relationGroup']['relations'][$i]['advancedSettings']['lazyLoading'] =
+							$module['value']['relationGroup']['relations'][$i]['lazyLoading'];
+						$module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationDescription'] =
+							$module['value']['relationGroup']['relations'][$i]['relationDescription'];
+						$module['value']['relationGroup']['relations'][$i]['advancedSettings']['foreignRelationClass'] =
+							$module['value']['relationGroup']['relations'][$i]['foreignRelationClass'];
+					}
+				} elseif (isset($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
+					foreach ($fieldsToMap as $fieldToMap) {
+						$module['value']['relationGroup']['relations'][$i][$fieldToMap] =
+							$module['value']['relationGroup']['relations'][$i]['advancedSettings'][$fieldToMap];
+					}
+					unset($module['value']['relationGroup']['relations'][$i]['advancedSettings']);
+				}
+			}
+		}
+		return $jsonConfig;
 	}
 
 	/**

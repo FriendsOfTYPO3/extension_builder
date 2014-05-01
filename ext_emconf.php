@@ -17,7 +17,6 @@ $EM_CONF[$_EXTKEY] = array(
 	'author' => 'Nico de Haen',
 	'author_email' => 'mail@ndh-websolutions.de',
 	'shy' => '',
-	'dependencies' => 'extbase,fluid',
 	'conflicts' => '',
 	'priority' => '',
 	'module' => '',
@@ -32,9 +31,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'version' => '6.1',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '6.0-6.2.99',
-			'extbase' => '6.0-6.2.99',
-			'fluid' => '6.0-6.2.99',
+			'typo3' => '6.1-6.2.99'
 		),
 		'conflicts' => array(
 		),
