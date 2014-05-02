@@ -257,7 +257,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 		GeneralUtility::mkdir_deep($extension->getExtensionDir(), self::SETTINGS_DIR);
 		$settings = file_get_contents($codeTemplateRootPath . 'Configuration/ExtensionBuilder/settings.yamlt');
 		$settings = str_replace('{extension.extensionKey}', $extension->getExtensionKey(), $settings);
-		$settings = str_replace('<f:format.date>now</f:format.date>', date('Y-m-d H:i'), $settings);
+		$settings = str_replace('{f:format.date(format:\'Y-m-d\\TH:i:s\\Z\',date:\'now\')}', date('Y-m-d\TH:i:s\Z'), $settings);
 		GeneralUtility::writeFile(
 			$extension->getExtensionDir() . self::SETTINGS_DIR . 'settings.yaml', $settings
 		);
