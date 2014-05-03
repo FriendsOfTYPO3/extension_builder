@@ -1,6 +1,6 @@
 #
 # Extension Builder settings for extension {extension.extensionKey}
-# generated {f:format.date(format:'Y-m-d\TH:i:s\Z',date:'now')}
+# generated {f:format.date(format:'Y-m-d\TH:i:00\Z',date:'now')}
 #
 # See http://www.yaml.org/spec/1.2/spec.html
 #
@@ -50,8 +50,7 @@ overwriteSettings:
 
   Resources:
     Private:
-      Language:
-        #locallang.xlf: merge
+      #Language: merge
       #Templates: keep
 
   ext_icon.gif: keep
@@ -63,10 +62,7 @@ overwriteSettings:
 #  ext_tables.sql: merge
 
 ## use static date attribute in xliff files ##
-#staticDateInXliffFiles: {f:format.date(format:'Y-m-d\TH:i:s\Z',date:'now')}
-
-## ext_autoload.php is only needed in special cases ##
-createAutoloadRegistry: false
+#staticDateInXliffFiles: {f:format.date(format:'Y-m-d\TH:i:00\Z',date:'now')}
 
 ######### settings for classBuilder #############################
 #
@@ -76,7 +72,6 @@ createAutoloadRegistry: false
 # It will be kept on next code generation, if the overwrite settings
 # are configured to merge it
 #
-#  Experimental!!
 #################################################################
 
 classBuilder:

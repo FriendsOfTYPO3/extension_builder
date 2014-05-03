@@ -320,7 +320,9 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $pluginValues['actions']['controllerActionCombinations'], TRUE);
 			foreach ($lines as $line) {
 				list($controllerName, $actionNames) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>', $line);
-				$controllerActionCombinations[$controllerName] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $actionNames);
+				if (!empty($actionNames)) {
+					$controllerActionCombinations[$controllerName] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $actionNames);
+				}
 			}
 			$plugin->setControllerActionCombinations($controllerActionCombinations);
 		}
@@ -329,7 +331,9 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			$lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $pluginValues['actions']['noncacheableActions'], TRUE);
 			foreach ($lines as $line) {
 				list($controllerName, $actionNames) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>', $line);
-				$noncacheableControllerActions[$controllerName] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $actionNames);
+				if (!empty($actionNames)) {
+					$noncacheableControllerActions[$controllerName] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $actionNames);
+				}
 			}
 			$plugin->setNoncacheableControllerActions($noncacheableControllerActions);
 		}

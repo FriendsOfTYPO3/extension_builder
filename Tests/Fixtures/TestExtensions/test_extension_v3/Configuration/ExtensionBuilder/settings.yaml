@@ -1,6 +1,6 @@
 #
 # Extension Builder settings for extension test_extension
-# generated 2011-08-11T06:49:45Z
+# generated 2011-08-11T06:49:00Z
 #
 # See http://www.yaml.org/spec/1.2/spec.html
 #
@@ -50,8 +50,7 @@ overwriteSettings:
 
   Resources:
     Private:
-      Language:
-        #locallang.xlf: merge
+      #Language: merge
       #Templates: keep
 
   ext_icon.gif: keep
@@ -63,10 +62,7 @@ overwriteSettings:
 #  ext_tables.sql: merge
 
 ## use static date attribute in xliff files ##
-#staticDateInXliffFiles: 2011-08-11T06:49:45Z
-
-## ext_autoload.php is only needed in special cases ##
-createAutoloadRegistry: false
+#staticDateInXliffFiles: 2011-08-11T06:49:00Z
 
 ######### settings for classBuilder #############################
 #
@@ -76,7 +72,6 @@ createAutoloadRegistry: false
 # It will be kept on next code generation, if the overwrite settings
 # are configured to merge it
 #
-#  Experimental!!
 #################################################################
 
 classBuilder:
