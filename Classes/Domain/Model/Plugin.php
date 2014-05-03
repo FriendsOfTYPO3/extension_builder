@@ -114,9 +114,16 @@ class Plugin {
 	}
 
 	/**
-	 * @return array
+	 * Used in fluid templates for localconf.php
+	 * if controllerActionCombinations are empty we have to
+	 * return NULL to enable test in condition
+	 *
+	 * @return array|NULL
 	 */
 	public function getControllerActionCombinations() {
+		if (empty($this->controllerActionCombinations)) {
+			return NULL;
+		}
 		return $this->controllerActionCombinations;
 	}
 
@@ -132,6 +139,9 @@ class Plugin {
 	 * @return array
 	 */
 	public function getNoncacheableControllerActions() {
+		if (empty($this->noncacheableControllerActions)) {
+			return NULL;
+		}
 		return $this->noncacheableControllerActions;
 	}
 

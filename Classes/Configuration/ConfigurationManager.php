@@ -28,7 +28,6 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Http\AjaxRequestHandler;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /**
@@ -41,10 +40,6 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 	 */
 	const SETTINGS_DIR = 'Configuration/ExtensionBuilder/';
 
-	/**
-	 * @var string
-	 */
-	const OLD_SETTINGS_DIR = 'Configuration/Kickstarter/';
 
 	/**
 	 * @var string
@@ -153,22 +148,16 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 	 * Reads the stored configuration (i.e. the extension model etc.).
 	 *
 	 * @param string $extensionKey
-	 * @param boolean $prepareForModeler (should the advanced settings be mapped to the subform?)
 	 * @return array|NULL
 	 */
-	public function getExtensionBuilderConfiguration($extensionKey, $prepareForModeler = TRUE) {
+	public function getExtensionBuilderConfiguration($extensionKey) {
 		$result = NULL;
 
-		$oldJsonFile = PATH_typo3conf . 'ext/' . $extensionKey . '/kickstarter.json';
 		$jsonFile = PATH_typo3conf . 'ext/' . $extensionKey . '/' . self::EXTENSION_BUILDER_SETTINGS_FILE;
-		if (file_exists($oldJsonFile)) {
-			rename($oldJsonFile, $jsonFile);
-		}
 
 		if (file_exists($jsonFile)) {
-			// compatibility adaptions for configurations from older versions
 			$extensionConfigurationJson = json_decode(file_get_contents($jsonFile), TRUE);
-			$extensionConfigurationJson = $this->fixExtensionBuilderJSON($extensionConfigurationJson, $prepareForModeler);
+			$extensionConfigurationJson = $this->fixExtensionBuilderJSON($extensionConfigurationJson);
 			$extensionConfigurationJson['properties']['originalExtensionKey'] = $extensionKey;
 			if (floatval($extensionConfigurationJson['log']['extension_builder_version']) >= 2.5) {
 				$result = $extensionConfigurationJson;
@@ -216,11 +205,11 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 				$currentClassSettings = $frameworkConfiguration['persistence']['classes'][$currentClassName];
 				if ($currentClassSettings !== NULL) {
 					if (isset($currentClassSettings['mapping']['columns']) && is_array($currentClassSettings['mapping']['columns'])) {
-						$columnMapping = GeneralUtility::array_merge_recursive_overrule(
+						\TYPO3\CMS\Core\Utility\ArrayUtility::mergeRecursiveWithOverrule(
 							$columnMapping,
 							$currentClassSettings['mapping']['columns'],
 							0,
-							// FALSE means: do not include empty values form 2nd array
+								// FALSE means: do not include empty values form 2nd array
 							FALSE
 						);
 					}
@@ -238,14 +227,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 	 */
 	public function getSettingsFile($extensionKey) {
 		$extensionDir = PATH_typo3conf . 'ext/' . $extensionKey . '/';
-		$settingsFile = $extensionDir . self::SETTINGS_DIR . 'settings.yaml';
-		if (!file_exists($settingsFile) && file_exists($extensionDir . self::OLD_SETTINGS_DIR . 'settings.yaml')) {
-			// upgrade from an extension that was built with the extbase_kickstarter
-			mkdir($extensionDir . self::SETTINGS_DIR);
-			copy($extensionDir . self::OLD_SETTINGS_DIR . 'settings.yaml', $extensionDir . self::SETTINGS_DIR . 'settings.yaml');
-			$settingsFile = $extensionDir . self::SETTINGS_DIR . 'settings.yaml';
-		}
-		return $settingsFile;
+		return $extensionDir . self::SETTINGS_DIR . 'settings.yaml';
 	}
 
 	/**
@@ -287,25 +269,13 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 	}
 
 	/**
-	 * Performs various compatibility modifications and fixes/workarounds for wireit
-	 * limitations.
+	 * Performs various fixes/workarounds for wireit limitations.
 	 *
 	 * @param array $extensionConfigurationJson
-	 * @param boolean $prepareForModeler
 	 * @return array the modified configuration
 	 */
-	public function fixExtensionBuilderJSON($extensionConfigurationJson, $prepareForModeler) {
-		$extBuilderVersion = VersionNumberUtility::convertVersionsStringToVersionNumbers(
-			$extensionConfigurationJson['log']['extension_builder_version']
-		);
-		$extensionConfigurationJson['modules'] = $this->mapOldRelationTypesToNewRelationTypes($extensionConfigurationJson['modules']);
-		$extensionConfigurationJson['modules'] = $this->generateUniqueIds($extensionConfigurationJson['modules']);
+	public function fixExtensionBuilderJSON($extensionConfigurationJson) {
 		$extensionConfigurationJson['modules'] = $this->resetOutboundedPositions($extensionConfigurationJson['modules']);
-		$extensionConfigurationJson['modules'] = $this->mapAdvancedMode($extensionConfigurationJson['modules'], $prepareForModeler);
-		$extensionConfigurationJson['modules'] = $this->mapOldActions($extensionConfigurationJson['modules']);
-		if ($extBuilderVersion['version_int'] < 2000100) {
-			$extensionConfigurationJson = $this->importExistingActionConfiguration($extensionConfigurationJson);
-		}
 		$extensionConfigurationJson = $this->reArrangeRelations($extensionConfigurationJson);
 		return $extensionConfigurationJson;
 	}
@@ -321,48 +291,11 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 		foreach ($moduleConfig as &$module) {
 			if (!empty($module['value']['objectsettings']['parentClass'])
 					&& strpos($module['value']['objectsettings']['parentClass'], '\\') !== 0) {
-				// namespaced classes always need a full qualified class name
+					// namespaced classes always need a full qualified class name
 				$module['value']['objectsettings']['parentClass'] = '\\' . $module['value']['objectsettings']['parentClass'];
 			}
 		}
 		return $moduleConfig;
-	}
-
-	/**
-	 * Enable unique IDs to track modifications of models, properties and relations
-	 * this method sets unique IDs to the JSON array, if it was created with an
-	 * older version of the extension builder.
-	 *
-	 * @param $jsonConfig
-	 * @return array $jsonConfig with unique IDs
-	 */
-	protected function generateUniqueIds($jsonConfig) {
-		foreach ($jsonConfig as &$module) {
-
-			if (empty($module['value']['objectsettings']['uid'])) {
-				$module['value']['objectsettings']['uid'] = md5(microtime() . $module['propertyName']);
-			}
-
-			for ($i = 0; $i < count($module['value']['propertyGroup']['properties']); $i++) {
-				// don't save empty properties
-				if (empty($module['value']['propertyGroup']['properties'][$i]['propertyName'])) {
-					unset($module['value']['propertyGroup']['properties'][$i]);
-				} elseif (empty($module['value']['propertyGroup']['properties'][$i]['uid'])) {
-					$module['value']['propertyGroup']['properties'][$i]['uid'] = md5(
-						microtime() . $module['value']['propertyGroup']['properties'][$i]['propertyName']
-					);
-				}
-			}
-			for ($i = 0; $i < count($module['value']['relationGroup']['relations']); $i++) {
-				// don't save empty relations
-				if (empty($module['value']['relationGroup']['relations'][$i]['relationName'])) {
-					unset($module['value']['relationGroup']['relations'][$i]);
-				} elseif (empty($module['value']['relationGroup']['relations'][$i]['uid'])) {
-					$module['value']['relationGroup']['relations'][$i]['uid'] = md5(microtime() . $module['value']['relationGroup']['relations'][$i]['relationName']);
-				}
-			}
-		}
-		return $jsonConfig;
 	}
 
 	/**
@@ -380,101 +313,6 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 		return FALSE;
 	}
 
-
-	/**
-	 * Enables compatibility with JSON from older versions of the extension builder
-	 * old relation types are mapped to new types according to this scheme:
-	 *
-	 * zeroToMany
-	 *         inline == 1 => zeroToMany
-	 *         inline == 0 => manyToMany
-	 * zeroToOne
-	 *         inline == 1 => zeroToOne
-	 *         inline == 0 => manyToOne
-	 * ManyToMany
-	 *         inline == 1 => oneToMany
-	 *         inline == 0 => manyToMany
-	 *
-	 * @param array $jsonConfig
-	 * @return array
-	 */
-	protected function mapOldRelationTypesToNewRelationTypes($jsonConfig) {
-		foreach ($jsonConfig as &$module) {
-			for ($i = 0; $i < count($module['value']['relationGroup']['relations']); $i++) {
-				if (isset($module['value']['relationGroup']['relations'][$i]['advancedSettings']['inlineEditing'])) {
-					// the json config was created with an older version of the kickstarter
-					if ($module['value']['relationGroup']['relations'][$i]['advancedSettings']['inlineEditing'] == 1) {
-						if ($module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] == 'manyToMany') {
-							// inline enabled results in a zeroToMany
-							$module['value']['relationGroup']['relations'][$i]['relationType'] = 'zeroToMany';
-						}
-					} else {
-						if ($module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] == 'zeroToMany') {
-							// inline disabled results in a manyToMany
-							$module['value']['relationGroup']['relations'][$i]['relationType'] = 'manyToMany';
-						}
-						if ($module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationType'] == 'zeroToOne') {
-							// inline disabled results in a manyToOne
-							$module['value']['relationGroup']['relations'][$i]['relationType'] = 'manyToOne';
-						}
-					}
-				}
-				unset($module['value']['relationGroup']['relations'][$i]['advancedSettings']['inlineEditing']);
-				unset($module['value']['relationGroup']['relations'][$i]['inlineEditing']);
-			}
-		}
-		return $jsonConfig;
-	}
-
-	/**
-	 * Copy values from simple mode fieldset to advanced fieldset.
-	 *
-	 * Enables compatibility with JSON from older versions of the extension builder.
-	 *
-	 * @param array $jsonConfig
-	 * @param boolean $prepareForModeler
-	 *
-	 * @return array modified json
-	 */
-	protected function mapAdvancedMode($jsonConfig, $prepareForModeler) {
-		$fieldsToMap = array(
-			'relationType',
-			'propertyIsExcludeField',
-			'propertyIsExcludeField',
-			'lazyLoading',
-			'relationDescription',
-			'foreignRelationClass'
-		);
-		foreach ($jsonConfig as &$module) {
-			for ($i = 0; $i < count($module['value']['relationGroup']['relations']); $i++) {
-				if ($prepareForModeler) {
-					if (empty($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
-						$module['value']['relationGroup']['relations'][$i]['advancedSettings'] = array();
-						foreach ($fieldsToMap as $fieldToMap) {
-							$module['value']['relationGroup']['relations'][$i]['advancedSettings'][$fieldToMap] =
-								$module['value']['relationGroup']['relations'][$i][$fieldToMap];
-						}
-
-						$module['value']['relationGroup']['relations'][$i]['advancedSettings']['propertyIsExcludeField'] =
-							$module['value']['relationGroup']['relations'][$i]['propertyIsExcludeField'];
-						$module['value']['relationGroup']['relations'][$i]['advancedSettings']['lazyLoading'] =
-							$module['value']['relationGroup']['relations'][$i]['lazyLoading'];
-						$module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationDescription'] =
-							$module['value']['relationGroup']['relations'][$i]['relationDescription'];
-						$module['value']['relationGroup']['relations'][$i]['advancedSettings']['foreignRelationClass'] =
-							$module['value']['relationGroup']['relations'][$i]['foreignRelationClass'];
-					}
-				} elseif (isset($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
-					foreach ($fieldsToMap as $fieldToMap) {
-						$module['value']['relationGroup']['relations'][$i][$fieldToMap] =
-							$module['value']['relationGroup']['relations'][$i]['advancedSettings'][$fieldToMap];
-					}
-					unset($module['value']['relationGroup']['relations'][$i]['advancedSettings']);
-				}
-			}
-		}
-		return $jsonConfig;
-	}
 
 	/**
 	 * Just a temporary workaround until the new UI is available.
@@ -571,103 +409,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 				$moduleCounter++;
 			}
 		}
-	}
-
-	/**
-	 * This method should adapt the changes in action configuration.
-	 *
-	 * 1. version: list with dropdowns
-	 * 2. version: checkboxes for default actions and list with textfields for
-	 *             custom actions
-	 * 3. version: prefix for default actions to enable sorting
-	 *
-	 * @param $modules
-	 * @return mixed
-	 */
-	protected function mapOldActions($modules) {
-		$newActionNames = array(
-			'list' => '_default0_list',
-			'show' => '_default1_show',
-			'new_create' => '_default2_new_create',
-			'edit_update' => '_default3_edit_update',
-			'delete' => '_default4_delete'
-		);
-		foreach ($modules as &$module) {
-			if (isset($module['value']['actionGroup']['actions'])) {
-				foreach ($newActionNames as $defaultAction) {
-					$module['value']['actionGroup'][$defaultAction] = FALSE;
-				}
-				if (empty($module['value']['actionGroup']['actions'])) {
-					if ($module['value']['objectsettings']['aggregateRoot']) {
-						foreach ($newActionNames as $defaultAction) {
-							$module['value']['actionGroup'][$defaultAction] = TRUE;
-						}
-					}
-				} else {
-
-					foreach ($module['value']['actionGroup']['actions'] as $oldActionName) {
-						if ($oldActionName == 'create') {
-							$module['value']['actionGroup']['new_create'] = TRUE;
-						} elseif ($oldActionName == 'update') {
-							$module['value']['actionGroup']['edit_update'] = TRUE;
-						} else {
-							$module['value']['actionGroup'][$oldActionName] = TRUE;
-						}
-					}
-				}
-				unset($module['value']['actionGroup']['actions']);
-			}
-
-			foreach ($newActionNames as $oldActionKey => $newActionKey) {
-				if (isset($module['value']['actionGroup'][$oldActionKey])) {
-					$module['value']['actionGroup'][$newActionKey] = $module['value']['actionGroup'][$oldActionKey];
-					unset($module['value']['actionGroup'][$oldActionKey]);
-				} elseif (!isset($module['value']['actionGroup'][$newActionKey])) {
-					$module['value']['actionGroup'][$newActionKey] = FALSE;
-				}
-			}
-		}
-		return $modules;
-	}
-
-	/**
-	 * Enable the import of actions configuration of installed extensions
-	 * by importing the settings from $TYPO3_CONF_VARS.
-	 *
-	 * @param array $extensionConfigurationJson
-	 * @return array
-	 */
-	protected function importExistingActionConfiguration(array $extensionConfigurationJson) {
-		if (isset($extensionConfigurationJson['properties']['plugins'])) {
-			$extKey = $extensionConfigurationJson['properties']['extensionKey'];
-			$upperCamelcaseExtKey = GeneralUtility::underscoredToUpperCamelCase($extKey);
-			if (ExtensionManagementUtility::isLoaded($extKey)) {
-				foreach ($extensionConfigurationJson['properties']['plugins'] as &$pluginJson) {
-					if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$upperCamelcaseExtKey]['plugins'][ucfirst($pluginJson['key'])]['controllers'])) {
-						$controllerActionCombinationsConfig = '';
-						$nonCachableActionConfig = '';
-						if (!is_array($pluginJson['actions'])) {
-							$pluginJson['actions'] = array();
-						}
-						foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$upperCamelcaseExtKey]['plugins'][ucfirst($pluginJson['key'])]['controllers'] as $controllerName => $controllerConfig) {
-							if (isset($controllerConfig['actions'])) {
-								$controllerActionCombinationsConfig .= $controllerName . '=>' . implode(',', $controllerConfig['actions']) . LF;
-							}
-							if (isset($controllerConfig['nonCacheableActions'])) {
-								$nonCachableActionConfig .= $controllerName . '=>' . implode(',', $controllerConfig['nonCacheableActions']) . LF;
-							}
-						}
-						if (!empty($controllerActionCombinationsConfig)) {
-							$pluginJson['actions']['controllerActionCombinations'] = $controllerActionCombinationsConfig;
-						}
-						if (!empty($nonCachableActionConfig)) {
-							$pluginJson['actions']['noncacheableActions'] = $nonCachableActionConfig;
-						}
-					}
-				}
-			}
-		}
-		return $extensionConfigurationJson;
+		return $result;
 	}
 
 	public function getParentClassForValueObject($extensionKey) {
