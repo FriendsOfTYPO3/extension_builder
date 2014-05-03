@@ -1,6 +1,6 @@
 #
 # Extension Builder settings for extension test_extension
-# generated 2011-08-11
+# generated 2011-08-11T06:49:45Z
 #
 # See http://www.yaml.org/spec/1.2/spec.html
 #
@@ -61,6 +61,9 @@ overwriteSettings:
 #  ext_tables.php: merge
 
 #  ext_tables.sql: merge
+
+## use static date attribute in xliff files ##
+#staticDateInXliffFiles: 2011-08-11T06:49:45Z
 
 ## ext_autoload.php is only needed in special cases ##
 createAutoloadRegistry: false
