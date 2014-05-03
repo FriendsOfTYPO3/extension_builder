@@ -64,6 +64,10 @@ overwriteSettings:
 ## use static date attribute in xliff files ##
 #staticDateInXliffFiles: 2011-08-11T06:49:00Z
 
+## list of error codes for warnings that should be ignored ##
+#ignoreWarnings:
+  #503
+
 ######### settings for classBuilder #############################
 #
 # here you may define default parent classes for your classes
