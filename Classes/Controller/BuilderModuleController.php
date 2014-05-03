@@ -311,7 +311,7 @@ class BuilderModuleController extends ActionController {
 			if (!is_array($messagesPerErrorcode[$exception->getCode()])) {
 				$messagesPerErrorcode[$exception->getCode()] = array();
 			}
-			$messagesPerErrorcode[$exception->getCode()][] = $exception->getMessage();
+			$messagesPerErrorcode[$exception->getCode()][] = nl2br(htmlspecialchars($exception->getMessage())) . ' (Error ' . $exception->getCode() . ')<br /><br />';
 		}
 		foreach ($messagesPerErrorcode as $errorCode => $messages) {
 			if (!$this->configurationManager->isConfirmed('allow' . $errorCode)) {
@@ -323,7 +323,7 @@ class BuilderModuleController extends ActionController {
 
 				} else {
 					$confirmMessage = '<ol class="warnings"><li>' . implode('</li><li>', $messages) . '</li></ol>' .
-							'<strong>Do you want to save anyway?</strong>';
+							'<strong>Do you want to save anyway?</strong><br /><br />';
 				}
 				return array(
 					'confirm' => '<span style="color:red">Warning!</span></br>' . $confirmMessage,

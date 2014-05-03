@@ -4,5 +4,3 @@ enableRoundtrip =
 backupExtension = 1
   # cat=basic; type=string; label=Backup dir: Name of the backup dir (as subdir of path_SITE or as absolute path)
 backupDir = uploads/tx_extensionbuilder/backups
-  # cat=basic; type=boolean; label=Advanced mode: Skip warnings and default values for unexperienced users. If you check this, you have more options but also to have take care of correct configuration etc.
-advancedMode =

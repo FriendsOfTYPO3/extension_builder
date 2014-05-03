@@ -64,6 +64,10 @@ overwriteSettings:
 ## use static date attribute in xliff files ##
 #staticDateInXliffFiles: {f:format.date(format:'Y-m-d\TH:i:00\Z',date:'now')}
 
+## list of error codes for warnings that should be ignored ##
+#ignoreWarnings:
+  #503
+
 ######### settings for classBuilder #############################
 #
 # here you may define default parent classes for your classes
