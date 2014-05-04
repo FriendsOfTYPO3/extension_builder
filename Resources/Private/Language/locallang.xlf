@@ -108,18 +108,6 @@
 			<trans-unit id="documentation">
 				<source>Documentation</source>
 			</trans-unit>
-			<trans-unit id="priority">
-				<source>Priority</source>
-			</trans-unit>
-			<trans-unit id="descr_priority">
-				<source>This tells the EM to try to load the extension as the very first or last of all extensions. Possible values: top or bottom</source>
-			</trans-unit>
-			<trans-unit id="shy">
-				<source>Shy</source>
-			</trans-unit>
-			<trans-unit id="descr_shy">
-				<source>If the extension is marked as shy, it won't be displayed in the extension manager by default</source>
-			</trans-unit>
 			<trans-unit id="disableVersioning">
 				<source>Disable versioning</source>
 			</trans-unit>
@@ -142,7 +130,7 @@
 				<source>Depends on</source>
 			</trans-unit>
 			<trans-unit id="descr_dependsOn">
-				<source>If the extension is depending on other extensions, enter the extension keys here (one per line followed by a double arrow and the lowest version number). Please leave extbase and fluid since they are required always</source>
+				<source>If the extension is depending on other extensions, enter the extension keys here (one per line followed by a double arrow and the lowest version number)./source>
 			</trans-unit>
 			<trans-unit id="persons">
 				<source>Persons</source>
