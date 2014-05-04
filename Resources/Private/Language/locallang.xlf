@@ -130,7 +130,7 @@
 				<source>Depends on</source>
 			</trans-unit>
 			<trans-unit id="descr_dependsOn">
-				<source>If the extension is depending on other extensions, enter the extension keys here (one per line followed by a double arrow and the lowest version number)./source>
+				<source>If the extension is depending on other extensions, enter the extension keys here (one per line followed by a double arrow and the lowest version number).</source>
 			</trans-unit>
 			<trans-unit id="persons">
 				<source>Persons</source>
