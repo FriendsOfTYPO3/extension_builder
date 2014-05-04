@@ -247,9 +247,9 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 													inputParams: {
 														name: "propertyName",
 														forceAlphaNumeric: true,
+														placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.propertyName,
 														lcFirst: true,
 														placeholder : TYPO3.settings.extensionBuilder._LOCAL_LANG.propertyName,
-														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.propertyName,
 														description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_propertyName,
 														required: true
 													}
@@ -258,7 +258,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 													type: "select",
 													inputParams: {
 														name: "propertyType",
-														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.propertyType,
+														//label: TYPO3.settings.extensionBuilder._LOCAL_LANG.propertyType,
                                                         description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_propertyType,
                                                         selectValues: [
 															"String",
@@ -367,7 +367,6 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								type: "list",
 								inputParams: {
 									name: "relations",
-									label: "",
 									wirable: false,
 									elementType: {
 										type: "group",
@@ -385,7 +384,6 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 												{
 													type: "string",
 													inputParams: {
-														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.relationName,
 														placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.relationName,
 														name: "relationName",
 														forceAlphaNumeric: true,

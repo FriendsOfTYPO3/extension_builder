@@ -39,7 +39,7 @@ div.WireIt-Container{
 	font-size:8pt;
 	opacity:0.8;
 	position:absolute;
-	width:260px;
+	width:220px;
 	z-index:5;
 }
 
@@ -140,16 +140,14 @@ div.WireIt-InputExTerminal{
 	width:21px;
 }
 
-div.WireIt-InputExTerminal div.WireIt-Terminal{
-	left:-19px;
-	top:-12px;
-}
 
 div.advancedSettings legend{
 	margin-left:20px;
-	margin-top:-25px;
+	margin-top:-19px;
 	position:absolute;
 	z-index:500;
+	font-weight: normal;
+	color: #ccc;
 }
 
 div.WireIt-ImageContainer{
@@ -165,7 +163,7 @@ div.WireIt-ImageContainer{
 	padding-bottom:6px;
 	padding-left:6px;
 	position:absolute;
-	width:252px;
+	width:212px;
 	z-index:1000;
 }
 
@@ -239,15 +237,13 @@ div.hiddenField{
 
 div.propertyGroup,
 div.relationGroup{
-	border:1px solid #BBB;
-	margin-bottom:4px;
-	padding:6px 6px 0;
+	border:none;
+	padding:1px 6px 0;
 }
 
 div.relationGroup{
-	border:none;
 	padding:0;
-	width:240px;
+	width:200px;
 }
 
 div.relationGroup .textfieldWrapper {
@@ -259,12 +255,12 @@ div.relationGroup div.advancedSettings .textfieldWrapper {
 
 
 div.propertyGroup{
-	width:175px;
+	width:135px;
 }
 
 .relationGroup,
 .objectSettings,.advancedSettings{
-	width:250px;
+	width:210px;
 }
 
 div.inputEx-label{
@@ -315,42 +311,36 @@ div.relationGroup div.inputEx-label{
 	float:none;
 }
 
-div.relationGroup .textfieldWrapper .inputEx-label{
-	float:left;
-}
 
-div.relationGroup fieldset fieldset .textfieldWrapper .inputEx-label{
-	float:none;
-}
-
-.inputEx-Group .checkBoxFieldWrapper,.inputEx-Group .inputEx-CheckBox{
+.inputEx-Group .checkBoxFieldWrapper,
+.inputEx-Group .inputEx-CheckBox{
 	height:15px;
 }
 
-.inputEx-Group .checkBoxFieldWrapper div.inputEx-label{
+.objectSettings .checkBoxFieldWrapper div.inputEx-label,
+.actionGroup .checkBoxFieldWrapper div.inputEx-label{
+	width:100px;
+}
+
+.relationGroup .checkBoxFieldWrapper div.inputEx-label{
 	width:55%;
+}
+
+.propertyGroup .checkBoxFieldWrapper div.inputEx-label {
+	width:65%;
 }
 
 .inputEx-Group .checkBoxFieldWrapper div.inputEx-label label{
 	white-space:nowrap;
 }
 
-div.inputEx-Group div.inputEx-label,
-.textfieldWrapper div.inputEx-label{
-	width:85%;
-}
-
-div.relationGroup .textfieldWrapper div.inputEx-label{
-	width:100px;
-}
-
-div.relationGroup .advancedSettings .textfieldWrapper div.inputEx-label{
-	width:65%;
-}
-
 .textfieldWrapper div.inputEx-label,
 div.relationGroup .advancedSettings div.inputEx-label{
 	text-align:left;
+}
+
+.inputEx-Group .textfieldWrapper div.inputEx-label {
+	width: 100%;
 }
 
 div.objectSettings .inputEx-Field.inputEx-CheckBox,
@@ -361,7 +351,7 @@ div.relationGroup .advancedSettings .inputEx-Field.inputEx-CheckBox{
 
 div.propertyGroup .inputEx-Field.inputEx-CheckBox{
 	float:left;
-	width:34%;
+	width:20%;
 }
 
 div.mainGroup .inputEx-Field.inputEx-CheckBox{
@@ -403,18 +393,82 @@ div.inputEx-List-link.deleteButton{
 	font-size:9pt;
 }
 
-div.relationGroup textarea,div.propertyGroup textarea,
-div.propertyGroup input[type=text],div.propertyGroup select{
+div.relationGroup textarea,
+div.propertyGroup textarea,
+div.propertyGroup input[type=text],
+div.propertyGroup select{
 	width:100%;
 }
+
+div.relationGroup textarea,
+div.propertyGroup textarea,
+div.propertyGroup input[type=text],
+div.relationGroup input[type=text],
+div.propertyGroup select{
+	border: 1px solid #fff;
+	color:#666;
+	cursor: pointer;
+}
+
+div.relationGroup .inputEx-invalid  textarea,
+div.propertyGroup .inputEx-invalid  textarea,
+div.propertyGroup .inputEx-invalid  input[type=text],
+div.relationGroup .inputEx-invalid  input[type=text] {
+	border: 1px solid #C00E0C;
+	font-weight: normal;
+}
+
+div.relationGroup select,
+div.propertyGroup select{
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+
+div.propertyGroup input[type=text],
+div.relationGroup input[type=text]{
+	font-weight: bold;
+}
+
+.showAdvancedOptions div.relationGroup textarea,
+.showAdvancedOptions div.propertyGroup textarea,
+.showAdvancedOptions div.propertyGroup input[type=text],
+.showAdvancedOptions div.relationGroup input[type=text],
+div.relationGroup textarea:focus,
+div.relationGroup .inputEx-Expanded  textarea,
+div.propertyGroup textarea:focus,
+div.propertyGroup .inputEx-Expanded textarea,
+div.propertyGroup input[type=text]:focus,
+div.relationGroup input[type=text]:focus{
+	border: 1px solid #666;
+	font-weight: normal;
+}
+
+.showAdvancedOptions div.propertyGroup select,
+div.relationGroup .inputEx-Expanded select,
+div.propertyGroup .inputEx-invalid + .selectFieldWrapper select,
+div.relationGroup select:focus,
+div.propertyGroup select:focus {
+	-webkit-appearance: menulist;
+	-moz-appearance: menulist;
+	border: 1px solid #666;
+}
+
+.showAdvancedOptions div.propertyGroup select,
+ div.relationGroup .advancedSettings select{
+	margin: 4px 0;
+}
+
 
 div.propertyGroup .textfieldWrapper.small input[type=text] {
 	width: 40px;
 }
 
 div.relationGroup input[type=text]{
-	width:90px;
+	width:120px;
+	margin-left: 30px;
 }
+
 
 div.objectSettings .textfieldWrapper input[type=text],
 div.objectSettings .textfieldWrapper textarea{
@@ -422,15 +476,16 @@ div.objectSettings .textfieldWrapper textarea{
 }
 
 div.objectSettings .inputEx-StringField-wrapper{
-	width:260px;
+	width:190px;
 }
 
 div.relationGroup .advancedSettings input[type=text]{
 	width:100%;
+	margin-left: 0;
 }
 
 .properties .inputEx-ListField{
-	width:245px;
+	width:205px;
 }
 
 div#wireEditorMessageBox{
@@ -479,13 +534,14 @@ label.helpAvailable {
 	cursor: help;
 }
 
-div.inputEx-valid > div.inputEx-label label.helpAvailable,
-div.inputEx-empty > div.inputEx-label label.helpAvailable {
-	background-image:url(help.png);
-	background-position:right;
-	background-repeat:no-repeat;
-	padding-right: 17px;
+div.propertyGroup div.inputEx-valid > div.inputEx-label label.helpAvailable,
+div.relationGroup div.inputEx-valid > div.inputEx-label label.helpAvailable,
+div.propertyGroup div.inputEx-empty > div.inputEx-label label.helpAvailable
+div.relationGroup div.inputEx-empty > div.inputEx-label label.helpAvailable {
+	position: absolute;
+	top:-4px;
 }
+
 
 #alertPanel_c{
 	max-width:400px;
@@ -502,6 +558,10 @@ div.inputEx-empty > div.inputEx-label label.helpAvailable {
 
 .yui-layout-hd h2{
 	color:#585858!important;
+}
+
+div#propertiesForm {
+	margin-bottom: 100px;
 }
 
 div#propertiesForm div.mainGroup{
@@ -539,9 +599,6 @@ div#propertiesForm fieldset{
 	width:200px;
 }
 
-#propertiesForm div.inputEx-Group .wideTextfields textarea{
-	width:210px;
-}
 
 #wireEditorConfirmMessageBox ol.warnings{
 	padding-left:50px;
@@ -556,6 +613,48 @@ div#propertiesForm fieldset{
 	font-weight:700;
 }
 
-div.inputEx-invalid>div.inputEx-label label {
-	background-position: 3px 1px;
+.inputEx-ListField-childContainer > div {
+	border-top: 1px solid #ccc;
+	padding-top: 2px;
+}
+
+.showAdvancedOptions .inputEx-ListField-childContainer > div {
+	padding-top: 5px;
+	margin-top: 5px;
+	border-top: 1px solid #666;
+}
+
+div.positionGroup div.inputEx-fieldWrapper {
+	margin-bottom: 2px;
+}
+
+.inputEx-Field.inputEx-ListField > span {
+	display: none;
+}
+
+.positionGroup .helpAvailable:hover div.inputEx-description,
+.inputEx-invalid .inputEx-StringField-wrapper:hover + div.inputEx-description,
+.helpAvailable select:focus + div.inputEx-description{
+	display: block;
+	margin-left: 200px;
+}
+
+.mainGroup .helpAvailable:hover div.inputEx-description {
+	margin-left: 30px;
+}
+
+.inputEx-CheckBox.helpAvailable:hover div.inputEx-description {
+	display: none;
+}
+
+.inputEx-ListField-Arrow,
+.WireIt-Container-closebutton.t3-icon-edit-delete,
+.deleteButton {
+	display: none;
+}
+
+div:hover > .inputEx-ListField-Arrow,
+div:hover > .WireIt-Container-closebutton.t3-icon-edit-delete,
+div:hover > .deleteButton {
+	display: block;
 }
