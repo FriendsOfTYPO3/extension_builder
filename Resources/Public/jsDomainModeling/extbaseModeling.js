@@ -12,6 +12,9 @@ var extbaseModeling_wiringEditorLanguage = {
 
 		function addFieldsetClass (selectElement) {
 			var fieldset = dom.getAncestorByTagName(selectElement, 'fieldset');
+			if (dom.hasClass(fieldset, 'inputEx-Expanded')) {
+				return;
+			}
 			fieldset.removeAttribute('class');
 			dom.addClass(fieldset, selectElement.value);
 		}
