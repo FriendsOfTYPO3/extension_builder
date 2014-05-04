@@ -227,7 +227,6 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 		inputParams: {
 			name: "plugins",
 			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.plugins,
-			description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_plugins,
 			sortable: true,
 			className: 'plugins mainGroup',
 			elementType: {

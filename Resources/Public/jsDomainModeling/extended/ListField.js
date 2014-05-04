@@ -190,7 +190,7 @@
 				for(i = 0;i <  copiedFieldSet['inputs'].length;i++){
 					fieldName =  copiedFieldSet['inputs'][i]['options']['name'];
 
-					if (fieldName == 'relationName' || fieldName == 'propertyName') {
+					if (fieldName == 'relationName' || fieldName == 'propertyName'|| fieldName == 'propertyDescription') {
 						copiedFieldSet['inputs'][i].setValue('');
 					} else if (fieldName == 'uid') {
 						copiedFieldSet['inputs'][i].setValue(parseInt(new Date().getTime() * Math.random(), 10));
@@ -397,9 +397,11 @@
 		removeElement: function(index) {
 		   var elementDiv = this.subFields[index].getEl().parentNode;
 			var fieldToRemove = this.subFields[index];
-			for(var i = 0; i < fieldToRemove.inputs.length; i++) {
-				if(fieldToRemove.inputs[i].terminal !== undefined) {
-					fieldToRemove.inputs[i].terminal.removeAllWires();
+			if (fieldToRemove.inputs) {
+				for(var i = 0; i < fieldToRemove.inputs.length; i++) {
+					if(fieldToRemove.inputs[i].terminal !== undefined) {
+						fieldToRemove.inputs[i].terminal.removeAllWires();
+					}
 				}
 			}
 

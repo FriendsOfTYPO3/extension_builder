@@ -116,6 +116,10 @@
 				this.divEl.appendChild(this.labelDiv);
 			}
 
+			if (this.options.description) {
+				this.options.className += ' helpAvailable';
+			}
+
 			this.fieldContainer = inputEx.cn('div', {className: this.options.className}); // for wrapping the field and description
 
 			// Render the component directly

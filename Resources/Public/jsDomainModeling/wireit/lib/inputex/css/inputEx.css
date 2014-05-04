@@ -51,9 +51,8 @@ div.inputEx-invalid > div.inputEx-label {
    font-weight:bold;
 }
 
-div.inputEx-invalid > div.inputEx-label label {
-   background:transparent url(../images/error_bang.gif) no-repeat scroll 0 1px;
-   padding-left:20px;
+div.inputEx-invalid > .inputEx-Field input {
+	border: 1px solid #C00E0C;
 }
 
 div.inputEx-valid > div.inputEx-message {

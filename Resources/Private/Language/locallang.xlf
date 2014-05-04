@@ -52,7 +52,7 @@
 				<source>Target version</source>
 			</trans-unit>
 			<trans-unit id="descr_target_version">
-				<source>If your extension uses features of Extbase/Fluid versions higher than 1.3 you can select your target version here. You have to add the dependency manually in the "Depends on" field.</source>
+				<source>Select the TYPO3 version the extension requires.</source>
 			</trans-unit>
 			<trans-unit id="state">
 				<source>State</source>
