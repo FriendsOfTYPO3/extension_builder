@@ -16,17 +16,11 @@ $EM_CONF[$_EXTKEY] = array(
 	'category' => '{extension.category}',
 	'author' => '<f:for each="{extension.persons}" as="person"  iteration="counter"><f:if condition="{counter.index} > 0">, </f:if>{person.name}</f:for>',
 	'author_email' => '<f:for each="{extension.persons}" as="person"  iteration="counter"><f:if condition="{person.email}"><f:if condition="{counter.index} > 0">, </f:if>{person.email}</f:if></f:for>',
-	'author_company' => '<f:for each="{extension.persons}" as="person"  iteration="counter"><f:if condition="{person.company}"><f:if condition="{counter.index} > 0">, </f:if>{person.company}</f:if></f:for>',
-	'shy' => '{extension.shy}',
-	'priority' => '{extension.priority}',
-	'module' => '',
 	'state' => '{extension.readableState}',
 	'internal' => '',
 	'uploadfolder' => '{extension.needsUploadFolder}',
 	'createDirs' => '',
-	'modify_tables' => '',
 	'clearCacheOnLoad' => 0,
-	'lockType' => '',
 	'version' => '{extension.version}',
 	'constraints' => array(
 		'depends' => array(<f:for each="{extension.dependencies}" as="version" key="extensionKey">

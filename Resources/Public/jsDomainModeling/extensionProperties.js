@@ -114,25 +114,6 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 						}
 					},
 					{
-						type: "string",
-						inputParams: {
-							name: "priority",
-							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_priority,
-							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.priority,
-							cols: 30
-						}
-					},
-					{
-						type: "boolean",
-						inputParams: {
-							name: "shy",
-							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.shy,
-							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_shy,
-							value: 0,
-							postText: TYPO3.settings.extensionBuilder._LOCAL_LANG.extension_api_link
-						}
-					},
-					{
 						type: "boolean",
 						inputParams: {
 							name: "disableVersioning",
@@ -168,11 +149,10 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
                             label: TYPO3.settings.extensionBuilder._LOCAL_LANG.target_version,
                             description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_target_version,
                             selectOptions: [
-                                'TYPO3 v 6.0',
 								'TYPO3 v 6.1',
 								'TYPO3 v 6.2'
                             ],
-                            selectValues: ["6.0","6.1","6.2"],
+                            selectValues: ["6.1","6.2"],
 							value: '6.2'
                         }
                     },

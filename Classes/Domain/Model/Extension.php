@@ -79,23 +79,6 @@ class Extension {
 	protected $settings = array();
 
 	/**
-	 * default settings for em_conf
-	 *
-	 * @var string[]
-	 */
-	protected $emConfDefaults = array('dependencies' => 'cms,extbase,fluid', 'category' => 'plugin');
-
-	/**
-	 * @var string
-	 */
-	protected $priority = '';
-
-	/**
-	 * @var bool
-	 */
-	protected $shy = FALSE;
-
-	/**
 	 * @var string
 	 */
 	protected $category;
@@ -242,19 +225,6 @@ class Extension {
 	 */
 	public function getSettings() {
 		return $this->settings;
-	}
-
-	/**
-	 *
-	 *
-	 * @return array settings for Extension Manager
-	 */
-	public function getEmConf() {
-
-		if (isset($this->settings['emConf'])) {
-			return $this->settings['emConf'];
-		}
-		else return $this->emConfDefaults;
 	}
 
 	/**
@@ -722,35 +692,6 @@ class Extension {
 	 */
 	public function getUploadFolder() {
 		return 'uploads/' . $this->getShortExtensionKey();
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPriority() {
-		return $this->priority;
-	}
-
-	/**
-	 * @param string $priority
-	 */
-	public function setPriority($priority) {
-		$this->priority = $priority;
-	}
-
-	/**
-	 * @return boolean
-	 */
-	public function getShy() {
-		return $this->shy;
-	}
-
-	/**
-	 * @param boolean $shy
-	 * @return void
-	 */
-	public function setShy($shy) {
-		$this->shy = $shy;
 	}
 
 	/**

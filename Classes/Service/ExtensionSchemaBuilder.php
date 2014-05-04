@@ -242,10 +242,6 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 
 		$extension->setCategory($category);
 
-		$extension->setShy($propertyConfiguration['emConf']['shy']);
-
-		$extension->setPriority($propertyConfiguration['emConf']['priority']);
-
 		// state
 		$state = 0;
 		switch ($propertyConfiguration['emConf']['state']) {
