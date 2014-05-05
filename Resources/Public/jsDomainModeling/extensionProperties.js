@@ -14,6 +14,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 		inputParams: {
 			name: "vendorName",
 			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.vendorName,
+			placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.vendorName,
 			value: '',
 			ucFirst: true,
 			forceAlphaNumeric: true,
@@ -266,6 +267,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 											name: "controllerActionCombinations",
 											label: TYPO3.settings.extensionBuilder._LOCAL_LANG.controller_action_combinations,
 											description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_controller_action_combinations,
+											placeholder: 'ControllerName => action1,action2',
 											cols: 38,
 											rows: 3
 										}
@@ -275,6 +277,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 										inputParams: {
 											name: "noncacheableActions",
 											label: TYPO3.settings.extensionBuilder._LOCAL_LANG.noncacheable_actions,
+											placeholder: 'ControllerName => action1,action2',
 											description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_noncacheable_actions,
 											cols: 38,
 											rows: 3
