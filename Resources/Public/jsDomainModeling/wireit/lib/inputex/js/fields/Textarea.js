@@ -30,6 +30,7 @@
 							  this.options.rows = options.rows || 6;
 							  this.options.cols = options.cols || 23;
 							  this.options.advancedMode = options.advancedMode ? options.advancedMode : false;
+							  this.options.placeholder = options.placeholder;
 						  },
 
 						  /**
@@ -46,6 +47,7 @@
 							  attributes.rows = this.options.rows;
 							  attributes.cols = this.options.cols;
 							  if (this.options.name) attributes.name = this.options.name;
+							  if (this.options.placeholder) attributes.placeholder = this.options.placeholder;
 
 							  //if(this.options.maxLength) attributes.maxLength = this.options.maxLength;
 

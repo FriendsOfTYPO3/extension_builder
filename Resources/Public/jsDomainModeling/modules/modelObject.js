@@ -114,7 +114,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								inputParams: {
 									name: "description",
 									className: 'bottomBorder',
-									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
+									placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
 									required: false,
 									cols:20,
 									rows:2
@@ -136,6 +136,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 									name: "parentClass",
 									advancedMode: true,
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.parentClass,
+									placeholder: '\\Fully\\Qualified\\Classname',
 									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_parentClass,
 									required: false
 								}
@@ -247,6 +248,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 														name: "propertyName",
 														forceAlphaNumeric: true,
 														lcFirst: true,
+														placeholder : TYPO3.settings.extensionBuilder._LOCAL_LANG.propertyName,
 														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.propertyName,
 														description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_propertyName,
 														required: true
@@ -299,9 +301,9 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 												{
 													type:'text',
 													inputParams: {
-														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
 														advancedMode: true,
 														name: "propertyDescription",
+														placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
 														cols:23,
 														rows:2
 													}
@@ -384,6 +386,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 													type: "string",
 													inputParams: {
 														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.relationName,
+														placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.relationName,
 														name: "relationName",
 														forceAlphaNumeric: true,
 														lcFirst: true,
@@ -406,6 +409,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 													inputParams: {
 														name: "relationDescription",
 														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
+														placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
 														required: false,
 														cols:20,
 														rows:3
