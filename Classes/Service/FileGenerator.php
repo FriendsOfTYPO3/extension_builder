@@ -935,7 +935,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 					$existingLabels
 				);
 				if (is_array($existingLabels)) {
-					GeneralUtility::array_merge_recursive_overrule($languageLabels, $existingLabels);
+					$languageLabels = GeneralUtility::array_merge_recursive_overrule($languageLabels, $existingLabels);
 				}
 
 			}
