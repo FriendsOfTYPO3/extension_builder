@@ -400,10 +400,16 @@
 
 			var value = this.getValue();
 
-			var extensionProperties = this.propertiesForm.getValue();
 			if (!this.propertiesForm.validate()) {
-				this.alert('Invalid extension properties', "Please check the fields in the left panel");
+				this.alert(
+					this.localize('modeler_invalidExtensionPropertiesTitle'),
+					this.localize('modeler_invalidExtensionProperties')
+				);
 				return;
+			}
+
+			if (!this.validateModels(value)) {
+				return false;
 			}
 
 			this.showSpinnerPanel.show();
@@ -415,6 +421,61 @@
 				scope: this
 			});
 
+		},
+
+
+		validateModels: function(value) {
+			var modelNames = {},
+				propertyNames = {},
+				modelName,
+				propertyName,
+				model,
+				modelForm;
+			if (value.working.modules) {
+				for (var modelIndex = 0; modelIndex < value.working.modules.length; modelIndex++) {
+					model = value.working.modules[modelIndex].value;
+					modelName = model.name;
+					if (!modelName || modelName.length < 2) {
+						this.alert(this.localize('modeler_invalidConfigurationTitle'), this.localize('modeler_missingModelName'));
+						return false;
+					}
+					if (modelNames[modelName] !== undefined) {
+						this.alert(this.localize('modeler_duplicateModelNamesTitle'),'2 x "' + modelName + '"');
+						return false;
+					}
+					modelNames[modelName] = 1;
+					modelForm = this.layer.containers[modelIndex].form;
+					if(!modelForm.validate()) {
+						this.alert(this.localize('modeler_invalidConfigurationTitle'), this.localize('modeler_invalidModelConfiguration') + modelName);
+						return false;
+					}
+					propertyNames = {};
+					for (var propertyIndex = 0; propertyIndex < model.propertyGroup.properties.length; propertyIndex++) {
+						propertyName = model.propertyGroup.properties[propertyIndex].propertyName;
+						if (propertyNames[propertyName] !== undefined) {
+							this.alert(this.localize('modeler_duplicatePropertyNamesTitle'),'2 x "' + propertyName + '" in model "' + modelName + '"');
+							return false;
+						}
+						propertyNames[propertyName] = 1;
+					}
+					for (var relationIndex = 0; relationIndex < model.relationGroup.relations.length; relationIndex++) {
+						propertyName = model.relationGroup.relations[relationIndex].relationName;
+						if (propertyNames[propertyName] !== undefined) {
+							this.alert(this.localize('modeler_duplicatePropertyNamesTitle'),'2 x "' + propertyName + '" in model "' + modelName + '"');
+							return false;
+						}
+						propertyNames[propertyName] = 1;
+					}
+				}
+			}
+			return true;
+		},
+
+		localize: function(key) {
+			if (TYPO3.settings.extensionBuilder._LOCAL_LANG[key] !== undefined) {
+				return TYPO3.settings.extensionBuilder._LOCAL_LANG[key];
+			}
+			return key;
 		},
 
 		/**
@@ -444,7 +505,7 @@
 			}
 			else if (typeof o.error != 'undefined') {
 				title = '<span style="color:red">Error!</span>';
-				message = "Extension could not be saved:\n " + o.error;
+				message = this.localize('modeler_extensionSaveError') + "\n " + o.error;
 			}
 			else if (typeof o.warning != 'undefined') {
 				title = 'Warning';
@@ -553,7 +614,7 @@
 		 * @method onNew
 		 */
 		onNew: function() {
-			if (!confirm('Do you really want to clear the current working board and load the selected pipe? Unsaved changes will get lost!')) {
+			if (!confirm('modeler_loadPipeConfirmMessage')) {
 				return false;
 			}
 			this.layer.removeAllContainers();
@@ -688,7 +749,7 @@
 
 			// TODO: check if current pipe is saved...
 
-			if (!confirm('Do you really want to clear the current working board and load the selected pipe?')) return false;
+			if (!confirm(this.localize('modeler_loadPipeConfirmMessage'))) return false;
 
 			this.layer.removeAllContainers();
 

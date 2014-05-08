@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2012-02-29T20:52:35Z" product-name="extension_builder">
+	<file source-language="en" datatype="plaintext" original="messages" date="2012-02-29T20:52:35Z"
+		  product-name="extension_builder">
 		<header/>
 		<body>
 			<trans-unit id="error.extension.0">
 				<source>An extension key must have minimum 3, maximum 30 characters (not counting underscores)</source>
 			</trans-unit>
 			<trans-unit id="error.extension.1">
-				<source>Illegal character(s) in extension key. Allowed characters are: a-z (lowercase), 0-9 and '_' (underscore)</source>
+				<source>Illegal character(s) in extension key. Allowed characters are: a-z (lowercase), 0-9 and '_'
+					(underscore)
+				</source>
 			</trans-unit>
 			<trans-unit id="error.extension.2">
-				<source>The key may not begin with one of the following prefixes: tx,u,user_,pages,tt_,sys_,ts_language_,csh_</source>
+				<source>The key may not begin with one of the following prefixes:
+					tx,u,user_,pages,tt_,sys_,ts_language_,csh_
+				</source>
 			</trans-unit>
 			<trans-unit id="error.extension.3">
 				<source>Extension keys cannot start or end with 0-9 and '_' (underscore)</source>
 			</trans-unit>
 			<trans-unit id="error.extension.500">
-				<source>There is an existing piBased extension with this extension key. Please choose another extension key or rename the existing extension directory</source>
+				<source>There is an existing piBased extension with this extension key. Please choose another extension
+					key or rename the existing extension directory
+				</source>
 			</trans-unit>
 			<trans-unit id="name">
 				<source>Name</source>
@@ -31,7 +38,9 @@
 				<source>Extension Key</source>
 			</trans-unit>
 			<trans-unit id="descr_extensionKey">
-				<source>The extensionkey should be lowercase and without spaces. It will be the unique identifier for this extension.</source>
+				<source>The extensionkey should be lowercase and without spaces. It will be the unique identifier for
+					this extension.
+				</source>
 			</trans-unit>
 			<trans-unit id="vendorName">
 				<source>Vendor name</source>
@@ -112,25 +121,33 @@
 				<source>Disable versioning</source>
 			</trans-unit>
 			<trans-unit id="descr_disableVersioning">
-				<source>Check this if your extension needs no support for versioning. This will skip the creation of versioning related columns in the database</source>
+				<source>Check this if your extension needs no support for versioning. This will skip the creation of
+					versioning related columns in the database
+				</source>
 			</trans-unit>
 			<trans-unit id="disableLocalization">
 				<source>Disable localization</source>
 			</trans-unit>
 			<trans-unit id="descr_disableLocalization">
-				<source>Check this if your extension needs no support for localization. This will skip the creation of localization related columns in the database</source>
+				<source>Check this if your extension needs no support for localization. This will skip the creation of
+					localization related columns in the database
+				</source>
 			</trans-unit>
 			<trans-unit id="sourceLanguage">
 				<source>Source language for xliff files</source>
 			</trans-unit>
 			<trans-unit id="descr_sourceLanguage">
-				<source>The source language for xliff files is the language in which the "source" of a label is defined, which can be translated into other languages. In general it should be english.</source>
+				<source>The source language for xliff files is the language in which the "source" of a label is defined,
+					which can be translated into other languages. In general it should be english.
+				</source>
 			</trans-unit>
 			<trans-unit id="dependsOn">
 				<source>Depends on</source>
 			</trans-unit>
 			<trans-unit id="descr_dependsOn">
-				<source>If the extension is depending on other extensions, enter the extension keys here (one per line followed by a double arrow and the lowest version number).</source>
+				<source>If the extension is depending on other extensions, enter the extension keys here (one per line
+					followed by a double arrow and the lowest version number).
+				</source>
 			</trans-unit>
 			<trans-unit id="persons">
 				<source>Persons</source>
@@ -160,19 +177,28 @@
 				<source>Controller action combinations</source>
 			</trans-unit>
 			<trans-unit id="descr_controller_action_combinations">
-				<source>Here you can configure, which controller action combinations this plugin/module should have. Example: &lt;br /&gt;Blog =&gt; list,show &lt;br /&gt;(one controller per line, actions comma separated) &lt;br /&gt;If you leave this empty, all available actions are configured for this plugin.</source>
+				<source>Here you can configure, which controller action combinations this plugin/module should have.
+					Example: &lt;br /&gt;Blog =&gt; list,show &lt;br /&gt;(one controller per line, actions comma
+					separated) &lt;br /&gt;If you leave this empty, all available actions are configured for this
+					plugin.
+				</source>
 			</trans-unit>
 			<trans-unit id="noncacheable_actions">
 				<source>Non cacheable actions</source>
 			</trans-unit>
 			<trans-unit id="descr_noncacheable_actions">
-				<source>Typically create, delete and update actions should not be cached. (Same format as above)</source>
+				<source>Typically create, delete and update actions should not be cached. (Same format as above)
+				</source>
 			</trans-unit>
 			<trans-unit id="switchableActions">
 				<source>Switchable actions</source>
 			</trans-unit>
 			<trans-unit id="descr_switchableActions">
-				<source>Make actions switchable in the plugin's form. One line for the label, one for the list of allowed Controller-&gt;action pairs (semicolon separated). Example: &lt;br /&gt;Display items&lt;br /&gt;Model-&gt;list; Model-&gt;show;&lt;br /&gt;Admin&lt;br /&gt;Model-&gt;new; Model-&gt;create; Model-&gt;edit; Model-&gt;update;</source>
+				<source>Make actions switchable in the plugin's form. One line for the label, one for the list of
+					allowed Controller-&gt;action pairs (semicolon separated). Example: &lt;br /&gt;Display items&lt;br
+					/&gt;Model-&gt;list; Model-&gt;show;&lt;br /&gt;Admin&lt;br /&gt;Model-&gt;new; Model-&gt;create;
+					Model-&gt;edit; Model-&gt;update;
+				</source>
 			</trans-unit>
 			<trans-unit id="backendModules">
 				<source>Backend modules</source>
@@ -253,13 +279,16 @@
 				<source>Add deleted field</source>
 			</trans-unit>
 			<trans-unit id="descr_addDeletedField">
-				<source>Deleting a record with "delete" field will not really delete the record, but just set the delete flag to true</source>
+				<source>Deleting a record with "delete" field will not really delete the record, but just set the delete
+					flag to true
+				</source>
 			</trans-unit>
 			<trans-unit id="addHiddenField">
 				<source>Add hidden field</source>
 			</trans-unit>
 			<trans-unit id="descr_addHiddenField">
-				<source>The hidden field is an "enable" field. Only records which are not hidden will be displayed</source>
+				<source>The hidden field is an "enable" field. Only records which are not hidden will be displayed
+				</source>
 			</trans-unit>
 			<trans-unit id="addStarttimeEndtimeFields">
 				<source>Add starttime/endtime fields</source>
@@ -292,7 +321,10 @@
 				<source>Action type</source>
 			</trans-unit>
 			<trans-unit id="descr_actionType">
-				<source>For each selected action, the extension builder will generate a template and a action method in the controller of this model. If the model is an aggregate root the default CRUD actions will be generated per default.</source>
+				<source>For each selected action, the extension builder will generate a template and a action method in
+					the controller of this model. If the model is an aggregate root the default CRUD actions will be
+					generated per default.
+				</source>
 			</trans-unit>
 			<trans-unit id="show">
 				<source>show</source>
@@ -415,7 +447,36 @@
 				<source>Relation to external class</source>
 			</trans-unit>
 			<trans-unit id="descr_foreignRelationClass">
-				<source>If this is a relation to an external model, enter the (full qualified) class name here. The class must exist and be loadable</source>
+				<source>If this is a relation to an external model, enter the (full qualified) class name here. The
+					class must exist and be loadable
+				</source>
+			</trans-unit>
+			<trans-unit id="modeler_invalidConfigurationTitle">
+				<source>Invalid configuration!</source>
+			</trans-unit>
+			<trans-unit id="modeler_invalidExtensionPropertiesTitle">
+				<source>Invalid extension properties</source>
+			</trans-unit>
+			<trans-unit id="modeler_invalidExtensionProperties">
+				<source>Please check the fields in the left panel</source>
+			</trans-unit>
+			<trans-unit id="modeler_duplicatePropertyNamesTitle">
+				<source>Duplicate property names</source>
+			</trans-unit>
+			<trans-unit id="modeler_missingModelName">
+				<source>Please enter a model name!</source>
+			</trans-unit>
+			<trans-unit id="modeler_duplicateModelNamesTitle">
+				<source>Duplicate model names</source>
+			</trans-unit>
+			<trans-unit id="modeler_invalidModelConfiguration">
+				<source>Invalid fields in model: </source>
+			</trans-unit>
+			<trans-unit id="modeler_extensionSaveError">
+				<source>Extension could not be saved:</source>
+			</trans-unit>
+			<trans-unit id="modeler_loadPipeConfirmMessage">
+				<source>Do you really want to clear the current working board and load the selected pipe? Unsaved changes will get lost!</source>
 			</trans-unit>
 		</body>
 	</file>
