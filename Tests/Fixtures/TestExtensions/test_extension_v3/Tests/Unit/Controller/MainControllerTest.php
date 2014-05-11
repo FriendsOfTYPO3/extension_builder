@@ -104,32 +104,6 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function createActionAddsMessageToFlashMessageContainer() {
-		$main = new \TYPO3\TestExtension\Domain\Model\Main();
-
-		$mainRepository = $this->getMock('TYPO3\\TestExtension\\Domain\\Repository\\MainRepository', array('add'), array(), '', FALSE);
-		$this->inject($this->subject, 'mainRepository', $mainRepository);
-		$this->subject->expects($this->once())->method('addFlashMessage');
-
-		$this->subject->createAction($main);
-	}
-
-	/**
-	 * @test
-	 */
-	public function createActionRedirectsToListAction() {
-		$main = new \TYPO3\TestExtension\Domain\Model\Main();
-
-		$mainRepository = $this->getMock('TYPO3\\TestExtension\\Domain\\Repository\\MainRepository', array('add'), array(), '', FALSE);
-		$this->inject($this->subject, 'mainRepository', $mainRepository);
-
-		$this->subject->expects($this->once())->method('redirect')->with('list');
-		$this->subject->createAction($main);
-	}
-
-	/**
-	 * @test
-	 */
 	public function editActionAssignsTheGivenMainToView() {
 		$main = new \TYPO3\TestExtension\Domain\Model\Main();
 
@@ -156,32 +130,6 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function updateActionAddsMessageToFlashMessageContainer() {
-		$main = new \TYPO3\TestExtension\Domain\Model\Main();
-
-		$mainRepository = $this->getMock('TYPO3\\TestExtension\\Domain\\Repository\\MainRepository', array('update'), array(), '', FALSE);
-		$this->inject($this->subject, 'mainRepository', $mainRepository);
-
-		$this->subject->expects($this->once())->method('addFlashMessage');
-		$this->subject->updateAction($main);
-	}
-
-	/**
-	 * @test
-	 */
-	public function updateActionRedirectsToListAction() {
-		$main = new \TYPO3\TestExtension\Domain\Model\Main();
-
-		$mainRepository = $this->getMock('TYPO3\\TestExtension\\Domain\\Repository\\MainRepository', array('update'), array(), '', FALSE);
-		$this->inject($this->subject, 'mainRepository', $mainRepository);
-
-		$this->subject->expects($this->once())->method('redirect')->with('list');
-		$this->subject->updateAction($main);
-	}
-
-	/**
-	 * @test
-	 */
 	public function deleteActionRemovesTheGivenMainFromMainRepository() {
 		$main = new \TYPO3\TestExtension\Domain\Model\Main();
 
@@ -189,32 +137,6 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$mainRepository->expects($this->once())->method('remove')->with($main);
 		$this->inject($this->subject, 'mainRepository', $mainRepository);
 
-		$this->subject->deleteAction($main);
-	}
-
-	/**
-	 * @test
-	 */
-	public function deleteActionAddsMessageToFlashMessageContainer() {
-		$main = new \TYPO3\TestExtension\Domain\Model\Main();
-
-		$mainRepository = $this->getMock('TYPO3\\TestExtension\\Domain\\Repository\\MainRepository', array('remove'), array(), '', FALSE);
-		$this->inject($this->subject, 'mainRepository', $mainRepository);
-		$this->subject->expects($this->once())->method('addFlashMessage');
-
-		$this->subject->deleteAction($main);
-	}
-
-	/**
-	 * @test
-	 */
-	public function deleteActionRedirectsToListAction() {
-		$main = new \TYPO3\TestExtension\Domain\Model\Main();
-
-		$mainRepository = $this->getMock('TYPO3\\TestExtension\\Domain\\Repository\\MainRepository', array('remove'), array(), '', FALSE);
-		$this->inject($this->subject, 'mainRepository', $mainRepository);
-
-		$this->subject->expects($this->once())->method('redirect')->with('list');
 		$this->subject->deleteAction($main);
 	}
 }
