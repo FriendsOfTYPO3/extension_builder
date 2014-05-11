@@ -54,12 +54,10 @@ Covered ControllerActions
 * updateAction()
 * deleteAction()
 
-The ControllerAction tests cover the following behaviour expectations:
+The ControllerAction tests cover the following behavior expectations:
 
 * asserting data is assigned to a view
 * asserting the action delegates data modifications to a repository, like adding, updating, removing or fetching objects
-* asserting FlashMessages are added
-* asserting redirects at the end of certain actions
 
 For example:
 
