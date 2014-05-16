@@ -79,14 +79,26 @@ $GLOBALS['TCA']['{domainObject.databaseTableName}'] = array(
 
 <f:for each="{extension.domainObjectsInHierarchicalOrder}" as="domainObject"><f:if condition="{domainObject.mappedToExistingTable}"><f:then>
 <f:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
-$GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = array('LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}','{domainObject.recordType}');
+$GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = array(
+	'LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}',
+	'{domainObject.recordType}'
+);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
+	'{domainObject.databaseTableName}',
+	'EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xlf'
+);
 </f:then><f:else><f:if condition="{domainObject.hasChildren}">
 $GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = array('LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.databaseTableName}.tx_extbase_type.{domainObject.recordType}','{domainObject.recordType}');
 $GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['default'] = '{domainObject.recordType}';
 </f:if></f:else></f:if>
 </f:for>
 <f:for each="{extension.tablesForTypeFieldDefinitions}" as="databaseTableName">
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('{databaseTableName}', $GLOBALS['TCA']['{databaseTableName}']['ctrl']['type'],'','after:' . $TCA['{databaseTableName}']['ctrl']['label']);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+	'{databaseTableName}',
+	$GLOBALS['TCA']['{databaseTableName}']['ctrl']['type'],
+	'',
+	'after:' . $TCA['{databaseTableName}']['ctrl']['label']
+);
 </f:for>
 <f:for each="{extension.domainObjects}" as="domainObject">
 	<f:if condition="{domainObject.categorizable}">
