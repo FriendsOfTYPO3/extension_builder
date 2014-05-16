@@ -11,7 +11,9 @@ if (!isset($GLOBALS['TCA']['{databaseTableName}']['ctrl']['type'])) {
 		'label'   => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{extension.shortExtensionKey}.tx_extbase_type',
 		'config' => array(
 			'type' => 'select',
-			'items' => array(),
+			'items' => array(
+				array('Default','1')
+			),
 			'size' => 1,
 			'maxitems' => 1,
 		)

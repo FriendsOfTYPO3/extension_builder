@@ -81,4 +81,11 @@ The backend form for the extended frontend user
 Relations to models of other extensions
 ---------------------------------------
 
-If you want to add a relation to a model that does not belong to your current extension you have to enter the class name (not the model name!) of that model in the relations settings form. The related class has to be loadable, so you can only add models of extensions that are installed.
+If you want to add a relation to a model that does not belong to your current extension you have to enter the
+class name (not the model name!) of that model in the relations settings form. The related class has to be loadable,
+so you can only add models of extensions that are installed.
+
+.. tip::
+	Don't forget to add the extension which models you extend in the dependencies field in the left property panel.
+	Only then the PackageManager will care for the right order loading the extensions
+
