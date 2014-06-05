@@ -29,11 +29,9 @@ namespace EBT\ExtensionBuilder\Parser;
  * @author Nico de Haen
  */
 
-interface TraverserInterface {
+interface TraverserInterface extends \PHPParser_NodeTraverserInterface {
 
 	public function resetVisitors();
 
 	public function appendVisitor(\PHPParser_NodeVisitor $visitor);
-
-	public function traverse( array $stmts);
 }
