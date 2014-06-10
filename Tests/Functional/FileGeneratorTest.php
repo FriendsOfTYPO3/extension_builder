@@ -418,7 +418,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 			$this->assertFileExists($extensionDir.$extensionFile,'File was not generated: ' . $extensionFile);
 		}
 
-		$this->assertFileExists($extensionDir.'Configuration/TCA/'. $domainObject->getName() . '.php');
+		$this->assertFileExists($extensionDir.'Configuration/TCA/'. $domainObject->getDatabaseTableName() . '.php');
 		$this->assertFileExists($extensionDir.'Configuration/ExtensionBuilder/settings.yaml');
 
 		$this->assertFileExists($extensionDir.'Resources/Private/Language/locallang_db.xlf');

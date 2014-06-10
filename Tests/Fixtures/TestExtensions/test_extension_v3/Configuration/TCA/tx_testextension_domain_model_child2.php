@@ -1,10 +1,26 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
-	die ('Access denied.');
-}
-
-$GLOBALS['TCA']['tx_testextension_domain_model_child1'] = array(
-	'ctrl' => $GLOBALS['TCA']['tx_testextension_domain_model_child1']['ctrl'],
+return array(
+	'ctrl' => array(
+		'title'	=> 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2',
+		'label' => 'name',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+		'versioningWS' => 2,
+		'versioning_followPages' => TRUE,
+		'languageField' => 'sys_language_uid',
+		'transOrigPointerField' => 'l10n_parent',
+		'transOrigDiffSourceField' => 'l10n_diffsource',
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'endtime' => 'endtime',
+		),
+		'searchFields' => 'name,',
+		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('test_extension') . 'Resources/Public/Icons/tx_testextension_domain_model_child2.gif'
+	),
 	'interface' => array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name',
 	),
@@ -37,8 +53,8 @@ $GLOBALS['TCA']['tx_testextension_domain_model_child1'] = array(
 				'items' => array(
 					array('', 0),
 				),
-				'foreign_table' => 'tx_testextension_domain_model_child1',
-				'foreign_table_where' => 'AND tx_testextension_domain_model_child1.pid=###CURRENT_PID### AND tx_testextension_domain_model_child1.sys_language_uid IN (-1,0)',
+				'foreign_table' => 'tx_testextension_domain_model_child2',
+				'foreign_table_where' => 'AND tx_testextension_domain_model_child2.pid=###CURRENT_PID### AND tx_testextension_domain_model_child2.sys_language_uid IN (-1,0)',
 			),
 		),
 		'l10n_diffsource' => array(
@@ -95,11 +111,16 @@ $GLOBALS['TCA']['tx_testextension_domain_model_child1'] = array(
 		),
 		'name' => array(
 			'exclude' => 0,
-			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child1.name',
+			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.name',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
 				'eval' => 'trim'
+			),
+		),
+		'main' => array(
+			'config' => array(
+				'type' => 'passthrough',
 			),
 		),
 	),

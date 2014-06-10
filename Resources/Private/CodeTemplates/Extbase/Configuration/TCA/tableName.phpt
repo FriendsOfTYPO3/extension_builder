@@ -1,10 +1,28 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}<?php
-if (!defined ('TYPO3_MODE')) {
-	die ('Access denied.');
-}
-<f:if condition="{domainObject.mapToTable}"><f:else>
-$GLOBALS['TCA']['{domainObject.databaseTableName}'] = array(
-	'ctrl' => $GLOBALS['TCA']['{domainObject.databaseTableName}']['ctrl'],
+return array(
+	'ctrl' => array(
+		'title'	=> 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.databaseTableName}',
+		'label' => '{domainObject.listModuleValueLabel}',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+<f:if condition="{domainObject.sorting}">		'sortby' => 'sorting',</f:if>
+<f:if condition="{extension.supportVersioning}">		'versioningWS' => 2,
+		'versioning_followPages' => TRUE,</f:if>
+<f:if condition="{extension.supportLocalization}">
+		'languageField' => 'sys_language_uid',
+		'transOrigPointerField' => 'l10n_parent',
+		'transOrigDiffSourceField' => 'l10n_diffsource',</f:if>
+<f:if condition="{domainObject.addDeletedField}">		'delete' => 'deleted',</f:if>
+		'enablecolumns' => array(
+<f:if condition="{domainObject.addHiddenField}">			'disabled' => 'hidden',</f:if>
+<f:if condition="{domainObject.addStarttimeEndtimeFields}">			'starttime' => 'starttime',
+			'endtime' => 'endtime',</f:if>
+		),
+		'searchFields' => '<f:for each="{domainObject.properties}" as="property">{property.fieldName},</f:for>',
+		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('{domainObject.extension.extensionKey}') . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif'
+	),
 	'interface' => array(
 		'showRecordFieldList' => '<f:if condition="{extension.supportLocalization}">sys_language_uid, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addHiddenField}">hidden, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}<f:if condition="{i.isLast}"><f:else>, </f:else></f:if></f:for>',
 	),
@@ -106,5 +124,3 @@ $GLOBALS['TCA']['{domainObject.databaseTableName}'] = array(
 		),</f:for>
 	),
 );
-
-</f:else></f:if>
