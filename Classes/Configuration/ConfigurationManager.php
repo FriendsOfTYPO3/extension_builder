@@ -161,11 +161,8 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 	 */
 	public function getExtensionBuilderConfiguration($extensionKey) {
 		$result = NULL;
-
-		$jsonFile = PATH_typo3conf . 'ext/' . $extensionKey . '/' . self::EXTENSION_BUILDER_SETTINGS_FILE;
-
-		if (file_exists($jsonFile)) {
-			$extensionConfigurationJson = json_decode(file_get_contents($jsonFile), TRUE);
+		$extensionConfigurationJson = self::getExtensionBuilderJson($extensionKey);
+		if ($extensionConfigurationJson) {
 			$extensionConfigurationJson = $this->fixExtensionBuilderJSON($extensionConfigurationJson);
 			$extensionConfigurationJson['properties']['originalExtensionKey'] = $extensionKey;
 			if (floatval($extensionConfigurationJson['log']['extension_builder_version']) >= 2.5) {
@@ -174,6 +171,15 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 		}
 
 		return $result;
+	}
+
+	public static function getExtensionBuilderJson($extensionKey) {
+		$jsonFile = PATH_typo3conf . 'ext/' . $extensionKey . '/' . self::EXTENSION_BUILDER_SETTINGS_FILE;
+		if (file_exists($jsonFile)) {
+			return json_decode(file_get_contents($jsonFile), TRUE);
+		} else {
+			return NULL;
+		}
 	}
 
 	/**

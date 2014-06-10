@@ -42,64 +42,12 @@ if (TYPO3_MODE === 'BE') {
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', '<k:format.quoteString>{extension.name}</k:format.quoteString>');
 
 <f:for each="{extension.domainObjects}" as="domainObject">
-	<f:if condition="{domainObject.needsTableCtrlDefinition}">
+	<f:if condition="{domainObject.mappedToExistingTable}"><f:else>
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xlf');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('{domainObject.databaseTableName}');
-$GLOBALS['TCA']['{domainObject.databaseTableName}'] = array(
-	'ctrl' => array(
-		'title'	=> 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.databaseTableName}',
-		'label' => '{domainObject.listModuleValueLabel}',
-		'tstamp' => 'tstamp',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'dividers2tabs' => TRUE,
-<f:if condition="{domainObject.sorting}">		'sortby' => 'sorting',</f:if>
-<f:if condition="{extension.supportVersioning}">		'versioningWS' => 2,
-		'versioning_followPages' => TRUE,</f:if>
-<f:if condition="{extension.supportLocalization}">
-		'languageField' => 'sys_language_uid',
-		'transOrigPointerField' => 'l10n_parent',
-		'transOrigDiffSourceField' => 'l10n_diffsource',</f:if>
-<f:if condition="{domainObject.addDeletedField}">		'delete' => 'deleted',</f:if>
-		'enablecolumns' => array(
-<f:if condition="{domainObject.addHiddenField}">			'disabled' => 'hidden',</f:if>
-<f:if condition="{domainObject.addStarttimeEndtimeFields}">			'starttime' => 'starttime',
-			'endtime' => 'endtime',</f:if>
-		),
-		'searchFields' => '<f:for each="{domainObject.properties}" as="property">{property.fieldName},</f:for>',
-		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/{domainObject.name}.php',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/{domainObject.databaseTableName}.gif'
-	),
-);
-</f:if>
-</f:for>
-<f:for each="{extension.tablesForTypeFieldDefinitions}" as="databaseTableName">
-	<f:render partial="TCA/TypeField.phpt" arguments="{databaseTableName:databaseTableName, extension:extension, settings:settings}" />
+	</f:else></f:if>
 </f:for>
 
-<f:for each="{extension.domainObjectsInHierarchicalOrder}" as="domainObject"><f:if condition="{domainObject.mappedToExistingTable}"><f:then>
-<f:render partial="TCA/Columns.phpt" arguments="{domainObject:domainObject, settings:settings}" />
-$GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = array(
-	'LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}',
-	'{domainObject.recordType}'
-);
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
-	'{domainObject.databaseTableName}',
-	'EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xlf'
-);
-</f:then><f:else><f:if condition="{domainObject.hasChildren}">
-$GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = array('LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.databaseTableName}.tx_extbase_type.{domainObject.recordType}','{domainObject.recordType}');
-$GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$TCA['{domainObject.databaseTableName}']['ctrl']['type']]['config']['default'] = '{domainObject.recordType}';
-</f:if></f:else></f:if>
-</f:for>
-<f:for each="{extension.tablesForTypeFieldDefinitions}" as="databaseTableName">
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
-	'{databaseTableName}',
-	$GLOBALS['TCA']['{databaseTableName}']['ctrl']['type'],
-	'',
-	'after:' . $TCA['{databaseTableName}']['ctrl']['label']
-);
-</f:for>
 <f:for each="{extension.domainObjects}" as="domainObject">
 	<f:if condition="{domainObject.categorizable}">
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(

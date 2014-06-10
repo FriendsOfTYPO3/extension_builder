@@ -65,10 +65,11 @@ class RecordTypeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
 				}
 			}
 		}
-
+		$this->templateVariableContainer->add('parentModelName', end(explode('\\',$domainObject->getParentClass())));
 		$this->templateVariableContainer->add('parentRecordType', $parentRecordType);
 		$content = $this->renderChildren();
 		$this->templateVariableContainer->remove('parentRecordType');
+		$this->templateVariableContainer->remove('parentModelName');
 
 		return $content;
 	}

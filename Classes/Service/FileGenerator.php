@@ -316,10 +316,28 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 				if (!$domainObject->getMapToTable()) {
 					$fileContents = $this->generateTCA($domainObject);
 					$this->writeFile(
-						$this->configurationDirectory . 'TCA/' . $domainObject->getName() . '.php',
+						$this->configurationDirectory . 'TCA/' . $domainObject->getDatabaseTableName() . '.php',
 						$fileContents
 					);
 				}
+			}
+			$domainObjectsNeedingOverrides = array();
+			foreach($this->extension->getDomainObjectsInHierarchicalOrder() as $domainObject) {
+				if($domainObject->isMappedToExistingTable() || $domainObject->getHasChildren()) {
+					if(!isset($domainObjectsNeedingOverrides[$domainObject->getDatabaseTableName()])) {
+						$domainObjectsNeedingOverrides[$domainObject->getDatabaseTableName()] = array();
+					}
+					$domainObjectsNeedingOverrides[$domainObject->getDatabaseTableName()][] = $domainObject;
+				}
+			}
+			$tablesNeedingTypeFields = $this->extension->getTablesForTypeFieldDefinitions();
+			foreach($domainObjectsNeedingOverrides as $tableName => $domainObjects) {
+				$addRecordTypeField = in_array($tableName, $tablesNeedingTypeFields);
+				$fileContents = $this->generateTCAOverride($domainObjects, $addRecordTypeField);
+				$this->writeFile(
+					$this->configurationDirectory . 'TCA/Overrides/' . $tableName . '.php',
+					$fileContents
+				);
 			}
 
 		} catch (\Exception $e) {
@@ -965,10 +983,29 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 
 	public function generateTCA(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject) {
 		return $this->renderTemplate(
-			'Configuration/TCA/domainObject.phpt',
+			'Configuration/TCA/tableName.phpt',
 			array(
 				'extension' => $this->extension,
 				'domainObject' => $domainObject
+			)
+		);
+	}
+
+	/**
+	 * Overrides are needed for single table inheritance
+	 *
+	 * @param array $domainObjects
+	 * @param $addRecordTypeField
+	 * @return mixed
+	 */
+	public function generateTCAOverride(array $domainObjects, $addRecordTypeField) {
+		return $this->renderTemplate(
+			'Configuration/TCA/Overrides/tableName.phpt',
+			array(
+				'extension' => $this->extension,
+				'rootDomainObject' => reset($domainObjects),
+				'domainObjects' => $domainObjects,
+				'addRecordTypeField' => $addRecordTypeField
 			)
 		);
 	}
