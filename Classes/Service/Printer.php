@@ -163,7 +163,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 			}
 			// if the last parameters endline is 2 lines above the first statements
 			// startLine, the closing bracket is in a new line (except if there is a comment)
-			if ($this->getFirstLineOfMoethodBody($node->stmts) - end($node->params)->getAttribute('endLine') > 1) {
+			if ($this->getFirstLineOfMethodBody($node->stmts) - end($node->params)->getAttribute('endLine') > 1) {
 				$lastToken = LF;
 			}
 		}
@@ -180,8 +180,8 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 	 * @param array $stmts
 	 * @return int
 	 */
-	protected function getFirstLineOfMoethodBody(array $stmts) {
-		if (count($stmts) > 0) {
+	protected function getFirstLineOfMethodBody(array $stmts) {
+		if (count($stmts) < 1) {
 			return 0;
 		} else {
 			$firstNode = reset($stmts);
