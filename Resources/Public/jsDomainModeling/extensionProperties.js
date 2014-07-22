@@ -246,6 +246,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 								name: "key",
 								label: TYPO3.settings.extensionBuilder._LOCAL_LANG.key,
 								required: true,
+								forceLowerCase: true,
 								forceAlphaNumeric: true,
 								noSpaces: true,
 								description: TYPO3.settings.extensionBuilder._LOCAL_LANG.uniqueInThisModel
@@ -333,6 +334,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 								label: TYPO3.settings.extensionBuilder._LOCAL_LANG.key,
 								name: "key",
 								required: true,
+								forceLowerCase: true,
 								forceAlphaNumeric: true,
 								noSpaces: true,
 								description: TYPO3.settings.extensionBuilder._LOCAL_LANG.uniqueInThisModel
