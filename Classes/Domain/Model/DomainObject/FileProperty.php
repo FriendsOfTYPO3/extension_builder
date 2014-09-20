@@ -39,7 +39,7 @@ class FileProperty extends AbstractProperty {
 	 *
 	 * @var string (comma separated filetypes)
 	 */
-	protected $allowedFileTypes = '*';
+	protected $allowedFileTypes = '';
 
 	/**
 	 * not allowed file types for this property (comma-separated file types)
