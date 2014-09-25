@@ -410,7 +410,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 					foreach ($lines as $line) {
 						if ($firstLine) {
 								// label for flexform select
-							if (!preg_match('/^[a-zA-Z0-9_-\\s]*$/', $line)) {
+							if (!preg_match('/^[a-zA-Z0-9_\-\s]*$/', $line)) {
 								$isValid = FALSE;
 								GeneralUtility::devlog('Label in switchable Actions contained disallowed character:' . $line, 'extension_builder', 2);
 							}
@@ -503,7 +503,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 			if (count($test) != 2) {
 				$isValid = FALSE;
 				GeneralUtility::devlog('Wrong count for explode("=>") switchable Actions line:' . $line, 'extension_builder', 2);
-			} elseif (!preg_match('/^[a-zA-Z0-9_,\\s]*$/', $test[1])) {
+			} elseif (!preg_match('/^[a-zA-Z0-9_,\s]*$/', $test[1])) {
 				$isValid = FALSE;
 				GeneralUtility::devlog('Regex failed:' . $test[1], 'extension_builder', 2);
 			}
@@ -807,7 +807,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 	 * @return boolean TRUE if valid
 	 */
 	private static function validatePluginKey($key) {
-		return preg_match('/^[a-zA-Z0-9_-]*$/', $key);
+		return preg_match('/^[a-zA-Z0-9_\-]*$/', $key);
 	}
 
 	/**
@@ -816,7 +816,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 	 * @return boolean TRUE if valid
 	 */
 	private static function validateModuleKey($key) {
-		return preg_match('/^[a-zA-Z0-9_-]*$/', $key);
+		return preg_match('/^[a-zA-Z0-9_\-]*$/', $key);
 	}
 
 	/**
