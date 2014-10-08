@@ -9,7 +9,7 @@ originally created files.
 This is, where "Roundtrip mode" is needed. It aims to preserve your manual changes and applying the new model
 configuration at the same time.
 
-First you have to enable the roundtrip mode in the ExtensionBuilder Configuration see :doc:`/Configuration/Index`
+The roundtrip mode is enabled by default. To disable it see the ExtensionBuilder Configuration :doc:`/Configuration/Index`
 
 The general rule is: All stuff that is editable in the modeler should be applied in the modeler.
 For example if you need another dependency in :file:`ext_emconf.php` you should add it in the modeler and not in :file:`ext_emconf.php` itself.
