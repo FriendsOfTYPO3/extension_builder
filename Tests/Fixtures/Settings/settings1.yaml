@@ -91,3 +91,4 @@ classBuilder:
     Repository:
       parentClass: \TYPO3\CMS\Extbase\Mvc\Controller\ActionControllerPersistence\Repository
 
+	setDefaultValuesForClassProperties: true

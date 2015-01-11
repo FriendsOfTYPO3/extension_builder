@@ -249,7 +249,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		// add the property to class Object (or update an existing class Object property)
 		if ($this->classObject->propertyExists($propertyName)) {
 			$classProperty = $this->classObject->getProperty($propertyName);
-			if ($this->settings['setDefaultValuesForClassProperties']) {
+			if ($this->settings['setDefaultValuesForClassProperties'] !== FALSE) {
 				$classProperty->setDefault($domainProperty->getDefaultValue());
 			}
 		} else {
@@ -262,7 +262,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 				$classProperty->setDescription(str_replace('property', $propertyName, $classProperty->getDescription()));
 			}
 
-			if ($domainProperty->getHasDefaultValue() && $this->settings['setDefaultValuesForClassProperties']) {
+			if ($domainProperty->getHasDefaultValue() && $this->settings['setDefaultValuesForClassProperties'] !== FALSE) {
 				$classProperty->setDefault($domainProperty->getDefaultValue());
 			}
 
