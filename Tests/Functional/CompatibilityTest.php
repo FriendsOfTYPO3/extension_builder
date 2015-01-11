@@ -36,8 +36,9 @@ use org\bovigo\vfs\vfsStream;
  *
  */
 class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
+
 	/**
-	 * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
+	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
 	 */
 	protected $configurationManager = NULL;
 
@@ -102,8 +103,8 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 			$createdFile = str_replace($testExtensionDir, $this->extension->getExtensionDir(), $referenceFile);
 			if (!in_array(basename($createdFile), array('ExtensionBuilder.json'))) {
 				$referenceFileContent = str_replace(
-					array('2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###'),
-					array(date('Y-m-d\TH:i:00\Z'),date('Y-m-d'), date('Y')),
+					array('2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###', '2014'),
+					array(date('Y-m-d\TH:i:00\Z'),date('Y-m-d'), date('Y'), date('Y')),
 					file_get_contents($referenceFile)
 				);
 				$this->assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');

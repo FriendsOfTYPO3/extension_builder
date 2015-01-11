@@ -29,7 +29,7 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
 
 class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	/**
-	 * @var \EBT\ExtensionBuilder\Service;\ExtensionSchemaBuilder
+	 * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
 	 */
 	protected $extensionSchemaBuilder = NULL;
 

@@ -26,6 +26,7 @@ namespace EBT\ExtensionBuilder\Configuration;
  ***************************************************************/
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Http\AjaxRequestHandler;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -45,6 +46,11 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 	 * @var string
 	 */
 	const EXTENSION_BUILDER_SETTINGS_FILE = 'ExtensionBuilder.json';
+
+	/**
+	 * @var string
+	 */
+	const DEFAULT_TEMPLATE_ROOTPATH = 'EXT:extension_builder/Resources/Private/CodeTemplates/Extbase/';
 
 	/**
 	 * @var array
@@ -107,7 +113,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 		}
 		$settings = $typoscript['module.']['extension_builder.']['settings.'];
 		if (empty($settings['codeTemplateRootPath'])) {
-			$settings['codeTemplateRootPath'] = 'EXT:extension_builder/Resources/Private/CodeTemplates/Extbase/';
+			$settings['codeTemplateRootPath'] = self::DEFAULT_TEMPLATE_ROOTPATH;
 		}
 		$settings['codeTemplateRootPath'] = self::substituteExtensionPath($settings['codeTemplateRootPath']);
 		$settings['extConf'] = $this->getExtensionBuilderSettings();
@@ -205,7 +211,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 				$currentClassSettings = $frameworkConfiguration['persistence']['classes'][$currentClassName];
 				if ($currentClassSettings !== NULL) {
 					if (isset($currentClassSettings['mapping']['columns']) && is_array($currentClassSettings['mapping']['columns'])) {
-						GeneralUtility::array_merge_recursive_overrule(
+						ArrayUtility::mergeRecursiveWithOverrule(
 							$columnMapping,
 							$currentClassSettings['mapping']['columns'],
 							0,
