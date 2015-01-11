@@ -46,6 +46,7 @@ div.WireIt-Container{
 div.WireIt-Container div.body{
 	border:1px solid #ccc;
 	position:relative;
+	padding: 10px 3px;
 }
 
 div.WireIt-Container-focused{
@@ -57,6 +58,10 @@ div.WireIt-Container-focused{
 
 #modelingLayer{
 	height:100%;
+}
+
+#domainModelEditor legend {
+	font-size: 11px;
 }
 
 #moduleBar{
@@ -86,7 +91,7 @@ div.WireIt-Layer{
 	cursor:move;
 	font-size:10pt;
 	font-weight:700;
-	height:16px;
+	height:auto;
 	margin:5px;
 	padding:5px;
 	width:130px;
@@ -125,9 +130,9 @@ div.WireIt-Container-ddhandle{
 	cursor:move;
 	font-size:10pt;
 	font-weight:700;
-	height:22px;
+	height:25px;
 	line-height:150%;
-	padding-top:3px;
+	padding-top:0;
 	text-align:center;
 	width:auto;
 }
@@ -159,16 +164,16 @@ div.WireIt-ImageContainer{
 	border:1px solid #CCC;
 	border-top:none;
 	box-shadow:0 4px 5px -4px #000;
-	margin-left:-6px;
+	margin-left:-4px;
 	padding-bottom:6px;
 	padding-left:6px;
 	position:absolute;
-	width:212px;
+	width:220px;
 	z-index:1000;
 }
 
 .WireIt-Container .advancedSettings.expanded{
-	margin-left:-10px;
+	margin-left:-8px;
 }
 
 div.inputEx-Group fieldset.inputEx-Collapsed legend:hover div.inputEx-Group-collapseImg{
@@ -208,21 +213,35 @@ div.extbase-modelTitleEditor{
 	line-height:100%;
 	position:absolute;
 	text-align:center;
-	top:-29px;
+	top:-32px;
 }
 
 div.WireIt-Container-ddhandle span{
 	display:none;
 }
 
+div#moduleProxy {
+	white-space: nowrap;
+	padding-left: 0;
+}
+
 div.inputEx-InPlaceEdit-visu:hover{
 	background-color:transparent;
+}
+
+.inputEx-InPlaceEdit-editor input[type="text"] {
+	width: 120px;
+}
+
+.inputEx-InPlaceEdit-editor  .inputEx-InPlaceEdit-OkButton {
+	font-size: 0;
 }
 
 legend.inputEx-Group-legend{
 	color:#666;
 	font-weight:700;
 	padding-top:4px;
+	width:auto;
 }
 
 a.inputEx-List-link{
@@ -657,4 +676,13 @@ div:hover > .inputEx-ListField-Arrow,
 div:hover > .WireIt-Container-closebutton.t3-icon-edit-delete,
 div:hover > .deleteButton {
 	display: block;
+}
+
+#domainModelEditor .collapse {
+	display: block;
+	visibility: visible;
+}
+
+#domainModelEditor .t3-icon {
+    font-size: 1px;
 }
