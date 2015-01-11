@@ -117,6 +117,9 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 		}
 		$settings['codeTemplateRootPath'] = self::substituteExtensionPath($settings['codeTemplateRootPath']);
 		$settings['extConf'] = $this->getExtensionBuilderSettings();
+		if (empty($settings['publicResourcesPath'])) {
+			$settings['publicResourcesPath'] = ExtensionManagementUtility::extRelPath('extension_builder') . 'Resources/Public/';
+		}
 		return $settings;
 	}
 

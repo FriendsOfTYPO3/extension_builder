@@ -1017,7 +1017,6 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	protected static function getTcaForDomainObject($domainObject) {
 		$tableName = $domainObject->getDatabaseTableName();
-		GeneralUtility::loadTca($tableName);
 		if (isset($GLOBALS['TCA'][$tableName])) {
 			return $GLOBALS['TCA'][$tableName];
 		}
