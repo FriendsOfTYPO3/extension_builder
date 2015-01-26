@@ -215,6 +215,10 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			$extension->setSupportLocalization(FALSE);
 		}
 
+		if (!empty($propertyConfiguration['emConf']['skipGenerateDocumentationTemplate'])) {
+			$extension->setGenerateDocumentationTemplate(FALSE);
+		}
+
 		// various extension properties
 		$extension->setVersion($propertyConfiguration['emConf']['version']);
 

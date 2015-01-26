@@ -133,6 +133,12 @@
 					localization related columns in the database
 				</source>
 			</trans-unit>
+			<trans-unit id="skipGenerateDocumentationTemplate">
+				<source>Don't generate doc-template</source>
+			</trans-unit>
+			<trans-unit id="descr_skipGenerateDocumentationTemplate">
+				<source>Check this if you don't want a documentation-template generated for your extension.</source>
+			</trans-unit>
 			<trans-unit id="sourceLanguage">
 				<source>Source language for xliff files</source>
 			</trans-unit>

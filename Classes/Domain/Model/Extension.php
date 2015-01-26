@@ -94,6 +94,11 @@ class Extension {
 	protected $supportLocalization = TRUE;
 
 	/**
+	 * @var bool
+	 */
+	protected $generateDocumentationTemplate = TRUE;
+
+	/**
 	 * @var string
 	 */
 	protected $sourceLanguage = 'en';
@@ -769,6 +774,20 @@ class Extension {
 	 */
 	public function getSupportLocalization() {
 		return $this->supportLocalization;
+	}
+
+	/**
+	 * @param boolean $generateDocumentationTemplate
+	 */
+	public function setGenerateDocumentationTemplate($generateDocumentationTemplate) {
+		$this->generateDocumentationTemplate = $generateDocumentationTemplate;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getGenerateDocumentationTemplate() {
+		return $this->generateDocumentationTemplate;
 	}
 
 	/**
