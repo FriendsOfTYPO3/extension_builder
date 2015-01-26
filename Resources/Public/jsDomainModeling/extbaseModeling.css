@@ -624,6 +624,10 @@ div#propertiesForm fieldset{
 	width:200px;
 }
 
+div#propertiesForm div.mainGroup div.checkBoxFieldWrapper div.inputEx-label {
+    width: 165px;
+}
+
 
 #wireEditorConfirmMessageBox ol.warnings{
 	padding-left:50px;

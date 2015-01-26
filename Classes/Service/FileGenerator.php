@@ -211,7 +211,9 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 
 		$this->generateDomainObjectRelatedFiles();
 
-		$this->generateDocumentationFiles();
+		if ($extension->getGenerateDocumentationTemplate()) {
+			$this->generateDocumentationFiles();
+		}
 	}
 
 	protected function generateYamlSettingsFile() {
