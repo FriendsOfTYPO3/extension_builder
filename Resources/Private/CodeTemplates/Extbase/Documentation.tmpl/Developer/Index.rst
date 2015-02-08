@@ -42,7 +42,7 @@ How to use the API...
 
 .. code-block:: php
 
-	$stuff = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('\\Foo\\Bar\\Utility\\Stuff');
+	$stuff = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Foo\\Bar\\Utility\\Stuff');
 	$stuff->do();
 
 or some other language:
