@@ -691,7 +691,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	public function renderTemplate($filePath, $variables) {
 		$variables['settings'] = $this->settings;
-		$standAloneView = $this->objectManager->get('\\TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+		$standAloneView = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
 		$standAloneView->setLayoutRootPath($this->codeTemplateRootPath);
 		$standAloneView->setPartialRootPath($this->codeTemplateRootPath . '/Partials');
 		$standAloneView->setFormat('txt');
@@ -757,10 +757,10 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return string
 	 */
 	protected function renderClassFile($classObject) {
-		$nameSpace = $this->objectManager->get('\\EBT\\ExtensionBuilder\\Domain\\Model\\NamespaceObject', $classObject->getNamespaceName());
+		$nameSpace = $this->objectManager->get('EBT\\ExtensionBuilder\\Domain\\Model\\NamespaceObject', $classObject->getNamespaceName());
 		$this->addLicenseHeader($classObject);
 		$nameSpace->addClass($classObject);
-		$classFile = $this->objectManager->get('\\EBT\\ExtensionBuilder\\Domain\\Model\\File');
+		$classFile = $this->objectManager->get('EBT\\ExtensionBuilder\\Domain\\Model\\File');
 		$classFile->addNamespace($nameSpace);
 		return $this->printerService->renderFileObject($classFile, TRUE);
 	}
