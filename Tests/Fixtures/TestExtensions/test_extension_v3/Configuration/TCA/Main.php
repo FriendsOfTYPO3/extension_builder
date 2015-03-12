@@ -182,14 +182,19 @@ $GLOBALS['TCA']['tx_testextension_domain_model_main'] = array(
 					'_PADDING' => 1,
 					'_VERTICAL' => 1,
 					'edit' => array(
+						'module' => array(
+							'name' => 'wizard_edit',
+						),
 						'type' => 'popup',
 						'title' => 'Edit',
-						'script' => 'wizard_edit.php',
 						'icon' => 'edit2.gif',
 						'popup_onlyOpenIfSelected' => 1,
 						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
 						),
 					'add' => Array(
+						'module' => array(
+							'name' => 'wizard_add',
+						),
 						'type' => 'script',
 						'title' => 'Create new',
 						'icon' => 'add.gif',
@@ -198,7 +203,6 @@ $GLOBALS['TCA']['tx_testextension_domain_model_main'] = array(
 							'pid' => '###CURRENT_PID###',
 							'setValue' => 'prepend'
 							),
-						'script' => 'wizard_add.php',
 					),
 				),
 			),
