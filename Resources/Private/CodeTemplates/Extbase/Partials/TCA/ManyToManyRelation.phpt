@@ -12,7 +12,7 @@ array(
 		'edit' => array(
 			'module' => array(
 				'name' => 'wizard_edit',
-        	),
+			),
 			'type' => 'popup',
 			'title' => 'Edit',
 			'icon' => 'edit2.gif',
