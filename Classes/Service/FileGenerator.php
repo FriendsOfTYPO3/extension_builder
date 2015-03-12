@@ -692,8 +692,8 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	public function renderTemplate($filePath, $variables) {
 		$variables['settings'] = $this->settings;
 		$standAloneView = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
-		$standAloneView->setLayoutRootPath($this->codeTemplateRootPath);
-		$standAloneView->setPartialRootPath($this->codeTemplateRootPath . '/Partials');
+		$standAloneView->setLayoutRootPaths(array($this->codeTemplateRootPath));
+		$standAloneView->setPartialRootPaths(array($this->codeTemplateRootPath . '/Partials'));
 		$standAloneView->setFormat('txt');
 		$templatePathAndFilename = $this->codeTemplateRootPath .  $filePath;
 		$standAloneView->setTemplatePathAndFilename($templatePathAndFilename);
