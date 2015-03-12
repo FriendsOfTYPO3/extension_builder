@@ -120,7 +120,7 @@ class ExtensionInstallationStatus {
 				}
 				$sqlContent = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl($sqlFile);
 				/** @var $cacheManager \TYPO3\CMS\Core\Cache\CacheManager */
-				$cacheManager = $GLOBALS['typo3CacheManager'];
+				$cacheManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
 				$cacheManager->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
 				$sqlContent .= \TYPO3\CMS\Core\Cache\Cache::getDatabaseTableDefinitions();
 				$fieldDefinitionsFromFile = $sqlHandler->getFieldDefinitions_fileContent($sqlContent);
