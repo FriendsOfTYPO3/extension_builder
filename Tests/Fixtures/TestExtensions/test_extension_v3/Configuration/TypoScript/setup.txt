@@ -7,10 +7,6 @@ plugin.tx_testextension {
 	persistence {
 		storagePid = {$plugin.tx_testextension.persistence.storagePid}
 	}
-	features {
-		# uncomment the following line to enable the new Property Mapper.
-		# rewrittenPropertyMapper = 1
-    }
 }
 
 plugin.tx_testextension._CSS_DEFAULT_STYLE (

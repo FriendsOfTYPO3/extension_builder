@@ -8,10 +8,6 @@ plugin.{extension.shortExtensionKey} {
 	persistence {
 		storagePid = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}.persistence.storagePid<![CDATA[}]]>
 	}
-	features {
-		# uncomment the following line to enable the new Property Mapper.
-		# rewrittenPropertyMapper = 1
-	}
 }
 
 plugin.{extension.shortExtensionKey}._CSS_DEFAULT_STYLE (
