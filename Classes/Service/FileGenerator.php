@@ -25,6 +25,7 @@ namespace EBT\ExtensionBuilder\Service;
  ***************************************************************/
 
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
@@ -935,7 +936,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 					$existingLabels
 				);
 				if (is_array($existingLabels)) {
-					$languageLabels = GeneralUtility::array_merge_recursive_overrule($languageLabels, $existingLabels);
+					ArrayUtility::mergeRecursiveWithOverrule($languageLabels, $existingLabels);
 				}
 
 			}
