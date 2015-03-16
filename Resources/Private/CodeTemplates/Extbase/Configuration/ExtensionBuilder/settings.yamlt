@@ -25,6 +25,8 @@
 #   preserved (renaming a property or DomainObject will result in new keys and new labels)
 #
 #   for other files: You will find a Split token at the end of the file
+#   see: \EBT\ExtensionBuilder\Service\RoundTrip::SPLIT_TOKEN
+#
 #   After this token you can write whatever you want and it will be appended
 #   everytime the code is generated
 #
