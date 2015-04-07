@@ -22,11 +22,11 @@ conf.py:
   latex_documents:
   - - Index
     - extension_builder.tex
-    - extension_builder
+    - Extension Builder
     - Nico de Haen
     - manual
   latex_elements:
     papersize: a4paper
     pointsize: 10pt
-    preamble: \usepackage
+    preamble: \usepackage{typo3}
 ...
