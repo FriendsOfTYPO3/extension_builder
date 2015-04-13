@@ -339,6 +339,13 @@ class DomainObject {
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function hasRelations() {
+		return count($this->getAnyToManyRelationProperties()) == 0 && count($this->getZeroToManyRelationProperties()) == 0;
+	}
+
+	/**
 	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action
 	 *
 	 * @return void
