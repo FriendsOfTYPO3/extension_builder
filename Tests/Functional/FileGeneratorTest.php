@@ -398,6 +398,9 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$relation->setInlineEditing(false);
 		$domainObject->addProperty($relation);
 
+		$property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty('title');
+		$domainObject->addProperty($property);
+
 		$this->extension->addDomainObject($domainObject);
 		$this->extension->addDomainObject($relatedDomainObject);
 

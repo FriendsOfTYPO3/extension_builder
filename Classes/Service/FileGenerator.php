@@ -622,6 +622,9 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 		}
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	protected function copyStaticFiles() {
 		try {
 			$this->upload_copy_move(
@@ -637,10 +640,18 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 			$publicResourcesDirectory = $this->extensionDirectory . 'Resources/Public/';
 			$this->mkdir_deep($publicResourcesDirectory, 'Icons');
 			$this->iconsDirectory = $publicResourcesDirectory . 'Icons/';
-			$this->upload_copy_move(
-				ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/Icons/relation.gif',
-				$this->iconsDirectory . 'relation.gif'
-			);
+			$needsRelationIcon = FALSE;
+			foreach($this->extension->getDomainObjects() as $domainObject) {
+				if ($domainObject->hasRelations()) {
+					$needsRelationIcon = TRUE;
+				}
+			}
+			if ($needsRelationIcon) {
+				$this->upload_copy_move(
+					ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/Icons/relation.gif',
+					$this->iconsDirectory . 'relation.gif'
+				);
+			}
 		} catch (\Exception $e) {
 			throw new \Exception('Could not create public resources folder, error: ' . $e->getMessage());
 		}
@@ -913,7 +924,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 		$languageLabels = array();
 		if ($variableName == 'domainObject') {
 			$languageLabels = $this->localizationService->prepareLabelArrayForContextHelp($variable);
-		} elseif($variableName == 'backendModule') {
+		} elseif ($variableName == 'backendModule') {
 			$languageLabels = $this->localizationService->prepareLabelArrayForBackendModule($variable);
 		} else {
 			$languageLabels = $this->localizationService->prepareLabelArray($this->extension, 'locallang' . $fileNameSuffix);
@@ -940,6 +951,9 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 				}
 
 			}
+		}
+		if (empty($languageLabels)) {
+			return '';
 		}
 		$variableArray['labelArray'] = $languageLabels;
 		return $this->renderTemplate('Resources/Private/Language/locallang.xlf' . 't', $variableArray);
@@ -1095,6 +1109,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 				0,
 				$this->settings
 			);
+			return;
 		}
 		$success = \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($targetFile, $fileContents);
 		if (!$success) {
