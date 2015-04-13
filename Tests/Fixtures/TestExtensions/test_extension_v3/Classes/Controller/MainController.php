@@ -62,12 +62,10 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 	/**
 	 * action new
 	 *
-	 * @param \TYPO3\TestExtension\Domain\Model\Main $newMain
-	 * @ignorevalidation $newMain
 	 * @return void
 	 */
-	public function newAction(\TYPO3\TestExtension\Domain\Model\Main $newMain = NULL) {
-		$this->view->assign('newMain', $newMain);
+	public function newAction() {
+		
 	}
 
 	/**
