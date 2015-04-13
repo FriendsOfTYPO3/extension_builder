@@ -176,7 +176,7 @@
 				},
 				this,
 				this
-		)
+		);
 
 
 		/**
@@ -366,9 +366,7 @@
 				else {
 					o.argument.editor.alert('Login expired', 'Your login is expired. Please refresh your login in a separate browser window and save again');
 				}
-				return;
-			}
-			else {
+			} else {
 				o.argument.editor.saveModule(true);
 			}
 
@@ -484,7 +482,6 @@
 		 */
 		saveModuleSuccess: function(o) {
 			this.showSpinnerPanel.hide();
-			console.log(o);
 			if (typeof o.confirm != 'undefined') {
 				title = 'Please confirm';
 				message = o.confirm;
@@ -554,7 +551,6 @@
 						'confirmUpdatePanelButton',
 						'click',
 						function() {
-							console.log('confirmUpdatePanelButton clicked');
 							this.confirmUpdatesPanel.hide();
 							this.performDbUpdates();
 						}, this, true);
@@ -582,7 +578,6 @@
 			this.dataToSubmit.updateStatements = updateStatements;
 			this.dataToSubmit.extensionKey = extensionProperties.extensionKey;
 			this.dataToSubmit.vendorName = extensionProperties.vendorName;
-			console.log(this.service);
 			this.showSpinnerPanel.show();
 			this.service.updateDb(this.dataToSubmit, {
 				success: this.saveModuleSuccess,
@@ -597,7 +592,7 @@
 		 * @method saveModuleFailure
 		 */
 		saveModuleFailure: function(o, t) {
-			this.showSpinnerPanel.hide()
+			this.showSpinnerPanel.hide();
 			this.alert('Error', "Error while saving: " + o.error);
 		},
 
@@ -614,10 +609,12 @@
 		 * @method onNew
 		 */
 		onNew: function() {
-			if (!confirm('modeler_loadPipeConfirmMessage')) {
-				return false;
-			}
-			this.layer.removeAllContainers();
+			if(this.layer.containers.length > 0) {
+                if (!confirm(this.localize('modeler_loadPipeConfirmMessage'))) {
+                    return false;
+                }
+            }
+			this.layer.clear();
 			this.propertiesForm.destroy();
 			this.renderPropertiesForm();
 			this.layout.getUnitById('left').expand();
@@ -746,12 +743,14 @@
 		 */
 		loadPipe: function(name) {
 			var pipe = this.getPipeByName(name), i;
-
 			// TODO: check if current pipe is saved...
+            if(this.layer.containers.length > 0) {
+                if (!confirm(this.localize('modeler_loadPipeConfirmMessage'))){
+                    return false;
+                }
+            }
 
-			if (!confirm(this.localize('modeler_loadPipeConfirmMessage'))) return false;
-
-			this.layer.removeAllContainers();
+			this.layer.clear();
 
 			this.propertiesForm.setValue(pipe.properties);
 
@@ -847,4 +846,3 @@
 	};
 
 })();
-
