@@ -75,8 +75,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 								TYPO3.settings.extensionBuilder._LOCAL_LANG.frontend,
 								TYPO3.settings.extensionBuilder._LOCAL_LANG.services,
 								TYPO3.settings.extensionBuilder._LOCAL_LANG.templates,
-								TYPO3.settings.extensionBuilder._LOCAL_LANG.examples,
 								TYPO3.settings.extensionBuilder._LOCAL_LANG.distribution,
+								TYPO3.settings.extensionBuilder._LOCAL_LANG.examples,
 								TYPO3.settings.extensionBuilder._LOCAL_LANG.documentation
 							]
 						}
