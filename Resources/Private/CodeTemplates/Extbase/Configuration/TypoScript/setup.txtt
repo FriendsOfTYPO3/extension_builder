@@ -1,15 +1,17 @@
-<f:if condition="{extension.plugins}">
-plugin.{extension.shortExtensionKey} {
+<f:for each="{extension.plugins}" as="plugin">
+plugin.{extension.shortExtensionKey}_{plugin.key} {
 	view {
-		templateRootPath = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}.view.templateRootPath<![CDATA[}]]>
-		partialRootPath = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}.view.partialRootPath<![CDATA[}]]>
-		layoutRootPath = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}.view.layoutRootPath<![CDATA[}]]>
+		templateRootPath = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.view.templateRootPath<![CDATA[}]]>
+		partialRootPath = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.view.partialRootPath<![CDATA[}]]>
+		layoutRootPath = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.view.layoutRootPath<![CDATA[}]]>
 	}
 	persistence {
-		storagePid = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}.persistence.storagePid<![CDATA[}]]>
+		storagePid = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.persistence.storagePid<![CDATA[}]]>
 	}
 }
+</f:for>
 
+<f:if condition="{extension.plugins}">
 plugin.{extension.shortExtensionKey}._CSS_DEFAULT_STYLE (
 	textarea.f3-form-error {
 		background-color:#FF9F9F;
@@ -45,16 +47,16 @@ plugin.{extension.shortExtensionKey}._CSS_DEFAULT_STYLE (
 )
 </f:if>
 
-<f:if condition="{extension.backendModules}">
+<f:for each="{extension.backendModules}" as="backendModule">
  # Module configuration
-module.{extension.shortExtensionKey} {
+module.{extension.shortExtensionKey}_{backendModule.key} {
 	persistence {
-		storagePid = <![CDATA[{$]]>module.{extension.shortExtensionKey}.persistence.storagePid<![CDATA[}]]>
+		storagePid = <![CDATA[{$]]>module.{extension.shortExtensionKey}_{backendModule.key}.persistence.storagePid<![CDATA[}]]>
 	}
 	view {
-		templateRootPath = <![CDATA[{$]]>module.{extension.shortExtensionKey}.view.templateRootPath<![CDATA[}]]>
-		partialRootPath = <![CDATA[{$]]>module.{extension.shortExtensionKey}.view.partialRootPath<![CDATA[}]]>
-		layoutRootPath = <![CDATA[{$]]>module.{extension.shortExtensionKey}.view.layoutRootPath<![CDATA[}]]>
+		templateRootPath = <![CDATA[{$]]>module.{extension.shortExtensionKey}_{backendModule.key}.view.templateRootPath<![CDATA[}]]>
+		partialRootPath = <![CDATA[{$]]>module.{extension.shortExtensionKey}_{backendModule.key}.view.partialRootPath<![CDATA[}]]>
+		layoutRootPath = <![CDATA[{$]]>module.{extension.shortExtensionKey}_{backendModule.key}.view.layoutRootPath<![CDATA[}]]>
 	}
 }
-</f:if>
+</f:for>

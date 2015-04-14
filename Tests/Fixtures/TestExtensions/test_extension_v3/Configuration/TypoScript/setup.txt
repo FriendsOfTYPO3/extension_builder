@@ -1,11 +1,11 @@
-plugin.tx_testextension {
+plugin.tx_testextension_testplugin {
 	view {
-		templateRootPath = {$plugin.tx_testextension.view.templateRootPath}
-		partialRootPath = {$plugin.tx_testextension.view.partialRootPath}
-		layoutRootPath = {$plugin.tx_testextension.view.layoutRootPath}
+		templateRootPath = {$plugin.tx_testextension_testplugin.view.templateRootPath}
+		partialRootPath = {$plugin.tx_testextension_testplugin.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_testextension_testplugin.view.layoutRootPath}
 	}
 	persistence {
-		storagePid = {$plugin.tx_testextension.persistence.storagePid}
+		storagePid = {$plugin.tx_testextension_testplugin.persistence.storagePid}
 	}
 }
 
@@ -45,13 +45,13 @@ plugin.tx_testextension._CSS_DEFAULT_STYLE (
 
 
  # Module configuration
-module.tx_testextension {
+module.tx_testextension_testmodule {
 	persistence {
-		storagePid = {$module.tx_testextension.persistence.storagePid}
+		storagePid = {$module.tx_testextension_testmodule.persistence.storagePid}
 	}
 	view {
-		templateRootPath = {$module.tx_testextension.view.templateRootPath}
-		partialRootPath = {$module.tx_testextension.view.partialRootPath}
-		layoutRootPath = {$module.tx_testextension.view.layoutRootPath}
+		templateRootPath = {$module.tx_testextension_testmodule.view.templateRootPath}
+		partialRootPath = {$module.tx_testextension_testmodule.view.partialRootPath}
+		layoutRootPath = {$module.tx_testextension_testmodule.view.layoutRootPath}
 	}
 }
