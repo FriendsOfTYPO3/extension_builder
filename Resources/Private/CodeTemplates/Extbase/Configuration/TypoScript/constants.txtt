@@ -1,33 +1,33 @@
-<f:if condition="{extension.plugins}">
-plugin.{extension.shortExtensionKey} {
+<f:for each="{extension.plugins}" as="plugin">
+plugin.{extension.shortExtensionKey}_{plugin.key} {
 	view {
-		# cat=plugin.{extension.shortExtensionKey}/file; type=string; label=Path to template root (FE)
+		# cat=plugin.{extension.shortExtensionKey}_{plugin.key}/file; type=string; label=Path to template root (FE)
 		templateRootPath = EXT:{extension.extensionKey}/Resources/Private/Templates/
-		# cat=plugin.{extension.shortExtensionKey}/file; type=string; label=Path to template partials (FE)
+		# cat=plugin.{extension.shortExtensionKey}_{plugin.key}/file; type=string; label=Path to template partials (FE)
 		partialRootPath = EXT:{extension.extensionKey}/Resources/Private/Partials/
-		# cat=plugin.{extension.shortExtensionKey}/file; type=string; label=Path to template layouts (FE)
+		# cat=plugin.{extension.shortExtensionKey}_{plugin.key}/file; type=string; label=Path to template layouts (FE)
 		layoutRootPath = EXT:{extension.extensionKey}/Resources/Private/Layouts/
 	}
 	persistence {
-		# cat=plugin.{extension.shortExtensionKey}//a; type=string; label=Default storage PID
+		# cat=plugin.{extension.shortExtensionKey}_{plugin.key}//a; type=string; label=Default storage PID
 		storagePid =
 	}
 }
-</f:if>
-<f:if condition="{extension.backendModules}">
-module.{extension.shortExtensionKey} {
+</f:for>
+<f:for each="{extension.backendModules}" as="backendModule">
+module.{extension.shortExtensionKey}_{backendModule.key} {
 	view {
-		# cat=module.{extension.shortExtensionKey}/file; type=string; label=Path to template root (BE)
+		# cat=module.{extension.shortExtensionKey}_{backendModule.key}/file; type=string; label=Path to template root (BE)
 		templateRootPath = EXT:{extension.extensionKey}/Resources/Private/Backend/Templates/
-		# cat=module.{extension.shortExtensionKey}/file; type=string; label=Path to template partials (BE)
+		# cat=module.{extension.shortExtensionKey}_{backendModule.key}/file; type=string; label=Path to template partials (BE)
 		partialRootPath = EXT:{extension.extensionKey}/Resources/Private/Backend/Partials/
-		# cat=module.{extension.shortExtensionKey}/file; type=string; label=Path to template layouts (BE)
+		# cat=module.{extension.shortExtensionKey}_{backendModule.key}/file; type=string; label=Path to template layouts (BE)
 		layoutRootPath = EXT:{extension.extensionKey}/Resources/Private/Backend/Layouts/
 	}
 	persistence {
-		# cat=module.{extension.shortExtensionKey}//a; type=string; label=Default storage PID
+		# cat=module.{extension.shortExtensionKey}_{backendModule.key}//a; type=string; label=Default storage PID
 		storagePid =
 	}
 }
 
-</f:if>
+</f:for>
