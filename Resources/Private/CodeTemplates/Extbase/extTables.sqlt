@@ -51,6 +51,7 @@ CREATE TABLE {domainObject.databaseTableName} (
 <f:for each="{extension.domainObjects}" as="domainObject">
    <f:groupedFor each="{domainObject.zeroToManyRelationProperties}" as="relationsWithSameForeignTable" groupBy="foreignDatabaseTableName" groupKey="tableName">
       <f:if condition="{tableName}">
+        <f:if condition="{tableName} == 'sys_file_reference'"><f:else>
 #
 # Table structure for table '{tableName}'
 #
@@ -59,6 +60,7 @@ CREATE TABLE {tableName} (
 	{relation.foreignKeyName}  int(11) unsigned DEFAULT '0' NOT NULL,
 </f:for>
 );
+        </f:else></f:if>
       </f:if>
    </f:groupedFor>
    <f:if condition="{domainObject.categorizable}">
