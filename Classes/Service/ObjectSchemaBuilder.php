@@ -93,6 +93,7 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 					$propertyJsonConfiguration['foreignRelationClass'] = '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference';
 					$propertyJsonConfiguration['type'] = $propertyJsonConfiguration['propertyType'];
 					$propertyJsonConfiguration['maxItems'] = $propertyJsonConfiguration['maxItems'];
+					$propertyJsonConfiguration['allowedFileTypes'] = $propertyJsonConfiguration['allowedFileTypes'];
 
 					$property = $this->buildRelation($propertyJsonConfiguration, $domainObject);
 				} else {
@@ -204,6 +205,9 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			if ($relation->isFileReference() && !empty($relationJsonConfiguration['maxItems'])) {
 				/** @var $relation \EBT\ExtensionBuilder\Domain\Model\DomainObject\FileProperty */
 				$relation->setMaxItems($relationJsonConfiguration['maxItems']);
+				if (!empty($relationJsonConfiguration['allowedFileTypes'])) {
+					$relation->setAllowedFileTypes($relationJsonConfiguration['allowedFileTypes']);
+				}
 			}
 		}
 		return $relation;

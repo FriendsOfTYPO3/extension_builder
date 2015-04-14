@@ -69,6 +69,20 @@ abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\Domai
 	 */
 	protected $relatedToExternalModel = FALSE;
 
+	/**
+	 * allowed file types for this relation
+	 *
+	 * @var string (comma separated filetypes)
+	 */
+	protected $allowedFileTypes = '';
+
+	/**
+	 * not allowed file types for this relation (comma-separated file types)
+	 *
+	 * @var string
+	 */
+	protected $disallowedFileTypes = 'php';
+
 	public function setRelatedToExternalModel($relatedToExternalModel) {
 		$this->relatedToExternalModel = $relatedToExternalModel;
 	}
@@ -202,6 +216,42 @@ abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\Domai
 			return TRUE;
 		}
 		return FALSE;
+	}
+
+	/**
+	 * getter for allowed file types
+	 *
+	 * @return string
+	 */
+	public function getAllowedFileTypes() {
+		return $this->allowedFileTypes;
+	}
+
+	/**
+	 * setter for allowed file types
+	 *
+	 * @return string
+	 */
+	public function setAllowedFileTypes($allowedFileTypes) {
+		return $this->allowedFileTypes = $allowedFileTypes;
+	}
+
+	/**
+	 * getter for disallowed file types
+	 *
+	 * @return string
+	 */
+	public function getDisallowedFileTypes() {
+		return $this->disallowedFileTypes;
+	}
+
+	/**
+	 * setter for disallowed file types
+	 *
+	 * @return string
+	 */
+	public function setDisallowedFileTypes($disallowedFileTypes) {
+		return $this->disallowedFileTypes = $disallowedFileTypes;
 	}
 
 }
