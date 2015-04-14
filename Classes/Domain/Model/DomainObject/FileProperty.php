@@ -80,7 +80,7 @@ class FileProperty extends AbstractProperty {
 	/**
 	 * getter for allowed file types
 	 *
-	 * @return boolean
+	 * @return string
 	 */
 	public function getAllowedFileTypes() {
 		return $this->allowedFileTypes;
@@ -98,7 +98,7 @@ class FileProperty extends AbstractProperty {
 	/**
 	 * getter for disallowed file types
 	 *
-	 * @return boolean
+	 * @return string
 	 */
 	public function getDisallowedFileTypes() {
 		return $this->disallowedFileTypes;
