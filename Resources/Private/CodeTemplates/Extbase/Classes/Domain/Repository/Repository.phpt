@@ -6,4 +6,11 @@ namespace VENDOR\Package\Domain\Repository;
  */
 class DomainObjectRepository {
 
+	/**
+	 * @var array
+	 */
+	protected $defaultOrderings = array(
+		'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
+	);
+
 }
