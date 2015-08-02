@@ -27,7 +27,7 @@
                     "description": "",
                     "mapToTable": "",
                     "parentClass": "",
-                    "sorting": false,
+                    "sorting": true,
                     "type": "Entity",
                     "uid": "995983065087"
                 },

@@ -779,6 +779,10 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			}
 			$this->classObject->setParentClassName($parentClass);
 		}
+		if ($domainObject->getSorting() && is_null($this->classObject->getProperty('defaultOrderings'))) {
+			$defaultOrderings = $this->templateClassObject->getProperty('defaultOrderings');
+			$this->classObject->addProperty($defaultOrderings);
+		}
 		$this->classFileObject->getNamespace()
 			->setName($this->extension->getNamespaceName() . '\\Domain\\Repository')
 			->setClasses(array($this->classObject));
