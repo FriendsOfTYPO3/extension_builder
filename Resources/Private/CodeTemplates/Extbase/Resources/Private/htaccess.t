@@ -1,4 +1,4 @@
-﻿# Apache < 2.3
+# Apache < 2.3
 <IfModule !mod_authz_core.c>
 	Order allow,deny
 	Deny from all
