@@ -33,9 +33,9 @@ class NodeConverter {
 	 * @var int[]
 	 */
 	public static $accessorModifiers = array(
-		\PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC,
-		\PHPParser_Node_Stmt_Class::MODIFIER_PROTECTED,
-		\PHPParser_Node_Stmt_Class::MODIFIER_PRIVATE
+		\PhpParser\Node\Stmt\Class_::MODIFIER_PUBLIC,
+		\PhpParser\Node\Stmt\Class_::MODIFIER_PROTECTED,
+		\PhpParser\Node\Stmt\Class_::MODIFIER_PRIVATE
 
 	);
 
@@ -58,18 +58,18 @@ class NodeConverter {
 	 * @return array with names as strings
 	 */
 	public static function modifierToNames($modifiers) {
-		$modifierString = ($modifiers & \PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC    ? 'public '    : '') .
-			($modifiers & \PHPParser_Node_Stmt_Class::MODIFIER_PROTECTED ? 'protected ' : '') .
-			($modifiers & \PHPParser_Node_Stmt_Class::MODIFIER_PRIVATE   ? 'private '   : '') .
-			($modifiers & \PHPParser_Node_Stmt_Class::MODIFIER_STATIC    ? 'static '    : '') .
-			($modifiers & \PHPParser_Node_Stmt_Class::MODIFIER_ABSTRACT  ? 'abstract '  : '') .
-			($modifiers & \PHPParser_Node_Stmt_Class::MODIFIER_FINAL     ? 'final '     : '');
+		$modifierString = ($modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_PUBLIC    ? 'public '    : '') .
+			($modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_PROTECTED ? 'protected ' : '') .
+			($modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_PRIVATE   ? 'private '   : '') .
+			($modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_STATIC    ? 'static '    : '') .
+			($modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_ABSTRACT  ? 'abstract '  : '') .
+			($modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_FINAL     ? 'final '     : '');
 		return explode(' ',trim($modifierString));
 	}
 
 
 	/**
-	 * Convert various \PHPParser_Nodes to the value they represent
+	 * Convert various \PhpParser\Nodes to the value they represent
 	 * //TODO: support more node types?
 	 *
 	 * @static
@@ -80,17 +80,17 @@ class NodeConverter {
 		if (\is_string($node) || \is_numeric($node)) {
 			return $node;
 		}
-		if ($node instanceof \PHPParser_Node_Stmt_Namespace) {
+		if ($node instanceof \PhpParser\Node\Stmt\Namespace_) {
 			return implode('\\', $node->name->parts);
-		} elseif ($node instanceof \PHPParser_Node_Name_FullyQualified) {
+		} elseif ($node instanceof \PhpParser\Node\Name\FullyQualified) {
 			return '\\' . implode('\\', $node->parts);
-		} elseif ($node instanceof \PHPParser_Node_Name) {
+		} elseif ($node instanceof \PhpParser\Node\Name) {
 			return implode('\\', $node->parts);
-		} elseif ($node instanceof \PHPParser_Node_Expr_ConstFetch) {
+		} elseif ($node instanceof \PhpParser\Node\Expr\ConstFetch) {
 			return self::getValueFromNode($node->name);
-		} elseif ($node instanceof \PHPParser_Node_Expr_UnaryMinus) {
+		} elseif ($node instanceof \PhpParser\Node\Expr\UnaryMinus) {
 			return -1 * self::getValueFromNode($node->expr);
-		} elseif ($node instanceof \PHPParser_Node_Expr_Array) {
+		} elseif ($node instanceof \PhpParser\Node\Expr\Array_) {
 			$value = array();
 			$arrayItems = $node->items;
 			foreach ($arrayItems as $arrayItemNode) {
@@ -103,7 +103,7 @@ class NodeConverter {
 				}
 			}
 			return $value;
-		} elseif ($node instanceof \PHPParser_Node) {
+		} elseif ($node instanceof \PhpParser\Node) {
 			return $node->value;
 		} else {
 			return NULL;
@@ -116,44 +116,44 @@ class NodeConverter {
     *
     * @param mixed $value The value to normalize
     *
-    * @return \PHPParser_Node_Expr The normalized value
+    * @return \PhpParser\Node\Expr The normalized value
     */
    public static function normalizeValue($value) {
-       if ($value instanceof \PHPParser_Node) {
+       if ($value instanceof \PhpParser\Node) {
            return $value;
        } elseif (is_null($value)) {
-           return new \PHPParser_Node_Expr_ConstFetch(
-               new \PHPParser_Node_Name('NULL')
+           return new \PhpParser\Node\Expr\ConstFetch(
+               new \PhpParser\Node\Name('NULL')
            );
        } elseif (is_bool($value)) {
-           return new \PHPParser_Node_Expr_ConstFetch(
-               new \PHPParser_Node_Name($value ? 'TRUE' : 'FALSE')
+           return new \PhpParser\Node\Expr\ConstFetch(
+               new \PhpParser\Node\Name($value ? 'TRUE' : 'FALSE')
            );
        } elseif (is_int($value)) {
-           return new \PHPParser_Node_Scalar_LNumber($value);
+           return new \PhpParser\Node\Scalar\LNumber($value);
        } elseif (is_float($value)) {
-           return new \PHPParser_Node_Scalar_DNumber($value);
+           return new \PhpParser\Node\Scalar\DNumber($value);
        } elseif (is_string($value)) {
-           return new \PHPParser_Node_Scalar_String($value);
+           return new \PhpParser\Node\Scalar\String_($value);
        } elseif (is_array($value)) {
            $items = array();
            $lastKey = -1;
            foreach ($value as $itemKey => $itemValue) {
                // for consecutive, numeric keys don't generate keys
                if (NULL !== $lastKey && ++$lastKey === $itemKey) {
-                   $items[] = new \PHPParser_Node_Expr_ArrayItem(
+                   $items[] = new \PhpParser\Node\Expr\ArrayItem(
                        self::normalizeValue($itemValue)
                    );
                } else {
                    $lastKey = NULL;
-                   $items[] = new \PHPParser_Node_Expr_ArrayItem(
+                   $items[] = new \PhpParser\Node\Expr\ArrayItem(
                        self::normalizeValue($itemValue),
                        self::normalizeValue($itemKey)
                    );
                }
            }
 
-           return new \PHPParser_Node_Expr_Array($items);
+           return new \PhpParser\Node\Expr\Array_($items);
        } else {
            throw new \LogicException('Invalid value');
        }
@@ -161,14 +161,14 @@ class NodeConverter {
 
 	/**
 	 * Constants consist of a simple key => value array in the API
-	 * This methods converts  \PHPParser_Node_Stmt_ClassConst or
-	 * \PHPParser_Node_Stmt_Const
+	 * This methods converts  \PhpParser\Node\Stmt\Class_Const or
+	 * \PhpParser\Node\Stmt\Class_Const
 	 *
 	 * @static
-	 * @param \PHPParser_Node
+	 * @param \PhpParser\Node
 	 * @return array
 	 */
-	public static function convertClassConstantNodeToArray(\PHPParser_Node $node) {
+	public static function convertClassConstantNodeToArray(\PhpParser\Node $node) {
 		$constantsArray = array();
 		$consts = $node->consts;
 		foreach ($consts as $const) {
@@ -181,16 +181,15 @@ class NodeConverter {
 
 	/**
 	 * Constants consist of a simple key => value array in the API
-	 * This methods converts  \PHPParser_Node_Stmt_ClassConst or
-	 * \PHPParser_Node_Stmt_Const
+	 * This methods converts  \PhpParser\Node\Stmt\ClassConst or
+	 * \PhpParser\Node\Stmt\ClassConst
 	 *
 	 * @static
-	 * @param \PHPParser_Node
+	 * @param \PhpParser\Node
 	 * @return array
 	 */
-	public static function convertUseAliasStatementNodeToArray(\PHPParser_Node_Stmt_Use $node) {
-		$subNodes = $node->__get('uses');
-		return array('name' => self::getValueFromNode($subNodes[0]->__get('name')), 'alias' => $subNodes[0]->__get('alias'));
+	public static function convertUseAliasStatementNodeToArray(\PhpParser\Node\Stmt\Use_ $node) {
+		return array('name' => self::getValueFromNode($node->uses[0]->name), 'alias' => self::getValueFromNode($node->uses[0]->alias));
 	}
 
 	public static function getVarTypeFromValue($value) {

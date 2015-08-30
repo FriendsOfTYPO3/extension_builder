@@ -44,7 +44,7 @@ class File extends Container {
 	protected $stmts = array();
 
 	/**
-	 * @var \PHPParser_Node_Stmt[]
+	 * @var \PhpParser\Node\Stmt[]
 	 */
 	protected $aliasDeclarations = array();
 
@@ -151,14 +151,14 @@ class File extends Container {
 	}
 
 	/**
-	 * @param array $aliasDeclarations PHPParser_Node_Stmt
+	 * @param array $aliasDeclarations PhpParser\Node\Stmt
 	 */
 	public function addAliasDeclarations($aliasDeclarations) {
 		$this->aliasDeclarations = $aliasDeclarations;
 	}
 
 	/**
-	 * @return array PHPParser_Node_Stmt
+	 * @return array PhpParser\Node\Stmt
 	 */
 	public function getAliasDeclarations() {
 		return $this->aliasDeclarations;

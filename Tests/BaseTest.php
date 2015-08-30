@@ -93,10 +93,10 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 
 
 	protected function setUp($settingFile = ''){
-		if (!class_exists('PHPParser_Parser')) {
+		if (!class_exists('PhpParser\Parser')) {
 			\EBT\ExtensionBuilder\Parser\AutoLoader::register();
 		}
-		if (!class_exists('PHPParser_Parser')) {
+		if (!class_exists('PhpParser\Parser')) {
 			die('Parser not found!!');
 		}
 		$this->fixturesPath = PATH_typo3conf . 'ext/extension_builder/Tests/Fixtures/';
@@ -105,6 +105,7 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 		$extensionKey = 'dummy';
 		vfsStream::setup('testDir');
 		$dummyExtensionDir = vfsStream::url('testDir') . '/';
+		//$dummyExtensionDir = $this->fixturesPath . 'dummy/';
 		$this->extension->setVendorName('EBT');
 		$this->extension->setExtensionKey($extensionKey);
 		$this->extension->expects(
@@ -131,7 +132,7 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 		$objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 		$this->objectManager = clone $objectManager;
 
-		$this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PHPParser_Lexer());
+		$this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
 		$this->printerService = new \EBT\ExtensionBuilder\Service\Printer();
 		$this->printerService->injectNodeFactory(new \EBT\ExtensionBuilder\Parser\NodeFactory());
 

@@ -33,7 +33,7 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  * @author Nico de Haen
  */
 
-class ReplaceClassNamesVisitor extends \PHPParser_NodeVisitorAbstract {
+class ReplaceClassNamesVisitor extends \PhpParser\NodeVisitorAbstract {
 	/**
 	 * @var string
 	 */
@@ -55,10 +55,10 @@ class ReplaceClassNamesVisitor extends \PHPParser_NodeVisitorAbstract {
 	protected $newClassPrefix = '';
 
 	/**
-	 * @param \PHPParser_Node $node
-	 * @return \PHPParser_Node|void
+	 * @param \PhpParser\Node $node
+	 * @return \PhpParser\Node|void
 	 */
-	public function leaveNode(\PHPParser_Node $node) {
+	public function leaveNode(\PhpParser\Node $node) {
 		if (NULL !== $node->__get('class')) {
 			$oldClassName = \EBT\ExtensionBuilder\Parser\Utility\NodeConverter::getValueFromNode($node->__get('class'));
 			if (strpos($oldClassName,$this->oldClassPrefix) !== FALSE) {
@@ -70,7 +70,7 @@ class ReplaceClassNamesVisitor extends \PHPParser_NodeVisitorAbstract {
 	}
 
 	public function beforeTraverse(array $nodes){}
-	public function enterNode(\PHPParser_Node $node){}
+	public function enterNode(\PhpParser\Node $node){}
 	public function afterTraverse(array $nodes){}
 
 	public function setNewClassPrefix($newClassPrefix) {

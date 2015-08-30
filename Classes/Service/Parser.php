@@ -30,7 +30,7 @@ namespace EBT\ExtensionBuilder\Service;
  * @author Nico de Haen
  */
 
-if (!class_exists('PHPParser_Parser')) {
+if (!class_exists('\PhpParser\Parser')) {
 	\EBT\ExtensionBuilder\Parser\AutoLoader::register();
 }
 
@@ -38,7 +38,7 @@ if (!class_exists('PHPParser_Parser')) {
 /**
  *
  */
-class Parser extends \PHPParser_Parser implements \TYPO3\CMS\Core\SingletonInterface {
+class Parser extends \PhpParser\Parser implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * @var \EBT\ExtensionBuilder\\Parser\Visitor\FileVisitorInterface
 	 */
@@ -67,7 +67,7 @@ class Parser extends \PHPParser_Parser implements \TYPO3\CMS\Core\SingletonInter
 		$stmts = $this->parseRawStatements($code);
 			// set defaults
 		if (NULL === $this->traverser) {
-			$this->traverser = new \EBT\ExtensionBuilder\Parser\Traverser;
+			$this->traverser = new \EBT\ExtensionBuilder\Parser\Traverser(TRUE);
 		}
 		if (NULL === $this->fileVisitor) {
 			$this->fileVisitor = new \EBT\ExtensionBuilder\Parser\Visitor\FileVisitor;
@@ -131,20 +131,20 @@ class Parser extends \PHPParser_Parser implements \TYPO3\CMS\Core\SingletonInter
 	/**
 	 * @param array $stmts
 	 * @param array $replacements
-	 * @param string $nodeType
+	 * @param array $nodeTypes
 	 * @param string $nodeProperty
 	 * @return array
 	 */
-	public function replaceNodeProperty($stmts, $replacements, $nodeType = NULL, $nodeProperty = 'name') {
+	public function replaceNodeProperty($stmts, $replacements, $nodeTypes = array(), $nodeProperty = 'name') {
 		if (NULL === $this->traverser) {
 			$this->traverser = new \EBT\ExtensionBuilder\Parser\Traverser;
 		}
 		$this->traverser->resetVisitors();
 		$visitor = new \EBT\ExtensionBuilder\Parser\Visitor\ReplaceVisitor;
-		$visitor->setNodeType($nodeType)
+		$visitor->setNodeTypes($nodeTypes)
 			->setNodeProperty($nodeProperty)
 			->setReplacements($replacements);
-		$this->traverser->appendVisitor($visitor);
+		$this->traverser->addVisitor($visitor);
 		$stmts = $this->traverser->traverse($stmts);
 		$this->traverser->resetVisitors();
 		return $stmts;

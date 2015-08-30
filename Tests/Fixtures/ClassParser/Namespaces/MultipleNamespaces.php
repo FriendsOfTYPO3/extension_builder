@@ -1,5 +1,5 @@
 <?php
-namespace PhpParser\Test\Model;
+namespace Parser\Test\Model;
 
 
 /***************************************************************
@@ -34,7 +34,7 @@ class MultipleNamespaces {
 
 
 }
-namespace PhpParser\Test\Model2;
+namespace Parser\Test\Model2;
 
 /**
  * This is my doc comment

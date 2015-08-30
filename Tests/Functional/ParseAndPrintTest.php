@@ -136,6 +136,7 @@ class ParseAndPrintTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$code = fread($fileHandler, filesize($classFilePath));
 		$fileObject = $this->parserService->parseCode($code);
 		$printedCode = $this->printerService->renderFileObject($fileObject, TRUE);
+
 		$this->assertEquals(
 			explode(PHP_EOL, $code),
 			explode(PHP_EOL, $printedCode)

@@ -24,14 +24,16 @@ namespace EBT\ExtensionBuilder\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-if (!class_exists('PHPParser_PrettyPrinter_Default')) {
+use \PhpParser\Node\Stmt;
+
+if (!class_exists('PhpParser\PrettyPrinter\Standard')) {
 	\EBT\ExtensionBuilder\Parser\AutoLoader::register();
 }
 
 /**
  * provides methods to render the sourcecode for statements
  */
-class Printer extends \PHPParser_PrettyPrinter_Default {
+class Printer extends \PhpParser\PrettyPrinter\Standard {
 	/**
 	 * @var \EBT\ExtensionBuilder\Parser\NodeFactory
 	 */
@@ -106,7 +108,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 	/**
 	 * Pretty prints an array of nodes (statements) and indents them optionally.
 	 *
-	 * @param \PHPParser_Node[] $nodes Array of nodes
+	 * @param \PHPParser\Node[] $nodes Array of nodes
 	 * @param bool $indent Whether to indent the printed nodes
 	 *
 	 * @return string Pretty printed statements
@@ -116,7 +118,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		foreach ($nodes as $node) {
 			$pNodes[] = $this->pComments($node->getAttribute('comments', array())) .
 				$this->p($node) .
-				($node instanceof \PHPParser_Node_Expr ? ';' : '');
+				($node instanceof \PhpParser\Node\Expr ? ';' : '');
 		}
 
 		if ($indent) {
@@ -132,13 +134,13 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		}
 	}
 
-	public function pStmt_Interface(\PHPParser_Node_Stmt_Interface $node) {
+	public function pStmt_Interface(Stmt\Interface_ $node) {
 		return 'interface ' . $node->name .
 			(!empty($node->extends) ? ' extends ' . $this->pCommaSeparated($node->extends) : '') .
 			'{' . LF . $this->pStmts($node->stmts) . LF . '}';
 	}
 
-	public function pStmt_Class(\PHPParser_Node_Stmt_Class $node) {
+	public function pStmt_Class(Stmt\Class_ $node) {
 		return $this->pModifiers($node->type) .
 			'class ' . $node->name .
 			(NULL !== $node->extends ? ' extends ' . $this->p($node->extends) : '') .
@@ -146,15 +148,15 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 			' {' . LF . LF . $this->pStmts($node->stmts) . LF . '}';
 	}
 
-	public function pStmt_ClassConst(\PHPParser_Node_Stmt_ClassConst $node) {
+	public function pStmt_ClassConst(Stmt\ClassConst $node) {
 		return 'const ' . $this->pCommaSeparated($node->consts) . ';' . LF;
 	}
 
-	public function pStmt_Property(\PHPParser_Node_Stmt_Property $node) {
+	public function pStmt_Property(Stmt\Property $node) {
 		return $this->pModifiers($node->type) . $this->pCommaSeparated($node->props) . ';' . LF;
 	}
 
-	public function pStmt_ClassMethod(\PHPParser_Node_Stmt_ClassMethod $node) {
+	public function pStmt_ClassMethod(Stmt\ClassMethod $node) {
 		$firstToken = '';
 		$lastToken = '';
 		if (count($node->params) > 0) {
@@ -196,7 +198,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 
 	// Function calls and similar constructs
 
-	public function pExpr_FuncCall(\PHPParser_Node_Expr_FuncCall $node) {
+	public function pExpr_FuncCall(\PhpParser\Node\Expr\FuncCall $node) {
 		$firstToken = '';
 		$lastToken = '';
 		if (count($node->args) > 0) {
@@ -210,7 +212,8 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		return $this->p($node->name) . '(' . $firstToken . $this->pParameterNodes($node->args) . $lastToken. ')';
 	}
 
-	public function pExpr_MethodCall(\PHPParser_Node_Expr_MethodCall $node) {
+
+	public function zzz_pExpr_MethodCall(\PhpParser\Node\Expr\MethodCall $node) {
 		$firstToken = '';
 		$lastToken = '';
 		if (count($node->args) > 0) {
@@ -221,11 +224,12 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 				$lastToken = LF;
 			}
 		}
-		return $this->pVarOrNewExpr($node->var) . '->' . $this->pObjectProperty($node->name) .
+		return $this->pExpr_Variable($node->var) . '->' . $this->pObjectProperty($node->name) .
 			'(' . $firstToken . $this->pParameterNodes($node->args) . $lastToken . ')';
 	}
 
-	public function pExpr_StaticCall(\PHPParser_Node_Expr_StaticCall $node) {
+
+	public function pExpr_StaticCall(\PhpParser\Node\Expr\StaticCall $node) {
 		$firstToken = '';
 		$lastToken = '';
 		if (count($node->args) > 0) {
@@ -237,9 +241,9 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 			}
 		}
 		return $this->p($node->class) . '::' .
-			($node->name instanceof \PHPParser_Node_Expr
-			? ($node->name instanceof \PHPParser_Node_Expr_Variable
-			|| $node->name instanceof \PHPParser_Node_Expr_ArrayDimFetch
+			($node->name instanceof \PhpParser\Node\Expr
+			? ($node->name instanceof \PhpParser\Node\Expr\Variable
+			|| $node->name instanceof \PhpParser\Node\Expr\ArrayDimFetch
 			? $this->p($node->name)
 			: '{' . $this->p($node->name) . '}')
 			: $node->name) .
@@ -249,7 +253,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 	/**
 	* Pretty prints an array of nodes and implodes the printed values with commas.
 	*
-	* @param \PHPParser_Node[] $nodes Array of Nodes to be printed
+	* @param \PhpParser\Node[] $nodes Array of Nodes to be printed
 	*
 	* @return string Comma separated pretty printed nodes
 	*/
@@ -287,14 +291,14 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		);
 	}
 
-	public function pStmt_Function(\PHPParser_Node_Stmt_Function $node) {
+	public function pStmtFunction(Stmt\Function_ $node) {
 		return 'function ' . ($node->byRef ? '&' : '') . $node->name .
 			'(' . $this->pParameterNodes($node->params) . ')' .
 			' {' . LF . $this->pStmts($node->stmts) . LF . '}' . LF;
 	}
 
 	/**
-	 * @param \PHPParser_Comment[] $comments
+	 * @param \PhpParser\Comment[] $comments
 	 * @return string
 	 */
 	protected function pComments(array $comments) {
@@ -307,7 +311,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 				continue;
 			}
 			$result .= $comment->getReformattedText() . LF;
-			if (!$comment instanceof \PHPParser_Comment_Doc &&
+			if (!$comment instanceof \PhpParser\Comment\Doc &&
 				count(explode(LF, $comment->getReformattedText())) > 1
 			) {
 				// one blank line after comments except for doc comments and single line comments
@@ -323,7 +327,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 	/**
 	 * print an associative array
 	 */
-	public function pExpr_Array(\PHPParser_Node_Expr_Array $node) {
+	public function pExpr_Array(\PhpParser\Node\Expr\Array_ $node) {
 		$multiLine = FALSE;
 		$startLine = $node->getAttribute('startLine');
 		$endLine = $node->getAttribute('endLine');
@@ -355,7 +359,7 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		}
 	}
 
-	public function pStmt_Namespace(\PHPParser_Node_Stmt_Namespace $node) {
+	public function pStmt_Namespace(Stmt\Namespace_ $node) {
 		if ($this->canUseSemicolonNamespaces) {
 			return 'namespace ' . $this->p($node->name) . ';' . LF . $this->pStmts($node->stmts, FALSE);
 		} else {
@@ -364,13 +368,61 @@ class Printer extends \PHPParser_PrettyPrinter_Default {
 		}
 	}
 
-	public function pExpr_Include(\PHPParser_Node_Expr_Include $node) {
+	public function pExpr_Include(\PhpParser\Node\Expr\Include_ $node) {
 		static $map = array(
-			\PHPParser_Node_Expr_Include::TYPE_INCLUDE      => 'include',
-			\PHPParser_Node_Expr_Include::TYPE_INCLUDE_ONCE => 'include_once',
-			\PHPParser_Node_Expr_Include::TYPE_REQUIRE      => 'require',
-			\PHPParser_Node_Expr_Include::TYPE_REQUIRE_ONCE => 'require_once',
+			\PhpParser\Node\Expr\Include_::TYPE_INCLUDE      => 'include',
+			\PhpParser\Node\Expr\Include_::TYPE_INCLUDE_ONCE => 'include_once',
+			\PhpParser\Node\Expr\Include_::TYPE_REQUIRE      => 'require',
+			\PhpParser\Node\Expr\Include_::TYPE_REQUIRE_ONCE => 'require_once',
 		);
 		return $map[$node->type] . '(' . $this->p($node->expr) . ')';
+	}
+
+	// Control flow
+
+	public function pStmt_If(Stmt\If_ $node) {
+		return 'if (' . $this->p($node->cond) . ') {' . LF
+			 . $this->pStmts($node->stmts) . "\n" . '}'
+			 . $this->pImplode($node->elseifs)
+			 . (null !== $node->else ? $this->p($node->else) : '');
+	}
+
+	public function pStmt_ElseIf(Stmt\ElseIf_ $node) {
+		return ' elseif (' . $this->p($node->cond) . ') {' . LF
+			 . $this->pStmts($node->stmts) . "\n" . '}';
+	}
+
+	public function pStmt_Else(Stmt\Else_ $node) {
+		return ' else {' . LF . $this->pStmts($node->stmts) . "\n" . '}';
+	}
+
+	public function pStmt_For(Stmt\For_ $node) {
+		return 'for ('
+			 . $this->pCommaSeparated($node->init) . ';' . (!empty($node->cond) ? ' ' : '')
+			 . $this->pCommaSeparated($node->cond) . ';' . (!empty($node->loop) ? ' ' : '')
+			 . $this->pCommaSeparated($node->loop)
+			 . ') {' . LF . $this->pStmts($node->stmts) . "\n" . '}';
+	}
+
+	public function pStmt_Foreach(Stmt\Foreach_ $node) {
+		return 'foreach (' . $this->p($node->expr) . ' as '
+			 . (null !== $node->keyVar ? $this->p($node->keyVar) . ' => ' : '')
+			 . ($node->byRef ? '&' : '') . $this->p($node->valueVar) . ') {' . LF
+			 . $this->pStmts($node->stmts) . "\n" . '}';
+	}
+
+	public function pStmt_While(Stmt\While_ $node) {
+		return 'while (' . $this->p($node->cond) . ') {' . LF
+			 . $this->pStmts($node->stmts) . "\n" . '}';
+	}
+
+	public function pStmt_Do(Stmt\Do_ $node) {
+		return 'do {' . $this->pStmts($node->stmts) . "\n"
+			 . '} while (' . $this->p($node->cond) . ');';
+	}
+
+	public function pStmt_Switch(Stmt\Switch_ $node) {
+		return 'switch (' . $this->p($node->cond) . ') {' . LF
+			 . $this->pStmts($node->cases) . "\n" . '}';
 	}
 }

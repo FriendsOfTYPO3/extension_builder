@@ -35,11 +35,12 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  */
 
 
-class ReplaceVisitor extends \PHPParser_NodeVisitorAbstract {
+class ReplaceVisitor extends \PhpParser\NodeVisitorAbstract {
+
 	/**
-	 * @var string
+	 * @var array
 	 */
-	protected $nodeType = '';
+	protected $nodeTypes = array();
 
 	/**
 	 * @var string
@@ -52,14 +53,14 @@ class ReplaceVisitor extends \PHPParser_NodeVisitorAbstract {
 	protected $replacements = array();
 
 	/**
-	 * @param \PHPParser_Node $node
-	 * @return \PHPParser_Node|void
+	 * @param \PhpParser\Node $node
+	 * @return \PhpParser\Node|void
 	 */
-	public function leaveNode(\PHPParser_Node $node) {
+	public function leaveNode(\PhpParser\Node $node) {
 		$nodeProperty = $this->nodeProperty;
 		$nodeTypeMatch = FALSE;
-		if (!empty($this->nodeType)) {
-			if ($node instanceof $this->nodeType) {
+		if (!empty($this->nodeTypes)) {
+			if (in_array($node->getType(), $this->nodeTypes)) {
 				$nodeTypeMatch = TRUE;
 			}
 		} else {
@@ -67,16 +68,13 @@ class ReplaceVisitor extends \PHPParser_NodeVisitorAbstract {
 			$nodeTypeMatch = TRUE;
 		}
 		if ($nodeTypeMatch) {
+
 			foreach ($this->replacements as $oldValue => $newValue) {
 				if (property_exists($node, $nodeProperty)) {
 					$nodePropertyValue = $node->$nodeProperty;
 					if ($nodePropertyValue == $oldValue) {
 						$node->$nodeProperty = $newValue;
 					}
-				}
-				// replace subNodes which are not traversed (?)
-				if ($node->__isset($nodeProperty) && $node->__get($nodeProperty) === $oldValue) {
-					$node->__set($nodeProperty, $newValue);
 				}
 			}
 			return $node;
@@ -104,11 +102,11 @@ class ReplaceVisitor extends \PHPParser_NodeVisitorAbstract {
 	}
 
 	/**
-	 * @param $nodeType
+	 * @param array $nodeTypes
 	 * @return \EBT\ExtensionBuilder\Parser\Visitor\ReplaceVisitor
 	 */
-	public function setNodeType($nodeType) {
-		$this->nodeType = $nodeType;
+	public function setNodeTypes($nodeTypes) {
+		$this->nodeTypes = $nodeTypes;
 		return $this;
 	}
 

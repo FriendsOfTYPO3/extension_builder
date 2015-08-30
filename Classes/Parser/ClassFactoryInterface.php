@@ -31,13 +31,13 @@ namespace EBT\ExtensionBuilder\Parser;
 
 interface ClassFactoryInterface {
 
-	public function buildClassObject(\PHPParser_Node_Stmt_Class $node);
+	public function buildClassObject(\PhpParser\Node\Stmt\Class_ $node);
 
-	public function buildClassMethodObject(\PHPParser_Node_Stmt_ClassMethod $node);
+	public function buildClassMethodObject(\PhpParser\Node\Stmt\ClassMethod $node);
 
-	public function buildPropertyObject(\PHPParser_Node_Stmt_Property $node);
+	public function buildPropertyObject(\PhpParser\Node\Stmt\Property $node);
 
-	public function buildFunctionObject(\PHPParser_Node_Stmt_Function $node);
+	public function buildFunctionObject(\PhpParser\Node\Stmt\Function_ $node);
 
-	public function buildNamespaceObject(\PHPParser_Node_Stmt_Namespace $node);
+	public function buildNamespaceObject(\PhpParser\Node\Stmt\Namespace_ $node);
 }

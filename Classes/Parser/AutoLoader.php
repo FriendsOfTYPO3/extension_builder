@@ -54,8 +54,10 @@ class AutoLoader {
 			if (is_file($file)) {
 				require $file;
 			}
-		} elseif (0 === strpos($class, 'PHPParser_')) {
-			$file =  str_replace('Classes/Parser', '', static::getCurrentDirectoryName()) . 'Resources/Private/PHP/PHP-Parser/lib/'  . strtr($class, '_', '/') . '.php';
+		} elseif (0 === strpos($class, 'PhpParser\\')) {
+
+			$file =  str_replace('Classes/Parser', '', static::getCurrentDirectoryName()) . 'Resources/Private/PHP/PHP-Parser/lib/'  . strtr($class, '\\', '/') . '.php';
+			//$fileName = dirname(__DIR__) . '/' . strtr($class, '\\', '/') . '.php';
 			if (is_file($file)) {
 				require $file;
 			} else {

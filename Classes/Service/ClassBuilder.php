@@ -313,7 +313,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			$templateBodyStmts = $initStorageObjectsMethod->getBodyStmts();
 			$initStorageObjectsMethod->setModifier('protected');
 			foreach ($anyToManyRelationProperties as $relationProperty) {
-				$methodBodyStmts = array_merge($methodBodyStmts, $this->parserService->replaceNodeProperty($templateBodyStmts, array('children' => $relationProperty->getName()), '\PHPParser_Node_Expr_PropertyFetch'));
+				$methodBodyStmts = array_merge($methodBodyStmts, $this->parserService->replaceNodeProperty($templateBodyStmts, array('children' => $relationProperty->getName()), array('Expr_PropertyFetch', 'Expr_Variable')));
 			}
 			$initStorageObjectsMethod->setBodyStmts($methodBodyStmts);
 			$this->classObject->setMethod($initStorageObjectsMethod);

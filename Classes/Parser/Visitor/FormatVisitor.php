@@ -24,26 +24,28 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class FormatVisitor extends \PHPParser_NodeVisitorAbstract {
+use \PhpParser\Node;
+
+class FormatVisitor extends \PhpParser\NodeVisitorAbstract {
 	/**
 	 * @var bool
 	 */
 	public static $first = TRUE;
 
-    public function enterNode(\PHPParser_Node $node){
-        if (self::$first && $node instanceof \PHPParser_Node_Expr_FuncCall) {
+    public function enterNode(\PhpParser\Node $node){
+        if (self::$first && $node instanceof Node\Expr\FuncCall) {
             self::$first = FALSE;
-            return new \PHPParser_Node_Expr_Array(array(
-                new \PHPParser_Node_Expr_ArrayItem(
+            return new Node\Expr\Array_(array(
+                new Node\Expr\ArrayItem(
                     self::parseArgs($node),
-                    new \PHPParser_Node_Scalar_String($node->name)
+                    new Node\Scalar\String_($node->name)
                 )
             ));
         }
-        if (!self::$first && $node instanceof \PHPParser_Node_Expr_FuncCall) {
-            return new \PHPParser_Node_Expr_ArrayItem(
+        if (!self::$first && $node instanceof Node\Expr\FuncCall) {
+            return new Node\Expr\ArrayItem(
                 self::parseArgs($node),
-                new \PHPParser_Node_Scalar_String($node->name)
+                new Node\Scalar\String_($node->name)
             );
         }
     }
@@ -51,11 +53,11 @@ class FormatVisitor extends \PHPParser_NodeVisitorAbstract {
     public static function parseArgs(&$node){
         if (count($node->args) > 1){
             foreach($node->args as $k2=>&$arg){
-                if ($arg->value instanceof \PHPParser_Node_Expr_FuncCall){
-                    $arg = new \PHPParser_Node_Expr_Array(array($arg));
+                if ($arg->value instanceof Node\Expr\FuncCall){
+                    $arg = new Node\Expr\Array_(array($arg));
                 }
             }
         }
-        return new \PHPParser_Node_Expr_Array($node->args);
+        return new Node\Expr\Array_($node->args);
     }
 }

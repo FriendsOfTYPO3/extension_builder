@@ -35,10 +35,10 @@ use \EBT\ExtensionBuilder\Domain\Model;
 class ClassFactory  {
 
 	/**
-	 * @param \PHPParser_Node_Stmt_Class $classNode
+	 * @param \PhpParser\Node\Stmt\Class_ $classNode
 	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
 	 */
-	public function buildClassObject(\PHPParser_Node_Stmt_Class $classNode) {
+	public function buildClassObject(\PhpParser\Node\Stmt\Class_ $classNode) {
 		$classObject = new Model\ClassObject\ClassObject($classNode->name);
 		foreach($classNode->implements as $interfaceNode) {
 			$classObject->addInterfaceName($interfaceNode, FALSE);
@@ -52,10 +52,10 @@ class ClassFactory  {
 	}
 
 	/**
-	 * @param \PHPParser_Node_Stmt_ClassMethod $methodNode
+	 * @param \PhpParser\Node\Stmt\ClassMethod $methodNode
 	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 	 */
-	public function buildClassMethodObject (\PHPParser_Node_Stmt_ClassMethod $methodNode) {
+	public function buildClassMethodObject (\PhpParser\Node\Stmt\ClassMethod $methodNode) {
 		$methodObject = new Model\ClassObject\Method($methodNode->name);
 		$methodObject->setModifiers($methodNode->type);
 		$this->addCommentsFromAttributes($methodObject, $methodNode);
@@ -64,10 +64,10 @@ class ClassFactory  {
 	}
 
 	/**
-	 * @param \PHPParser_Node_Stmt_Function $functionNode
+	 * @param \PhpParser\Node\Stmt\Function_ $functionNode
 	 * @return \EBT\ExtensionBuilder\Domain\Model\FunctionObject
 	 */
-	public function buildFunctionObject (\PHPParser_Node_Stmt_Function $functionNode) {
+	public function buildFunctionObject (\PhpParser\Node\Stmt\Function_ $functionNode) {
 		$functionObject = new Model\FunctionObject($functionNode->name);
 		$this->addCommentsFromAttributes($functionObject, $functionNode);
 		$this->setFunctionProperties($functionNode, $functionObject);
@@ -75,15 +75,15 @@ class ClassFactory  {
 	}
 
 	/**
-	 * @param \PHPParser_Node_Stmt_Property $propertyNode
+	 * @param \PhpParser\Node\Stmt\Property $propertyNode
 	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property
 	 */
-	public function buildPropertyObject(\PHPParser_Node_Stmt_Property $propertyNode) {
+	public function buildPropertyObject(\PhpParser\Node\Stmt\Property $propertyNode) {
 		$propertyName = '';
 		$propertyDefault = NULL;
 
 		foreach($propertyNode->props as $subNode) {
-			if ($subNode instanceof \PHPParser_Node_Stmt_PropertyProperty) {
+			if ($subNode instanceof \PhpParser\Node\Stmt\PropertyProperty) {
 				$propertyName = $subNode->name;
 				if ($subNode->default) {
 					$propertyDefault = $subNode->default;
@@ -102,21 +102,21 @@ class ClassFactory  {
 	}
 
 	/**
-	 * @param \PHPParser_Node_Stmt_Namespace $nameSpaceNode
+	 * @param \PhpParser\Node\Stmt\Namespace_ $nameSpaceNode
 	 * @return \EBT\ExtensionBuilder\Domain\Model\NamespaceObject
 	 */
-	public function buildNamespaceObject(\PHPParser_Node_Stmt_Namespace $nameSpaceNode) {
+	public function buildNamespaceObject(\PhpParser\Node\Stmt\Namespace_ $nameSpaceNode) {
 		$nameSpaceObject = new Model\NamespaceObject(NodeConverter::getValueFromNode($nameSpaceNode));
 		$this->addCommentsFromAttributes($nameSpaceObject, $nameSpaceNode);
 		return $nameSpaceObject;
 	}
 
 	/**
-	 * @param \PHPParser_Node_Stmt $node
+	 * @param \PhpParser\Node\Stmt $node
 	 * @param \EBT\ExtensionBuilder\Domain\Model\FunctionObject $object
 	 * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject
 	 */
-	protected function setFunctionProperties(\PHPParser_Node_Stmt $node, Model\FunctionObject $object) {
+	protected function setFunctionProperties(\PhpParser\Node\Stmt $node, Model\FunctionObject $object) {
 		if (property_exists($node,'type')) {
 			$object->setModifiers($node->type);
 		}
@@ -132,7 +132,7 @@ class ClassFactory  {
 				$getVarTypeFromParamTag = TRUE;
 			}
 		}
-		/** @var $param \PHPParser_NodeAbstract */
+		/** @var $param \PhpParser\NodeAbstract */
 		foreach($node->params as $param) {
 			$parameter = new Model\ClassObject\MethodParameter($param->name);
 			$parameter->setPosition($position);
@@ -164,15 +164,15 @@ class ClassFactory  {
 
 	/**
 	 * @param \EBT\ExtensionBuilder\Domain\Model\AbstractObject $object
-	 * @param \PHPParser_Node_Stmt $node
+	 * @param \PhpParser\Node\Stmt $node
 	 */
-	protected function addCommentsFromAttributes(Model\AbstractObject $object, \PHPParser_Node_Stmt $node) {
+	protected function addCommentsFromAttributes(Model\AbstractObject $object, \PhpParser\Node\Stmt $node) {
 		$comments = $node->getAttribute('comments');
 		if (is_array($comments)) {
 			foreach ($comments as $comment) {
-				if ($comment instanceof \PHPParser_Comment_Doc) {
+				if ($comment instanceof \PhpParser\Comment\Doc) {
 					$object->setDocComment($comment->getReformattedText());
-				} elseif ($comment instanceof \PHPParser_Comment) {
+				} elseif ($comment instanceof \PhpParser\Comment) {
 					$object->addComment($comment->getText());
 				}
 			}

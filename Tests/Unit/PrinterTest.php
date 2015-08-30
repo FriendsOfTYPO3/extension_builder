@@ -179,8 +179,8 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$fileName = 'MultipleNamespaces.php';
 		$classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
 		$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
-		$this->assertTrue(class_exists('PhpParser\Test\Model\MultipleNamespaces'));
-		$this->assertTrue(class_exists('PhpParser\Test\Model2\MultipleNamespaces'));
+		$this->assertTrue(class_exists('Parser\Test\Model\MultipleNamespaces'));
+		$this->assertTrue(class_exists('Parser\Test\Model2\MultipleNamespaces'));
 		$this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
 	}
 
@@ -192,8 +192,8 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$fileName = 'MultipleBracedNamespaces.php';
 		$classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
 		$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
-		$this->assertTrue(class_exists('PhpParser\Test\Model\MultipleBracedNamespaces'));
-		$this->assertTrue(class_exists('PhpParser\Test\Model2\MultipleBracedNamespaces'));
+		$this->assertTrue(class_exists('Parser\Test\Model\MultipleBracedNamespaces'));
+		$this->assertTrue(class_exists('Parser\Test\Model2\MultipleBracedNamespaces'));
 	}
 
 	/**
