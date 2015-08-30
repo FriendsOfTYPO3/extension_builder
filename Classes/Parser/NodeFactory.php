@@ -33,10 +33,10 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface{
 	/**
 	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
 	 * @param bool $skipStatements
-	 * @return \PHPParser_Node_Stmt_Class
+	 * @return \PhpParser\Node\Stmt\Class_
 	 */
 	public function buildClassNode($classObject, $skipStatements = FALSE) {
-		$factory = new \PHPParser_BuilderFactory;
+		$factory = new \PhpParser\BuilderFactory;
 
 		$classNodeBuilder = $factory->class($classObject->getName());
 		if ($classObject->getParentClassName()) {
@@ -91,10 +91,10 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface{
 	 * @return array
 	 */
 	public function getFileStatements(\EBT\ExtensionBuilder\Domain\Model\File $fileObject) {
-
 		$stmts = array();
 		if ($fileObject->hasNamespaces()) {
 			foreach ($fileObject->getNamespaces() as $namespace) {
+
 				$stmts[] = $this->buildNamespaceNode($namespace);
 				foreach ($namespace->getAliasDeclarations() as $aliasDeclaration) {
 					$stmts[] = $this->buildUseStatementNode($aliasDeclaration['name'], $aliasDeclaration['alias']);
@@ -136,10 +136,10 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface{
 
 	/**
 	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method $methodObject
-	 * @return \PHPParser_Node_Stmt_ClassMethod
+	 * @return \PhpParser\Node\Stmt\ClassMethod
 	 */
 	public function buildMethodNode(\EBT\ExtensionBuilder\Domain\Model\ClassObject\Method $methodObject) {
-		$factory = new \PHPParser_BuilderFactory;
+		$factory = new \PhpParser\BuilderFactory;
 		$methodNodeBuilder = $factory->method($methodObject->getName());
 		$parameters = $methodObject->getParameters();
 		if (count($parameters) > 0) {
@@ -160,10 +160,10 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface{
 
 	/**
 	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter $parameter
-	 * @return \PHPParser_Node_Param
+	 * @return \PhpParser\Node\Param
 	 */
 	public function buildParameterNode(\EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter $parameter) {
-		$factory = new \PHPParser_BuilderFactory;
+		$factory = new \PhpParser\BuilderFactory;
 		$paramNodeBuilder = $factory->param($parameter->getName());
 		if ($parameter->hasTypeHint()) {
 			$paramNodeBuilder->setTypeHint($parameter->getTypeHint());
@@ -183,18 +183,18 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface{
 
 	/**
 	 * @param \EBT\ExtensionBuilder\Domain\Model\AbstractObject $object
-	 * @param \PHPParser_Node_Stmt $node
+	 * @param \PhpParser\Node\Stmt $node
 	 */
-	protected function addCommentAttributes(\EBT\ExtensionBuilder\Domain\Model\AbstractObject $object, \PHPParser_Node_Stmt $node) {
+	protected function addCommentAttributes(\EBT\ExtensionBuilder\Domain\Model\AbstractObject $object, \PhpParser\Node\Stmt $node) {
 		$commentAttributes = array();
 		$comments = $object->getComments();
 		if (count($comments) > 0) {
 			foreach($comments as $comment) {
-				$commentAttributes[] = new \PHPParser_Comment($comment);
+				$commentAttributes[] = new \PhpParser\Comment($comment);
 			}
 		}
 		if ($object->hasDescription() || $object->hasTags()) {
-			$commentAttributes[] = new \PHPParser_Comment_Doc($object->getDocComment());
+			$commentAttributes[] = new \PhpParser\Comment\Doc($object->getDocComment());
 		}
 		$node->setAttribute('comments', $commentAttributes);
 	}
@@ -203,22 +203,22 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface{
 	 * @param \EBT\ExtensionBuilder\Domain\Model\NamespaceObject $nameSpace
 	 */
 	public function buildNamespaceNode(\EBT\ExtensionBuilder\Domain\Model\NamespaceObject $nameSpace) {
-		return new \PHPParser_Node_Stmt_Namespace(new \PHPParser_Node_Name($nameSpace->getName()));
+		return new \PhpParser\Node\Stmt\Namespace_(new \PhpParser\Node\Name($nameSpace->getName()));
 	}
 
 	/**
 	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property $property
-	 * @return \PHPParser_Node_Stmt_Property
+	 * @return \PhpParser\Node\Stmt\Property
 	 */
 	public function buildPropertyNode(\EBT\ExtensionBuilder\Domain\Model\ClassObject\Property $property) {
-		$factory = new \PHPParser_BuilderFactory;
+		$factory = new \PhpParser\BuilderFactory;
 		$propertyNodeBuilder = $factory->property($property->getName());
 
 		$propertyNode = $propertyNodeBuilder->getNode();
 		$propertyNode->type = $property->getModifiers();
 
 		foreach($propertyNode->props as $subNode) {
-			if ($subNode instanceof \PHPParser_Node_Stmt_PropertyProperty) {
+			if ($subNode instanceof \PhpParser\Node\Stmt\PropertyProperty) {
 				if (!is_null($property->getDefaultValueNode())) {
 					$subNode->default = $property->getDefaultValueNode();
 				} else {
@@ -240,10 +240,10 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface{
 	 * @static
 	 * @param string $name
 	 * @param mixed $value
-	 * @return \PHPParser_Node_Const
+	 * @return \PhpParser\Node\Const_
 	 */
 	public static function buildConstantNode($name, $value) {
-		$constantNode = new \PHPParser_Node_Const($name, self::buildNodeFromValue($value));
+		$constantNode = new \PhpParser\Node\Const_($name, self::buildNodeFromValue($value));
 		return $constantNode;
 	}
 
@@ -251,10 +251,10 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface{
 	 * @static
 	 * @param string $name
 	 * @param mixed $value
-	 * @return \PHPParser_Node_Const
+	 * @return \PhpParser\Node\Stmt\ClassConst
 	 */
 	public static function buildClassConstantNode($name, $value) {
-		$constantNode = new \PHPParser_Node_Stmt_ClassConst(array(self::buildConstantNode($name, $value)));
+		$constantNode = new \PhpParser\Node\Stmt\ClassConst(array(self::buildConstantNode($name, $value)));
 		return $constantNode;
 	}
 
@@ -262,26 +262,26 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface{
 	 * @static
 	 * @param string $name
 	 * @param string $alias
-	 * @return \PHPParser_Node_Stmt_Use
+	 * @return \PhpParser\Node\Stmt\Use_
 	 */
 	public static function buildUseStatementNode($name, $alias) {
-		$useStatementNode = new \PHPParser_Node_Stmt_Use(array('uses' => new \PHPParser_Node_Stmt_UseUse(self::buildNodeFromName($name), $alias)));
+		$useStatementNode = new \PhpParser\Node\Stmt\Use_(array('uses' => new \PhpParser\Node\Stmt\UseUse(self::buildNodeFromName($name), $alias)));
 		return $useStatementNode;
 	}
 
 
 	/**
-	 * Normalizes a name: Converts plain string names to \PHPParser_Node_Name.
+	 * Normalizes a name: Converts plain string names to \PhpParser\Node_Name.
 	 *
-	 * @param \PHPParser_Node_Name|string $name The name to normalize
+	 * @param \PhpParser\Node\Name|string $name The name to normalize
 	 *
-	 * @return \PHPParser_Node_Name The normalized name
+	 * @return \PhpParser\Node\Name The normalized name
 	 */
 	static public function buildNodeFromName($name) {
-		if ($name instanceof \PHPParser_Node_Name) {
+		if ($name instanceof \PhpParser\Node\Name) {
 			return $name;
 		} else {
-			return new \PHPParser_Node_Name($name);
+			return new \PhpParser\Node\Name($name);
 		}
 	}
 
@@ -291,44 +291,44 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface{
      *
      * @param mixed $value The value to normalize
      *
-     * @return \PHPParser_Node_Expr The normalized value
+     * @return \PhpParser\Node\Expr The normalized value
      */
     protected function buildNodeFromValue($value) {
-        if ($value instanceof \PHPParser_Node) {
+        if ($value instanceof \PhpParser\Node) {
             return $value;
         } elseif (is_null($value)) {
-            return new \PHPParser_Node_Expr_ConstFetch(
-                new \PHPParser_Node_Name('NULL')
+            return new \PhpParser\Node\Expr\ConstFetch(
+                new \PhpParser\Node\Name('NULL')
             );
         } elseif (is_bool($value)) {
-            return new \PHPParser_Node_Expr_ConstFetch(
-                new \PHPParser_Node_Name($value ? 'TRUE' : 'FALSE')
+            return new \PhpParser\Node\Expr\ConstFetch(
+                new \PhpParser\Node\Name($value ? 'TRUE' : 'FALSE')
             );
         } elseif (is_int($value)) {
-            return new \PHPParser_Node_Scalar_LNumber($value);
+            return new \PhpParser\Node\Scalar\LNumber($value);
         } elseif (is_float($value)) {
-            return new \PHPParser_Node_Scalar_DNumber($value);
+            return new \PhpParser\Node\Scalar\DNumber($value);
         } elseif (is_string($value)) {
-            return new \PHPParser_Node_Scalar_String($value);
+            return new \PhpParser\Node\Scalar\String_($value);
         } elseif (is_array($value)) {
             $items = array();
             $lastKey = -1;
             foreach ($value as $itemKey => $itemValue) {
                 // for consecutive, numeric keys don't generate keys
                 if (null !== $lastKey && ++$lastKey === $itemKey) {
-                    $items[] = new \PHPParser_Node_Expr_ArrayItem(
+                    $items[] = new \PhpParser\Node\Expr\ArrayItem(
                         self::buildNodeFromValue($itemValue)
                     );
                 } else {
                     $lastKey = null;
-                    $items[] = new \PHPParser_Node_Expr_ArrayItem(
+                    $items[] = new \PhpParser\Node\Expr\ArrayItem(
                         self::buildNodeFromValue($itemValue),
                         self::buildNodeFromValue($itemKey)
                     );
                 }
             }
 
-            return new \PHPParser_Node_Expr_Array($items);
+            return new \PhpParser\Node\Expr\Array_($items);
         } else {
             throw new \LogicException('Invalid value');
         }

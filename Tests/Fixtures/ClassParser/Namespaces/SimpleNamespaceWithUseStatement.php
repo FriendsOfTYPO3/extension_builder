@@ -1,5 +1,5 @@
 <?php
-namespace PhpParser\Test\Model;
+namespace Parser\Test\Model;
 
 use EBT\ExtensionBuilder\Domain\Model;
 use EBT\ExtensionBuilder\Domain\Model\Test;

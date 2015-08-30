@@ -27,7 +27,7 @@
  * @package
  * @author Nico de Haen
  */
-namespace PhpParser\Test\Model {
+namespace Parser\Test\Model {
 	class MultipleBracedNamespaces {
 
 	}
@@ -38,7 +38,7 @@ namespace PhpParser\Test\Model {
 /**
  * This is another namespace
  */
-namespace PhpParser\Test\Model2 {
+namespace Parser\Test\Model2 {
 	/**
 	 * This is my doc comment
 	 *

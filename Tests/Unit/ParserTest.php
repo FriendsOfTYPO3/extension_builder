@@ -92,7 +92,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 */
 	function parseSimpleNonBracedNamespace() {
 		$classFileObject = $this->parseFile('Namespaces/SimpleNamespace.php');
-		$this->assertEquals('PhpParser\\Test\\Model',$classFileObject->getFirstClass()->getNamespaceName());
+		$this->assertEquals('Parser\\Test\\Model',$classFileObject->getFirstClass()->getNamespaceName());
 	}
 
 	/**

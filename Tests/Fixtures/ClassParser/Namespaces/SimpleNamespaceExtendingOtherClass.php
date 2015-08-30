@@ -1,5 +1,5 @@
 <?php
-namespace PhpParser\Test\Model;
+namespace Parser\Test\Model;
 
 /***************************************************************
  *  Copyright notice

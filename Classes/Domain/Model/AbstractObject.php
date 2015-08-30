@@ -40,12 +40,12 @@ abstract class AbstractObject {
 	 * @var int[]
 	 */
 	private $mapModifierNames = array(
-		'public' => \PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC,
-		'protected' => \PHPParser_Node_Stmt_Class::MODIFIER_PROTECTED,
-		'private' => \PHPParser_Node_Stmt_Class::MODIFIER_PRIVATE,
-		'static' => \PHPParser_Node_Stmt_Class::MODIFIER_STATIC,
-		'abstract' => \PHPParser_Node_Stmt_Class::MODIFIER_ABSTRACT,
-		'final' => \PHPParser_Node_Stmt_Class::MODIFIER_FINAL
+		'public' => \PhpParser\Node\Stmt\Class_::MODIFIER_PUBLIC,
+		'protected' => \PhpParser\Node\Stmt\Class_::MODIFIER_PROTECTED,
+		'private' => \PhpParser\Node\Stmt\Class_::MODIFIER_PRIVATE,
+		'static' => \PhpParser\Node\Stmt\Class_::MODIFIER_STATIC,
+		'abstract' => \PhpParser\Node\Stmt\Class_::MODIFIER_ABSTRACT,
+		'final' => \PhpParser\Node\Stmt\Class_::MODIFIER_FINAL
 	);
 
 	/**
@@ -379,18 +379,18 @@ abstract class AbstractObject {
 	 * @throws \EBT\ExtensionBuilder\Exception\SyntaxErrorException
 	 */
 	protected function validateModifier($modifier) {
-		if ($modifier == \PHPParser_Node_Stmt_Class::MODIFIER_FINAL && $this->isAbstract() ||
-				$modifier == \PHPParser_Node_Stmt_Class::MODIFIER_ABSTRACT && $this->isFinal()
+		if ($modifier == \PhpParser\Node\Stmt\Class_::MODIFIER_FINAL && $this->isAbstract() ||
+				$modifier == \PhpParser\Node\Stmt\Class_::MODIFIER_ABSTRACT && $this->isFinal()
 		) {
 			throw new \EBT\ExtensionBuilder\Exception\SyntaxErrorException ('Abstract and Final can\'t be applied both to same object');
-		} elseif ($modifier == \PHPParser_Node_Stmt_Class::MODIFIER_STATIC && $this->isAbstract() ||
-				$modifier == \PHPParser_Node_Stmt_Class::MODIFIER_ABSTRACT && $this->isStatic()
+		} elseif ($modifier == \PhpParser\Node\Stmt\Class_::MODIFIER_STATIC && $this->isAbstract() ||
+				$modifier == \PhpParser\Node\Stmt\Class_::MODIFIER_ABSTRACT && $this->isStatic()
 		) {
 			throw new \EBT\ExtensionBuilder\Exception\FileNotFoundException('Abstract and Static can\'t be applied both to same object');
 		}
 		try {
-			\PHPParser_Node_Stmt_Class::verifyModifier($this->modifiers, $modifier);
-		} catch (\PHPParser_Error $e) {
+			\PhpParser\Node\Stmt\Class_::verifyModifier($this->modifiers, $modifier);
+		} catch (\PhpParser_Error $e) {
 			throw new \EBT\ExtensionBuilder\Exception\SyntaxErrorException(
 					'Only one access modifier can be applied to one object. Use setModifier to avoid this exception'
 			);
@@ -577,7 +577,7 @@ abstract class AbstractObject {
 	 * @return bool
 	 */
 	public function isPublic() {
-		return (($this->modifiers & \PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC) !== 0);
+		return (($this->modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_PUBLIC) !== 0);
 	}
 
 	/**
@@ -585,35 +585,35 @@ abstract class AbstractObject {
 	 */
 
 	public function isProtected() {
-		return (($this->modifiers & \PHPParser_Node_Stmt_Class::MODIFIER_PROTECTED) !== 0);
+		return (($this->modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_PROTECTED) !== 0);
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function isPrivate() {
-		return (($this->modifiers & \PHPParser_Node_Stmt_Class::MODIFIER_PRIVATE) !== 0);
+		return (($this->modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_PRIVATE) !== 0);
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function isStatic() {
-		return (($this->modifiers & \PHPParser_Node_Stmt_Class::MODIFIER_STATIC) !== 0);
+		return (($this->modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_STATIC) !== 0);
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function isAbstract() {
-		return (($this->modifiers & \PHPParser_Node_Stmt_Class::MODIFIER_ABSTRACT) !== 0);
+		return (($this->modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_ABSTRACT) !== 0);
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function isFinal() {
-		return (($this->modifiers & \PHPParser_Node_Stmt_Class::MODIFIER_FINAL) !== 0);
+		return (($this->modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_FINAL) !== 0);
 	}
 
 

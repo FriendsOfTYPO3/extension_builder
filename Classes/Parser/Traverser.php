@@ -29,7 +29,7 @@ namespace EBT\ExtensionBuilder\Parser;
  * @author Nico de Haen
  */
 
-class Traverser extends \PHPParser_NodeTraverser implements TraverserInterface{
+class Traverser extends \PhpParser\NodeTraverser implements TraverserInterface{
 
 	/**
 	 * remove all previous set visitors
@@ -40,10 +40,10 @@ class Traverser extends \PHPParser_NodeTraverser implements TraverserInterface{
 
 	/**
 	 * append visitors
-	 * @param \PHPParser_NodeVisitor $visitor
+	 * @param \PhpParser\NodeVisitor $visitor
 	 *
 	 */
-	public function appendVisitor(\PHPParser_NodeVisitor $visitor) {
+	public function appendVisitor(\PhpParser\NodeVisitor $visitor) {
 		$this->visitors[] = $visitor;
 	}
 }

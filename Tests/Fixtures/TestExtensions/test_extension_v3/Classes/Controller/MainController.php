@@ -1,6 +1,7 @@
 <?php
 namespace TYPO3\TestExtension\Controller;
 
+
 /***************************************************************
  *
  *  Copyright notice
