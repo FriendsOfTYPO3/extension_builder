@@ -1,9 +1,9 @@
 <f:for each="{extension.plugins}" as="plugin">
 plugin.{extension.shortExtensionKey}_{plugin.key} {
 	view {
-		templateRootPath = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.view.templateRootPath<![CDATA[}]]>
-		partialRootPath = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.view.partialRootPath<![CDATA[}]]>
-		layoutRootPath = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.view.layoutRootPath<![CDATA[}]]>
+		templateRootPaths.0 = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.view.templateRootPath<![CDATA[}]]>
+		partialRootPaths.0 = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.view.partialRootPath<![CDATA[}]]>
+		layoutRootPaths.0 = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.view.layoutRootPath<![CDATA[}]]>
 	}
 	persistence {
 		storagePid = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.persistence.storagePid<![CDATA[}]]>
@@ -54,9 +54,9 @@ module.{extension.shortExtensionKey}_{backendModule.key} {
 		storagePid = <![CDATA[{$]]>module.{extension.shortExtensionKey}_{backendModule.key}.persistence.storagePid<![CDATA[}]]>
 	}
 	view {
-		templateRootPath = <![CDATA[{$]]>module.{extension.shortExtensionKey}_{backendModule.key}.view.templateRootPath<![CDATA[}]]>
-		partialRootPath = <![CDATA[{$]]>module.{extension.shortExtensionKey}_{backendModule.key}.view.partialRootPath<![CDATA[}]]>
-		layoutRootPath = <![CDATA[{$]]>module.{extension.shortExtensionKey}_{backendModule.key}.view.layoutRootPath<![CDATA[}]]>
+		templateRootPaths.0 = <![CDATA[{$]]>module.{extension.shortExtensionKey}_{backendModule.key}.view.templateRootPath<![CDATA[}]]>
+		partialRootPaths.0 = <![CDATA[{$]]>module.{extension.shortExtensionKey}_{backendModule.key}.view.partialRootPath<![CDATA[}]]>
+		layoutRootPaths.0 = <![CDATA[{$]]>module.{extension.shortExtensionKey}_{backendModule.key}.view.layoutRootPath<![CDATA[}]]>
 	}
 }
 </f:for>

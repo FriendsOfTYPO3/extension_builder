@@ -1,8 +1,8 @@
 plugin.tx_testextension_testplugin {
 	view {
-		templateRootPath = {$plugin.tx_testextension_testplugin.view.templateRootPath}
-		partialRootPath = {$plugin.tx_testextension_testplugin.view.partialRootPath}
-		layoutRootPath = {$plugin.tx_testextension_testplugin.view.layoutRootPath}
+		templateRootPaths.0 = {$plugin.tx_testextension_testplugin.view.templateRootPath}
+		partialRootPaths.0 = {$plugin.tx_testextension_testplugin.view.partialRootPath}
+		layoutRootPaths.0 = {$plugin.tx_testextension_testplugin.view.layoutRootPath}
 	}
 	persistence {
 		storagePid = {$plugin.tx_testextension_testplugin.persistence.storagePid}
@@ -50,8 +50,8 @@ module.tx_testextension_testmodule {
 		storagePid = {$module.tx_testextension_testmodule.persistence.storagePid}
 	}
 	view {
-		templateRootPath = {$module.tx_testextension_testmodule.view.templateRootPath}
-		partialRootPath = {$module.tx_testextension_testmodule.view.partialRootPath}
-		layoutRootPath = {$module.tx_testextension_testmodule.view.layoutRootPath}
+		templateRootPaths.0 = {$module.tx_testextension_testmodule.view.templateRootPath}
+		partialRootPaths.0 = {$module.tx_testextension_testmodule.view.partialRootPath}
+		layoutRootPaths.0 = {$module.tx_testextension_testmodule.view.layoutRootPath}
 	}
 }
