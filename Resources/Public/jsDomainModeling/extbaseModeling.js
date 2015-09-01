@@ -11,26 +11,26 @@ var extbaseModeling_wiringEditorLanguage = {
 	var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event, lang = YAHOO.lang, dom = YAHOO.util.Dom;
 
 		function addFieldsetClass (selectElement) {
-			var fieldset = dom.getAncestorByTagName(selectElement, 'fieldset');
-			if (dom.hasClass(fieldset, 'inputEx-Expanded')) {
+			var fieldset = TYPO3.jQuery(selectElement).parent('fieldset');
+			if (fieldset.hasClass('inputEx-Expanded')) {
 				return;
 			}
-			fieldset.removeAttribute('class');
-			dom.addClass(fieldset, selectElement.value);
+			fieldset.attr('class', '');
+            fieldset.addClass(selectElement.value);
 		}
 
 		inputEx.SelectField.prototype.onChange = function (evt) {
-			addFieldsetClass(dom.get(evt.target));
+			addFieldsetClass(evt.target);
 		};
 
 		/**
 		 * add the selected propertyType as classname to all propertyGroup fieldsets
 		 */
 		WireIt.WiringEditor.prototype.onPipeLoaded = function () {
-			var propertyTypeSelects = $$('.propertyGroup select');
+			var propertyTypeSelects = TYPO3.jQuery('.propertyGroup select');
 			if (propertyTypeSelects) {
-				propertyTypeSelects.each(function (el) {
-					addFieldsetClass(dom.get(el));
+				propertyTypeSelects.each(function (index, el) {
+					addFieldsetClass(el);
 				});
 			}
 		};
@@ -42,10 +42,11 @@ YAHOO.util.Event.onAvailable('extensionDependencies-field', function () {
 	/**
 	 * Update dependencies in textarea
 	 */
-	$('targetVersionSelector-field').onchange =
+    TYPO3.jQuery('#targetVersionSelector-field').onchange =
 	function (event) {
 		var updatedDependencies = '';
-		var dependencies = $('extensionDependencies-field').value.split("\n");
+        var dependenciesField = TYPO3.jQuery('extensionDependencies-field');
+		var dependencies = dependenciesField.value.split("\n");
 		for (i = 0; i < dependencies.length; i++) {
 			parts = dependencies[i].split('=>');
 			if (parts[0].indexOf('typo3') > -1) {
@@ -55,28 +56,28 @@ YAHOO.util.Event.onAvailable('extensionDependencies-field', function () {
 			}
 
 		}
-		$('extensionDependencies-field').value = updatedDependencies;
+        dependenciesField.value = updatedDependencies;
 	};
 });
 
 YAHOO.util.Event.onAvailable('toggleAdvancedOptions', function () {
 
-	$('typo3-mod-php').addClassName('yui-skin-sam');
+    TYPO3.jQuery('#typo3-index-php').addClass('yui-skin-sam');
 
 	var advancedMode = false;
-	$('toggleAdvancedOptions').onclick =
-	function (ev, target) {
+	TYPO3.jQuery('#toggleAdvancedOptions').click(
+	function () {
 		if (!advancedMode) {
-			$('domainModelEditor').addClassName('showAdvancedOptions');
-			$$('#toggleAdvancedOptions .simpleMode')[0].style.display = 'none';
-			$$('#toggleAdvancedOptions .advancedMode')[0].style.display = 'inline';
+			TYPO3.jQuery('#domainModelEditor').addClass('showAdvancedOptions');
+            TYPO3.jQuery('#toggleAdvancedOptions .simpleMode').hide();
+            TYPO3.jQuery('#toggleAdvancedOptions .advancedMode').show();
 			advancedMode = true;
 		} else {
-			$('domainModelEditor').removeClassName('showAdvancedOptions');
-			$$('#toggleAdvancedOptions .simpleMode')[0].style.display = 'inline';
-			$$('#toggleAdvancedOptions .advancedMode')[0].style.display = 'none';
+            TYPO3.jQuery('#domainModelEditor').removeClass('showAdvancedOptions');
+            TYPO3.jQuery('#toggleAdvancedOptions .simpleMode').show();
+            TYPO3.jQuery('#toggleAdvancedOptions .advancedMode').hide();
 			advancedMode = false;
 		}
 		return false;
-	};
+	});
 });

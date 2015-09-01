@@ -20,6 +20,10 @@
 	border-bottom:2px solid #999;
 }
 
+.yui-panel {
+    text-align: center;
+}
+
 .WireIt-Container .expanded {
 	box-shadow: 10px 10px 10px #aaa !important;
 }
@@ -242,6 +246,7 @@ legend.inputEx-Group-legend{
 	font-weight:700;
 	padding-top:4px;
 	width:auto;
+    border-bottom: none;
 }
 
 a.inputEx-List-link{
@@ -602,6 +607,7 @@ div#propertiesForm div.smallBottomBorder{
 
 .inputEx-Expanded legend{
 	padding:4px 0;
+    border-bottom: none;
 }
 
 div#propertiesForm fieldset{

@@ -26,6 +26,12 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extensionmanager\Utility\InstallUtility;
+use EBT\ExtensionBuilder\Domain\Model\Extension;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Install\Service\SqlSchemaMigrationService;
+
 class ExtensionInstallationStatus {
 	/**
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
@@ -38,7 +44,7 @@ class ExtensionInstallationStatus {
 	protected $extension = NULL;
 
 	/**
-	 * @var \TYPO3\CMS\Extensionmanager\Utility\InstallUtility
+	 * @var InstallUtility
 	 */
 	protected $installTool = NULL;
 
@@ -53,7 +59,7 @@ class ExtensionInstallationStatus {
 	protected $dbUpdateNeeded = FALSE;
 
 	public function __construct() {
-		$this->installTool = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extensionmanager\\Utility\\InstallUtility');
+		$this->installTool = GeneralUtility::makeInstance(InstallUtility::class);
 	}
 
 	/**
@@ -93,7 +99,7 @@ class ExtensionInstallationStatus {
 
 		}
 
-		if (!\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($this->extension->getExtensionKey())) {
+		if (!ExtensionManagementUtility::isLoaded($this->extension->getExtensionKey())) {
 			$statusMessage .= '<p>Your Extension is not installed yet.</p>';
 		}
 
@@ -110,19 +116,11 @@ class ExtensionInstallationStatus {
 		if (ExtensionManagementUtility::isLoaded($extensionKey)) {
 			$sqlFile = ExtensionManagementUtility::extPath($extensionKey) . 'ext_tables.sql';
 			if (@file_exists($sqlFile)) {
-				$this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
-				if (class_exists('TYPO3\\CMS\\Install\\Service\\SqlSchemaMigrationService')) {
-					/* @var \TYPO3\CMS\Install\Service\SqlSchemaMigrationService $sqlHandler */
-					$sqlHandler = $this->objectManager->get('TYPO3\\CMS\\Install\\Service\\SqlSchemaMigrationService');
-				} else {
-					/* @var \TYPO3\CMS\Install\Sql\SchemaMigrator $sqlHandler */
-					$sqlHandler = $this->objectManager->get('TYPO3\\CMS\\Install\\Sql\\SchemaMigrator');
-				}
-				$sqlContent = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl($sqlFile);
-				/** @var $cacheManager \TYPO3\CMS\Core\Cache\CacheManager */
-				$cacheManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
-				$cacheManager->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
-				$sqlContent .= \TYPO3\CMS\Core\Cache\Cache::getDatabaseTableDefinitions();
+				$this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+				/* @var \TYPO3\CMS\Install\Service\SqlSchemaMigrationService $sqlHandler */
+				$sqlHandler = GeneralUtility::makeInstance(SqlSchemaMigrationService::class);
+
+				$sqlContent = GeneralUtility::getUrl($sqlFile);
 				$fieldDefinitionsFromFile = $sqlHandler->getFieldDefinitions_fileContent($sqlContent);
 				if (count($fieldDefinitionsFromFile)) {
 					$fieldDefinitionsFromCurrentDatabase = $sqlHandler->getFieldDefinitions_database();
@@ -147,7 +145,7 @@ class ExtensionInstallationStatus {
 							$res = $this->getDatabaseConnection()->admin_query($statement);
 							if ($res === FALSE) {
 								$hasErrors = TRUE;
-								\TYPO3\CMS\Core\Utility\GeneralUtility::devlog('SQL error','extension_builder',0,array('statement' => $statement, 'error' => $this->getDatabaseConnection()->sql_error()));
+								GeneralUtility::devlog('SQL error','extension_builder',0,array('statement' => $statement, 'error' => $this->getDatabaseConnection()->sql_error()));
 							} elseif (is_resource($res) || is_a($res, '\\mysqli_result')) {
 								$this->getDatabaseConnection()->sql_free_result($res);
 							}
