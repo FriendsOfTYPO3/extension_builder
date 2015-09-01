@@ -1,6 +1,9 @@
 <?php
 namespace EBT\ExtensionBuilder\ViewHelpers\Be;
 
+use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBackendViewHelper {
 	/**
 	 * @var \TYPO3\CMS\Core\Page\PageRenderer
@@ -9,11 +12,10 @@ class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBa
 
 	public function render() {
 
-		$this->pageRenderer = $this->getDocInstance()->getPageRenderer();
+		$this->pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
 
 		$baseUrl = '../' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath('extension_builder');
 		$this->pageRenderer->disableCompressJavascript();
-
 		// SECTION: JAVASCRIPT FILES
 		// YUI Basis Files
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/yui/utilities/utilities.js');
@@ -64,12 +66,7 @@ class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBa
 			'extensionBuilder',
 			array('baseUrl' => $baseUrl)
 		);
-		// This call is only done for backwards compatibility for TYPO3 versions below 6.2
-		// It can be removed once compatibility for these versions is dropped as since 6.2 this is populated automatically
-		$this->pageRenderer->addInlineSettingArray(
-			'ajaxUrls',
-			array('ExtensionBuilder::wiringEditorSmdEndpoint' => 'ajax.php?ajaxID=ExtensionBuilder%3A%3AwiringEditorSmdEndpoint')
-		);
+
 		$this->setLocallangSettings();
 
 		$this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/WiringEditor.js');
@@ -113,7 +110,8 @@ class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBa
 	 * @return void
 	 */
 	private function setLocallangSettings() {
-		$LL = \TYPO3\CMS\Core\Utility\GeneralUtility::readLLfile('EXT:extension_builder/Resources/Private/Language/locallang.xml', 'default');
+		$languageFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Localization\LocalizationFactory::class);
+		$LL = $languageFactory->getParsedData('EXT:extension_builder/Resources/Private/Language/locallang.xml', 'default');
 		if (!empty($LL['default']) && is_array($LL['default'])) {
 			foreach ($LL['default'] as $key => $value) {
 				$this->pageRenderer->addInlineSetting(

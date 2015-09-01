@@ -30,18 +30,8 @@ YAHOO.extend(WireIt.util.DD, YAHOO.util.DD, {
 	 * @method onDrag
 	 */
 	onDrag: function(e) {
-		var leftPanel = YAHOO.util.Dom.getElementsByClassName('yui-layout-unit-left');
-		var leftWidth = $(leftPanel[0]).getWidth() + 10;
-//		Ext.select('.WireIt-Container').each(function(element) {
-//			var el = Ext.get(element);
-//			if (el.getX() < leftWidth) {
-//				el.setX(leftWidth);
-//			}
-//
-//			if (el.getY() < 65) {
-//				el.setY(65);
-//			}
-//		});
+		var leftPanel = TYPO3.jQuery('.yui-layout-unit-left');
+		var leftWidth = leftPanel.width() + 10;
 
 		// Make sure terminalList is an array
 		var terminalList = YAHOO.lang.isArray(this._WireItTerminals) ? this._WireItTerminals : (this._WireItTerminals.isWireItTerminal ? [this._WireItTerminals] : []);

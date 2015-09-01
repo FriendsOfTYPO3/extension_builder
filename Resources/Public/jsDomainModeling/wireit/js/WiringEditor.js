@@ -376,18 +376,19 @@
 		 * @method saveModule
 		 */
 		saveModule: function(login) {
-			if (typeof login == 'undefined') {
+
+            if (typeof login == 'undefined') {
 				var baseUrl;
 				if (typeof parent.TYPO3.configuration != 'undefined') {
 					baseUrl = parent.TYPO3.configuration.PATH_typo3;
 				}
 				else {
-					baseUrl = window.location.href.split('mod.php')[0];
+					baseUrl = window.location.href.split('index.php')[0];
 				}
 
 				Connect.asyncRequest(
 						'GET',
-						baseUrl + 'ajax.php?ajaxID=BackendLogin%3A%3AisTimedOut&skipSessionUpdate=1',
+						baseUrl + 'index.php?ajaxID=BackendLogin%3A%3AisTimedOut&skipSessionUpdate=1',
 						{
 							'success':this.loginCheck
 							,argument: {'editor':this}
@@ -413,6 +414,7 @@
 			this.showSpinnerPanel.show();
 			this.dataToSubmit.name = value.name;
 			this.dataToSubmit.working = JSON.stringify(value.working);
+            console.log(this.dataToSubmit);
 			this.service.saveWiring(this.dataToSubmit, {
 				success: this.saveModuleSuccess,
 				failure: this.saveModuleFailure,
@@ -831,14 +833,12 @@
 				terminalUid;
 			if (terminal.el.getAttribute('title') == 'SOURCES') {
 				// id of the module
-				parentId = terminal.el.parentNode.id;
+                terminalUid = TYPO3.jQuery(terminal.el.parentNode).find('input[name="uid"]').val();
 			}
 			else {
 				// id of the wrapper of the first field in the fieldset
-				parentId = YAHOO.util.Dom.getAncestorByTagName(terminal.el, 'fieldset').firstChild.id;
+                terminalUid = TYPO3.jQuery(terminal.el).parent('fieldset').find('input[name="uid"]').val();
 			}
-			// find uid for terminal (needs prototype since YAHOO.util.Dom does not provide such function)
-			terminalUid = $$('#' + parentId + ' input[name="uid"]')[0].value;
 			return terminalUid;
 		}
 

@@ -150,12 +150,10 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
                             label: TYPO3.settings.extensionBuilder._LOCAL_LANG.target_version,
                             description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_target_version,
                             selectOptions: [
-								'TYPO3 v 6.2',
-								'TYPO3 v 7.0',
-                                'TYPO3 v 7.1'
+								'TYPO3 v 7.4'
                             ],
-                            selectValues: ["6.2.0-6.2.99","7.0.0-7.0.99","7.1.0-7.1.99"],
-							value: '6.2.0-6.2.99'
+                            selectValues: ["7.4.0-7.4.99"],
+							value: '7.4.0-7.4.99'
                         }
                     },
 					{
@@ -167,7 +165,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_dependsOn,
 							cols:20,
 							rows:6,
-							value : "typo3 => 6.2.0-6.2.99\n"
+							value : "typo3 => 7.4.0-7.4.99\n"
 						}
 					}
 			]

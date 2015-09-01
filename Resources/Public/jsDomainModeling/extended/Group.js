@@ -181,22 +181,25 @@ lang.extend(inputEx.Group, inputEx.Field,
     * Toggle the collapse state
     */
    toggleCollapse: function() {
-      if(Dom.hasClass(this.fieldset, 'inputEx-Expanded')) {
-         Dom.replaceClass(this.fieldset, 'inputEx-Expanded', 'inputEx-Collapsed');
-		  Dom.replaceClass(this.divEl, 'expanded', 'collapsed');
+       var fieldset = TYPO3.jQuery(this.fieldset),
+           divElement = TYPO3.jQuery(this.divEl);
+      if(fieldset.hasClass('inputEx-Expanded')) {
+          fieldset.removeClass('inputEx-Expanded').addClass('inputEx-Collapsed');
+          TYPO3.jQuery(this.divEl).removeClass('expanded').addClass('collapsed');
       }
       else {
-		  if(Dom.getAncestorByClassName(this.divEl, 'WireIt-Container')) {
-				var containerId = Dom.getAncestorByClassName(this.divEl, 'WireIt-Container').id;
-			  Dom.getElementsByClassName('inputEx-Expanded', 'fieldset', containerId).each(function(el) {
-				Dom.replaceClass(el, 'inputEx-Expanded', 'inputEx-Collapsed');
+          var container = divElement.parent('.WireIt-Container').first();
+		  if(container.length) {
+              //var containerId = container.id;
+              container.find('.inputEx-Expanded,.fieldset').each(function(index, el) {
+                  TYPO3.jQuery(el).removeClass('inputEx-Expanded').addClass('inputEx-Collapsed');
 			  });
-			  Dom.getElementsByClassName('expanded').each(function(el) {
-				  Dom.replaceClass(el, 'expanded', 'collapsed');
+              TYPO3.jQuery('.expanded').each(function(index, el) {
+                  TYPO3.jQuery(el).removeClass('expanded').addClass('collapsed');
 			  });
 		  }
-		  Dom.replaceClass(this.fieldset, 'inputEx-Collapsed','inputEx-Expanded');
-		  Dom.replaceClass(this.divEl, 'collapsed', 'expanded');
+          fieldset.removeClass('inputEx-Collapsed').addClass('inputEx-Expanded');
+          divElement.removeClass('collapsed').addClass('expanded');
       }
    },
    
