@@ -8,13 +8,13 @@
 
 ---
 conf.py:
-  copyright: 2012-2013
+  copyright: 2012-2015
   project: Extension Name (Français)
   version: x.y
   release: x.y.z
   intersphinx_mapping:
     t3tsref:
-    - http://docs.typo3.org/typo3cms/TyposcriptReference/
+    - https://docs.typo3.org/typo3cms/TyposcriptReference/
     - null
   latex_documents:
   - - Index

@@ -21,6 +21,13 @@ This chapter should give a brief overview of the extension. What does it do? Wha
 Who is interested in this? Basically, this section includes everything people need to know to decide whether they
 should go on with this extension or not.
 
+.. important::
+
+   Please don't forget to repeat your extension's version number in the
+   :file:`Settings.yml` file, in the :code:`release` property. It will be
+   automatically picked up on the cover page by the :code:`|release|`
+   substitution.
+
 
 .. _screenshots:
 

@@ -91,9 +91,11 @@ subst_elementUid
 
 :typoscript:`plugin.tx_extensionkey.subst_elementUid =` :ref:`t3tsref:data-type-boolean`
 
-If set, all appearances of the string ``{elementUid}`` in the total element html-code (after wrapped in allWrap_)
-is substituted with the uid number of the menu item. This is useful if you want to insert an identification code
-in the HTML in order to manipulate properties with JavaScript.
+If set, all appearances of the string ``{elementUid}`` in the total
+element html-code (after wrapped in allWrap_) are substituted with the
+uid number of the menu item. This is useful if you want to insert an
+identification code in the HTML in order to manipulate properties with
+JavaScript.
 
 
 .. _configuration-faq:
