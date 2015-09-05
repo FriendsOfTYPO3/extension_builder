@@ -26,6 +26,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+require_once(__DIR__ . '/../BaseTest.php');
+
 class ConfigurationManagerTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	/**
@@ -33,8 +35,9 @@ class ConfigurationManagerTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 */
 	protected $configurationManager;
 
-	protected function setUp() {
-		$this->objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+	public function setUp() {
+		parent::setUp();
+		//$this->objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 		$this->configurationManager = $this->objectManager->get('EBT\\ExtensionBuilder\\Configuration\\ConfigurationManager');
 	}
 

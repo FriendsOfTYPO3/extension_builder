@@ -20,7 +20,7 @@ namespace EBT\ExtensionBuilder\Utility;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-require(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/PHP/Sho_Inflect.php');
+require(__DIR__ . '/../../Resources/Private/PHP/Sho_Inflect.php');
 
 /**
  * Inflector utilities for the Extension Builder. This is a basic conversion from PHP

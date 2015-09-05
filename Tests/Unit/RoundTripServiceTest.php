@@ -33,7 +33,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 */
 	protected $objectSchemaBuilder = NULL;
 
-	protected function setUp() {
+	public function setUp() {
 		parent::setUp();
 		$this->objectSchemaBuilder = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\\ObjectSchemaBuilder');
 	}

@@ -36,7 +36,6 @@ class LocalizationService implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Utility\Inflector
-	 * @inject
 	 */
 	protected $inflector = NULL;
 
@@ -45,6 +44,14 @@ class LocalizationService implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	public function injectXliffParser(\TYPO3\CMS\Core\Localization\Parser\XliffParser $xlifflParser) {
 		$this->xliffParser = $xlifflParser;
+	}
+
+	/**
+	 * @param \EBT\ExtensionBuilder\Utility\Inflector
+	 * @return void
+	 */
+	public function injectInflector(\EBT\ExtensionBuilder\Utility\Inflector $inflector) {
+		$this->inflector = $inflector;
 	}
 
 	public function getLabelArrayFromFile($file, $languageKey = 'default') {

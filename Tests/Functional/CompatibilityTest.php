@@ -51,10 +51,7 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 * @test
 	 */
 	public function checkRequirements() {
-		$this->assertTrue(
-			class_exists('org\\bovigo\\vfs\\vfsStream'),
-			'Requirements not fulfilled: vfsStream is needed for file operation tests. '
-			. 'Please make sure you are using at least phpunit Version 3.5.6');
+		
 	}
 
 	/**
@@ -72,7 +69,7 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		);
 		$this->extensionSchemaBuilder = $this->objectManager->get('EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder');
 
-		$testExtensionDir = $this->fixturesPath . 'TestExtensions/test_extension_v3/';
+		$testExtensionDir = $this->fixturesPath . 'TestExtensions/test_extension/';
 		$jsonFile = $testExtensionDir . \EBT\ExtensionBuilder\Configuration\ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
 
 		if (file_exists($jsonFile)) {
@@ -104,19 +101,19 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 			if (!in_array(basename($createdFile), array('ExtensionBuilder.json'))) {
 				$referenceFileContent = str_replace(
 					array('2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###', '2014'),
-					array(date('Y-m-d\TH:i:00\Z'),date('Y-m-d'), date('Y'), date('Y')),
+					array(date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')),
 					file_get_contents($referenceFile)
 				);
 				$this->assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');
 				// do not compare files that contain a formatted DateTime, as it might have changed between file creation and this comparison
-				if(strpos($referenceFile, 'xlf') === FALSE && strpos($referenceFile, 'yaml') === FALSE ) {
+				if(strpos($referenceFile, 'xlf') === FALSE && strpos($referenceFile, 'yaml') === FALSE && strpos($referenceFile, 'ext_emconf') === FALSE ) {
 
 					$originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $referenceFileContent, TRUE);
 					$generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, file_get_contents($createdFile), TRUE);
 					$this->assertEquals(
 						$originalLines,
 						$generatedLines,
-						'File ' . $createdFile . ' was not equal to original file.'
+						'File ' . $createdFile . ' was not equal to original file.' . file_get_contents($createdFile)
 					);
 				}
 			}

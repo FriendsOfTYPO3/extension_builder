@@ -26,9 +26,6 @@ namespace EBT\ExtensionBuilder\Service;
 
 use \PhpParser\Node\Stmt;
 
-if (!class_exists('PhpParser\PrettyPrinter\Standard')) {
-	\EBT\ExtensionBuilder\Parser\AutoLoader::register();
-}
 
 /**
  * provides methods to render the sourcecode for statements

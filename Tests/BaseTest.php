@@ -2,6 +2,7 @@
 namespace EBT\ExtensionBuilder\Tests;
 use org\bovigo\vfs\vfsStream;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\UnknownClassException;
 
 /***************************************************************
  *  Copyright notice
@@ -29,7 +30,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-abstract class BaseTest extends \Tx_Phpunit_TestCase {
+
+abstract class BaseTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase {
 
 	/**
 	 * @var string
@@ -72,11 +74,6 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 	protected $roundTripService = NULL;
 
 	/**
-	 * @var \TYPO3\CMS\Fluid\Core\Parser\TemplateParser
-	 */
-	protected $templateParser = NULL;
-
-	/**
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
 	 */
 	protected $objectManager = NULL;
@@ -91,21 +88,22 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 	 */
 	protected $fileGenerator = NULL;
 
+	protected $testExtensionsToLoad = array('typo3conf/ext/extension_builder');
 
-	protected function setUp($settingFile = ''){
+
+	public function setUp(){
+		parent::setUp();
+
+		$this->objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 		if (!class_exists('PhpParser\Parser')) {
-			\EBT\ExtensionBuilder\Parser\AutoLoader::register();
+			throw new UnknownClassException('PhpParser not found!!');
 		}
-		if (!class_exists('PhpParser\Parser')) {
-			die('Parser not found!!');
-		}
-		$this->fixturesPath = PATH_typo3conf . 'ext/extension_builder/Tests/Fixtures/';
+		$this->fixturesPath = __DIR__ . '/Fixtures/';
 
 		$this->extension = $this->getMock('EBT\\ExtensionBuilder\\Domain\\Model\\Extension', array('getExtensionDir'));
 		$extensionKey = 'dummy';
 		vfsStream::setup('testDir');
 		$dummyExtensionDir = vfsStream::url('testDir') . '/';
-		//$dummyExtensionDir = $this->fixturesPath . 'dummy/';
 		$this->extension->setVendorName('EBT');
 		$this->extension->setExtensionKey($extensionKey);
 		$this->extension->expects(
@@ -118,43 +116,31 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 		$yamlParser = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser();
 		$settings = $yamlParser->YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
 		$this->extension->setSettings($settings);
-		$configurationManager = GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Configuration\\ConfigurationManager');
 
-		$this->roundTripService =  $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\RoundTrip'), array('dummy'));
-		$this->classBuilder = GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Service\\ClassBuilder');
-		$this->classBuilder->injectConfigurationManager($configurationManager);
-
-		$this->roundTripService->injectClassBuilder($this->classBuilder);
-		$this->roundTripService->injectConfigurationManager($configurationManager);
-		$this->templateParser = $this->getMock($this->buildAccessibleProxy('TYPO3\\CMS\\Fluid\\Core\\Parser\\TemplateParser'), array('dummy'));
-		$this->fileGenerator = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\FileGenerator'), array('dummy'));
-
-		$objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
-		$this->objectManager = clone $objectManager;
-
+		// get instances to inject in Mocks
+		$configurationManager = $this->objectManager->get('EBT\\ExtensionBuilder\\Configuration\\ConfigurationManager');
+		$this->classBuilder = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\\ClassBuilder');
 		$this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
-		$this->printerService = new \EBT\ExtensionBuilder\Service\Printer();
-		$this->printerService->injectNodeFactory(new \EBT\ExtensionBuilder\Parser\NodeFactory());
-
+		$this->printerService = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\Printer');
 		$localizationService = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\\LocalizationService');
 
-		$this->fileGenerator->injectObjectManager($this->objectManager);
-		$this->fileGenerator->injectPrinterService($this->printerService);
-		$this->fileGenerator->injectLocalizationService($localizationService);
-
+		$this->roundTripService =  $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\RoundTrip'), array('dummy'));
+		$this->roundTripService->injectClassBuilder($this->classBuilder);
+		$this->roundTripService->injectConfigurationManager($configurationManager);
 		$this->roundTripService->injectParserService($this->parserService);
 		$this->roundTripService->initialize($this->extension);
 
 		$this->classBuilder->injectRoundtripService($this->roundTripService);
-		$this->classBuilder->injectParserService($this->parserService);
-		$this->classBuilder->injectPrinterService($this->printerService);
-		$this->classBuilder->injectClassFactory(new \EBT\ExtensionBuilder\Parser\ClassFactory());
+
+		$this->fileGenerator = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\FileGenerator'), array('dummy'));
+		$this->fileGenerator->injectObjectManager($this->objectManager);
+		$this->fileGenerator->injectPrinterService($this->printerService);
+		$this->fileGenerator->injectLocalizationService($localizationService);
+		$this->fileGenerator->injectClassBuilder($this->classBuilder);
 
 		$this->classBuilder->initialize($this->fileGenerator, $this->extension, TRUE);
 
-		$this->fileGenerator->injectClassBuilder($this->classBuilder);
-
-		$this->codeTemplateRootPath = PATH_typo3conf.'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
+		$this->codeTemplateRootPath = PATH_typo3conf .'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
 		$this->modelClassTemplatePath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
 
 		$this->fileGenerator->setSettings(
@@ -165,13 +151,13 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 				)
 			)
 		);
-		$this->fileGenerator->_set('codeTemplateRootPath', PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/');
+		$this->fileGenerator->_set('codeTemplateRootPath', __DIR__ .'/../Resources/Private/CodeTemplates/Extbase/');
 		$this->fileGenerator->_set('enableRoundtrip', true);
 		$this->fileGenerator->_set('extension', $this->extension);
 	}
 
-	protected function tearDown() {
-		if (isset($this->extension) && $this->extension->getExtensionKey() != NULL) {
+	public function tearDown() {
+		if (!empty($this->extension) && $this->extension->getExtensionKey() != NULL) {
 			GeneralUtility::rmdir($this->extension->getExtensionDir(), TRUE);
 		}
 	}
@@ -213,9 +199,9 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 	 * This class file is generated based on the CodeTemplates
 	 * @param string $modelName
 	 */
-	function generateInitialModelClassFile($modelName){
+	protected function generateInitialModelClassFile($modelName){
 		$domainObject = $this->buildDomainObject($modelName);
-		$classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, $this->extension);
+		$classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, FALSE);
 		$modelClassDir = 'Classes/Domain/Model/';
 		GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
 		$absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
@@ -225,7 +211,7 @@ abstract class BaseTest extends \Tx_Phpunit_TestCase {
 		GeneralUtility::writeFile($modelClassPath,$classFileContent);
 	}
 
-	function removeInitialModelClassFile($modelName){
+	protected function removeInitialModelClassFile($modelName){
 		if (@file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php')){
 			unlink($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php');
 		}
