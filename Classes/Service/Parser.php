@@ -30,10 +30,6 @@ namespace EBT\ExtensionBuilder\Service;
  * @author Nico de Haen
  */
 
-if (!class_exists('\PhpParser\Parser')) {
-	\EBT\ExtensionBuilder\Parser\AutoLoader::register();
-}
-
 
 /**
  *

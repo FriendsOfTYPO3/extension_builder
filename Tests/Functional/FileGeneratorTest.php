@@ -38,10 +38,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 * @test
 	 */
 	public function checkRequirements(){
-		$this->assertTrue(
-			class_exists('org\\bovigo\\vfs\\vfsStream'),
-			'Requirements not fulfilled: vfsStream is needed for file operation tests. Please make sure you are using at least phpunit Version 3.5.6'
-		);
+
 	}
 
 	/**
@@ -337,21 +334,21 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 * @test
 	 */
 	function writeRepositoryClassFromDomainObject(){
-		$domainObject = $this->buildDomainObject('ModelCgt6',true);
+		$domainObject = $this->buildDomainObject('ModelCgt6',TRUE, TRUE);
 		$classFileContent = $this->fileGenerator->generateDomainRepositoryCode($domainObject, FALSE);
 
-		$controllerClassDir =  'Classes/Controller/';
-		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$controllerClassDir);
-		$absControllerClassDir = $this->extension->getExtensionDir().$controllerClassDir;
-		$this->assertTrue(is_dir($absControllerClassDir),'Directory ' . $absControllerClassDir . ' was not created');
-		$controllerClassPath =  $absControllerClassDir . $domainObject->getName() . 'Controller.php';
-		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($controllerClassPath,$classFileContent);
-		$this->assertFileExists($controllerClassPath,'File was not generated: ' . $controllerClassPath);
-		$className = $domainObject->getControllerClassName();
+		$repositoryClassDir =  'Classes/Domain/Repository/';
+		\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(),$repositoryClassDir);
+		$absRepositoryClassDir = $this->extension->getExtensionDir().$repositoryClassDir;
+		$this->assertTrue(is_dir($absRepositoryClassDir),'Directory ' . $absRepositoryClassDir . ' was not created');
+		$repositoryClassPath =  $absRepositoryClassDir . $domainObject->getName() . 'Repository.php';
+		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($repositoryClassPath,$classFileContent);
+		$this->assertFileExists($repositoryClassPath,'File was not generated: ' . $repositoryClassPath);
+		$className = $domainObject->getFullyQualifiedDomainRepositoryClassName();
 		if(!class_exists($className)) {
-			include($controllerClassPath);
+			include($repositoryClassPath);
 		}
-		$this->assertTrue(class_exists($className),'Class was not generated:'.$className);
+		$this->assertTrue(class_exists($className),'Class was not generated:'.$className . 'in ' . $repositoryClassPath);
 
 	}
 
@@ -382,7 +379,6 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 * @depends writeModelClassWithManyToManyRelation
 	 * @depends writeAggregateRootClassesFromDomainObject
 	 *
-	 * TODO: A lot of more testing possible here (file content etc.) But this is in fact not a unit test anymore...
 	 *
 	 * @test
 	 */

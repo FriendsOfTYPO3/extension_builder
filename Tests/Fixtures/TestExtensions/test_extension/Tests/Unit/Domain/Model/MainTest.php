@@ -40,11 +40,11 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 */
 	protected $subject = NULL;
 
-	protected function setUp() {
+	public function setUp() {
 		$this->subject = new \TYPO3\TestExtension\Domain\Model\Main();
 	}
 
-	protected function tearDown() {
+	public function tearDown() {
 		unset($this->subject);
 	}
 

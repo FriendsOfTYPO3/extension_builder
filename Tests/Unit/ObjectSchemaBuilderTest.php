@@ -38,7 +38,8 @@ class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 */
 	protected $objectSchemaBuilder = NULL;
 
-	protected function setUp() {
+	public function setUp() {
+		parent::setUp();
 		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\ObjectSchemaBuilder'), array('dummy'));
 		$concreteConfigurationManager = $this->getMock($this->buildAccessibleProxy('TYPO3\\CMS\Extbase\\Configuration\\BackendConfigurationManager'));
 		$typoScriptService = new \TYPO3\CMS\Extbase\Service\TypoScriptService ();

@@ -27,24 +27,24 @@ namespace TYPO3\TestExtension\Tests\Unit\Domain\Model;
  ***************************************************************/
 
 /**
- * Test case for class \TYPO3\TestExtension\Domain\Model\Child3.
+ * Test case for class \TYPO3\TestExtension\Domain\Model\Child2.
  *
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  * @author John Doe <mail@typo3.com>
  */
-class Child3Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
+class Child2Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
-	 * @var \TYPO3\TestExtension\Domain\Model\Child3
+	 * @var \TYPO3\TestExtension\Domain\Model\Child2
 	 */
 	protected $subject = NULL;
 
-	protected function setUp() {
-		$this->subject = new \TYPO3\TestExtension\Domain\Model\Child3();
+	public function setUp() {
+		$this->subject = new \TYPO3\TestExtension\Domain\Model\Child2();
 	}
 
-	protected function tearDown() {
+	public function tearDown() {
 		unset($this->subject);
 	}
 

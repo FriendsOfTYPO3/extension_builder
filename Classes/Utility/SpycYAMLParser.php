@@ -311,7 +311,7 @@ class SpycYAMLParser {
 	 */
 	private function _dumpNode($key, $value, $indent, $previous_key = -1, $first_key = 0) {
 		// do some folding here, for blocks
-		if (is_string($value) && ((strpos($value, LF) !== FALSE || strpos($value, ": ") !== FALSE || strpos($value, "- ") !== FALSE ||
+		if (is_string($value) && ((strpos($value, PHP_EOL) !== FALSE || strpos($value, ": ") !== FALSE || strpos($value, "- ") !== FALSE ||
 								   strpos($value, "*") !== FALSE || strpos($value, "#") !== FALSE || strpos($value, "<") !== FALSE || strpos($value, ">") !== FALSE ||
 								   strpos($value, "[") !== FALSE || strpos($value, "]") !== FALSE || strpos($value, "{") !== FALSE || strpos($value, "}") !== FALSE) || substr($value, -1, 1) == ':')
 		) {
@@ -329,14 +329,14 @@ class SpycYAMLParser {
 
 		if (is_int($key) && $key - 1 == $previous_key && $first_key === 0) {
 			// It's a sequence
-			$string = $spaces . '- ' . $value . LF;
+			$string = $spaces . '- ' . $value . PHP_EOL;
 		} else {
 			if ($first_key === 0) throw new \Exception('Keys are all screwy.  The first one was zero, now it\'s "' . $key . '"');
 			// It's mapped
 			if (strpos($key, ":") !== FALSE) {
 				$key = '"' . $key . '"';
 			}
-			$string = $spaces . $key . ': ' . $value . LF;
+			$string = $spaces . $key . ': ' . $value . PHP_EOL;
 		}
 		return $string;
 	}
@@ -349,10 +349,10 @@ class SpycYAMLParser {
 	 * @param $indent int The value of the indent
 	 */
 	private function _doLiteralBlock($value, $indent) {
-		if (strpos($value, LF) === FALSE && strpos($value, "'") === FALSE) {
+		if (strpos($value, PHP_EOL) === FALSE && strpos($value, "'") === FALSE) {
 			return sprintf("'%s'", $value);
 		}
-		if (strpos($value, LF) === FALSE && strpos($value, '"') === FALSE) {
+		if (strpos($value, PHP_EOL) === FALSE && strpos($value, '"') === FALSE) {
 			return sprintf('"%s"', $value);
 		}
 		$exploded = explode(LF, $value);
@@ -360,7 +360,7 @@ class SpycYAMLParser {
 		$indent += $this->_dumpIndent;
 		$spaces = str_repeat(' ', $indent);
 		foreach ($exploded as $line) {
-			$newValue .= LF . $spaces . trim($line);
+			$newValue .= PHP_EOL . $spaces . trim($line);
 		}
 		return $newValue;
 	}
@@ -377,8 +377,8 @@ class SpycYAMLParser {
 		if ($this->_dumpWordWrap !== 0 && is_string($value) && strlen($value) > $this->_dumpWordWrap) {
 			$indent += $this->_dumpIndent;
 			$indent = str_repeat(' ', $indent);
-			$wrapped = wordwrap($value, $this->_dumpWordWrap, LF . $indent);
-			$value = '>' . LF . $indent . $wrapped;
+			$wrapped = wordwrap($value, $this->_dumpWordWrap, PHP_EOL . $indent);
+			$value = '>' . PHP_EOL . $indent . $wrapped;
 		} else {
 			if ($this->setting_dump_force_quotes && is_string($value))
 				$value = '"' . $value . '"';
@@ -424,7 +424,7 @@ class SpycYAMLParser {
 			$literalBlock = '';
 			$literalBlockStyle = self::startsLiteralBlock($line);
 			if ($literalBlockStyle) {
-				$line = rtrim($line, $literalBlockStyle . ' ' . LF);
+				$line = rtrim($line, $literalBlockStyle . ' ' . PHP_EOL);
 				$literalBlock = '';
 				$line .= $this->LiteralPlaceHolder;
 
@@ -435,7 +435,7 @@ class SpycYAMLParser {
 			}
 
 			while (++$i < $cnt && self::greedilyNeedNextLine($line)) {
-				$line = rtrim($line, ' ' . LF . TAB . CR) . ' ' . ltrim($Source[$i], ' ' . TAB);
+				$line = rtrim($line, ' ' . PHP_EOL . TAB . CR) . ' ' . ltrim($Source[$i], ' ' . TAB);
 			}
 			$i--;
 
@@ -462,7 +462,7 @@ class SpycYAMLParser {
 	}
 
 	private function loadFromSource($input) {
-		if (!empty($input) && strpos($input, LF) === FALSE && file_exists($input))
+		if (!empty($input) && strpos($input, PHP_EOL) === FALSE && file_exists($input))
 			return file($input);
 
 		return $this->loadFromString($input);
@@ -858,16 +858,16 @@ class SpycYAMLParser {
 
 	private function addLiteralLine($literalBlock, $line, $literalBlockStyle) {
 		$line = self::stripIndent($line);
-		$line = rtrim($line, CRLF . TAB) . LF;
+		$line = rtrim($line, CRLF . TAB) . PHP_EOL;
 		if ($literalBlockStyle == '|') {
 			return $literalBlock . $line;
 		}
 		if (strlen($line) == 0)
-			return rtrim($literalBlock, ' ') . LF;
-		if ($line == LF && $literalBlockStyle == '>') {
-			return rtrim($literalBlock, " \t") . LF;
+			return rtrim($literalBlock, ' ') . PHP_EOL;
+		if ($line == PHP_EOL && $literalBlockStyle == '>') {
+			return rtrim($literalBlock, " \t") . PHP_EOL;
 		}
-		if ($line != LF)
+		if ($line != PHP_EOL)
 			$line = trim($line, CRLF . ' ') . " ";
 		return $literalBlock . $line;
 	}

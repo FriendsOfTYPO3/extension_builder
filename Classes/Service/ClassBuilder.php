@@ -160,7 +160,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		$settings = $extension->getSettings();
 		if ($roundTripEnabled) {
 			$this->roundTripService->initialize($this->extension);
-			\EBT\ExtensionBuilder\Parser\AutoLoader::register();
 		}
 		$this->settings = $settings['classBuilder'];
 		$this->extensionDirectory = $this->extension->getExtensionDir();

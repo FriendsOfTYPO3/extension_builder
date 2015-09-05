@@ -24,12 +24,14 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
 /**
  *
  * @author Nico de Haen
  *
  */
+
+require_once(__DIR__ . '/../BaseTest.php');
+
 class FileGeneratorUnitTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	/**
 	 * Generate the appropriate code for a simple model class

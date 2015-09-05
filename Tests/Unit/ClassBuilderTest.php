@@ -42,12 +42,12 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 */
 	protected $modelClassTemplatePath = '';
 
-	protected function setUp() {
+	public function setUp() {
 		parent::setUp();
 		$this->generateInitialModelClassFile($this->modelName);
 	}
 
-	protected function tearDown() {
+	public function tearDown() {
 		$this->removeInitialModelClassFile($this->modelName);
 	}
 
