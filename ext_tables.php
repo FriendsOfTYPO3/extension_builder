@@ -25,15 +25,9 @@ if (TYPO3_MODE === 'BE' && !(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_INSTALL)) {
 		)
 	);
 
-	// \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler(
-	//     'ExtensionBuilder::wiringEditorSmdEndpoint',
-	//	   'EBT\ExtensionBuilder\Configuration\ConfigurationManager->getWiringEditorSmd'
-	// );
-	// To stay compatible with older TYPO3 versions, we register the ajax script the
-	// old way. It is also OK to not have this Ajax call to be CSRF protected as it
-	// is of no use for an attacker in this scenario even if the result contains the
-	// module token.
-	$GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['ExtensionBuilder::wiringEditorSmdEndpoint'] = '' .
-		'EBT\ExtensionBuilder\Configuration\ConfigurationManager->getWiringEditorSmd';
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler(
+	     'ExtensionBuilder::wiringEditorSmdEndpoint',
+		   'EBT\ExtensionBuilder\Configuration\ConfigurationManager->getWiringEditorSmd'
+	);
 
 }
