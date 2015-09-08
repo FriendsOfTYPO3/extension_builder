@@ -4,7 +4,7 @@ if (!defined('TYPO3_MODE')) {
 }
 <f:for each="{extension.Plugins}" as="plugin">
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-	$_EXTKEY,
+	'{extension.vendorName}.' . $_EXTKEY,
 	'<k:format.uppercaseFirst>{plugin.key}</k:format.uppercaseFirst>',
 	'<k:format.quoteString>{plugin.name}</k:format.quoteString>'
 );
