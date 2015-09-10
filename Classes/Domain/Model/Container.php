@@ -133,7 +133,7 @@ class Container extends AbstractObject {
 
 	/**
 	 * @param string $constantName
-	 * @return boolean TRUE if successfully removed
+	 * @return bool TRUE if successfully removed
 	 */
 	public function removeConstant($constantName) {
 		if (isset($this->constants[$constantName])) {

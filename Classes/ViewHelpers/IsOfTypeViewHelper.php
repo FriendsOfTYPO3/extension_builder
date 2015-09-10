@@ -40,7 +40,7 @@ class IsOfTypeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHe
 	 * Checks if $object is of type $type and returns TRUE or FALSE respectively
 	 * @param mixed $object
 	 * @param string $type
-	 * @return boolean TRUE or FALSE
+	 * @return bool TRUE or FALSE
 	 */
 	public function render($object, $type) {
 		return is_a($object, 'EBT\\ExtensionBuilder\\Domain\\Model\\' . $type);

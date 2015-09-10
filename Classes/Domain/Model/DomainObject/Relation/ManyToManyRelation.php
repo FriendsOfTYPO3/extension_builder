@@ -51,7 +51,7 @@ class ManyToManyRelation extends AnyToManyRelation {
 
 	/**
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isOfTypeObjectStorage() {
 		return TRUE;
@@ -60,7 +60,7 @@ class ManyToManyRelation extends AnyToManyRelation {
 	/**
 	 * Is a MM table needed for this relation?
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getUseMMTable() {
 		return TRUE;

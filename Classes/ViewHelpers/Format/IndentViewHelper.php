@@ -31,9 +31,9 @@ class IndentViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
 
 	/**
 	 *
-	 * @param integer $indentation
+	 * @param int $indentation
 	 * @param string $type
-	 * @return boolean TRUE or FALSE
+	 * @return bool TRUE or FALSE
 	 */
 	public function render($indentation) {
 		$outputToIndent = $this->renderChildren();

@@ -39,7 +39,7 @@ class BooleanProperty extends AbstractProperty {
 	 * @return string
 	 */
 	public function getTypeForComment() {
-		return 'boolean';
+		return 'bool';
 	}
 
 	/*

@@ -139,7 +139,7 @@ class Action {
 	/**
 	 * Is a template required for this action?
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getNeedsTemplate() {
 		if (in_array($this->getName(), $this->actionNamesWithNoRendering)) {
@@ -154,7 +154,7 @@ class Action {
 	/**
 	 * Is a form required to render the actions template?
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getNeedsForm() {
 		if (in_array($this->getName(), $this->actionNamesWithForm)) {
@@ -169,7 +169,7 @@ class Action {
 	/**
 	 * Is a property partial needed to render the actions template?
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getNeedsPropertyPartial() {
 		if ($this->getName() == 'show') {
@@ -184,7 +184,7 @@ class Action {
 	/**
 	 * setter for cacheable flag
 	 *
-	 * @param boolean $cacheable
+	 * @param bool $cacheable
 	 */
 	public function setCacheable($cacheable) {
 		$this->cacheable = $cacheable;
@@ -193,7 +193,7 @@ class Action {
 	/**
 	 * Getter for cacheable
 	 *
-	 * @return boolean|NULL $cacheable
+	 * @return bool|NULL $cacheable
 	 */
 	public function getCacheable() {
 		return $this->isCacheable();
@@ -202,7 +202,7 @@ class Action {
 	/**
 	 * should this action be cacheable
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isCacheable() {
 		if (!isset($this->cacheable)) {

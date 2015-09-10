@@ -100,7 +100,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * was the extension renamed?
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $extensionRenamed = FALSE;
 
@@ -651,7 +651,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $oldProperty
 	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $newProperty
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function relatedMethodsNeedUpdate($oldProperty, $newProperty) {
 		if ($this->extensionRenamed) {

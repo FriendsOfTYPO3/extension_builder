@@ -162,7 +162,7 @@ class DocComment extends Comment {
 	 * Checks if a tag with the given name exists
 	 *
 	 * @param string $tagName The tag name to check for
-	 * @return boolean TRUE the tag exists, otherwise FALSE
+	 * @return bool TRUE the tag exists, otherwise FALSE
 	 */
 	public function isTaggedWith($tagName) {
 		return (isset($this->tags[$tagName]));

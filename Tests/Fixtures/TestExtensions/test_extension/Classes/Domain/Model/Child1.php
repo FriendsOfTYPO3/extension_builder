@@ -39,6 +39,13 @@ class Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $name = '';
 
 	/**
+	 * flag
+	 *
+	 * @var bool
+	 */
+	protected $flag = FALSE;
+
+	/**
 	 * Returns the name
 	 *
 	 * @return string $name
@@ -55,6 +62,34 @@ class Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function setName($name) {
 		$this->name = $name;
+	}
+
+	/**
+	 * Returns the flag
+	 *
+	 * @return bool $flag
+	 */
+	public function getFlag() {
+		return $this->flag;
+	}
+
+	/**
+	 * Sets the flag
+	 *
+	 * @param bool $flag
+	 * @return void
+	 */
+	public function setFlag($flag) {
+		$this->flag = $flag;
+	}
+
+	/**
+	 * Returns the boolean state of flag
+	 *
+	 * @return bool
+	 */
+	public function isFlag() {
+		return $this->flag;
 	}
 
 }

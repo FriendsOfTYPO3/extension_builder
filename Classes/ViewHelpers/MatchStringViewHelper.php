@@ -36,9 +36,9 @@ class MatchStringViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
 	/**
 	 * @param string $match
 	 * @param string $in
-	 * @param boolean $caseSensitive
+	 * @param bool $caseSensitive
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function render($match, $in, $caseSensitive = FALSE) {
 		$matchAsRegularExpression = '/' . $match . '/';

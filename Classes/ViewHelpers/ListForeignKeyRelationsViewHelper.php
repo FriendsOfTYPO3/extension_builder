@@ -32,7 +32,7 @@ class ListForeignKeyRelationsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper
 	 *
 	 * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
 	 * @param mixed $domainObject
-	 * @return boolean TRUE or FALSE
+	 * @return bool TRUE or FALSE
 	 */
 	public function render($extension, $domainObject) {
 		$expectedDomainObject = $domainObject;

@@ -83,7 +83,7 @@ abstract class AbstractProperty {
 	/**
 	 * is set to TRUE, if this property was new added
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $new = TRUE;
 
@@ -176,7 +176,7 @@ abstract class AbstractProperty {
 
 	/**
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getHasDefaultValue() {
 		return isset($this->defaultValue);
@@ -202,7 +202,7 @@ abstract class AbstractProperty {
 
 	/**
 	 *
-	 * @return boolean TRUE (if property is of type relation any to many)
+	 * @return bool TRUE (if property is of type relation any to many)
 	 */
 	public function isAnyToManyRelation() {
 		return is_subclass_of($this, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation');
@@ -210,7 +210,7 @@ abstract class AbstractProperty {
 
 	/**
 	 *
-	 * @return boolean TRUE (if property is of type relation any to many)
+	 * @return bool TRUE (if property is of type relation any to many)
 	 */
 	public function isZeroToManyRelation() {
 		return FALSE;
@@ -219,7 +219,7 @@ abstract class AbstractProperty {
 
 	/**
 	 *
-	 * @return boolean TRUE (if property is of type relation)
+	 * @return bool TRUE (if property is of type relation)
 	 */
 	public function isRelation() {
 		return is_subclass_of($this, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation');
@@ -227,7 +227,7 @@ abstract class AbstractProperty {
 
 	/**
 	 *
-	 * @return boolean TRUE (if property is of type boolean)
+	 * @return bool TRUE (if property is of type boolean)
 	 */
 	public function isBoolean() {
 		return is_a($this, '\EBT\ExtensionBuilder\Domain_Model\DomainObject\BooleanProperty');
@@ -281,7 +281,7 @@ abstract class AbstractProperty {
 	/**
 	 * Template Method which should return the type hinting information
 	 * being used in PHPDoc Comments.
-	 * Examples: integer, string, Tx_FooBar_Something, \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_FooBar_Something>
+	 * Examples: int, string, Tx_FooBar_Something, \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_FooBar_Something>
 	 *
 	 * @return string
 	 */
@@ -298,7 +298,7 @@ abstract class AbstractProperty {
 	/**
 	 * TRUE if this property is required, FALSE otherwise.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getRequired() {
 		return $this->required;
@@ -307,7 +307,7 @@ abstract class AbstractProperty {
 	/**
 	 * Set whether this property is required
 	 *
-	 * @param boolean $required
+	 * @param bool $required
 	 */
 	public function setRequired($required) {
 		$this->required = $required;
@@ -316,7 +316,7 @@ abstract class AbstractProperty {
 	/**
 	 * Set whether this property is exclude field
 	 *
-	 * @param boolean $excludeField
+	 * @param bool $excludeField
 	 * @return void
 	 */
 	public function setExcludeField($excludeField) {
@@ -326,7 +326,7 @@ abstract class AbstractProperty {
 	/**
 	 * TRUE if this property is an exclude field, FALSE otherwise.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getExcludeField() {
 		return $this->excludeField;
@@ -357,7 +357,7 @@ abstract class AbstractProperty {
 	/**
 	 * Is this property displayable inside a Fluid template?
 	 *
-	 * @return boolean TRUE if this property can be displayed inside a fluid template
+	 * @return bool TRUE if this property can be displayed inside a fluid template
 	 */
 	public function getIsDisplayable() {
 		return TRUE;
@@ -415,7 +415,7 @@ abstract class AbstractProperty {
 	/**
 	 * Getter for $needsUploadFolder
 	 *
-	 * @return boolean $needsUploadFolder
+	 * @return bool $needsUploadFolder
 	 */
 	public function getNeedsUploadFolder() {
 		return $this->needsUploadFolder;
@@ -432,7 +432,7 @@ abstract class AbstractProperty {
 
 	/**
 	 *
-	 * @param boolean $new
+	 * @param bool $new
 	 */
 	public function setNew($new) {
 		$this->new = $new;
@@ -441,7 +441,7 @@ abstract class AbstractProperty {
 	/**
 	 * Getter for $useRTE
 	 *
-	 * @return boolean $useRTE
+	 * @return bool $useRTE
 	 */
 	public function getUseRTE() {
 		return $this->useRTE;

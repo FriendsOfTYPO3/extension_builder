@@ -54,7 +54,7 @@ class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isProperty() {
 		return $this->property;

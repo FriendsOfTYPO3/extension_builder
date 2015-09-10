@@ -344,7 +344,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 	 * @param array $actionNames
 	 * @param string $label related plugin or module
 	 * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-	 * @param boolean $firstControllerAction
+	 * @param bool $firstControllerAction
 	 * @return void
 	 */
 	private function validateActionConfiguration($controllerName, $actionNames, $label, $extension, $firstControllerAction = FALSE) {
@@ -816,7 +816,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 	/**
 	 * validates a plugin key
 	 * @param string $key
-	 * @return boolean TRUE if valid
+	 * @return bool TRUE if valid
 	 */
 	private static function validatePluginKey($key) {
 		return preg_match('/^[a-zA-Z0-9_\-]*$/', $key);
@@ -825,7 +825,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 	/**
 	 * validates a backend module key
 	 * @param string $key
-	 * @return boolean TRUE if valid
+	 * @return bool TRUE if valid
 	 */
 	private static function validateModuleKey($key) {
 		return preg_match('/^[a-zA-Z0-9_\-]*$/', $key);
@@ -882,7 +882,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 	 *
 	 * @param string $word
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	static public function isReservedWord($word) {
 		if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($word) ||
