@@ -154,6 +154,10 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 	 * @var int
 	 */
 	const ERROR_MAPPING_WRONG_TYPEFIELD_CONFIGURATION = 605;
+	/**
+	 * @var int
+	 */
+	const ERROR_MAPPING_TO_INCOMPATIBLE_TABLE = 606;
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
@@ -639,6 +643,14 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 			}
 		}
 		if ($tableName) {
+			if (in_array($tableName, array('tt_content', 'pages')) || preg_match("/^(pages_|be_|sys_|static_|cf_)/", $tableName)) {
+				$this->validationResult['warnings'][] = new ExtensionException(
+					'The configuration for table "' . $tableName . '" is not compatible' . LF .
+					' with extbase. You have to configure it yourself if you want to map' . LF .
+					' to this table',
+					self::ERROR_MAPPING_TO_INCOMPATIBLE_TABLE
+				);
+			}
 			if (strpos($extensionPrefix, $tableName) !== FALSE) {
 					// the domainObject extends a class of the same extension
 				if (!$parentClass) {
