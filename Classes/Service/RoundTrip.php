@@ -426,11 +426,6 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 				if ($initializeMethod != NULL) {
 					$initializeMethodBodyStmts = $initializeMethod->getBodyStmts();
 					$initializeMethodBodyStmts = str_replace(
-						$oldDomainObject->getDomainRepositoryClassName(),
-						$currentDomainObject->getDomainRepositoryClassName(),
-						$initializeMethodBodyStmts
-					);
-					$initializeMethodBodyStmts = str_replace(
 						GeneralUtility::lcfirst($oldName) . 'Repository',
 						GeneralUtility::lcfirst($newName) . 'Repository',
 						$initializeMethodBodyStmts
@@ -448,10 +443,10 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 						$injectMethod->getBodyStmts()
 					);
 					$injectMethod->setBodyStmts($initializeMethodBodyStmts);
-					$injectMethod->setTag('param', $currentDomainObject->getDomainRepositoryClassName() . ' $' . $newName . 'Repository');
+					$injectMethod->setTag('param', $currentDomainObject->getFullyQualifiedDomainRepositoryClassName() . ' $' . $newName . 'Repository');
 					$injectMethod->setName('inject' . $newName . 'Repository');
 					$parameter = new Model\ClassObject\MethodParameter(GeneralUtility::lcfirst($newName) . 'Repository');
-					$parameter->setTypeHint($currentDomainObject->getDomainRepositoryClassName());
+					$parameter->setTypeHint($currentDomainObject->getFullyQualifiedDomainRepositoryClassName());
 					$parameter->setPosition(0);
 					$injectMethod->replaceParameter($parameter);
 					$this->classObject->setMethod($injectMethod);
@@ -521,7 +516,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 				$this->classObject = $this->classFileObject->getFirstClass();
 				$this->classObject->setName($currentDomainObject->getName() . 'Repository');
 				if ($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed) {
-					$newClassName = $currentDomainObject->getName();
+					$newClassName = $currentDomainObject->getDomainRepositoryClassName();
 					$this->classObject->setName($newClassName);
 					$this->cleanUp(
 						FileGenerator::getFolderForClassFile($extensionDir, 'Repository'),
