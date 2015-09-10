@@ -405,17 +405,16 @@ class DomainObject {
 	}
 
 	/**
-	 * Returns the name of the domain repository class name, if it is an
-	 * aggregateroot.
+	 * Returns the name of the domain repository class without namespaces, (only if it is an
+	 * aggregate root).
 	 *
 	 * @return string
-	 * @deprecated Use getFullyQualifiedDomainRepositoryClassName() instead
 	 */
 	public function getDomainRepositoryClassName() {
 		if (!$this->aggregateRoot) {
 			return '';
 		} else {
-			return '\\' . $this->extension->getNamespaceName() . '\\Domain\\Repository\\' . $this->getName() . 'Repository';
+			return $this->getName() . 'Repository';
 		}
 	}
 
