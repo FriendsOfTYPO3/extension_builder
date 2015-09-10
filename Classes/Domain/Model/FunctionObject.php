@@ -171,7 +171,7 @@ class FunctionObject extends AbstractObject {
 	 *
 	 * @param $parameterName
 	 * @param $parameterPosition
-	 * @return boolean TRUE (if successfull removed)
+	 * @return bool TRUE (if successfull removed)
 	 */
 	public function removeParameter($parameterName, $parameterPosition) {
 		if (isset($this->parameters[$parameterPosition]) && $this->parameters[$parameterPosition]->getName() == $parameterName) {
@@ -188,7 +188,7 @@ class FunctionObject extends AbstractObject {
 	 * @param $oldName
 	 * @param $newName
 	 * @param $parameterPosition
-	 * @return boolean TRUE (if successfull removed)
+	 * @return bool TRUE (if successfull removed)
 	 */
 	public function renameParameter($oldName, $newName, $parameterPosition) {
 		if (isset($this->parameters[$parameterPosition])) {

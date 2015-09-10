@@ -303,7 +303,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 	 * Enables compatibility with JSON from older versions of the extension builder.
 	 *
 	 * @param array $jsonConfig
-	 * @param boolean $prepareForModeler
+	 * @param bool $prepareForModeler
 	 *
 	 * @return array modified json
 	 */
@@ -369,7 +369,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
 	 * Check if the confirm was send with input data.
 	 *
 	 * @param string $identifier
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isConfirmed($identifier) {
 		if (isset($this->inputData['params'][$identifier]) &&

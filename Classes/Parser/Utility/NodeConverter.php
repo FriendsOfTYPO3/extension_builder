@@ -196,7 +196,7 @@ class NodeConverter {
 		if (is_null($value)) {
 			return '';
 		} elseif ($value == 'FALSE' || $value == 'TRUE') {
-			return 'boolean';
+			return 'bool';
 		} else {
 			return gettype($value);
 		}

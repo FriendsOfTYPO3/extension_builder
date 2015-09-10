@@ -74,7 +74,7 @@ abstract class AnyToManyRelation extends AbstractRelation {
 
 	/**
 	 * Setter for useExtendedRelationTableName
-	 * @param boolean $useExtendedRelationTableName
+	 * @param bool $useExtendedRelationTableName
 	 */
 	public function setUseExtendedRelationTableName($useExtendedRelationTableName) {
 		$this->useExtendedRelationTableName = $useExtendedRelationTableName;
@@ -94,7 +94,7 @@ abstract class AnyToManyRelation extends AbstractRelation {
 	/**
 	 * Is a MM table needed for this relation?
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getUseMMTable() {
 		if ($this->getInlineEditing()) {

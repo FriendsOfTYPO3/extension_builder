@@ -32,7 +32,7 @@ class SelectProperty extends AbstractProperty {
 	protected $defaultValue = 0;
 
 	public function getTypeForComment() {
-		return 'integer';
+		return 'int';
 	}
 
 	public function getTypeHint() {

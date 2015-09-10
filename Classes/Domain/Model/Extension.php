@@ -105,7 +105,7 @@ class Extension {
 
 	/**
 	 * The extension's state. One of the STATE_* constants.
-	 * @var integer
+	 * @var int
 	 */
 	protected $state = 0;
 
@@ -118,7 +118,7 @@ class Extension {
 	/**
 	 * Is an upload folder required for this extension
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $needsUploadFolder = FALSE;
 
@@ -160,7 +160,7 @@ class Extension {
 
 	/**
 	 * was the extension renamed?
-	 * @var boolean
+	 * @var bool
 	 */
 	private $renamed = FALSE;
 
@@ -318,7 +318,7 @@ class Extension {
 
 	/**
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getState() {
 		return $this->state;
@@ -326,7 +326,7 @@ class Extension {
 
 	/**
 	 *
-	 * @param integer $state
+	 * @param int $state
 	 */
 	public function setState($state) {
 		$this->state = $state;
@@ -532,7 +532,7 @@ class Extension {
 
 	/**
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasPlugins() {
 		if (count($this->plugins) > 0) {
@@ -583,7 +583,7 @@ class Extension {
 
 	/**
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasBackendModules() {
 		if (count($this->backendModules) > 0) {
@@ -667,7 +667,7 @@ class Extension {
 
 	/**
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isRenamed() {
 		$originalExtensionKey = $this->getOriginalExtensionKey();
@@ -680,7 +680,7 @@ class Extension {
 	/**
 	 * Getter for $needsUploadFolder
 	 *
-	 * @return boolean $needsUploadFolder
+	 * @return bool $needsUploadFolder
 	 */
 	public function getNeedsUploadFolder() {
 		if ($this->needsUploadFolder) {
@@ -714,14 +714,14 @@ class Extension {
 	}
 
 	/**
-	 * @param boolean $supportVersioning
+	 * @param bool $supportVersioning
 	 */
 	public function setSupportVersioning($supportVersioning) {
 		$this->supportVersioning = $supportVersioning;
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getSupportVersioning() {
 		return $this->supportVersioning;
@@ -763,28 +763,28 @@ class Extension {
 	}
 
 	/**
-	 * @param boolean $supportLocalization
+	 * @param bool $supportLocalization
 	 */
 	public function setSupportLocalization($supportLocalization) {
 		$this->supportLocalization = $supportLocalization;
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getSupportLocalization() {
 		return $this->supportLocalization;
 	}
 
 	/**
-	 * @param boolean $generateDocumentationTemplate
+	 * @param bool $generateDocumentationTemplate
 	 */
 	public function setGenerateDocumentationTemplate($generateDocumentationTemplate) {
 		$this->generateDocumentationTemplate = $generateDocumentationTemplate;
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getGenerateDocumentationTemplate() {
 		return $this->generateDocumentationTemplate;

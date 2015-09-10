@@ -361,7 +361,7 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface {
 	 *
 	 * @param string $word
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	static public function isReservedTYPO3Word($word) {
 		if (in_array(\TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($word), self::$reservedTYPO3ColumnNames)) {
@@ -375,7 +375,7 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface {
 	 *
 	 * @param string $word
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	static public function isReservedExtbaseWord($word) {
 		if (in_array($word, self::$reservedExtbaseNames)) {
@@ -389,7 +389,7 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface {
 	 *
 	 * @param string $word
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	static public function isReservedMYSQLWord($word) {
 		if (in_array(strtoupper($word), self::$reservedMYSQLWords)) {
@@ -403,7 +403,7 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface {
 	 *
 	 * @param string $word
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	static public function isReservedWord($word) {
 		if (self::isReservedMYSQLWord($word) || self::isReservedTYPO3Word($word)) {

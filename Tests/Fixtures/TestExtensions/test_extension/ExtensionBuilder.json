@@ -130,6 +130,14 @@
 						"propertyName":"name",
 						"propertyType":"String",
 						"uid":"522021193466"
+					},
+					{
+						"propertyDescription":"",
+						"propertyIsExcludeField":false,
+						"propertyIsRequired":false,
+						"propertyName":"flag",
+						"propertyType":"Boolean",
+						"uid":"522021193478"
 					}
 				]
 			},

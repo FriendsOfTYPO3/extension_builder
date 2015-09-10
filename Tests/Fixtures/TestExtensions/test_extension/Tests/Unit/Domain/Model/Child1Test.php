@@ -70,4 +70,26 @@ class Child1Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			$this->subject
 		);
 	}
+
+	/**
+	* @test
+	*/
+	public function getFlagReturnsInitialValueForBool() {
+		$this->assertSame(
+			FALSE,
+			$this->subject->getFlag()
+		);
+	}
+
+	/**
+	* @test
+	*/
+	public function setFlagForBoolSetsFlag() {
+		$this->subject->setFlag(TRUE);
+		$this->assertAttributeEquals(
+			TRUE,
+			'flag',
+			$this->subject
+		);
+	}
 }

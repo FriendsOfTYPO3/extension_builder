@@ -50,7 +50,7 @@ class FileGeneratorUnitTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 		$classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, FALSE);
 		$this->assertRegExp("/.*class ModelCgt1.*/", $classFileContent, 'Class declaration was not generated');
 		$this->assertRegExp('/.*protected \\$blue.*/', $classFileContent, 'protected boolean property was not generated');
-		$this->assertRegExp('/.*\* \@var boolean.*/', $classFileContent, 'var tag for boolean property was not generated');
+		$this->assertRegExp('/.*\* \@var bool.*/', $classFileContent, 'var tag for boolean property was not generated');
 		$this->assertRegExp('/.*\* \@validate NotEmpty.*/', $classFileContent, 'validate tag for required property was not generated');
 		$this->assertRegExp('/.*public function getBlue\(\).*/', $classFileContent, 'Getter for boolean property was not generated');
 		$this->assertRegExp('/.*public function setBlue\(\$blue\).*/', $classFileContent, 'Setter for boolean property was not generated');

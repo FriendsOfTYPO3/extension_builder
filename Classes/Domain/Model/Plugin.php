@@ -154,7 +154,7 @@ class Plugin {
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getSwitchableControllerActions() {
 		return $this->switchableControllerActions;

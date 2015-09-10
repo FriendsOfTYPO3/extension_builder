@@ -126,7 +126,7 @@ abstract class AbstractObject {
 	 * the specified tag
 	 *
 	 * @param  string $tag: Tag name to check for
-	 * @return boolean TRUE if such a tag has been defined, otherwise FALSE
+	 * @return bool TRUE if such a tag has been defined, otherwise FALSE
 	 */
 	public function isTaggedWith($tagName) {
 		return (isset($this->tags[$tagName]));
@@ -273,7 +273,7 @@ abstract class AbstractObject {
 	/**
 	 *
 	 *
-	 * @return boolean TRUE if the description isn't empty
+	 * @return bool TRUE if the description isn't empty
 	 */
 	public function hasDescription() {
 		return !empty($this->description);
@@ -497,7 +497,7 @@ abstract class AbstractObject {
 	/**
 	 * is there a docComment
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasDocComment() {
 		return !empty($this->docComment);

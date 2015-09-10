@@ -36,7 +36,7 @@ class Exception extends \TYPO3\CMS\Extbase\Exception {
 
 	/**
 	 * @param string $message
-	 * @param integer $code
+	 * @param int $code
 	 * @param \Exception $previous
 	 */
 	public function __construct($message, $code, \Exception $previous = null) {

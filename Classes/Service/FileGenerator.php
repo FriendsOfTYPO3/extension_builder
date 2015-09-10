@@ -83,7 +83,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	protected $overWriteSettings = array();
 
 	/**
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $roundTripEnabled = FALSE;
 
@@ -742,7 +742,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	 * Either from ectionController template or from class partial
 	 *
 	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-	 * @param boolean $mergeWithExistingClass
+	 * @param bool $mergeWithExistingClass
 	 * @return string
 	 */
 	public function generateActionControllerCode(
@@ -767,7 +767,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	 * Either from domainObject template or from class partial
 	 *
 	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-	 * @param boolean $mergeWithExistingClass
+	 * @param bool $mergeWithExistingClass
 	 * @return string
 	 */
 	public function generateDomainObjectCode(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject, $mergeWithExistingClass) {
@@ -802,7 +802,7 @@ class FileGenerator implements \TYPO3\CMS\Core\SingletonInterface {
 	 * Either from domainRepository template or from class partial
 	 *
 	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-	 * @param boolean $mergeWithExistingClass
+	 * @param bool $mergeWithExistingClass
 	 *
 	 * @return string
 	 */

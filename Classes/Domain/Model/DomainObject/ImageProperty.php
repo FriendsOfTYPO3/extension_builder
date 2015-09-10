@@ -78,7 +78,7 @@ class ImageProperty extends AbstractProperty {
 	/**
 	 * getter for allowed file types
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getAllowedFileTypes() {
 		if (empty($this->allowedFileTypes)) {
@@ -99,7 +99,7 @@ class ImageProperty extends AbstractProperty {
 	/**
 	 * getter for disallowed file types
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getDisallowedFileTypes() {
 		return $this->disallowedFileTypes;

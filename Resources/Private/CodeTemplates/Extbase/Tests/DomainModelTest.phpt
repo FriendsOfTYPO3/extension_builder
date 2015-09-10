@@ -69,7 +69,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			'',
 			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
 		);
-</f:if><f:if condition="{property.unqualifiedType} == 'boolean'">
+</f:if><f:if condition="{property.unqualifiedType} == 'bool'">
 		$this->assertSame(
 			FALSE,
 			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
@@ -126,7 +126,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			'',
 			0.000000001
 		);
-</f:if><f:if condition="{property.unqualifiedType} == 'boolean'">
+</f:if><f:if condition="{property.unqualifiedType} == 'bool'">
 		$this->subject->set{property.name -> k:format.uppercaseFirst()}(TRUE);
 
 		$this->assertAttributeEquals(
