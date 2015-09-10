@@ -521,7 +521,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 				$this->classObject = $this->classFileObject->getFirstClass();
 				$this->classObject->setName($currentDomainObject->getName() . 'Repository');
 				if ($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed) {
-					$newClassName = $currentDomainObject->getFullyQualifiedDomainRepositoryClassName();
+					$newClassName = $currentDomainObject->getName();
 					$this->classObject->setName($newClassName);
 					$this->cleanUp(
 						FileGenerator::getFolderForClassFile($extensionDir, 'Repository'),
