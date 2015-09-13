@@ -84,16 +84,15 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\Parser
+	 * @inject
+	 *
 	 */
 	protected $parserService = NULL;
 
 	/**
-	 * @var \EBT\ExtensionBuilder\Service\ClassBuilder
-	 */
-	protected $classBuilder = NULL;
-
-	/**
 	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
+	 * @inject
+	 *
 	 */
 	protected $configurationManager = NULL;
 
@@ -120,29 +119,6 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	protected $settings = array();
 
-	/**
-	 * @param \EBT\ExtensionBuilder\Service\Parser $parserService
-	 * @return void
-	 */
-	public function injectParserService(\EBT\ExtensionBuilder\Service\Parser $parserService) {
-		$this->parserService = $parserService;
-	}
-
-	/**
-	 * @param \EBT\ExtensionBuilder\Service\ClassBuilder $classBuilder
-	 * @return void
-	 */
-	public function injectClassBuilder(\EBT\ExtensionBuilder\Service\ClassBuilder $classBuilder) {
-		$this->classBuilder = $classBuilder;
-	}
-
-	/**
-	 * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager
-	 * @return void
-	 */
-	public function injectConfigurationManager(ConfigurationManager $configurationManager) {
-		$this->configurationManager = $configurationManager;
-	}
 
 	/**
 	 * If a JSON file is found in the extensions directory the previous version

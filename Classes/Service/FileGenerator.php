@@ -35,11 +35,15 @@ class FileGenerator {
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\ClassBuilder
+	 * @inject
+	 *
 	 */
 	protected $classBuilder = NULL;
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\RoundTrip
+	 * @inject
+	 *
 	 */
 	protected $roundTripService = NULL;
 
@@ -80,6 +84,7 @@ class FileGenerator {
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+	 * @inject
 	 */
 	protected $objectManager = NULL;
 
@@ -100,6 +105,7 @@ class FileGenerator {
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\Printer
+	 * @inject
 	 */
 	protected $printerService = NULL;
 
@@ -129,45 +135,11 @@ class FileGenerator {
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\LocalizationService
+	 * @inject
+	 *
 	 */
 	protected $localizationService = NULL;
 
-	/**
-	 * @param \EBT\ExtensionBuilder\Service\ClassBuilder $classBuilder
-	 */
-	public function injectClassBuilder(ClassBuilder $classBuilder) {
-		$this->classBuilder = $classBuilder;
-	}
-
-
-	/**
-	 * @param \EBT\ExtensionBuilder\Service\RoundTrip $roundTripService
-	 * @return void
-	 */
-	public function injectRoundtripService(RoundTrip $roundTripService) {
-		$this->roundTripService = $roundTripService;
-	}
-
-	/**
-	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface  $objectManager
-	 */
-	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
-		$this->objectManager = $objectManager;
-	}
-
-	/**
-	 * @param \EBT\ExtensionBuilder\Service\Printer $printer
-	 */
-	public function injectPrinterService(Printer $printer) {
-		$this->printerService = $printer;
-	}
-
-	/**
-	 * @param \EBT\ExtensionBuilder\Service\LocalizationService $localizationService
-	 */
-	public function injectLocalizationService(LocalizationService $localizationService) {
-		$this->localizationService = $localizationService;
-	}
 
 	/**
 	 * called by controller
@@ -1279,6 +1251,4 @@ class FileGenerator {
 			}
 		}
 	}
-
-
 }
