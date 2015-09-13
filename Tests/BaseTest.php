@@ -131,17 +131,17 @@ abstract class BaseTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase {
 		$this->classBuilder->initialize($this->extension, TRUE);
 
 		$this->roundTripService = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\RoundTrip'), array('dummy'));
-		$this->roundTripService->injectConfigurationManager($configurationManager);
-		$this->roundTripService->injectParserService($this->parserService);
+		$this->inject($this->roundTripService, 'configurationManager', $configurationManager);
+		$this->inject($this->roundTripService, 'parserService', $this->parserService);
 		$this->roundTripService->initialize($this->extension);
 
 		$this->fileGenerator = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\FileGenerator'), array('dummy'));
-		$this->fileGenerator->injectObjectManager($this->objectManager);
-		$this->fileGenerator->injectPrinterService($this->printerService);
-		$this->fileGenerator->injectLocalizationService($localizationService);
-		$this->fileGenerator->injectClassBuilder($this->classBuilder);
+		$this->inject($this->fileGenerator, 'objectManager',$this->objectManager);
+		$this->inject($this->fileGenerator,'printerService',$this->printerService);
+		$this->inject($this->fileGenerator, 'localizationService',$localizationService);
+		$this->inject($this->fileGenerator,'classBuilder',$this->classBuilder);
 
-		$this->fileGenerator->injectRoundtripService($this->roundTripService);
+		$this->inject($this->fileGenerator, 'roundTripService', $this->roundTripService);
 
 		$this->codeTemplateRootPath = PATH_typo3conf .'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
 		$this->modelClassTemplatePath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
