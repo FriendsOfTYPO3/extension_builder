@@ -223,8 +223,6 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 				}
 			}
 		}
-		//TODO: not needed anymore?
-		spl_autoload_register('EBT\\ExtensionBuilder\\Utility\\ClassLoader::loadClass', FALSE, TRUE);
 	}
 
 	/**
@@ -722,9 +720,9 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 		}
 		if ($newProperty->getTypeForComment() != $this->updateExtensionKey($oldProperty->getTypeForComment())) {
 			if ($oldProperty->isBoolean() && !$newProperty->isBoolean()) {
-				$this->classObject->removeMethod($this->classBuilder->getMethodName($oldProperty, 'is'));
+				$this->classObject->removeMethod(ClassBuilder::getMethodName($oldProperty, 'is'));
 				$this->log(
-					'Method removed:' . $this->classBuilder->getMethodName($oldProperty, 'is'),
+					'Method removed:' . ClassBuilder::getMethodName($oldProperty, 'is'),
 					1,
 					$this->classObject->getMethods());
 			}
@@ -743,7 +741,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	protected function updateMethod($oldProperty, $newProperty, $methodType) {
 
-		$oldMethodName = $this->classBuilder->getMethodName($oldProperty, $methodType);
+		$oldMethodName = ClassBuilder::getMethodName($oldProperty, $methodType);
 		// the method to be merged
 		$mergedMethod = $this->classObject->getMethod($oldMethodName);
 
@@ -751,7 +749,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 			// no previous version of the method exists
 			return;
 		}
-		$newMethodName = $this->classBuilder->getMethodName($newProperty, $methodType);
+		$newMethodName = ClassBuilder::getMethodName($newProperty, $methodType);
 		$this->log('updateMethod:' . $oldMethodName . '=>' . $newMethodName, 'extension_builder');
 
 		if ($oldProperty->getName() != $newProperty->getName()) {
@@ -772,8 +770,8 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 			$parameterTags = $mergedMethod->getTagValues('param');
 			foreach ($methodParameters as $methodParameter) {
 				$oldParameterName = $methodParameter->getName();
-				if ($oldParameterName == $this->classBuilder->getParameterName($oldProperty, $methodType)) {
-					$newParameterName = $this->classBuilder->getParameterName($newProperty, $methodType);
+				if ($oldParameterName == ClassBuilder::getParameterName($oldProperty, $methodType)) {
+					$newParameterName = ClassBuilder::getParameterName($newProperty, $methodType);
 					$methodParameter->setName($newParameterName);
 					$newMethodBody = $this->replacePropertyNameInMethodBody($oldParameterName, $newParameterName, $mergedMethod->getBodyStmts());
 					$mergedMethod->setBodyStmts($newMethodBody);
@@ -788,7 +786,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 						}
 					}
 				}
-				$parameterTags[$methodParameter->getPosition()] = $this->classBuilder->getParamTag($newProperty, $methodType);
+				$parameterTags[$methodParameter->getPosition()] = ClassBuilder::getParamTag($newProperty, $methodType);
 				$mergedMethod->replaceParameter($methodParameter);
 			}
 			$mergedMethod->setTag('param', $parameterTags);

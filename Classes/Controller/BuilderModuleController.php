@@ -38,6 +38,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
 class BuilderModuleController extends ActionController {
+	
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\FileGenerator
 	 */
