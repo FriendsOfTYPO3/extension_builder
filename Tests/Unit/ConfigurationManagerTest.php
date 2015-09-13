@@ -37,7 +37,7 @@ class ConfigurationManagerTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 	public function setUp() {
 		parent::setUp();
-		//$this->objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+		$this->objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 		$this->configurationManager = $this->objectManager->get('EBT\\ExtensionBuilder\\Configuration\\ConfigurationManager');
 	}
 

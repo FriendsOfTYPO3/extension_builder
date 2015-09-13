@@ -100,12 +100,17 @@ abstract class BaseTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase {
 		}
 		$this->fixturesPath = __DIR__ . '/Fixtures/';
 
+
+		$testTargetDir = 'testDir';
+		vfsStream::setup($testTargetDir);
+		$dummyExtensionDir = vfsStream::url($testTargetDir) . '/';
+
+		$yamlParser = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser();
+		$settings = $yamlParser->YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
+
 		$this->extension = $this->getMock('EBT\\ExtensionBuilder\\Domain\\Model\\Extension', array('getExtensionDir'));
-		$extensionKey = 'dummy';
-		vfsStream::setup('testDir');
-		$dummyExtensionDir = vfsStream::url('testDir') . '/';
 		$this->extension->setVendorName('EBT');
-		$this->extension->setExtensionKey($extensionKey);
+		$this->extension->setExtensionKey('dummy');
 		$this->extension->expects(
 			$this->any())
 				->method('getExtensionDir')
@@ -113,24 +118,22 @@ abstract class BaseTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase {
 		if (is_dir($dummyExtensionDir)) {
 			GeneralUtility::mkdir($dummyExtensionDir, TRUE);
 		}
-		$yamlParser = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser();
-		$settings = $yamlParser->YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
 		$this->extension->setSettings($settings);
 
 		// get instances to inject in Mocks
 		$configurationManager = $this->objectManager->get('EBT\\ExtensionBuilder\\Configuration\\ConfigurationManager');
-		$this->classBuilder = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\\ClassBuilder');
+
 		$this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
 		$this->printerService = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\Printer');
 		$localizationService = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\\LocalizationService');
 
-		$this->roundTripService =  $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\RoundTrip'), array('dummy'));
-		$this->roundTripService->injectClassBuilder($this->classBuilder);
+		$this->classBuilder = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\\ClassBuilder');
+		$this->classBuilder->initialize($this->extension, TRUE);
+
+		$this->roundTripService = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\RoundTrip'), array('dummy'));
 		$this->roundTripService->injectConfigurationManager($configurationManager);
 		$this->roundTripService->injectParserService($this->parserService);
 		$this->roundTripService->initialize($this->extension);
-
-		$this->classBuilder->injectRoundtripService($this->roundTripService);
 
 		$this->fileGenerator = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\FileGenerator'), array('dummy'));
 		$this->fileGenerator->injectObjectManager($this->objectManager);
@@ -138,7 +141,7 @@ abstract class BaseTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase {
 		$this->fileGenerator->injectLocalizationService($localizationService);
 		$this->fileGenerator->injectClassBuilder($this->classBuilder);
 
-		$this->classBuilder->initialize($this->fileGenerator, $this->extension, TRUE);
+		$this->fileGenerator->injectRoundtripService($this->roundTripService);
 
 		$this->codeTemplateRootPath = PATH_typo3conf .'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
 		$this->modelClassTemplatePath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';

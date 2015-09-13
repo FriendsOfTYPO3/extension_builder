@@ -23,39 +23,34 @@ namespace EBT\ExtensionBuilder\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\Utility;
+use EBT\ExtensionBuilder\Utility\Inflector;
 
 /**
  * Helper for localization related stuff
  */
 
 class LocalizationService implements \TYPO3\CMS\Core\SingletonInterface {
+
 	/**
 	 * @var \TYPO3\CMS\Core\Localization\Parser\XliffParser
 	 */
 	protected $xliffParser = NULL;
 
-	/**
-	 * @var \EBT\ExtensionBuilder\Utility\Inflector
-	 */
-	protected $inflector = NULL;
 
 	/**
 	 * @param \TYPO3\CMS\Core\Localization\Parser\XliffParser $xlifflParser
 	 */
-	public function injectXliffParser(\TYPO3\CMS\Core\Localization\Parser\XliffParser $xlifflParser) {
-		$this->xliffParser = $xlifflParser;
+	protected function getXliffParser() {
+		if (is_null($this->xliffParser)) {
+			$this->xliffParser = Utility\GeneralUtility::makeInstance('TYPO3\CMS\Core\Localization\Parser\XliffParser');
+		}
+		return $this->xliffParser;
 	}
 
-	/**
-	 * @param \EBT\ExtensionBuilder\Utility\Inflector
-	 * @return void
-	 */
-	public function injectInflector(\EBT\ExtensionBuilder\Utility\Inflector $inflector) {
-		$this->inflector = $inflector;
-	}
 
 	public function getLabelArrayFromFile($file, $languageKey = 'default') {
-		$xml = $this->xliffParser->getParsedData($file, $languageKey);
+		$xliffParser = $this->getXliffParser();
+		$xml = $xliffParser->getParsedData($file, $languageKey);
 		return $this->flattenLocallangArray($xml, 'xlf' , $languageKey);
 	}
 
@@ -68,9 +63,9 @@ class LocalizationService implements \TYPO3\CMS\Core\SingletonInterface {
 		$labelArray = array();
 		foreach ($extension->getDomainObjects() as $domainObject) {
 			/* @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
-			$labelArray[$domainObject->getLabelNamespace()] = $this->inflector->humanize($domainObject->getName());
+			$labelArray[$domainObject->getLabelNamespace()] = Inflector::humanize($domainObject->getName());
 			foreach ($domainObject->getProperties() as $property) {
-				$labelArray[$property->getLabelNamespace()] = $this->inflector->humanize($property->getName());
+				$labelArray[$property->getLabelNamespace()] = Inflector::humanize($property->getName());
 			}
 			if ($type == 'locallang_db') {
 				$tableToMapTo = $domainObject->getMapToTable();

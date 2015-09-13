@@ -54,32 +54,6 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
-	 * @param string $methodType (get,set,add,remove,is)
-	 * @return string method name
-	 */
-	static public function getMethodName(AbstractProperty $domainProperty, $methodType) {
-		$propertyName = $domainProperty->getName();
-		switch ($methodType) {
-			case 'set'        :
-				return 'set' . ucfirst($propertyName);
-
-			case 'get'        :
-				return 'get' . ucfirst($propertyName);
-
-			case 'add'        :
-				return 'add' . ucfirst(\EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName));
-
-			case 'remove'    :
-				return 'remove' . ucfirst(\EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName));
-
-			case 'is'        :
-				return 'is' . ucfirst($propertyName);
-		}
-	}
-
-	/**
-	 *
 	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property
 	 * @param string $methodType (set,add,remove)
 	 * @return string method body

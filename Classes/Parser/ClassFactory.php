@@ -32,7 +32,7 @@ use \EBT\ExtensionBuilder\Domain\Model;
  *
  */
 
-class ClassFactory  {
+class ClassFactory implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * @param \PhpParser\Node\Stmt\Class_ $classNode
