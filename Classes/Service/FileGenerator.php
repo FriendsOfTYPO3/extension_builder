@@ -785,10 +785,10 @@ class FileGenerator {
 	 * @return string
 	 */
 	protected function renderClassFile($classObject) {
-		$nameSpace = $this->objectManager->get('EBT\\ExtensionBuilder\\Domain\\Model\\NamespaceObject', $classObject->getNamespaceName());
+		$nameSpace = new \EBT\ExtensionBuilder\Domain\Model\NamespaceObject($classObject->getNamespaceName());
 		$this->addLicenseHeader($classObject);
 		$nameSpace->addClass($classObject);
-		$classFile = $this->objectManager->get('EBT\\ExtensionBuilder\\Domain\\Model\\File');
+		$classFile = new \EBT\ExtensionBuilder\Domain\Model\File;
 		$classFile->addNamespace($nameSpace);
 		return $this->printerService->renderFileObject($classFile, TRUE);
 	}

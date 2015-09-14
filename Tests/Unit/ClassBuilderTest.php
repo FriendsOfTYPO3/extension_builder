@@ -38,6 +38,11 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
 	protected $modelName = 'Model1';
 
 	/**
+	 * @var \EBT\ExtensionBuilder\Service\ClassBuilder
+	 */
+	protected $classBuilder = NULL;
+
+	/**
 	 * @var string
 	 */
 	protected $modelClassTemplatePath = '';
