@@ -25,7 +25,7 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  ***************************************************************/
 
 
-class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
+class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
 	/**
 	 * set to true to see an overview of the parsed class objects in the backend
 	 *
@@ -36,6 +36,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	public function setUp() {
 		parent::setUp();
 		$this->fixturesPath = PATH_typo3conf . 'ext/extension_builder/Tests/Fixtures/ClassParser/';
+		$this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
 	}
 
 

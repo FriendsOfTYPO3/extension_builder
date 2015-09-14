@@ -33,9 +33,8 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  *
  */
 
-require_once(__DIR__ . '/../BaseTest.php');
 
-class  ExtensionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
+class  ExtensionTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
 	/**
 	 * @var \EBT\ExtensionBuilder\Domain\Model\Person[]
 	 */
