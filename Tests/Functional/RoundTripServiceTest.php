@@ -27,7 +27,7 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
  ***************************************************************/
 
 
-class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
+class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest {
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder
 	 */

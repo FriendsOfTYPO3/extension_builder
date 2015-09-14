@@ -32,7 +32,7 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  * Class ParseAndPrintTest
  * @package EBT\ExtensionBuilder\Tests\Functional
  */
-class ParseAndPrintTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
+class ParseAndPrintTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest {
 
 	public function setUp() {
 		parent::setUp();

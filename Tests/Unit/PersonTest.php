@@ -26,7 +26,7 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class PersonTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
+class PersonTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
 	/**
 	 * @var \EBT\ExtensionBuilder\Domain\Model\Person
 	 */

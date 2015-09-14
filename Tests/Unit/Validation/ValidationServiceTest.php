@@ -28,7 +28,7 @@ namespace EBT\ExtensionBuilder\Tests\Unit\Validation;
 /**
  * test for validation service
  */
-class ValidationServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
+class ValidationServiceTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
 	/**
 	 * @test
 	 * @return void
@@ -44,7 +44,15 @@ class ValidationServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	/**
 	 * @test
 	 */
-	public function validateConfigurationFormatReturnsExcpetionsOnDuplicatePropertyNames() {
+	public function testForReservedWord() {
+		$this->assertTrue(\EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::isReservedWord('DATABASE'));
+	}
+
+	/**
+	 * @test
+	 */
+	public function validateConfigurationFormatReturnsExceptionsOnDuplicatePropertyNames() {
+		$this->markTestSkipped('Exception message is translated by localization service, which calls Object manager');
 		$fixture = array(
 			'modules' => array(
 				array(
@@ -74,6 +82,7 @@ class ValidationServiceTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 
 		);
 		$extensionValidator = new \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator();
+
 		$result = $extensionValidator->validateConfigurationFormat($fixture);
 		$expected = array(
 			'errors' => array(),
