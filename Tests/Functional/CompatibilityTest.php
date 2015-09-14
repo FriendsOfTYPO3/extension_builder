@@ -35,7 +35,7 @@ use org\bovigo\vfs\vfsStream;
  * @author Nico de Haen
  *
  */
-class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
+class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest {
 
 	/**
 	 * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager

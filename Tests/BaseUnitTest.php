@@ -31,7 +31,7 @@ use TYPO3\CMS\Extbase\Object\UnknownClassException;
  ***************************************************************/
 
 
-abstract class BaseTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase {
+abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 	/**
 	 * @var string
@@ -94,10 +94,6 @@ abstract class BaseTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase {
 	public function setUp(){
 		parent::setUp();
 
-		$this->objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
-		if (!class_exists('PhpParser\Parser')) {
-			throw new UnknownClassException('PhpParser not found!!');
-		}
 		$this->fixturesPath = __DIR__ . '/Fixtures/';
 
 
@@ -120,43 +116,9 @@ abstract class BaseTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase {
 		}
 		$this->extension->setSettings($settings);
 
-		// get instances to inject in Mocks
-		$configurationManager = $this->objectManager->get('EBT\\ExtensionBuilder\\Configuration\\ConfigurationManager');
-
-		$this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
-		$this->printerService = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\Printer');
-		$localizationService = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\\LocalizationService');
-
-		$this->classBuilder = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\\ClassBuilder');
-		$this->classBuilder->initialize($this->extension, TRUE);
-
-		$this->roundTripService = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\RoundTrip'), array('dummy'));
-		$this->inject($this->roundTripService, 'configurationManager', $configurationManager);
-		$this->inject($this->roundTripService, 'parserService', $this->parserService);
-		$this->roundTripService->initialize($this->extension);
-
-		$this->fileGenerator = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\FileGenerator'), array('dummy'));
-		$this->inject($this->fileGenerator, 'objectManager',$this->objectManager);
-		$this->inject($this->fileGenerator,'printerService',$this->printerService);
-		$this->inject($this->fileGenerator, 'localizationService',$localizationService);
-		$this->inject($this->fileGenerator,'classBuilder',$this->classBuilder);
-
-		$this->inject($this->fileGenerator, 'roundTripService', $this->roundTripService);
-
 		$this->codeTemplateRootPath = PATH_typo3conf .'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
 		$this->modelClassTemplatePath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
-
-		$this->fileGenerator->setSettings(
-			array(
-				'codeTemplateRootPath' => $this->codeTemplateRootPath,
-				'extConf' => array(
-					'enableRoundtrip'=>'1'
-				)
-			)
-		);
-		$this->fileGenerator->_set('codeTemplateRootPath', __DIR__ .'/../Resources/Private/CodeTemplates/Extbase/');
-		$this->fileGenerator->_set('enableRoundtrip', true);
-		$this->fileGenerator->_set('extension', $this->extension);
+		require_once(__DIR__ . '/../Resources/Private/PHP/PHP-Parser/lib/bootstrap.php');
 	}
 
 	public function tearDown() {
@@ -194,31 +156,6 @@ abstract class BaseTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase {
 			}
 		}
 		return $domainObject;
-	}
-
-	/**
-	 * Builds an initial class file to test parsing and modifiying of existing classes
-	 *
-	 * This class file is generated based on the CodeTemplates
-	 * @param string $modelName
-	 */
-	protected function generateInitialModelClassFile($modelName){
-		$domainObject = $this->buildDomainObject($modelName);
-		$classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, FALSE);
-		$modelClassDir = 'Classes/Domain/Model/';
-		GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
-		$absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
-		$this->assertTrue(is_dir($absModelClassDir),'Directory ' . $absModelClassDir . ' was not created');
-
-		$modelClassPath =  $absModelClassDir . $domainObject->getName() . '.php';
-		GeneralUtility::writeFile($modelClassPath,$classFileContent);
-	}
-
-	protected function removeInitialModelClassFile($modelName){
-		if (@file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php')){
-			unlink($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php');
-		}
-		$this->assertFalse(file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php'), 'Dummy files could not be removed:' . $this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php');
 	}
 
 }

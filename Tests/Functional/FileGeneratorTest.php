@@ -33,12 +33,30 @@ use EBT\ExtensionBuilder\Utility\Inflector;
  * @author Nico de Haen
  *
  */
-class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
+class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest {
+
 	/**
+	 * Generate the appropriate code for a simple model class
+	 * for a non aggregate root domain object with one boolean property
+	 *
 	 * @test
 	 */
-	public function checkRequirements(){
-
+	function generateCodeForModelClassWithBooleanProperty() {
+		$modelName = 'ModelCgt1';
+		$propertyName = 'blue';
+		$domainObject = $this->buildDomainObject($modelName);
+		$property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty();
+		$property->setName($propertyName);
+		$property->setRequired(TRUE);
+		$domainObject->addProperty($property);
+		$classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
+		$this->assertRegExp("/.*class ModelCgt1.*/", $classFileContent, 'Class declaration was not generated');
+		$this->assertRegExp('/.*protected \\$blue.*/', $classFileContent, 'protected boolean property was not generated');
+		$this->assertRegExp('/.*\* \@var bool.*/', $classFileContent, 'var tag for boolean property was not generated');
+		$this->assertRegExp('/.*\* \@validate NotEmpty.*/', $classFileContent, 'validate tag for required property was not generated');
+		$this->assertRegExp('/.*public function getBlue\(\).*/', $classFileContent, 'Getter for boolean property was not generated');
+		$this->assertRegExp('/.*public function setBlue\(\$blue\).*/', $classFileContent, 'Setter for boolean property was not generated');
+		$this->assertRegExp('/.*public function isBlue\(\).*/', $classFileContent, 'is method for boolean property was not generated');
 	}
 
 	/**

@@ -31,7 +31,7 @@ use EBT\ExtensionBuilder\Utility\Inflector;
  * @author ndh
  *
  */
-class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
+class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
 	/**
 	 * @var string
 	 */
@@ -43,13 +43,22 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	protected $modelClassTemplatePath = '';
 
 	public function setUp() {
+
 		parent::setUp();
-		$this->generateInitialModelClassFile($this->modelName);
+
+		$this->classBuilder = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\ClassBuilder'), array('dummy'));
+
+		$parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
+		$printerService = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\Printer'), array('dummy'));
+		$nodeFactory = new \EBT\ExtensionBuilder\Parser\NodeFactory();
+		$printerService->_set('nodeFactory', $nodeFactory);
+		$configurationManager = new \EBT\ExtensionBuilder\Configuration\ConfigurationManager();
+		$this->classBuilder->_set('parserService', $parserService);
+		$this->classBuilder->_set('printerService', $printerService);
+		$this->classBuilder->_set('configurationManager', $configurationManager);
+		$this->classBuilder->initialize($this->extension);
 	}
 
-	public function tearDown() {
-		$this->removeInitialModelClassFile($this->modelName);
-	}
 
 	/**
 	 * @test

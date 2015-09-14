@@ -27,7 +27,7 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  ***************************************************************/
 
 
-class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
+class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
 	/**
 	 * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
 	 */

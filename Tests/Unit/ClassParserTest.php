@@ -25,7 +25,7 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  ***************************************************************/
 
 
-class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
+class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
 	/**
 	 * set to TRUE to see an overview of the parsed class objects in the backend
 	 *
@@ -33,14 +33,9 @@ class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseTest {
 	 */
 	protected $debugMode = FALSE;
 
-	/**
-	 * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
-	 */
-	protected $extensionSchemaBuilder = NULL;
-
 	public function setUp() {
 		parent::setUp();
-		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('\EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder'), array('dummy'));
+		$this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
 	}
 
 	/**
