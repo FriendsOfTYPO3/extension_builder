@@ -27,6 +27,19 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
 use org\bovigo\vfs\vfsStream;
 
 class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
+
+
+	/**
+	 * @var \EBT\ExtensionBuilder\Service\Parser
+	 */
+	protected $parserService = NULL;
+
+	/**
+	 * @var \EBT\ExtensionBuilder\Service\Printer
+	 */
+	protected $printerService = NULL;
+
+
 	/**
 	 * @var string
 	 */

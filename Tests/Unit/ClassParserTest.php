@@ -26,6 +26,14 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
 
 
 class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
+
+
+	/**
+	 * @var \EBT\ExtensionBuilder\Service\Parser
+	 */
+	protected $parserService = NULL;
+
+
 	/**
 	 * set to TRUE to see an overview of the parsed class objects in the backend
 	 *

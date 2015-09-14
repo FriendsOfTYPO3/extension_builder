@@ -30,6 +30,7 @@ use TYPO3\CMS\Extbase\Object\UnknownClassException;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+require_once(__DIR__ . '/../Resources/Private/PHP/PHP-Parser/lib/bootstrap.php');
 
 abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
@@ -54,41 +55,9 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	protected $fixturesPath = '';
 
 	/**
-	 * @var \EBT\ExtensionBuilder\Service\Parser
-	 */
-	protected $parserService = NULL;
-
-	/**
-	 * @var \EBT\ExtensionBuilder\Service\Printer
-	 */
-	protected $printerService = NULL;
-
-	/**
-	 * @var \EBT\ExtensionBuilder\Service\ClassBuilder
-	 */
-	protected $classBuilder = NULL;
-
-	/**
-	 * @var \EBT\ExtensionBuilder\Service\RoundTrip
-	 */
-	protected $roundTripService = NULL;
-
-	/**
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 */
-	protected $objectManager = NULL;
-
-	/**
 	 * @var \EBT\ExtensionBuilder\Domain\Model\Extension
 	 */
 	protected $extension = NULL;
-
-	/**
-	 * @var \EBT\ExtensionBuilder\Service\FileGenerator
-	 */
-	protected $fileGenerator = NULL;
-
-	protected $testExtensionsToLoad = array('typo3conf/ext/extension_builder');
 
 
 	public function setUp(){
@@ -118,7 +87,7 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 		$this->codeTemplateRootPath = PATH_typo3conf .'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
 		$this->modelClassTemplatePath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
-		require_once(__DIR__ . '/../Resources/Private/PHP/PHP-Parser/lib/bootstrap.php');
+
 	}
 
 	public function tearDown() {
