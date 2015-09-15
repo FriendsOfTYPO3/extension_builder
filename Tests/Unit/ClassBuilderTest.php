@@ -51,10 +51,9 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
 
 		parent::setUp();
 
-		$this->classBuilder = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\ClassBuilder'), array('dummy'));
-
+		$this->classBuilder = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\ClassBuilder::class, array('dummy'));
 		$parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
-		$printerService = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\Printer'), array('dummy'));
+		$printerService = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\Printer::class, array('dummy'));
 		$nodeFactory = new \EBT\ExtensionBuilder\Parser\NodeFactory();
 		$printerService->_set('nodeFactory', $nodeFactory);
 		$configurationManager = new \EBT\ExtensionBuilder\Configuration\ConfigurationManager();

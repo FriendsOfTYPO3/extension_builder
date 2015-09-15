@@ -40,11 +40,11 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTes
 
 	public function setUp() {
 		parent::setUp();
-		$this->extension = $this->getMock('EBT\ExtensionBuilder\Domain\Model\Extension', array('getOverWriteSettings'));
-		$this->extensionSchemaBuilder = $this->getMock($this->buildAccessibleProxy('\EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder'), array('dummy'));
+		$this->extension = $this->getMock(\EBT\ExtensionBuilder\Domain\Model\Extension::class, array('getOverWriteSettings'));
+		$this->extensionSchemaBuilder = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder::class, array('dummy'));
 		$this->extensionSchemaBuilder->injectConfigurationManager(new \EBT\ExtensionBuilder\Configuration\ConfigurationManager());
 		/** @var $objectSchemaBuilder \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder */
-		$objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\ObjectSchemaBuilder'), array('dummy'));
+		$objectSchemaBuilder = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\ObjectSchemaBuilder::class, array('dummy'));
 		$objectSchemaBuilder->injectConfigurationManager(new \EBT\ExtensionBuilder\Configuration\ConfigurationManager());
 		$this->extensionSchemaBuilder->injectObjectSchemaBuilder($objectSchemaBuilder);
 		$this->extensionKey = 'dummy';
@@ -90,8 +90,8 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTes
 	 */
 	public function conversionExtractsPersons() {
 		$persons = array();
-		$persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Person');
-		$persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Person');
+		$persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\EBT\ExtensionBuilder\Domain\Model\Person::class);
+		$persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\EBT\ExtensionBuilder\Domain\Model\Person::class);
 		$persons[0]->setName('name0');
 		$persons[0]->setRole('role0');
 		$persons[0]->setEmail('email0');

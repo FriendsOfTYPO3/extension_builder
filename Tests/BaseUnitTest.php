@@ -73,7 +73,7 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$yamlParser = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser();
 		$settings = $yamlParser->YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
 
-		$this->extension = $this->getMock('EBT\\ExtensionBuilder\\Domain\\Model\\Extension', array('getExtensionDir'));
+		$this->extension = $this->getMock(\EBT\ExtensionBuilder\Domain\Model\Extension::class, array('getExtensionDir'));
 		$this->extension->setVendorName('EBT');
 		$this->extension->setExtensionKey('dummy');
 		$this->extension->expects(
@@ -104,8 +104,8 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
 	 */
 	protected function buildDomainObject($name, $entity = false, $aggregateRoot = false){
-		$domainObject = $this->getMock(
-			$this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject'),
+		$domainObject = $this->getAccessibleMock(
+			\EBT\ExtensionBuilder\Domain\Model\DomainObject::class,
 			array('dummy')
 		);
 		/* @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */

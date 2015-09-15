@@ -94,7 +94,7 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
 	public function setUp(){
 		parent::setUp();
 
-		$this->objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+		$this->objectManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
 		if (!class_exists('PhpParser\Parser')) {
 			throw new UnknownClassException('PhpParser not found!!');
 		}
@@ -108,7 +108,7 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
 		$yamlParser = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser();
 		$settings = $yamlParser->YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
 
-		$this->extension = $this->getMock('EBT\\ExtensionBuilder\\Domain\\Model\\Extension', array('getExtensionDir'));
+		$this->extension = $this->getMock(\EBT\ExtensionBuilder\Domain\Model\Extension::class, array('getExtensionDir'));
 		$this->extension->setVendorName('EBT');
 		$this->extension->setExtensionKey('dummy');
 		$this->extension->expects(
@@ -121,21 +121,21 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
 		$this->extension->setSettings($settings);
 
 		// get instances to inject in Mocks
-		$configurationManager = $this->objectManager->get('EBT\\ExtensionBuilder\\Configuration\\ConfigurationManager');
+		$configurationManager = $this->objectManager->get(\EBT\ExtensionBuilder\Configuration\ConfigurationManager::class);
 
 		$this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
-		$this->printerService = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\Printer');
-		$localizationService = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\\LocalizationService');
+		$this->printerService = $this->objectManager->get(\EBT\ExtensionBuilder\Service\Printer::class);
+		$localizationService = $this->objectManager->get(\EBT\ExtensionBuilder\Service\LocalizationService::class);
 
-		$this->classBuilder = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\\ClassBuilder');
+		$this->classBuilder = $this->objectManager->get(\EBT\ExtensionBuilder\Service\ClassBuilder::class);
 		$this->classBuilder->initialize($this->extension);
 
-		$this->roundTripService = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\RoundTrip'), array('dummy'));
+		$this->roundTripService = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\RoundTrip::class, array('dummy'));
 		$this->inject($this->roundTripService, 'configurationManager', $configurationManager);
 		$this->inject($this->roundTripService, 'parserService', $this->parserService);
 		$this->roundTripService->initialize($this->extension);
 
-		$this->fileGenerator = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\FileGenerator'), array('dummy'));
+		$this->fileGenerator = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\FileGenerator::class, array('dummy'));
 		$this->inject($this->fileGenerator, 'objectManager',$this->objectManager);
 		$this->inject($this->fileGenerator,'printerService',$this->printerService);
 		$this->inject($this->fileGenerator, 'localizationService',$localizationService);
@@ -173,8 +173,8 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
 	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
 	 */
 	protected function buildDomainObject($name, $entity = false, $aggregateRoot = false){
-		$domainObject = $this->getMock(
-			$this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject'),
+		$domainObject = $this->getAccessibleMock(
+			'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject',
 			array('dummy')
 		);
 		/* @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
@@ -185,7 +185,7 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
 		if ($aggregateRoot){
 			$defaultActions = ['list','show','new','create','edit','update','delete'];
 			foreach ($defaultActions as $actionName){
-				$action = GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Action');
+				$action = GeneralUtility::makeInstance(\EBT\ExtensionBuilder\Domain\Model\DomainObject\Action::class);
 				$action->setName($actionName);
 				if ($actionName == 'deleted'){
 					$action->setNeedsTemplate = false;
