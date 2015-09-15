@@ -40,11 +40,11 @@ class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
 
 	public function setUp() {
 		parent::setUp();
-		$this->objectSchemaBuilder = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\\ObjectSchemaBuilder'), array('dummy'));
-		$concreteConfigurationManager = $this->getMock($this->buildAccessibleProxy('TYPO3\\CMS\Extbase\\Configuration\\BackendConfigurationManager'));
+		$this->objectSchemaBuilder = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\ObjectSchemaBuilder::class, array('dummy'));
+		$concreteConfigurationManager = $this->getAccessibleMock(\TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager::class);
 		$typoScriptService = new \TYPO3\CMS\Extbase\Service\TypoScriptService ();
 		$concreteConfigurationManager->_set('typoScriptService',$typoScriptService);
-		$this->configurationManager = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Configuration\\ConfigurationManager'),array('getExtbaseClassConfiguration'));
+		$this->configurationManager = $this->getAccessibleMock(\EBT\ExtensionBuilder\Configuration\ConfigurationManager::class,array('getExtbaseClassConfiguration'));
 		$this->configurationManager->_set('concreteConfigurationManager',$concreteConfigurationManager);
 		$this->objectSchemaBuilder->injectConfigurationManager($this->configurationManager);
 	}
@@ -96,11 +96,11 @@ class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
 		$expected->addProperty($property0);
 		$expected->addProperty($property1);
 
-		$testAction = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Action');
+		$testAction = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\EBT\ExtensionBuilder\Domain\Model\DomainObject\Action::class);
 		$testAction->setName('test');
 		$expected->addAction($testAction);
 
-		$listAction = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Action');
+		$listAction = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\EBT\ExtensionBuilder\Domain\Model\DomainObject\Action::class);
 		$listAction->setName('list');
 		$expected->addAction($listAction);
 
@@ -164,7 +164,11 @@ class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
 		$extbaseConfiguration = array(
 			'tableName' => 'fe_users'
 		);
-		$this->configurationManager->expects($this->atLeastOnce())->method('getExtbaseClassConfiguration')->with($className)->will($this->returnValue($extbaseConfiguration));
+		$this->configurationManager->expects($this->atLeastOnce())
+				->method('getExtbaseClassConfiguration')
+				->with($className)
+				->will($this->returnValue($extbaseConfiguration)
+		);
 		$actual = $this->objectSchemaBuilder->build($input);
 		$this->assertEquals($actual, $expected, 'Domain Object not built correctly.');
 

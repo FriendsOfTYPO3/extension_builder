@@ -52,7 +52,6 @@ class ValidationServiceTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
 	 * @test
 	 */
 	public function validateConfigurationFormatReturnsExceptionsOnDuplicatePropertyNames() {
-		$this->markTestSkipped('Exception message is translated by localization service, which calls Object manager');
 		$fixture = array(
 			'modules' => array(
 				array(

@@ -50,7 +50,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
 		$this->fixturesPath = PATH_typo3conf . 'ext/extension_builder/Tests/Fixtures/ClassParser/';
 		vfsStream::setup('tmpDir');
 		$this->tmpDir = vfsStream::url('tmpDir').'/';
-		$this->printerService = $this->getMock($this->buildAccessibleProxy('EBT\\ExtensionBuilder\\Service\Printer'), array('dummy'));
+		$this->printerService = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\Printer::class, array('dummy'));
 		$nodeFactory = new \EBT\ExtensionBuilder\Parser\NodeFactory();
 		$this->printerService->_set('nodeFactory', $nodeFactory);
 		$this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
