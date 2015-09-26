@@ -833,15 +833,14 @@
 				terminalUid;
 			if (terminal.el.getAttribute('title') == 'SOURCES') {
 				// id of the module
-                terminalUid = TYPO3.jQuery(terminal.el.parentNode).find('input[name="uid"]').val();
+				terminalUid = TYPO3.jQuery(terminal.el).parents('.WireIt-Container').first().find('input[name="uid"]').val();
 			}
 			else {
 				// id of the wrapper of the first field in the fieldset
-                terminalUid = TYPO3.jQuery(terminal.el).parent('fieldset').find('input[name="uid"]').val();
+				terminalUid = TYPO3.jQuery(terminal.el).parents('.relationGroup').find('input[name="uid"]').val();
 			}
 			return terminalUid;
 		}
-
 
 	};
 
