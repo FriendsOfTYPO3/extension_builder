@@ -4,9 +4,9 @@
 	"description": "Tool to kickstart and maintain TYPO3 extensions",
 	"homepage": "http://typo3.org",
 	"license": ["GPL-2.0+"],
-	"version": "7.4",
+	"version": "7.5.0-dev",
 	"require": {
-		"typo3/cms-core": "~7.4"
+		"typo3/cms-core": "7.x-dev"
 	},
 	"require-dev": {
 		"mikey179/vfsStream": "1.4.*@dev",
@@ -15,7 +15,7 @@
 	"autoload": {
 		"psr-4": {
 			"EBT\\ExtensionBuilder\\": "Classes/",
-			"PhpParser\\": "Resources/Private/PHP/Php-Parser/lib/PhpParser/"
+			"PhpParser\\": "Resources/Private/PHP/PHP-Parser/lib/PhpParser/"
 		}
 	},
 	"autoload-dev": {
