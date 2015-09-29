@@ -1,6 +1,6 @@
 #
 # Extension Builder settings for extension test_extension
-# generated 2011-08-11T06:49:00Z
+# generated 2015-01-01T01:00:00Z
 #
 # See http://www.yaml.org/spec/1.2/spec.html
 #
@@ -25,6 +25,8 @@
 #   preserved (renaming a property or DomainObject will result in new keys and new labels)
 #
 #   for other files: You will find a Split token at the end of the file
+#   see: \EBT\ExtensionBuilder\Service\RoundTrip::SPLIT_TOKEN
+#
 #   After this token you can write whatever you want and it will be appended
 #   everytime the code is generated
 #
@@ -62,7 +64,7 @@ overwriteSettings:
 #  ext_tables.sql: merge
 
 ## use static date attribute in xliff files ##
-#staticDateInXliffFiles: 2011-08-11T06:49:00Z
+#staticDateInXliffFiles: 2015-01-01T01:00:00Z
 
 ## list of error codes for warnings that should be ignored ##
 #ignoreWarnings:

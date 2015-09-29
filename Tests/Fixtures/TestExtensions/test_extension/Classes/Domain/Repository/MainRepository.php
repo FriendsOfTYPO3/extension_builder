@@ -1,12 +1,11 @@
 <?php
-namespace TYPO3\TestExtension\Domain\Repository;
-
+namespace FIXTURE\TestExtension\Domain\Repository;
 
 /***************************************************************
  *
  *  Copyright notice
  *
- *  (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
+ *  (c) 2015 John Doe <mail@typo3.com>, TYPO3
  *
  *  All rights reserved
  *
@@ -32,4 +31,5 @@ namespace TYPO3\TestExtension\Domain\Repository;
  */
 class MainRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 
+	
 }

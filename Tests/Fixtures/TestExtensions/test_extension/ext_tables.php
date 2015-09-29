@@ -4,13 +4,10 @@ if (!defined('TYPO3_MODE')) {
 }
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-	'TYPO3.' . $_EXTKEY,
+	'FIXTURE.' . $_EXTKEY,
 	'Testplugin',
 	'Test plugin'
 );
-
-
-
 
 if (TYPO3_MODE === 'BE') {
 
@@ -18,9 +15,9 @@ if (TYPO3_MODE === 'BE') {
 	 * Registers a Backend Module
 	 */
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-		'TYPO3.' . $_EXTKEY,
+		'FIXTURE.' . $_EXTKEY,
 		'web',	 // Make module a submodule of 'web'
-		'testmodule',	// Submodule key
+		'testmodule1',	// Submodule key
 		'',						// Position
 		array(
 			'Main' => 'list, show, new, create, edit, update, delete',
@@ -28,15 +25,13 @@ if (TYPO3_MODE === 'BE') {
 		array(
 			'access' => 'user,group',
 			'icon'   => 'EXT:' . $_EXTKEY . '/ext_icon.gif',
-			'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_testmodule.xlf',
+			'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_testmodule1.xlf',
 		)
 	);
 
 }
 
-
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Compatibility Test Extension Version 1.0');
-
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'ExtensionBuilder Test Extension');
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_testextension_domain_model_main', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_main.xlf');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_testextension_domain_model_main');

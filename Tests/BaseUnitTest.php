@@ -30,7 +30,6 @@ use TYPO3\CMS\Extbase\Object\UnknownClassException;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once(__DIR__ . '/../Resources/Private/PHP/PHP-Parser/lib/bootstrap.php');
 
 abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
