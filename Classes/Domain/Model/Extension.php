@@ -262,6 +262,7 @@ class Extension {
 		return $this->name;
 	}
 
+
 	/**
 	 *
 	 * @param string $name
@@ -480,6 +481,14 @@ class Extension {
 	 */
 	public function getShortExtensionKey() {
 		return 'tx_' . str_replace('_', '', $this->getExtensionKey());
+	}
+
+	/**
+	 * returns the extension key without underscore
+	 * (Used in Typoscript module signature)
+	 */
+	public function getUnprefixedShortExtensionKey() {
+		return str_replace('_', '', $this->getExtensionKey());
 	}
 
 	/**

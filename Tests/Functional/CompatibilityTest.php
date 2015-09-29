@@ -95,7 +95,7 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
 
 		$this->fileGenerator->build($this->extension);
 
-		$referenceFiles = \TYPO3\CMS\Core\Utility\GeneralUtility::getAllFilesAndFoldersInPath(array(), $testExtensionDir, 'php,sql');
+		$referenceFiles = \TYPO3\CMS\Core\Utility\GeneralUtility::getAllFilesAndFoldersInPath(array(), $testExtensionDir, 'php,sql,txt,html');
 		foreach ($referenceFiles as $referenceFile) {
 			$createdFile = str_replace($testExtensionDir, $this->extension->getExtensionDir(), $referenceFile);
 			if (!in_array(basename($createdFile), array('ExtensionBuilder.json'))) {
