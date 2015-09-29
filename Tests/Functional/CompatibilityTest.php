@@ -95,7 +95,7 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
 
 		$this->fileGenerator->build($this->extension);
 
-		$referenceFiles = \TYPO3\CMS\Core\Utility\GeneralUtility::getAllFilesAndFoldersInPath(array(), $testExtensionDir);
+		$referenceFiles = \TYPO3\CMS\Core\Utility\GeneralUtility::getAllFilesAndFoldersInPath(array(), $testExtensionDir, 'php,sql');
 		foreach ($referenceFiles as $referenceFile) {
 			$createdFile = str_replace($testExtensionDir, $this->extension->getExtensionDir(), $referenceFile);
 			if (!in_array(basename($createdFile), array('ExtensionBuilder.json'))) {
@@ -106,15 +106,28 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
 				);
 				$this->assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');
 				// do not compare files that contain a formatted DateTime, as it might have changed between file creation and this comparison
-				if(strpos($referenceFile, 'xlf') === FALSE && strpos($referenceFile, 'yaml') === FALSE && strpos($referenceFile, 'ext_emconf') === FALSE ) {
+				if( strpos($referenceFile, 'ext_emconf') === FALSE ) {
 
 					$originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $referenceFileContent, TRUE);
 					$generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, file_get_contents($createdFile), TRUE);
+					for($c = 0; $c < count($originalLines); $c++) {
+						$originalLine = str_replace(
+							array('2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###', '2014'),
+							array(date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')),
+							$originalLines[$c]
+						);
+						$this->assertEquals(
+							trim($originalLine),
+							trim($generatedLines[$c]),
+							'File ' . $createdFile . ' was not equal to original file! Difference in line ' . $c . ':' . $generatedLines[$c] .' != ' .  $originalLines[$c]
+						);
+					}
+					/**
 					$this->assertEquals(
 						$originalLines,
 						$generatedLines,
-						'File ' . $createdFile . ' was not equal to original file.' . file_get_contents($createdFile)
-					);
+						'File ' . $createdFile . ' was not equal to original file.' . serialize(array_diff($generatedLines, $originalLines))
+					);*/
 				}
 			}
 		}

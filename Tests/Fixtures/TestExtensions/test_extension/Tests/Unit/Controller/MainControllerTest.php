@@ -1,9 +1,9 @@
 <?php
-namespace TYPO3\TestExtension\Tests\Unit\Controller;
+namespace FIXTURE\TestExtension\Tests\Unit\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014 John Doe <mail@typo3.com>, TYPO3
+ *  (c) 2015 John Doe <mail@typo3.com>, TYPO3
  *  			
  *  All rights reserved
  *
@@ -25,19 +25,19 @@ namespace TYPO3\TestExtension\Tests\Unit\Controller;
  ***************************************************************/
 
 /**
- * Test case for class TYPO3\TestExtension\Controller\MainController.
+ * Test case for class FIXTURE\TestExtension\Controller\MainController.
  *
  * @author John Doe <mail@typo3.com>
  */
 class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 	/**
-	 * @var \TYPO3\TestExtension\Controller\MainController
+	 * @var \FIXTURE\TestExtension\Controller\MainController
 	 */
 	protected $subject = NULL;
 
 	public function setUp() {
-		$this->subject = $this->getMock('TYPO3\\TestExtension\\Controller\\MainController', array('redirect', 'forward', 'addFlashMessage'), array(), '', FALSE);
+		$this->subject = $this->getMock('FIXTURE\\TestExtension\\Controller\\MainController', array('redirect', 'forward', 'addFlashMessage'), array(), '', FALSE);
 	}
 
 	public function tearDown() {
@@ -51,7 +51,7 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 		$allMains = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array(), array(), '', FALSE);
 
-		$mainRepository = $this->getMock('TYPO3\\TestExtension\\Domain\\Repository\\MainRepository', array('findAll'), array(), '', FALSE);
+		$mainRepository = $this->getMock('FIXTURE\\TestExtension\\Domain\\Repository\\MainRepository', array('findAll'), array(), '', FALSE);
 		$mainRepository->expects($this->once())->method('findAll')->will($this->returnValue($allMains));
 		$this->inject($this->subject, 'mainRepository', $mainRepository);
 
@@ -66,7 +66,7 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function showActionAssignsTheGivenMainToView() {
-		$main = new \TYPO3\TestExtension\Domain\Model\Main();
+		$main = new \FIXTURE\TestExtension\Domain\Model\Main();
 
 		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
 		$this->inject($this->subject, 'view', $view);
@@ -79,7 +79,7 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function newActionAssignsTheGivenMainToView() {
-		$main = new \TYPO3\TestExtension\Domain\Model\Main();
+		$main = new \FIXTURE\TestExtension\Domain\Model\Main();
 
 		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
 		$view->expects($this->once())->method('assign')->with('newMain', $main);
@@ -92,9 +92,9 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function createActionAddsTheGivenMainToMainRepository() {
-		$main = new \TYPO3\TestExtension\Domain\Model\Main();
+		$main = new \FIXTURE\TestExtension\Domain\Model\Main();
 
-		$mainRepository = $this->getMock('TYPO3\\TestExtension\\Domain\\Repository\\MainRepository', array('add'), array(), '', FALSE);
+		$mainRepository = $this->getMock('FIXTURE\\TestExtension\\Domain\\Repository\\MainRepository', array('add'), array(), '', FALSE);
 		$mainRepository->expects($this->once())->method('add')->with($main);
 		$this->inject($this->subject, 'mainRepository', $mainRepository);
 
@@ -105,7 +105,7 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function editActionAssignsTheGivenMainToView() {
-		$main = new \TYPO3\TestExtension\Domain\Model\Main();
+		$main = new \FIXTURE\TestExtension\Domain\Model\Main();
 
 		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
 		$this->inject($this->subject, 'view', $view);
@@ -118,9 +118,9 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function updateActionUpdatesTheGivenMainInMainRepository() {
-		$main = new \TYPO3\TestExtension\Domain\Model\Main();
+		$main = new \FIXTURE\TestExtension\Domain\Model\Main();
 
-		$mainRepository = $this->getMock('TYPO3\\TestExtension\\Domain\\Repository\\MainRepository', array('update'), array(), '', FALSE);
+		$mainRepository = $this->getMock('FIXTURE\\TestExtension\\Domain\\Repository\\MainRepository', array('update'), array(), '', FALSE);
 		$mainRepository->expects($this->once())->method('update')->with($main);
 		$this->inject($this->subject, 'mainRepository', $mainRepository);
 
@@ -131,9 +131,9 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function deleteActionRemovesTheGivenMainFromMainRepository() {
-		$main = new \TYPO3\TestExtension\Domain\Model\Main();
+		$main = new \FIXTURE\TestExtension\Domain\Model\Main();
 
-		$mainRepository = $this->getMock('TYPO3\\TestExtension\\Domain\\Repository\\MainRepository', array('remove'), array(), '', FALSE);
+		$mainRepository = $this->getMock('FIXTURE\\TestExtension\\Domain\\Repository\\MainRepository', array('remove'), array(), '', FALSE);
 		$mainRepository->expects($this->once())->method('remove')->with($main);
 		$this->inject($this->subject, 'mainRepository', $mainRepository);
 

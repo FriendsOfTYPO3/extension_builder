@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2012-11-24T16:57:24Z" product-name="test_extension">
+	<file source-language="en" datatype="plaintext" original="messages" date="2015-01-01T01:00:00Z" product-name="test_extension">
 		<header/>
 		<body>
-
 			<trans-unit id="tx_testextension_domain_model_main">
 				<source>Main</source>
 			</trans-unit>
@@ -12,6 +11,9 @@
 			</trans-unit>
 			<trans-unit id="tx_testextension_domain_model_main.identifier">
 				<source>Identifier</source>
+			</trans-unit>
+			<trans-unit id="tx_testextension_domain_model_main.my_date">
+				<source>My Date</source>
 			</trans-unit>
 			<trans-unit id="tx_testextension_domain_model_main.child1">
 				<source>Child1</source>
@@ -25,32 +27,33 @@
 			<trans-unit id="tx_testextension_domain_model_main.children4">
 				<source>Children4</source>
 			</trans-unit>
-
 			<trans-unit id="tx_testextension_domain_model_child1">
 				<source>Child1</source>
 			</trans-unit>
 			<trans-unit id="tx_testextension_domain_model_child1.name">
 				<source>Name</source>
 			</trans-unit>
-
+			<trans-unit id="tx_testextension_domain_model_child1.flag">
+				<source>Flag</source>
+			</trans-unit>
 			<trans-unit id="tx_testextension_domain_model_child2">
 				<source>Child2</source>
 			</trans-unit>
-
+			<trans-unit id="tx_testextension_domain_model_child2.name">
+				<source>Name</source>
+			</trans-unit>
 			<trans-unit id="tx_testextension_domain_model_child3">
 				<source>Child3</source>
 			</trans-unit>
 			<trans-unit id="tx_testextension_domain_model_child3.name">
 				<source>Name</source>
 			</trans-unit>
-
 			<trans-unit id="tx_testextension_domain_model_child4">
 				<source>Child4</source>
 			</trans-unit>
 			<trans-unit id="tx_testextension_domain_model_child4.name">
 				<source>Name</source>
 			</trans-unit>
-
 		</body>
 	</file>
 </xliff>

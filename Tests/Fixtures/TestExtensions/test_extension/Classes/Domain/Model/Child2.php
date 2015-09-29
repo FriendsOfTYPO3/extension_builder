@@ -1,11 +1,11 @@
 <?php
-namespace TYPO3\TestExtension\Domain\Model;
+namespace FIXTURE\TestExtension\Domain\Model;
 
 /***************************************************************
- * 
+ *
  *  Copyright notice
  *
- *  (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
+ *  (c) 2015 John Doe <mail@typo3.com>, TYPO3
  *
  *  All rights reserved
  *
@@ -56,4 +56,5 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	public function setName($name) {
 		$this->name = $name;
 	}
+
 }

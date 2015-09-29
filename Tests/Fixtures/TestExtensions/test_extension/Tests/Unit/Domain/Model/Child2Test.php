@@ -1,11 +1,11 @@
 <?php
 
-namespace TYPO3\TestExtension\Tests\Unit\Domain\Model;
+namespace FIXTURE\TestExtension\Tests\Unit\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014 John Doe <mail@typo3.com>, TYPO3
+ *  (c) 2015 John Doe <mail@typo3.com>, TYPO3
  *
  *  All rights reserved
  *
@@ -27,7 +27,7 @@ namespace TYPO3\TestExtension\Tests\Unit\Domain\Model;
  ***************************************************************/
 
 /**
- * Test case for class \TYPO3\TestExtension\Domain\Model\Child2.
+ * Test case for class \FIXTURE\TestExtension\Domain\Model\Child2.
  *
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
@@ -36,12 +36,12 @@ namespace TYPO3\TestExtension\Tests\Unit\Domain\Model;
  */
 class Child2Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
-	 * @var \TYPO3\TestExtension\Domain\Model\Child2
+	 * @var \FIXTURE\TestExtension\Domain\Model\Child2
 	 */
 	protected $subject = NULL;
 
 	public function setUp() {
-		$this->subject = new \TYPO3\TestExtension\Domain\Model\Child2();
+		$this->subject = new \FIXTURE\TestExtension\Domain\Model\Child2();
 	}
 
 	public function tearDown() {

@@ -1,11 +1,11 @@
 <?php
 
-namespace TYPO3\TestExtension\Tests\Unit\Domain\Model;
+namespace FIXTURE\TestExtension\Tests\Unit\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014 John Doe <mail@typo3.com>, TYPO3
+ *  (c) 2015 John Doe <mail@typo3.com>, TYPO3
  *
  *  All rights reserved
  *
@@ -27,7 +27,7 @@ namespace TYPO3\TestExtension\Tests\Unit\Domain\Model;
  ***************************************************************/
 
 /**
- * Test case for class \TYPO3\TestExtension\Domain\Model\Main.
+ * Test case for class \FIXTURE\TestExtension\Domain\Model\Main.
  *
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
@@ -36,12 +36,12 @@ namespace TYPO3\TestExtension\Tests\Unit\Domain\Model;
  */
 class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
-	 * @var \TYPO3\TestExtension\Domain\Model\Main
+	 * @var \FIXTURE\TestExtension\Domain\Model\Main
 	 */
 	protected $subject = NULL;
 
 	public function setUp() {
-		$this->subject = new \TYPO3\TestExtension\Domain\Model\Main();
+		$this->subject = new \FIXTURE\TestExtension\Domain\Model\Main();
 	}
 
 	public function tearDown() {
@@ -132,7 +132,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function setChild1ForChild1SetsChild1() {
-		$child1Fixture = new \TYPO3\TestExtension\Domain\Model\Child1();
+		$child1Fixture = new \FIXTURE\TestExtension\Domain\Model\Child1();
 		$this->subject->setChild1($child1Fixture);
 
 		$this->assertAttributeEquals(
@@ -157,7 +157,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function setChildren2ForObjectStorageContainingChild2SetsChildren2() {
-		$children2 = new \TYPO3\TestExtension\Domain\Model\Child2();
+		$children2 = new \FIXTURE\TestExtension\Domain\Model\Child2();
 		$objectStorageHoldingExactlyOneChildren2 = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 		$objectStorageHoldingExactlyOneChildren2->attach($children2);
 		$this->subject->setChildren2($objectStorageHoldingExactlyOneChildren2);
@@ -173,7 +173,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function addChildren2ToObjectStorageHoldingChildren2() {
-		$children2 = new \TYPO3\TestExtension\Domain\Model\Child2();
+		$children2 = new \FIXTURE\TestExtension\Domain\Model\Child2();
 		$children2ObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('attach'), array(), '', FALSE);
 		$children2ObjectStorageMock->expects($this->once())->method('attach')->with($this->equalTo($children2));
 		$this->inject($this->subject, 'children2', $children2ObjectStorageMock);
@@ -185,7 +185,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function removeChildren2FromObjectStorageHoldingChildren2() {
-		$children2 = new \TYPO3\TestExtension\Domain\Model\Child2();
+		$children2 = new \FIXTURE\TestExtension\Domain\Model\Child2();
 		$children2ObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('detach'), array(), '', FALSE);
 		$children2ObjectStorageMock->expects($this->once())->method('detach')->with($this->equalTo($children2));
 		$this->inject($this->subject, 'children2', $children2ObjectStorageMock);
@@ -208,7 +208,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function setChild3ForChild3SetsChild3() {
-		$child3Fixture = new \TYPO3\TestExtension\Domain\Model\Child3();
+		$child3Fixture = new \FIXTURE\TestExtension\Domain\Model\Child3();
 		$this->subject->setChild3($child3Fixture);
 
 		$this->assertAttributeEquals(
@@ -233,7 +233,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function setChildren4ForObjectStorageContainingChild4SetsChildren4() {
-		$children4 = new \TYPO3\TestExtension\Domain\Model\Child4();
+		$children4 = new \FIXTURE\TestExtension\Domain\Model\Child4();
 		$objectStorageHoldingExactlyOneChildren4 = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 		$objectStorageHoldingExactlyOneChildren4->attach($children4);
 		$this->subject->setChildren4($objectStorageHoldingExactlyOneChildren4);
@@ -249,7 +249,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function addChildren4ToObjectStorageHoldingChildren4() {
-		$children4 = new \TYPO3\TestExtension\Domain\Model\Child4();
+		$children4 = new \FIXTURE\TestExtension\Domain\Model\Child4();
 		$children4ObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('attach'), array(), '', FALSE);
 		$children4ObjectStorageMock->expects($this->once())->method('attach')->with($this->equalTo($children4));
 		$this->inject($this->subject, 'children4', $children4ObjectStorageMock);
@@ -261,7 +261,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function removeChildren4FromObjectStorageHoldingChildren4() {
-		$children4 = new \TYPO3\TestExtension\Domain\Model\Child4();
+		$children4 = new \FIXTURE\TestExtension\Domain\Model\Child4();
 		$children4ObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('detach'), array(), '', FALSE);
 		$children4ObjectStorageMock->expects($this->once())->method('detach')->with($this->equalTo($children4));
 		$this->inject($this->subject, 'children4', $children4ObjectStorageMock);
