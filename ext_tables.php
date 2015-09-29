@@ -6,7 +6,6 @@ if (!defined('TYPO3_MODE')) {
 
 
 if (TYPO3_MODE === 'BE' && !(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_INSTALL)) {
-	require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/PHP/PHP-Parser/lib/bootstrap.php');
 	/**
 	 * Register Backend Module
 	 */
