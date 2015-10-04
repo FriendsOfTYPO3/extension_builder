@@ -180,9 +180,9 @@ class NodeConverter {
 	}
 
 	/**
-	 * Constants consist of a simple key => value array in the API
-	 * This methods converts  \PhpParser\Node\Stmt\ClassConst or
-	 * \PhpParser\Node\Stmt\ClassConst
+	 * helper function
+	 * This methods converts a USE statement node to an array
+	 * with keys name and alias
 	 *
 	 * @static
 	 * @param \PhpParser\Node

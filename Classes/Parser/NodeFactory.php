@@ -53,6 +53,10 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface{
 			$properties = array();
 			$methods = array();
 
+			foreach ($classObject->getUseTraitStatement() as $statement) {
+				$stmts[] = $statement;
+			}
+
 			foreach ($classObject->getMethods() as $method) {
 				$methods[$method->getName()] = $this->buildMethodNode($method);
 			}
