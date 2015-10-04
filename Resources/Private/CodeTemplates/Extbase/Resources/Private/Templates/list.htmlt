@@ -16,7 +16,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 <k:openingTag>f:section name="main"</k:openingTag>
 <h1>Listing for {domainObject.name}</h1>
 
-<k:openingTag>f:flashMessages renderMode="div" /</k:openingTag>
+<k:openingTag>f:flashMessages /</k:openingTag>
 
 <table  class="{extension.shortExtensionKey}" >
 	<k:format.removeMultipleNewlines><tr>
