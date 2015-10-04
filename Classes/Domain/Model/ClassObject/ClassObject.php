@@ -70,6 +70,11 @@ class ClassObject extends AbstractObject {
 	protected $aliasDeclarations = array();
 
 	/**
+	 * @var array
+	 */
+	protected $useTraitStatements = array();
+
+	/**
 	 * @var bool
 	 */
 	protected $isFileBased = FALSE;
@@ -527,6 +532,23 @@ class ClassObject extends AbstractObject {
 	 */
 	public function getAliasDeclarations() {
 		return $this->aliasDeclarations;
+	}
+
+	/**
+	 * @param $statement
+	 * @return void
+	 */
+	public function addUseTraitStatement($statement) {
+		if (!in_array($statement, $this->useTraitStatements)) {
+			$this->useTraitStatements[] = $statement;
+		}
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getUseTraitStatement() {
+		return $this->useTraitStatements;
 	}
 
 	/**

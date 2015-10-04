@@ -127,7 +127,11 @@ class FileVisitor extends \PhpParser\NodeVisitorAbstract implements FileVisitorI
 				} else {
 					//TODO: find how this could happen
 				}
-			} elseif ($node instanceof Node\Stmt\Use_) {
+			} elseif ($node instanceof Node\Stmt\TraitUse) {
+				if ($this->currentClassObject) {
+					$this->currentClassObject->addUseTraitStatement($node);
+				}
+			}elseif ($node instanceof Node\Stmt\Use_) {
 				$this->currentContainer->addAliasDeclaration(
 					NodeConverter::convertUseAliasStatementNodeToArray($node)
 				);

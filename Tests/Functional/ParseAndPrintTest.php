@@ -67,6 +67,15 @@ class ParseAndPrintTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest {
 	/**
 	 * @test
 	 */
+	public function parseAndPrintClassWithUseTraitStatement() {
+		$fileName = 'ClassWithUseTraitStatement.php';
+		$this->parseAndPrint($fileName);
+
+	}
+
+	/**
+	 * @test
+	 */
 	public function parseAndPrintSimpleNamespacedClass() {
 		$fileName = 'SimpleNamespace.php';
 		$this->parseAndPrint($fileName, 'Namespaces/');
@@ -131,7 +140,7 @@ class ParseAndPrintTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest {
 	 */
 	protected function parseAndPrint($fileName, $subFolder = '') {
 		$classFilePath = $this->fixturesPath . $subFolder . $fileName;
-		$this->assertTrue(file_exists($classFilePath));
+		$this->assertTrue(file_exists($classFilePath), 'File not found: ' . $subFolder . $fileName);
 		$fileHandler = fopen($classFilePath, 'r');
 		$code = fread($fileHandler, filesize($classFilePath));
 		$fileObject = $this->parserService->parseCode($code);
