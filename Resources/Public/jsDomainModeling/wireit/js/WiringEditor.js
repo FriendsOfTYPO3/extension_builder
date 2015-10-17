@@ -387,12 +387,15 @@
 				}
 
 				Connect.asyncRequest(
-						'GET',
-						baseUrl + 'index.php?ajaxID=BackendLogin%3A%3AisTimedOut&skipSessionUpdate=1',
+						'POST',
+						TYPO3.settings.ajaxUrls['login_timedout']
+						? TYPO3.settings.ajaxUrls['login_timedout'] // TYPO3 CMS >7.5.0
+						: TYPO3.settings.ajaxUrls['BackendLogin::isTimedOut'],
 						{
 							'success':this.loginCheck
 							,argument: {'editor':this}
-						}
+						},
+						'skipSessionUpdate=1'
 				);
 				return;
 			}
