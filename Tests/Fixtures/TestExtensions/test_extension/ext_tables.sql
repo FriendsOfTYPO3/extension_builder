@@ -94,6 +94,10 @@ CREATE TABLE tx_testextension_domain_model_child2 (
 	main int(11) unsigned DEFAULT '0' NOT NULL,
 
 	name varchar(255) DEFAULT '' NOT NULL,
+	date_property1 date DEFAULT '0000-00-00',
+	date_property2 datetime DEFAULT '0000-00-00 00:00:00',
+	date_property3 int(11) DEFAULT '0' NOT NULL,
+	date_property4 int(11) DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -133,6 +137,8 @@ CREATE TABLE tx_testextension_domain_model_child3 (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	name varchar(255) DEFAULT '' NOT NULL,
+	password varchar(255) DEFAULT '' NOT NULL,
+	image_property int(11) unsigned NOT NULL default '0',
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -172,6 +178,7 @@ CREATE TABLE tx_testextension_domain_model_child4 (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	name varchar(255) DEFAULT '' NOT NULL,
+	file_property int(11) unsigned NOT NULL default '0',
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

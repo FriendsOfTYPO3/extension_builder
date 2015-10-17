@@ -1,6 +1,7 @@
 <?php
 namespace FIXTURE\TestExtension\Domain\Model;
 
+
 /***************************************************************
  *
  *  Copyright notice
@@ -39,6 +40,20 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $name = '';
 
 	/**
+	 * password
+	 *
+	 * @var string
+	 */
+	protected $password = '';
+
+	/**
+	 * imageProperty
+	 *
+	 * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
+	 */
+	protected $imageProperty = NULL;
+
+	/**
 	 * Returns the name
 	 *
 	 * @return string $name
@@ -55,6 +70,44 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function setName($name) {
 		$this->name = $name;
+	}
+
+	/**
+	 * Returns the password
+	 *
+	 * @return string $password
+	 */
+	public function getPassword() {
+		return $this->password;
+	}
+
+	/**
+	 * Sets the password
+	 *
+	 * @param string $password
+	 * @return void
+	 */
+	public function setPassword($password) {
+		$this->password = $password;
+	}
+
+	/**
+	 * Returns the imageProperty
+	 *
+	 * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference $imageProperty
+	 */
+	public function getImageProperty() {
+		return $this->imageProperty;
+	}
+
+	/**
+	 * Sets the imageProperty
+	 *
+	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $imageProperty
+	 * @return void
+	 */
+	public function setImageProperty(\TYPO3\CMS\Extbase\Domain\Model\FileReference $imageProperty) {
+		$this->imageProperty = $imageProperty;
 	}
 
 }

@@ -1,6 +1,7 @@
 <?php
 namespace FIXTURE\TestExtension\Domain\Model;
 
+
 /***************************************************************
  *
  *  Copyright notice
@@ -39,6 +40,13 @@ class Child4 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $name = '';
 
 	/**
+	 * fileProperty
+	 *
+	 * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
+	 */
+	protected $fileProperty = NULL;
+
+	/**
 	 * Returns the name
 	 *
 	 * @return string $name
@@ -55,6 +63,25 @@ class Child4 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function setName($name) {
 		$this->name = $name;
+	}
+
+	/**
+	 * Returns the fileProperty
+	 *
+	 * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference $fileProperty
+	 */
+	public function getFileProperty() {
+		return $this->fileProperty;
+	}
+
+	/**
+	 * Sets the fileProperty
+	 *
+	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $fileProperty
+	 * @return void
+	 */
+	public function setFileProperty(\TYPO3\CMS\Extbase\Domain\Model\FileReference $fileProperty) {
+		$this->fileProperty = $fileProperty;
 	}
 
 }

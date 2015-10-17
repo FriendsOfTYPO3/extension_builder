@@ -42,17 +42,38 @@
 			<trans-unit id="tx_testextension_domain_model_child2.name">
 				<source>Name</source>
 			</trans-unit>
+			<trans-unit id="tx_testextension_domain_model_child2.date_property1">
+				<source>Date Property1</source>
+			</trans-unit>
+			<trans-unit id="tx_testextension_domain_model_child2.date_property2">
+				<source>Date Property2</source>
+			</trans-unit>
+			<trans-unit id="tx_testextension_domain_model_child2.date_property3">
+				<source>Date Property3</source>
+			</trans-unit>
+			<trans-unit id="tx_testextension_domain_model_child2.date_property4">
+				<source>Date Property4</source>
+			</trans-unit>
 			<trans-unit id="tx_testextension_domain_model_child3">
 				<source>Child3</source>
 			</trans-unit>
 			<trans-unit id="tx_testextension_domain_model_child3.name">
 				<source>Name</source>
 			</trans-unit>
+			<trans-unit id="tx_testextension_domain_model_child3.password">
+				<source>Password</source>
+			</trans-unit>
+			<trans-unit id="tx_testextension_domain_model_child3.image_property">
+				<source>Image Property</source>
+			</trans-unit>
 			<trans-unit id="tx_testextension_domain_model_child4">
 				<source>Child4</source>
 			</trans-unit>
 			<trans-unit id="tx_testextension_domain_model_child4.name">
 				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_testextension_domain_model_child4.file_property">
+				<source>File Property</source>
 			</trans-unit>
 		</body>
 	</file>

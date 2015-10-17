@@ -42,6 +42,12 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 			className:'hiddenField'
 		}
 	},
+    {
+        inputParams: {
+            name: "originalVendorName",
+            className:'hiddenField'
+        }
+    },
 	{
 		type: "text",
 		inputParams: {
