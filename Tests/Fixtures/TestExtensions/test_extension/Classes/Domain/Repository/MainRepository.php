@@ -1,6 +1,7 @@
 <?php
 namespace FIXTURE\TestExtension\Domain\Repository;
 
+
 /***************************************************************
  *
  *  Copyright notice

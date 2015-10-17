@@ -6,6 +6,12 @@
 			<trans-unit id="name.description">
 				<source>name</source>
 			</trans-unit>
+			<trans-unit id="password.description">
+				<source>password</source>
+			</trans-unit>
+			<trans-unit id="image_property.description">
+				<source>imageProperty</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

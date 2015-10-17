@@ -70,4 +70,28 @@ class Child4Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			$this->subject
 		);
 	}
+
+	/**
+	 * @test
+	 */
+	public function getFilePropertyReturnsInitialValueForFileReference() {
+		$this->assertEquals(
+			NULL,
+			$this->subject->getFileProperty()
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function setFilePropertyForFileReferenceSetsFileProperty() {
+		$fileReferenceFixture = new \TYPO3\CMS\Extbase\Domain\Model\FileReference();
+		$this->subject->setFileProperty($fileReferenceFixture);
+
+		$this->assertAttributeEquals(
+			$fileReferenceFixture,
+			'fileProperty',
+			$this->subject
+		);
+	}
 }

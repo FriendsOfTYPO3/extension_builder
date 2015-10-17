@@ -195,7 +195,7 @@
                     "addStarttimeEndtimeFields": true,
                     "aggregateRoot": false,
                     "categorizable": false,
-                    "description": "",
+                    "description": "An object with various date format properties",
                     "mapToTable": "",
                     "parentClass": "",
                     "sorting": false,
@@ -213,6 +213,46 @@
                             "propertyName": "name",
                             "propertyType": "String",
                             "uid": "507560465265"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "A date which is stored as Native Date",
+                            "propertyIsExcludeField": true,
+                            "propertyIsRequired": false,
+                            "propertyName": "dateProperty1",
+                            "propertyType": "NativeDate",
+                            "uid": "414270654770"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "DateTime which is stored as Native DateTime",
+                            "propertyIsExcludeField": true,
+                            "propertyIsRequired": false,
+                            "propertyName": "dateProperty2",
+                            "propertyType": "NativeDateTime",
+                            "uid": "176386201122"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "A date which is stored as Timestamp",
+                            "propertyIsExcludeField": true,
+                            "propertyIsRequired": false,
+                            "propertyName": "dateProperty3",
+                            "propertyType": "Date",
+                            "uid": "696741754173"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "DateTime stores as Timestamp",
+                            "propertyIsExcludeField": true,
+                            "propertyIsRequired": false,
+                            "propertyName": "dateProperty4",
+                            "propertyType": "DateTime",
+                            "uid": "1266443817411"
                         }
                     ]
                 },
@@ -263,6 +303,26 @@
                             "propertyName": "name",
                             "propertyType": "String",
                             "uid": "1048493789327"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "",
+                            "propertyIsExcludeField": true,
+                            "propertyIsRequired": false,
+                            "propertyName": "password",
+                            "propertyType": "Password",
+                            "uid": "976351887713"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "",
+                            "propertyIsExcludeField": true,
+                            "propertyIsRequired": false,
+                            "propertyName": "imageProperty",
+                            "propertyType": "Image",
+                            "uid": "1382041126723"
                         }
                     ]
                 },
@@ -313,6 +373,16 @@
                             "propertyName": "name",
                             "propertyType": "String",
                             "uid": "586091933631"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "",
+                            "propertyIsExcludeField": true,
+                            "propertyIsRequired": false,
+                            "propertyName": "fileProperty",
+                            "propertyType": "File",
+                            "uid": "1174091833834"
                         }
                     ]
                 },
@@ -351,6 +421,7 @@
         "extensionKey": "test_extension",
         "name": "ExtensionBuilder Test Extension",
         "originalExtensionKey": "test_extension",
+        "originalVendorName": "FIXTURE",
         "persons": [
             {
                 "company": "TYPO3",
@@ -423,8 +494,8 @@
         }
     ],
     "log": {
-        "last_modified": "2015-09-26 10:32",
-        "extension_builder_version": "7.4",
+        "last_modified": "2015-10-18 01:03",
+        "extension_builder_version": "7.6-dev",
         "be_user": " (1)"
     }
 }

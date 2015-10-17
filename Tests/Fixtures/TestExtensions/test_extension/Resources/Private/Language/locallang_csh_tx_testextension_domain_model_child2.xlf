@@ -6,6 +6,18 @@
 			<trans-unit id="name.description">
 				<source>name</source>
 			</trans-unit>
+			<trans-unit id="date_property1.description">
+				<source>A date which is stored as Native Date</source>
+			</trans-unit>
+			<trans-unit id="date_property2.description">
+				<source>DateTime which is stored as Native DateTime</source>
+			</trans-unit>
+			<trans-unit id="date_property3.description">
+				<source>A date which is stored as Timestamp</source>
+			</trans-unit>
+			<trans-unit id="date_property4.description">
+				<source>DateTime stores as Timestamp</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
