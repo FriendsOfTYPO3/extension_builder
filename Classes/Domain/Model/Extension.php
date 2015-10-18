@@ -715,8 +715,8 @@ class Extension {
 	 * @return bool
 	 */
 	public function vendorNameChanged() {
-		$originalVendorName = $this->getOriginalExtensionKey();
-		if (!empty($originalExtensionKey) && $originalExtensionKey != $this->getExtensionKey()) {
+		$originalVendorName = $this->getOriginalVendorName();
+		if (!empty($originalVendorName) && $originalVendorName != $this->getVendorName()) {
 			$this->renamed = TRUE;
 		}
 		return $this->renamed;

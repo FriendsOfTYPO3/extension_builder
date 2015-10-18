@@ -1,5 +1,5 @@
 <?php
-namespace EBT\ExtensionBuilder\Tests\Unit;
+namespace EBT\ExtensionBuilder\Tests\Functional;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
 
 /***************************************************************
@@ -235,17 +235,6 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
 		$addParameter = current($parameters);
 		$this->assertEquals($addParameter->getTypeHint(), '\\EBT\\Dummy\\Domain\\Model\\RenamedModel');
 
-	}
-
-	function updateMethodReturnsCorrectMethod() {
-
-	}
-
-	/**
-	 * @test
-	 */
-	function changeVendorNameResultsInNewNamespace() {
-		$this->markTestIncomplete('Not yet implemented!');
 	}
 
 }

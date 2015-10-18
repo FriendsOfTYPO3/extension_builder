@@ -202,6 +202,23 @@ abstract class AbstractObject {
 		return $this->tags[$tagName];
 	}
 
+	/**
+	 * Returns the value of the specified tag
+	 * @return string Value of the given tag
+	 */
+	public function getTagValue($tagName) {
+		$tagValues = $this->getTagValues($tagName);
+		if (is_array($tagValues) && count($tagValues) > 1) {
+			throw new \InvalidArgumentException('Tag "' . $tagName . '" has multiple values.');
+		}
+		if (is_string($tagValues)) {
+			return $tagValues;
+		}
+		if (is_array($tagValues)) {
+			return $tagValues[0];
+		}
+	}
+
 
 	/**
 	 * is called by fluid
@@ -390,7 +407,7 @@ abstract class AbstractObject {
 		}
 		try {
 			\PhpParser\Node\Stmt\Class_::verifyModifier($this->modifiers, $modifier);
-		} catch (\PhpParser_Error $e) {
+		} catch (\PhpParser\Error $e) {
 			throw new \EBT\ExtensionBuilder\Exception\SyntaxErrorException(
 					'Only one access modifier can be applied to one object. Use setModifier to avoid this exception'
 			);

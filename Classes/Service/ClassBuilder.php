@@ -344,13 +344,11 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
 	 */
 	protected function buildSetterMethod($domainProperty) {
-
 		$propertyName = $domainProperty->getName();
 		// add (or update) a setter method
 		$setterMethodName = self::getMethodName($domainProperty, 'set');
 		if ($this->classObject->methodExists($setterMethodName)) {
 			$setterMethod = $this->classObject->getMethod($setterMethodName);
-			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Existing setter method imported!', 'extension_builder', 2, $setterMethod->getTags());
 		} else {
 			$setterMethod = clone $this->templateClassObject->getMethod('setProperty');
 			$setterMethod->setName('set' . ucfirst($propertyName));
@@ -368,7 +366,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 		}
 		$setterParameters = $setterMethod->getParameterNames();
 		if (!in_array($propertyName, $setterParameters)) {
-			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Setter for  ' . $propertyName . ' misses parameter!', 'extension_builder', 2, $setterParameters);
 			$setterParameter = new Model\ClassObject\MethodParameter($propertyName);
 			$setterParameter->setVarType($domainProperty->getTypeForComment());
 			if (is_subclass_of($domainProperty, 'Model\\DomainObject\\Relation\\AbstractRelation')) {
@@ -774,7 +771,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface {
 			$this->classObject = clone($this->templateClassObject);
 			$this->classObject->resetAll();
 			$this->classObject->setName($className);
-			$this->classObject->setNamespaceName($this->extension->getNamespaceName() . '\\Domain\\Repository');
 			$this->classObject->setDescription('The repository for ' . Inflector::pluralize($domainObject->getName()));
 			if (isset($this->settings['Repository']['parentClass'])) {
 				$parentClass = $this->settings['Repository']['parentClass'];

@@ -286,6 +286,9 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 					);
 				}
 				$this->classFileObject->setClasses(array($this->classObject));
+				if ($this->extension->vendorNameChanged()) {
+					$this->updateVendorName();
+				}
 				return $this->classFileObject;
 			}
 			else {
@@ -349,7 +352,11 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 					}
 					// we don't have to add new ones, this will be done automatically by the class builder
 				}
+				if ($this->extension->vendorNameChanged()) {
+					$this->updateVendorName();
+				}
 				$this->classFileObject->setClasses(array($this->classObject));
+
 				return $this->classFileObject;
 			}
 			else {
@@ -366,13 +373,60 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 				$this->classObject->setFileName($fileName);
 				$className = $currentDomainObject->getControllerClassName();
 				$this->classObject->setName($className);
+				if ($this->extension->vendorNameChanged()) {
+					$this->updateVendorName();
+				}
 				$this->classFileObject->setClasses(array($this->classObject));
+
 				return $this->classFileObject;
 			}
 			else $this->log('No existing controller class:' . $fileName, 2);
 		}
 		$this->log('No existing controller class:' . $currentDomainObject->getName(), 2);
 		return NULL;
+	}
+
+	/**
+	 * update all relevant namespace parts in tags, typehints etc.
+	 */
+	protected function updateVendorName() {
+		$this->classObject->setNamespaceName($this->renameVendor($this->classObject->getNamespaceName()));
+		foreach($this->classObject->getProperties() as $property) {
+			foreach($property->getTags() as $tagName => $tagValue) {
+				if (is_array($tagValue)) {
+					$tagValue = $tagValue[0];
+				}
+				if (!empty($tagValue)) {
+					$tagValue = $this->renameVendor($tagValue);
+					$property->setTag($tagName, $tagValue, TRUE);
+				}
+			}
+		}
+		foreach($this->classObject->getMethods() as $method) {
+			foreach($method->getTags() as $tagName => $tagValue) {
+				if (is_array($tagValue)) {
+					$tagValue = $tagValue[0];
+				}
+				if (!empty($tagValue)) {
+					$tagValue = $this->renameVendor($tagValue);
+					$method->setTag($tagName, $tagValue, TRUE);
+				}
+			}
+			foreach($method->getParameters() as $parameter) {
+				$typeHint = $parameter->getTypeHint();
+				if(!empty($typeHint)) {
+					$parameter->setTypeHint($this->renameVendor($typeHint));
+				}
+				$varType = $parameter->getVarType();
+				if(!empty($varType)) {
+					$parameter->setVarType($this->renameVendor($varType));
+				}
+			}
+		}
+	}
+
+	protected function renameVendor($string) {
+		return str_replace('\\' . $this->extension->getOriginalVendorName(). '\\', '\\' . $this->extension->getVendorName() . '\\', $string);
 	}
 
 	/**
@@ -768,7 +822,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface {
 			$mergedMethod->setTag('param', $parameterTags);
 		}
 
-		$returnTagValue = $mergedMethod->getTagValues('return');
+		$returnTagValue = $mergedMethod->getTagValue('return');
 		if ($returnTagValue != 'void') {
 			$mergedMethod->setTag('return', $newProperty->getTypeForComment() . ' ' . $newProperty->getName());
 		}
