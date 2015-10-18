@@ -28,11 +28,6 @@ use EBT\ExtensionBuilder\Domain\Model\Plugin;
 use EBT\ExtensionBuilder\Utility\Inflector;
 
 
-/**
- *
- * @author Nico de Haen
- *
- */
 class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest {
 
 	/**

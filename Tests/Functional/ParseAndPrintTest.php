@@ -30,7 +30,6 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  * as the printer
  *
  * Class ParseAndPrintTest
- * @package EBT\ExtensionBuilder\Tests\Functional
  */
 class ParseAndPrintTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest {
 

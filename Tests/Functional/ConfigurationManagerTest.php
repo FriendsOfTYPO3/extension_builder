@@ -1,6 +1,5 @@
 <?php
 namespace EBT\ExtensionBuilder\Tests\Unit;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /***************************************************************
  *  Copyright notice
