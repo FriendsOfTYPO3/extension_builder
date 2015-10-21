@@ -267,6 +267,18 @@ class BuilderModuleController extends ActionController {
 				} catch (\Exception $e) {
 					throw $e;
 				}
+			} else {
+				if (!is_array($extensionSettings['ignoreWarnings']) ||
+					!in_array(
+						\EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::EXTENSION_DIR_EXISTS,
+						$extensionSettings['ignoreWarnings'])) {
+					$confirmationRequired = $this->handleValidationWarnings(array(
+						new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException("This action will overwrite previously saved content!\n(Enable the roundtrip feature to avoid this warning).",\EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::EXTENSION_DIR_EXISTS)
+					));
+					if (!empty($confirmationRequired)) {
+						return $confirmationRequired;
+					}
+				}
 			}
 		}
 		try {
