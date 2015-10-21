@@ -17,6 +17,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 			placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.vendorName,
 			value: '',
 			ucFirst: true,
+            regexp: /^[A-Z]/,
+            minLength: 2,
 			forceAlphaNumeric: true,
 			cols: 30,
 			description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_vendorName,
@@ -31,6 +33,9 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 			typeInvite: TYPO3.settings.extensionBuilder._LOCAL_LANG.extensionKey,
 			forceLowerCase: true,
 			forceAlphaNumericUnderscore: true,
+            regexp: /^[a-z]/,
+            minLength: 3,
+            maxLength: 30,
 			cols: 30,
 			description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_extensionKey,
 			required: true
