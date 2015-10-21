@@ -95,7 +95,7 @@ YAHOO.namespace("rpc");
 				if (url.match(/^\//)) {
 					url = window.location.protocol + '//' + window.location.hostname + url;
 				}
-				var urlRegexp = /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/i;
+				var urlRegexp = /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*(\.[a-z]{2,5})?(:[0-9]{1,5})?(\/.*)?$/i;
 				if (!url.match(urlRegexp) && url != self._smd.target) {
 					url = self._smd.target + url;
 				}
