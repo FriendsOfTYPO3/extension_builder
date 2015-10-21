@@ -367,7 +367,9 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 								type: "list",
 								inputParams: {
 									name: "relations",
+									className: "relations",
 									wirable: false,
+									sortable: true,
 									elementType: {
 										type: "group",
 										inputParams: {

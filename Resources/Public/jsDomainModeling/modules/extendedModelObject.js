@@ -50,16 +50,16 @@ var advancedFields = {
 							value: false
 						}
 					},
-                    {
-                        type: "string",
-                        inputParams: {
-                            label: TYPO3.settings.extensionBuilder._LOCAL_LANG.foreignRelationClass,
-                            name: "foreignRelationClass",
+				{
+						type: "string",
+						inputParams: {
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.foreignRelationClass,
+							name: "foreignRelationClass",
 							placeholder: '\\Fully\\Qualified\\Classname',
 							advancedMode: true,
-                            description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_foreignRelationClass
-                        }
-                    }
+							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_foreignRelationClass
+						}
+					}
 
 			]
 		}

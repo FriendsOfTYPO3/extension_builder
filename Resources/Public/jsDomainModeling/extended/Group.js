@@ -188,7 +188,7 @@ lang.extend(inputEx.Group, inputEx.Field,
           TYPO3.jQuery(this.divEl).removeClass('expanded').addClass('collapsed');
       }
       else {
-          var container = divElement.parent('.WireIt-Container').first();
+          var container = divElement.parents('.WireIt-Container').first();
 		  if(container.length) {
               //var containerId = container.id;
               container.find('.inputEx-Expanded,.fieldset').each(function(index, el) {
