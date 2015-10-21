@@ -155,7 +155,6 @@ div.advancedSettings legend{
 	margin-top:-19px;
 	position:absolute;
 	z-index:500;
-	font-weight: normal;
 	color: #ccc;
 }
 
@@ -272,6 +271,7 @@ div.relationGroup{
 
 div.relationGroup .textfieldWrapper {
 	margin-left: 10px;
+    margin-right: 45px;
 }
 div.relationGroup div.advancedSettings .textfieldWrapper {
 	margin-left: 0;
@@ -458,14 +458,16 @@ div.relationGroup input[type=text]{
 .showAdvancedOptions div.propertyGroup textarea,
 .showAdvancedOptions div.propertyGroup input[type=text],
 .showAdvancedOptions div.relationGroup input[type=text],
-div.relationGroup textarea:focus,
-div.relationGroup .inputEx-Expanded  textarea,
 div.propertyGroup textarea:focus,
 div.propertyGroup .inputEx-Expanded textarea,
 div.propertyGroup input[type=text]:focus,
 div.relationGroup input[type=text]:focus{
-	border: 1px solid #666;
 	font-weight: normal;
+}
+
+.showAdvancedOptions div.relationGroup input[type=text][name=relationName] {
+    font-weight: bold;
+    border:1px solid #fff;
 }
 
 .showAdvancedOptions div.propertyGroup select,
@@ -481,6 +483,15 @@ div.propertyGroup select:focus {
 .showAdvancedOptions div.propertyGroup select,
  div.relationGroup .advancedSettings select{
 	margin: 4px 0;
+}
+
+div.relationGroup .advancedSettings.inputEx-valid {
+    width: 220px;
+}
+
+div.relationGroup .advancedMode.textfieldWrapper,
+div.relationGroup .advancedSettings  .textfieldWrapper{
+    margin-right: 5px;
 }
 
 
@@ -648,9 +659,7 @@ div#propertiesForm div.mainGroup div.checkBoxFieldWrapper div.inputEx-label {
 }
 
 .showAdvancedOptions .inputEx-ListField-childContainer > div {
-	padding-top: 5px;
-	margin-top: 5px;
-	border-top: 1px solid #666;
+	border-top: 1px solid #BBB;
 }
 
 div.positionGroup div.inputEx-fieldWrapper {
@@ -695,4 +704,17 @@ div:hover > .deleteButton {
 
 #domainModelEditor .t3-icon {
     font-size: 1px;
+}
+
+.inputEx-Group .inputEx-ListField-Arrow {
+    float: right;
+    margin-right: 20px;
+}
+
+.inputEx-Group .inputEx-ListField-ArrowUp {
+    margin-right: 32px;
+}
+
+.relations .inputEx-ListField-Arrow {
+    margin-top: -20px;
 }
