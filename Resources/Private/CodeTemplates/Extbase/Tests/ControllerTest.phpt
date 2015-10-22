@@ -75,19 +75,6 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$view->expects($this->once())->method('assign')->with('{domainObject.name -> k:format.lowercaseFirst()}', ${domainObject.name -> k:format.lowercaseFirst()});
 
 		$this->subject->showAction(${domainObject.name -> k:format.lowercaseFirst()});
-	}</f:if><f:if condition="{k:matchString(match:'new', in:action.name)}">
-
-	/**
-	 * @test
-	 */
-	public function newActionAssignsTheGiven{domainObject.name}ToView() {
-		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
-
-		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
-		$view->expects($this->once())->method('assign')->with('new{domainObject.name}', ${domainObject.name -> k:format.lowercaseFirst()});
-		$this->inject($this->subject, 'view', $view);
-
-		$this->subject->newAction(${domainObject.name -> k:format.lowercaseFirst()});
 	}</f:if><f:if condition="{k:matchString(match:'create', in:action.name)}">
 
 	/**

@@ -78,19 +78,6 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function newActionAssignsTheGivenMainToView() {
-		$main = new \FIXTURE\TestExtension\Domain\Model\Main();
-
-		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
-		$view->expects($this->once())->method('assign')->with('newMain', $main);
-		$this->inject($this->subject, 'view', $view);
-
-		$this->subject->newAction($main);
-	}
-
-	/**
-	 * @test
-	 */
 	public function createActionAddsTheGivenMainToMainRepository() {
 		$main = new \FIXTURE\TestExtension\Domain\Model\Main();
 
