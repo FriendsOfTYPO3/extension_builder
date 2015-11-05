@@ -1,5 +1,6 @@
 array(
 	'type' => 'select',
+	'renderType' => 'selectMultipleSideBySide',
 	'foreign_table' => '{property.foreignDatabaseTableName}',
 	'MM' => '{property.relationTableName}',
 	'size' => 10,

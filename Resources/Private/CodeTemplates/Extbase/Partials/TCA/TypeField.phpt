@@ -11,6 +11,7 @@ if (!isset($GLOBALS['TCA']['{databaseTableName}']['ctrl']['type'])) {
 		'label'   => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{extension.shortExtensionKey}.tx_extbase_type',
 		'config' => array(
 			'type' => 'select',
+			'renderType' => 'selectSingle',
 			'items' => array(
 				array('{domainObject.name}','{domainObject.recordType}')
 			),
