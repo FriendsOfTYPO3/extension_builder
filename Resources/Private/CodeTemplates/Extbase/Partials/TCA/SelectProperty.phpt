@@ -1,5 +1,6 @@
 array(
 	'type' => 'select',
+	'renderType' => 'selectSingle',
 	'items' => array(
 		array('-- Label --', 0),
 	),
