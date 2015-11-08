@@ -145,6 +145,10 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
         if ($existingClassFileObject) {
             $this->classFileObject = $existingClassFileObject;
             $this->classObject = $existingClassFileObject->getFirstClass();
+            if ($this->classFileObject->getNamespace() === false) {
+                $nameSpace = new \EBT\ExtensionBuilder\Domain\Model\NamespaceObject('dummy');
+                $this->classFileObject->addNamespace($nameSpace);
+            }
         }
         if ($this->classObject == null) {
             $this->createNewModelClassObject($domainObject);
@@ -704,6 +708,10 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
         if ($existingClassFileObject) {
             $this->classFileObject = $existingClassFileObject;
             $this->classObject = $existingClassFileObject->getFirstClass();
+            if ($this->classFileObject->getNamespace() === false) {
+                $nameSpace = new \EBT\ExtensionBuilder\Domain\Model\NamespaceObject('dummy');
+                $this->classFileObject->addNamespace($nameSpace);
+            }
         }
 
         if ($this->classObject == null) {
@@ -769,6 +777,10 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
         if ($existingClassFileObject) {
             $this->classFileObject = $existingClassFileObject;
             $this->classObject = $existingClassFileObject->getFirstClass();
+            if ($this->classFileObject->getNamespace() === false) {
+                $nameSpace = new \EBT\ExtensionBuilder\Domain\Model\NamespaceObject('dummy');
+                $this->classFileObject->addNamespace($nameSpace);
+            }
         }
 
         if ($this->classObject == null) {
@@ -784,10 +796,10 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
             }
             $this->classObject->setParentClassName($parentClass);
         }
-		if ($domainObject->getSorting() && is_null($this->classObject->getProperty('defaultOrderings'))) {
-			$defaultOrderings = $this->templateClassObject->getProperty('defaultOrderings');
-			$this->classObject->addProperty($defaultOrderings);
-		}
+        if ($domainObject->getSorting() && is_null($this->classObject->getProperty('defaultOrderings'))) {
+            $defaultOrderings = $this->templateClassObject->getProperty('defaultOrderings');
+            $this->classObject->addProperty($defaultOrderings);
+        }
         $this->classFileObject->getNamespace()
             ->setName($this->extension->getNamespaceName() . '\\Domain\\Repository')
             ->setClasses(array($this->classObject));
