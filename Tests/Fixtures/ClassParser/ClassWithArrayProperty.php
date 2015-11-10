@@ -27,24 +27,25 @@
  * @package
  * @author Nico de Haen
  */
-abstract class Tx_PhpParser_Tests_ArrayProperty {
+abstract class Tx_PhpParser_Tests_ArrayProperty
+{
 
-	/**
-	 * @var array
-	 */
-	protected $arrProperty = array(
-		'a' => 'b',
-		'5' => 1223,
-		'foo' => array(
-			'foo' => 'bar'
-		),
-		array(1, 2, 3),
-		array('qwer' => 'tzysd', 'Test' => 123),
-		array(
-			'a',
-			'b',
-			'c'
-		)
-	);
+    /**
+     * @var array
+     */
+    protected $arrProperty = array(
+        'a' => 'b',
+        '5' => 1223,
+        'foo' => array(
+            'foo' => 'bar'
+        ),
+        array(1, 2, 3),
+        array('qwer' => 'tzysd', 'Test' => 123),
+        array(
+            'a',
+            'b',
+            'c'
+        )
+    );
 
 }

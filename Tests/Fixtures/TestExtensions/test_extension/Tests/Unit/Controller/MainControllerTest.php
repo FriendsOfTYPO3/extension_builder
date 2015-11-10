@@ -1,10 +1,11 @@
 <?php
 namespace FIXTURE\TestExtension\Tests\Unit\Controller;
+
 /***************************************************************
  *  Copyright notice
  *
  *  (c) 2015 John Doe <mail@typo3.com>, TYPO3
- *  			
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,101 +30,109 @@ namespace FIXTURE\TestExtension\Tests\Unit\Controller;
  *
  * @author John Doe <mail@typo3.com>
  */
-class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
+class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+{
+    /**
+     * @var \FIXTURE\TestExtension\Controller\MainController
+     */
+    protected $subject = NULL;
 
-	/**
-	 * @var \FIXTURE\TestExtension\Controller\MainController
-	 */
-	protected $subject = NULL;
+    public function setUp()
+    {
+        $this->subject = $this->getMock('FIXTURE\\TestExtension\\Controller\\MainController', array('redirect', 'forward', 'addFlashMessage'), array(), '', FALSE);
+    }
 
-	public function setUp() {
-		$this->subject = $this->getMock('FIXTURE\\TestExtension\\Controller\\MainController', array('redirect', 'forward', 'addFlashMessage'), array(), '', FALSE);
-	}
+    public function tearDown()
+    {
+        unset($this->subject);
+    }
 
-	public function tearDown() {
-		unset($this->subject);
-	}
+    /**
+     * @test
+     */
+    public function listActionFetchesAllMainsFromRepositoryAndAssignsThemToView()
+    {
 
-	/**
-	 * @test
-	 */
-	public function listActionFetchesAllMainsFromRepositoryAndAssignsThemToView() {
+        $allMains = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array(), array(), '', FALSE);
 
-		$allMains = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array(), array(), '', FALSE);
+        $mainRepository = $this->getMock('FIXTURE\\TestExtension\\Domain\\Repository\\MainRepository', array('findAll'), array(), '', FALSE);
+        $mainRepository->expects($this->once())->method('findAll')->will($this->returnValue($allMains));
+        $this->inject($this->subject, 'mainRepository', $mainRepository);
 
-		$mainRepository = $this->getMock('FIXTURE\\TestExtension\\Domain\\Repository\\MainRepository', array('findAll'), array(), '', FALSE);
-		$mainRepository->expects($this->once())->method('findAll')->will($this->returnValue($allMains));
-		$this->inject($this->subject, 'mainRepository', $mainRepository);
+        $view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
+        $view->expects($this->once())->method('assign')->with('mains', $allMains);
+        $this->inject($this->subject, 'view', $view);
 
-		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
-		$view->expects($this->once())->method('assign')->with('mains', $allMains);
-		$this->inject($this->subject, 'view', $view);
+        $this->subject->listAction();
+    }
 
-		$this->subject->listAction();
-	}
+    /**
+     * @test
+     */
+    public function showActionAssignsTheGivenMainToView()
+    {
+        $main = new \FIXTURE\TestExtension\Domain\Model\Main();
 
-	/**
-	 * @test
-	 */
-	public function showActionAssignsTheGivenMainToView() {
-		$main = new \FIXTURE\TestExtension\Domain\Model\Main();
+        $view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
+        $this->inject($this->subject, 'view', $view);
+        $view->expects($this->once())->method('assign')->with('main', $main);
 
-		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
-		$this->inject($this->subject, 'view', $view);
-		$view->expects($this->once())->method('assign')->with('main', $main);
+        $this->subject->showAction($main);
+    }
 
-		$this->subject->showAction($main);
-	}
+    /**
+     * @test
+     */
+    public function createActionAddsTheGivenMainToMainRepository()
+    {
+        $main = new \FIXTURE\TestExtension\Domain\Model\Main();
 
-	/**
-	 * @test
-	 */
-	public function createActionAddsTheGivenMainToMainRepository() {
-		$main = new \FIXTURE\TestExtension\Domain\Model\Main();
+        $mainRepository = $this->getMock('FIXTURE\\TestExtension\\Domain\\Repository\\MainRepository', array('add'), array(), '', FALSE);
+        $mainRepository->expects($this->once())->method('add')->with($main);
+        $this->inject($this->subject, 'mainRepository', $mainRepository);
 
-		$mainRepository = $this->getMock('FIXTURE\\TestExtension\\Domain\\Repository\\MainRepository', array('add'), array(), '', FALSE);
-		$mainRepository->expects($this->once())->method('add')->with($main);
-		$this->inject($this->subject, 'mainRepository', $mainRepository);
+        $this->subject->createAction($main);
+    }
 
-		$this->subject->createAction($main);
-	}
+    /**
+     * @test
+     */
+    public function editActionAssignsTheGivenMainToView()
+    {
+        $main = new \FIXTURE\TestExtension\Domain\Model\Main();
 
-	/**
-	 * @test
-	 */
-	public function editActionAssignsTheGivenMainToView() {
-		$main = new \FIXTURE\TestExtension\Domain\Model\Main();
+        $view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
+        $this->inject($this->subject, 'view', $view);
+        $view->expects($this->once())->method('assign')->with('main', $main);
 
-		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
-		$this->inject($this->subject, 'view', $view);
-		$view->expects($this->once())->method('assign')->with('main', $main);
+        $this->subject->editAction($main);
+    }
 
-		$this->subject->editAction($main);
-	}
+    /**
+     * @test
+     */
+    public function updateActionUpdatesTheGivenMainInMainRepository()
+    {
+        $main = new \FIXTURE\TestExtension\Domain\Model\Main();
 
-	/**
-	 * @test
-	 */
-	public function updateActionUpdatesTheGivenMainInMainRepository() {
-		$main = new \FIXTURE\TestExtension\Domain\Model\Main();
+        $mainRepository = $this->getMock('FIXTURE\\TestExtension\\Domain\\Repository\\MainRepository', array('update'), array(), '', FALSE);
+        $mainRepository->expects($this->once())->method('update')->with($main);
+        $this->inject($this->subject, 'mainRepository', $mainRepository);
 
-		$mainRepository = $this->getMock('FIXTURE\\TestExtension\\Domain\\Repository\\MainRepository', array('update'), array(), '', FALSE);
-		$mainRepository->expects($this->once())->method('update')->with($main);
-		$this->inject($this->subject, 'mainRepository', $mainRepository);
+        $this->subject->updateAction($main);
+    }
 
-		$this->subject->updateAction($main);
-	}
+    /**
+     * @test
+     */
+    public function deleteActionRemovesTheGivenMainFromMainRepository()
+    {
+        $main = new \FIXTURE\TestExtension\Domain\Model\Main();
 
-	/**
-	 * @test
-	 */
-	public function deleteActionRemovesTheGivenMainFromMainRepository() {
-		$main = new \FIXTURE\TestExtension\Domain\Model\Main();
+        $mainRepository = $this->getMock('FIXTURE\\TestExtension\\Domain\\Repository\\MainRepository', array('remove'), array(), '', FALSE);
+        $mainRepository->expects($this->once())->method('remove')->with($main);
+        $this->inject($this->subject, 'mainRepository', $mainRepository);
 
-		$mainRepository = $this->getMock('FIXTURE\\TestExtension\\Domain\\Repository\\MainRepository', array('remove'), array(), '', FALSE);
-		$mainRepository->expects($this->once())->method('remove')->with($main);
-		$this->inject($this->subject, 'mainRepository', $mainRepository);
-
-		$this->subject->deleteAction($main);
-	}
+        $this->subject->deleteAction($main);
+    }
 }

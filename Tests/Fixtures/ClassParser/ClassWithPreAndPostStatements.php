@@ -37,7 +37,8 @@ if (!isset($foo3) && !isset($bar3)) {
 	$bar3 = 42;
 }
 
-abstract class Tx_PhpParser_Tests_ClassWithPreAndPostStatement {
+abstract class Tx_PhpParser_Tests_ClassWithPreAndPostStatement
+{
 }
 
 if ($bar3 > $foo3) {

@@ -30,7 +30,8 @@
 
 
 
-abstract class Tx_PhpParser_Tests_ClassWithPostStatement {
+abstract class Tx_PhpParser_Tests_ClassWithPostStatement
+{
 }
 
 // just some stuff for testing

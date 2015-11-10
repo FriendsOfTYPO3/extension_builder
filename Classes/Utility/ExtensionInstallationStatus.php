@@ -1,184 +1,177 @@
 <?php
 namespace EBT\ExtensionBuilder\Utility;
 
+/*
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-
-/***************************************************************
- *  Copyright notice
- *
- *  (c) 2011 Sebastian Michaelsen
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
-
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extensionmanager\Utility\InstallUtility;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Service\SqlSchemaMigrationService;
 
-class ExtensionInstallationStatus {
-	/**
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 */
-	protected $objectManager = NULL;
+class ExtensionInstallationStatus
+{
+    /**
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     */
+    protected $objectManager = null;
+    /**
+     * @var \EBT\ExtensionBuilder\Domain\Model\Extension
+     */
+    protected $extension = null;
+    /**
+     * @var InstallUtility
+     */
+    protected $installTool = null;
+    /**
+     * @var array[]
+     */
+    protected $updateStatements = array();
+    /**
+     * @var bool
+     */
+    protected $dbUpdateNeeded = false;
 
-	/**
-	 * @var \EBT\ExtensionBuilder\Domain\Model\Extension
-	 */
-	protected $extension = NULL;
+    public function __construct()
+    {
+        $this->installTool = GeneralUtility::makeInstance(InstallUtility::class);
+    }
 
-	/**
-	 * @var InstallUtility
-	 */
-	protected $installTool = NULL;
+    /**
+     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     */
+    public function setExtension($extension)
+    {
+        $this->extension = $extension;
+    }
 
-	/**
-	 * @var array[]
-	 */
-	protected $updateStatements = array();
+    public function getStatusMessage()
+    {
+        $statusMessage = '';
+        $this->checkForDbUpdate($this->extension->getExtensionKey(), $this->extension->getExtensionDir() . 'ext_tables.sql');
 
-	/**
-	 * @var bool
-	 */
-	protected $dbUpdateNeeded = FALSE;
+        if ($this->dbUpdateNeeded) {
+            $statusMessage .= '<p>Database has to be updated!</p>';
+            $typeInfo = array(
+                'add' => 'Add fields',
+                'change' => 'Change fields',
+                'create_table' => 'Create tables'
+            );
+            $statusMessage .= '<div id="dbUpdateStatementsWrapper"><table>';
+            foreach ($this->updateStatements as $type => $statements) {
 
-	public function __construct() {
-		$this->installTool = GeneralUtility::makeInstance(InstallUtility::class);
-	}
+                $statusMessage .= '<tr><td></td><td style="text-align:left;padding-left:15px">' . $typeInfo[$type] . ':</td></tr>';
+                foreach ($statements as $key => $statement) {
+                    if ($type == 'add') {
+                        $statusMessage .= '<tr><td><input type="checkbox" name="dbUpdateStatements[]" value="' . $key . '" checked="checked" /></td><td style="text-align:left;padding-left:15px">' . $statement . '</td></tr>';
+                    } elseif ($type === 'change') {
+                        $statusMessage .= '<tr><td><input type="checkbox" name="dbUpdateStatements[]" value="' . $key . '" checked="checked" /></td><td style="text-align:left;padding-left:15px">' . $statement . '</td></tr>';
+                        $statusMessage .= '<tr><td></td><td style="text-align:left;padding-left:15px">Current value: ' . $this->updateStatements['change_currentValue'][$key] . '</td></tr>';
+                    } elseif ($type === 'create_table') {
+                        $statusMessage .= '<tr><td><input type="checkbox" name="dbUpdateStatements[]" value="' . $key . '" checked="checked" /></td><td style="text-align:left;padding-left:15px;">' . nl2br($statement) . '</td></tr>';
+                    }
+                }
+            }
+            $statusMessage .= '</table></div>';
+        }
 
-	/**
-	 * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-	 */
-	public function setExtension($extension) {
-		$this->extension = $extension;
-	}
+        if (!ExtensionManagementUtility::isLoaded($this->extension->getExtensionKey())) {
+            $statusMessage .= '<p>Your Extension is not installed yet.</p>';
+        }
 
-	public function getStatusMessage() {
-		$statusMessage = '';
-		$this->checkForDbUpdate($this->extension->getExtensionKey(), $this->extension->getExtensionDir().'ext_tables.sql');
+        return $statusMessage;
+    }
 
-		if ($this->dbUpdateNeeded) {
-			$statusMessage .= '<p>Database has to be updated!</p>';
-			$typeInfo = array(
-				'add' => 'Add fields',
-				'change' => 'Change fields',
-				'create_table' => 'Create tables'
-			);
-			$statusMessage .= '<div id="dbUpdateStatementsWrapper"><table>';
-			foreach($this->updateStatements as $type => $statements) {
+    /**
+     * @param string $extKey
+     * @return void
+     */
 
-				$statusMessage .= '<tr><td></td><td style="text-align:left;padding-left:15px">' . $typeInfo[$type] . ':</td></tr>';
-				foreach($statements as $key => $statement) {
-					if($type == 'add') {
-						$statusMessage .= '<tr><td><input type="checkbox" name="dbUpdateStatements[]" value="' . $key . '" checked="checked" /></td><td style="text-align:left;padding-left:15px">' . $statement . '</td></tr>';
-					} elseif ($type=== 'change') {
-						$statusMessage .= '<tr><td><input type="checkbox" name="dbUpdateStatements[]" value="' . $key . '" checked="checked" /></td><td style="text-align:left;padding-left:15px">' . $statement . '</td></tr>';
-						$statusMessage .= '<tr><td></td><td style="text-align:left;padding-left:15px">Current value: ' . $this->updateStatements['change_currentValue'][$key] . '</td></tr>';
-					} elseif ($type=== 'create_table') {
-						$statusMessage .= '<tr><td><input type="checkbox" name="dbUpdateStatements[]" value="' . $key . '" checked="checked" /></td><td style="text-align:left;padding-left:15px;">' . nl2br($statement) . '</td></tr>';
-					}
-				}
-			}
-			$statusMessage .= '</table></div>';
+    public function checkForDbUpdate($extensionKey)
+    {
+        $this->dbUpdateNeeded = false;
+        if (ExtensionManagementUtility::isLoaded($extensionKey)) {
+            $sqlFile = ExtensionManagementUtility::extPath($extensionKey) . 'ext_tables.sql';
+            if (@file_exists($sqlFile)) {
+                $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+                /* @var \TYPO3\CMS\Install\Service\SqlSchemaMigrationService $sqlHandler */
+                $sqlHandler = GeneralUtility::makeInstance(SqlSchemaMigrationService::class);
 
-		}
+                $sqlContent = GeneralUtility::getUrl($sqlFile);
+                $fieldDefinitionsFromFile = $sqlHandler->getFieldDefinitions_fileContent($sqlContent);
+                if (count($fieldDefinitionsFromFile)) {
+                    $fieldDefinitionsFromCurrentDatabase = $sqlHandler->getFieldDefinitions_database();
+                    $updateTableDefinition = $sqlHandler->getDatabaseExtra($fieldDefinitionsFromFile, $fieldDefinitionsFromCurrentDatabase);
+                    $this->updateStatements = $sqlHandler->getUpdateSuggestions($updateTableDefinition);
+                    if (!empty($updateTableDefinition['extra']) || !empty($updateTableDefinition['diff']) || !empty($updateTableDefinition['diff_currentValues'])) {
+                        $this->dbUpdateNeeded = true;
+                    }
+                }
+            }
+        }
+    }
 
-		if (!ExtensionManagementUtility::isLoaded($this->extension->getExtensionKey())) {
-			$statusMessage .= '<p>Your Extension is not installed yet.</p>';
-		}
+    public function performDbUpdates($params)
+    {
+        $hasErrors = false;
+        if (!empty($params['updateStatements']) && !empty($params['extensionKey'])) {
+            $this->checkForDbUpdate($params['extensionKey']);
+            if ($this->dbUpdateNeeded) {
+                foreach ($this->updateStatements as $type => $statements) {
+                    foreach ($statements as $key => $statement) {
+                        if (in_array($type, array('change', 'add', 'create_table')) && in_array($key, $params['updateStatements'])) {
+                            $res = $this->getDatabaseConnection()->admin_query($statement);
+                            if ($res === false) {
+                                $hasErrors = true;
+                                GeneralUtility::devlog('SQL error', 'extension_builder', 0, array('statement' => $statement, 'error' => $this->getDatabaseConnection()->sql_error()));
+                            } elseif (is_resource($res) || is_a($res, '\\mysqli_result')) {
+                                $this->getDatabaseConnection()->sql_free_result($res);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if ($hasErrors) {
+            return array('error' => 'Database could not be updated. Please check it in the update wizzard of the install tool');
+        } else {
+            return array('success' => 'Database was successfully updated');
+        }
+    }
 
-		return $statusMessage;
-	}
+    /**
+     * @return bool
+     */
+    public function isDbUpdateNeeded()
+    {
+        return $this->dbUpdateNeeded;
+    }
 
-	/**
-	 * @param string $extKey
-	 * @return void
-	 */
+    /**
+     * @return array
+     */
+    public function getUpdateStatements()
+    {
+        return $this->updateStatements;
+    }
 
-	public function checkForDbUpdate($extensionKey) {
-		$this->dbUpdateNeeded = FALSE;
-		if (ExtensionManagementUtility::isLoaded($extensionKey)) {
-			$sqlFile = ExtensionManagementUtility::extPath($extensionKey) . 'ext_tables.sql';
-			if (@file_exists($sqlFile)) {
-				$this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-				/* @var \TYPO3\CMS\Install\Service\SqlSchemaMigrationService $sqlHandler */
-				$sqlHandler = GeneralUtility::makeInstance(SqlSchemaMigrationService::class);
-
-				$sqlContent = GeneralUtility::getUrl($sqlFile);
-				$fieldDefinitionsFromFile = $sqlHandler->getFieldDefinitions_fileContent($sqlContent);
-				if (count($fieldDefinitionsFromFile)) {
-					$fieldDefinitionsFromCurrentDatabase = $sqlHandler->getFieldDefinitions_database();
-					$updateTableDefinition = $sqlHandler->getDatabaseExtra($fieldDefinitionsFromFile, $fieldDefinitionsFromCurrentDatabase);
-					$this->updateStatements = $sqlHandler->getUpdateSuggestions($updateTableDefinition);
-					if (!empty($updateTableDefinition['extra']) || !empty($updateTableDefinition['diff']) || !empty($updateTableDefinition['diff_currentValues'])) {
-						$this->dbUpdateNeeded = TRUE;
-					}
-				}
-			}
-		}
-	}
-
-	public function performDbUpdates($params) {
-		$hasErrors = FALSE;
-		if (!empty($params['updateStatements']) && !empty($params['extensionKey'])) {
-			$this->checkForDbUpdate($params['extensionKey']);
-			if ($this->dbUpdateNeeded) {
-				foreach($this->updateStatements as $type => $statements) {
-					foreach($statements as $key => $statement) {
-						if (in_array($type, array('change', 'add', 'create_table')) && in_array($key, $params['updateStatements'])) {
-							$res = $this->getDatabaseConnection()->admin_query($statement);
-							if ($res === FALSE) {
-								$hasErrors = TRUE;
-								GeneralUtility::devlog('SQL error','extension_builder',0,array('statement' => $statement, 'error' => $this->getDatabaseConnection()->sql_error()));
-							} elseif (is_resource($res) || is_a($res, '\\mysqli_result')) {
-								$this->getDatabaseConnection()->sql_free_result($res);
-							}
-						}
-					}
-				}
-			}
-		}
-		if ($hasErrors) {
-			return array('error' => 'Database could not be updated. Please check it in the update wizzard of the install tool');
-		} else {
-			return array('success' => 'Database was successfully updated');
-		}
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isDbUpdateNeeded() {
-		return $this->dbUpdateNeeded;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getUpdateStatements() {
-		return $this->updateStatements;
-	}
-
-	/**
-	 * @return \TYPO3\CMS\Core\Database\DatabaseConnection
-	 */
-	protected function getDatabaseConnection() {
-		return $GLOBALS['TYPO3_DB'];
-	}
+    /**
+     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+     */
+    protected function getDatabaseConnection()
+    {
+        return $GLOBALS['TYPO3_DB'];
+    }
 }

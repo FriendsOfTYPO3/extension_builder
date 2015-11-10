@@ -1,25 +1,18 @@
 <?php
 namespace EBT\ExtensionBuilder\ViewHelpers\Format;
 
-/*                                                                        *
- * This script belongs to the TYPO3 package "Extension Builder".         *
- *                                                                        *
- * It is free software; you can redistribute it and/or modify it under    *
- * the terms of the GNU Lesser General Public License as published by the *
- * Free Software Foundation, either version 3 of the License, or (at your *
- * option) any later version.                                             *
- *                                                                        *
- * This script is distributed in the hope that it will be useful, but     *
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHAN-    *
- * TABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser       *
- * General Public License for more details.                               *
- *                                                                        *
- * You should have received a copy of the GNU Lesser General Public       *
- * License along with the script.                                         *
- * If not, see http://www.gnu.org/licenses/lgpl.html                      *
- *                                                                        *
- * The TYPO3 project - inspiring people to share!                         *
- *                                                                        */
+/*
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
 
 /**
  * View helper which returns a quoted string
@@ -28,21 +21,18 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Format;
  *
  * <f:quoteString>{anyString}</f:quoteString>
  *
- *
- * @author Rens Admiraal
- *
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
-class QuoteStringViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-	/**
-	 * @param string $value
-	 */
-	public function render($value = NULL) {
-		if ($value == NULL) {
-			$value = $this->renderChildren();
-		}
+class QuoteStringViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
+    /**
+     * @param string $value
+     */
+    public function render($value = null)
+    {
+        if ($value == null) {
+            $value = $this->renderChildren();
+        }
 
-		return addslashes($value);
-	}
-
+        return addslashes($value);
+    }
 }

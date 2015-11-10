@@ -27,8 +27,10 @@
  * @package
  * @author Nico de Haen
  */
-namespace Parser\Test\Model {
-	class MultipleBracedNamespaces {
+namespace Parser\Test\Model
+{
+	class MultipleBracedNamespaces
+	{
 
 	}
 }
@@ -38,14 +40,16 @@ namespace Parser\Test\Model {
 /**
  * This is another namespace
  */
-namespace Parser\Test\Model2 {
+namespace Parser\Test\Model2
+{
 	/**
 	 * This is my doc comment
 	 *
 	 * @author Nico de Haen
 	 *
 	 */
-	class MultipleBracedNamespaces {
+	class MultipleBracedNamespaces
+	{
 
 	}
 }

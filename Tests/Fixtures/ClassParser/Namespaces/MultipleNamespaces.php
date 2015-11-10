@@ -30,7 +30,8 @@ namespace Parser\Test\Model;
  * @package
  * @author Nico de Haen
  */
-class MultipleNamespaces {
+class MultipleNamespaces
+{
 
 
 }
@@ -41,7 +42,8 @@ namespace Parser\Test\Model2;
  *
  * @author Nico de Haen
  */
-class MultipleNamespaces {
+class MultipleNamespaces
+{
 
 	
 }

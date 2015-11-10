@@ -1,15 +1,18 @@
 <?php
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
-/*                                                                        *
- * This script is backported from the TYPO3 Flow package "TYPO3.Fluid".   *
- *                                                                        *
- * It is free software; you can redistribute it and/or modify it under    *
- * the terms of the GNU Lesser General Public License, either version 3   *
- *  of the License, or (at your option) any later version.                *
- *                                                                        *
- * The TYPO3 project - inspiring people to share!                         *
- *                                                                        */
+/*
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
 
 /**
  * Switch view helper which can be used to render content depending on a value or expression.
@@ -21,11 +24,11 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * <f:switch expression="{person.gender}">
  *   <f:case value="male">Mr.</f:case>
  *   <f:case value="female">Mrs.</f:case>
- *   <f:case default="TRUE">Mrs. or Mr.</f:case>
+ *   <f:case default="true">Mrs. or Mr.</f:case>
  * </f:switch>
  * </code>
  * <output>
- * Mr. / Mrs. (depending on the value of {person.gender}) or if no value evaluates to TRUE, default case
+ * Mr. / Mrs. (depending on the value of {person.gender}) or if no value evaluates to true, default case
  * </output>
  *
  * Note: Using this view helper can be a sign of weak architecture. If you end up using it extensively
@@ -36,96 +39,98 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  *
  * @api
  */
-class SwitchViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper implements \TYPO3\CMS\Fluid\Core\ViewHelper\Facets\ChildNodeAccessInterface {
+class SwitchViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper implements \TYPO3\CMS\Fluid\Core\ViewHelper\Facets\ChildNodeAccessInterface
+{
+    /**
+     * An array of \TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\AbstractNode
+     * @var array
+     */
+    private $childNodes = array();
+    /**
+     * @var mixed
+     */
+    protected $backupSwitchExpression = null;
+    /**
+     * @var bool
+     */
+    protected $backupBreakState = false;
 
-	/**
-	 * An array of \TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\AbstractNode
-	 * @var array
-	 */
-	private $childNodes = array();
+    /**
+     * Setter for ChildNodes - as defined in ChildNodeAccessInterface
+     *
+     * @param array $childNodes Child nodes of this syntax tree node
+     * @return void
+     */
+    public function setChildNodes(array $childNodes)
+    {
+        $this->childNodes = $childNodes;
+    }
 
-	/**
-	 * @var mixed
-	 */
-	protected $backupSwitchExpression = NULL;
+    /**
+     * @param mixed $expression
+     * @return string the rendered string
+     * @api
+     */
+    public function render($expression)
+    {
+        $content = '';
+        $this->backupSwitchState();
+        $templateVariableContainer = $this->renderingContext->getViewHelperVariableContainer();
 
-	/**
-	 * @var bool
-	 */
-	protected $backupBreakState = FALSE;
+        $templateVariableContainer->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression', $expression);
+        $templateVariableContainer->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break', false);
 
-	/**
-	 * Setter for ChildNodes - as defined in ChildNodeAccessInterface
-	 *
-	 * @param array $childNodes Child nodes of this syntax tree node
-	 * @return void
-	 */
-	public function setChildNodes(array $childNodes) {
-		$this->childNodes = $childNodes;
-	}
+        foreach ($this->childNodes as $childNode) {
+            if (
+                !$childNode instanceof \TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\ViewHelperNode
+                || $childNode->getViewHelperClassName() !== 'EBT\ExtensionBuilder\ViewHelpers\CaseViewHelper'
+            ) {
+                continue;
+            }
+            $content = $childNode->evaluate($this->renderingContext);
+            if ($templateVariableContainer->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break') === true) {
+                break;
+            }
+        }
 
-	/**
-	 * @param mixed $expression
-	 * @return string the rendered string
-	 * @api
-	 */
-	public function render($expression) {
-		$content = '';
-		$this->backupSwitchState();
-		$templateVariableContainer = $this->renderingContext->getViewHelperVariableContainer();
+        $templateVariableContainer->remove('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression');
+        $templateVariableContainer->remove('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break');
 
-		$templateVariableContainer->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression', $expression);
-		$templateVariableContainer->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break', FALSE);
+        $this->restoreSwitchState();
+        return $content;
+    }
 
-		foreach ($this->childNodes as $childNode) {
-			if (
-				!$childNode instanceof \TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\ViewHelperNode
-				|| $childNode->getViewHelperClassName() !== 'EBT\ExtensionBuilder\ViewHelpers\CaseViewHelper'
-			) {
-				continue;
-			}
-			$content = $childNode->evaluate($this->renderingContext);
-			if ($templateVariableContainer->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break') === TRUE) {
-				break;
-			}
-		}
+    /**
+     * Backups "switch expression" and "break" state of a possible parent switch ViewHelper to support nesting
+     *
+     * @return void
+     */
+    protected function backupSwitchState()
+    {
+        if ($this->renderingContext->getViewHelperVariableContainer()->exists('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression')) {
+            $this->backupSwitchExpression = $this->renderingContext->getViewHelperVariableContainer()->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression');
+        }
+        if ($this->renderingContext->getViewHelperVariableContainer()->exists('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break')) {
+            $this->backupBreakState = $this->renderingContext->getViewHelperVariableContainer()->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break');
+        }
+    }
 
-		$templateVariableContainer->remove('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression');
-		$templateVariableContainer->remove('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break');
-
-		$this->restoreSwitchState();
-		return $content;
-	}
-
-	/**
-	 * Backups "switch expression" and "break" state of a possible parent switch ViewHelper to support nesting
-	 *
-	 * @return void
-	 */
-	protected function backupSwitchState() {
-		if ($this->renderingContext->getViewHelperVariableContainer()->exists('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression')) {
-			$this->backupSwitchExpression = $this->renderingContext->getViewHelperVariableContainer()->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression');
-		}
-		if ($this->renderingContext->getViewHelperVariableContainer()->exists('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break')) {
-			$this->backupBreakState = $this->renderingContext->getViewHelperVariableContainer()->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break');
-		}
-	}
-
-	/**
-	 * Restores "switch expression" and "break" states that might have been backed up in backupSwitchState() before
-	 *
-	 * @return void
-	 */
-	protected function restoreSwitchState() {
-		if ($this->backupSwitchExpression !== NULL) {
-			$this->renderingContext->getViewHelperVariableContainer()->addOrUpdate(
-				'EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
-				'switchExpression',
-				$this->backupSwitchExpression
-			);
-		}
-		if ($this->backupBreakState !== FALSE) {
-			$this->renderingContext->getViewHelperVariableContainer()->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break', TRUE);
-		}
-	}
+    /**
+     * Restores "switch expression" and "break" states that might have been backed up in backupSwitchState() before
+     *
+     * @return void
+     */
+    protected function restoreSwitchState()
+    {
+        if ($this->backupSwitchExpression !== null) {
+            $this->renderingContext->getViewHelperVariableContainer()->addOrUpdate(
+                'EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
+                'switchExpression',
+                $this->backupSwitchExpression
+            );
+        }
+        if ($this->backupBreakState !== false) {
+            $this->renderingContext->getViewHelperVariableContainer()->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break', true);
+        }
+    }
 }

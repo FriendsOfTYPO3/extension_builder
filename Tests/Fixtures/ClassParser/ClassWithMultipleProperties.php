@@ -28,7 +28,8 @@
  * @author Nico de Haen
  */
 
-abstract class Tx_PhpParser_Tests_ClassWithMultipleProperties {
+abstract class Tx_PhpParser_Tests_ClassWithMultipleProperties
+{
 
 	private $test = array(
 		'test' 	=> 123,
@@ -52,7 +53,8 @@ abstract class Tx_PhpParser_Tests_ClassWithMultipleProperties {
 	/**
 	 * @param string $property
 	 */
-	public function setProperty($property) {
+	public function setProperty($property)
+	{
 		// comment in a new line
 		if(strlen($property)>50) { // some comment here
 			$property = substr($property,0,49); // some comment there
@@ -63,7 +65,8 @@ abstract class Tx_PhpParser_Tests_ClassWithMultipleProperties {
 	/**
 	 * @return string
 	 */
-	public function getProperty() {
+	public function getProperty()
+	{
 		return $this->property;
 	}
 }

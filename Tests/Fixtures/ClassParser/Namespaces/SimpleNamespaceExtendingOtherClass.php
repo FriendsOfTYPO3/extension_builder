@@ -29,7 +29,8 @@ namespace Parser\Test\Model;
  * @package
  * @author Nico de Haen
  */
-class SimpleNamepaceTest extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class SimpleNamepaceTest extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+{
 
-	
+    
 }

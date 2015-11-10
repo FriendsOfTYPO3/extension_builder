@@ -45,7 +45,8 @@ if ($bar > $foo) {
 }
 
 
-abstract class Tx_PhpParser_Tests_ClassWithPreStatement {
+abstract class Tx_PhpParser_Tests_ClassWithPreStatement
+{
 
 }
 

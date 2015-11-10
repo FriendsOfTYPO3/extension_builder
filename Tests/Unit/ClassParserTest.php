@@ -1,212 +1,206 @@
 <?php
 namespace EBT\ExtensionBuilder\Tests\Unit;
-/***************************************************************
- *  Copyright notice
+
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- *  (c) 2010 Nico de Haen
- *  All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
 
+class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
+{
+    /**
+     * @var \EBT\ExtensionBuilder\Service\Parser
+     */
+    protected $parserService = null;
+    /**
+     * set to true to see an overview of the parsed class objects in the backend
+     *
+     * @var bool
+     */
+    protected $debugMode = false;
 
-class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest {
+    public function setUp()
+    {
+        parent::setUp();
+        $this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
+    }
 
+    /**
+     * Parse a basic class from a file
+     * @test
+     */
+    public function ParseBasicClass()
+    {
+        $file = $this->fixturesPath . 'ClassParser/BasicClass.php';
+        $this->parseClass($file, 'Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClass');
+    }
 
-	/**
-	 * @var \EBT\ExtensionBuilder\Service\Parser
-	 */
-	protected $parserService = NULL;
+    /**
+     * Parse a basic class from a file
+     * @test
+     */
+    public function ParseBasicNameSpacedClass()
+    {
+        $file = $this->fixturesPath . 'ClassParser/BasicNameSpacedClass.php';
+        $this->parseClass($file, '\\Foo\\Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicNameSpacedClass');
+    }
 
+    /**
+     * Parse a complex class from a file
+     * @test
+     */
+    public function ParseComplexClass()
+    {
+        $file = $this->fixturesPath . 'ClassParser/ComplexClass.php';
+        $classObject = $this->parseClass($file, 'Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass');
+        $getters = $classObject->getGetters();
+        $this->assertEquals(1, count($getters));
+        $firstGetter = array_pop($getters);
+        $this->assertEquals('getName', $firstGetter->getName());
 
-	/**
-	 * set to TRUE to see an overview of the parsed class objects in the backend
-	 *
-	 * @var bool
-	 */
-	protected $debugMode = FALSE;
+        $params2 = $classObject->getMethod('methodWithVariousParameter')->getParameters();
+        $this->assertEquals(
+            count($params2),
+            4,
+            'Wrong parameter count in parsed "methodWithVariousParameter"'
+        );
+        $this->assertEquals(
+            $params2[3]->getName(),
+            'param4',
+            'Last parameter name was not correctly parsed'
+        );
+    }
 
-	public function setUp() {
-		parent::setUp();
-		$this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
-	}
+    /**
+     * Parse a with interfaces
+     *
+     */
+    public function ParseClassWithInterfaces()
+    {
+        $file = $this->fixturesPath . 'ClassParser/ClassWithInterfaces.php';
+        $classObject = $this->parseClass($file, 'Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithInterfaces');
+        $this->assertEquals(
+            $classObject->getInterfaceNames(),
+            array(
+                'PHPUnit_Framework_IncompleteTest',
+                'PHPUnit_Framework_MockObject_Stub',
+                'PHPUnit_Framework_SelfDescribing'
+            )
+        );
+    }
 
-	/**
-	 * Parse a basic class from a file
-	 * @test
-	 */
-	public function ParseBasicClass() {
-		$file = $this->fixturesPath . 'ClassParser/BasicClass.php';
-		$this->parseClass($file, 'Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClass');
-	}
+    /**
+     * Parse a with interfaces
+     *
+     */
+    public function ParseClassWithAliasDeclarations()
+    {
+        $file = $this->fixturesPath . 'ClassParser/ClassWithAlias.php';
+        $classObject = $this->parseClass($file, 'Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithAlias');
+        $this->assertEquals(
+            $classObject->getAliasDeclarations(),
+            array(
+                'TYPO3\\CMS\\Core\\Utility\\GeneralUtility',
+                'TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager as Config'
+            )
+        );
+    }
 
-	/**
-	 * Parse a basic class from a file
-	 * @test
-	 */
-	public function ParseBasicNameSpacedClass() {
-		$file = $this->fixturesPath . 'ClassParser/BasicNameSpacedClass.php';
-		$this->parseClass($file, '\\Foo\\Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicNameSpacedClass');
-	}
+    /**
+     * Parse a complex class from a file
+     *
+     */
+    public function ParseAnotherComplexClass()
+    {
+        $file = $this->fixturesPath . 'ClassParser/AnotherComplexClass.php';
+        $this->parseClass($file, 'Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass');
+    }
 
+    /**
+     * Parse a big class from a file
+     *
+     */
+    public function Parse_t3lib_div()
+    {
+        $this->parseClass(PATH_typo3 . 'sysext/core/Classes/Utility/GeneralUtility.php', '\\TYPO3\\CMS\\Core\\Utility\\GeneralUtility');
+    }
 
-	/**
-	 * Parse a complex class from a file
-	 * @test
-	 */
-	public function ParseComplexClass() {
-		$file =  $this->fixturesPath . 'ClassParser/ComplexClass.php';
-		$classObject = $this->parseClass($file, 'Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass');
-		$getters = $classObject->getGetters();
-		$this->assertEquals(1, count($getters));
-		$firstGetter = array_pop($getters);
-		$this->assertEquals('getName', $firstGetter->getName());
+    /**
+     * Parse a file and compare the resulting
+     * ClassObject with the reflection class object
+     * @param $className
+     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+     */
+    protected function parseClass($file, $className)
+    {
+        $classObject = $this->parserService->parseFile($file)->getFirstClass();
+        $this->assertTrue($classObject instanceof \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject);
+        require_once($file);
+        $classReflection = new \TYPO3\CMS\Extbase\Reflection\ClassReflection($className);
+        $this->ParserFindsAllConstants($classObject, $classReflection);
+        $this->ParserFindsAllMethods($classObject, $classReflection);
+        $this->ParserFindsAllProperties($classObject, $classReflection);
+        $this->assertEquals($classReflection->getNamespaceName(), $classObject->getNamespaceName());
+        return $classObject;
+    }
 
-		$params2 = $classObject->getMethod('methodWithVariousParameter')->getParameters();
-		$this->assertEquals(
-			count($params2),
-			4,
-			'Wrong parameter count in parsed "methodWithVariousParameter"'
-		);
-		$this->assertEquals(
-			$params2[3]->getName(),
-			'param4',
-			'Last parameter name was not correctly parsed'
-		);
+    /**
+     * compares the number of methods found by parsing with those
+     * retrieved from the reflection class
+     *
+     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
+     * @param \TYPO3\CMS\Extbase\Reflection\ClassReflection $classReflection
+     * @return void
+     */
+    public function ParserFindsAllConstants($classObject, $classReflection)
+    {
+        $reflectionConstantCount = count($classReflection->getConstants());
+        if ($classReflection->getParentClass()) {
+            $reflectionConstantCount -= count($classReflection->getParentClass()->getConstants());
+        }
+        $classObjectConstantCount = count($classObject->getConstants());
+        $this->assertEquals(
+            $reflectionConstantCount,
+            $classObjectConstantCount,
+            'Not all Constants were found: ' . $classObject->getName() . serialize($classReflection->getConstants())
+        );
+    }
 
-	}
+    /**
+     * compares the number of methods found by parsing
+     * with those retrieved from the reflection class
+     *
+     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
+     * @param \TYPO3\CMS\Extbase\Reflection\ClassReflection $classReflection
+     * @return void
+     */
+    public function ParserFindsAllMethods($classObject, $classReflection)
+    {
+        $reflectionMethodCount = count($classReflection->getMethods());
+        $classObjectMethodCount = count($classObject->getMethods());
+        $this->assertEquals($classObjectMethodCount, $reflectionMethodCount, 'Not all Methods were found!: ' . $reflectionMethodCount);
+    }
 
-
-	/**
-	 * Parse a with interfaces
-	 *
-	 */
-	public function ParseClassWithInterfaces() {
-		$file = $this->fixturesPath . 'ClassParser/ClassWithInterfaces.php';
-		$classObject = $this->parseClass($file, 'Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithInterfaces');
-		$this->assertEquals(
-			$classObject->getInterfaceNames(),
-			array(
-				'PHPUnit_Framework_IncompleteTest',
-				'PHPUnit_Framework_MockObject_Stub',
-				'PHPUnit_Framework_SelfDescribing'
-			)
-		);
-	}
-
-	/**
-	 * Parse a with interfaces
-	 *
-	 */
-	public function ParseClassWithAliasDeclarations() {
-		$file = $this->fixturesPath . 'ClassParser/ClassWithAlias.php';
-		$classObject = $this->parseClass($file, 'Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithAlias');
-		$this->assertEquals(
-			$classObject->getAliasDeclarations(),
-			array(
-				'TYPO3\\CMS\\Core\\Utility\\GeneralUtility',
-				'TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager as Config'
-			)
-		);
-	}
-
-	/**
-	 * Parse a complex class from a file
-	 *
-	 */
-	public function ParseAnotherComplexClass() {
-		$file = $this->fixturesPath . 'ClassParser/AnotherComplexClass.php';
-		$this->parseClass($file, 'Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass');
-	}
-
-	/**
-	 * Parse a big class from a file
-	 *
-	 */
-	public function Parse_t3lib_div() {
-		$this->parseClass(PATH_typo3 . 'sysext/core/Classes/Utility/GeneralUtility.php', '\\TYPO3\\CMS\\Core\\Utility\\GeneralUtility');
-	}
-
-	/**
-	 * Parse a file and compare the resulting
-	 * ClassObject with the reflection class object
-	 * @param $className
-	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
-	 */
-	protected function parseClass($file, $className) {
-		$classObject = $this->parserService->parseFile($file)->getFirstClass();
-		$this->assertTrue($classObject instanceof \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject);
-		require_once($file);
-		$classReflection = new \TYPO3\CMS\Extbase\Reflection\ClassReflection($className);
-		$this->ParserFindsAllConstants($classObject, $classReflection);
-		$this->ParserFindsAllMethods($classObject, $classReflection);
-		$this->ParserFindsAllProperties($classObject, $classReflection);
-		$this->assertEquals($classReflection->getNamespaceName(), $classObject->getNamespaceName());
-		return $classObject;
-	}
-
-	/**
-	 * compares the number of methods found by parsing with those
-	 * retrieved from the reflection class
-	 *
-	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
-	 * @param \TYPO3\CMS\Extbase\Reflection\ClassReflection $classReflection
-	 * @return void
-	 */
-	public function ParserFindsAllConstants($classObject, $classReflection) {
-		$reflectionConstantCount = count($classReflection->getConstants());
-		if ($classReflection->getParentClass()) {
-			$reflectionConstantCount -= count($classReflection->getParentClass()->getConstants());
-		}
-		$classObjectConstantCount = count($classObject->getConstants());
-		$this->assertEquals(
-			$reflectionConstantCount,
-			$classObjectConstantCount,
-			'Not all Constants were found: ' . $classObject->getName() . serialize($classReflection->getConstants())
-		);
-	}
-
-	/**
-	 * compares the number of methods found by parsing
-	 * with those retrieved from the reflection class
-	 *
-	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
-	 * @param \TYPO3\CMS\Extbase\Reflection\ClassReflection $classReflection
-	 * @return void
-	 */
-	public function ParserFindsAllMethods($classObject, $classReflection) {
-		$reflectionMethodCount = count($classReflection->getMethods());
-		$classObjectMethodCount = count($classObject->getMethods());
-		$this->assertEquals($classObjectMethodCount, $reflectionMethodCount, 'Not all Methods were found!: ' . $reflectionMethodCount);
-	}
-
-	/**
-	 * compares the number of properties found by parsing
-	 * with those retrieved from the reflection class
-	 *
-	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
-	 * @param \TYPO3\CMS\Extbase\Reflection\ClassReflection $classReflection
-	 * @return void
-	 */
-	public function ParserFindsAllProperties($classObject, $classReflection) {
-		$reflectionPropertyCount = count($classReflection->getProperties());
-		$classObjectPropertCount = count($classObject->getProperties());
-		$this->assertEquals($classObjectPropertCount, $reflectionPropertyCount, 'Not all Properties were found!');
-	}
-
+    /**
+     * compares the number of properties found by parsing
+     * with those retrieved from the reflection class
+     *
+     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
+     * @param \TYPO3\CMS\Extbase\Reflection\ClassReflection $classReflection
+     * @return void
+     */
+    public function ParserFindsAllProperties($classObject, $classReflection)
+    {
+        $reflectionPropertyCount = count($classReflection->getProperties());
+        $classObjectPropertCount = count($classObject->getProperties());
+        $this->assertEquals($classObjectPropertCount, $reflectionPropertyCount, 'Not all Properties were found!');
+    }
 }
