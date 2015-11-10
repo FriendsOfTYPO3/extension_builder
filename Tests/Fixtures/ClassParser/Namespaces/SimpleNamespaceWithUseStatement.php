@@ -30,7 +30,8 @@ use EBT\ExtensionBuilder\Domain\Model\Test;
 /**
  * some comment
  */
-class SimpleNamepaceWithUseTest {
+class SimpleNamepaceWithUseTest
+{
 
-	
+    
 }

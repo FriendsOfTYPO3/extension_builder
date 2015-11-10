@@ -29,13 +29,14 @@
  * @package
  * @author Nico de Haen
  */
-abstract class Tx_PhpParser_Tests_SimpleProperty {
+abstract class Tx_PhpParser_Tests_SimpleProperty
+{
 
-	/**
-	 * Some simple property
-	 *
-	 * @var string
-	 */
-	protected $property = 'foo';
+    /**
+     * Some simple property
+     *
+     * @var string
+     */
+    protected $property = 'foo';
 
 }

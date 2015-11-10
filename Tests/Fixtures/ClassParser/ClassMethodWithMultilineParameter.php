@@ -27,31 +27,34 @@
  * @package
  * @author Nico de Haen
  */
-class Tx_PhpParser_Test_ClassMethodWithMultilineParameter {
+class Tx_PhpParser_Test_ClassMethodWithMultilineParameter
+{
 
-	/**
-	 * This is the description
-	 *
-	 * @param int $number
-	 * @param string $stringParam
-	 * @param array $arr
-	 * @param boolean $booleanParam
-	 * @param float $float
-	 * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n
-	 * @return string
-	 */
-	private static function testMethod($number, $stringParam, array $arr, $booleanParam = FALSE,
-		$float = 0.2, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n) {
-		self::sendForDownload(
-			$arr,
-			'Foo-' . PHP_EOL . '-' . date('Y-m-d-H-i') . $stringParam,
-			'Bar.docx'
-		);
-		if ($number > 3 && $booleanParam) {
-			return 'bar';
-		} else {
-			return 'foo';
-		}
-	}
+    /**
+     * This is the description
+     *
+     * @param int $number
+     * @param string $stringParam
+     * @param array $arr
+     * @param boolean $booleanParam
+     * @param float $float
+     * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n
+     * @return string
+     */
+    private static function testMethod(
+        $number, $stringParam, array $arr, $booleanParam = FALSE,
+        $float = 0.2, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n)
+    {
+        self::sendForDownload(
+            $arr,
+            'Foo-' . PHP_EOL . '-' . date('Y-m-d-H-i') . $stringParam,
+            'Bar.docx'
+        );
+        if ($number > 3 && $booleanParam) {
+            return 'bar';
+        } else {
+            return 'foo';
+        }
+    }
 
 }

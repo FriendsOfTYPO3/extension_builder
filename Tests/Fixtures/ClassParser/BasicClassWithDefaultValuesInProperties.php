@@ -1,5 +1,6 @@
 <?php
-class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClassWithDefaultValuesInProperties {
+class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClassWithDefaultValuesInProperties
+{
 
 	const FOO = -1;
 

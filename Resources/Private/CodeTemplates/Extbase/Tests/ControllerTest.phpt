@@ -29,18 +29,21 @@ namespace {extension.nameSpaceName}\Tests\Unit\Controller;
  *
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
 </f:for> */
-class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
+class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
+{
 
 	/**
 	 * @var \{domainObject.controllerClassName}
 	 */
 	protected $subject = NULL;
 
-	public function setUp() {
+	public function setUp()
+	{
 		$this->subject = $this->getMock('{domainObject.controllerClassName -> k:format.escapeBackslashes()}', array('redirect', 'forward', 'addFlashMessage'), array(), '', FALSE);
 	}
 
-	public function tearDown() {
+	public function tearDown()
+	{
 		unset($this->subject);
 	}
 
@@ -49,7 +52,8 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function listActionFetchesAll{domainObject.name -> k:pluralize()}FromRepositoryAndAssignsThemToView() {
+	public function listActionFetchesAll{domainObject.name -> k:pluralize()}FromRepositoryAndAssignsThemToView()
+	{
 
 		$all{domainObject.name -> k:pluralize()} = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array(), array(), '', FALSE);
 
@@ -67,7 +71,8 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function showActionAssignsTheGiven{domainObject.name}ToView() {
+	public function showActionAssignsTheGiven{domainObject.name}ToView()
+	{
 		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
 
 		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
@@ -80,7 +85,8 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function createActionAddsTheGiven{domainObject.name}To{domainObject.name}Repository() {
+	public function createActionAddsTheGiven{domainObject.name}To{domainObject.name}Repository()
+	{
 		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
 
 		${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock('{domainObject.qualifiedDomainRepositoryClassName -> k:format.escapeBackslashes()}', array('add'), array(), '', FALSE);
@@ -93,7 +99,8 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function editActionAssignsTheGiven{domainObject.name}ToView() {
+	public function editActionAssignsTheGiven{domainObject.name}ToView()
+	{
 		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
 
 		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
@@ -107,7 +114,8 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function updateActionUpdatesTheGiven{domainObject.name}In{domainObject.name}Repository() {
+	public function updateActionUpdatesTheGiven{domainObject.name}In{domainObject.name}Repository()
+	{
 		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
 
 		${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock('{domainObject.qualifiedDomainRepositoryClassName -> k:format.escapeBackslashes()}', array('update'), array(), '', FALSE);
@@ -120,7 +128,8 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function deleteActionRemovesTheGiven{domainObject.name}From{domainObject.name}Repository() {
+	public function deleteActionRemovesTheGiven{domainObject.name}From{domainObject.name}Repository()
+	{
 		${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
 
 		${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock('{domainObject.qualifiedDomainRepositoryClassName -> k:format.escapeBackslashes()}', array('remove'), array(), '', FALSE);
@@ -132,7 +141,8 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function dummyTestToNotLeaveThisFileEmpty() {
+	public function dummyTestToNotLeaveThisFileEmpty()
+	{
 		$this->markTestIncomplete();
 	}</f:else></f:if>
 }

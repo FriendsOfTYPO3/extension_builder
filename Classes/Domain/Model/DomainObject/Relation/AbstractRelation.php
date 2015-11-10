@@ -1,27 +1,18 @@
 <?php
 namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
-/***************************************************************
- *  Copyright notice
+
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- *  (c) 2009 Ingmar Schlecht, 2013 Nico de Haen
- *  All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
 
 /**
  * Creates a request an dispatches it to the controller which was specified
@@ -29,229 +20,242 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
  *
  * This class is the main entry point for extbase extensions in the frontend.
  */
-abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty {
-	/**
-	 * the schema of the foreign class
-	 *
-	 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
-	 */
-	protected $foreignModel = NULL;
+abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty
+{
+    /**
+     * the schema of the foreign class
+     *
+     * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     */
+    protected $foreignModel = null;
+    /**
+     * the schema of the foreign class
+     *
+     * @var string
+     */
+    protected $foreignClassName = null;
+    /**
+     * @var string
+     */
+    protected $foreignDatabaseTableName = '';
+    /**
+     * If this flag is set to true, the relation is rendered as IRRE field (Inline Relational Record Editing).
+     * Default is false.
+     *
+     * @var bool
+     */
+    protected $inlineEditing = false;
+    /**
+     * If this flag is set to true, the relation will be lazy loading. Default is false
+     *
+     * @var bool
+     */
+    protected $lazyLoading = false;
+    /**
+     * @var bool
+     */
+    protected $relatedToExternalModel = false;
+    /**
+     * allowed file types for this relation
+     *
+     * @var string (comma separated filetypes)
+     */
+    protected $allowedFileTypes = '';
+    /**
+     * not allowed file types for this relation (comma-separated file types)
+     *
+     * @var string
+     */
+    protected $disallowedFileTypes = 'php';
 
-	/**
-	 * the schema of the foreign class
-	 *
-	 * @var string
-	 */
-	protected $foreignClassName = NULL;
+    public function setRelatedToExternalModel($relatedToExternalModel)
+    {
+        $this->relatedToExternalModel = $relatedToExternalModel;
+    }
 
-	/**
-	 * @var string
-	 */
-	protected $foreignDatabaseTableName = '';
+    public function getRelatedToExternalModel()
+    {
+        return $this->relatedToExternalModel;
+    }
 
-	/**
-	 * If this flag is set to TRUE, the relation is rendered as IRRE field (Inline Relational Record Editing).
-	 * Default is FALSE.
-	 *
-	 * @var bool
-	 */
-	protected $inlineEditing = FALSE;
+    /**
+     *
+     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject The foreign class
+     */
+    public function getForeignModel()
+    {
+        return $this->foreignModel;
+    }
 
-	/**
-	 * If this flag is set to TRUE, the relation will be lazy loading. Default is FALSE
-	 *
-	 * @var bool
-	 */
-	protected $lazyLoading = FALSE;
+    /**
+     * @return string
+     */
+    public function getForeignDatabaseTableName()
+    {
+        if (is_object($this->foreignModel)) {
+            return $this->foreignModel->getDatabaseTableName();
+        } else {
+            return $this->foreignDatabaseTableName;
+        }
+    }
 
-	/**
-	 * @var bool
-	 */
-	protected $relatedToExternalModel = FALSE;
+    /**
+     * @param string
+     */
+    public function setForeignDatabaseTableName($foreignDatabaseTableName)
+    {
+        $this->foreignDatabaseTableName = $foreignDatabaseTableName;
+    }
 
-	/**
-	 * allowed file types for this relation
-	 *
-	 * @var string (comma separated filetypes)
-	 */
-	protected $allowedFileTypes = '';
+    /**
+     *
+     * @return string The foreign class
+     */
+    public function getForeignClassName()
+    {
+        if (isset($this->foreignClassName)) {
+            return $this->foreignClassName;
+        }
+        if (is_object($this->foreignModel)) {
+            return $this->foreignModel->getFullQualifiedClassName();
+        }
+        return null;
+    }
 
-	/**
-	 * not allowed file types for this relation (comma-separated file types)
-	 *
-	 * @var string
-	 */
-	protected $disallowedFileTypes = 'php';
+    public function getForeignModelName()
+    {
+        if (is_object($this->foreignModel)) {
+            return $this->foreignModel->getName();
+        }
+        $parts = explode('\\Domain\\Model\\', $this->foreignClassName);
+        return $parts[1];
+    }
 
-	public function setRelatedToExternalModel($relatedToExternalModel) {
-		$this->relatedToExternalModel = $relatedToExternalModel;
-	}
+    /**
+     *
+     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $foreignModel Set the foreign DomainObject of the relation
+     */
+    public function setForeignModel(\EBT\ExtensionBuilder\Domain\Model\DomainObject $foreignModel)
+    {
+        $this->foreignModel = $foreignModel;
+    }
 
-	public function getRelatedToExternalModel() {
-		return $this->relatedToExternalModel;
-	}
+    /**
+     *
+     * @param string $foreignClassName Set the foreign class nsme of the relation
+     */
+    public function setForeignClassName($foreignClassName)
+    {
+        $this->foreignClassName = $foreignClassName;
+    }
 
-	/**
-	 *
-	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject The foreign class
-	 */
-	public function getForeignModel() {
-		return $this->foreignModel;
-	}
+    /**
+     * Sets the flag, if the relation should be rendered as IRRE field.
+     *
+     * @param bool $inlineEditing
+     * @return void
+     **/
+    public function setInlineEditing($inlineEditing)
+    {
+        $this->inlineEditing = (bool)$inlineEditing;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getForeignDatabaseTableName() {
-		if (is_object($this->foreignModel)) {
-			return $this->foreignModel->getDatabaseTableName();
-		} else {
-			return $this->foreignDatabaseTableName;
-		}
-	}
+    /**
+     * Returns the state of the flag, if the relation should be rendered as IRRE field.
+     *
+     * @return bool true if the field shopuld be rendered as IRRE field; false otherwise
+     **/
+    public function getInlineEditing()
+    {
+        return (bool)$this->inlineEditing;
+    }
 
-	/**
-	 * @param string
-	 */
-	public function setForeignDatabaseTableName( $foreignDatabaseTableName) {
-		$this->foreignDatabaseTableName = $foreignDatabaseTableName;
-	}
+    /**
+     * Sets the lazyLoading flag
+     *
+     * @param  $lazyLoading
+     * @return void
+     */
+    public function setLazyLoading($lazyLoading)
+    {
+        $this->lazyLoading = $lazyLoading;
+    }
 
-	/**
-	 *
-	 * @return string The foreign class
-	 */
-	public function getForeignClassName() {
-		if (isset($this->foreignClassName)) {
-			return $this->foreignClassName;
-		}
-		if (is_object($this->foreignModel)) {
-			return $this->foreignModel->getFullQualifiedClassName();
-		}
-		return NULL;
-	}
+    /**
+     * Gets the lazyLoading flag
+     *
+     * @return bool
+     */
+    public function getLazyLoading()
+    {
+        return $this->lazyLoading;
+    }
 
-	public function getForeignModelName() {
-		if (is_object($this->foreignModel)) {
-			return $this->foreignModel->getName();
-		}
-		$parts = explode('\\Domain\\Model\\', $this->foreignClassName);
-		return $parts[1];
-	}
+    public function getSqlDefinition()
+    {
+        return $this->getFieldName() . " int(11) unsigned DEFAULT '0' NOT NULL,";
+    }
 
-	/**
-	 *
-	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $foreignModel Set the foreign DomainObject of the relation
-	 */
-	public function setForeignModel(\EBT\ExtensionBuilder\Domain\Model\DomainObject $foreignModel) {
-		$this->foreignModel = $foreignModel;
-	}
+    /**
+     * is displayable in the auto generated properties template
+     *
+     * this is only true for files and images
+     *
+     * @return bool
+     */
+    public function getIsDisplayable()
+    {
+        return $this->isFileReference();
+    }
 
-	/**
-	 *
-	 * @param string $foreignClassName Set the foreign class nsme of the relation
-	 */
-	public function setForeignClassName( $foreignClassName) {
-		$this->foreignClassName = $foreignClassName;
-	}
+    /**
+     * @return bool
+     */
+    public function isFileReference()
+    {
+        if ($this->foreignClassName == '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference') {
+            return true;
+        }
+        return false;
+    }
 
-	/**
-	 * Sets the flag, if the relation should be rendered as IRRE field.
-	 *
-	 * @param bool $inlineEditing
-	 * @return void
-	 **/
-	public function setInlineEditing($inlineEditing) {
-		$this->inlineEditing = (bool)$inlineEditing;
-	}
+    /**
+     * getter for allowed file types
+     *
+     * @return string
+     */
+    public function getAllowedFileTypes()
+    {
+        return $this->allowedFileTypes;
+    }
 
-	/**
-	 * Returns the state of the flag, if the relation should be rendered as IRRE field.
-	 *
-	 * @return bool TRUE if the field shopuld be rendered as IRRE field; FALSE otherwise
-	 **/
-	public function getInlineEditing() {
-		return (bool)$this->inlineEditing;
-	}
+    /**
+     * setter for allowed file types
+     *
+     * @return string
+     */
+    public function setAllowedFileTypes($allowedFileTypes)
+    {
+        return $this->allowedFileTypes = $allowedFileTypes;
+    }
 
-	/**
-	 * Sets the lazyLoading flag
-	 *
-	 * @param  $lazyLoading
-	 * @return void
-	 */
-	public function setLazyLoading($lazyLoading) {
-		$this->lazyLoading = $lazyLoading;
-	}
+    /**
+     * getter for disallowed file types
+     *
+     * @return string
+     */
+    public function getDisallowedFileTypes()
+    {
+        return $this->disallowedFileTypes;
+    }
 
-	/**
-	 * Gets the lazyLoading flag
-	 *
-	 * @return bool
-	 */
-	public function getLazyLoading() {
-		return $this->lazyLoading;
-	}
-
-	public function getSqlDefinition() {
-		return $this->getFieldName() . " int(11) unsigned DEFAULT '0' NOT NULL,";
-	}
-
-	/**
-	 * is displayable in the auto generated properties template
-	 *
-	 * this is only true for files and images
-	 *
-	 * @return bool
-	 */
-	public function getIsDisplayable() {
-		return $this->isFileReference();
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isFileReference() {
-		if ($this->foreignClassName == '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference') {
-			return TRUE;
-		}
-		return FALSE;
-	}
-
-	/**
-	 * getter for allowed file types
-	 *
-	 * @return string
-	 */
-	public function getAllowedFileTypes() {
-		return $this->allowedFileTypes;
-	}
-
-	/**
-	 * setter for allowed file types
-	 *
-	 * @return string
-	 */
-	public function setAllowedFileTypes($allowedFileTypes) {
-		return $this->allowedFileTypes = $allowedFileTypes;
-	}
-
-	/**
-	 * getter for disallowed file types
-	 *
-	 * @return string
-	 */
-	public function getDisallowedFileTypes() {
-		return $this->disallowedFileTypes;
-	}
-
-	/**
-	 * setter for disallowed file types
-	 *
-	 * @return string
-	 */
-	public function setDisallowedFileTypes($disallowedFileTypes) {
-		return $this->disallowedFileTypes = $disallowedFileTypes;
-	}
-
+    /**
+     * setter for disallowed file types
+     *
+     * @return string
+     */
+    public function setDisallowedFileTypes($disallowedFileTypes)
+    {
+        return $this->disallowedFileTypes = $disallowedFileTypes;
+    }
 }

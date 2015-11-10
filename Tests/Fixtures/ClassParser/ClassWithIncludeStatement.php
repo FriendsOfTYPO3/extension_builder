@@ -28,8 +28,9 @@
  * @author Nico de Haen
  */
 require_once('DummyIncludeFile1.php');
-abstract class Tx_PhpParser_Tests_ClassWithIncludeStatement {
+abstract class Tx_PhpParser_Tests_ClassWithIncludeStatement
+{
 
-	
+    
 }
 include_once('DummyIncludeFile2.php');

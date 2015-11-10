@@ -27,7 +27,8 @@
  * @package
  * @author Nico de Haen
  */
-class Tx_PhpParser_Test_ClassMethodWithMissingParameterTag {
+class Tx_PhpParser_Test_ClassMethodWithMissingParameterTag
+{
 
 	/**
 	 * This is the description
@@ -35,7 +36,8 @@ class Tx_PhpParser_Test_ClassMethodWithMissingParameterTag {
 	 * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n
 	 * @return string
 	 */
-	function testMethod($string, array $arr, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n) {
+	function testMethod($string, array $arr, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n)
+	{
 		if ($string > 3) {
 			return 'bar';
 		} else {

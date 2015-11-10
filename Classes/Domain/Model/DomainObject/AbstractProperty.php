@@ -1,497 +1,509 @@
 <?php
 namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
-	/***************************************************************
- *  Copyright notice
+
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- *  (c) 2010 Nico de Haen, Ingmar Schlecht, Stephan Petzl
- *  All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
+
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 
 /**
  * property representing a "property" in the context of software development
  */
-abstract class AbstractProperty {
-	/**
-	 * @var string
-	 */
-	protected $uniqueIdentifier = '';
+abstract class AbstractProperty
+{
+    /**
+     * @var string
+     */
+    protected $uniqueIdentifier = '';
+    /**
+     * name of the property
+     *
+     * @var string
+     */
+    protected $name = '';
+    /**
+     * description of property
+     *
+     * @var string
+     */
+    protected $description = '';
+    /**
+     * whether the property is required
+     *
+     * @var bool
+     */
+    protected $required = false;
+    /**
+     * property's default value
+     *
+     * @var mixed
+     */
+    protected $defaultValue = null;
+    /**
+     * @var mixed
+     */
+    protected $value = null;
+    /**
+     * Is an upload folder required for this property
+     *
+     * @var bool
+     */
+    protected $needsUploadFolder = false;
+    /**
+     * The domain object this property belongs to.
+     *
+     * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     */
+    protected $class = null;
+    /**
+     * is set to true, if this property was new added
+     *
+     * @var bool
+     */
+    protected $new = true;
+    /**
+     * use RTE in Backend
+     *
+     * @var bool
+     */
+    protected $useRTE = false;
+    /**
+     * @var string the property type of this property
+     */
+    protected $type = '';
+    /**
+     * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     */
+    protected $domainObject = null;
+    /**
+     * @var bool
+     */
+    protected $excludeField = false;
 
-	/**
-	 * name of the property
-	 *
-	 * @var string
-	 */
-	protected $name = '';
+    /**
+     *
+     * @param string $propertyName
+     * @return void
+     */
+    public function __construct($propertyName = '')
+    {
+        if (!empty($propertyName)) {
+            $this->name = $propertyName;
+        }
+    }
 
-	/**
-	 * description of property
-	 *
-	 * @var string
-	 */
-	protected $description = '';
+    /**
+     * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
+     *
+     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $class the class this property belongs to
+     */
+    public function setClass(\EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $class)
+    {
+        $this->class = $class;
+    }
 
-	/**
-	 * whether the property is required
-	 *
-	 * @var bool
-	 */
-	protected $required = FALSE;
+    /**
+     * Get the domain object this property belongs to.
+     *
+     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
 
-	/**
-	 * property's default value
-	 *
-	 * @var mixed
-	 */
-	protected $defaultValue = NULL;
+    /**
+     * Get property name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	/**
-	 * @var mixed
-	 */
-	protected $value = NULL;
+    /**
+     * Set property name
+     *
+     * @param string $name Property name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
-	/**
-	 * Is an upload folder required for this property
-	 *
-	 * @var bool
-	 */
-	protected $needsUploadFolder = FALSE;
+    /**
+     * Get property defaultValue
+     *
+     * @return string
+     */
+    public function getDefaultValue()
+    {
+        return $this->defaultValue;
+    }
 
-	/**
-	 * The domain object this property belongs to.
-	 *
-	 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
-	 */
-	protected $class = NULL;
+    /**
+     * Set property defaultValue
+     *
+     * @param string $defaultValue
+     */
+    public function setDefaultValue($defaultValue)
+    {
+        $this->defaultValue = $defaultValue;
+    }
 
-	/**
-	 * is set to TRUE, if this property was new added
-	 *
-	 * @var bool
-	 */
-	protected $new = TRUE;
+    /**
+     *
+     * @return bool
+     */
+    public function getHasDefaultValue()
+    {
+        return isset($this->defaultValue);
+    }
 
-	/**
-	 * use RTE in Backend
-	 *
-	 * @var bool
-	 */
-	protected $useRTE = FALSE;
+    /**
+     * Get property uniqueIdentifier
+     *
+     * @return string
+     */
+    public function getUniqueIdentifier()
+    {
+        return $this->uniqueIdentifier;
+    }
 
-	/**
-	 * @var string the property type of this property
-	 */
-	protected $type = '';
+    /**
+     * Set property uniqueIdentifier
+     *
+     * @param string $uniqueIdentifier
+     */
+    public function setUniqueIdentifier($uniqueIdentifier)
+    {
+        $this->uniqueIdentifier = $uniqueIdentifier;
+    }
 
-	/**
-	 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
-	 */
-	protected $domainObject = NULL;
+    /**
+     *
+     * @return bool true (if property is of type relation any to many)
+     */
+    public function isAnyToManyRelation()
+    {
+        return is_subclass_of($this, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation');
+    }
 
-	/**
-	 * @var bool
-	 */
-	protected $excludeField = FALSE;
+    /**
+     *
+     * @return bool true (if property is of type relation any to many)
+     */
+    public function isZeroToManyRelation()
+    {
+        return false;
+    }
 
-	/**
-	 *
-	 * @param string $propertyName
-	 * @return void
-	 */
-	public function __construct($propertyName = '') {
-		if (!empty($propertyName)) {
-			$this->name = $propertyName;
-		}
-	}
+    /**
+     *
+     * @return bool true (if property is of type relation)
+     */
+    public function isRelation()
+    {
+        return is_subclass_of($this, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation');
+    }
 
-	/**
-	 * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
-	 *
-	 * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $class the class this property belongs to
-	 */
-	public function setClass(\EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $class) {
-		$this->class = $class;
-	}
+    /**
+     *
+     * @return bool true (if property is of type boolean)
+     */
+    public function isBoolean()
+    {
+        return is_a($this, '\EBT\ExtensionBuilder\Domain_Model\DomainObject\BooleanProperty');
+    }
 
-	/**
-	 * Get the domain object this property belongs to.
-	 *
-	 * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
-	 */
-	public function getClass() {
-		return $this->class;
-	}
+    /**
+     * Get property description to be used in comments
+     *
+     * @return string Property description
+     */
+    public function getDescription()
+    {
+        if ($this->description) {
+            return $this->description;
+        } else {
+            return $this->getName();
+        }
+    }
 
-	/**
-	 * Get property name
-	 *
-	 * @return string
-	 */
-	public function getName() {
-		return $this->name;
-	}
+    /**
+     * Set property description
+     *
+     * @param string $description Property description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
 
-	/**
-	 * Set property name
-	 *
-	 * @param string $name Property name
-	 */
-	public function setName($name) {
-		$this->name = $name;
-	}
+    /**
+     * Returns a field name used in the database. This is the property name converted
+     * to lowercase underscore (mySpecialProperty -> my_special_property).
+     *
+     * @return string the field name in lowercase underscore
+     */
+    public function getFieldName()
+    {
+        $fieldName = \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($this->name);
+        if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($fieldName)) {
+            $fieldName = $this->domainObject->getExtension()->getShortExtensionKey() . '_' . $fieldName;
+        }
+        return $fieldName;
+    }
 
-	/**
-	 * Get property defaultValue
-	 *
-	 * @return string
-	 */
-	public function getDefaultValue() {
-		return $this->defaultValue;
-	}
+    /**
+     * Get SQL Definition to be used inside CREATE TABLE.
+     *
+     * @retrun string the SQL definition
+     */
+    abstract public function getSqlDefinition();
 
-	/**
-	 * Set property defaultValue
-	 *
-	 * @param string $defaultValue
-	 */
-	public function setDefaultValue($defaultValue) {
-		$this->defaultValue = $defaultValue;
-	}
+    /**
+     * Template Method which should return the type hinting information
+     * being used in PHPDoc Comments.
+     * Examples: int, string, Tx_FooBar_Something, \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_FooBar_Something>
+     *
+     * @return string
+     */
+    abstract public function getTypeForComment();
 
-	/**
-	 *
-	 * @return bool
-	 */
-	public function getHasDefaultValue() {
-		return isset($this->defaultValue);
-	}
+    /**
+     * Template method which should return the PHP type hint
+     * Example: \TYPO3\CMS\Extbase\Persistence\ObjectStorage, array, Tx_FooBar_Something
+     *
+     * @return string
+     */
+    abstract public function getTypeHint();
 
-	/**
-	 * Get property uniqueIdentifier
-	 *
-	 * @return string
-	 */
-	public function getUniqueIdentifier() {
-		return $this->uniqueIdentifier;
-	}
+    /**
+     * true if this property is required, false otherwise.
+     *
+     * @return bool
+     */
+    public function getRequired()
+    {
+        return $this->required;
+    }
 
-	/**
-	 * Set property uniqueIdentifier
-	 *
-	 * @param string $uniqueIdentifier
-	 */
-	public function setUniqueIdentifier($uniqueIdentifier) {
-		$this->uniqueIdentifier = $uniqueIdentifier;
-	}
+    /**
+     * Set whether this property is required
+     *
+     * @param bool $required
+     */
+    public function setRequired($required)
+    {
+        $this->required = $required;
+    }
 
-	/**
-	 *
-	 * @return bool TRUE (if property is of type relation any to many)
-	 */
-	public function isAnyToManyRelation() {
-		return is_subclass_of($this, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation');
-	}
+    /**
+     * Set whether this property is exclude field
+     *
+     * @param bool $excludeField
+     * @return void
+     */
+    public function setExcludeField($excludeField)
+    {
+        $this->excludeField = $excludeField;
+    }
 
-	/**
-	 *
-	 * @return bool TRUE (if property is of type relation any to many)
-	 */
-	public function isZeroToManyRelation() {
-		return FALSE;
-	}
+    /**
+     * true if this property is an exclude field, false otherwise.
+     *
+     * @return bool
+     */
+    public function getExcludeField()
+    {
+        return $this->excludeField;
+    }
 
+    /**
+     * Get the validate annotation to be used in the domain model for this property.
+     *
+     * @return string
+     */
+    public function getValidateAnnotation()
+    {
+        if ($this->required) {
+            return '@validate NotEmpty';
+        }
+        return '';
+    }
 
-	/**
-	 *
-	 * @return bool TRUE (if property is of type relation)
-	 */
-	public function isRelation() {
-		return is_subclass_of($this, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation');
-	}
+    /**
+     * Get the data type of this property. This is the last part after EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject_*
+     *
+     * @return string the data type of this property
+     */
+    public function getDataType()
+    {
+        $shortClassNameParts = explode('\\', get_class($this));
+        return end($shortClassNameParts);
+    }
 
-	/**
-	 *
-	 * @return bool TRUE (if property is of type boolean)
-	 */
-	public function isBoolean() {
-		return is_a($this, '\EBT\ExtensionBuilder\Domain_Model\DomainObject\BooleanProperty');
-	}
+    /**
+     * Is this property displayable inside a Fluid template?
+     *
+     * @return bool true if this property can be displayed inside a fluid template
+     */
+    public function getIsDisplayable()
+    {
+        return true;
+    }
 
+    /**
+     * The string to be used inside object accessors to display this property.
+     *
+     * @return string
+     */
+    public function getNameToBeDisplayedInFluidTemplate()
+    {
+        return $this->name;
+    }
 
-	/**
-	 * Get property description to be used in comments
-	 *
-	 * @return string Property description
-	 */
-	public function getDescription() {
-		if ($this->description) {
-			return $this->description;
-		} else {
-			return $this->getName();
-		}
-	}
+    /**
+     * The locallang key for this property which contains the label.
+     *
+     * @return <type>
+     */
+    public function getLabelNamespace()
+    {
+        return $this->domainObject->getLabelNamespace() . '.' . $this->getFieldName();
+    }
 
-	/**
-	 * Set property description
-	 *
-	 * @param string $description Property description
-	 */
-	public function setDescription($description) {
-		$this->description = $description;
-	}
+    /**
+     * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
+     *
+     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject the domain object this property belongs to
+     */
+    public function setDomainObject(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject)
+    {
+        $this->domainObject = $domainObject;
+    }
 
-	/**
-	 * Returns a field name used in the database. This is the property name converted
-	 * to lowercase underscore (mySpecialProperty -> my_special_property).
-	 *
-	 * @return string the field name in lowercase underscore
-	 */
-	public function getFieldName() {
-		$fieldName = \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($this->name);
-		if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($fieldName)) {
-			$fieldName = $this->domainObject->getExtension()->getShortExtensionKey() . '_' . $fieldName;
-		}
-		return $fieldName;
-	}
+    /**
+     *
+     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     */
+    public function getDomainObject()
+    {
+        return $this->domainObject;
+    }
 
-	/**
-	 * Get SQL Definition to be used inside CREATE TABLE.
-	 *
-	 * @retrun string the SQL definition
-	 */
-	abstract public function getSqlDefinition();
+    /**
+     * The Typoscript statement used by extbase to map the property to
+     * a specific database fieldname
+     *
+     * @return string $mappingStatement
+     */
+    public function getMappingStatement()
+    {
+        if ($this->getFieldName() != \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($this->name)) {
+            return $this->getFieldName() . '.mapOnProperty = ' . $this->name;
+        } else return null;
+    }
 
+    /**
+     * Getter for $needsUploadFolder
+     *
+     * @return bool $needsUploadFolder
+     */
+    public function getNeedsUploadFolder()
+    {
+        return $this->needsUploadFolder;
+    }
 
-	/**
-	 * Template Method which should return the type hinting information
-	 * being used in PHPDoc Comments.
-	 * Examples: int, string, Tx_FooBar_Something, \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_FooBar_Something>
-	 *
-	 * @return string
-	 */
-	abstract public function getTypeForComment();
+    /**
+     *
+     */
+    public function isNew()
+    {
+        return $this->new;
+    }
 
-	/**
-	 * Template method which should return the PHP type hint
-	 * Example: \TYPO3\CMS\Extbase\Persistence\ObjectStorage, array, Tx_FooBar_Something
-	 *
-	 * @return string
-	 */
-	abstract public function getTypeHint();
+    /**
+     *
+     * @param bool $new
+     */
+    public function setNew($new)
+    {
+        $this->new = $new;
+    }
 
-	/**
-	 * TRUE if this property is required, FALSE otherwise.
-	 *
-	 * @return bool
-	 */
-	public function getRequired() {
-		return $this->required;
-	}
+    /**
+     * Getter for $useRTE
+     *
+     * @return bool $useRTE
+     */
+    public function getUseRTE()
+    {
+        return $this->useRTE;
+    }
 
-	/**
-	 * Set whether this property is required
-	 *
-	 * @param bool $required
-	 */
-	public function setRequired($required) {
-		$this->required = $required;
-	}
+    /**
+     * @return string
+     */
+    public function getUnqualifiedType()
+    {
+        $type = $this->getTypeForComment();
+        if (substr($type, 0, 1) === chr(92)) {
+            return substr($type, 1);
+        } else {
+            return $type;
+        }
+    }
 
-	/**
-	 * Set whether this property is exclude field
-	 *
-	 * @param bool $excludeField
-	 * @return void
-	 */
-	public function setExcludeField($excludeField) {
-		$this->excludeField = $excludeField;
-	}
+    /**
+     * @param mixed $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
 
-	/**
-	 * TRUE if this property is an exclude field, FALSE otherwise.
-	 *
-	 * @return bool
-	 */
-	public function getExcludeField() {
-		return $this->excludeField;
-	}
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
 
-	/**
-	 * Get the validate annotation to be used in the domain model for this property.
-	 *
-	 * @return string
-	 */
-	public function getValidateAnnotation() {
-		if ($this->required) {
-			return '@validate NotEmpty';
-		}
-		return '';
-	}
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 
-	/**
-	 * Get the data type of this property. This is the last part after EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject_*
-	 *
-	 * @return string the data type of this property
-	 */
-	public function getDataType() {
-		$shortClassNameParts = explode('\\', get_class($this));
-		return end($shortClassNameParts);
-	}
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
 
-	/**
-	 * Is this property displayable inside a Fluid template?
-	 *
-	 * @return bool TRUE if this property can be displayed inside a fluid template
-	 */
-	public function getIsDisplayable() {
-		return TRUE;
-	}
-
-	/**
-	 * The string to be used inside object accessors to display this property.
-	 *
-	 * @return string
-	 */
-	public function getNameToBeDisplayedInFluidTemplate() {
-		return $this->name;
-	}
-
-	/**
-	 * The locallang key for this property which contains the label.
-	 *
-	 * @return <type>
-	 */
-	public function getLabelNamespace() {
-		return $this->domainObject->getLabelNamespace() . '.' . $this->getFieldName();
-	}
-
-	/**
-	 * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
-	 *
-	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject the domain object this property belongs to
-	 */
-	public function setDomainObject(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject) {
-		$this->domainObject = $domainObject;
-	}
-
-	/**
-	 *
-	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-	 */
-	public function getDomainObject() {
-		return $this->domainObject;
-	}
-
-	/**
-	 * The Typoscript statement used by extbase to map the property to
-	 * a specific database fieldname
-	 *
-	 * @return string $mappingStatement
-	 */
-	public function getMappingStatement() {
-		if ($this->getFieldName() != \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($this->name)) {
-			return $this->getFieldName() . '.mapOnProperty = ' . $this->name;
-		}
-		else return NULL;
-	}
-
-
-	/**
-	 * Getter for $needsUploadFolder
-	 *
-	 * @return bool $needsUploadFolder
-	 */
-	public function getNeedsUploadFolder() {
-		return $this->needsUploadFolder;
-	}
-
-
-	/**
-	 *
-	 */
-	public function isNew() {
-		return $this->new;
-	}
-
-
-	/**
-	 *
-	 * @param bool $new
-	 */
-	public function setNew($new) {
-		$this->new = $new;
-	}
-
-	/**
-	 * Getter for $useRTE
-	 *
-	 * @return bool $useRTE
-	 */
-	public function getUseRTE() {
-		return $this->useRTE;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getUnqualifiedType() {
-		$type = $this->getTypeForComment();
-		if (substr($type, 0, 1) === chr(92)) {
-			return substr($type, 1);
-		} else {
-			return $type;
-		}
-	}
-
-	/**
-	 * @param mixed $value
-	 */
-	public function setValue($value) {
-		$this->value = $value;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getValue() {
-		return $this->value;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getType() {
-		return $this->type;
-	}
-
-	/**
-	 * @param string $type
-	 */
-	public function setType($type) {
-		$this->type = $type;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isFileReference() {
-		return in_array($this->type, array('Image', 'File'));
-	}
-
+    /**
+     * @return bool
+     */
+    public function isFileReference()
+    {
+        return in_array($this->type, array('Image', 'File'));
+    }
 }

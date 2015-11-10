@@ -34,17 +34,20 @@ namespace {extension.nameSpaceName}\Tests\Unit\Domain\Model;
  *
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
 </f:for> */
-class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
+class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
+{
 	/**
 	 * @var {domainObject.fullQualifiedClassName}
 	 */
 	protected $subject = NULL;
 
-	public function setUp() {
+	public function setUp()
+	{
 		$this->subject = new {domainObject.fullQualifiedClassName}();
 	}
 
-	public function tearDown() {
+	public function tearDown()
+	{
 		unset($this->subject);
 	}
 <f:if condition="{f:count(subject:domainObject.properties)} > 0">
@@ -54,7 +57,8 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function get{property.name -> k:format.uppercaseFirst()}ReturnsInitialValueFor<f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}"><f:then>FileReference</f:then><f:else>{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}</f:else></f:if>() {<f:if condition="{property.unqualifiedType} == 'integer'">
+	public function get{property.name -> k:format.uppercaseFirst()}ReturnsInitialValueFor<f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}"><f:then>FileReference</f:then><f:else>{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}</f:else></f:if>()
+	{<f:if condition="{property.unqualifiedType} == 'integer'">
 		$this->assertSame(
 			0,
 			$this->subject->get{property.name -> k:format.uppercaseFirst()}()
@@ -100,7 +104,8 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function set{property.name -> k:format.uppercaseFirst()}For<f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}"><f:then>FileReference</f:then><f:else>{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"ObjectStorageContaining{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}</f:else></f:if>Sets{property.name -> k:format.uppercaseFirst()}() {<f:if condition="{property.unqualifiedType} == 'string'">
+	public function set{property.name -> k:format.uppercaseFirst()}For<f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}"><f:then>FileReference</f:then><f:else>{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"ObjectStorageContaining{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}</f:else></f:if>Sets{property.name -> k:format.uppercaseFirst()}()
+	{<f:if condition="{property.unqualifiedType} == 'string'">
 		$this->subject->set{property.name -> k:format.uppercaseFirst()}('Conceived at T3CON10');
 
 		$this->assertAttributeEquals(
@@ -177,7 +182,8 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function add{property.name -> k:singularize() -> k:format.uppercaseFirst()}ToObjectStorageHolding{property.name -> k:format.uppercaseFirst()}() {
+	public function add{property.name -> k:singularize() -> k:format.uppercaseFirst()}ToObjectStorageHolding{property.name -> k:format.uppercaseFirst()}()
+	{
 		${property.name -> k:singularize()} = new {property.foreignClassName}();
 		${property.name}ObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('attach'), array(), '', FALSE);
 		${property.name}ObjectStorageMock->expects($this->once())->method('attach')->with($this->equalTo(${property.name -> k:singularize()}));
@@ -189,7 +195,8 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function remove{property.name -> k:singularize() -> k:format.uppercaseFirst()}FromObjectStorageHolding{property.name -> k:format.uppercaseFirst()}() {
+	public function remove{property.name -> k:singularize() -> k:format.uppercaseFirst()}FromObjectStorageHolding{property.name -> k:format.uppercaseFirst()}()
+	{
 		${property.name -> k:singularize()} = new {property.foreignClassName}();
 		${property.name}ObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('detach'), array(), '', FALSE);
 		${property.name}ObjectStorageMock->expects($this->once())->method('detach')->with($this->equalTo(${property.name -> k:singularize()}));
@@ -201,7 +208,8 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
 	 */
-	public function dummyTestToNotLeaveThisFileEmpty() {
+	public function dummyTestToNotLeaveThisFileEmpty()
+	{
 		$this->markTestIncomplete();
 	}</f:else></f:if>
 }

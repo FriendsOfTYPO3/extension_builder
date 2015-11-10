@@ -34,64 +34,71 @@ namespace FIXTURE\TestExtension\Tests\Unit\Domain\Model;
  *
  * @author John Doe <mail@typo3.com>
  */
-class Child4Test extends \TYPO3\CMS\Core\Tests\UnitTestCase {
-	/**
-	 * @var \FIXTURE\TestExtension\Domain\Model\Child4
-	 */
-	protected $subject = NULL;
+class Child4Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
+{
+    /**
+     * @var \FIXTURE\TestExtension\Domain\Model\Child4
+     */
+    protected $subject = NULL;
 
-	public function setUp() {
-		$this->subject = new \FIXTURE\TestExtension\Domain\Model\Child4();
-	}
+    public function setUp()
+    {
+        $this->subject = new \FIXTURE\TestExtension\Domain\Model\Child4();
+    }
 
-	public function tearDown() {
-		unset($this->subject);
-	}
+    public function tearDown()
+    {
+        unset($this->subject);
+    }
 
-	/**
-	 * @test
-	 */
-	public function getNameReturnsInitialValueForString() {
-		$this->assertSame(
-			'',
-			$this->subject->getName()
-		);
-	}
+    /**
+     * @test
+     */
+    public function getNameReturnsInitialValueForString()
+    {
+        $this->assertSame(
+            '',
+            $this->subject->getName()
+        );
+    }
 
-	/**
-	 * @test
-	 */
-	public function setNameForStringSetsName() {
-		$this->subject->setName('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function setNameForStringSetsName()
+    {
+        $this->subject->setName('Conceived at T3CON10');
 
-		$this->assertAttributeEquals(
-			'Conceived at T3CON10',
-			'name',
-			$this->subject
-		);
-	}
+        $this->assertAttributeEquals(
+            'Conceived at T3CON10',
+            'name',
+            $this->subject
+        );
+    }
 
-	/**
-	 * @test
-	 */
-	public function getFilePropertyReturnsInitialValueForFileReference() {
-		$this->assertEquals(
-			NULL,
-			$this->subject->getFileProperty()
-		);
-	}
+    /**
+     * @test
+     */
+    public function getFilePropertyReturnsInitialValueForFileReference()
+    {
+        $this->assertEquals(
+            NULL,
+            $this->subject->getFileProperty()
+        );
+    }
 
-	/**
-	 * @test
-	 */
-	public function setFilePropertyForFileReferenceSetsFileProperty() {
-		$fileReferenceFixture = new \TYPO3\CMS\Extbase\Domain\Model\FileReference();
-		$this->subject->setFileProperty($fileReferenceFixture);
+    /**
+     * @test
+     */
+    public function setFilePropertyForFileReferenceSetsFileProperty()
+    {
+        $fileReferenceFixture = new \TYPO3\CMS\Extbase\Domain\Model\FileReference();
+        $this->subject->setFileProperty($fileReferenceFixture);
 
-		$this->assertAttributeEquals(
-			$fileReferenceFixture,
-			'fileProperty',
-			$this->subject
-		);
-	}
+        $this->assertAttributeEquals(
+            $fileReferenceFixture,
+            'fileProperty',
+            $this->subject
+        );
+    }
 }
