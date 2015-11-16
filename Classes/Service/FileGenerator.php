@@ -294,6 +294,9 @@ class FileGenerator
                     $domainObjectsNeedingOverrides[$domainObject->getDatabaseTableName()][] = $domainObject;
                 }
             }
+            if (count($domainObjectsNeedingOverrides) > 0) {
+                GeneralUtility::mkdir_deep($this->extensionDirectory, 'Configuration/TCA/Overrides');
+            }
             $tablesNeedingTypeFields = $this->extension->getTablesForTypeFieldDefinitions();
             foreach ($domainObjectsNeedingOverrides as $tableName => $domainObjects) {
                 $addRecordTypeField = in_array($tableName, $tablesNeedingTypeFields);
