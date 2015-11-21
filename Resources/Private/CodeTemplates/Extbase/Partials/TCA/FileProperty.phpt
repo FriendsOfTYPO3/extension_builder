@@ -1,5 +1,5 @@
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
-	'{property.name}',
+	'{property.fieldName}',
 	array(<f:if condition="{property.maxItems}">'maxitems' => {property.maxItems},</f:if>
 		'appearance' => array(
 			'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:media.addFileReference'
