@@ -6,8 +6,8 @@ return array(
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
-		'dividers2tabs' => TRUE,
-<f:if condition="{domainObject.sorting}">		'sortby' => 'sorting',</f:if>
+		'dividers2tabs' => TRUE,<f:if condition="{domainObject.sorting}">
+		'sortby' => 'sorting',</f:if>
 <f:if condition="{extension.supportVersioning}">		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,</f:if>
 <f:if condition="{extension.supportLocalization}">

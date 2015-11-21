@@ -4,8 +4,9 @@
 	</f:then><f:else>array(
 	'type' => 'inline',
 	'foreign_table' => '{property.foreignDatabaseTableName}',
-	'foreign_field' => '{property.foreignKeyName}',
-	'maxitems'      => 9999,
+	'foreign_field' => '{property.foreignKeyName}',<f:if condition="{property.foreignModel.sorting}">
+	'foreign_sortby' => 'sorting',</f:if>
+	'maxitems' => 9999,
 	'appearance' => array(
 		'collapseAll' => 0,
 		'levelLinksPosition' => 'top',
