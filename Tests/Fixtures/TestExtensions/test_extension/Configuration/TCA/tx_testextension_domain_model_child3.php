@@ -139,7 +139,7 @@ return array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3.image_property',
 			'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
-				'imageProperty',
+				'image_property',
 				array('maxitems' => 1,
 					'appearance' => array(
 						'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:images.addFileReference'
