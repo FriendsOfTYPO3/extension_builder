@@ -172,7 +172,7 @@ return array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_testextension_domain_model_child2',
 				'foreign_field' => 'main',
-				'maxitems'      => 9999,
+				'maxitems' => 9999,
 				'appearance' => array(
 					'collapseAll' => 0,
 					'levelLinksPosition' => 'top',
