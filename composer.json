@@ -4,13 +4,9 @@
 	"description": "Tool to kickstart and maintain TYPO3 extensions",
 	"homepage": "http://typo3.org",
 	"license": ["GPL-2.0+"],
-	"version": "7.6.0-dev",
+	"version": "7.6",
 	"require": {
-		"typo3/cms-core": "7.x-dev"
-	},
-	"require-dev": {
-		"mikey179/vfsStream": "1.4.*@dev",
-		"phpunit/phpunit": "~4.7.0"
+		"typo3/cms-core": "~7.6"
 	},
 	"autoload": {
 		"psr-4": {

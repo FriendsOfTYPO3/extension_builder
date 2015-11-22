@@ -1,403 +1,95 @@
-[BUGFIX] Avoid race condition in tests
-Resolves: #58717
-[BUGFIX] Follow-Up: Remove obsolete unit tests from test-extension fixture
-Follow-up to 4226c010282b9e158044c2895d4c402a44797a27
-Resolves: #58700
-[TASK] Do not generate Controller tests which assert mock behavior of the SUT
-Resolves: #58700
-[TASK] Validate models on clientside
-Resolves: #58647
-[WIP] Optimize the space usage in modeler
-This patch tries to reduce the modeler view to the basic
-information needed to get an idea of the model.
-Resolves: #58453
-Resolves: #58560
-[BUGFIX] Use return value of array_merge_recursive_overrule
-Resolves: #58590
-[BUGFIX] Wrong tags in property partial
-Resolves: #58589
-[TASK] Implement placeholders
-Resolves: #58481
-[BUGFIX] Don't add class to relation fieldset
-Resolves: #58482
-[TASK] Follow-up: Remove obsolete emConf settings
-Fix XML in xliff-file.
-Resolves: #58478
-[TASK] Remove obsolete emConf settings
-Resolves: #58478
-[TASK] Add a reST documentation
-This documentation is far from being complete yet, but it should
-be a starting point. Maybe other contributors will extend it in
-some areas (like security, testing, documentation etc)
-Resolves: #58259
-[TASK] Add an option to skip warnings
-This patch enables a configuration option to skip certain warnings
-in the extensions settings.yaml (based on the error code)
-It also removes the global advancedConfiguration flag
-Resolves: #58443
-[TASK] Enable 6.1 compatibility
-Just adds 2 ViewHelper that were not available
-in 6.1 (Switch & Case)
-I think if that is all we need to support 6.1
-we should do it
-[TASK] Remove legacy code
-Resolves: #58439
-[TASK] Adapt fixtures to new configuration option
-[FEATURE] Add configuration option for date in xliff files
-Resolves: #58405
-[CLEANUP] Fix formatting issues
-[CLEANUP] Remove unused view helpers
-Resolves: #58374
-[BUGFIX] Wires should be removed together with relations
-If a wired relation is removed the related wire should be removed also
-Resolves: #5677
-[TASK] Remove unused methods
-Resolves: #58255
-[TASK] Remove unused code
-Remove all reflection classes and replace usage in Tests
-Resolves: #58251
-Resolves: #58254
-[BUGFIX] Replace wrong class name
-Resolves: #58245
-[TASK] Replace lowercase constant names with uppercase
-I skipped the PHP Parser library in Resources/Private
-since it will be easier to compare the code in case
-of an update
-Resolves: #58228
-[TASK] Include the generated tests in test_extension fixture
-The generated tests should be also compared in Compatibility test
-Resolves: #58396
-[BUGFIX] makeCategorizable: use $_EXTKEY for the extension-key
-Variable $extensionKey currently used is not available there.
-Resolves: #58350
-[TASK] Pretty print JSON
-Resolves: #49315
-[BUGFIX] Avoid race condition in loading events
-[CLEANUP] Use fully-qualified class names for @param, @return and @var
-This makes the code more readable.
-Resolves: #58277
-[CLEANUP] Cleanup \EBT\ExtensionBuilder\Domain\Model\DomainObject
-Resolves: #58275
-[CLEANUP] Cleanup \EBT\ExtensionBuilder\Domain\Model\NamespaceObject
-Resolves: #58271
-[BUGFIX] Re-add two @return $this annotations
-This is a regression bug introduced with commit
-84b06e7e123 which solves #58256.
-At the moment unit tests are red.
-Resolves: #58304
-[CLEANUP] Cleanup various domain model classes
-* import classes
-* remove superfluous comments
-* Improve some vertical rhythm by using some vertical space
-* Support method chaining not only for some of the methods in a class
-* remove superfluous empty lines
-Resolves: #58256
-[BUGFIX] Fix line endings in generated .htaccess file
-Now uses LF instead of CRLF.
-Resolves: #58279
-[BUGFIX] Fix getter/setter tests for model property types 'file' and 'image'
-The property types 'file' and 'image' use FileReference from
-Extbase FAL implementation.
-The generated unit test for the getter/setter of these model
-properties test for FileReference.
-Resolves: #58111
-[CLEANUP] Cleanup \EBT\ExtensionBuilder\Domain\Model\Person
-Resolves: #58270
-[CLEANUP] Cleanup \EBT\ExtensionBuilder\Domain\Model\BackendModule
-Resolves: #58273
-[CLEANUP] Cleanup \EBT\ExtensionBuilder\Domain\Model\Container
-Resolves: #58274
-[CLEANUP] Cleanup \EBT\ExtensionBuilder\Domain\Model\Plugin
-Resolves: #58269
-[TASK] Refactor Javascript loading
-Somehow the YAHOO.util.Event.onDOMReady event
-was not fired. This patch changes the event listener.
-Tested on Chrome, FF and Safari
-[TASK] Use the namespaced vfsStream
-The current version of vfsStream (as shipped with the PHPUnit extension)
-now uses the namespace \org\bovigo\vfs\vfsStream. We should use it, too.
-Resolves: #58244
-[BUGFIX] Fix "undefined" PhpStorm warnings
-Fix most of the occurrences of undefined classes, namespaces, methods, fields
-and variables, including instances of "might not be defined".
-This change also deletes the unused JsonViewHelper (which calls inexistent
-methods) and the ToolsTest (which does not include a single non-skipped test
-and which also calls inexistent methods).
-Resolves: #58234
-[CLEANUP] Cleanup ConfigurationManager.php
-This mainly fixes CGL violations:
-* missing @return annotations
-* variables must be lower camel case
-* line lengths
-* remove unused local variables
-* use single quotes instead of double quotes
-Resolves: #58246
-[CLEANUP] Cleanup Model/ClassObject.php
-* Import classes
-Resolves: #58248
-[CLEANUP] Drop the ClassParser class
-This class is not used anymore and can be removed.
-Resolves: #58252
-[CLEANUP] Cleanup BuilderModuleController.php
-This mainly fixes CGL violations:
-* import classes
-* variable names must be lower camel case
-* method names must be lower camel case
-* intentions of blocks
-* Add getBackendUserAuthentication()
-Resolves: #58247
-[CLEANUP] Fix some CGL violations in ext_tables.php
-* comment line length
-* intentions
-Resolves: #58241
-[TASK] Use $GLOBALS['TCA'] instead of $TCA
-Resolves: #58237
-[BUGFIX] Duplicate model property names should not be valid
-If a model has a proerty and a relation with the same name
-it would result in a class with 2 properties of the same name
-This patch also improves the client side validation before saving
-Resolves: #50185
-[BUGFIX] Remove leftovers from merge conflicts.
-The most recent merge introduced some syntax errors because of some
-remaining merge conflict markers.
-Relates: #58229
-[CLEANUP] Remove more SVN ID markers
-As this extension is stored in a GIT repository, the SVN ID markers
-are no longer needed.
-This change set removes some ID markers that were overlooked during the first
-change set.
-Resolves: #58218
-[CLEANUP] Use "elseif" instead of "else if"
-Resolves: #58227
-[CLEANUP] Drop the closing PHP tags
-This change drop the closing PHP tags both from the extension classes as well
-as from the generated files.
-This reflects the current version of the TYPO3 CGL.
-Resolves: #58229
-[BUGFIX] Clean up and fix the backslash usage in strings
-* use the constants CR, LF, CRLF and TAB whereever possible
-Resolves: #58222
-[BUGFIX] Exception\ParseError extends an inexistent class
-The leading backslash in the base class name is missing.
-Resolves: #58221
-[CLEANUP] Drop commented-out code
-Resolves: #58219
-[CLEANUP] Drop SVN ID markers
-As this extension is stored in a GIT repository, the SVN ID markers
-are no longer needed.
-Resolves: #58218
-[BUGFIX] Typo in ValidationService::$reservedExtbaseNames
-Reflectionexception -> ReflectionException
-Resolves: #58216
-[CLEANUP] Add and clean up @var and default values for fields
-Fields should have default values to communicate that we
-haven't just forgotten them.
-This change also adds some missing @var annotations and
-some undeclared fields.
-Resolves: #58084
-[TASK] Remove origuid column since it's not used anymore
-Steffen Ritter gave me the hint, that origuid is not
-used anymore in TYPO3 core
-[TASK] Adapt settings.yaml in fixtures
-Somehow I missed this yesterday.
-Without this file comparison in compatibility
-test fails
-[BUGFIX] Set correct default values in roundtrip mode
-The class builder now sets correct default values for existing properties.
-Since there might be cases where it makes a difference if a class property
-is NULL or an empty string or 0 (for numeric type) this patch adds a
-configuration flag setDefaultValuesForClassProperties which can be set
-to false to disable this behaviour (tbd)
-Resolves: #58164
-[BUGFIX] Trash-button should properly use t3skin
-Resolves: #57540
-[TASK] Remove ExtJS and ExtDirect
-Refactoring of Javascript to avoid global
-variables. ContainerViewHelper is just a
-workaround for #58075
-Resolves: #58115
-[TASK] Make source language configurable
-Resolves: #58049
-[TASK] Keep existing keys in xliff files when merging
-Resolves: #57688
-[CLEANUP] setUp and tearDown should be protected
-setUp and tearDown are protected in the PHPUnit base classes.
-There is no reason to make them public in the generated unit tests.
-Resolves: #58083
-[TASK] Adapt fixtures to last changes
-Removes space in die () call and ending php tags
-in fixtures
-[TASK] Don't create closing php tags
-Resolves: #57990
-[TASK] Add extension category "Distribution"
-Resolves: #57419
-[TASK] Preparation for TER release
-Remove legacy stuff related to not supported versions
-[TASK] Enable merging of xliff files
-This patch enables "merging" of xliff localization files.
-Manually added key/label pairs are preserved on rewriting
-the files, but changes made in the modeler are applied.
-When renaming a model or a property the old id/label is
-not removed, since we would have to load all labels from
-the previous version of the extension to identify renamed
-items.
-Support for xml format is dropped.
-Resolves: #57688
-[TASK] Enable FAL related property types
-The FAL integration in extbase is still quite incomplete.
-This patch enables adding files or images as properties.
-A property of type file or image is in fact a relation.
-But if you create a relation to sys_file_reference in the
-modeler, you won't get the appropriate form element for
-adding a reference or uploading files in the Backend.
-So this patch adds a property of type file_reference if
-maxItems is 1 and a 1:n relation (ObjectStorage),
-if maxItems is > 1.
-The folder property, is dropped since it is not
-supportd by FAL. Instead a relation to sys_file_collection
-could be added as usual.
-Resolves: #57791
-[TASK] Remove old doc/manual.sxw
-[TASK] Include new Extension Manual
-Resolves: #57853
-[TASK] Enable property type specific options
-Prepare TCA partials for FAL properties
-Since the TCA for FAL is generated by a method that returns an array,
-we have to rearrange the template for the domain objects TCA file.
-All Partials define an array now, not only the key value pairs
-[BUGFIX] Set correct default values
-Resolves: #57738
-[TASK] Use sortable in inline appearance
-Resolves: #55682
-[TASK] Add rte_transform to rte options
-Resolves: #53479
-[FEATURE] Enable DB Updates in modeler
-Resolves: #57654
-[TASK] Adapt unit tests
-Extend non deprecated UnitTestCase
-tests controller->addFlashMessage
-Resolves: #28769
-[TASK] Dont create a Controller class if no actions are defined
-Resolves: #57687
-[TASK] Add warning and link to WIKI in all write actions
-Also includes some improvements in the generated Templates
-Resolves: #57686
-[TASK] Followup: Use t3skin-icons for DomainObject-editor
-Previous commit mixed up save- and close-icons.
-Resolves: #57432
-[TASK] Add option to make domainobjects categorizable
-Default-name for category-field is "categories".
-Description how categorization is enabled:
-http://wiki.typo3.org/TYPO3_6.0#Category
-Resolves: #56968
-[TASK] Use t3skin-icons for DomainObject-editor
-Space in the heading of that box is limited.
-Replace words like "Cancel" with an icon.
-Use icons from t3skin.
-Resolves: #57432
-[BUGFIX] Refactor TCA rendering
-Resolves: #50064
-[FEATURE] Toggle extended configuration options
-To enable a simple interface but more options for the
-experienced developer there is an advancedMode which
-toggles additional options in the interface
-Access key is "a"
-Also removes 3 Javascript files that were not used
-Resolves: #57423
-[BUGFIX] Wrong type field lists
-The showitem lists in TCA had wrong commas introduced in https://review.typo3.org/#/c/28450/
-If all optional fields are added, the list starts with ' ,hidden'
-Resolves: #56965
-[BUGFIX] Fix some styling issues
-Resolves: #56094
-[TASK] DomainObject: Add options to make default-fields optional
-By default the fields deleted, disabled (in db: hidden) as well
-as starttime/endtime are added to a domain-object. Allow to
-turn them of on per object and have files properly be generated.
-Resolves: #56965
-[BUGFIX] Missing clearfix for plugins and persons
-Thanks to Robert Vock for the patch
-Resolves: #56093
-[BUGFIX] Autoloader fails on Windows
-str_replace fails because of different directory-separator
-Windows uses.
-Resolves: #56619
-[TASK] Cleanup Ajax URL generation
-The Ajax URL generation is cleaned up to
-match the current state in TYPO3 master (6.2)
-The compatibility for < 6.2 is still retained.
-Related: #57096
-[TASK] Introduce advancedMode setting
-The advanced mode flag should enable to fulfill the needs of a
-"first time" user and an advanced user in extension development
-Also added missing TYPO3 versions to Extension configuration panel
-in the modeler
-Resolves: #57201
-[TASK] Use new docheader for backend template
-Thanks to Robert Vock for the patch
-Resolves: #56091
-[BUGFIX] Add dontvalidate to default editAction
-This will allow opening a record that might not pass validators
-to edit and update it once it is adjusted.
-Resolves: #53398
-Resources/Private/PHP/tmp added as empty directory with .gitignore inside
-Resources/Private/PHP/tmp was added as submodule without submodule
-[BUGFIX] Missing quotes in class_exists parameter
-Resolves: #56512
-[TASK] Use appropriate SQL handler class
-Resolves: #56477
-[BUGFIX] Fix date format in code templates
-Removes also a wrong trailing slash in CompatibilityTest
-Resolves: #56476
-[BUGFIX] Make Extension Builder work with current master
-In the current TYPO3 master branch (6.2) all modules
-require a module token to avoid CSRF attacks.
-Because of that, we need to change the smd endpoint
-URL to be dynamic to generate the target URL
-properly.
-The change will make it work in master branch
-but is still compatible with older TYPO3 versions.
-Resolves: #56465
-[TASK] Integrate PHP-Parser
-Use PHP-Parser based on tokenizer.
-Single line comments are now restricted to appear before
-nodes, otherwise they will be lost.
-Needs still extensive testing to cover more possible coding
-styles.
-In general the handling of whitespaces and comments is sometimes
-difficult; I adapted the printer to keep linebreaks in array
-definitions and in method parameters
-Resolves: #55686
-[FEATURE] Open in new window link
-The link will appear on the upper right corner if the
-module is not shown in it's own window
-The issue is only party fixed, the print mode will be skipped
-for now. Please open a new issue if you still think it is needed
-Resolves: #53230
-[BUGFIX] Avoid error in EXT.Direct
-Resolves: #55337
-[TASK] Remove wrong trailing backslashes
-Resolves: #53775
-[BUGFIX] Replace wrong method call
-There was a wrong call to the new method getFullyQualifiedClassName
-[TASK] Replace non namespaced class references
-Follow up to #54620
-[TASK] Generate UnitTests for default ControllerActions
-Resolves: #54636
-[BUGFIX] Fix missing getter/setter tests
-Creates getter/setter tests for 1:1 and n:1 relations
-and properties of type \DateTime.
-Resolves: #54713
-[BUGFIX] Replace non namespaced class call
-Resolves: #54865
-[TASK] Use objectStorage mock in generated Domain Model Tests
-Resolves: #54441
-[BUGFIX] Add missing backslash to namespace
-Resolves: #54714
-[BUGFIX] Fix getter assertions in template for domain model tests
-Resolves: #54712
-
---HOW TO CREATE THE CHANGELOG
---===========================
---
--- git log 1143463f623e7cb5bb1..HEAD --pretty=format:"%s%n%b%n" | grep -v "^$" | grep -v "Change-Id*\|Reviewed-by*\|Reviewed-on*\|Tested-by*\|Releases*" > ChangeLog
+[BUGFIX] Required has no effects for files
+Resolves: #71668
+FollowUp 71028 use fieldName as argument
+[Bugfix] use fieldName as argument
+Resolves #71028
+[BUGFIX] Create overrides directory if existing models are extended
+Resolves: #71611
+[BUGFIX] Prevent error on existing files without namespace
+[BUGFIX] Add 'foreign_sortby' for relations to records with sorting
+If 'foreign_sortby' is set related records are sorted correctly
+upon fetching.
+Resolves: #68694
+[TASK] Use PSR-2
+Resolves: #70313
+[BUGFIX] Repository should default to respect sorting
+If a model has sorting the repository should respect it.
+Set the defaultOrderings-property.
+Resolves: #49579
+[TASK] Add renderType for select-fields
+Resolves: #71344
+[TASK] Remove new action test
+The newAction in controllers is empty and thus
+can't be tested
+[BUGFIX] Fix regex for smd url
+Resolves: #70031
+Make relations sortable
+Resolves: #68689
+[TASK] Add client side validator
+Resolves: #59379
+[FEATURE] Confirm overwrite
+Resolves: #67232
+[TASK] Enable renaming of vendor
+Resolves: #70818
+Add more properties to fixture tests
+Update version to 7.6
+Use correct typoscript key for backend modules
+Resolves: #69954
+[BUGFIX] Use PSR-7-based Routing for Backend AJAX Requests
+In TYPO3 CMS after 7.5.0 with commit
+Introduce PSR-7-based Routing for Backend AJAX Requests
+the way for doing backend AJAX-requests changed.
+Use the TYPO3.settings.ajaxUrls-identifier depending on version.
+Resolves: #70808
+[TASK] Implement traits
+Resolves: #63095
+Remove renderMode attribute for flashMessages
+Resolves: #69465
+Use new vendor name in fixture extension
+Update to version 7.5-dev
+Resolves: #70188
+[BUGFIX] Fix wrong jQuery selectors
+When adding relations in the modeler the selector
+for the uid of the relation was wrong leading to
+wrong wire configuration, when the extension is
+loaded again and to wrong mapping of relation source
+Remove unused Exception translation code
+Use getAccessibleMock instead of getMock($this->buildAccessibleProxy...)
+Make use of PHP 5.5 class name resolution
+Remove obsolete class properties
+Refactor Tests
+[TASK] Remove inject methods
+[TASK] Refactoring to reduce dependencies
+[TASK] Rename boolean and integer type hints
+Resolves: #58230
+[TASK] Use correct RTE configuration
+Resolves: #69603
+[TASK] Add a warning if mapping to TYPO3 tables
+Resolves: #69656
+[BUGFIX] Follow up to #69635
+Resolves: #69635
+[BUGFIX] Wrong class name when renaming extension
+Resolves: #69635
+[TASK] Prepend Vendor name in registerPlugin
+Resolves: #69613
+[TASK] Refactor tests and add configuration for TravisCI
+Use special composer configuration to enable functional tests
+in a local -Build folder
+Tests will be reorganized since most unit tests are in fact
+functional tests since they depend on objects which are generated
+by the ExtensionBuilder
+Resolves: #69615
+[TASK] Update documentation template
+[FEATURE] Enable optional generation of documentation-template
+Resolves: #64502
+[TASK] Use array for template rootpaths
+Fix: #66306
+[TASK] use correct registerAjaxHandler
+[TASK] Implement 7.4 compatibility
+Fixes: #69444
+[BUGFIX] Removed attribute for be.container in CMS 7.4
+[TASK] Typoscript configuration per plugin and per module
+!! Can be a breaking change, since typoscript configuration
+is based on extkey_pluginkey now.
+Resolves: #62105
+git log 2e03533e..HEAD --pretty=format:"%s%n%b%n" | grep -v "^$" | grep -v "Tested-by\|Reviewed-by\|Change-Id\|Reviewed-on\|Release" > ChangeLog
