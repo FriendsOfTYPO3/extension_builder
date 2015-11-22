@@ -35,6 +35,7 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * name
      *
      * @var string
+     * @validate NotEmpty
      */
     protected $name = '';
     /**
@@ -47,6 +48,7 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * imageProperty
      *
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
+     * @validate NotEmpty
      */
     protected $imageProperty = null;
 

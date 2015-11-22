@@ -299,7 +299,7 @@
                             "maxItems": "1",
                             "propertyDescription": "",
                             "propertyIsExcludeField": true,
-                            "propertyIsRequired": false,
+                            "propertyIsRequired": true,
                             "propertyName": "name",
                             "propertyType": "String",
                             "uid": "1048493789327"
@@ -319,7 +319,7 @@
                             "maxItems": "1",
                             "propertyDescription": "",
                             "propertyIsExcludeField": true,
-                            "propertyIsRequired": false,
+                            "propertyIsRequired": true,
                             "propertyName": "imageProperty",
                             "propertyType": "Image",
                             "uid": "1382041126723"

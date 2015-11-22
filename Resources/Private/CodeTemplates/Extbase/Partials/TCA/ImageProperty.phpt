@@ -1,6 +1,6 @@
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
 	'{property.fieldName}',
-	array(<f:if condition="{property.maxItems}">'maxitems' => {property.maxItems},</f:if>
+	array(
 		'appearance' => array(
 			'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:images.addFileReference'
 		),
@@ -35,7 +35,9 @@
 				--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
 				--palette--;;filePalette'
 			)
-		)
+		)<f:if condition="{property.maxItems}">,
+		'maxitems' => {property.maxItems}</f:if><f:if condition="{property.required}">,
+		'minitems' => 1</f:if>
 	),
 	$GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
 ),
