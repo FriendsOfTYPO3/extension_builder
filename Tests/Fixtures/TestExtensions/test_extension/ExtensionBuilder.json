@@ -56,6 +56,16 @@
                         {
                             "allowedFileTypes": "",
                             "maxItems": "1",
+                            "propertyDescription": "",
+                            "propertyIsExcludeField": true,
+                            "propertyIsRequired": false,
+                            "propertyName": "description",
+                            "propertyType": "RichText",
+                            "uid": "583743944638"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
                             "propertyDescription": "Just a date",
                             "propertyIsExcludeField": true,
                             "propertyIsRequired": false,

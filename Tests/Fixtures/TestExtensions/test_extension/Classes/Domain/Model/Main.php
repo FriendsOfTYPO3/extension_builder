@@ -31,12 +31,14 @@ namespace FIXTURE\TestExtension\Domain\Model;
  */
 class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
+
     /**
      * This is not required
      *
      * @var string
      */
     protected $name = '';
+
     /**
      * This is required
      *
@@ -44,18 +46,28 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @validate NotEmpty
      */
     protected $identifier = '';
+
+    /**
+     * description
+     *
+     * @var string
+     */
+    protected $description = '';
+
     /**
      * Just a date
      *
      * @var \DateTime
      */
     protected $myDate = null;
+
     /**
      * This is a 1:1 relation
      *
      * @var \FIXTURE\TestExtension\Domain\Model\Child1
      */
     protected $child1 = null;
+
     /**
      * This is a 1:n relation
      *
@@ -63,12 +75,14 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @cascade remove
      */
     protected $children2 = null;
+
     /**
      * This is a n:1 relation
      *
      * @var \FIXTURE\TestExtension\Domain\Model\Child3
      */
     protected $child3 = null;
+
     /**
      * This is a m:n relation
      *
@@ -139,6 +153,27 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setIdentifier($identifier)
     {
         $this->identifier = $identifier;
+    }
+
+    /**
+     * Returns the description
+     *
+     * @return string $description
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Sets the description
+     *
+     * @param string $description
+     * @return void
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
     /**
@@ -289,4 +324,5 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->children4 = $children4;
     }
+
 }

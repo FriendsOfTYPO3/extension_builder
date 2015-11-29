@@ -21,6 +21,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 	<tr>
 		<th><f:translate key="tx_testextension_domain_model_main.name" /></th>
 		<th><f:translate key="tx_testextension_domain_model_main.identifier" /></th>
+		<th><f:translate key="tx_testextension_domain_model_main.description" /></th>
 		<th><f:translate key="tx_testextension_domain_model_main.my_date" /></th>
 		<th> </th>
 		<th> </th>
@@ -30,6 +31,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 		<tr>
 			<td><f:link.action action="show" arguments="{main : main}"> {main.name}</f:link.action></td>
 			<td><f:link.action action="show" arguments="{main : main}"> {main.identifier}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{main : main}"> {main.description}</f:link.action></td>
 			<td><f:link.action action="show" arguments="{main : main}"> {main.myDate -> f:format.date()}</f:link.action></td>
 			<td><f:link.action action="edit" arguments="{main : main}">Edit</f:link.action></td>
 			<td><f:link.action action="delete" arguments="{main : main}">Delete</f:link.action></td>
