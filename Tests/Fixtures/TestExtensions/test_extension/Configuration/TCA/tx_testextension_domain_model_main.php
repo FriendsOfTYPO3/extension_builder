@@ -8,7 +8,6 @@ return array(
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
 		'sortby' => 'sorting',
-
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 
@@ -21,20 +20,20 @@ return array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'searchFields' => 'name,identifier,my_date,child1,children2,child3,children4,',
+		'searchFields' => 'name,identifier,description,my_date,child1,children2,child3,children4,',
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('test_extension') . 'Resources/Public/Icons/tx_testextension_domain_model_main.gif'
 	),
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, identifier, my_date, child1, children2, child3, children4',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, identifier, description, my_date, child1, children2, child3, children4',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, name, identifier, my_date, child1, children2, child3, children4, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, name, identifier, description;;;richtext:rte_transform[mode=ts_links], my_date, child1, children2, child3, children4, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
 	),
 	'columns' => array(
-	
+
 		'sys_language_uid' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
@@ -77,7 +76,7 @@ return array(
 				'max' => 255,
 			)
 		),
-	
+
 		'hidden' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
@@ -126,6 +125,7 @@ return array(
 				'size' => 30,
 				'eval' => 'trim'
 			),
+
 		),
 		'identifier' => array(
 			'exclude' => 1,
@@ -135,6 +135,18 @@ return array(
 				'size' => 30,
 				'eval' => 'trim,required'
 			),
+
+		),
+		'description' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.description',
+			'config' => array(
+				'type' => 'text',
+				'cols' => 40,
+				'rows' => 15,
+				'eval' => 'trim',
+			),
+			'defaultExtras' => 'rte[]'
 		),
 		'my_date' => array(
 			'exclude' => 1,
@@ -147,6 +159,7 @@ return array(
 				'checkbox' => 0,
 				'default' => '0000-00-00'
 			),
+
 		),
 		'child1' => array(
 			'exclude' => 1,
@@ -164,6 +177,7 @@ return array(
 					'showAllLocalizationLink' => 1
 				),
 			),
+
 		),
 		'children2' => array(
 			'exclude' => 1,
@@ -193,6 +207,7 @@ return array(
 				'minitems' => 0,
 				'maxitems' => 1,
 			),
+
 		),
 		'children4' => array(
 			'exclude' => 1,
@@ -234,6 +249,7 @@ return array(
 					),
 				),
 			),
+
 		),
 		
 	),

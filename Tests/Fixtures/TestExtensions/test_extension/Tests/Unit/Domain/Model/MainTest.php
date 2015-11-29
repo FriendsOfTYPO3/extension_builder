@@ -104,6 +104,31 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     /**
      * @test
      */
+    public function getDescriptionReturnsInitialValueForString()
+    {
+        $this->assertSame(
+            '',
+            $this->subject->getDescription()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function setDescriptionForStringSetsDescription()
+    {
+        $this->subject->setDescription('Conceived at T3CON10');
+
+        $this->assertAttributeEquals(
+            'Conceived at T3CON10',
+            'description',
+            $this->subject
+        );
+    }
+
+    /**
+     * @test
+     */
     public function getMyDateReturnsInitialValueForDateTime()
     {
         $this->assertEquals(
@@ -206,6 +231,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $this->inject($this->subject, 'children2', $children2ObjectStorageMock);
 
         $this->subject->removeChildren2($children2);
+
     }
 
     /**
@@ -287,5 +313,6 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $this->inject($this->subject, 'children4', $children4ObjectStorageMock);
 
         $this->subject->removeChildren4($children4);
+
     }
 }

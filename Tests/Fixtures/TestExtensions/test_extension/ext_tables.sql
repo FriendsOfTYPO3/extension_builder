@@ -8,6 +8,7 @@ CREATE TABLE tx_testextension_domain_model_main (
 
 	name varchar(255) DEFAULT '' NOT NULL,
 	identifier varchar(255) DEFAULT '' NOT NULL,
+	description text NOT NULL,
 	my_date date DEFAULT '0000-00-00',
 	child1 int(11) unsigned DEFAULT '0',
 	children2 int(11) unsigned DEFAULT '0' NOT NULL,
