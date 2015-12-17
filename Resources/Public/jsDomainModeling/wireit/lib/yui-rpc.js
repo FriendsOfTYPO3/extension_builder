@@ -93,7 +93,11 @@ YAHOO.namespace("rpc");
 
 				var url = method.target || self._smd.target;
 				if (url.match(/^\//)) {
-					url = window.location.protocol + '//' + window.location.hostname + url;
+					var hostname = window.location.hostname;
+					if (window.location.port) {
+						hostname = hostname + ':' + window.location.port;
+					}
+					url = window.location.protocol + '//' + hostname + url;
 				}
 				var urlRegexp = /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*(\.[a-z]{2,5})?(:[0-9]{1,5})?(\/.*)?$/i;
 				if (!url.match(urlRegexp) && url != self._smd.target) {
