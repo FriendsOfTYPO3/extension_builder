@@ -309,6 +309,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
     {
         $fieldsToMap = array(
             'relationType',
+            'renderType',
             'propertyIsExcludeField',
             'propertyIsExcludeField',
             'lazyLoading',

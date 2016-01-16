@@ -85,6 +85,7 @@
                             "relationName": "child1",
                             "relationType": "zeroToOne",
                             "relationWire": "[wired]",
+                            "renderType": "selectSingle",
                             "uid": "894361328325"
                         },
                         {
@@ -95,6 +96,7 @@
                             "relationName": "children2",
                             "relationType": "zeroToMany",
                             "relationWire": "[wired]",
+                            "renderType": "inline",
                             "uid": "190818946515"
                         },
                         {
@@ -105,6 +107,7 @@
                             "relationName": "child3",
                             "relationType": "manyToOne",
                             "relationWire": "[wired]",
+                            "renderType": "selectSingle",
                             "uid": "614483217433"
                         },
                         {
@@ -115,6 +118,7 @@
                             "relationName": "children4",
                             "relationType": "manyToMany",
                             "relationWire": "[wired]",
+                            "renderType": "selectMultipleSideBySide",
                             "uid": "395489177398"
                         }
                     ]

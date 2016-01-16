@@ -24,6 +24,7 @@ abstract class AnyToManyRelation extends AbstractRelation
      * @var string
      */
     protected $relationTableName = '';
+
     /**
      * Use tbl1_field1_tbl2_mm as table name to enable multiple relations
      * to the same foreign class
@@ -31,14 +32,17 @@ abstract class AnyToManyRelation extends AbstractRelation
      * @var bool
      */
     protected $useExtendedRelationTableName = false;
+
     /**
      * @var int
      */
     protected $maxItems = 1;
+
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
      */
     protected $domainObject = null;
+
 
     /**
      * Returns the relation table name. It is build by having 'tx_myextension_' followed by the
@@ -112,4 +116,5 @@ abstract class AnyToManyRelation extends AbstractRelation
     {
         $this->maxItems = $maxItems;
     }
+
 }

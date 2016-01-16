@@ -378,7 +378,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 											fields: [
 												{
 													type: "hidden",
-														inputParams: {
+													inputParams: {
 														name: "uid",
 														className:'hiddenField'
 													}
@@ -427,19 +427,6 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 															type: "input",
 															allowedTypes: ["output", "input"]
 														}
-													}
-												},
-												{
-													type: "select",
-													inputParams: {
-														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.type,
-														name: "relationType",
-														selectValues: ["zeroToOne", "zeroToMany", "manyToMany"],
-														selectOptions: [
-															TYPO3.settings.extensionBuilder._LOCAL_LANG.zeroToOne,
-															TYPO3.settings.extensionBuilder._LOCAL_LANG.zeroToMany,
-															TYPO3.settings.extensionBuilder._LOCAL_LANG.manyToMany
-														]
 													}
 												}
 											]

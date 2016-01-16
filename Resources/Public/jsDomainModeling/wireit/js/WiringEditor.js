@@ -417,7 +417,6 @@
 			this.showSpinnerPanel.show();
 			this.dataToSubmit.name = value.name;
 			this.dataToSubmit.working = JSON.stringify(value.working);
-            console.log(this.dataToSubmit);
 			this.service.saveWiring(this.dataToSubmit, {
 				success: this.saveModuleSuccess,
 				failure: this.saveModuleFailure,

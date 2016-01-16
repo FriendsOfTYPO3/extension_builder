@@ -184,20 +184,26 @@
 		onAddButton: function(e) {
 		   Event.stopEvent(e);
 		   // Add a field with no value:
-		   var subFieldEl = this.addElement();
-		   var copiedFieldSet = this.lastCopiedFieldSet;
+		   var subFieldEl = this.addElement(),
+			   fieldset,
+			   copiedFieldSet = this.lastCopiedFieldSet;
 			if(typeof copiedFieldSet['inputs'] !='undefined'){
 				for(i = 0;i <  copiedFieldSet['inputs'].length;i++){
 					fieldName =  copiedFieldSet['inputs'][i]['options']['name'];
-
 					if (fieldName == 'relationName' || fieldName == 'propertyName'|| fieldName == 'propertyDescription') {
 						copiedFieldSet['inputs'][i].setValue('');
 					} else if (fieldName == 'uid') {
 						copiedFieldSet['inputs'][i].setValue(parseInt(new Date().getTime() * Math.random(), 10));
 					} else if (fieldName == 'propertyType') {
-						var fieldset = copiedFieldSet.fieldset;
+						fieldset = copiedFieldSet.fieldset;
 						fieldset.removeAttribute('class');
 						Dom.addClass(fieldset, copiedFieldSet['inputs'][i].getValue());
+					} else if (fieldName == 'advancedSettings') {
+						if (copiedFieldSet.options.value) {
+							fieldset = copiedFieldSet.fieldset;
+							fieldset.removeAttribute('class');
+							Dom.addClass(fieldset, copiedFieldSet.options.value.relationType);
+						}
 					}
 				}
 			}

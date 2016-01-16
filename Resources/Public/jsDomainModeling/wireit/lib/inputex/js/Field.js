@@ -80,6 +80,7 @@
 
 			// Other options
 			this.options.className = options.className ? options.className : 'inputEx-Field';
+			this.options.wrapperClassName = options.wrapperClassName ? options.wrapperClassName : 'inputEx-fieldWrapper';
 			this.options.required = lang.isUndefined(options.required) ? false : options.required;
 			this.options.showMsg = lang.isUndefined(options.showMsg) ? false : options.showMsg;
 			this.options.advancedMode = lang.isUndefined(options.advancedMode) ? false : options.advancedMode;
@@ -91,7 +92,7 @@
 		render: function() {
 
 			// Create a DIV element to wrap the editing el and the image
-			this.divEl = inputEx.cn('div', {className: 'inputEx-fieldWrapper'});
+			this.divEl = inputEx.cn('div', {className: this.options.wrapperClassName});
 			//qwertz
 			if (this.options.id) {
 				this.divEl.id = this.options.id;

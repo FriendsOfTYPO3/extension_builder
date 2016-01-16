@@ -11,12 +11,38 @@ var extbaseModeling_wiringEditorLanguage = {
 	var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event, lang = YAHOO.lang, dom = YAHOO.util.Dom;
 
 		function addFieldsetClass (selectElement) {
-			var fieldset = TYPO3.jQuery(selectElement).parent('fieldset');
-			if (fieldset.hasClass('inputEx-Expanded')) {
+			if (TYPO3.jQuery(selectElement).parent().hasClass('isDependant')) {
 				return;
+			}
+			var fieldset = TYPO3.jQuery(selectElement).parents('fieldset').first();
+			if (selectElement.name == 'relationType') {
+				// relations
+				fieldset = TYPO3.jQuery(fieldset).parents('fieldset').first();
+				var renderTypeSelect = fieldset.find("select[name='renderType']").first();
+				updateRenderTypeOptions(selectElement.value, renderTypeSelect);
 			}
 			fieldset.attr('class', '');
             fieldset.addClass(selectElement.value);
+		}
+
+
+		function updateRenderTypeOptions (selectedRelationType, renderTypeSelect) {
+			renderTypeSelect.find("option").hide();
+			var optionValueMap = {
+				'zeroToOne': ["selectSingle", "inline"],
+				'manyToOne': ["selectSingle"],
+				'zeroToMany': ["inline", "selectSingle"],
+				'manyToMany': ["selectMultipleSideBySide", "selectSingleBox", "selectCheckBox"]
+			};
+			var validOptions = optionValueMap[selectedRelationType];
+
+			TYPO3.jQuery.each(validOptions, function(i, e) {
+				renderTypeSelect.find("option[value='" + e + "']").show();
+			});
+			if (validOptions.indexOf(renderTypeSelect.val()) < 0) {
+				renderTypeSelect.val(validOptions[0]);
+			}
+
 		}
 
 		inputEx.SelectField.prototype.onChange = function (evt) {
@@ -30,6 +56,12 @@ var extbaseModeling_wiringEditorLanguage = {
 			var propertyTypeSelects = TYPO3.jQuery('.propertyGroup select');
 			if (propertyTypeSelects) {
 				propertyTypeSelects.each(function (index, el) {
+					addFieldsetClass(el);
+				});
+			}
+			var relationTypeSelects = TYPO3.jQuery('.relationGroup select');
+			if (relationTypeSelects) {
+				relationTypeSelects.each(function (index, el) {
 					addFieldsetClass(el);
 				});
 			}

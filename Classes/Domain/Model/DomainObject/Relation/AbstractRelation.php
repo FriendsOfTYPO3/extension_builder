@@ -68,6 +68,11 @@ abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\Domai
      */
     protected $disallowedFileTypes = 'php';
 
+    /**
+     * @var string
+     */
+    protected $renderType = '';
+
     public function setRelatedToExternalModel($relatedToExternalModel)
     {
         $this->relatedToExternalModel = $relatedToExternalModel;
@@ -257,5 +262,22 @@ abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\Domai
     public function setDisallowedFileTypes($disallowedFileTypes)
     {
         return $this->disallowedFileTypes = $disallowedFileTypes;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getRenderType()
+    {
+        return $this->renderType;
+    }
+
+    /**
+     * @param string $renderType
+     */
+    public function setRenderType($renderType)
+    {
+        $this->renderType = $renderType;
     }
 }
