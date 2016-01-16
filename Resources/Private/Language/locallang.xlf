@@ -245,6 +245,27 @@
 			<trans-unit id="manyToMany">
 				<source>m:n</source>
 			</trans-unit>
+			<trans-unit id="renderType">
+				<source>Render type</source>
+			</trans-unit>
+			<trans-unit id="desc_renderType">
+				<source>How should the relation be displayed in backend forms?</source>
+			</trans-unit>
+			<trans-unit id="selectSingleBox">
+				<source>Dropdown (multiple)</source>
+			</trans-unit>
+			<trans-unit id="selectCheckBox">
+				<source>Checkboxes</source>
+			</trans-unit>
+			<trans-unit id="selectMultipleSideBySide">
+				<source>Side by side multi select</source>
+			</trans-unit>
+			<trans-unit id="inline">
+				<source>Inline (IRRE)</source>
+			</trans-unit>
+			<trans-unit id="select">
+				<source>Dropdown</source>
+			</trans-unit>
 			<trans-unit id="isExcludeField">
 				<source>Is exclude field?</source>
 			</trans-unit>

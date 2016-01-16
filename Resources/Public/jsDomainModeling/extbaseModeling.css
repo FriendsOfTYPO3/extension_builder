@@ -302,6 +302,8 @@ div.inputEx-label label{
 
 div.relationGroup div.inputEx-label{
 	text-align:right;
+	margin: 0;
+	height: 17px;
 }
 
 
@@ -319,8 +321,8 @@ div.relationGroup div.inputEx-label{
 }
 
 
-#domainModelEditor.showAdvancedOptions .inputEx-fieldWrapper.dependant,
-#domainModelEditor.showAdvancedOptions .inputEx-fieldWrapper.dependant.advancedMode {
+#domainModelEditor .inputEx-fieldWrapper.dependant,
+#domainModelEditor .inputEx-fieldWrapper.dependant.advancedMode {
 	display:none;
 }
 
@@ -329,6 +331,13 @@ div.relationGroup div.inputEx-label{
 #domainModelEditor.showAdvancedOptions fieldset.String .inputEx-fieldWrapper.dependant.stringOnly.advancedMode {
 	display:block;
 }
+
+
+#domainModelEditor .relationGroup fieldset.manyToMany .advancedSettings .inputEx-Expanded .dependant.renderType,
+#domainModelEditor .relationGroup fieldset.zeroToMany .advancedSettings .inputEx-Expanded .dependant.renderType{
+	display:block;
+}
+
 
 .selectFieldWrapper .inputEx-label,
 .textfieldWrapper .inputEx-label{
@@ -571,7 +580,7 @@ label.helpAvailable {
 
 div.propertyGroup div.inputEx-valid > div.inputEx-label label.helpAvailable,
 div.relationGroup div.inputEx-valid > div.inputEx-label label.helpAvailable,
-div.propertyGroup div.inputEx-empty > div.inputEx-label label.helpAvailable
+div.propertyGroup div.inputEx-empty > div.inputEx-label label.helpAvailable,
 div.relationGroup div.inputEx-empty > div.inputEx-label label.helpAvailable {
 	position: absolute;
 	top:-4px;

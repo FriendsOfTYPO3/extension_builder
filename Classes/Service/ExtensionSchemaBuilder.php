@@ -175,6 +175,10 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
             }
             $existingRelations[$localModelName][] = $foreignModelName;
 
+            if (!empty($relationJsonConfiguration['renderType'])) {
+                $relation->setRenderType($relationJsonConfiguration['renderType']);
+            }
+
             $relation->setForeignModel($extension->getDomainObjectByName($foreignModelName));
         }
     }
