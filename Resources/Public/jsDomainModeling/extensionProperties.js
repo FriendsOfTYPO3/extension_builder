@@ -107,7 +107,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							name: "version",
 							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.version,
 							required: false,
-							size: 5
+							size: 5,
+							value: '1.0.0'
 						}
 					},
 					{
