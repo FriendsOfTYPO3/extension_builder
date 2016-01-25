@@ -20,7 +20,7 @@ if (!isset($GLOBALS['TCA']['{databaseTableName}']['ctrl']['type'])) {
             'maxitems' => 1,
         ]
     ];
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('{databaseTableName}', $tempColumns{extension.shortExtensionKey}_{databaseTableName}, 1);
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('{databaseTableName}', $tempColumns{extension.shortExtensionKey}_{databaseTableName});
 }
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
