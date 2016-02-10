@@ -426,7 +426,7 @@ class FileGenerator
                 $this->mkdir_deep($this->extensionDirectory, 'Configuration/TypoScript');
                 $typoscriptDirectory = $this->extensionDirectory . 'Configuration/TypoScript/';
                 $fileContents = $this->generateTyposcriptSetup();
-                $this->writeFile($typoscriptDirectory . 'setup.txt', $fileContents);
+                $this->writeFile($typoscriptDirectory . 'setup.ts', $fileContents);
             } catch (\Exception $e) {
                 throw new \Exception('Could not generate typoscript setup, error: ' . $e->getMessage());
             }
@@ -435,7 +435,7 @@ class FileGenerator
             try {
                 $typoscriptDirectory = $this->extensionDirectory . 'Configuration/TypoScript/';
                 $fileContents = $this->generateTyposcriptConstants();
-                $this->writeFile($typoscriptDirectory . 'constants.txt', $fileContents);
+                $this->writeFile($typoscriptDirectory . 'constants.ts', $fileContents);
             } catch (\Exception $e) {
                 throw new \Exception('Could not generate typoscript constants, error: ' . $e->getMessage());
             }
@@ -445,7 +445,7 @@ class FileGenerator
         try {
             if ($this->extension->getDomainObjectsThatNeedMappingStatements()) {
                 $fileContents = $this->generateStaticTyposcript();
-                $this->writeFile($this->extensionDirectory . 'ext_typoscript_setup.txt', $fileContents);
+                $this->writeFile($this->extensionDirectory . 'ext_typoscript_setup.ts', $fileContents);
             }
         } catch (\Exception $e) {
             throw new \Exception('Could not generate static typoscript, error: ' . $e->getMessage());
@@ -1011,12 +1011,12 @@ class FileGenerator
 
     public function generateTyposcriptSetup()
     {
-        return $this->renderTemplate('Configuration/TypoScript/setup.txtt', array('extension' => $this->extension));
+        return $this->renderTemplate('Configuration/TypoScript/setup.tst', array('extension' => $this->extension));
     }
 
     public function generateTyposcriptConstants()
     {
-        return $this->renderTemplate('Configuration/TypoScript/constants.txtt', array('extension' => $this->extension));
+        return $this->renderTemplate('Configuration/TypoScript/constants.tst', array('extension' => $this->extension));
     }
 
     public function generateStaticTyposcript()

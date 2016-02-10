@@ -1,18 +1,19 @@
 <?php
-if (!defined('TYPO3_MODE')) {
-	die('Access denied.');
-}
-
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'FIXTURE.' . $_EXTKEY,
-	'Testplugin',
-	array(
-		'Main' => 'list, show, new, create, edit, update, delete',
-		
-	),
-	// non-cacheable actions
-	array(
-		'Main' => 'create, update, delete',
-		
-	)
+defined('TYPO3_MODE') || die('Access denied.');
+call_user_func(
+    function($extKey)
+    {
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'FIXTURE.' . $extKey,
+            'Testplugin',
+            [
+                'Main' => 'list, show, new, create, edit, update, delete',
+            ],
+            // non-cacheable actions
+            [
+                'Main' => 'create, update, delete',
+            ]
+        );
+    },
+    $_EXTKEY
 );

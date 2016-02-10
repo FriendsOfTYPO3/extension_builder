@@ -1,4 +1,4 @@
-array(
-	'type' => 'check',
-	'default' => 0
-)
+[
+    'type' => 'check',
+    'default' => 0
+]
