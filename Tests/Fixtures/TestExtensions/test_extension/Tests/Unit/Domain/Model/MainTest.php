@@ -1,30 +1,5 @@
 <?php
-
 namespace FIXTURE\TestExtension\Tests\Unit\Domain\Model;
-
-/***************************************************************
- *  Copyright notice
- *
- *  (c) 2016 John Doe <mail@typo3.com>, TYPO3
- *
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
 
 /**
  * Test case for class \FIXTURE\TestExtension\Domain\Model\Main.
@@ -60,6 +35,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             '',
             $this->subject->getName()
         );
+
     }
 
     /**
@@ -74,6 +50,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'name',
             $this->subject
         );
+
     }
 
     /**
@@ -85,6 +62,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             '',
             $this->subject->getIdentifier()
         );
+
     }
 
     /**
@@ -99,6 +77,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'identifier',
             $this->subject
         );
+
     }
 
     /**
@@ -110,6 +89,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             '',
             $this->subject->getDescription()
         );
+
     }
 
     /**
@@ -124,6 +104,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'description',
             $this->subject
         );
+
     }
 
     /**
@@ -135,6 +116,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             NULL,
             $this->subject->getMyDate()
         );
+
     }
 
     /**
@@ -150,6 +132,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'myDate',
             $this->subject
         );
+
     }
 
     /**
@@ -161,6 +144,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             NULL,
             $this->subject->getChild1()
         );
+
     }
 
     /**
@@ -176,6 +160,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'child1',
             $this->subject
         );
+
     }
 
     /**
@@ -188,6 +173,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             $newObjectStorage,
             $this->subject->getChildren2()
         );
+
     }
 
     /**
@@ -205,6 +191,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'children2',
             $this->subject
         );
+
     }
 
     /**
@@ -213,7 +200,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function addChildren2ToObjectStorageHoldingChildren2()
     {
         $children2 = new \FIXTURE\TestExtension\Domain\Model\Child2();
-        $children2ObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('attach'), array(), '', FALSE);
+        $children2ObjectStorageMock = $this->getMock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, ['attach'], [], '', false);
         $children2ObjectStorageMock->expects($this->once())->method('attach')->with($this->equalTo($children2));
         $this->inject($this->subject, 'children2', $children2ObjectStorageMock);
 
@@ -226,7 +213,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function removeChildren2FromObjectStorageHoldingChildren2()
     {
         $children2 = new \FIXTURE\TestExtension\Domain\Model\Child2();
-        $children2ObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('detach'), array(), '', FALSE);
+        $children2ObjectStorageMock = $this->getMock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, ['detach'], [], '', false);
         $children2ObjectStorageMock->expects($this->once())->method('detach')->with($this->equalTo($children2));
         $this->inject($this->subject, 'children2', $children2ObjectStorageMock);
 
@@ -243,6 +230,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             NULL,
             $this->subject->getChild3()
         );
+
     }
 
     /**
@@ -258,6 +246,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'child3',
             $this->subject
         );
+
     }
 
     /**
@@ -270,6 +259,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             $newObjectStorage,
             $this->subject->getChildren4()
         );
+
     }
 
     /**
@@ -287,6 +277,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'children4',
             $this->subject
         );
+
     }
 
     /**
@@ -295,7 +286,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function addChildren4ToObjectStorageHoldingChildren4()
     {
         $children4 = new \FIXTURE\TestExtension\Domain\Model\Child4();
-        $children4ObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('attach'), array(), '', FALSE);
+        $children4ObjectStorageMock = $this->getMock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, ['attach'], [], '', false);
         $children4ObjectStorageMock->expects($this->once())->method('attach')->with($this->equalTo($children4));
         $this->inject($this->subject, 'children4', $children4ObjectStorageMock);
 
@@ -308,7 +299,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function removeChildren4FromObjectStorageHoldingChildren4()
     {
         $children4 = new \FIXTURE\TestExtension\Domain\Model\Child4();
-        $children4ObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('detach'), array(), '', FALSE);
+        $children4ObjectStorageMock = $this->getMock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, ['detach'], [], '', false);
         $children4ObjectStorageMock->expects($this->once())->method('detach')->with($this->equalTo($children4));
         $this->inject($this->subject, 'children4', $children4ObjectStorageMock);
 
