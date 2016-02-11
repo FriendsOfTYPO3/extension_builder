@@ -24,7 +24,7 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
         unset($this->subject);
     }
 
-<f:for each="{domainObject.actions}" as="action"><f:if condition="{k:matchString(match:'list', in:action.name)}">
+<f:for each="{domainObject.actions}" as="action"><f:if condition="{action.name} == 'list'">
 
     /**
      * @test
