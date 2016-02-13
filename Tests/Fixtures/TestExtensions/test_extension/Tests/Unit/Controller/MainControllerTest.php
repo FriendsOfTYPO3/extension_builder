@@ -4,7 +4,7 @@ namespace FIXTURE\TestExtension\Tests\Unit\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2015 John Doe <mail@typo3.com>, TYPO3
+ *  (c) 2016 John Doe <mail@typo3.com>, TYPO3
  *
  *  All rights reserved
  *

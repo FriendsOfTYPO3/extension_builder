@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2015-01-01T01:00:00Z" product-name="test_extension">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-01-01T01:00:00Z" product-name="test_extension">
 		<header/>
 		<body>
 			<trans-unit id="tx_testextension_domain_model_main">
