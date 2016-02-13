@@ -1,6 +1,6 @@
 #
 # Extension Builder settings for extension test_extension
-# generated 2015-01-01T01:00:00Z
+# generated 2016-01-01T01:00:00Z
 #
 # See http://www.yaml.org/spec/1.2/spec.html
 #
@@ -64,7 +64,7 @@ overwriteSettings:
 #  ext_tables.sql: merge
 
 ## use static date attribute in xliff files ##
-#staticDateInXliffFiles: 2015-01-01T01:00:00Z
+#staticDateInXliffFiles: 2016-01-01T01:00:00Z
 
 ## list of error codes for warnings that should be ignored ##
 #ignoreWarnings:
