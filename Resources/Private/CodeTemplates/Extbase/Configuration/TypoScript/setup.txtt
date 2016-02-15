@@ -10,6 +10,13 @@ plugin.{extension.shortExtensionKey}_{plugin.key} {
   }
   persistence {
     storagePid = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.persistence.storagePid<![CDATA[}]]>
+    #recursive = 1
+  }
+  features {
+    #skipDefaultArguments = 1
+  }
+  mvc {
+    #callDefaultActionIfActionCantBeResolved = 1
   }
 }
 </f:for>

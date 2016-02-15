@@ -7,6 +7,13 @@ plugin.tx_testextension_testplugin {
 	}
 	persistence {
 		storagePid = {$plugin.tx_testextension_testplugin.persistence.storagePid}
+		#recursive = 1
+	}
+	features {
+		#skipDefaultArguments = 1
+	}
+	mvc {
+		#callDefaultActionIfActionCantBeResolved = 1
 	}
 }
 
