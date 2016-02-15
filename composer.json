@@ -1,5 +1,5 @@
 {
-	"name": "ebt/extension_builder",
+	"name": "ebt/extension-builder",
 	"type": "typo3-cms-extension",
 	"description": "Tool to kickstart and maintain TYPO3 extensions",
 	"homepage": "http://typo3.org",
