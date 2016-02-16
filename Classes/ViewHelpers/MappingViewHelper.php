@@ -30,15 +30,23 @@ class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditi
         $this->configurationManager = $configurationManager;
     }
 
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('domainObject', 'object', '', true);
+        $this->registerArgument('renderCondition', 'string', '', true);
+    }
+
     /**
      * Helper function to verify various conditions around possible mapping/inheritance configurations
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     * @param string $renderCondition
+     *
      * @return string
      */
-    public function render(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject, $renderCondition)
+    public function render()
     {
         $content = '';
+        /** @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
+        $domainObject = $this->arguments['domainObject'];
         $extensionPrefix = 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($domainObject->getExtension()->getExtensionKey());
 
         // an external table should have a loadable TCA configuration and the column definitions
@@ -52,7 +60,7 @@ class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditi
             $isMappedToExternalTable = true;
         }
 
-        switch ($renderCondition) {
+        switch ($this->arguments['renderCondition']) {
 
             case 'isMappedToInternalTable'    :
                 if (!$isMappedToExternalTable) {
