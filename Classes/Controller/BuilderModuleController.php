@@ -20,6 +20,7 @@ use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -77,7 +78,7 @@ class BuilderModuleController extends ActionController
      * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager
      * @return void
      */
-    public function injectConfigurationManager(\EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager)
+    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
     {
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getSettings();
