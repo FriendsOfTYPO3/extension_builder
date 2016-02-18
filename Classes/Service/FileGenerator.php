@@ -203,7 +203,7 @@ class FileGenerator
                     )
                 );
                 $this->writeFile($this->extensionDirectory . $extensionFile, $fileContents);
-                GeneralUtility::devlog(
+                GeneralUtility::devLog(
                     'Generated ' . $extensionFile,
                     'extension_builder',
                     0,
@@ -224,7 +224,7 @@ class FileGenerator
                     array('extension' => $this->extension)
                 );
                 $this->writeFile($this->extensionDirectory . 'ext_localconf.php', $fileContents);
-                GeneralUtility::devlog(
+                GeneralUtility::devLog(
                     'Generated ext_localconf.php',
                     'extension_builder',
                     0,
@@ -252,7 +252,7 @@ class FileGenerator
                             $this->extensionDirectory . 'Configuration/FlexForms/flexform_' . $currentPluginKey . '.xml',
                             $fileContents
                         );
-                        GeneralUtility::devlog(
+                        GeneralUtility::devLog(
                             'Generated flexform_' . $currentPluginKey . '.xml',
                             'extension_builder',
                             0,
@@ -490,7 +490,7 @@ class FileGenerator
                     }
                     $fileContents = $this->generateDomainObjectCode($domainObject, $mergeWithExistingClass);
                     $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
-                    GeneralUtility::devlog(
+                    GeneralUtility::devLog(
                         'Generated ' . $domainObject->getName() . '.php',
                         'extension_builder',
                         0
@@ -519,7 +519,7 @@ class FileGenerator
                         }
                         $fileContents = $this->generateDomainRepositoryCode($domainObject, $mergeWithExistingClass);
                         $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
-                        GeneralUtility::devlog(
+                        GeneralUtility::devLog(
                             'Generated ' . $domainObject->getName() . 'Repository.php',
                             'extension_builder',
                             0
@@ -547,7 +547,7 @@ class FileGenerator
                     }
                     $fileContents = $this->generateActionControllerCode($domainObject, $mergeWithExistingClass);
                     $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
-                    GeneralUtility::devlog(
+                    GeneralUtility::devLog(
                         'Generated ' . $domainObject->getName() . 'Controller.php',
                         'extension_builder',
                         0
@@ -586,7 +586,7 @@ class FileGenerator
                 throw new \Exception('Could not generate ext_autoload.php, error: ' . $e->getMessage());
             }
         } else {
-            GeneralUtility::devlog(
+            GeneralUtility::devLog(
                 'No domainObjects in this extension',
                 'extension_builder',
                 3,
@@ -947,7 +947,7 @@ class FileGenerator
 
             if (@file_exists($existingFile)) {
                 $existingLabels = $this->localizationService->getLabelArrayFromFile($existingFile, 'default');
-                GeneralUtility::devlog(
+                GeneralUtility::devLog(
                     'locallang' . $fileNameSuffix . ' existing labels',
                     'extension_builder',
                     1,
@@ -1119,7 +1119,7 @@ class FileGenerator
                 $fileExtension = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
                 if ($fileExtension == 'html') {
                     //TODO: We need some kind of protocol to be displayed after code generation
-                    GeneralUtility::devlog(
+                    GeneralUtility::devLog(
                         'File ' . basename($targetFile) . ' was not written. Template files can\'t be merged!',
                         'extension_builder',
                         1

@@ -291,7 +291,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
                     // Format should be: Controller->action
                     list($controllerName, $actionName) = explode('->', $actions);
                     $configuredActions[] = $actionName;
-                    GeneralUtility::devlog('Controller' . $controllerName, 'extension_builder', 0, array($actionName));
+                    GeneralUtility::devLog('Controller' . $controllerName, 'extension_builder', 0, array($actionName));
                     $this->validateActionConfiguration($controllerName, array($actionName), 'plugin ' . $plugin->getName(), $extension);
                 }
                 $this->validateDependentActions($configuredActions, 'plugin ' . $plugin->getName());
@@ -349,7 +349,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
             // we show a warning if that's an action that requires a domain object as parameter
             $defaultAction = reset($actionNames);
             if (in_array($defaultAction, array('show', 'edit'))) {
-                GeneralUtility::devlog('Invalid action configurations', 'extension_builder', 1, array($controllerName, $actionNames));
+                GeneralUtility::devLog('Invalid action configurations', 'extension_builder', 1, array($controllerName, $actionNames));
                 $this->validationResult['warnings'][] = new ExtensionException(
                     'Potential misconfiguration in ' . $label . ':' . LF .
                     'Default action ' . $controllerName . '->' . $defaultAction . '  can not be called without a domain object parameter',
@@ -393,7 +393,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
                     if (!empty($pluginConfiguration['actions'][$configType])) {
                         $isValid = $this->validateActionConfigFormat($pluginConfiguration['actions'][$configType], $configType);
                         if (!$isValid) {
-                            GeneralUtility::devlog('validateActionConfigFormat failed',
+                            GeneralUtility::devLog('validateActionConfigFormat failed',
                                 'extension_builder',
                                 2,
                                 array($pluginConfiguration['actions'][$configType])
@@ -413,20 +413,20 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
                             // label for flexform select
                             if (!preg_match('/^[a-zA-Z0-9_\-\s]*$/', $line)) {
                                 $isValid = false;
-                                GeneralUtility::devlog('Label in switchable Actions contained disallowed character:' . $line, 'extension_builder', 2);
+                                GeneralUtility::devLog('Label in switchable Actions contained disallowed character:' . $line, 'extension_builder', 2);
                             }
                             $firstLine = false;
                         } else {
                             $parts = GeneralUtility::trimExplode(';', $line, true);
-                            GeneralUtility::devlog('switchable Actions line even:' . $line, 'extension_builder', 0, $parts);
+                            GeneralUtility::devLog('switchable Actions line even:' . $line, 'extension_builder', 0, $parts);
                             if (count($parts) < 1) {
                                 $isValid = false;
-                                GeneralUtility::devlog('Wrong count for explode(";") switchable Actions line:' . $line, 'extension_builder', 2, $parts);
+                                GeneralUtility::devLog('Wrong count for explode(";") switchable Actions line:' . $line, 'extension_builder', 2, $parts);
                             }
                             foreach ($parts as $part) {
                                 if (!empty($part) && count(GeneralUtility::trimExplode('->', $part, true)) != 2) {
                                     $isValid = false;
-                                    GeneralUtility::devlog('Wrong count for explode("->") switchable Actions line:' . $part, 'extension_builder', 2);
+                                    GeneralUtility::devLog('Wrong count for explode("->") switchable Actions line:' . $part, 'extension_builder', 2);
                                 }
                             }
                             $firstLine = true;
@@ -448,7 +448,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
                     if (!empty($moduleConfiguration['actions'][$configType])) {
                         $isValid = $this->validateActionConfigFormat($moduleConfiguration['actions'][$configType], $configType);
                         if (!$isValid) {
-                            GeneralUtility::devlog('validateActionConfigFormat failed',
+                            GeneralUtility::devLog('validateActionConfigFormat failed',
                                 'extension_builder',
                                 2,
                                 array($moduleConfiguration['actions'][$configType])
@@ -465,7 +465,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
             $propertyNames = array();
             if (isset($domainObjectConfiguration['value']['propertyGroup']['properties'])) {
                 foreach ($domainObjectConfiguration['value']['propertyGroup']['properties'] as $property) {
-                    GeneralUtility::devlog('property', 'extension_builder', 0, $property);
+                    GeneralUtility::devLog('property', 'extension_builder', 0, $property);
                     if (in_array($property['propertyName'], $propertyNames)) {
                         $this->validationResult['errors'][] = new ExtensionException(
                             'Property "' . $property['propertyName'] . '" of Model "' . $domainObjectConfiguration['value']['name'] . '" exists twice.',
@@ -478,7 +478,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
             // check relation names, since these will result in class properties too
             if (isset($domainObjectConfiguration['value']['relationGroup']['relations'])) {
                 foreach ($domainObjectConfiguration['value']['relationGroup']['relations'] as $property) {
-                    GeneralUtility::devlog('relation', 'extension_builder', 0, $property);
+                    GeneralUtility::devLog('relation', 'extension_builder', 0, $property);
                     if (in_array($property['relationName'], $propertyNames)) {
                         $this->validationResult['errors'][] = new ExtensionException(
                             'Property "' . $property['relationName'] . '" of Model "' . $domainObjectConfiguration['value']['name'] . '" exists twice.',
@@ -504,10 +504,10 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
             $test = GeneralUtility::trimExplode('=>', $line, true);
             if (count($test) != 2) {
                 $isValid = false;
-                GeneralUtility::devlog('Wrong count for explode("=>") switchable Actions line:' . $line, 'extension_builder', 2);
+                GeneralUtility::devLog('Wrong count for explode("=>") switchable Actions line:' . $line, 'extension_builder', 2);
             } elseif (!preg_match('/^[a-zA-Z0-9_,\s]*$/', $test[1])) {
                 $isValid = false;
-                GeneralUtility::devlog('Regex failed:' . $test[1], 'extension_builder', 2);
+                GeneralUtility::devLog('Regex failed:' . $test[1], 'extension_builder', 2);
             }
         }
         return $isValid;
@@ -620,7 +620,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
         $extensionPrefix = 'Tx_' . GeneralUtility::underscoredToUpperCamelCase($domainObject->getExtension()->getExtensionKey()) . '_Domain_Model_';
         if (!empty($parentClass)) {
             $classConfiguration = $this->configurationManager->getExtbaseClassConfiguration($parentClass);
-            GeneralUtility::devlog('class settings ' . $parentClass, 'extension_builder', 0, $classConfiguration);
+            GeneralUtility::devLog('class settings ' . $parentClass, 'extension_builder', 0, $classConfiguration);
 
             if (!isset($classConfiguration['tableName'])) {
                 if (!$tableName) {

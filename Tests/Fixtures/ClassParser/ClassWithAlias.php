@@ -10,8 +10,8 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithAlias {
 	 *
 	 * @return array $names
 	 */
-	public function devlog(){
-		GeneralUtility::devlog('Test','test',1);
+	public function devLog(){
+		GeneralUtility::devLog('Test','test',1);
 	}
 
 }

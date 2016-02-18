@@ -140,7 +140,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
             $yamlParser = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser();
             $settings = $yamlParser->YAMLLoadString(file_get_contents($settingsFile));
         } else {
-            GeneralUtility::devlog('No settings found: ' . $settingsFile, 'extension_builder', 2);
+            GeneralUtility::devLog('No settings found: ' . $settingsFile, 'extension_builder', 2);
         }
 
         return $settings;
