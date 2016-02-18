@@ -481,6 +481,7 @@ class FileGenerator
                     $destinationFile = $domainModelDirectory . $domainObject->getName() . '.php';
 
                     $fileContents = $this->generateDomainObjectCode($domainObject);
+                    $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
                     $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
                     GeneralUtility::devLog(
                         'Generated ' . $domainObject->getName() . '.php',
@@ -505,6 +506,7 @@ class FileGenerator
                     if ($domainObject->isAggregateRoot()) {
                         $destinationFile = $domainRepositoryDirectory . $domainObject->getName() . 'Repository.php';
                         $fileContents = $this->generateDomainRepositoryCode($domainObject);
+                        $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
                         $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
                         GeneralUtility::devLog(
                             'Generated ' . $domainObject->getName() . 'Repository.php',
@@ -516,6 +518,7 @@ class FileGenerator
 
                     // Generate basic UnitTests
                     $fileContents = $this->generateDomainModelTests($domainObject);
+                    $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
                     $this->writeFile($domainModelTestsDirectory . $domainObject->getName() . 'Test.php', $fileContents);
                 }
             } catch (\Exception $e) {
@@ -528,6 +531,7 @@ class FileGenerator
                 foreach ($this->extension->getDomainObjectsForWhichAControllerShouldBeBuilt() as $domainObject) {
                     $destinationFile = $controllerDirectory . $domainObject->getName() . 'Controller.php';
                     $fileContents = $this->generateActionControllerCode($domainObject);
+                    $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
                     $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
                     GeneralUtility::devLog(
                         'Generated ' . $domainObject->getName() . 'Controller.php',
@@ -541,6 +545,7 @@ class FileGenerator
                         $domainObject->getName() . 'Controller',
                         $domainObject
                     );
+                    $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
                     $this->writeFile(
                         $crudEnabledControllerTestsDirectory . $domainObject->getName() . 'ControllerTest.php',
                         $fileContents
