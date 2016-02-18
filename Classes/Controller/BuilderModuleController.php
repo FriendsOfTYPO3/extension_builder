@@ -201,7 +201,7 @@ class BuilderModuleController extends ActionController
     {
         try {
             $extensionBuildConfiguration = $this->configurationManager->getConfigurationFromModeler();
-            GeneralUtility::devlog('Modeler Configuration', 'extension_builder', 0, $extensionBuildConfiguration);
+            GeneralUtility::devLog('Modeler Configuration', 'extension_builder', 0, $extensionBuildConfiguration);
             $validationConfigurationResult = $this->extensionValidator->validateConfigurationFormat($extensionBuildConfiguration);
             if (!empty($validationConfigurationResult['warnings'])) {
                 $confirmationRequired = $this->handleValidationWarnings($validationConfigurationResult['warnings']);

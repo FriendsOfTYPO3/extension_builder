@@ -135,7 +135,7 @@ class ExtensionInstallationStatus
                             $res = $this->getDatabaseConnection()->admin_query($statement);
                             if ($res === false) {
                                 $hasErrors = true;
-                                GeneralUtility::devlog('SQL error', 'extension_builder', 0, array('statement' => $statement, 'error' => $this->getDatabaseConnection()->sql_error()));
+                                GeneralUtility::devLog('SQL error', 'extension_builder', 0, array('statement' => $statement, 'error' => $this->getDatabaseConnection()->sql_error()));
                             } elseif (is_resource($res) || is_a($res, '\\mysqli_result')) {
                                 $this->getDatabaseConnection()->sql_free_result($res);
                             }

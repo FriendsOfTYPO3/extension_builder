@@ -144,7 +144,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
         $this->assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
-        \TYPO3\CMS\Core\Utility\GeneralUtility::devlog('Class Content', 'extension_builder', 0, array('c' => $classFileContent, 'path' => $absModelClassDir));
+        \TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Class Content', 'extension_builder', 0, array('c' => $classFileContent, 'path' => $absModelClassDir));
         \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath, $classFileContent);
         $this->assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
         $className = $domainObject->getFullQualifiedClassName();

@@ -113,7 +113,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
         $this->extensionDirectory = $this->extension->getExtensionDir();
 
         if (!$this->parserService instanceof \EBT\ExtensionBuilder\Service\Parser) {
-            $this->injectParserService(GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Service\\Parser'));
+            $this->parserService = GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Service\\Parser');
         }
         $this->settings = $this->configurationManager->getExtensionBuilderSettings();
         // defaults
@@ -124,7 +124,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
             $this->previousExtensionDirectory = $extension->getPreviousExtensionDirectory();
             $this->previousExtensionKey = $extension->getOriginalExtensionKey();
             $this->extensionRenamed = true;
-            GeneralUtility::devlog('Extension renamed: ' . $this->previousExtensionKey . ' => ' . $this->extension->getExtensionKey(), 'extension_builder', 1, array('$previousExtensionDirectory ' => $this->previousExtensionDirectory));
+            GeneralUtility::devLog('Extension renamed: ' . $this->previousExtensionKey . ' => ' . $this->extension->getExtensionKey(), 'extension_builder', 1, array('$previousExtensionDirectory ' => $this->previousExtensionDirectory));
         }
 
         // Rename the old kickstarter.json file to ExtensionBuilder.json
@@ -137,8 +137,8 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
 
         if (file_exists($this->previousExtensionDirectory . ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE)) {
             $extensionSchemaBuilder = GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Service\\ExtensionSchemaBuilder');
-            $jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey, false);
-            GeneralUtility::devlog(
+            $jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey);
+            GeneralUtility::devLog(
                 'old JSON:' . $this->previousExtensionDirectory . 'ExtensionBuilder.json',
                 'extension_builder',
                 0,
@@ -686,6 +686,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
                 return true;
             }
         }
+        return false;
     }
 
     /**
@@ -843,7 +844,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param string $oldName
      * @param string $newName
-     * @param string $string
+     * @param string $methodBodyStmts
      *
      * @return string
      */
@@ -920,7 +921,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
      * remove class files that are not required any more, due to
      * renaming of ModelObjects or changed types
      * @param string $path
-     * @param string $file
+     * @param string $fileName
      * @return void
      */
     public function cleanUp($path, $fileName)
@@ -998,7 +999,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
     public static function prepareExtensionForRoundtrip(&$extension)
     {
         foreach ($extension->getDomainObjects() as $domainObject) {
-            $existingTca = self::getTcaForDomainObject($domainObject, $extension);
+            $existingTca = self::getTcaForDomainObject($domainObject);
             if ($existingTca) {
                 foreach ($domainObject->getAnyToManyRelationProperties() as $relationProperty) {
                     if (isset($existingTca['columns'][$relationProperty->getName()]['config']['MM'])) {
@@ -1121,7 +1122,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
         self::log('Backup created in ' . $backupDir);
     }
 
-    protected function log($message, $severity = 0, $data = array())
+    protected static function log($message, $severity = 0, $data = array())
     {
         GeneralUtility::devLog(
             $message,
