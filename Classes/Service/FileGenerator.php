@@ -141,7 +141,6 @@ class FileGenerator
         } else {
             throw new \Exception('No codeTemplateRootPath configured');
         }
-
         // Base directory already exists at this point
         $this->extensionDirectory = $this->extension->getExtensionDir();
         if (!is_dir($this->extensionDirectory)) {
@@ -483,12 +482,8 @@ class FileGenerator
                      * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
                      */
                     $destinationFile = $domainModelDirectory . $domainObject->getName() . '.php';
-                    if ($this->fileShouldBeMerged($destinationFile)) {
-                        $mergeWithExistingClass = true;
-                    } else {
-                        $mergeWithExistingClass = false;
-                    }
-                    $fileContents = $this->generateDomainObjectCode($domainObject, $mergeWithExistingClass);
+
+                    $fileContents = $this->generateDomainObjectCode($domainObject);
                     $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
                     GeneralUtility::devLog(
                         'Generated ' . $domainObject->getName() . '.php',
@@ -512,12 +507,7 @@ class FileGenerator
 
                     if ($domainObject->isAggregateRoot()) {
                         $destinationFile = $domainRepositoryDirectory . $domainObject->getName() . 'Repository.php';
-                        if ($this->fileShouldBeMerged($destinationFile)) {
-                            $mergeWithExistingClass = true;
-                        } else {
-                            $mergeWithExistingClass = false;
-                        }
-                        $fileContents = $this->generateDomainRepositoryCode($domainObject, $mergeWithExistingClass);
+                        $fileContents = $this->generateDomainRepositoryCode($domainObject);
                         $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
                         GeneralUtility::devLog(
                             'Generated ' . $domainObject->getName() . 'Repository.php',
@@ -540,12 +530,7 @@ class FileGenerator
                 $controllerDirectory = 'Classes/Controller/';
                 foreach ($this->extension->getDomainObjectsForWhichAControllerShouldBeBuilt() as $domainObject) {
                     $destinationFile = $controllerDirectory . $domainObject->getName() . 'Controller.php';
-                    if ($this->fileShouldBeMerged($destinationFile)) {
-                        $mergeWithExistingClass = true;
-                    } else {
-                        $mergeWithExistingClass = false;
-                    }
-                    $fileContents = $this->generateActionControllerCode($domainObject, $mergeWithExistingClass);
+                    $fileContents = $this->generateActionControllerCode($domainObject);
                     $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
                     GeneralUtility::devLog(
                         'Generated ' . $domainObject->getName() . 'Controller.php',
@@ -707,7 +692,6 @@ class FileGenerator
      * Either from ectionController template or from class partial
      *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     * @param bool $mergeWithExistingClass
      * @return string
      */
     public function generateActionControllerCode(
@@ -737,7 +721,6 @@ class FileGenerator
      * Either from domainObject template or from class partial
      *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     * @param bool $mergeWithExistingClass
      * @return string
      */
     public function generateDomainObjectCode(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject)
@@ -777,7 +760,6 @@ class FileGenerator
      * Either from domainRepository template or from class partial
      *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     * @param bool $mergeWithExistingClass
      *
      * @return string
      */
@@ -840,7 +822,7 @@ class FileGenerator
     }
 
     /**
-     * generate a docComment for class files. Add a license haeder if none found
+     * generate a docComment for class files. Add a license header if none found
      * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
      *
      * @return void;
@@ -850,15 +832,15 @@ class FileGenerator
         $comments = $classObject->getComments();
         $needsLicenseHeader = true;
         foreach ($comments as $comment) {
-            if (strpos($comment, 'GNU General Public License') !== false) {
+            if (strpos($comment, 'license information') !== false) {
                 $needsLicenseHeader = false;
             }
         }
-
-        if ($needsLicenseHeader) {
+        $extensionSettings = $this->extension->getSettings();
+        if ($needsLicenseHeader && empty($extensionSettings['skipDocComment'])) {
             $licenseHeader = $this->renderTemplate(
                 'Partials/Classes/licenseHeader.phpt',
-                array('persons' => $this->extension->getPersons())
+                array('extension' => $this->extension)
             );
             $classObject->addComment($licenseHeader);
         }

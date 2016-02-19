@@ -75,7 +75,7 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
         $stmts = $this->nodeFactory->getFileStatements($fileObject);
         $resultingCode = $this->render($stmts);
         if ($prependPHPTag) {
-            return '<?php' . LF . $resultingCode;
+            return '<?php' . LF . $resultingCode . LF;
         } else {
             return $resultingCode;
         }
