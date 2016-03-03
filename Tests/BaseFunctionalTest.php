@@ -44,31 +44,31 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
     /**
      * @var \EBT\ExtensionBuilder\Service\Parser
      */
-    protected $parserService = NULL;
+    protected $parserService = null;
     /**
      * @var \EBT\ExtensionBuilder\Service\Printer
      */
-    protected $printerService = NULL;
+    protected $printerService = null;
     /**
      * @var \EBT\ExtensionBuilder\Service\ClassBuilder
      */
-    protected $classBuilder = NULL;
+    protected $classBuilder = null;
     /**
      * @var \EBT\ExtensionBuilder\Service\RoundTrip
      */
-    protected $roundTripService = NULL;
+    protected $roundTripService = null;
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
      */
-    protected $objectManager = NULL;
+    protected $objectManager = null;
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
-    protected $extension = NULL;
+    protected $extension = null;
     /**
      * @var \EBT\ExtensionBuilder\Service\FileGenerator
      */
-    protected $fileGenerator = NULL;
+    protected $fileGenerator = null;
     protected $testExtensionsToLoad = array('typo3conf/ext/extension_builder');
 
     public function setUp()
@@ -96,7 +96,7 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
             ->method('getExtensionDir')
             ->will($this->returnValue($dummyExtensionDir));
         if (is_dir($dummyExtensionDir)) {
-            GeneralUtility::mkdir($dummyExtensionDir, TRUE);
+            GeneralUtility::mkdir($dummyExtensionDir, true);
         }
         $this->extension->setSettings($settings);
 
@@ -141,8 +141,8 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
 
     public function tearDown()
     {
-        if (!empty($this->extension) && $this->extension->getExtensionKey() != NULL) {
-            GeneralUtility::rmdir($this->extension->getExtensionDir(), TRUE);
+        if (!empty($this->extension) && $this->extension->getExtensionKey() != null) {
+            GeneralUtility::rmdir($this->extension->getExtensionDir(), true);
         }
     }
 
@@ -187,7 +187,7 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
     protected function generateInitialModelClassFile($modelName)
     {
         $domainObject = $this->buildDomainObject($modelName);
-        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, FALSE);
+        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
         $modelClassDir = 'Classes/Domain/Model/';
         GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;

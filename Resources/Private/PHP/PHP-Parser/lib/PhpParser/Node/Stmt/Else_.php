@@ -15,12 +15,14 @@ class Else_ extends Node\Stmt
      * @param Node[] $stmts      Statements
      * @param array  $attributes Additional attributes
      */
-    public function __construct(array $stmts = array(), array $attributes = array()) {
+    public function __construct(array $stmts = array(), array $attributes = array())
+    {
         parent::__construct(null, $attributes);
         $this->stmts = $stmts;
     }
 
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return array('stmts');
     }
 }

@@ -26,11 +26,12 @@ namespace Parser\Test\Model;
  ***************************************************************/
 
 /**
- * @package
  * @author Nico de Haen
  */
 class SimpleNamepaceTest
 {
-
-    
+    /**
+     * @var
+     */
+    protected $foo = null;
 }

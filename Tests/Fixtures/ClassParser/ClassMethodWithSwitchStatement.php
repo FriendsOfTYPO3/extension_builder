@@ -24,12 +24,10 @@
  ***************************************************************/
 
 /**
- * @package
  * @author Nico de Haen
  */
 abstract class Tx_PhpParser_Tests_SwitchStatement
 {
-
     /**
      * @param $foo
      * @return int
@@ -46,5 +44,4 @@ abstract class Tx_PhpParser_Tests_SwitchStatement
         }
         return $bar;
     }
-
 }

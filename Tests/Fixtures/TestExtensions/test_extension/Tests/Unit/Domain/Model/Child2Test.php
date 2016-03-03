@@ -14,7 +14,7 @@ class Child2Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     /**
      * @var \FIXTURE\TestExtension\Domain\Model\Child2
      */
-    protected $subject = NULL;
+    protected $subject = null;
 
     public function setUp()
     {
@@ -35,7 +35,6 @@ class Child2Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             '',
             $this->subject->getName()
         );
-
     }
 
     /**
@@ -50,7 +49,6 @@ class Child2Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'name',
             $this->subject
         );
-
     }
 
     /**
@@ -59,10 +57,9 @@ class Child2Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function getDateProperty1ReturnsInitialValueForDateTime()
     {
         $this->assertEquals(
-            NULL,
+            null,
             $this->subject->getDateProperty1()
         );
-
     }
 
     /**
@@ -78,7 +75,6 @@ class Child2Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'dateProperty1',
             $this->subject
         );
-
     }
 
     /**
@@ -87,10 +83,9 @@ class Child2Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function getDateProperty2ReturnsInitialValueForDateTime()
     {
         $this->assertEquals(
-            NULL,
+            null,
             $this->subject->getDateProperty2()
         );
-
     }
 
     /**
@@ -106,7 +101,6 @@ class Child2Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'dateProperty2',
             $this->subject
         );
-
     }
 
     /**
@@ -115,10 +109,9 @@ class Child2Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function getDateProperty3ReturnsInitialValueForDateTime()
     {
         $this->assertEquals(
-            NULL,
+            null,
             $this->subject->getDateProperty3()
         );
-
     }
 
     /**
@@ -134,7 +127,6 @@ class Child2Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'dateProperty3',
             $this->subject
         );
-
     }
 
     /**
@@ -143,10 +135,9 @@ class Child2Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function getDateProperty4ReturnsInitialValueForDateTime()
     {
         $this->assertEquals(
-            NULL,
+            null,
             $this->subject->getDateProperty4()
         );
-
     }
 
     /**
@@ -162,6 +153,5 @@ class Child2Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'dateProperty4',
             $this->subject
         );
-
     }
 }

@@ -18,13 +18,15 @@ class Do_ extends Node\Stmt
      * @param Node[]    $stmts      Statements
      * @param array     $attributes Additional attributes
      */
-    public function __construct(Node\Expr $cond, array $stmts = array(), array $attributes = array()) {
+    public function __construct(Node\Expr $cond, array $stmts = array(), array $attributes = array())
+    {
         parent::__construct(null, $attributes);
         $this->cond = $cond;
         $this->stmts = $stmts;
     }
 
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return array('cond', 'stmts');
     }
 }

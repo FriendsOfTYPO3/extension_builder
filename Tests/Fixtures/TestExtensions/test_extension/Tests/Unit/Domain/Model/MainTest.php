@@ -14,7 +14,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     /**
      * @var \FIXTURE\TestExtension\Domain\Model\Main
      */
-    protected $subject = NULL;
+    protected $subject = null;
 
     public function setUp()
     {
@@ -35,7 +35,6 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             '',
             $this->subject->getName()
         );
-
     }
 
     /**
@@ -50,7 +49,6 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'name',
             $this->subject
         );
-
     }
 
     /**
@@ -62,7 +60,6 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             '',
             $this->subject->getIdentifier()
         );
-
     }
 
     /**
@@ -77,7 +74,6 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'identifier',
             $this->subject
         );
-
     }
 
     /**
@@ -89,7 +85,6 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             '',
             $this->subject->getDescription()
         );
-
     }
 
     /**
@@ -104,7 +99,6 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'description',
             $this->subject
         );
-
     }
 
     /**
@@ -113,10 +107,9 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function getMyDateReturnsInitialValueForDateTime()
     {
         $this->assertEquals(
-            NULL,
+            null,
             $this->subject->getMyDate()
         );
-
     }
 
     /**
@@ -132,7 +125,6 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'myDate',
             $this->subject
         );
-
     }
 
     /**
@@ -141,10 +133,9 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function getChild1ReturnsInitialValueForChild1()
     {
         $this->assertEquals(
-            NULL,
+            null,
             $this->subject->getChild1()
         );
-
     }
 
     /**
@@ -160,7 +151,6 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'child1',
             $this->subject
         );
-
     }
 
     /**
@@ -173,7 +163,6 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             $newObjectStorage,
             $this->subject->getChildren2()
         );
-
     }
 
     /**
@@ -191,7 +180,6 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'children2',
             $this->subject
         );
-
     }
 
     /**
@@ -218,7 +206,6 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $this->inject($this->subject, 'children2', $children2ObjectStorageMock);
 
         $this->subject->removeChildren2($children2);
-
     }
 
     /**
@@ -227,10 +214,9 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function getChild3ReturnsInitialValueForChild3()
     {
         $this->assertEquals(
-            NULL,
+            null,
             $this->subject->getChild3()
         );
-
     }
 
     /**
@@ -246,7 +232,6 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'child3',
             $this->subject
         );
-
     }
 
     /**
@@ -259,7 +244,6 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             $newObjectStorage,
             $this->subject->getChildren4()
         );
-
     }
 
     /**
@@ -277,7 +261,6 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'children4',
             $this->subject
         );
-
     }
 
     /**
@@ -304,6 +287,5 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $this->inject($this->subject, 'children4', $children4ObjectStorageMock);
 
         $this->subject->removeChildren4($children4);
-
     }
 }

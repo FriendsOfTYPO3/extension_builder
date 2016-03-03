@@ -15,12 +15,14 @@ class HaltCompiler extends Stmt
      * @param string $remaining  Remaining text after halt compiler statement.
      * @param array  $attributes Additional attributes
      */
-    public function __construct($remaining, array $attributes = array()) {
+    public function __construct($remaining, array $attributes = array())
+    {
         parent::__construct(null, $attributes);
         $this->remaining = $remaining;
     }
 
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return array('remaining');
     }
 }

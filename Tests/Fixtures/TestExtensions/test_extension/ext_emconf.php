@@ -11,24 +11,24 @@
  ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'ExtensionBuilder Test Extension',
-	'description' => 'This is just a test extension created by the ExtensionBuilder',
-	'category' => 'misc',
-	'author' => 'John Doe',
-	'author_email' => 'mail@typo3.com',
-	'state' => 'alpha',
-	'internal' => '',
-	'uploadfolder' => '1',
-	'createDirs' => '',
-	'clearCacheOnLoad' => 0,
-	'version' => '0.9',
-	'constraints' => array(
-		'depends' => array(
-			'typo3' => '7.6.0-7.6.99',
-		),
-		'conflicts' => array(
-		),
-		'suggests' => array(
-		),
-	),
+    'title' => 'ExtensionBuilder Test Extension',
+    'description' => 'This is just a test extension created by the ExtensionBuilder',
+    'category' => 'misc',
+    'author' => 'John Doe',
+    'author_email' => 'mail@typo3.com',
+    'state' => 'alpha',
+    'internal' => '',
+    'uploadfolder' => '1',
+    'createDirs' => '',
+    'clearCacheOnLoad' => 0,
+    'version' => '0.9',
+    'constraints' => array(
+        'depends' => array(
+            'typo3' => '7.6.0-7.6.99',
+        ),
+        'conflicts' => array(
+        ),
+        'suggests' => array(
+        ),
+    ),
 );

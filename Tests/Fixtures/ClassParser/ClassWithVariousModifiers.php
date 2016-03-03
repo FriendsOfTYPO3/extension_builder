@@ -24,44 +24,42 @@
  ***************************************************************/
 
 /**
- * @package
  * @author Nico de Haen
  */
+abstract class Tx_PhpParser_Tests_ClassWithVariousModifiers
+{
 
-abstract class Tx_PhpParser_Tests_ClassWithVariousModifiers {
+    /**
+     * @var string
+     */
+    public $publicProperty;
 
-	/**
-	 * @var string
-	 */
-	public $publicProperty;
+    /**
+     * @var string
+     */
+    protected $protectedProperty;
 
-	/**
-	 * @var string
-	 */
-	protected $protectedProperty;
+    /**
+     * @var string
+     */
+    private $privateProperty;
 
-	/**
-	 * @var string
-	 */
-	private $privateProperty;
+    /**
+     * @var string
+     */
+    public static $staticProperty;
 
-	/**
-	 * @var string
-	 */
-	static $staticProperty;
+    /**
+     * @abstract
+     * @return mixed
+     */
+    abstract public function abstractMethod();
 
-	/**
-	 * @abstract
-	 * @return mixed
-	 */
-	abstract function abstractMethod();
-
-	/**
-	 * @static
-	 *
-	 */
-	static final function staticFinalFunction() {
-
-	}
-
+    /**
+     * @static
+     *
+     */
+    final public static function staticFinalFunction()
+    {
+    }
 }

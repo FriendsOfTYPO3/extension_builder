@@ -14,7 +14,7 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
-use \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter;
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter;
 
 /**
  * Class FunctionObject
@@ -177,7 +177,9 @@ class FunctionObject extends AbstractObject
             unset($this->parameters[$parameterPosition]);
             $this->updateParamTags();
             return true;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     /**

@@ -1,7 +1,6 @@
 <?php
 namespace Parser\Test\Model;
 
-
 /***************************************************************
  *  Copyright notice
  *
@@ -27,13 +26,10 @@ namespace Parser\Test\Model;
  ***************************************************************/
 
 /**
- * @package
  * @author Nico de Haen
  */
 class MultipleNamespaces
 {
-
-
 }
 namespace Parser\Test\Model2;
 
@@ -44,6 +40,4 @@ namespace Parser\Test\Model2;
  */
 class MultipleNamespaces
 {
-
-	
 }

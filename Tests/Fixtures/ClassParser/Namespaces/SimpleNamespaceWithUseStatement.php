@@ -32,6 +32,5 @@ use EBT\ExtensionBuilder\Domain\Model\Test;
  */
 class SimpleNamepaceWithUseTest
 {
-
-    
+    protected $foo = null;
 }

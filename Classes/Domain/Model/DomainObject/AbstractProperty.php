@@ -414,7 +414,9 @@ abstract class AbstractProperty
     {
         if ($this->getFieldName() != \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($this->name)) {
             return $this->getFieldName() . '.mapOnProperty = ' . $this->name;
-        } else return null;
+        } else {
+            return null;
+        }
     }
 
     /**

@@ -18,7 +18,7 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
 use EBT\ExtensionBuilder\Domain\Model\Plugin;
 use EBT\ExtensionBuilder\Utility\Inflector;
 
-class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
+class FileGeneratorTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
 {
     /**
      * Generate the appropriate code for a simple model class
@@ -26,7 +26,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
      *
      * @test
      */
-    function generateCodeForModelClassWithBooleanProperty()
+    public function generateCodeForModelClassWithBooleanProperty()
     {
         $modelName = 'ModelCgt1';
         $propertyName = 'blue';
@@ -36,7 +36,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
         $property->setRequired(true);
         $domainObject->addProperty($property);
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
-        $this->assertRegExp("/.*class ModelCgt1.*/", $classFileContent, 'Class declaration was not generated');
+        $this->assertRegExp('/.*class ModelCgt1.*/', $classFileContent, 'Class declaration was not generated');
         $this->assertRegExp('/.*protected \\$blue.*/', $classFileContent, 'protected boolean property was not generated');
         $this->assertRegExp('/.*\* \@var bool.*/', $classFileContent, 'var tag for boolean property was not generated');
         $this->assertRegExp('/.*\* \@validate NotEmpty.*/', $classFileContent, 'validate tag for required property was not generated');
@@ -50,7 +50,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
      *
      * @test
      */
-    function writeModelClassWithBooleanProperty()
+    public function writeModelClassWithBooleanProperty()
     {
         $modelName = 'ModelCgt1';
         $propertyName = 'blue';
@@ -89,7 +89,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
      *
      * @test
      */
-    function writeModelClassWithStringProperty()
+    public function writeModelClassWithStringProperty()
     {
         $modelName = 'ModelCgt2';
         $propertyName = 'title';
@@ -127,7 +127,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
      *
      * @test
      */
-    function writeModelClassWithZeroToOneRelation()
+    public function writeModelClassWithZeroToOneRelation()
     {
         $modelName = 'ModelCgt3';
         $relatedModelName = 'RelatedModel';
@@ -171,7 +171,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
      *
      * @test
      */
-    function writeModelClassWithZeroToManyRelation()
+    public function writeModelClassWithZeroToManyRelation()
     {
         $modelName = 'ModelCgt4';
         $relatedModelName = 'RelatedModel';
@@ -240,7 +240,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
      *
      * @test
      */
-    function writeModelClassWithManyToManyRelation()
+    public function writeModelClassWithManyToManyRelation()
     {
         $modelName = 'ModelCgt5';
         $relatedModelName = 'RelatedModel';
@@ -311,7 +311,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
      *
      * @test
      */
-    function writeSimpleControllerClassFromDomainObject()
+    public function writeSimpleControllerClassFromDomainObject()
     {
         $domainObject = $this->buildDomainObject('ModelCgt6', true);
         $action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Action');
@@ -338,7 +338,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
      *
      * @test
      */
-    function writeRepositoryClassFromDomainObject()
+    public function writeRepositoryClassFromDomainObject()
     {
         $domainObject = $this->buildDomainObject('ModelCgt6', true, true);
         $classFileContent = $this->fileGenerator->generateDomainRepositoryCode($domainObject, false);
@@ -364,7 +364,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
      *
      * @test
      */
-    function writeAggregateRootClassesFromDomainObject()
+    public function writeAggregateRootClassesFromDomainObject()
     {
         $domainObject = $this->buildDomainObject('ModelCgt7', true, true);
         $property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty('blue');
@@ -387,7 +387,7 @@ class FileGeneratorFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
      *
      * @test
      */
-    function writeExtensionFiles()
+    public function writeExtensionFiles()
     {
         $modelName = 'ModelCgt8';
         $relatedModelName = 'RelatedModel';

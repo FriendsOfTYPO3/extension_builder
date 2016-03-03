@@ -24,7 +24,6 @@
  ***************************************************************/
 
 /**
- * @package
  * @author Nico de Haen
  */
 
@@ -32,22 +31,17 @@
 
 define('TX_PHPPARSER_TEST_FOO', 'BAR');
 
-
 if (!isset($foo) && !isset($bar)) {
-	$foo = 23;
-	$bar = 42;
+    $foo = 23;
+    $bar = 42;
 }
 
 if ($bar > $foo) {
-	if ($foo == 23) {
-		define('TX_PHPPARSER_TEST_BAR', 'FOO');
-	}
+    if ($foo == 23) {
+        define('TX_PHPPARSER_TEST_BAR', 'FOO');
+    }
 }
-
 
 abstract class Tx_PhpParser_Tests_ClassWithPreStatement
 {
-
 }
-
-

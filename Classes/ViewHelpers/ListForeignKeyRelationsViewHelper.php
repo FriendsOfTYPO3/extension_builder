@@ -31,7 +31,9 @@ class ListForeignKeyRelationsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper
         $expectedDomainObject = $domainObject;
         $results = array();
         foreach ($extension->getDomainObjects() as $domainObject) {
-            if (!count($domainObject->getProperties())) continue;
+            if (!count($domainObject->getProperties())) {
+                continue;
+            }
             foreach ($domainObject->getProperties() as $property) {
                 if ($property instanceof \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation
                     && $property->getForeignClassName() === $expectedDomainObject->getFullQualifiedClassName()

@@ -14,8 +14,8 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  * The TYPO3 project - inspiring people to share!
  */
 
-use \EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
-use \PhpParser\Node;
+use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
+use PhpParser\Node;
 
 /**
  * provides methods to import a class object and methods and properties

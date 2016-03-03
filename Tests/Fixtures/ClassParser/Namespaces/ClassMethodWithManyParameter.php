@@ -1,5 +1,6 @@
 <?php
 namespace EBT\Tests\Fixtures;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -24,25 +25,23 @@ namespace EBT\Tests\Fixtures;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
 class ClassMethodWithManyParameter
 {
 
-	/**
-	 * This is the description
-	 *
-	 * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TOOOL\Projects\Domain\Model\Calculation> $tests
-	 * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
-	 */
-	private static function testMethod(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject, \TYPO3\CMS\Extbase\Persistence\ObjectStorage $tests)
-	{
-		$number = 7;
-		if ($number > $tests->count()) {
-			return $domainObject;
-		} else {
-			$domainObject->setName('Foo');
-		}
-	}
-
+    /**
+     * This is the description
+     *
+     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TOOOL\Projects\Domain\Model\Calculation> $tests
+     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     */
+    private static function testMethod(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject, \TYPO3\CMS\Extbase\Persistence\ObjectStorage $tests)
+    {
+        $number = 7;
+        if ($number > $tests->count()) {
+            return $domainObject;
+        } else {
+            $domainObject->setName('Foo');
+        }
+    }
 }

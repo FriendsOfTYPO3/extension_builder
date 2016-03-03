@@ -89,7 +89,7 @@ class FileGenerator
     /**
      * @var string[]
      */
-    static public $defaultActions = array(
+    public static $defaultActions = array(
         'createAction',
         'deleteAction',
         'editAction',
@@ -180,7 +180,6 @@ class FileGenerator
 
     protected function generateYamlSettingsFile()
     {
-
         if (!file_exists($this->configurationDirectory . 'ExtensionBuilder/settings.yaml')) {
             GeneralUtility::mkdir($this->configurationDirectory . 'ExtensionBuilder');
             $fileContents = $this->generateYamlSettings();
@@ -459,12 +458,10 @@ class FileGenerator
      */
     protected function generateDomainObjectRelatedFiles()
     {
-
         if (count($this->extension->getDomainObjects()) > 0) {
             $this->classBuilder->initialize($this->extension);
             // Generate Domain Model
             try {
-
                 $domainModelDirectory = 'Classes/Domain/Model/';
                 $this->mkdir_deep($this->extensionDirectory, $domainModelDirectory);
 
@@ -1017,7 +1014,6 @@ class FileGenerator
      */
     public function getDefaultMethodBody($domainObject, $domainProperty, $classType, $methodType, $methodName)
     {
-
         if ($classType == 'Controller' && !in_array($methodName, self::$defaultActions)) {
             return '';
         }

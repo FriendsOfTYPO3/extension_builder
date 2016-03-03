@@ -85,7 +85,6 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $classFileObject = $this->parseAndWrite($fileName);
         $reflectedClass = $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
         // No way to detect the typeHint with Reflection...
-
     }
 
     /**

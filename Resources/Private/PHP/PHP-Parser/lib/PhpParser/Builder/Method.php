@@ -17,7 +17,8 @@ class Method extends FunctionLike
      *
      * @param string $name Name of the method
      */
-    public function __construct($name) {
+    public function __construct($name)
+    {
         $this->name = $name;
     }
 
@@ -26,7 +27,8 @@ class Method extends FunctionLike
      *
      * @return $this The builder instance (for fluid interface)
      */
-    public function makePublic() {
+    public function makePublic()
+    {
         $this->setModifier(Stmt\Class_::MODIFIER_PUBLIC);
 
         return $this;
@@ -37,7 +39,8 @@ class Method extends FunctionLike
      *
      * @return $this The builder instance (for fluid interface)
      */
-    public function makeProtected() {
+    public function makeProtected()
+    {
         $this->setModifier(Stmt\Class_::MODIFIER_PROTECTED);
 
         return $this;
@@ -48,7 +51,8 @@ class Method extends FunctionLike
      *
      * @return $this The builder instance (for fluid interface)
      */
-    public function makePrivate() {
+    public function makePrivate()
+    {
         $this->setModifier(Stmt\Class_::MODIFIER_PRIVATE);
 
         return $this;
@@ -59,7 +63,8 @@ class Method extends FunctionLike
      *
      * @return $this The builder instance (for fluid interface)
      */
-    public function makeStatic() {
+    public function makeStatic()
+    {
         $this->setModifier(Stmt\Class_::MODIFIER_STATIC);
 
         return $this;
@@ -70,7 +75,8 @@ class Method extends FunctionLike
      *
      * @return $this The builder instance (for fluid interface)
      */
-    public function makeAbstract() {
+    public function makeAbstract()
+    {
         if (!empty($this->stmts)) {
             throw new \LogicException('Cannot make method with statements abstract');
         }
@@ -86,7 +92,8 @@ class Method extends FunctionLike
      *
      * @return $this The builder instance (for fluid interface)
      */
-    public function makeFinal() {
+    public function makeFinal()
+    {
         $this->setModifier(Stmt\Class_::MODIFIER_FINAL);
 
         return $this;
@@ -99,7 +106,8 @@ class Method extends FunctionLike
      *
      * @return $this The builder instance (for fluid interface)
      */
-    public function addStmt($stmt) {
+    public function addStmt($stmt)
+    {
         if (null === $this->stmts) {
             throw new \LogicException('Cannot add statements to an abstract method');
         }
@@ -114,7 +122,8 @@ class Method extends FunctionLike
      *
      * @return Stmt\ClassMethod The built method node
      */
-    public function getNode() {
+    public function getNode()
+    {
         return new Stmt\ClassMethod($this->name, array(
             'type'   => $this->type,
             'byRef'  => $this->returnByRef,

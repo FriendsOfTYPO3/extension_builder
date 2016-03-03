@@ -24,12 +24,8 @@
  ***************************************************************/
 
 /**
- * @package
  * @author Nico de Haen
  */
-
-
-
 abstract class Tx_PhpParser_Tests_ClassWithPostStatement
 {
 }
@@ -38,14 +34,13 @@ abstract class Tx_PhpParser_Tests_ClassWithPostStatement
 
 const TX_PHPPARSER_TEST_FOO_POST = 'BAR';
 
-
 if (!isset($foo2) && !isset($bar2)) {
-	$foo2 = 23;
-	$bar2 = 42;
+    $foo2 = 23;
+    $bar2 = 42;
 }
 
 if ($bar2 > $foo2) {
-	if ($foo2 == 23) {
-		define('TX_PHPPARSER_TEST_BAR_POST', 'FOO');
-	}
+    if ($foo2 == 23) {
+        define('TX_PHPPARSER_TEST_BAR_POST', 'FOO');
+    }
 }

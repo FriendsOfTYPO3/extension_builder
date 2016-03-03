@@ -14,7 +14,7 @@ class Child3Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     /**
      * @var \FIXTURE\TestExtension\Domain\Model\Child3
      */
-    protected $subject = NULL;
+    protected $subject = null;
 
     public function setUp()
     {
@@ -35,7 +35,6 @@ class Child3Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             '',
             $this->subject->getName()
         );
-
     }
 
     /**
@@ -50,7 +49,6 @@ class Child3Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'name',
             $this->subject
         );
-
     }
 
     /**
@@ -62,7 +60,6 @@ class Child3Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             '',
             $this->subject->getPassword()
         );
-
     }
 
     /**
@@ -77,7 +74,6 @@ class Child3Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'password',
             $this->subject
         );
-
     }
 
     /**
@@ -86,10 +82,9 @@ class Child3Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function getImagePropertyReturnsInitialValueForFileReference()
     {
         $this->assertEquals(
-            NULL,
+            null,
             $this->subject->getImageProperty()
         );
-
     }
 
     /**
@@ -105,6 +100,5 @@ class Child3Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'imageProperty',
             $this->subject
         );
-
     }
 }

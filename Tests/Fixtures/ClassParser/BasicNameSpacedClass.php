@@ -1,5 +1,6 @@
 <?php
 namespace FOO;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -26,40 +27,47 @@ namespace FOO;
 
 /**
  * Class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicNameSpacedClass
- * @package FOO
  */
-class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicNameSpacedClass {
+class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicNameSpacedClass
+{
 
-	protected $names;
+    protected $names;
 
-	const TEST = "test";
+    const TEST = "test";
 
-	const TEST2 = 'test';
+    const TEST2 = 'test';
 
-	/**
-	 *
-	 * @return array $names
-	 */
-	public function getNames(){
-		return $this->names;
-	}
+    /**
+     *
+     * @return array $names
+     */
+    public function getNames()
+    {
+        return $this->names;
+    }
 
-	public function getNames0(){	return $this->names;}
+    public function getNames0() { return $this->names; }
 
-	public function getNames1(){  }
+    public function getNames1()
+    {
+    }
 
-	public function getNames2(){
-	}
+    public function getNames2()
+    {
+    }
 
-	public function getNames3(){
-		return $this->names;		}
+    public function getNames3()
+    {
+        return $this->names;
+    }
 
-	/**
-	 *
-	 * @param array $names
-	 * @return void
-	 */
-	public function setNames(array $names){
-		$this->names = $names;
-	}
+    /**
+     *
+     * @param array $names
+     * @return void
+     */
+    public function setNames(array $names)
+    {
+        $this->names = $names;
+    }
 }

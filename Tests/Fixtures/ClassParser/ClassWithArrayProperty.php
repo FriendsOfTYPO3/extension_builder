@@ -24,12 +24,10 @@
  ***************************************************************/
 
 /**
- * @package
  * @author Nico de Haen
  */
 abstract class Tx_PhpParser_Tests_ArrayProperty
 {
-
     /**
      * @var array
      */
@@ -47,5 +45,4 @@ abstract class Tx_PhpParser_Tests_ArrayProperty
             'c'
         )
     );
-
 }

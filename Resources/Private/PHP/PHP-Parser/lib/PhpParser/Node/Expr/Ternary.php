@@ -21,14 +21,16 @@ class Ternary extends Expr
      * @param Expr      $else       Expression for false
      * @param array                    $attributes Additional attributes
      */
-    public function __construct(Expr $cond, $if, Expr $else, array $attributes = array()) {
+    public function __construct(Expr $cond, $if, Expr $else, array $attributes = array())
+    {
         parent::__construct(null, $attributes);
         $this->cond = $cond;
         $this->if = $if;
         $this->else = $else;
     }
 
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return array('cond', 'if', 'else');
     }
 }

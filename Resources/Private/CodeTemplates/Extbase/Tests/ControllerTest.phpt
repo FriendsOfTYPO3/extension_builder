@@ -12,7 +12,7 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     /**
      * @var \{domainObject.controllerClassName}
      */
-    protected $subject = NULL;
+    protected $subject = null;
 
     public function setUp()
     {

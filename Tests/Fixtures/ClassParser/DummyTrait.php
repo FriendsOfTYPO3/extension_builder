@@ -1,8 +1,10 @@
 <?php
 
-trait dummyTrait {
+trait dummyTrait
+{
 
-	public function dummy() {
-		// do nothing
-	}
+    public function dummy()
+    {
+        // do nothing
+    }
 }

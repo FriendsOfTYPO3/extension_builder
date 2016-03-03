@@ -14,8 +14,8 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Core\Utility;
 use EBT\ExtensionBuilder\Utility\Inflector;
+use TYPO3\CMS\Core\Utility;
 
 /**
  * Helper for localization related stuff

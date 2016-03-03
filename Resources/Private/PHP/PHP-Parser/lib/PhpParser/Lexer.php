@@ -24,7 +24,8 @@ class Lexer
      *                       'startFilePos', 'endFilePos'. The option defaults to the first three.
      *                       For more info see getNextToken() docs.
      */
-    public function __construct(array $options = array()) {
+    public function __construct(array $options = array())
+    {
         // map from internal tokens to PhpParser tokens
         $this->tokenMap = $this->createTokenMap();
 
@@ -47,7 +48,8 @@ class Lexer
      *
      * @throws Error on lexing errors (unterminated comment or unexpected character)
      */
-    public function startLexing($code) {
+    public function startLexing($code)
+    {
         $scream = ini_set('xdebug.scream', '0');
 
         $this->resetErrors();
@@ -64,14 +66,16 @@ class Lexer
         $this->filePos = 0;
     }
 
-    protected function resetErrors() {
+    protected function resetErrors()
+    {
         // set error_get_last() to defined state by forcing an undefined variable error
-        set_error_handler(function() { return false; }, 0);
+        set_error_handler(function () { return false; }, 0);
         @$undefinedVariable;
         restore_error_handler();
     }
 
-    protected function handleErrors() {
+    protected function handleErrors()
+    {
         $error = error_get_last();
 
         if (preg_match(
@@ -119,7 +123,8 @@ class Lexer
      *
      * @return int Token id
      */
-    public function getNextToken(&$value = null, &$startAttributes = null, &$endAttributes = null) {
+    public function getNextToken(&$value = null, &$startAttributes = null, &$endAttributes = null)
+    {
         $startAttributes = array();
         $endAttributes   = array();
 
@@ -210,7 +215,8 @@ class Lexer
      *
      * @return array Array of tokens in token_get_all() format
      */
-    public function getTokens() {
+    public function getTokens()
+    {
         return $this->tokens;
     }
 
@@ -219,7 +225,8 @@ class Lexer
      *
      * @return string Remaining text
      */
-    public function handleHaltCompiler() {
+    public function handleHaltCompiler()
+    {
         // text after T_HALT_COMPILER, still including ();
         $textAfter = substr($this->code, $this->filePos);
 
@@ -246,7 +253,8 @@ class Lexer
      *
      * @return array The token map
      */
-    protected function createTokenMap() {
+    protected function createTokenMap()
+    {
         $tokenMap = array();
 
         // 256 is the minimum possible token number, as everything below
@@ -255,17 +263,17 @@ class Lexer
             if (T_DOUBLE_COLON === $i) {
                 // T_DOUBLE_COLON is equivalent to T_PAAMAYIM_NEKUDOTAYIM
                 $tokenMap[$i] = Parser::T_PAAMAYIM_NEKUDOTAYIM;
-            } elseif(T_OPEN_TAG_WITH_ECHO === $i) {
+            } elseif (T_OPEN_TAG_WITH_ECHO === $i) {
                 // T_OPEN_TAG_WITH_ECHO with dropped T_OPEN_TAG results in T_ECHO
                 $tokenMap[$i] = Parser::T_ECHO;
-            } elseif(T_CLOSE_TAG === $i) {
+            } elseif (T_CLOSE_TAG === $i) {
                 // T_CLOSE_TAG is equivalent to ';'
                 $tokenMap[$i] = ord(';');
             } elseif ('UNKNOWN' !== $name = token_name($i)) {
                 if ('T_HASHBANG' === $name) {
                     // HHVM uses a special token for #! hashbang lines
                     $tokenMap[$i] = Parser::T_INLINE_HTML;
-                } else if (defined($name = 'PhpParser\Parser::' . $name)) {
+                } elseif (defined($name = 'PhpParser\Parser::' . $name)) {
                     // Other tokens can be mapped directly
                     $tokenMap[$i] = constant($name);
                 }

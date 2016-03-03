@@ -15,7 +15,6 @@ namespace EBT\ExtensionBuilder\Utility;
  */
 
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
-use TYPO3\CMS\Core\Utility;
 
 /**
  * provides helper methods
@@ -50,9 +49,8 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface
      * @param string $methodType (set,add,remove)
      * @return string method body
      */
-    static public function getParameterName(AbstractProperty $domainProperty, $methodType)
+    public static function getParameterName(AbstractProperty $domainProperty, $methodType)
     {
-
         $propertyName = $domainProperty->getName();
 
         switch ($methodType) {
@@ -73,9 +71,8 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface
      * @param string $methodType
      * @return string
      */
-    static public function getParamTag(AbstractProperty $domainProperty, $methodType)
+    public static function getParamTag(AbstractProperty $domainProperty, $methodType)
     {
-
         switch ($methodType) {
             case 'set'        :
                 return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
@@ -101,7 +98,7 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface
      * @param $className
      * @return string
      */
-    static public function convertClassNameToRecordType($className)
+    public static function convertClassNameToRecordType($className)
     {
         $classNameParts = explode('\\', $className);
         if (count($classNameParts) > 6) {

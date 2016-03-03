@@ -17,6 +17,6 @@ namespace EBT\ExtensionBuilder\Exception;
 /**
  * An exception thrown if an error occured during parsing a php file
  */
-class SyntaxErrorException extends \TYPO3\CMS\Extbase\Exception
+class SyntaxError extends \TYPO3\CMS\Extbase\Exception
 {
 }

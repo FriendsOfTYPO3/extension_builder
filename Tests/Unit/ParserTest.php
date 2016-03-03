@@ -31,7 +31,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     /**
      * @test
      */
-    function parseSimpleProperty()
+    public function parseSimpleProperty()
     {
         $classFileObject = $this->parseFile('SimpleProperty.php');
         $this->assertEquals(count($classFileObject->getClasses()), 1);
@@ -45,7 +45,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     /**
      * @test
      */
-    function parseSimplePropertyWithGetterAndSetter()
+    public function parseSimplePropertyWithGetterAndSetter()
     {
         $this->parserService->setTraverser(new \EBT\ExtensionBuilder\Parser\Traverser);
         $classFileObject = $this->parseFile('SimplePropertyWithGetterAndSetter.php');
@@ -58,7 +58,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     /**
      * @test
      */
-    function parseDocComments()
+    public function parseDocComments()
     {
         $classFileObject = $this->parseFile('SimpleProperty.php');
         $this->assertEquals(count($classFileObject->getClasses()), 1);
@@ -72,7 +72,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     /**
      * @test
      */
-    function parseArrayProperty()
+    public function parseArrayProperty()
     {
         $this->parserService->setTraverser(new \EBT\ExtensionBuilder\Parser\Traverser);
         $classFileObject = $this->parseFile('ClassWithArrayProperty.php');
@@ -83,7 +83,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     /**
      * @test
      */
-    function parseSimpleNonBracedNamespace()
+    public function parseSimpleNonBracedNamespace()
     {
         $classFileObject = $this->parseFile('Namespaces/SimpleNamespace.php');
         $this->assertEquals('Parser\\Test\\Model', $classFileObject->getFirstClass()->getNamespaceName());
@@ -92,7 +92,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     /**
      * @test
      */
-    function parseClassMethodWithManyParameter()
+    public function parseClassMethodWithManyParameter()
     {
         $classFileObject = $this->parseFile('ClassMethodWithManyParameter.php');
         $parameters = $classFileObject->getFirstClass()->getMethod('testMethod')->getParameters();
@@ -105,7 +105,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     /**
      * @test
      */
-    function parseClassWithVariousModifiers()
+    public function parseClassWithVariousModifiers()
     {
         $classFileObject = $this->parseFile('ClassWithVariousModifiers.php');
         $classObject = $classFileObject->getFirstClass();
@@ -124,7 +124,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     /**
      * @test
      */
-    function parserFindsFunction()
+    public function parserFindsFunction()
     {
         $fileObject = $this->parseFile('FunctionsWithoutClasses.php');
         $functions = $fileObject->getFunctions();
@@ -137,7 +137,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     /**
      * @test
      */
-    function parserFindsAliasDeclarations()
+    public function parserFindsAliasDeclarations()
     {
         $fileObject = $this->parseFile('Namespaces/SimpleNamespaceWithUseStatement.php');
         $this->assertSame(count($fileObject->getNamespace()->getAliasDeclarations()), 2, 'Alias declaration not found!');

@@ -17,7 +17,6 @@ namespace EBT\ExtensionBuilder\Service;
 /**
  * provides validation against reserved words
  */
-
 class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
 {
     /**
@@ -26,7 +25,7 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @var string[]
      */
-    static public $reservedMYSQLWords = array(
+    public static $reservedMYSQLWords = array(
         'ACCESSIBLE',
         'ADD',
         'ALL',
@@ -266,7 +265,7 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @var string[]
      */
-    static public $reservedTYPO3ColumnNames = array(
+    public static $reservedTYPO3ColumnNames = array(
         'uid',
         'pid',
         'endtime',
@@ -298,7 +297,7 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @var string[]
      */
-    static public $reservedExtbaseNames = array(
+    public static $reservedExtbaseNames = array(
         'Class',
         'Format',
         'Action',
@@ -353,7 +352,7 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return bool
      */
-    static public function isReservedTYPO3Word($word)
+    public static function isReservedTYPO3Word($word)
     {
         if (in_array(\TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($word), self::$reservedTYPO3ColumnNames)) {
             return true;
@@ -368,7 +367,7 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return bool
      */
-    static public function isReservedExtbaseWord($word)
+    public static function isReservedExtbaseWord($word)
     {
         if (in_array($word, self::$reservedExtbaseNames)) {
             return true;
@@ -383,7 +382,7 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return bool
      */
-    static public function isReservedMYSQLWord($word)
+    public static function isReservedMYSQLWord($word)
     {
         if (in_array(strtoupper($word), self::$reservedMYSQLWords)) {
             return true;
@@ -398,7 +397,7 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return bool
      */
-    static public function isReservedWord($word)
+    public static function isReservedWord($word)
     {
         if (self::isReservedMYSQLWord($word) || self::isReservedTYPO3Word($word)) {
             return true;

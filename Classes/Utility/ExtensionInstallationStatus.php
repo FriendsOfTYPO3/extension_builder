@@ -14,11 +14,11 @@ namespace EBT\ExtensionBuilder\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\Extension;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extensionmanager\Utility\InstallUtility;
-use EBT\ExtensionBuilder\Domain\Model\Extension;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Service\SqlSchemaMigrationService;
 
 class ExtensionInstallationStatus
@@ -71,7 +71,6 @@ class ExtensionInstallationStatus
             );
             $statusMessage .= '<div id="dbUpdateStatementsWrapper"><table>';
             foreach ($this->updateStatements as $type => $statements) {
-
                 $statusMessage .= '<tr><td></td><td style="text-align:left;padding-left:15px">' . $typeInfo[$type] . ':</td></tr>';
                 foreach ($statements as $key => $statement) {
                     if ($type == 'add') {
@@ -98,7 +97,6 @@ class ExtensionInstallationStatus
      * @param string $extKey
      * @return void
      */
-
     public function checkForDbUpdate($extensionKey)
     {
         $this->dbUpdateNeeded = false;

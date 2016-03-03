@@ -1,22 +1,22 @@
 <?php
 return [
     'ctrl' => [
-        'title'	=> 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3',
+        'title'    => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3',
         'label' => 'name',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         'dividers2tabs' => true,
-		'versioningWS' => 2,
+        'versioningWS' => 2,
         'versioning_followPages' => true,
 
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
         'transOrigDiffSourceField' => 'l10n_diffsource',
-		'delete' => 'deleted',
+        'delete' => 'deleted',
         'enablecolumns' => [
-			'disabled' => 'hidden',
-			'starttime' => 'starttime',
+            'disabled' => 'hidden',
+            'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
         'searchFields' => 'name,password,image_property,',
@@ -113,74 +113,74 @@ return [
             ],
         ],
 
-	    'name' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3.name',
-	        'config' => [
-			    'type' => 'input',
-			    'size' => 30,
-			    'eval' => 'trim,required'
-			],
+        'name' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3.name',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim,required'
+            ],
 
-	    ],
-	    'password' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3.password',
-	        'config' => [
-			    'type' => 'input',
-			    'size' => 30,
-			    'eval' => 'nospace,password'
-			]
+        ],
+        'password' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3.password',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'nospace,password'
+            ]
 
-	    ],
-	    'image_property' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3.image_property',
-	        'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
-			    'image_property',
-			    [
-			        'appearance' => [
-			            'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:images.addFileReference'
-			        ],
-			        'foreign_types' => [
-			            '0' => [
-			                'showitem' => '
+        ],
+        'image_property' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3.image_property',
+            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+                'image_property',
+                [
+                    'appearance' => [
+                        'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:images.addFileReference'
+                    ],
+                    'foreign_types' => [
+                        '0' => [
+                            'showitem' => '
 			                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
 			                --palette--;;filePalette'
-			            ],
-			            \TYPO3\CMS\Core\Resource\File::FILETYPE_TEXT => [
-			                'showitem' => '
+                        ],
+                        \TYPO3\CMS\Core\Resource\File::FILETYPE_TEXT => [
+                            'showitem' => '
 			                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
 			                --palette--;;filePalette'
-			            ],
-			            \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
-			                'showitem' => '
+                        ],
+                        \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
+                            'showitem' => '
 			                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
 			                --palette--;;filePalette'
-			            ],
-			            \TYPO3\CMS\Core\Resource\File::FILETYPE_AUDIO => [
-			                'showitem' => '
+                        ],
+                        \TYPO3\CMS\Core\Resource\File::FILETYPE_AUDIO => [
+                            'showitem' => '
 			                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
 			                --palette--;;filePalette'
-			            ],
-			            \TYPO3\CMS\Core\Resource\File::FILETYPE_VIDEO => [
-			                'showitem' => '
+                        ],
+                        \TYPO3\CMS\Core\Resource\File::FILETYPE_VIDEO => [
+                            'showitem' => '
 			                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
 			                --palette--;;filePalette'
-			            ],
-			            \TYPO3\CMS\Core\Resource\File::FILETYPE_APPLICATION => [
-			                'showitem' => '
+                        ],
+                        \TYPO3\CMS\Core\Resource\File::FILETYPE_APPLICATION => [
+                            'showitem' => '
 			                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
 			                --palette--;;filePalette'
-			            ]
-			        ],
-			        'maxitems' => 1,
-			        'minitems' => 1
-			    ],
-			    $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
-			),
+                        ]
+                    ],
+                    'maxitems' => 1,
+                    'minitems' => 1
+                ],
+                $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
+            ),
 
-	    ],
+        ],
 
     ],
 ];

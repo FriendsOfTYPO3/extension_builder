@@ -15,12 +15,14 @@ class LNumber extends Scalar
      * @param int   $value      Value of the number
      * @param array $attributes Additional attributes
      */
-    public function __construct($value = 0, array $attributes = array()) {
+    public function __construct($value = 0, array $attributes = array())
+    {
         parent::__construct(null, $attributes);
         $this->value = $value;
     }
 
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return array('value');
     }
 
@@ -33,7 +35,8 @@ class LNumber extends Scalar
      *
      * @return int The parsed number
      */
-    public static function parse($str) {
+    public static function parse($str)
+    {
         // handle plain 0 specially
         if ('0' === $str) {
             return 0;

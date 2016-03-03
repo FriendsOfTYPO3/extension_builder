@@ -28,7 +28,8 @@ class Foreach_ extends Node\Stmt
      *                              'stmts'  => array(): Statements
      * @param array     $attributes Additional attributes
      */
-    public function __construct(Node\Expr $expr, Node\Expr $valueVar, array $subNodes = array(), array $attributes = array()) {
+    public function __construct(Node\Expr $expr, Node\Expr $valueVar, array $subNodes = array(), array $attributes = array())
+    {
         parent::__construct(null, $attributes);
         $this->expr = $expr;
         $this->keyVar = isset($subNodes['keyVar']) ? $subNodes['keyVar'] : null;
@@ -37,7 +38,8 @@ class Foreach_ extends Node\Stmt
         $this->stmts = isset($subNodes['stmts']) ? $subNodes['stmts'] : array();
     }
 
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return array('expr', 'keyVar', 'byRef', 'valueVar', 'stmts');
     }
 }

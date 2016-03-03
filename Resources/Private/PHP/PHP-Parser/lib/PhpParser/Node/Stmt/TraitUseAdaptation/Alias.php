@@ -20,7 +20,8 @@ class Alias extends Node\Stmt\TraitUseAdaptation
      * @param null|string    $newName     New name
      * @param array          $attributes  Additional attributes
      */
-    public function __construct($trait, $method, $newModifier, $newName, array $attributes = array()) {
+    public function __construct($trait, $method, $newModifier, $newName, array $attributes = array())
+    {
         parent::__construct(null, $attributes);
         $this->trait = $trait;
         $this->method = $method;
@@ -28,7 +29,8 @@ class Alias extends Node\Stmt\TraitUseAdaptation
         $this->newName = $newName;
     }
 
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return array('trait', 'method', 'newModifier', 'newName');
     }
 }

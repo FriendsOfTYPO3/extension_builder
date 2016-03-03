@@ -14,8 +14,8 @@ namespace EBT\ExtensionBuilder\Domain\Validator;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Schema for a whole extension
@@ -184,7 +184,6 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
      */
     public function isValid($extension)
     {
-
         $extensionSettings = $extension->getSettings();
         GeneralUtility::devLog('isValid: settings', 'extension_builder', 0, $extension->getSettings());
         if (isset($extensionSettings['ignoreWarnings'])) {
@@ -550,7 +549,6 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
      */
     private function validateDomainObjects($extension)
     {
-
         $actionCounter = 0;
         foreach ($extension->getDomainObjects() as $domainObject) {
             $actionCounter .= count($domainObject->getActions());
@@ -644,7 +642,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
             }
         }
         if ($tableName) {
-            if (in_array($tableName, array('tt_content', 'pages')) || preg_match("/^(pages_|be_|sys_|static_|cf_)/", $tableName)) {
+            if (in_array($tableName, array('tt_content', 'pages')) || preg_match('/^(pages_|be_|sys_|static_|cf_)/', $tableName)) {
                 $this->validationResult['warnings'][] = new ExtensionException(
                     'The configuration for table "' . $tableName . '" is not compatible' . LF .
                     ' with extbase. You have to configure it yourself if you want to map' . LF .
@@ -875,7 +873,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
          * Reserved prefixes
          * The key must not being with one of the following prefixes: tx,u,user_,pages,tt_,sys_,ts_language_,csh_
          */
-        if (preg_match("/^(tx_|u_|user_|pages_|tt_|sys_|ts_language_|csh_)/", $key)) {
+        if (preg_match('/^(tx_|u_|user_|pages_|tt_|sys_|ts_language_|csh_)/', $key)) {
             $this->validationResult['errors'][] = new ExtensionException(
                 'Illegal extension key prefix', self::ERROR_EXTKEY_ILLEGAL_PREFIX);
         }
@@ -887,7 +885,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
      *
      * @return bool
      */
-    static public function isReservedWord($word)
+    public static function isReservedWord($word)
     {
         if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($word) ||
             \EBT\ExtensionBuilder\Service\ValidationService::isReservedTYPO3Word($word)

@@ -402,7 +402,7 @@ abstract class AbstractObject
         if ($modifier == \PhpParser\Node\Stmt\Class_::MODIFIER_FINAL && $this->isAbstract() ||
             $modifier == \PhpParser\Node\Stmt\Class_::MODIFIER_ABSTRACT && $this->isFinal()
         ) {
-            throw new \EBT\ExtensionBuilder\Exception\SyntaxErrorException ('Abstract and Final can\'t be applied both to same object');
+            throw new \EBT\ExtensionBuilder\Exception\SyntaxErrorException('Abstract and Final can\'t be applied both to same object');
         } elseif ($modifier == \PhpParser\Node\Stmt\Class_::MODIFIER_STATIC && $this->isAbstract() ||
             $modifier == \PhpParser\Node\Stmt\Class_::MODIFIER_ABSTRACT && $this->isStatic()
         ) {
@@ -613,7 +613,6 @@ abstract class AbstractObject
     /**
      * @return bool
      */
-
     public function isProtected()
     {
         return (($this->modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_PROTECTED) !== 0);

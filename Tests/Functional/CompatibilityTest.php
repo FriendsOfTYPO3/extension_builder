@@ -26,7 +26,7 @@ use org\bovigo\vfs\vfsStream;
  * @author Nico de Haen
  *
  */
-class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
+class CompatibilityTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
 {
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
@@ -52,7 +52,7 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
      *
      * @test
      */
-    function generateExtensionFromVersion3Configuration()
+    public function generateExtensionFromVersion3Configuration()
     {
         $this->configurationManager = $this->getAccessibleMock(
             'EBT\ExtensionBuilder\Configuration\ConfigurationManager',
@@ -98,7 +98,6 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
                 $this->assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');
                 // do not compare files that contain a formatted DateTime, as it might have changed between file creation and this comparison
                 if (strpos($referenceFile, 'ext_emconf') === false) {
-
                     $originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $referenceFileContent, true);
                     $generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, file_get_contents($createdFile), true);
                     for ($c = 0; $c < count($originalLines); $c++) {
@@ -108,8 +107,8 @@ class CompatibilityFunctionTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
                             $originalLines[$c]
                         );
                         $this->assertEquals(
-                            trim($originalLine),
-                            trim($generatedLines[$c]),
+                            preg_replace('/\s+/', ' ', $originalLine),
+                            preg_replace('/\s+/', ' ', $generatedLines[$c]),
                             'File ' . $createdFile . ' was not equal to original file! Difference in line ' . $c . ':' . $generatedLines[$c] . ' != ' . $originalLines[$c]
                         );
                     }

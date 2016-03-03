@@ -1,22 +1,22 @@
 <?php
 return [
     'ctrl' => [
-        'title'	=> 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2',
+        'title'    => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2',
         'label' => 'name',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         'dividers2tabs' => true,
-		'versioningWS' => 2,
+        'versioningWS' => 2,
         'versioning_followPages' => true,
 
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
         'transOrigDiffSourceField' => 'l10n_diffsource',
-		'delete' => 'deleted',
+        'delete' => 'deleted',
         'enablecolumns' => [
-			'disabled' => 'hidden',
-			'starttime' => 'starttime',
+            'disabled' => 'hidden',
+            'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
         'searchFields' => 'name,date_property1,date_property2,date_property3,date_property4,',
@@ -113,66 +113,66 @@ return [
             ],
         ],
 
-	    'name' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.name',
-	        'config' => [
-			    'type' => 'input',
-			    'size' => 30,
-			    'eval' => 'trim'
-			],
+        'name' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.name',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
 
-	    ],
-	    'date_property1' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property1',
-	        'config' => [
-			    'dbType' => 'date',
-			    'type' => 'input',
-			    'size' => 7,
-			    'eval' => 'date',
-			    'checkbox' => 0,
-			    'default' => '0000-00-00'
-			],
+        ],
+        'date_property1' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property1',
+            'config' => [
+                'dbType' => 'date',
+                'type' => 'input',
+                'size' => 7,
+                'eval' => 'date',
+                'checkbox' => 0,
+                'default' => '0000-00-00'
+            ],
 
-	    ],
-	    'date_property2' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property2',
-	        'config' => [
-			    'dbType' => 'datetime',
-			    'type' => 'input',
-			    'size' => 12,
-			    'eval' => 'datetime',
-			    'checkbox' => 0,
-			    'default' => '0000-00-00 00:00:00'
-			],
+        ],
+        'date_property2' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property2',
+            'config' => [
+                'dbType' => 'datetime',
+                'type' => 'input',
+                'size' => 12,
+                'eval' => 'datetime',
+                'checkbox' => 0,
+                'default' => '0000-00-00 00:00:00'
+            ],
 
-	    ],
-	    'date_property3' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property3',
-	        'config' => [
-			    'type' => 'input',
-			    'size' => 7,
-			    'eval' => 'date',
-			    'checkbox' => 1,
-			    'default' => time()
-			],
+        ],
+        'date_property3' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property3',
+            'config' => [
+                'type' => 'input',
+                'size' => 7,
+                'eval' => 'date',
+                'checkbox' => 1,
+                'default' => time()
+            ],
 
-	    ],
-	    'date_property4' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property4',
-	        'config' => [
-			    'type' => 'input',
-			    'size' => 10,
-			    'eval' => 'datetime',
-			    'checkbox' => 1,
-			    'default' => time()
-			],
+        ],
+        'date_property4' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property4',
+            'config' => [
+                'type' => 'input',
+                'size' => 10,
+                'eval' => 'datetime',
+                'checkbox' => 1,
+                'default' => time()
+            ],
 
-	    ],
+        ],
 
         'main' => [
             'config' => [

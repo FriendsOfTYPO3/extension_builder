@@ -18,7 +18,7 @@ if (empty($operations)) {
 }
 
 if (empty($files)) {
-    showHelp("Must specify at least one file.");
+    showHelp('Must specify at least one file.');
 }
 
 $lexer = new PhpParser\Lexer\Emulative(array('usedAttributes' => array(
@@ -81,7 +81,8 @@ foreach ($files as $file) {
     }
 }
 
-function showHelp($error) {
+function showHelp($error)
+{
     die($error . "\n\n" .
         <<<OUTPUT
 Usage: php php-parse.php [operations] file1.php [file2.php ...]
@@ -107,7 +108,8 @@ OUTPUT
     );
 }
 
-function parseArgs($args) {
+function parseArgs($args)
+{
     $operations = array();
     $files = array();
     $attributes = array(

@@ -14,8 +14,8 @@ namespace EBT\ExtensionBuilder\Parser;
  * The TYPO3 project - inspiring people to share!
  */
 
-use \EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
-use \EBT\ExtensionBuilder\Domain\Model;
+use EBT\ExtensionBuilder\Domain\Model;
+use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 
 /**
  * factory for class objects and related objects (methods, properties etc)
