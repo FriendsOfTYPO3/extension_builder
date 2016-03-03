@@ -21,6 +21,11 @@ use TYPO3\CMS\Extbase\Object\UnknownClassException;
 abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 {
     /**
+     * @var bool
+     */
+    protected $backupGlobals = false;
+
+    /**
      * @var string
      */
     protected $modelClassDir = 'Classes/Domain/Model/';
