@@ -14,7 +14,7 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
-use \PhpParser\Node\Stmt;
+use PhpParser\Node\Stmt;
 
 /**
  * provides methods to render the sourcecode for statements
@@ -77,7 +77,7 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
         if ($prependPHPTag) {
             return '<?php' . LF . $resultingCode . LF;
         } else {
-            return $resultingCode;
+            return $resultingCode . LF;
         }
     }
 
@@ -138,7 +138,7 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
         'class ' . $node->name .
         (null !== $node->extends ? ' extends ' . $this->p($node->extends) : '') .
         (!empty($node->implements) ? ' implements ' . $this->pCommaSeparated($node->implements) : '') .
-        LF . '{' . LF . LF . $this->pStmts($node->stmts) . LF . '}';
+        LF . '{' . LF . $this->pStmts($node->stmts) . '}';
     }
 
     public function pStmt_ClassConst(Stmt\ClassConst $node)
@@ -271,7 +271,7 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
         }
         $printedNodes = '';
         foreach ($nodes as $node) {
-            $glueToken = ", ";
+            $glueToken = ', ';
             if ($node->getAttribute('startLine') != $startLine) {
                 $glueToken = ',' . LF;
                 $startLine = $node->getAttribute('startLine');
@@ -336,7 +336,7 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
         }
         $printedNodes = '';
         foreach ($node->items as $itemNode) {
-            $glueToken = ", ";
+            $glueToken = ', ';
             if ($itemNode->getAttribute('startLine') != $startLine) {
                 $glueToken = ',' . LF;
                 $startLine = $itemNode->getAttribute('startLine');

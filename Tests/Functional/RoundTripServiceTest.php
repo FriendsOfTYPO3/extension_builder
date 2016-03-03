@@ -40,7 +40,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
      * Write a simple model class for a non aggregate root domain obbject
      * @test
      */
-    function relatedMethodsReflectRenamingAProperty()
+    public function relatedMethodsReflectRenamingAProperty()
     {
         $modelName = 'model7';
         $this->generateInitialModelClassFile($modelName);
@@ -88,7 +88,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
      *
      * @test
      */
-    function relatedMethodsReflectRenamingARelation()
+    public function relatedMethodsReflectRenamingARelation()
     {
         $modelName = 'Model8';
         $this->generateInitialModelClassFile($modelName);
@@ -154,7 +154,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
      * Write a simple model class for a non aggregate root domain obbject
      * @test
      */
-    function relatedMethodsReflectRenamingARelatedModel()
+    public function relatedMethodsReflectRenamingARelatedModel()
     {
         $modelName = 'Model8';
         $this->generateInitialModelClassFile($modelName);

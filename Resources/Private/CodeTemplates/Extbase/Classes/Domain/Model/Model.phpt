@@ -17,7 +17,7 @@ class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child> $children
      */
-    protected $children = NULL;
+    protected $children = null;
 
     public function __construct()
     {

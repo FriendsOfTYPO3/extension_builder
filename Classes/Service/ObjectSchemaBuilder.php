@@ -14,7 +14,6 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
-use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Utility\Tools;
 
 /**
@@ -76,7 +75,6 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
         }
         // properties
         if (isset($jsonDomainObject['propertyGroup']['properties'])) {
-
             foreach ($jsonDomainObject['propertyGroup']['properties'] as $propertyJsonConfiguration) {
                 $propertyType = $propertyJsonConfiguration['propertyType'];
                 if (in_array($propertyType, array('Image', 'File')) && !empty($propertyJsonConfiguration['maxItems']) && $propertyJsonConfiguration['maxItems'] > 1) {

@@ -43,7 +43,6 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTes
      */
     public function conversionExtractsExtensionProperties()
     {
-
         $description = 'My cool fancy description';
         $name = 'ExtName';
         $extensionKey = $this->extensionKey;

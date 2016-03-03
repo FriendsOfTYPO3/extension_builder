@@ -12,12 +12,11 @@ call_user_func(
         );
 
         if (TYPO3_MODE === 'BE') {
-
             \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
                 'FIXTURE.' . $extKey,
-                'web',	 // Make module a submodule of 'web'
-                'testmodule1',	// Submodule key
-                '',						// Position
+                'web', // Make module a submodule of 'web'
+                'testmodule1', // Submodule key
+                '', // Position
                 [
                     'Main' => 'list, show, new, create, edit, update, delete',
                 ],
@@ -27,7 +26,6 @@ call_user_func(
                     'labels' => 'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_testmodule1.xlf',
                 ]
             );
-
         }
 
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($extKey, 'Configuration/TypoScript', 'ExtensionBuilder Test Extension');

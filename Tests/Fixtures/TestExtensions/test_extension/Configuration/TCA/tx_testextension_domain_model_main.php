@@ -1,23 +1,23 @@
 <?php
 return [
     'ctrl' => [
-        'title'	=> 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main',
+        'title'    => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main',
         'label' => 'name',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         'dividers2tabs' => true,
         'sortby' => 'sorting',
-		'versioningWS' => 2,
+        'versioningWS' => 2,
         'versioning_followPages' => true,
 
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
         'transOrigDiffSourceField' => 'l10n_diffsource',
-		'delete' => 'deleted',
+        'delete' => 'deleted',
         'enablecolumns' => [
-			'disabled' => 'hidden',
-			'starttime' => 'starttime',
+            'disabled' => 'hidden',
+            'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
         'searchFields' => 'name,identifier,description,my_date,child1,children2,child3,children4,',
@@ -114,140 +114,140 @@ return [
             ],
         ],
 
-	    'name' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.name',
-	        'config' => [
-			    'type' => 'input',
-			    'size' => 30,
-			    'eval' => 'trim'
-			],
+        'name' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.name',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
 
-	    ],
-	    'identifier' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.identifier',
-	        'config' => [
-			    'type' => 'input',
-			    'size' => 30,
-			    'eval' => 'trim,required'
-			],
+        ],
+        'identifier' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.identifier',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim,required'
+            ],
 
-	    ],
-	    'description' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.description',
-	        'config' => [
-			    'type' => 'text',
-			    'cols' => 40,
-			    'rows' => 15,
-			    'eval' => 'trim',
-			],
-	        'defaultExtras' => 'rte[]'
-	    ],
-	    'my_date' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.my_date',
-	        'config' => [
-			    'dbType' => 'date',
-			    'type' => 'input',
-			    'size' => 7,
-			    'eval' => 'date',
-			    'checkbox' => 0,
-			    'default' => '0000-00-00'
-			],
+        ],
+        'description' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.description',
+            'config' => [
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 15,
+                'eval' => 'trim',
+            ],
+            'defaultExtras' => 'rte[]'
+        ],
+        'my_date' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.my_date',
+            'config' => [
+                'dbType' => 'date',
+                'type' => 'input',
+                'size' => 7,
+                'eval' => 'date',
+                'checkbox' => 0,
+                'default' => '0000-00-00'
+            ],
 
-	    ],
-	    'child1' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.child1',
-	        'config' => [
-			    'type' => 'inline',
-			    'foreign_table' => 'tx_testextension_domain_model_child1',
-			    'minitems' => 0,
-			    'maxitems' => 1,
-			    'appearance' => [
-			        'collapseAll' => 0,
-			        'levelLinksPosition' => 'top',
-			        'showSynchronizationLink' => 1,
-			        'showPossibleLocalizationRecords' => 1,
-			        'showAllLocalizationLink' => 1
-			    ],
-			],
+        ],
+        'child1' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.child1',
+            'config' => [
+                'type' => 'inline',
+                'foreign_table' => 'tx_testextension_domain_model_child1',
+                'minitems' => 0,
+                'maxitems' => 1,
+                'appearance' => [
+                    'collapseAll' => 0,
+                    'levelLinksPosition' => 'top',
+                    'showSynchronizationLink' => 1,
+                    'showPossibleLocalizationRecords' => 1,
+                    'showAllLocalizationLink' => 1
+                ],
+            ],
 
-	    ],
-	    'children2' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.children2',
-	        'config' => [
-			    'type' => 'inline',
-			    'foreign_table' => 'tx_testextension_domain_model_child2',
-			    'foreign_field' => 'main',
-			    'maxitems' => 9999,
-			    'appearance' => [
-			        'collapseAll' => 0,
-			        'levelLinksPosition' => 'top',
-			        'showSynchronizationLink' => 1,
-			        'showPossibleLocalizationRecords' => 1,
-			        'showAllLocalizationLink' => 1
-			    ],
-			],
+        ],
+        'children2' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.children2',
+            'config' => [
+                'type' => 'inline',
+                'foreign_table' => 'tx_testextension_domain_model_child2',
+                'foreign_field' => 'main',
+                'maxitems' => 9999,
+                'appearance' => [
+                    'collapseAll' => 0,
+                    'levelLinksPosition' => 'top',
+                    'showSynchronizationLink' => 1,
+                    'showPossibleLocalizationRecords' => 1,
+                    'showAllLocalizationLink' => 1
+                ],
+            ],
 
-	    ],
-	    'child3' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.child3',
-	        'config' => [
-			    'type' => 'select',
-			    'renderType' => 'selectSingle',
-			    'foreign_table' => 'tx_testextension_domain_model_child3',
-			    'minitems' => 0,
-			    'maxitems' => 1,
-			],
+        ],
+        'child3' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.child3',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'foreign_table' => 'tx_testextension_domain_model_child3',
+                'minitems' => 0,
+                'maxitems' => 1,
+            ],
 
-	    ],
-	    'children4' => [
-	        'exclude' => 1,
-	        'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.children4',
-	        'config' => [
-			    'type' => 'select',
-			    'renderType' => 'selectMultipleSideBySide',
-			    'foreign_table' => 'tx_testextension_domain_model_child4',
-			    'MM' => 'tx_testextension_main_child4_mm',
-			    'size' => 10,
-			    'autoSizeMax' => 30,
-			    'maxitems' => 9999,
-			    'multiple' => 0,
-			    'wizards' => [
-			        '_PADDING' => 1,
-			        '_VERTICAL' => 1,
-			        'edit' => [
-			            'module' => [
-			                'name' => 'wizard_edit',
-			            ],
-			            'type' => 'popup',
-			            'title' => 'Edit',
-			            'icon' => 'edit2.gif',
-			            'popup_onlyOpenIfSelected' => 1,
-			            'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-			        ],
-			        'add' => [
-			            'module' => [
-			                'name' => 'wizard_add',
-			            ],
-			            'type' => 'script',
-			            'title' => 'Create new',
-			            'icon' => 'add.gif',
-			            'params' => [
-			                'table' => 'tx_testextension_domain_model_child4',
-			                'pid' => '###CURRENT_PID###',
-			                'setValue' => 'prepend'
-			            ],
-			        ],
-			    ],
-			],
+        ],
+        'children4' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.children4',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
+                'foreign_table' => 'tx_testextension_domain_model_child4',
+                'MM' => 'tx_testextension_main_child4_mm',
+                'size' => 10,
+                'autoSizeMax' => 30,
+                'maxitems' => 9999,
+                'multiple' => 0,
+                'wizards' => [
+                    '_PADDING' => 1,
+                    '_VERTICAL' => 1,
+                    'edit' => [
+                        'module' => [
+                            'name' => 'wizard_edit',
+                        ],
+                        'type' => 'popup',
+                        'title' => 'Edit',
+                        'icon' => 'edit2.gif',
+                        'popup_onlyOpenIfSelected' => 1,
+                        'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+                    ],
+                    'add' => [
+                        'module' => [
+                            'name' => 'wizard_add',
+                        ],
+                        'type' => 'script',
+                        'title' => 'Create new',
+                        'icon' => 'add.gif',
+                        'params' => [
+                            'table' => 'tx_testextension_domain_model_child4',
+                            'pid' => '###CURRENT_PID###',
+                            'setValue' => 'prepend'
+                        ],
+                    ],
+                ],
+            ],
 
-	    ],
+        ],
 
     ],
 ];

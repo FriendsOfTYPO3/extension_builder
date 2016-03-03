@@ -26,7 +26,6 @@ class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBa
 
     public function render()
     {
-
         $this->pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
 
         $baseUrl = '../' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath('extension_builder');

@@ -24,49 +24,48 @@
  ***************************************************************/
 
 /**
- * @package
  * @author Nico de Haen
  */
-
 abstract class Tx_PhpParser_Tests_ClassWithMultipleProperties
 {
 
-	private $test = array(
-		'test' 	=> 123,
-		'test5'	=> 456,
-		'arr' 	=> array(
-			'sieben' => 7
-		)
-	);
+    private $test = array(
+        'test'    => 123,
+        'test5'    => 456,
+        'arr'    => array(
+            'sieben' => 7
+        )
+    );
 
-	protected $testBoolean = FALSE;
-		
-	const TEST = 'MyConstant';const TEST4 = 'MyConstant2';
-	// just a single line comment
-	const TEST2 = 890;
-	
-	/**
-	 * @var string
-	 */
-	protected $property = array('a' => 'b');
+    protected $testBoolean = false;
 
-	/**
-	 * @param string $property
-	 */
-	public function setProperty($property)
-	{
-		// comment in a new line
-		if(strlen($property)>50) { // some comment here
-			$property = substr($property,0,49); // some comment there
-		}
-		$this->property = $property;
-	}
+    const TEST = 'MyConstant';
+    const TEST4 = 'MyConstant2';
+    // just a single line comment
+    const TEST2 = 890;
 
-	/**
-	 * @return string
-	 */
-	public function getProperty()
-	{
-		return $this->property;
-	}
+    /**
+     * @var string
+     */
+    protected $property = array('a' => 'b');
+
+    /**
+     * @param string $property
+     */
+    public function setProperty($property)
+    {
+        // comment in a new line
+        if (strlen($property)>50) { // some comment here
+            $property = substr($property, 0, 49); // some comment there
+        }
+        $this->property = $property;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProperty()
+    {
+        return $this->property;
+    }
 }

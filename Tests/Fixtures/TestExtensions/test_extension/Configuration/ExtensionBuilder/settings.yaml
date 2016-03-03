@@ -66,9 +66,6 @@ overwriteSettings:
 ## use static date attribute in xliff files ##
 #staticDateInXliffFiles: 2016-01-01T01:00:00Z
 
-## skip docComment (license header) ##
-#skipDocComment
-
 ## list of error codes for warnings that should be ignored ##
 #ignoreWarnings:
   #503

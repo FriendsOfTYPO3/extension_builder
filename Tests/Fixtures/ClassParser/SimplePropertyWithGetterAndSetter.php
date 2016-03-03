@@ -24,32 +24,33 @@
  ***************************************************************/
 
 /**
- * @package
  * @author Nico de Haen
  */
+abstract class Tx_PhpParser_Tests_SimplePropertyTest
+{
 
-abstract class Tx_PhpParser_Tests_SimplePropertyTest {
+    /**
+     * @var string
+     */
+    protected $property = 'foo';
 
-	/**
-	 * @var string
-	 */
-	protected $property = 'foo';
+    /**
+     * @param string $property
+     */
+    public function setProperty($property)
+    {
+        // comment in a new line
+        if (strlen($property)>50) { // some comment here
+            $property = substr($property, 0, 49); // some comment there
+        }
+        $this->property = $property;
+    }
 
-	/**
-	 * @param string $property
-	 */
-	public function setProperty($property) {
-		// comment in a new line
-		if(strlen($property)>50) { // some comment here
-			$property = substr($property,0,49); // some comment there
-		}
-		$this->property = $property;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getProperty() {
-		return $this->property;
-	}
+    /**
+     * @return string
+     */
+    public function getProperty()
+    {
+        return $this->property;
+    }
 }

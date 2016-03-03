@@ -15,7 +15,6 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  */
 
 use EBT\ExtensionBuilder\Domain\Model\AbstractObject;
-use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 
 /**
  * property representing a "property" in the context of software development

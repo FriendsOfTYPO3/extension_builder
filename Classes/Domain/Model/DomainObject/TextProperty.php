@@ -35,6 +35,6 @@ class TextProperty extends AbstractProperty
 
     public function getSqlDefinition()
     {
-        return $this->getFieldName() . " text NOT NULL,";
+        return $this->getFieldName() . ' text NOT NULL,';
     }
 }

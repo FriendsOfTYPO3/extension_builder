@@ -21,9 +21,9 @@ call_user_func(
 <f:for each="{extension.BackendModules}" as="backendModule">
             \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
                 '{extension.vendorName}.' . $extKey,
-                '{backendModule.mainModule}',	 // Make module a submodule of '{backendModule.mainModule}'
-                '{backendModule.key}',	// Submodule key
-                '',						// Position
+                '{backendModule.mainModule}', // Make module a submodule of '{backendModule.mainModule}'
+                '{backendModule.key}', // Submodule key
+                '', // Position
                 [<f:if condition="{backendModule.controllerActionCombinations}"><f:then>
                     <f:for each="{backendModule.controllerActionCombinations}" as="actionNames" key="controllerName">'{controllerName}' => '<f:for each="{actionNames}" as="actionName" iteration="i">{actionName}<f:if condition="{i.isLast} == 0">, </f:if></f:for>',
                     </f:for></f:then><f:else>

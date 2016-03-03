@@ -22,11 +22,10 @@ class HtmlSpecialCharsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abstra
 {
     /**
      *
-     * @return boolean string
+     * @return bool string
      */
     public function render()
     {
-
         return htmlspecialchars($this->renderChildren());
     }
 }

@@ -20,7 +20,6 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  * (Usage see: Tests/Function/ModifyObjects renameMethodParameterAndUpdateMethodBody)
  *
  */
-
 class ReplaceVisitor extends \PhpParser\NodeVisitorAbstract
 {
     /**
@@ -53,7 +52,6 @@ class ReplaceVisitor extends \PhpParser\NodeVisitorAbstract
             $nodeTypeMatch = true;
         }
         if ($nodeTypeMatch) {
-
             foreach ($this->replacements as $oldValue => $newValue) {
                 if (property_exists($node, $nodeProperty)) {
                     $nodePropertyValue = $node->$nodeProperty;

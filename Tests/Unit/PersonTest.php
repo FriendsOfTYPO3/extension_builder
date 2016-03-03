@@ -30,12 +30,12 @@ class PersonTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     /**
      * @test
      */
-    function GettersSettersTest()
+    public function GettersSettersTest()
     {
-        $name = "John Doe";
-        $role = "Tester";
-        $email = "e@mail.com";
-        $company = "none";
+        $name = 'John Doe';
+        $role = 'Tester';
+        $email = 'e@mail.com';
+        $company = 'none';
 
         $this->person->setName($name);
         $this->person->setRole($role);

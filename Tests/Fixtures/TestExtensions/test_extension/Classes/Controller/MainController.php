@@ -23,7 +23,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @var \FIXTURE\TestExtension\Domain\Repository\MainRepository
      * @inject
      */
-    protected $mainRepository = NULL;
+    protected $mainRepository = null;
 
     /**
      * action list

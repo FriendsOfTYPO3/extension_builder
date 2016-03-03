@@ -24,11 +24,9 @@
  ***************************************************************/
 
 /**
- * @package
  * @author Nico de Haen
  */
 abstract class Tx_PhpParser_Tests_ClassWithUseTraitStatement
 {
-
     use dummyTrait;
 }

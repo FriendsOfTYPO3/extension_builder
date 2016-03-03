@@ -379,7 +379,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function buildAddMethod($domainProperty)
     {
-
         $propertyName = $domainProperty->getName();
         $addMethodName = self::getMethodName($domainProperty, 'add');
 
@@ -495,7 +494,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function buildIsMethod($domainProperty)
     {
-
         $isMethodName = self::getMethodName($domainProperty, 'is');
 
         if ($this->classObject->methodExists($isMethodName)) {
@@ -644,7 +642,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public static function getParameterName($domainProperty, $methodType)
     {
-
         $propertyName = $domainProperty->getName();
 
         switch ($methodType) {
@@ -668,7 +665,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public static function getParamTag($domainProperty, $methodType)
     {
-
         switch ($methodType) {
             case 'set'        :
                 return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
@@ -814,7 +810,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function sortMethods($domainObject)
     {
-
         $objectProperties = $domainObject->getProperties();
         $sortedProperties = array();
         $propertyRelatedMethods = array();

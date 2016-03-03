@@ -14,7 +14,7 @@ class Child1Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     /**
      * @var \FIXTURE\TestExtension\Domain\Model\Child1
      */
-    protected $subject = NULL;
+    protected $subject = null;
 
     public function setUp()
     {
@@ -35,7 +35,6 @@ class Child1Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             '',
             $this->subject->getName()
         );
-
     }
 
     /**
@@ -50,7 +49,6 @@ class Child1Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'name',
             $this->subject
         );
-
     }
 
     /**
@@ -62,7 +60,6 @@ class Child1Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             false,
             $this->subject->getFlag()
         );
-
     }
 
     /**
@@ -77,6 +74,5 @@ class Child1Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'flag',
             $this->subject
         );
-
     }
 }

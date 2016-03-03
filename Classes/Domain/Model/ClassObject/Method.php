@@ -1,5 +1,6 @@
 <?php
 namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
+
 /*
  * This file is part of the TYPO3 CMS project.
  *

@@ -14,7 +14,6 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * The TYPO3 project - inspiring people to share!
  */
 
-
 class BooleanProperty extends AbstractProperty
 {
     /**

@@ -4,12 +4,12 @@
  * @author Nico de Haen
  *
 
-	empty line in multiline comment
+    empty line in multiline comment
 
-	// single comment in multiline
-	 *
-	some keywords: $property  function
-	static
+    // single comment in multiline
+     *
+    some keywords: $property  function
+    static
 
 
 
@@ -18,82 +18,94 @@
  */
 require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Fixtures/ClassParser/BasicClass.php');
 
+final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
+{
 
-final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass {
+    protected $name='test;';
+    private $propertiesInOneLine;
 
-	protected $name="test;"; private $propertiesInOneLine;
+    const testConstant = '123';
+    const testConstant2 = 0.56;
 
-	const testConstant = "123"; const testConstant2 = 0.56;
+    protected $defaultOrderings = array(
+        'title' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING,
+        'subtitle' =>  \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING,
+        'test' => 'test;',
+    );
 
-	protected $defaultOrderings = array(
-		'title' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING,
-		'subtitle' =>  \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING,
-		'test' => 'test;',
-	);
+    /**
+     *
+     * @return string $name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    // some methods
+    public function getNames()
+    {
+        return $this->names;
+    }
 
-	/**
-	 *
-	 * @return string $name
-	 */
-	public function getName(){
-		return $this->name;
-	}
-	// some methods
-	public function getNames(){	return $this->names;}
+    public function getNames1()
+    {
+    }
 
-	public function getNames1(){  }
+    public function getNames2()
+    {
+    }
 
-	public function getNames2(){
-	}
+    public function getNames3()
+    {
+        return $this->names;
+    }
 
-	public function getNames3(){
-		return $this->names;		}
+    //startPrecedingBlock
 
-	//startPrecedingBlock
+    /***********************************************************/
 
-	/***********************************************************/
+    /*********/ //some  strange comments /*/ test \*\*\*
+    //  include_once('typo3conf/ext/extension_builder/Tests/Examples/ComplexClass.php'); // test
 
+    /**
+     *
+     * @param string $name
+     * @return void
+     * @lazy
+     */
+    public function methodWithStrangePrecedingBlock($name)
+    {
+        /**
+         * multi-line comment in a method
+         * explaining some strange things
+         */
+        $this->name = $name;
+    }
+    private $another_Property = 'test456_";';
+    private $anotherProperty = "test456_'\"";
+    private $arrayProperty1 = array(2,6,'test');
+    private $arrayProperty2 = array('test'=>3,'b' => 'q');
+    public static $constProperty = testConstant;
 
-	/*********/ //some  strange comments /*/ test \*\*\*
-	//  include_once('typo3conf/ext/extension_builder/Tests/Examples/ComplexClass.php'); // test
-
-	/**
-	 *
-	 * @param string $name
-	 * @return void
-	 * @lazy
-	 */
-	public function methodWithStrangePrecedingBlock($name){
-		/**
-		 * multi-line comment in a method
-		 * explaining some strange things
-		 */
-		$this->name = $name;
-	}
-	private $another_Property = 'test456_";';
-	private $anotherProperty = "test456_'\"";
-	private $arrayProperty1 = array(2,6,'test');
-	private $arrayProperty2 = array('test'=>3,'b' => 'q');
-	static $constProperty = testConstant;
-
-	/**
-	 * @static
-	 * @param $param1
-	 * @param $param2
-	 * @param string $param3
-	 * @param array $param4
-	 * @return int
-	 */
-	static function methodWithVariousParameter($param1,&$param2,$param3= 'default',array $param4 = array('test'=>array(1,2,3))){
-		/**
-		 * test test
-		 */
-		$test = 234;
-		return 5; // test test
-	}
-	const another_Constant = "r5r_8";
-	// single line comment
-var $testProperty4 = 123;
+    /**
+     * @static
+     * @param $param1
+     * @param $param2
+     * @param string $param3
+     * @param array $param4
+     * @return int
+     */
+    public static function methodWithVariousParameter($param1, &$param2, $param3= 'default', array $param4 = array('test'=>array(1, 2, 3)))
+    {
+        /**
+         * test test
+         */
+        $test = 234;
+        return 5; // test test
+    }
+    const another_Constant = 'r5r_8';
+    // single line comment
+public $testProperty4 = 123;
 }
 
 /**

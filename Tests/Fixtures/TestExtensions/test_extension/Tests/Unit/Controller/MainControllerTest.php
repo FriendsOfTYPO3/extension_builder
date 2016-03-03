@@ -12,7 +12,7 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     /**
      * @var \FIXTURE\TestExtension\Controller\MainController
      */
-    protected $subject = NULL;
+    protected $subject = null;
 
     public function setUp()
     {
@@ -29,7 +29,6 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function listActionFetchesAllMainsFromRepositoryAndAssignsThemToView()
     {
-
         $allMains = $this->getMock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, [], [], '', false);
 
         $mainRepository = $this->getMock(\FIXTURE\TestExtension\Domain\Repository\MainRepository::class, ['findAll'], [], '', false);

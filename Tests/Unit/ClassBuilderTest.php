@@ -33,7 +33,6 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
 
     public function setUp()
     {
-
         parent::setUp();
 
         $this->classBuilder = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\ClassBuilder::class, array('dummy'));
@@ -73,10 +72,8 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     /**
      * @test
      */
-
     public function classBuilderGeneratesGetterMethodForSimpleProperty()
     {
-
         $domainObject = $this->buildDomainObject($this->modelName, true, true);
         $property0 = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty('name');
         $property0->setRequired(true);
@@ -91,7 +88,6 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     public function classBuilderGeneratesIsMethodForBooleanProperty()
     {
-
         $domainObject = $this->buildDomainObject($this->modelName, true, true);
 
         $property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty('blue');

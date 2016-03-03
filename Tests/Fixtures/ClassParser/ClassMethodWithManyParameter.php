@@ -24,12 +24,10 @@
  ***************************************************************/
 
 /**
- * @package
  * @author Nico de Haen
  */
 class Tx_PhpParser_Test_ClassMethodWithManyParameter
 {
-
     /**
      * This is the description
      *
@@ -41,7 +39,7 @@ class Tx_PhpParser_Test_ClassMethodWithManyParameter
      * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n
      * @return string
      */
-    private static function testMethod($number, $stringParam, array $arr, $booleanParam = FALSE, $float = 0.2, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n)
+    private static function testMethod($number, $stringParam, array $arr, $booleanParam = false, $float = 0.2, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n)
     {
         if ($number > 3) {
             return 'bar';
@@ -49,5 +47,4 @@ class Tx_PhpParser_Test_ClassMethodWithManyParameter
             return 'foo';
         }
     }
-
 }

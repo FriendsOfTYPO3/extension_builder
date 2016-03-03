@@ -17,7 +17,6 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
 /**
  * Class RecordTypeViewHelper
  */
-
 class RecordTypeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
     /**

@@ -18,7 +18,8 @@ class Autoloader
      *
      * @param bool $prepend Whether to prepend the autoloader instead of appending
      */
-    static public function register($prepend = false) {
+    public static function register($prepend = false)
+    {
         if (self::$registered === true) {
             return;
         }
@@ -33,7 +34,8 @@ class Autoloader
      *
      * @param string $class A class name.
      */
-    static public function autoload($class) {
+    public static function autoload($class)
+    {
         if (0 === strpos($class, 'PhpParser\\')) {
             if (isset(self::$php7AliasesOldToNew[$class])) {
                 if (self::$runningOnPhp7) {
@@ -56,7 +58,7 @@ class Autoloader
                     class_alias($class, self::$php7AliasesNewToOld[$class]);
                 }
             }
-        } else if (0 === strpos($class, 'PHPParser_')) {
+        } elseif (0 === strpos($class, 'PHPParser_')) {
             if (isset(self::$nonNamespacedAliases[$class])) {
                 // Register all aliases at once to avoid dependency issues
                 self::registerNonNamespacedAliases();
@@ -64,7 +66,8 @@ class Autoloader
         }
     }
 
-    private static function registerNonNamespacedAliases() {
+    private static function registerNonNamespacedAliases()
+    {
         foreach (self::$nonNamespacedAliases as $old => $new) {
             class_alias($new, $old);
         }

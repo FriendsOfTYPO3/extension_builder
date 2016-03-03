@@ -18,7 +18,6 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  * replaces all occurances of new "className" and static class calls like "className::"
  *
  */
-
 class ReplaceClassNamesVisitor extends \PhpParser\NodeVisitorAbstract
 {
     /**

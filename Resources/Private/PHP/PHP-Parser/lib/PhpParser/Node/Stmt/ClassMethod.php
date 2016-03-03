@@ -2,9 +2,9 @@
 
 namespace PhpParser\Node\Stmt;
 
+use PhpParser\Error;
 use PhpParser\Node;
 use PhpParser\Node\FunctionLike;
-use PhpParser\Error;
 
 class ClassMethod extends Node\Stmt implements FunctionLike
 {
@@ -33,7 +33,8 @@ class ClassMethod extends Node\Stmt implements FunctionLike
      *                                'stmts'      => array()        : Statements
      * @param array       $attributes Additional attributes
      */
-    public function __construct($name, array $subNodes = array(), array $attributes = array()) {
+    public function __construct($name, array $subNodes = array(), array $attributes = array())
+    {
         parent::__construct(null, $attributes);
         $this->type = isset($subNodes['type']) ? $subNodes['type'] : 0;
         $this->byRef = isset($subNodes['byRef'])  ? $subNodes['byRef']  : false;
@@ -54,48 +55,59 @@ class ClassMethod extends Node\Stmt implements FunctionLike
         }
     }
 
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return array('type', 'byRef', 'name', 'params', 'returnType', 'stmts');
     }
 
-    public function returnsByRef() {
+    public function returnsByRef()
+    {
         return $this->byRef;
     }
 
-    public function getParams() {
+    public function getParams()
+    {
         return $this->params;
     }
 
-    public function getReturnType() {
+    public function getReturnType()
+    {
         return $this->returnType;
     }
 
-    public function getStmts() {
+    public function getStmts()
+    {
         return $this->stmts;
     }
 
-    public function isPublic() {
+    public function isPublic()
+    {
         return ($this->type & Class_::MODIFIER_PUBLIC) !== 0
             || ($this->type & Class_::VISIBILITY_MODIFER_MASK) === 0;
     }
 
-    public function isProtected() {
+    public function isProtected()
+    {
         return (bool) ($this->type & Class_::MODIFIER_PROTECTED);
     }
 
-    public function isPrivate() {
+    public function isPrivate()
+    {
         return (bool) ($this->type & Class_::MODIFIER_PRIVATE);
     }
 
-    public function isAbstract() {
+    public function isAbstract()
+    {
         return (bool) ($this->type & Class_::MODIFIER_ABSTRACT);
     }
 
-    public function isFinal() {
+    public function isFinal()
+    {
         return (bool) ($this->type & Class_::MODIFIER_FINAL);
     }
 
-    public function isStatic() {
+    public function isStatic()
+    {
         return (bool) ($this->type & Class_::MODIFIER_STATIC);
     }
 }

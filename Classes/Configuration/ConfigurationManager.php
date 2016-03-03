@@ -263,7 +263,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
      * @param string $encodedTemplateRootPath
      * @return string
      */
-    static public function substituteExtensionPath($encodedTemplateRootPath)
+    public static function substituteExtensionPath($encodedTemplateRootPath)
     {
         $result = '';
 

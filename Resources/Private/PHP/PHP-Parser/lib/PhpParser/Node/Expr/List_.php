@@ -15,12 +15,14 @@ class List_ extends Expr
      * @param Expr[] $vars       List of variables to assign to
      * @param array  $attributes Additional attributes
      */
-    public function __construct(array $vars, array $attributes = array()) {
+    public function __construct(array $vars, array $attributes = array())
+    {
         parent::__construct(null, $attributes);
         $this->vars = $vars;
     }
 
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return array('vars');
     }
 }

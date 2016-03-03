@@ -86,7 +86,6 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface
         $stmts = array();
         if ($fileObject->hasNamespaces()) {
             foreach ($fileObject->getNamespaces() as $namespace) {
-
                 $stmts[] = $this->buildNamespaceNode($namespace);
                 foreach ($namespace->getAliasDeclarations() as $aliasDeclaration) {
                     $stmts[] = $this->buildUseStatementNode($aliasDeclaration['name'], $aliasDeclaration['alias']);
@@ -227,8 +226,6 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface
         return $propertyNode;
     }
 
-
-
     //
 
     /**
@@ -274,7 +271,7 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return \PhpParser\Node\Name The normalized name
      */
-    static public function buildNodeFromName($name)
+    public static function buildNodeFromName($name)
     {
         if ($name instanceof \PhpParser\Node\Name) {
             return $name;

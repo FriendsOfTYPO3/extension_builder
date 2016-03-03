@@ -14,7 +14,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     /**
      * @var {domainObject.fullQualifiedClassName}
      */
-    protected $subject = NULL;
+    protected $subject = null;
 
     public function setUp()
     {
@@ -61,17 +61,17 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
         );
 </f:then><f:else><f:if condition="{property.foreignModel}">
         $this->assertEquals(
-            NULL,
+            null,
             $this->subject->get{property.name -> k:format.uppercaseFirst()}()
         );
 </f:if><f:if condition="{k:matchString(match:'DateTime', in:property.unqualifiedType)}">
         $this->assertEquals(
-            NULL,
+            null,
             $this->subject->get{property.name -> k:format.uppercaseFirst()}()
         );
 </f:if><f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}">
         $this->assertEquals(
-            NULL,
+            null,
             $this->subject->get{property.name -> k:format.uppercaseFirst()}()
         );
 </f:if></f:else></f:if>

@@ -1,7 +1,6 @@
 <?php
 namespace DUMMY\Dummy\Domain\Model;
 
-
 /***************************************************************
  *  Copyright notice
  *
@@ -24,83 +23,86 @@ namespace DUMMY\Dummy\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
-
 /**
  *
  *
- * @package
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+{
 
-	/**
-	 * This is the property
-	 *
-	 * @var string
-	 * @validate NotEmpty
-	 */
-	protected $property;
+    /**
+     * This is the property
+     *
+     * @var string
+     * @validate NotEmpty
+     */
+    protected $property;
 
-	/**
-	 * children
-	 *
-	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child>
-	 */
-	protected $children;
+    /**
+     * children
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child>
+     */
+    protected $children;
 
-	/**
-	 * @param string $property
-	 */
-	public function setProperty($property) {
-		$this->property = $property;
-	}
+    /**
+     * @param string $property
+     */
+    public function setProperty($property)
+    {
+        $this->property = $property;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getProperty() {
-		return $this->property;
-	}
+    /**
+     * @return string
+     */
+    public function getProperty()
+    {
+        return $this->property;
+    }
 
-	/**
-	 * Returns the children
-	 *
-	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child> $children
-	 */
-	public function getChildren() {
-		return $this->children;
-	}
+    /**
+     * Returns the children
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child> $children
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
 
-	/**
-	 * Sets the children
-	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child> $children
-	 * @return void
-	 */
-	public function setChildren($children) {
-		$this->children = $children;
-	}
+    /**
+     * Sets the children
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child> $children
+     * @return void
+     */
+    public function setChildren($children)
+    {
+        $this->children = $children;
+    }
 
-	/**
-	 * Adds a Child
-	 *
-	 * @param \VENDOR\Package\Domain\Model\Child $child
-	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\Package\Domain\Model\Child> children
-	 */
-	public function addChild(\VENDOR\Package\Domain\Model\Child $child) {
-		$this->children->attach($child);
-	}
+    /**
+     * Adds a Child
+     *
+     * @param \VENDOR\Package\Domain\Model\Child $child
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\Package\Domain\Model\Child> children
+     */
+    public function addChild(\VENDOR\Package\Domain\Model\Child $child)
+    {
+        $this->children->attach($child);
+    }
 
-	/**
-	 * Removes a Child
-	 *
-	 * @param \VENDOR\Package\Domain\Model\Child $child
-	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\Package\Domain\Model\Child> children
-	 */
-	public function removeChild(\VENDOR\Package\Domain\Model\Child $child) {
-		$this->children->detach($child);
-	}
-
+    /**
+     * Removes a Child
+     *
+     * @param \VENDOR\Package\Domain\Model\Child $child
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\Package\Domain\Model\Child> children
+     */
+    public function removeChild(\VENDOR\Package\Domain\Model\Child $child)
+    {
+        $this->children->detach($child);
+    }
 }

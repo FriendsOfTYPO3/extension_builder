@@ -24,34 +24,27 @@
  ***************************************************************/
 
 /**
- * @package
  * @author Nico de Haen
  */
 namespace Parser\Test\Model
 {
-	class MultipleBracedNamespaces
-	{
-
-	}
+    class MultipleBracedNamespaces
+    {
+    }
 }
-
-
 
 /**
  * This is another namespace
  */
 namespace Parser\Test\Model2
 {
-	/**
-	 * This is my doc comment
-	 *
-	 * @author Nico de Haen
-	 *
-	 */
-	class MultipleBracedNamespaces
-	{
-
-	}
+    /**
+     * This is my doc comment
+     *
+     * @author Nico de Haen
+     *
+     */
+    class MultipleBracedNamespaces
+    {
+    }
 }
-
-

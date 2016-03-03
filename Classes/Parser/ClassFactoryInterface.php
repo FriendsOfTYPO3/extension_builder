@@ -18,7 +18,6 @@ namespace EBT\ExtensionBuilder\Parser;
  * interface for class factory
  *
  */
-
 interface ClassFactoryInterface
 {
     public function buildClassObject(\PhpParser\Node\Stmt\Class_ $node);

@@ -24,13 +24,14 @@
  ***************************************************************/
 
 /**
- * @package
  * @author Nico de Haen
  */
 require_once('DummyIncludeFile1.php');
 abstract class Tx_PhpParser_Tests_ClassWithIncludeStatement
 {
-
-    
+    /**
+     * @var null
+     */
+    private $foo = null;
 }
 include_once('DummyIncludeFile2.php');

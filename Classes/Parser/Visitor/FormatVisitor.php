@@ -14,7 +14,7 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  * The TYPO3 project - inspiring people to share!
  */
 
-use \PhpParser\Node;
+use PhpParser\Node;
 
 class FormatVisitor extends \PhpParser\NodeVisitorAbstract
 {

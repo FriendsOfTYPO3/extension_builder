@@ -24,25 +24,23 @@
  ***************************************************************/
 
 /**
- * @package
  * @author Nico de Haen
  */
 class Tx_PhpParser_Test_ClassMethodWithMultilineParameter
 {
-
     /**
      * This is the description
      *
      * @param int $number
      * @param string $stringParam
      * @param array $arr
-     * @param boolean $booleanParam
+     * @param bool $booleanParam
      * @param float $float
      * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n
      * @return string
      */
     private static function testMethod(
-        $number, $stringParam, array $arr, $booleanParam = FALSE,
+        $number, $stringParam, array $arr, $booleanParam = false,
         $float = 0.2, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n)
     {
         self::sendForDownload(
@@ -56,5 +54,4 @@ class Tx_PhpParser_Test_ClassMethodWithMultilineParameter
             return 'foo';
         }
     }
-
 }

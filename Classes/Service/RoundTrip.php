@@ -14,10 +14,10 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
-use EBT\ExtensionBuilder\Domain\Model;
-use EBT\ExtensionBuilder\Utility\Inflector;
 use EBT\ExtensionBuilder\Configuration\ConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Model;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
+use EBT\ExtensionBuilder\Utility\Inflector;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -108,7 +108,6 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function initialize(Model\Extension $extension)
     {
-
         $this->extension = $extension;
         $this->extensionDirectory = $this->extension->getExtensionDir();
 
@@ -357,7 +356,9 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
                 $this->classFileObject->setClasses(array($this->classObject));
 
                 return $this->classFileObject;
-            } else $this->log('No existing controller class:' . $fileName, 2);
+            } else {
+                $this->log('No existing controller class:' . $fileName, 2);
+            }
         }
         $this->log('No existing controller class:' . $currentDomainObject->getName(), 2);
         return null;
@@ -753,7 +754,6 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function updateMethod($oldProperty, $newProperty, $methodType)
     {
-
         $oldMethodName = ClassBuilder::getMethodName($oldProperty, $methodType);
         // the method to be merged
         $mergedMethod = $this->classObject->getMethod($oldMethodName);
@@ -794,7 +794,6 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
                     if ($oldProperty->isRelation()) {
                         /** @var $oldProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
                         if ($typeHint == $oldProperty->getForeignClassName()) {
-
                             $methodParameter->setTypeHint($this->updateExtensionKey($this->getForeignClassName($newProperty)));
                         }
                     }
@@ -868,7 +867,9 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
             /** @var $renamedObject \EBT\ExtensionBuilder\Domain\Model\DomainObject */
             $renamedObject = $this->renamedDomainObjects[$relation->getForeignModel()->getUniqueIdentifier()];
             return $renamedObject->getQualifiedClassName();
-        } else return $relation->getForeignClassName();
+        } else {
+            return $relation->getForeignClassName();
+        }
     }
 
     /**
@@ -978,7 +979,6 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
         $overWriteSettings = $settings['overwriteSettings'];
 
         foreach ($pathParts as $pathPart) {
-
             if (isset($overWriteSettings[$pathPart]) && is_array($overWriteSettings[$pathPart])) {
                 // step one level deeper
                 $overWriteSettings = $overWriteSettings[$pathPart];
@@ -1037,7 +1037,9 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
         $tableName = $domainObject->getDatabaseTableName();
         if (isset($GLOBALS['TCA'][$tableName])) {
             return $GLOBALS['TCA'][$tableName];
-        } else return null;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -1079,7 +1081,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return void
      */
-    static function backupExtension(Model\Extension $extension, $backupDir)
+    public static function backupExtension(Model\Extension $extension, $backupDir)
     {
         if (empty($backupDir)) {
             throw new \Exception('Please define a backup directory in extension configuration!');
@@ -1139,7 +1141,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return void
      */
-    static public function recurse_copy($src, $dst)
+    public static function recurse_copy($src, $dst)
     {
         $dir = opendir($src);
         @mkdir($dst);

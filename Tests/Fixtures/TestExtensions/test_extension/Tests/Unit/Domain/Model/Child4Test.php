@@ -14,7 +14,7 @@ class Child4Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     /**
      * @var \FIXTURE\TestExtension\Domain\Model\Child4
      */
-    protected $subject = NULL;
+    protected $subject = null;
 
     public function setUp()
     {
@@ -35,7 +35,6 @@ class Child4Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             '',
             $this->subject->getName()
         );
-
     }
 
     /**
@@ -50,7 +49,6 @@ class Child4Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'name',
             $this->subject
         );
-
     }
 
     /**
@@ -59,10 +57,9 @@ class Child4Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function getFilePropertyReturnsInitialValueForFileReference()
     {
         $this->assertEquals(
-            NULL,
+            null,
             $this->subject->getFileProperty()
         );
-
     }
 
     /**
@@ -78,6 +75,5 @@ class Child4Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'fileProperty',
             $this->subject
         );
-
     }
 }

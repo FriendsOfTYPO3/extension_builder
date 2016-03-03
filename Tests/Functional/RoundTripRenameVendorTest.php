@@ -76,7 +76,7 @@ class RoundTripRenameVendorTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
     /**
      * @test
      */
-    function changeVendorNameResultsInNewNamespace()
+    public function changeVendorNameResultsInNewNamespace()
     {
         $this->fixtureExtension->setOriginalVendorName('FIXTURE');
         $this->fixtureExtension->setVendorName('VENDOR');
@@ -86,7 +86,7 @@ class RoundTripRenameVendorTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
     /**
      * @test
      */
-    function changeVendorNameResultsInUpdatedTagsInControllerClass()
+    public function changeVendorNameResultsInUpdatedTagsInControllerClass()
     {
         $this->fixtureExtension->setOriginalVendorName('FIXTURE');
         $this->fixtureExtension->setVendorName('VENDOR');
@@ -100,7 +100,7 @@ class RoundTripRenameVendorTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
     /**
      * @test
      */
-    function changeVendorNameResultsInUpdatedTagsInModelClass()
+    public function changeVendorNameResultsInUpdatedTagsInModelClass()
     {
         $this->fixtureExtension->setOriginalVendorName('FIXTURE');
         $this->fixtureExtension->setVendorName('VENDOR');

@@ -16,7 +16,6 @@ namespace EBT\ExtensionBuilder\Tests;
 
 use org\bovigo\vfs\vfsStream;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\UnknownClassException;
 
 abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 {
@@ -44,7 +43,7 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
-    protected $extension = NULL;
+    protected $extension = null;
 
     public function setUp()
     {
@@ -67,7 +66,7 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             ->method('getExtensionDir')
             ->will($this->returnValue($dummyExtensionDir));
         if (is_dir($dummyExtensionDir)) {
-            GeneralUtility::mkdir($dummyExtensionDir, TRUE);
+            GeneralUtility::mkdir($dummyExtensionDir, true);
         }
         $this->extension->setSettings($settings);
 
@@ -77,8 +76,8 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
     public function tearDown()
     {
-        if (!empty($this->extension) && $this->extension->getExtensionKey() != NULL) {
-            GeneralUtility::rmdir($this->extension->getExtensionDir(), TRUE);
+        if (!empty($this->extension) && $this->extension->getExtensionKey() != null) {
+            GeneralUtility::rmdir($this->extension->getExtensionDir(), true);
         }
     }
 

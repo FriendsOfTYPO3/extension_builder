@@ -24,25 +24,23 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 /**
- * @package
  * @author Nico de Haen
  */
 class Tx_PhpParser_Test_ClassMethodWithMissingParameterTag
 {
 
-	/**
-	 * This is the description
-	 *
-	 * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n
-	 * @return string
-	 */
-	function testMethod($string, array $arr, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n)
-	{
-		if ($string > 3) {
-			return 'bar';
-		} else {
-			return 'foo';
-		}
-	}
-
+    /**
+     * This is the description
+     *
+     * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n
+     * @return string
+     */
+    public function testMethod($string, array $arr, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n)
+    {
+        if ($string > 3) {
+            return 'bar';
+        } else {
+            return 'foo';
+        }
+    }
 }
