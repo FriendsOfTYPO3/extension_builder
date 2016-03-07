@@ -7,11 +7,11 @@ call_user_func(
             'FIXTURE.' . $extKey,
             'Testplugin',
             [
-                'Main' => 'list, show, new, create, edit, update, delete',
+                'Main' => 'list, show, new, create, edit, update, delete'
             ],
             // non-cacheable actions
             [
-                'Main' => 'create, update, delete',
+                'Main' => 'create, update, delete'
             ]
         );
     },
