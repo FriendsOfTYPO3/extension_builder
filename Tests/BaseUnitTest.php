@@ -45,7 +45,7 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     protected $extension = null;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -74,11 +74,13 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $this->modelClassTemplatePath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         if (!empty($this->extension) && $this->extension->getExtensionKey() != null) {
             GeneralUtility::rmdir($this->extension->getExtensionDir(), true);
         }
+
+        parent::tearDown();
     }
 
     /**

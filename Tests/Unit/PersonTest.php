@@ -21,7 +21,7 @@ class PersonTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     protected $person = null;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->person = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\EBT\ExtensionBuilder\Domain\Model\Person::class);

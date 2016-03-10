@@ -25,7 +25,7 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTes
      */
     protected $extensionKey = '';
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->extension = $this->getMock(\EBT\ExtensionBuilder\Domain\Model\Extension::class, array('getOverWriteSettings'));

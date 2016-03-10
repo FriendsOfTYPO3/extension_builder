@@ -71,7 +71,7 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
     protected $fileGenerator = null;
     protected $testExtensionsToLoad = array('typo3conf/ext/extension_builder');
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -139,7 +139,7 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
         $this->fileGenerator->_set('extension', $this->extension);
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         if (!empty($this->extension) && $this->extension->getExtensionKey() != null) {
             GeneralUtility::rmdir($this->extension->getExtensionDir(), true);

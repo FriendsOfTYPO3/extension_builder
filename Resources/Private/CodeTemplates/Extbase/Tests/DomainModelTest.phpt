@@ -16,14 +16,14 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     protected $subject = null;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->subject = new {domainObject.fullQualifiedClassName}();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
-        unset($this->subject);
+        parent::tearDown();
     }
 <f:if condition="{f:count(subject:domainObject.properties)} > 0">
 <f:then>

@@ -14,14 +14,14 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     protected $subject = null;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->subject = $this->getMock(\FIXTURE\TestExtension\Controller\MainController::class, ['redirect', 'forward', 'addFlashMessage'], [], '', false);
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
-        unset($this->subject);
+        parent::tearDown();
     }
 
     /**

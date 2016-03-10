@@ -27,7 +27,7 @@ class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     protected $debugMode = false;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());

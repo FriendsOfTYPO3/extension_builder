@@ -29,7 +29,7 @@ class  ExtensionTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     protected $extension = null;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->extension = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\EBT\ExtensionBuilder\Domain\Model\Extension::class);

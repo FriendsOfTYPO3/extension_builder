@@ -31,7 +31,7 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     protected $modelClassTemplatePath = '';
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 

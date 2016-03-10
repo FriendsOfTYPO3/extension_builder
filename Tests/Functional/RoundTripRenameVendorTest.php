@@ -29,7 +29,7 @@ class RoundTripRenameVendorTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
      */
     protected $fixtureExtension = null;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->configurationManager = $this->getAccessibleMock(
@@ -68,7 +68,7 @@ class RoundTripRenameVendorTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
         );
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         // overwrite parent tearDown to avoid deletion of fixture extension
     }
