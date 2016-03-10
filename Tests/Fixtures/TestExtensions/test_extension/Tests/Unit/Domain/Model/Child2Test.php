@@ -16,14 +16,14 @@ class Child2Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     protected $subject = null;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->subject = new \FIXTURE\TestExtension\Domain\Model\Child2();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
-        unset($this->subject);
+        parent::tearDown();
     }
 
     /**

@@ -25,7 +25,7 @@ class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     protected $objectSchemaBuilder = null;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->objectSchemaBuilder = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\ObjectSchemaBuilder::class, array('dummy'));

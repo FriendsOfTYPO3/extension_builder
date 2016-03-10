@@ -14,14 +14,14 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     protected $subject = null;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->subject = $this->getMock(\{domainObject.controllerClassName}::class, ['redirect', 'forward', 'addFlashMessage'], [], '', false);
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
-        unset($this->subject);
+        parent::tearDown();
     }
 
 <f:for each="{domainObject.actions}" as="action"><f:if condition="{action.name} == 'list'">
