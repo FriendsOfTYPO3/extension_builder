@@ -6,7 +6,7 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
-        'dividers2tabs' => true,<f:if condition="{domainObject.sorting}">
+        'dividers2tabs' => 1,<f:if condition="{domainObject.sorting}">
         'sortby' => 'sorting',</f:if>
 <f:if condition="{extension.supportVersioning}">		'versioningWS' => 2,
         'versioning_followPages' => true,</f:if>
