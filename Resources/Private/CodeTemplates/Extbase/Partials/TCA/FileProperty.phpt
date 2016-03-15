@@ -2,7 +2,7 @@
 	'{property.fieldName}',
 	[
 		'appearance' => [
-			'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:media.addFileReference'
+			'createNewRelationLinkTitle' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:media.addFileReference'
 		],
 		'foreign_types' => [
 			'0' => [
