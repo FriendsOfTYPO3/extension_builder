@@ -990,12 +990,12 @@ class FileGenerator
 
     public function generateTyposcriptSetup()
     {
-        return $this->renderTemplate('Configuration/TypoScript/setup.txtt', array('extension' => $this->extension));
+        return $this->renderTemplate('Configuration/TypoScript/setup.tst', array('extension' => $this->extension));
     }
 
     public function generateTyposcriptConstants()
     {
-        return $this->renderTemplate('Configuration/TypoScript/constants.txtt', array('extension' => $this->extension));
+        return $this->renderTemplate('Configuration/TypoScript/constants.tst', array('extension' => $this->extension));
     }
 
     public function generateStaticTyposcript()
