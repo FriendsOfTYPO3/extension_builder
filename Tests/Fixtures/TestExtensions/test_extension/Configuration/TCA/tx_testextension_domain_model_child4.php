@@ -20,7 +20,7 @@ return [
             'endtime' => 'endtime',
         ],
         'searchFields' => 'name,file_property,',
-        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('test_extension') . 'Resources/Public/Icons/tx_testextension_domain_model_child4.gif'
+        'iconfile' => 'EXT:test_extension/Resources/Public/Icons/tx_testextension_domain_model_child4.gif'
     ],
     'interface' => [
         'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, file_property',
