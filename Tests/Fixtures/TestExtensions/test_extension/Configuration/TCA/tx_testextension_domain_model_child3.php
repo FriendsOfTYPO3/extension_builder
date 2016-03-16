@@ -28,9 +28,6 @@ return [
     'types' => [
         '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, password, image_property, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
-    'palettes' => [
-        '1' => ['showitem' => ''],
-    ],
     'columns' => [
         'sys_language_uid' => [
             'exclude' => 1,
