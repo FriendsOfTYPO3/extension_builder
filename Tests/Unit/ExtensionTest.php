@@ -47,7 +47,7 @@ class  ExtensionTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     public function testGetPersonsSetPersons()
     {
         $this->extension->setPersons($this->persons);
-        $this->assertEquals($this->extension->getPersons(), $this->persons, 'Extensions Persons have been set wrong.');
+        self::assertEquals($this->extension->getPersons(), $this->persons, 'Extensions Persons have been set wrong.');
     }
 
     /**
@@ -55,14 +55,14 @@ class  ExtensionTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     public function testAddPerson()
     {
-        $this->assertEquals($this->extension->getPersons(), array(), 'Extensions Persons are not empty.');
+        self::assertEquals($this->extension->getPersons(), array(), 'Extensions Persons are not empty.');
         $this->extension->addPerson($this->persons[0]);
         $this->extension->addPerson($this->persons[1]);
         $this->extension->addPerson($this->persons[2]);
-        $this->assertEquals(count($this->extension->getPersons()), 3, 'To many Persons in Extension.');
+        self::assertEquals(count($this->extension->getPersons()), 3, 'To many Persons in Extension.');
         $persons = $this->extension->getPersons();
-        $this->assertEquals($persons[0]->getName(), '0', 'Wrong ordering of Persons in Extension.');
-        $this->assertEquals($persons[1]->getName(), '1', 'Wrong ordering of Persons in Extension.');
-        $this->assertEquals($persons[2]->getName(), '2', 'Wrong ordering of Persons in Extension.');
+        self::assertEquals($persons[0]->getName(), '0', 'Wrong ordering of Persons in Extension.');
+        self::assertEquals($persons[1]->getName(), '1', 'Wrong ordering of Persons in Extension.');
+        self::assertEquals($persons[2]->getName(), '2', 'Wrong ordering of Persons in Extension.');
     }
 }

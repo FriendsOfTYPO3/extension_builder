@@ -70,7 +70,7 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTes
         $extension->setExtensionDir('');
 
         $actual = $this->extensionSchemaBuilder->build($input);
-        $this->assertEquals($extension, $actual, 'Extension properties were not extracted.');
+        self::assertEquals($extension, $actual, 'Extension properties were not extracted.');
     }
 
     /**
@@ -116,7 +116,7 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTes
             )
         );
         $extension = $this->extensionSchemaBuilder->build($input);
-        $this->assertEquals($extension->getPersons(), $persons, 'Persons set wrong in ObjectBuilder.');
+        self::assertEquals($extension->getPersons(), $persons, 'Persons set wrong in ObjectBuilder.');
     }
 
     /**
@@ -277,6 +277,6 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTes
         $relation->setExcludeField(1);
         $post->addProperty($relation);
         $actualExtension = $this->extensionSchemaBuilder->build($input);
-        $this->assertEquals($extension->getDomainObjects(), $actualExtension->getDomainObjects(), 'The extensions differ');
+        self::assertEquals($extension->getDomainObjects(), $actualExtension->getDomainObjects(), 'The extensions differ');
     }
 }

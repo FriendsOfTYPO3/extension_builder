@@ -69,7 +69,7 @@ class CompatibilityTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
             $extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON($extensionConfigurationJSON, false);
         } else {
             $extensionConfigurationJSON = array();
-            $this->fail('JSON file not found');
+            self::fail('JSON file not found');
         }
 
         $this->extension = $this->extensionSchemaBuilder->build($extensionConfigurationJSON);
@@ -95,7 +95,7 @@ class CompatibilityTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
                     array(date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')),
                     file_get_contents($referenceFile)
                 );
-                $this->assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');
+                self::assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');
                 // do not compare files that contain a formatted DateTime, as it might have changed between file creation and this comparison
                 if (strpos($referenceFile, 'ext_emconf') === false) {
                     $originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $referenceFileContent, true);
@@ -106,14 +106,14 @@ class CompatibilityTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
                             array(date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')),
                             $originalLines[$c]
                         );
-                        $this->assertEquals(
+                        self::assertEquals(
                             preg_replace('/\s+/', ' ', $originalLine),
                             preg_replace('/\s+/', ' ', $generatedLines[$c]),
                             'File ' . $createdFile . ' was not equal to original file! Difference in line ' . $c . ':' . $generatedLines[$c] . ' != ' . $originalLines[$c]
                         );
                     }
                     /**
-                     * $this->assertEquals(
+                     * self::assertEquals(
                      * $originalLines,
                      * $generatedLines,
                      * 'File ' . $createdFile . ' was not equal to original file.' . serialize(array_diff($generatedLines, $originalLines))

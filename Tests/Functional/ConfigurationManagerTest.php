@@ -33,6 +33,6 @@ class ConfigurationManagerTest extends \EBT\ExtensionBuilder\Tests\BaseFunctiona
     public function getExtbaseClassConfigurationReturnsCorrectValue()
     {
         $classConfiguration = $this->configurationManager->getExtbaseClassConfiguration('TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser');
-        $this->assertSame($classConfiguration['tableName'], 'fe_users');
+        self::assertSame($classConfiguration['tableName'], 'fe_users');
     }
 }

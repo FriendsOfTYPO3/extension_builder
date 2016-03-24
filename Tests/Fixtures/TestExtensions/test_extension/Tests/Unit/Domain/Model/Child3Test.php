@@ -28,7 +28,7 @@ class Child3Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function getNameReturnsInitialValueForString()
     {
-        $this->assertSame(
+        self::assertSame(
             '',
             $this->subject->getName()
         );
@@ -41,7 +41,7 @@ class Child3Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     {
         $this->subject->setName('Conceived at T3CON10');
 
-        $this->assertAttributeEquals(
+        self::assertAttributeEquals(
             'Conceived at T3CON10',
             'name',
             $this->subject
@@ -53,7 +53,7 @@ class Child3Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function getPasswordReturnsInitialValueForString()
     {
-        $this->assertSame(
+        self::assertSame(
             '',
             $this->subject->getPassword()
         );
@@ -66,7 +66,7 @@ class Child3Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     {
         $this->subject->setPassword('Conceived at T3CON10');
 
-        $this->assertAttributeEquals(
+        self::assertAttributeEquals(
             'Conceived at T3CON10',
             'password',
             $this->subject
@@ -78,7 +78,7 @@ class Child3Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function getImagePropertyReturnsInitialValueForFileReference()
     {
-        $this->assertEquals(
+        self::assertEquals(
             null,
             $this->subject->getImageProperty()
         );
@@ -92,7 +92,7 @@ class Child3Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $fileReferenceFixture = new \TYPO3\CMS\Extbase\Domain\Model\FileReference();
         $this->subject->setImageProperty($fileReferenceFixture);
 
-        $this->assertAttributeEquals(
+        self::assertAttributeEquals(
             $fileReferenceFixture,
             'imageProperty',
             $this->subject

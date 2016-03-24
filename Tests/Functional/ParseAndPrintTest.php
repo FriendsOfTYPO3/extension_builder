@@ -136,13 +136,13 @@ class ParseAndPrintTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
     protected function parseAndPrint($fileName, $subFolder = '')
     {
         $classFilePath = $this->fixturesPath . $subFolder . $fileName;
-        $this->assertTrue(file_exists($classFilePath), 'File not found: ' . $subFolder . $fileName);
+        self::assertTrue(file_exists($classFilePath), 'File not found: ' . $subFolder . $fileName);
         $fileHandler = fopen($classFilePath, 'r');
         $code = fread($fileHandler, filesize($classFilePath));
         $fileObject = $this->parserService->parseCode($code);
         $printedCode = $this->printerService->renderFileObject($fileObject, true);
 
-        $this->assertEquals(
+        self::assertEquals(
             explode(PHP_EOL, $code),
             explode(PHP_EOL, $printedCode)
         );

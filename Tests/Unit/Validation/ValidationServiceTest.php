@@ -29,7 +29,7 @@ class ValidationServiceTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty();
         $property->setName('Order');
         $property->setDomainObject($domainObject);
-        $this->assertEquals('tx_dummy_order', $property->getFieldName());
+        self::assertEquals('tx_dummy_order', $property->getFieldName());
     }
 
     /**
@@ -37,7 +37,7 @@ class ValidationServiceTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     public function testForReservedWord()
     {
-        $this->assertTrue(\EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::isReservedWord('DATABASE'));
+        self::assertTrue(\EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::isReservedWord('DATABASE'));
     }
 
     /**
@@ -84,6 +84,6 @@ class ValidationServiceTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
             'Property "bar" of Model "Foo" exists twice.',
             \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::ERROR_PROPERTY_DUPLICATE
         );
-        $this->assertEquals($result, $expected);
+        self::assertEquals($result, $expected);
     }
 }

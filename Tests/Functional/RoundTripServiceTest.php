@@ -46,7 +46,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
         $this->generateInitialModelClassFile($modelName);
         // create an "old" domainObject
         $domainObject = $this->buildDomainObject($modelName);
-        $this->assertTrue(is_object($domainObject), 'No domain object');
+        self::assertTrue(is_object($domainObject), 'No domain object');
 
         $property = new StringProperty('prop1');
         $uniqueIdentifier1 = md5(microtime() . 'prop1');
@@ -59,11 +59,11 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
         $templateClass = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
         // create an "old" class object.
         $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $templateClass, false)->getFirstClass();
-        $this->assertTrue(is_object($modelClassObject), 'No class object');
+        self::assertTrue(is_object($modelClassObject), 'No class object');
 
         // Check that the getter/methods exist
-        $this->assertTrue($modelClassObject->methodExists('getProp1'));
-        $this->assertTrue($modelClassObject->methodExists('setProp1'));
+        self::assertTrue($modelClassObject->methodExists('getProp1'));
+        self::assertTrue($modelClassObject->methodExists('setProp1'));
 
         // set the class object manually, this is usually parsed from an existing class file
         $this->roundTripService->_set('classObject', $modelClassObject);
@@ -80,8 +80,8 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
         $this->roundTripService->_call('updateModelClassProperties', $domainObject, $newDomainObject);
 
         $classObject = $this->roundTripService->_get('classObject');
-        $this->assertTrue($classObject->methodExists('getNewProp1Name'));
-        $this->assertTrue($classObject->methodExists('setNewProp1Name'));
+        self::assertTrue($classObject->methodExists('getNewProp1Name'));
+        self::assertTrue($classObject->methodExists('setNewProp1Name'));
     }
 
     /**
@@ -94,7 +94,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
         $this->generateInitialModelClassFile($modelName);
         // create an "old" domainObject
         $domainObject = $this->buildDomainObject($modelName);
-        $this->assertTrue(is_object($domainObject), 'No domain object');
+        self::assertTrue(is_object($domainObject), 'No domain object');
 
         $relationJsonConfiguration = array(
             'lazyLoading' => 0,
@@ -117,13 +117,13 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
         $templateClass = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
         // create an "old" class object.
         $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $templateClass, false)->getFirstClass();
-        $this->assertTrue(is_object($modelClassObject), 'No class object');
+        self::assertTrue(is_object($modelClassObject), 'No class object');
 
         // Check that the property related methods exist
-        $this->assertTrue($modelClassObject->methodExists('setChildren'));
-        $this->assertTrue($modelClassObject->methodExists('getChildren'));
-        $this->assertTrue($modelClassObject->methodExists('addChild'));
-        $this->assertTrue($modelClassObject->methodExists('removeChild'));
+        self::assertTrue($modelClassObject->methodExists('setChildren'));
+        self::assertTrue($modelClassObject->methodExists('getChildren'));
+        self::assertTrue($modelClassObject->methodExists('addChild'));
+        self::assertTrue($modelClassObject->methodExists('removeChild'));
 
         // set the class object manually, this is usually parsed from an existing class file
         $this->roundTripService->_set('classObject', $modelClassObject);
@@ -144,10 +144,10 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
         $this->roundTripService->_call('updateModelClassProperties', $domainObject, $newDomainObject);
         $modifiedModelClassObject = $this->roundTripService->_get('classObject');
 
-        $this->assertTrue($modifiedModelClassObject->methodExists('setPosts'));
-        $this->assertTrue($modifiedModelClassObject->methodExists('getPosts'));
-        $this->assertTrue($modifiedModelClassObject->methodExists('addPost'));
-        $this->assertTrue($modifiedModelClassObject->methodExists('removePost'));
+        self::assertTrue($modifiedModelClassObject->methodExists('setPosts'));
+        self::assertTrue($modifiedModelClassObject->methodExists('getPosts'));
+        self::assertTrue($modifiedModelClassObject->methodExists('addPost'));
+        self::assertTrue($modifiedModelClassObject->methodExists('removePost'));
     }
 
     /**
@@ -160,7 +160,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
         $this->generateInitialModelClassFile($modelName);
         // create an "old" domainObject
         $domainObject = $this->buildDomainObject($modelName);
-        $this->assertTrue(is_object($domainObject), 'No domain object');
+        self::assertTrue(is_object($domainObject), 'No domain object');
 
         $relationJsonConfiguration = array(
             'lazyLoading' => 0,
@@ -188,13 +188,13 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
             false
         )->getFirstClass();
 
-        $this->assertTrue(is_object($modelClassObject), 'No class object');
+        self::assertTrue(is_object($modelClassObject), 'No class object');
 
         // Check that the property related methods exist
-        $this->assertTrue($modelClassObject->methodExists('setChildren'));
-        $this->assertTrue($modelClassObject->methodExists('getChildren'));
-        $this->assertTrue($modelClassObject->methodExists('addChild'));
-        $this->assertTrue($modelClassObject->methodExists('removeChild'));
+        self::assertTrue($modelClassObject->methodExists('setChildren'));
+        self::assertTrue($modelClassObject->methodExists('getChildren'));
+        self::assertTrue($modelClassObject->methodExists('addChild'));
+        self::assertTrue($modelClassObject->methodExists('removeChild'));
 
         // set the class object manually, this is usually parsed
         // from an existing class file
@@ -218,14 +218,14 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
 
         $newAddMethod = $modifiedModelClassObject->getMethod('addChild');
         $parameters = $newAddMethod->getParameters();
-        $this->assertEquals(count($parameters), 1);
+        self::assertEquals(count($parameters), 1);
         $addParameter = current($parameters);
-        $this->assertEquals($addParameter->getTypeHint(), '\\EBT\\Dummy\\Domain\\Model\\RenamedModel');
+        self::assertEquals($addParameter->getTypeHint(), '\\EBT\\Dummy\\Domain\\Model\\RenamedModel');
 
         $newRemoveMethod = $modifiedModelClassObject->getMethod('removeChild');
         $parameters = $newRemoveMethod->getParameters();
-        $this->assertEquals(count($parameters), 1);
+        self::assertEquals(count($parameters), 1);
         $addParameter = current($parameters);
-        $this->assertEquals($addParameter->getTypeHint(), '\\EBT\\Dummy\\Domain\\Model\\RenamedModel');
+        self::assertEquals($addParameter->getTypeHint(), '\\EBT\\Dummy\\Domain\\Model\\RenamedModel');
     }
 }

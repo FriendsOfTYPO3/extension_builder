@@ -92,9 +92,9 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
         $this->extension->setVendorName('EBT');
         $this->extension->setExtensionKey('dummy');
         $this->extension->expects(
-            $this->any())
+            self::any())
             ->method('getExtensionDir')
-            ->will($this->returnValue($dummyExtensionDir));
+            ->will(self::returnValue($dummyExtensionDir));
         if (is_dir($dummyExtensionDir)) {
             GeneralUtility::mkdir($dummyExtensionDir, true);
         }
@@ -191,7 +191,7 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
         $modelClassDir = 'Classes/Domain/Model/';
         GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
-        $this->assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
+        self::assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
         GeneralUtility::writeFile($modelClassPath, $classFileContent);
@@ -202,6 +202,6 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
         if (@file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php')) {
             unlink($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php');
         }
-        $this->assertFalse(file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php'), 'Dummy files could not be removed:' . $this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php');
+        self::assertFalse(file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php'), 'Dummy files could not be removed:' . $this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php');
     }
 }

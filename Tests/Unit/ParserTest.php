@@ -34,12 +34,12 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     public function parseSimpleProperty()
     {
         $classFileObject = $this->parseFile('SimpleProperty.php');
-        $this->assertEquals(count($classFileObject->getClasses()), 1);
+        self::assertEquals(count($classFileObject->getClasses()), 1);
         $classObject = $classFileObject->getFirstClass();
-        $this->assertEquals(count($classObject->getMethods()), 0);
-        $this->assertEquals(count($classObject->getProperties()), 1);
-        $this->assertEquals($classObject->getProperty('property')->getValue(), 'foo');
-        $this->assertEquals($classObject->getProperty('property')->getModifierNames(), array('protected'));
+        self::assertEquals(count($classObject->getMethods()), 0);
+        self::assertEquals(count($classObject->getProperties()), 1);
+        self::assertEquals($classObject->getProperty('property')->getValue(), 'foo');
+        self::assertEquals($classObject->getProperty('property')->getModifierNames(), array('protected'));
     }
 
     /**
@@ -49,10 +49,10 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         $this->parserService->setTraverser(new \EBT\ExtensionBuilder\Parser\Traverser);
         $classFileObject = $this->parseFile('SimplePropertyWithGetterAndSetter.php');
-        $this->assertEquals(count($classFileObject->getFirstClass()->getMethods()), 2);
-        $this->assertEquals(count($classFileObject->getFirstClass()->getProperties()), 1);
-        $this->assertEquals($classFileObject->getFirstClass()->getProperty('property')->getValue(), 'foo');
-        $this->assertEquals($classFileObject->getFirstClass()->getProperty('property')->getModifierNames(), array('protected'));
+        self::assertEquals(count($classFileObject->getFirstClass()->getMethods()), 2);
+        self::assertEquals(count($classFileObject->getFirstClass()->getProperties()), 1);
+        self::assertEquals($classFileObject->getFirstClass()->getProperty('property')->getValue(), 'foo');
+        self::assertEquals($classFileObject->getFirstClass()->getProperty('property')->getModifierNames(), array('protected'));
     }
 
     /**
@@ -61,12 +61,12 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     public function parseDocComments()
     {
         $classFileObject = $this->parseFile('SimpleProperty.php');
-        $this->assertEquals(count($classFileObject->getClasses()), 1);
+        self::assertEquals(count($classFileObject->getClasses()), 1);
         $classObject = $classFileObject->getFirstClass();
-        $this->assertEquals('This is the class comment', $classObject->getDescription());
-        $this->assertEquals('Some simple property', $classObject->getProperty('property')->getDescription());
-        $this->assertTrue($classObject->isTaggedWith('author'));
-        $this->assertTrue($classObject->getProperty('property')->isTaggedWith('var'));
+        self::assertEquals('This is the class comment', $classObject->getDescription());
+        self::assertEquals('Some simple property', $classObject->getProperty('property')->getDescription());
+        self::assertTrue($classObject->isTaggedWith('author'));
+        self::assertTrue($classObject->getProperty('property')->isTaggedWith('var'));
     }
 
     /**
@@ -76,8 +76,8 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         $this->parserService->setTraverser(new \EBT\ExtensionBuilder\Parser\Traverser);
         $classFileObject = $this->parseFile('ClassWithArrayProperty.php');
-        $this->assertEquals(count($classFileObject->getFirstClass()->getProperties()), 1);
-        $this->assertEquals($classFileObject->getFirstClass()->getProperty('arrProperty')->getModifierNames(), array('protected'));
+        self::assertEquals(count($classFileObject->getFirstClass()->getProperties()), 1);
+        self::assertEquals($classFileObject->getFirstClass()->getProperty('arrProperty')->getModifierNames(), array('protected'));
     }
 
     /**
@@ -86,7 +86,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     public function parseSimpleNonBracedNamespace()
     {
         $classFileObject = $this->parseFile('Namespaces/SimpleNamespace.php');
-        $this->assertEquals('Parser\\Test\\Model', $classFileObject->getFirstClass()->getNamespaceName());
+        self::assertEquals('Parser\\Test\\Model', $classFileObject->getFirstClass()->getNamespaceName());
     }
 
     /**
@@ -96,10 +96,10 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         $classFileObject = $this->parseFile('ClassMethodWithManyParameter.php');
         $parameters = $classFileObject->getFirstClass()->getMethod('testMethod')->getParameters();
-        $this->assertEquals(6, count($parameters));
-        $this->assertEquals($parameters[3]->getName(), 'booleanParam');
-        $this->assertEquals($parameters[3]->getVarType(), 'boolean');
-        $this->assertEquals($parameters[5]->getTypeHint(), '\\EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter');
+        self::assertEquals(6, count($parameters));
+        self::assertEquals($parameters[3]->getName(), 'booleanParam');
+        self::assertEquals($parameters[3]->getVarType(), 'boolean');
+        self::assertEquals($parameters[5]->getTypeHint(), '\\EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter');
     }
 
     /**
@@ -109,16 +109,16 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         $classFileObject = $this->parseFile('ClassWithVariousModifiers.php');
         $classObject = $classFileObject->getFirstClass();
-        $this->assertTrue($classObject->isAbstract(), 'Class is not abstract');
+        self::assertTrue($classObject->isAbstract(), 'Class is not abstract');
 
-        $this->assertTrue($classObject->getProperty('publicProperty')->isPublic(), 'publicProperty is not public');
-        $this->assertTrue($classObject->getProperty('protectedProperty')->isProtected(), 'protectedProperty is not protected');
-        $this->assertTrue($classObject->getProperty('privateProperty')->isPrivate(), 'privateProperty is not private');
-        $this->assertFalse($classObject->getProperty('publicProperty')->isProtected(), 'Public property is is protected');
-        $this->assertFalse($classObject->getProperty('privateProperty')->isPublic(), 'Public property is public');
-        $this->assertTrue($classObject->getMethod('abstractMethod')->isAbstract(), 'abstract Method is not abstract');
-        $this->assertTrue($classObject->getMethod('staticFinalFunction')->isStatic(), 'staticFinalFunction is not static');
-        $this->assertTrue($classObject->getMethod('staticFinalFunction')->isFinal(), 'staticFinalFunction is not final');
+        self::assertTrue($classObject->getProperty('publicProperty')->isPublic(), 'publicProperty is not public');
+        self::assertTrue($classObject->getProperty('protectedProperty')->isProtected(), 'protectedProperty is not protected');
+        self::assertTrue($classObject->getProperty('privateProperty')->isPrivate(), 'privateProperty is not private');
+        self::assertFalse($classObject->getProperty('publicProperty')->isProtected(), 'Public property is is protected');
+        self::assertFalse($classObject->getProperty('privateProperty')->isPublic(), 'Public property is public');
+        self::assertTrue($classObject->getMethod('abstractMethod')->isAbstract(), 'abstract Method is not abstract');
+        self::assertTrue($classObject->getMethod('staticFinalFunction')->isStatic(), 'staticFinalFunction is not static');
+        self::assertTrue($classObject->getMethod('staticFinalFunction')->isFinal(), 'staticFinalFunction is not final');
     }
 
     /**
@@ -128,10 +128,10 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         $fileObject = $this->parseFile('FunctionsWithoutClasses.php');
         $functions = $fileObject->getFunctions();
-        $this->assertEquals(count($functions), 2);
-        $this->assertTrue(isset($functions['simpleFunction']));
-        $this->assertEquals(count($fileObject->getFunction('functionWithParameter')->getParameters()), 2);
-        $this->assertEquals($fileObject->getFunction('functionWithParameter')->getParameterByPosition(1)->getName(), 'bar');
+        self::assertEquals(count($functions), 2);
+        self::assertTrue(isset($functions['simpleFunction']));
+        self::assertEquals(count($fileObject->getFunction('functionWithParameter')->getParameters()), 2);
+        self::assertEquals($fileObject->getFunction('functionWithParameter')->getParameterByPosition(1)->getName(), 'bar');
     }
 
     /**
@@ -140,7 +140,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     public function parserFindsAliasDeclarations()
     {
         $fileObject = $this->parseFile('Namespaces/SimpleNamespaceWithUseStatement.php');
-        $this->assertSame(count($fileObject->getNamespace()->getAliasDeclarations()), 2, 'Alias declaration not found!');
+        self::assertSame(count($fileObject->getNamespace()->getAliasDeclarations()), 2, 'Alias declaration not found!');
     }
 
     protected function parseFile($fileName)
