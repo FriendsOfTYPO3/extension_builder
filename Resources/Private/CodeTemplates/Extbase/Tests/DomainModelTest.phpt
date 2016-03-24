@@ -2,13 +2,10 @@
 namespace {extension.nameSpaceName}\Tests\Unit\Domain\Model;
 
 /**
- * Test case for class {domainObject.fullQualifiedClassName}.
- *
- * @copyright Copyright belongs to the respective authors
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
+ * Test case.
+<f:if condition="{extension.persons}"> *
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
-</f:for> */
+</f:for></f:if> */
 class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
 {
     /**

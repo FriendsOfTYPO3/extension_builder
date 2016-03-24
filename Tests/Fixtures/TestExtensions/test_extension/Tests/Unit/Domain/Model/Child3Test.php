@@ -2,10 +2,7 @@
 namespace FIXTURE\TestExtension\Tests\Unit\Domain\Model;
 
 /**
- * Test case for class \FIXTURE\TestExtension\Domain\Model\Child3.
- *
- * @copyright Copyright belongs to the respective authors
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * Test case.
  *
  * @author John Doe <mail@typo3.com>
  */

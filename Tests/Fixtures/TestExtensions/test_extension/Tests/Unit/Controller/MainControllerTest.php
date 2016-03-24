@@ -2,7 +2,7 @@
 namespace FIXTURE\TestExtension\Tests\Unit\Controller;
 
 /**
- * Test case for class FIXTURE\TestExtension\Controller\MainController.
+ * Test case.
  *
  * @author John Doe <mail@typo3.com>
  */
