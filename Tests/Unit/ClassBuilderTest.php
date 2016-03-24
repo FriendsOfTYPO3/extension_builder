@@ -59,14 +59,14 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
 
         $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $this->modelClassTemplatePath, false)->getFirstClass();
 
-        $this->assertTrue(is_object($modelClassObject), 'No model class object');
-        $this->assertTrue($modelClassObject->methodExists('setName'), 'No method: setName');
+        self::assertTrue(is_object($modelClassObject), 'No model class object');
+        self::assertTrue($modelClassObject->methodExists('setName'), 'No method: setName');
 
         $setNameMethod = $modelClassObject->getMethod('setName');
         $parameters = $setNameMethod->getParameters();
-        $this->assertEquals(count($parameters), 1);
+        self::assertEquals(count($parameters), 1);
         $firstParameter = array_shift($parameters);
-        $this->assertEquals($firstParameter->getName(), 'name');
+        self::assertEquals($firstParameter->getName(), 'name');
     }
 
     /**
@@ -80,7 +80,7 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $domainObject->addProperty($property0);
 
         $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $this->modelClassTemplatePath, false)->getFirstClass();
-        $this->assertTrue($modelClassObject->methodExists('getName'), 'No method: getName');
+        self::assertTrue($modelClassObject->methodExists('getName'), 'No method: getName');
     }
 
     /**
@@ -95,7 +95,7 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $domainObject->addProperty($property);
 
         $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $this->modelClassTemplatePath, false)->getFirstClass();
-        $this->assertTrue($modelClassObject->methodExists('isBlue'), 'No method: isBlue');
+        self::assertTrue($modelClassObject->methodExists('isBlue'), 'No method: isBlue');
     }
 
     /**
@@ -115,21 +115,21 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
 
         $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject1, $this->modelClassTemplatePath, false)->getFirstClass();
 
-        $this->assertTrue($modelClassObject->methodExists('add' . ucfirst(Inflector::singularize($propertyName))), 'Add method was not generated');
-        $this->assertTrue($modelClassObject->methodExists('remove' . ucfirst(Inflector::singularize($propertyName))), 'Remove method was not generated');
-        $this->assertTrue($modelClassObject->methodExists('set' . ucfirst($propertyName)), 'Setter was not generated');
-        $this->assertTrue($modelClassObject->methodExists('set' . ucfirst($propertyName)), 'Setter was not generated');
+        self::assertTrue($modelClassObject->methodExists('add' . ucfirst(Inflector::singularize($propertyName))), 'Add method was not generated');
+        self::assertTrue($modelClassObject->methodExists('remove' . ucfirst(Inflector::singularize($propertyName))), 'Remove method was not generated');
+        self::assertTrue($modelClassObject->methodExists('set' . ucfirst($propertyName)), 'Setter was not generated');
+        self::assertTrue($modelClassObject->methodExists('set' . ucfirst($propertyName)), 'Setter was not generated');
 
         $addMethod = $modelClassObject->getMethod('add' . ucfirst(Inflector::singularize($propertyName)));
-        $this->assertTrue($addMethod->isTaggedWith('param'), 'No param tag set for setter method');
+        self::assertTrue($addMethod->isTaggedWith('param'), 'No param tag set for setter method');
         $paramTagValues = $addMethod->getTagValues('param');
-        $this->assertTrue((strpos($paramTagValues, $relatedDomainObject->getFullQualifiedClassName()) === 0), 'Wrong param tag:' . $paramTagValues);
+        self::assertTrue((strpos($paramTagValues, $relatedDomainObject->getFullQualifiedClassName()) === 0), 'Wrong param tag:' . $paramTagValues);
 
         $parameters = $addMethod->getParameters();
-        $this->assertTrue((count($parameters) == 1), 'Wrong parameter count in add method');
+        self::assertTrue((count($parameters) == 1), 'Wrong parameter count in add method');
         $parameter = current($parameters);
-        $this->assertTrue(($parameter->getName() == Inflector::singularize($propertyName)), 'Wrong parameter name in add method');
-        $this->assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getFullQualifiedClassName()), 'Wrong type hint for add method parameter:' . $parameter->getTypeHint());
+        self::assertTrue(($parameter->getName() == Inflector::singularize($propertyName)), 'Wrong parameter name in add method');
+        self::assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getFullQualifiedClassName()), 'Wrong type hint for add method parameter:' . $parameter->getTypeHint());
     }
 
     public function propertyDefaultTypesProviderTypes()
@@ -169,6 +169,6 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $this->modelClassTemplatePath, false)->getFirstClass();
 
         $propertyObject = $modelClassObject->getProperty($propertyName);
-        $this->assertSame($propertyDefaultValue, $propertyObject->getDefault());
+        self::assertSame($propertyDefaultValue, $propertyObject->getDefault());
     }
 }

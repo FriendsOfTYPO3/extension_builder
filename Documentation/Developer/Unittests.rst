@@ -33,7 +33,7 @@ For example:
 	public function setNameForStringSetsName() {
 	    $this->subject->setName('Conceived at T3CON10');
 
-	    $this->assertAttributeEquals(
+	    self::assertAttributeEquals(
 	        'Conceived at T3CON10',
 	        'name',
 	        $this->subject
@@ -71,12 +71,12 @@ For example:
 
 	    $blogRepository = $this->getMock(
 	        'Vendor\\Example\\Domain\\Repository\\BlogRepository',
-	        array('remove'),
-	        array(),
+	        ['remove'],
+	        [],
 	        '',
-	        FALSE
+	        false
 	    );
-	    $blogRepository->expects($this->once())->method('remove')->with($blog);
+	    $blogRepository->expects(self::once())->method('remove')->with($blog);
 	    $this->inject($this->subject, 'blogRepository', $blogRepository);
 
 	    $this->subject->deleteAction($blog);

@@ -28,7 +28,7 @@ class Child1Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function getNameReturnsInitialValueForString()
     {
-        $this->assertSame(
+        self::assertSame(
             '',
             $this->subject->getName()
         );
@@ -41,7 +41,7 @@ class Child1Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     {
         $this->subject->setName('Conceived at T3CON10');
 
-        $this->assertAttributeEquals(
+        self::assertAttributeEquals(
             'Conceived at T3CON10',
             'name',
             $this->subject
@@ -53,7 +53,7 @@ class Child1Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function getFlagReturnsInitialValueForBool()
     {
-        $this->assertSame(
+        self::assertSame(
             false,
             $this->subject->getFlag()
         );
@@ -66,7 +66,7 @@ class Child1Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     {
         $this->subject->setFlag(true);
 
-        $this->assertAttributeEquals(
+        self::assertAttributeEquals(
             true,
             'flag',
             $this->subject

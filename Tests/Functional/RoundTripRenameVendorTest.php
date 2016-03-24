@@ -47,7 +47,7 @@ class RoundTripRenameVendorTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
             $extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON($extensionConfigurationJSON, false);
         } else {
             $extensionConfigurationJSON = array();
-            $this->fail('JSON file not found: ' . $jsonFile);
+            self::fail('JSON file not found: ' . $jsonFile);
         }
 
         $this->fixtureExtension = $this->extensionSchemaBuilder->build($extensionConfigurationJSON);
@@ -80,7 +80,7 @@ class RoundTripRenameVendorTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
     {
         $this->fixtureExtension->setOriginalVendorName('FIXTURE');
         $this->fixtureExtension->setVendorName('VENDOR');
-        $this->assertEquals('VENDOR\TestExtension', $this->fixtureExtension->getNamespaceName());
+        self::assertEquals('VENDOR\TestExtension', $this->fixtureExtension->getNamespaceName());
     }
 
     /**
@@ -94,7 +94,7 @@ class RoundTripRenameVendorTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
         $controllerClassFile = $this->roundTripService->getControllerClassFile($this->fixtureExtension->getDomainObjectByName('Main'));
         $controllerClassObject = $controllerClassFile->getFirstClass();
         $repositoryProperty = current($controllerClassObject->getProperties());
-        $this->assertEquals('\VENDOR\TestExtension\Domain\Repository\MainRepository', $repositoryProperty->getTagValues('var'));
+        self::assertEquals('\VENDOR\TestExtension\Domain\Repository\MainRepository', $repositoryProperty->getTagValues('var'));
     }
 
     /**
@@ -108,8 +108,8 @@ class RoundTripRenameVendorTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
         $modelClassFile = $this->roundTripService->getDomainModelClassFile($this->fixtureExtension->getDomainObjectByName('Main'));
         $modelClassObject = $modelClassFile->getFirstClass();
         $properties = $modelClassObject->getProperties();
-        $this->assertEquals('\VENDOR\TestExtension\Domain\Model\Child1', $properties['child1']->getTagValue('var'));
-        $this->assertEquals('\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\TestExtension\Domain\Model\Child2>', $properties['children2']->getTagValue('var'));
-        $this->assertEquals('\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\TestExtension\Domain\Model\Child4>', $properties['children4']->getTagValue('var'));
+        self::assertEquals('\VENDOR\TestExtension\Domain\Model\Child1', $properties['child1']->getTagValue('var'));
+        self::assertEquals('\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\TestExtension\Domain\Model\Child2>', $properties['children2']->getTagValue('var'));
+        self::assertEquals('\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\TestExtension\Domain\Model\Child4>', $properties['children4']->getTagValue('var'));
     }
 }

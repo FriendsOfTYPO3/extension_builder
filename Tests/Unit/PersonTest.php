@@ -42,9 +42,9 @@ class PersonTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $this->person->setEmail($email);
         $this->person->setCompany($company);
 
-        $this->assertEquals($this->person->getName(), $name, 'Persons name was set wrong.');
-        $this->assertEquals($this->person->getRole(), $role, 'Persons role was set wrong.');
-        $this->assertEquals($this->person->getEmail(), $email, 'Persons email was set wrong.');
-        $this->assertEquals($this->person->getCompany(), $company, 'Persons company was set wrong.');
+        self::assertEquals($this->person->getName(), $name, 'Persons name was set wrong.');
+        self::assertEquals($this->person->getRole(), $role, 'Persons role was set wrong.');
+        self::assertEquals($this->person->getEmail(), $email, 'Persons email was set wrong.');
+        self::assertEquals($this->person->getCompany(), $company, 'Persons company was set wrong.');
     }
 }

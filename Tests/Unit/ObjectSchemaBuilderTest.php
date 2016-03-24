@@ -93,7 +93,7 @@ class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $expected->addAction($listAction);
 
         $actual = $this->objectSchemaBuilder->build($input);
-        $this->assertEquals($actual, $expected, 'Domain Object not built correctly.');
+        self::assertEquals($actual, $expected, 'Domain Object not built correctly.');
     }
 
     /**
@@ -152,13 +152,13 @@ class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $extbaseConfiguration = array(
             'tableName' => 'fe_users'
         );
-        $this->configurationManager->expects($this->atLeastOnce())
+        $this->configurationManager->expects(self::atLeastOnce())
             ->method('getExtbaseClassConfiguration')
             ->with($className)
-            ->will($this->returnValue($extbaseConfiguration)
+            ->will(self::returnValue($extbaseConfiguration)
             );
         $actual = $this->objectSchemaBuilder->build($input);
-        $this->assertEquals($actual, $expected, 'Domain Object not built correctly.');
+        self::assertEquals($actual, $expected, 'Domain Object not built correctly.');
     }
 
     /**
@@ -193,7 +193,7 @@ class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $extbaseConfiguration = array(
             'tableName' => 'fe_users'
         );
-        $this->configurationManager->expects($this->atLeastOnce())->method('getExtbaseClassConfiguration')->with($className)->will($this->returnValue($extbaseConfiguration));
+        $this->configurationManager->expects(self::atLeastOnce())->method('getExtbaseClassConfiguration')->with($className)->will(self::returnValue($extbaseConfiguration));
 
         $domainObject = $this->objectSchemaBuilder->build($input);
         $dummyExtension = new \EBT\ExtensionBuilder\Domain\Model\Extension();
@@ -202,15 +202,15 @@ class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
 
         $relation = $domainObject->getPropertyByName($relationName);
 
-        $this->assertTrue($relation->getUseMMTable(), 'ManyToMany Relation->getUseMMTable() returned false.');
+        self::assertTrue($relation->getUseMMTable(), 'ManyToMany Relation->getUseMMTable() returned false.');
 
-        $this->assertEquals('tx_dummy_mydomainobject_frontenduser_mm', $relation->getRelationTableName());
+        self::assertEquals('tx_dummy_mydomainobject_frontenduser_mm', $relation->getRelationTableName());
 
         $relation->setUseExtendedRelationTableName(true);
 
-        $this->assertEquals('tx_dummy_mydomainobject_relation1_frontenduser_mm', $relation->getRelationTableName());
+        self::assertEquals('tx_dummy_mydomainobject_relation1_frontenduser_mm', $relation->getRelationTableName());
 
-        $this->assertEquals('fe_users', $relation->getForeignDatabaseTableName());
+        self::assertEquals('fe_users', $relation->getForeignDatabaseTableName());
     }
 
     /**
@@ -253,9 +253,9 @@ class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
 
         $relation->setForeignModel($domainObject2);
 
-        $this->assertFalse($relation->getUseMMTable(), 'ZeroToMany Relation->getUseMMTable() returned true.');
+        self::assertFalse($relation->getUseMMTable(), 'ZeroToMany Relation->getUseMMTable() returned true.');
 
-        $this->assertEquals('tx_dummy_domain_model_domainobject2', $relation->getForeignDatabaseTableName());
+        self::assertEquals('tx_dummy_domain_model_domainobject2', $relation->getForeignDatabaseTableName());
     }
 
     /**
@@ -291,14 +291,14 @@ class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $extbaseConfiguration = array(
             'tableName' => 'fe_users'
         );
-        $this->configurationManager->expects($this->atLeastOnce())->method('getExtbaseClassConfiguration')->with($className)->will($this->returnValue($extbaseConfiguration));
+        $this->configurationManager->expects(self::atLeastOnce())->method('getExtbaseClassConfiguration')->with($className)->will(self::returnValue($extbaseConfiguration));
 
         $domainObject1 = $this->objectSchemaBuilder->build($input);
 
         $relation = $domainObject1->getPropertyByName($relationName);
 
-        $this->assertFalse($relation->getUseMMTable(), 'ZeroToMany Relation->getUseMMTable() returned true.');
+        self::assertFalse($relation->getUseMMTable(), 'ZeroToMany Relation->getUseMMTable() returned true.');
 
-        $this->assertEquals('fe_users', $relation->getForeignDatabaseTableName());
+        self::assertEquals('fe_users', $relation->getForeignDatabaseTableName());
     }
 }

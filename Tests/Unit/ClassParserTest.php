@@ -62,17 +62,17 @@ class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $file = $this->fixturesPath . 'ClassParser/ComplexClass.php';
         $classObject = $this->parseClass($file, 'Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass');
         $getters = $classObject->getGetters();
-        $this->assertEquals(1, count($getters));
+        self::assertEquals(1, count($getters));
         $firstGetter = array_pop($getters);
-        $this->assertEquals('getName', $firstGetter->getName());
+        self::assertEquals('getName', $firstGetter->getName());
 
         $params2 = $classObject->getMethod('methodWithVariousParameter')->getParameters();
-        $this->assertEquals(
+        self::assertEquals(
             count($params2),
             4,
             'Wrong parameter count in parsed "methodWithVariousParameter"'
         );
-        $this->assertEquals(
+        self::assertEquals(
             $params2[3]->getName(),
             'param4',
             'Last parameter name was not correctly parsed'
@@ -87,7 +87,7 @@ class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         $file = $this->fixturesPath . 'ClassParser/ClassWithInterfaces.php';
         $classObject = $this->parseClass($file, 'Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithInterfaces');
-        $this->assertEquals(
+        self::assertEquals(
             $classObject->getInterfaceNames(),
             array(
                 'PHPUnit_Framework_IncompleteTest',
@@ -105,7 +105,7 @@ class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         $file = $this->fixturesPath . 'ClassParser/ClassWithAlias.php';
         $classObject = $this->parseClass($file, 'Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithAlias');
-        $this->assertEquals(
+        self::assertEquals(
             $classObject->getAliasDeclarations(),
             array(
                 'TYPO3\\CMS\\Core\\Utility\\GeneralUtility',
@@ -142,13 +142,13 @@ class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     protected function parseClass($file, $className)
     {
         $classObject = $this->parserService->parseFile($file)->getFirstClass();
-        $this->assertTrue($classObject instanceof \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject);
+        self::assertTrue($classObject instanceof \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject);
         require_once($file);
         $classReflection = new \TYPO3\CMS\Extbase\Reflection\ClassReflection($className);
         $this->ParserFindsAllConstants($classObject, $classReflection);
         $this->ParserFindsAllMethods($classObject, $classReflection);
         $this->ParserFindsAllProperties($classObject, $classReflection);
-        $this->assertEquals($classReflection->getNamespaceName(), $classObject->getNamespaceName());
+        self::assertEquals($classReflection->getNamespaceName(), $classObject->getNamespaceName());
         return $classObject;
     }
 
@@ -167,7 +167,7 @@ class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
             $reflectionConstantCount -= count($classReflection->getParentClass()->getConstants());
         }
         $classObjectConstantCount = count($classObject->getConstants());
-        $this->assertEquals(
+        self::assertEquals(
             $reflectionConstantCount,
             $classObjectConstantCount,
             'Not all Constants were found: ' . $classObject->getName() . serialize($classReflection->getConstants())
@@ -186,7 +186,7 @@ class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         $reflectionMethodCount = count($classReflection->getMethods());
         $classObjectMethodCount = count($classObject->getMethods());
-        $this->assertEquals($classObjectMethodCount, $reflectionMethodCount, 'Not all Methods were found!: ' . $reflectionMethodCount);
+        self::assertEquals($classObjectMethodCount, $reflectionMethodCount, 'Not all Methods were found!: ' . $reflectionMethodCount);
     }
 
     /**
@@ -201,6 +201,6 @@ class ClassParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         $reflectionPropertyCount = count($classReflection->getProperties());
         $classObjectPropertCount = count($classObject->getProperties());
-        $this->assertEquals($classObjectPropertCount, $reflectionPropertyCount, 'Not all Properties were found!');
+        self::assertEquals($classObjectPropertCount, $reflectionPropertyCount, 'Not all Properties were found!');
     }
 }

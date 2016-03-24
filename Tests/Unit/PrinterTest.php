@@ -48,7 +48,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     public function printSimplePropertyClass()
     {
-        $this->assertTrue(is_writable($this->tmpDir), 'Directory not writable: ' . $this->tmpDir . '. Can\'t compare rendered files');
+        self::assertTrue(is_writable($this->tmpDir), 'Directory not writable: ' . $this->tmpDir . '. Can\'t compare rendered files');
         $fileName = 'SimpleProperty.php';
         $classFileObject = $this->parseAndWrite($fileName);
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
@@ -93,8 +93,8 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     public function printClassWithIncludeStatement()
     {
         $fileName = 'ClassWithIncludeStatement.php';
-        $this->assertTrue(copy($this->fixturesPath . 'DummyIncludeFile1.php', $this->tmpDir . 'DummyIncludeFile1.php'));
-        $this->assertTrue(copy($this->fixturesPath . 'DummyIncludeFile2.php', $this->tmpDir . 'DummyIncludeFile2.php'));
+        self::assertTrue(copy($this->fixturesPath . 'DummyIncludeFile1.php', $this->tmpDir . 'DummyIncludeFile1.php'));
+        self::assertTrue(copy($this->fixturesPath . 'DummyIncludeFile2.php', $this->tmpDir . 'DummyIncludeFile2.php'));
         $classFileObject = $this->parseAndWrite($fileName);
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
@@ -119,8 +119,8 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $fileName = 'ClassWithPreStatements.php';
         $classFileObject = $this->parseAndWrite($fileName);
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
-        $this->assertEquals(TX_PHPPARSER_TEST_FOO, 'BAR');
-        $this->assertEquals('FOO', TX_PHPPARSER_TEST_BAR);
+        self::assertEquals(TX_PHPPARSER_TEST_FOO, 'BAR');
+        self::assertEquals('FOO', TX_PHPPARSER_TEST_BAR);
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
@@ -133,8 +133,8 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $fileName = 'ClassWithPostStatements.php';
         $classFileObject = $this->parseAndWrite($fileName);
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
-        $this->assertEquals(TX_PHPPARSER_TEST_FOO_POST, 'BAR');
-        $this->assertEquals('FOO', TX_PHPPARSER_TEST_BAR_POST);
+        self::assertEquals(TX_PHPPARSER_TEST_FOO_POST, 'BAR');
+        self::assertEquals('FOO', TX_PHPPARSER_TEST_BAR_POST);
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
@@ -147,8 +147,8 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $fileName = 'ClassWithPreAndPostStatements.php';
         $classFileObject = $this->parseAndWrite($fileName);
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
-        $this->assertEquals(TX_PHPPARSER_TEST_FOO_PRE2, 'BAR');
-        $this->assertEquals('FOO', TX_PHPPARSER_TEST_BAR_POST2);
+        self::assertEquals(TX_PHPPARSER_TEST_FOO_PRE2, 'BAR');
+        self::assertEquals('FOO', TX_PHPPARSER_TEST_BAR_POST2);
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
@@ -193,8 +193,8 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $fileName = 'MultipleNamespaces.php';
         $classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
-        $this->assertTrue(class_exists('Parser\Test\Model\MultipleNamespaces'));
-        $this->assertTrue(class_exists('Parser\Test\Model2\MultipleNamespaces'));
+        self::assertTrue(class_exists('Parser\Test\Model\MultipleNamespaces'));
+        self::assertTrue(class_exists('Parser\Test\Model2\MultipleNamespaces'));
         $this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
     }
 
@@ -206,8 +206,8 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $fileName = 'MultipleBracedNamespaces.php';
         $classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
-        $this->assertTrue(class_exists('Parser\Test\Model\MultipleBracedNamespaces'));
-        $this->assertTrue(class_exists('Parser\Test\Model2\MultipleBracedNamespaces'));
+        self::assertTrue(class_exists('Parser\Test\Model\MultipleBracedNamespaces'));
+        self::assertTrue(class_exists('Parser\Test\Model2\MultipleBracedNamespaces'));
     }
 
     /**
@@ -229,8 +229,8 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $fileName = 'ClassMethodWithMissingParameterTag.php';
         $classFileObject = $this->parseAndWrite($fileName);
         $tags = $classFileObject->getFirstClass()->getMethod('testMethod')->getTagValues('param');
-        $this->assertEquals(count($tags), 3);
-        $this->assertSame($tags, array('$string', 'array $arr', '\\EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter $n'));
+        self::assertEquals(count($tags), 3);
+        self::assertSame($tags, array('$string', 'array $arr', '\\EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter $n'));
     }
 
     /**
@@ -242,15 +242,15 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
         $testMethod = $classFileObject->getFirstClass()->getMethod('testMethod');
         $tags = $testMethod->getTagValues('param');
-        $this->assertEquals(count($tags), 2);
-        $this->assertSame(
+        self::assertEquals(count($tags), 2);
+        self::assertSame(
             $tags,
             array(
                 0 => '\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject',
                 1 => '\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TOOOL\Projects\Domain\Model\Calculation> $tests'
             )
         );
-        $this->assertSame(
+        self::assertSame(
             $testMethod->getParameterByPosition(0)->getTypeHint(),
             '\EBT\ExtensionBuilder\Domain\Model\DomainObject'
         );
@@ -264,7 +264,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         $fileName = 'ClassMethodWithMultilineParameter.php';
         $classFileObject = $this->parseAndWrite($fileName);
-        $this->assertSame(
+        self::assertSame(
             $classFileObject->getFirstClass()->getMethod('testMethod')->getParameterNames(),
             array(
                 0 => 'number',
@@ -286,7 +286,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     protected function parseAndWrite($fileName, $subFolder = '')
     {
         $classFilePath = $this->fixturesPath . $subFolder . $fileName;
-        $this->assertTrue(file_exists($classFilePath));
+        self::assertTrue(file_exists($classFilePath));
 
         $fileHandler = fopen($classFilePath, 'r');
         $classFileObject = $this->parserService->parseFile($classFilePath);
@@ -305,20 +305,20 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     protected function compareClasses($classFileObject, $pathToGeneratedFile)
     {
-        $this->assertTrue(file_exists($pathToGeneratedFile), $pathToGeneratedFile . 'not exists');
+        self::assertTrue(file_exists($pathToGeneratedFile), $pathToGeneratedFile . 'not exists');
         $classObject = $classFileObject->getFirstClass();
-        $this->assertTrue($classObject instanceof \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject);
+        self::assertTrue($classObject instanceof \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject);
         $className = $classObject->getQualifiedName();
         if (!class_exists($className)) {
             require_once($pathToGeneratedFile);
         }
-        $this->assertTrue(class_exists($className), 'Class "' . $className . '" does not exist! Tried ' . $pathToGeneratedFile);
+        self::assertTrue(class_exists($className), 'Class "' . $className . '" does not exist! Tried ' . $pathToGeneratedFile);
         $reflectedClass = new \ReflectionClass($className);
-        $this->assertEquals(count($reflectedClass->getMethods()), count($classObject->getMethods()), 'Method count does not match');
-        $this->assertEquals(count($reflectedClass->getProperties()), count($classObject->getProperties()));
-        $this->assertEquals(count($reflectedClass->getConstants()), count($classObject->getConstants()));
+        self::assertEquals(count($reflectedClass->getMethods()), count($classObject->getMethods()), 'Method count does not match');
+        self::assertEquals(count($reflectedClass->getProperties()), count($classObject->getProperties()));
+        self::assertEquals(count($reflectedClass->getConstants()), count($classObject->getConstants()));
         if (strlen($classObject->getNamespaceName()) > 0) {
-            $this->assertEquals($reflectedClass->getNamespaceName(), $classObject->getNamespaceName());
+            self::assertEquals($reflectedClass->getNamespaceName(), $classObject->getNamespaceName());
         }
         return $reflectedClass;
     }
@@ -336,7 +336,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         $originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, file_get_contents($this->fixturesPath . $originalFile), true);
         $generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, file_get_contents($pathToGeneratedFile), true);
-        $this->assertEquals(
+        self::assertEquals(
             $originalLines,
             $generatedLines,
             'File ' . $originalFile . ' was not equal to original file.'

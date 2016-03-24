@@ -32,11 +32,11 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $allMains = $this->getMock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, [], [], '', false);
 
         $mainRepository = $this->getMock(\FIXTURE\TestExtension\Domain\Repository\MainRepository::class, ['findAll'], [], '', false);
-        $mainRepository->expects($this->once())->method('findAll')->will($this->returnValue($allMains));
+        $mainRepository->expects(self::once())->method('findAll')->will(self::returnValue($allMains));
         $this->inject($this->subject, 'mainRepository', $mainRepository);
 
         $view = $this->getMock(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class);
-        $view->expects($this->once())->method('assign')->with('mains', $allMains);
+        $view->expects(self::once())->method('assign')->with('mains', $allMains);
         $this->inject($this->subject, 'view', $view);
 
         $this->subject->listAction();
@@ -51,7 +51,7 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
         $view = $this->getMock(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class);
         $this->inject($this->subject, 'view', $view);
-        $view->expects($this->once())->method('assign')->with('main', $main);
+        $view->expects(self::once())->method('assign')->with('main', $main);
 
         $this->subject->showAction($main);
     }
@@ -64,7 +64,7 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $main = new \FIXTURE\TestExtension\Domain\Model\Main();
 
         $mainRepository = $this->getMock(\FIXTURE\TestExtension\Domain\Repository\MainRepository::class, ['add'], [], '', false);
-        $mainRepository->expects($this->once())->method('add')->with($main);
+        $mainRepository->expects(self::once())->method('add')->with($main);
         $this->inject($this->subject, 'mainRepository', $mainRepository);
 
         $this->subject->createAction($main);
@@ -79,7 +79,7 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
         $view = $this->getMock(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class);
         $this->inject($this->subject, 'view', $view);
-        $view->expects($this->once())->method('assign')->with('main', $main);
+        $view->expects(self::once())->method('assign')->with('main', $main);
 
         $this->subject->editAction($main);
     }
@@ -92,7 +92,7 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $main = new \FIXTURE\TestExtension\Domain\Model\Main();
 
         $mainRepository = $this->getMock(\FIXTURE\TestExtension\Domain\Repository\MainRepository::class, ['update'], [], '', false);
-        $mainRepository->expects($this->once())->method('update')->with($main);
+        $mainRepository->expects(self::once())->method('update')->with($main);
         $this->inject($this->subject, 'mainRepository', $mainRepository);
 
         $this->subject->updateAction($main);
@@ -106,7 +106,7 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $main = new \FIXTURE\TestExtension\Domain\Model\Main();
 
         $mainRepository = $this->getMock(\FIXTURE\TestExtension\Domain\Repository\MainRepository::class, ['remove'], [], '', false);
-        $mainRepository->expects($this->once())->method('remove')->with($main);
+        $mainRepository->expects(self::once())->method('remove')->with($main);
         $this->inject($this->subject, 'mainRepository', $mainRepository);
 
         $this->subject->deleteAction($main);

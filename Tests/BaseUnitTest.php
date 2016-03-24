@@ -55,16 +55,15 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         vfsStream::setup($testTargetDir);
         $dummyExtensionDir = vfsStream::url($testTargetDir) . '/';
 
-        $yamlParser = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser();
-        $settings = $yamlParser->YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
+        $settings = \EBT\ExtensionBuilder\Utility\SpycYAMLParser::YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
 
         $this->extension = $this->getMock(\EBT\ExtensionBuilder\Domain\Model\Extension::class, array('getExtensionDir'));
         $this->extension->setVendorName('EBT');
         $this->extension->setExtensionKey('dummy');
         $this->extension->expects(
-            $this->any())
+            self::any())
             ->method('getExtensionDir')
-            ->will($this->returnValue($dummyExtensionDir));
+            ->will(self::returnValue($dummyExtensionDir));
         if (is_dir($dummyExtensionDir)) {
             GeneralUtility::mkdir($dummyExtensionDir, true);
         }

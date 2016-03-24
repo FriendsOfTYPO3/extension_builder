@@ -34,11 +34,11 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $all{domainObject.name -> k:pluralize()} = $this->getMock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, [], [], '', false);
 
         ${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock(\{domainObject.qualifiedDomainRepositoryClassName}::class, ['findAll'], [], '', false);
-        ${domainObject.name -> k:format.lowercaseFirst()}Repository->expects($this->once())->method('findAll')->will($this->returnValue($all{domainObject.name -> k:pluralize()}));
+        ${domainObject.name -> k:format.lowercaseFirst()}Repository->expects(self::once())->method('findAll')->will(self::returnValue($all{domainObject.name -> k:pluralize()}));
         $this->inject($this->subject, '{domainObject.name -> k:format.lowercaseFirst()}Repository', ${domainObject.name -> k:format.lowercaseFirst()}Repository);
 
         $view = $this->getMock(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class);
-        $view->expects($this->once())->method('assign')->with('{domainObject.name -> k:pluralize() -> k:format.lowercaseFirst()}', $all{domainObject.name -> k:pluralize()});
+        $view->expects(self::once())->method('assign')->with('{domainObject.name -> k:pluralize() -> k:format.lowercaseFirst()}', $all{domainObject.name -> k:pluralize()});
         $this->inject($this->subject, 'view', $view);
 
         $this->subject->listAction();
@@ -53,7 +53,7 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
         $view = $this->getMock(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class);
         $this->inject($this->subject, 'view', $view);
-        $view->expects($this->once())->method('assign')->with('{domainObject.name -> k:format.lowercaseFirst()}', ${domainObject.name -> k:format.lowercaseFirst()});
+        $view->expects(self::once())->method('assign')->with('{domainObject.name -> k:format.lowercaseFirst()}', ${domainObject.name -> k:format.lowercaseFirst()});
 
         $this->subject->showAction(${domainObject.name -> k:format.lowercaseFirst()});
     }</f:if><f:if condition="{k:matchString(match:'create', in:action.name)}">
@@ -66,7 +66,7 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
         ${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
 
         ${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock(\{domainObject.qualifiedDomainRepositoryClassName}::class, ['add'], [], '', false);
-        ${domainObject.name -> k:format.lowercaseFirst()}Repository->expects($this->once())->method('add')->with(${domainObject.name -> k:format.lowercaseFirst()});
+        ${domainObject.name -> k:format.lowercaseFirst()}Repository->expects(self::once())->method('add')->with(${domainObject.name -> k:format.lowercaseFirst()});
         $this->inject($this->subject, '{domainObject.name -> k:format.lowercaseFirst()}Repository', ${domainObject.name -> k:format.lowercaseFirst()}Repository);
 
         $this->subject->createAction(${domainObject.name -> k:format.lowercaseFirst()});
@@ -81,7 +81,7 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
         $view = $this->getMock(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class);
         $this->inject($this->subject, 'view', $view);
-        $view->expects($this->once())->method('assign')->with('{domainObject.name -> k:format.lowercaseFirst()}', ${domainObject.name -> k:format.lowercaseFirst()});
+        $view->expects(self::once())->method('assign')->with('{domainObject.name -> k:format.lowercaseFirst()}', ${domainObject.name -> k:format.lowercaseFirst()});
 
         $this->subject->editAction(${domainObject.name -> k:format.lowercaseFirst()});
     }
@@ -95,7 +95,7 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
         ${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
 
         ${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock(\{domainObject.qualifiedDomainRepositoryClassName}::class, ['update'], [], '', false);
-        ${domainObject.name -> k:format.lowercaseFirst()}Repository->expects($this->once())->method('update')->with(${domainObject.name -> k:format.lowercaseFirst()});
+        ${domainObject.name -> k:format.lowercaseFirst()}Repository->expects(self::once())->method('update')->with(${domainObject.name -> k:format.lowercaseFirst()});
         $this->inject($this->subject, '{domainObject.name -> k:format.lowercaseFirst()}Repository', ${domainObject.name -> k:format.lowercaseFirst()}Repository);
 
         $this->subject->updateAction(${domainObject.name -> k:format.lowercaseFirst()});
@@ -109,7 +109,7 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
         ${domainObject.name -> k:format.lowercaseFirst()} = new {domainObject.fullQualifiedClassName}();
 
         ${domainObject.name -> k:format.lowercaseFirst()}Repository = $this->getMock(\{domainObject.qualifiedDomainRepositoryClassName}::class, ['remove'], [], '', false);
-        ${domainObject.name -> k:format.lowercaseFirst()}Repository->expects($this->once())->method('remove')->with(${domainObject.name -> k:format.lowercaseFirst()});
+        ${domainObject.name -> k:format.lowercaseFirst()}Repository->expects(self::once())->method('remove')->with(${domainObject.name -> k:format.lowercaseFirst()});
         $this->inject($this->subject, '{domainObject.name -> k:format.lowercaseFirst()}Repository', ${domainObject.name -> k:format.lowercaseFirst()}Repository);
 
         $this->subject->deleteAction(${domainObject.name -> k:format.lowercaseFirst()});
@@ -119,6 +119,6 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function dummyTestToNotLeaveThisFileEmpty()
     {
-        $this->markTestIncomplete();
+        self::markTestIncomplete();
     }</f:else></f:if>
 }
