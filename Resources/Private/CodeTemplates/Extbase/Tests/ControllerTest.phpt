@@ -2,13 +2,12 @@
 namespace {extension.nameSpaceName}\Tests\Unit\Controller;
 
 /**
- * Test case for class {domainObject.controllerClassName}.
- *
+ * Test case.
+<f:if condition="{extension.persons}"> *
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
-</f:for> */
+</f:for></f:if> */
 class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
 {
-
     /**
      * @var \{domainObject.controllerClassName}
      */
