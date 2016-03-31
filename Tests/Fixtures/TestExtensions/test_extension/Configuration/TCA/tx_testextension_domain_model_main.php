@@ -218,8 +218,8 @@ return [
                             'name' => 'wizard_edit',
                         ],
                         'type' => 'popup',
-                        'title' => 'Edit',
-                        'icon' => 'edit2.gif',
+                        'title' => 'Edit', // todo define label: LLL:EXT:.../Resources/Private/Language/locallang_tca.xlf:wizard.edit
+                        'icon' => 'EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_edit.gif',
                         'popup_onlyOpenIfSelected' => 1,
                         'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
                     ],
@@ -228,8 +228,8 @@ return [
                             'name' => 'wizard_add',
                         ],
                         'type' => 'script',
-                        'title' => 'Create new',
-                        'icon' => 'add.gif',
+                        'title' => 'Create new', // todo define label: LLL:EXT:.../Resources/Private/Language/locallang_tca.xlf:wizard.add
+                        'icon' => 'EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_add.gif',
                         'params' => [
                             'table' => 'tx_testextension_domain_model_child4',
                             'pid' => '###CURRENT_PID###',
