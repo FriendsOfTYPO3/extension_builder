@@ -39,9 +39,9 @@ CREATE TABLE {domainObject.databaseTableName} (
 	l10n_diffsource mediumblob,
 </f:if>
 	PRIMARY KEY (uid),
-	KEY parent (pid),
-<f:if condition="{extension.supportVersioning}">	KEY t3ver_oid (t3ver_oid,t3ver_wsid),</f:if>
-<f:if condition="{extension.supportLocalization}"> KEY language (l10n_parent,sys_language_uid)</f:if>
+	KEY parent (pid),<f:if condition="{extension.supportVersioning}">
+	KEY t3ver_oid (t3ver_oid,t3ver_wsid),</f:if><f:if condition="{extension.supportLocalization}">
+	KEY language (l10n_parent,sys_language_uid)</f:if>
 </f:else>
 </f:if>
 );
@@ -57,7 +57,7 @@ CREATE TABLE {domainObject.databaseTableName} (
 #
 CREATE TABLE {tableName} (
 <f:for each="{relationsWithSameForeignTable}" as="relation">
-	{relation.foreignKeyName}  int(11) unsigned DEFAULT '0' NOT NULL,
+	{relation.foreignKeyName} int(11) unsigned DEFAULT '0' NOT NULL,
 </f:for>
 );
         </f:else></f:if>
