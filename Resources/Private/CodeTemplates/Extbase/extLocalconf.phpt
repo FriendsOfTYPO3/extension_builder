@@ -6,7 +6,7 @@ call_user_func(
     {
 <f:for each="{extension.plugins}" as="plugin">
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            '{extension.vendorName}.' . $extKey,
+            '{extension.vendorName}.{extension.extensionName}',
             '<k:format.uppercaseFirst>{plugin.key}</k:format.uppercaseFirst>',
             [<f:if condition="{plugin.controllerActionCombinations}"><f:then>
                 <f:for each="{plugin.controllerActionCombinations}" as="actionNames" key="controllerName" iteration="j">'{controllerName}' => '<f:for each="{actionNames}" as="actionName" iteration="i">{actionName}<f:if condition="{i.isLast} == 0">, </f:if></f:for>'<f:if condition="{j.isLast} == 0">,

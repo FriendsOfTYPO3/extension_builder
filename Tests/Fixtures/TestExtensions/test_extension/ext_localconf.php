@@ -4,7 +4,7 @@ call_user_func(
     function($extKey)
     {
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'FIXTURE.' . $extKey,
+            'FIXTURE.TestExtension',
             'Testplugin',
             [
                 'Main' => 'list, show, new, create, edit, update, delete'

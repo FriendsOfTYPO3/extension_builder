@@ -13,6 +13,7 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Schema for a whole extension
@@ -167,6 +168,14 @@ class Extension
     }
 
     /**
+     * @return string
+     */
+    public function getExtensionName()
+    {
+        return GeneralUtility::underscoredToUpperCamelCase($this->extensionKey);
+    }
+
+    /**
      *
      * @param string $extensionKey
      */
@@ -195,7 +204,7 @@ class Extension
 
     /**
      *
-     * @param array $overWriteSettings
+     * @param array $settings
      */
     public function setSettings($settings)
     {
@@ -211,8 +220,8 @@ class Extension
     }
 
     /**
-     *
      * @return string
+     * @throws \Exception
      */
     public function getExtensionDir()
     {
@@ -645,6 +654,7 @@ class Extension
             case self::STATE_TEST:
                 return 'test';
         }
+        return '';
     }
 
     public function getCssClassName()
@@ -682,7 +692,8 @@ class Extension
 
     /**
      * calculates all md5 hashes
-     * @return
+     *
+     * @param string $filePath
      */
     public function setMD5Hash($filePath)
     {
@@ -825,7 +836,7 @@ class Extension
      */
     public function getNamespaceName()
     {
-        return $this->getVendorName() . '\\' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($this->getExtensionKey());
+        return $this->getVendorName() . '\\' . $this->getExtensionName();
     }
 
     /**

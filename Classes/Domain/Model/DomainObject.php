@@ -14,8 +14,6 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 /**
  * Schema for a Domain Object
  */
@@ -165,7 +163,7 @@ class DomainObject
     public function getDatabaseTableName()
     {
         $result = 'tx_' .
-            strtolower(GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey())) .
+            strtolower($this->extension->getExtensionName()) .
             '_domain_model_' .
             strtolower($this->getName());
 
@@ -603,9 +601,7 @@ class DomainObject
      */
     public function getRecordType()
     {
-        $recordType = 'Tx_' .
-            GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey()) . '_' .
-            $this->getName();
+        $recordType = 'Tx_' . $this->extension->getExtensionName() . '_' . $this->getName();
         return $recordType;
     }
 

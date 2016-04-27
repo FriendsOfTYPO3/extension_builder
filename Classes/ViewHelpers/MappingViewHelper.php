@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+
 class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper
 {
     /**
@@ -45,9 +47,9 @@ class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditi
     public function render()
     {
         $content = '';
-        /** @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
+        /** @var DomainObject $domainObject */
         $domainObject = $this->arguments['domainObject'];
-        $extensionPrefix = 'Tx_' . \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($domainObject->getExtension()->getExtensionKey());
+        $extensionPrefix = 'Tx_' . $domainObject->getExtension()->getExtensionName();
 
         // an external table should have a loadable TCA configuration and the column definitions
         // for external tables have to be declared in ext_tables.php
@@ -97,12 +99,11 @@ class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditi
      * or if other domain objects of this extension extend it or if it is mapped
      * to an existing table
      *
-     * @param string $tableName
-     * @param string $parentClass
+     * @param DomainObject $domainObject
      * @param bool $isMappedToExternalTable
      * @return bool
      */
-    protected function needsTypeField(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject, $isMappedToExternalTable)
+    protected function needsTypeField(DomainObject $domainObject, $isMappedToExternalTable)
     {
         $needsTypeField = false;
         if ($domainObject->getChildObjects() || $isMappedToExternalTable) {
