@@ -433,7 +433,7 @@ class FileGenerator
             try {
                 $typoscriptDirectory = $this->extensionDirectory . 'Configuration/TypoScript/';
                 $fileContents = $this->generateTyposcriptConstants();
-                $this->writeFile($typoscriptDirectory . 'constants.txt', $fileContents);
+                $this->writeFile($typoscriptDirectory . 'constants.ts', $fileContents);
             } catch (\Exception $e) {
                 throw new \Exception('Could not generate typoscript constants, error: ' . $e->getMessage());
             }
