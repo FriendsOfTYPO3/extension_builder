@@ -14,7 +14,10 @@ namespace EBT\ExtensionBuilder\Domain\Validator;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Configuration\ConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
+use EBT\ExtensionBuilder\Service\ValidationService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -150,7 +153,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
      */
     const ERROR_MAPPING_TO_INCOMPATIBLE_TABLE = 606;
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
+     * @var ConfigurationManager
      */
     protected $configurationManager = null;
     /**
@@ -161,10 +164,10 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
     protected $warningsToIgnore = array();
 
     /**
-     * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager
+     * @param ConfigurationManager $configurationManager
      * @return void
      */
-    public function injectConfigurationManager(\EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager)
+    public function injectConfigurationManager(ConfigurationManager $configurationManager)
     {
         $this->configurationManager = $configurationManager;
     }
@@ -221,7 +224,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
     {
         if (is_dir($extension->getExtensionDir())) {
             $settingsFile = $extension->getExtensionDir() .
-                \EBT\ExtensionBuilder\Configuration\ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
+                ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
             if (!file_exists($settingsFile) || $extension->isRenamed()) {
                 $this->validationResult['warnings'][] = new ExtensionException(
                     'Extension directory exists',
@@ -390,7 +393,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
                 $configTypes = array('controllerActionCombinations', 'noncacheableActions');
                 foreach ($configTypes as $configType) {
                     if (!empty($pluginConfiguration['actions'][$configType])) {
-                        $isValid = $this->validateActionConfigFormat($pluginConfiguration['actions'][$configType], $configType);
+                        $isValid = $this->validateActionConfigFormat($pluginConfiguration['actions'][$configType]);
                         if (!$isValid) {
                             GeneralUtility::devLog('validateActionConfigFormat failed',
                                 'extension_builder',
@@ -445,7 +448,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
                 $configTypes = array('controllerActionCombinations');
                 foreach ($configTypes as $configType) {
                     if (!empty($moduleConfiguration['actions'][$configType])) {
-                        $isValid = $this->validateActionConfigFormat($moduleConfiguration['actions'][$configType], $configType);
+                        $isValid = $this->validateActionConfigFormat($moduleConfiguration['actions'][$configType]);
                         if (!$isValid) {
                             GeneralUtility::devLog('validateActionConfigFormat failed',
                                 'extension_builder',
@@ -578,7 +581,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
                     self::ERROR_DOMAINOBJECT_LOWER_FIRST_CHARACTER
                 );
             }
-            if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedExtbaseWord($objectName)) {
+            if (ValidationService::isReservedExtbaseWord($objectName)) {
                 $this->validationResult['errors'][] = new ExtensionException(
                     'Domain object name "' . $domainObject->getName() . '" may not be used in extbase.',
                     self::ERROR_PROPERTY_RESERVED_WORD
@@ -615,7 +618,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
     {
         $parentClass = $domainObject->getParentClass();
         $tableName = $domainObject->getMapToTable();
-        $extensionPrefix = 'Tx_' . GeneralUtility::underscoredToUpperCamelCase($domainObject->getExtension()->getExtensionKey()) . '_Domain_Model_';
+        $extensionPrefix = 'Tx_' . $domainObject->getExtension()->getExtensionName() . '_Domain_Model_';
         if (!empty($parentClass)) {
             $classConfiguration = $this->configurationManager->getExtbaseClassConfiguration($parentClass);
             GeneralUtility::devLog('class settings ' . $parentClass, 'extension_builder', 0, $classConfiguration);
@@ -766,7 +769,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
                 );
             }
 
-            if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedTYPO3Word($propertyName)) {
+            if (ValidationService::isReservedTYPO3Word($propertyName)) {
                 $this->validationResult['warnings'][] = new ExtensionException(
                     'The name of property "' . $propertyName . '" in Model "' . $domainObject->getName() .
                     '" will result in a TYPO3 specific column name.' . LF .
@@ -776,7 +779,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
                 );
             }
 
-            if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($propertyName)) {
+            if (ValidationService::isReservedMYSQLWord($propertyName)) {
                 $this->validationResult['warnings'][] = new ExtensionException(
                     'Property "' . $propertyName . '" in Model "' . $domainObject->getName() . '".',
                     self::ERROR_PROPERTY_RESERVED_SQL_WORD
@@ -791,7 +794,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
             }
             $propertyNames[] = $propertyName;
 
-            if ($property instanceof \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation) {
+            if ($property instanceof AbstractRelation) {
                 if (!$property->getForeignModel() && $property->getForeignClassName()) {
                     if (!class_exists($property->getForeignClassName())) {
                         $this->validationResult['errors'][] = new ExtensionException(
@@ -887,13 +890,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
      */
     public static function isReservedWord($word)
     {
-        if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($word) ||
-            \EBT\ExtensionBuilder\Service\ValidationService::isReservedTYPO3Word($word)
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        return ValidationService::isReservedMYSQLWord($word) || ValidationService::isReservedTYPO3Word($word);
     }
 
     /**
