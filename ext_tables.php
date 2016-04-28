@@ -1,9 +1,7 @@
 <?php
-if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
-}
+defined('TYPO3_MODE') || die();
 
-if (TYPO3_MODE === 'BE' && !(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_INSTALL)) {
+if (TYPO3_MODE === 'BE') {
     /**
      * Register Backend Module
      */
@@ -20,10 +18,5 @@ if (TYPO3_MODE === 'BE' && !(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_INSTALL)) {
             'icon' => 'EXT:extension_builder/ext_icon.gif',
             'labels' => 'LLL:EXT:extension_builder/Resources/Private/Language/locallang_mod.xlf',
         )
-    );
-
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler(
-         'ExtensionBuilder::wiringEditorSmdEndpoint',
-           'EBT\ExtensionBuilder\Configuration\ConfigurationManager->getWiringEditorSmd'
     );
 }
