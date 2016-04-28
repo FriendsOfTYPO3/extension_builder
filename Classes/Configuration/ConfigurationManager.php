@@ -14,8 +14,9 @@ namespace EBT\ExtensionBuilder\Configuration;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Http\AjaxRequestHandler;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -510,11 +511,11 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
      * Ajax callback that reads the smd file and modiefies the target URL to include
      * the module token.
      *
-     * @param array $parameters (unused)
-     * @param \TYPO3\CMS\Core\Http\AjaxRequestHandler $ajaxRequestHandler
-     * @return void
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
      */
-    public function getWiringEditorSmd(array $parameters, AjaxRequestHandler $ajaxRequestHandler)
+    public function getWiringEditorSmd(ServerRequestInterface $request, ResponseInterface $response)
     {
         $smdJsonString = file_get_contents(
             ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd'
@@ -528,6 +529,8 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
         );
         $smdJson->target = BackendUtility::getModuleUrl('tools_ExtensionBuilderExtensionbuilder', $parameters);
         $smdJsonString = json_encode($smdJson);
-        $ajaxRequestHandler->setContent(array($smdJsonString));
+        
+        $response->getBody()->write($smdJsonString);
+        return $response;
     }
 }
