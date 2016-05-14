@@ -238,6 +238,13 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
             }
         }
 
+        if ($domainProperty->getCascadeRemove()) {
+            if (!$classProperty->isTaggedWith('cascade')) {
+                $validateTag = explode(' ', trim($domainProperty->getCascadeRemoveAnnotation()));
+                $classProperty->setTag('cascade', $validateTag[1]);
+            }
+        }
+
         if ($domainProperty->isRelation()) {
             /** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
             if ($domainProperty->getLazyLoading()) {

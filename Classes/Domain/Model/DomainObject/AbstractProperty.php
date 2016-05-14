@@ -89,7 +89,10 @@ abstract class AbstractProperty
      * @var bool
      */
     protected $excludeField = false;
-
+    /**
+     * @var bool
+     */
+    protected $cascadeRemove = false;
     /**
      *
      * @param string $propertyName
@@ -301,6 +304,14 @@ abstract class AbstractProperty
     }
 
     /**
+     * @return bool
+     */
+    public function getCascadeRemove ()
+    {
+        return $this->cascadeRemove;
+    }
+
+    /**
      * Set whether this property is required
      *
      * @param bool $required
@@ -342,6 +353,13 @@ abstract class AbstractProperty
             return '@validate NotEmpty';
         }
         return '';
+    }
+
+    public function getCascadeRemoveAnnotation ()
+    {
+        if ($this->cascadeRemove) {
+            return '@cascade remove';
+        }
     }
 
     /**

@@ -46,6 +46,10 @@ class ImageProperty extends AbstractProperty
      * @var int
      */
     protected $maxItems = 1;
+    /**
+     * @var bool
+     */
+    protected $cascadeRemove = true;
 
     public function getTypeForComment()
     {
