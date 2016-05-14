@@ -35,6 +35,7 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
      * @validate NotEmpty
+     * @cascade remove
      */
     protected $imageProperty = null;
 

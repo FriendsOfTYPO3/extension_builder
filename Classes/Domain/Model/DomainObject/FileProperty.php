@@ -51,6 +51,10 @@ class FileProperty extends AbstractProperty
      * @var string
      */
     protected $type = 'File';
+    /**
+     * @var bool
+     */
+    protected $cascadeRemove = true;
 
     public function getTypeForComment()
     {
