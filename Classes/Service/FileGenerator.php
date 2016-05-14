@@ -104,7 +104,7 @@ class FileGenerator
      * @var string[]
      */
     protected $filesSupportingSplitToken = array(
-        'php', //ext_tables, tca, localconf
+        'php', //ext_tables, localconf
         'sql',
         'txt' // Typoscript
     );
