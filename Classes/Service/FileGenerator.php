@@ -106,7 +106,8 @@ class FileGenerator
     protected $filesSupportingSplitToken = array(
         'php', //ext_tables, localconf
         'sql',
-        'txt' // Typoscript
+        'txt', // Typoscript
+        'ts' // Typoscript
     );
     /**
      * @var \EBT\ExtensionBuilder\Service\LocalizationService
