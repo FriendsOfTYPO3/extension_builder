@@ -33,7 +33,15 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'special' => 'languages'
+                'special' => 'languages',
+                'items' => [
+                    [
+                        'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
+                        -1,
+                        'flags-multiple'
+                    ]
+                ],
+                'default' => 0,
             ],
         ],
         'l10n_parent' => [
