@@ -20,6 +20,10 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  */
 class CopyrightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
+    protected $escapeOutput = false;
+
+    protected $escapeChildren = false;
+
     /**
      * Format the copyright holder's name(s)
      *

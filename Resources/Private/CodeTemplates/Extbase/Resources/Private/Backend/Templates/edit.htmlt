@@ -1,4 +1,4 @@
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:format.raw>
 <k:openingTag>f:layout name="Default" /</k:openingTag>
 
 This template displays a EDIT form for the current domain object.
@@ -24,5 +24,5 @@ Otherwise your changes will be overwritten the next time you save the extension 
 <k:openingTag>f:render partial="{domainObject.name}/FormFields" arguments="<k:curlyBrackets>{domainObject.name-> k:format.lowercaseFirst()}:{domainObject.name-> k:format.lowercaseFirst()}</k:curlyBrackets>" /</k:openingTag>
 </k:format.removeMultipleNewlines>
 	<k:openingTag>f:form.submit value="Save" /</k:openingTag>
-<![CDATA[</f:form>]]>
-<![CDATA[</f:section>]]>
+<k:openingTag>/f:form</k:openingTag>
+<k:openingTag>/f:section</k:openingTag></f:format.raw>
