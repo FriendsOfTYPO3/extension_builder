@@ -42,6 +42,7 @@ class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditi
     /**
      * Helper function to verify various conditions around possible mapping/inheritance configurations
      *
+     * @param bool $condition View helper condition
      * @return string
      */
     public function render()

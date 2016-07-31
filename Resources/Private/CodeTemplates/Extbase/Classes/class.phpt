@@ -2,7 +2,7 @@
 <f:if condition="{classObject.nameSpace}">namespace {classObject.nameSpace};</f:if>
 <f:if condition="{classObject.aliasDeclarations}"><f:for each="{classObject.aliasDeclarations}" as="aliasDeclaration">
 use {aliasDeclaration};</f:for></f:if>
-{classObject.docComment}
+<f:format.htmlentitiesDecode>{classObject.docComment}</f:format.htmlentitiesDecode>
 <f:if condition="{classObject.modifier}"><f:for each="{classObject.modifierNames}" as="modifierName">{modifierName} </f:for></f:if>class {classObject.name}<k:class classObject="{classObject}"  renderElement="parentClass" /> <k:class classObject="{classObject}"  renderElement="interfaces" />
 {
 <f:for each="{classObject.constants}" as="constant">
