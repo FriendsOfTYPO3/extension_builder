@@ -20,6 +20,8 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Format;
  */
 class IndentViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
+    protected $escapeOutput = FALSE;
+
     /**
      *
      * @param int $indentation

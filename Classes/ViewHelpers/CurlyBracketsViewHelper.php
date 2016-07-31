@@ -16,6 +16,10 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
 
 class CurlyBracketsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
+    protected $escapeOutput = false;
+
+    protected $escapeChildren = false;
+
     public function render()
     {
         return '{' . $this->renderChildren() . '}';

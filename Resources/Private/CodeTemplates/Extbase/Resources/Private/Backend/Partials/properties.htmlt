@@ -1,5 +1,5 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}
-<table class="{extension.cssClassName}" >
+<f:format.raw><table class="{extension.cssClassName}" >
 	<k:format.removeMultipleNewlines>
 	<f:for each="{domainObject.properties}" as="property">
 		<f:if condition="{property.isDisplayable}">
@@ -14,4 +14,4 @@
 		</f:if>
 	</f:for>
 	</k:format.removeMultipleNewlines>
-</table>
+</table></f:format.raw>

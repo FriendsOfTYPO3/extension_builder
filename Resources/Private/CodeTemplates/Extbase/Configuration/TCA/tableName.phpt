@@ -110,7 +110,7 @@ return [
                 ],
             ],
         ],</f:if>
-        <k:format.indent indentation="1"><k:render partial="TCA/PropertiesDefinition.phpt" arguments="{domainObject:domainObject,settings:settings}"/></k:format.indent>
+        <k:format.indent indentation="1"><f:render partial="TCA/PropertiesDefinition.phpt" arguments="{domainObject:domainObject,settings:settings}"/></k:format.indent>
         <f:for each="{k:listForeignKeyRelations(extension: extension, domainObject: domainObject)}" as="relation">
         '{relation.foreignKeyName}' => [
             'config' => [
