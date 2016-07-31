@@ -94,7 +94,7 @@ YAHOO.util.Event.onAvailable('extensionDependencies-field', function () {
 
 YAHOO.util.Event.onAvailable('toggleAdvancedOptions', function () {
 
-    TYPO3.jQuery('#typo3-index-php').addClass('yui-skin-sam');
+    TYPO3.jQuery('body').addClass('yui-skin-sam');
 
 	var advancedMode = false;
 	TYPO3.jQuery('#toggleAdvancedOptions').click(
