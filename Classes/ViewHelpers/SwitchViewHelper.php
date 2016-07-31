@@ -45,7 +45,7 @@ class SwitchViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
      * An array of \TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\AbstractNode
      * @var array
      */
-    private $childNodes = array();
+    protected $childNodes = array();
     /**
      * @var mixed
      */
