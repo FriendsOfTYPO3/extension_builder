@@ -5,8 +5,7 @@ return [
         'label' => '{domainObject.listModuleValueLabel}',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
-        'dividers2tabs' => 1,<f:if condition="{domainObject.sorting}">
+        'cruser_id' => 'cruser_id',<f:if condition="{domainObject.sorting}">
         'sortby' => 'sorting',</f:if>
 <f:if condition="{extension.supportVersioning}">		'versioningWS' => 2,
         'versioning_followPages' => true,</f:if>
