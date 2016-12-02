@@ -1,23 +1,21 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}<?php
 return [
     'ctrl' => [
-        'title'	=> 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.databaseTableName}',
+        'title' => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.databaseTableName}',
         'label' => '{domainObject.listModuleValueLabel}',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
-        'dividers2tabs' => 1,<f:if condition="{domainObject.sorting}">
+        'cruser_id' => 'cruser_id',<f:if condition="{domainObject.sorting}">
         'sortby' => 'sorting',</f:if>
-<f:if condition="{extension.supportVersioning}">		'versioningWS' => 2,
-        'versioning_followPages' => true,</f:if>
+<f:if condition="{extension.supportVersioning}">        'versioningWS' => true,</f:if>
 <f:if condition="{extension.supportLocalization}">
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
         'transOrigDiffSourceField' => 'l10n_diffsource',</f:if>
-<f:if condition="{domainObject.addDeletedField}">		'delete' => 'deleted',</f:if>
+<f:if condition="{domainObject.addDeletedField}">        'delete' => 'deleted',</f:if>
         'enablecolumns' => [
-<f:if condition="{domainObject.addHiddenField}">			'disabled' => 'hidden',</f:if>
-<f:if condition="{domainObject.addStarttimeEndtimeFields}">			'starttime' => 'starttime',
+<f:if condition="{domainObject.addHiddenField}">            'disabled' => 'hidden',</f:if>
+<f:if condition="{domainObject.addStarttimeEndtimeFields}">            'starttime' => 'starttime',
             'endtime' => 'endtime',</f:if>
         ],
         'searchFields' => '<f:for each="{domainObject.properties}" as="property">{property.fieldName},</f:for>',
@@ -36,7 +34,15 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'special' => 'languages'
+                'special' => 'languages',
+                'items' => [
+                    [
+                        'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
+                        -1,
+                        'flags-multiple'
+                    ]
+                ],
+                'default' => 0,
             ],
         ],
         'l10n_parent' => [
