@@ -6,9 +6,7 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
-        'dividers2tabs' => 1,
-        'versioningWS' => 2,
-        'versioning_followPages' => true,
+        'versioningWS' => true,
 
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
@@ -35,7 +33,15 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'special' => 'languages'
+                'special' => 'languages',
+                'items' => [
+                    [
+                        'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
+                        -1,
+                        'flags-multiple'
+                    ]
+                ],
+                'default' => 0,
             ],
         ],
         'l10n_parent' => [
