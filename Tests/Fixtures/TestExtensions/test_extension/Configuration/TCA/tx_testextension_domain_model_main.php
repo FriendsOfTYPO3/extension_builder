@@ -93,7 +93,6 @@ return [
                 'size' => 13,
                 'max' => 20,
                 'eval' => 'datetime',
-                'checkbox' => 0,
                 'default' => 0,
                 'range' => [
                     'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
@@ -109,7 +108,6 @@ return [
                 'size' => 13,
                 'max' => 20,
                 'eval' => 'datetime',
-                'checkbox' => 0,
                 'default' => 0,
                 'range' => [
                     'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
@@ -156,7 +154,6 @@ return [
                 'type' => 'input',
                 'size' => 7,
                 'eval' => 'date',
-                'checkbox' => 0,
                 'default' => '0000-00-00'
             ],
 
