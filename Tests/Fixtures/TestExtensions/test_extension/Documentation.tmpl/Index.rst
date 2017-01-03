@@ -29,7 +29,7 @@ ExtensionBuilder Test Extension
 		comma,separated,list,of,keywords
 
 	:Copyright:
-		2016
+		2017
 
 	:Author:
 		John Doe
