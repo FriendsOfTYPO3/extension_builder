@@ -91,7 +91,7 @@ class CompatibilityTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
             $createdFile = str_replace($testExtensionDir, $this->extension->getExtensionDir(), $referenceFile);
             if (!in_array(basename($createdFile), array('ExtensionBuilder.json'))) {
                 $referenceFileContent = str_replace(
-                    array('2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###', '2014'),
+                    array('2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###', '2016'),
                     array(date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')),
                     file_get_contents($referenceFile)
                 );
@@ -102,7 +102,7 @@ class CompatibilityTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
                     $generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, file_get_contents($createdFile), true);
                     for ($c = 0; $c < count($originalLines); $c++) {
                         $originalLine = str_replace(
-                            array('2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###', '2014'),
+                            array('2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###', '2016'),
                             array(date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')),
                             $originalLines[$c]
                         );
