@@ -16,6 +16,7 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
     protected function setUp()
     {
+        parent::setUp();
         $this->subject = $this->getMock(\FIXTURE\TestExtension\Controller\MainController::class, ['redirect', 'forward', 'addFlashMessage'], [], '', false);
     }
 
