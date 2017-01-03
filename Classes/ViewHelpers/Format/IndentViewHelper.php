@@ -23,12 +23,14 @@ class IndentViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
     /**
      *
      * @param int $indentation
-     * @param string $type
-     * @return bool true or false
+     * @return string
      */
     public function render($indentation)
     {
-        $outputToIndent = $this->renderChildren();
+        $outputToIndent = trim($this->renderChildren());
+        if ($outputToIndent === '') {
+            return chr(10);
+        }
         $lineArray = explode(chr(10), $outputToIndent);
         $indentString = '';
         for ($i = 0; $i < $indentation; $i++) {
