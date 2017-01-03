@@ -1,7 +1,7 @@
 <?php
 return [
     'ctrl' => [
-        'title'    => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3',
+        'title' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3',
         'label' => 'name',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -17,7 +17,7 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'name,password,image_property,',
+        'searchFields' => 'name,password,image_property',
         'iconfile' => 'EXT:test_extension/Resources/Public/Icons/tx_testextension_domain_model_child3.gif'
     ],
     'interface' => [

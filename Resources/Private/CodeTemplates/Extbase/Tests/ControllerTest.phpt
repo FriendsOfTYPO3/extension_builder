@@ -15,6 +15,7 @@ class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
     protected function setUp()
     {
+        parent::setUp();
         $this->subject = $this->getMockBuilder(\{domainObject.controllerClassName}::class)
             ->setMethods(['redirect', 'forward', 'addFlashMessage'])
             ->disableOriginalConstructor()

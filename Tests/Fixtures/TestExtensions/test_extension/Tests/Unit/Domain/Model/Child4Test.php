@@ -15,6 +15,7 @@ class Child4Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
     protected function setUp()
     {
+        parent::setUp();
         $this->subject = new \FIXTURE\TestExtension\Domain\Model\Child4();
     }
 
