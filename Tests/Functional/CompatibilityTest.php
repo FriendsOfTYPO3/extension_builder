@@ -90,11 +90,7 @@ class CompatibilityTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
         foreach ($referenceFiles as $referenceFile) {
             $createdFile = str_replace($testExtensionDir, $this->extension->getExtensionDir(), $referenceFile);
             if (!in_array(basename($createdFile), array('ExtensionBuilder.json'))) {
-                $referenceFileContent = str_replace(
-                    array('2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###', '2016'),
-                    array(date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')),
-                    file_get_contents($referenceFile)
-                );
+                $referenceFileContent = file_get_contents($referenceFile);
                 self::assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');
                 // do not compare files that contain a formatted DateTime, as it might have changed between file creation and this comparison
                 if (strpos($referenceFile, 'ext_emconf') === false) {
@@ -102,8 +98,8 @@ class CompatibilityTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
                     $generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, file_get_contents($createdFile), true);
                     for ($c = 0; $c < count($originalLines); $c++) {
                         $originalLine = str_replace(
-                            array('2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###', '2016'),
-                            array(date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')),
+                            array('###YEAR###', '2017'),
+                            array(date('Y-m-d'), date('Y'), date('Y')),
                             $originalLines[$c]
                         );
                         self::assertEquals(
