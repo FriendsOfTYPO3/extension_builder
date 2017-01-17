@@ -29,7 +29,7 @@ return [
     ],
     'columns' => [
         'sys_language_uid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
             'config' => [
                 'type' => 'select',
@@ -47,7 +47,7 @@ return [
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
@@ -73,7 +73,7 @@ return [
             ],
         ],
         'hidden' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
             'config' => [
                 'type' => 'check',
@@ -85,7 +85,7 @@ return [
             ],
         ],
         'starttime' => [
-            'exclude' => 1,
+            'exclude' => true,
             'l10n_mode' => 'mergeIfNotBlank',
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
             'config' => [
@@ -96,7 +96,7 @@ return [
             ],
         ],
         'endtime' => [
-            'exclude' => 1,
+            'exclude' => true,
             'l10n_mode' => 'mergeIfNotBlank',
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
             'config' => [
@@ -111,7 +111,7 @@ return [
         ],
 
         'name' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.name',
             'config' => [
                 'type' => 'input',
@@ -121,7 +121,7 @@ return [
 
         ],
         'identifier' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.identifier',
             'config' => [
                 'type' => 'input',
@@ -131,7 +131,7 @@ return [
 
         ],
         'description' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.description',
             'config' => [
                 'type' => 'text',
@@ -142,7 +142,7 @@ return [
             'defaultExtras' => 'richtext:rte_transform[mode=ts_css]'
         ],
         'my_date' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.my_date',
             'config' => [
                 'dbType' => 'date',
@@ -154,7 +154,7 @@ return [
 
         ],
         'child1' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.child1',
             'config' => [
                 'type' => 'inline',
@@ -172,7 +172,7 @@ return [
 
         ],
         'children2' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.children2',
             'config' => [
                 'type' => 'inline',
@@ -190,7 +190,7 @@ return [
 
         ],
         'child3' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.child3',
             'config' => [
                 'type' => 'select',
@@ -202,7 +202,7 @@ return [
 
         ],
         'children4' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.children4',
             'config' => [
                 'type' => 'select',
