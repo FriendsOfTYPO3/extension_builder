@@ -28,7 +28,7 @@ return [
     ],
      'columns' => [
         'sys_language_uid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
             'config' => [
                 'type' => 'select',
@@ -46,7 +46,7 @@ return [
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
@@ -72,7 +72,7 @@ return [
             ],
         ],
         'hidden' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
             'config' => [
                 'type' => 'check',
@@ -84,7 +84,7 @@ return [
             ],
         ],
         'starttime' => [
-            'exclude' => 1,
+            'exclude' => true,
             'l10n_mode' => 'mergeIfNotBlank',
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
             'config' => [
@@ -95,7 +95,7 @@ return [
             ],
         ],
         'endtime' => [
-            'exclude' => 1,
+            'exclude' => true,
             'l10n_mode' => 'mergeIfNotBlank',
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
             'config' => [
@@ -110,7 +110,7 @@ return [
         ],
 
         'name' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.name',
             'config' => [
                 'type' => 'input',
@@ -120,7 +120,7 @@ return [
 
         ],
         'date_property1' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property1',
             'config' => [
                 'dbType' => 'date',
@@ -132,7 +132,7 @@ return [
 
         ],
         'date_property2' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property2',
             'config' => [
                 'dbType' => 'datetime',
@@ -144,7 +144,7 @@ return [
 
         ],
         'date_property3' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property3',
             'config' => [
                 'type' => 'input',
@@ -155,7 +155,7 @@ return [
 
         ],
         'date_property4' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property4',
             'config' => [
                 'type' => 'input',
