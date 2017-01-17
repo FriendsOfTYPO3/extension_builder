@@ -14,6 +14,7 @@ namespace EBT\ExtensionBuilder\Tests;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Utility\Spyc;
 use org\bovigo\vfs\vfsStream;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -55,7 +56,7 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         vfsStream::setup($testTargetDir);
         $dummyExtensionDir = vfsStream::url($testTargetDir) . '/';
 
-        $settings = \EBT\ExtensionBuilder\Utility\SpycYAMLParser::YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
+        $settings = Spyc::YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
 
         $this->extension = $this->getMock(\EBT\ExtensionBuilder\Domain\Model\Extension::class, array('getExtensionDir'));
         $this->extension->setVendorName('EBT');
@@ -65,7 +66,7 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             ->method('getExtensionDir')
             ->will(self::returnValue($dummyExtensionDir));
         if (is_dir($dummyExtensionDir)) {
-            GeneralUtility::mkdir($dummyExtensionDir, true);
+            GeneralUtility::mkdir($dummyExtensionDir);
         }
         $this->extension->setSettings($settings);
 
