@@ -279,7 +279,7 @@ div.relationGroup div.advancedSettings .textfieldWrapper {
 
 
 div.propertyGroup{
-	width:135px;
+	width:149px;
 }
 
 .relationGroup,
@@ -352,8 +352,9 @@ div.relationGroup div.inputEx-label{
 
 .objectSettings .checkBoxFieldWrapper div.inputEx-label,
 .actionGroup .checkBoxFieldWrapper div.inputEx-label{
-	width:100px;
+	width:170px;
 }
+
 
 .relationGroup .checkBoxFieldWrapper div.inputEx-label{
 	width:55%;
@@ -379,7 +380,6 @@ div.relationGroup .advancedSettings div.inputEx-label{
 div.objectSettings .inputEx-Field.inputEx-CheckBox,
 div.relationGroup .advancedSettings .inputEx-Field.inputEx-CheckBox{
 	float:left;
-	width:27%;
 }
 
 div.propertyGroup .inputEx-Field.inputEx-CheckBox{
@@ -703,7 +703,7 @@ div.positionGroup div.inputEx-fieldWrapper {
 div:hover > .inputEx-ListField-Arrow,
 div:hover > .WireIt-Container-closebutton.t3-icon-edit-delete,
 div:hover > .deleteButton {
-	display: block;
+	display: inline-block;
 }
 
 #domainModelEditor .collapse {
@@ -716,13 +716,19 @@ div:hover > .deleteButton {
 }
 
 .inputEx-Group .inputEx-ListField-Arrow {
-    float: right;
-    margin-right: 20px;
+    float: left;
 }
 
-.inputEx-Group .inputEx-ListField-ArrowUp {
-    margin-right: 32px;
+.inputEx-Group .relations  .inputEx-ListField-Arrow {
+    float: right;
+	margin-right: 30px;
 }
+
+.inputEx-Group .relations  .inputEx-ListField-ArrowDown {
+	margin-right: 15px;
+}
+
+
 
 .relations .inputEx-ListField-Arrow {
     margin-top: -20px;
