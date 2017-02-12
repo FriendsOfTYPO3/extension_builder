@@ -353,9 +353,9 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
                     LF . $this->indentToken,
                     $printedNodes
                 );
-            return 'array(' . LF . $multiLinedItems . LF . ')';
+            return '[' . LF . $multiLinedItems . LF . ']';
         } else {
-            return parent::pExpr_Array($node);
+            return '[' . $this->pCommaSeparated($node->items) . ']';
         }
     }
 
@@ -435,4 +435,5 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
         return 'switch (' . $this->p($node->cond) . ') {' . LF
         . $this->pStmts($node->cases) . "\n" . '}';
     }
+
 }
