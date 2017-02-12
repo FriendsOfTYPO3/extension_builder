@@ -29,6 +29,6 @@
 		</f:if>
 	</k:case>
 	<k:case value="">
-		<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets>
+		<f:format.raw><k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets></f:format.raw>
 	</k:case>
 </k:switch></f:format.raw>
