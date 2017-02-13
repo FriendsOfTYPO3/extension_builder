@@ -27,11 +27,11 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
     const testConstant = '123';
     const testConstant2 = 0.56;
 
-    protected $defaultOrderings = array(
+    protected $defaultOrderings = [
         'title' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING,
         'subtitle' =>  \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING,
         'test' => 'test;',
-    );
+    ];
 
     /**
      *
@@ -83,8 +83,8 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
     }
     private $another_Property = 'test456_";';
     private $anotherProperty = "test456_'\"";
-    private $arrayProperty1 = array(2,6,'test');
-    private $arrayProperty2 = array('test'=>3,'b' => 'q');
+    private $arrayProperty1 = [2,6,'test'];
+    private $arrayProperty2 = ['test'=>3,'b' => 'q'];
     public static $constProperty = testConstant;
 
     /**
@@ -95,7 +95,7 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
      * @param array $param4
      * @return int
      */
-    public static function methodWithVariousParameter($param1, &$param2, $param3= 'default', array $param4 = array('test'=>array(1, 2, 3)))
+    public static function methodWithVariousParameter($param1, &$param2, $param3= 'default', array $param4 = ['test'=>[1, 2, 3]])
     {
         /**
          * test test
