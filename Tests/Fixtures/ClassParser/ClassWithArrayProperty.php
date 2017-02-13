@@ -31,18 +31,18 @@ abstract class Tx_PhpParser_Tests_ArrayProperty
     /**
      * @var array
      */
-    protected $arrProperty = array(
+    protected $arrProperty = [
         'a' => 'b',
         '5' => 1223,
-        'foo' => array(
+        'foo' => [
             'foo' => 'bar'
-        ),
-        array(1, 2, 3),
-        array('qwer' => 'tzysd', 'Test' => 123),
-        array(
+        ],
+        [1, 2, 3],
+        ['qwer' => 'tzysd', 'Test' => 123],
+        [
             'a',
             'b',
             'c'
-        )
-    );
+        ]
+    ];
 }

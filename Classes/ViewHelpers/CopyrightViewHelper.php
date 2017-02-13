@@ -28,7 +28,7 @@ class CopyrightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
      * Format the copyright holder's name(s)
      *
      * @param string $date
-     * @param \EBT\ExtensionBuilder\Domain\Model\Person[] $persons
+     * @param array $persons (\EBT\ExtensionBuilder\Domain\Model\Person )
      * @return string The copyright ownership
      * @author Andreas Lappe <nd@kaeufli.ch>
      */
