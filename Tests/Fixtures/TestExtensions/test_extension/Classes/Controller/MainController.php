@@ -8,7 +8,7 @@ namespace FIXTURE\TestExtension\Controller;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2017 John Doe <mail@typo3.com>, TYPO3
+ *  (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
  *
  ***/
 
