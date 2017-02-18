@@ -15,6 +15,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
     protected function setUp()
     {
+        parent::setUp();
         $this->subject = new {domainObject.fullQualifiedClassName}();
     }
 
@@ -159,7 +160,11 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function add{property.name -> k:singularize() -> k:format.uppercaseFirst()}ToObjectStorageHolding{property.name -> k:format.uppercaseFirst()}()
     {
         ${property.name -> k:singularize()} = new {property.foreignClassName}();
-        ${property.name}ObjectStorageMock = $this->getMock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, ['attach'], [], '', false);
+        ${property.name}ObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
+            ->setMethods(['attach'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
         ${property.name}ObjectStorageMock->expects(self::once())->method('attach')->with(self::equalTo(${property.name -> k:singularize()}));
         $this->inject($this->subject, '{property.name}', ${property.name}ObjectStorageMock);
 
@@ -172,7 +177,11 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function remove{property.name -> k:singularize() -> k:format.uppercaseFirst()}FromObjectStorageHolding{property.name -> k:format.uppercaseFirst()}()
     {
         ${property.name -> k:singularize()} = new {property.foreignClassName}();
-        ${property.name}ObjectStorageMock = $this->getMock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, ['detach'], [], '', false);
+        ${property.name}ObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
+            ->setMethods(['detach'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
         ${property.name}ObjectStorageMock->expects(self::once())->method('detach')->with(self::equalTo(${property.name -> k:singularize()}));
         $this->inject($this->subject, '{property.name}', ${property.name}ObjectStorageMock);
 
