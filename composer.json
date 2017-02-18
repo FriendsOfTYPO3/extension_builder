@@ -5,8 +5,8 @@
 	"homepage": "http://typo3.org",
 	"license": ["GPL-2.0+"],
 	"require": {
-		"php": "5.5.0 - 7.0.99",
-		"typo3/cms-core": "~8.2"
+		"php": "^7.0",
+		"typo3/cms-core": "~8.6"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.8.0",

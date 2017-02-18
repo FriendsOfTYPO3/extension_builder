@@ -1,3 +1,30 @@
+.module-body.index #typo3-inner-docbody {
+	padding:0 !important;
+	position: relative !important;
+	min-height: 900px;
+}
+.module-body.domainmodelling #typo3-inner-docbody {
+	padding:0 !important;
+}
+
+.module-body.index a {
+	color: #666;
+	font-weight: bold;
+}
+
+#tools-ExtensionBuilderExtensionbuilder .module-docheader-bar .module-icon {
+	float: right;
+ 	margin: 5px;
+}
+
+#tools-ExtensionBuilderExtensionbuilder .module-docheader-bar .docheader-funcmenu {
+	float: right;
+}
+
+.t3js-module-docheader-bar-buttons {
+	display: none;
+}
+
 .yui-skin-sam .yui-layout .yui-layout-hd{
 	border:none;
 }
@@ -115,7 +142,7 @@ div.WireIt-Layer{
 	border:none;
 }
 
-div#typo3-inner-docbody{
+div#typo3-docbody{
 	height:100%;
 	padding:0;
 }
@@ -123,6 +150,7 @@ div#typo3-inner-docbody{
 div#domainModelEditor{
 	height:100%;
 	width:100%;
+	margin-top: 65px;
 }
 
 div.WireIt-Container-ddhandle{
@@ -600,6 +628,10 @@ div.relationGroup div.inputEx-empty > div.inputEx-label label.helpAvailable {
 	background-image:none!important;
 }
 
+.yui-layout .yui-layout-unit-left .yui-layout-hd {
+	z-index: 10;
+}
+
 .yui-layout-hd h2{
 	color:#585858!important;
 }
@@ -642,11 +674,14 @@ div#propertiesForm fieldset{
 #propertiesForm div.inputEx-Group input[type=text],
 #propertiesForm div.inputEx-Group textarea{
 	width:200px;
+	padding: 3px;
 }
 
 div#propertiesForm div.mainGroup div.checkBoxFieldWrapper div.inputEx-label {
     width: 165px;
 }
+
+
 
 
 #wireEditorConfirmMessageBox ol.warnings{
@@ -721,15 +756,8 @@ div:hover > .deleteButton {
 
 .inputEx-Group .relations  .inputEx-ListField-Arrow {
     float: right;
-	margin-right: 30px;
 }
 
 .inputEx-Group .relations  .inputEx-ListField-ArrowDown {
-	margin-right: 15px;
-}
-
-
-
-.relations .inputEx-ListField-Arrow {
-    margin-top: -20px;
+	margin-right: 20px;
 }
