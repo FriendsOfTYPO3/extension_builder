@@ -859,6 +859,9 @@ class SpycYAMLParser
 
             $_arr = array_merge($_arr, $value);
         } elseif ($key || $key === '' || $key === '0') {
+            if (!is_array($_arr)) {
+                $_arr = [];
+            }
             $_arr[$key] = $value;
         } else {
             if (!is_array($_arr)) {
