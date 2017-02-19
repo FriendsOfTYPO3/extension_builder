@@ -8,7 +8,6 @@ return [
         'cruser_id' => 'cruser_id',
         'sortby' => 'sorting',
         'versioningWS' => true,
-
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
         'transOrigDiffSourceField' => 'l10n_diffsource',
@@ -92,7 +91,7 @@ return [
                 'type' => 'input',
                 'size' => 13,
                 'eval' => 'datetime',
-                'default' => 0
+                'default' => 0,
             ],
         ],
         'endtime' => [
@@ -106,7 +105,7 @@ return [
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038)
-                ]
+                ],
             ],
         ],
 
