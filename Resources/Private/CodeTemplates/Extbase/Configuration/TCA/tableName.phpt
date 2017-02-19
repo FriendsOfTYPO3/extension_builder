@@ -17,14 +17,14 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',</f:if>
         ],
-        'searchFields' => '<f:for each="{domainObject.properties}" as="property">{property.fieldName}{f:if(condition: it.isLast, else: \',\')}</f:for>',
+		'searchFields' => '<f:for each="{domainObject.properties}" as="property" iteration="it">{property.fieldName}{f:if(condition: it.isLast, else: ',')}</f:for>',
         'iconfile' => 'EXT:{domainObject.extension.extensionKey}/Resources/Public/Icons/{domainObject.databaseTableName}.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => '<f:if condition="{extension.supportLocalization}">sys_language_uid, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addHiddenField}">hidden, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}<f:if condition="{i.isLast}"><f:else>, </f:else></f:if></f:for>',
+		'showRecordFieldList' => '<f:if condition="{extension.supportLocalization}">sys_language_uid, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addHiddenField}">hidden, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}<f:if condition="{i.isLast}"><f:else>, </f:else></f:if></f:for>',
     ],
     'types' => [
-        <f:if condition="{domainObject.hasChildren}"><f:then>'{domainObject.recordType}'</f:then><f:else>'1'</f:else></f:if> => ['showitem' => '<f:if condition="{extension.supportLocalization}">sys_language_uid, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addHiddenField}">hidden, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}{f:if(condition: it.isLast, else: ',')}</f:for><f:if condition="{domainObject.addStarttimeEndtimeFields}">--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime</f:if>'],
+		<f:if condition="{domainObject.hasChildren}"><f:then>'{domainObject.recordType}'</f:then><f:else>'1'</f:else></f:if> => ['showitem' => '<f:if condition="{extension.supportLocalization}">sys_language_uid, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addHiddenField}">hidden, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}{f:if(condition: i.isLast, else: ', ')}</f:for><f:if condition="{domainObject.addStarttimeEndtimeFields}">, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime</f:if>'],
     ],
     'columns' => [<f:if condition="{extension.supportLocalization}">
 			'sys_language_uid' => [
@@ -63,7 +63,7 @@ return [
                 'type' => 'passthrough',
             ],
         ],</f:if><f:if condition="{extension.supportVersioning}">
-			't3ver_label' => [
+		't3ver_label' => [
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
             'config' => [
                 'type' => 'input',
@@ -71,7 +71,7 @@ return [
                 'max' => 255,
             ],
         ],</f:if><f:if condition="{domainObject.addHiddenField}">
-			'hidden' => [
+		'hidden' => [
             'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
             'config' => [
@@ -83,7 +83,7 @@ return [
                 ],
             ],
         ],</f:if><f:if condition="{domainObject.addStarttimeEndtimeFields}">
-			'starttime' => [
+		'starttime' => [
             'exclude' => true,
             'l10n_mode' => 'mergeIfNotBlank',
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
@@ -92,9 +92,6 @@ return [
                 'size' => 13,
                 'eval' => 'datetime',
                 'default' => 0,
-                'range' => [
-                    'lower' => mktime(0, 0, 0, 1, 1, 2038)
-                ],
             ],
         ],
         'endtime' => [
@@ -107,12 +104,11 @@ return [
                 'eval' => 'datetime',
                 'default' => 0,
                 'range' => [
-                    'lower' => mktime(0, 0, 0, 1, 1, 2038)
+                    'upper' => mktime(0, 0, 0, 1, 1, 2038)
                 ],
             ],
         ],</f:if>
-        <k:format.indent indentation="1"><f:render partial="TCA/PropertiesDefinition.phpt" arguments="{domainObject:domainObject,settings:settings}"/></k:format.indent>
-        <f:for each="{k:listForeignKeyRelations(extension: extension, domainObject: domainObject)}" as="relation">
+        <k:format.indent indentation="1"><f:render partial="TCA/PropertiesDefinition.phpt" arguments="{domainObject:domainObject,settings:settings}"/></k:format.indent><f:for each="{k:listForeignKeyRelations(extension: extension, domainObject: domainObject)}" as="relation">
         '{relation.foreignKeyName}' => [
             'config' => [
                 'type' => 'passthrough',

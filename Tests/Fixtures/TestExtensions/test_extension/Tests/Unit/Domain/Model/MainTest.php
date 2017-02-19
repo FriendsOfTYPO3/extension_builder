@@ -15,6 +15,7 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
     protected function setUp()
     {
+        parent::setUp();
         $this->subject = new \FIXTURE\TestExtension\Domain\Model\Main();
     }
 
@@ -185,7 +186,11 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function addChildren2ToObjectStorageHoldingChildren2()
     {
         $children2 = new \FIXTURE\TestExtension\Domain\Model\Child2();
-        $children2ObjectStorageMock = $this->getMock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, ['attach'], [], '', false);
+        $children2ObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
+            ->setMethods(['attach'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $children2ObjectStorageMock->expects(self::once())->method('attach')->with(self::equalTo($children2));
         $this->inject($this->subject, 'children2', $children2ObjectStorageMock);
 
@@ -198,7 +203,11 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function removeChildren2FromObjectStorageHoldingChildren2()
     {
         $children2 = new \FIXTURE\TestExtension\Domain\Model\Child2();
-        $children2ObjectStorageMock = $this->getMock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, ['detach'], [], '', false);
+        $children2ObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
+            ->setMethods(['detach'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $children2ObjectStorageMock->expects(self::once())->method('detach')->with(self::equalTo($children2));
         $this->inject($this->subject, 'children2', $children2ObjectStorageMock);
 
@@ -266,7 +275,11 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function addChildren4ToObjectStorageHoldingChildren4()
     {
         $children4 = new \FIXTURE\TestExtension\Domain\Model\Child4();
-        $children4ObjectStorageMock = $this->getMock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, ['attach'], [], '', false);
+        $children4ObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
+            ->setMethods(['attach'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $children4ObjectStorageMock->expects(self::once())->method('attach')->with(self::equalTo($children4));
         $this->inject($this->subject, 'children4', $children4ObjectStorageMock);
 
@@ -279,7 +292,11 @@ class MainTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     public function removeChildren4FromObjectStorageHoldingChildren4()
     {
         $children4 = new \FIXTURE\TestExtension\Domain\Model\Child4();
-        $children4ObjectStorageMock = $this->getMock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, ['detach'], [], '', false);
+        $children4ObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
+            ->setMethods(['detach'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $children4ObjectStorageMock->expects(self::once())->method('detach')->with(self::equalTo($children4));
         $this->inject($this->subject, 'children4', $children4ObjectStorageMock);
 

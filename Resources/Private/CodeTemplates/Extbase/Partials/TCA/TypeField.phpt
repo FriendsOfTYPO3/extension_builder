@@ -7,7 +7,7 @@ if (!isset($GLOBALS['TCA']['{databaseTableName}']['ctrl']['type'])) {
     $GLOBALS['TCA']['{databaseTableName}']['ctrl']['type'] = 'tx_extbase_type';
     $tempColumns{extension.shortExtensionKey}_{databaseTableName} = [];
     $tempColumns{extension.shortExtensionKey}_{databaseTableName}[$GLOBALS['TCA']['{databaseTableName}']['ctrl']['type']] = [
-        'exclude' => 1,
+        'exclude' => true,
         'label'   => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{extension.shortExtensionKey}.tx_extbase_type',
         'config' => [
             'type' => 'select',
