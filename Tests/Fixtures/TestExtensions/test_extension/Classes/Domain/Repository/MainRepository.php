@@ -8,7 +8,7 @@ namespace FIXTURE\TestExtension\Domain\Repository;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2017 John Doe <mail@typo3.com>, TYPO3
+ *  (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
  *
  ***/
 
@@ -21,7 +21,7 @@ class MainRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @var array
      */
-    protected $defaultOrderings = array(
+    protected $defaultOrderings = [
         'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
-    );
+    ];
 }

@@ -1,15 +1,15 @@
-<f:for each="{extension.plugins}" as="plugin">
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:for each="{extension.plugins}" as="plugin">
 plugin.{extension.shortExtensionKey}_{plugin.key} {
   view {
     templateRootPaths.0 = EXT:{extension.extensionKey}/Resources/Private/Templates/
-    templateRootPaths.1 = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.view.templateRootPath<![CDATA[}]]>
+    templateRootPaths.1 = <k:curlyBrackets>$plugin.{extension.shortExtensionKey}_{plugin.key}.view.templateRootPath</k:curlyBrackets>
     partialRootPaths.0 = EXT:{extension.extensionKey}/Resources/Private/Partials/
-    partialRootPaths.1 = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.view.partialRootPath<![CDATA[}]]>
+    partialRootPaths.1 = <k:curlyBrackets>$plugin.{extension.shortExtensionKey}_{plugin.key}.view.partialRootPath</k:curlyBrackets>
     layoutRootPaths.0 = EXT:{extension.extensionKey}/Resources/Private/Layouts/
-    layoutRootPaths.1 = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.view.layoutRootPath<![CDATA[}]]>
+    layoutRootPaths.1 = <k:curlyBrackets>$plugin.{extension.shortExtensionKey}_{plugin.key}.view.layoutRootPath</k:curlyBrackets>
   }
   persistence {
-    storagePid = <![CDATA[{$]]>plugin.{extension.shortExtensionKey}_{plugin.key}.persistence.storagePid<![CDATA[}]]>
+    storagePid = <k:curlyBrackets>$plugin.{extension.shortExtensionKey}_{plugin.key}.persistence.storagePid</k:curlyBrackets>
     #recursive = 1
   }
   features {
@@ -60,15 +60,15 @@ plugin.{extension.shortExtensionKey}._CSS_DEFAULT_STYLE (
 # Module configuration
 module.{extension.shortExtensionKey}_{backendModule.mainModule}_{extension.unprefixedShortExtensionKey}{backendModule.key} {
   persistence {
-    storagePid = <![CDATA[{$]]>module.{extension.shortExtensionKey}_{backendModule.key}.persistence.storagePid<![CDATA[}]]>
+    storagePid = <k:curlyBrackets>$module.{extension.shortExtensionKey}_{backendModule.key}.persistence.storagePid</k:curlyBrackets>
   }
   view {
     templateRootPaths.0 = EXT:{extension.extensionKey}/Resources/Private/Backend/Templates/
-    templateRootPaths.1 = <![CDATA[{$]]>module.{extension.shortExtensionKey}_{backendModule.key}.view.templateRootPath<![CDATA[}]]>
+    templateRootPaths.1 = <k:curlyBrackets>$module.{extension.shortExtensionKey}_{backendModule.key}.view.templateRootPath</k:curlyBrackets>
     partialRootPaths.0 = EXT:{extension.extensionKey}/Resources/Private/Backend/Partials/
-    partialRootPaths.1 = <![CDATA[{$]]>module.{extension.shortExtensionKey}_{backendModule.key}.view.partialRootPath<![CDATA[}]]>
+    partialRootPaths.1 = <k:curlyBrackets>$module.{extension.shortExtensionKey}_{backendModule.key}.view.partialRootPath</k:curlyBrackets>
     layoutRootPaths.0 = EXT:{extension.extensionKey}/Resources/Private/Backend/Layouts/
-    layoutRootPaths.1 = <![CDATA[{$]]>module.{extension.shortExtensionKey}_{backendModule.key}.view.layoutRootPath<![CDATA[}]]>
+    layoutRootPaths.1 = <k:curlyBrackets>$module.{extension.shortExtensionKey}_{backendModule.key}.view.layoutRootPath</k:curlyBrackets>
   }
 }
 </f:for>

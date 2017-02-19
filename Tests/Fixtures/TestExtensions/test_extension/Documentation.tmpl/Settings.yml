@@ -8,7 +8,7 @@
 
 ---
 conf.py:
-  copyright: 2017
+  copyright: 2016
   project: ExtensionBuilder Test Extension
   version: 0.9
   release: 0.9

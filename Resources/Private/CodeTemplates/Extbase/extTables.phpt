@@ -25,8 +25,8 @@ call_user_func(
                 '{backendModule.key}', // Submodule key
                 '', // Position
                 [<f:if condition="{backendModule.controllerActionCombinations}"><f:then>
-                    <f:for each="{backendModule.controllerActionCombinations}" as="actionNames" key="controllerName" iteration="ic">'{controllerName}' => '<f:for each="{actionNames}" as="actionName" iteration="i">{actionName}<f:if condition="{i.isLast} == 0">, </f:if></f:for>'<f:if condition="{ic.isLast}"><f:else>,
-                    </f:else></f:if></f:for></f:then><f:else>
+                    <f:for each="{backendModule.controllerActionCombinations}" as="actionNames" key="controllerName">'{controllerName}' => '<f:for each="{actionNames}" as="actionName" iteration="i">{actionName}<f:if condition="{i.isLast} == 0">, </f:if></f:for>',
+                    </f:for></f:then><f:else>
                     <f:for each="{extension.domainObjectsForWhichAControllerShouldBeBuilt}" as="domainObject">'{domainObject.name}' => '<f:for each="{domainObject.actions}" as="action" iteration="actionIterator">{action.name}<f:if condition="{actionIterator.isLast} == 0">, </f:if></f:for>',</f:for></f:else></f:if>
                 ],
                 [

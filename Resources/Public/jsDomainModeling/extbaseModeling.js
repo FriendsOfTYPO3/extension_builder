@@ -94,8 +94,11 @@ YAHOO.util.Event.onAvailable('extensionDependencies-field', function () {
 
 YAHOO.util.Event.onAvailable('toggleAdvancedOptions', function () {
 
-    TYPO3.jQuery('#typo3-index-php').addClass('yui-skin-sam');
-
+    TYPO3.jQuery('body').addClass('yui-skin-sam');
+	TYPO3.jQuery('.t3js-module-docheader-bar-buttons').show();
+	if (window.top.location.href === window.location.href) {
+		TYPO3.jQuery("#opennewwindow").hide();
+	}
 	var advancedMode = false;
 	TYPO3.jQuery('#toggleAdvancedOptions').click(
 	function () {
