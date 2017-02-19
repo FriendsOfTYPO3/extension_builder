@@ -27,12 +27,12 @@ return [
 		<f:if condition="{domainObject.hasChildren}"><f:then>'{domainObject.recordType}'</f:then><f:else>'1'</f:else></f:if> => ['showitem' => '<f:if condition="{extension.supportLocalization}">sys_language_uid, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addHiddenField}">hidden, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}{f:if(condition: i.isLast, else: ', ')}</f:for><f:if condition="{domainObject.addStarttimeEndtimeFields}">, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime</f:if>'],
     ],
     'columns' => [<f:if condition="{extension.supportLocalization}">
-			'sys_language_uid' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
+		'sys_language_uid' => [
+			'exclude' => true,
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
+			'config' => [
+				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'special' => 'languages',
 				'items' => [
 					[
@@ -42,7 +42,7 @@ return [
 					]
 				],
 				'default' => 0,
-            ],
+			],
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
