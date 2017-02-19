@@ -14,7 +14,6 @@ namespace EBT\ExtensionBuilder\Tests;
  * The TYPO3 project - inspiring people to share!
  */
 
-use EBT\ExtensionBuilder\Utility\Spyc;
 use org\bovigo\vfs\vfsStream;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\UnknownClassException;
@@ -86,7 +85,7 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
         vfsStream::setup($testTargetDir);
         $dummyExtensionDir = vfsStream::url($testTargetDir) . '/';
 
-        $yamlParser = new Spyc();
+        $yamlParser = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser();
         $settings = $yamlParser->YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
 
         $this->extension = $this->getMock(\EBT\ExtensionBuilder\Domain\Model\Extension::class, array('getExtensionDir'));
@@ -97,7 +96,7 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
             ->method('getExtensionDir')
             ->will(self::returnValue($dummyExtensionDir));
         if (is_dir($dummyExtensionDir)) {
-            GeneralUtility::mkdir($dummyExtensionDir);
+            GeneralUtility::mkdir($dummyExtensionDir, true);
         }
         $this->extension->setSettings($settings);
 
@@ -188,7 +187,7 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
     protected function generateInitialModelClassFile($modelName)
     {
         $domainObject = $this->buildDomainObject($modelName);
-        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
+        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
         $modelClassDir = 'Classes/Domain/Model/';
         GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;

@@ -30,14 +30,14 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
     /**
      * @var string[]
      */
-    protected $debugMessages = array();
+    protected $debugMessages = [];
 
     /**
      * an array of fields that if changed require a reindexing of all the events
      *
      * @var array
      */
-    protected static $fieldsRequiringReindexing = array(
+    protected static $fieldsRequiringReindexing = [
         'recurrance_type',
         'recurrance_subtype',
         'recurrance_until',
@@ -48,7 +48,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
         'pid',
         'hidden',
         'deleted'
-    );
+    ];
 
     /**
      * @var \Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
@@ -58,8 +58,8 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
     protected $classFiles;
     protected $packagePath;
 
-    protected $componentObjects = array(); // the object cache
-    protected $componentConfigurations = array(); // the configuration cache
+    protected $componentObjects = []; // the object cache
+    protected $componentConfigurations = []; // the configuration cache
     protected $tsConf; // TypoScript config
 
     public static function getInstance()
@@ -73,7 +73,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
     protected function __construct()
     {
         $this->loadTypoScriptConfig();
-        spl_autoload_register(array($this, 'loadClass'));
+        spl_autoload_register([$this, 'loadClass']);
     }
 
     private function __clone()
@@ -116,14 +116,14 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
         }
 
         if (!is_array($this->classFiles)) {
-            $this->classFiles = array();
+            $this->classFiles = [];
         }
         /*if ($this->componentObjectExists($componentName)) {
             $componentObject = $this->componentObjects[$componentName];
         } else */
         if (!array_key_exists($componentName, $this->classFiles)) {
             $this->loadClass($componentName);
-            $componentObject = $this->createComponentObject($componentName, array());
+            $componentObject = $this->createComponentObject($componentName, []);
             $this->putComponentObject($componentName, $componentObject);
         } else {
             $arguments =  array_slice(func_get_args(), 1, null, true); // array keys are preserved (TRUE) -> argument array starts with key=1
@@ -151,15 +151,15 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
             throw new Exception('No valid implementation class for component "' . $componentName . '" found while building the component object (Class "' . $className . '" does not exist).');
         }
 
-        $constructorArguments = $componentConfiguration['arguments.'] ? $componentConfiguration['arguments.'] : array();
+        $constructorArguments = $componentConfiguration['arguments.'] ? $componentConfiguration['arguments.'] : [];
         foreach ($overridingConstructorArguments as $index => $value) {
             $constructorArguments[$index] = $value;
         }
         $class = new ReflectionClass($className);
         $constructorArguments = $this->autoWireConstructorArguments($constructorArguments, $class);
 
-        $injectedArguments = array();
-        $preparedArguments = array();
+        $injectedArguments = [];
+        $preparedArguments = [];
         $this->injectConstructorArguments($constructorArguments, $injectedArguments, $preparedArguments);
 
         $instruction = '$componentObject = new ' . $className . '(';
@@ -353,7 +353,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
      */
     protected function buildArrayOfClassFiles($packageKey, $subDirectory = '', $recursionLevel = 0)
     {
-        $classFiles = array();
+        $classFiles = [];
         if (strpos($packageKey, '/') === false) {
             $currentPath = $this->getPackagePath($packageKey) . self::DIRECTORY_CLASSES . $subDirectory;
         } else {
@@ -361,7 +361,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
         }
 
         if (!is_dir($currentPath)) {
-            return array();
+            return [];
         }
         if ($recursionLevel > 100) {
             throw new Exception('Recursion too deep.');
@@ -409,7 +409,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
 
             if (is_array($this->tsConf['additionalIncludePaths.'])) {
                 foreach ($this->tsConf['additionalIncludePaths.'] as $dir) {
-                    $temp = array();
+                    $temp = [];
                     $temp = $this->buildArrayOfClassFiles($dir);
 
                     $this->classFiles = array_merge($temp, $this->classFiles);

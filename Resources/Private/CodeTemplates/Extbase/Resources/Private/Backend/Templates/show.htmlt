@@ -1,4 +1,4 @@
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:format.raw>
 <k:openingTag>f:layout name="Default" /</k:openingTag>
 
 This Template is responsible for displaying a single view for a domain object
@@ -17,6 +17,6 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
 <k:openingTag>f:flashMessages /</k:openingTag>
 <k:openingTag>f:render partial="{domainObject.name}/Properties" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}:{domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>" /</k:openingTag>
-<k:openingTag>f:link.action action="list"</k:openingTag>Back to list<![CDATA[</f:link.action>]]><br />
-<k:openingTag>f:link.action action="create"</k:openingTag>New {domainObject.name}<![CDATA[</f:link.action>]]>
-<![CDATA[</f:section>]]>
+<k:openingTag>f:link.action action="list"</k:openingTag>Back to list<k:openingTag>/f:link.action</k:openingTag><br />
+<k:openingTag>f:link.action action="create"</k:openingTag>New {domainObject.name}<k:openingTag>/f:link.action</k:openingTag>
+<k:openingTag>/f:section</k:openingTag></f:format.raw>

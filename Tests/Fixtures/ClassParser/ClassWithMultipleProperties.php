@@ -29,13 +29,13 @@
 abstract class Tx_PhpParser_Tests_ClassWithMultipleProperties
 {
 
-    private $test = array(
+    private $test = [
         'test'    => 123,
         'test5'    => 456,
-        'arr'    => array(
+        'arr'    => [
             'sieben' => 7
-        )
-    );
+        ]
+    ];
 
     protected $testBoolean = false;
 
@@ -47,7 +47,7 @@ abstract class Tx_PhpParser_Tests_ClassWithMultipleProperties
     /**
      * @var string
      */
-    protected $property = array('a' => 'b');
+    protected $property = ['a' => 'b'];
 
     /**
      * @param string $property

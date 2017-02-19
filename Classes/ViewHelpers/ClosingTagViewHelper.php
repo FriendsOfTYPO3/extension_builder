@@ -14,14 +14,14 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
-class CurlyBracketsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class ClosingTagViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
-    protected $escapeOutput = false;
+    protected $escapeChildren = FALSE;
 
-    protected $escapeChildren = false;
+    protected $escapeOutput = FALSE;
 
     public function render()
     {
-        return '{' . $this->renderChildren() . '}';
+        return '</' . $this->renderChildren() . '>';
     }
 }
