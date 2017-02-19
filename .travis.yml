@@ -5,7 +5,7 @@ php:
 
 env:
   matrix:
-    - TYPO3_VERSION=~8.2
+    - TYPO3_VERSION=~8.6
 
 sudo: false
 
@@ -36,7 +36,7 @@ script:
     export typo3DatabaseHost="localhost";
     export typo3DatabaseUsername="root";
     export typo3DatabasePassword="";
-    .Build/bin/phpunit --colors  -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml Tests/Unit/
+    .Build/bin/phpunit --colors  -c .Build/vendor/typo3/cms/components/testing_framework/Resources/Core/Build/UnitTests.xml Tests/Unit/
 
   - >
     echo;
@@ -45,4 +45,4 @@ script:
 
   - >
     echo;
-    find 'Tests/Functional' -wholename '*Test.php' | parallel --gnu 'echo; echo "Running functional test suite {}"; .Build/bin/phpunit --colors  -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/FunctionalTests.xml {}'
+    find 'Tests/Functional' -wholename '*Test.php' | parallel --gnu 'echo; echo "Running functional test suite {}"; .Build/bin/phpunit --colors  -c .Build/vendor/typo3/cms/components/testing_framework/Resources/Core/Build/FunctionalTests.xml {}'
