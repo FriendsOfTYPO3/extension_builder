@@ -51,6 +51,5 @@ call_user_func(
             '{domainObject.databaseTableName}'
         );
 </f:if></f:for>
-    },
-    $_EXTKEY
+    }
 );
