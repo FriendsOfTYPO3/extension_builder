@@ -23,6 +23,5 @@ call_user_func(
             ]
         );
 </f:for>
-    },
-    $_EXTKEY
+    }
 );

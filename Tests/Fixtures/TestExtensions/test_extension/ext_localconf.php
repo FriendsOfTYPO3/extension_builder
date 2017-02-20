@@ -14,6 +14,5 @@ call_user_func(
                 'Main' => 'create, update, delete'
             ]
         );
-    },
-    $_EXTKEY
+    }
 );
