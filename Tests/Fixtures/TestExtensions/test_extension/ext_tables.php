@@ -22,7 +22,7 @@ call_user_func(
                 ],
                 [
                     'access' => 'user,group',
-                    'icon'   => 'EXT:' . $extKey . '/ext_icon.gif',
+                    'icon'   => 'EXT:' . $extKey . '/Resources/Public/Icons/ext_icon.gif',
                     'labels' => 'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_testmodule1.xlf',
                 ]
             );
