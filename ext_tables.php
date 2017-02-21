@@ -6,7 +6,7 @@ if (TYPO3_MODE === 'BE') {
      * Register Backend Module
      */
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-        'EBT.' . $_EXTKEY,
+        'EBT.ExtensionBuilder',
         'tools',
         'extensionbuilder',
         '',
