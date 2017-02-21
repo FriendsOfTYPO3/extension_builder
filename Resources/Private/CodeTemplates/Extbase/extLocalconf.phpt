@@ -2,7 +2,7 @@
 defined('TYPO3_MODE') || die('Access denied.');
 
 call_user_func(
-    function($extKey)
+    function()
     {
 <f:for each="{extension.plugins}" as="plugin">
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
