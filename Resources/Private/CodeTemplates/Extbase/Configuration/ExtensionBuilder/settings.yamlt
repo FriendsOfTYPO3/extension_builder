@@ -55,7 +55,7 @@ overwriteSettings:
       #Language: merge
       #Templates: keep
 
-  ext_icon.gif: keep
+  user_extension.svg: keep
 
 #  ext_localconf.php: merge
 

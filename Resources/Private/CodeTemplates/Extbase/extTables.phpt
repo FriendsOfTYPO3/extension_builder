@@ -2,7 +2,7 @@
 defined('TYPO3_MODE') || die('Access denied.');
 
 call_user_func(
-    function($extKey)
+    function()
     {
 <f:for each="{extension.Plugins}" as="plugin">
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
@@ -11,9 +11,9 @@ call_user_func(
             '<k:format.quoteString>{plugin.name}</k:format.quoteString>'
         );
 <f:if condition="{plugin.switchableControllerActions}">
-        $pluginSignature = str_replace('_', '', $extKey) . '_{plugin.key}';
+        $pluginSignature = str_replace('_', '', '{extension.extensionKey}') . '_{plugin.key}';
         $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $extKey . '/Configuration/FlexForms/flexform_{plugin.key}.xml');</f:if>
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:{extension.extensionKey}/Configuration/FlexForms/flexform_{plugin.key}.xml');</f:if>
 </f:for>
 
 <f:if condition="{extension.BackendModules}">
@@ -31,14 +31,14 @@ call_user_func(
                 ],
                 [
                     'access' => 'user,group',
-                    'icon'   => 'EXT:' . $extKey . '/Resources/Public/Icons/user_extension.svg',
-                    'labels' => 'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_{backendModule.key}.xlf',
+                    'icon'   => 'EXT:{extension.extensionKey}/Resources/Public/Icons/icon_mod_{backendModule.key}.svg',
+                    'labels' => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_{backendModule.key}.xlf',
                 ]
             );
 </f:for>
         }
 </f:if>
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($extKey, 'Configuration/TypoScript', '<k:format.quoteString>{extension.name}</k:format.quoteString>');
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('{extension.extensionKey}', 'Configuration/TypoScript', '<k:format.quoteString>{extension.name}</k:format.quoteString>');
 
 <f:for each="{extension.domainObjects}" as="domainObject"><f:if condition="{domainObject.mappedToExistingTable}"><f:else>
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xlf');
@@ -47,7 +47,7 @@ call_user_func(
 
 <f:for each="{extension.domainObjects}" as="domainObject"><f:if condition="{domainObject.categorizable}">
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
-            $extKey,
+			{extension.extensionKey},
             '{domainObject.databaseTableName}'
         );
 </f:if></f:for>

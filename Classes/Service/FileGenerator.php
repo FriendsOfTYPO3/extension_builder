@@ -328,6 +328,11 @@ class FileGenerator
                         $this->languageDirectory . 'locallang_' . $backendModule->getKey() . '.xlf',
                         $fileContents
                     );
+                    $this->upload_copy_move(
+                        ExtensionManagementUtility::extPath('extension_builder')
+                        . 'Resources/Private/Icons/user_extension.svg',
+                        $this->iconsDirectory . 'icon_mod_' . $backendModule->getKey() . '.svg'
+                    );
                 }
             }
             foreach ($this->extension->getDomainObjects() as $domainObject) {

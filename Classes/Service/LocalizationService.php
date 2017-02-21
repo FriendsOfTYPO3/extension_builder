@@ -96,8 +96,14 @@ class LocalizationService implements \TYPO3\CMS\Core\SingletonInterface
     {
         $labelArray = array();
         $labelArray['mlang_tabs_tab'] = htmlspecialchars($backendModule->getName());
-        $labelArray['mlang_labels_tabdescr'] = htmlspecialchars($backendModule->getDescription());
-        $labelArray['mlang_tabs_tab'] = htmlspecialchars($backendModule->getTabLabel());
+        $moduleDescription = $backendModule->getDescription();
+        if (empty($moduleDescription)) {
+            $moduleDescription = $backendModule->getName();
+        }
+        $labelArray['mlang_labels_tabdescr'] = htmlspecialchars($moduleDescription);
+        if (!empty($backendModule->getTabLabel())) {
+            $labelArray['mlang_labels_tablabel'] = htmlspecialchars($backendModule->getTabLabel());
+        }
         return $labelArray;
     }
 
