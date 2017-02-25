@@ -1,3 +1,30 @@
+.module-body.index #typo3-inner-docbody {
+	padding:0 !important;
+	position: relative !important;
+	min-height: 900px;
+}
+.module-body.domainmodelling #typo3-inner-docbody {
+	padding:0 !important;
+}
+
+.module-body.index a {
+	color: #666;
+	font-weight: bold;
+}
+
+.module-docheader-bar .module-icon {
+	float: right;
+ 	margin: 5px;
+}
+
+.module-docheader-bar .docheader-funcmenu {
+	float: right;
+}
+
+.t3js-module-docheader-bar-buttons {
+	display: none;
+}
+
 .yui-skin-sam .yui-layout .yui-layout-hd{
 	border:none;
 }
@@ -65,7 +92,8 @@ div.WireIt-Container-focused{
 }
 
 #domainModelEditor legend {
-	font-size: 11px;
+	font-size: 10px;
+	margin-bottom: 0;
 }
 
 #moduleBar{
@@ -79,7 +107,7 @@ div.WireIt-Container-focused{
 }
 
 #moduleBar .WiringEditor-module span{
-	font-size:13px;
+	font-size:11px;
 	position:relative;
 	top:0;
 }
@@ -115,7 +143,7 @@ div.WireIt-Layer{
 	border:none;
 }
 
-div#typo3-inner-docbody{
+div#typo3-docbody{
 	height:100%;
 	padding:0;
 }
@@ -123,6 +151,8 @@ div#typo3-inner-docbody{
 div#domainModelEditor{
 	height:100%;
 	width:100%;
+	margin-top: 37px;
+	min-height: 900px;
 }
 
 div.WireIt-Container-ddhandle{
@@ -134,7 +164,7 @@ div.WireIt-Container-ddhandle{
 	cursor:move;
 	font-size:10pt;
 	font-weight:700;
-	height:25px;
+	height:23px;
 	line-height:150%;
 	padding-top:0;
 	text-align:center;
@@ -180,14 +210,20 @@ div.WireIt-ImageContainer{
 }
 
 div.inputEx-Group fieldset.inputEx-Collapsed legend:hover div.inputEx-Group-collapseImg{
+	background-position:-8px -397px;
+}
+div.inputEx-Group .relationGroup  fieldset.inputEx-Collapsed legend:hover div.inputEx-Group-collapseImg{
 	background-position:-8px -400px;
 }
 
-div.inputEx-Group fieldset.inputEx-Expanded legend:hover div.inputEx-Group-collapseImg{
-	background-position:-8px -81px;
+div.inputEx-Group  fieldset.inputEx-Expanded legend:hover div.inputEx-Group-collapseImg{
+	background-position:-8px -79px;
 }
 
-div.inputEx-Group fieldset.inputEx-Collapsed legend div.inputEx-Group-collapseImg{
+div.inputEx-Group fieldset.inputEx-Collapsed div.inputEx-Group-collapseImg{
+	background-position:-8px -317px;
+}
+div.inputEx-Group .relationGroup  fieldset.inputEx-Collapsed div.inputEx-Group-collapseImg{
 	background-position:-8px -320px;
 }
 
@@ -210,13 +246,13 @@ div.Bubble div.body{
 div.extbase-modelTitleEditor{
 	color:#333;
 	cursor:move;
-	font-size:10pt;
+	font-size:12px;
 	font-weight:700;
 	left:30px;
 	line-height:100%;
 	position:absolute;
 	text-align:center;
-	top:-32px;
+	top:-30px;
 }
 
 div.WireIt-Container-ddhandle span{
@@ -233,7 +269,7 @@ div.inputEx-InPlaceEdit-visu:hover{
 }
 
 .inputEx-InPlaceEdit-editor input[type="text"] {
-	width: 120px;
+	width: 150px;
 }
 
 .inputEx-InPlaceEdit-editor  .inputEx-InPlaceEdit-OkButton {
@@ -279,7 +315,7 @@ div.relationGroup div.advancedSettings .textfieldWrapper {
 
 
 div.propertyGroup{
-	width:135px;
+	width:149px;
 }
 
 .relationGroup,
@@ -352,8 +388,9 @@ div.relationGroup div.inputEx-label{
 
 .objectSettings .checkBoxFieldWrapper div.inputEx-label,
 .actionGroup .checkBoxFieldWrapper div.inputEx-label{
-	width:100px;
+	width:170px;
 }
+
 
 .relationGroup .checkBoxFieldWrapper div.inputEx-label{
 	width:55%;
@@ -379,7 +416,6 @@ div.relationGroup .advancedSettings div.inputEx-label{
 div.objectSettings .inputEx-Field.inputEx-CheckBox,
 div.relationGroup .advancedSettings .inputEx-Field.inputEx-CheckBox{
 	float:left;
-	width:27%;
 }
 
 div.propertyGroup .inputEx-Field.inputEx-CheckBox{
@@ -422,8 +458,9 @@ div.inputEx-List-link.deleteButton{
 	float:left;
 }
 
-.inputEx-StringField-wrapper input[type=text],.inputEx-StringField-wrapper textarea{
-	font-size:9pt;
+.inputEx-StringField-wrapper input[type=text],
+.inputEx-StringField-wrapper textarea{
+	font-size:10px;
 }
 
 div.relationGroup textarea,
@@ -600,8 +637,14 @@ div.relationGroup div.inputEx-empty > div.inputEx-label label.helpAvailable {
 	background-image:none!important;
 }
 
+.yui-layout .yui-layout-unit-left .yui-layout-hd {
+	z-index: 10;
+}
+
 .yui-layout-hd h2{
 	color:#585858!important;
+	margin: 0;
+	font-size: 16px;
 }
 
 div#propertiesForm {
@@ -642,11 +685,14 @@ div#propertiesForm fieldset{
 #propertiesForm div.inputEx-Group input[type=text],
 #propertiesForm div.inputEx-Group textarea{
 	width:200px;
+	padding: 3px;
 }
 
 div#propertiesForm div.mainGroup div.checkBoxFieldWrapper div.inputEx-label {
     width: 165px;
 }
+
+
 
 
 #wireEditorConfirmMessageBox ol.warnings{
@@ -695,15 +741,26 @@ div.positionGroup div.inputEx-fieldWrapper {
 }
 
 .inputEx-ListField-Arrow,
-.WireIt-Container-closebutton.t3-icon-edit-delete,
+.inputEx-Group .icon img,
+.WireIt-Container-closebutton.icon,
 .deleteButton {
-	display: none;
+	display: none !important;
 }
 
 div:hover > .inputEx-ListField-Arrow,
-div:hover > .WireIt-Container-closebutton.t3-icon-edit-delete,
+div:hover > .icon img,
+div:hover > .WireIt-Container-closebutton.icon,
+.WireIt-Container-ddhandle:hover .icon-markup,
 div:hover > .deleteButton {
+	display: inline-block !important;
+}
+
+div:hover > .WireIt-Container-closebutton.icon {
+	position: absolute;
+	top: 5px;
+	right: 5px;
 	display: block;
+	cursor: pointer;
 }
 
 #domainModelEditor .collapse {
@@ -716,14 +773,43 @@ div:hover > .deleteButton {
 }
 
 .inputEx-Group .inputEx-ListField-Arrow {
+    float: left;
+}
+
+.inputEx-Group .relations  .inputEx-ListField-Arrow {
     float: right;
-    margin-right: 20px;
+	margin-top: -18px;
+	margin-right: 15px;
 }
 
-.inputEx-Group .inputEx-ListField-ArrowUp {
-    margin-right: 32px;
+.inputEx-Group .relations  .inputEx-ListField-ArrowDown {
+	margin-right: 30px;
 }
 
-.relations .inputEx-ListField-Arrow {
-    margin-top: -20px;
+.yui-layout .yui-layout-unit div.yui-layout-hd .collapse {
+	height:18px;
+	background-position-y: -158px !important;
+}
+
+#typo3-inner-docbody {
+    display: block;
+    position: absolute;
+    height: auto;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 30px 0;
+}
+
+.module-docheader + .module-body {
+    padding-top: 89px;
+}
+
+.module-body {
+    padding: 24px 24px;
+}
+
+.module-body.domainmodelling #typo3-inner-docbody {
+    padding: 0 !important;
 }

@@ -2,8 +2,7 @@
 defined('TYPO3_MODE') || die('Access denied.');
 
 call_user_func(
-    function($extKey)
-    {
+    function($extKey){
 <f:for each="{extension.plugins}" as="plugin">
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             '{extension.vendorName}.{extension.extensionName}',
@@ -23,6 +22,26 @@ call_user_func(
             ]
         );
 </f:for>
+<f:if condition="{extension.plugins}">
+	// wizards
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
+		'mod <k:curlyBrackets>
+			wizards.newContentElement.wizardItems.plugins <k:curlyBrackets>
+				elements {<f:for each="{extension.plugins}" as="plugin">
+					{plugin.key} <k:curlyBrackets>
+						icon = ' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($extKey) . 'ext_icon.gif
+						title = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:tx_{extension.extensionKey}_domain_model_{plugin.key}
+						description = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:tx_{extension.extensionKey}_domain_model_{plugin.key}.description
+						tt_content_defValues <k:curlyBrackets>
+							CType = list
+							list_type = {extension.unprefixedShortExtensionKey}_{plugin.key}
+						</k:curlyBrackets>
+					</k:curlyBrackets></f:for>
+				}
+				show = *
+			</k:curlyBrackets>
+	   </k:curlyBrackets>'
+	);</f:if>
     },
     $_EXTKEY
 );

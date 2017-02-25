@@ -143,7 +143,7 @@
 			this.options.height = options.height;
 
 			this.options.close = (typeof options.close == "undefined") ? true : options.close;
-			this.options.closeButtonClassName = options.closeButtonClassName || CSS_PREFIX + "Container-closebutton t3-icon t3-icon-actions t3-icon-edit-delete";
+			this.options.closeButtonClassName = options.closeButtonClassName || CSS_PREFIX + "Container-closebutton t3js-icon icon icon-size-small icon-state-default icon-actions-edit-delete";
 
 			this.options.title = options.title; // no default
 
@@ -211,7 +211,8 @@
 
 			if (this.options.close) {
 				// Close button
-				this.closeButton = WireIt.cn('div', {className: this.options.closeButtonClassName});
+				//this.closeButton = WireIt.cn('div', {className: this.options.closeButtonClassName});
+				this.closeButton = WireIt.cn('img', {className: this.options.closeButtonClassName, src: '/typo3/sysext/core/Resources/Public/Icons/T3Icons/actions/actions-edit-delete.svg', width: 16});
 				this.el.appendChild(this.closeButton);
 				Event.addListener(this.closeButton, "click", this.onCloseButton, this, true);
 			}

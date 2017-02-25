@@ -57,15 +57,18 @@
 						this.editorContainer.appendChild(this.editorField.getEl());
 						Dom.setStyle(this.editorField.getEl(), 'float', 'left');
 
-						this.okButton = inputEx.cn('input', {type: 'button', value: inputEx.messages.okEditor, className: 'inputEx-InPlaceEdit-OkButton buttonreset t3-icon t3-icon-actions t3-icon-document-save'});
-						Dom.setStyle(this.okButton, 'float', 'left');
-						this.editorContainer.appendChild(this.okButton);
+						//this.okButton = inputEx.cn('input', {type: 'button', value: inputEx.messages.okEditor, className: 'inputEx-InPlaceEdit-OkButton buttonreset t3-icon t3-icon-actions t3-icon-document-save'});
+						// overlay-approved.svg
+						//Dom.setStyle(this.okButton, 'float', 'left');
+						//this.editorContainer.appendChild(this.okButton);
+						//this.cancelLink = inputEx.cn('a', {className: 'inputEx-InPlaceEdit-CancelLink buttonreset t3-icon t3-icon-actions t3-icon-document-close'}, null, inputEx.messages.cancelEditor);
+						//this.cancelLink.href = ""; // IE required (here, not in the cn fct)
+						//Dom.setStyle(this.cancelLink, 'float', 'left');
+						//this.cancelLink.appendChild(test);
+						//this.editorContainer.appendChild(this.cancelLink);
 
-						this.cancelLink = inputEx.cn('a', {className: 'inputEx-InPlaceEdit-CancelLink buttonreset t3-icon t3-icon-actions t3-icon-document-close'}, null, inputEx.messages.cancelEditor);
-						this.cancelLink.href = ""; // IE required (here, not in the cn fct)
-						Dom.setStyle(this.cancelLink, 'float', 'left');
-						this.editorContainer.appendChild(this.cancelLink);
-
+						//<img class="module-icon" src="../typo3conf/ext/extension_builder/Resources/Public/Icons/module-extensionbuilder.svg" width="16" height="16" title="Open in new window" alt="Open in new window">
+						//this.editorContainer.appendChild(test);
 						// Line breaker
 						this.editorContainer.appendChild(inputEx.cn('div', null, {clear: 'both'}));
 
@@ -132,13 +135,14 @@
 						Event.addListener(this.formattedContainer, 'mouseout', this.onVisuMouseOut, this, true);
 
 						// Editor:
-						Event.addListener(this.okButton, 'click', this.onOkEditor, this, true);
-						Event.addListener(this.cancelLink, 'click', this.onCancelEditor, this, true);
+						//Event.addListener(this.okButton, 'click', this.onOkEditor, this, true);
+						//Event.addListener(this.cancelLink, 'click', this.onCancelEditor, this, true);
 
 						if (this.editorField.el) {
 							// Register some listeners
 							Event.addListener(this.editorField.el, "keyup", this.onKeyUp, this, true);
 							Event.addListener(this.editorField.el, "keydown", this.onKeyDown, this, true);
+							Event.addListener(this.editorField.el, "blur", this.onOkEditor, this, true);
 						}
 					},
 

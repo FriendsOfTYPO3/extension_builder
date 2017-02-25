@@ -2,7 +2,13 @@
 <xliff version="1.0">
 	<file source-language="{extension.sourceLanguage}" datatype="plaintext" original="messages" date="{f:if(condition:extension.settings.staticDateInXliffFiles, then:'{extension.settings.staticDateInXliffFiles}', else: '{f:format.date(format:\'Y-m-d\\TH:i:s\\Z\',date:\'now\')}')}" product-name="{extension.extensionKey}">
 		<header/>
-		<body><f:for each="{labelArray}" as="label" key="index">
+		<body><f:for each="{extension.plugins}" as="plugin">
+			<trans-unit id="tx_{extension.extensionKey}_domain_model_{plugin.key}">
+				<source><k:format.quoteString>{plugin.name}</k:format.quoteString></source>
+			</trans-unit>
+			<trans-unit id="tx_{extension.extensionKey}_domain_model_{plugin.key}.description">
+				<source><k:format.quoteString>{extension.description}</k:format.quoteString></source>
+			</trans-unit></f:for><f:for each="{labelArray}" as="label" key="index">
 			<trans-unit id="{index}">
 				<source>{label}</source>
 			</trans-unit></f:for>

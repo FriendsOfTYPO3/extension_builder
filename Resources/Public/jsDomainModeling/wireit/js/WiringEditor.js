@@ -311,20 +311,9 @@
 		 * @method renderButtons
 		 */
 		renderButtons: function() {
-			var toolbar = Dom.get('toolbar');
-			// Buttons :
-			var newButton = new widget.Button({ label:"New", id:"WiringEditor-newButton", container: toolbar });
-			newButton.on("click", this.onNew, this, true);
-
-			var loadButton = new widget.Button({ label:"Load", id:"WiringEditor-loadButton", container: toolbar });
-			loadButton.on("click", this.onLoad, this, true);
-
-			var saveButton = new widget.Button({ label:"Save", id:"WiringEditor-saveButton", container: toolbar });
-			saveButton.on("click", this.onSave, this, true);
-			/** Has no use so far, we don't want to delete extensions from here
-			 var deleteButton = new widget.Button({ label:"Delete", id:"WiringEditor-deleteButton", container: toolbar });
-			 deleteButton.on("click", this.onDelete, this, true);
-			 */
+			Event.addListener('WiringEditor-newButton-button', 'click', this.onNew, this, true);
+			Event.addListener('WiringEditor-loadButton-button', 'click', this.onLoad, this, true);
+			Event.addListener('WiringEditor-saveButton-button', 'click', this.onSave, this, true);
 		},
 
 

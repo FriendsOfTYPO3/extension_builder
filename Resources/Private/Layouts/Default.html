@@ -1,4 +1,5 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}
+{namespace core = TYPO3\CMS\Core\ViewHelpers}
 <f:comment>
 	Use the section "header" to call ViewHelpers which modify the configuration
 	of the PageRenderer, f.e. to include custom CSS or JavaScript.
@@ -6,37 +7,43 @@
 <f:render section="header" />
 <f:be.container>
 	<div class="typo3-fullDoc">
-		<div id="typo3-docheader">
-			<div class="typo3-docheader-functions">
-				<div class="left">
-					<f:be.buttons.csh />
+		<div class="module-docheader t3js-module-docheader">
+			<div class="module-docheader-bar module-docheader-bar-navigation t3js-module-docheader-bar t3js-module-docheader-bar-navigation">
+				<div class="pull-right">
+					<img class="module-icon" src="{settings.publicResourcesPath}Icons/module-extensionbuilder.svg" width="16" height="16" title="Open in new window" class="absmiddle" alt="Open in new window">
 					<f:be.menus.actionMenu>
 						<f:be.menus.actionMenuItem label="Introduction" controller="BuilderModule" action="index" />
 						<f:be.menus.actionMenuItem label="Domain Modelling" controller="BuilderModule" action="domainmodelling"/>
 					</f:be.menus.actionMenu>
 				</div>
-				<div class="right">
-					<span class="logo">Extension Builder</span>
-				</div>
 			</div>
-			<div class="typo3-docheader-buttons">
-				<div class="left">
-					<f:render section="iconButtons" />
+			<div class="module-docheader-bar module-docheader-bar-buttons t3js-module-docheader-bar t3js-module-docheader-bar-buttons">
+				<div class="module-docheader-bar-column-left">
+					<div class="btn-toolbar">
+						<a class="btn btn-default btn-sm" href="#" id="WiringEditor-loadButton-button" title="Open extension">
+							<core:icon identifier="actions-system-list-open" size="small" />
+						</a>
+						<a href="#" class="btn btn-default btn-sm" title="New extension" id="WiringEditor-newButton-button">
+							<core:icon identifier="actions-document-new" size="small" />
+						</a>
+						<a href="#" class="btn btn-default btn-sm" title="Save extension" id="WiringEditor-saveButton-button">
+							<core:icon identifier="actions-document-save" size="small" />
+						</a>
+					</div>
 				</div>
-				<div class="right">
-					<a id="toggleAdvancedOptions" href="#"  accesskey="a">
-						<img src="{settings.publicResourcesPath}Icons/advanced_options.png" width="16" height="16" title="Advanced options" class="absmiddle" alt="Advanced options">
-												<span class="simpleMode">Show</span><span class="advancedMode">Hide</span> <span class="access-key">a</span>dvanced options.</a>
-					<a id="opennewwindow" href="#" target="_blank" accesskey="n">
-							<img src="{settings.publicResourcesPath}Icons/open_in_new_window.gif" width="16" height="16" title="Open in new window" class="absmiddle" alt="Open in new window">
-								Open in <span class="access-key">n</span>ew window.</a>
-					<script type="text/javascript">/*<![CDATA[*/if (window.top.location.href === window.location.href) { document.getElementById("opennewwindow").style.display = "none"; }/*]]>*/</script>
+				<div class="module-docheader-bar-column-right">
+					<a id="toggleAdvancedOptions" href="#" class="btn btn-default btn-sm" accesskey="a" title="Show advanced options" >
+						<core:icon identifier="actions-document" size="small" />
+						<span class="simpleMode">Show</span><span class="advancedMode">Hide</span> <strong>a</strong>dvanced options.
+					</a>
+					<a class="btn btn-default btn-sm" id="opennewwindow" href="#" target="_blank" accesskey="n" title="Open in new window">
+						<core:icon identifier="actions-window-open" size="small" /></a>
 					<f:be.buttons.shortcut />
 				</div>
 			</div>
 		</div>
-		<div id="typo3-docbody">
-			<div id="typo3-inner-docbody">
+		<div class="module-body t3js-module-body {currentAction}">
+			<div id="typo3-inner-docbody" style="min-height: 800px">
 				<f:render section="content" />
 			</div>
 		</div>
