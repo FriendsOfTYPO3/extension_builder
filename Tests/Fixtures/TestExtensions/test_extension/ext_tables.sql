@@ -216,7 +216,7 @@ CREATE TABLE tx_testextension_domain_model_child4 (
 #
 CREATE TABLE tx_testextension_domain_model_child2 (
 
-	main  int(11) unsigned DEFAULT '0' NOT NULL,
+	main int(11) unsigned DEFAULT '0' NOT NULL,
 
 );
 

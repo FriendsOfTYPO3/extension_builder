@@ -34,7 +34,7 @@ class IndentViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
         $lineArray = explode(chr(10), $outputToIndent);
         $indentString = '';
         for ($i = 0; $i < $indentation; $i++) {
-            $indentString .= '	';
+            $indentString .= '    ';
         }
         return implode(chr(10) . $indentString, $lineArray);
     }

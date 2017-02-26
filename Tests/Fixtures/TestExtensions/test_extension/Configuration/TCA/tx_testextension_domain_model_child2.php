@@ -25,7 +25,7 @@ return [
     'types' => [
         '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, date_property1, date_property2, date_property3, date_property4, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
-     'columns' => [
+    'columns' => [
         'sys_language_uid' => [
             'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
@@ -128,7 +128,6 @@ return [
                 'eval' => 'date',
                 'default' => '0000-00-00'
             ],
-
         ],
         'date_property2' => [
             'exclude' => true,
@@ -140,7 +139,6 @@ return [
                 'eval' => 'datetime',
                 'default' => '0000-00-00 00:00:00'
             ],
-
         ],
         'date_property3' => [
             'exclude' => true,
@@ -151,7 +149,6 @@ return [
                 'eval' => 'date',
                 'default' => time()
             ],
-
         ],
         'date_property4' => [
             'exclude' => true,
@@ -162,9 +159,7 @@ return [
                 'eval' => 'datetime',
                 'default' => time()
             ],
-
         ],
-
         'main' => [
             'config' => [
                 'type' => 'passthrough',

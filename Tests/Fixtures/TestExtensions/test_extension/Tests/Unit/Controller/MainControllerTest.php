@@ -33,6 +33,7 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function listActionFetchesAllMainsFromRepositoryAndAssignsThemToView()
     {
+
         $allMains = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -41,7 +42,6 @@ class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             ->setMethods(['findAll'])
             ->disableOriginalConstructor()
             ->getMock();
-
         $mainRepository->expects(self::once())->method('findAll')->will(self::returnValue($allMains));
         $this->inject($this->subject, 'mainRepository', $mainRepository);
 
