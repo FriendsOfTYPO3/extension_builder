@@ -92,7 +92,7 @@ return [
                 'size' => 13,
                 'eval' => 'datetime',
                 'default' => 0,
-            ],
+            ]
         ],
         'endtime' => [
             'exclude' => true,
@@ -105,7 +105,7 @@ return [
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038)
-                ],
+                ]
             ],
         ],</f:if>
         <k:format.indent indentation="1"><f:render partial="TCA/PropertiesDefinition.phpt" arguments="{domainObject:domainObject,settings:settings}"/></k:format.indent><f:for each="{k:listForeignKeyRelations(extension: extension, domainObject: domainObject)}" as="relation">
