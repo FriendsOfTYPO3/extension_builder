@@ -23,5 +23,24 @@ call_user_func(
             ]
         );
 </f:for>
+	// wizards
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
+		'mod <k:curlyBrackets>
+			wizards.newContentElement.wizardItems.plugins <k:curlyBrackets>
+				elements {<f:for each="{extension.plugins}" as="plugin">
+					{plugin.key} <k:curlyBrackets>
+						icon = ' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('{extension.extensionKey}') . 'Resources/Public/Icons/user_plugin_{plugin.key}.svg
+						title = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:tx_{extension.extensionKey}_domain_model_{plugin.key}
+						description = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:tx_{extension.extensionKey}_domain_model_{plugin.key}.description
+						tt_content_defValues <k:curlyBrackets>
+							CType = list
+							list_type = {extension.unprefixedShortExtensionKey}_{plugin.key}
+						</k:curlyBrackets>
+					</k:curlyBrackets></f:for>
+				}
+				show = *
+			</k:curlyBrackets>
+	   </k:curlyBrackets>'
+	);
     }
 );

@@ -31,7 +31,7 @@ call_user_func(
                 ],
                 [
                     'access' => 'user,group',
-                    'icon'   => 'EXT:{extension.extensionKey}/Resources/Public/Icons/icon_mod_{backendModule.key}.svg',
+					'icon'   => 'EXT:{extension.extensionKey}/Resources/Public/Icons/user_mod_{backendModule.key}.svg',
                     'labels' => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_{backendModule.key}.xlf',
                 ]
             );
