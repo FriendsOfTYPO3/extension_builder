@@ -23,24 +23,28 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $name = '';
+
     /**
      * A date which is stored as Native Date
      *
      * @var \DateTime
      */
     protected $dateProperty1 = null;
+
     /**
      * DateTime which is stored as Native DateTime
      *
      * @var \DateTime
      */
     protected $dateProperty2 = null;
+
     /**
      * A date which is stored as Timestamp
      *
      * @var \DateTime
      */
     protected $dateProperty3 = null;
+
     /**
      * DateTime stores as Timestamp
      *

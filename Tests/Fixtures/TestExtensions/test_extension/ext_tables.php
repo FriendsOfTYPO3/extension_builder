@@ -12,6 +12,7 @@ call_user_func(
         );
 
         if (TYPO3_MODE === 'BE') {
+
             \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
                 'FIXTURE.TestExtension',
                 'web', // Make module a submodule of 'web'
@@ -26,6 +27,7 @@ call_user_func(
                     'labels' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_testmodule1.xlf',
                 ]
             );
+
         }
 
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('test_extension', 'Configuration/TypoScript', 'ExtensionBuilder Test Extension');

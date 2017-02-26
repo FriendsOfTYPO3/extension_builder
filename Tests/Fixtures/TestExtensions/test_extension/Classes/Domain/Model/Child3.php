@@ -24,12 +24,14 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @validate NotEmpty
      */
     protected $name = '';
+
     /**
      * password
      *
      * @var string
      */
     protected $password = '';
+
     /**
      * imageProperty
      *
