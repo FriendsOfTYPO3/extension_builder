@@ -138,6 +138,7 @@ class BuilderModuleController extends ActionController
      */
     public function indexAction()
     {
+        $this->view->assign('currentAction', $this->request->getControllerActionName());
         if (!$this->request->hasArgument('action')) {
             $userSettings = $this->getBackendUserAuthentication()->getModuleData('extensionbuilder');
             if ($userSettings['firstTime'] === 0) {
@@ -156,6 +157,7 @@ class BuilderModuleController extends ActionController
      */
     public function domainmodellingAction()
     {
+        $this->view->assign('currentAction', $this->request->getControllerActionName());
         $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', array('firstTime' => 0));
     }
 

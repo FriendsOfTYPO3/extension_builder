@@ -51,9 +51,7 @@
     text-align: center;
 }
 
-.WireIt-Container .expanded {
-	box-shadow: 10px 10px 10px #aaa !important;
-}
+
 
 #toggleAdvancedOptions .advancedMode {
 	display: none;
@@ -77,7 +75,7 @@ div.WireIt-Container{
 div.WireIt-Container div.body{
 	border:1px solid #ccc;
 	position:relative;
-	padding: 10px 3px;
+	padding: 5px 3px;
 }
 
 div.WireIt-Container-focused{
@@ -151,7 +149,7 @@ div#typo3-docbody{
 div#domainModelEditor{
 	height:100%;
 	width:100%;
-	margin-top: 37px;
+	margin-top: 67px;
 	min-height: 900px;
 }
 
@@ -196,13 +194,13 @@ div.WireIt-ImageContainer{
 	background-color:#fff;
 	border:1px solid #CCC;
 	border-top:none;
-	box-shadow:0 4px 5px -4px #000;
 	margin-left:-4px;
 	padding-bottom:6px;
-	padding-left:6px;
+	padding-left:4px;
 	position:absolute;
 	width:220px;
 	z-index:1000;
+	box-shadow: 10px 10px 10px #aaa !important;
 }
 
 .WireIt-Container .advancedSettings.expanded{
@@ -252,7 +250,7 @@ div.extbase-modelTitleEditor{
 	line-height:100%;
 	position:absolute;
 	text-align:center;
-	top:-30px;
+	top:-25px;
 }
 
 div.WireIt-Container-ddhandle span{
@@ -784,6 +782,11 @@ div:hover > .WireIt-Container-closebutton.icon {
 
 .inputEx-Group .relations  .inputEx-ListField-ArrowDown {
 	margin-right: 30px;
+}
+
+.relations > span {
+	/* inputEx artefact? */
+	display: none;
 }
 
 .yui-layout .yui-layout-unit div.yui-layout-hd .collapse {
