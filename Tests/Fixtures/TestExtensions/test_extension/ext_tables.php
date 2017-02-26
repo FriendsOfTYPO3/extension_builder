@@ -22,7 +22,7 @@ call_user_func(
                 ],
                 [
                     'access' => 'user,group',
-                    'icon'   => 'EXT:test_extension/Resources/Public/Icons/icon_mod_testmodule1.svg',
+                    'icon'   => 'EXT:test_extension/Resources/Public/Icons/user_mod_testmodule1.svg',
                     'labels' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_testmodule1.xlf',
                 ]
             );

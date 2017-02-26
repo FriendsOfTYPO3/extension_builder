@@ -328,11 +328,6 @@ class FileGenerator
                         $this->languageDirectory . 'locallang_' . $backendModule->getKey() . '.xlf',
                         $fileContents
                     );
-                    $this->upload_copy_move(
-                        ExtensionManagementUtility::extPath('extension_builder')
-                        . 'Resources/Private/Icons/user_extension.svg',
-                        $this->iconsDirectory . 'icon_mod_' . $backendModule->getKey() . '.svg'
-                    );
                 }
             }
             foreach ($this->extension->getDomainObjects() as $domainObject) {
@@ -628,6 +623,18 @@ class FileGenerator
                 $this->upload_copy_move(
                     ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/Icons/relation.gif',
                     $this->iconsDirectory . 'relation.gif'
+                );
+            }
+            foreach ($this->extension->getBackendModules() as $backendModule) {
+                $this->upload_copy_move(
+                    $this->codeTemplateRootPath. 'Resources/Public/Icons/user_extension.svg',
+                    $this->iconsDirectory . 'user_mod_' . $backendModule->getKey() . '.svg'
+                );
+            }
+            foreach ($this->extension->getPlugins() as $plugin) {
+                $this->upload_copy_move(
+                    $this->codeTemplateRootPath. 'Resources/Public/Icons/user_extension.svg',
+                    $this->iconsDirectory . 'user_plugin_' . $plugin->getKey() . '.svg'
                 );
             }
         } catch (\Exception $e) {
