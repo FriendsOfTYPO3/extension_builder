@@ -13,5 +13,5 @@ Known Problems
 
 There is an issue with the modeler if gridelements is installed.
 
-Please report bugs in the forge bug tracker:
-`bug tracker <http://forge.typo3.org/projects/extension-extension_builder/issues>`_
+Please report bugs in github:
+`ExtensionBuilder Github <https://github.com/FriendsOfTYPO3/extension_builder/issues>`_

@@ -11,7 +11,7 @@ can alter data, as explained in :ref:`user-manual`.
 
 Read these online resources before publishing:
 
-* `Extbase FLOW3 Security Cookbook <http://forge.typo3.org/projects/typo3v4-mvc/wiki/Extbase__FLOW3_Security_Cookbook>`_
+* `Extbase and Fluid Guide <https://docs.typo3.org/typo3cms/ExtbaseGuide/Index.html>`_
 *  :ref:`TYPO3 Security Guide <t3security:types-of-security-threats>`
 
 Documentation
