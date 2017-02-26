@@ -1,0 +1,859 @@
+//colors
+$color_storm_dust_approx: #666;
+$color_mountain_mist_approx: #999;
+$white: #fff;
+$color_celeste_approx: #ccc;
+$color_silver_chalice_approx: #aaa;
+$color_mine_shaft_approx: #333;
+$color_buttercup_approx: #f1a21b;
+$color_milano_red_approx: #c00e0c;
+$red: red;
+$color_gallery_approx: #eee;
+$web_orange: orange;
+$color_chicago_approx: #585858;
+$color_pink_swan_approx: #bbb;
+
+//urls
+$url_0: url(background_pixel.png);
+
+//@extend-elements
+//original selectors
+//div.relationGroup textarea, div.propertyGroup textarea, div.propertyGroup input[type=text], div.relationGroup input[type=text], div.propertyGroup select
+%extend_1 {
+	border: 1px solid $white;
+	color: $color_storm_dust_approx;
+	cursor: pointer;
+}
+
+.module-body {
+	&.index {
+		#typo3-inner-docbody {
+			min-height: 900px;
+			padding: 0 !important;
+			position: relative !important;
+		}
+		a {
+			color: $color_storm_dust_approx;
+			font-weight: 700;
+		}
+	}
+	&.domainmodelling #typo3-inner-docbody {
+		padding: 0 !important;
+	}
+}
+
+.yui-layout-unit-left {
+	background-color: $color_gallery_approx;
+	.inputEx-ListField-childContainer div {
+		border-bottom: 1px solid $color_mountain_mist_approx;
+		padding-bottom: 5px;
+		div {
+			border-bottom: none;
+			padding-bottom: 0;
+		}
+		&.mainGroup {
+			border-bottom: 2px solid $color_mountain_mist_approx;
+		}
+		&.inputEx-description {
+			border-bottom: 1px solid $web_orange;
+			padding-bottom: 8px;
+		}
+	}
+	.checkBoxFieldWrapper div.inputEx-description {
+		margin-left: -20px;
+		margin-top: 15px;
+	}
+}
+
+.yui-panel {
+	text-align: center;
+}
+
+.WireIt-Container {
+	.expanded {
+		background-color: $white;
+		border: 1px solid $color_celeste_approx;
+		border-top: none;
+		//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+		box-shadow: 10px 10px 10px $color_silver_chalice_approx !important;
+		margin-left: -4px;
+		padding-bottom: 6px;
+		padding-left: 6px;
+		position: absolute;
+		width: 220px;
+		z-index: 1000;
+	}
+	.advancedSettings.expanded {
+		margin-left: -8px;
+	}
+}
+
+div {
+	&.WireIt-Container {
+		//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+		box-shadow: 6px 6px 10px $color_silver_chalice_approx;
+		filter: alpha(opacity=80);
+		font-size: 8pt;
+		opacity: 0.8;
+		position: absolute;
+		width: 220px;
+		z-index: 5;
+		div.body {
+			border: 1px solid $color_celeste_approx;
+			padding: 10px 3px;
+			position: relative;
+		}
+	}
+	&.WireIt-Container-focused {
+		//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+		box-shadow: 10px 10px 10px $color_silver_chalice_approx !important;
+		filter: alpha(opacity=100);
+		opacity: 1;
+		z-index: 6;
+	}
+	&.WireIt-Layer {
+		background-image: $url_0;
+	}
+	&#typo3-docbody {
+		height: 100%;
+		padding: 0;
+	}
+	&#domainModelEditor {
+		height: 100%;
+		margin-top: 65px;
+		width: 100%;
+	}
+	&.WireIt-Container-ddhandle {
+		background-color: $color_celeste_approx;
+		border: 1px solid $color_celeste_approx;
+		color: $white;
+		cursor: move;
+		font-size: 10pt;
+		font-weight: 700;
+		height: 25px;
+		line-height: 150%;
+		padding-top: 0;
+		text-align: center;
+		width: auto;
+		span {
+			display: none;
+		}
+	}
+	&.WireIt-InputExTerminal {
+		float: left;
+		height: 21px;
+		position: absolute;
+		top: -20px;
+		width: 21px;
+	}
+	&.WireIt-ImageContainer {
+		width: auto;
+	}
+	&.extbase-modelTitleEditor {
+		color: $color_mine_shaft_approx;
+		cursor: move;
+		font-size: 10pt;
+		font-weight: 700;
+		left: 30px;
+		line-height: 100%;
+		position: absolute;
+		text-align: center;
+		top: -32px;
+	}
+	&#moduleProxy {
+		padding-left: 0;
+		white-space: nowrap;
+	}
+	&.propertyGroup {
+		border: none;
+		padding: 1px 6px 0;
+		width: 149px;
+		textarea {
+			@extend %extend_1;
+			width: 100%;
+			&:focus {
+				font-weight: 400;
+			}
+		}
+		input[type=text] {
+			@extend %extend_1;
+			width: 100%;
+			font-weight: 700;
+			&:focus {
+				font-weight: 400;
+			}
+		}
+		select {
+			@extend %extend_1;
+			width: 100%;
+			&:focus {
+				border: 1px solid $color_storm_dust_approx;
+			}
+		}
+		.inputEx-invalid {
+			textarea {
+				border: 1px solid $color_milano_red_approx;
+				font-weight: 400;
+			}
+			input[type=text] {
+				border: 1px solid $color_milano_red_approx;
+				font-weight: 400;
+			}
+			+ .selectFieldWrapper select {
+				border: 1px solid $color_storm_dust_approx;
+			}
+		}
+		div {
+			&.inputEx-Field {
+				float: none;
+			}
+			&.inputEx-valid > div.inputEx-label label.helpAvailable {
+				position: absolute;
+				top: -4px;
+			}
+			&.inputEx-empty > div.inputEx-label label.helpAvailable {
+				position: absolute;
+				top: -4px;
+			}
+			&.textfieldWrapper div.inputEx-Field {
+				float: none;
+			}
+		}
+		.inputEx-Field.inputEx-CheckBox {
+			float: left;
+			width: 20%;
+			input {
+				float: right;
+			}
+		}
+		.inputEx-Expanded textarea {
+			font-weight: 400;
+		}
+		.textfieldWrapper.small input[type=text] {
+			width: 40px;
+		}
+	}
+	&.relationGroup {
+		border: none;
+		padding: 1px 6px 0;
+		padding: 0;
+		width: 200px;
+		.textfieldWrapper {
+			margin-left: 10px;
+			margin-right: 45px;
+		}
+		div {
+			&.advancedSettings {
+				.textfieldWrapper {
+					margin-left: 0;
+				}
+				div.inputEx-Field {
+					float: none;
+				}
+			}
+			&.inputEx-label {
+				height: 17px;
+				margin: 0;
+				text-align: right;
+			}
+			&.inputEx-valid > div.inputEx-label label.helpAvailable {
+				position: absolute;
+				top: -4px;
+			}
+			&.inputEx-empty > div.inputEx-label label.helpAvailable {
+				position: absolute;
+				top: -4px;
+			}
+		}
+		.advancedSettings {
+			select {
+				margin: 4px 0;
+			}
+			&.inputEx-valid {
+				width: 220px;
+			}
+			.textfieldWrapper {
+				margin-right: 5px;
+			}
+			input[type=text] {
+				margin-left: 0;
+				width: 100%;
+			}
+			.inputEx-Field {
+				width: 90%;
+				&.inputEx-CheckBox {
+					float: left;
+					input {
+						float: right;
+					}
+				}
+			}
+			div.inputEx-label {
+				text-align: left;
+			}
+		}
+		textarea {
+			@extend %extend_1;
+			width: 100%;
+		}
+		input[type=text] {
+			@extend %extend_1;
+			margin-left: 30px;
+			width: 120px;
+			font-weight: 700;
+			&:focus {
+				font-weight: 400;
+			}
+		}
+		.inputEx-invalid {
+			textarea {
+				border: 1px solid $color_milano_red_approx;
+				font-weight: 400;
+			}
+			input[type=text] {
+				border: 1px solid $color_milano_red_approx;
+				font-weight: 400;
+			}
+		}
+		select:focus {
+			border: 1px solid $color_storm_dust_approx;
+		}
+		.inputEx-Expanded select {
+			border: 1px solid $color_storm_dust_approx;
+		}
+		.advancedMode.textfieldWrapper {
+			margin-right: 5px;
+		}
+	}
+	&.inputEx-label {
+		display: block;
+		margin-bottom: 3px;
+		margin-right: 2px;
+		padding: 0 17px 0 0;
+		text-align: left;
+		label {
+			line-height: 20px;
+			min-height: 20px;
+		}
+	}
+	&.objectSettings {
+		.inputEx-StringField-wrapper {
+			width: 190px;
+		}
+		.textfieldWrapper {
+			input[type=text] {
+				width: 90%;
+			}
+			textarea {
+				width: 90%;
+			}
+		}
+		.inputEx-Field.inputEx-CheckBox {
+			float: left;
+			input {
+				float: right;
+			}
+		}
+	}
+	&#wireEditorMessageBox {
+		min-width: 200px;
+		padding: 0 15px 15px;
+		.error {
+			color: $red;
+			font-weight: 700;
+		}
+	}
+	&.inputEx-description {
+		background-color: $color_gallery_approx;
+		border: 1px solid $web_orange;
+		//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+		box-shadow: -10px 10px 8px $color_mountain_mist_approx;
+		display: none;
+		font-size: 9pt;
+		margin-left: 10px;
+		margin-top: -20px;
+		min-width: 120px;
+		padding: 8px;
+		position: absolute;
+		z-index: 10000;
+	}
+	&#propertiesForm {
+		margin-bottom: 100px;
+		div {
+			&.mainGroup {
+				border-bottom: 2px solid $color_mountain_mist_approx;
+				clear: left;
+				padding-bottom: 10px;
+				div.checkBoxFieldWrapper div.inputEx-label {
+					width: 165px;
+				}
+			}
+			&.smallBottomBorder {
+				border-bottom: 1px solid $color_mountain_mist_approx;
+				margin-bottom: 5px;
+			}
+		}
+		fieldset {
+			padding-top: 10px;
+		}
+	}
+	&.hiddenField {
+		display: none;
+	}
+	&.terminalFieldWrap {
+		display: none;
+	}
+	&.advancedSettings legend {
+		color: $color_celeste_approx;
+		margin-left: 20px;
+		margin-top: -19px;
+		position: absolute;
+		z-index: 500;
+	}
+	&.inputEx-Group fieldset {
+		&.inputEx-Collapsed legend {
+			&:hover div.inputEx-Group-collapseImg {
+				background-position: -8px -400px;
+			}
+			div.inputEx-Group-collapseImg {
+				background-position: -8px -320px;
+			}
+		}
+		&.inputEx-Expanded legend {
+			&:hover div.inputEx-Group-collapseImg {
+				background-position: -8px -81px;
+			}
+			div.inputEx-Group-collapseImg {
+				background-position: -8px 0;
+			}
+		}
+	}
+	&.Bubble div.body {
+		cursor: move;
+		height: 45px;
+		opacity: 0.9;
+		width: 70px;
+	}
+	&.inputEx-InPlaceEdit-visu:hover {
+		background-color: transparent;
+	}
+	&.mainGroup .inputEx-Field.inputEx-CheckBox {
+		width: 12%;
+		input {
+			float: right;
+		}
+	}
+	&.actionGroup .inputEx-ListField {
+		width: 98%;
+	}
+	&.inputEx-List-link.deleteButton {
+		cursor: pointer;
+		float: left;
+		position: absolute;
+		right: 0;
+	}
+	&.WiringEditor-module-New div.mainGroup {
+		border-bottom: 1px solid $color_mountain_mist_approx;
+		margin-bottom: 10px;
+		padding-bottom: 10px;
+	}
+	&.positionGroup div.inputEx-fieldWrapper {
+		margin-bottom: 2px;
+	}
+	&:hover > {
+		.inputEx-ListField-Arrow {
+			display: inline-block;
+		}
+		.WireIt-Container-closebutton {
+			&.t3-icon-edit-delete {
+				display: inline-block;
+			}
+			&.icon {
+				cursor: pointer;
+				display: block;
+				position: absolute;
+				right: 5px;
+				top: 5px;
+			}
+		}
+		.deleteButton {
+			display: inline-block;
+		}
+	}
+}
+
+#modelingLayer {
+	height: 100%;
+}
+
+#domainModelEditor {
+	legend {
+		font-size: 11px;
+	}
+	.collapse {
+		display: block;
+		visibility: visible;
+	}
+	.t3-icon {
+		font-size: 1px;
+	}
+	&.showAdvancedOptions {
+		fieldset {
+			&.inputEx-Collapsed div.inputEx-fieldWrapper.advancedMode {
+				display: none;
+			}
+			&.File .inputEx-fieldWrapper.dependant.fileOnly.advancedMode {
+				display: block;
+			}
+			&.Image .inputEx-fieldWrapper.dependant.imageOnly.advancedMode {
+				display: block;
+			}
+			&.String .inputEx-fieldWrapper.dependant.stringOnly.advancedMode {
+				display: block;
+			}
+		}
+		.inputEx-fieldWrapper.advancedMode {
+			display: block;
+		}
+	}
+	.inputEx-fieldWrapper {
+		&.advancedMode {
+			display: none;
+		}
+		&.dependant {
+			display: none;
+			&.advancedMode {
+				display: none;
+			}
+		}
+	}
+	.relationGroup fieldset {
+		&.manyToMany .advancedSettings .inputEx-Expanded .dependant.renderType {
+			display: block;
+		}
+		&.zeroToMany .advancedSettings .inputEx-Expanded .dependant.renderType {
+			display: block;
+		}
+	}
+}
+
+#moduleBar {
+	cursor: move;
+	padding: 3px;
+	position: absolute;
+	width: 160px;
+	z-index: 10;
+	.WiringEditor-module span {
+		font-size: 13px;
+		position: relative;
+		top: 0;
+	}
+}
+
+.WiringEditor-module {
+	background-color: $color_celeste_approx;
+	color: $color_mine_shaft_approx;
+	cursor: move;
+	font-size: 10pt;
+	font-weight: 700;
+	height: auto;
+	margin: 5px;
+	padding: 5px;
+	width: 130px;
+	span {
+		position: relative;
+		top: -3px;
+	}
+}
+
+#toolbar {
+	position: static;
+}
+
+.inputEx-InPlaceEdit-editor {
+	input[type="text"] {
+		width: 150px;
+	}
+	.inputEx-InPlaceEdit-OkButton {
+		font-size: 0;
+	}
+}
+
+.relationGroup {
+	width: 210px;
+	.checkBoxFieldWrapper div.inputEx-label {
+		width: 55%;
+	}
+}
+
+.objectSettings {
+	width: 210px;
+	.checkBoxFieldWrapper div.inputEx-label {
+		width: 170px;
+	}
+}
+
+.advancedSettings {
+	width: 210px;
+}
+
+.inputEx-fieldWrapper {
+	clear: both;
+}
+
+.inputEx-Group {
+	.checkBoxFieldWrapper {
+		height: 15px;
+		div.inputEx-label label {
+			white-space: nowrap;
+		}
+	}
+	.inputEx-CheckBox {
+		height: 15px;
+	}
+	.relations {
+		.inputEx-ListField-Arrow {
+			float: right;
+			margin-right: 15px;
+			margin-top: -18px;
+		}
+		.inputEx-ListField-ArrowDown {
+			margin-right: 30px;
+		}
+	}
+	.inputEx-ListField-Arrow {
+		float: left;
+	}
+	.textfieldWrapper div.inputEx-label {
+		width: 100%;
+	}
+}
+
+.textfieldWrapper {
+	.inputEx-label {
+		float: none;
+	}
+	div.inputEx-label {
+		text-align: left;
+	}
+}
+
+.inputEx-StringField-wrapper {
+	input[type=text] {
+		font-size: 9pt;
+	}
+	textarea {
+		font-size: 9pt;
+	}
+}
+
+.showAdvancedOptions {
+	div {
+		&.relationGroup {
+			textarea {
+				font-weight: 400;
+			}
+			input[type=text] {
+				font-weight: 400;
+			}
+			input[type=text][name=relationName] {
+				border: 1px solid $white;
+				font-weight: 700;
+			}
+		}
+		&.propertyGroup {
+			textarea {
+				font-weight: 400;
+			}
+			input[type=text] {
+				font-weight: 400;
+			}
+			select {
+				border: 1px solid $color_storm_dust_approx;
+				margin: 4px 0;
+			}
+		}
+	}
+	.inputEx-ListField-childContainer > div {
+		border-top: 1px solid $color_pink_swan_approx;
+	}
+}
+
+#alertPanel_c {
+	max-width: 400px;
+}
+
+#alertPanelButton {
+	padding: 2px 15px;
+}
+
+.yui-layout-hd {
+	background-color: $color_gallery_approx !important;
+	background-image: none !important;
+	h2 {
+		color: $color_chicago_approx !important;
+	}
+}
+
+.yui-layout {
+	.yui-layout-unit-left .yui-layout-hd {
+		z-index: 10;
+	}
+	.yui-layout-unit div.yui-layout-hd .collapse {
+		background-position-y: -158px !important;
+		height: 18px;
+	}
+}
+
+#wireEditorConfirmMessageBox {
+	strong {
+		font-weight: 700;
+	}
+	ol.warnings {
+		padding-left: 50px;
+		text-align: left;
+		li {
+			list-style: decimal;
+		}
+	}
+}
+
+.t3js-module-docheader-bar-buttons {
+	display: none;
+}
+
+input[disabled] {
+	display: none;
+}
+
+.inputEx-ListField-Arrow {
+	display: none;
+}
+
+.deleteButton {
+	display: none;
+}
+
+#tools-ExtensionBuilderExtensionbuilder .module-docheader-bar {
+	.module-icon {
+		float: right;
+		margin: 5px;
+	}
+	.docheader-funcmenu {
+		float: right;
+	}
+}
+
+.yui-skin-sam .yui-layout {
+	background-color: $color_gallery_approx;
+	.yui-layout-hd {
+		border: none;
+	}
+	.yui-layout-clip {
+		background-color: transparent;
+		border: none;
+	}
+	.yui-layout-unit div.yui-layout-bd {
+		background-color: transparent;
+		border: none;
+	}
+}
+
+.typo3-docheader-buttons .access-key {
+	font-weight: 700;
+	text-decoration: underline;
+}
+
+legend.inputEx-Group-legend {
+	border-bottom: none;
+	color: $color_storm_dust_approx;
+	font-weight: 700;
+	padding-top: 4px;
+	width: auto;
+}
+
+a.inputEx-List-link {
+	color: $color_buttercup_approx;
+	cursor: pointer;
+	margin-left: 10px;
+}
+
+.actionGroup .checkBoxFieldWrapper div.inputEx-label {
+	width: 170px;
+}
+
+.propertyGroup .checkBoxFieldWrapper div.inputEx-label {
+	width: 65%;
+}
+
+.properties .inputEx-ListField {
+	width: 205px;
+}
+
+label.helpAvailable {
+	cursor: help;
+}
+
+.inputEx-Expanded legend {
+	border-bottom: none;
+	padding: 4px 0;
+}
+
+#propertiesForm div.inputEx-Group {
+	input[type=text] {
+		padding: 3px;
+		width: 200px;
+	}
+	textarea {
+		padding: 3px;
+		width: 200px;
+	}
+	div.wideTextfields div.inputEx-label {
+		text-align: left;
+		width: 135px;
+	}
+}
+
+.inputEx-ListField-childContainer > div {
+	border-top: 1px solid $color_celeste_approx;
+	padding-top: 2px;
+}
+
+.positionGroup .helpAvailable:hover div.inputEx-description {
+	display: block;
+	margin-left: 200px;
+}
+
+.inputEx-invalid .inputEx-StringField-wrapper:hover + div.inputEx-description {
+	display: block;
+	margin-left: 200px;
+}
+
+.helpAvailable select:focus + div.inputEx-description {
+	display: block;
+	margin-left: 200px;
+}
+
+.mainGroup .helpAvailable:hover div.inputEx-description {
+	margin-left: 30px;
+}
+
+#toggleAdvancedOptions .advancedMode {
+	display: none;
+}
+
+.inputEx-Field.inputEx-ListField > span {
+	display: none;
+}
+
+.inputEx-CheckBox.helpAvailable:hover div.inputEx-description {
+	display: none;
+}
+
+.WireIt-Container-closebutton.icon {
+	display: none;
+}
+
+.selectFieldWrapper .inputEx-label {
+	float: none;
+}

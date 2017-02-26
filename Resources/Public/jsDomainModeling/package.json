@@ -1,0 +1,17 @@
+{
+  "name": "extension_builder",
+  "version": "8.6.0",
+  "description": "",
+  "dependencies": {
+    "node-sass": "^4.5.0",
+    "nodemon": "^1.11.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build-css": "node-sass --include-path scss extbaseModeling.scss  extbaseModeling.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FriendsOfTYPO3/extension_builder.git"
+  }
+}
