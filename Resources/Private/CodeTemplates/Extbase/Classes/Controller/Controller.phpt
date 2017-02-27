@@ -89,7 +89,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function deleteAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject)
     {
-        $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         $this->domainObjectRepository->remove($domainObject);
         $this->redirect('list');
     }
