@@ -8,7 +8,7 @@ CREATE TABLE tx_testextension_domain_model_main (
 
 	name varchar(255) DEFAULT '' NOT NULL,
 	identifier varchar(255) DEFAULT '' NOT NULL,
-	description text,
+	description text NOT NULL,
 	my_date date DEFAULT '0000-00-00',
 	child1 int(11) unsigned DEFAULT '0',
 	children2 int(11) unsigned DEFAULT '0' NOT NULL,
@@ -37,6 +37,7 @@ CREATE TABLE tx_testextension_domain_model_main (
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
 	l10n_diffsource mediumblob,
+	l10n_state text,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
@@ -54,7 +55,7 @@ CREATE TABLE tx_testextension_domain_model_child1 (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	name varchar(255) DEFAULT '' NOT NULL,
-	flag tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	flag smallint(5) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -77,6 +78,7 @@ CREATE TABLE tx_testextension_domain_model_child1 (
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
 	l10n_diffsource mediumblob,
+	l10n_state text,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
@@ -122,6 +124,7 @@ CREATE TABLE tx_testextension_domain_model_child2 (
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
 	l10n_diffsource mediumblob,
+	l10n_state text,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
@@ -163,6 +166,7 @@ CREATE TABLE tx_testextension_domain_model_child3 (
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
 	l10n_diffsource mediumblob,
+	l10n_state text,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
@@ -203,6 +207,7 @@ CREATE TABLE tx_testextension_domain_model_child4 (
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
 	l10n_diffsource mediumblob,
+	l10n_state text,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
