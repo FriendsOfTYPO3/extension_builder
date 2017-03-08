@@ -37,6 +37,7 @@ CREATE TABLE {domainObject.databaseTableName} (
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
 	l10n_diffsource mediumblob,
+	l10n_state text,
 </f:if>
 	PRIMARY KEY (uid),
 	KEY parent (pid),<f:if condition="{extension.supportVersioning}">
