@@ -1,0 +1,20 @@
+{
+    "name": "fixture/test-extension",
+    "type": "typo3-cms-extension",
+    "description": "This is just a test extension created by the ExtensionBuilder",
+    "author": [
+        {
+            "name": "John Doe",
+            "role": "Developer",
+            "company": "TYPO3"
+        }
+    ],
+    "require": {
+        "typo3/cms-core": "^8.6.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "FIXTURE\\TestExtension\\": "Classes"
+        }
+    }
+}
