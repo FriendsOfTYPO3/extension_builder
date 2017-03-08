@@ -148,6 +148,8 @@ class FileGenerator
             GeneralUtility::mkdir($this->extensionDirectory);
         }
 
+        $this->generateComposerJson();
+
         GeneralUtility::mkdir_deep($this->extensionDirectory, 'Configuration');
 
         $this->configurationDirectory = $this->extensionDirectory . 'Configuration/';
@@ -177,6 +179,7 @@ class FileGenerator
         if ($extension->getGenerateDocumentationTemplate()) {
             $this->generateDocumentationFiles();
         }
+
     }
 
     protected function generateYamlSettingsFile()
@@ -834,6 +837,22 @@ class FileGenerator
                 'domainObject' => $domainObject
             )
         );
+    }
+
+    /**
+     * create a basic composer file (only if none exists)
+     */
+    public function generateComposerJson() {
+        if (!file_exists($this->extensionDirectory . 'package.json')) {
+            $composerInfo = $this->extension->getComposerInfo();
+            $this->writeFile($this->extension->getExtensionDir() . 'package.json', json_encode($composerInfo, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            GeneralUtility::devLog(
+                'Generated package json',
+                'extension_builder',
+                0,
+                array('Content' => $composerInfo)
+            );
+        }
     }
 
     /**

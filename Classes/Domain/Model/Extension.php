@@ -886,4 +886,35 @@ class Extension
     {
         $this->sourceLanguage = $sourceLanguage;
     }
+
+    /**
+     * @return array
+     */
+    public function getComposerInfo() {
+        $info = [
+            'name' => strtolower($this->vendorName) . '/' . strtolower(str_replace('_','-',$this->extensionKey)), 'type' => 'typo3-cms-extension',
+            'description' => $this->description,
+            'author' => [], 'require' => [
+                'typo3/cms-core' => '^8.6.1'
+            ],
+            'autoload' => [
+                'psr-4' => [
+                    $this->getNamespaceName() .  '\\' => 'Classes'
+                ]
+            ]
+        ];
+        foreach ($this->persons as $person) {
+            $author = [
+                'name' => $person->getName()
+            ];
+            if ($person->getRole() !== '') {
+                $author['role'] = $person->getRole();
+            }
+            if ($person->getCompany() !== '') {
+                $author['company'] = $person->getCompany();
+            }
+            $info['author'][] = $author;
+        }
+        return $info;
+    }
 }
