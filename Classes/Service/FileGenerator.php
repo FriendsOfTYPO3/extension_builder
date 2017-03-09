@@ -843,11 +843,11 @@ class FileGenerator
      * create a basic composer file (only if none exists)
      */
     public function generateComposerJson() {
-        if (!file_exists($this->extensionDirectory . 'package.json')) {
+        if (!file_exists($this->extensionDirectory . 'composer.json')) {
             $composerInfo = $this->extension->getComposerInfo();
-            $this->writeFile($this->extension->getExtensionDir() . 'package.json', json_encode($composerInfo, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            $this->writeFile($this->extension->getExtensionDir() . 'composer.json', json_encode($composerInfo, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
             GeneralUtility::devLog(
-                'Generated package json',
+                'Generated composer json',
                 'extension_builder',
                 0,
                 array('Content' => $composerInfo)
