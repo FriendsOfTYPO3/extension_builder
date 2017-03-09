@@ -1,95 +1,14 @@
-[BUGFIX] Required has no effects for files
-Resolves: #71668
-FollowUp 71028 use fieldName as argument
-[Bugfix] use fieldName as argument
-Resolves #71028
-[BUGFIX] Create overrides directory if existing models are extended
-Resolves: #71611
-[BUGFIX] Prevent error on existing files without namespace
-[BUGFIX] Add 'foreign_sortby' for relations to records with sorting
-If 'foreign_sortby' is set related records are sorted correctly
-upon fetching.
-Resolves: #68694
-[TASK] Use PSR-2
-Resolves: #70313
-[BUGFIX] Repository should default to respect sorting
-If a model has sorting the repository should respect it.
-Set the defaultOrderings-property.
-Resolves: #49579
-[TASK] Add renderType for select-fields
-Resolves: #71344
-[TASK] Remove new action test
-The newAction in controllers is empty and thus
-can't be tested
-[BUGFIX] Fix regex for smd url
-Resolves: #70031
-Make relations sortable
-Resolves: #68689
-[TASK] Add client side validator
-Resolves: #59379
-[FEATURE] Confirm overwrite
-Resolves: #67232
-[TASK] Enable renaming of vendor
-Resolves: #70818
-Add more properties to fixture tests
-Update version to 7.6
-Use correct typoscript key for backend modules
-Resolves: #69954
-[BUGFIX] Use PSR-7-based Routing for Backend AJAX Requests
-In TYPO3 CMS after 7.5.0 with commit
-Introduce PSR-7-based Routing for Backend AJAX Requests
-the way for doing backend AJAX-requests changed.
-Use the TYPO3.settings.ajaxUrls-identifier depending on version.
-Resolves: #70808
-[TASK] Implement traits
-Resolves: #63095
-Remove renderMode attribute for flashMessages
-Resolves: #69465
-Use new vendor name in fixture extension
-Update to version 7.5-dev
-Resolves: #70188
-[BUGFIX] Fix wrong jQuery selectors
-When adding relations in the modeler the selector
-for the uid of the relation was wrong leading to
-wrong wire configuration, when the extension is
-loaded again and to wrong mapping of relation source
-Remove unused Exception translation code
-Use getAccessibleMock instead of getMock($this->buildAccessibleProxy...)
-Make use of PHP 5.5 class name resolution
-Remove obsolete class properties
-Refactor Tests
-[TASK] Remove inject methods
-[TASK] Refactoring to reduce dependencies
-[TASK] Rename boolean and integer type hints
-Resolves: #58230
-[TASK] Use correct RTE configuration
-Resolves: #69603
-[TASK] Add a warning if mapping to TYPO3 tables
-Resolves: #69656
-[BUGFIX] Follow up to #69635
-Resolves: #69635
-[BUGFIX] Wrong class name when renaming extension
-Resolves: #69635
-[TASK] Prepend Vendor name in registerPlugin
-Resolves: #69613
-[TASK] Refactor tests and add configuration for TravisCI
-Use special composer configuration to enable functional tests
-in a local -Build folder
-Tests will be reorganized since most unit tests are in fact
-functional tests since they depend on objects which are generated
-by the ExtensionBuilder
-Resolves: #69615
-[TASK] Update documentation template
-[FEATURE] Enable optional generation of documentation-template
-Resolves: #64502
-[TASK] Use array for template rootpaths
-Fix: #66306
-[TASK] use correct registerAjaxHandler
-[TASK] Implement 7.4 compatibility
-Fixes: #69444
-[BUGFIX] Removed attribute for be.container in CMS 7.4
-[TASK] Typoscript configuration per plugin and per module
-!! Can be a breaking change, since typoscript configuration
-is based on extkey_pluginkey now.
-Resolves: #62105
-git log 2e03533e..HEAD --pretty=format:"%s%n%b%n" | grep -v "^$" | grep -v "Tested-by\|Reviewed-by\|Change-Id\|Reviewed-on\|Release" > ChangeLog
+SVG Icon for backend modules and plugins
+Add svg icon
+Update Spyc parser
+Use icon API in backend
+Add label for checkboxes in TCA
+Add cascade remove to file properties
+Use new 'special' => 'languages' for sys_language
+Adapt TCA settings
+Reformat code as PSR-2
+Make renderTypes configurable
+Replace license header
+Take server port into account
+Remove deprecated code
+Make templates PSR2 and PHP5.5+ compatible
