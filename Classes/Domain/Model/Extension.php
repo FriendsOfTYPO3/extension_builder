@@ -128,13 +128,13 @@ class Extension
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\Plugin[]
      */
-    private $plugins;
+    private $plugins = array();
     /**
      * backend modules
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\BackendModule[]
      */
-    private $backendModules;
+    private $backendModules = array();
     /**
      * was the extension renamed?
      * @var bool
