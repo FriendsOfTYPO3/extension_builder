@@ -126,13 +126,13 @@ class Extension
     /**
      * plugins
      *
-     * @var \EBT\ExtensionBuilder\Domain\Model\Plugin[]
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\Plugin>
      */
     private $plugins;
     /**
      * backend modules
      *
-     * @var \EBT\ExtensionBuilder\Domain\Model\BackendModule[]
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\BackendModule>
      */
     private $backendModules;
     /**
