@@ -561,10 +561,10 @@ class FileGenerator
 
             // Generate Domain Templates
             try {
-                if ($this->extension->getPlugins()) {
+                if ($this->extension->hasPlugins()) {
                     $this->generateTemplateFiles();
                 }
-                if ($this->extension->getBackendModules()) {
+                if ($this->extension->hasBackendModules()) {
                     $this->generateTemplateFiles('Backend/');
                 }
             } catch (\Exception $e) {
@@ -628,17 +628,21 @@ class FileGenerator
                     $this->iconsDirectory . 'relation.gif'
                 );
             }
-            foreach ($this->extension->getBackendModules() as $backendModule) {
-                $this->upload_copy_move(
-                    $this->codeTemplateRootPath. 'Resources/Public/Icons/user_extension.svg',
-                    $this->iconsDirectory . 'user_mod_' . $backendModule->getKey() . '.svg'
-                );
+            if ($this->extension->hasBackendModules()) {
+                foreach ($this->extension->getBackendModules() as $backendModule) {
+                    $this->upload_copy_move(
+                        $this->codeTemplateRootPath . 'Resources/Public/Icons/user_extension.svg',
+                        $this->iconsDirectory . 'user_mod_' . $backendModule->getKey() . '.svg'
+                    );
+                }
             }
-            foreach ($this->extension->getPlugins() as $plugin) {
-                $this->upload_copy_move(
-                    $this->codeTemplateRootPath. 'Resources/Public/Icons/user_extension.svg',
-                    $this->iconsDirectory . 'user_plugin_' . $plugin->getKey() . '.svg'
-                );
+            if ($this->extension->hasPlugins()) {
+                foreach ($this->extension->getPlugins() as $plugin) {
+                    $this->upload_copy_move(
+                        $this->codeTemplateRootPath . 'Resources/Public/Icons/user_extension.svg',
+                        $this->iconsDirectory . 'user_plugin_' . $plugin->getKey() . '.svg'
+                    );
+                }
             }
         } catch (\Exception $e) {
             throw new \Exception('Could not create public resources folder, error: ' . $e->getMessage());
