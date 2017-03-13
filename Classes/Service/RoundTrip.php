@@ -14,7 +14,7 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
-use EBT\ExtensionBuilder\Configuration\ConfigurationManager;
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use EBT\ExtensionBuilder\Utility\Inflector;
@@ -74,7 +74,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected $parserService = null;
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
+     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      * @inject
      *
      */
@@ -130,11 +130,11 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
         if (file_exists($this->previousExtensionDirectory . 'kickstarter.json')) {
             rename(
                 $this->previousExtensionDirectory . 'kickstarter.json',
-                $this->previousExtensionDirectory . ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE
+                $this->previousExtensionDirectory . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE
             );
         }
 
-        if (file_exists($this->previousExtensionDirectory . ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE)) {
+        if (file_exists($this->previousExtensionDirectory . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE)) {
             $extensionSchemaBuilder = GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Service\\ExtensionSchemaBuilder');
             $jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey);
             GeneralUtility::devLog(
@@ -1015,7 +1015,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
                 }
             }
             if (file_exists($extension->getExtensionDir() . 'Configuration/TCA/' . $domainObject->getName() . '.php')) {
-                $extensionConfigurationJson = \EBT\ExtensionBuilder\Configuration\ConfigurationManager::getExtensionBuilderJson($extension->getExtensionKey());
+                $extensionConfigurationJson = \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager::getExtensionBuilderJson($extension->getExtensionKey());
                 if (floatval($extensionConfigurationJson['log']['extension_builder_version']) <= 6.2) {
                     self::moveAdditionalTcaToOverrideFile($domainObject);
                 }

@@ -102,7 +102,7 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
         $this->extension->setSettings($settings);
 
         // get instances to inject in Mocks
-        $configurationManager = $this->objectManager->get(\EBT\ExtensionBuilder\Configuration\ConfigurationManager::class);
+        $configurationManager = $this->objectManager->get(\EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager::class);
 
         $this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
         $this->printerService = $this->objectManager->get(\EBT\ExtensionBuilder\Service\Printer::class);
