@@ -10,7 +10,7 @@
  * writing. "version" and "dependencies" must not be touched!
  ***************************************************************/
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
     'title' => 'Extension Builder',
     'description' => 'The Extension Builder helps you build and manage your Extbase based TYPO3 extensions.',
     'category' => 'module',
@@ -19,17 +19,12 @@ $EM_CONF[$_EXTKEY] = array(
     'state' => 'beta',
     'uploadfolder' => 1,
     'createDirs' => 'uploads/tx_extensionbuilder/backups',
-    'clearCacheOnLoad' => 0,
     'version' => '8.6.0',
-    'constraints' => array(
-        'depends' => array(
-            'php' => '^7.0',
-            'typo3' => '8.6.0-8.6.99'
-        ),
-        'conflicts' => array(
-        ),
-        'suggests' => array(
-            'phpunit' => '',
-        ),
-    ),
-);
+    'constraints' => [
+        'depends' => [
+            'typo3' => '8.6.0-8.7.99'
+        ],
+        'conflicts' => [],
+        'suggests' => []
+    ],
+];
