@@ -23,7 +23,6 @@ cache:
 
 before_install:
   - composer self-update
-  - composer --version
 
 before_script:
   - composer require typo3/cms=$TYPO3_VERSION
@@ -35,10 +34,6 @@ script:
   - >
     echo;
     echo "Running unit tests";
-    export typo3DatabaseName="typo3";
-    export typo3DatabaseHost="localhost";
-    export typo3DatabaseUsername="root";
-    export typo3DatabasePassword="";
     .Build/bin/phpunit --colors  -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml Tests/Unit/
 
   - >
@@ -48,4 +43,9 @@ script:
 
   - >
     echo;
+    echo "Running functional tests";
+    export typo3DatabaseName="typo3";
+    export typo3DatabaseHost="localhost";
+    export typo3DatabaseUsername="root";
+    export typo3DatabasePassword="";
     find 'Tests/Functional' -wholename '*Test.php' | parallel --gnu 'echo; echo "Running functional test suite {}"; .Build/bin/phpunit --colors  -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/FunctionalTests.xml {}'
