@@ -20,15 +20,15 @@ namespace EBT\ExtensionBuilder\Domain\Repository;
 class ExtensionRepository implements \TYPO3\CMS\Core\SingletonInterface
 {
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
+     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      */
     protected $configurationManager = null;
 
     /**
-     * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager
+     * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
      * @return void
      */
-    public function injectConfigurationManager(\EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager)
+    public function injectExtensionBuilderConfigurationManager(\EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager)
     {
         $this->configurationManager = $configurationManager;
     }
@@ -75,6 +75,6 @@ class ExtensionRepository implements \TYPO3\CMS\Core\SingletonInterface
         if (defined('JSON_PRETTY_PRINT')) {
             $encodeOptions |= JSON_PRETTY_PRINT;
         }
-        \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($extension->getExtensionDir() . \EBT\ExtensionBuilder\Configuration\ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE, json_encode($extensionBuildConfiguration, $encodeOptions));
+        \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($extension->getExtensionDir() . \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE, json_encode($extensionBuildConfiguration, $encodeOptions));
     }
 }

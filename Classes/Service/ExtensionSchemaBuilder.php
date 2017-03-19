@@ -20,15 +20,15 @@ namespace EBT\ExtensionBuilder\Service;
 class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
 {
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
+     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      */
     protected $configurationManager = null;
 
     /**
-     * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager
+     * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
      * @return void
      */
-    public function injectConfigurationManager(\EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager)
+    public function injectExtensionBuilderConfigurationManager(\EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager)
     {
         $this->configurationManager = $configurationManager;
     }
