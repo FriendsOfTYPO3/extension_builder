@@ -55,7 +55,7 @@ class CompatibilityTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
     public function generateExtensionFromVersion3Configuration()
     {
         $this->configurationManager = $this->getAccessibleMock(
-            'EBT\ExtensionBuilder\Configuration\ConfigurationManager',
+            'EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager',
             array('dummy')
         );
         $this->extensionSchemaBuilder = $this->objectManager->get('EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder');

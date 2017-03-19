@@ -24,7 +24,7 @@ class ConfigurationManagerTest extends \EBT\ExtensionBuilder\Tests\BaseFunctiona
     protected function setUp()
     {
         parent::setUp();
-        $this->configurationManager = $this->objectManager->get('EBT\\ExtensionBuilder\\Configuration\\ExtensionBuilderConfigManager');
+        $this->configurationManager = $this->objectManager->get('EBT\\ExtensionBuilder\\Configuration\\ExtensionBuilderConfigurationManager');
     }
 
     /**
