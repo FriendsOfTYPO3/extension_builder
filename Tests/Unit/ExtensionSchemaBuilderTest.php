@@ -33,7 +33,7 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTes
         $this->extensionSchemaBuilder->injectExtensionBuilderConfigurationManager(new \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager());
         /** @var $objectSchemaBuilder \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder */
         $objectSchemaBuilder = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\ObjectSchemaBuilder::class, array('dummy'));
-        $objectSchemaBuilder->injectConfigurationManager(new \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager());
+        $objectSchemaBuilder->injectExtensionBuilderConfigurationManager(new \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager());
         $this->extensionSchemaBuilder->injectObjectSchemaBuilder($objectSchemaBuilder);
         $this->extensionKey = 'dummy';
     }
