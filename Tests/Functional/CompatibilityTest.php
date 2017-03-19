@@ -29,7 +29,7 @@ use org\bovigo\vfs\vfsStream;
 class CompatibilityTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
+     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      */
     protected $configurationManager = null;
     /**
@@ -61,7 +61,7 @@ class CompatibilityTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
         $this->extensionSchemaBuilder = $this->objectManager->get('EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder');
 
         $testExtensionDir = $this->fixturesPath . 'TestExtensions/test_extension/';
-        $jsonFile = $testExtensionDir . \EBT\ExtensionBuilder\Configuration\ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
+        $jsonFile = $testExtensionDir . \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
 
         if (file_exists($jsonFile)) {
             // compatibility adaptions for configurations from older versions

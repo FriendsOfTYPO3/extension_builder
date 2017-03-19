@@ -17,14 +17,14 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
 class ConfigurationManagerTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
+     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      */
     protected $configurationManager;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->configurationManager = $this->objectManager->get('EBT\\ExtensionBuilder\\Configuration\\ConfigurationManager');
+        $this->configurationManager = $this->objectManager->get('EBT\\ExtensionBuilder\\Configuration\\ExtensionBuilderConfigManager');
     }
 
     /**

@@ -14,7 +14,7 @@ namespace EBT\ExtensionBuilder\Domain\Validator;
  * The TYPO3 project - inspiring people to share!
  */
 
-use EBT\ExtensionBuilder\Configuration\ConfigurationManager;
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use EBT\ExtensionBuilder\Service\ValidationService;
@@ -153,7 +153,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
      */
     const ERROR_MAPPING_TO_INCOMPATIBLE_TABLE = 606;
     /**
-     * @var ConfigurationManager
+     * @var ExtensionBuilderConfigurationManager
      */
     protected $configurationManager = null;
     /**
@@ -164,10 +164,10 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
     protected $warningsToIgnore = array();
 
     /**
-     * @param ConfigurationManager $configurationManager
+     * @param ExtensionBuilderConfigurationManager $configurationManager
      * @return void
      */
-    public function injectConfigurationManager(ConfigurationManager $configurationManager)
+    public function injectExtensionBuilderConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
     {
         $this->configurationManager = $configurationManager;
     }
@@ -224,7 +224,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
     {
         if (is_dir($extension->getExtensionDir())) {
             $settingsFile = $extension->getExtensionDir() .
-                ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
+                ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
             if (!file_exists($settingsFile) || $extension->isRenamed()) {
                 $this->validationResult['warnings'][] = new ExtensionException(
                     'Extension directory exists',
