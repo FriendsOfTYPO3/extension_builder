@@ -33,7 +33,7 @@ class RoundTripRenameVendorTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
     {
         parent::setUp();
         $this->configurationManager = $this->getAccessibleMock(
-            'EBT\ExtensionBuilder\Configuration\ConfigurationManager',
+            'EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager',
             array('dummy')
         );
         $this->extensionSchemaBuilder = $this->objectManager->get('EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder');
