@@ -40,7 +40,7 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $printerService = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\Printer::class, array('dummy'));
         $nodeFactory = new \EBT\ExtensionBuilder\Parser\NodeFactory();
         $printerService->_set('nodeFactory', $nodeFactory);
-        $configurationManager = new \EBT\ExtensionBuilder\Configuration\ConfigurationManager();
+        $configurationManager = new \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager();
         $this->classBuilder->_set('parserService', $parserService);
         $this->classBuilder->_set('printerService', $printerService);
         $this->classBuilder->_set('configurationManager', $configurationManager);

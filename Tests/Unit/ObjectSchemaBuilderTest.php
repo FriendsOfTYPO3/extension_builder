@@ -17,7 +17,7 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
 class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
+     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      */
     protected $configurationManager = null;
     /**
@@ -32,9 +32,9 @@ class ObjectSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $concreteConfigurationManager = $this->getAccessibleMock(\TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager::class);
         $typoScriptService = new \TYPO3\CMS\Extbase\Service\TypoScriptService();
         $concreteConfigurationManager->_set('typoScriptService', $typoScriptService);
-        $this->configurationManager = $this->getAccessibleMock(\EBT\ExtensionBuilder\Configuration\ConfigurationManager::class, array('getExtbaseClassConfiguration'));
+        $this->configurationManager = $this->getAccessibleMock(\EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager::class, array('getExtbaseClassConfiguration'));
         $this->configurationManager->_set('concreteConfigurationManager', $concreteConfigurationManager);
-        $this->objectSchemaBuilder->injectConfigurationManager($this->configurationManager);
+        $this->objectSchemaBuilder->injectExtensionBuilderConfigurationManager($this->configurationManager);
     }
 
     /**
