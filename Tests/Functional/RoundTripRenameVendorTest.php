@@ -33,13 +33,13 @@ class RoundTripRenameVendorTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
     {
         parent::setUp();
         $this->configurationManager = $this->getAccessibleMock(
-            'EBT\ExtensionBuilder\Configuration\ConfigurationManager',
+            'EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager',
             array('dummy')
         );
         $this->extensionSchemaBuilder = $this->objectManager->get('EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder');
 
         $testExtensionDir = $this->fixturesPath . 'TestExtensions/test_extension/';
-        $jsonFile = $testExtensionDir . \EBT\ExtensionBuilder\Configuration\ConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
+        $jsonFile = $testExtensionDir . \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
 
         if (file_exists($jsonFile)) {
             // compatibility adaptions for configurations from older versions

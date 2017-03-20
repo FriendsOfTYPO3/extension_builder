@@ -1,7 +1,4 @@
  # global configuration
-config.tx_extbase.objects {
-	TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface.className = EBT\ExtensionBuilder\Configuration\ConfigurationManager
-}
 module.extension_builder {
 	settings{
 		codeTemplateRootPath = EXT:extension_builder/Resources/Private/CodeTemplates/Extbase/

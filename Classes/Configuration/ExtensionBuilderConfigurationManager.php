@@ -25,7 +25,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 /**
  * Load settings from yaml file and from TYPO3_CONF_VARS extConf
  */
-class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
+class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
 {
     /**
      * @var string
