@@ -19,8 +19,8 @@ use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
 use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -35,26 +35,32 @@ class BuilderModuleController extends ActionController
      * @var \EBT\ExtensionBuilder\Service\FileGenerator
      */
     protected $fileGenerator = null;
+
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ConfigurationManager
+     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      */
-    protected $configurationManager = null;
+    protected $extensionBuilderConfigurationManager = null;
+
     /**
      * @var \EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus
      */
     protected $extensionInstallationStatus = null;
+
     /**
      * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
      */
     protected $extensionSchemaBuilder = null;
+
     /**
      * @var \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator
      */
     protected $extensionValidator = null;
+
     /**
      * @var \EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository
      */
     protected $extensionRepository = null;
+
     /**
      * Settings from various sources:
      *
@@ -63,7 +69,7 @@ class BuilderModuleController extends ActionController
      *
      * @var array
      */
-    protected $settings = array();
+    protected $extensionBuilderSettings = [];
 
     /**
      * @param \EBT\ExtensionBuilder\Service\FileGenerator $fileGenerator
@@ -75,13 +81,13 @@ class BuilderModuleController extends ActionController
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Configuration\ConfigurationManager $configurationManager
+     * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
      * @return void
      */
-    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
+    public function injectExtensionBuilderConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
     {
-        $this->configurationManager = $configurationManager;
-        $this->settings = $this->configurationManager->getSettings();
+        $this->extensionBuilderConfigurationManager = $configurationManager;
+        $this->extensionBuilderSettings = $this->extensionBuilderConfigurationManager->getSettings();
     }
 
     /**
@@ -125,7 +131,7 @@ class BuilderModuleController extends ActionController
      */
     public function initializeAction()
     {
-        $this->fileGenerator->setSettings($this->settings);
+        $this->fileGenerator->setSettings($this->extensionBuilderSettings);
     }
 
     /**
@@ -169,8 +175,8 @@ class BuilderModuleController extends ActionController
     public function dispatchRpcAction()
     {
         try {
-            $this->configurationManager->parseRequest();
-            $subAction = $this->configurationManager->getSubActionFromRequest();
+            $this->extensionBuilderConfigurationManager->parseRequest();
+            $subAction = $this->extensionBuilderConfigurationManager->getSubActionFromRequest();
             if (empty($subAction)) {
                 throw new \Exception('No Sub Action!');
             }
@@ -202,7 +208,7 @@ class BuilderModuleController extends ActionController
     protected function rpcActionSave()
     {
         try {
-            $extensionBuildConfiguration = $this->configurationManager->getConfigurationFromModeler();
+            $extensionBuildConfiguration = $this->extensionBuilderConfigurationManager->getConfigurationFromModeler();
             GeneralUtility::devLog('Modeler Configuration', 'extension_builder', 0, $extensionBuildConfiguration);
             $validationConfigurationResult = $this->extensionValidator->validateConfigurationFormat($extensionBuildConfiguration);
             if (!empty($validationConfigurationResult['warnings'])) {
@@ -246,19 +252,19 @@ class BuilderModuleController extends ActionController
         if (!is_dir($extensionDirectory)) {
             GeneralUtility::mkdir($extensionDirectory);
         } else {
-            if ($this->settings['extConf']['backupExtension'] == 1) {
+            if ($this->extensionBuilderSettings['extConf']['backupExtension'] === '1') {
                 try {
-                    RoundTrip::backupExtension($extension, $this->settings['extConf']['backupDir']);
+                    RoundTrip::backupExtension($extension, $this->extensionBuilderSettings['extConf']['backupDir']);
                 } catch (\Exception $e) {
                     throw $e;
                 }
             }
-            $extensionSettings = $this->configurationManager->getExtensionSettings($extension->getExtensionKey());
-            if ($this->settings['extConf']['enableRoundtrip'] == 1) {
+            $extensionSettings = $this->extensionBuilderConfigurationManager->getExtensionSettings($extension->getExtensionKey());
+            if ($this->extensionBuilderSettings['extConf']['enableRoundtrip'] === '1') {
                 if (empty($extensionSettings)) {
                     // no config file in an existing extension!
                     // this would result in a	 total overwrite so we create one and give a warning
-                    $this->configurationManager->createInitialSettingsFile($extension, $this->settings['codeTemplateRootPath']);
+                    $this->extensionBuilderConfigurationManager->createInitialSettingsFile($extension, $this->extensionBuilderSettings['codeTemplateRootPath']);
                     return array('warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the extension builder the first time for this extension. <br />A settings file was generated in <br /><b>typo3conf/ext/" . $extension->getExtensionKey() . '/Configuration/ExtensionBuilder/settings.yaml.</b><br />Configure the overwrite settings, then save again.');
                 }
                 try {
@@ -329,7 +335,7 @@ class BuilderModuleController extends ActionController
             $messagesPerErrorcode[$exception->getCode()][] = nl2br(htmlspecialchars($exception->getMessage())) . ' (Error ' . $exception->getCode() . ')<br /><br />';
         }
         foreach ($messagesPerErrorcode as $errorCode => $messages) {
-            if (!$this->configurationManager->isConfirmed('allow' . $errorCode)) {
+            if (!$this->extensionBuilderConfigurationManager->isConfirmed('allow' . $errorCode)) {
                 if ($errorCode == ExtensionValidator::ERROR_PROPERTY_RESERVED_SQL_WORD) {
                     $confirmMessage = 'SQL reserved names were found for these properties:<br />' .
                         '<ol class="warnings"><li>' . implode('</li><li>', $messages) . '</li></ol>' .
@@ -353,7 +359,7 @@ class BuilderModuleController extends ActionController
      */
     protected function rpcActionPerformDbUpdate()
     {
-        $params = $this->configurationManager->getParamsFromRequest();
+        $params = $this->extensionBuilderConfigurationManager->getParamsFromRequest();
         return $this->extensionInstallationStatus->performDbUpdates($params);
     }
 

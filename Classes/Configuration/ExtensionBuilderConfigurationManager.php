@@ -21,12 +21,12 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /**
  * Load settings from yaml file and from TYPO3_CONF_VARS extConf
  */
-class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
+class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
 {
     /**
      * @var string
@@ -102,7 +102,7 @@ class ConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\Configuratio
     public function getSettings($typoscript = null)
     {
         if ($typoscript == null) {
-            $typoscript = $this->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+            $typoscript = $this->getConfiguration(parent::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         }
         $settings = $typoscript['module.']['extension_builder.']['settings.'];
         if (empty($settings['codeTemplateRootPath'])) {
