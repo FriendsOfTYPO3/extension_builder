@@ -101,7 +101,7 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
     public function getSettings($typoscript = null)
     {
         if ($typoscript == null) {
-            $typoscript = $this->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+            $typoscript = $this->getConfiguration(parent::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         }
         $settings = $typoscript['module.']['extension_builder.']['settings.'];
         if (empty($settings['codeTemplateRootPath'])) {
