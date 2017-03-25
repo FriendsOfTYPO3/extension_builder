@@ -19,16 +19,12 @@ $EM_CONF[$_EXTKEY] = array(
     'state' => 'beta',
     'uploadfolder' => 1,
     'createDirs' => 'uploads/tx_extensionbuilder/backups',
-    'clearCacheOnLoad' => 0,
-    'version' => '7.6.17',
+    'version' => '7.6.18',
     'constraints' => array(
         'depends' => array(
             'typo3' => '7.6.0-7.6.99'
         ),
-        'conflicts' => array(
-        ),
-        'suggests' => array(
-            'phpunit' => '',
-        ),
+        'conflicts' => array(),
+        'suggests' => array(),
     ),
 );
