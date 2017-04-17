@@ -25,6 +25,7 @@ before_install:
 
 before_script:
   - composer require typo3/cms=$TYPO3_VERSION
+  - composer require typo3/testing-framework=~1.0.0
   # Restore composer.json
   - git checkout composer.json
   - export TYPO3_PATH_WEB=$PWD/.Build/Web
