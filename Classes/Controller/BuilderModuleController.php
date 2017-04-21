@@ -163,6 +163,7 @@ class BuilderModuleController extends ActionController
      */
     public function domainmodellingAction()
     {
+        $this->view->assign('settings', $this->extensionBuilderConfigurationManager->getSettings());
         $this->view->assign('currentAction', $this->request->getControllerActionName());
         $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', array('firstTime' => 0));
     }
