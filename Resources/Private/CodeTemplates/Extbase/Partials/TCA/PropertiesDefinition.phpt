@@ -1,4 +1,5 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}
+{escaping off}
 <f:for each="{domainObject.properties}" as="property"><f:format.raw>
     '{property.fieldName}' => [
         'exclude' => <f:if condition="{property.excludeField}"><f:then>true</f:then><f:else>false</f:else></f:if>,
