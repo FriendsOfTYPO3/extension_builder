@@ -145,6 +145,7 @@ class BuilderModuleController extends ActionController
     public function indexAction()
     {
         $this->view->assign('currentAction', $this->request->getControllerActionName());
+        $this->view->assign('settings', $this->extensionBuilderConfigurationManager->getSettings());
         if (!$this->request->hasArgument('action')) {
             $userSettings = $this->getBackendUserAuthentication()->getModuleData('extensionbuilder');
             if ($userSettings['firstTime'] === 0) {
