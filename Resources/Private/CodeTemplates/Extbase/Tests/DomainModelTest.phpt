@@ -35,44 +35,36 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
         self::assertSame(
             0,
             $this->subject->get{property.name -> k:format.uppercaseFirst()}()
-        );
-</f:if><f:if condition="{property.unqualifiedType} == 'float'">
+        );</f:if><f:if condition="{property.unqualifiedType} == 'float'">
         self::assertSame(
             0.0,
             $this->subject->get{property.name -> k:format.uppercaseFirst()}()
-        );
-</f:if><f:if condition="{property.unqualifiedType} == 'string'">
+        );</f:if><f:if condition="{property.unqualifiedType} == 'string'">
         self::assertSame(
             '',
             $this->subject->get{property.name -> k:format.uppercaseFirst()}()
-        );
-</f:if><f:if condition="{property.unqualifiedType} == 'bool'">
+        );</f:if><f:if condition="{property.unqualifiedType} == 'bool'">
         self::assertSame(
             false,
             $this->subject->get{property.name -> k:format.uppercaseFirst()}()
-        );
-</f:if><f:if condition="{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}"><f:then>
+        );</f:if><f:if condition="{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}"><f:then>
         $newObjectStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         self::assertEquals(
             $newObjectStorage,
             $this->subject->get{property.name -> k:format.uppercaseFirst()}()
-        );
-</f:then><f:else><f:if condition="{property.foreignModel}">
+        );</f:then><f:else><f:if condition="{property.foreignModel}">
         self::assertEquals(
             null,
             $this->subject->get{property.name -> k:format.uppercaseFirst()}()
-        );
-</f:if><f:if condition="{k:matchString(match:'DateTime', in:property.unqualifiedType)}">
+        );</f:if><f:if condition="{k:matchString(match:'DateTime', in:property.unqualifiedType)}">
         self::assertEquals(
             null,
             $this->subject->get{property.name -> k:format.uppercaseFirst()}()
-        );
-</f:if><f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}">
+        );</f:if><f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}">
         self::assertEquals(
             null,
             $this->subject->get{property.name -> k:format.uppercaseFirst()}()
-        );
-</f:if></f:else></f:if>
+        );</f:if></f:else></f:if>
     }
 
     /**
@@ -86,16 +78,14 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'Conceived at T3CON10',
             '{property.name}',
             $this->subject
-        );
-</f:if><f:if condition="{property.unqualifiedType}  == 'integer'">
+        );</f:if><f:if condition="{property.unqualifiedType}  == 'integer'">
         $this->subject->set{property.name -> k:format.uppercaseFirst()}(12);
 
         self::assertAttributeEquals(
             12,
             '{property.name}',
             $this->subject
-        );
-</f:if><f:if condition="{property.unqualifiedType} == 'float'">
+        );</f:if><f:if condition="{property.unqualifiedType} == 'float'">
         $this->subject->set{property.name -> k:format.uppercaseFirst()}(3.14159265);
 
         self::assertAttributeEquals(
@@ -104,16 +94,14 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             $this->subject,
             '',
             0.000000001
-        );
-</f:if><f:if condition="{property.unqualifiedType} == 'bool'">
+        );</f:if><f:if condition="{property.unqualifiedType} == 'bool'">
         $this->subject->set{property.name -> k:format.uppercaseFirst()}(true);
 
         self::assertAttributeEquals(
             true,
             '{property.name}',
             $this->subject
-        );
-</f:if><f:if condition="{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}"><f:then>
+        );</f:if><f:if condition="{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}"><f:then>
         ${property.name -> k:singularize()} = new {k:pregReplace(match:'/^.*<(.*)>$/', replace:'\1', subject:property.unqualifiedType)}();
         $objectStorageHoldingExactlyOne{property.name -> k:format.uppercaseFirst()} = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         $objectStorageHoldingExactlyOne{property.name -> k:format.uppercaseFirst()}->attach(${property.name -> k:singularize()});
@@ -123,8 +111,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             $objectStorageHoldingExactlyOne{property.name -> k:format.uppercaseFirst()},
             '{property.name}',
             $this->subject
-        );
-</f:then><f:else><f:if condition="{property.foreignModel}">
+        );</f:then><f:else><f:if condition="{property.foreignModel}">
         ${property.name}Fixture = new {f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"ObjectStorageContaining{property.foreignModelName)}", else:"{property.foreignModel.fullQualifiedClassName}")}();
         $this->subject->set{property.name -> k:format.uppercaseFirst()}(${property.name}Fixture);
 
@@ -132,8 +119,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             ${property.name}Fixture,
             '{property.name}',
             $this->subject
-        );
-</f:if><f:if condition="{k:matchString(match:'DateTime', in:property.unqualifiedType)}">
+        );</f:if><f:if condition="{k:matchString(match:'DateTime', in:property.unqualifiedType)}">
         $dateTimeFixture = new \DateTime();
         $this->subject->set{property.name -> k:format.uppercaseFirst()}($dateTimeFixture);
 
@@ -141,8 +127,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             $dateTimeFixture,
             '{property.name}',
             $this->subject
-        );
-</f:if><f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}">
+        );</f:if><f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}">
         $fileReferenceFixture = new \TYPO3\CMS\Extbase\Domain\Model\FileReference();
         $this->subject->set{property.name -> k:format.uppercaseFirst()}($fileReferenceFixture);
 
@@ -150,8 +135,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             $fileReferenceFixture,
             '{property.name}',
             $this->subject
-        );
-</f:if></f:else></f:if>
+        );</f:if></f:else></f:if>
     }<f:if condition="{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}">
 
     /**
@@ -186,7 +170,6 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $this->inject($this->subject, '{property.name}', ${property.name}ObjectStorageMock);
 
         $this->subject->remove{property.name -> k:singularize() -> k:format.uppercaseFirst()}(${property.name -> k:singularize()});
-
     }</f:if></f:for></f:then><f:else>
     /**
      * @test
