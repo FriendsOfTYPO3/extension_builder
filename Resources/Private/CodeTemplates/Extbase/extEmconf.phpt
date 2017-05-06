@@ -1,5 +1,5 @@
 <?php
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}{escaping off}
 /***************************************************************
  * Extension Manager/Repository config file for ext: "{extension.extensionKey}"
  *

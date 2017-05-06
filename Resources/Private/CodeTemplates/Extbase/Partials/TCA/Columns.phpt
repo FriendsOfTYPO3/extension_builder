@@ -1,4 +1,4 @@
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}{escaping off}
 <f:if condition="{domainObject.properties}">
 $tmp_{domainObject.extension.extensionKey}_columns = [<f:render partial="TCA/PropertiesDefinition.phpt" arguments="{domainObject:domainObject,settings:settings}"/>
 ];
