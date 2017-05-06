@@ -37,12 +37,6 @@ class CompatibilityTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
      */
     protected $extensionSchemaBuilder = null;
 
-    /**
-     * @test
-     */
-    public function checkRequirements()
-    {
-    }
 
     /**
      * This test creates an extension based on a JSON file, generated
@@ -81,8 +75,8 @@ class CompatibilityTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
                 )
             )
         );
-        $newExtensionDir = vfsStream::url('testDir') . '/';
-        $this->extension->setExtensionDir($newExtensionDir . 'test_extension/');
+
+        $this->extension->setExtensionDir('test_extension/');
 
         $this->fileGenerator->build($this->extension);
 

@@ -28,7 +28,7 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTes
     protected function setUp()
     {
         parent::setUp();
-        $this->extension = $this->getMock(\EBT\ExtensionBuilder\Domain\Model\Extension::class, array('getOverWriteSettings'));
+        $this->extension = $this->createMock(\EBT\ExtensionBuilder\Domain\Model\Extension::class, array('getOverWriteSettings'));
         $this->extensionSchemaBuilder = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder::class, array('dummy'));
         $this->extensionSchemaBuilder->injectConfigurationManager(new \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager());
         /** @var $objectSchemaBuilder \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder */
