@@ -32,7 +32,7 @@ use {aliasDeclaration};</f:for></f:if>
      */
     <f:for each="{method.modifierNames}" as="modifierName">{modifierName} </f:for>function {method.name}(<k:method methodObject="{method}"  renderElement="parameter" />)
     <![CDATA[{]]>
-<f:format.raw>{method.body}</f:format.raw>
+{method.body}
     <![CDATA[}]]>
 </f:for>
 }

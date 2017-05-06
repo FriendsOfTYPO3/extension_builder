@@ -1,4 +1,4 @@
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:format.raw>
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}{escaping off}
 <k:switch expression="{property.type}">
 	<k:case value="Image">
 		<f:if condition="{property.zeroToManyRelation}">
@@ -29,6 +29,6 @@
 		</f:if>
 	</k:case>
 	<k:case value="">
-		<f:format.raw><k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets></f:format.raw>
+		<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets>
 	</k:case>
-</k:switch></f:format.raw>
+</k:switch>
