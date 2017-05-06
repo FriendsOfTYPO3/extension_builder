@@ -1,9 +1,12 @@
 
 plugin.tx_testextension_testplugin {
     view {
-        templateRootPaths.0 = {$plugin.tx_testextension_testplugin.view.templateRootPath}
-        partialRootPaths.0 = {$plugin.tx_testextension_testplugin.view.partialRootPath}
-        layoutRootPaths.0 = {$plugin.tx_testextension_testplugin.view.layoutRootPath}
+        templateRootPaths.0 = EXT:test_extension/Resources/Private/Templates/
+        templateRootPaths.1 = {$plugin.tx_testextension_testplugin.view.templateRootPath}
+        partialRootPaths.0 = EXT:test_extension/Resources/Private/Partials/
+        partialRootPaths.1 = {$plugin.tx_testextension_testplugin.view.partialRootPath}
+        layoutRootPaths.0 = EXT:test_extension/Resources/Private/Layouts/
+        layoutRootPaths.1 = {$plugin.tx_testextension_testplugin.view.layoutRootPath}
     }
     persistence {
         storagePid = {$plugin.tx_testextension_testplugin.persistence.storagePid}
@@ -21,6 +24,7 @@ plugin.tx_testextension_testplugin {
     }
 }
 
+# these classes are only used in auto-generated templates
 plugin.tx_testextension._CSS_DEFAULT_STYLE (
     textarea.f3-form-error {
         background-color:#FF9F9F;
@@ -61,8 +65,11 @@ module.tx_testextension_web_testextensiontestmodule1 {
         storagePid = {$module.tx_testextension_testmodule1.persistence.storagePid}
     }
     view {
-        templateRootPaths.0 = {$module.tx_testextension_testmodule1.view.templateRootPath}
-        partialRootPaths.0 = {$module.tx_testextension_testmodule1.view.partialRootPath}
-        layoutRootPaths.0 = {$module.tx_testextension_testmodule1.view.layoutRootPath}
+        templateRootPaths.0 = EXT:test_extension/Resources/Private/Backend/Templates/
+        templateRootPaths.1 = {$module.tx_testextension_testmodule1.view.templateRootPath}
+        partialRootPaths.0 = EXT:test_extension/Resources/Private/Backend/Partials/
+        partialRootPaths.1 = {$module.tx_testextension_testmodule1.view.partialRootPath}
+        layoutRootPaths.0 = EXT:test_extension/Resources/Private/Backend/Layouts/
+        layoutRootPaths.1 = {$module.tx_testextension_testmodule1.view.layoutRootPath}
     }
 }
