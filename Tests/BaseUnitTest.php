@@ -15,9 +15,10 @@ namespace EBT\ExtensionBuilder\Tests;
  */
 
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+abstract class BaseUnitTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
     /**
      * @var bool
@@ -51,22 +52,14 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
         $this->fixturesPath = __DIR__ . '/Fixtures/';
 
-        $testTargetDir = 'testDir';
-        vfsStream::setup($testTargetDir);
-        $dummyExtensionDir = vfsStream::url($testTargetDir) . '/';
-
         $settings = \EBT\ExtensionBuilder\Utility\SpycYAMLParser::YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
 
-        $this->extension = $this->getMock(\EBT\ExtensionBuilder\Domain\Model\Extension::class, array('getExtensionDir'));
+        $this->extension = $this->getMockBuilder(\EBT\ExtensionBuilder\Domain\Model\Extension::class)
+            ->enableProxyingToOriginalMethods()
+            ->getMock();
         $this->extension->setVendorName('EBT');
+
         $this->extension->setExtensionKey('dummy');
-        $this->extension->expects(
-            self::any())
-            ->method('getExtensionDir')
-            ->will(self::returnValue($dummyExtensionDir));
-        if (is_dir($dummyExtensionDir)) {
-            GeneralUtility::mkdir($dummyExtensionDir, true);
-        }
         $this->extension->setSettings($settings);
 
         $this->codeTemplateRootPath = PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
