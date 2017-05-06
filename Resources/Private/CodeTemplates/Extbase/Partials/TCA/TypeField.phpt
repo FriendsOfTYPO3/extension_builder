@@ -1,4 +1,4 @@
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}{escaping off}
 if (!isset($GLOBALS['TCA']['{databaseTableName}']['ctrl']['type'])) {
     if (file_exists($GLOBALS['TCA']['{databaseTableName}']['ctrl']['dynamicConfigFile'])) {
         require_once($GLOBALS['TCA']['{databaseTableName}']['ctrl']['dynamicConfigFile']);
