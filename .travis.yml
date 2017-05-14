@@ -24,7 +24,6 @@ before_install:
   - composer --version
 
 before_script:
-  - echo 'allow_url_include = "1"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - composer require typo3/cms=$TYPO3_VERSION
   - composer require typo3/testing-framework=~1.0.0
   # Restore composer.json
