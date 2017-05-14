@@ -17,7 +17,6 @@ namespace EBT\ExtensionBuilder\Tests;
 use org\bovigo\vfs\vfsStream;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\UnknownClassException;
-use TYPO3\TestingFramework\Core\FileStreamWrapper;
 
 abstract class BaseFunctionalTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
 {
@@ -97,9 +96,6 @@ abstract class BaseFunctionalTest extends \TYPO3\TestingFramework\Core\Functiona
 
         vfsStream::copyFromFileSystem($this->fixturesPath, $fixturesDir, 1024*1024);
 
-        FileStreamWrapper::init(PATH_site);
-        FileStreamWrapper::registerOverlayPath($this->fixturesPath, 'vfs://root/Fixtures');
-
         $yamlParser = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser();
         $settings = $yamlParser->YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
 
@@ -113,6 +109,9 @@ abstract class BaseFunctionalTest extends \TYPO3\TestingFramework\Core\Functiona
             self::any())
             ->method('getExtensionDir')
             ->will(self::returnValue($dummyExtensionDir));
+        if (is_dir($dummyExtensionDir)) {
+           GeneralUtility::mkdir($dummyExtensionDir, true);
+        }
 
         $this->extension->setSettings($settings);
 
@@ -160,7 +159,6 @@ abstract class BaseFunctionalTest extends \TYPO3\TestingFramework\Core\Functiona
         if (!empty($this->extension) && $this->extension->getExtensionKey() != null) {
             GeneralUtility::rmdir($this->extension->getExtensionDir(), true);
         }
-        FileStreamWrapper::destroy();
     }
 
     /**
