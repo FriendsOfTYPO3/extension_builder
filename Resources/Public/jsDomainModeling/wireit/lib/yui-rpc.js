@@ -22,15 +22,12 @@ YAHOO.namespace("rpc");
 		if (lang.isString(smd)) {
 			this.smdUrl = smd;
 			this.fetch(smd, callback);
-		}
-		else if (lang.isObject(smd)) {
+		} else if (lang.isObject(smd)) {
 			this._smd = smd;
 			this.process(callback);
-		}
-		else {
+		} else {
 			throw new Error("smd should be an object or an url");
 		}
-
 	};
 
 
@@ -74,8 +71,7 @@ YAHOO.namespace("rpc");
 									};
 								}, 1000);
 							}
-							opts.failure.call(opts.scope || self,
-											  {error:errorMessage});
+							opts.failure.call(opts.scope || self, {error:errorMessage});
 						}
 					},
 					scope: self
@@ -99,18 +95,6 @@ YAHOO.namespace("rpc");
 					}
 					url = window.location.protocol + '//' + hostname + url;
 				}
-				var urlRegexp = /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*(\.[a-z]{2,5})?(:[0-9]{1,5})?(\/.*)?$/i;
-				if (!url.match(urlRegexp) && url != self._smd.target) {
-					url = self._smd.target + url;
-				}
-
-				if (!!this.smdUrl && !url.match(urlRegexp)) {
-					// URL is still relative !
-					var a = this.smdUrl.split('/');
-					a[a.length - 1] = "";
-					url = a.join("/") + url;
-				}
-
 
 				var r = {
 					target: url,
@@ -162,7 +146,6 @@ YAHOO.namespace("rpc");
 			if (lang.isObject(callback) && lang.isFunction(callback.success)) {
 				callback.success.call(callback.scope || this);
 			}
-
 		},
 
 		/**
@@ -198,8 +181,6 @@ YAHOO.namespace("rpc");
 				scope: this
 			});
 		}
-
-
 	};
 
 
@@ -239,7 +220,6 @@ YAHOO.namespace("rpc");
 		"TCP/IP": function(r) {
 			throw new Error("TCP/IP transport not implemented !");
 		}
-
 	};
 
 
@@ -312,10 +292,10 @@ YAHOO.namespace("rpc");
 			serialize: function(smd, method, data) {
 				return {
 					data: lang.JSON.stringify({
-												  "id": rpc.Service._requestId++,
-												  "method": method.name,
-												  "params": data
-											  })
+						"id": rpc.Service._requestId++,
+						"method": method.name,
+						"params": data
+					})
 				};
 			},
 			deserialize: function(results) {
@@ -333,11 +313,11 @@ YAHOO.namespace("rpc");
 			serialize: function(smd, method, data) {
 				return {
 					data: lang.JSON.stringify({
-												  "id": rpc.Service._requestId++,
-												  "method": method.name,
-												  "version": "json-rpc-2.0",
-												  "params": data
-											  })
+						"id": rpc.Service._requestId++,
+						"method": method.name,
+						"version": "json-rpc-2.0",
+						"params": data
+					})
 				};
 			},
 			deserialize: function(results) {
@@ -350,7 +330,5 @@ YAHOO.namespace("rpc");
 				return lang.JSON.parse(results.responseText);
 			}
 		}
-
 	};
-
 })();
