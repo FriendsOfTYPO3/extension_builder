@@ -128,13 +128,13 @@ class Extension
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\Plugin>
      */
-    private $plugins;
+    private $plugins = array();
     /**
      * backend modules
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\BackendModule>
      */
-    private $backendModules;
+    private $backendModules = array();
     /**
      * was the extension renamed?
      * @var bool
