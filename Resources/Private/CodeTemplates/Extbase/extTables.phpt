@@ -47,7 +47,7 @@ call_user_func(
 
 <f:for each="{extension.domainObjects}" as="domainObject"><f:if condition="{domainObject.categorizable}">
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
-            {extension.extensionKey},
+            '{extension.extensionKey}',
             '{domainObject.databaseTableName}'
         );
 </f:if></f:for>
