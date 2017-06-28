@@ -26,6 +26,6 @@ if (isset($GLOBALS['TCA']['{domainObject.databaseTableName}']['types']['{parentR
 $GLOBALS['TCA']['{domainObject.databaseTableName}']['types']['{domainObject.recordType}']['showitem'] .= ',--div--;LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.labelNamespace},';
 $GLOBALS['TCA']['{domainObject.databaseTableName}']['types']['{domainObject.recordType}']['showitem'] .= '<f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}<f:if condition="{i.isLast} == 0">, </f:if></f:for>';
 <f:for each="{domainObject.properties}" as="property"><f:if condition="{property.useRTE}">
-$GLOBALS['TCA']['{domainObject.databaseTableName}']['types']['{domainObject.recordType}']['columnsOverrides']['{property.fieldName}']['defaultExtras'] = 'richtext:rte_transform[mode=ts_css]';
+$GLOBALS['TCA']['{domainObject.databaseTableName}']['types']['{domainObject.recordType}']['columnsOverrides']['{property.fieldName}']['defaultExtras'] = 'richtext:rte_transform';
 </f:if></f:for>
 </k:recordType>
