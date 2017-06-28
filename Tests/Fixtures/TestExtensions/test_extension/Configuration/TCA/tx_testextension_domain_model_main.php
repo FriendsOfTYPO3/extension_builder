@@ -138,7 +138,7 @@ return [
                 'rows' => 15,
                 'eval' => 'trim',
             ],
-            'defaultExtras' => 'richtext:rte_transform[mode=ts_css]'
+            'defaultExtras' => 'richtext:rte_transform'
         ],
         'my_date' => [
             'exclude' => true,
