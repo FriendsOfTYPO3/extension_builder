@@ -894,7 +894,7 @@ class Extension
         $info = [
             'name' => strtolower($this->vendorName) . '/' . strtolower(str_replace('_','-',$this->extensionKey)), 'type' => 'typo3-cms-extension',
             'description' => $this->description,
-            'author' => [], 'require' => [
+            'authors' => [], 'require' => [
                 'typo3/cms-core' => '^8.6.1'
             ],
             'autoload' => [
@@ -910,10 +910,7 @@ class Extension
             if ($person->getRole() !== '') {
                 $author['role'] = $person->getRole();
             }
-            if ($person->getCompany() !== '') {
-                $author['company'] = $person->getCompany();
-            }
-            $info['author'][] = $author;
+            $info['authors'][] = $author;
         }
         return $info;
     }
