@@ -31,7 +31,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
      * @test
      */
     public function get{property.name -> k:format.uppercaseFirst()}ReturnsInitialValueFor<f:if condition="{k:matchString(match:'FileReference', in:property.unqualifiedType)}"><f:then>FileReference</f:then><f:else>{f:if(condition:"{k:matchString(match:'ObjectStorage', in:property.unqualifiedType)}", then:"{property.foreignModelName}", else:"{property.unqualifiedType -> k:format.uppercaseFirst()}")}</f:else></f:if>()
-    {<f:if condition="{property.unqualifiedType} == 'integer'">
+    {<f:if condition="{property.unqualifiedType} == 'int'">
         self::assertSame(
             0,
             $this->subject->get{property.name -> k:format.uppercaseFirst()}()
@@ -78,7 +78,7 @@ class {domainObject.name}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             'Conceived at T3CON10',
             '{property.name}',
             $this->subject
-        );</f:if><f:if condition="{property.unqualifiedType}  == 'integer'">
+        );</f:if><f:if condition="{property.unqualifiedType}  == 'int'">
         $this->subject->set{property.name -> k:format.uppercaseFirst()}(12);
 
         self::assertAttributeEquals(
