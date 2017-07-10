@@ -2,11 +2,10 @@
     "name": "fixture/test-extension",
     "type": "typo3-cms-extension",
     "description": "This is just a test extension created by the ExtensionBuilder",
-    "author": [
+    "authors": [
         {
             "name": "John Doe",
-            "role": "Developer",
-            "company": "TYPO3"
+            "role": "Developer"
         }
     ],
     "require": {
