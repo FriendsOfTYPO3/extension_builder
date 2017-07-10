@@ -1,8 +1,5 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}{escaping off}
 if (!isset($GLOBALS['TCA']['{databaseTableName}']['ctrl']['type'])) {
-    if (file_exists($GLOBALS['TCA']['{databaseTableName}']['ctrl']['dynamicConfigFile'])) {
-        require_once($GLOBALS['TCA']['{databaseTableName}']['ctrl']['dynamicConfigFile']);
-    }
     // no type field defined, so we define it here. This will only happen the first time the extension is installed!!
     $GLOBALS['TCA']['{databaseTableName}']['ctrl']['type'] = 'tx_extbase_type';
     $tempColumns{extension.shortExtensionKey}_{databaseTableName} = [];
@@ -13,6 +10,7 @@ if (!isset($GLOBALS['TCA']['{databaseTableName}']['ctrl']['type'])) {
             'type' => 'select',
             'renderType' => 'selectSingle',
             'items' => [
+                ['',''],
                 ['{domainObject.name}','{domainObject.recordType}']
             ],
             'default' => '{domainObject.recordType}',
