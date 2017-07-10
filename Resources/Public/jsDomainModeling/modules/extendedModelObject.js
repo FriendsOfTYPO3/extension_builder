@@ -30,7 +30,7 @@ var advancedFields = {
 						className: 'inputEx-Field isDependant',
 						name: "renderType",
 						//advancedMode: true,
-						selectValues: ["selectMultipleSideBySide", "selectSingleBox", "selectCheckBox", "inline", "selectSingle"],
+						selectValues: ["selectSingleBox", "selectCheckBox","selectMultipleSideBySide", "inline", "selectSingle"],
 						selectOptions: [
 							TYPO3.settings.extensionBuilder._LOCAL_LANG.selectSingleBox,
 							TYPO3.settings.extensionBuilder._LOCAL_LANG.selectCheckBox,
