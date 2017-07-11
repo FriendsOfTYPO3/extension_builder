@@ -73,4 +73,29 @@ class Child1Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
             $this->subject
         );
     }
+
+    /**
+     * @test
+     */
+    public function getMailReturnsInitialValueForString()
+    {
+        self::assertSame(
+            '',
+            $this->subject->getMail()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function setMailForStringSetsMail()
+    {
+        $this->subject->setMail('Conceived at T3CON10');
+
+        self::assertAttributeEquals(
+            'Conceived at T3CON10',
+            'mail',
+            $this->subject
+        );
+}
 }
