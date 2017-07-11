@@ -177,6 +177,16 @@
                             "propertyName": "flag",
                             "propertyType": "Boolean",
                             "uid": "217141805697"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "",
+                            "propertyIsExcludeField": true,
+                            "propertyIsRequired": false,
+                            "propertyName": "mail",
+                            "propertyType": "Email",
+                            "uid": "217141865797"
                         }
                     ]
                 },

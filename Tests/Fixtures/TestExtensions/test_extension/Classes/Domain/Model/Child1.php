@@ -32,6 +32,13 @@ class Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $flag = false;
 
     /**
+     * mail
+     *
+     * @var string
+     */
+    protected $mail = '';
+
+    /**
      * Returns the name
      *
      * @return string $name
@@ -81,5 +88,26 @@ class Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function isFlag()
     {
         return $this->flag;
+    }
+
+    /**
+     * Returns the mail
+     *
+     * @return string $mail
+     */
+    public function getMail()
+    {
+        return $this->mail;
+    }
+
+    /**
+     * Sets the mail
+     *
+     * @param string $mail
+     * @return void
+     */
+    public function setMail($mail)
+    {
+        $this->mail = $mail;
     }
 }
