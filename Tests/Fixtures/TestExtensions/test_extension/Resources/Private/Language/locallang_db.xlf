@@ -78,6 +78,12 @@
 			<trans-unit id="tx_testextension_domain_model_child4.file_property">
 				<source>File Property</source>
 			</trans-unit>
+			<trans-unit id="tx_test_extension_testplugin.name">
+				<source>Test plugin</source>
+			</trans-unit>
+			<trans-unit id="tx_test_extension_testplugin.description">
+				<source>This is just a test extension created by the ExtensionBuilder &amp; so</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

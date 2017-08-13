@@ -451,6 +451,7 @@
                     "noncacheableActions": "",
                     "switchableActions": ""
                 },
+                "description": "Just a simple test plugin",
                 "key": "testplugin",
                 "name": "Test plugin"
             }
