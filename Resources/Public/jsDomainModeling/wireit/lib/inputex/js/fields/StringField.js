@@ -47,6 +47,7 @@
 				this.options.noSpaces = options.noSpaces;
 				this.options.ucFirst = options.ucFirst;
 				this.options.lcFirst = options.lcFirst;
+				this.options.firstCharNonNumeric = options.firstCharNonNumeric;
 				this.options.advancedMode = options.advancedMode ? options.advancedMode : false;
 				this.options.classname = options.classname;
 				this.options.placeholder = options.placeholder;
@@ -145,10 +146,23 @@
 
 				// if we are using a regular expression
 				if (this.options.regexp) {
-					result = result && val.match(this.options.regexp);
+					var reg = new RegExp(this.options.regexp);
+					result = result && reg.test(val);
 				}
 				if (this.options.minLength) {
 					result = result && val.length >= this.options.minLength;
+				}
+				if (this.options.forceAlphaNumeric) {
+					var forceAlphaNumericRegex = new RegExp(/[^a-zA-Z0-9]/g);
+					result = result && !forceAlphaNumericRegex.test(val);
+				}
+				if (this.options.forceAlphaNumericUnderscore) {
+					var forceAlphaNumericUnderscoreRegex = new RegExp(/[a-zA-Z0-9_]/g);
+					result = result && !forceAlphaNumericUnderscoreRegex.test(val);
+				}
+				if (this.options.firstCharNonNumeric) {
+					var firstCharNonNumericRegex = new RegExp(/(^[a-zA-Z])/);
+					result = result && firstCharNonNumericRegex.test(val);
 				}
 				return result;
 			},
@@ -246,16 +260,9 @@
 				if (this.options.forceLowerCase) {
 					this.el.value = this.el.value.toLowerCase();
 				}
-				if (this.options.forceAlphaNumeric) {
-					this.el.value = this.el.value.replace(/[^a-zA-Z0-9]/g, '');
-				}
-				if (this.options.forceAlphaNumericUnderscore) {
-					this.el.value = this.el.value.replace(/[^a-zA-Z0-9_]/g, '');
-				}
 				if (this.options.noSpaces) {
 					this.el.value = this.el.value.replace(/\s/g, '');
 				}
-
 				if (this.options.lcFirst || this.options.ucFirst) {
 					var first = this.el.value.charAt(0);
 					var tmp = this.el.value.substr(1);
@@ -266,16 +273,6 @@
 					}
 					this.el.value = first + tmp;
 				}
-
-
-				// override me
-				//
-				//   example :
-				//
-				//   lang.later(0, this, this.setClassFromState);
-				//
-				//     -> Set style immediatly when typing in the field
-				//     -> Call setClassFromState escaping the stack (after the event has been fully treated, because the value has to be updated)
 			}
 
 		}
