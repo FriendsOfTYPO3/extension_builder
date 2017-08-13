@@ -82,7 +82,7 @@
 				<source>Test plugin</source>
 			</trans-unit>
 			<trans-unit id="tx_test_extension_testplugin.description">
-				<source>This is just a test extension created by the ExtensionBuilder &amp; so</source>
+				<source>Just a simple test plugin</source>
 			</trans-unit>
 		</body>
 	</file>
