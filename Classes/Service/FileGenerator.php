@@ -441,6 +441,7 @@ class FileGenerator
                 return $path . $fileName;
             }
         }
+        throw new \Exception('template not found: ' . $fileName);
     }
 
     protected function generateTyposcriptFiles()

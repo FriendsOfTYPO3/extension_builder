@@ -266,7 +266,7 @@ class BuilderModuleController extends ActionController
                 if (empty($extensionSettings)) {
                     // no config file in an existing extension!
                     // this would result in a	 total overwrite so we create one and give a warning
-                    $this->extensionBuilderConfigurationManager->createInitialSettingsFile($extension, $this->extensionBuilderSettings['codeTemplateRootPath']);
+                    $this->extensionBuilderConfigurationManager->createInitialSettingsFile($extension, $this->extensionBuilderSettings['codeTemplateRootPaths']);
                     return array('warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the extension builder the first time for this extension. <br />A settings file was generated in <br /><b>typo3conf/ext/" . $extension->getExtensionKey() . '/Configuration/ExtensionBuilder/settings.yaml.</b><br />Configure the overwrite settings, then save again.');
                 }
                 try {

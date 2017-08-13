@@ -240,13 +240,13 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
 
     /**
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-     * @param string $codeTemplateRootPath
+     * @param array $codeTemplateRootPaths
      * @return void
      */
-    public function createInitialSettingsFile($extension, $codeTemplateRootPath)
+    public function createInitialSettingsFile($extension, $codeTemplateRootPaths)
     {
         GeneralUtility::mkdir_deep($extension->getExtensionDir(), self::SETTINGS_DIR);
-        $settings = file_get_contents($codeTemplateRootPath . 'Configuration/ExtensionBuilder/settings.yamlt');
+        $settings = file_get_contents($codeTemplateRootPaths[0] . 'Configuration/ExtensionBuilder/settings.yamlt');
         $settings = str_replace('{extension.extensionKey}', $extension->getExtensionKey(), $settings);
         $settings = str_replace('{f:format.date(format:\'Y-m-d\\TH:i:s\\Z\',date:\'now\')}', date('Y-m-d\TH:i:s\Z'), $settings);
         GeneralUtility::writeFile(
