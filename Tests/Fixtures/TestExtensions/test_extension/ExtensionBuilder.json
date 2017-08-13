@@ -298,7 +298,7 @@
                     "addHiddenField": true,
                     "addStarttimeEndtimeFields": true,
                     "aggregateRoot": false,
-                    "categorizable": false,
+                    "categorizable": true,
                     "description": "",
                     "mapToTable": "",
                     "parentClass": "",
