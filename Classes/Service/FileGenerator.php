@@ -324,7 +324,7 @@ class FileGenerator
             $fileContents = $this->generateLocallangFileContent('_db');
             $this->writeFile($this->languageDirectory . 'locallang_db.xlf', $fileContents);
             if ($this->extension->hasBackendModules()) {
-                /** @var $backendModule \EBT\ExtensionBuilder\Domain\Model\Plugin */
+                /** @var $backendModule \EBT\ExtensionBuilder\Domain\Model\BackendModule */
                 foreach ($this->extension->getBackendModules() as $backendModule) {
                     $fileContents = $this->generateLocallangFileContent('_mod', 'backendModule', $backendModule);
                     $this->writeFile(

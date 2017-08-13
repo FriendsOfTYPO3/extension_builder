@@ -309,6 +309,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     {
         $plugin = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Plugin');
         $plugin->setName($pluginValues['name']);
+        $plugin->setDescription($pluginValues['description']);
         $plugin->setType($pluginValues['type']);
         $plugin->setKey($pluginValues['key']);
         if (!empty($pluginValues['actions']['controllerActionCombinations'])) {

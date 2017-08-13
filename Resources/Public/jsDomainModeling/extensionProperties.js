@@ -273,6 +273,16 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							}
 						},
 						{
+							type: 'text',
+							inputParams: {
+								name: "description",
+								label: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
+								required: false,
+								cols:20,
+								rows:6
+							}
+						},
+						{
 							type: 'group',
 							inputParams: {
 								collapsible: true,

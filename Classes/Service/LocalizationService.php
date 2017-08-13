@@ -71,6 +71,12 @@ class LocalizationService implements \TYPO3\CMS\Core\SingletonInterface
                 }
             }
         }
+        if ($type == 'locallang_db') {
+            foreach ($extension->getPlugins() as $plugin) {
+                $labelArray['tx_' . $extension->getExtensionKey() . '_' . $plugin->getKey() . '.name'] = $plugin->getName();
+                $labelArray['tx_' . $extension->getExtensionKey() . '_' . $plugin->getKey() . '.description'] = $plugin->getDescription();
+            }
+        }
         return $labelArray;
     }
 
@@ -96,14 +102,8 @@ class LocalizationService implements \TYPO3\CMS\Core\SingletonInterface
     {
         $labelArray = array();
         $labelArray['mlang_tabs_tab'] = htmlspecialchars($backendModule->getName());
-        $moduleDescription = $backendModule->getDescription();
-        if (empty($moduleDescription)) {
-            $moduleDescription = $backendModule->getName();
-        }
-        $labelArray['mlang_labels_tabdescr'] = htmlspecialchars($moduleDescription);
-        if (!empty($backendModule->getTabLabel())) {
-            $labelArray['mlang_labels_tablabel'] = htmlspecialchars($backendModule->getTabLabel());
-        }
+        $labelArray['mlang_labels_tabdescr'] = htmlspecialchars($backendModule->getDescription());
+        $labelArray['mlang_tabs_tab'] = htmlspecialchars($backendModule->getTabLabel());
         return $labelArray;
     }
 

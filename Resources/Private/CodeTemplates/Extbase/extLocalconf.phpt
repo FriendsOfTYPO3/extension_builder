@@ -29,9 +29,9 @@ call_user_func(
             wizards.newContentElement.wizardItems.plugins <k:curlyBrackets>
                 elements {<f:for each="{extension.plugins}" as="plugin">
                     {plugin.key} <k:curlyBrackets>
-                        icon = ' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('{extension.extensionKey}') . 'Resources/Public/Icons/user_plugin_{plugin.key}.svg
-                        title = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:tx_{extension.extensionKey}_domain_model_{plugin.key}
-                        description = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:tx_{extension.extensionKey}_domain_model_{plugin.key}.description
+                        iconIdentifier = {extension.extensionKey}-plugin-{plugin.key}
+                        title = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:tx_{extension.extensionKey}_{plugin.key}.name
+                        description = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:tx_{extension.extensionKey}_{plugin.key}.description
                         tt_content_defValues <k:curlyBrackets>
                             CType = list
                             list_type = {extension.unprefixedShortExtensionKey}_{plugin.key}
@@ -42,5 +42,13 @@ call_user_func(
             </k:curlyBrackets>
        </k:curlyBrackets>'
     );
+		$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+		<f:for each="{extension.plugins}" as="plugin">
+			$iconRegistry->registerIcon(
+				'{extension.extensionKey}-plugin-{plugin.key}',
+				\TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+				['source' => 'EXT:{extension.extensionKey}/Resources/Public/Icons/user_plugin_{plugin.key}.svg']
+			);
+		</f:for>
     }
 );
