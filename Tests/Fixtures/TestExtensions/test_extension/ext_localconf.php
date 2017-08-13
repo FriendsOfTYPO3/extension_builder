@@ -21,9 +21,9 @@ call_user_func(
             wizards.newContentElement.wizardItems.plugins {
                 elements {
                     testplugin {
-                        icon = ' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('test_extension') . 'Resources/Public/Icons/user_plugin_testplugin.svg
-                        title = LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_test_extension_domain_model_testplugin
-                        description = LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_test_extension_domain_model_testplugin.description
+                        iconIdentifier = test_extension-plugin-testplugin
+                        title = LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_test_extension_testplugin.name
+                        description = LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_test_extension_testplugin.description
                         tt_content_defValues {
                             CType = list
                             list_type = testextension_testplugin
@@ -34,5 +34,12 @@ call_user_func(
             }
        }'
     );
+        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+
+            $iconRegistry->registerIcon(
+                'test_extension-plugin-testplugin',
+                \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+                ['source' => 'EXT:test_extension/Resources/Public/Icons/user_plugin_testplugin.svg']
+            );
     }
 );
