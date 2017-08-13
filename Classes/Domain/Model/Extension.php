@@ -895,7 +895,7 @@ class Extension
             'name' => strtolower($this->vendorName) . '/' . strtolower(str_replace('_','-',$this->extensionKey)), 'type' => 'typo3-cms-extension',
             'description' => $this->description,
             'authors' => [], 'require' => [
-                'typo3/cms-core' => '^8.6.1'
+                'typo3/cms-core' => '^8.7.1'
             ],
             'autoload' => [
                 'psr-4' => [

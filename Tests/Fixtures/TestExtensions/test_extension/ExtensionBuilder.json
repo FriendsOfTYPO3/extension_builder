@@ -423,13 +423,13 @@
         "emConf": {
             "category": "misc",
             "custom_category": "",
-            "dependsOn": "typo3 => 8.6.0-8.6.99\n",
+            "dependsOn": "typo3 => 8.7.0-8.7.99\n",
             "disableLocalization": false,
             "disableVersioning": false,
             "skipGenerateDocumentationTemplate": false,
             "sourceLanguage": "en",
             "state": "alpha",
-            "targetVersion": "8.6.0-8.6.99",
+            "targetVersion": "8.7.0-8.7.99",
             "version": "0.9"
         },
         "extensionKey": "test_extension",
