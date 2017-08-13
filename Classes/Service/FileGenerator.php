@@ -289,7 +289,7 @@ class FileGenerator
             }
             $domainObjectsNeedingOverrides = array();
             foreach ($this->extension->getDomainObjectsInHierarchicalOrder() as $domainObject) {
-                if ($domainObject->isMappedToExistingTable() || $domainObject->getHasChildren()) {
+                if ($domainObject->needsTcaOverride()) {
                     if (!isset($domainObjectsNeedingOverrides[$domainObject->getDatabaseTableName()])) {
                         $domainObjectsNeedingOverrides[$domainObject->getDatabaseTableName()] = array();
                     }

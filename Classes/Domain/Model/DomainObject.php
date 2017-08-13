@@ -522,6 +522,13 @@ class DomainObject
     }
 
     /**
+     * @return bool
+     */
+    public function needsTcaOverride() {
+        return $this->isMappedToExistingTable() || $this->hasChildren() || $this->categorizable;
+    }
+
+    /**
      * @return string
      */
     public function getMapToTable()
