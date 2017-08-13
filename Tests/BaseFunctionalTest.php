@@ -143,15 +143,16 @@ abstract class BaseFunctionalTest extends \TYPO3\TestingFramework\Core\Functiona
 
         $this->fileGenerator->setSettings(
             array(
-                'codeTemplateRootPaths' => [$this->codeTemplateRootPath],
-                'codeTemplatePartialPaths' => [$this->codeTemplateRootPath . 'Partials'],
+                'codeTemplateRootPaths.' => [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/'],
+                'codeTemplatePartialPaths.' => [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials'],
                 'extConf' => array(
                     'enableRoundtrip' => '1'
                 )
             )
         );
-        $this->fileGenerator->_set('codeTemplateRootPaths', [__DIR__ . '/../Resources/Private/CodeTemplates/Extbase/']);
-        $this->fileGenerator->_set('codeTemplatePartialPaths', [__DIR__ . '/../Resources/Private/CodeTemplates/Extbase/']);
+        // needed when sub routines in file generator are called without an initial setup
+        $this->fileGenerator->_set('codeTemplateRootPaths', [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/']);
+        $this->fileGenerator->_set('codeTemplatePartialPaths', [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials']);
         $this->fileGenerator->_set('enableRoundtrip', true);
         $this->fileGenerator->_set('extension', $this->extension);
     }
