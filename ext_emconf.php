@@ -19,10 +19,10 @@ $EM_CONF[$_EXTKEY] = [
     'state' => 'beta',
     'uploadfolder' => 1,
     'createDirs' => 'uploads/tx_extensionbuilder/backups',
-    'version' => '8.6.0',
+    'version' => '8.7.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '8.6.0-8.7.99'
+            'typo3' => '8.7.0-8.7.99'
         ],
         'conflicts' => [],
         'suggests' => []

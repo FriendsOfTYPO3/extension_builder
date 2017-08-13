@@ -1,6 +1,6 @@
 {
   "name": "extension_builder",
-  "version": "8.6.0",
+  "version": "8.7.0",
   "description": "",
   "dependencies": {
     "node-sass": "^4.5.0",
