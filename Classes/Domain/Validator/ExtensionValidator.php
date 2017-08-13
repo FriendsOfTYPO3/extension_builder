@@ -874,9 +874,9 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 
         /**
          * Reserved prefixes
-         * The key must not being with one of the following prefixes: tx,u,user_,pages,tt_,sys_,ts_language_,csh_
+         * The key must not being with one of the following prefixes: tx,pages,tt_,sys_,ts_language_,csh_
          */
-        if (preg_match('/^(tx_|u_|user_|pages_|tt_|sys_|ts_language_|csh_)/', $key)) {
+        if (preg_match('/^(tx|pages_|tt_|sys_|ts_language_|csh_)/', $key)) {
             $this->validationResult['errors'][] = new ExtensionException(
                 'Illegal extension key prefix', self::ERROR_EXTKEY_ILLEGAL_PREFIX);
         }
