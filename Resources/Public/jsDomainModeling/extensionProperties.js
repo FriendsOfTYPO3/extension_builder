@@ -30,6 +30,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 		inputParams: {
 			name: "extensionKey",
 			label: TYPO3.settings.extensionBuilder._LOCAL_LANG.key,
+			helpLink: 'https://docs.typo3.org/typo3cms/CoreApiReference/ExtensionArchitecture/ExtensionKey/',
 			typeInvite: TYPO3.settings.extensionBuilder._LOCAL_LANG.extensionKey,
 			forceLowerCase: true,
 			forceAlphaNumericUnderscore: true,
