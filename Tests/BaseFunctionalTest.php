@@ -143,13 +143,15 @@ abstract class BaseFunctionalTest extends \TYPO3\TestingFramework\Core\Functiona
 
         $this->fileGenerator->setSettings(
             array(
-                'codeTemplateRootPath' => $this->codeTemplateRootPath,
+                'codeTemplateRootPaths' => [$this->codeTemplateRootPath],
+                'codeTemplatePartialPaths' => [$this->codeTemplateRootPath . 'Partials'],
                 'extConf' => array(
                     'enableRoundtrip' => '1'
                 )
             )
         );
-        $this->fileGenerator->_set('codeTemplateRootPath', __DIR__ . '/../Resources/Private/CodeTemplates/Extbase/');
+        $this->fileGenerator->_set('codeTemplateRootPaths', [__DIR__ . '/../Resources/Private/CodeTemplates/Extbase/']);
+        $this->fileGenerator->_set('codeTemplatePartialPaths', [__DIR__ . '/../Resources/Private/CodeTemplates/Extbase/']);
         $this->fileGenerator->_set('enableRoundtrip', true);
         $this->fileGenerator->_set('extension', $this->extension);
     }
