@@ -104,13 +104,9 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
             $typoscript = $this->getConfiguration(parent::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         }
         $settings = $typoscript['module.']['extension_builder.']['settings.'];
-        if (empty($settings['codeTemplateRootPath'])) {
-            $settings['codeTemplateRootPath'] = self::DEFAULT_TEMPLATE_ROOTPATH;
-        }
-        $settings['codeTemplateRootPath'] = self::substituteExtensionPath($settings['codeTemplateRootPath']);
         $settings['extConf'] = $this->getExtensionBuilderSettings();
         if (empty($settings['publicResourcesPath'])) {
-            $settings['publicResourcesPath'] = ExtensionManagementUtility::extRelPath('extension_builder') . 'Resources/Public/';
+            $settings['publicResourcesPath'] = ExtensionManagementUtility::siteRelPath('extension_builder') . 'Resources/Public/';
         }
         return $settings;
     }
