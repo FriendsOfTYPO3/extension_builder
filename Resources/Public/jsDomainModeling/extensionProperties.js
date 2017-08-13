@@ -33,7 +33,6 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 			typeInvite: TYPO3.settings.extensionBuilder._LOCAL_LANG.extensionKey,
 			forceLowerCase: true,
 			forceAlphaNumericUnderscore: true,
-            regexp: /^[a-z]/,
             minLength: 3,
             maxLength: 30,
 			cols: 30,

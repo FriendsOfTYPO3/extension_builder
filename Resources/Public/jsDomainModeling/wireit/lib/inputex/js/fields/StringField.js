@@ -157,7 +157,7 @@
 					result = result && !forceAlphaNumericRegex.test(val);
 				}
 				if (this.options.forceAlphaNumericUnderscore) {
-					var forceAlphaNumericUnderscoreRegex = new RegExp(/[a-zA-Z0-9_]/g);
+					var forceAlphaNumericUnderscoreRegex = new RegExp(/[^a-zA-Z0-9_]/g);
 					result = result && !forceAlphaNumericUnderscoreRegex.test(val);
 				}
 				if (this.options.firstCharNonNumeric) {
