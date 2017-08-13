@@ -15,7 +15,8 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 						editorField:{
 							type: "string",
 							inputParams: {
-								required	: true
+								required	: true,
+								firstCharNonNumeric: true
 							}
 						},
 						animColors: {from: "#cccccc" , to: "#cccccc"}
@@ -205,6 +206,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 											name: "customAction",
 											label: TYPO3.settings.extensionBuilder._LOCAL_LANG.customAction,
 											forceAlphaNumeric: true,
+											firstCharNonNumeric: true,
 											lcFirst: true
 										}
 									}
@@ -247,8 +249,8 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 													inputParams: {
 														name: "propertyName",
 														forceAlphaNumeric: true,
-														placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.propertyName,
 														lcFirst: true,
+														firstCharNonNumeric: true,
 														placeholder : TYPO3.settings.extensionBuilder._LOCAL_LANG.propertyName,
 														description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_propertyName,
 														required: true
@@ -391,6 +393,7 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 														placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.relationName,
 														name: "relationName",
 														forceAlphaNumeric: true,
+														firstCharNonNumeric: true,
 														lcFirst: true,
 														description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_relationName,
 														required: true
