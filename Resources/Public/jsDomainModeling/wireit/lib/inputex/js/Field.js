@@ -71,6 +71,7 @@
 			this.options.id = options.id || Dom.generateId();
 			this.options.label = options.label;
 			this.options.description = options.description;
+			this.options.helpLink = options.helpLink;
 
 			// Define default messages
 			this.options.messages = {};
@@ -107,6 +108,7 @@
 			// Label element
 			if (this.options.label) {
 				var labelClassName = '';
+				var linkEl;
 				if (this.options.description) {
 					labelClassName = 'helpAvailable';
 				}
@@ -114,6 +116,11 @@
 				this.labelEl = inputEx.cn('label', {className: labelClassName});
 				this.labelEl.appendChild(document.createTextNode(this.options.label));
 				this.labelDiv.appendChild(this.labelEl);
+				if (this.options.helpLink) {
+					linkEl = inputEx.cn('a', {href: this.options.helpLink, target: '_blank', title: 'Open TYPO3 documentation in new window'});
+					linkEl.innerHTML = '<img src="./sysext/core/Resources/Public/Icons/T3Icons/apps/apps-toolbar-menu-help.svg" width="16" height="16" style="margin-left: 10px">';
+					this.labelDiv.appendChild(linkEl);
+				}
 				this.divEl.appendChild(this.labelDiv);
 			}
 
