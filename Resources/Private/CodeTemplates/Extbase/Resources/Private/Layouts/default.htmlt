@@ -1,4 +1,5 @@
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:format.raw>
-<div class="{extension.cssClassName}">
-	<k:openingTag>f:render section="main" /</k:openingTag>
-</div></f:format.raw>
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:format.raw><k:openingTag>html xmlns:f="https://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"</k:openingTag>
+	<div class="{extension.cssClassName}">
+		<k:openingTag>f:render section="main" /</k:openingTag>
+	</div>
+<k:openingTag>/html</k:openingTag></f:format.raw>
