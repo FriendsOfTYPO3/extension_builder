@@ -1,4 +1,4 @@
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:format.raw>
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:format.raw><k:openingTag>html xmlns:f="https://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"</k:openingTag>
 <k:openingTag>f:layout name="Default" /</k:openingTag>
 
 This Template is responsible for creating a table of domain objects.
@@ -48,4 +48,4 @@ Otherwise your changes will be overwritten the next time you save the extension 
 </table>
 
 <k:openingTag>f:link.action action="new"</k:openingTag>New {domainObject.name}<k:openingTag>/f:link.action</k:openingTag>
-<k:openingTag>/f:section</k:openingTag></f:format.raw>
+	<k:openingTag>/f:section</k:openingTag><k:openingTag>/html</k:openingTag></f:format.raw>
