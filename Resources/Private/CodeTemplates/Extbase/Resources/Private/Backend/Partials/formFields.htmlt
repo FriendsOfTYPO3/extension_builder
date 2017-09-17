@@ -1,5 +1,5 @@
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}
-<f:format.raw><k:format.removeMultipleNewlines>
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:format.raw><k:openingTag>html xmlns:f="https://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"</k:openingTag>
+<k:format.removeMultipleNewlines>
 <f:for each="{domainObject.properties}" as="property">
 <f:if condition="{property.isDisplayable}">
 <label for="{property.name}">
@@ -8,4 +8,5 @@
 	<k:openingTag><f:render partial="Form/{property.dataType}.htmlt" arguments="{domainObject:domainObject,property: property,settings:settings}" /> /</k:openingTag><br />
 </f:if>
 </f:for>
-</k:format.removeMultipleNewlines></f:format.raw>
+</k:format.removeMultipleNewlines>
+<k:openingTag>/html</k:openingTag></f:format.raw>
