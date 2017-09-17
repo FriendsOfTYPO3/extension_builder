@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace EBT\ExtensionBuilder\Service;
 
 /*
@@ -375,7 +376,7 @@ class FileGenerator
                  * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action
                  */
                 if ($action->getNeedsTemplate()
-                    && file_exists($this->getTemplatePath($templateRootFolder . 'Templates/' . $action->getName() . '.htmlt'))
+                    && $this->templateExists($templateRootFolder . 'Templates/' . $action->getName() . '.htmlt')
 
                 ) {
                     $hasTemplates = true;
@@ -442,6 +443,15 @@ class FileGenerator
             }
         }
         throw new \Exception('template not found: ' . $fileName);
+    }
+
+    protected function templateExists($fileName) {
+        try {
+            $this->getTemplatePath($fileName);
+            return true;
+        } catch(\Exception $e) {
+            return false;
+        }
     }
 
     protected function generateTyposcriptFiles()
@@ -593,12 +603,6 @@ class FileGenerator
                 }
             } catch (\Exception $e) {
                 throw new \Exception('Could not generate domain templates, error: ' . $e->getMessage());
-            }
-
-            try {
-                $settings = $this->extension->getSettings();
-            } catch (\Exception $e) {
-                throw new \Exception('Could not generate ext_autoload.php, error: ' . $e->getMessage());
             }
         } else {
             GeneralUtility::devLog(
