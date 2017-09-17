@@ -1,5 +1,5 @@
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}
-<f:format.raw><k:openingTag>f:form.validationResults for="<k:curlyBrackets>object</k:curlyBrackets>"</k:openingTag>
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:format.raw><k:openingTag>html xmlns:f="https://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"</k:openingTag>
+<k:openingTag>f:form.validationResults for="<k:curlyBrackets>object</k:curlyBrackets>"</k:openingTag>
 	<k:openingTag>f:if condition="<k:curlyBrackets>validationResults.flattenedErrors</k:curlyBrackets>"</k:openingTag>
 		<ul>
 		<k:openingTag>f:for each="<k:curlyBrackets>validationResults.flattenedErrors</k:curlyBrackets>" key="propertyPath" as="errors"</k:openingTag>
@@ -10,4 +10,5 @@
 			</li>
 		<k:openingTag>/f:for</k:openingTag></ul>
 <k:openingTag>/f:if</k:openingTag>
-<k:openingTag>/f:form.validationResults</k:openingTag></f:format.raw>
+<k:openingTag>/f:form.validationResults</k:openingTag>
+<k:openingTag>/html</k:openingTag></f:format.raw>

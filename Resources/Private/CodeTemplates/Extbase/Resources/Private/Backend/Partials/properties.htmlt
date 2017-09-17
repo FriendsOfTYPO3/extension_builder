@@ -1,5 +1,5 @@
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}
-<f:format.raw><table class="{extension.cssClassName}" >
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:format.raw><k:openingTag>html xmlns:f="https://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"</k:openingTag>
+<table class="{extension.cssClassName}" >
 	<k:format.removeMultipleNewlines>
 	<f:for each="{domainObject.properties}" as="property">
 		<f:if condition="{property.isDisplayable}">
@@ -8,10 +8,11 @@
 			<k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag>
 		</td>
 		<td>
-			<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets>
+			<f:render partial="Property.htmlt" arguments="{domainObject:domainObject, property:property}" />
 		</td>
 	</tr>
 		</f:if>
 	</f:for>
 	</k:format.removeMultipleNewlines>
-</table></f:format.raw>
+</table>
+<k:openingTag>/html</k:openingTag></f:format.raw>
