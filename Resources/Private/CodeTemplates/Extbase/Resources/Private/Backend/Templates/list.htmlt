@@ -48,4 +48,5 @@ Otherwise your changes will be overwritten the next time you save the extension 
 </table>
 
 <k:openingTag>f:link.action action="new"</k:openingTag>New {domainObject.name}<k:openingTag>/f:link.action</k:openingTag>
-	<k:openingTag>/f:section</k:openingTag><k:openingTag>/html</k:openingTag></f:format.raw>
+	<k:openingTag>/f:section</k:openingTag>
+<k:openingTag>/html</k:openingTag></f:format.raw>
