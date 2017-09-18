@@ -48,7 +48,7 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     public function build(array $jsonDomainObject)
     {
         $domainObject = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject'
+            \EBT\ExtensionBuilder\Domain\Model\DomainObject::class
         );
         $domainObject->setUniqueIdentifier($jsonDomainObject['objectsettings']['uid']);
 
@@ -81,10 +81,8 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
                     $propertyJsonConfiguration['relationType'] = 'zeroToMany';
                     $propertyJsonConfiguration['relationName'] = $propertyJsonConfiguration['propertyName'];
                     $propertyJsonConfiguration['relationDescription'] = $propertyJsonConfiguration['propertyDescription'];
-                    $propertyJsonConfiguration['foreignRelationClass'] = '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference';
+                    $propertyJsonConfiguration['foreignRelationClass'] = \TYPO3\CMS\Extbase\Domain\Model\FileReference::class;
                     $propertyJsonConfiguration['type'] = $propertyJsonConfiguration['propertyType'];
-                    $propertyJsonConfiguration['maxItems'] = $propertyJsonConfiguration['maxItems'];
-                    $propertyJsonConfiguration['allowedFileTypes'] = $propertyJsonConfiguration['allowedFileTypes'];
 
                     $property = $this->buildRelation($propertyJsonConfiguration, $domainObject);
                 } else {
@@ -120,7 +118,7 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
                 if (!empty($actionNames)) {
                     foreach ($actionNames as $actionName) {
                         $action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-                            'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Action'
+                            \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action::class
                         );
                         $action->setName($actionName);
                         $domainObject->addAction($action);
@@ -172,7 +170,6 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
             );
             if (isset($extbaseClassConfiguration['tableName'])) {
                 $foreignDatabaseTableName = $extbaseClassConfiguration['tableName'];
-                $this->relatedForeignTables[$foreignDatabaseTableName] = 1;
             } else {
                 $foreignDatabaseTableName = Tools::parseTableNameFromClassName(
                     $relationJsonConfiguration['foreignRelationClass']
@@ -186,12 +183,11 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
                 }
                 if (isset($this->relatedForeignTables[$foreignDatabaseTableName])) {
                     $foreignKeyName .= $this->relatedForeignTables[$foreignDatabaseTableName];
-                    $this->relatedForeignTables[$foreignDatabaseTableName] += 1;
+                    $this->relatedForeignTables[$foreignDatabaseTableName]++;
                 } else {
-                    $foreignDatabaseTableName = Tools::parseTableNameFromClassName(
-                        $relationJsonConfiguration['foreignRelationClass']
-                    );
+                    $this->relatedForeignTables[$foreignDatabaseTableName] = 1;
                 }
+                $relation->setForeignKeyName($foreignKeyName);
                 $relation->setForeignDatabaseTableName($foreignDatabaseTableName);
             }
             if ($relation->isFileReference() && !empty($relationJsonConfiguration['maxItems'])) {
