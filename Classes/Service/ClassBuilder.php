@@ -543,7 +543,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
             if (in_array($actionName, array('create'))) {
                 $parameterName = 'new' . $domainObject->getName();
             } else {
-                $parameterName = \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($domainObject->getName());
+                $parameterName = lcfirst($domainObject->getName());
             }
             $actionMethod->getParameterByPosition(0)
                 ->setName($parameterName)
@@ -731,7 +731,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
             $this->classObject->setParentClassName($parentClass);
         }
         if ($domainObject->isAggregateRoot()) {
-            $repositoryName = \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($domainObject->getName() . 'Repository');
+            $repositoryName = lcfirst($domainObject->getName() . 'Repository');
             // now add the property to class Object (or update an existing class Object property)
             if (!$this->classObject->propertyExists($repositoryName)) {
                 $classProperty = $this->templateClassObject->getProperty('domainObjectRepository');

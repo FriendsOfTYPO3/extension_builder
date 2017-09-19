@@ -311,7 +311,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
                 if ($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed) {
                     $this->mapOldControllerToCurrentClassObject($oldDomainObject, $currentDomainObject);
                 } elseif ($oldDomainObject->isAggregateRoot() && !$currentDomainObject->isAggregateRoot()) {
-                    $injectMethodName = 'inject' . GeneralUtility::lcfirst($oldDomainObject->getName()) . 'Repository';
+                    $injectMethodName = 'inject' . lcfirst($oldDomainObject->getName()) . 'Repository';
                     $this->classObject->removeMethod($injectMethodName);
                 }
 
@@ -427,7 +427,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
         if ($oldDomainObject->isAggregateRoot()) {
 
             // should we keep the old properties comments and tags?
-            $this->classObject->removeProperty(GeneralUtility::lcfirst($oldName) . 'Repository');
+            $this->classObject->removeProperty(lcfirst($oldName) . 'Repository');
             $injectMethodName = 'inject' . $oldName . 'Repository';
             if ($currentDomainObject->isAggregateRoot()) {
                 // update the initializeAction method body
@@ -435,8 +435,8 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
                 if ($initializeMethod != null) {
                     $initializeMethodBodyStmts = $initializeMethod->getBodyStmts();
                     $initializeMethodBodyStmts = str_replace(
-                        GeneralUtility::lcfirst($oldName) . 'Repository',
-                        GeneralUtility::lcfirst($newName) . 'Repository',
+                        lcfirst($oldName) . 'Repository',
+                        lcfirst($newName) . 'Repository',
                         $initializeMethodBodyStmts
                     );
                     $initializeMethod->setBodyStmts($initializeMethodBodyStmts);
@@ -447,14 +447,14 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
                 if ($injectMethod != null) {
                     $this->classObject->removeMethod($injectMethodName);
                     $initializeMethodBodyStmts = str_replace(
-                        GeneralUtility::lcfirst($oldName),
-                        GeneralUtility::lcfirst($newName),
+                        lcfirst($oldName),
+                        lcfirst($newName),
                         $injectMethod->getBodyStmts()
                     );
                     $injectMethod->setBodyStmts($initializeMethodBodyStmts);
                     $injectMethod->setTag('param', $currentDomainObject->getFullyQualifiedDomainRepositoryClassName() . ' $' . $newName . 'Repository');
                     $injectMethod->setName('inject' . $newName . 'Repository');
-                    $parameter = new Model\ClassObject\MethodParameter(GeneralUtility::lcfirst($newName) . 'Repository');
+                    $parameter = new Model\ClassObject\MethodParameter(lcfirst($newName) . 'Repository');
                     $parameter->setTypeHint($currentDomainObject->getFullyQualifiedDomainRepositoryClassName());
                     $parameter->setPosition(0);
                     $injectMethod->replaceParameter($parameter);
@@ -467,8 +467,8 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
                     if ($actionMethod != null) {
                         $actionMethodBody = $actionMethod->getBodyStmts();
                         $newActionMethodBody = str_replace(
-                            GeneralUtility::lcfirst($oldName) . 'Repository',
-                            GeneralUtility::lcfirst($newName) . 'Repository',
+                            lcfirst($oldName) . 'Repository',
+                            lcfirst($newName) . 'Repository',
                             $actionMethodBody
                         );
                         $actionMethod->setBodyStmts($newActionMethodBody);
@@ -834,7 +834,7 @@ class RoundTrip implements \TYPO3\CMS\Core\SingletonInterface
     protected function replaceUpperAndLowerCase($search, $replace, $haystack)
     {
         $result = str_replace(ucfirst($search), ucfirst($replace), $haystack);
-        $result = str_replace(GeneralUtility::lcfirst($search), GeneralUtility::lcfirst($replace), $result);
+        $result = str_replace(lcfirst($search), lcfirst($replace), $result);
         return $result;
     }
 
