@@ -38,6 +38,6 @@ class LowercaseFirstViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abstract
     public function render()
     {
         $content = $this->renderChildren();
-        return \TYPO3\CMS\Core\Utility\GeneralUtility::lcfirst($content);
+        return lcfirst($content);
     }
 }
