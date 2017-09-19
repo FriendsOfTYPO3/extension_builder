@@ -134,11 +134,18 @@ return [
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.description',
             'config' => [
                 'type' => 'text',
+                'enableRichtext' => true,
+                'richtextConfiguration' => 'default',
+                'fieldControl' => [
+                    'fullScreenRichtext' => [
+                        'disabled' => false,
+                    ],
+                ],
+
                 'cols' => 40,
                 'rows' => 15,
                 'eval' => 'trim',
             ],
-            'defaultExtras' => 'richtext:rte_transform'
         ],
         'my_date' => [
             'exclude' => true,
