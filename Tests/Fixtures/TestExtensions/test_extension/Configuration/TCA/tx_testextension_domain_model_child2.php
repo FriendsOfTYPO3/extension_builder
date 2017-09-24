@@ -50,6 +50,7 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
+                'default' => 0,
                 'items' => [
                     ['', 0],
                 ],
