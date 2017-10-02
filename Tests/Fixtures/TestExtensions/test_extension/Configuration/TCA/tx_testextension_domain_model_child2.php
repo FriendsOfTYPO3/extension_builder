@@ -124,6 +124,7 @@ return [
             'config' => [
                 'dbType' => 'date',
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => 7,
                 'eval' => 'date',
                 'default' => '0000-00-00'
@@ -135,6 +136,7 @@ return [
             'config' => [
                 'dbType' => 'datetime',
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => 12,
                 'eval' => 'datetime',
                 'default' => '0000-00-00 00:00:00'
@@ -145,6 +147,7 @@ return [
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property3',
             'config' => [
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => 7,
                 'eval' => 'date',
                 'default' => time()
@@ -155,6 +158,7 @@ return [
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property4',
             'config' => [
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => 10,
                 'eval' => 'datetime',
                 'default' => time()

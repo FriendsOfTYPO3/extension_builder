@@ -146,6 +146,7 @@ return [
             'config' => [
                 'dbType' => 'date',
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => 7,
                 'eval' => 'date',
                 'default' => '0000-00-00'
