@@ -92,6 +92,10 @@ abstract class AbstractProperty
     /**
      * @var bool
      */
+    protected $l10nModeExclude = false;
+    /**
+     * @var bool
+     */
     protected $cascadeRemove = false;
     /**
      *
@@ -343,6 +347,28 @@ abstract class AbstractProperty
     }
 
     /**
+     * Set whether this property is l10n_mode = exclude
+     *
+     * @param bool $l10nModeExclude
+     * @return void
+     */
+    public function setL10nModeExclude($l10nModeExclude)
+    {
+        $this->l10nModeExclude = $l10nModeExclude;
+    }
+
+    /**
+     * true if this property  l10n_mode = exclude, false otherwise.
+     *
+     * @return bool
+     */
+    public function getL10nModeExclude()
+    {
+        return $this->l10nModeExclude;
+    }
+
+    /**
+
      * Get the validate annotation to be used in the domain model for this property.
      *
      * @return string
