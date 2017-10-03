@@ -350,6 +350,16 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 														description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_isExcludeField,
 														value: true
 													}
+												},
+												{
+													type: "boolean",
+													inputParams: {
+														label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isL10nModeExclude,
+														advancedMode: true,
+														name: "propertyIsL10nModeExclude",
+														description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_isL10nModeExclude,
+														value: false
+													}
 												}
 											]
 										}
