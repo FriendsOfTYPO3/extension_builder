@@ -272,6 +272,12 @@
 			<trans-unit id="descr_isExcludeField">
 				<source>If set to true, this field will only be visible for admin users per default</source>
 			</trans-unit>
+			<trans-unit id="isL10nModeExclude">
+				<source>Is l10n_mode = exclude?</source>
+			</trans-unit>
+			<trans-unit id="descr_isL10nModeExclude">
+				<source>If set to true, this field will be set to l10n_mode = exclude</source>
+			</trans-unit>
 			<trans-unit id="newModelObject">
 				<source>New model object</source>
 			</trans-unit>
