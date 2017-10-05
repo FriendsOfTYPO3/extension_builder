@@ -31,7 +31,7 @@ var extbaseModeling_wiringEditorLanguage = {
 			var optionValueMap = {
 				'zeroToOne': ["selectSingle", "inline"],
 				'manyToOne': ["selectSingle"],
-				'zeroToMany': ["inline", "selectSingle"],
+				'zeroToMany': ["inline"],
 				'manyToMany': ["selectMultipleSideBySide", "selectSingleBox", "selectCheckBox"]
 			};
 			var validOptions = optionValueMap[selectedRelationType];
