@@ -134,7 +134,7 @@ return [
                 'renderType' => 'inputDateTime',
                 'size' => 7,
                 'eval' => 'date',
-                'default' => '0000-00-00'
+                'default' => null,
             ],
         ],
         'date_property2' => [
@@ -146,7 +146,7 @@ return [
                 'renderType' => 'inputDateTime',
                 'size' => 12,
                 'eval' => 'datetime',
-                'default' => '0000-00-00 00:00:00'
+                'default' => null,
             ],
         ],
         'date_property3' => [

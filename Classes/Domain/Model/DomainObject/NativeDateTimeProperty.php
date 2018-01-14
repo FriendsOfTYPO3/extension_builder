@@ -35,7 +35,7 @@ class NativeDateTimeProperty extends AbstractProperty
 
     public function getSqlDefinition()
     {
-        return $this->getFieldName() . " datetime DEFAULT '0000-00-00 00:00:00',";
+        return $this->getFieldName() . " datetime DEFAULT NULL,";
     }
 
     public function getNameToBeDisplayedInFluidTemplate()

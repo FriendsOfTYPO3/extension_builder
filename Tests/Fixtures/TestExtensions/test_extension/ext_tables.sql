@@ -9,7 +9,7 @@ CREATE TABLE tx_testextension_domain_model_main (
 	name varchar(255) DEFAULT '' NOT NULL,
 	identifier varchar(255) DEFAULT '' NOT NULL,
 	description text,
-	my_date date DEFAULT '0000-00-00',
+	my_date date DEFAULT NULL,
 	child1 int(11) unsigned DEFAULT '0',
 	children2 int(11) unsigned DEFAULT '0' NOT NULL,
 	child3 int(11) unsigned DEFAULT '0',
@@ -99,8 +99,8 @@ CREATE TABLE tx_testextension_domain_model_child2 (
 	main int(11) unsigned DEFAULT '0' NOT NULL,
 
 	name varchar(255) DEFAULT '' NOT NULL,
-	date_property1 date DEFAULT '0000-00-00',
-	date_property2 datetime DEFAULT '0000-00-00 00:00:00',
+	date_property1 date DEFAULT NULL,
+	date_property2 datetime DEFAULT NULL,
 	date_property3 int(11) DEFAULT '0' NOT NULL,
 	date_property4 int(11) DEFAULT '0' NOT NULL,
 
