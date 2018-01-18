@@ -9,7 +9,7 @@
   ],
   "homepage": "https://github.com/FriendsOfTYPO3/extension_builder",
   "license": [
-    "GPL-2.0+"
+    "GPL-2.0-or-later"
   ],
   "authors": [
     {
