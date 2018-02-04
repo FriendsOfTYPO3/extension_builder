@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * View helper for preg_replace
  *
@@ -22,7 +24,7 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * {k:pregReplace(match:'/this/', replace:'that', subject:'this')}
  *
  */
-class PregReplaceViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class PregReplaceViewHelper extends AbstractViewHelper
 {
     /**
      * Execute the preg_replace

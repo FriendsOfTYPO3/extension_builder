@@ -24,7 +24,7 @@ class NamespaceObject extends Container
      *
      * @var string[]
      */
-    protected $aliasDeclarations = array();
+    protected $aliasDeclarations = [];
 
     /**
      * @param string $name

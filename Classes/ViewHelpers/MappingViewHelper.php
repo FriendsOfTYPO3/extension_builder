@@ -14,9 +14,11 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
-class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper
+class MappingViewHelper extends AbstractConditionViewHelper
 {
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
@@ -27,7 +29,7 @@ class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditi
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
      * @return void
      */
-    public function injectExtensionBuilderConfigurationManager(\EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager)
+    public function injectExtensionBuilderConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
     {
         $this->configurationManager = $configurationManager;
     }
@@ -65,7 +67,7 @@ class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditi
 
         switch ($this->arguments['renderCondition']) {
 
-            case 'isMappedToInternalTable'    :
+            case 'isMappedToInternalTable':
                 if (!$isMappedToExternalTable) {
                     $content = $this->renderThenChild();
                 } else {
@@ -73,7 +75,7 @@ class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditi
                 }
                 break;
 
-            case 'isMappedToExternalTable'    :
+            case 'isMappedToExternalTable':
                 if ($isMappedToExternalTable) {
                     $content = $this->renderThenChild();
                 } else {
@@ -81,7 +83,7 @@ class MappingViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditi
                 }
                 break;
 
-            case 'needsTypeField'            :
+            case 'needsTypeField':
                 if ($this->needsTypeField($domainObject, $isMappedToExternalTable)) {
                     $content = $this->renderThenChild();
                 } else {

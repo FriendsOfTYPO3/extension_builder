@@ -23,7 +23,7 @@ class BooleanProperty extends AbstractProperty
      */
     protected $defaultValue = false;
 
-    /*
+    /**
      * @return string
      */
     public function getTypeForComment()
@@ -31,7 +31,7 @@ class BooleanProperty extends AbstractProperty
         return 'bool';
     }
 
-    /*
+    /**
      * @return string
      */
     public function getTypeHint()
@@ -39,7 +39,7 @@ class BooleanProperty extends AbstractProperty
         return '';
     }
 
-    /*
+    /**
      * @return string
      */
     public function getSqlDefinition()

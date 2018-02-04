@@ -14,7 +14,12 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
-class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
+use EBT\ExtensionBuilder\Parser\Traverser;
+use EBT\ExtensionBuilder\Service\Parser;
+use EBT\ExtensionBuilder\Tests\BaseUnitTest;
+use PhpParser\Lexer;
+
+class ParserTest extends BaseUnitTest
 {
     /**
      * @var \EBT\ExtensionBuilder\Service\Parser
@@ -25,7 +30,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         parent::setUp();
         $this->fixturesPath = PATH_typo3conf . 'ext/extension_builder/Tests/Fixtures/ClassParser/';
-        $this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
+        $this->parserService = new Parser(new Lexer());
     }
 
     /**
@@ -39,7 +44,7 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         self::assertEquals(count($classObject->getMethods()), 0);
         self::assertEquals(count($classObject->getProperties()), 1);
         self::assertEquals($classObject->getProperty('property')->getValue(), 'foo');
-        self::assertEquals($classObject->getProperty('property')->getModifierNames(), array('protected'));
+        self::assertEquals($classObject->getProperty('property')->getModifierNames(), ['protected']);
     }
 
     /**
@@ -47,12 +52,12 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     public function parseSimplePropertyWithGetterAndSetter()
     {
-        $this->parserService->setTraverser(new \EBT\ExtensionBuilder\Parser\Traverser);
+        $this->parserService->setTraverser(new Traverser);
         $classFileObject = $this->parseFile('SimplePropertyWithGetterAndSetter.php');
         self::assertEquals(count($classFileObject->getFirstClass()->getMethods()), 2);
         self::assertEquals(count($classFileObject->getFirstClass()->getProperties()), 1);
         self::assertEquals($classFileObject->getFirstClass()->getProperty('property')->getValue(), 'foo');
-        self::assertEquals($classFileObject->getFirstClass()->getProperty('property')->getModifierNames(), array('protected'));
+        self::assertEquals($classFileObject->getFirstClass()->getProperty('property')->getModifierNames(), ['protected']);
     }
 
     /**
@@ -74,10 +79,10 @@ class ParserTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     public function parseArrayProperty()
     {
-        $this->parserService->setTraverser(new \EBT\ExtensionBuilder\Parser\Traverser);
+        $this->parserService->setTraverser(new Traverser);
         $classFileObject = $this->parseFile('ClassWithArrayProperty.php');
         self::assertEquals(count($classFileObject->getFirstClass()->getProperties()), 1);
-        self::assertEquals($classFileObject->getFirstClass()->getProperty('arrProperty')->getModifierNames(), array('protected'));
+        self::assertEquals($classFileObject->getFirstClass()->getProperty('arrProperty')->getModifierNames(), ['protected']);
     }
 
     /**

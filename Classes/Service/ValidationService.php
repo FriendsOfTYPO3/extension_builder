@@ -14,10 +14,13 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * provides validation against reserved words
  */
-class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
+class ValidationService implements SingletonInterface
 {
     /**
      * TODO: Check this list if it's still up to date
@@ -25,7 +28,7 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @var string[]
      */
-    public static $reservedMYSQLWords = array(
+    public static $reservedMYSQLWords = [
         'ACCESSIBLE',
         'ADD',
         'ALL',
@@ -259,13 +262,13 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
         'XOR',
         'YEAR_MONTH',
         'ZEROFILL'
-    );
+    ];
     /**
      * column names used by TYPO3
      *
      * @var string[]
      */
-    public static $reservedTYPO3ColumnNames = array(
+    public static $reservedTYPO3ColumnNames = [
         'uid',
         'pid',
         'endtime',
@@ -291,13 +294,13 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
         'sys_language_uid',
         'l18n_parent',
         'l18n_diffsource'
-    );
+    ];
     /**
      * all these words may not be used as class or domain object names
      *
      * @var string[]
      */
-    public static $reservedExtbaseNames = array(
+    public static $reservedExtbaseNames = [
         'Class',
         'Format',
         'Action',
@@ -344,17 +347,16 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
         'RecursiveRegexIterator',
         'RecursiveTreeIterator',
         'RegexIterator',
-    );
+    ];
 
     /**
-     *
      * @param string $word
      *
      * @return bool
      */
     public static function isReservedTYPO3Word($word)
     {
-        if (in_array(\TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($word), self::$reservedTYPO3ColumnNames)) {
+        if (in_array(GeneralUtility::camelCaseToLowerCaseUnderscored($word), self::$reservedTYPO3ColumnNames)) {
             return true;
         } else {
             return false;
@@ -362,7 +364,6 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     *
      * @param string $word
      *
      * @return bool
@@ -377,7 +378,6 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     *
      * @param string $word
      *
      * @return bool
@@ -392,7 +392,6 @@ class ValidationService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     *
      * @param string $word
      *
      * @return bool

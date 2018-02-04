@@ -15,12 +15,13 @@ namespace EBT\ExtensionBuilder\Utility;
  */
 
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
+use TYPO3\CMS\Core\SingletonInterface;
 
 /**
  * provides helper methods
  *
  */
-class Tools implements \TYPO3\CMS\Core\SingletonInterface
+class Tools implements SingletonInterface
 {
     public static function parseTableNameFromClassName($className)
     {
@@ -45,8 +46,9 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $property
+     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
      * @param string $methodType (set,add,remove)
+     *
      * @return string method body
      */
     public static function getParameterName(AbstractProperty $domainProperty, $methodType)
@@ -54,15 +56,14 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface
         $propertyName = $domainProperty->getName();
 
         switch ($methodType) {
-
-            case 'set'            :
+            case 'set':
                 return $propertyName;
 
-            case 'add'            :
-                return \EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName);
+            case 'add':
+                return Inflector::singularize($propertyName);
 
-            case 'remove'        :
-                return \EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName) . 'ToRemove';
+            case 'remove':
+                return Inflector::singularize($propertyName) . 'ToRemove';
         }
     }
 
@@ -74,16 +75,16 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface
     public static function getParamTag(AbstractProperty $domainProperty, $methodType)
     {
         switch ($methodType) {
-            case 'set'        :
+            case 'set':
                 return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
 
-            case 'add'        :
+            case 'add':
                 /** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
                 $paramTag = $domainProperty->getForeignClassName();
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
                 return $paramTag;
 
-            case 'remove'    :
+            case 'remove':
                 /** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
                 $paramTag = $domainProperty->getForeignClassName();
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
@@ -93,7 +94,6 @@ class Tools implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     *
      * Build record type from TX_Vendor_Package_Modelname
      * @param $className
      * @return string

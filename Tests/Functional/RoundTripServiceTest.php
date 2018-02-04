@@ -14,9 +14,12 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
+use EBT\ExtensionBuilder\Service\ObjectSchemaBuilder;
+use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 
-class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
+class RoundTripServiceTest extends BaseFunctionalTest
 {
     /**
      * @var \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder
@@ -26,7 +29,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
     protected function setUp()
     {
         parent::setUp();
-        $this->objectSchemaBuilder = $this->objectManager->get('EBT\\ExtensionBuilder\\Service\\ObjectSchemaBuilder');
+        $this->objectSchemaBuilder = $this->objectManager->get(ObjectSchemaBuilder::class);
     }
 
     /**
@@ -55,7 +58,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
         $uniqueIdentifier2 = md5(microtime() . 'model');
         $domainObject->setUniqueIdentifier($uniqueIdentifier2);
 
-        $this->roundTripService->_set('previousDomainObjects', array($domainObject->getUniqueIdentifier() => $domainObject));
+        $this->roundTripService->_set('previousDomainObjects', [$domainObject->getUniqueIdentifier() => $domainObject]);
         $templateClass = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
         // create an "old" class object.
         $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $templateClass, false)->getFirstClass();
@@ -70,7 +73,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
 
         // build a new domain object with the same unique identifiers
         $newDomainObject = $this->buildDomainObject('Dummy');
-        $property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty('newProp1Name');
+        $property = new BooleanProperty('newProp1Name');
         $property->setUniqueIdentifier($uniqueIdentifier1);
         $property->setRequired(true);
         $newDomainObject->addProperty($property);
@@ -96,13 +99,13 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
         $domainObject = $this->buildDomainObject($modelName);
         self::assertTrue(is_object($domainObject), 'No domain object');
 
-        $relationJsonConfiguration = array(
+        $relationJsonConfiguration = [
             'lazyLoading' => 0,
             'propertyIsExcludeField' => 1,
             'relationDescription' => '',
             'relationName' => 'children',
             'relationType' => 'manyToMany',
-        );
+        ];
 
         $relation = $this->objectSchemaBuilder->buildRelation($relationJsonConfiguration, $domainObject);
 
@@ -113,7 +116,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
         $uniqueIdentifier2 = md5(microtime() . 'Model8');
         $domainObject->setUniqueIdentifier($uniqueIdentifier2);
 
-        $this->roundTripService->_set('previousDomainObjects', array($domainObject->getUniqueIdentifier() => $domainObject));
+        $this->roundTripService->_set('previousDomainObjects', [$domainObject->getUniqueIdentifier() => $domainObject]);
         $templateClass = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
         // create an "old" class object.
         $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $templateClass, false)->getFirstClass();
@@ -162,13 +165,13 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
         $domainObject = $this->buildDomainObject($modelName);
         self::assertTrue(is_object($domainObject), 'No domain object');
 
-        $relationJsonConfiguration = array(
+        $relationJsonConfiguration = [
             'lazyLoading' => 0,
             'propertyIsExcludeField' => 1,
             'relationDescription' => '',
             'relationName' => 'children',
             'relationType' => 'manyToMany',
-        );
+        ];
 
         $relation = $this->objectSchemaBuilder->buildRelation($relationJsonConfiguration, $domainObject);
 
@@ -179,7 +182,7 @@ class RoundTripServiceTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTes
         $uniqueIdentifier2 = md5(microtime() . 'Model8');
         $domainObject->setUniqueIdentifier($uniqueIdentifier2);
 
-        $this->roundTripService->_set('previousDomainObjects', array($domainObject->getUniqueIdentifier() => $domainObject));
+        $this->roundTripService->_set('previousDomainObjects', [$domainObject->getUniqueIdentifier() => $domainObject]);
 
         // create an "old" class object.
         $modelClassObject = $this->classBuilder->generateModelClassFileObject(

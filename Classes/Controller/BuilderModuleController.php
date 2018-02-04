@@ -15,9 +15,11 @@ namespace EBT\ExtensionBuilder\Controller;
  */
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository;
 use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
 use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
+use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -75,14 +77,16 @@ class BuilderModuleController extends ActionController
      * @param \EBT\ExtensionBuilder\Service\FileGenerator $fileGenerator
      * @return void
      */
-    public function injectFileGenerator(\EBT\ExtensionBuilder\Service\FileGenerator $fileGenerator)
+    public function injectFileGenerator(FileGenerator $fileGenerator)
     {
         $this->fileGenerator = $fileGenerator;
     }
 
     /**
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
+     *
      * @return void
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     public function injectExtensionBuilderConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
     {
@@ -141,6 +145,8 @@ class BuilderModuleController extends ActionController
      * loading the user should immediately be redirected to the domainmodellingAction.
      *
      * @return void
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
     public function indexAction()
     {
@@ -161,12 +167,13 @@ class BuilderModuleController extends ActionController
      * interface.
      *
      * @return void
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     public function domainmodellingAction()
     {
         $this->view->assign('settings', $this->extensionBuilderConfigurationManager->getSettings());
         $this->view->assign('currentAction', $this->request->getControllerActionName());
-        $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', array('firstTime' => 0));
+        $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', ['firstTime' => 0]);
     }
 
     /**
@@ -193,10 +200,10 @@ class BuilderModuleController extends ActionController
                     $response = $this->rpcActionPerformDbUpdate();
                     break;
                 default:
-                    $response = array('error' => 'Sub Action not found.');
+                    $response = ['error' => 'Sub Action not found.'];
             }
         } catch (\Exception $e) {
-            $response = array('error' => $e->getMessage());
+            $response = ['error' => $e->getMessage()];
         }
         return json_encode($response);
     }
@@ -267,7 +274,7 @@ class BuilderModuleController extends ActionController
                     // no config file in an existing extension!
                     // this would result in a	 total overwrite so we create one and give a warning
                     $this->extensionBuilderConfigurationManager->createInitialSettingsFile($extension, $this->extensionBuilderSettings['codeTemplateRootPaths']);
-                    return array('warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the extension builder the first time for this extension. <br />A settings file was generated in <br /><b>typo3conf/ext/" . $extension->getExtensionKey() . '/Configuration/ExtensionBuilder/settings.yaml.</b><br />Configure the overwrite settings, then save again.');
+                    return ['warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the extension builder the first time for this extension. <br />A settings file was generated in <br /><b>typo3conf/ext/" . $extension->getExtensionKey() . '/Configuration/ExtensionBuilder/settings.yaml.</b><br />Configure the overwrite settings, then save again.'];
                 }
                 try {
                     RoundTrip::prepareExtensionForRoundtrip($extension);
@@ -275,14 +282,10 @@ class BuilderModuleController extends ActionController
                     throw $e;
                 }
             } else {
-                if (!is_array($extensionSettings['ignoreWarnings']) ||
-                    !in_array(
-                        \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::EXTENSION_DIR_EXISTS,
-                        $extensionSettings['ignoreWarnings'])
-                ) {
-                    $confirmationRequired = $this->handleValidationWarnings(array(
-                        new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException("This action will overwrite previously saved content!\n(Enable the roundtrip feature to avoid this warning).", \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::EXTENSION_DIR_EXISTS)
-                    ));
+                if (!is_array($extensionSettings['ignoreWarnings']) || !in_array(ExtensionValidator::EXTENSION_DIR_EXISTS, $extensionSettings['ignoreWarnings'])) {
+                    $confirmationRequired = $this->handleValidationWarnings([
+                        new ExtensionException("This action will overwrite previously saved content!\n(Enable the roundtrip feature to avoid this warning).", ExtensionValidator::EXTENSION_DIR_EXISTS)
+                    ]);
                     if (!empty($confirmationRequired)) {
                         return $confirmationRequired;
                     }
@@ -296,7 +299,7 @@ class BuilderModuleController extends ActionController
             if ($extension->getNeedsUploadFolder()) {
                 $message .= '<br />Notice: File upload is not yet implemented.';
             }
-            $result = array('success' => $message);
+            $result = ['success' => $message];
             if ($this->extensionInstallationStatus->isDbUpdateNeeded()) {
                 $result['confirmUpdate'] = true;
             }
@@ -318,7 +321,7 @@ class BuilderModuleController extends ActionController
     protected function rpcActionList()
     {
         $extensions = $this->extensionRepository->findAll();
-        return array('result' => $extensions, 'error' => null);
+        return ['result' => $extensions, 'error' => null];
     }
 
     /**
@@ -329,10 +332,10 @@ class BuilderModuleController extends ActionController
      */
     protected function handleValidationWarnings(array $warnings)
     {
-        $messagesPerErrorcode = array();
+        $messagesPerErrorcode = [];
         foreach ($warnings as $exception) {
             if (!is_array($messagesPerErrorcode[$exception->getCode()])) {
-                $messagesPerErrorcode[$exception->getCode()] = array();
+                $messagesPerErrorcode[$exception->getCode()] = [];
             }
             $messagesPerErrorcode[$exception->getCode()][] = nl2br(htmlspecialchars($exception->getMessage())) . ' (Error ' . $exception->getCode() . ')<br /><br />';
         }
@@ -347,13 +350,13 @@ class BuilderModuleController extends ActionController
                     $confirmMessage = '<ol class="warnings"><li>' . implode('</li><li>', $messages) . '</li></ol>' .
                         '<strong>Do you want to save anyway?</strong><br /><br />';
                 }
-                return array(
+                return [
                     'confirm' => '<span style="color:red">Warning!</span></br>' . $confirmMessage,
                     'confirmFieldName' => 'allow' . $errorCode
-                );
+                ];
             }
         }
-        return array();
+        return [];
     }
 
     /**

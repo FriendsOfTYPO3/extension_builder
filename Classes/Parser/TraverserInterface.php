@@ -14,9 +14,12 @@ namespace EBT\ExtensionBuilder\Parser;
  * The TYPO3 project - inspiring people to share!
  */
 
-interface TraverserInterface extends \PhpParser\NodeTraverserInterface
+use PhpParser\NodeTraverserInterface;
+use PhpParser\NodeVisitor;
+
+interface TraverserInterface extends NodeTraverserInterface
 {
     public function resetVisitors();
 
-    public function appendVisitor(\PhpParser\NodeVisitor $visitor);
+    public function appendVisitor(NodeVisitor $visitor);
 }

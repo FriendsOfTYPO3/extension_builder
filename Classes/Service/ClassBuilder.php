@@ -14,8 +14,14 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model;
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter;
+use EBT\ExtensionBuilder\Domain\Model\NamespaceObject;
+use EBT\ExtensionBuilder\Parser\ClassFactory;
 use EBT\ExtensionBuilder\Utility\Inflector;
+use EBT\ExtensionBuilder\Utility\Tools;
+use TYPO3\CMS\Core\SingletonInterface;
 
 /**
  * Builds the required class objects for extbase extensions
@@ -23,7 +29,7 @@ use EBT\ExtensionBuilder\Utility\Inflector;
  * if an existing classFileObject is passed as argument, the existing class is loaded
  * and modified according to the current modeler configuration
  */
-class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
+class ClassBuilder implements SingletonInterface
 {
     /**
      * The class file object created to container the generated class
@@ -71,7 +77,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
     /**
      * @var string
      */
@@ -81,7 +87,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
      * @return void
      */
-    public function injectConfigurationManager(\EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager)
+    public function injectConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
     {
         $this->configurationManager = $configurationManager;
     }
@@ -108,16 +114,16 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
      * @param \EBT\ExtensionBuilder\Parser\ClassFactory $classFactory
      * @return void
      */
-    public function injectClassFactory(\EBT\ExtensionBuilder\Parser\ClassFactory $classFactory)
+    public function injectClassFactory(ClassFactory $classFactory)
     {
         $this->classFactory = $classFactory;
     }
 
     /**
-     *
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
      *
      * @return void
+     * @throws \Exception
      */
     public function initialize(Model\Extension $extension)
     {
@@ -133,9 +139,12 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
      * comments needed to create a domain object class file
      *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param string $modelClassTemplatePath
      * @param \EBT\ExtensionBuilder\Domain\Model\File $existingClassFileObject
      *
      * @return \EBT\ExtensionBuilder\Domain\Model\File
+     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
+     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
      */
     public function generateModelClassFileObject($domainObject, $modelClassTemplatePath, $existingClassFileObject = null)
     {
@@ -146,7 +155,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
             $this->classFileObject = $existingClassFileObject;
             $this->classObject = $existingClassFileObject->getFirstClass();
             if ($this->classFileObject->getNamespace() === false) {
-                $nameSpace = new \EBT\ExtensionBuilder\Domain\Model\NamespaceObject('dummy');
+                $nameSpace = new NamespaceObject('dummy');
                 $this->classFileObject->addNamespace($nameSpace);
             }
         }
@@ -167,13 +176,12 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
         }
         $this->classFileObject->getNamespace()
             ->setName($this->extension->getNamespaceName() . '\\Domain\\Model')
-            ->setClasses(array($this->classObject));
+            ->setClasses([$this->classObject]);
         return $this->classFileObject;
     }
 
     /**
-     *
-     * create a new class object based on the template and the related domain object
+     * Create a new class object based on the template and the related domain object
      *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
      *
@@ -259,7 +267,10 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     *
      * @return void
+     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
+     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
      */
     protected function addInitStorageObjectCalls(Model\DomainObject $domainObject)
     {
@@ -276,24 +287,27 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
                 $this->classObject->setMethod($this->classObject->getMethod('__construct'));
             }
             $initStorageObjectsMethod = clone($this->templateClassObject->getMethod('initStorageObjects'));
-            $methodBodyStmts = array();
+            $methodBodyStmts = [];
             $templateBodyStmts = $initStorageObjectsMethod->getBodyStmts();
             $initStorageObjectsMethod->setModifier('protected');
             foreach ($anyToManyRelationProperties as $relationProperty) {
-                $methodBodyStmts = array_merge($methodBodyStmts, $this->parserService->replaceNodeProperty($templateBodyStmts, array('children' => $relationProperty->getName()), array('Expr_PropertyFetch', 'Expr_Variable')));
+                $methodBodyStmts = array_merge($methodBodyStmts, $this->parserService->replaceNodeProperty($templateBodyStmts, ['children' => $relationProperty->getName()], ['Expr_PropertyFetch', 'Expr_Variable']));
             }
             $initStorageObjectsMethod->setBodyStmts($methodBodyStmts);
             $this->classObject->setMethod($initStorageObjectsMethod);
         } elseif ($this->classObject->methodExists('initStorageObjects')) {
-            $this->classObject->getMethod('initStorageObjects')->setBodyStmts(array());
+            $this->classObject->getMethod('initStorageObjects')->setBodyStmts([]);
         }
     }
 
     /**
      * add all setter/getter/add/remove etc. methods
+     *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
      *
      * @return void
+     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
+     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
      */
     protected function setPropertyRelatedMethods($domainProperty)
     {
@@ -314,7 +328,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
      *
      * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
@@ -328,7 +341,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
             $getterMethod = $this->classObject->getMethod($getterMethodName);
         } else {
             $getterMethod = clone $this->templateClassObject->getMethod('getProperty')->setName($getterMethodName);
-            $replacements = array('property' => $propertyName);
+            $replacements = ['property' => $propertyName];
             $this->updateMethodBody($getterMethod, $replacements);
             $this->updateDocComment($getterMethod, $replacements);
             $getterMethod->setTag('return', $domainProperty->getTypeForComment() . ' $' . $propertyName);
@@ -340,7 +353,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
      *
      * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
@@ -355,7 +367,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
         } else {
             $setterMethod = clone $this->templateClassObject->getMethod('setProperty');
             $setterMethod->setName('set' . ucfirst($propertyName));
-            $replacements = array('property' => $propertyName);
+            $replacements = ['property' => $propertyName];
             $this->updateMethodBody($setterMethod, $replacements);
             $this->updateDocComment($setterMethod, $replacements);
             $setterMethod->setTag('return', 'void');
@@ -368,7 +380,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
         }
         $setterParameters = $setterMethod->getParameterNames();
         if (!in_array($propertyName, $setterParameters)) {
-            $setterParameter = new Model\ClassObject\MethodParameter($propertyName);
+            $setterParameter = new MethodParameter($propertyName);
             $setterParameter->setVarType($domainProperty->getTypeForComment());
             if (is_subclass_of($domainProperty, 'Model\\DomainObject\\Relation\\AbstractRelation')) {
                 $setterParameter->setTypeHint($domainProperty->getTypeHint());
@@ -379,10 +391,11 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation $domainProperty
      *
      * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
+     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
+     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
      */
     protected function buildAddMethod($domainProperty)
     {
@@ -393,28 +406,28 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
             $addMethod = $this->classObject->getMethod($addMethodName);
         } else {
             $addMethod = clone($this->templateClassObject->getMethod('addChild'));
-            $addMethod->setName('add' . ucfirst(\EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName)));
+            $addMethod->setName('add' . ucfirst(Inflector::singularize($propertyName)));
 
             $this->updateMethodBody(
                 $addMethod,
-                array(
-                    'child' => \EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName),
+                [
+                    'child' => Inflector::singularize($propertyName),
                     'children' => $propertyName,
                     'Child' => $domainProperty->getForeignModelName()
-                )
+                ]
             );
             $this->updateDocComment(
                 $addMethod,
-                array(
-                    '\bchild\b' => \EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName),
+                [
+                    '\bchild\b' => Inflector::singularize($propertyName),
                     '\bchildren\b' => $propertyName,
                     '\bChild\b' => $domainProperty->getForeignModelName()
-                )
+                ]
             );
 
-            $addMethod->setTag('param', \EBT\ExtensionBuilder\Utility\Tools::getParamTag($domainProperty, 'add'));
+            $addMethod->setTag('param', Tools::getParamTag($domainProperty, 'add'));
             $addMethod->getParameterByPosition(0)
-                ->setName(\EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName))
+                ->setName(Inflector::singularize($propertyName))
                 ->setVarType($domainProperty->getForeignClassName())
                 ->setTypeHint($domainProperty->getForeignClassName());
             $addMethod->setTag('return', 'void');
@@ -422,8 +435,8 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
         }
         $addParameters = $addMethod->getParameterNames();
 
-        if (!in_array(\EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName), $addParameters)) {
-            $addParameter = new Model\ClassObject\MethodParameter(\EBT\ExtensionBuilder\Utility\Tools::getParameterName($domainProperty, 'add'));
+        if (!in_array(Inflector::singularize($propertyName), $addParameters)) {
+            $addParameter = new MethodParameter(Tools::getParameterName($domainProperty, 'add'));
             $addParameter->setVarType($domainProperty->getForeignClassName());
             $addMethod->setParameter($addParameter);
         }
@@ -434,23 +447,24 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation $domainProperty
      *
      * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
+     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
+     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
      */
     protected function buildRemoveMethod($domainProperty)
     {
         $propertyName = $domainProperty->getName();
         $removeMethodName = self::getMethodName($domainProperty, 'remove');
-        $parameterName = \EBT\ExtensionBuilder\Utility\Tools::getParameterName($domainProperty, 'remove');
+        $parameterName = Tools::getParameterName($domainProperty, 'remove');
 
         if ($this->classObject->methodExists($removeMethodName)) {
             $removeMethod = $this->classObject->getMethod($removeMethodName);
         } else {
             $removeMethod = clone($this->templateClassObject->getMethod('removeChild'));
-            $removeMethod->setName('remove' . ucfirst(\EBT\ExtensionBuilder\Utility\Inflector::singularize($propertyName)));
-            $removeMethod->setTag('param', \EBT\ExtensionBuilder\Utility\Tools::getParamTag($domainProperty, 'remove'), true);
+            $removeMethod->setName('remove' . ucfirst(Inflector::singularize($propertyName)));
+            $removeMethod->setTag('param', Tools::getParamTag($domainProperty, 'remove'), true);
             $removeMethod->setTag('return', 'void');
             $removeMethod->addModifier('public');
             $removeMethod->getParameterByPosition(0)
@@ -460,26 +474,26 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
             $removeMethod->updateParamTags();
             $this->updateMethodBody(
                 $removeMethod,
-                array(
+                [
                     'childToRemove' => $parameterName,
                     'child' => $domainProperty->getForeignModelName(),
                     'children' => $propertyName,
                     'Child' => $domainProperty->getForeignModelName()
-                )
+                ]
             );
             $this->updateDocComment(
                 $removeMethod,
-                array(
+                [
                     '\bchildToRemove\b' => $parameterName,
                     '\bChild\b' => $domainProperty->getForeignModelName()
-                )
+                ]
             );
         }
 
         $removeParameters = $removeMethod->getParameterNames();
-        if (!in_array(\EBT\ExtensionBuilder\Utility\Tools::getParameterName($domainProperty, 'remove'), $removeParameters)) {
-            $removeParameter = new Model\ClassObject\MethodParameter(\EBT\ExtensionBuilder\Utility\Tools::getParameterName($domainProperty, 'remove'), true);
-            $removeParameter->setName(\EBT\ExtensionBuilder\Utility\Tools::getParameterName($domainProperty, 'remove'))
+        if (!in_array(Tools::getParameterName($domainProperty, 'remove'), $removeParameters)) {
+            $removeParameter = new MethodParameter(Tools::getParameterName($domainProperty, 'remove'));
+            $removeParameter->setName(Tools::getParameterName($domainProperty, 'remove'))
                 ->setVarType($domainProperty->getForeignClassName())
                 ->setTypeHint($domainProperty->getForeignClassName())
                 ->setTypeForParamTag($domainProperty->getTypeForComment());
@@ -509,7 +523,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
             $isMethod = clone($this->templateClassObject->getMethod('isProperty'));
             $isMethod->setName('is' . ucfirst($domainProperty->getName()));
             $isMethod->setTag('return', 'bool');
-            $replacements = array('property' => $domainProperty->getName());
+            $replacements = ['property' => $domainProperty->getName()];
             $this->updateMethodBody($isMethod, $replacements);
             $this->updateDocComment($isMethod, $replacements);
         }
@@ -521,7 +535,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
      *
@@ -538,9 +551,9 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
             $actionMethod->setName($actionMethodName);
             $actionMethod->setDescription('action ' . $action->getName());
         }
-        if (in_array($actionName, array('show', 'edit', 'create', 'update', 'delete'))) {
+        if (in_array($actionName, ['show', 'edit', 'create', 'update', 'delete'])) {
             // these actions need a parameter
-            if (in_array($actionName, array('create'))) {
+            if (in_array($actionName, ['create'])) {
                 $parameterName = 'new' . $domainObject->getName();
             } else {
                 $parameterName = lcfirst($domainObject->getName());
@@ -556,19 +569,18 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
             }
         }
 
-        $replacements = array(
+        $replacements = [
             'domainObjectRepository' => lcfirst($domainObject->getName()) . 'Repository',
             'domainObject' => lcfirst($domainObject->getName()),
             'domainObjects' => lcfirst(Inflector::pluralize($domainObject->getName())),
             'newDomainObject' => 'new' . $domainObject->getName()
-        );
+        ];
         $this->updateMethodBody($actionMethod, $replacements);
         $this->updateDocComment($actionMethod, $replacements);
         return $actionMethod;
     }
 
     /**
-     *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
      * @param string $methodType (get,set,add,remove,is)
      * @return string method name
@@ -577,19 +589,19 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
     {
         $propertyName = $domainProperty->getName();
         switch ($methodType) {
-            case 'set'        :
+            case 'set':
                 return 'set' . ucfirst($propertyName);
 
-            case 'get'        :
+            case 'get':
                 return 'get' . ucfirst($propertyName);
 
-            case 'add'        :
+            case 'add':
                 return 'add' . ucfirst(Inflector::singularize($propertyName));
 
-            case 'remove'    :
+            case 'remove':
                 return 'remove' . ucfirst(Inflector::singularize($propertyName));
 
-            case 'is'        :
+            case 'is':
                 return 'is' . ucfirst($propertyName);
         }
     }
@@ -605,7 +617,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
         $stmts = current(
             $this->parserService->replaceNodeProperty(
-                array($stmts),
+                [$stmts],
                 $replacements,
                 null,
                 'name'
@@ -613,7 +625,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
         );
         $stmts = current(
             $this->parserService->replaceNodeProperty(
-                array($stmts),
+                [$stmts],
                 $replacements,
                 null,
                 'value'
@@ -630,9 +642,9 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
     {
         $docComment = $object->getDocComment();
         // reset all tags (they will be restored from the parsed doc comment string)
-        $object->setTags(array());
-        $object->setDescriptionLines(array());
-        // replace occurences in tags and comments
+        $object->setTags([]);
+        $object->setDescriptionLines([]);
+        // replace occurrences in tags and comments
         $pattern = array_keys($replacements);
         array_walk($pattern, function (&$item) {
             $item = '/' . $item . '/';
@@ -642,7 +654,6 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
      * @param string $methodType (set,add,remove)
      * @return string method body
@@ -653,13 +664,13 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
         switch ($methodType) {
 
-            case 'set'            :
+            case 'set':
                 return $propertyName;
 
-            case 'add'            :
+            case 'add':
                 return Inflector::singularize($propertyName);
 
-            case 'remove'        :
+            case 'remove':
                 return Inflector::singularize($propertyName) . 'ToRemove';
         }
     }
@@ -673,16 +684,16 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
     public static function getParamTag($domainProperty, $methodType)
     {
         switch ($methodType) {
-            case 'set'        :
+            case 'set':
                 return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
 
-            case 'add'        :
+            case 'add':
                 /** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
                 $paramTag = $domainProperty->getForeignClassName();
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
                 return $paramTag;
 
-            case 'remove'    :
+            case 'remove':
                 /** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
                 $paramTag = $domainProperty->getForeignClassName();
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
@@ -697,9 +708,11 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
      * comments that are required to create a controller class file
      *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param $controllerClassTemplatePath
      * @param \EBT\ExtensionBuilder\Domain\Model\File $existingClassFileObject
      *
      * @return \EBT\ExtensionBuilder\Domain\Model\File
+     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
      */
     public function generateControllerClassFileObject($domainObject, $controllerClassTemplatePath, $existingClassFileObject = null)
     {
@@ -712,7 +725,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
             $this->classFileObject = $existingClassFileObject;
             $this->classObject = $existingClassFileObject->getFirstClass();
             if ($this->classFileObject->getNamespace() === false) {
-                $nameSpace = new \EBT\ExtensionBuilder\Domain\Model\NamespaceObject('dummy');
+                $nameSpace = new NamespaceObject('dummy');
                 $this->classFileObject->addNamespace($nameSpace);
             }
         }
@@ -755,7 +768,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
         }
         $this->classFileObject->getNamespace()
             ->setName($this->extension->getNamespaceName() . '\\Controller')
-            ->setClasses(array($this->classObject));
+            ->setClasses([$this->classObject]);
         return $this->classFileObject;
     }
 
@@ -767,9 +780,11 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
      * needed to create a repository class file
      *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param $repositoryTemplateClassPath
      * @param \EBT\ExtensionBuilder\Domain\Model\File $existingClassFileObject
      *
      * @return \EBT\ExtensionBuilder\Domain\Model\File
+     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
      */
     public function generateRepositoryClassFileObject($domainObject, $repositoryTemplateClassPath, $existingClassFileObject = null)
     {
@@ -781,7 +796,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
             $this->classFileObject = $existingClassFileObject;
             $this->classObject = $existingClassFileObject->getFirstClass();
             if ($this->classFileObject->getNamespace() === false) {
-                $nameSpace = new \EBT\ExtensionBuilder\Domain\Model\NamespaceObject('dummy');
+                $nameSpace = new NamespaceObject('dummy');
                 $this->classFileObject->addNamespace($nameSpace);
             }
         }
@@ -805,7 +820,7 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
         }
         $this->classFileObject->getNamespace()
             ->setName($this->extension->getNamespaceName() . '\\Domain\\Repository')
-            ->setClasses(array($this->classObject));
+            ->setClasses([$this->classObject]);
         return $this->classFileObject;
     }
 
@@ -818,15 +833,15 @@ class ClassBuilder implements \TYPO3\CMS\Core\SingletonInterface
     public function sortMethods($domainObject)
     {
         $objectProperties = $domainObject->getProperties();
-        $sortedProperties = array();
-        $propertyRelatedMethods = array();
-        $customMethods = array();
+        $sortedProperties = [];
+        $propertyRelatedMethods = [];
+        $customMethods = [];
 
         // sort all properties and methods according to domainObject sort order
         foreach ($objectProperties as $objectProperty) {
             if ($this->classObject->propertyExists($objectProperty->getName())) {
                 $sortedProperties[$objectProperty->getName()] = $this->classObject->getProperty($objectProperty->getName());
-                $methodPrefixes = array('get', 'set', 'add', 'remove', 'is');
+                $methodPrefixes = ['get', 'set', 'add', 'remove', 'is'];
                 foreach ($methodPrefixes as $methodPrefix) {
                     $methodName = self::getMethodName($objectProperty, $methodPrefix);
                     if ($this->classObject->methodExists($methodName)) {

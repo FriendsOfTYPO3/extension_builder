@@ -14,11 +14,14 @@ namespace EBT\ExtensionBuilder\Tests;
  * The TYPO3 project - inspiring people to share!
  */
 
-use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
+use EBT\ExtensionBuilder\Domain\Model\Extension;
+use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
-abstract class BaseUnitTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+abstract class BaseUnitTest extends UnitTestCase
 {
     /**
      * @var bool
@@ -52,9 +55,9 @@ abstract class BaseUnitTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCa
 
         $this->fixturesPath = __DIR__ . '/Fixtures/';
 
-        $settings = \EBT\ExtensionBuilder\Utility\SpycYAMLParser::YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
+        $settings = SpycYAMLParser::YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
 
-        $this->extension = $this->getMockBuilder(\EBT\ExtensionBuilder\Domain\Model\Extension::class)
+        $this->extension = $this->getMockBuilder(Extension::class)
             ->enableProxyingToOriginalMethods()
             ->getMock();
         $this->extension->setVendorName('EBT');
@@ -85,8 +88,8 @@ abstract class BaseUnitTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCa
     protected function buildDomainObject($name, $entity = false, $aggregateRoot = false)
     {
         $domainObject = $this->getAccessibleMock(
-            \EBT\ExtensionBuilder\Domain\Model\DomainObject::class,
-            array('dummy')
+            DomainObject::class,
+            ['dummy']
         );
         /* @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
         $domainObject->setExtension($this->extension);
@@ -96,7 +99,7 @@ abstract class BaseUnitTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCa
         if ($aggregateRoot) {
             $defaultActions = ['list', 'show', 'new', 'create', 'edit', 'update', 'delete'];
             foreach ($defaultActions as $actionName) {
-                $action = GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Action');
+                $action = GeneralUtility::makeInstance(Action::class);
                 $action->setName($actionName);
                 if ($actionName == 'deleted') {
                     $action->setNeedsTemplate = false;

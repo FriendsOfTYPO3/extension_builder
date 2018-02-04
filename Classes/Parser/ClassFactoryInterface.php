@@ -14,19 +14,25 @@ namespace EBT\ExtensionBuilder\Parser;
  * The TYPO3 project - inspiring people to share!
  */
 
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Function_;
+use PhpParser\Node\Stmt\Namespace_;
+use PhpParser\Node\Stmt\Property;
+
 /**
  * interface for class factory
  *
  */
 interface ClassFactoryInterface
 {
-    public function buildClassObject(\PhpParser\Node\Stmt\Class_ $node);
+    public function buildClassObject(Class_ $node);
 
-    public function buildClassMethodObject(\PhpParser\Node\Stmt\ClassMethod $node);
+    public function buildClassMethodObject(ClassMethod $node);
 
-    public function buildPropertyObject(\PhpParser\Node\Stmt\Property $node);
+    public function buildPropertyObject(Property $node);
 
-    public function buildFunctionObject(\PhpParser\Node\Stmt\Function_ $node);
+    public function buildFunctionObject(Function_ $node);
 
-    public function buildNamespaceObject(\PhpParser\Node\Stmt\Namespace_ $node);
+    public function buildNamespaceObject(Namespace_ $node);
 }

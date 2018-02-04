@@ -27,7 +27,7 @@ class Person
      * @var string[]
      * @transient
      */
-    protected static $ROLES = array('developer', 'product_manager');
+    protected static $ROLES = ['developer', 'product_manager'];
     /**
      * @var string
      */

@@ -14,12 +14,25 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
+use EBT\ExtensionBuilder\Domain\Model\File;
+use EBT\ExtensionBuilder\Parser\NodeFactory;
+use PhpParser\Comment\Doc;
+use PhpParser\Node\Expr;
+use PhpParser\Node\Expr\Array_;
+use PhpParser\Node\Expr\ArrayDimFetch;
+use PhpParser\Node\Expr\FuncCall;
+use PhpParser\Node\Expr\Include_;
+use PhpParser\Node\Expr\MethodCall;
+use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Stmt;
+use PhpParser\PrettyPrinter\Standard;
 
 /**
  * provides methods to render the sourcecode for statements
  */
-class Printer extends \PhpParser\PrettyPrinter\Standard
+class Printer extends Standard
 {
     /**
      * @var \EBT\ExtensionBuilder\Parser\NodeFactory
@@ -37,7 +50,7 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
     /**
      * @param \EBT\ExtensionBuilder\Parser\NodeFactory $nodeFactory
      */
-    public function injectNodeFactory(\EBT\ExtensionBuilder\Parser\NodeFactory $nodeFactory)
+    public function injectNodeFactory(NodeFactory $nodeFactory)
     {
         $this->nodeFactory = $nodeFactory;
     }
@@ -49,7 +62,7 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
     public function render($stmts)
     {
         if (!is_array($stmts)) {
-            $stmts = array($stmts);
+            $stmts = [$stmts];
         }
         return $this->prettyPrint($stmts);
     }
@@ -59,7 +72,7 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
      * @return string
      * @return string
      */
-    public function renderClassObject(\EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject)
+    public function renderClassObject(ClassObject $classObject)
     {
         $stmts = $this->nodeFactory->buildClassNode($classObject);
         return $this->render($stmts);
@@ -70,7 +83,7 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
      * @param bool $prependPHPTag
      * @return string
      */
-    public function renderFileObject(\EBT\ExtensionBuilder\Domain\Model\File $fileObject, $prependPHPTag = false)
+    public function renderFileObject(File $fileObject, $prependPHPTag = false)
     {
         $stmts = $this->nodeFactory->getFileStatements($fileObject);
         $resultingCode = $this->render($stmts);
@@ -105,11 +118,11 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
      */
     protected function pStmts(array $nodes, $indent = true)
     {
-        $pNodes = array();
+        $pNodes = [];
         foreach ($nodes as $node) {
-            $pNodes[] = $this->pComments($node->getAttribute('comments', array())) .
-                $this->p($node) .
-                ($node instanceof \PhpParser\Node\Expr ? ';' : '');
+            $pNodes[] = $this->pComments($node->getAttribute('comments', [])) .
+                        $this->p($node) .
+                ($node instanceof Expr ? ';' : '');
         }
 
         if ($indent) {
@@ -174,7 +187,6 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
     }
 
     /**
-     *
      * @param array $stmts
      * @return int
      */
@@ -194,7 +206,7 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
 
     // Function calls and similar constructs
 
-    public function pExpr_FuncCall(\PhpParser\Node\Expr\FuncCall $node)
+    public function pExpr_FuncCall(FuncCall $node)
     {
         $firstToken = '';
         $lastToken = '';
@@ -209,7 +221,7 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
         return $this->p($node->name) . '(' . $firstToken . $this->pParameterNodes($node->args) . $lastToken . ')';
     }
 
-    public function zzz_pExpr_MethodCall(\PhpParser\Node\Expr\MethodCall $node)
+    public function zzz_pExpr_MethodCall(MethodCall $node)
     {
         $firstToken = '';
         $lastToken = '';
@@ -225,7 +237,7 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
         '(' . $firstToken . $this->pParameterNodes($node->args) . $lastToken . ')';
     }
 
-    public function pExpr_StaticCall(\PhpParser\Node\Expr\StaticCall $node)
+    public function pExpr_StaticCall(StaticCall $node)
     {
         $firstToken = '';
         $lastToken = '';
@@ -238,9 +250,9 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
             }
         }
         return $this->p($node->class) . '::' .
-        ($node->name instanceof \PhpParser\Node\Expr
-            ? ($node->name instanceof \PhpParser\Node\Expr\Variable
-            || $node->name instanceof \PhpParser\Node\Expr\ArrayDimFetch
+        ($node->name instanceof Expr
+            ? ($node->name instanceof Variable
+            || $node->name instanceof ArrayDimFetch
                 ? $this->p($node->name)
                 : '{' . $this->p($node->name) . '}')
             : $node->name) .
@@ -311,7 +323,7 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
                 continue;
             }
             $result .= $comment->getReformattedText() . LF;
-            if (!$comment instanceof \PhpParser\Comment\Doc &&
+            if (!$comment instanceof Doc &&
                 count(explode(LF, $comment->getReformattedText())) > 1
             ) {
                 // one blank line after comments except for doc comments and single line comments
@@ -326,7 +338,7 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
     /**
      * print an associative array
      */
-    public function pExpr_Array(\PhpParser\Node\Expr\Array_ $node)
+    public function pExpr_Array(Array_ $node)
     {
         $multiLine = false;
         $startLine = $node->getAttribute('startLine');
@@ -369,14 +381,14 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
         }
     }
 
-    public function pExpr_Include(\PhpParser\Node\Expr\Include_ $node)
+    public function pExpr_Include(Include_ $node)
     {
-        static $map = array(
-            \PhpParser\Node\Expr\Include_::TYPE_INCLUDE => 'include',
-            \PhpParser\Node\Expr\Include_::TYPE_INCLUDE_ONCE => 'include_once',
-            \PhpParser\Node\Expr\Include_::TYPE_REQUIRE => 'require',
-            \PhpParser\Node\Expr\Include_::TYPE_REQUIRE_ONCE => 'require_once',
-        );
+        static $map = [
+            Include_::TYPE_INCLUDE => 'include',
+            Include_::TYPE_INCLUDE_ONCE => 'include_once',
+            Include_::TYPE_REQUIRE => 'require',
+            Include_::TYPE_REQUIRE_ONCE => 'require_once',
+        ];
         return $map[$node->type] . '(' . $this->p($node->expr) . ')';
     }
 
@@ -435,5 +447,4 @@ class Printer extends \PhpParser\PrettyPrinter\Standard
         return 'switch (' . $this->p($node->cond) . ') {' . LF
         . $this->pStmts($node->cases) . "\n" . '}';
     }
-
 }

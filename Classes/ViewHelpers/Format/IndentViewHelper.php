@@ -14,18 +14,18 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Format;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * Indentation ViewHelper
  *
  */
-class IndentViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class IndentViewHelper extends AbstractViewHelper
 {
-    protected $escapeOutput = FALSE;
+    protected $escapeOutput = false;
 
     /**
-     *
      * @param int $indentation
-     * @param string $type
      * @return bool true or false
      */
     public function render($indentation)

@@ -45,7 +45,7 @@ class BackendModule
      *
      * @var string[]
      */
-    protected $controllerActionCombinations = array();
+    protected $controllerActionCombinations = [];
 
     /**
      * @return string

@@ -16,15 +16,17 @@ namespace EBT\ExtensionBuilder\Domain\Validator;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use EBT\ExtensionBuilder\Service\ValidationService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * Schema for a whole extension
  *
  */
-class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+class ExtensionValidator extends AbstractValidator
 {
     /*
      * Error Codes:
@@ -161,7 +163,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
      *
      * @var array
      */
-    protected $warningsToIgnore = array();
+    protected $warningsToIgnore = [];
 
     /**
      * @param ExtensionBuilderConfigurationManager $configurationManager
@@ -177,13 +179,16 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
      *
      * @var array[]
      */
-    protected $validationResult = array('errors' => array(), 'warnings' => array());
+    protected $validationResult = ['errors' => [], 'warnings' => []];
 
     /**
      * Validate the given extension
      *
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     *
      * @return array[]
+     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
+     * @throws \Exception
      */
     public function isValid($extension)
     {
@@ -193,7 +198,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
             $this->warningsToIgnore = $extensionSettings['ignoreWarnings'];
         }
 
-        $this->validationResult = array('errors' => array(), 'warnings' => array());
+        $this->validationResult = ['errors' => [], 'warnings' => []];
 
         $this->validateExtensionKey($extension->getExtensionKey());
         $this->checkExistingExtensions($extension);
@@ -202,7 +207,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
         $this->validateDomainObjects($extension);
 
         if (!empty($this->warningsToIgnore)) {
-            $warningsToKeep = array();
+            $warningsToKeep = [];
             foreach ($this->validationResult['warnings'] as $warning) {
                 /* @var ExtensionException $warning */
                 GeneralUtility::devLog('warning: ' . $warning->getCode(), 'extension_builder', 0, $this->warningsToIgnore);
@@ -218,7 +223,9 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 
     /**
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     *
      * @return void
+     * @throws \Exception
      */
     protected function checkExistingExtensions($extension)
     {
@@ -228,7 +235,8 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
             if (!file_exists($settingsFile) || $extension->isRenamed()) {
                 $this->validationResult['warnings'][] = new ExtensionException(
                     'Extension directory exists',
-                    self::EXTENSION_DIR_EXISTS);
+                    self::EXTENSION_DIR_EXISTS
+                );
             }
         }
     }
@@ -242,7 +250,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
         if (count($extension->getPlugins()) < 1) {
             return;
         }
-        $pluginKeys = array();
+        $pluginKeys = [];
         /** @var $plugin \EBT\ExtensionBuilder\Domain\Model\Plugin */
         foreach ($extension->getPlugins() as $plugin) {
             if (self::validatePluginKey($plugin->getKey()) === 0) {
@@ -288,13 +296,13 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
         $switchableActionConfiguration = $plugin->getSwitchableControllerActions();
         if (is_array($switchableActionConfiguration)) {
             foreach ($switchableActionConfiguration as $switchableAction) {
-                $configuredActions = array();
+                $configuredActions = [];
                 foreach ($switchableAction['actions'] as $actions) {
                     // Format should be: Controller->action
                     list($controllerName, $actionName) = explode('->', $actions);
                     $configuredActions[] = $actionName;
-                    GeneralUtility::devLog('Controller' . $controllerName, 'extension_builder', 0, array($actionName));
-                    $this->validateActionConfiguration($controllerName, array($actionName), 'plugin ' . $plugin->getName(), $extension);
+                    GeneralUtility::devLog('Controller' . $controllerName, 'extension_builder', 0, [$actionName]);
+                    $this->validateActionConfiguration($controllerName, [$actionName], 'plugin ' . $plugin->getName(), $extension);
                 }
                 $this->validateDependentActions($configuredActions, 'plugin ' . $plugin->getName());
             }
@@ -325,14 +333,16 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
         ) {
             $this->validationResult['warnings'][] = new ExtensionException(
                 'Potential misconfiguration in ' . $name . ':' . LF . 'Actions new and create usually depend on each other',
-                self::ERROR_ACTION_MISCONFIGURATION);
+                self::ERROR_ACTION_MISCONFIGURATION
+            );
         }
         if ((in_array('edit', $actionNames) && !in_array('update', $actionNames)) ||
             (in_array('update', $actionNames) && !in_array('edit', $actionNames))
         ) {
             $this->validationResult['warnings'][] = new ExtensionException(
                 'Potential misconfiguration in ' . $name . ':' . LF . 'Actions edit and update usually depend on each other',
-                self::ERROR_ACTION_MISCONFIGURATION);
+                self::ERROR_ACTION_MISCONFIGURATION
+            );
         }
     }
 
@@ -350,12 +360,13 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
             // the first Controller action config is the default Controller action
             // we show a warning if that's an action that requires a domain object as parameter
             $defaultAction = reset($actionNames);
-            if (in_array($defaultAction, array('show', 'edit'))) {
-                GeneralUtility::devLog('Invalid action configurations', 'extension_builder', 1, array($controllerName, $actionNames));
+            if (in_array($defaultAction, ['show', 'edit'])) {
+                GeneralUtility::devLog('Invalid action configurations', 'extension_builder', 1, [$controllerName, $actionNames]);
                 $this->validationResult['warnings'][] = new ExtensionException(
                     'Potential misconfiguration in ' . $label . ':' . LF .
                     'Default action ' . $controllerName . '->' . $defaultAction . '  can not be called without a domain object parameter',
-                    self::ERROR_ACTION_MISCONFIGURATION);
+                    self::ERROR_ACTION_MISCONFIGURATION
+                );
             }
         }
 
@@ -363,10 +374,11 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
         if (!$relatedDomainObject) {
             $this->validationResult['warnings'][] = new ExtensionException(
                 'Potential misconfiguration in ' . $label . ':' . LF . 'Controller ' . $controllerName . ' has no related Domain Object',
-                self::ERROR_ACTION_MISCONFIGURATION);
+                self::ERROR_ACTION_MISCONFIGURATION
+            );
         } else {
             $existingActions = $relatedDomainObject->getActions();
-            $existingActionNames = array();
+            $existingActionNames = [];
             foreach ($existingActions as $existingAction) {
                 $existingActionNames[] = $existingAction->getName();
             }
@@ -375,7 +387,8 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
                 if (!in_array($actionName, $existingActionNames)) {
                     $this->validationResult['warnings'][] = new ExtensionException(
                         'Potential misconfiguration in ' . $label . ':' . LF . 'Controller ' . $controllerName . ' has no action named ' . $actionName,
-                        self::ERROR_ACTION_MISCONFIGURATION);
+                        self::ERROR_ACTION_MISCONFIGURATION
+                    );
                 }
             }
         }
@@ -390,19 +403,21 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
         foreach ($configuration['properties']['plugins'] as $pluginConfiguration) {
             $pluginName = $pluginConfiguration['name'];
             if (!empty($pluginConfiguration['actions'])) {
-                $configTypes = array('controllerActionCombinations', 'noncacheableActions');
+                $configTypes = ['controllerActionCombinations', 'noncacheableActions'];
                 foreach ($configTypes as $configType) {
                     if (!empty($pluginConfiguration['actions'][$configType])) {
                         $isValid = $this->validateActionConfigFormat($pluginConfiguration['actions'][$configType]);
                         if (!$isValid) {
-                            GeneralUtility::devLog('validateActionConfigFormat failed',
+                            GeneralUtility::devLog(
+                                'validateActionConfigFormat failed',
                                 'extension_builder',
                                 2,
-                                array($pluginConfiguration['actions'][$configType])
+                                [$pluginConfiguration['actions'][$configType]]
                             );
                             $this->validationResult['warnings'][] = new ExtensionException(
                                 'Wrong format in configuration for ' . $configType . ' in plugin ' . $pluginName,
-                                self::ERROR_MISCONFIGURATION);
+                                self::ERROR_MISCONFIGURATION
+                            );
                         }
                     }
                 }
@@ -437,7 +452,8 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
                     if (!$isValid) {
                         $this->validationResult['warnings'][] = new ExtensionException(
                             'Wrong format in configuration for switchable ControllerActions in plugin ' . $pluginName,
-                            self::ERROR_MISCONFIGURATION);
+                            self::ERROR_MISCONFIGURATION
+                        );
                     }
                 }
             }
@@ -445,26 +461,28 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
         foreach ($configuration['properties']['backendModules'] as $moduleConfiguration) {
             $moduleName = $moduleConfiguration['name'];
             if (!empty($moduleConfiguration['actions'])) {
-                $configTypes = array('controllerActionCombinations');
+                $configTypes = ['controllerActionCombinations'];
                 foreach ($configTypes as $configType) {
                     if (!empty($moduleConfiguration['actions'][$configType])) {
                         $isValid = $this->validateActionConfigFormat($moduleConfiguration['actions'][$configType]);
                         if (!$isValid) {
-                            GeneralUtility::devLog('validateActionConfigFormat failed',
+                            GeneralUtility::devLog(
+                                'validateActionConfigFormat failed',
                                 'extension_builder',
                                 2,
-                                array($moduleConfiguration['actions'][$configType])
+                                [$moduleConfiguration['actions'][$configType]]
                             );
                             $this->validationResult['warnings'][] = new ExtensionException(
                                 'Wrong format in configuration for ' . $configType . ' in module ' . $moduleName,
-                                self::ERROR_MISCONFIGURATION);
+                                self::ERROR_MISCONFIGURATION
+                            );
                         }
                     }
                 }
             }
         }
         foreach ($configuration['modules'] as $domainObjectConfiguration) {
-            $propertyNames = array();
+            $propertyNames = [];
             if (isset($domainObjectConfiguration['value']['propertyGroup']['properties'])) {
                 foreach ($domainObjectConfiguration['value']['propertyGroup']['properties'] as $property) {
                     GeneralUtility::devLog('property', 'extension_builder', 0, $property);
@@ -524,7 +542,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
         if (count($extension->getBackendModules()) < 1) {
             return;
         }
-        $backendModuleKeys = array();
+        $backendModuleKeys = [];
         /** @var $backendModule \EBT\ExtensionBuilder\Domain\Model\BackendModule */
         foreach ($extension->getBackendModules() as $backendModule) {
             if (self::validateModuleKey($backendModule->getKey()) === 0) {
@@ -558,7 +576,8 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
             // Check if domainObject name is given
             if (!$domainObject->getName()) {
                 $this->validationResult['errors'][] = new ExtensionException(
-                    'A Domain Object has no name', self::ERROR_DOMAINOBJECT_NO_NAME
+                    'A Domain Object has no name',
+                    self::ERROR_DOMAINOBJECT_NO_NAME
                 );
             }
 
@@ -613,8 +632,10 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
      * 1. extend TYPO3 class like fe_users (no mapping table needed)
      *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     *
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    private function validateMapping(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject)
+    private function validateMapping(DomainObject $domainObject)
     {
         $parentClass = $domainObject->getParentClass();
         $tableName = $domainObject->getMapToTable();
@@ -645,7 +666,7 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
             }
         }
         if ($tableName) {
-            if (in_array($tableName, array('tt_content', 'pages')) || preg_match('/^(pages_|be_|sys_|static_|cf_)/', $tableName)) {
+            if (in_array($tableName, ['tt_content', 'pages']) || preg_match('/^(pages_|be_|sys_|static_|cf_)/', $tableName)) {
                 $this->validationResult['warnings'][] = new ExtensionException(
                     'The configuration for table "' . $tableName . '" is not compatible' . LF .
                     ' with extbase. You have to configure it yourself if you want to map' . LF .
@@ -694,9 +715,9 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
      * @return void
      */
-    private function validateDomainObjectActions(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject)
+    private function validateDomainObjectActions(DomainObject $domainObject)
     {
-        $actionNames = array();
+        $actionNames = [];
         $actions = $domainObject->getActions();
         foreach ($actions as $action) {
             if (in_array($action->getName(), $actionNames)) {
@@ -738,12 +759,13 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
      */
     private function validateProperties($domainObject)
     {
-        $propertyNames = array();
+        $propertyNames = [];
         foreach ($domainObject->getProperties() as $property) {
             // Check if property name is given
             if (!$property->getName()) {
                 $this->validationResult['errors'][] = new ExtensionException(
-                    'A property of ' . $domainObject->getName() . ' has no name', self::ERROR_PROPERTY_NO_NAME
+                    'A property of ' . $domainObject->getName() . ' has no name',
+                    self::ERROR_PROPERTY_NO_NAME
                 );
             }
             $propertyName = $property->getName();
@@ -789,7 +811,8 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
             // Check for duplicate property names
             if (in_array($propertyName, $propertyNames)) {
                 $this->validationResult['errors'][] = new ExtensionException(
-                    'Property "' . $property->getName() . '" of ' . $domainObject->getName() . ' exists twice.', self::ERROR_PROPERTY_DUPLICATE
+                    'Property "' . $property->getName() . '" of ' . $domainObject->getName() . ' exists twice.',
+                    self::ERROR_PROPERTY_DUPLICATE
                 );
             }
             $propertyNames[] = $propertyName;
@@ -848,7 +871,9 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
          */
         if (!preg_match('/^[a-z0-9_]*$/', $key)) {
             $this->validationResult['errors'][] = new ExtensionException(
-                'Illegal characters in extension key', self::ERROR_EXTKEY_ILLEGAL_CHARACTERS);
+                'Illegal characters in extension key',
+                self::ERROR_EXTKEY_ILLEGAL_CHARACTERS
+            );
         }
 
         /**
@@ -857,7 +882,8 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
          */
         if (preg_match('/^[0-9_]/', $key)) {
             $this->validationResult['errors'][] = new ExtensionException(
-                'Illegal first character of extension key', self::ERROR_EXTKEY_ILLEGAL_FIRST_CHARACTER
+                'Illegal first character of extension key',
+                self::ERROR_EXTKEY_ILLEGAL_FIRST_CHARACTER
             );
         }
 
@@ -868,7 +894,8 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
         $keyLengthTest = str_replace('_', '', $key);
         if (strlen($keyLengthTest) < 3 || strlen($keyLengthTest) > 30) {
             $this->validationResult['errors'][] = new ExtensionException(
-                'Invalid extension key length', self::ERROR_EXTKEY_LENGTH
+                'Invalid extension key length',
+                self::ERROR_EXTKEY_LENGTH
             );
         }
 
@@ -878,7 +905,9 @@ class ExtensionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
          */
         if (preg_match('/^(tx|pages_|tt_|sys_|ts_language_|csh_)/', $key)) {
             $this->validationResult['errors'][] = new ExtensionException(
-                'Illegal extension key prefix', self::ERROR_EXTKEY_ILLEGAL_PREFIX);
+                'Illegal extension key prefix',
+                self::ERROR_EXTKEY_ILLEGAL_PREFIX
+            );
         }
     }
 

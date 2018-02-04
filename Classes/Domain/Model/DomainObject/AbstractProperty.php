@@ -14,7 +14,12 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation;
+use EBT\ExtensionBuilder\Service\ValidationService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * property representing a "property" in the context of software development
@@ -110,7 +115,7 @@ abstract class AbstractProperty
      *
      * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $class the class this property belongs to
      */
-    public function setClass(\EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $class)
+    public function setClass(ClassObject $class)
     {
         $this->class = $class;
     }
@@ -118,7 +123,7 @@ abstract class AbstractProperty
     /**
      * Get the domain object this property belongs to.
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
      */
     public function getClass()
     {
@@ -166,7 +171,6 @@ abstract class AbstractProperty
     }
 
     /**
-     *
      * @return bool
      */
     public function getHasDefaultValue()
@@ -195,16 +199,14 @@ abstract class AbstractProperty
     }
 
     /**
-     *
      * @return bool true (if property is of type relation any to many)
      */
     public function isAnyToManyRelation()
     {
-        return is_subclass_of($this, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation');
+        return is_subclass_of($this, AnyToManyRelation::class);
     }
 
     /**
-     *
      * @return bool true (if property is of type relation any to many)
      */
     public function isZeroToManyRelation()
@@ -213,21 +215,19 @@ abstract class AbstractProperty
     }
 
     /**
-     *
      * @return bool true (if property is of type relation)
      */
     public function isRelation()
     {
-        return is_subclass_of($this, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation');
+        return is_subclass_of($this, AbstractRelation::class);
     }
 
     /**
-     *
      * @return bool true (if property is of type boolean)
      */
     public function isBoolean()
     {
-        return is_a($this, '\EBT\ExtensionBuilder\Domain_Model\DomainObject\BooleanProperty');
+        return is_a($this, BooleanProperty::class);
     }
 
     /**
@@ -262,8 +262,8 @@ abstract class AbstractProperty
      */
     public function getFieldName()
     {
-        $fieldName = \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($this->name);
-        if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($fieldName)) {
+        $fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($this->name);
+        if (ValidationService::isReservedMYSQLWord($fieldName)) {
             $fieldName = $this->domainObject->getExtension()->getShortExtensionKey() . '_' . $fieldName;
         }
         return $fieldName;
@@ -306,7 +306,7 @@ abstract class AbstractProperty
     /**
      * @return bool
      */
-    public function getCascadeRemove ()
+    public function getCascadeRemove()
     {
         return $this->cascadeRemove;
     }
@@ -355,7 +355,7 @@ abstract class AbstractProperty
         return '';
     }
 
-    public function getCascadeRemoveAnnotation ()
+    public function getCascadeRemoveAnnotation()
     {
         if ($this->cascadeRemove) {
             return '@cascade remove';
@@ -408,13 +408,12 @@ abstract class AbstractProperty
      *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject the domain object this property belongs to
      */
-    public function setDomainObject(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject)
+    public function setDomainObject(DomainObject $domainObject)
     {
         $this->domainObject = $domainObject;
     }
 
     /**
-     *
      * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
      */
     public function getDomainObject()
@@ -430,7 +429,7 @@ abstract class AbstractProperty
      */
     public function getMappingStatement()
     {
-        if ($this->getFieldName() != \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($this->name)) {
+        if ($this->getFieldName() != GeneralUtility::camelCaseToLowerCaseUnderscored($this->name)) {
             return $this->getFieldName() . '.mapOnProperty = ' . $this->name;
         } else {
             return null;
@@ -448,7 +447,7 @@ abstract class AbstractProperty
     }
 
     /**
-     *
+     * @return bool
      */
     public function isNew()
     {
@@ -456,7 +455,6 @@ abstract class AbstractProperty
     }
 
     /**
-     *
      * @param bool $new
      */
     public function setNew($new)
@@ -524,6 +522,6 @@ abstract class AbstractProperty
      */
     public function isFileReference()
     {
-        return in_array($this->type, array('Image', 'File'));
+        return in_array($this->type, ['Image', 'File']);
     }
 }

@@ -14,13 +14,16 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Fluid\Core\ViewHelper\Exception;
+
 /**
  * Case view helper that is only usable within the SwitchViewHelper.
  * @see \TYPO3\CMS\Fluid\ViewHelpers\SwitchViewHelper
  *
  * @api
  */
-class CaseViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class CaseViewHelper extends AbstractViewHelper
 {
     /**
      * @param mixed $value The switch value. If it matches, the child will be rendered
@@ -35,10 +38,10 @@ class CaseViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
     {
         $viewHelperVariableContainer = $this->renderingContext->getViewHelperVariableContainer();
         if (!$viewHelperVariableContainer->exists('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression')) {
-            throw new \TYPO3\CMS\Fluid\Core\ViewHelper\Exception('The case View helper can only be used within a switch View helper', 1368112037);
+            throw new Exception('The case View helper can only be used within a switch View helper', 1368112037);
         }
         if (is_null($value) && $default === false) {
-            throw new \TYPO3\CMS\Fluid\Core\ViewHelper\Exception('The case View helper must have either value or default argument', 1382867521);
+            throw new Exception('The case View helper must have either value or default argument', 1382867521);
         }
         $switchExpression = $viewHelperVariableContainer->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression');
 

@@ -26,13 +26,13 @@ class FunctionObject extends AbstractObject
      *
      * @var array
      */
-    protected $bodyStmts = array();
+    protected $bodyStmts = [];
     /**
      * parameters
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter[]
      */
-    protected $parameters = array();
+    protected $parameters = [];
     /**
      * @var int
      */
@@ -46,7 +46,6 @@ class FunctionObject extends AbstractObject
      * __construct
      *
      * @param string $name
-     * @return
      */
     public function __construct($name)
     {
@@ -58,7 +57,7 @@ class FunctionObject extends AbstractObject
      */
     public function __clone()
     {
-        $clonedParameters = array();
+        $clonedParameters = [];
         foreach ($this->parameters as $parameter) {
             $clonedParameters[] = clone($parameter);
         }
@@ -74,7 +73,7 @@ class FunctionObject extends AbstractObject
     public function setBodyStmts($stmts)
     {
         if (!is_array($stmts)) {
-            $stmts = array();
+            $stmts = [];
         }
         $this->bodyStmts = $stmts;
         return $this;
@@ -107,7 +106,7 @@ class FunctionObject extends AbstractObject
      */
     public function getParameterNames()
     {
-        $parameterNames = array();
+        $parameterNames = [];
         if (is_array($this->parameters)) {
             /** @var $parameter \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter */
             foreach ($this->parameters as $parameter) {
@@ -119,6 +118,8 @@ class FunctionObject extends AbstractObject
 
     /**
      * @param int $position
+     *
+     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter|null
      */
     public function getParameterByPosition($position)
     {
@@ -212,7 +213,7 @@ class FunctionObject extends AbstractObject
     {
         $annotations = parent::getAnnotations();
         if (is_array($this->parameters) && count($this->parameters) > 0 && !$this->isTaggedWith('param')) {
-            $paramTags = array();
+            $paramTags = [];
             /** @var $parameter \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter */
             foreach ($this->parameters as $parameter) {
                 $paramTags[] = 'param ' . strtolower($parameter->getVarType()) . '$' . $parameter->getName();
@@ -233,13 +234,13 @@ class FunctionObject extends AbstractObject
      */
     public function updateParamTags()
     {
-        $updatedParamTags = array();
-        $existingParamTagValues = array();
+        $updatedParamTags = [];
+        $existingParamTagValues = [];
         $paramTagsMissing = false;
         if ($this->isTaggedWith('param')) {
             $existingParamTagValues = $this->getTagValues('param');
             if (!is_array($existingParamTagValues)) {
-                $existingParamTagValues = array($existingParamTagValues);
+                $existingParamTagValues = [$existingParamTagValues];
             }
         }
         if (count($existingParamTagValues) < count(array_keys($this->parameters))) {

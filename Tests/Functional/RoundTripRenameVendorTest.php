@@ -14,7 +14,10 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  * The TYPO3 project - inspiring people to share!
  */
 
-class RoundTripRenameVendorTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
+
+class RoundTripRenameVendorTest extends BaseFunctionalTest
 {
     /**
      * @var \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder
@@ -34,19 +37,19 @@ class RoundTripRenameVendorTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
         parent::setUp();
         $this->configurationManager = $this->getAccessibleMock(
             'EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager',
-            array('dummy')
+            ['dummy']
         );
         $this->extensionSchemaBuilder = $this->objectManager->get('EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder');
 
         $testExtensionDir = $this->fixturesPath . 'TestExtensions/test_extension/';
-        $jsonFile = $testExtensionDir . \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
+        $jsonFile = $testExtensionDir . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
 
         if (file_exists($jsonFile)) {
             // compatibility adaptions for configurations from older versions
             $extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), true);
             $extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON($extensionConfigurationJSON, false);
         } else {
-            $extensionConfigurationJSON = array();
+            $extensionConfigurationJSON = [];
             self::fail('JSON file not found: ' . $jsonFile);
         }
 
@@ -55,16 +58,16 @@ class RoundTripRenameVendorTest extends \EBT\ExtensionBuilder\Tests\BaseFunction
         $this->roundTripService->_set('extension', $this->fixtureExtension);
         $this->roundTripService->_set('previousExtensionDirectory', $testExtensionDir);
         $this->roundTripService->_set('extensionDirectory', $testExtensionDir);
-        $this->roundTripService->_set('previousDomainObjects', array(
+        $this->roundTripService->_set('previousDomainObjects', [
             $this->fixtureExtension->getDomainObjectByName('Main')->getUniqueIdentifier() => $this->fixtureExtension->getDomainObjectByName('Main')
-        ));
+        ]);
         $this->fileGenerator->setSettings(
-            array(
+            [
                 'codeTemplateRootPath' => PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/',
-                'extConf' => array(
+                'extConf' => [
                     'enableRoundtrip' => '1'
-                )
-            )
+                ]
+            ]
         );
     }
 

@@ -16,6 +16,16 @@ namespace EBT\ExtensionBuilder\Parser;
 
 use EBT\ExtensionBuilder\Domain\Model;
 use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
+use PhpParser\Comment;
+use PhpParser\Comment\Doc;
+use PhpParser\Node\Stmt;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Function_;
+use PhpParser\Node\Stmt\Namespace_;
+use PhpParser\Node\Stmt\Property;
+use PhpParser\Node\Stmt\PropertyProperty;
+use TYPO3\CMS\Core\SingletonInterface;
 
 /**
  * factory for class objects and related objects (methods, properties etc)
@@ -23,13 +33,13 @@ use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
  * builds objects from PHP-Parser nodes
  *
  */
-class ClassFactory implements \TYPO3\CMS\Core\SingletonInterface
+class ClassFactory implements SingletonInterface
 {
     /**
      * @param \PhpParser\Node\Stmt\Class_ $classNode
      * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
      */
-    public function buildClassObject(\PhpParser\Node\Stmt\Class_ $classNode)
+    public function buildClassObject(Class_ $classNode)
     {
         $classObject = new Model\ClassObject\ClassObject($classNode->name);
         foreach ($classNode->implements as $interfaceNode) {
@@ -47,7 +57,7 @@ class ClassFactory implements \TYPO3\CMS\Core\SingletonInterface
      * @param \PhpParser\Node\Stmt\ClassMethod $methodNode
      * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
      */
-    public function buildClassMethodObject(\PhpParser\Node\Stmt\ClassMethod $methodNode)
+    public function buildClassMethodObject(ClassMethod $methodNode)
     {
         $methodObject = new Model\ClassObject\Method($methodNode->name);
         $methodObject->setModifiers($methodNode->type);
@@ -60,7 +70,7 @@ class ClassFactory implements \TYPO3\CMS\Core\SingletonInterface
      * @param \PhpParser\Node\Stmt\Function_ $functionNode
      * @return \EBT\ExtensionBuilder\Domain\Model\FunctionObject
      */
-    public function buildFunctionObject(\PhpParser\Node\Stmt\Function_ $functionNode)
+    public function buildFunctionObject(Function_ $functionNode)
     {
         $functionObject = new Model\FunctionObject($functionNode->name);
         $this->addCommentsFromAttributes($functionObject, $functionNode);
@@ -72,13 +82,13 @@ class ClassFactory implements \TYPO3\CMS\Core\SingletonInterface
      * @param \PhpParser\Node\Stmt\Property $propertyNode
      * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property
      */
-    public function buildPropertyObject(\PhpParser\Node\Stmt\Property $propertyNode)
+    public function buildPropertyObject(Property $propertyNode)
     {
         $propertyName = '';
         $propertyDefault = null;
 
         foreach ($propertyNode->props as $subNode) {
-            if ($subNode instanceof \PhpParser\Node\Stmt\PropertyProperty) {
+            if ($subNode instanceof PropertyProperty) {
                 $propertyName = $subNode->name;
                 if ($subNode->default) {
                     $propertyDefault = $subNode->default;
@@ -100,7 +110,7 @@ class ClassFactory implements \TYPO3\CMS\Core\SingletonInterface
      * @param \PhpParser\Node\Stmt\Namespace_ $nameSpaceNode
      * @return \EBT\ExtensionBuilder\Domain\Model\NamespaceObject
      */
-    public function buildNamespaceObject(\PhpParser\Node\Stmt\Namespace_ $nameSpaceNode)
+    public function buildNamespaceObject(Namespace_ $nameSpaceNode)
     {
         $nameSpaceObject = new Model\NamespaceObject(NodeConverter::getValueFromNode($nameSpaceNode));
         $this->addCommentsFromAttributes($nameSpaceObject, $nameSpaceNode);
@@ -112,7 +122,7 @@ class ClassFactory implements \TYPO3\CMS\Core\SingletonInterface
      * @param \EBT\ExtensionBuilder\Domain\Model\FunctionObject $object
      * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject
      */
-    protected function setFunctionProperties(\PhpParser\Node\Stmt $node, Model\FunctionObject $object)
+    protected function setFunctionProperties(Stmt $node, Model\FunctionObject $object)
     {
         if (property_exists($node, 'type')) {
             $object->setModifiers($node->type);
@@ -122,7 +132,7 @@ class ClassFactory implements \TYPO3\CMS\Core\SingletonInterface
         $object->setStartLine($node->getAttribute('startLine'));
         $object->setEndLine($node->getAttribute('endLine'));
         $getVarTypeFromParamTag = false;
-        $paramTags = array();
+        $paramTags = [];
         if ($object->isTaggedWith('param') && is_array($object->getTagValues('param'))) {
             $paramTags = $object->getTagValues('param');
             if (count($paramTags) == count($node->params)) {
@@ -163,14 +173,14 @@ class ClassFactory implements \TYPO3\CMS\Core\SingletonInterface
      * @param \EBT\ExtensionBuilder\Domain\Model\AbstractObject $object
      * @param \PhpParser\Node\Stmt $node
      */
-    protected function addCommentsFromAttributes(Model\AbstractObject $object, \PhpParser\Node\Stmt $node)
+    protected function addCommentsFromAttributes(Model\AbstractObject $object, Stmt $node)
     {
         $comments = $node->getAttribute('comments');
         if (is_array($comments)) {
             foreach ($comments as $comment) {
-                if ($comment instanceof \PhpParser\Comment\Doc) {
+                if ($comment instanceof Doc) {
                     $object->setDocComment($comment->getReformattedText());
-                } elseif ($comment instanceof \PhpParser\Comment) {
+                } elseif ($comment instanceof Comment) {
                     $object->addComment($comment->getText());
                 }
             }

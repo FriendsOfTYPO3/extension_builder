@@ -26,36 +26,36 @@ class Container extends AbstractObject
      *
      * @var array
      */
-    protected $constants = array();
+    protected $constants = [];
     /**
      * @var array
      */
-    protected $preIncludes = array();
+    protected $preIncludes = [];
     /**
      * @var array
      */
-    protected $postIncludes = array();
+    protected $postIncludes = [];
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\FunctionObject[]
      */
-    protected $functions = array();
+    protected $functions = [];
     /**
      * Contains all statements that occurred before the first class statement.
      *
      * @var array
      */
-    protected $preClassStatements = array();
+    protected $preClassStatements = [];
     /**
      * Contains all statements that occurred after the first class statement they
      * will be rewritten after the last class!
      *
      * @var array
      */
-    protected $postClassStatements = array();
+    protected $postClassStatements = [];
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject[]
      */
-    protected $classes = array();
+    protected $classes = [];
 
     /**
      * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
@@ -103,7 +103,7 @@ class Container extends AbstractObject
     }
 
     /**
-     * @return string constants
+     * @return array constants
      */
     public function getConstants()
     {

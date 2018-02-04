@@ -8,6 +8,8 @@ function simpleFunction()
 /**
  * @param $foo
  * @param $bar
+ *
+ * @return mixed
  */
 function functionWithParameter($foo, $bar)
 {

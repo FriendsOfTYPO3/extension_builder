@@ -14,6 +14,10 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Utility\Inflector;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * Pluralize a word
  *
@@ -27,7 +31,7 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * foos
  *
  */
-class SingularizeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class SingularizeViewHelper extends AbstractViewHelper
 {
     /**
      * @var \EBT\ExtensionBuilder\Utility\Inflector
@@ -36,7 +40,7 @@ class SingularizeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
 
     public function __construct()
     {
-        $this->inflector = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Utility\\Inflector');
+        $this->inflector = GeneralUtility::makeInstance(Inflector::class);
     }
 
     /**

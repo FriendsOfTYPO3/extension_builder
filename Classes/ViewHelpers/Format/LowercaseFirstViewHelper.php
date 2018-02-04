@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Format;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * Wrapper for PHPs ucfirst function.
  * @see http://www.php.net/manual/en/ucfirst
@@ -28,7 +30,7 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Format;
  * TextWithMixedCase
  *
  */
-class LowercaseFirstViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class LowercaseFirstViewHelper extends AbstractViewHelper
 {
     /**
      * Lowercase first character

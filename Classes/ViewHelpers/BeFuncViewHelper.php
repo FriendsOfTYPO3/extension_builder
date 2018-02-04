@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * View helper which return input as it is
  *
@@ -23,7 +25,7 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  *
  *
  */
-class BeFuncViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class BeFuncViewHelper extends AbstractViewHelper
 {
     /**
      * @var bool

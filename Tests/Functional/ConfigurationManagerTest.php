@@ -14,7 +14,11 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
-class ConfigurationManagerTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
+use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
+
+class ConfigurationManagerTest extends BaseFunctionalTest
 {
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
@@ -24,7 +28,7 @@ class ConfigurationManagerTest extends \EBT\ExtensionBuilder\Tests\BaseFunctiona
     protected function setUp()
     {
         parent::setUp();
-        $this->configurationManager = $this->objectManager->get('EBT\\ExtensionBuilder\\Configuration\\ExtensionBuilderConfigurationManager');
+        $this->configurationManager = $this->objectManager->get(ExtensionBuilderConfigurationManager::class);
     }
 
     /**
@@ -32,7 +36,7 @@ class ConfigurationManagerTest extends \EBT\ExtensionBuilder\Tests\BaseFunctiona
      */
     public function getExtbaseClassConfigurationReturnsCorrectValue()
     {
-        $classConfiguration = $this->configurationManager->getExtbaseClassConfiguration('TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser');
+        $classConfiguration = $this->configurationManager->getExtbaseClassConfiguration(FrontendUser::class);
         self::assertSame($classConfiguration['tableName'], 'fe_users');
     }
 }

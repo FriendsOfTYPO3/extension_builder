@@ -76,7 +76,7 @@ class Property extends AbstractObject
      */
     public function setVarType($varType)
     {
-        $this->setTag('var', array($varType));
+        $this->setTag('var', [$varType]);
         $this->varType = $varType;
     }
 

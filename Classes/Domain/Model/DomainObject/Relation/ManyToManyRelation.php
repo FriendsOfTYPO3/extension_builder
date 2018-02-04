@@ -43,7 +43,6 @@ class ManyToManyRelation extends AnyToManyRelation
     }
 
     /**
-     *
      * @return bool
      */
     public function isOfTypeObjectStorage()

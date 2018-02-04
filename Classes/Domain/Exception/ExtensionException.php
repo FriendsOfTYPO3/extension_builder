@@ -14,10 +14,12 @@ namespace EBT\ExtensionBuilder\Domain\Exception;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Exception;
+
 /**
  * Schema for a whole extension
  *
  */
-class ExtensionException extends \EBT\ExtensionBuilder\Exception
+class ExtensionException extends Exception
 {
 }

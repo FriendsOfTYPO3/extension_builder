@@ -13,7 +13,13 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
+use EBT\ExtensionBuilder\Domain\Model\BackendModule;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+use EBT\ExtensionBuilder\Domain\Model\Plugin;
+use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Schema for a whole extension
@@ -67,7 +73,7 @@ class Extension
     /**
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
     /**
      * @var string
      */
@@ -110,19 +116,19 @@ class Extension
      *
      * @var string[]
      */
-    protected $md5Hashes = array();
+    protected $md5Hashes = [];
     /**
      * all domain objects
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject[]
      */
-    protected $domainObjects = array();
+    protected $domainObjects = [];
     /**
      * the Persons working on the Extension
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\Person[]
      */
-    protected $persons = array();
+    protected $persons = [];
     /**
      * plugins
      *
@@ -143,7 +149,7 @@ class Extension
     /**
      * @var array
      */
-    private $dependencies = array();
+    private $dependencies = [];
     /**
      * the lowest required TYPO3 version
      * @var float
@@ -176,7 +182,6 @@ class Extension
     }
 
     /**
-     *
      * @param string $extensionKey
      */
     public function setExtensionKey($extensionKey)
@@ -185,7 +190,6 @@ class Extension
     }
 
     /**
-     *
      * @return string
      */
     public function getOriginalExtensionKey()
@@ -194,7 +198,6 @@ class Extension
     }
 
     /**
-     *
      * @param string $extensionKey
      */
     public function setOriginalExtensionKey($extensionKey)
@@ -203,7 +206,6 @@ class Extension
     }
 
     /**
-     *
      * @param array $settings
      */
     public function setSettings($settings)
@@ -235,7 +237,6 @@ class Extension
     }
 
     /**
-     *
      * @param string $extensionDir
      */
     public function setExtensionDir($extensionDir)
@@ -244,7 +245,6 @@ class Extension
     }
 
     /**
-     *
      * @return string
      */
     public function getName()
@@ -253,7 +253,6 @@ class Extension
     }
 
     /**
-     *
      * @param string $name
      */
     public function setName($name)
@@ -278,7 +277,6 @@ class Extension
     }
 
     /**
-     *
      * @return string
      */
     public function getOriginalVendorName()
@@ -287,7 +285,6 @@ class Extension
     }
 
     /**
-     *
      * @param string $vendorName
      */
     public function setOriginalVendorName($vendorName)
@@ -296,7 +293,6 @@ class Extension
     }
 
     /**
-     *
      * @return string
      */
     public function getVersion()
@@ -305,7 +301,6 @@ class Extension
     }
 
     /**
-     *
      * @param string $version
      */
     public function setVersion($version)
@@ -314,7 +309,6 @@ class Extension
     }
 
     /**
-     *
      * @return string
      */
     public function getDescription()
@@ -323,7 +317,6 @@ class Extension
     }
 
     /**
-     *
      * @param string $description
      */
     public function setDescription($description)
@@ -332,7 +325,6 @@ class Extension
     }
 
     /**
-     *
      * @return int
      */
     public function getState()
@@ -341,7 +333,6 @@ class Extension
     }
 
     /**
-     *
      * @param int $state
      */
     public function setState($state)
@@ -350,7 +341,6 @@ class Extension
     }
 
     /**
-     *
      * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject[]
      */
     public function getDomainObjects()
@@ -366,7 +356,7 @@ class Extension
      */
     public function getDomainObjectsForWhichAControllerShouldBeBuilt()
     {
-        $domainObjects = array();
+        $domainObjects = [];
         foreach ($this->domainObjects as $domainObject) {
             if (count($domainObject->getActions()) > 0) {
                 $domainObjects[] = $domainObject;
@@ -381,7 +371,7 @@ class Extension
      */
     public function getDomainObjectsThatNeedMappingStatements()
     {
-        $domainObjectsThatNeedMappingStatements = array();
+        $domainObjectsThatNeedMappingStatements = [];
         foreach ($this->domainObjects as $domainObject) {
             if ($domainObject->getNeedsMappingStatement()) {
                 $domainObjectsThatNeedMappingStatements[] = $domainObject;
@@ -400,7 +390,7 @@ class Extension
      */
     public function getTablesForTypeFieldDefinitions()
     {
-        $tableNames = array();
+        $tableNames = [];
         foreach ($this->getDomainObjects() as $domainObject) {
             if ($domainObject->isMappedToExistingTable() || $domainObject->getParentClass()) {
                 $tableNames[] = $domainObject->getMapToTable();
@@ -415,7 +405,7 @@ class Extension
      */
     public function getClassHierarchy()
     {
-        $classHierarchy = array();
+        $classHierarchy = [];
         foreach ($this->domainObjects as $domainObject) {
             if ($domainObject->isSubclass()) {
                 $parentClass = $domainObject->getParentClass();
@@ -423,7 +413,7 @@ class Extension
                     $parentClass = substr($parentClass, 1);
                 }
                 if (!is_array($classHierarchy[$parentClass])) {
-                    $classHierarchy[$parentClass] = array();
+                    $classHierarchy[$parentClass] = [];
                 }
                 $classHierarchy[$parentClass][] = $domainObject;
             }
@@ -472,14 +462,17 @@ class Extension
 
     /**
      * Add a domain object to the extension. Creates the reverse link as well.
+     *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     *
+     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
      */
-    public function addDomainObject(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject)
+    public function addDomainObject(DomainObject $domainObject)
     {
         $domainObject->setExtension($this);
         foreach (array_keys($this->domainObjects) as $existingDomainObjectName) {
             if (strtolower($domainObject->getName()) == strtolower($existingDomainObjectName)) {
-                throw new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
+                throw new ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
             }
         }
         if ($domainObject->getNeedsUploadFolder()) {
@@ -489,7 +482,6 @@ class Extension
     }
 
     /**
-     *
      * @param string $domainObjectName
      * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
      */
@@ -556,7 +548,7 @@ class Extension
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\Plugin> $plugins
      * @return void
      */
-    public function setPlugins(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $plugins)
+    public function setPlugins(ObjectStorage $plugins)
     {
         $this->plugins = $plugins;
     }
@@ -572,7 +564,6 @@ class Extension
     }
 
     /**
-     *
      * @return bool
      */
     public function hasPlugins()
@@ -590,7 +581,7 @@ class Extension
      * @param \EBT\ExtensionBuilder\Domain\Model\Plugin
      * @return void
      */
-    public function addPlugin(\EBT\ExtensionBuilder\Domain\Model\Plugin $plugin)
+    public function addPlugin(Plugin $plugin)
     {
         $this->plugins[] = $plugin;
     }
@@ -601,7 +592,7 @@ class Extension
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\BackendModule> $backendModules
      * @return void
      */
-    public function setBackendModules(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $backendModules)
+    public function setBackendModules(ObjectStorage $backendModules)
     {
         $this->backendModules = $backendModules;
     }
@@ -622,13 +613,12 @@ class Extension
      * @param \EBT\ExtensionBuilder\Domain\Model\BackendModule
      * @return void
      */
-    public function addBackendModule(\EBT\ExtensionBuilder\Domain\Model\BackendModule $backendModule)
+    public function addBackendModule(BackendModule $backendModule)
     {
         $this->backendModules[] = $backendModule;
     }
 
     /**
-     *
      * @return bool
      */
     public function hasBackendModules()
@@ -719,7 +709,6 @@ class Extension
     }
 
     /**
-     *
      * @return bool
      */
     public function isRenamed()
@@ -732,7 +721,6 @@ class Extension
     }
 
     /**
-     *
      * @return bool
      */
     public function vendorNameChanged()
@@ -759,7 +747,6 @@ class Extension
     }
 
     /**
-     *
      * @return string $uploadFolder
      */
     public function getUploadFolder()
@@ -890,11 +877,14 @@ class Extension
     /**
      * @return array
      */
-    public function getComposerInfo() {
+    public function getComposerInfo()
+    {
         $info = [
-            'name' => strtolower($this->vendorName) . '/' . strtolower(str_replace('_','-',$this->extensionKey)), 'type' => 'typo3-cms-extension',
+            'name' => strtolower($this->vendorName) . '/' . strtolower(str_replace('_', '-', $this->extensionKey)),
+            'type' => 'typo3-cms-extension',
             'description' => $this->description,
-            'authors' => [], 'require' => [
+            'authors' => [],
+            'require' => [
                 'typo3/cms-core' => '^8.7.1'
             ],
             'autoload' => [

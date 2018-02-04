@@ -14,7 +14,18 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
-class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
+use EBT\ExtensionBuilder\Domain\Model\Extension;
+use EBT\ExtensionBuilder\Domain\Model\Person;
+use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
+use EBT\ExtensionBuilder\Service\ObjectSchemaBuilder;
+use EBT\ExtensionBuilder\Tests\BaseUnitTest;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+class ExtensionSchemaBuilderTest extends BaseUnitTest
 {
     /**
      * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
@@ -28,12 +39,12 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTes
     protected function setUp()
     {
         parent::setUp();
-        $this->extension = $this->createMock(\EBT\ExtensionBuilder\Domain\Model\Extension::class, array('getOverWriteSettings'));
-        $this->extensionSchemaBuilder = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder::class, array('dummy'));
-        $this->extensionSchemaBuilder->injectConfigurationManager(new \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager());
+        $this->extension = $this->createMock(Extension::class, ['getOverWriteSettings']);
+        $this->extensionSchemaBuilder = $this->getAccessibleMock(ExtensionSchemaBuilder::class, ['dummy']);
+        $this->extensionSchemaBuilder->injectConfigurationManager(new ExtensionBuilderConfigurationManager());
         /** @var $objectSchemaBuilder \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder */
-        $objectSchemaBuilder = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\ObjectSchemaBuilder::class, array('dummy'));
-        $objectSchemaBuilder->injectConfigurationManager(new \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager());
+        $objectSchemaBuilder = $this->getAccessibleMock(ObjectSchemaBuilder::class, ['dummy']);
+        $objectSchemaBuilder->injectConfigurationManager(new ExtensionBuilderConfigurationManager());
         $this->extensionSchemaBuilder->injectObjectSchemaBuilder($objectSchemaBuilder);
         $this->extensionKey = 'dummy';
     }
@@ -49,19 +60,19 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTes
         $state = 0;
         $version = '1.0.4';
 
-        $input = array(
-            'properties' => array(
+        $input = [
+            'properties' => [
                 'description' => $description,
                 'extensionKey' => $extensionKey,
                 'name' => $name,
-                'emConf' => array(
+                'emConf' => [
                     'state' => $state,
                     'version' => $version
-                )
-            )
-        );
+                ]
+            ]
+        ];
 
-        $extension = new \EBT\ExtensionBuilder\Domain\Model\Extension();
+        $extension = new Extension();
         $extension->setDescription($description);
         $extension->setName($name);
         $extension->setExtensionKey($extensionKey);
@@ -78,9 +89,9 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTes
      */
     public function conversionExtractsPersons()
     {
-        $persons = array();
-        $persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\EBT\ExtensionBuilder\Domain\Model\Person::class);
-        $persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\EBT\ExtensionBuilder\Domain\Model\Person::class);
+        $persons = [];
+        $persons[] = GeneralUtility::makeInstance(Person::class);
+        $persons[] = GeneralUtility::makeInstance(Person::class);
         $persons[0]->setName('name0');
         $persons[0]->setRole('role0');
         $persons[0]->setEmail('email0');
@@ -90,31 +101,31 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTes
         $persons[1]->setEmail('email1');
         $persons[1]->setCompany('company1');
 
-        $input = array(
-            'properties' => array(
+        $input = [
+            'properties' => [
                 'description' => 'myDescription',
                 'extensionKey' => 'myExtensionKey',
                 'name' => 'myName',
-                'emConf' => array(
+                'emConf' => [
                     'state' => 'beta'
-                ),
-                'persons' => array(
-                    array(
+                ],
+                'persons' => [
+                    [
                         'company' => 'company0',
                         'email' => 'email0',
                         'name' => 'name0',
                         'role' => 'role0'
-                    ),
-                    array(
+                    ],
+                    [
                         'company' => 'company1',
                         'email' => 'email1',
                         'name' => 'name1',
                         'role' => 'role1'
-                    ),
-                ),
+                    ],
+                ],
                 'state' => 'beta'
-            )
-        );
+            ]
+        ];
         $extension = $this->extensionSchemaBuilder->build($input);
         self::assertEquals($extension->getPersons(), $persons, 'Persons set wrong in ObjectBuilder.');
     }
@@ -124,155 +135,155 @@ class ExtensionSchemaBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTes
      */
     public function conversionExtractsWholeExtensionMetadataWithRelations()
     {
-        $input = array(
-            'modules' => array(
-                0 => array(
+        $input = [
+            'modules' => [
+                0 => [
                     // config
                     // name
-                    'value' => array(
+                    'value' => [
                         'name' => 'Blog',
-                        'objectsettings' => array(
+                        'objectsettings' => [
                             'description' => 'A blog object',
                             'aggregateRoot' => false,
                             'type' => 'Entity'
-                        ),
-                        'propertyGroup' => array(
-                            'properties' => array(
-                                0 => array(
+                        ],
+                        'propertyGroup' => [
+                            'properties' => [
+                                0 => [
                                     'propertyName' => 'name',
                                     'propertyType' => 'String'
-                                ),
-                                1 => array(
+                                ],
+                                1 => [
                                     'propertyName' => 'description',
                                     'propertyType' => 'String'
-                                )
-                            )
-                        ),
-                        'relationGroup' => array(
-                            'relations' => array(
-                                0 => array(
+                                ]
+                            ]
+                        ],
+                        'relationGroup' => [
+                            'relations' => [
+                                0 => [
                                     'relationName' => 'posts',
                                     'relationType' => 'zeroToMany',
                                     'propertyIsExcludeField' => 1
-                                )
-                            )
-                        )
-                    )
-                ),
-                1 => array(
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                1 => [
                     // config
                     // name
-                    'value' => array(
+                    'value' => [
                         'name' => 'Post',
-                        'objectsettings' => array(
+                        'objectsettings' => [
                             'description' => 'A blog post',
                             'aggregateRoot' => false,
                             'type' => 'Entity'
-                        ),
-                        'propertyGroup' => array(
-                            'properties' => array()
-                        ),
-                        'relationGroup' => array(
-                            'relations' => array(
-                                0 => array(
+                        ],
+                        'propertyGroup' => [
+                            'properties' => []
+                        ],
+                        'relationGroup' => [
+                            'relations' => [
+                                0 => [
                                     'relationName' => 'comments',
                                     'relationType' => 'zeroToMany',
                                     'propertyIsExcludeField' => 1
-                                )
-                            )
-                        )
-                    )
-                ),
-                2 => array(
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                2 => [
                     // config
                     // name
-                    'value' => array(
+                    'value' => [
                         'name' => 'Comment',
-                        'objectsettings' => array(
+                        'objectsettings' => [
                             'description' => '',
                             'aggregateRoot' => false,
                             'type' => 'Entity'
-                        ),
-                        'propertyGroup' => array(
-                            'properties' => array()
-                        ),
-                        'relationGroup' => array(
-                            'relations' => array()
-                        )
-                    )
-                ),
-            ),
-            'properties' => array(
+                        ],
+                        'propertyGroup' => [
+                            'properties' => []
+                        ],
+                        'relationGroup' => [
+                            'relations' => []
+                        ]
+                    ]
+                ],
+            ],
+            'properties' => [
                 'description' => 'Some description',
                 'extensionKey' => $this->extensionKey,
                 'name' => 'My ext name',
-                'emConf' => array(
+                'emConf' => [
                     'state' => 'beta'
-                )
-            ),
-            'wires' => array(
-                0 => array(
-                    'tgt' => array(
+                ]
+            ],
+            'wires' => [
+                0 => [
+                    'tgt' => [
                         'moduleId' => 1,
                         'terminal' => 'SOURCES'
-                    ),
-                    'src' => array(
+                    ],
+                    'src' => [
                         'moduleId' => 0, // hier stand leerstring drin
                         'terminal' => 'relationWire_0'
-                    )
-                ),
-                1 => array(
-                    'tgt' => array(
+                    ]
+                ],
+                1 => [
+                    'tgt' => [
                         'moduleId' => 2,
                         'terminal' => 'SOURCES'
-                    ),
-                    'src' => array(
+                    ],
+                    'src' => [
                         'moduleId' => 1,
                         'terminal' => 'relationWire_0'
-                    )
-                )
-            )
-        );
+                    ]
+                ]
+            ]
+        ];
 
-        $extension = new \EBT\ExtensionBuilder\Domain\Model\Extension();
+        $extension = new Extension();
         $extension->setName('My ext name');
-        $extension->setState(\EBT\ExtensionBuilder\Domain\Model\Extension::STATE_BETA);
+        $extension->setState(Extension::STATE_BETA);
         $extension->setExtensionKey($this->extensionKey);
         $extension->setDescription('Some description');
         $extension->setExtensionDir('');
 
-        $blog = new \EBT\ExtensionBuilder\Domain\Model\DomainObject();
+        $blog = new DomainObject();
         $blog->setName('Blog');
         $blog->setDescription('A blog object');
         $blog->setEntity(true);
         $blog->setAggregateRoot(false);
-        $property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty('name');
+        $property = new StringProperty('name');
         $blog->addProperty($property);
-        $property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty('description');
+        $property = new StringProperty('description');
         $blog->addProperty($property);
 
         $extension->addDomainObject($blog);
 
-        $post = new \EBT\ExtensionBuilder\Domain\Model\DomainObject();
+        $post = new DomainObject();
         $post->setName('Post');
         $post->setDescription('A blog post');
         $post->setEntity(true);
         $post->setAggregateRoot(false);
         $extension->addDomainObject($post);
 
-        $comment = new \EBT\ExtensionBuilder\Domain\Model\DomainObject();
+        $comment = new DomainObject();
         $comment->setName('Comment');
         $comment->setDescription('');
         $comment->setEntity(true);
         $comment->setAggregateRoot(false);
         $extension->addDomainObject($comment);
 
-        $relation = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation('posts');
+        $relation = new ZeroToManyRelation('posts');
         $relation->setForeignModel($post);
         $relation->setExcludeField(1);
         $blog->addProperty($relation);
 
-        $relation = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation('comments');
+        $relation = new ZeroToManyRelation('comments');
         $relation->setForeignModel($comment);
         $relation->setExcludeField(1);
         $post->addProperty($relation);

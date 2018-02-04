@@ -14,11 +14,13 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Format;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * Wrapper for htmlspecialchars ViewHelper
  *
  */
-class HtmlSpecialCharsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class HtmlSpecialCharsViewHelper extends AbstractViewHelper
 {
     /**
      *

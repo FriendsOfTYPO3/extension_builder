@@ -14,11 +14,13 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Format;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * Removes all linebreaks
  *
  */
-class RemoveMultipleNewlinesViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class RemoveMultipleNewlinesViewHelper extends AbstractViewHelper
 {
     /**
      * Uppercase first character

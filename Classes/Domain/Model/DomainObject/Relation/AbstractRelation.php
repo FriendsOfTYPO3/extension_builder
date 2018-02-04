@@ -14,13 +14,16 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
+
 /**
  * Creates a request an dispatches it to the controller which was specified
  * by TS Setup, Flexform and returns the content to the v4 framework.
  *
  * This class is the main entry point for extbase extensions in the frontend.
  */
-abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty
+abstract class AbstractRelation extends AbstractProperty
 {
     /**
      * the schema of the foreign class
@@ -84,7 +87,6 @@ abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\Domai
     }
 
     /**
-     *
      * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject The foreign class
      */
     public function getForeignModel()
@@ -113,7 +115,6 @@ abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\Domai
     }
 
     /**
-     *
      * @return string The foreign class
      */
     public function getForeignClassName()
@@ -137,16 +138,14 @@ abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\Domai
     }
 
     /**
-     *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $foreignModel Set the foreign DomainObject of the relation
      */
-    public function setForeignModel(\EBT\ExtensionBuilder\Domain\Model\DomainObject $foreignModel)
+    public function setForeignModel(DomainObject $foreignModel)
     {
         $this->foreignModel = $foreignModel;
     }
 
     /**
-     *
      * @param string $foreignClassName Set the foreign class nsme of the relation
      */
     public function setForeignClassName($foreignClassName)
@@ -237,6 +236,8 @@ abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\Domai
     /**
      * setter for allowed file types
      *
+     * @param $allowedFileTypes
+     *
      * @return string
      */
     public function setAllowedFileTypes($allowedFileTypes)
@@ -256,6 +257,8 @@ abstract class AbstractRelation extends \EBT\ExtensionBuilder\Domain\Model\Domai
 
     /**
      * setter for disallowed file types
+     *
+     * @param $disallowedFileTypes
      *
      * @return string
      */

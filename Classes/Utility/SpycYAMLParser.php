@@ -67,11 +67,11 @@ class SpycYAMLParser
     /**
      * @var array
      */
-    private $path = array();
+    private $path = [];
     /**
      * @var array
      */
-    private $result = array();
+    private $result = [];
     /**
      * @var string
      */
@@ -79,7 +79,7 @@ class SpycYAMLParser
     /**
      * @var array
      */
-    private $SavedGroups = array();
+    private $SavedGroups = [];
     /**
      * @var int
      */
@@ -89,7 +89,7 @@ class SpycYAMLParser
      *
      * @var int[]
      */
-    private $delayedPath = array();
+    private $delayedPath = [];
     /**
      * @var mixed
      */
@@ -132,7 +132,7 @@ class SpycYAMLParser
      */
     public static function YAMLLoad($input)
     {
-        $Spyc = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser;
+        $Spyc = new SpycYAMLParser;
         return $Spyc->__load($input);
     }
 
@@ -157,7 +157,7 @@ class SpycYAMLParser
      */
     public static function YAMLLoadString($input)
     {
-        $Spyc = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser();
+        $Spyc = new SpycYAMLParser();
         return $Spyc->__loadString($input);
     }
 
@@ -177,13 +177,16 @@ class SpycYAMLParser
      *
      * @access public
      * @return string
+     *
      * @param array $array PHP array
      * @param int $indent Pass in false to use the default, which is 2
      * @param int $wordwrap Pass in 0 for no wordwrap, false for default (40)
+     *
+     * @throws \Exception
      */
     public static function YAMLDump($array, $indent = false, $wordwrap = false)
     {
-        $spyc = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser;
+        $spyc = new SpycYAMLParser;
         return $spyc->dump($array, $indent, $wordwrap);
     }
 
@@ -203,9 +206,12 @@ class SpycYAMLParser
      *
      * @access public
      * @return string
+     *
      * @param array $array PHP array
      * @param int $indent Pass in false to use the default, which is 2
      * @param int $wordwrap Pass in 0 for no wordwrap, false for default (40)
+     *
+     * @throws \Exception
      */
     public function dump($array, $indent = false, $wordwrap = false)
     {
@@ -244,17 +250,21 @@ class SpycYAMLParser
 
     /**
      * Attempts to convert a key / value array item to YAML
+     *
      * @access private
      * @return string
+     *
      * @param string $key The name of the key
      * @param mixed $value The value of the item
      * @param int $indent The indent of the current node
+     *
+     * @throws \Exception
      */
     private function _yamlize($key, $value, $indent, $previous_key = -1, $first_key = 0)
     {
         if (is_array($value)) {
             if (empty($value)) {
-                return $this->_dumpNode($key, array(), $indent, $previous_key, $first_key);
+                return $this->_dumpNode($key, [], $indent, $previous_key, $first_key);
             }
             // It has children.  What to do?
             // Make it the right kind of item
@@ -275,10 +285,14 @@ class SpycYAMLParser
 
     /**
      * Attempts to convert an array to YAML
+     *
      * @access private
      * @return string
+     *
      * @param array $array The array you want to convert
      * @param int $indent The indent of the current level
+     *
+     * @throws \Exception
      */
     private function _yamlizeArray($array, $indent)
     {
@@ -298,11 +312,15 @@ class SpycYAMLParser
 
     /**
      * Returns YAML from a key and a value
+     *
      * @access private
      * @return string
+     *
      * @param string $key The name of the key
      * @param mixed $value The value of the item
      * @param int $indent The indent of the current node
+     *
+     * @throws \Exception
      */
     private function _dumpNode($key, $value, $indent, $previous_key = -1, $first_key = 0)
     {
@@ -319,7 +337,7 @@ class SpycYAMLParser
             }
         }
 
-        if ($value === array()) {
+        if ($value === []) {
             $value = '[ ]';
         }
 
@@ -390,7 +408,7 @@ class SpycYAMLParser
         return $value;
     }
 
-// LOADING FUNCTIONS
+    // LOADING FUNCTIONS
 
     private function __load($input)
     {
@@ -407,15 +425,15 @@ class SpycYAMLParser
     private function loadWithSource($Source)
     {
         if (empty($Source)) {
-            return array();
+            return [];
         }
         if ($this->setting_use_syck_is_possible && function_exists('syck_load')) {
             $array = syck_load(implode('', $Source));
-            return is_array($array) ? $array : array();
+            return is_array($array) ? $array : [];
         }
 
-        $this->path = array();
-        $this->result = array();
+        $this->path = [];
+        $this->result = [];
 
         $cnt = count($Source);
         for ($i = 0; $i < $cnt; $i++) {
@@ -468,7 +486,7 @@ class SpycYAMLParser
                 $this->path[$indent] = $delayedPath;
             }
 
-            $this->delayedPath = array();
+            $this->delayedPath = [];
         }
         return $this->result;
     }
@@ -500,14 +518,14 @@ class SpycYAMLParser
     private function _parseLine($line)
     {
         if (!$line) {
-            return array();
+            return [];
         }
         $line = trim($line);
 
         if (!$line) {
-            return array();
+            return [];
         }
-        $array = array();
+        $array = [];
 
         $group = $this->nodeContainsGroup($line);
         if ($group) {
@@ -563,7 +581,7 @@ class SpycYAMLParser
         } while (0);
 
         if ($is_quoted) {
-            return strtr(substr($value, 1, -1), array('\\"' => '"', '\'\'' => '\'', '\\\'' => '\''));
+            return strtr(substr($value, 1, -1), ['\\"' => '"', '\'\'' => '\'', '\\\'' => '\'']);
         }
 
         if (strpos($value, ' #') !== false) {
@@ -574,11 +592,11 @@ class SpycYAMLParser
             // Take out strings sequences and mappings
             $innerValue = trim(substr($value, 1, -1));
             if ($innerValue === '') {
-                return array();
+                return [];
             }
             $explode = $this->_inlineEscape($innerValue);
             // Propagate value array
-            $value = array();
+            $value = [];
             foreach ($explode as $v) {
                 $value[] = $this->_toType($v);
             }
@@ -591,19 +609,19 @@ class SpycYAMLParser
             array_shift($array);
             $value = trim(implode(': ', $array));
             $value = $this->_toType($value);
-            return array($key => $value);
+            return [$key => $value];
         }
 
         if ($first_character == '{' && $last_character == '}') {
             $innerValue = trim(substr($value, 1, -1));
             if ($innerValue === '') {
-                return array();
+                return [];
             }
             // Inline Mapping
             // Take out strings sequences and mappings
             $explode = $this->_inlineEscape($innerValue);
             // Propagate value array
-            $array = array();
+            $array = [];
             foreach ($explode as $v) {
                 $SubArr = $this->_toType($v);
                 if (empty($SubArr)) {
@@ -630,14 +648,18 @@ class SpycYAMLParser
             return $value;
         }
 
-        if (in_array($value,
-            array('true', 'on', '+', 'yes', 'y', 'True', 'TRUE', 'On', 'ON', 'YES', 'Yes', 'Y'))
+        if (in_array(
+            $value,
+            ['true', 'on', '+', 'yes', 'y', 'True', 'TRUE', 'On', 'ON', 'YES', 'Yes', 'Y']
+        )
         ) {
             return true;
         }
 
-        if (in_array(strtolower($value),
-            array('false', 'off', '-', 'no', 'n'))
+        if (in_array(
+            strtolower($value),
+            ['false', 'off', '-', 'no', 'n']
+        )
         ) {
             return false;
         }
@@ -667,9 +689,9 @@ class SpycYAMLParser
         // pure mappings and mappings with sequences inside can't go very
         // deep.  This needs to be fixed.
 
-        $seqs = array();
-        $maps = array();
-        $saved_strings = array();
+        $seqs = [];
+        $maps = [];
+        $saved_strings = [];
 
         // Check for strings
         $regex = '/(?:(")|(?:\'))((?(1)[^"]+|[^\']+))(?(1)"|\')/';
@@ -806,7 +828,7 @@ class SpycYAMLParser
         }
 
         foreach ($array as $k => $_) {
-            $this->addArray(array($k => $_), $indent);
+            $this->addArray([$k => $_], $indent);
             $this->path = $CommonGroupPath;
         }
         return true;
@@ -839,7 +861,7 @@ class SpycYAMLParser
             return;
         }
 
-        $history = array();
+        $history = [];
         // Unfolding inner array tree.
         $history[] = $_arr = $this->result;
         foreach ($this->path as $k) {
@@ -854,7 +876,7 @@ class SpycYAMLParser
         // Adding string or numeric key to the innermost level or $this->arr.
         if (is_string($key) && $key == '<<') {
             if (!is_array($_arr)) {
-                $_arr = array();
+                $_arr = [];
             }
 
             $_arr = array_merge($_arr, $value);
@@ -865,7 +887,7 @@ class SpycYAMLParser
             $_arr[$key] = $value;
         } else {
             if (!is_array($_arr)) {
-                $_arr = array($value);
+                $_arr = [$value];
                 $key = 0;
             } else {
                 $_arr[] = $value;
@@ -973,7 +995,7 @@ class SpycYAMLParser
     private function getParentPathByIndent($indent)
     {
         if ($indent == 0) {
-            return array();
+            return [];
         }
         $linePath = $this->path;
         do {
@@ -989,7 +1011,7 @@ class SpycYAMLParser
     private function clearBiggerPathValues($indent)
     {
         if ($indent == 0) {
-            $this->path = array();
+            $this->path = [];
         }
         if (empty($this->path)) {
             return true;
@@ -1080,16 +1102,16 @@ class SpycYAMLParser
 
     private function returnMappedSequence($line)
     {
-        $array = array();
+        $array = [];
         $key = self::unquote(trim(substr($line, 1, -1)));
-        $array[$key] = array();
-        $this->delayedPath = array(strpos($line, $key) + $this->indent => $key);
-        return array($array);
+        $array[$key] = [];
+        $this->delayedPath = [strpos($line, $key) + $this->indent => $key];
+        return [$array];
     }
 
     private function returnMappedValue($line)
     {
-        $array = array();
+        $array = [];
         $key = self::unquote(trim(substr($line, 0, -1)));
         $array[$key] = '';
         return $array;
@@ -1112,7 +1134,7 @@ class SpycYAMLParser
 
     private function returnKeyValuePair($line)
     {
-        $array = array();
+        $array = [];
         $key = '';
         if (strpos($line, ':')) {
             // It's a key/value pair most likely
@@ -1134,7 +1156,7 @@ class SpycYAMLParser
             }
             $array[$key] = $value;
         } else {
-            $array = array($line);
+            $array = [$line];
         }
         return $array;
     }
@@ -1142,9 +1164,9 @@ class SpycYAMLParser
     private function returnArrayElement($line)
     {
         if (strlen($line) <= 1) {
-            return array(array());
+            return [[]];
         } // Weird %)
-        $array = array();
+        $array = [];
         $value = trim(substr($line, 1));
         $value = $this->_toType($value);
         $array[] = $value;
