@@ -12,6 +12,8 @@
  * Public License for more details.                                       *
  *                                                                        */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Component Manager of the extension 'gimmefive'. This is a backport of the Component Manager of FLOW3. It's based
  * on code mainly written by Robert Lemke. Thanx to the FLOW3 team for all the great stuff!
@@ -85,12 +87,12 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
      */
     private function loadTypoScriptConfig()
     {
-        $sysPageObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('t3lib_pageSelect');
+        $sysPageObj = GeneralUtility::makeInstance('t3lib_pageSelect');
         if (!$GLOBALS['TSFE']->sys_page) {
             $GLOBALS['TSFE']->sys_page = $sysPageObj;
         }
         $rootLine = $sysPageObj->getRootLine($GLOBALS['TSFE']->id);
-        $TSObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('t3lib_tsparser_ext');
+        $TSObj = GeneralUtility::makeInstance('t3lib_tsparser_ext');
         $TSObj->tt_track = 0;
         $TSObj->init();
         $TSObj->runThroughTemplates($rootLine);
@@ -103,9 +105,11 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
      * Returns a component object from the cache. If there is no object stored already, a new one is created and stored in the cache.
      *
      * @param string $componentName
-     * @return void
+     *
      * @author Robert Lemke <robert@typo3.org>
      * @author adapted for TYPO3v4 by Jochen Rau <jochen.rau@typoplanet.de>
+     * @return object|\Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
+     * @throws \Exception
      */
     public function getComponent($componentName)
     {
@@ -136,8 +140,11 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
      * Requires a class file and instanciates a class.
      *
      * @param string $componentName
-     * @param array	$overridingConstructorArguments
+     * @param array $overridingConstructorArguments
+     *
      * @return object
+     * @throws \Exception
+     * @throws \ReflectionException
      * @author Robert Lemke <robert@typo3.org>
      * @author adapted for TYPO3v4 by Jochen Rau <jochen.rau@typoplanet.de>
      */
@@ -186,11 +193,13 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
      * If mandatory constructor arguments have not been defined yet, this function tries to autowire
      * them if possible.
      *
-     * @param array $constructorArguments: Array of Tx_FLOW3_Component_ConfigurationArgument for the current component
-     * @param \ReflectionClass $class: The component class which contains the methods supposed to be analyzed
+     * @param array $constructorArguments : Array of Tx_FLOW3_Component_ConfigurationArgument for the current component
+     * @param \ReflectionClass $class : The component class which contains the methods supposed to be analyzed
+     *
      * @return array The modified array of constructor arguments
      * @author Robert Lemke <robert@typo3.org>
      * @author adapted for TYPO3v4 by Jochen Rau <jochen.rau@typoplanet.de>
+     * @throws \Exception
      */
     protected function autoWireConstructorArguments(array $constructorArguments, \ReflectionClass $class)
     {
@@ -262,7 +271,9 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
      * Returns the component configuration from cache or fetches it from scratch.
      *
      * @param string $componentName
-     * @return \Tx_Contentparser_Configuration
+     *
+     * @return mixed
+     * @throws \Exception
      */
     protected function getComponentConfiguration($componentName)
     {
@@ -298,7 +309,8 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
      * Tests if a component object already exists in cache
      *
      * @param string $componentName
-     * @return void
+     *
+     * @return bool
      */
     protected function componentObjectExists($componentName)
     {
@@ -312,7 +324,8 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
      * Tests if a component configuration already exists in cache
      *
      * @param string $componentName
-     * @return void
+     *
+     * @return bool
      */
     protected function componentConfigurationExists($componentName)
     {
@@ -428,7 +441,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
         if (strpos($packageKey, '/') === false) {
             $path = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath(strtolower($packageKey));
         } else {
-            $path = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($packageKey);
+            $path = GeneralUtility::getFileAbsFileName($packageKey);
             if (substr($path, strlen($path) -1) !== '/') {
                 $path .= '/';
             }

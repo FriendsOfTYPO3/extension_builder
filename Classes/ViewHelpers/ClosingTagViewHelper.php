@@ -14,11 +14,13 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
-class ClosingTagViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
-{
-    protected $escapeChildren = FALSE;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-    protected $escapeOutput = FALSE;
+class ClosingTagViewHelper extends AbstractViewHelper
+{
+    protected $escapeChildren = false;
+
+    protected $escapeOutput = false;
 
     public function render()
     {

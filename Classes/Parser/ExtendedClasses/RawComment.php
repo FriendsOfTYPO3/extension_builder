@@ -14,6 +14,8 @@ namespace ETB\ExtensionBuilder\Parser\ExtendedClasses;
  * The TYPO3 project - inspiring people to share!
  */
 
-class RawComment extends \PhpParser\Comment
+use PhpParser\Comment;
+
+class RawComment extends Comment
 {
 }

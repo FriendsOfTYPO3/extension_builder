@@ -14,7 +14,10 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  * The TYPO3 project - inspiring people to share!
  */
 
-use org\bovigo\vfs\vfsStream;
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
+use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  *
@@ -26,7 +29,7 @@ use org\bovigo\vfs\vfsStream;
  * @author Nico de Haen
  *
  */
-class CompatibilityTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
+class CompatibilityTest extends BaseFunctionalTest
 {
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
@@ -48,57 +51,54 @@ class CompatibilityTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
      */
     public function generateExtensionFromVersion3Configuration()
     {
-        $this->configurationManager = $this->getAccessibleMock(
-            'EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager',
-            array('dummy')
-        );
-        $this->extensionSchemaBuilder = $this->objectManager->get('EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder');
+        $this->configurationManager = $this->getAccessibleMock(ExtensionBuilderConfigurationManager::class, ['dummy']);
+        $this->extensionSchemaBuilder = $this->objectManager->get(ExtensionSchemaBuilder::class);
 
         $testExtensionDir = $this->fixturesPath . 'TestExtensions/test_extension/';
-        $jsonFile = $testExtensionDir . \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
+        $jsonFile = $testExtensionDir . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
 
         if (file_exists($jsonFile)) {
             // compatibility adaptions for configurations from older versions
             $extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), true);
             $extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON($extensionConfigurationJSON, false);
         } else {
-            $extensionConfigurationJSON = array();
+            $extensionConfigurationJSON = [];
             self::fail('JSON file not found');
         }
 
         $this->extension = $this->extensionSchemaBuilder->build($extensionConfigurationJSON);
         $this->fileGenerator->setSettings(
-            array(
+            [
                 'codeTemplateRootPaths.' => [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/'],
                 'codeTemplatePartialPaths.' => [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials'],
-                'extConf' => array(
+                'extConf' => [
                     'enableRoundtrip' => '0'
-                )
-            )
+                ]
+            ]
         );
 
         $this->extension->setExtensionDir('test_extension/');
 
         $this->fileGenerator->build($this->extension);
 
-        $referenceFiles = \TYPO3\CMS\Core\Utility\GeneralUtility::getAllFilesAndFoldersInPath(array(), $testExtensionDir, 'php,sql,txt,html');
+        $referenceFiles = GeneralUtility::getAllFilesAndFoldersInPath([], $testExtensionDir, 'php,sql,txt,html');
         foreach ($referenceFiles as $referenceFile) {
             $createdFile = str_replace($testExtensionDir, $this->extension->getExtensionDir(), $referenceFile);
-            if (!in_array(basename($createdFile), array('ExtensionBuilder.json'))) {
+            if (!in_array(basename($createdFile), ['ExtensionBuilder.json'])) {
                 $referenceFileContent = str_replace(
-                    array('2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###', '2014'),
-                    array(date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')),
+                    ['2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###', '2014'],
+                    [date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')],
                     file_get_contents($referenceFile)
                 );
                 self::assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');
                 // do not compare files that contain a formatted DateTime, as it might have changed between file creation and this comparison
                 if (strpos($referenceFile, 'ext_emconf') === false) {
-                    $originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $referenceFileContent, true);
-                    $generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, file_get_contents($createdFile), true);
+                    $originalLines = GeneralUtility::trimExplode(LF, $referenceFileContent, true);
+                    $generatedLines = GeneralUtility::trimExplode(LF, file_get_contents($createdFile), true);
                     for ($c = 0; $c < count($originalLines); $c++) {
                         $originalLine = str_replace(
-                            array('2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###', '2014'),
-                            array(date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')),
+                            ['2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###', '2014'],
+                            [date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')],
                             $originalLines[$c]
                         );
                         self::assertEquals(

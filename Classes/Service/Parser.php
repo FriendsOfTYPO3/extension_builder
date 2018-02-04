@@ -14,7 +14,17 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
-class Parser extends \PhpParser\Parser implements \TYPO3\CMS\Core\SingletonInterface
+use EBT\ExtensionBuilder\Parser\ClassFactory;
+use EBT\ExtensionBuilder\Parser\ClassFactoryInterface;
+use EBT\ExtensionBuilder\Parser\Traverser;
+use EBT\ExtensionBuilder\Parser\TraverserInterface;
+use EBT\ExtensionBuilder\Parser\Visitor\FileVisitor;
+use EBT\ExtensionBuilder\Parser\Visitor\FileVisitorInterface;
+use EBT\ExtensionBuilder\Parser\Visitor\ReplaceVisitor;
+use TYPO3\CMS\Core\Localization\Exception\FileNotFoundException;
+use TYPO3\CMS\Core\SingletonInterface;
+
+class Parser extends \PhpParser\Parser implements SingletonInterface
 {
     /**
      * @var \EBT\ExtensionBuilder\\Parser\Visitor\FileVisitorInterface
@@ -42,17 +52,17 @@ class Parser extends \PhpParser\Parser implements \TYPO3\CMS\Core\SingletonInter
         $stmts = $this->parseRawStatements($code);
         // set defaults
         if (null === $this->traverser) {
-            $this->traverser = new \EBT\ExtensionBuilder\Parser\Traverser(true);
+            $this->traverser = new Traverser(true);
         }
         if (null === $this->fileVisitor) {
-            $this->fileVisitor = new \EBT\ExtensionBuilder\Parser\Visitor\FileVisitor;
+            $this->fileVisitor = new FileVisitor;
         }
         if (null === $this->classFactory) {
-            $this->classFactory = new \EBT\ExtensionBuilder\Parser\ClassFactory;
+            $this->classFactory = new ClassFactory;
         }
         $this->fileVisitor->setClassFactory($this->classFactory);
         $this->traverser->appendVisitor($this->fileVisitor);
-        $this->traverser->traverse(array($stmts));
+        $this->traverser->traverse([$stmts]);
         $fileObject = $this->fileVisitor->getFileObject();
         return $fileObject;
     }
@@ -65,7 +75,7 @@ class Parser extends \PhpParser\Parser implements \TYPO3\CMS\Core\SingletonInter
     public function parseFile($fileName)
     {
         if (!file_exists($fileName)) {
-            throw new \TYPO3\CMS\Core\Localization\Exception\FileNotFoundException('File "' . $fileName . '" not found!');
+            throw new FileNotFoundException('File "' . $fileName . '" not found!');
         }
         $fileHandler = fopen($fileName, 'r');
         $code = fread($fileHandler, filesize($fileName));
@@ -86,7 +96,7 @@ class Parser extends \PhpParser\Parser implements \TYPO3\CMS\Core\SingletonInter
     /**
      * @param \EBT\ExtensionBuilder\\Parser\Visitor\FileVisitorInterface $visitor
      */
-    public function setFileVisitor(\EBT\ExtensionBuilder\Parser\Visitor\FileVisitorInterface $visitor)
+    public function setFileVisitor(FileVisitorInterface $visitor)
     {
         $this->classFileVisitor = $visitor;
     }
@@ -95,7 +105,7 @@ class Parser extends \PhpParser\Parser implements \TYPO3\CMS\Core\SingletonInter
      * @param \EBT\ExtensionBuilder\\Parser\TraverserInterface
      * @return void
      */
-    public function setTraverser(\EBT\ExtensionBuilder\Parser\TraverserInterface $traverser)
+    public function setTraverser(TraverserInterface $traverser)
     {
         $this->traverser = $traverser;
     }
@@ -103,7 +113,7 @@ class Parser extends \PhpParser\Parser implements \TYPO3\CMS\Core\SingletonInter
     /**
      * @param \EBT\ExtensionBuilder\\Parser\ClassFactoryInterface $classFactory
      */
-    public function setClassFactory(\EBT\ExtensionBuilder\Parser\ClassFactoryInterface $classFactory)
+    public function setClassFactory(ClassFactoryInterface $classFactory)
     {
         $this->classFactory = $classFactory;
     }
@@ -115,13 +125,13 @@ class Parser extends \PhpParser\Parser implements \TYPO3\CMS\Core\SingletonInter
      * @param string $nodeProperty
      * @return array
      */
-    public function replaceNodeProperty($stmts, $replacements, $nodeTypes = array(), $nodeProperty = 'name')
+    public function replaceNodeProperty($stmts, $replacements, $nodeTypes = [], $nodeProperty = 'name')
     {
         if (null === $this->traverser) {
-            $this->traverser = new \EBT\ExtensionBuilder\Parser\Traverser;
+            $this->traverser = new Traverser;
         }
         $this->traverser->resetVisitors();
-        $visitor = new \EBT\ExtensionBuilder\Parser\Visitor\ReplaceVisitor;
+        $visitor = new ReplaceVisitor;
         $visitor->setNodeTypes($nodeTypes)
             ->setNodeProperty($nodeProperty)
             ->setReplacements($replacements);

@@ -25,11 +25,11 @@ class DocComment extends Comment
     /**
      * @var string[]
      */
-    protected $descriptionLines = array();
+    protected $descriptionLines = [];
     /**
      * @var array
      */
-    protected $tags = array();
+    protected $tags = [];
 
     /**
      * @param string $text Comment text (including comment delimiters like /*)
@@ -82,7 +82,7 @@ class DocComment extends Comment
     {
         $this->description = $description;
         // TODO: enable automated splitting into lines after certain number of characters?
-        $this->descriptionLines = array();
+        $this->descriptionLines = [];
     }
 
     /**
@@ -113,7 +113,7 @@ class DocComment extends Comment
         if (!$override && isset($this->tags[$tagName])) {
             if (!is_array($this->tags[$tagName])) {
                 // build an array with the existing value as first element
-                $this->tags[$tagName] = array($this->tags[$tagName]);
+                $this->tags[$tagName] = [$this->tags[$tagName]];
             }
             $this->tags[$tagName][] = $tagValue;
         } else {
@@ -177,7 +177,7 @@ class DocComment extends Comment
      */
     protected function parseTag($line)
     {
-        $tagAndValue = array();
+        $tagAndValue = [];
         if (preg_match('/@([A-Za-z0-9\\\-]+)(\(.*\))? ?(.*)/', $line, $tagAndValue) === 0) {
             $tagAndValue = preg_split('/\\s/', $line, 2);
         } else {
@@ -187,7 +187,7 @@ class DocComment extends Comment
         if (count($tagAndValue) > 1) {
             $this->tags[$tag][] = trim($tagAndValue[2], ' "');
         } else {
-            $this->tags[$tag] = array();
+            $this->tags[$tag] = [];
         }
     }
 
@@ -216,7 +216,7 @@ class DocComment extends Comment
      */
     public function toString($singleLineCommentAllowed = false)
     {
-        $docCommentLines = array();
+        $docCommentLines = [];
 
         if (is_array($this->tags)) {
             if (isset($this->tags['return'])) {

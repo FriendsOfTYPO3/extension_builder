@@ -14,10 +14,14 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Be;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Localization\LocalizationFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBackendViewHelper;
 
-class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBackendViewHelper
+class ConfigurationViewHelper extends AbstractBackendViewHelper
 {
     /**
      * @var \TYPO3\CMS\Core\Page\PageRenderer
@@ -28,7 +32,7 @@ class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBa
     {
         $this->pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
 
-        $baseUrl = '../' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath('extension_builder');
+        $baseUrl = '../' . ExtensionManagementUtility::siteRelPath('extension_builder');
         $this->pageRenderer->disableCompressJavascript();
         // SECTION: JAVASCRIPT FILES
         // YUI Basis Files
@@ -78,7 +82,7 @@ class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBa
 
         $this->pageRenderer->addInlineSettingArray(
             'extensionBuilder',
-            array('baseUrl' => $baseUrl)
+            ['baseUrl' => $baseUrl]
         );
 
         $this->setLocallangSettings();
@@ -124,14 +128,14 @@ class ConfigurationViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBa
      */
     private function setLocallangSettings()
     {
-        $languageFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Localization\LocalizationFactory::class);
+        $languageFactory = GeneralUtility::makeInstance(LocalizationFactory::class);
         $LL = $languageFactory->getParsedData('EXT:extension_builder/Resources/Private/Language/locallang.xml', 'default');
         if (!empty($LL['default']) && is_array($LL['default'])) {
             foreach ($LL['default'] as $key => $value) {
                 $this->pageRenderer->addInlineSetting(
                     'extensionBuilder._LOCAL_LANG',
                     str_replace('.', '_', $key),
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($key, 'extension_builder')
+                    LocalizationUtility::translate($key, 'extension_builder')
                 );
             }
         }

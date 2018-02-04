@@ -29,14 +29,16 @@ class Plugin
     /**
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
     /**
      * @param string $description
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
     }
 
@@ -53,17 +55,17 @@ class Plugin
      *
      * @var string[]
      */
-    protected $controllerActionCombinations = array();
+    protected $controllerActionCombinations = [];
     /**
      * array('controller' => 'MyController', 'actions' => 'action1,action2')
      *
      * @var string[]
      */
-    protected $noncacheableControllerActions = array();
+    protected $noncacheableControllerActions = [];
     /**
      * @var string[]
      */
-    protected $switchableControllerActions = array();
+    protected $switchableControllerActions = [];
 
     /**
      * @return string
@@ -170,7 +172,7 @@ class Plugin
     }
 
     /**
-     * @return bool
+     * @return array
      */
     public function getSwitchableControllerActions()
     {

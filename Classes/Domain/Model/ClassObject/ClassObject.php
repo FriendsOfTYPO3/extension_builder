@@ -24,24 +24,24 @@ class ClassObject extends AbstractObject
     /**
      * @var array
      */
-    protected $constants = array();
+    protected $constants = [];
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property[]
      */
-    protected $properties = array();
+    protected $properties = [];
     /**
      * @deprecated Use this->getPropertyNames() instead
      * @var string[]
      */
-    protected $propertyNames = array();
+    protected $propertyNames = [];
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method[]
      */
-    protected $methods = array();
+    protected $methods = [];
     /**
      * @var string[]
      */
-    protected $interfaceNames = array();
+    protected $interfaceNames = [];
     /**
      * All lines that were found below the class declaration.
      *
@@ -51,11 +51,11 @@ class ClassObject extends AbstractObject
     /**
      * @var array
      */
-    protected $aliasDeclarations = array();
+    protected $aliasDeclarations = [];
     /**
      * @var array
      */
-    protected $useTraitStatements = array();
+    protected $useTraitStatements = [];
     /**
      * @var bool
      */
@@ -92,8 +92,8 @@ class ClassObject extends AbstractObject
      */
     public function __clone()
     {
-        $clonedProperties = array();
-        $clonedMethods = array();
+        $clonedProperties = [];
+        $clonedMethods = [];
         foreach ($this->properties as $property) {
             $clonedProperties[] = clone($property);
         }
@@ -278,7 +278,7 @@ class ClassObject extends AbstractObject
      */
     public function getGetters()
     {
-        $getterMethods = array();
+        $getterMethods = [];
         foreach ($this->getMethods() as $method) {
             $methodName = $method->getName();
             if (strpos($methodName, 'get') === 0) {
@@ -299,7 +299,7 @@ class ClassObject extends AbstractObject
      */
     public function getSetters()
     {
-        $setterMethods = array();
+        $setterMethods = [];
         foreach ($this->getMethods() as $method) {
             $methodName = $method->getName();
             if (strpos($methodName, 'set') === 0) {
@@ -504,17 +504,17 @@ class ClassObject extends AbstractObject
      */
     public function getInfo()
     {
-        $infoArray = array();
+        $infoArray = [];
         $infoArray['className'] = $this->getName();
         $infoArray['nameSpace'] = $this->getNamespaceName();
         $infoArray['parentClass'] = $this->getParentClassName();
         $infoArray['fileName'] = $this->getFileName();
 
-        $methodArray = array();
+        $methodArray = [];
         foreach ($this->getMethods() as $method) {
-            $methodArray[$method->getName()] = array(
+            $methodArray[$method->getName()] = [
                 'parameter' => $method->getParameters()
-            );
+            ];
         }
         $infoArray['Methods'] = $methodArray;
         $infoArray['Properties'] = $this->getProperties();
@@ -607,7 +607,7 @@ class ClassObject extends AbstractObject
      */
     public function removeInterface($interfaceNameToRemove)
     {
-        $interfaceNames = array();
+        $interfaceNames = [];
         foreach ($this->interfaceNames as $interfaceName) {
             if ($interfaceName != $interfaceNameToRemove) {
                 $interfaceNames[] = $interfaceName;
@@ -621,7 +621,7 @@ class ClassObject extends AbstractObject
      */
     public function removeAllInterfaces()
     {
-        $this->interfaceNames = array();
+        $this->interfaceNames = [];
     }
 
     /**
@@ -655,8 +655,8 @@ class ClassObject extends AbstractObject
      */
     public function resetAll()
     {
-        $this->constants = array();
-        $this->properties = array();
-        $this->methods = array();
+        $this->constants = [];
+        $this->properties = [];
+        $this->methods = [];
     }
 }

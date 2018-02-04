@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * View helper to check if one string contains another string
  *
@@ -22,7 +24,7 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * {k:matchString(match:'this', in:'this and that')}
  *
  */
-class MatchStringViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class MatchStringViewHelper extends AbstractViewHelper
 {
     /**
      * @param string $match

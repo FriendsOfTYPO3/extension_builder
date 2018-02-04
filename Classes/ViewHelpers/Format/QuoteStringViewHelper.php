@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Format;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * View helper which returns a quoted string
  *
@@ -22,10 +24,12 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Format;
  * <f:quoteString>{anyString}</f:quoteString>
  *
  */
-class QuoteStringViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class QuoteStringViewHelper extends AbstractViewHelper
 {
     /**
      * @param string $value
+     *
+     * @return string
      */
     public function render($value = null)
     {

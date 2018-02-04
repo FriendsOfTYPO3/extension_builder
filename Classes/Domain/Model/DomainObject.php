@@ -14,6 +14,9 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
+
 /**
  * Schema for a Domain Object
  */
@@ -84,13 +87,13 @@ class DomainObject
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty[]
      */
-    protected $properties = array();
+    protected $properties = [];
     /**
      * List of actions the domain object has.
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action[]
      */
-    protected $actions = array();
+    protected $actions = [];
     /**
      * Is an upload folder required for this domain object?
      *
@@ -110,7 +113,7 @@ class DomainObject
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject[]
      */
-    protected $childObjects = array();
+    protected $childObjects = [];
 
     /**
      * @return string
@@ -307,9 +310,9 @@ class DomainObject
      */
     public function getZeroToManyRelationProperties()
     {
-        $relationProperties = array();
+        $relationProperties = [];
         foreach ($this->properties as $property) {
-            if (is_a($property, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation')) {
+            if (is_a($property, ZeroToManyRelation::class)) {
                 $relationProperties[] = $property;
             }
         }
@@ -323,9 +326,9 @@ class DomainObject
      */
     public function getAnyToManyRelationProperties()
     {
-        $relationProperties = array();
+        $relationProperties = [];
         foreach ($this->properties as $property) {
-            if (is_subclass_of($property, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation')) {
+            if (is_subclass_of($property, AnyToManyRelation::class)) {
                 $relationProperties[] = $property;
             }
         }
@@ -454,7 +457,7 @@ class DomainObject
      */
     public function getCommaSeparatedFieldList()
     {
-        $fieldNames = array();
+        $fieldNames = [];
         foreach ($this->properties as $property) {
             $fieldNames[] = $property->getFieldName();
         }
@@ -504,7 +507,7 @@ class DomainObject
      */
     public function hasPropertiesThatNeedMappingStatements()
     {
-        $propertiesWithMappingStatements = array();
+        $propertiesWithMappingStatements = [];
         foreach ($this->properties as $property) {
             if ($property->getMappingStatement()) {
                 $propertiesWithMappingStatements[] = $property;
@@ -524,7 +527,8 @@ class DomainObject
     /**
      * @return bool
      */
-    public function needsTcaOverride() {
+    public function needsTcaOverride()
+    {
         return $this->isMappedToExistingTable() || $this->hasChildren() || $this->categorizable;
     }
 
@@ -548,7 +552,7 @@ class DomainObject
     /**
      * Is this domain object mapped to an existing table?
      *
-     * @return bool
+     * @return bool|array
      */
     public function getNeedsMappingStatement()
     {

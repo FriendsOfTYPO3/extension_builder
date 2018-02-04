@@ -14,19 +14,21 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 use PhpParser\Node;
+use PhpParser\NodeVisitorAbstract;
 
 /**
  * provides methods to import a class object and methods and properties
  *
  */
-class FileVisitor extends \PhpParser\NodeVisitorAbstract implements FileVisitorInterface
+class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
 {
     /**
      * @var array
      */
-    protected $properties = array();
+    protected $properties = [];
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
      */
@@ -57,7 +59,7 @@ class FileVisitor extends \PhpParser\NodeVisitorAbstract implements FileVisitorI
      *
      * @var array
      */
-    protected $contextStack = array();
+    protected $contextStack = [];
     /**
      * @var \PhpParser\Node
      */
@@ -73,7 +75,7 @@ class FileVisitor extends \PhpParser\NodeVisitorAbstract implements FileVisitorI
      *
      * @param \PhpParser\Node $node
      */
-    public function enterNode(\PhpParser\Node $node)
+    public function enterNode(Node $node)
     {
         $this->contextStack[] = $node;
         if ($node instanceof Node\Stmt\Namespace_) {
@@ -88,7 +90,7 @@ class FileVisitor extends \PhpParser\NodeVisitorAbstract implements FileVisitorI
     /**
      * @param \PhpParser\Node $node
      */
-    public function leaveNode(\PhpParser\Node $node)
+    public function leaveNode(Node $node)
     {
         array_pop($this->contextStack);
         if ($this->isContainerNode(end($this->contextStack)) || count($this->contextStack) === 0) {
@@ -154,7 +156,7 @@ class FileVisitor extends \PhpParser\NodeVisitorAbstract implements FileVisitorI
      */
     public function beforeTraverse(array $nodes)
     {
-        $this->fileObject = new \EBT\ExtensionBuilder\Domain\Model\File;
+        $this->fileObject = new File;
         $this->currentContainer = $this->fileObject;
     }
 

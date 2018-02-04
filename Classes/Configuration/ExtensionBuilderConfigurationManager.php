@@ -14,18 +14,22 @@ namespace EBT\ExtensionBuilder\Configuration;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
 
 /**
  * Load settings from yaml file and from TYPO3_CONF_VARS extConf
  */
-class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
+class ExtensionBuilderConfigurationManager extends ConfigurationManager
 {
     /**
      * @var string
@@ -42,7 +46,7 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
     /**
      * @var array
      */
-    private $inputData = array();
+    private $inputData = [];
 
     /**
      * Wrapper for file_get_contents('php://input')
@@ -97,6 +101,9 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
      * - Module settings configured in the extension manager
      *
      * @param array $typoscript (optional)
+     *
+     * @return array
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     public function getSettings($typoscript = null)
     {
@@ -118,7 +125,7 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
      */
     public function getExtensionBuilderSettings()
     {
-        $settings = array();
+        $settings = [];
         if (!empty($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['extension_builder'])) {
             $settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['extension_builder']);
         }
@@ -131,10 +138,10 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
      */
     public function getExtensionSettings($extensionKey)
     {
-        $settings = array();
+        $settings = [];
         $settingsFile = $this->getSettingsFile($extensionKey);
         if (file_exists($settingsFile)) {
-            $yamlParser = new \EBT\ExtensionBuilder\Utility\SpycYAMLParser();
+            $yamlParser = new SpycYAMLParser();
             $settings = $yamlParser->YAMLLoadString(file_get_contents($settingsFile));
         } else {
             GeneralUtility::devLog('No settings found: ' . $settingsFile, 'extension_builder', 2);
@@ -177,11 +184,13 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
      * This is mainly copied from DataMapFactory.
      *
      * @param string $className
+     *
      * @return array with configuration values
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     public function getExtbaseClassConfiguration($className)
     {
-        $classConfiguration = array();
+        $classConfiguration = [];
         if (strpos($className, '\\') === 0) {
             $className = substr($className, 1);
         }
@@ -197,15 +206,15 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
             if (isset($classSettings['mapping']['tableName']) && strlen($classSettings['mapping']['tableName']) > 0) {
                 $classConfiguration['tableName'] = $classSettings['mapping']['tableName'];
             }
-            $classHierachy = array_merge(array($className), class_parents($className));
-            $columnMapping = array();
+            $classHierachy = array_merge([$className], class_parents($className));
+            $columnMapping = [];
             foreach ($classHierachy as $currentClassName) {
                 if (in_array(
                     $currentClassName,
-                    array(
-                        'TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity',
-                        'TYPO3\\CMS\\Extbase\\DomainObject\\AbstractValueObject'
-                    )
+                    [
+                        AbstractEntity::class,
+                        AbstractValueObject::class
+                    ]
                 )) {
                     break;
                 }
@@ -241,7 +250,9 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
     /**
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
      * @param array $codeTemplateRootPaths
+     *
      * @return void
+     * @throws \Exception
      */
     public function createInitialSettingsFile($extension, $codeTemplateRootPaths)
     {
@@ -250,7 +261,8 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
         $settings = str_replace('{extension.extensionKey}', $extension->getExtensionKey(), $settings);
         $settings = str_replace('{f:format.date(format:\'Y-m-d\\TH:i:s\\Z\',date:\'now\')}', date('Y-m-d\TH:i:s\Z'), $settings);
         GeneralUtility::writeFile(
-            $extension->getExtensionDir() . self::SETTINGS_DIR . 'settings.yaml', $settings
+            $extension->getExtensionDir() . self::SETTINGS_DIR . 'settings.yaml',
+            $settings
         );
     }
 
@@ -304,7 +316,7 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
      */
     protected function mapAdvancedMode($jsonConfig, $prepareForModeler = true)
     {
-        $fieldsToMap = array(
+        $fieldsToMap = [
             'relationType',
             'renderType',
             'propertyIsExcludeField',
@@ -312,12 +324,12 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
             'lazyLoading',
             'relationDescription',
             'foreignRelationClass'
-        );
+        ];
         foreach ($jsonConfig as &$module) {
             for ($i = 0; $i < count($module['value']['relationGroup']['relations']); $i++) {
                 if ($prepareForModeler) {
                     if (empty($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
-                        $module['value']['relationGroup']['relations'][$i]['advancedSettings'] = array();
+                        $module['value']['relationGroup']['relations'][$i]['advancedSettings'] = [];
                         foreach ($fieldsToMap as $fieldToMap) {
                             $module['value']['relationGroup']['relations'][$i]['advancedSettings'][$fieldToMap] =
                                 $module['value']['relationGroup']['relations'][$i][$fieldToMap];
@@ -442,9 +454,9 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
      */
     protected function findModuleIndexByRelationUid($uid, $modules, $supposedModuleIndex, $supposedRelationIndex = null)
     {
-        $result = array(
+        $result = [
             'moduleId' => $supposedModuleIndex
-        );
+        ];
         if ($supposedRelationIndex == null) {
             $result['terminal'] = 'SOURCES';
             if ($modules[$supposedModuleIndex]['value']['objectsettings']['uid'] == $uid) {
@@ -481,6 +493,11 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
         return $result;
     }
 
+    /**
+     * @param $extensionKey
+     *
+     * @return string
+     */
     public function getParentClassForValueObject($extensionKey)
     {
         $settings = self::getExtensionSettings($extensionKey);
@@ -492,6 +509,11 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
         return $parentClass;
     }
 
+    /**
+     * @param $extensionKey
+     *
+     * @return string
+     */
     public function getParentClassForEntityObject($extensionKey)
     {
         $settings = self::getExtensionSettings($extensionKey);
@@ -517,15 +539,15 @@ class ExtensionBuilderConfigurationManager extends \TYPO3\CMS\Extbase\Configurat
             ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd'
         );
         $smdJson = json_decode($smdJsonString);
-        $parameters = array(
-            'tx_extensionbuilder_tools_extensionbuilderextensionbuilder' => array(
+        $parameters = [
+            'tx_extensionbuilder_tools_extensionbuilderextensionbuilder' => [
                 'controller' => 'BuilderModule',
                 'action' => 'dispatchRpc',
-            )
-        );
+            ]
+        ];
         $smdJson->target = BackendUtility::getModuleUrl('tools_ExtensionBuilderExtensionbuilder', $parameters);
         $smdJsonString = json_encode($smdJson);
-        
+
         $response->getBody()->write($smdJsonString);
         return $response;
     }

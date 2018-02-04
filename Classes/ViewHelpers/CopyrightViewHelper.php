@@ -14,11 +14,13 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * Format the Copyright notice
  *
  */
-class CopyrightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class CopyrightViewHelper extends AbstractViewHelper
 {
     protected $escapeOutput = false;
 

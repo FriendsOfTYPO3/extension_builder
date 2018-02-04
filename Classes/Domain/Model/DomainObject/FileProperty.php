@@ -84,6 +84,8 @@ class FileProperty extends AbstractProperty
     /**
      * setter for allowed file types
      *
+     * @param $allowedFileTypes
+     *
      * @return string
      */
     public function setAllowedFileTypes($allowedFileTypes)
@@ -103,6 +105,8 @@ class FileProperty extends AbstractProperty
 
     /**
      * setter for disallowed file types
+     *
+     * @param $disallowedFileTypes
      *
      * @return string
      */

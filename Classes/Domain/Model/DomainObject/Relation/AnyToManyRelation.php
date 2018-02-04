@@ -1,8 +1,6 @@
 <?php
 namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
 
-use EBT\ExtensionBuilder\Domain\Model\DomainObject;
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -116,5 +114,4 @@ abstract class AnyToManyRelation extends AbstractRelation
     {
         $this->maxItems = $maxItems;
     }
-
 }

@@ -14,11 +14,13 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\AbstractObject;
+
 /**
  * parameter representing a method parameter in the context of software
  * development
  */
-class MethodParameter extends \EBT\ExtensionBuilder\Domain\Model\AbstractObject
+class MethodParameter extends AbstractObject
 {
     /**
      * @var string

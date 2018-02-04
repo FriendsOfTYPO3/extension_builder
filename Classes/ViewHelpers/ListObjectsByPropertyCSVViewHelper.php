@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * Renders a comma separated list of a specific property and a list of objects
  *
@@ -27,7 +29,7 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * Anthony,Billy,Chris
  *
  */
-class ListObjectsByPropertyCSVViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class ListObjectsByPropertyCSVViewHelper extends AbstractViewHelper
 {
     /**
      * Renders a comma separated list of a specific property and a list of objects
@@ -37,7 +39,7 @@ class ListObjectsByPropertyCSVViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelpe
      */
     public function render($objects, $property)
     {
-        $values = array();
+        $values = [];
         foreach ($objects as $object) {
             if (method_exists($object, 'get' . ucfirst($property))) {
                 eval('$values[] = $object->get' . ucfirst($property) . '();');

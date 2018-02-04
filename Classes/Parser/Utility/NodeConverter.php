@@ -14,21 +14,36 @@ namespace EBT\ExtensionBuilder\Parser\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
+use PhpParser\Node;
+use PhpParser\Node\Expr\Array_;
+use PhpParser\Node\Expr\ArrayItem;
+use PhpParser\Node\Expr\ConstFetch;
+use PhpParser\Node\Expr\UnaryMinus;
+use PhpParser\Node\Name;
+use PhpParser\Node\Name\FullyQualified;
+use PhpParser\Node\Scalar\DNumber;
+use PhpParser\Node\Scalar\LNumber;
+use PhpParser\Node\Scalar\String_;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\Namespace_;
+use PhpParser\Node\Stmt\Use_;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 class NodeConverter
 {
     /**
      * @var int[]
      */
-    public static $accessorModifiers = array(
-        \PhpParser\Node\Stmt\Class_::MODIFIER_PUBLIC,
-        \PhpParser\Node\Stmt\Class_::MODIFIER_PROTECTED,
-        \PhpParser\Node\Stmt\Class_::MODIFIER_PRIVATE
+    public static $accessorModifiers = [
+        Class_::MODIFIER_PUBLIC,
+        Class_::MODIFIER_PROTECTED,
+        Class_::MODIFIER_PRIVATE
 
-    );
+    ];
 
     public static function getTypeHintFromVarType($varType)
     {
-        if (in_array(strtolower($varType), array('integer', 'int', 'double', 'float', 'boolean', 'bool', 'string'))) {
+        if (in_array(strtolower($varType), ['integer', 'int', 'double', 'float', 'boolean', 'bool', 'string'])) {
             return '';
         } else {
             if (preg_match_all('/^[^a-zA-Z]|[^\w_]/', $varType, $matches) === 0) {
@@ -46,12 +61,12 @@ class NodeConverter
      */
     public static function modifierToNames($modifiers)
     {
-        $modifierString = ($modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_PUBLIC ? 'public ' : '') .
-            ($modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_PROTECTED ? 'protected ' : '') .
-            ($modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_PRIVATE ? 'private ' : '') .
-            ($modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_STATIC ? 'static ' : '') .
-            ($modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_ABSTRACT ? 'abstract ' : '') .
-            ($modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_FINAL ? 'final ' : '');
+        $modifierString = ($modifiers & Class_::MODIFIER_PUBLIC ? 'public ' : '') .
+            ($modifiers & Class_::MODIFIER_PROTECTED ? 'protected ' : '') .
+            ($modifiers & Class_::MODIFIER_PRIVATE ? 'private ' : '') .
+            ($modifiers & Class_::MODIFIER_STATIC ? 'static ' : '') .
+            ($modifiers & Class_::MODIFIER_ABSTRACT ? 'abstract ' : '') .
+            ($modifiers & Class_::MODIFIER_FINAL ? 'final ' : '');
         return explode(' ', trim($modifierString));
     }
 
@@ -68,18 +83,18 @@ class NodeConverter
         if (\is_string($node) || \is_numeric($node)) {
             return $node;
         }
-        if ($node instanceof \PhpParser\Node\Stmt\Namespace_) {
+        if ($node instanceof Namespace_) {
             return implode('\\', $node->name->parts);
-        } elseif ($node instanceof \PhpParser\Node\Name\FullyQualified) {
+        } elseif ($node instanceof FullyQualified) {
             return '\\' . implode('\\', $node->parts);
-        } elseif ($node instanceof \PhpParser\Node\Name) {
+        } elseif ($node instanceof Name) {
             return implode('\\', $node->parts);
-        } elseif ($node instanceof \PhpParser\Node\Expr\ConstFetch) {
+        } elseif ($node instanceof ConstFetch) {
             return self::getValueFromNode($node->name);
-        } elseif ($node instanceof \PhpParser\Node\Expr\UnaryMinus) {
+        } elseif ($node instanceof UnaryMinus) {
             return -1 * self::getValueFromNode($node->expr);
-        } elseif ($node instanceof \PhpParser\Node\Expr\Array_) {
-            $value = array();
+        } elseif ($node instanceof Array_) {
+            $value = [];
             $arrayItems = $node->items;
             foreach ($arrayItems as $arrayItemNode) {
                 $itemKey = $arrayItemNode->key;
@@ -91,7 +106,7 @@ class NodeConverter
                 }
             }
             return $value;
-        } elseif ($node instanceof \PhpParser\Node) {
+        } elseif ($node instanceof Node) {
             return $node->value;
         } else {
             return null;
@@ -108,41 +123,41 @@ class NodeConverter
      */
     public static function normalizeValue($value)
     {
-        if ($value instanceof \PhpParser\Node) {
+        if ($value instanceof Node) {
             return $value;
         } elseif (is_null($value)) {
-            return new \PhpParser\Node\Expr\ConstFetch(
-                new \PhpParser\Node\Name('null')
+            return new ConstFetch(
+                new Name('null')
             );
         } elseif (is_bool($value)) {
-            return new \PhpParser\Node\Expr\ConstFetch(
-                new \PhpParser\Node\Name($value ? 'true' : 'false')
+            return new ConstFetch(
+                new Name($value ? 'true' : 'false')
             );
         } elseif (is_int($value)) {
-            return new \PhpParser\Node\Scalar\LNumber($value);
+            return new LNumber($value);
         } elseif (is_float($value)) {
-            return new \PhpParser\Node\Scalar\DNumber($value);
+            return new DNumber($value);
         } elseif (is_string($value)) {
-            return new \PhpParser\Node\Scalar\String_($value);
+            return new String_($value);
         } elseif (is_array($value)) {
-            $items = array();
+            $items = [];
             $lastKey = -1;
             foreach ($value as $itemKey => $itemValue) {
                 // for consecutive, numeric keys don't generate keys
                 if (null !== $lastKey && ++$lastKey === $itemKey) {
-                    $items[] = new \PhpParser\Node\Expr\ArrayItem(
+                    $items[] = new ArrayItem(
                         self::normalizeValue($itemValue)
                     );
                 } else {
                     $lastKey = null;
-                    $items[] = new \PhpParser\Node\Expr\ArrayItem(
+                    $items[] = new ArrayItem(
                         self::normalizeValue($itemValue),
                         self::normalizeValue($itemKey)
                     );
                 }
             }
 
-            return new \PhpParser\Node\Expr\Array_($items);
+            return new Array_($items);
         } else {
             throw new \LogicException('Invalid value');
         }
@@ -157,15 +172,15 @@ class NodeConverter
      * @param \PhpParser\Node
      * @return array
      */
-    public static function convertClassConstantNodeToArray(\PhpParser\Node $node)
+    public static function convertClassConstantNodeToArray(Node $node)
     {
-        $constantsArray = array();
+        $constantsArray = [];
         $consts = $node->consts;
         foreach ($consts as $const) {
-            \TYPO3\CMS\Core\Utility\GeneralUtility::devLog('$const1: ', 'extension_builder', 1, (array)$const);
-            $constantsArray[] = array('name' => $const->name, 'value' => self::getValueFromNode($const->value));
+            GeneralUtility::devLog('$const1: ', 'extension_builder', 1, (array)$const);
+            $constantsArray[] = ['name' => $const->name, 'value' => self::getValueFromNode($const->value)];
         }
-        \TYPO3\CMS\Core\Utility\GeneralUtility::devLog('$const2: ', 'extension_builder', 1, (array)$constantsArray);
+        GeneralUtility::devLog('$const2: ', 'extension_builder', 1, (array)$constantsArray);
         return $constantsArray;
     }
 
@@ -178,9 +193,9 @@ class NodeConverter
      * @param \PhpParser\Node
      * @return array
      */
-    public static function convertUseAliasStatementNodeToArray(\PhpParser\Node\Stmt\Use_ $node)
+    public static function convertUseAliasStatementNodeToArray(Use_ $node)
     {
-        return array('name' => self::getValueFromNode($node->uses[0]->name), 'alias' => self::getValueFromNode($node->uses[0]->alias));
+        return ['name' => self::getValueFromNode($node->uses[0]->name), 'alias' => self::getValueFromNode($node->uses[0]->alias)];
     }
 
     public static function getVarTypeFromValue($value)

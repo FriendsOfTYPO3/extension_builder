@@ -14,18 +14,19 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  * The TYPO3 project - inspiring people to share!
  */
 
+use PhpParser\Node;
+use PhpParser\NodeVisitorAbstract;
+
 /**
- *
  * a generic visitor to replace node properties in statements
  * (Usage see: Tests/Function/ModifyObjects renameMethodParameterAndUpdateMethodBody)
- *
  */
-class ReplaceVisitor extends \PhpParser\NodeVisitorAbstract
+class ReplaceVisitor extends NodeVisitorAbstract
 {
     /**
      * @var array
      */
-    protected $nodeTypes = array();
+    protected $nodeTypes = [];
     /**
      * @var string
      */
@@ -33,13 +34,13 @@ class ReplaceVisitor extends \PhpParser\NodeVisitorAbstract
     /**
      * @var array
      */
-    protected $replacements = array();
+    protected $replacements = [];
 
     /**
      * @param \PhpParser\Node $node
      * @return \PhpParser\Node|void
      */
-    public function leaveNode(\PhpParser\Node $node)
+    public function leaveNode(Node $node)
     {
         $nodeProperty = $this->nodeProperty;
         $nodeTypeMatch = false;

@@ -14,10 +14,20 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Model\BackendModule;
+use EBT\ExtensionBuilder\Domain\Model\Extension;
+use EBT\ExtensionBuilder\Domain\Model\Person;
+use EBT\ExtensionBuilder\Domain\Model\Plugin;
+use EBT\ExtensionBuilder\Service\ObjectSchemaBuilder;
+use EBT\ExtensionBuilder\Utility\Tools;
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Builds an extension object based on the buildConfiguration
  */
-class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
+class ExtensionSchemaBuilder implements SingletonInterface
 {
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
@@ -28,7 +38,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
      * @return void
      */
-    public function injectConfigurationManager(\EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager)
+    public function injectConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
     {
         $this->configurationManager = $configurationManager;
     }
@@ -42,23 +52,26 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      * @param \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder $objectSchemaBuilder
      * @return void
      */
-    public function injectObjectSchemaBuilder(\EBT\ExtensionBuilder\Service\ObjectSchemaBuilder $objectSchemaBuilder)
+    public function injectObjectSchemaBuilder(ObjectSchemaBuilder $objectSchemaBuilder)
     {
         $this->objectSchemaBuilder = $objectSchemaBuilder;
     }
 
     /**
-     *
      * @param array $extensionBuildConfiguration
+     *
      * @return \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
+     * @throws \Exception
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     public function build(array $extensionBuildConfiguration)
     {
         /** @var $extension \EBT\ExtensionBuilder\Domain\Model\Extension */
-        $extension = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Extension');
+        $extension = GeneralUtility::makeInstance(Extension::class);
         $globalProperties = $extensionBuildConfiguration['properties'];
         if (!is_array($globalProperties)) {
-            \TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Error: Extension properties not submitted! ' . $extension->getOriginalExtensionKey(), 'builder', 3, $globalProperties);
+            GeneralUtility::devLog('Error: Extension properties not submitted! ' . $extension->getOriginalExtensionKey(), 'builder', 3, $globalProperties);
             throw new \Exception('Extension properties not submitted!');
         }
 
@@ -95,7 +108,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
                         $tableName = $classSettings['tableName'];
                     } else {
                         // we use the default table name
-                        $tableName = \EBT\ExtensionBuilder\Utility\Tools::parseTableNameFromClassName($domainObject->getParentClass());
+                        $tableName = Tools::parseTableNameFromClassName($domainObject->getParentClass());
                     }
                     if (!isset($GLOBALS['TCA'][$tableName])) {
                         throw new \Exception('Table definitions for table ' . $tableName . ' could not be loaded. You can only map to tables with existing TCA or extend classes of installed extensions!');
@@ -129,7 +142,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function setExtensionRelations($extensionBuildConfiguration, &$extension)
     {
-        $existingRelations = array();
+        $existingRelations = [];
         foreach ($extensionBuildConfiguration['wires'] as $wire) {
             if ($wire['tgt']['terminal'] !== 'SOURCES') {
                 if ($wire['src']['terminal'] == 'SOURCES') {
@@ -137,7 +150,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
                     // swap the two arrays
                     $tgtModuleId = $wire['src']['moduleId'];
                     $wire['src'] = $wire['tgt'];
-                    $wire['tgt'] = array('moduleId' => $tgtModuleId, 'terminal' => 'SOURCES');
+                    $wire['tgt'] = ['moduleId' => $tgtModuleId, 'terminal' => 'SOURCES'];
                 } else {
                     throw new \Exception('A wire has always to connect a relation with a model, not with another relation');
                 }
@@ -147,7 +160,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
             $relationJsonConfiguration = $extensionBuildConfiguration['modules'][$srcModuleId]['value']['relationGroup']['relations'][$relationId];
 
             if (!is_array($relationJsonConfiguration)) {
-                \TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Error in JSON relation configuration!', 'extension_builder', 3, $extensionBuildConfiguration);
+                GeneralUtility::devLog('Error in JSON relation configuration!', 'extension_builder', 3, $extensionBuildConfiguration);
                 $errorMessage = 'Missing relation config in domain object: ' . $extensionBuildConfiguration['modules'][$srcModuleId]['value']['name'];
                 throw new \Exception($errorMessage);
             }
@@ -156,12 +169,12 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
             $localModelName = $extensionBuildConfiguration['modules'][$wire['src']['moduleId']]['value']['name'];
 
             if (!isset($existingRelations[$localModelName])) {
-                $existingRelations[$localModelName] = array();
+                $existingRelations[$localModelName] = [];
             }
             $domainObject = $extension->getDomainObjectByName($localModelName);
             $relation = $domainObject->getPropertyByName($relationJsonConfiguration['relationName']);
             if (!$relation) {
-                \TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Relation not found: ' . $localModelName . '->' . $relationJsonConfiguration['relationName'], 'extension_builder', 2, $relationJsonConfiguration);
+                GeneralUtility::devLog('Relation not found: ' . $localModelName . '->' . $relationJsonConfiguration['relationName'], 'extension_builder', 2, $relationJsonConfiguration);
                 throw new \Exception('Relation not found: ' . $localModelName . '->' . $relationJsonConfiguration['relationName']);
             }
             // get unique foreign key names for multiple relations to the same foreign class
@@ -219,11 +232,11 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $extension->setVersion($propertyConfiguration['emConf']['version']);
 
         if (!empty($propertyConfiguration['emConf']['dependsOn'])) {
-            $dependencies = array();
-            $lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $propertyConfiguration['emConf']['dependsOn']);
+            $dependencies = [];
+            $lines = GeneralUtility::trimExplode(LF, $propertyConfiguration['emConf']['dependsOn']);
             foreach ($lines as $line) {
                 if (strpos($line, '=>')) {
-                    list($extensionKey, $version) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>', $line);
+                    list($extensionKey, $version) = GeneralUtility::trimExplode('=>', $line);
                     $dependencies[$extensionKey] = $version;
                 }
             }
@@ -246,19 +259,19 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $state = 0;
         switch ($propertyConfiguration['emConf']['state']) {
             case 'alpha':
-                $state = \EBT\ExtensionBuilder\Domain\Model\Extension::STATE_ALPHA;
+                $state = Extension::STATE_ALPHA;
                 break;
             case 'beta':
-                $state = \EBT\ExtensionBuilder\Domain\Model\Extension::STATE_BETA;
+                $state = Extension::STATE_BETA;
                 break;
             case 'stable':
-                $state = \EBT\ExtensionBuilder\Domain\Model\Extension::STATE_STABLE;
+                $state = Extension::STATE_STABLE;
                 break;
             case 'experimental':
-                $state = \EBT\ExtensionBuilder\Domain\Model\Extension::STATE_EXPERIMENTAL;
+                $state = Extension::STATE_EXPERIMENTAL;
                 break;
             case 'test':
-                $state = \EBT\ExtensionBuilder\Domain\Model\Extension::STATE_TEST;
+                $state = Extension::STATE_TEST;
                 break;
         }
         $extension->setState($state);
@@ -267,7 +280,7 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
             // handle renaming of extensions
             // original extensionKey
             $extension->setOriginalExtensionKey($propertyConfiguration['originalExtensionKey']);
-            \TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Extension setOriginalExtensionKey:' . $extension->getOriginalExtensionKey(), 'extbase', 0, $propertyConfiguration);
+            GeneralUtility::devLog('Extension setOriginalExtensionKey:' . $extension->getOriginalExtensionKey(), 'extbase', 0, $propertyConfiguration);
         }
 
         if (!empty($propertyConfiguration['originalExtensionKey']) && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()) {
@@ -281,18 +294,17 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
         if (!empty($settings)) {
             $extension->setSettings($settings);
-            \TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Extension settings:' . $extension->getExtensionKey(), 'extbase', 0, $extension->getSettings());
+            GeneralUtility::devLog('Extension settings:' . $extension->getExtensionKey(), 'extbase', 0, $extension->getSettings());
         }
     }
 
     /**
-     *
      * @param array $personValues
      * @return \EBT\ExtensionBuilder\Domain\Model\Person
      */
     protected function buildPerson($personValues)
     {
-        $person = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Person');
+        $person = GeneralUtility::makeInstance(Person::class);
         $person->setName($personValues['name']);
         $person->setRole($personValues['role']);
         $person->setEmail($personValues['email']);
@@ -301,52 +313,51 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     *
      * @param array $pluginValues
      * @return \EBT\ExtensionBuilder\Domain\Model\Plugin
      */
     protected function buildPlugin($pluginValues)
     {
-        $plugin = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\Plugin');
+        $plugin = GeneralUtility::makeInstance(Plugin::class);
         $plugin->setName($pluginValues['name']);
         $plugin->setDescription($pluginValues['description']);
         $plugin->setType($pluginValues['type']);
         $plugin->setKey($pluginValues['key']);
         if (!empty($pluginValues['actions']['controllerActionCombinations'])) {
-            $controllerActionCombinations = array();
-            $lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $pluginValues['actions']['controllerActionCombinations'], true);
+            $controllerActionCombinations = [];
+            $lines = GeneralUtility::trimExplode(LF, $pluginValues['actions']['controllerActionCombinations'], true);
             foreach ($lines as $line) {
-                list($controllerName, $actionNames) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>', $line);
+                list($controllerName, $actionNames) = GeneralUtility::trimExplode('=>', $line);
                 if (!empty($actionNames)) {
-                    $controllerActionCombinations[$controllerName] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $actionNames);
+                    $controllerActionCombinations[$controllerName] = GeneralUtility::trimExplode(',', $actionNames);
                 }
             }
             $plugin->setControllerActionCombinations($controllerActionCombinations);
         }
         if (!empty($pluginValues['actions']['noncacheableActions'])) {
-            $noncacheableControllerActions = array();
-            $lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $pluginValues['actions']['noncacheableActions'], true);
+            $noncacheableControllerActions = [];
+            $lines = GeneralUtility::trimExplode(LF, $pluginValues['actions']['noncacheableActions'], true);
             foreach ($lines as $line) {
-                list($controllerName, $actionNames) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>', $line);
+                list($controllerName, $actionNames) = GeneralUtility::trimExplode('=>', $line);
                 if (!empty($actionNames)) {
-                    $noncacheableControllerActions[$controllerName] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $actionNames);
+                    $noncacheableControllerActions[$controllerName] = GeneralUtility::trimExplode(',', $actionNames);
                 }
             }
             $plugin->setNoncacheableControllerActions($noncacheableControllerActions);
         }
         if (!empty($pluginValues['actions']['switchableActions'])) {
-            $switchableControllerActions = array();
-            $lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $pluginValues['actions']['switchableActions'], true);
-            $switchableAction = array();
+            $switchableControllerActions = [];
+            $lines = GeneralUtility::trimExplode(LF, $pluginValues['actions']['switchableActions'], true);
+            $switchableAction = [];
             foreach ($lines as $line) {
                 if (strpos($line, '->') === false) {
                     if (isset($switchableAction['label'])) {
                         // start a new array
-                        $switchableAction = array();
+                        $switchableAction = [];
                     }
                     $switchableAction['label'] = trim($line);
                 } else {
-                    $switchableAction['actions'] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(';', $line, true);
+                    $switchableAction['actions'] = GeneralUtility::trimExplode(';', $line, true);
                     $switchableControllerActions[] = $switchableAction;
                 }
             }
@@ -356,24 +367,23 @@ class ExtensionSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     *
      * @param array $backendModuleValues
      * @return \EBT\ExtensionBuilder\Domain\Model\BackendModule
      */
     protected function buildBackendModule($backendModuleValues)
     {
-        $backendModule = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\BackendModule');
+        $backendModule = GeneralUtility::makeInstance(BackendModule::class);
         $backendModule->setName($backendModuleValues['name']);
         $backendModule->setMainModule($backendModuleValues['mainModule']);
         $backendModule->setTabLabel($backendModuleValues['tabLabel']);
         $backendModule->setKey($backendModuleValues['key']);
         $backendModule->setDescription($backendModuleValues['description']);
         if (!empty($backendModuleValues['actions']['controllerActionCombinations'])) {
-            $controllerActionCombinations = array();
-            $lines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, $backendModuleValues['actions']['controllerActionCombinations'], true);
+            $controllerActionCombinations = [];
+            $lines = GeneralUtility::trimExplode(LF, $backendModuleValues['actions']['controllerActionCombinations'], true);
             foreach ($lines as $line) {
-                list($controllerName, $actionNames) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('=>', $line);
-                $controllerActionCombinations[$controllerName] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $actionNames);
+                list($controllerName, $actionNames) = GeneralUtility::trimExplode('=>', $line);
+                $controllerActionCombinations[$controllerName] = GeneralUtility::trimExplode(',', $actionNames);
             }
             $backendModule->setControllerActionCombinations($controllerActionCombinations);
         }

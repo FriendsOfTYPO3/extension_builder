@@ -14,6 +14,12 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Exception\FileNotFoundException;
+use EBT\ExtensionBuilder\Exception\SyntaxError;
+use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
+use PhpParser\Node\Stmt\Class_;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * abstract object representing a class, method or property in the context of
  * software development
@@ -31,14 +37,14 @@ abstract class AbstractObject
      *
      * @var int[]
      */
-    private $mapModifierNames = array(
-        'public' => \PhpParser\Node\Stmt\Class_::MODIFIER_PUBLIC,
-        'protected' => \PhpParser\Node\Stmt\Class_::MODIFIER_PROTECTED,
-        'private' => \PhpParser\Node\Stmt\Class_::MODIFIER_PRIVATE,
-        'static' => \PhpParser\Node\Stmt\Class_::MODIFIER_STATIC,
-        'abstract' => \PhpParser\Node\Stmt\Class_::MODIFIER_ABSTRACT,
-        'final' => \PhpParser\Node\Stmt\Class_::MODIFIER_FINAL
-    );
+    private $mapModifierNames = [
+        'public' => Class_::MODIFIER_PUBLIC,
+        'protected' => Class_::MODIFIER_PROTECTED,
+        'private' => Class_::MODIFIER_PRIVATE,
+        'static' => Class_::MODIFIER_STATIC,
+        'abstract' => Class_::MODIFIER_ABSTRACT,
+        'final' => Class_::MODIFIER_FINAL
+    ];
     /**
      * @var string
      */
@@ -52,7 +58,7 @@ abstract class AbstractObject
      *
      * @var string[]
      */
-    protected $modifiers = array();
+    protected $modifiers = [];
     /**
      * @var string
      */
@@ -60,7 +66,7 @@ abstract class AbstractObject
     /**
      * @var string[]
      */
-    protected $comments = array();
+    protected $comments = [];
     /**
      * @var string
      */
@@ -68,11 +74,11 @@ abstract class AbstractObject
     /**
      * @var string[]
      */
-    protected $descriptionLines = array();
+    protected $descriptionLines = [];
     /**
      * @var string[]
      */
-    protected $tags = array();
+    protected $tags = [];
     /**
      * this flag is set to true if a modification of an object was detected
      *
@@ -161,7 +167,7 @@ abstract class AbstractObject
         if (!$override && isset($this->tags[$tagName])) {
             if (!is_array($this->tags[$tagName])) {
                 // build an array with the existing value as first element
-                $this->tags[$tagName] = array($this->tags[$tagName]);
+                $this->tags[$tagName] = [$this->tags[$tagName]];
             }
             $this->tags[$tagName][] = $tagValue;
         } else {
@@ -220,7 +226,7 @@ abstract class AbstractObject
      */
     public function getAnnotations()
     {
-        $annotations = array();
+        $annotations = [];
         $tags = $this->getTags();
         $tagNames = array_keys($tags);
         foreach ($tagNames as $tagName) {
@@ -255,7 +261,7 @@ abstract class AbstractObject
      */
     public function getDescriptionLines()
     {
-        return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(PHP_EOL, trim($this->getDescription()));
+        return GeneralUtility::trimExplode(PHP_EOL, trim($this->getDescription()));
     }
 
     /**
@@ -310,7 +316,10 @@ abstract class AbstractObject
      * adds a modifier
      *
      * @param string $modifierName
+     *
      * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject (for fluid interface)
+     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
+     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
      */
     public function addModifier($modifierName)
     {
@@ -327,9 +336,10 @@ abstract class AbstractObject
      * it will care for removing existing ones to avoid syntax errors
      *
      * @param string $modifierName
-     * @throws \EBT\ExtensionBuilder\Exception\SyntaxErrorException
      *
      * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject (for fluid interface)
+     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
+     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
      */
     public function setModifier($modifierName)
     {
@@ -337,8 +347,8 @@ abstract class AbstractObject
             return $this; // modifier is already present
         }
         $modifier = $this->mapModifierNames[$modifierName];
-        if (in_array($modifier, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter::$accessorModifiers)) {
-            foreach (\EBT\ExtensionBuilder\Parser\Utility\NodeConverter::$accessorModifiers as $accessorModifier) {
+        if (in_array($modifier, NodeConverter::$accessorModifiers)) {
+            foreach (NodeConverter::$accessorModifiers as $accessorModifier) {
                 // unset all accessorModifier
                 if ($this->modifiers & $accessorModifier) {
                     $this->modifiers ^= $accessorModifier;
@@ -387,7 +397,7 @@ abstract class AbstractObject
     public function getModifierNames()
     {
         $modifiers = $this->getModifiers();
-        return \EBT\ExtensionBuilder\Parser\Utility\NodeConverter::modifierToNames($modifiers);
+        return NodeConverter::modifierToNames($modifiers);
     }
 
     /**
@@ -395,23 +405,23 @@ abstract class AbstractObject
      *
      * @param $modifier
      * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \EBT\ExtensionBuilder\Exception\SyntaxErrorException
+     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
      */
     protected function validateModifier($modifier)
     {
-        if ($modifier == \PhpParser\Node\Stmt\Class_::MODIFIER_FINAL && $this->isAbstract() ||
-            $modifier == \PhpParser\Node\Stmt\Class_::MODIFIER_ABSTRACT && $this->isFinal()
+        if ($modifier == Class_::MODIFIER_FINAL && $this->isAbstract() ||
+            $modifier == Class_::MODIFIER_ABSTRACT && $this->isFinal()
         ) {
-            throw new \EBT\ExtensionBuilder\Exception\SyntaxErrorException('Abstract and Final can\'t be applied both to same object');
-        } elseif ($modifier == \PhpParser\Node\Stmt\Class_::MODIFIER_STATIC && $this->isAbstract() ||
-            $modifier == \PhpParser\Node\Stmt\Class_::MODIFIER_ABSTRACT && $this->isStatic()
+            throw new SyntaxError('Abstract and Final can\'t be applied both to same object');
+        } elseif ($modifier == Class_::MODIFIER_STATIC && $this->isAbstract() ||
+            $modifier == Class_::MODIFIER_ABSTRACT && $this->isStatic()
         ) {
-            throw new \EBT\ExtensionBuilder\Exception\FileNotFoundException('Abstract and Static can\'t be applied both to same object');
+            throw new FileNotFoundException('Abstract and Static can\'t be applied both to same object');
         }
         try {
-            \PhpParser\Node\Stmt\Class_::verifyModifier($this->modifiers, $modifier);
+            Class_::verifyModifier($this->modifiers, $modifier);
         } catch (\PhpParser\Error $e) {
-            throw new \EBT\ExtensionBuilder\Exception\SyntaxErrorException(
+            throw new SyntaxError(
                 'Only one access modifier can be applied to one object. Use setModifier to avoid this exception'
             );
         }
@@ -445,7 +455,7 @@ abstract class AbstractObject
                 }
             }
         }
-        $this->descriptionLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(PHP_EOL, $this->description, true);
+        $this->descriptionLines = GeneralUtility::trimExplode(PHP_EOL, $this->description, true);
         $this->description = trim($this->description);
     }
 
@@ -458,7 +468,7 @@ abstract class AbstractObject
      */
     protected function parseTag($line)
     {
-        $tagAndValue = array();
+        $tagAndValue = [];
         if (preg_match('/@([A-Za-z0-9\\\-]+)(\(.*\))? ?(.*)/', $line, $tagAndValue) === 0) {
             $tagAndValue = preg_split('/\\s/', $line, 2);
         } else {
@@ -468,7 +478,7 @@ abstract class AbstractObject
         if (count($tagAndValue) > 1) {
             $this->tags[$tag][] = trim($tagAndValue[2], ' "');
         } else {
-            $this->tags[$tag] = array();
+            $this->tags[$tag] = [];
         }
     }
 
@@ -481,7 +491,7 @@ abstract class AbstractObject
      */
     public function getDocComment()
     {
-        $docCommentLines = array();
+        $docCommentLines = [];
         if (is_array($this->tags)) {
             if (isset($this->tags['return'])) {
                 $returnTagValue = $this->tags['return'];
@@ -607,7 +617,7 @@ abstract class AbstractObject
      */
     public function isPublic()
     {
-        return (($this->modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_PUBLIC) !== 0);
+        return (($this->modifiers & Class_::MODIFIER_PUBLIC) !== 0);
     }
 
     /**
@@ -615,7 +625,7 @@ abstract class AbstractObject
      */
     public function isProtected()
     {
-        return (($this->modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_PROTECTED) !== 0);
+        return (($this->modifiers & Class_::MODIFIER_PROTECTED) !== 0);
     }
 
     /**
@@ -623,7 +633,7 @@ abstract class AbstractObject
      */
     public function isPrivate()
     {
-        return (($this->modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_PRIVATE) !== 0);
+        return (($this->modifiers & Class_::MODIFIER_PRIVATE) !== 0);
     }
 
     /**
@@ -631,7 +641,7 @@ abstract class AbstractObject
      */
     public function isStatic()
     {
-        return (($this->modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_STATIC) !== 0);
+        return (($this->modifiers & Class_::MODIFIER_STATIC) !== 0);
     }
 
     /**
@@ -639,7 +649,7 @@ abstract class AbstractObject
      */
     public function isAbstract()
     {
-        return (($this->modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_ABSTRACT) !== 0);
+        return (($this->modifiers & Class_::MODIFIER_ABSTRACT) !== 0);
     }
 
     /**
@@ -647,6 +657,6 @@ abstract class AbstractObject
      */
     public function isFinal()
     {
-        return (($this->modifiers & \PhpParser\Node\Stmt\Class_::MODIFIER_FINAL) !== 0);
+        return (($this->modifiers & Class_::MODIFIER_FINAL) !== 0);
     }
 }

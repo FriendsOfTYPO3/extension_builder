@@ -14,16 +14,21 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\Extension;
+use EBT\ExtensionBuilder\Domain\Model\Person;
+use EBT\ExtensionBuilder\Tests\BaseUnitTest;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * TODO testcase doesn't cover whole class
  *
  */
-class  ExtensionTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
+class  ExtensionTest extends BaseUnitTest
 {
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Person[]
      */
-    protected $persons = array();
+    protected $persons = [];
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
@@ -32,10 +37,10 @@ class  ExtensionTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     protected function setUp()
     {
         parent::setUp();
-        $this->extension = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\EBT\ExtensionBuilder\Domain\Model\Extension::class);
-        $this->persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\EBT\ExtensionBuilder\Domain\Model\Person::class);
-        $this->persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\EBT\ExtensionBuilder\Domain\Model\Person::class);
-        $this->persons[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\EBT\ExtensionBuilder\Domain\Model\Person::class);
+        $this->extension = GeneralUtility::makeInstance(Extension::class);
+        $this->persons[] = GeneralUtility::makeInstance(Person::class);
+        $this->persons[] = GeneralUtility::makeInstance(Person::class);
+        $this->persons[] = GeneralUtility::makeInstance(Person::class);
         $this->persons[0]->setName('0');
         $this->persons[1]->setName('1');
         $this->persons[2]->setName('2');
@@ -55,7 +60,7 @@ class  ExtensionTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     public function testAddPerson()
     {
-        self::assertEquals($this->extension->getPersons(), array(), 'Extensions Persons are not empty.');
+        self::assertEquals($this->extension->getPersons(), [], 'Extensions Persons are not empty.');
         $this->extension->addPerson($this->persons[0]);
         $this->extension->addPerson($this->persons[1]);
         $this->extension->addPerson($this->persons[2]);
