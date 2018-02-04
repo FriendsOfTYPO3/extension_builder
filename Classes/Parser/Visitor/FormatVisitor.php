@@ -15,24 +15,25 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  */
 
 use PhpParser\Node;
+use PhpParser\NodeVisitorAbstract;
 
-class FormatVisitor extends \PhpParser\NodeVisitorAbstract
+class FormatVisitor extends NodeVisitorAbstract
 {
     /**
      * @var bool
      */
     public static $first = true;
 
-    public function enterNode(\PhpParser\Node $node)
+    public function enterNode(Node $node)
     {
         if (self::$first && $node instanceof Node\Expr\FuncCall) {
             self::$first = false;
-            return new Node\Expr\Array_(array(
+            return new Node\Expr\Array_([
                 new Node\Expr\ArrayItem(
                     self::parseArgs($node),
                     new Node\Scalar\String_($node->name)
                 )
-            ));
+            ]);
         }
         if (!self::$first && $node instanceof Node\Expr\FuncCall) {
             return new Node\Expr\ArrayItem(
@@ -47,7 +48,7 @@ class FormatVisitor extends \PhpParser\NodeVisitorAbstract
         if (count($node->args) > 1) {
             foreach ($node->args as $k2 => &$arg) {
                 if ($arg->value instanceof Node\Expr\FuncCall) {
-                    $arg = new Node\Expr\Array_(array($arg));
+                    $arg = new Node\Expr\Array_([$arg]);
                 }
             }
         }

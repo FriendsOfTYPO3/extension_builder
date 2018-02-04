@@ -14,14 +14,15 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Format;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * Wrapper for PHPs trim function.
  *
  */
-class TrimViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class TrimViewHelper extends AbstractViewHelper
 {
     /**
-     *
      * @return string The altered string.
      * @author Christopher Hlubek <hlubek@networkteam.com>
      */

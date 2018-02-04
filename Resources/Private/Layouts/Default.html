@@ -1,5 +1,5 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}
-{namespace core = TYPO3\CMS\Core\ViewHelpers}
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
 <f:comment>
 	Use the section "header" to call ViewHelpers which modify the configuration
 	of the PageRenderer, f.e. to include custom CSS or JavaScript.
@@ -10,7 +10,7 @@
 		<div class="module-docheader t3js-module-docheader">
 			<div class="module-docheader-bar module-docheader-bar-navigation t3js-module-docheader-bar t3js-module-docheader-bar-navigation">
 				<div class="pull-right">
-					<img class="module-icon" src="../typo3conf/ext/extension_builder/Resources/Public/Icons/module-extensionbuilder.svg" width="16" height="16" title="Open in new window" class="absmiddle" alt="Open in new window">
+					<img class="module-icon absmiddle" src="../typo3conf/ext/extension_builder/Resources/Public/Icons/module-extensionbuilder.svg" width="16" height="16" title="Open in new window" alt="Open in new window">
 					<f:be.menus.actionMenu>
 						<f:be.menus.actionMenuItem label="Introduction" controller="BuilderModule" action="index" />
 						<f:be.menus.actionMenuItem label="Domain Modelling" controller="BuilderModule" action="domainmodelling"/>

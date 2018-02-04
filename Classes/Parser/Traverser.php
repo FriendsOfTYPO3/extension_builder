@@ -14,14 +14,17 @@ namespace EBT\ExtensionBuilder\Parser;
  * The TYPO3 project - inspiring people to share!
  */
 
-class Traverser extends \PhpParser\NodeTraverser implements TraverserInterface
+use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor;
+
+class Traverser extends NodeTraverser implements TraverserInterface
 {
     /**
      * remove all previous set visitors
      */
     public function resetVisitors()
     {
-        $this->visitors = array();
+        $this->visitors = [];
     }
 
     /**
@@ -29,7 +32,7 @@ class Traverser extends \PhpParser\NodeTraverser implements TraverserInterface
      * @param \PhpParser\NodeVisitor $visitor
      *
      */
-    public function appendVisitor(\PhpParser\NodeVisitor $visitor)
+    public function appendVisitor(NodeVisitor $visitor)
     {
         $this->visitors[] = $visitor;
     }

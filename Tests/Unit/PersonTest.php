@@ -14,7 +14,11 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
-class PersonTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
+use EBT\ExtensionBuilder\Domain\Model\Person;
+use EBT\ExtensionBuilder\Tests\BaseUnitTest;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+class PersonTest extends BaseUnitTest
 {
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Person
@@ -24,7 +28,7 @@ class PersonTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     protected function setUp()
     {
         parent::setUp();
-        $this->person = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\EBT\ExtensionBuilder\Domain\Model\Person::class);
+        $this->person = GeneralUtility::makeInstance(Person::class);
     }
 
     /**

@@ -14,6 +14,10 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Fluid\Core\ViewHelper\Facets\ChildNodeAccessInterface;
+
 /**
  * Switch view helper which can be used to render content depending on a value or expression.
  * Implements what a basic switch()-PHP-method does.
@@ -39,13 +43,13 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  *
  * @api
  */
-class SwitchViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper implements \TYPO3\CMS\Fluid\Core\ViewHelper\Facets\ChildNodeAccessInterface
+class SwitchViewHelper extends AbstractViewHelper implements ChildNodeAccessInterface
 {
     /**
      * An array of \TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\AbstractNode
      * @var array
      */
-    protected $childNodes = array();
+    protected $childNodes = [];
     /**
      * @var mixed
      */
@@ -82,8 +86,8 @@ class SwitchViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
 
         foreach ($this->childNodes as $childNode) {
             if (
-                !$childNode instanceof \TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\ViewHelperNode
-                || $childNode->getViewHelperClassName() !== 'EBT\ExtensionBuilder\ViewHelpers\CaseViewHelper'
+                !$childNode instanceof ViewHelperNode
+                || $childNode->getViewHelperClassName() !== CaseViewHelper::class
             ) {
                 continue;
             }

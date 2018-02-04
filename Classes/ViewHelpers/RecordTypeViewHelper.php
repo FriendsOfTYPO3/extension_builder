@@ -14,10 +14,16 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+use EBT\ExtensionBuilder\Utility\Tools;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * Class RecordTypeViewHelper
  */
-class RecordTypeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class RecordTypeViewHelper extends AbstractViewHelper
 {
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
@@ -28,25 +34,29 @@ class RecordTypeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
      * @return void
      */
-    public function injectExtensionBuilderConfigurationManager(\EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager)
+    public function injectExtensionBuilderConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
     {
         $this->configurationManager = $configurationManager;
     }
 
     /**
      * Helper function to find the parents class recordType
+     *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     *
      * @return string
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3Fluid\Fluid\Core\Variables\Exception\InvalidVariableException
      */
-    public function render(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject)
+    public function render(DomainObject $domainObject)
     {
         $classSettings = $this->configurationManager->getExtbaseClassConfiguration($domainObject->getParentClass());
         if (isset($classSettings['recordType'])) {
-            $parentRecordType = \EBT\ExtensionBuilder\Utility\Tools::convertClassNameToRecordType($classSettings['recordType']);
+            $parentRecordType = Tools::convertClassNameToRecordType($classSettings['recordType']);
         } else {
-            $parentRecordType = \EBT\ExtensionBuilder\Utility\Tools::convertClassNameToRecordType($domainObject->getParentClass());
+            $parentRecordType = Tools::convertClassNameToRecordType($domainObject->getParentClass());
             $existingTypes = $GLOBALS['TCA'][$domainObject->getDatabaseTableName()]['types'];
-            \TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Parent Record type: ' . $parentRecordType, 'extension_builder', 2, $existingTypes);
+            GeneralUtility::devLog('Parent Record type: ' . $parentRecordType, 'extension_builder', 2, $existingTypes);
             if (is_array($existingTypes) && !isset($existingTypes[$parentRecordType])) {
                 // no types field for parent record type configured, use the default type 1
                 if (isset($existingTypes['1'])) {

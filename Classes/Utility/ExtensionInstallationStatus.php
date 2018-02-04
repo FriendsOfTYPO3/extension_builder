@@ -38,7 +38,7 @@ class ExtensionInstallationStatus
     /**
      * @var array[]
      */
-    protected $updateStatements = array();
+    protected $updateStatements = [];
     /**
      * @var bool
      */
@@ -57,18 +57,22 @@ class ExtensionInstallationStatus
         $this->extension = $extension;
     }
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     public function getStatusMessage()
     {
         $statusMessage = '';
-        $this->checkForDbUpdate($this->extension->getExtensionKey(), $this->extension->getExtensionDir() . 'ext_tables.sql');
+        $this->checkForDbUpdate($this->extension->getExtensionKey());
 
         if ($this->dbUpdateNeeded) {
             $statusMessage .= '<p>Database has to be updated!</p>';
-            $typeInfo = array(
+            $typeInfo = [
                 'add' => 'Add fields',
                 'change' => 'Change fields',
                 'create_table' => 'Create tables'
-            );
+            ];
             $statusMessage .= '<div id="dbUpdateStatementsWrapper"><table>';
             foreach ($this->updateStatements as $type => $statements) {
                 $statusMessage .= '<tr><td></td><td style="text-align:left;padding-left:15px">' . $typeInfo[$type] . ':</td></tr>';
@@ -94,7 +98,8 @@ class ExtensionInstallationStatus
     }
 
     /**
-     * @param string $extKey
+     * @param string $extensionKey
+     *
      * @return void
      */
     public function checkForDbUpdate($extensionKey)
@@ -121,7 +126,12 @@ class ExtensionInstallationStatus
         }
     }
 
-    public function performDbUpdates($params)
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function performDbUpdates(array $params)
     {
         $hasErrors = false;
         if (!empty($params['updateStatements']) && !empty($params['extensionKey'])) {
@@ -129,12 +139,12 @@ class ExtensionInstallationStatus
             if ($this->dbUpdateNeeded) {
                 foreach ($this->updateStatements as $type => $statements) {
                     foreach ($statements as $key => $statement) {
-                        if (in_array($type, array('change', 'add', 'create_table')) && in_array($key, $params['updateStatements'])) {
+                        if (in_array($type, ['change', 'add', 'create_table']) && in_array($key, $params['updateStatements'])) {
                             $res = $this->getDatabaseConnection()->admin_query($statement);
                             if ($res === false) {
                                 $hasErrors = true;
-                                GeneralUtility::devLog('SQL error', 'extension_builder', 0, array('statement' => $statement, 'error' => $this->getDatabaseConnection()->sql_error()));
-                            } elseif (is_resource($res) || is_a($res, '\\mysqli_result')) {
+                                GeneralUtility::devLog('SQL error', 'extension_builder', 0, ['statement' => $statement, 'error' => $this->getDatabaseConnection()->sql_error()]);
+                            } elseif (is_resource($res) || is_a($res, \mysqli_result::class)) {
                                 $this->getDatabaseConnection()->sql_free_result($res);
                             }
                         }
@@ -143,9 +153,9 @@ class ExtensionInstallationStatus
             }
         }
         if ($hasErrors) {
-            return array('error' => 'Database could not be updated. Please check it in the update wizzard of the install tool');
+            return ['error' => 'Database could not be updated. Please check it in the update wizzard of the install tool'];
         } else {
-            return array('success' => 'Database was successfully updated');
+            return ['success' => 'Database was successfully updated'];
         }
     }
 

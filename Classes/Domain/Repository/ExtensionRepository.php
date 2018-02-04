@@ -14,10 +14,16 @@ namespace EBT\ExtensionBuilder\Domain\Repository;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Model\Extension;
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Repository for existing Extbase Extensions
  */
-class ExtensionRepository implements \TYPO3\CMS\Core\SingletonInterface
+class ExtensionRepository implements SingletonInterface
 {
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
@@ -28,7 +34,7 @@ class ExtensionRepository implements \TYPO3\CMS\Core\SingletonInterface
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
      * @return void
      */
-    public function injectExtensionBuilderConfigurationManager(\EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager)
+    public function injectExtensionBuilderConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
     {
         $this->configurationManager = $configurationManager;
     }
@@ -40,7 +46,7 @@ class ExtensionRepository implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function findAll()
     {
-        $result = array();
+        $result = [];
         $extensionDirectoryHandle = opendir(PATH_typo3conf . 'ext/');
         while (false !== ($singleExtensionDirectory = readdir($extensionDirectoryHandle))) {
             if ($singleExtensionDirectory[0] == '.' || $singleExtensionDirectory[0] == '..' || !is_dir(PATH_typo3conf . 'ext/' . $singleExtensionDirectory)) {
@@ -48,10 +54,10 @@ class ExtensionRepository implements \TYPO3\CMS\Core\SingletonInterface
             }
             $extensionBuilderConfiguration = $this->configurationManager->getExtensionBuilderConfiguration($singleExtensionDirectory);
             if ($extensionBuilderConfiguration !== null) {
-                $result[] = array(
+                $result[] = [
                     'name' => $singleExtensionDirectory,
                     'working' => json_encode($extensionBuilderConfiguration)
-                );
+                ];
             }
         }
         closedir($extensionDirectoryHandle);
@@ -61,20 +67,23 @@ class ExtensionRepository implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     *
+     * @throws \Exception
+     * @throws \TYPO3\CMS\Core\Package\Exception
      */
-    public function saveExtensionConfiguration(\EBT\ExtensionBuilder\Domain\Model\Extension $extension)
+    public function saveExtensionConfiguration(Extension $extension)
     {
         $extensionBuildConfiguration = $this->configurationManager->getConfigurationFromModeler();
-        $extensionBuildConfiguration['log'] = array(
+        $extensionBuildConfiguration['log'] = [
             'last_modified' => date('Y-m-d h:i'),
-            'extension_builder_version' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getExtensionVersion('extension_builder'),
+            'extension_builder_version' => ExtensionManagementUtility::getExtensionVersion('extension_builder'),
             'be_user' => $GLOBALS['BE_USER']->user['realName'] . ' (' . $GLOBALS['BE_USER']->user['uid'] . ')'
-        );
+        ];
         $encodeOptions = 0;
         // option JSON_PRETTY_PRINT is available since PHP 5.4.0
         if (defined('JSON_PRETTY_PRINT')) {
             $encodeOptions |= JSON_PRETTY_PRINT;
         }
-        \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($extension->getExtensionDir() . \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE, json_encode($extensionBuildConfiguration, $encodeOptions));
+        GeneralUtility::writeFile($extension->getExtensionDir() . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE, json_encode($extensionBuildConfiguration, $encodeOptions));
     }
 }

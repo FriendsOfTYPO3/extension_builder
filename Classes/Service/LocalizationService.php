@@ -15,12 +15,14 @@ namespace EBT\ExtensionBuilder\Service;
  */
 
 use EBT\ExtensionBuilder\Utility\Inflector;
+use TYPO3\CMS\Core\Localization\Parser\XliffParser;
+use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility;
 
 /**
  * Helper for localization related stuff
  */
-class LocalizationService implements \TYPO3\CMS\Core\SingletonInterface
+class LocalizationService implements SingletonInterface
 {
     /**
      * @var \TYPO3\CMS\Core\Localization\Parser\XliffParser
@@ -28,12 +30,12 @@ class LocalizationService implements \TYPO3\CMS\Core\SingletonInterface
     protected $xliffParser = null;
 
     /**
-     * @param \TYPO3\CMS\Core\Localization\Parser\XliffParser $xlifflParser
+     * @return object|\TYPO3\CMS\Core\Localization\Parser\XliffParser
      */
     protected function getXliffParser()
     {
         if (is_null($this->xliffParser)) {
-            $this->xliffParser = Utility\GeneralUtility::makeInstance('TYPO3\CMS\Core\Localization\Parser\XliffParser');
+            $this->xliffParser = Utility\GeneralUtility::makeInstance(XliffParser::class);
         }
         return $this->xliffParser;
     }
@@ -48,11 +50,13 @@ class LocalizationService implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
      * @param string $type
+     *
+     * @return array
      * @throws \InvalidArgumentException
      */
     public function prepareLabelArray($extension, $type = 'locallang')
     {
-        $labelArray = array();
+        $labelArray = [];
         foreach ($extension->getDomainObjects() as $domainObject) {
             /* @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
             $labelArray[$domainObject->getLabelNamespace()] = Inflector::humanize($domainObject->getName());
@@ -82,11 +86,13 @@ class LocalizationService implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     *
+     * @return array
      * @throws \InvalidArgumentException
      */
     public function prepareLabelArrayForContextHelp($domainObject)
     {
-        $labelArray = array();
+        $labelArray = [];
         foreach ($domainObject->getProperties() as $property) {
             $labelArray[$property->getFieldName() . '.description'] = htmlspecialchars($property->getDescription());
         }
@@ -95,12 +101,12 @@ class LocalizationService implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * @param \EBT\ExtensionBuilder\Domain\Model\BackendModule $backendModule
-     * @param string $type
-     * @throws \InvalidArgumentException
+     *
+     * @return array
      */
     public function prepareLabelArrayForBackendModule($backendModule)
     {
-        $labelArray = array();
+        $labelArray = [];
         $labelArray['mlang_tabs_tab'] = htmlspecialchars($backendModule->getName());
         $labelArray['mlang_labels_tabdescr'] = htmlspecialchars($backendModule->getDescription());
         $labelArray['mlang_tabs_tab'] = htmlspecialchars($backendModule->getTabLabel());
@@ -112,13 +118,16 @@ class LocalizationService implements \TYPO3\CMS\Core\SingletonInterface
      * to a simple index => label array
      *
      * @static
+     *
      * @param array $array
      * @param string $format xml/xlf
+     * @param $languageKey
+     *
      * @return array
      */
     public function flattenLocallangArray($array, $format, $languageKey)
     {
-        $cleanMergedLabelArray = array();
+        $cleanMergedLabelArray = [];
         if ($format == 'xlf') {
             foreach ($array[$languageKey] as $index => $label) {
                 $cleanMergedLabelArray[$index] = $label[0]['source'];

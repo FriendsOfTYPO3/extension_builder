@@ -14,11 +14,16 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Parser\NodeFactory;
+use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
+use PhpParser\Node;
+use PhpParser\NodeVisitorAbstract;
+
 /**
  * replaces all occurances of new "className" and static class calls like "className::"
  *
  */
-class ReplaceClassNamesVisitor extends \PhpParser\NodeVisitorAbstract
+class ReplaceClassNamesVisitor extends NodeVisitorAbstract
 {
     /**
      * @var string
@@ -41,13 +46,13 @@ class ReplaceClassNamesVisitor extends \PhpParser\NodeVisitorAbstract
      * @param \PhpParser\Node $node
      * @return \PhpParser\Node|void
      */
-    public function leaveNode(\PhpParser\Node $node)
+    public function leaveNode(Node $node)
     {
         if (null !== $node->__get('class')) {
-            $oldClassName = \EBT\ExtensionBuilder\Parser\Utility\NodeConverter::getValueFromNode($node->__get('class'));
+            $oldClassName = NodeConverter::getValueFromNode($node->__get('class'));
             if (strpos($oldClassName, $this->oldClassPrefix) !== false) {
                 $newClassName = str_replace($this->oldClassPrefix, $this->newClassPrefix, $oldClassName);
-                $node->setClass(\EBT\ExtensionBuilder\Parser\NodeFactory::buildNodeFromName($newClassName));
+                $node->setClass(NodeFactory::buildNodeFromName($newClassName));
                 return $node;
             }
         }
@@ -57,7 +62,7 @@ class ReplaceClassNamesVisitor extends \PhpParser\NodeVisitorAbstract
     {
     }
 
-    public function enterNode(\PhpParser\Node $node)
+    public function enterNode(Node $node)
     {
     }
 

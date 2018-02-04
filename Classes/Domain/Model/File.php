@@ -23,19 +23,19 @@ class File extends Container
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\NamespaceObject[]
      */
-    protected $namespaces = array();
+    protected $namespaces = [];
     /**
      * @var array all statements
      */
-    protected $stmts = array();
+    protected $stmts = [];
     /**
      * @var \PhpParser\Node\Stmt[]
      */
-    protected $aliasDeclarations = array();
+    protected $aliasDeclarations = [];
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\FunctionObject[]
      */
-    protected $functions = array();
+    protected $functions = [];
     /**
      * @var string
      */
@@ -45,7 +45,7 @@ class File extends Container
      */
     public function __clone()
     {
-        $clonedClasses = array();
+        $clonedClasses = [];
         foreach ($this->classes as $class) {
             $clonedClasses = clone($class);
         }

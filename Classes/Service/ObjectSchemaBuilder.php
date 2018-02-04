@@ -14,12 +14,20 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
+use EBT\ExtensionBuilder\Service\ValidationService;
 use EBT\ExtensionBuilder\Utility\Tools;
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
  * Builder for domain objects
  */
-class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
+class ObjectSchemaBuilder implements SingletonInterface
 {
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
@@ -28,13 +36,13 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * @var string[]
      */
-    protected $relatedForeignTables = array();
+    protected $relatedForeignTables = [];
 
     /**
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      * @return void
      */
-    public function injectConfigurationManager(\EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager)
+    public function injectConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
     {
         $this->configurationManager = $configurationManager;
     }
@@ -47,9 +55,7 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function build(array $jsonDomainObject)
     {
-        $domainObject = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \EBT\ExtensionBuilder\Domain\Model\DomainObject::class
-        );
+        $domainObject = GeneralUtility::makeInstance(DomainObject::class);
         $domainObject->setUniqueIdentifier($jsonDomainObject['objectsettings']['uid']);
 
         $domainObject->setName($jsonDomainObject['name']);
@@ -77,11 +83,11 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
         if (isset($jsonDomainObject['propertyGroup']['properties'])) {
             foreach ($jsonDomainObject['propertyGroup']['properties'] as $propertyJsonConfiguration) {
                 $propertyType = $propertyJsonConfiguration['propertyType'];
-                if (in_array($propertyType, array('Image', 'File')) && !empty($propertyJsonConfiguration['maxItems']) && $propertyJsonConfiguration['maxItems'] > 1) {
+                if (in_array($propertyType, ['Image', 'File']) && !empty($propertyJsonConfiguration['maxItems']) && $propertyJsonConfiguration['maxItems'] > 1) {
                     $propertyJsonConfiguration['relationType'] = 'zeroToMany';
                     $propertyJsonConfiguration['relationName'] = $propertyJsonConfiguration['propertyName'];
                     $propertyJsonConfiguration['relationDescription'] = $propertyJsonConfiguration['propertyDescription'];
-                    $propertyJsonConfiguration['foreignRelationClass'] = \TYPO3\CMS\Extbase\Domain\Model\FileReference::class;
+                    $propertyJsonConfiguration['foreignRelationClass'] = FileReference::class;
                     $propertyJsonConfiguration['type'] = $propertyJsonConfiguration['propertyType'];
 
                     $property = $this->buildRelation($propertyJsonConfiguration, $domainObject);
@@ -109,17 +115,15 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
                     if ($jsonActionName == 'edit_update' || $jsonActionName == 'new_create') {
                         $actionNames = explode('_', $jsonActionName);
                     } else {
-                        $actionNames = array($jsonActionName);
+                        $actionNames = [$jsonActionName];
                     }
                 } else {
-                    $actionNames = array();
+                    $actionNames = [];
                 }
 
                 if (!empty($actionNames)) {
                     foreach ($actionNames as $actionName) {
-                        $action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-                            \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action::class
-                        );
+                        $action = GeneralUtility::makeInstance(Action::class);
                         $action->setName($actionName);
                         $domainObject->addAction($action);
                     }
@@ -130,7 +134,6 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     *
      * @param array $relationJsonConfiguration
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
      * @throws \Exception
@@ -176,9 +179,9 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
                 );
             }
             $relation->setForeignDatabaseTableName($foreignDatabaseTableName);
-            if ($relation instanceof \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation) {
+            if ($relation instanceof ZeroToManyRelation) {
                 $foreignKeyName = strtolower($domainObject->getName());
-                if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($foreignKeyName)) {
+                if (ValidationService::isReservedMYSQLWord($foreignKeyName)) {
                     $foreignKeyName = 'tx_' . $foreignKeyName;
                 }
                 if (isset($this->relatedForeignTables[$foreignDatabaseTableName])) {
@@ -214,7 +217,7 @@ class ObjectSchemaBuilder implements \TYPO3\CMS\Core\SingletonInterface
         if (!class_exists($propertyClassName)) {
             throw new \Exception('Property of type ' . $propertyType . ' not found');
         }
-        $property = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($propertyClassName);
+        $property = GeneralUtility::makeInstance($propertyClassName);
         $property->setUniqueIdentifier($propertyJsonConfiguration['uid']);
         $property->setName($propertyJsonConfiguration['propertyName']);
         $property->setDescription($propertyJsonConfiguration['propertyDescription']);

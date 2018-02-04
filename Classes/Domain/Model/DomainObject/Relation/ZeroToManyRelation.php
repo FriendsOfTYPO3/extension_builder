@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Service\ValidationService;
+
 /**
  * Creates a request an dispatches it to the controller which was specified
  * by TS Setup, Flexform and returns the content to the v4 framework.
@@ -41,7 +43,7 @@ class ZeroToManyRelation extends AnyToManyRelation
     {
         if (empty($this->foreignKeyName)) {
             $foreignKeyName = strtolower($this->getDomainObject()->getName());
-            if (\EBT\ExtensionBuilder\Service\ValidationService::isReservedMYSQLWord($foreignKeyName)) {
+            if (ValidationService::isReservedMYSQLWord($foreignKeyName)) {
                 $foreignKeyName = 'tx_' . $foreignKeyName;
             }
             return $foreignKeyName;

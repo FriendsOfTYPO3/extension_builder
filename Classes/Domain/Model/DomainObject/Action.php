@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+
 /**
  * An action defined for a domain object
  *
@@ -55,30 +57,30 @@ class Action
      *
      * @var string[]
      */
-    protected $actionNamesWithNoRendering = array(
+    protected $actionNamesWithNoRendering = [
         'create',
         'update',
         'delete'
-    );
+    ];
     /**
      * these actions need a form
      *
      * @var string[]
      */
-    protected $actionNamesWithForm = array(
+    protected $actionNamesWithForm = [
         'new',
         'edit'
-    );
+    ];
     /**
      * these actions should not be cached
      *
      * @var string[]
      */
-    protected $actionNamesThatShouldNotBeCached = array(
+    protected $actionNamesThatShouldNotBeCached = [
         'create',
         'update',
         'delete'
-    );
+    ];
     /**
      * flag: true if the action is cacheable
      *
@@ -108,13 +110,12 @@ class Action
      * DO NOT CALL DIRECTLY! This is being called by addAction() automatically.
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject the domain object this actions belongs to
      */
-    public function setDomainObject(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject)
+    public function setDomainObject(DomainObject $domainObject)
     {
         $this->domainObject = $domainObject;
     }
 
     /**
-     *
      * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
      */
     public function getDomainObject()

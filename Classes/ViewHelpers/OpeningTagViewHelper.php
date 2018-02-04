@@ -14,7 +14,9 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
-class OpeningTagViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
+class OpeningTagViewHelper extends AbstractViewHelper
 {
     public function render()
     {
