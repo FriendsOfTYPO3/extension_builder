@@ -111,7 +111,6 @@ class Extension
      */
     protected $needsUploadFolder = false;
     /**
-     *
      * an array keeping all md5 hashes of all files in the extension to detect modifications
      *
      * @var string[]
@@ -165,7 +164,6 @@ class Extension
     protected $previousExtensionKey = '';
 
     /**
-     *
      * @return string
      */
     public function getExtensionKey()
@@ -647,11 +645,19 @@ class Extension
         return '';
     }
 
+    /**
+     * @return string
+     */
     public function getCssClassName()
     {
         return 'tx-' . str_replace('_', '-', $this->getExtensionKey());
     }
 
+    /**
+     * @param string $filePath
+     *
+     * @return bool
+     */
     public function isModified($filePath)
     {
         if (is_file($filePath) && isset($this->md5Hashes[$filePath])) {
@@ -664,9 +670,12 @@ class Extension
 
     /**
      * setter for md5 hashes
+     *
+     * @param array $md5Hashes
+     *
      * @return void
      */
-    public function setMD5Hashes($md5Hashes)
+    public function setMD5Hashes(array $md5Hashes)
     {
         $this->md5Hashes = $md5Hashes;
     }
@@ -879,8 +888,9 @@ class Extension
      */
     public function getComposerInfo()
     {
+        $composerExtensionKey = strtolower(str_replace('_', '-', $this->extensionKey));
         $info = [
-            'name' => strtolower($this->vendorName) . '/' . strtolower(str_replace('_', '-', $this->extensionKey)),
+            'name' => strtolower($this->vendorName) . '/' . $composerExtensionKey,
             'type' => 'typo3-cms-extension',
             'description' => $this->description,
             'authors' => [],
@@ -891,6 +901,15 @@ class Extension
                 'psr-4' => [
                     $this->getNamespaceName() .  '\\' => 'Classes'
                 ]
+            ],
+            'autoload-dev' => [
+                'psr-4' => [
+                    $this->getNamespaceName() .  '\\Tests\\' => 'Tests'
+                ]
+            ],
+            'replace' => [
+                strtolower($this->extensionKey) => 'self.version',
+                'typo3-ter/' . $composerExtensionKey => 'self.version'
             ]
         ];
         foreach ($this->persons as $person) {
