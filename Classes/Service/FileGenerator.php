@@ -164,6 +164,8 @@ class FileGenerator
             GeneralUtility::mkdir($this->extensionDirectory);
         }
 
+        $this->generateGitIgnore();
+
         $this->generateComposerJson();
 
         GeneralUtility::mkdir_deep($this->extensionDirectory, 'Configuration');
@@ -901,6 +903,22 @@ class FileGenerator
             'controllerName' => $controllerName,
             'domainObject' => $domainObject
         ]);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function generateGitIgnore()
+    {
+        if (!file_exists($this->extensionDirectory . '.gitignore')) {
+            // Generate .gitignore
+            try {
+                $fileContents = $this->renderTemplate('gitignore.t', []);
+                $this->writeFile($this->extension->getExtensionDir() . '.gitignore', $fileContents);
+            } catch (\Exception $e) {
+                throw new \Exception('Could not create folder, error: ' . $e->getMessage());
+            }
+        }
     }
 
     /**
