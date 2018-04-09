@@ -10,6 +10,7 @@ CREATE TABLE tx_testextension_domain_model_main (
 	identifier varchar(255) DEFAULT '' NOT NULL,
 	description text,
 	my_date date DEFAULT NULL,
+	mail varchar(255) DEFAULT '' NOT NULL,
 	child1 int(11) unsigned DEFAULT '0',
 	children2 int(11) unsigned DEFAULT '0' NOT NULL,
 	child3 int(11) unsigned DEFAULT '0',
