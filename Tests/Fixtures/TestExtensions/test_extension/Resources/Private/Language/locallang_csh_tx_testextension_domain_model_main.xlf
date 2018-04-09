@@ -12,6 +12,9 @@
 			<trans-unit id="my_date.description">
 				<source>Just a date</source>
 			</trans-unit>
+			<trans-unit id="mail.description">
+				<source>mail</source>
+			</trans-unit>
 			<trans-unit id="child1.description">
 				<source>This is a 1:1 relation</source>
 			</trans-unit>

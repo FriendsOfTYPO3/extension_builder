@@ -48,6 +48,13 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $myDate = null;
 
     /**
+     * mail
+     *
+     * @var string
+     */
+    protected $mail = '';
+
+    /**
      * This is a 1:1 relation
      *
      * @var \FIXTURE\TestExtension\Domain\Model\Child1
@@ -182,6 +189,29 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->myDate = $myDate;
     }
+
+    /**
+    * Returns the mail
+    *
+    * @return string $mail
+    */
+    public function getMail()
+    {
+        return $this->mail;
+    }
+
+
+    /**
+     * Sets the mail
+     *
+     * @param string $mail
+     * @return void
+     */
+    public function setMail($mail)
+    {
+        $this->mail = $mail;
+    }
+
 
     /**
      * Returns the child1

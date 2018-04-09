@@ -18,6 +18,9 @@
 			<trans-unit id="tx_testextension_domain_model_main.my_date">
 				<source>My Date</source>
 			</trans-unit>
+			<trans-unit id="tx_testextension_domain_model_main.mail">
+				<source>Mail</source>
+			</trans-unit>
 			<trans-unit id="tx_testextension_domain_model_main.child1">
 				<source>Child1</source>
 			</trans-unit>
