@@ -17,14 +17,14 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'name,identifier,description,my_date,child1,children2,child3,children4',
+        'searchFields' => 'name,identifier,description,my_date,mail,child1,children2,child3,children4',
         'iconfile' => 'EXT:test_extension/Resources/Public/Icons/tx_testextension_domain_model_main.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, identifier, description, my_date, child1, children2, child3, children4',
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, identifier, description, my_date, mail, child1, children2, child3, children4',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, identifier, description, my_date, child1, children2, child3, children4, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, identifier, description, my_date, mail, child1, children2, child3, children4, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -166,6 +166,15 @@ return [
                 'default' => null,
             ],
 
+        ],
+        'mail' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.mail',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'nospace,email'
+            ]
         ],
         'child1' => [
             'exclude' => true,
