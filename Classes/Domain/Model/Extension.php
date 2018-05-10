@@ -613,7 +613,7 @@ class Extension
      */
     public function addBackendModule(BackendModule $backendModule)
     {
-        $this->backendModules[] = $backendModule;
+        $this->backendModules->attach($backendModule);
     }
 
     /**
