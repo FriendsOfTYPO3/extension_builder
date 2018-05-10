@@ -158,6 +158,12 @@ class Extension
      */
     protected $previousExtensionKey = '';
 
+    public function __construct()
+    {
+        $this->plugins = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->backendModules = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
+
     /**
      *
      * @return string
