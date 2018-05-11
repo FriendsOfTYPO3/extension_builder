@@ -131,15 +131,15 @@ class Extension
     /**
      * plugins
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\Plugin>
+     * @var array<\EBT\ExtensionBuilder\Domain\Model\Plugin>
      */
-    private $plugins;
+    private $plugins = [];
     /**
      * backend modules
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\BackendModule>
+     * @var array<\EBT\ExtensionBuilder\Domain\Model\BackendModule>
      */
-    private $backendModules;
+    private $backendModules = [];
     /**
      * was the extension renamed?
      * @var bool
@@ -162,12 +162,6 @@ class Extension
      * @var string
      */
     protected $previousExtensionKey = '';
-
-    public function __construct()
-    {
-        $this->plugins = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-        $this->backendModules = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-    }
 
     /**
      * @return string
@@ -549,10 +543,10 @@ class Extension
     /**
      * Setter for plugin
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\Plugin> $plugins
+     * @param array<\EBT\ExtensionBuilder\Domain\Model\Plugin> $plugins
      * @return void
      */
-    public function setPlugins(ObjectStorage $plugins)
+    public function setPlugins(array $plugins)
     {
         $this->plugins = $plugins;
     }
@@ -560,7 +554,7 @@ class Extension
     /**
      * Getter for $plugin
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\Plugin>
+     * @return array<\EBT\ExtensionBuilder\Domain\Model\Plugin>
      */
     public function getPlugins()
     {
@@ -593,10 +587,10 @@ class Extension
     /**
      * Setter for backendModule
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\BackendModule> $backendModules
+     * @param array<\EBT\ExtensionBuilder\Domain\Model\BackendModule> $backendModules
      * @return void
      */
-    public function setBackendModules(ObjectStorage $backendModules)
+    public function setBackendModules(array $backendModules)
     {
         $this->backendModules = $backendModules;
     }
@@ -604,7 +598,7 @@ class Extension
     /**
      * Getter for $backendModule
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\EBT\ExtensionBuilder\Domain\Model\Plugin>
+     * @return array<\EBT\ExtensionBuilder\Domain\Model\Plugin>
      */
     public function getBackendModules()
     {
