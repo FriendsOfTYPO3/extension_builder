@@ -57,7 +57,6 @@ CREATE TABLE tx_testextension_domain_model_child1 (
 
 	name varchar(255) DEFAULT '' NOT NULL,
 	flag smallint(5) unsigned DEFAULT '0' NOT NULL,
-	mail varchar(255) DEFAULT '' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
