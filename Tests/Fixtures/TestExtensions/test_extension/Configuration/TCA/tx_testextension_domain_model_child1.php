@@ -16,14 +16,14 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'name,flag,mail',
+        'searchFields' => 'name,flag',
         'iconfile' => 'EXT:test_extension/Resources/Public/Icons/tx_testextension_domain_model_child1.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, flag, mail',
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, flag',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, flag, mail, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, flag, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -137,15 +137,5 @@ return [
                 'default' => 0,
             ]
         ],
-        'mail' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child1.mail',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'nospace,email'
-            ]
-        ],
-
     ],
 ];
