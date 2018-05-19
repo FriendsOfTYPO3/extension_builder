@@ -10,13 +10,13 @@ if (TYPO3_MODE === 'BE') {
         'tools',
         'extensionbuilder',
         '',
-        array(
+        [
             'BuilderModule' => 'index,domainmodelling,dispatchRpc',
-        ),
-        array(
+        ],
+        [
             'access' => 'user,group',
-            'icon' => 'EXT:extension_builder/Resources/Public/Icons/module-extensionbuilder.svg',
+            'icon' => 'EXT:extension_builder/Resources/Public/Icons/Extension.svg',
             'labels' => 'LLL:EXT:extension_builder/Resources/Private/Language/locallang_mod.xlf',
-        )
+        ]
     );
 }
