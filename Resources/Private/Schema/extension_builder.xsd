@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://typo3.org/ns/EBT/ExtensionBuilder/ViewHelpers"><xsd:element name="beFunc"><xsd:annotation><xsd:documentation><![CDATA[View helper which return input as it is
+
+ = Examples =
+
+ <f:null>{anyString}</f:null>]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="be.configuration"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="case"><xsd:annotation><xsd:documentation><![CDATA[Case view helper that is only usable within the SwitchViewHelper.]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="value"><xsd:annotation><xsd:documentation><![CDATA[The switch value. If it matches, the child will be rendered]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="default"><xsd:annotation><xsd:documentation><![CDATA[If this is set, this child will be rendered, if none else matches]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="closingTag"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="copyright"><xsd:annotation><xsd:documentation><![CDATA[Format the Copyright notice]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="date" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="persons" use="required"><xsd:annotation><xsd:documentation><![CDATA[(\EBT\ExtensionBuilder\Domain\Model\Person )]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="curlyBrackets"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="format.htmlSpecialChars"><xsd:annotation><xsd:documentation><![CDATA[Wrapper for htmlspecialchars ViewHelper]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="format.indent"><xsd:annotation><xsd:documentation><![CDATA[Indentation ViewHelper]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="indentation" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="format.lowercaseFirst"><xsd:annotation><xsd:documentation><![CDATA[Wrapper for PHPs ucfirst function.]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="format.quoteString"><xsd:annotation><xsd:documentation><![CDATA[View helper which returns a quoted string
+
+ = Examples =
+
+ <f:quoteString>{anyString}</f:quoteString>]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="value"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="format.removeMultipleNewlines"><xsd:annotation><xsd:documentation><![CDATA[Removes all linebreaks]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="format.trim"><xsd:annotation><xsd:documentation><![CDATA[Wrapper for PHPs trim function.]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="format.uppercaseFirst"><xsd:annotation><xsd:documentation><![CDATA[Wrapper for PHPs ucfirst function.]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="humanize"><xsd:annotation><xsd:documentation><![CDATA[Makes a word in CamelCase or lower_underscore human readable
+
+ = Examples =
+
+ <code title="Example">
+ <k:inflect.humanize>foo_bar</k:inflect.humanize>
+ </code>
+
+ Output:
+ Foo Bar]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="string"><xsd:annotation><xsd:documentation><![CDATA[The string to make human readable]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="isOfType"><xsd:annotation><xsd:documentation><![CDATA[Wrapper for PHPs ucfirst function.]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="object" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="type" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="listForeignKeyRelations"><xsd:annotation><xsd:documentation><![CDATA[Indentation ViewHelper]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="extension" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="domainObject" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="listObjectsByPropertyCSV"><xsd:annotation><xsd:documentation><![CDATA[Renders a comma separated list of a specific property and a list of objects
+
+ = Examples =
+
+ <code title="Example">
+ <k:listObjectsByPropertyCSV objects="{persons}" property="name" />
+ </code>
+
+ Output:
+ Anthony,Billy,Chris]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="objects" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="property" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="mapping"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="then"><xsd:annotation><xsd:documentation><![CDATA[Value to be returned if the condition if met.]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="else"><xsd:annotation><xsd:documentation><![CDATA[Value to be returned if the condition if not met.]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="condition"><xsd:annotation><xsd:documentation><![CDATA[Condition expression conforming to Fluid boolean rules]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="domainObject" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="renderCondition" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="matchString"><xsd:annotation><xsd:documentation><![CDATA[View helper to check if one string contains another string
+
+ = Examples =
+ <k:matchString match="this" in="this and that" />
+ {k:matchString(match:'this', in:'this and that')}]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="match" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="in" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="caseSensitive"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="openingTag"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="pluralize"><xsd:annotation><xsd:documentation><![CDATA[Pluralize a word
+
+ = Examples =
+
+ <code title="Example">
+ <k:inflect.pluralize>foo</k:inflect.pluralize>
+ </code>
+
+ Output:
+ foos]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="pregReplace"><xsd:annotation><xsd:documentation><![CDATA[View helper for preg_replace
+
+ = Examples =
+ <k:pregReplace match="/this/" replace="that" subject="this" />
+ {k:pregReplace(match:'/this/', replace:'that', subject:'this')}]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="match" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="replace" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="subject" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="recordType"><xsd:annotation><xsd:documentation><![CDATA[Class RecordTypeViewHelper]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="domainObject" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="singularize"><xsd:annotation><xsd:documentation><![CDATA[Pluralize a word
+
+ = Examples =
+
+ <code title="Example">
+ <k:inflect.pluralize>foo</k:inflect.pluralize>
+ </code>
+
+ Output:
+ foos]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="switch"><xsd:annotation><xsd:documentation><![CDATA[Switch view helper which can be used to render content depending on a value or expression.
+ Implements what a basic switch()-PHP-method does.
+
+ = Examples =
+
+ <code title="Simple Switch statement">
+ <f:switch expression="{person.gender}">
+   <f:case value="male">Mr.</f:case>
+   <f:case value="female">Mrs.</f:case>
+   <f:case default="true">Mrs. or Mr.</f:case>
+ </f:switch>
+ </code>
+ <output>
+ Mr. / Mrs. (depending on the value of {person.gender}) or if no value evaluates to true, default case
+ </output>
+
+ Note: Using this view helper can be a sign of weak architecture. If you end up using it extensively
+ you might want to consider restructuring your controllers/actions and/or use partials and sections.
+ E.g. the above example could be achieved with <f:render partial="title.{person.gender}" /> and the partials
+ "title.male.html", "title.female.html", ...
+ Depending on the scenario this can be easier to extend and possibly contains less duplication.]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="expression" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element></xsd:schema>
