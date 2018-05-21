@@ -26,6 +26,7 @@ $url_0: url(background_pixel.png);
 }
 
 .module-body {
+	padding: 0px !important;
 	&.index {
 		#typo3-inner-docbody {
 			min-height: 900px;
@@ -123,6 +124,7 @@ div {
 		height: 100%;
 		margin-top: 65px;
 		width: 100%;
+		min-height:900px;
 	}
 	&.WireIt-Container-ddhandle {
 		background-color: $color_celeste_approx;
@@ -735,7 +737,7 @@ input[disabled] {
 	display: none;
 }
 
-#tools-ExtensionBuilderExtensionbuilder .module-docheader-bar {
+#tools-ExtensionBuilderExtensionbuilder- .module-docheader-bar {
 	.module-icon {
 		float: right;
 		margin: 5px;
