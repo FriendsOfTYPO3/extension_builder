@@ -11,13 +11,13 @@ var extbaseModeling_wiringEditorLanguage = {
 	var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event, lang = YAHOO.lang, dom = YAHOO.util.Dom;
 
 		function addFieldsetClass (selectElement) {
-			if (TYPO3.jQuery(selectElement).parent().hasClass('isDependant')) {
+			if ($(selectElement).parent().hasClass('isDependant')) {
 				return;
 			}
-			var fieldset = TYPO3.jQuery(selectElement).parents('fieldset').first();
+			var fieldset = $(selectElement).parents('fieldset').first();
 			if (selectElement.name == 'relationType') {
 				// relations
-				fieldset = TYPO3.jQuery(fieldset).parents('fieldset').first();
+				fieldset = $(fieldset).parents('fieldset').first();
 				var renderTypeSelect = fieldset.find("select[name='renderType']").first();
 				updateRenderTypeOptions(selectElement.value, renderTypeSelect);
 			}
@@ -36,7 +36,7 @@ var extbaseModeling_wiringEditorLanguage = {
 			};
 			var validOptions = optionValueMap[selectedRelationType];
 
-			TYPO3.jQuery.each(validOptions, function(i, e) {
+			$.each(validOptions, function(i, e) {
 				renderTypeSelect.find("option[value='" + e + "']").show();
 			});
 			if (validOptions.indexOf(renderTypeSelect.val()) < 0) {
@@ -53,13 +53,13 @@ var extbaseModeling_wiringEditorLanguage = {
 		 * add the selected propertyType as classname to all propertyGroup fieldsets
 		 */
 		WireIt.WiringEditor.prototype.onPipeLoaded = function () {
-			var propertyTypeSelects = TYPO3.jQuery('.propertyGroup select');
+			var propertyTypeSelects = $('.propertyGroup select');
 			if (propertyTypeSelects) {
 				propertyTypeSelects.each(function (index, el) {
 					addFieldsetClass(el);
 				});
 			}
-			var relationTypeSelects = TYPO3.jQuery('.relationGroup select');
+			var relationTypeSelects = $('.relationGroup select');
 			if (relationTypeSelects) {
 				relationTypeSelects.each(function (index, el) {
 					addFieldsetClass(el);
@@ -74,10 +74,10 @@ YAHOO.util.Event.onAvailable('extensionDependencies-field', function () {
 	/**
 	 * Update dependencies in textarea
 	 */
-    TYPO3.jQuery('#targetVersionSelector-field').onchange =
+    $('#targetVersionSelector-field').onchange =
 	function (event) {
 		var updatedDependencies = '';
-        var dependenciesField = TYPO3.jQuery('extensionDependencies-field');
+        var dependenciesField = $('extensionDependencies-field');
 		var dependencies = dependenciesField.value.split("\n");
 		for (i = 0; i < dependencies.length; i++) {
 			parts = dependencies[i].split('=>');
@@ -94,23 +94,23 @@ YAHOO.util.Event.onAvailable('extensionDependencies-field', function () {
 
 YAHOO.util.Event.onAvailable('toggleAdvancedOptions', function () {
 
-    TYPO3.jQuery('body').addClass('yui-skin-sam');
-	TYPO3.jQuery('.t3js-module-docheader-bar-buttons').show();
+    $('body').addClass('yui-skin-sam');
+	$('.t3js-module-docheader-bar-buttons').show();
 	if (window.top.location.href === window.location.href) {
-		TYPO3.jQuery("#opennewwindow").hide();
+		$("#opennewwindow").hide();
 	}
 	var advancedMode = false;
-	TYPO3.jQuery('#toggleAdvancedOptions').click(
+	$('#toggleAdvancedOptions').click(
 	function () {
 		if (!advancedMode) {
-			TYPO3.jQuery('#domainModelEditor').addClass('showAdvancedOptions');
-            TYPO3.jQuery('#toggleAdvancedOptions .simpleMode').hide();
-            TYPO3.jQuery('#toggleAdvancedOptions .advancedMode').show();
+			$('#domainModelEditor').addClass('showAdvancedOptions');
+            $('#toggleAdvancedOptions .simpleMode').hide();
+            $('#toggleAdvancedOptions .advancedMode').show();
 			advancedMode = true;
 		} else {
-            TYPO3.jQuery('#domainModelEditor').removeClass('showAdvancedOptions');
-            TYPO3.jQuery('#toggleAdvancedOptions .simpleMode').show();
-            TYPO3.jQuery('#toggleAdvancedOptions .advancedMode').hide();
+            $('#domainModelEditor').removeClass('showAdvancedOptions');
+            $('#toggleAdvancedOptions .simpleMode').show();
+            $('#toggleAdvancedOptions .advancedMode').hide();
 			advancedMode = false;
 		}
 		return false;
