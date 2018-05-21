@@ -26,17 +26,24 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class PregReplaceViewHelper extends AbstractViewHelper
 {
+
+    /**
+    * Arguments Initialization
+    */
+    public function initializeArguments()
+    {
+        $this->registerArgument('match', 'string', 'pattern', TRUE);
+        $this->registerArgument('replace', 'string', 'replacement', TRUE);
+        $this->registerArgument('subject', 'string', 'subject', TRUE);
+    }
+
     /**
      * Execute the preg_replace
      *
-     * @param mixed $match
-     * @param mixed $replace
-     * @param mixed $subject
-     *
      * @return mixed
      */
-    public function render($match, $replace, $subject)
+    public function render()
     {
-        return preg_replace($match, $replace, $subject);
+        return preg_replace($this->arguments['match'], $this->arguments['replace'], $this->arguments['subject']);
     }
 }

@@ -22,17 +22,25 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class ListForeignKeyRelationsViewHelper extends AbstractViewHelper
 {
+
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-     * @param mixed $domainObject
+    * Arguments Initialization
+    */
+    public function initializeArguments()
+    {
+        $this->registerArgument('extension', \EBT\ExtensionBuilder\Domain\Model\Extension::class, 'extension', TRUE);
+        $this->registerArgument('domainObject', \EBT\ExtensionBuilder\Domain\Model\DomainObject::class, 'domainObject', TRUE);
+    }
+
+    /**
      *
      * @return array
      */
-    public function render($extension, $domainObject)
+    public function render()
     {
-        $expectedDomainObject = $domainObject;
+        $expectedDomainObject = $this->arguments['domainObject'];
         $results = [];
-        foreach ($extension->getDomainObjects() as $domainObject) {
+        foreach ($this->arguments['extension']->getDomainObjects() as $domainObject) {
             if (!count($domainObject->getProperties())) {
                 continue;
             }

@@ -25,15 +25,22 @@ class IndentViewHelper extends AbstractViewHelper
     protected $escapeOutput = false;
 
     /**
-     * @param int $indentation
+    * Arguments Initialization
+    */
+    public function initializeArguments()
+    {
+        $this->registerArgument('indentation', 'integer', 'number of spaces to indent', TRUE);
+    }
+
+    /**
      * @return bool true or false
      */
-    public function render($indentation)
+    public function render()
     {
         $outputToIndent = $this->renderChildren();
         $lineArray = explode(chr(10), $outputToIndent);
         $indentString = '';
-        for ($i = 0; $i < $indentation; $i++) {
+        for ($i = 0; $i < $this->arguments['indentation']; $i++) {
             $indentString .= '    ';
         }
         return implode(chr(10) . $indentString, $lineArray);

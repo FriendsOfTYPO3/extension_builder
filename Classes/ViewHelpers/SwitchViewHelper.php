@@ -71,17 +71,24 @@ class SwitchViewHelper extends AbstractViewHelper implements ChildNodeAccessInte
     }
 
     /**
-     * @param mixed $expression
+    * Arguments Initialization
+    */
+    public function initializeArguments()
+    {
+        $this->registerArgument('expression', 'mixed', '', TRUE);
+    }
+
+    /**
      * @return string the rendered string
      * @api
      */
-    public function render($expression)
+    public function render()
     {
         $content = '';
         $this->backupSwitchState();
         $templateVariableContainer = $this->renderingContext->getViewHelperVariableContainer();
 
-        $templateVariableContainer->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression', $expression);
+        $templateVariableContainer->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression', $this->arguments['expression']);
         $templateVariableContainer->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break', false);
 
         foreach ($this->childNodes as $childNode) {

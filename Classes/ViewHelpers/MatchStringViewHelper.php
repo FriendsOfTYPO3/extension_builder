@@ -26,19 +26,27 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class MatchStringViewHelper extends AbstractViewHelper
 {
+
     /**
-     * @param string $match
-     * @param string $in
-     * @param bool $caseSensitive
+    * Arguments Initialization
+    */
+    public function initializeArguments()
+    {
+        $this->registerArgument('match', 'string', 'RegEx', TRUE);
+        $this->registerArgument('in', 'string', 'the string to compare', TRUE);
+        $this->registerArgument('caseSensitive', 'boolean', 'caseSensitive', false);
+    }
+
+    /**
      *
      * @return bool
      */
-    public function render($match, $in, $caseSensitive = false)
+    public function render()
     {
-        $matchAsRegularExpression = '/' . $match . '/';
-        if (!$caseSensitive) {
+        $matchAsRegularExpression = '/' . $this->arguments['match'] . '/';
+        if (!$this->arguments['caseSensitive']) {
             $matchAsRegularExpression .= 'i';
         }
-        return (preg_match($matchAsRegularExpression, $in) === 0) ? false : true;
+        return (preg_match($matchAsRegularExpression, $this->arguments['in']) === 0) ? false : true;
     }
 }
