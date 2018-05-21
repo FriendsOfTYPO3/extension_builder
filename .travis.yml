@@ -1,8 +1,6 @@
 language: php
 
 php:
-  - 7.0
-  - 7.1
   - 7.2
 
 env:
@@ -25,7 +23,7 @@ before_install:
   - composer --version
 
 before_script:
-  - composer require typo3/cms=$TYPO3_VERSION
+  - composer require typo3/cms-core=$TYPO3_VERSION
   - composer require typo3/testing-framework=~1.0.0
   # Restore composer.json
   - git checkout composer.json
