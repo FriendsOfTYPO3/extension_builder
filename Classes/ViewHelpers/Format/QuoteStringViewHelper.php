@@ -27,12 +27,23 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 class QuoteStringViewHelper extends AbstractViewHelper
 {
     /**
-     * @param string $value
+    * Arguments Initialization
+    */
+    public function initializeArguments()
+    {
+        $this->registerArgument('value', 'string', 'The string to addslashes', FALSE);
+    }
+
+    /**
      *
      * @return string
      */
-    public function render($value = null)
+    public function render()
     {
+        $value = null;
+        if ($this->hasArgument('value')) {
+            $value = $this->arguments['value'];
+        }
         if ($value == null) {
             $value = $this->renderChildren();
         }

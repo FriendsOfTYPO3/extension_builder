@@ -25,17 +25,33 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\Exception;
  */
 class CaseViewHelper extends AbstractViewHelper
 {
+
     /**
-     * @param mixed $value The switch value. If it matches, the child will be rendered
-     * @param bool $default If this is set, this child will be rendered, if none else matches
+    * Arguments Initialization
+    */
+    public function initializeArguments() {
+       $this->registerArgument('value', 'mixed', 'The switch value. If it matches, the child will be rendered', FALSE);
+       $this->registerArgument('default', 'boolean', 'If this is set, this child will be rendered, if none else matches', FALSE);
+    }
+
+    /**
      *
      * @return string the contents of this view helper if $value equals the expression of the surrounding switch view helper, or $default is true. otherwise an empty string
      * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
      *
      * @api
      */
-    public function render($value = null, $default = false)
+    public function render()
     {
+        $default = false;
+        $value = null;
+        if (!$this->hasArgument('default')) {
+            $default = $this->arguments['default'];
+        }
+        if (!$this->hasArgument('value')) {
+            $value = $this->arguments['value'];
+        }
+
         $viewHelperVariableContainer = $this->renderingContext->getViewHelperVariableContainer();
         if (!$viewHelperVariableContainer->exists('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression')) {
             throw new Exception('The case View helper can only be used within a switch View helper', 1368112037);
@@ -46,7 +62,7 @@ class CaseViewHelper extends AbstractViewHelper
         $switchExpression = $viewHelperVariableContainer->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression');
 
         // non-type-safe comparison by intention
-        if ($default === true || $switchExpression == $value) {
+        if ($default === true || $switchExpression == $this->arguments['value']) {
             $viewHelperVariableContainer->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break', true);
             return $this->renderChildren();
         }

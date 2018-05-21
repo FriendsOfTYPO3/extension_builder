@@ -44,13 +44,20 @@ class HumanizeViewHelper extends AbstractViewHelper
     }
 
     /**
+    * Arguments Initialization
+    */
+    public function initializeArguments() {
+       $this->registerArgument('string', 'string', 'The string to make human readable', TRUE);
+    }
+
+    /**
      * Make a word human readable
      *
-     * @param string $string The string to make human readable
      * @return string The human readable string
      */
-    public function render($string = null)
+    public function render()
     {
+        $string = $this->arguments['string'];
         if ($string === null) {
             $string = $this->renderChildren();
         }

@@ -40,16 +40,23 @@ class RecordTypeViewHelper extends AbstractViewHelper
     }
 
     /**
+    * Arguments Initialization
+    */
+    public function initializeArguments()
+    {
+        $this->registerArgument('domainObject', \EBT\ExtensionBuilder\Domain\Model\DomainObject::class, 'domainObject', TRUE);
+    }
+
+    /**
      * Helper function to find the parents class recordType
-     *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
      *
      * @return string
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3Fluid\Fluid\Core\Variables\Exception\InvalidVariableException
      */
-    public function render(DomainObject $domainObject)
+    public function render()
     {
+        $domainObject = $this->arguments['domainObject'];
         $classSettings = $this->configurationManager->getExtbaseClassConfiguration($domainObject->getParentClass());
         if (isset($classSettings['recordType'])) {
             $parentRecordType = Tools::convertClassNameToRecordType($classSettings['recordType']);

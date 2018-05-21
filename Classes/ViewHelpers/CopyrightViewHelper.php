@@ -27,6 +27,14 @@ class CopyrightViewHelper extends AbstractViewHelper
     protected $escapeChildren = false;
 
     /**
+    * Arguments Initialization
+    */
+    public function initializeArguments() {
+       $this->registerArgument('date', 'string', 'Date', TRUE);
+       $this->registerArgument('persons', 'array', 'Array with persons', TRUE);
+    }
+
+    /**
      * Format the copyright holder's name(s)
      *
      * @param string $date
@@ -34,12 +42,12 @@ class CopyrightViewHelper extends AbstractViewHelper
      * @return string The copyright ownership
      * @author Andreas Lappe <nd@kaeufli.ch>
      */
-    public function render($date, $persons)
+    public function render()
     {
-        $copyright = ' *  (c) ' . $date . ' ';
+        $copyright = ' *  (c) ' . $this->arguments['date'] . ' ';
         $offset = strlen($copyright) - 2;
 
-        foreach ($persons as $index => $person) {
+        foreach ($this->arguments['persons'] as $index => $person) {
             $entry = '';
 
             if ($index !== 0) {
