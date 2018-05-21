@@ -1,4 +1,4 @@
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}{escaping off}<f:format.htmlentitiesDecode><k:format.trim>
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}{escaping off}<k:format.trim>
 <f:for each="{extension.domainObjects}" as="domainObject">
 #
 # Table structure for table '{domainObject.databaseTableName}'
@@ -91,4 +91,3 @@ CREATE TABLE {relation.relationTableName} (
        </f:if>
     </f:for>
 </f:for>
-</f:format.htmlentitiesDecode>
