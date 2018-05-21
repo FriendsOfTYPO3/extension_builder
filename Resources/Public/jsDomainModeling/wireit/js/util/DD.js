@@ -30,7 +30,7 @@ YAHOO.extend(WireIt.util.DD, YAHOO.util.DD, {
 	 * @method onDrag
 	 */
 	onDrag: function(e) {
-		var leftPanel = TYPO3.jQuery('.yui-layout-unit-left');
+		var leftPanel = $('.yui-layout-unit-left');
 		var leftWidth = leftPanel.width() + 10;
 
 		// Make sure terminalList is an array

@@ -1,7 +1,7 @@
 (function() {
-   
+
    var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Dom = YAHOO.util.Dom, Event = YAHOO.util.Event;
-   
+
 /**
  * @class Handle a group of fields
  * @extends inputEx.Field
@@ -17,49 +17,49 @@
  */
 inputEx.Group = function(options) {
    inputEx.Group.superclass.constructor.call(this,options);
-   
+
    if(this.hasInteractions) {
       for(var i = 0 ; i < this.inputs.length ; i++) {
          this.runInteractions(this.inputs[i],this.inputs[i].getValue());
       }
    }
 };
-lang.extend(inputEx.Group, inputEx.Field, 
+lang.extend(inputEx.Group, inputEx.Field,
 /**
  * @scope inputEx.Group.prototype
- */   
+ */
 {
-   
+
    /**
     * Adds some options: legend, collapsible, fields...
     * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
    setOptions: function(options) {
-   
+
    	this.options = {};
-   	
+
    	this.options.className = options.className || 'inputEx-Group';
-   	
+
    	this.options.fields = options.fields;
-   	
+
    	this.options.id = options.id;
-   	
+
    	this.options.name = options.name;
-   	
+
    	this.options.value = options.value;
-   	
+
    	this.options.flatten = options.flatten;
-   
+
       this.options.legend = options.legend || '';
-   
+
       // leave this for compatibility reasons
       this.inputConfigs = options.fields;
-   
+
       this.options.collapsible = lang.isUndefined(options.collapsible) ? false : options.collapsible;
       this.options.collapsed = lang.isUndefined(options.collapsed) ? false : options.collapsed;
-      
+
       this.options.disabled = lang.isUndefined(options.disabled) ? false : options.disabled;
-      
+
       // Array containing the list of the field instances
       this.inputs = [];
 
@@ -80,23 +80,23 @@ lang.extend(inputEx.Group, inputEx.Field,
 	   if(this.options.id) {
    	   this.divEl.id = this.options.id;
    	}
-  	   
-  	   this.renderFields(this.divEl);  	  
-  	   
+
+  	   this.renderFields(this.divEl);
+
   	   if(this.options.disabled) {
   	      this.disable();
   	   }
    },
-   
+
    /**
     * Render all the fields.
     * We use the parentEl so that inputEx.Form can append them to the FORM tag
     */
    renderFields: function(parentEl) {
-      
+
       this.fieldset = inputEx.cn('fieldset');
       this.legend = inputEx.cn('legend', {className: 'inputEx-Group-legend'});
-   
+
       // Option Collapsible
       //TODO: <MF> should it be renamed to 'collapsed'?
       if(this.options.collapsible) {
@@ -104,19 +104,19 @@ lang.extend(inputEx.Group, inputEx.Field,
          this.legend.appendChild(collapseImg);
          inputEx.sn(this.fieldset,{className:'inputEx-Expanded'});
       }
-   
+
       if(!lang.isUndefined(this.options.legend) && this.options.legend !== ''){
          this.legend.appendChild( document.createTextNode(" "+this.options.legend) );
       }
-   
+
       if( this.options.collapsible || (!lang.isUndefined(this.options.legend) && this.options.legend !== '') ) {
          this.fieldset.appendChild(this.legend);
       }
-  	   
+
       // Iterate this.createInput on input fields
       for (var i = 0 ; i < this.options.fields.length ; i++) {
          var input = this.options.fields[i];
-        
+
          // Render the field
 		// input = this.createUniqueIdForUidField(input);
 
@@ -127,20 +127,20 @@ lang.extend(inputEx.Group, inputEx.Field,
 		}
 
          var field = this.renderField(input);
-         
+
 
          this.fieldset.appendChild(field.getEl() );
   	   }
-  	
+
   	   // Collapsed at creation ?
   	   if(this.options.collapsed) {
   	      this.toggleCollapse();
   	   }
-  	
+
   	   // Append the fieldset
   	   parentEl.appendChild(this.fieldset);
    },
-  
+
    /**
     * Instanciate one field given its parameters, type or fieldClass
     * @param {Object} fieldOptions The field properties as required bu inputEx.buildField
@@ -148,26 +148,26 @@ lang.extend(inputEx.Group, inputEx.Field,
    renderField: function(fieldOptions) {
 
       // Instanciate the field
-      var fieldInstance = inputEx.buildField(fieldOptions);      
-      
+      var fieldInstance = inputEx.buildField(fieldOptions);
+
 	   this.inputs.push(fieldInstance);
-      
+
       // Create an index to access fields by their name
       if(fieldInstance.options.name) {
          this.inputsNames[fieldInstance.options.name] = fieldInstance;
       }
-      
+
       // Create the this.hasInteractions to run interactions at startup
       if(!this.hasInteractions && fieldOptions.interactions) {
          this.hasInteractions = true;
       }
-      
+
 	   // Subscribe to the field "updated" event to send the group "updated" event
       fieldInstance.updatedEvt.subscribe(this.onChange, this, true);
-   	  
+
       return fieldInstance;
    },
-  
+
    /**
     * Add a listener for the 'collapsible' option
     */
@@ -181,35 +181,35 @@ lang.extend(inputEx.Group, inputEx.Field,
     * Toggle the collapse state
     */
    toggleCollapse: function() {
-       var fieldset = TYPO3.jQuery(this.fieldset),
-           divElement = TYPO3.jQuery(this.divEl);
+       var fieldset = $(this.fieldset),
+           divElement = $(this.divEl);
       if(fieldset.hasClass('inputEx-Expanded')) {
           fieldset.removeClass('inputEx-Expanded').addClass('inputEx-Collapsed');
-          TYPO3.jQuery(this.divEl).removeClass('expanded').addClass('collapsed');
+          $(this.divEl).removeClass('expanded').addClass('collapsed');
       }
       else {
           var container = divElement.parents('.WireIt-Container').first();
 		  if(container.length) {
               //var containerId = container.id;
               container.find('.inputEx-Expanded,.fieldset').each(function(index, el) {
-                  TYPO3.jQuery(el).removeClass('inputEx-Expanded').addClass('inputEx-Collapsed');
+                  $(el).removeClass('inputEx-Expanded').addClass('inputEx-Collapsed');
 			  });
-              TYPO3.jQuery('.expanded').each(function(index, el) {
-                  TYPO3.jQuery(el).removeClass('expanded').addClass('collapsed');
+              $('.expanded').each(function(index, el) {
+                  $(el).removeClass('expanded').addClass('collapsed');
 			  });
 		  }
           fieldset.removeClass('inputEx-Collapsed').addClass('inputEx-Expanded');
           divElement.removeClass('collapsed').addClass('expanded');
       }
    },
-   
+
    /**
     * Validate each field
     * @returns {Boolean} true if all fields validate and required fields are not empty
     */
    validate: function() {
       var response = true;
-      
+
       // Validate all the sub fields
       for (var i = 0 ; i < this.inputs.length ; i++) {
    	   var input = this.inputs[i];
@@ -221,7 +221,7 @@ lang.extend(inputEx.Group, inputEx.Field,
       }
       return response;
    },
-   
+
    /**
     * Enable all fields in the group
     */
@@ -230,7 +230,7 @@ lang.extend(inputEx.Group, inputEx.Field,
  	      this.inputs[i].enable();
       }
    },
-   
+
    /**
     * Disable all fields in the group
     */
@@ -239,7 +239,7 @@ lang.extend(inputEx.Group, inputEx.Field,
  	      this.inputs[i].disable();
       }
    },
-   
+
    /**
     * Set the values of each field from a key/value hash object
      * @param {Any} value The group value
@@ -259,13 +259,13 @@ lang.extend(inputEx.Group, inputEx.Field,
 	         field.clear(false);
 	      }
       }
-      
+
 	   if(sendUpdatedEvt !== false) {
 	      // fire update event
          this.fireUpdatedEvt();
       }
    },
-   
+
    /**
     * Return an object with all the values of the fields
     */
@@ -284,7 +284,7 @@ lang.extend(inputEx.Group, inputEx.Field,
       }
 	   return o;
    },
-  
+
    /**
     * Close the group (recursively calls "close" on each field, does NOT hide the group )
     * Call this function before hidding the group to close any field popup
@@ -314,12 +314,12 @@ lang.extend(inputEx.Group, inputEx.Field,
       }
       return this.inputsNames[fieldName];
    },
-   
-   
+
+
    /**
     * Called when one of the group subfields is updated.
     * @param {String} eventName Event name
-    * @param {Array} args Array of [fieldValue, fieldInstance] 
+    * @param {Array} args Array of [fieldValue, fieldInstance]
     */
    onChange: function(eventName, args) {
 
@@ -327,9 +327,9 @@ lang.extend(inputEx.Group, inputEx.Field,
       var fieldValue = args[0];
       var fieldInstance = args[1];
       this.runInteractions(fieldInstance,fieldValue);
-      
+
       //this.setClassFromState();
-      
+
       this.fireUpdatedEvt();
    },
 
@@ -350,18 +350,18 @@ lang.extend(inputEx.Group, inputEx.Field,
          throw new Error("action "+action.action+" is not a valid action for field "+action.name);
       }
    },
-   
+
    /**
     * Run the interactions for the given field instance
     * @param {inputEx.Field} fieldInstance Field that just changed
     * @param {Any} fieldValue Field value
     */
    runInteractions: function(fieldInstance,fieldValue) {
-      
+
       var index = inputEx.indexOf(fieldInstance, this.inputs);
       var fieldConfig = this.options.fields[index];
       if( YAHOO.lang.isUndefined(fieldConfig.interactions) ) return;
-      
+
       // Let's run the interactions !
       var interactions = fieldConfig.interactions;
       for(var i = 0 ; i < interactions.length ; i++) {
@@ -372,9 +372,9 @@ lang.extend(inputEx.Group, inputEx.Field,
             }
          }
       }
-      
+
    },
-   
+
 	/**
 	 * Clear all subfields
 	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this clear should fire the updatedEvt or not (default is true, pass false to NOT send the event)
@@ -388,11 +388,11 @@ lang.extend(inputEx.Group, inputEx.Field,
          this.fireUpdatedEvt();
       }
 	}
-   
-   
+
+
 });
 
-   
+
 /**
  * Register this class as "group" type
  */
