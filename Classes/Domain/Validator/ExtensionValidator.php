@@ -513,10 +513,10 @@ class ExtensionValidator extends AbstractValidator
     }
 
     /**
-     * @param array $configuration
+     * @param string $configuration
      * @return bool
      */
-    protected function validateActionConfigFormat($configuration)
+    protected function validateActionConfigFormat(string $configuration)
     {
         $isValid = true;
         $lines = GeneralUtility::trimExplode(LF, $configuration, true);
@@ -565,7 +565,7 @@ class ExtensionValidator extends AbstractValidator
     /**
      * @author Sebastian Michaelsen <sebastian.gebhard@gmail.com>
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-     * @return     void
+     * @return void
      * @throws ExtensionException
      */
     private function validateDomainObjects($extension)
@@ -755,7 +755,6 @@ class ExtensionValidator extends AbstractValidator
     /**
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
      * @return void
-     * @throws ExtensionException
      */
     private function validateProperties($domainObject)
     {
@@ -861,7 +860,6 @@ class ExtensionValidator extends AbstractValidator
      * @author Rens Admiraal
      * @param string $key
      * @return void
-     * @throws ExtensionException
      */
     private function validateExtensionKey($key)
     {
