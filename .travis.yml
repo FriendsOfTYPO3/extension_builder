@@ -5,7 +5,7 @@ php:
 
 env:
   matrix:
-    - TYPO3_VERSION=~9.2
+    - TYPO3_VERSION=~9.3
 
 sudo: false
 

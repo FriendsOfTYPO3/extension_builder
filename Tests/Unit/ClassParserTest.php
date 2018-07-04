@@ -155,7 +155,7 @@ class ClassParserTest extends BaseUnitTest
         $classObject = $this->parserService->parseFile($file)->getFirstClass();
         self::assertTrue($classObject instanceof ClassObject);
         require_once($file);
-        $classReflectionService = new ReflectionService($className);
+        $classReflectionService = new ReflectionService();
         $classSchema = $classReflectionService->getClassSchema($className);
         $this->ParserFindsAllConstants($classObject, $classSchema);
         $this->ParserFindsAllMethods($classObject, $classSchema);
