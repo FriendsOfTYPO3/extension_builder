@@ -63,7 +63,6 @@ class RecordTypeViewHelper extends AbstractViewHelper
         } else {
             $parentRecordType = Tools::convertClassNameToRecordType($domainObject->getParentClass());
             $existingTypes = $GLOBALS['TCA'][$domainObject->getDatabaseTableName()]['types'];
-            GeneralUtility::devLog('Parent Record type: ' . $parentRecordType, 'extension_builder', 2, $existingTypes);
             if (is_array($existingTypes) && !isset($existingTypes[$parentRecordType])) {
                 // no types field for parent record type configured, use the default type 1
                 if (isset($existingTypes['1'])) {
