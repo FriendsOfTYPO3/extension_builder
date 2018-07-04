@@ -143,10 +143,7 @@ class ExtensionBuilderConfigurationManager extends ConfigurationManager
         if (file_exists($settingsFile)) {
             $yamlParser = new SpycYAMLParser();
             $settings = $yamlParser->YAMLLoadString(file_get_contents($settingsFile));
-        } else {
-            GeneralUtility::devLog('No settings found: ' . $settingsFile, 'extension_builder', 2);
         }
-
         return $settings;
     }
 

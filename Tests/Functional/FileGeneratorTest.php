@@ -150,7 +150,6 @@ class FileGeneratorTest extends BaseFunctionalTest
         self::assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
-        GeneralUtility::devLog('Class Content', 'extension_builder', 0, ['c' => $classFileContent, 'path' => $absModelClassDir]);
         GeneralUtility::writeFile($modelClassPath, $classFileContent);
         self::assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
         $className = $domainObject->getFullQualifiedClassName();

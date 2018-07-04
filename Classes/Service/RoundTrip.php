@@ -128,7 +128,6 @@ class RoundTrip implements SingletonInterface
             $this->previousExtensionDirectory = $extension->getPreviousExtensionDirectory();
             $this->previousExtensionKey = $extension->getOriginalExtensionKey();
             $this->extensionRenamed = true;
-            GeneralUtility::devLog('Extension renamed: ' . $this->previousExtensionKey . ' => ' . $this->extension->getExtensionKey(), 'extension_builder', 1, ['$previousExtensionDirectory ' => $this->previousExtensionDirectory]);
         }
 
         // Rename the old kickstarter.json file to ExtensionBuilder.json
@@ -142,12 +141,6 @@ class RoundTrip implements SingletonInterface
         if (file_exists($this->previousExtensionDirectory . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE)) {
             $extensionSchemaBuilder = GeneralUtility::makeInstance(ExtensionSchemaBuilder::class);
             $jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey);
-            GeneralUtility::devLog(
-                'old JSON:' . $this->previousExtensionDirectory . 'ExtensionBuilder.json',
-                'extension_builder',
-                0,
-                $jsonConfig
-            );
             $this->previousExtension = $extensionSchemaBuilder->build($jsonConfig);
             $previousDomainObjects = $this->previousExtension->getDomainObjects();
             /** @var $previousDomainObjects \EBT\ExtensionBuilder\Domain\Model\DomainObject[] */
@@ -277,8 +270,6 @@ class RoundTrip implements SingletonInterface
                     $this->updateVendorName();
                 }
                 return $this->classFileObject;
-            } else {
-                GeneralUtility::devLog('class file didn\'t exist:' . $fileName, 'extension_builder', 0);
             }
         } else {
             $this->log('domainObject not identified:' . $currentDomainObject->getName(), 0, $this->previousDomainObjects);
@@ -346,7 +337,6 @@ class RoundTrip implements SingletonInterface
 
                 return $this->classFileObject;
             } else {
-                GeneralUtility::devLog('class file didn\'t exist:' . $fileName, 'extension_builder', 2);
                 return null;
             }
         } else {
@@ -544,8 +534,6 @@ class RoundTrip implements SingletonInterface
                     );
                 }
                 return $this->classFileObject;
-            } else {
-                GeneralUtility::devLog('class file didn\'t exist:' . $fileName, 'extension_builder', 2);
             }
         } else {
             $fileName = FileGenerator::getFolderForClassFile($extensionDir, 'Repository', false);
@@ -628,14 +616,12 @@ class RoundTrip implements SingletonInterface
         if ($propertyToRemove->isAnyToManyRelation()) {
             $this->classObject->removeMethod('add' . ucfirst(Inflector::singularize($propertyName)));
             $this->classObject->removeMethod('remove' . ucfirst(Inflector::singularize($propertyName)));
-            GeneralUtility::devLog('Methods removed: ' . 'add' . ucfirst(Inflector::singularize($propertyName)), 'extension_builder');
         }
         $this->classObject->removeMethod('get' . ucfirst($propertyName));
         $this->classObject->removeMethod('set' . ucfirst($propertyName));
         if ($propertyToRemove->isBoolean()) {
             $this->classObject->removeMethod('is' . ucfirst($propertyName));
         }
-        GeneralUtility::devLog('Methods removed: ' . 'get' . ucfirst($propertyName), 'extension_builder');
     }
 
     /**
@@ -922,11 +908,9 @@ class RoundTrip implements SingletonInterface
         if (file_exists($locallang_cshFile)) {
             // no overwrite settings check here...
             unlink($locallang_cshFile);
-            GeneralUtility::devLog('locallang_csh file removed: ' . $locallang_cshFile, 'extension_builder', 1);
         }
         if (file_exists($iconFile)) {
             unlink($iconFile);
-            GeneralUtility::devLog('icon file removed: ' . $iconFile, 'extension_builder', 1);
         }
     }
 
@@ -1143,12 +1127,7 @@ class RoundTrip implements SingletonInterface
 
     protected static function log($message, $severity = 0, $data = [])
     {
-        GeneralUtility::devLog(
-            $message,
-            'extension_builder',
-            $severity,
-            $data
-        );
+        // TODO implement logging
     }
 
     /**

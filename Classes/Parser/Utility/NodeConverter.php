@@ -177,10 +177,8 @@ class NodeConverter
         $constantsArray = [];
         $consts = $node->consts;
         foreach ($consts as $const) {
-            GeneralUtility::devLog('$const1: ', 'extension_builder', 1, (array)$const);
             $constantsArray[] = ['name' => $const->name, 'value' => self::getValueFromNode($const->value)];
         }
-        GeneralUtility::devLog('$const2: ', 'extension_builder', 1, (array)$constantsArray);
         return $constantsArray;
     }
 

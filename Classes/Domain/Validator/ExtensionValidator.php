@@ -193,7 +193,6 @@ class ExtensionValidator extends AbstractValidator
     public function isValid($extension)
     {
         $extensionSettings = $extension->getSettings();
-        GeneralUtility::devLog('isValid: settings', 'extension_builder', 0, $extension->getSettings());
         if (isset($extensionSettings['ignoreWarnings'])) {
             $this->warningsToIgnore = $extensionSettings['ignoreWarnings'];
         }
@@ -210,7 +209,6 @@ class ExtensionValidator extends AbstractValidator
             $warningsToKeep = [];
             foreach ($this->validationResult['warnings'] as $warning) {
                 /* @var ExtensionException $warning */
-                GeneralUtility::devLog('warning: ' . $warning->getCode(), 'extension_builder', 0, $this->warningsToIgnore);
                 if (!in_array($warning->getCode(), $this->warningsToIgnore)) {
                     $warningsToKeep[] = $warning;
                 }
@@ -301,7 +299,6 @@ class ExtensionValidator extends AbstractValidator
                     // Format should be: Controller->action
                     list($controllerName, $actionName) = explode('->', $actions);
                     $configuredActions[] = $actionName;
-                    GeneralUtility::devLog('Controller' . $controllerName, 'extension_builder', 0, [$actionName]);
                     $this->validateActionConfiguration($controllerName, [$actionName], 'plugin ' . $plugin->getName(), $extension);
                 }
                 $this->validateDependentActions($configuredActions, 'plugin ' . $plugin->getName());
@@ -361,7 +358,6 @@ class ExtensionValidator extends AbstractValidator
             // we show a warning if that's an action that requires a domain object as parameter
             $defaultAction = reset($actionNames);
             if (in_array($defaultAction, ['show', 'edit'])) {
-                GeneralUtility::devLog('Invalid action configurations', 'extension_builder', 1, [$controllerName, $actionNames]);
                 $this->validationResult['warnings'][] = new ExtensionException(
                     'Potential misconfiguration in ' . $label . ':' . LF .
                     'Default action ' . $controllerName . '->' . $defaultAction . '  can not be called without a domain object parameter',
@@ -408,12 +404,6 @@ class ExtensionValidator extends AbstractValidator
                     if (!empty($pluginConfiguration['actions'][$configType])) {
                         $isValid = $this->validateActionConfigFormat($pluginConfiguration['actions'][$configType]);
                         if (!$isValid) {
-                            GeneralUtility::devLog(
-                                'validateActionConfigFormat failed',
-                                'extension_builder',
-                                2,
-                                [$pluginConfiguration['actions'][$configType]]
-                            );
                             $this->validationResult['warnings'][] = new ExtensionException(
                                 'Wrong format in configuration for ' . $configType . ' in plugin ' . $pluginName,
                                 self::ERROR_MISCONFIGURATION
@@ -430,20 +420,16 @@ class ExtensionValidator extends AbstractValidator
                             // label for flexform select
                             if (!preg_match('/^[a-zA-Z0-9_\-\s]*$/', $line)) {
                                 $isValid = false;
-                                GeneralUtility::devLog('Label in switchable Actions contained disallowed character:' . $line, 'extension_builder', 2);
                             }
                             $firstLine = false;
                         } else {
                             $parts = GeneralUtility::trimExplode(';', $line, true);
-                            GeneralUtility::devLog('switchable Actions line even:' . $line, 'extension_builder', 0, $parts);
                             if (count($parts) < 1) {
                                 $isValid = false;
-                                GeneralUtility::devLog('Wrong count for explode(";") switchable Actions line:' . $line, 'extension_builder', 2, $parts);
                             }
                             foreach ($parts as $part) {
                                 if (!empty($part) && count(GeneralUtility::trimExplode('->', $part, true)) != 2) {
                                     $isValid = false;
-                                    GeneralUtility::devLog('Wrong count for explode("->") switchable Actions line:' . $part, 'extension_builder', 2);
                                 }
                             }
                             $firstLine = true;
@@ -466,12 +452,6 @@ class ExtensionValidator extends AbstractValidator
                     if (!empty($moduleConfiguration['actions'][$configType])) {
                         $isValid = $this->validateActionConfigFormat($moduleConfiguration['actions'][$configType]);
                         if (!$isValid) {
-                            GeneralUtility::devLog(
-                                'validateActionConfigFormat failed',
-                                'extension_builder',
-                                2,
-                                [$moduleConfiguration['actions'][$configType]]
-                            );
                             $this->validationResult['warnings'][] = new ExtensionException(
                                 'Wrong format in configuration for ' . $configType . ' in module ' . $moduleName,
                                 self::ERROR_MISCONFIGURATION
@@ -485,7 +465,6 @@ class ExtensionValidator extends AbstractValidator
             $propertyNames = [];
             if (isset($domainObjectConfiguration['value']['propertyGroup']['properties'])) {
                 foreach ($domainObjectConfiguration['value']['propertyGroup']['properties'] as $property) {
-                    GeneralUtility::devLog('property', 'extension_builder', 0, $property);
                     if (in_array($property['propertyName'], $propertyNames)) {
                         $this->validationResult['errors'][] = new ExtensionException(
                             'Property "' . $property['propertyName'] . '" of Model "' . $domainObjectConfiguration['value']['name'] . '" exists twice.',
@@ -498,7 +477,6 @@ class ExtensionValidator extends AbstractValidator
             // check relation names, since these will result in class properties too
             if (isset($domainObjectConfiguration['value']['relationGroup']['relations'])) {
                 foreach ($domainObjectConfiguration['value']['relationGroup']['relations'] as $property) {
-                    GeneralUtility::devLog('relation', 'extension_builder', 0, $property);
                     if (in_array($property['relationName'], $propertyNames)) {
                         $this->validationResult['errors'][] = new ExtensionException(
                             'Property "' . $property['relationName'] . '" of Model "' . $domainObjectConfiguration['value']['name'] . '" exists twice.',
@@ -524,10 +502,8 @@ class ExtensionValidator extends AbstractValidator
             $test = GeneralUtility::trimExplode('=>', $line, true);
             if (count($test) != 2) {
                 $isValid = false;
-                GeneralUtility::devLog('Wrong count for explode("=>") switchable Actions line:' . $line, 'extension_builder', 2);
             } elseif (!preg_match('/^[a-zA-Z0-9_,\s]*$/', $test[1])) {
                 $isValid = false;
-                GeneralUtility::devLog('Regex failed:' . $test[1], 'extension_builder', 2);
             }
         }
         return $isValid;
@@ -642,8 +618,6 @@ class ExtensionValidator extends AbstractValidator
         $extensionPrefix = 'Tx_' . $domainObject->getExtension()->getExtensionName() . '_Domain_Model_';
         if (!empty($parentClass)) {
             $classConfiguration = $this->configurationManager->getExtbaseClassConfiguration($parentClass);
-            GeneralUtility::devLog('class settings ' . $parentClass, 'extension_builder', 0, $classConfiguration);
-
             if (!isset($classConfiguration['tableName'])) {
                 if (!$tableName) {
                     $this->validationResult['errors'][] = new ExtensionException(

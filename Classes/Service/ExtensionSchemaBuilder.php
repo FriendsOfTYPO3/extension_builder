@@ -71,7 +71,6 @@ class ExtensionSchemaBuilder implements SingletonInterface
         $extension = GeneralUtility::makeInstance(Extension::class);
         $globalProperties = $extensionBuildConfiguration['properties'];
         if (!is_array($globalProperties)) {
-            GeneralUtility::devLog('Error: Extension properties not submitted! ' . $extension->getOriginalExtensionKey(), 'builder', 3, $globalProperties);
             throw new \Exception('Extension properties not submitted!');
         }
 
@@ -160,7 +159,6 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $relationJsonConfiguration = $extensionBuildConfiguration['modules'][$srcModuleId]['value']['relationGroup']['relations'][$relationId];
 
             if (!is_array($relationJsonConfiguration)) {
-                GeneralUtility::devLog('Error in JSON relation configuration!', 'extension_builder', 3, $extensionBuildConfiguration);
                 $errorMessage = 'Missing relation config in domain object: ' . $extensionBuildConfiguration['modules'][$srcModuleId]['value']['name'];
                 throw new \Exception($errorMessage);
             }
@@ -174,7 +172,6 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $domainObject = $extension->getDomainObjectByName($localModelName);
             $relation = $domainObject->getPropertyByName($relationJsonConfiguration['relationName']);
             if (!$relation) {
-                GeneralUtility::devLog('Relation not found: ' . $localModelName . '->' . $relationJsonConfiguration['relationName'], 'extension_builder', 2, $relationJsonConfiguration);
                 throw new \Exception('Relation not found: ' . $localModelName . '->' . $relationJsonConfiguration['relationName']);
             }
             // get unique foreign key names for multiple relations to the same foreign class
@@ -280,7 +277,6 @@ class ExtensionSchemaBuilder implements SingletonInterface
             // handle renaming of extensions
             // original extensionKey
             $extension->setOriginalExtensionKey($propertyConfiguration['originalExtensionKey']);
-            GeneralUtility::devLog('Extension setOriginalExtensionKey:' . $extension->getOriginalExtensionKey(), 'extbase', 0, $propertyConfiguration);
         }
 
         if (!empty($propertyConfiguration['originalExtensionKey']) && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()) {
@@ -294,7 +290,6 @@ class ExtensionSchemaBuilder implements SingletonInterface
 
         if (!empty($settings)) {
             $extension->setSettings($settings);
-            GeneralUtility::devLog('Extension settings:' . $extension->getExtensionKey(), 'extbase', 0, $extension->getSettings());
         }
     }
 

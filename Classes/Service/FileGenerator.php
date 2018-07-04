@@ -225,12 +225,6 @@ class FileGenerator
                     ]
                 );
                 $this->writeFile($this->extensionDirectory . $extensionFile, $fileContents);
-                GeneralUtility::devLog(
-                    'Generated ' . $extensionFile,
-                    'extension_builder',
-                    0,
-                    ['Content' => $fileContents]
-                );
             } catch (\Exception $e) {
                 throw new \Exception('Could not write ' . $extensionFile . ', error: ' . $e->getMessage());
             }
@@ -248,7 +242,6 @@ class FileGenerator
                     'extension' => $this->extension
                 ]);
                 $this->writeFile($this->extensionDirectory . 'ext_localconf.php', $fileContents);
-                GeneralUtility::devLog('Generated ext_localconf.php', 'extension_builder', 0, ['Content' => $fileContents]);
             } catch (\Exception $e) {
                 throw new \Exception('Could not write ext_localconf.php. Error: ' . $e->getMessage());
             }
@@ -270,7 +263,6 @@ class FileGenerator
                             $this->extensionDirectory . 'Configuration/FlexForms/flexform_' . $currentPluginKey . '.xml',
                             $fileContents
                         );
-                        GeneralUtility::devLog('Generated flexform_' . $currentPluginKey . '.xml', 'extension_builder', 0, ['Content' => $fileContents]);
                     }
                 }
             } catch (\Exception $e) {
@@ -548,11 +540,6 @@ class FileGenerator
                     $fileContents = $this->generateDomainObjectCode($domainObject);
                     $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
                     $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
-                    GeneralUtility::devLog(
-                        'Generated ' . $domainObject->getName() . '.php',
-                        'extension_builder',
-                        0
-                    );
                     $this->extension->setMD5Hash($this->extensionDirectory . $destinationFile);
 
                     if ($domainObject->isAggregateRoot()) {
@@ -573,11 +560,6 @@ class FileGenerator
                         $fileContents = $this->generateDomainRepositoryCode($domainObject);
                         $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
                         $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
-                        GeneralUtility::devLog(
-                            'Generated ' . $domainObject->getName() . 'Repository.php',
-                            'extension_builder',
-                            0
-                        );
                         $this->extension->setMD5Hash($this->extensionDirectory . $destinationFile);
                     }
 
@@ -598,11 +580,6 @@ class FileGenerator
                     $fileContents = $this->generateActionControllerCode($domainObject);
                     $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
                     $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
-                    GeneralUtility::devLog(
-                        'Generated ' . $domainObject->getName() . 'Controller.php',
-                        'extension_builder',
-                        0
-                    );
                     $this->extension->setMD5Hash($this->extensionDirectory . $destinationFile);
 
                     // Generate basic UnitTests
@@ -631,8 +608,6 @@ class FileGenerator
             } catch (\Exception $e) {
                 throw new \Exception('Could not generate domain templates, error: ' . $e->getMessage());
             }
-        } else {
-            GeneralUtility::devLog('No domainObjects in this extension', 'extension_builder', 3, (array)$this->extension);
         }
     }
 
@@ -931,7 +906,6 @@ class FileGenerator
         if (!file_exists($this->extensionDirectory . 'composer.json')) {
             $composerInfo = $this->extension->getComposerInfo();
             $this->writeFile($this->extension->getExtensionDir() . 'composer.json', json_encode($composerInfo, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-            GeneralUtility::devLog('Generated composer json', 'extension_builder', 0, ['Content' => $composerInfo]);
         }
     }
 
@@ -1073,7 +1047,6 @@ class FileGenerator
 
             if (@file_exists($existingFile)) {
                 $existingLabels = $this->localizationService->getLabelArrayFromFile($existingFile, 'default');
-                GeneralUtility::devLog('locallang' . $fileNameSuffix . ' existing labels', 'extension_builder', 1, $existingLabels);
                 if (is_array($existingLabels)) {
                     ArrayUtility::mergeRecursiveWithOverrule($languageLabels, $existingLabels);
                 }
@@ -1268,11 +1241,6 @@ class FileGenerator
                 $fileExtension = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
                 if ($fileExtension == 'html') {
                     //TODO: We need some kind of protocol to be displayed after code generation
-                    GeneralUtility::devLog(
-                        'File ' . basename($targetFile) . ' was not written. Template files can\'t be merged!',
-                        'extension_builder',
-                        1
-                    );
                     return;
                 } elseif (in_array($fileExtension, $this->filesSupportingSplitToken)) {
                     $fileContents = $this->insertSplitToken($targetFile, $fileContents);
@@ -1284,12 +1252,6 @@ class FileGenerator
         }
 
         if (empty($fileContents)) {
-            GeneralUtility::devLog(
-                'No file content! File ' . $targetFile . ' had no content',
-                'extension_builder',
-                0,
-                $this->settings
-            );
             return;
         }
         $success = GeneralUtility::writeFile($targetFile, $fileContents);
