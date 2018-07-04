@@ -171,12 +171,10 @@ class ClassParserTest extends BaseUnitTest
      * @param \TYPO3\CMS\Extbase\Reflection\ClassSchema $classReflection
      * @return void
      */
-    public function ParserFindsAllConstants($classObject, $classReflection)
+    public function ParserFindsAllConstants($classObject, $className)
     {
+        $classReflection = new \ReflectionClass($className);
         $reflectionConstantCount = count($classReflection->getConstants());
-        if ($classReflection->getParentClass()) {
-            $reflectionConstantCount -= count($classReflection->getParentClass()->getConstants());
-        }
         $classObjectConstantCount = count($classObject->getConstants());
         self::assertEquals(
             $reflectionConstantCount,
