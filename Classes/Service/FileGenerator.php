@@ -23,6 +23,7 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
+use \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
 
 /**
  * Creates (or updates) all the required files for an extension
@@ -316,7 +317,7 @@ class FileGenerator
             }
             $tablesNeedingTypeFields = $this->extension->getTablesForTypeFieldDefinitions();
             foreach ($domainObjectsNeedingOverrides as $tableName => $domainObjects) {
-                $addRecordTypeField = in_array($tableName, $tablesNeedingTypeFields);
+                $addRecordTypeField = in_array($tableName, $tablesNeedingTypeFields) && !ExtensionValidator::isTableWithSpecialTypeHandling($tableName);
                 $fileContents = $this->generateTCAOverride($domainObjects, $addRecordTypeField);
                 $this->writeFile(
                     $this->configurationDirectory . 'TCA/Overrides/' . $tableName . '.php',

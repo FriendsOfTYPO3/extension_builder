@@ -153,7 +153,7 @@ class Extension
      * the lowest required TYPO3 version
      * @var float
      */
-    private $targetVersion = 6.0;
+    private $targetVersion = 8.7;
     /**
      * @var string
      */
@@ -162,6 +162,11 @@ class Extension
      * @var string
      */
     protected $previousExtensionKey = '';
+
+    /**
+     * @var bool
+     */
+    protected $skipTypeConfiguration = false;
 
     /**
      * @return string
@@ -923,4 +928,27 @@ class Extension
         }
         return $info;
     }
+
+    /**
+     * @return bool
+     */
+    public function isSkipTypeConfiguration() {
+        return $this->skipTypeConfiguration;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getSkipTypeConfiguration() {
+        return $this->skipTypeConfiguration;
+    }
+
+    /**
+     * @param bool $skipTypeConfiguration
+     */
+    public function setSkipTypeConfiguration($skipTypeConfiguration) {
+        $this->skipTypeConfiguration = $skipTypeConfiguration;
+    }
+
+
 }
