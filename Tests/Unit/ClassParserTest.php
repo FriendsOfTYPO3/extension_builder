@@ -134,7 +134,7 @@ class ClassParserTest extends BaseUnitTest
      * Parse a big class from a file
      *
      */
-    public function Parse_t3lib_div()
+    public function Parse_GeneralUtitliy()
     {
         $this->parseClass(PATH_typo3 . 'sysext/core/Classes/Utility/GeneralUtility.php', '\\TYPO3\\CMS\\Core\\Utility\\GeneralUtility');
     }
@@ -157,7 +157,7 @@ class ClassParserTest extends BaseUnitTest
         require_once($file);
         $classReflectionService = new ReflectionService();
         $classSchema = $classReflectionService->getClassSchema($className);
-        $this->ParserFindsAllConstants($classObject, $classSchema);
+        $this->ParserFindsAllConstants($classObject, new \ReflectionClass($className));
         $this->ParserFindsAllMethods($classObject, $classSchema);
         $this->ParserFindsAllProperties($classObject, $classSchema);
         return $classObject;
@@ -171,9 +171,8 @@ class ClassParserTest extends BaseUnitTest
      * @param \TYPO3\CMS\Extbase\Reflection\ClassSchema $classReflection
      * @return void
      */
-    public function ParserFindsAllConstants($classObject, $className)
+    public function ParserFindsAllConstants($classObject, $classReflection)
     {
-        $classReflection = new \ReflectionClass($className);
         $reflectionConstantCount = count($classReflection->getConstants());
         $classObjectConstantCount = count($classObject->getConstants());
         self::assertEquals(
