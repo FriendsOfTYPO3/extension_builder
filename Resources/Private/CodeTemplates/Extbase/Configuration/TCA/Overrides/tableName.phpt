@@ -18,4 +18,3 @@ $GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$GLOBALS['TCA']['
     'EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xlf'
 );
 </f:if>
-<f:if condition="{domainObject.mappedToExistingTable}">//{domainObject.mapToTable}</f:if>

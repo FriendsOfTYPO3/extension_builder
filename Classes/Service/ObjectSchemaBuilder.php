@@ -79,6 +79,10 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (!empty($jsonDomainObject['objectsettings']['parentClass'])) {
             $domainObject->setParentClass($jsonDomainObject['objectsettings']['parentClass']);
         }
+        if (!empty($jsonDomainObject['objectsettings']['skipTypeConfiguration'])) {
+            $domainObject->setSkipTypeConfiguration($jsonDomainObject['objectsettings']['skipTypeConfiguration']);
+        }
+
         // properties
         if (isset($jsonDomainObject['propertyGroup']['properties'])) {
             foreach ($jsonDomainObject['propertyGroup']['properties'] as $propertyJsonConfiguration) {

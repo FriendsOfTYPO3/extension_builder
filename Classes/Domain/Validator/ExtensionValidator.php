@@ -155,10 +155,8 @@ class ExtensionValidator extends AbstractValidator
      */
     const ERROR_MAPPING_TO_INCOMPATIBLE_TABLE = 606;
 
-    static public $tablesWithSpecialTypeHandling = ['tt_content', 'pages', 'pages_language_overlay'];
-
     static public function isTableWithSpecialTypeHandling( $tableName) {
-        return in_array($tableName, ['tt_content', 'pages', 'pages_language_overlay']) || preg_match('/^(pages_|be_|sys_|static_|cf_)/', $tableName);
+        return in_array($tableName, ['tt_content', 'pages']) || preg_match('/^(pages_|be_|sys_|static_|cf_)/', $tableName);
     }
 
     /**
@@ -672,8 +670,8 @@ class ExtensionValidator extends AbstractValidator
             }
         }
         if ($tableName) {
-            if (self::isTableWithSpecialTypeHandling($tableName)) {
-                $domainObject->getExtension()->setSkipTypeConfiguration(true);
+            if (self::isTableWithSpecialTypeHandling($tableName) && !$domainObject->getSkipTypeConfiguration()) {
+                $domainObject->setSkipTypeConfiguration(true);
                 $this->validationResult['warnings'][] = new ExtensionException(
                     'The configuration for table "' . $tableName . '" is not compatible' . LF .
                     ' with extbase. You have to configure it yourself if you want to map' . LF .

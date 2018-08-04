@@ -164,11 +164,6 @@ class Extension
     protected $previousExtensionKey = '';
 
     /**
-     * @var bool
-     */
-    protected $skipTypeConfiguration = false;
-
-    /**
      * @return string
      */
     public function getExtensionKey()
@@ -928,27 +923,5 @@ class Extension
         }
         return $info;
     }
-
-    /**
-     * @return bool
-     */
-    public function isSkipTypeConfiguration() {
-        return $this->skipTypeConfiguration;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getSkipTypeConfiguration() {
-        return $this->skipTypeConfiguration;
-    }
-
-    /**
-     * @param bool $skipTypeConfiguration
-     */
-    public function setSkipTypeConfiguration($skipTypeConfiguration) {
-        $this->skipTypeConfiguration = $skipTypeConfiguration;
-    }
-
 
 }
