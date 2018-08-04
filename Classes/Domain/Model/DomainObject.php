@@ -116,6 +116,11 @@ class DomainObject
     protected $childObjects = [];
 
     /**
+      * @var bool
+      */
+     protected $skipTypeConfiguration = false;
+
+    /**
      * @return string
      */
     public function getName()
@@ -746,5 +751,26 @@ class DomainObject
     public function getCategorizable()
     {
         return $this->categorizable;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSkipTypeConfiguration() {
+        return $this->skipTypeConfiguration;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getSkipTypeConfiguration() {
+        return $this->skipTypeConfiguration;
+    }
+
+    /**
+     * @param bool $skipTypeConfiguration
+     */
+    public function setSkipTypeConfiguration($skipTypeConfiguration) {
+        $this->skipTypeConfiguration = $skipTypeConfiguration;
     }
 }

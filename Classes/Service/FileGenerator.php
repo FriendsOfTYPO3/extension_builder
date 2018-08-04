@@ -317,7 +317,13 @@ class FileGenerator
             }
             $tablesNeedingTypeFields = $this->extension->getTablesForTypeFieldDefinitions();
             foreach ($domainObjectsNeedingOverrides as $tableName => $domainObjects) {
-                $addRecordTypeField = in_array($tableName, $tablesNeedingTypeFields) && !ExtensionValidator::isTableWithSpecialTypeHandling($tableName);
+                $skipTypeConfiguration = false;
+                foreach($domainObjects as $domainObject) {
+                    if ($domainObject->getSkipTypeConfiguration()) {
+                        $skipTypeConfiguration = true;
+                    }
+                }
+                $addRecordTypeField = in_array($tableName, $tablesNeedingTypeFields) && !$skipTypeConfiguration;
                 $fileContents = $this->generateTCAOverride($domainObjects, $addRecordTypeField);
                 $this->writeFile(
                     $this->configurationDirectory . 'TCA/Overrides/' . $tableName . '.php',
