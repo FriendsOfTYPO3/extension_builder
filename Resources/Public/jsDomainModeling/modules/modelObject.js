@@ -138,7 +138,8 @@ extbaseModeling_wiringEditorLanguage.modules.push(
 									advancedMode: true,
 									label: TYPO3.settings.extensionBuilder._LOCAL_LANG.skipTypeConfiguration,
 									description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_skipTypeConfiguration,
-									required: false
+									required: false,
+									value: false
 								}
 							},
 							{
