@@ -23,6 +23,10 @@ class FormatVisitor extends \PhpParser\NodeVisitorAbstract
      */
     public static $first = true;
 
+    /**
+     * @param Node $node
+     * @return null|Node
+     */
     public function enterNode(\PhpParser\Node $node)
     {
         if (self::$first && $node instanceof Node\Expr\FuncCall) {
@@ -40,6 +44,7 @@ class FormatVisitor extends \PhpParser\NodeVisitorAbstract
                 new Node\Scalar\String_($node->name)
             );
         }
+        return $node;
     }
 
     public static function parseArgs(&$node)

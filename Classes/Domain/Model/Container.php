@@ -103,7 +103,7 @@ class Container extends AbstractObject
     }
 
     /**
-     * @return string constants
+     * @return array constants
      */
     public function getConstants()
     {
