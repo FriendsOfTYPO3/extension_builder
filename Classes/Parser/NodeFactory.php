@@ -288,7 +288,7 @@ class NodeFactory implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return \PhpParser\Node\Expr The normalized value
      */
-    protected function buildNodeFromValue($value)
+    protected static function buildNodeFromValue($value)
     {
         if ($value instanceof \PhpParser\Node) {
             return $value;
