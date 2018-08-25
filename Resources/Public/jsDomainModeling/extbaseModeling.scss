@@ -26,20 +26,15 @@ $url_0: url(background_pixel.png);
 }
 
 .module-body {
-	padding: 0px !important;
 	&.index {
-		#typo3-inner-docbody {
-			min-height: 900px;
-			padding: 0 !important;
-			position: relative !important;
-		}
+		min-height: 900px;
 		a {
 			color: $color_storm_dust_approx;
 			font-weight: 700;
 		}
 	}
-	&.domainmodelling #typo3-inner-docbody {
-		padding: 0 !important;
+	&.domainmodelling {
+		padding: 89px 0 0 0 !important;
 	}
 }
 
@@ -114,7 +109,6 @@ div {
 	}
 	&.WireIt-Layer {
 		background-image: $url_0;
-		height: 97%;
 	}
 	&#typo3-docbody {
 		height: 100%;
@@ -122,9 +116,7 @@ div {
 	}
 	&#domainModelEditor {
 		height: 100%;
-		margin-top: 65px;
 		width: 100%;
-		min-height:900px;
 	}
 	&.WireIt-Container-ddhandle {
 		background-color: $color_celeste_approx;
@@ -486,7 +478,7 @@ div {
 }
 
 #modelingLayer {
-	height: 97%;
+	height: 100%;
 }
 
 #domainModelEditor {
@@ -737,7 +729,7 @@ input[disabled] {
 	display: none;
 }
 
-#tools-ExtensionBuilderExtensionbuilder- .module-docheader-bar {
+#tools-ExtensionBuilderExtensionbuilder .module-docheader-bar {
 	.module-icon {
 		float: right;
 		margin: 5px;
@@ -787,6 +779,10 @@ a.inputEx-List-link {
 
 .propertyGroup .checkBoxFieldWrapper div.inputEx-label {
 	width: 65%;
+}
+
+.propertyGroup .checkBoxFieldWrapper.advanced {
+	min-width: 180px;
 }
 
 .properties .inputEx-ListField {
