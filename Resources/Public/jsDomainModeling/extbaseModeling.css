@@ -3,17 +3,13 @@ div.propertyGroup textarea, div.propertyGroup input[type=text], div.propertyGrou
   color: #666;
   cursor: pointer; }
 
-.module-body {
-  padding: 0px !important; }
-  .module-body.index #typo3-inner-docbody {
-    min-height: 900px;
-    padding: 0 !important;
-    position: relative !important; }
+.module-body.index {
+  min-height: 900px; }
   .module-body.index a {
     color: #666;
     font-weight: 700; }
-  .module-body.domainmodelling #typo3-inner-docbody {
-    padding: 0 !important; }
+.module-body.domainmodelling {
+  padding: 89px 0 0 0 !important; }
 
 .yui-layout-unit-left {
   background-color: #eee; }
@@ -67,16 +63,13 @@ div.WireIt-Container-focused {
   opacity: 1;
   z-index: 6; }
 div.WireIt-Layer {
-  background-image: url(background_pixel.png);
-  height: 97%; }
+  background-image: url(background_pixel.png); }
 div#typo3-docbody {
   height: 100%;
   padding: 0; }
 div#domainModelEditor {
   height: 100%;
-  margin-top: 65px;
-  width: 100%;
-  min-height: 900px; }
+  width: 100%; }
 div.WireIt-Container-ddhandle {
   background-color: #ccc;
   border: 1px solid #ccc;
@@ -321,7 +314,7 @@ div:hover > .deleteButton {
   display: inline-block; }
 
 #modelingLayer {
-  height: 97%; }
+  height: 100%; }
 
 #domainModelEditor legend {
   font-size: 11px; }
@@ -482,10 +475,10 @@ input[disabled] {
 .deleteButton {
   display: none; }
 
-#tools-ExtensionBuilderExtensionbuilder- .module-docheader-bar .module-icon {
+#tools-ExtensionBuilderExtensionbuilder .module-docheader-bar .module-icon {
   float: right;
   margin: 5px; }
-#tools-ExtensionBuilderExtensionbuilder- .module-docheader-bar .docheader-funcmenu {
+#tools-ExtensionBuilderExtensionbuilder .module-docheader-bar .docheader-funcmenu {
   float: right; }
 
 .yui-skin-sam .yui-layout {
@@ -520,6 +513,9 @@ a.inputEx-List-link {
 
 .propertyGroup .checkBoxFieldWrapper div.inputEx-label {
   width: 65%; }
+
+.propertyGroup .checkBoxFieldWrapper.advanced {
+  min-width: 180px; }
 
 .properties .inputEx-ListField {
   width: 205px; }
@@ -574,3 +570,5 @@ label.helpAvailable {
 
 .selectFieldWrapper .inputEx-label {
   float: none; }
+
+/*# sourceMappingURL=extbaseModeling.css.map */

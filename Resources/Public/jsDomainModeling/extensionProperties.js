@@ -164,18 +164,18 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							cols: 30
 						}
 					},
-                    {
-                        type: "select",
-                        inputParams: {
-                            name: "targetVersion",
+					{
+						type: "select",
+						inputParams: {
+							name: "targetVersion",
 							id: 'targetVersionSelector',
-                            label: TYPO3.settings.extensionBuilder._LOCAL_LANG.target_version,
-                            description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_target_version,
-                            selectOptions: [
-								'TYPO3 v 9.2'
-                            ],
-                            selectValues: ["9.2.0-9.5.99"],
-							value: '9.2.0-9.5.99'
+							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.target_version,
+							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_target_version,
+							selectOptions: [
+								'TYPO3 v 9.5'
+							],
+                            selectValues: ["9.5.0-9.5.99"],
+							value: '9.5.0-9.5.99'
                         }
                     },
 					{
@@ -187,7 +187,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_dependsOn,
 							cols:20,
 							rows:6,
-							value : "typo3 => 9.2.0-9.5.99\n"
+							value : "typo3 => 9.5.0-9.5.99\n"
 						}
 					}
 			]
@@ -324,14 +324,6 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 											rows: 3
 										}
 									}
-			//						{
-			//							type: "select",
-			//							inputParams: {
-			//								name: "type",
-			//								label: TYPO3.settings.extensionBuilder._LOCAL_LANG.type,
-			//								selectValues: ["list_type", "CType"],
-			//								selectOptions: ["Frontend plugin", "Content type"],
-			//							}
 								]
 							}
 						}

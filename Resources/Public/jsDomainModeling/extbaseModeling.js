@@ -22,7 +22,7 @@ var extbaseModeling_wiringEditorLanguage = {
 				updateRenderTypeOptions(selectElement.value, renderTypeSelect);
 			}
 			fieldset.attr('class', '');
-            fieldset.addClass(selectElement.value);
+			fieldset.addClass(selectElement.value);
 		}
 
 
@@ -74,10 +74,10 @@ YAHOO.util.Event.onAvailable('extensionDependencies-field', function () {
 	/**
 	 * Update dependencies in textarea
 	 */
-    $('#targetVersionSelector-field').onchange =
+	$('#targetVersionSelector-field').onchange =
 	function (event) {
 		var updatedDependencies = '';
-        var dependenciesField = $('extensionDependencies-field');
+		var dependenciesField = $('extensionDependencies-field');
 		var dependencies = dependenciesField.value.split("\n");
 		for (i = 0; i < dependencies.length; i++) {
 			parts = dependencies[i].split('=>');
@@ -88,13 +88,13 @@ YAHOO.util.Event.onAvailable('extensionDependencies-field', function () {
 			}
 
 		}
-        dependenciesField.value = updatedDependencies;
+		dependenciesField.value = updatedDependencies;
 	};
 });
 
 YAHOO.util.Event.onAvailable('toggleAdvancedOptions', function () {
 
-    $('body').addClass('yui-skin-sam');
+	$('body').addClass('yui-skin-sam');
 	$('.t3js-module-docheader-bar-buttons').show();
 	if (window.top.location.href === window.location.href) {
 		$("#opennewwindow").hide();
@@ -104,13 +104,13 @@ YAHOO.util.Event.onAvailable('toggleAdvancedOptions', function () {
 	function () {
 		if (!advancedMode) {
 			$('#domainModelEditor').addClass('showAdvancedOptions');
-            $('#toggleAdvancedOptions .simpleMode').hide();
-            $('#toggleAdvancedOptions .advancedMode').show();
+			$('#toggleAdvancedOptions .simpleMode').hide();
+			$('#toggleAdvancedOptions .advancedMode').show();
 			advancedMode = true;
 		} else {
-            $('#domainModelEditor').removeClass('showAdvancedOptions');
-            $('#toggleAdvancedOptions .simpleMode').show();
-            $('#toggleAdvancedOptions .advancedMode').hide();
+			$('#domainModelEditor').removeClass('showAdvancedOptions');
+			$('#toggleAdvancedOptions .simpleMode').show();
+			$('#toggleAdvancedOptions .advancedMode').hide();
 			advancedMode = false;
 		}
 		return false;
