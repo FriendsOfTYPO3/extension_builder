@@ -1181,6 +1181,7 @@ class FileGenerator
     /**
      * @param string $extensionDirectory
      * @param string $classType
+     * @param bool $createDirIfNotExist
      *
      * @return string
      * @throws \Exception

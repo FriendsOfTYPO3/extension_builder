@@ -44,7 +44,6 @@ class MappingViewHelper extends AbstractConditionViewHelper
     /**
      * Helper function to verify various conditions around possible mapping/inheritance configurations
      *
-     * @param bool $condition View helper condition
      * @return string
      */
     public function render()
