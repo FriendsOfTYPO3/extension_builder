@@ -207,7 +207,7 @@ class FunctionObject extends AbstractObject
     /**
      * TODO: THe sorting of tags/annotations should be controlled
      *
-     * @return
+     * @return []
      */
     public function getAnnotations()
     {
