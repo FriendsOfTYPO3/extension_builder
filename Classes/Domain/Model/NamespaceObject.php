@@ -14,17 +14,9 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
+
 class NamespaceObject extends Container
 {
-    /**
-     * array with alias declarations
-     *
-     * Each declaration is an array of the following type:
-     * array(name => alias)
-     *
-     * @var string[]
-     */
-    protected $aliasDeclarations = [];
 
     /**
      * @param string $name
@@ -41,23 +33,6 @@ class NamespaceObject extends Container
     {
         $classes = $this->getClasses();
         return reset($classes);
-    }
-
-    /**
-     * @param string $aliasDeclaration
-     * @return void
-     */
-    public function addAliasDeclaration($aliasDeclaration)
-    {
-        $this->aliasDeclarations[] = $aliasDeclaration;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getAliasDeclarations()
-    {
-        return $this->aliasDeclarations;
     }
 
     /**

@@ -39,7 +39,7 @@ class Property extends AbstractObject
      * In case of properties of type array we need to preserve the parsed statements
      * to be able to reapply the original linebrakes.
      *
-     * @var \PHPParser_NodeAbstract
+     * @var \PhpParser\NodeAbstract
      */
     protected $defaultValueNode = null;
 
@@ -151,7 +151,7 @@ class Property extends AbstractObject
     }
 
     /**
-     * @param \PHPParser_NodeAbstract $defaultValueNode
+     * @param \PhpParser\NodeAbstract $defaultValueNode
      * @return void
      */
     public function setDefaultValueNode($defaultValueNode)
@@ -160,7 +160,7 @@ class Property extends AbstractObject
     }
 
     /**
-     * @return \PHPParser_NodeAbstract
+     * @return \PhpParser\NodeAbstract
      */
     public function getDefaultValueNode()
     {

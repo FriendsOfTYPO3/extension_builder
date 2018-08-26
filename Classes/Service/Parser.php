@@ -27,17 +27,20 @@ use TYPO3\CMS\Core\SingletonInterface;
 class Parser extends \PhpParser\Parser implements SingletonInterface
 {
     /**
-     * @var \EBT\ExtensionBuilder\\Parser\Visitor\FileVisitorInterface
+     * @var \EBT\ExtensionBuilder\Parser\Visitor\FileVisitorInterface
      */
     protected $fileVisitor = null;
+
     /**
-     * @var \EBT\ExtensionBuilder\\Parser\TraverserInterface
+     * @var \EBT\ExtensionBuilder\Parser\TraverserInterface
      */
     protected $traverser = null;
+
     /**
-     * @var \EBT\ExtensionBuilder\\Parser\ClassFactoryInterface
+     * @var \EBT\ExtensionBuilder\Parser\ClassFactoryInterface
      */
     protected $classFactory = null;
+
     /**
      * @var \EBT\ExtensionBuilder\Parser\Visitor\FileVisitorInterface
      */
@@ -69,7 +72,6 @@ class Parser extends \PhpParser\Parser implements SingletonInterface
 
     /**
      * @param string $fileName
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
      * @return \EBT\ExtensionBuilder\Domain\Model\File
      */
     public function parseFile($fileName)
@@ -94,7 +96,7 @@ class Parser extends \PhpParser\Parser implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\\Parser\Visitor\FileVisitorInterface $visitor
+     * @param \EBT\ExtensionBuilder\Parser\Visitor\FileVisitorInterface $visitor
      */
     public function setFileVisitor(FileVisitorInterface $visitor)
     {
@@ -102,7 +104,7 @@ class Parser extends \PhpParser\Parser implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\\Parser\TraverserInterface
+     * @param \EBT\ExtensionBuilder\Parser\TraverserInterface
      * @return void
      */
     public function setTraverser(TraverserInterface $traverser)
@@ -111,7 +113,7 @@ class Parser extends \PhpParser\Parser implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\\Parser\ClassFactoryInterface $classFactory
+     * @param \EBT\ExtensionBuilder\Parser\ClassFactoryInterface $classFactory
      */
     public function setClassFactory(ClassFactoryInterface $classFactory)
     {

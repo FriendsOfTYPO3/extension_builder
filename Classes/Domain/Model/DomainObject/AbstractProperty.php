@@ -381,11 +381,15 @@ abstract class AbstractProperty
         return '';
     }
 
+    /**
+     * @return string
+     */
     public function getCascadeRemoveAnnotation()
     {
         if ($this->cascadeRemove) {
             return '@cascade remove';
         }
+        return '';
     }
 
     /**
@@ -422,7 +426,7 @@ abstract class AbstractProperty
     /**
      * The locallang key for this property which contains the label.
      *
-     * @return <type>
+     * @return string
      */
     public function getLabelNamespace()
     {

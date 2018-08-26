@@ -14,28 +14,30 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
+
 class File extends Container
 {
     /**
      * @var string
      */
     protected $filePathAndName = '';
+
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\NamespaceObject[]
      */
     protected $namespaces = [];
+
     /**
      * @var array all statements
      */
     protected $stmts = [];
-    /**
-     * @var \PhpParser\Node\Stmt[]
-     */
-    protected $aliasDeclarations = [];
+
+
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\FunctionObject[]
      */
     protected $functions = [];
+
     /**
      * @var string
      */
@@ -140,19 +142,4 @@ class File extends Container
         $this->filePathAndName = $filePathAndName;
     }
 
-    /**
-     * @param array $aliasDeclarations PhpParser\Node\Stmt
-     */
-    public function addAliasDeclarations($aliasDeclarations)
-    {
-        $this->aliasDeclarations = $aliasDeclarations;
-    }
-
-    /**
-     * @return array PhpParser\Node\Stmt
-     */
-    public function getAliasDeclarations()
-    {
-        return $this->aliasDeclarations;
-    }
 }

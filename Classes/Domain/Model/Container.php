@@ -15,6 +15,7 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  */
 
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
+use PhpParser\Node;
 
 /**
  * Provides methods that are common to Class, File and Namespace objects
@@ -56,6 +57,16 @@ class Container extends AbstractObject
      * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject[]
      */
     protected $classes = [];
+
+    /**
+    * array with alias declarations
+    *
+    * Each declaration is an array of the following type:
+    * array(name => alias)
+    *
+    * @var string[]
+    */
+   protected $aliasDeclarations = [];
 
     /**
      * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
@@ -210,7 +221,7 @@ class Container extends AbstractObject
     }
 
     /**
-     * @param array $postClassStatements
+     * @param Node $postClassStatements
      * @return void
      */
     public function addPostClassStatements($postClassStatements)
@@ -227,7 +238,7 @@ class Container extends AbstractObject
     }
 
     /**
-     * @param array $preClassStatements
+     * @param Node $preClassStatements
      * @return void
      */
     public function addPreClassStatements($preClassStatements)
@@ -241,5 +252,22 @@ class Container extends AbstractObject
     public function getPreClassStatements()
     {
         return $this->preClassStatements;
+    }
+
+    /**
+     * @param string $aliasDeclaration
+     * @return void
+     */
+    public function addAliasDeclaration($aliasDeclaration)
+    {
+        $this->aliasDeclarations[] = $aliasDeclaration;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAliasDeclarations()
+    {
+        return $this->aliasDeclarations;
     }
 }

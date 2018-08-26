@@ -190,7 +190,6 @@ class RoundTrip implements SingletonInterface
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $currentDomainObject
      *
      * @return \EBT\ExtensionBuilder\Domain\Model\File|null OR null
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
      * @throws \Exception
      */
     public function getDomainModelClassFile(Model\DomainObject $currentDomainObject)
@@ -510,7 +509,7 @@ class RoundTrip implements SingletonInterface
     /**
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $currentDomainObject
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject|null
+     * @return \EBT\ExtensionBuilder\Domain\Model\File|null
      * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
      * @throws \Exception
      */
@@ -766,7 +765,6 @@ class RoundTrip implements SingletonInterface
             $mergedMethod->setName($newMethodName);
 
             $oldMethodBody = $mergedMethod->getBodyStmts();
-            $oldComment = $mergedMethod->getDocComment();
 
             $newMethodBody = $this->replacePropertyNameInMethodBody($oldProperty->getName(), $newProperty->getName(), $oldMethodBody);
             $mergedMethod->setBodyStmts($newMethodBody);
@@ -825,7 +823,7 @@ class RoundTrip implements SingletonInterface
      * @param string $replace
      * @param string $haystack
      *
-     * @return string with replaced values
+     * @return string[] with replaced values
      */
     protected function replaceUpperAndLowerCase($search, $replace, $haystack)
     {
@@ -839,7 +837,7 @@ class RoundTrip implements SingletonInterface
      *
      * @param string $oldName
      * @param string $newName
-     * @param string $methodBodyStmts
+     * @param string[] $methodBodyStmts
      *
      * @return array
      */

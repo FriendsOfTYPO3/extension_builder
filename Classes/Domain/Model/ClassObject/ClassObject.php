@@ -14,66 +14,73 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  * The TYPO3 project - inspiring people to share!
  */
 
-use EBT\ExtensionBuilder\Domain\Model\AbstractObject;
+use EBT\ExtensionBuilder\Domain\Model\Container;
+
 
 /**
  * Class schema representing a "PHP class" in the context of software development
  */
-class ClassObject extends AbstractObject
+class ClassObject extends Container
 {
     /**
      * @var array
      */
     protected $constants = [];
+
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property[]
      */
     protected $properties = [];
-    /**
-     * @deprecated Use this->getPropertyNames() instead
-     * @var string[]
-     */
-    protected $propertyNames = [];
+
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method[]
      */
     protected $methods = [];
+
     /**
      * @var string[]
      */
     protected $interfaceNames = [];
+
     /**
      * All lines that were found below the class declaration.
      *
      * @var string
      */
     protected $appendedBlock = '';
+
     /**
      * @var array
      */
     protected $aliasDeclarations = [];
+
     /**
      * @var array
      */
     protected $useTraitStatements = [];
+
     /**
      * @var bool
      */
     protected $isFileBased = false;
+
     /**
      * the path to the file this class was defined in
      *
      * @var string
      */
     protected $fileName = '';
+
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
      */
     protected $parentClass = null;
+
     /**
      * @var string
      */
     protected $parentClassName = null;
+
     /**
      * @var bool
      */
@@ -321,7 +328,6 @@ class ClassObject extends AbstractObject
         if ($this->propertyExists($propertyName)) {
             if ($this->isTemplate) {
                 $propertyTemplate = clone($this->properties[$propertyName]);
-                $propertyTemplate->setIsTemplate(true);
                 $result = $propertyTemplate;
             } else {
                 $result = $this->properties[$propertyName];
@@ -421,7 +427,6 @@ class ClassObject extends AbstractObject
     public function addProperty(Property $classProperty)
     {
         if (!$this->propertyExists($classProperty->getName())) {
-            $this->propertyNames[] = $classProperty->getName();
             $this->properties[$classProperty->getName()] = $classProperty;
             $result = true;
         } else {
@@ -659,4 +664,5 @@ class ClassObject extends AbstractObject
         $this->properties = [];
         $this->methods = [];
     }
+
 }

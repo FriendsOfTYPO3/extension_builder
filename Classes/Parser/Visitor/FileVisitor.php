@@ -112,8 +112,6 @@ class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
                     $this->fileObject->addNamespace($this->currentNamespace);
                     $this->currentNamespace = null;
                     $this->currentContainer = $this->fileObject;
-                } else {
-                    //TODO: find how this could happen
                 }
             } elseif ($node instanceof Node\Stmt\TraitUse) {
                 if ($this->currentClassObject) {
@@ -142,7 +140,7 @@ class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
             } elseif (!$node instanceof Node\Name) {
                 // any other nodes (except the name node of the current container node)
                 // go into statements container
-                if ($this->currentContainer->getFirstClass() === false) {
+                    if ($this->currentContainer->getFirstClass() === false) {
                     $this->currentContainer->addPreClassStatements($node);
                 } else {
                     $this->currentContainer->addPostClassStatements($node);

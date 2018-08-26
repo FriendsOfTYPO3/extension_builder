@@ -494,7 +494,7 @@ class ExtensionValidator extends AbstractValidator
      * @param string $configuration
      * @return bool
      */
-    protected function validateActionConfigFormat(string $configuration)
+    protected function validateActionConfigFormat($configuration)
     {
         $isValid = true;
         $lines = GeneralUtility::trimExplode(LF, $configuration, true);
@@ -542,7 +542,6 @@ class ExtensionValidator extends AbstractValidator
      * @author Sebastian Michaelsen <sebastian.gebhard@gmail.com>
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
      * @return void
-     * @throws ExtensionException
      */
     private function validateDomainObjects($extension)
     {

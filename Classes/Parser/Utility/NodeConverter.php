@@ -188,7 +188,7 @@ class NodeConverter
      * with keys name and alias
      *
      * @static
-     * @param \PhpParser\Node
+     * @param \PhpParser\Node\Stmt\Use_
      * @return array
      */
     public static function convertUseAliasStatementNodeToArray(Use_ $node)

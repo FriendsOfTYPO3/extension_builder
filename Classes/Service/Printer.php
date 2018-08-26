@@ -337,6 +337,8 @@ class Printer extends Standard
 
     /**
      * print an associative array
+     *
+     * @param \PhpParser\Node\Expr\Array_
      */
     public function pExpr_Array(Array_ $node)
     {

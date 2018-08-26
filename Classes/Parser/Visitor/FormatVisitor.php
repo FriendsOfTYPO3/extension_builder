@@ -41,6 +41,7 @@ class FormatVisitor extends NodeVisitorAbstract
                 new Node\Scalar\String_($node->name)
             );
         }
+        return $node;
     }
 
     public static function parseArgs(&$node)
