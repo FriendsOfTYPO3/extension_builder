@@ -52,7 +52,6 @@ class RecordTypeViewHelper extends AbstractViewHelper
      *
      * @return string
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3Fluid\Fluid\Core\Variables\Exception\InvalidVariableException
      */
     public function render()
     {

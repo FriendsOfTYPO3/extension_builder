@@ -43,7 +43,7 @@ class ClassFactory implements SingletonInterface
     {
         $classObject = new Model\ClassObject\ClassObject($classNode->name);
         foreach ($classNode->implements as $interfaceNode) {
-            $classObject->addInterfaceName($interfaceNode, false);
+            $classObject->addInterfaceName($interfaceNode);
         }
         $classObject->setModifiers($classNode->type);
         if (!is_null($classNode->extends)) {
@@ -99,7 +99,7 @@ class ClassFactory implements SingletonInterface
         $propertyObject = new Model\ClassObject\Property($propertyName);
         $propertyObject->setModifiers($propertyNode->type);
         if (null !== $propertyDefault) {
-            $propertyObject->setValue(NodeConverter::getValueFromNode($propertyDefault), false, $propertyObject->isTaggedWith('var'));
+            $propertyObject->setValue(NodeConverter::getValueFromNode($propertyDefault));
             $propertyObject->setDefaultValueNode($propertyDefault);
         }
         $this->addCommentsFromAttributes($propertyObject, $propertyNode);

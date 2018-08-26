@@ -53,32 +53,38 @@ abstract class AbstractObject
      * @var string
      */
     protected $namespaceName = '';
+
     /**
      * modifiers  (privat, static abstract etc. not to mix up with "isModified" )
-     *
-     * @var string[]
+     * @var int
      */
-    protected $modifiers = [];
+    protected $modifiers;
+
     /**
      * @var string
      */
     protected $docComment = null;
+
     /**
-     * @var string[]
+     * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\Comment[]
      */
     protected $comments = [];
+
     /**
      * @var string
      */
     protected $description = '';
+
     /**
      * @var string[]
      */
     protected $descriptionLines = [];
+
     /**
      * @var string[]
      */
     protected $tags = [];
+
     /**
      * this flag is set to true if a modification of an object was detected
      *
@@ -117,7 +123,7 @@ abstract class AbstractObject
      * Checks if the doc comment of this method is tagged with
      * the specified tag
      *
-     * @param  string $tag : Tag name to check for
+     * @param  string $tagName : Tag name to check for
      * @return bool true if such a tag has been defined, otherwise false
      */
     public function isTaggedWith($tagName)
@@ -145,6 +151,7 @@ abstract class AbstractObject
 
     /**
      * sets the array of tags
+     * @param string[] tags
      *
      * @return $this;
      */
@@ -190,7 +197,8 @@ abstract class AbstractObject
 
     /**
      * Returns the values of the specified tag
-     * @return array Values of the given tag
+     * @param string $tagName
+     * @return string Values of the given tag
      */
     public function getTagValues($tagName)
     {
@@ -202,6 +210,8 @@ abstract class AbstractObject
 
     /**
      * Returns the value of the specified tag
+     *
+     * @param string $tagName
      * @return string Value of the given tag
      */
     public function getTagValue($tagName)
@@ -216,6 +226,7 @@ abstract class AbstractObject
         if (is_array($tagValues)) {
             return $tagValues[0];
         }
+        return '';
     }
 
     /**
@@ -257,7 +268,7 @@ abstract class AbstractObject
      * Get description lines as array
      * used by fluid in templates
      *
-     * @return string Property description
+     * @return string[] Property description
      */
     public function getDescriptionLines()
     {
@@ -267,10 +278,11 @@ abstract class AbstractObject
     /**
      * set description lines as array
      * this enables more control for line length and line breaks
+     * @param string[] $descriptionLines
      *
      * @return void
      */
-    public function setDescriptionLines(array $descriptionLines)
+    public function setDescriptionLines($descriptionLines)
     {
         $this->descriptionLines = $descriptionLines;
         $this->description = implode(' ', $descriptionLines);
@@ -382,7 +394,8 @@ abstract class AbstractObject
     /**
      * Getter for modifiers
      *
-     * @return int modifiers
+     * @return int
+     *
      */
     public function getModifiers()
     {
@@ -583,7 +596,7 @@ abstract class AbstractObject
     }
 
     /**
-     * @param string $namespace
+     * @param string $namespaceName
      * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject
      */
     public function setNamespaceName($namespaceName)
