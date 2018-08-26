@@ -44,7 +44,7 @@ class ReplaceClassNamesVisitor extends NodeVisitorAbstract
 
     /**
      * @param \PhpParser\Node $node
-     * @return \PhpParser\Node|void
+     * @return \PhpParser\Node
      */
     public function leaveNode(Node $node)
     {
@@ -56,6 +56,7 @@ class ReplaceClassNamesVisitor extends NodeVisitorAbstract
                 return $node;
             }
         }
+        return $node;
     }
 
     public function beforeTraverse(array $nodes)

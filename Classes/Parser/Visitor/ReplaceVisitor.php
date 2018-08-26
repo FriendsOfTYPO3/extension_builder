@@ -38,7 +38,7 @@ class ReplaceVisitor extends NodeVisitorAbstract
 
     /**
      * @param \PhpParser\Node $node
-     * @return \PhpParser\Node|void
+     * @return \PhpParser\Node
      */
     public function leaveNode(Node $node)
     {
@@ -63,6 +63,7 @@ class ReplaceVisitor extends NodeVisitorAbstract
             }
             return $node;
         }
+        return $node;
     }
 
     /**
