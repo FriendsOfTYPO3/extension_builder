@@ -70,6 +70,9 @@ The backend form for the extended frontend user
 	that record. Now, when you map your model to tt_content this will add a new type value which has no rendering
 	definition at all.
 
+	For these tables the ExtensionBuilder will not generate a type configuration. You have to configure it yourself.
+	You can skip the type configuration by setting the "Skip type configuration" checkbox in the advanced settings.
+
 	Another issue related to single table inheritance is, that there is no real implementation in TYPO3 to avoid
 	conflicts if multiple extensions extend the same model. If there are 3 extension which extend a news model,
 	you have always to decide, which model you will use. You can't use the features of all subclasses in one model.
