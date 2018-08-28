@@ -3,12 +3,12 @@
 The Extension Builder helps you build and manage your Extbase based TYPO3 extensions.
 
 It ships a graphical editor to build your domain model and generates most of the boiler-plate code necessary for you.
-This includes TCA, Models, Repositories and other things.
+This includes TCA, Models, Repositories, language files and other things.
 
-The editing mode even allows to adjust an existing extension (previously created by Extension Builder).
+The editing (or roundtrip) mode even allows to modify an existing extension (previously created by Extension Builder) without loosing your manual changes. See https://docs.typo3.org/typo3cms/extensions/extension_builder/Developer/Roundtrip.html 
 
 Keep in mind though that the code created by Extension Builder is only a starting point for you actual implementation of
-functionality.
+functionality and is in no sense "production ready"!
 
 ## Which version of Extension Builder to use?
 
@@ -21,8 +21,7 @@ We encourage every developer to use the latest matching source directly from git
 
 ### The Extension Builder TER version
 
-Even though there is a TER (TYPO3 Extension Repository) release every once in a while, those are for sure not
-on a regular basis. We hence suggest to rather stick to our recommendation above and use the github version.
+The TER (TYPO3 Extension Repository) version of the Extension Builder is primary thought for people who want to have an easy introduction to learn how an extbase extension works.  There will be a release every once in a while, but to have an up-to-date maintenance it is suggested to rather stick to our recommendation above and use the github version.
 
 
 ## Making Extension Builder even better
