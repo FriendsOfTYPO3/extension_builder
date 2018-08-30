@@ -1,16 +1,10 @@
-Use own COnfigurationManager
-Bugfix: #21
-SVG Icon for backend modules and plugins
-Add svg icon
-Update Spyc parser
-Use icon API in backend
-Add label for checkboxes in TCA
-Add cascade remove to file properties
-Use new 'special' => 'languages' for sys_language
-Adapt TCA settings
-Reformat code as PSR-2
-Make renderTypes configurable
-Replace license header
-Take server port into account
-Remove deprecated code
-Make templates PSR2 and PHP5.5+ compatible
+Add basic README information
+Change label "Persons" -> "Extension Authors"
+Avoid non static warning
+Fix order of render types
+Use renderType in TCA template
+Assign settings in index view
+Replace tabs with spaces
+Add missing publicResourcesPath
+Use relative instead of absolute paths
+[TASK] Update extension information
