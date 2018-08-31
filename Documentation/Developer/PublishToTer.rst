@@ -1,3 +1,5 @@
+.. include:: ../Includes.txt
+
 Publish your extension to TER
 =============================
 
