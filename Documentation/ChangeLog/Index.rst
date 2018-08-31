@@ -178,4 +178,4 @@ Full commit listing: ::
    2016-07-31 [TASK] Adapt body class setter to TYPO3 8.x (Commit 6b453513 by Nico de Haen)
    2016-07-27 Update composer.json to version 8.2 (Commit 888b29c7 by Nico de Haen)
 
-Listing created by: `git log ef5e3b9141e6dc1..v9.10.0 --abbrev-commit --pretty='%ad %s (Commit %h by %an)' --date=short`
+Listing created by: `git log ef5e3b9141e6dc1..HEAD --abbrev-commit --pretty='%ad %s (Commit %h by %an)' --date=short`

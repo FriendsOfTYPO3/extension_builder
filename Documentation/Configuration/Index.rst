@@ -1,9 +1,4 @@
-﻿.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
-.. include:: ../Includes.txt
+﻿.. include:: ../Includes.txt
 
 
 .. _configuration:
@@ -51,25 +46,25 @@ These settings only apply if the roundtrip feature of the extension builder is e
 The nesting reflects the file structure: a setting applies to a file or recursive to all files and subfolders.
 
 merge:
-	Impact on classes: All properties, methods and method bodies of the existing class will be **modified** according to the new settings but not **overwritten**
+   Impact on classes: All properties, methods and method bodies of the existing class will be **modified** according to the new settings but not **overwritten**
 
-	Impact on locallang files: Existing keys and labels are always preserved (renaming in the GUI has only influence on the property and method names)
+   Impact on locallang files: Existing keys and labels are always preserved (renaming in the GUI has only influence on the property and method names)
 
-	Impact on any other file: You will find a Split token at the end of the file. After this token you can write whatever you want and it will be appended everytime the code is generated
+   Impact on any other file: You will find a Split token at the end of the file. After this token you can write whatever you want and it will be appended everytime the code is generated
 
 
 keep:
-	files are never overwritten\*
+   files are never overwritten\*
 
 
 
 skip:
-	files are not created\*
+   files are not created\*
 
 
 .. warning::
 
-	\* These settings may break the functionality to edit your extension in the extension builder! Handle with care!
+   \* These settings may break the functionality to edit your extension in the extension builder! Handle with care!
 
 
 Here is an example:

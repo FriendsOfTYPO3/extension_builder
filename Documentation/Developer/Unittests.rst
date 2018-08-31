@@ -1,3 +1,5 @@
+.. include:: ../Includes.txt
+
 Unit tests
 ==========
 
@@ -27,18 +29,18 @@ For example:
 
 .. code-block:: php
 
-	/**
-	 * @test
-	 */
-	public function setNameForStringSetsName() {
-	    $this->subject->setName('Conceived at T3CON10');
+   /**
+    * @test
+    */
+   public function setNameForStringSetsName() {
+       $this->subject->setName('Conceived at T3CON10');
 
-	    self::assertAttributeEquals(
-	        'Conceived at T3CON10',
-	        'name',
-	        $this->subject
-	    );
-	}
+       self::assertAttributeEquals(
+           'Conceived at T3CON10',
+           'name',
+           $this->subject
+       );
+   }
 
 
 All types of properties are covered, for example integers, strings, file references or relations to other domain models.
@@ -63,24 +65,24 @@ For example:
 
 .. code-block:: php
 
-	/**
-	 * @test
-	 */
-	public function deleteActionRemovesTheGivenBlogFromBlogRepository() {
-	    $blog = new \Vendor\Example\Domain\Model\Blog();
+   /**
+    * @test
+    */
+   public function deleteActionRemovesTheGivenBlogFromBlogRepository() {
+       $blog = new \Vendor\Example\Domain\Model\Blog();
 
-	    $blogRepository = $this->getMock(
-	        'Vendor\\Example\\Domain\\Repository\\BlogRepository',
-	        ['remove'],
-	        [],
-	        '',
-	        false
-	    );
-	    $blogRepository->expects(self::once())->method('remove')->with($blog);
-	    $this->inject($this->subject, 'blogRepository', $blogRepository);
+       $blogRepository = $this->getMock(
+           'Vendor\\Example\\Domain\\Repository\\BlogRepository',
+           ['remove'],
+           [],
+           '',
+           false
+       );
+       $blogRepository->expects(self::once())->method('remove')->with($blog);
+       $this->inject($this->subject, 'blogRepository', $blogRepository);
 
-	    $this->subject->deleteAction($blog);
-	}
+       $this->subject->deleteAction($blog);
+   }
 
 Running your unit tests
 -----------------------
