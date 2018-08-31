@@ -8,10 +8,10 @@
 
 ---
 conf.py:
-  copyright: 2014
+  copyright: 2014-2018
   project: ExtensionBuilder
-  version: 7.6
-  release: 7.6.0
+  version: 9.10
+  release: 9.10.0
   intersphinx_mapping:
     t3security:
     - http://docs.typo3.org/typo3cms/SecurityGuide/
