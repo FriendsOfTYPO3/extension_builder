@@ -36,7 +36,7 @@ Extension Builder
 		Extension Development, ExtensionBuilder, Kickstarter, Extbase, Fluid, DDD, Domain Driven Design, Graphical modeler
 
 	:Copyright:
-		2014
+		Nico de Haen |copyright|
 
 	:Author:
 		ExtensionBuilder Team, Nico de Haen
@@ -67,4 +67,5 @@ Extension Builder
 	Developer/Index
 	KnownProblems/Index
 	ToDoList/Index
+   ChangeLog/Index
 	Targets
