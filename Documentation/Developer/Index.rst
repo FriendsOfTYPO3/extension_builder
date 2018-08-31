@@ -1,9 +1,4 @@
-﻿.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
-.. include:: ../Includes.txt
+﻿.. include:: ../Includes.txt
 
 
 .. _developer:
@@ -17,7 +12,7 @@ Please be aware that some configuration options are only available if you activa
 on the link in the upper right corner in the modeler.
 
 .. tip::
-	You can enable/disable the advanced options with the access key "a"
+   You can enable/disable the advanced options with the access key "a"
 
 
 If you use the advanced options you should know what you do. There a many possibilities to run into misconfiguration,
@@ -168,21 +163,21 @@ Relations connect two models. Here is a description of the fields:
 
 .. note::
 
-	How the relations are implemented:
+   How the relations are implemented:
 
-	**1:1 relation**
-	 Each parent class has only one (or none) child. Each child has only one parent. This setting will result in a field of type inline with maxitems=1
+   **1:1 relation**
+    Each parent class has only one (or none) child. Each child has only one parent. This setting will result in a field of type inline with maxitems=1
 
-	**1:n relation**
-	 Each parent can have multiple children, but each child has only one parent This is also implemented as Inline (IRRE) field.
+   **1:n relation**
+    Each parent can have multiple children, but each child has only one parent This is also implemented as Inline (IRRE) field.
 
-	**n:1 relation**
-	 Each parent has one child, but a child can have multiple parents This will result in a dropdown in the parents form
-	 in the backend. This relation is implemented with an MM relation table since TYPO3 can not handle multiple relations
-	 without comma separated values.
+   **n:1 relation**
+    Each parent has one child, but a child can have multiple parents This will result in a dropdown in the parents form
+    in the backend. This relation is implemented with an MM relation table since TYPO3 can not handle multiple relations
+    without comma separated values.
 
-	**m:n relations**
-	 These are always implemented with a MM relation table and will result in a multi select in the backend
+   **m:n relations**
+    These are always implemented with a MM relation table and will result in a multi select in the backend
 
 After adding a relation to the model you have to connect it to the related model. Click on the round bullet near the relation
 name and drag it to the bullet at the top of the related model. (Not the other way round)
@@ -210,10 +205,10 @@ The Extension Builder still has many limitations. The main missing features are:
 
 
 .. toctree::
-	:maxdepth: 2
+   :maxdepth: 2
 
-	Roundtrip
-	Unittests
-	ExtendingModels
-	Documentation
-	PublishToTer
+   Roundtrip
+   Unittests
+   ExtendingModels
+   Documentation
+   PublishToTer
