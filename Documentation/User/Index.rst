@@ -1,9 +1,4 @@
-﻿.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
-.. include:: ../Includes.txt
+﻿.. include:: ../Includes.txt
 
 
 .. _user-manual:
@@ -51,10 +46,10 @@ In general you need at least one aggregate root which has a corresponding reposi
 
 .. tip::
 
-	A simple way to find out, if a model is an aggregate root or not, is to consider if you can retrieve objects
-	of this model by requesting them from another model or not.
-	So if you create a post Model and a Blog model, it is obvious that the Blog is the aggregate root and the
-	post is not. You can retrieve posts by requesting it from the blog model: $Blog->getPosts().
+   A simple way to find out, if a model is an aggregate root or not, is to consider if you can retrieve objects
+   of this model by requesting them from another model or not.
+   So if you create a post Model and a Blog model, it is obvious that the Blog is the aggregate root and the
+   post is not. You can retrieve posts by requesting it from the blog model: $Blog->getPosts().
 
 
 Open the action panel and select the options you need. All actions you select will be configured as allowed actions for your plugin.
@@ -66,20 +61,20 @@ Open the action panel and select the options you need. All actions you select wi
 
 .. warning::
 
-	**Security check!**
+   **Security check!**
 
-	Be aware that any action can be called just by adding a parameter to the URL where the plugin is included.
-	If you provide an edit/update action link it will look like this:
+   Be aware that any action can be called just by adding a parameter to the URL where the plugin is included.
+   If you provide an edit/update action link it will look like this:
 
-	http\:\/\/mydomain.de/mypage/?tx_extensionkey_pluginkey[\ **action**\ ]=\ **edit**\ &tx_extensionkey_pluginkey[\ **profile**\ ]=\ **12**
+   http\:\/\/mydomain.de/mypage/?tx_extensionkey_pluginkey[\ **action**\ ]=\ **edit**\ &tx_extensionkey_pluginkey[\ **profile**\ ]=\ **12**
 
-	This will load your edit view (wich contains a form to edit the profile) and load the profile data into it.
+   This will load your edit view (wich contains a form to edit the profile) and load the profile data into it.
 
-	**Beware!** There's no access control by default. If someone manipulates this URL to look like this:
+   **Beware!** There's no access control by default. If someone manipulates this URL to look like this:
 
-	http\:\/\/mydomain.de/mypage/?tx_extensionkey_pluginkey[\ **action**\ ]=\ **delete**\ &tx_extensionkey_pluginkey[\ **profile**\ ]=\ **23**
+   http\:\/\/mydomain.de/mypage/?tx_extensionkey_pluginkey[\ **action**\ ]=\ **delete**\ &tx_extensionkey_pluginkey[\ **profile**\ ]=\ **23**
 
-	This would delete profile 23 if you forget to implement access checks or other appropriate constraints.
+   This would delete profile 23 if you forget to implement access checks or other appropriate constraints.
 
 
 
@@ -130,7 +125,7 @@ If your model represents the domain you wanted to implement you can hit the "Sav
 Have a look into :file:`typo3conf/ext/yourExtensionKey/` to see them. Now you can start implementing your logic.
 
 .. caution::
-	Please be aware that the generated extension is NOT ready for use in production context!
+   Please be aware that the generated extension is NOT ready for use in production context!
 
 You can find a more detailed description in the :doc:`/Developer/Index`
 
