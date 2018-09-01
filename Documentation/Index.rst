@@ -67,4 +67,5 @@ Extension Builder
 	Developer/Index
 	KnownProblems/Index
 	ToDoList/Index
+   ChangeLog/Index
 	Targets
