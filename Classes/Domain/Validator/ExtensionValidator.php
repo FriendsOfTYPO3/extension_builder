@@ -19,6 +19,7 @@ use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use EBT\ExtensionBuilder\Service\ValidationService;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
@@ -666,12 +667,11 @@ class ExtensionValidator extends AbstractValidator
             }
         }
         if (isset($GLOBALS['TCA'][$tableName]['ctrl']['type'])) {
-            $dataTypeRes = $this->getDatabaseConnection()->sql_query('DESCRIBE ' . $tableName);
-            while ($row = $this->getDatabaseConnection()->sql_fetch_assoc($dataTypeRes)) {
-                if ($row['Field'] == $GLOBALS['TCA'][$tableName]['ctrl']['type']) {
-                    if (strpos($row['Type'], 'int') !== false) {
+            $columns = $this->getDatabaseConnection($tableName)->getSchemaManager()->listTableColumns($tableName);
+            foreach ($columns as $column) {
+                if ($column->getName()  === $GLOBALS['TCA'][$tableName]['ctrl']['type']) {
+                    if ((String) $column->getType() === 'Integer') {
                         $this->validationResult['warnings'][] = new ExtensionException(
-                            'The configured type field for table "' . $tableName . '" is of type ' . $row['Type'] . '' . LF .
                             'This means the type field can not be used for defining the record type. ' . LF .
                             'You have to configure the mappings yourself if you want to map to this' . LF .
                             'table or extend the correlated class',
@@ -896,8 +896,8 @@ class ExtensionValidator extends AbstractValidator
     /**
      * @return \TYPO3\CMS\Core\Database\DatabaseConnection
      */
-    protected function getDatabaseConnection()
+    protected function getDatabaseConnection($tableName)
     {
-        return $GLOBALS['TYPO3_DB'];
+        return GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($tableName);
     }
 }
