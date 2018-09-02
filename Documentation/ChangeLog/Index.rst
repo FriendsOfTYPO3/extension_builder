@@ -5,13 +5,26 @@
 Change Log
 ==========
 
-Version 8.10.0
+Version 8.10.2
 --------------
 
-todo: tell about the important stuff here in verbose text
+Skip type configuration for tables with numeric typefield
+Support parameter by reference
 
 Full commit listing: ::
 
+   2018-09-01 Support for parameters by reference (Commit 9df8ee00 by Nico de Haen)
+   2018-09-01 [DOC] Update documentation rendering (Commit efe0aa04 by Markus Klein)
+   2018-09-01 [TASK] Fix version information and move changelog to docs (Commit 5e81de4a by Markus Klein)
+   2018-08-31 Raise version in Documentation (Commit 1943d111 by Nico de Haen)
+   2018-08-30 Update version in ext_emconf.php (Commit 977ba0f3 by Nico de Haen)
+   2018-08-30 Update Changelog (Commit 6e78e0cf by Nico de Haen)
+   2018-08-26 Add documentation for skip type configuration (Commit f7946b9a by Nico de Haen)
+   2018-08-05 Default value for skipTypeField (Commit 38e5a6f6 by Nico de Haen)
+   2018-08-05 Skip showitems configuration (Commit 72083493 by Nico de Haen)
+   2018-08-04 Add skip type configuration to DomainObject (Commit 418200da by Nico de Haen)
+   2018-08-02 Fix css width for advanced settings (Commit 2d20f022 by Nico de Haen)
+   2018-07-11 Skip type configuration for certain tables (Commit 6fca4c1b by Nico de Haen)
    2018-08-28 Some minor changes in readme (Commit 843eb6ba by Nico de Haen)
    2018-08-28 [TASK] Add basic README information (Commit 05c698ac by Markus Klein)
    2018-08-24 Change label "Persons" -> "Extension Authors" (Commit 70101cd0 by Tymoteusz Motylewski)
