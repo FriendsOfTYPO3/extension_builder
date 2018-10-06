@@ -165,6 +165,7 @@ div {
 		width: 149px;
 		textarea {
 			@extend %extend_1;
+			border: 1px solid #ddd;
 			width: 100%;
 			&:focus {
 				font-weight: 400;
@@ -290,6 +291,7 @@ div {
 		textarea {
 			@extend %extend_1;
 			width: 100%;
+			border: 1px solid #ddd;
 		}
 		input[type=text] {
 			@extend %extend_1;
