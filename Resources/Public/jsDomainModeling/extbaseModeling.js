@@ -7,9 +7,9 @@ var extbaseModeling_wiringEditorLanguage = {
 	modules: []
 };
 
+
 (function(){
 	var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event, lang = YAHOO.lang, dom = YAHOO.util.Dom;
-
 		function addFieldsetClass (selectElement) {
 			if ($(selectElement).parent().hasClass('isDependant')) {
 				return;

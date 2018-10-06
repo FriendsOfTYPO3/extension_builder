@@ -22,7 +22,9 @@ use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -171,6 +173,7 @@ class BuilderModuleController extends ActionController
      */
     public function domainmodellingAction()
     {
+        $this->view->assign('extPath', PathUtility::stripPathSitePrefix(ExtensionManagementUtility::extPath('extension_builder')));
         $this->view->assign('settings', $this->extensionBuilderConfigurationManager->getSettings());
         $this->view->assign('currentAction', $this->request->getControllerActionName());
         $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', ['firstTime' => 0]);
