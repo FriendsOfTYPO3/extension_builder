@@ -4,9 +4,6 @@
 # Table structure for table '{domainObject.databaseTableName}'
 #
 CREATE TABLE {domainObject.databaseTableName} (
-<f:if condition="{domainObject.mapToTable}"><f:then></f:then><f:else>
-	uid int(11) NOT NULL auto_increment,
-	pid int(11) DEFAULT '0' NOT NULL,</f:else></f:if>
 <f:for each="{k:listForeignKeyRelations(extension: extension, domainObject:domainObject)}" as="relation">
 	{relation.foreignKeyName} int(11) unsigned DEFAULT '0' NOT NULL,</f:for>
 <f:for each="{domainObject.properties}" as="property">
@@ -14,37 +11,7 @@ CREATE TABLE {domainObject.databaseTableName} (
 <k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">
 	tx_extbase_type varchar(255) DEFAULT '' NOT NULL,
 </k:mapping>
-<f:if condition="{domainObject.mapToTable}"><f:then></f:then><f:else>
-	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
-	crdate int(11) unsigned DEFAULT '0' NOT NULL,
-	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,
-<f:if condition="{domainObject.addDeletedField}">	deleted smallint(5) unsigned DEFAULT '0' NOT NULL,</f:if>
-<f:if condition="{domainObject.addHiddenField}">	hidden smallint(5) unsigned DEFAULT '0' NOT NULL,</f:if>
-<f:if condition="{domainObject.addStarttimeEndtimeFields}">	starttime int(11) unsigned DEFAULT '0' NOT NULL,
-	endtime int(11) unsigned DEFAULT '0' NOT NULL,</f:if>
-<f:if condition="{extension.supportVersioning}">
-	t3ver_oid int(11) DEFAULT '0' NOT NULL,
-	t3ver_id int(11) DEFAULT '0' NOT NULL,
-	t3ver_wsid int(11) DEFAULT '0' NOT NULL,
-	t3ver_label varchar(255) DEFAULT '' NOT NULL,
-	t3ver_state smallint(6) DEFAULT '0' NOT NULL,
-	t3ver_stage int(11) DEFAULT '0' NOT NULL,
-	t3ver_count int(11) DEFAULT '0' NOT NULL,
-	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
-	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
-</f:if><f:if condition="{domainObject.sorting}">	sorting int(11) DEFAULT '0' NOT NULL,</f:if>
-<f:if condition="{extension.supportLocalization}">
-	sys_language_uid int(11) DEFAULT '0' NOT NULL,
-	l10n_parent int(11) DEFAULT '0' NOT NULL,
-	l10n_diffsource mediumblob,
-	l10n_state text,
-</f:if>
-	PRIMARY KEY (uid),
-	KEY parent (pid),<f:if condition="{extension.supportVersioning}">
-	KEY t3ver_oid (t3ver_oid,t3ver_wsid),</f:if><f:if condition="{extension.supportLocalization}">
-	KEY language (l10n_parent,sys_language_uid)</f:if>
-</f:else>
-</f:if>
+
 );
 </f:for>
 </k:format.trim>
