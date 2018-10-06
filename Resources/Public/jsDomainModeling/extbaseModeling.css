@@ -110,6 +110,7 @@ div.propertyGroup {
   padding: 1px 6px 0;
   width: 149px; }
   div.propertyGroup textarea {
+    border: 1px solid #ddd;
     width: 100%; }
     div.propertyGroup textarea:focus {
       font-weight: 400; }
@@ -189,7 +190,8 @@ div.relationGroup {
   div.relationGroup .advancedSettings div.inputEx-label {
     text-align: left; }
   div.relationGroup textarea {
-    width: 100%; }
+    width: 100%;
+    border: 1px solid #ddd; }
   div.relationGroup input[type=text] {
     margin-left: 30px;
     width: 120px;
@@ -570,5 +572,3 @@ label.helpAvailable {
 
 .selectFieldWrapper .inputEx-label {
   float: none; }
-
-/*# sourceMappingURL=extbaseModeling.css.map */
