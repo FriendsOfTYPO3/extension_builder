@@ -59,7 +59,7 @@ class ClassBuilder implements SingletonInterface
      */
     protected $classFactory = null;
     /**
-     * @var \EBT\ExtensionBuilder\Service\Parser
+     * @var \EBT\ExtensionBuilder\Service\ParserService
      */
     protected $parserService = null;
     /**
@@ -93,10 +93,10 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Service\Parser $parserService
+     * @param \EBT\ExtensionBuilder\Service\ParserService $parserService
      * @return void
      */
-    public function injectParserService(Parser $parserService)
+    public function injectParserService(ParserService $parserService)
     {
         $this->parserService = $parserService;
     }
@@ -615,21 +615,17 @@ class ClassBuilder implements SingletonInterface
     {
         $stmts = $method->getBodyStmts();
 
-        $stmts = current(
-            $this->parserService->replaceNodeProperty(
-                [$stmts],
-                $replacements,
-                null,
-                'name'
-            )
+        $stmts = $this->parserService->replaceNodeProperty(
+            $stmts,
+            $replacements,
+            null,
+            'name'
         );
-        $stmts = current(
-            $this->parserService->replaceNodeProperty(
-                [$stmts],
-                $replacements,
-                null,
-                'value'
-            )
+        $stmts = $this->parserService->replaceNodeProperty(
+            $stmts,
+            $replacements,
+            null,
+            'value'
         );
         $method->setBodyStmts($stmts);
     }
