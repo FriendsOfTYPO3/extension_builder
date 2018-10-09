@@ -16,6 +16,7 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
+use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 
 /**
  * a generic visitor to replace node properties in statements
@@ -44,6 +45,7 @@ class ReplaceVisitor extends NodeVisitorAbstract
     {
         $nodeProperty = $this->nodeProperty;
         $nodeTypeMatch = false;
+        $type = $node->getType();
         if (!empty($this->nodeTypes)) {
             if (in_array($node->getType(), $this->nodeTypes)) {
                 $nodeTypeMatch = true;
@@ -55,7 +57,8 @@ class ReplaceVisitor extends NodeVisitorAbstract
         if ($nodeTypeMatch) {
             foreach ($this->replacements as $oldValue => $newValue) {
                 if (property_exists($node, $nodeProperty)) {
-                    $nodePropertyValue = $node->$nodeProperty;
+                    $nodePropertyValue = NodeConverter::getPropertyValueFromNode($node, $nodeProperty);
+                    //$nodePropertyValue = $node->$nodeProperty;
                     if ($nodePropertyValue == $oldValue) {
                         $node->$nodeProperty = $newValue;
                     }

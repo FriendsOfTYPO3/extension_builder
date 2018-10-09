@@ -20,6 +20,7 @@ use EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository;
 use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
 use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Service\FileGenerator;
+use EBT\ExtensionBuilder\Service\ParserService;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -152,6 +153,9 @@ class BuilderModuleController extends ActionController
      */
     public function indexAction()
     {
+//        $parserService = new ParserService();
+//        $file = '/app/public/typo3conf/ext/test_extension/Classes/Domain/Model/Main.php';
+//        $parserService->parseFile($file);
         $this->view->assign('currentAction', $this->request->getControllerActionName());
         $this->view->assign('settings', $this->extensionBuilderConfigurationManager->getSettings());
         if (!$this->request->hasArgument('action')) {

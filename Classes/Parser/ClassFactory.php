@@ -45,7 +45,7 @@ class ClassFactory implements SingletonInterface
         foreach ($classNode->implements as $interfaceNode) {
             $classObject->addInterfaceName($interfaceNode);
         }
-        $classObject->setModifiers($classNode->type);
+        $classObject->setModifiers($classNode->flags);
         if (!is_null($classNode->extends)) {
             $classObject->setParentClassName(NodeConverter::getValueFromNode($classNode->extends));
         }
@@ -59,8 +59,8 @@ class ClassFactory implements SingletonInterface
      */
     public function buildClassMethodObject(ClassMethod $methodNode)
     {
-        $methodObject = new Model\ClassObject\Method($methodNode->name);
-        $methodObject->setModifiers($methodNode->type);
+        $methodObject = new Model\ClassObject\Method($methodNode->name->name);
+        $methodObject->setModifiers($methodNode->flags);
         $this->addCommentsFromAttributes($methodObject, $methodNode);
         $this->setFunctionProperties($methodNode, $methodObject);
         return $methodObject;
@@ -89,7 +89,7 @@ class ClassFactory implements SingletonInterface
 
         foreach ($propertyNode->props as $subNode) {
             if ($subNode instanceof PropertyProperty) {
-                $propertyName = $subNode->name;
+                $propertyName = $subNode->name->name;
                 if ($subNode->default) {
                     $propertyDefault = $subNode->default;
                 }
@@ -97,7 +97,7 @@ class ClassFactory implements SingletonInterface
         }
 
         $propertyObject = new Model\ClassObject\Property($propertyName);
-        $propertyObject->setModifiers($propertyNode->type);
+        $propertyObject->setModifiers($propertyNode->flags);
         if (null !== $propertyDefault) {
             $propertyObject->setValue(NodeConverter::getValueFromNode($propertyDefault));
             $propertyObject->setDefaultValueNode($propertyDefault);
@@ -124,8 +124,8 @@ class ClassFactory implements SingletonInterface
      */
     protected function setFunctionProperties(Stmt $node, Model\FunctionObject $object)
     {
-        if (property_exists($node, 'type')) {
-            $object->setModifiers($node->type);
+        if (property_exists($node, 'flags')) {
+            $object->setModifiers($node->flags);
         }
         $object->setBodyStmts($node->stmts);
         $position = 0;
@@ -139,9 +139,9 @@ class ClassFactory implements SingletonInterface
                 $getVarTypeFromParamTag = true;
             }
         }
-        /** @var $param \PhpParser\NodeAbstract */
+        /** @var $param \PhpParser\Builder\Param */
         foreach ($node->params as $param) {
-            $parameter = new Model\ClassObject\MethodParameter($param->name);
+            $parameter = new Model\ClassObject\MethodParameter($param->var->name);
             $parameter->setPosition($position);
             $parameter->setStartLine($param->getAttribute('startLine'));
             $parameter->setEndLine($param->getAttribute('endLine'));

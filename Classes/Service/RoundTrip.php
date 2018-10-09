@@ -64,16 +64,19 @@ class RoundTrip implements SingletonInterface
      * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject[]
      */
     protected $previousDomainObjects = [];
+
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject[]
      */
     protected $renamedDomainObjects = [];
+
     /**
-     * @var \EBT\ExtensionBuilder\Service\Parser
+     * @var \EBT\ExtensionBuilder\Service\ParserService
      * @inject
      *
      */
     protected $parserService = null;
+
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      * @inject
@@ -116,8 +119,8 @@ class RoundTrip implements SingletonInterface
         $this->extension = $extension;
         $this->extensionDirectory = $this->extension->getExtensionDir();
 
-        if (!$this->parserService instanceof Parser) {
-            $this->parserService = GeneralUtility::makeInstance(Parser::class);
+        if (!$this->parserService instanceof ParserService) {
+            $this->parserService = GeneralUtility::makeInstance(ParserService::class);
         }
         $this->settings = $this->configurationManager->getExtensionBuilderSettings();
         // defaults
