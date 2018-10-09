@@ -34,6 +34,7 @@ class ConfigurationViewHelper extends AbstractBackendViewHelper
 
         $baseUrl = '../' . ExtensionManagementUtility::siteRelPath('extension_builder');
         $this->pageRenderer->disableCompressJavascript();
+        $this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/jquery.min.js');
         // SECTION: JAVASCRIPT FILES
         // YUI Basis Files
         $this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/yui/utilities/utilities.js');
