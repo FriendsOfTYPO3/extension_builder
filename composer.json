@@ -22,7 +22,8 @@
     }
   ],
   "require": {
-    "typo3/cms-core": "~9.5"
+    "typo3/cms-core": "~9.5",
+    "nikic/php-parser": "^4.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.0",
@@ -30,8 +31,7 @@
   },
   "autoload": {
     "psr-4": {
-      "EBT\\ExtensionBuilder\\": "Classes/",
-      "PhpParser\\": "Resources/Private/PHP/PHP-Parser/lib/PhpParser/"
+      "EBT\\ExtensionBuilder\\": "Classes/"
     }
   },
   "autoload-dev": {

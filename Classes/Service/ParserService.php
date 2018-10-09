@@ -21,10 +21,14 @@ use EBT\ExtensionBuilder\Parser\TraverserInterface;
 use EBT\ExtensionBuilder\Parser\Visitor\FileVisitor;
 use EBT\ExtensionBuilder\Parser\Visitor\FileVisitorInterface;
 use EBT\ExtensionBuilder\Parser\Visitor\ReplaceVisitor;
+use PhpParser\NodeVisitor\CloningVisitor;
 use TYPO3\CMS\Core\Localization\Exception\FileNotFoundException;
 use TYPO3\CMS\Core\SingletonInterface;
+use PhpParser\ParserFactory;
+use PhpParser\NodeDumper;
 
-class Parser extends \PhpParser\Parser implements SingletonInterface
+
+class ParserService implements SingletonInterface
 {
     /**
      * @var \EBT\ExtensionBuilder\Parser\Visitor\FileVisitorInterface
@@ -46,13 +50,21 @@ class Parser extends \PhpParser\Parser implements SingletonInterface
      */
     protected $classFileVisitor = null;
 
+
+    protected $parser = null;
+
+    public function __construct() {
+        $this->parser = (new ParserFactory)->create(ParserFactory::ONLY_PHP7);
+    }
+
     /**
      * @param string $code
      * @return \EBT\ExtensionBuilder\Domain\Model\File
      */
-    public function parseCode($code)
+    public function parseCode($code, \PhpParser\ErrorHandler $errorHandler = null)
     {
-        $stmts = $this->parseRawStatements($code);
+        $stmts = $this->parser->parse($code);
+
         // set defaults
         if (null === $this->traverser) {
             $this->traverser = new Traverser(true);
@@ -65,7 +77,7 @@ class Parser extends \PhpParser\Parser implements SingletonInterface
         }
         $this->fileVisitor->setClassFactory($this->classFactory);
         $this->traverser->appendVisitor($this->fileVisitor);
-        $this->traverser->traverse([$stmts]);
+        $this->traverser->traverse($stmts);
         $fileObject = $this->fileVisitor->getFileObject();
         return $fileObject;
     }
@@ -137,9 +149,12 @@ class Parser extends \PhpParser\Parser implements SingletonInterface
         $visitor->setNodeTypes($nodeTypes)
             ->setNodeProperty($nodeProperty)
             ->setReplacements($replacements);
-        $this->traverser->addVisitor($visitor);
+        $this->traverser->addVisitor(new CloningVisitor);
+        $this->traverser->appendVisitor($visitor);
         $stmts = $this->traverser->traverse($stmts);
         $this->traverser->resetVisitors();
         return $stmts;
     }
+
+    public function initReduceCallbacks(){}
 }

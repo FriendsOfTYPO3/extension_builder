@@ -97,7 +97,7 @@ class NodeFactory implements SingletonInterface
 
         $classNode = $classNodeBuilder->getNode();
 
-        $classNode->type = $classObject->getModifiers();
+        $classNode->flags = $classObject->getModifiers();
 
         $this->addCommentAttributes($classObject, $classNode);
 
@@ -167,7 +167,7 @@ class NodeFactory implements SingletonInterface
         }
         $methodNodeBuilder->addStmts($methodObject->getBodyStmts());
         $methodNode = $methodNodeBuilder->getNode();
-        $methodNode->type = $methodObject->getModifiers();
+        $methodNode->flags = $methodObject->getModifiers();
         $methodNode->setAttribute('startLine', $methodObject->getStartLine());
         $methodNode->setAttribute('endLine', $methodObject->getEndLine());
         $methodObject->updateParamTags();
@@ -238,7 +238,7 @@ class NodeFactory implements SingletonInterface
         $propertyNodeBuilder = $factory->property($property->getName());
 
         $propertyNode = $propertyNodeBuilder->getNode();
-        $propertyNode->type = $property->getModifiers();
+        $propertyNode->flags = $property->getModifiers();
 
         foreach ($propertyNode->props as $subNode) {
             if ($subNode instanceof PropertyProperty) {
