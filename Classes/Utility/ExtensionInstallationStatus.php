@@ -64,7 +64,7 @@ class ExtensionInstallationStatus
     public function getStatusMessage()
     {
         $statusMessage = '';
-        $this->checkForDbUpdate($this->extension->getExtensionKey());
+        // $this->checkForDbUpdate($this->extension->getExtensionKey());
 
         if ($this->dbUpdateNeeded) {
             $statusMessage .= '<p>Database has to be updated!</p>';
@@ -92,6 +92,8 @@ class ExtensionInstallationStatus
 
         if (!ExtensionManagementUtility::isLoaded($this->extension->getExtensionKey())) {
             $statusMessage .= '<p>Your Extension is not installed yet.</p>';
+        } else {
+            $statusMessage .= '<br /><p>Please check the Install Tool for possible database updates!</p>';
         }
 
         return $statusMessage;
