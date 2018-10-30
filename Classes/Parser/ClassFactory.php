@@ -72,7 +72,7 @@ class ClassFactory implements SingletonInterface
      */
     public function buildFunctionObject(Function_ $functionNode)
     {
-        $functionObject = new Model\FunctionObject($functionNode->name);
+        $functionObject = new Model\FunctionObject(NodeConverter::getNameFromNode($functionNode->name));
         $this->addCommentsFromAttributes($functionObject, $functionNode);
         $this->setFunctionProperties($functionNode, $functionObject);
         return $functionObject;
@@ -147,9 +147,9 @@ class ClassFactory implements SingletonInterface
             $parameter->setEndLine($param->getAttribute('endLine'));
             $parameter->setPassedByReference($param->byRef);
             if (!is_null($param->type)) {
-                $parameter->setTypeHint(NodeConverter::getValueFromNode($param->type));
+                $parameter->setTypeHint(NodeConverter::getNameFromNode($param->type));
                 if (!$getVarTypeFromParamTag) {
-                    $parameter->setVarType(NodeConverter::getValueFromNode($param->type));
+                    $parameter->setVarType(NodeConverter::getNameFromNode($param->type));
                 }
             } elseif ($getVarTypeFromParamTag) {
                 // if there is not type hint but a varType in the param tag,

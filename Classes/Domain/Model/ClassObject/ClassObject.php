@@ -15,6 +15,7 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  */
 
 use EBT\ExtensionBuilder\Domain\Model\Container;
+use PhpParser\Node;
 
 
 /**
@@ -118,6 +119,9 @@ class ClassObject extends Container
      */
     public function setConstant($constantName, $constantValue)
     {
+        if ($constantName instanceof Node) {
+            $constantName = $constantName->name;
+        }
         $this->constants[$constantName] = $constantValue;
     }
 

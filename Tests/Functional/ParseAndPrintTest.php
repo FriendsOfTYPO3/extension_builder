@@ -40,95 +40,7 @@ class ParseAndPrintTest extends BaseFunctionalTest
         $this->parseAndPrint($fileName);
     }
 
-    /**
-     * @test
-     */
-    public function parseAndPrintSimpleClassMethodWithManyParameter()
-    {
-        $fileName = 'ClassMethodWithManyParameter.php';
-        $this->parseAndPrint($fileName);
-    }
 
-    /**
-     * @test
-     */
-    public function parseAndPrintClassWithIncludeStatement()
-    {
-        $fileName = 'ClassWithIncludeStatement.php';
-        $this->parseAndPrint($fileName);
-    }
-
-    /**
-     * @test
-     */
-    public function parseAndPrintClassWithUseTraitStatement()
-    {
-        $fileName = 'ClassWithUseTraitStatement.php';
-        $this->parseAndPrint($fileName);
-    }
-
-    /**
-     * @test
-     */
-    public function parseAndPrintSimpleNamespacedClass()
-    {
-        $fileName = 'SimpleNamespace.php';
-        $this->parseAndPrint($fileName, 'Namespaces/');
-    }
-
-    /**
-     * @test
-     */
-    public function parseAndPrintSimpleNamespacedClassExtendingOtherClass()
-    {
-        $fileName = 'SimpleNamespaceExtendingOtherClass.php';
-        $this->parseAndPrint($fileName, 'Namespaces/');
-    }
-
-    /**
-     * @test
-     */
-    public function parseAndPrintSimpleNamespaceWithUseStatement()
-    {
-        $fileName = 'SimpleNamespaceWithUseStatement.php';
-        $this->parseAndPrint($fileName, 'Namespaces/');
-    }
-
-    /**
-     * @test
-     */
-    public function parseAndPrintMultiLineArray()
-    {
-        $fileName = 'ClassWithArrayProperty.php';
-        $this->parseAndPrint($fileName);
-    }
-
-    /**
-     * @test
-     */
-    public function parseAndPrintsNamespacedClassMethodWitNamespacedParameter()
-    {
-        $fileName = 'ClassMethodWithManyParameter.php';
-        $this->parseAndPrint($fileName);
-    }
-
-    /**
-     * @test
-     */
-    public function parseAndPrintsClassMethodWithMultilineParameter()
-    {
-        $fileName = 'ClassMethodWithMultilineParameter.php';
-        $this->parseAndPrint($fileName);
-    }
-
-    /**
-     * @test
-     */
-    public function parseAndPrintsClassMethodWithSwitchStatement()
-    {
-        $fileName = 'ClassMethodWithSwitchStatement.php';
-        $this->parseAndPrint($fileName);
-    }
 
     /**
      * @param $fileName
@@ -146,7 +58,8 @@ class ParseAndPrintTest extends BaseFunctionalTest
 
         self::assertEquals(
             explode(PHP_EOL, $code),
-            explode(PHP_EOL, $printedCode)
+            explode(PHP_EOL, $printedCode),
+            'Not equal'
         );
     }
 }

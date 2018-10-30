@@ -20,7 +20,7 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ManyToManyRelation;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
 use EBT\ExtensionBuilder\Parser\NodeFactory;
 use EBT\ExtensionBuilder\Service\ClassBuilder;
-use EBT\ExtensionBuilder\Service\Parser;
+use EBT\ExtensionBuilder\Service\ParserService;
 use EBT\ExtensionBuilder\Service\Printer;
 use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 use EBT\ExtensionBuilder\Utility\Inflector;
@@ -45,7 +45,7 @@ class ClassBuilderTest extends BaseUnitTest
         parent::setUp();
 
         $this->classBuilder = $this->getAccessibleMock(ClassBuilder::class, ['dummy']);
-        $parserService = new Parser(new \PhpParser\Lexer());
+        $parserService = new ParserService();
         $printerService = $this->getAccessibleMock(Printer::class, ['dummy']);
         $nodeFactory = new NodeFactory();
         $printerService->_set('nodeFactory', $nodeFactory);

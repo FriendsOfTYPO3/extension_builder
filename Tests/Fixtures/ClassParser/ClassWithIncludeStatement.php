@@ -26,7 +26,7 @@
 /**
  * @author Nico de Haen
  */
-require_once('DummyIncludeFile1.php');
+require_once 'DummyIncludeFile1.php';
 abstract class Tx_PhpParser_Tests_ClassWithIncludeStatement
 {
     /**
@@ -34,4 +34,4 @@ abstract class Tx_PhpParser_Tests_ClassWithIncludeStatement
      */
     private $foo = null;
 }
-include_once('DummyIncludeFile2.php');
+include_once 'DummyIncludeFile2.php';
