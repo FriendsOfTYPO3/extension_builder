@@ -20,7 +20,7 @@ use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Service\ClassBuilder;
 use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Service\LocalizationService;
-use EBT\ExtensionBuilder\Service\Parser;
+use EBT\ExtensionBuilder\Service\ParserService;
 use EBT\ExtensionBuilder\Service\Printer;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
@@ -55,7 +55,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
      */
     protected $fixturesPath = '';
     /**
-     * @var \EBT\ExtensionBuilder\Service\Parser
+     * @var \EBT\ExtensionBuilder\Service\ParserService
      */
     protected $parserService = null;
     /**
@@ -95,9 +95,6 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         parent::setUp();
 
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        if (!class_exists('PhpParser\Parser')) {
-            throw new UnknownClassException('PhpParser not found!!');
-        }
         $this->fixturesPath = __DIR__ . '/Fixtures/';
 
         $rootDir = vfsStream::setup('root');
@@ -131,7 +128,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         // get instances to inject in Mocks
         $configurationManager = $this->objectManager->get(ExtensionBuilderConfigurationManager::class);
 
-        $this->parserService = new Parser(new Lexer());
+        $this->parserService = new ParserService();
         $this->printerService = $this->objectManager->get(Printer::class);
         $localizationService = $this->objectManager->get(LocalizationService::class);
 

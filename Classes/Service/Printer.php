@@ -75,12 +75,74 @@ class Printer extends Standard
 
     /**
      * add a new line before each comment
-     * 
+     *
      * @param array $comments
      * @return string
      */
     protected function pComments(array $comments) : string {
         return $this->nl . parent::pComments($comments);
+    }
+
+    /**
+     * print an associative array
+     * with support for multi line notation
+     *
+     * @param \PhpParser\Node\Expr\Array_
+     */
+    public function pExpr_Array(\PhpParser\Node\Expr\Array_ $node)
+    {
+        $multiLine = false;
+        $startLine = $node->getAttribute('startLine');
+        $endLine = $node->getAttribute('endLine');
+        if ($startLine != $endLine) {
+            $multiLine = true;
+        }
+        $printedNodes = '';
+        foreach ($node->items as $itemNode) {
+            $glueToken = ', ';
+            if ($itemNode->getAttribute('startLine') != $startLine) {
+                $glueToken = ',' . LF;
+                $startLine = $itemNode->getAttribute('startLine');
+            }
+            if (!empty($printedNodes)) {
+                $printedNodes .= $glueToken . $this->p($itemNode);
+            } else {
+                $printedNodes .= $this->p($itemNode);
+            }
+        }
+        if ($multiLine) {
+            $multiLinedItems = $this->indentToken . preg_replace(
+                    '~\\n(?!$|' . $this->noIndentToken . ')~',
+                    LF . $this->indentToken,
+                    $printedNodes
+                );
+            return '[' . LF . $multiLinedItems . LF . ']';
+        } else {
+            return '[' . $this->pCommaSeparated($node->items) . ']';
+        }
+    }
+
+    /**
+     * Pretty prints an array of nodes and implodes the printed values with commas.
+     *
+     * @param Node[] $nodes Array of Nodes to be printed
+     *
+     * @return string Comma separated pretty printed nodes
+     */
+    protected function pCommaSeparated(array $nodes) : string {
+        $multiline = false;
+        if (!empty($nodes)) {
+            $startLine = reset($nodes)->getAttribute('startLine');
+            $endLine = end($nodes)->getAttribute('endLine');
+            if ($startLine != $endLine) {
+                $multiline = true;
+            }
+        }
+        if ($multiline) {
+            return $this->nl . $this->pImplode($nodes, ', ' . $this->nl) . $this->nl;
+        } else {
+            return $this->pImplode($nodes, ', ');
+        }
     }
 
 }

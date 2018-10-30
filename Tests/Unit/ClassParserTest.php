@@ -15,7 +15,7 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  */
 
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
-use EBT\ExtensionBuilder\Service\Parser;
+use EBT\ExtensionBuilder\Service\ParserService;
 use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 use PhpParser\Lexer;
 use TYPO3\CMS\Extbase\Reflection\ReflectionService;
@@ -23,7 +23,7 @@ use TYPO3\CMS\Extbase\Reflection\ReflectionService;
 class ClassParserTest extends BaseUnitTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Service\Parser
+     * @var \EBT\ExtensionBuilder\Service\ParserService
      */
     protected $parserService = null;
     /**
@@ -36,7 +36,7 @@ class ClassParserTest extends BaseUnitTest
     protected function setUp()
     {
         parent::setUp();
-        $this->parserService = new Parser(new Lexer());
+        $this->parserService = new ParserService();
     }
 
     /**

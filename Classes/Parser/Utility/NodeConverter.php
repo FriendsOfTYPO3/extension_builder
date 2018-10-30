@@ -209,12 +209,23 @@ class NodeConverter
     }
 
     public static function getPropertyValueFromNode($node, $property)
+    {
+        if (is_string($node->$property)) {
+            return $node->$property;
+        }
+        if (property_exists($node->$property, $property)) {
+            return $node->$property->$property;
+        }
+    }
+
+    public static function getNameFromNode($node)
         {
-            if (is_string($node->$property)) {
-                return $node->$property;
+            if (is_string($node->name)) {
+                return $node->name;
             }
-            if (property_exists($node->$property, $property)) {
-                return $node->$property->$property;
+            if (property_exists($node, 'var') && property_exists($node->var, 'name')) {
+                return $node->var->name;
             }
+            return self::getValueFromNode($node);
         }
 }

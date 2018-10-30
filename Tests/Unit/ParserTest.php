@@ -15,14 +15,14 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  */
 
 use EBT\ExtensionBuilder\Parser\Traverser;
-use EBT\ExtensionBuilder\Service\Parser;
+use EBT\ExtensionBuilder\Service\ParserService;
 use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 use PhpParser\Lexer;
 
 class ParserTest extends BaseUnitTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Service\Parser
+     * @var \EBT\ExtensionBuilder\Service\ParserService
      */
     protected $parserService = null;
 
@@ -30,7 +30,7 @@ class ParserTest extends BaseUnitTest
     {
         parent::setUp();
         $this->fixturesPath = PATH_typo3conf . 'ext/extension_builder/Tests/Fixtures/ClassParser/';
-        $this->parserService = new Parser(new Lexer());
+        $this->parserService = new ParserService();
     }
 
     /**
