@@ -34,14 +34,19 @@ class Tx_PhpParser_Test_ClassMethodWithMultilineParameter
      * @param int $number
      * @param string $stringParam
      * @param array $arr
+     * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n
      * @param bool $booleanParam
      * @param float $float
-     * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n
      * @return string
      */
     private static function testMethod(
-        $number, $stringParam, array $arr, $booleanParam = false,
-        $float = 0.2, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n)
+        $number,
+        $stringParam,
+        array $arr,
+        \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n,
+        $booleanParam = false,
+        $float = 0.2
+    )
     {
         self::sendForDownload(
             $arr,
