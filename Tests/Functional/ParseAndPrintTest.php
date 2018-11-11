@@ -15,6 +15,7 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  */
 
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Some tests to compare the parsed and the generated source code
@@ -54,11 +55,9 @@ class ParseAndPrintTest extends BaseFunctionalTest
         $fileHandler = fopen($classFilePath, 'r');
         $code = fread($fileHandler, filesize($classFilePath));
         $fileObject = $this->parserService->parseCode($code);
-        $printedCode = $this->printerService->renderFileObject($fileObject, true);
-
         self::assertEquals(
-            explode(PHP_EOL, $code),
-            explode(PHP_EOL, $printedCode),
+            GeneralUtility::trimExplode(PHP_EOL, $this->printerService->renderFileObject($fileObject, true)),
+            GeneralUtility::trimExplode(PHP_EOL, $code),
             'Not equal'
         );
     }
