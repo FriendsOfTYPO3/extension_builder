@@ -22,7 +22,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 /**
  * This is the class comment
  *
@@ -30,6 +29,7 @@
  */
 abstract class Tx_PhpParser_Tests_SimpleProperty
 {
+
     /**
      * Some simple property
      *
