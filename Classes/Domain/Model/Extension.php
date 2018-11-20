@@ -894,8 +894,9 @@ class Extension
             'type' => 'typo3-cms-extension',
             'description' => $this->description,
             'authors' => [],
+		    'version' => '1.0.0',
             'require' => [
-                'typo3/cms-core' => '^8.7.1'
+                'typo3/cms-core' => '^9.5'
             ],
             'autoload' => [
                 'psr-4' => [
