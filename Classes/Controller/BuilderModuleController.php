@@ -153,9 +153,6 @@ class BuilderModuleController extends ActionController
      */
     public function indexAction()
     {
-//        $parserService = new ParserService();
-//        $file = '/app/public/typo3conf/ext/test_extension/Classes/Domain/Model/Main.php';
-//        $parserService->parseFile($file);
         $this->view->assign('currentAction', $this->request->getControllerActionName());
         $this->view->assign('settings', $this->extensionBuilderConfigurationManager->getSettings());
         if (!$this->request->hasArgument('action')) {
