@@ -6,7 +6,7 @@ namespace FIXTURE\TestExtension\Tests\Unit\Controller;
  *
  * @author John Doe <mail@typo3.com>
  */
-class MainControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class MainControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
 
     /**
