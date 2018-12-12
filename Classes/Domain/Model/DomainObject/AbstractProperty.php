@@ -30,78 +30,98 @@ abstract class AbstractProperty
      * @var string
      */
     protected $uniqueIdentifier = '';
+
     /**
      * name of the property
      *
      * @var string
      */
     protected $name = '';
+
     /**
      * description of property
      *
      * @var string
      */
     protected $description = '';
+
     /**
      * whether the property is required
      *
      * @var bool
      */
     protected $required = false;
+
     /**
      * property's default value
      *
      * @var mixed
      */
     protected $defaultValue = null;
+
     /**
      * @var mixed
      */
     protected $value = null;
+
     /**
      * Is an upload folder required for this property
      *
      * @var bool
      */
     protected $needsUploadFolder = false;
+
     /**
      * The domain object this property belongs to.
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
      */
     protected $class = null;
+
     /**
      * is set to true, if this property was new added
      *
      * @var bool
      */
     protected $new = true;
+
     /**
      * use RTE in Backend
      *
      * @var bool
      */
     protected $useRTE = false;
+
     /**
      * @var string the property type of this property
      */
     protected $type = '';
+
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
      */
     protected $domainObject = null;
+
     /**
      * @var bool
      */
     protected $excludeField = false;
+
     /**
      * @var bool
      */
     protected $l10nModeExclude = false;
+
     /**
      * @var bool
      */
     protected $cascadeRemove = false;
+
+    /**
+     * @var bool
+     */
+    protected $searchable = false;
+
     /**
      *
      * @param string $propertyName
@@ -553,5 +573,12 @@ abstract class AbstractProperty
     public function isFileReference()
     {
         return in_array($this->type, ['Image', 'File']);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSearchable() {
+        return $this->searchable;
     }
 }
