@@ -17,7 +17,7 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',</f:if>
         ],
-        'searchFields' => '<f:for each="{domainObject.properties}" as="property" iteration="it">{property.fieldName}{f:if(condition: it.isLast, else: ',')}</f:for>',
+        'searchFields' => '<f:for each="{domainObject.searchableProperties}" as="property" iteration="it">{property.fieldName}{f:if(condition: it.isLast, else: ',')}</f:for>',
         'iconfile' => 'EXT:{domainObject.extension.extensionKey}/Resources/Public/Icons/{domainObject.databaseTableName}.gif'
     ],
     'interface' => [

@@ -747,4 +747,13 @@ class DomainObject
     {
         return $this->categorizable;
     }
+
+    /**
+     * @return array|DomainObject\AbstractProperty[]
+     */
+    public function getSearchableProperties() {
+        return array_filter($this->properties, function($property) {
+            return $property->isSearchable();
+        });
+    }
 }
