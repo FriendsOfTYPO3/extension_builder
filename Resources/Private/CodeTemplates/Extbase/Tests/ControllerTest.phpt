@@ -6,7 +6,7 @@ namespace {extension.nameSpaceName}\Tests\Unit\Controller;
 <f:if condition="{extension.persons}"> *
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
 </f:for></f:if> */
-class {controllerName}Test extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class {controllerName}Test extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
     /**
      * @var \{domainObject.controllerClassName}
