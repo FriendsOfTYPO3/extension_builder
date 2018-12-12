@@ -17,7 +17,7 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'name,identifier,description,my_date,mail,child1,children2,child3,children4',
+        'searchFields' => 'name,identifier,description,mail',
         'iconfile' => 'EXT:test_extension/Resources/Public/Icons/tx_testextension_domain_model_main.gif'
     ],
     'interface' => [
