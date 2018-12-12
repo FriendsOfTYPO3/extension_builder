@@ -56,7 +56,7 @@ return [
                     ['', 0],
                 ],
                 'foreign_table' => '{domainObject.databaseTableName}',
-                'foreign_table_where' => 'AND {domainObject.databaseTableName}.pid=###CURRENT_PID### AND {domainObject.databaseTableName}.sys_language_uid IN (-1,0)',
+                'foreign_table_where' => 'AND <k:curlyBrackets>#{domainObject.databaseTableName}</k:curlyBrackets>.<k:curlyBrackets>#pid</k:curlyBrackets>=###CURRENT_PID### AND <k:curlyBrackets>#{domainObject.databaseTableName}</k:curlyBrackets>.<k:curlyBrackets>#sys_language_uid</k:curlyBrackets> IN (-1,0)',
             ],
         ],
         'l10n_diffsource' => [
