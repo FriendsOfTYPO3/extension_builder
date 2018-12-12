@@ -55,7 +55,7 @@ return [
                     ['', 0],
                 ],
                 'foreign_table' => 'tx_testextension_domain_model_child4',
-                'foreign_table_where' => 'AND tx_testextension_domain_model_child4.pid=###CURRENT_PID### AND tx_testextension_domain_model_child4.sys_language_uid IN (-1,0)',
+                'foreign_table_where' => 'AND {#tx_testextension_domain_model_child4}.{#pid}=###CURRENT_PID### AND {#tx_testextension_domain_model_child4}.{#sys_language_uid} IN (-1,0)',
             ],
         ],
         'l10n_diffsource' => [
