@@ -16,7 +16,7 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'name,date_property1,date_property2,date_property3,date_property4',
+        'searchFields' => 'name',
         'iconfile' => 'EXT:test_extension/Resources/Public/Icons/tx_testextension_domain_model_child2.gif'
     ],
     'interface' => [
