@@ -25,6 +25,8 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
+use TYPO3\CMS\Core\Http\JsonResponse;
+
 
 /**
  * Load settings from yaml file and from TYPO3_CONF_VARS extConf
@@ -527,10 +529,9 @@ class ExtensionBuilderConfigurationManager extends ConfigurationManager
      * the module token.
      *
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
      * @return ResponseInterface
      */
-    public function getWiringEditorSmd(ServerRequestInterface $request, ResponseInterface $response)
+    public function getWiringEditorSmd(ServerRequestInterface $request): ResponseInterface
     {
         $smdJsonString = file_get_contents(
             ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd'
@@ -543,9 +544,7 @@ class ExtensionBuilderConfigurationManager extends ConfigurationManager
             ]
         ];
         $smdJson->target = BackendUtility::getModuleUrl('tools_ExtensionBuilderExtensionbuilder', $parameters);
-        $smdJsonString = json_encode($smdJson);
 
-        $response->getBody()->write($smdJsonString);
-        return $response;
+        return (new JsonResponse())->setPayload((array)$smdJson);
     }
 }
