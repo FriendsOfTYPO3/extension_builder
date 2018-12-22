@@ -409,10 +409,6 @@ class FileGeneratorTest extends BaseFunctionalTest
     }
 
     /**
-     * @depends writeModelClassWithManyToManyRelation
-     * @depends writeAggregateRootClassesFromDomainObject
-     *
-     *
      * @test
      */
     public function writeExtensionFiles()
@@ -450,10 +446,42 @@ class FileGeneratorTest extends BaseFunctionalTest
 
         self::assertFileExists($extensionDir . 'Configuration/TCA/' . $domainObject->getDatabaseTableName() . '.php');
         self::assertFileExists($extensionDir . 'Configuration/ExtensionBuilder/settings.yaml');
+        self::assertFileExists($extensionDir . 'Configuration/TypoScript/setup.typoscript');
+        self::assertFileExists($extensionDir . 'Configuration/TypoScript/constants.typoscript');
 
         self::assertFileExists($extensionDir . 'Resources/Private/Language/locallang_db.xlf');
         self::assertFileExists($extensionDir . 'Resources/Private/Language/locallang.xlf');
         self::assertFileExists($extensionDir . 'Resources/Private/Partials/' . $domainObject->getName() . '/Properties.html');
         self::assertFileExists($extensionDir . 'Resources/Private/Partials/' . $domainObject->getName() . '/FormFields.html');
+    }
+
+    public function getDeprecatedTypoScriptExtensions()
+    {
+        return [["ts"], ["txt"]];
+    }
+
+    /**
+     * @test
+     * @dataProvider getDeprecatedTypoScriptExtensions
+     * @param $deprecatedExtension
+     */
+    public function writeExtensionFilesOverWritesFilesWithDeprecatedExtensions($deprecatedExtension)
+    {
+        $plugin = new Plugin();
+        $plugin->setName('Test');
+        $plugin->setKey('test');
+        $this->extension->addPlugin($plugin);
+
+        $setupFile = join(DIRECTORY_SEPARATOR, [$this->extension->getExtensionDir(), 'Configuration', 'TypoScript', 'setup.' . $deprecatedExtension]);
+
+        GeneralUtility::mkdir_deep(dirname($setupFile));
+        GeneralUtility::writeFile($setupFile, "# some sample content");
+
+        $this->fileGenerator->build($this->extension);
+
+        $extensionDir = $this->extension->getExtensionDir();
+
+        self::assertFileExists($extensionDir . 'Configuration/TypoScript/setup.' . $deprecatedExtension);
+        self::assertFileNotExists($extensionDir . 'Configuration/TypoScript/setup.typoscript');
     }
 }
