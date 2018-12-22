@@ -116,7 +116,8 @@ class FileGenerator
         'php', //ext_tables, localconf
         'sql',
         'txt', // Typoscript
-        'ts' // Typoscript
+        'ts', // Typoscript
+        'typoscript', // Typoscript
     ];
     /**
      * @var \EBT\ExtensionBuilder\Service\LocalizationService
@@ -481,7 +482,7 @@ class FileGenerator
                 $this->mkdir_deep($this->extensionDirectory, 'Configuration/TypoScript');
                 $typoscriptDirectory = $this->extensionDirectory . 'Configuration/TypoScript/';
                 $fileContents = $this->generateTyposcriptSetup();
-                $this->writeFile($typoscriptDirectory . 'setup.ts', $fileContents);
+                $this->writeFile($typoscriptDirectory . 'setup.typoscript', $fileContents);
             } catch (\Exception $e) {
                 throw new \Exception('Could not generate typoscript setup, error: ' . $e->getMessage());
             }
@@ -490,7 +491,7 @@ class FileGenerator
             try {
                 $typoscriptDirectory = $this->extensionDirectory . 'Configuration/TypoScript/';
                 $fileContents = $this->generateTyposcriptConstants();
-                $this->writeFile($typoscriptDirectory . 'constants.ts', $fileContents);
+                $this->writeFile($typoscriptDirectory . 'constants.typoscript', $fileContents);
             } catch (\Exception $e) {
                 throw new \Exception('Could not generate typoscript constants, error: ' . $e->getMessage());
             }
@@ -500,7 +501,7 @@ class FileGenerator
         try {
             if ($this->extension->getDomainObjectsThatNeedMappingStatements()) {
                 $fileContents = $this->generateStaticTyposcript();
-                $this->writeFile($this->extensionDirectory . 'ext_typoscript_setup.txt', $fileContents);
+                $this->writeFile($this->extensionDirectory . 'ext_typoscript_setup.typoscript', $fileContents);
             }
         } catch (\Exception $e) {
             throw new \Exception('Could not generate static typoscript, error: ' . $e->getMessage());
