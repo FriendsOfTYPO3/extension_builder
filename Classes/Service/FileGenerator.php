@@ -120,6 +120,13 @@ class FileGenerator
         'typoscript', // Typoscript
     ];
     /**
+     * A map of deprecated file extensions
+     * @var string[][]
+     */
+    protected $deprecatedFileExtensions = [
+        'typoscript' => ['ts', 'txt'],
+    ];
+    /**
      * @var \EBT\ExtensionBuilder\Service\LocalizationService
      * @inject
      *
@@ -1238,6 +1245,22 @@ class FileGenerator
                 // skip file creation
                 return;
             }
+
+            $fileExtension = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+            // special handling for TypoScript files, that used to use "ts" as extension and now use "typoscript":
+            // if a ".typoscript" file SHOULD be written but a corresponding ".ts" file with the same name already
+            // exists, write to THAT file in order to avoid breaking users' extensions.
+            if (array_key_exists($fileExtension, $this->deprecatedFileExtensions)) {
+                foreach ($this->deprecatedFileExtensions[$fileExtension] as $possibleExistingExtension) {
+                    $possibleAlternateTarget = str_replace('.' . $fileExtension, '.' . $possibleExistingExtension, $targetFile);
+                    if (file_exists($possibleAlternateTarget)) {
+                        $targetFile = $possibleAlternateTarget;
+                        break;
+                    }
+                }
+            }
+
             if ($overWriteMode == 1 && strpos($targetFile, 'Classes') === false) {
                 // classes are merged by the class builder
                 $fileExtension = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
