@@ -1263,7 +1263,6 @@ class FileGenerator
 
             if ($overWriteMode == 1 && strpos($targetFile, 'Classes') === false) {
                 // classes are merged by the class builder
-                $fileExtension = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
                 if ($fileExtension == 'html') {
                     //TODO: We need some kind of protocol to be displayed after code generation
                     return;
