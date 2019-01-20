@@ -5,7 +5,7 @@
 Change Log
 ==========
 
-Version 8.10.2
+Version 8.10.3
 --------------
 
 Skip type configuration for tables with numeric typefield
@@ -13,6 +13,7 @@ Support parameter by reference
 
 Full commit listing: ::
 
+   2019-01-20 Readd UTF8 coding configuration (Commit 7ac417b4 by Nico de Haen)
    2018-09-01 Support for parameters by reference (Commit 9df8ee00 by Nico de Haen)
    2018-09-01 [DOC] Update documentation rendering (Commit efe0aa04 by Markus Klein)
    2018-09-01 [TASK] Fix version information and move changelog to docs (Commit 5e81de4a by Markus Klein)
