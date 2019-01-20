@@ -10,7 +10,7 @@
 Change Log
 ==========
 
-Version 8.10.3
+Version 8.10.4
 --------------
 
 Skip type configuration for tables with numeric typefield
