@@ -1,4 +1,9 @@
-﻿.. include:: ../Includes.txt
+﻿.. ==================================================
+.. FOR YOUR INFORMATION
+.. --------------------------------------------------
+.. -*- coding: utf-8 -*- with BOM.
+
+.. include:: ../Includes.txt
 
 
 .. _introduction:
@@ -38,8 +43,8 @@ Screenshots
 The Modeler provides a graphical interface to model your Domain
 
 .. figure:: ../Images/Introduction/modeler-blogexample.png
-   :width: 700px
-   :align: left
+   :width: 90%
+   :align: center
    :alt: Modeler Blog Example
 
 When you click on the "Save" button a complete code base for a TYPO3 extension is generated.

@@ -1,4 +1,9 @@
-﻿.. include:: ../Includes.txt
+﻿.. ==================================================
+.. FOR YOUR INFORMATION
+.. --------------------------------------------------
+.. -*- coding: utf-8 -*- with BOM.
+
+.. include:: ../Includes.txt
 
 
 .. _user-manual:
@@ -16,9 +21,9 @@ Starting a new extension
 
 To create a new Extension, go to the Domain Modelling view (1) and open the left panel by clicking on the small arrow on the upper left corner (2).
 
-.. figure:: ../Images/UserManual/modeler-start-extension-a.png
-   :width: 200px
-   :align: left
+.. figure:: ../Images/UserManual/modeler-start-extension-1.png
+   :width: 90%
+   :align: center
    :alt: Modeler Start Extension
 
 1. Create a domain model
@@ -27,9 +32,9 @@ To create a new Extension, go to the Domain Modelling view (1) and open the left
 Enter a meaningful Extension name (1), a `Vendor name <http://docs.typo3.org/flow/TYPO3FlowDocumentation/stable/TheDefinitiveGuide/PartV/CodingGuideLines/PHP.html#naming>`_ (2) (UpperCamelCase) and an extensionKey (3) (without spaces and in lowercase).
 You can add a person that will be listed in the generated files as author.
 
-.. figure:: ../Images/UserManual/modeler-start-extension-b.png
-   :width: 500px
-   :align: left
+.. figure:: ../Images/UserManual/modeler-start-extension-2.png
+   :width: 90%
+   :align: center
    :alt: Modeler Start Example
 
 Then create at least one model by dragging it from the grey button "New Model Object" to the canvas.
@@ -40,7 +45,7 @@ In general you need at least one aggregate root which has a corresponding reposi
 
 .. figure:: ../Images/UserManual/modeler-object-settings.png
    :width: 200px
-   :align: left
+   :align: center
    :alt: Modeler Object Settings
 
 
@@ -56,7 +61,7 @@ Open the action panel and select the options you need. All actions you select wi
 
 .. figure:: ../Images/UserManual/modeler-actions.png
    :width: 250px
-   :align: left
+   :align: center
    :alt: Modeler Actions
 
 .. warning::

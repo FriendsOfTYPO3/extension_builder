@@ -1,0 +1,32 @@
+# This is the project specific Settings.yml file.
+# Place Sphinx specific build information here.
+# Settings given here will replace the settings of 'conf.py'.
+
+# Below is an example of intersphinx mapping declaration
+# Add more mappings depending on what manual you want to link to
+# Remove entirely if you don't need cross-linking
+
+---
+conf.py:
+  copyright: 2014
+  project: ExtensionBuilder
+  version: 7.6
+  release: 7.6.0
+  intersphinx_mapping:
+    t3security:
+    - http://docs.typo3.org/typo3cms/SecurityGuide/
+    - null
+    sphinx:
+    - http://docs.typo3.org/typo3cms/extensions/sphinx/
+    - null
+  latex_documents:
+  - - Index
+    - extension_builder.tex
+    - Extension Builder
+    - Nico de Haen
+    - manual
+  latex_elements:
+    papersize: a4paper
+    pointsize: 10pt
+    preamble: \usepackage{typo3}
+...
