@@ -4,3 +4,6 @@ composer.lock
 node_modules*
 .DS_Store
 .idea*
+
+# created by rendering Documentation with Docker
+Documentation-GENERATED-temp
