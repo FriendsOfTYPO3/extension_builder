@@ -721,8 +721,8 @@ class FileGenerator
         }
         $fileContents = $this->renderTemplate('Documentation.tmpl/Index.rstt', ['extension' => $this->extension]);
         $this->writeFile($this->extensionDirectory . 'Documentation.tmpl/Index.rst', $fileContents);
-        $fileContents = $this->renderTemplate('Documentation.tmpl/Settings.ymlt', ['extension' => $this->extension]);
-        $this->writeFile($this->extensionDirectory . 'Documentation.tmpl/Settings.yml', $fileContents);
+        $fileContents = $this->renderTemplate('Documentation.tmpl/Settings.cfgt', ['extension' => $this->extension]);
+        $this->writeFile($this->extensionDirectory . 'Documentation.tmpl/Settings.cfg', $fileContents);
     }
 
     /**
