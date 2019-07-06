@@ -51,6 +51,7 @@ screenshots, try using the `Introduction Package <http://demo.typo3.org/>`_
 as a neutral TYPO3 CMS instance.
 
 .. figure:: ../Images/UserManual/BackendView.png
+   :class: with-shadow
    :width: 500px
    :alt: Backend view
 
