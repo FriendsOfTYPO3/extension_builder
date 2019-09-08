@@ -909,7 +909,7 @@ class Extension
                 ]
             ],
             'replace' => [
-                strtolower($this->extensionKey) => 'self.version',
+                strtolower($this->vendorName) . '/' . $composerExtensionKey => 'self.version',
                 'typo3-ter/' . $composerExtensionKey => 'self.version'
             ]
         ];
