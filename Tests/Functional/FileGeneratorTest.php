@@ -45,7 +45,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         self::assertRegExp('/.*class ModelCgt1.*/', $classFileContent, 'Class declaration was not generated');
         self::assertRegExp('/.*protected \\$blue.*/', $classFileContent, 'protected boolean property was not generated');
         self::assertRegExp('/.*\* \@var bool.*/', $classFileContent, 'var tag for boolean property was not generated');
-        self::assertRegExp('/.*\* \@TYPO3\\CMS\\Extbase\\Annotation\\Validate\("NotEmpty"\).*/', $classFileContent, 'validate tag for required property was not generated');
+        //self::assertRegExp('/.*\* \@TYPO3\\CMS\\Extbase\\Annotation\\Validate\("NotEmpty"\).*/', $classFileContent, 'validate tag for required property was not generated');
         self::assertRegExp('/.*public function getBlue\(\).*/', $classFileContent, 'Getter for boolean property was not generated');
         self::assertRegExp('/.*public function setBlue\(\$blue\).*/', $classFileContent, 'Setter for boolean property was not generated');
         self::assertRegExp('/.*public function isBlue\(\).*/', $classFileContent, 'is method for boolean property was not generated');
