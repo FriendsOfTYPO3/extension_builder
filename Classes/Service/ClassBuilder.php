@@ -31,10 +31,14 @@ use TYPO3\CMS\Core\SingletonInterface;
  */
 class ClassBuilder implements SingletonInterface
 {
+    const VALIDATE_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")';
+    const CASCADE_REMOVE_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")';
+
     /**
      * The class file object created to container the generated class
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\File
+     *
      */
     protected $classFileObject = null;
     /**
@@ -235,21 +239,21 @@ class ClassBuilder implements SingletonInterface
             }
 
             if ($domainProperty->isZeroToManyRelation()) {
-                $classProperty->setTag('cascade', 'remove');
+                $classProperty->setTag(self::CASCADE_REMOVE_ANNOTATION);
             }
         }
 
         if ($domainProperty->getRequired()) {
-            if (!$classProperty->isTaggedWith('validate')) {
+            if (!$classProperty->isTaggedWith(self::VALIDATE_ANNOTATION)) {
                 $validateTag = explode(' ', trim($domainProperty->getValidateAnnotation()));
-                $classProperty->setTag('validate', $validateTag[1]);
+                $classProperty->setTag(self::VALIDATE_ANNOTATION);
             }
         }
 
         if ($domainProperty->getCascadeRemove()) {
-            if (!$classProperty->isTaggedWith('cascade')) {
+            if (!$classProperty->isTaggedWith(self::CASCADE_REMOVE_ANNOTATION)) {
                 $validateTag = explode(' ', trim($domainProperty->getCascadeRemoveAnnotation()));
-                $classProperty->setTag('cascade', $validateTag[1]);
+                $classProperty->setTag(self::CASCADE_REMOVE_ANNOTATION);
             }
         }
 
