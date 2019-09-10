@@ -396,7 +396,7 @@ abstract class AbstractProperty
     public function getValidateAnnotation()
     {
         if ($this->required) {
-            return '@validate NotEmpty';
+            return '@TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")';
         }
         return '';
     }
@@ -407,7 +407,7 @@ abstract class AbstractProperty
     public function getCascadeRemoveAnnotation()
     {
         if ($this->cascadeRemove) {
-            return '@cascade remove';
+            return '@TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")';
         }
         return '';
     }
