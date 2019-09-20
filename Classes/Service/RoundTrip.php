@@ -801,8 +801,7 @@ class RoundTrip implements SingletonInterface
             $mergedMethod->setTag('param', $parameterTags);
         }
 
-        $returnTagValue = $mergedMethod->getTagValue('return');
-        if ($returnTagValue != 'void') {
+        if ($mergedMethod->isTaggedWith('return') && $mergedMethod->getTagValue('return') != 'void') {
             $mergedMethod->setTag('return', $newProperty->getTypeForComment() . ' ' . $newProperty->getName());
         }
 
