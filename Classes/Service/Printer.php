@@ -84,45 +84,6 @@ class Printer extends Standard
     }
 
     /**
-     * print an associative array
-     * with support for multi line notation
-     *
-     * @param \PhpParser\Node\Expr\Array_
-     */
-    public function pExpr_Array(\PhpParser\Node\Expr\Array_ $node)
-    {
-        $multiLine = false;
-        $startLine = $node->getAttribute('startLine');
-        $endLine = $node->getAttribute('endLine');
-        if ($startLine != $endLine) {
-            $multiLine = true;
-        }
-        $printedNodes = '';
-        foreach ($node->items as $itemNode) {
-            $glueToken = ', ';
-            if ($itemNode->getAttribute('startLine') != $startLine) {
-                $glueToken = ',' . LF;
-                $startLine = $itemNode->getAttribute('startLine');
-            }
-            if (!empty($printedNodes)) {
-                $printedNodes .= $glueToken . $this->p($itemNode);
-            } else {
-                $printedNodes .= $this->p($itemNode);
-            }
-        }
-        if ($multiLine) {
-            $multiLinedItems = $this->indentToken . preg_replace(
-                    '~\\n(?!$|' . $this->noIndentToken . ')~',
-                    LF . $this->indentToken,
-                    $printedNodes
-                );
-            return '[' . LF . $multiLinedItems . LF . ']';
-        } else {
-            return '[' . $this->pCommaSeparated($node->items) . ']';
-        }
-    }
-
-    /**
      * Pretty prints an array of nodes and implodes the printed values with commas.
      *
      * @param Node[] $nodes Array of Nodes to be printed
