@@ -1,64 +1,97 @@
-﻿.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
+﻿.. ---------------------------------------------------------------
+   This is the start file. It gets displayed as first page
+   https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us/GeneralConventions/DirectoryFilenames.html#supported-filenames-and-formats
+   ---------------------------------------------------------------
+
+.. ---------------------------------------------------------------
+   More information about creating an extension manual:
+   https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us/WritingDocForExtension/CreateWithExtensionBuilder.html
+   ---------------------------------------------------------------
+
+.. ---------------------------------------------------------------
+   comments start with 2 dots and a blank
+   they can continue on the next line
+   ---------------------------------------------------------------
+
+.. ---------------------------------------------------------------
+   every .rst file should include Includes.txt
+   use correct path!
+   ---------------------------------------------------------------
 
 .. include:: Includes.txt
 
+.. ---------------------------------------------------------------
+   Every manual should have a start label for cross-referencing to
+   start page. Do not remove this!
+   ---------------------------------------------------------------
+
 .. _start:
+
+.. ---------------------------------------------------------------
+   This is the doctitle
+   ---------------------------------------------------------------
 
 =============================================================
 ExtensionBuilder Test Extension
 =============================================================
 
-.. only:: html
+:Extension Key:
+    test_extension
 
-	:Classification:
-		test_extension
+:Version:
+    |release|
 
-	:Version:
-		|release|
+:Language:
+    en
 
-	:Language:
-		en
+:Copyright:
+    2019
 
-	:Description:
-		This is just a test extension created by the ExtensionBuilder
+:Author:
+    John Doe
 
-	:Keywords:
-		comma,separated,list,of,keywords
+:Email:
+    mail@typo3.com
 
-	:Copyright:
-		2016
+:License:
+   This extension documentation is published under the `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`__ (Creative Commons) license
 
-	:Author:
-		John Doe
+This is just a test extension created by the ExtensionBuilder
 
-	:Email:
-		mail@typo3.com
+**TYPO3**
 
-	:License:
-		This document is published under the Open Content License
-		available from http://www.opencontent.org/opl.shtml
+   The content of this document is related to TYPO3 CMS,
+   a GNU/GPL CMS/Framework available from `typo3.org
+   <https://typo3.org/>`_ .
 
-	:Rendered:
-		|today|
+**Community Documentation:**
 
-	The content of this document is related to TYPO3,
-	a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
+    This documentation is community documentation for the TYPO3 extension ExtensionBuilder Test Extension
 
-	**Table of Contents**
+    It is maintained as part of this third party extension.
+
+    If you find an error or something is missing, please:
+    `Report a Problem <https://github.com/TYPO3-Documentation/TYPO3CMS-Example-ExtensionManual/issues/new>`__
+
+**Sitemap:**
+
+   :ref:`sitemap`
+
+.. ---------------------------------------------------------------
+   This generates the menu
+   https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us/WritingReST/MenuHierarchy.html
+   ---------------------------------------------------------------
 
 .. toctree::
-	:maxdepth: 3
-	:titlesonly:
+   :maxdepth: 3
+   :hidden:
 
-	Introduction/Index
-	User/Index
-	Administrator/Index
-	Configuration/Index
-	Developer/Index
-	KnownProblems/Index
-	ToDoList/Index
-	ChangeLog/Index
-	Links
+   Introduction/Index
+   User/Index
+   Installation/Index
+   Configuration/Index
+   Developer/Index
+   KnownProblems/Index
+   ToDoList/Index
+   ChangeLog/Index
+   Sitemap

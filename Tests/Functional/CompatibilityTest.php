@@ -81,12 +81,12 @@ class CompatibilityTest extends BaseFunctionalTest
 
         $this->fileGenerator->build($this->extension);
 
-        $referenceFiles = GeneralUtility::getAllFilesAndFoldersInPath([], $testExtensionDir, 'php,sql,txt,html');
+        $referenceFiles = GeneralUtility::getAllFilesAndFoldersInPath([], $testExtensionDir, 'php,sql,html,typoscript');
         foreach ($referenceFiles as $referenceFile) {
             $createdFile = str_replace($testExtensionDir, $this->extension->getExtensionDir(), $referenceFile);
             if (!in_array(basename($createdFile), ['ExtensionBuilder.json'])) {
                 $referenceFileContent = str_replace(
-                    ['2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###', '2014'],
+                    ['2019-09-22T01:00:00Z', '2019-09-22', '###YEAR###', '2019'],
                     [date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')],
                     file_get_contents($referenceFile)
                 );
@@ -97,10 +97,18 @@ class CompatibilityTest extends BaseFunctionalTest
                     $generatedLines = GeneralUtility::trimExplode(LF, file_get_contents($createdFile), true);
                     for ($c = 0; $c < count($originalLines); $c++) {
                         $originalLine = str_replace(
-                            ['2011-08-11T06:49:00Z', '2011-08-11', '###YEAR###', '2014'],
+                            ['2019-01-01T01:00:00Z', '2019-01-01', '###YEAR###', '2019'],
                             [date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')],
                             $originalLines[$c]
                         );
+                        /** uncomment these lines to debug failing tests
+                        if (preg_replace('/\s+/', ' ', $originalLine) !=  preg_replace('/\s+/', ' ', $generatedLines[$c])) {
+                            echo 'Mismatch: Line ' . $c . ':' . preg_replace('/\s+/', ' ', $originalLine);
+                            echo 'Line ' . $c . ':' . preg_replace('/\s+/', ' ', $generatedLines[$c]);
+                            echo 'in File ' . $referenceFile;
+                            die();
+                        }
+                         * */
                         self::assertEquals(
                             preg_replace('/\s+/', ' ', $originalLine),
                             preg_replace('/\s+/', ' ', $generatedLines[$c]),
