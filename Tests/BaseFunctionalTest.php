@@ -173,7 +173,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
     protected function tearDown()
     {
         if (!empty($this->extension) && $this->extension->getExtensionKey() != null) {
-            //GeneralUtility::rmdir($this->extension->getExtensionDir(), true);
+            GeneralUtility::rmdir($this->extension->getExtensionDir(), true);
         }
     }
 
