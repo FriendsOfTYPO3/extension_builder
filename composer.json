@@ -28,7 +28,7 @@
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2",
-    "nimut/testing-framework": "^4.2"
+    "nimut/testing-framework": "^4"
   },
   "autoload": {
     "psr-4": {
