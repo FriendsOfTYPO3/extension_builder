@@ -9,9 +9,6 @@ plugin.tx_testextension_testplugin {
         layoutRootPaths.1 = {$plugin.tx_testextension_testplugin.view.layoutRootPath}
     }
     persistence {
-        # Be aware that a manual storage assignment via "Record Storage Page" in the
-        # backend will not have any effect once a storagePid is set via TypoScript.
-        # See https://forge.typo3.org/issues/58857
         storagePid = {$plugin.tx_testextension_testplugin.persistence.storagePid}
         #recursive = 1
     }
