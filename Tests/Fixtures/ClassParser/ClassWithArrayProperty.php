@@ -34,9 +34,7 @@ abstract class Tx_PhpParser_Tests_ArrayProperty
     protected $arrProperty = [
         'a' => 'b',
         '5' => 1223,
-        'foo' => [
-            'foo' => 'bar'
-        ],
+        'foo' => ['foo' => 'bar'],
         [1, 2, 3],
         ['qwer' => 'tzysd', 'Test' => 123],
         [
