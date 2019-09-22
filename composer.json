@@ -23,7 +23,8 @@
   ],
   "require": {
     "typo3/cms-core": "~9.5",
-    "nikic/php-parser": "^4.0"
+    "nikic/php-parser": "^4.0",
+    "typo3/minimal": "^9"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.0",
@@ -41,7 +42,7 @@
     }
   },
   "replace": {
-    "extension_builder": "self.version",
+    "friendsoftypo3/extension-builder": "self.version",
     "typo3-ter/extension-builder": "self.version"
   },
   "config": {
