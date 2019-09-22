@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
 /*
@@ -47,7 +48,6 @@ class SingularizeViewHelper extends AbstractViewHelper
      * Singularize a word
      *
      * @return string The pluralized string
-     * @author Sebastian Kurfürst <sbastian@typo3.org>
      */
     public function render()
     {

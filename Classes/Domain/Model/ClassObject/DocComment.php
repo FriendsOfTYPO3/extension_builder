@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
 
 /*
@@ -134,8 +135,8 @@ class DocComment extends Comment
      * parseDocComment() before tags are available.
      *
      * @param string $tagName The tag name to retrieve the values for
-     * @throws \InvalidArgumentException
      * @return array The tag's values
+     * @throws \InvalidArgumentException
      */
     public function getTagValues($tagName)
     {

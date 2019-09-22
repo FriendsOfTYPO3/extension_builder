@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Domain\Model;
 
 /*
@@ -751,8 +752,9 @@ class DomainObject
     /**
      * @return array|DomainObject\AbstractProperty[]
      */
-    public function getSearchableProperties() {
-        return array_filter($this->properties, function($property) {
+    public function getSearchableProperties()
+    {
+        return array_filter($this->properties, function ($property) {
             return $property->isSearchable();
         });
     }

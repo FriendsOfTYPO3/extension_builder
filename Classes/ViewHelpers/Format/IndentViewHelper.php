@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\ViewHelpers\Format;
 
 /*
@@ -25,11 +26,11 @@ class IndentViewHelper extends AbstractViewHelper
     protected $escapeOutput = false;
 
     /**
-    * Arguments Initialization
-    */
+     * Arguments Initialization
+     */
     public function initializeArguments()
     {
-        $this->registerArgument('indentation', 'integer', 'number of spaces to indent', TRUE);
+        $this->registerArgument('indentation', 'integer', 'number of spaces to indent', true);
     }
 
     /**

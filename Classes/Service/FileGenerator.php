@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Service;
 
 /*
@@ -246,9 +247,10 @@ class FileGenerator
     {
         if ($this->extension->getPlugins()) {
             try {
-                $fileContents = $this->renderTemplate(GeneralUtility::underscoredToLowerCamelCase('ext_localconf.phpt'), [
-                    'extension' => $this->extension
-                ]);
+                $fileContents = $this->renderTemplate(GeneralUtility::underscoredToLowerCamelCase('ext_localconf.phpt'),
+                    [
+                        'extension' => $this->extension
+                    ]);
                 $this->writeFile($this->extensionDirectory . 'ext_localconf.php', $fileContents);
             } catch (\Exception $e) {
                 throw new \Exception('Could not write ext_localconf.php. Error: ' . $e->getMessage());
@@ -440,7 +442,8 @@ class FileGenerator
             // Generate Layouts directory
             $this->mkdir_deep($absoluteTemplateRootFolder, 'Layouts');
             $layoutsDirectory = $absoluteTemplateRootFolder . 'Layouts/';
-            $this->writeFile($layoutsDirectory . 'Default.html', $this->generateLayout($templateRootFolder . 'Layouts/'));
+            $this->writeFile($layoutsDirectory . 'Default.html',
+                $this->generateLayout($templateRootFolder . 'Layouts/'));
         }
     }
 
@@ -799,7 +802,8 @@ class FileGenerator
         if ($this->roundTripEnabled) {
             $existingClassFileObject = $this->roundTripService->getDomainModelClassFile($domainObject);
         }
-        $modelClassFileObject = $this->classBuilder->generateModelClassFileObject($domainObject, $modelTemplateClassPath, $existingClassFileObject);
+        $modelClassFileObject = $this->classBuilder->generateModelClassFileObject($domainObject,
+            $modelTemplateClassPath, $existingClassFileObject);
         if ($modelClassFileObject) {
             $this->addLicenseHeader($modelClassFileObject->getFirstClass());
             return $this->printerService->renderFileObject($modelClassFileObject, true);
@@ -913,7 +917,8 @@ class FileGenerator
     {
         if (!file_exists($this->extensionDirectory . 'composer.json')) {
             $composerInfo = $this->extension->getComposerInfo();
-            $this->writeFile($this->extension->getExtensionDir() . 'composer.json', json_encode($composerInfo, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            $this->writeFile($this->extension->getExtensionDir() . 'composer.json',
+                json_encode($composerInfo, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         }
     }
 
@@ -1042,7 +1047,8 @@ class FileGenerator
         } elseif ($variableName == 'backendModule') {
             $languageLabels = $this->localizationService->prepareLabelArrayForBackendModule($variable);
         } else {
-            $languageLabels = $this->localizationService->prepareLabelArray($this->extension, 'locallang' . $fileNameSuffix);
+            $languageLabels = $this->localizationService->prepareLabelArray($this->extension,
+                'locallang' . $fileNameSuffix);
         }
 
         if ($this->fileShouldBeMerged($targetFile . '.xlf')) {
@@ -1230,9 +1236,9 @@ class FileGenerator
      * path and filename of the targetFile, relative to extension dir:
      * @param string $targetFile
      * @param string $fileContents
+     * @return void
      * @throws \Exception
      *
-     * @return void
      */
     protected function writeFile($targetFile, $fileContents)
     {
@@ -1253,7 +1259,8 @@ class FileGenerator
             // exists, write to THAT file in order to avoid breaking users' extensions.
             if (array_key_exists($fileExtension, $this->deprecatedFileExtensions)) {
                 foreach ($this->deprecatedFileExtensions[$fileExtension] as $possibleExistingExtension) {
-                    $possibleAlternateTarget = str_replace('.' . $fileExtension, '.' . $possibleExistingExtension, $targetFile);
+                    $possibleAlternateTarget = str_replace('.' . $fileExtension, '.' . $possibleExistingExtension,
+                        $targetFile);
                     if (file_exists($possibleAlternateTarget)) {
                         $targetFile = $possibleAlternateTarget;
                         break;

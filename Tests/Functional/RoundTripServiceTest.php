@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Tests\Functional;
 
 /*
@@ -61,7 +62,8 @@ class RoundTripServiceTest extends BaseFunctionalTest
         $this->roundTripService->_set('previousDomainObjects', [$domainObject->getUniqueIdentifier() => $domainObject]);
         $templateClass = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
         // create an "old" class object.
-        $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $templateClass, false)->getFirstClass();
+        $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $templateClass,
+            false)->getFirstClass();
         self::assertTrue(is_object($modelClassObject), 'No class object');
 
         // Check that the getter/methods exist
@@ -119,7 +121,8 @@ class RoundTripServiceTest extends BaseFunctionalTest
         $this->roundTripService->_set('previousDomainObjects', [$domainObject->getUniqueIdentifier() => $domainObject]);
         $templateClass = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
         // create an "old" class object.
-        $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $templateClass, false)->getFirstClass();
+        $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $templateClass,
+            false)->getFirstClass();
         self::assertTrue(is_object($modelClassObject), 'No class object');
 
         // Check that the property related methods exist

@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Tests\Unit;
 
 /*
@@ -288,6 +289,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         $relation->setExcludeField(1);
         $post->addProperty($relation);
         $actualExtension = $this->extensionSchemaBuilder->build($input);
-        self::assertEquals($extension->getDomainObjects(), $actualExtension->getDomainObjects(), 'The extensions differ');
+        self::assertEquals($extension->getDomainObjects(), $actualExtension->getDomainObjects(),
+            'The extensions differ');
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Parser\Utility;
 
 /*
@@ -194,7 +195,10 @@ class NodeConverter
      */
     public static function convertUseAliasStatementNodeToArray(Use_ $node)
     {
-        return ['name' => self::getValueFromNode($node->uses[0]->name), 'alias' => self::getValueFromNode($node->uses[0]->alias)];
+        return [
+            'name' => self::getValueFromNode($node->uses[0]->name),
+            'alias' => self::getValueFromNode($node->uses[0]->alias)
+        ];
     }
 
     public static function getVarTypeFromValue($value)
@@ -219,13 +223,13 @@ class NodeConverter
     }
 
     public static function getNameFromNode($node)
-        {
-            if (is_string($node->name)) {
-                return $node->name;
-            }
-            if (property_exists($node, 'var') && property_exists($node->var, 'name')) {
-                return $node->var->name;
-            }
-            return self::getValueFromNode($node);
+    {
+        if (is_string($node->name)) {
+            return $node->name;
         }
+        if (property_exists($node, 'var') && property_exists($node->var, 'name')) {
+            return $node->var->name;
+        }
+        return self::getValueFromNode($node);
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
 /*
@@ -28,13 +29,13 @@ class PregReplaceViewHelper extends AbstractViewHelper
 {
 
     /**
-    * Arguments Initialization
-    */
+     * Arguments Initialization
+     */
     public function initializeArguments()
     {
-        $this->registerArgument('match', 'string', 'pattern', TRUE);
-        $this->registerArgument('replace', 'string', 'replacement', TRUE);
-        $this->registerArgument('subject', 'string', 'subject', TRUE);
+        $this->registerArgument('match', 'string', 'pattern', true);
+        $this->registerArgument('replace', 'string', 'replacement', true);
+        $this->registerArgument('subject', 'string', 'subject', true);
     }
 
     /**

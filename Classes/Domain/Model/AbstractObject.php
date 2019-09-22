@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Domain\Model;
 
 /*
@@ -123,7 +124,7 @@ abstract class AbstractObject
      * Checks if the doc comment of this method is tagged with
      * the specified tag
      *
-     * @param  string $tagName : Tag name to check for
+     * @param string $tagName : Tag name to check for
      * @return bool true if such a tag has been defined, otherwise false
      */
     public function isTaggedWith($tagName)

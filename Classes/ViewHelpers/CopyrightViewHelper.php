@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
 /*
@@ -27,11 +28,12 @@ class CopyrightViewHelper extends AbstractViewHelper
     protected $escapeChildren = false;
 
     /**
-    * Arguments Initialization
-    */
-    public function initializeArguments() {
-       $this->registerArgument('date', 'string', 'Date', TRUE);
-       $this->registerArgument('persons', 'array', 'Array with persons', TRUE);
+     * Arguments Initialization
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('date', 'string', 'Date', true);
+        $this->registerArgument('persons', 'array', 'Array with persons', true);
     }
 
     /**
@@ -40,7 +42,6 @@ class CopyrightViewHelper extends AbstractViewHelper
      * @param string $date
      * @param array $persons (\EBT\ExtensionBuilder\Domain\Model\Person )
      * @return string The copyright ownership
-     * @author Andreas Lappe <nd@kaeufli.ch>
      */
     public function render()
     {

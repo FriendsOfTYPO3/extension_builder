@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Tests\Unit;
 
 /*
@@ -45,7 +46,8 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
         $concreteConfigurationManager = $this->getAccessibleMock(BackendConfigurationManager::class);
         $typoScriptService = new TypoScriptService();
         $concreteConfigurationManager->_set('typoScriptService', $typoScriptService);
-        $this->configurationManager = $this->getAccessibleMock(ExtensionBuilderConfigurationManager::class, ['getExtbaseClassConfiguration']);
+        $this->configurationManager = $this->getAccessibleMock(ExtensionBuilderConfigurationManager::class,
+            ['getExtbaseClassConfiguration']);
         $this->configurationManager->_set('concreteConfigurationManager', $concreteConfigurationManager);
         $this->objectSchemaBuilder->injectConfigurationManager($this->configurationManager);
     }

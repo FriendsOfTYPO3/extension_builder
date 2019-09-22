@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
 /*
@@ -44,10 +45,11 @@ class HumanizeViewHelper extends AbstractViewHelper
     }
 
     /**
-    * Arguments Initialization
-    */
-    public function initializeArguments() {
-       $this->registerArgument('string', 'string', 'The string to make human readable', TRUE);
+     * Arguments Initialization
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('string', 'string', 'The string to make human readable', true);
     }
 
     /**

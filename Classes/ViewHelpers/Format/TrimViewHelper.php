@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\ViewHelpers\Format;
 
 /*
@@ -24,7 +25,6 @@ class TrimViewHelper extends AbstractViewHelper
 {
     /**
      * @return string The altered string.
-     * @author Christopher Hlubek <hlubek@networkteam.com>
      */
     public function render()
     {

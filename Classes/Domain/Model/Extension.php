@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Domain\Model;
 
 /*
@@ -13,6 +14,7 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\BackendModule;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
@@ -470,7 +472,8 @@ class Extension
         $domainObject->setExtension($this);
         foreach (array_keys($this->domainObjects) as $existingDomainObjectName) {
             if (strtolower($domainObject->getName()) == strtolower($existingDomainObjectName)) {
-                throw new ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".', ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
+                throw new ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".',
+                    ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
             }
         }
         if ($domainObject->getNeedsUploadFolder()) {
@@ -899,12 +902,12 @@ class Extension
             ],
             'autoload' => [
                 'psr-4' => [
-                    $this->getNamespaceName() .  '\\' => 'Classes'
+                    $this->getNamespaceName() . '\\' => 'Classes'
                 ]
             ],
             'autoload-dev' => [
                 'psr-4' => [
-                    $this->getNamespaceName() .  '\\Tests\\' => 'Tests'
+                    $this->getNamespaceName() . '\\Tests\\' => 'Tests'
                 ]
             ],
             'replace' => [

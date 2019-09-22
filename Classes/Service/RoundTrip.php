@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Service;
 
 /*
@@ -202,19 +203,22 @@ class RoundTrip implements SingletonInterface
             $oldDomainObject = $this->previousDomainObjects[$currentDomainObject->getUniqueIdentifier()];
             /** @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $oldDomainObject */
             $extensionDir = $this->previousExtensionDirectory;
-            $fileName = FileGenerator::getFolderForClassFile($extensionDir, 'Model', false) . $oldDomainObject->getName() . '.php';
+            $fileName = FileGenerator::getFolderForClassFile($extensionDir, 'Model',
+                    false) . $oldDomainObject->getName() . '.php';
             if (file_exists($fileName)) {
                 // import the classObject from the existing file
                 $this->classFileObject = $this->parserService->parseFile($fileName);
                 $this->classObject = $this->classFileObject->getFirstClass();
                 if ($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed) {
                     if (!$this->extensionRenamed) {
-                        $this->log('domainObject renamed. old: ' . $oldDomainObject->getName() . ' new: ' . $currentDomainObject->getName(), 'extension_builder');
+                        $this->log('domainObject renamed. old: ' . $oldDomainObject->getName() . ' new: ' . $currentDomainObject->getName(),
+                            'extension_builder');
                     }
                     $newClassName = $currentDomainObject->getName();
                     $this->classObject->setName($newClassName);
                     $this->classObject->setFileName($currentDomainObject->getName() . '.php');
-                    $this->cleanUp(FileGenerator::getFolderForClassFile($extensionDir, 'Model'), $oldDomainObject->getName() . '.php');
+                    $this->cleanUp(FileGenerator::getFolderForClassFile($extensionDir, 'Model'),
+                        $oldDomainObject->getName() . '.php');
                     $this->cleanUp($extensionDir . 'Configuration/TCA/', $oldDomainObject->getName() . '.php');
                 } else {
                     $this->classObject->setName($currentDomainObject->getName());
@@ -274,7 +278,8 @@ class RoundTrip implements SingletonInterface
                 return $this->classFileObject;
             }
         } else {
-            $this->log('domainObject not identified:' . $currentDomainObject->getName(), 0, $this->previousDomainObjects);
+            $this->log('domainObject not identified:' . $currentDomainObject->getName(), 0,
+                $this->previousDomainObjects);
             $fileName = FileGenerator::getFolderForClassFile($this->extensionDirectory, 'Model', false);
             $fileName .= $currentDomainObject->getName() . '.php';
             if (file_exists($fileName)) {
@@ -283,7 +288,8 @@ class RoundTrip implements SingletonInterface
                 $this->classObject = $this->classFileObject->getFirstClass();
                 $this->classObject->setFileName($fileName);
                 $this->classObject->setName($currentDomainObject->getName());
-                $this->log('class file found:' . $currentDomainObject->getName() . '.php', 0, $this->classObject->getNamespaceName());
+                $this->log('class file found:' . $currentDomainObject->getName() . '.php', 0,
+                    $this->classObject->getNamespaceName());
                 $this->classFileObject->setClasses([$this->classObject]);
                 return $this->classFileObject;
             }
@@ -327,7 +333,8 @@ class RoundTrip implements SingletonInterface
                         if (!isset($newActions[$oldAction->getName()])) {
                             // an action was removed
                             $this->classObject->removeMethod($oldAction->getName() . 'Action');
-                            $this->log('Action method removed:' . $oldAction->getName(), 0, $this->classObject->getMethods());
+                            $this->log('Action method removed:' . $oldAction->getName(), 0,
+                                $this->classObject->getMethods());
                         }
                     }
                     // we don't have to add new ones, this will be done automatically by the class builder
@@ -406,7 +413,8 @@ class RoundTrip implements SingletonInterface
 
     protected function renameVendor($string)
     {
-        return str_replace('\\' . $this->extension->getOriginalVendorName() . '\\', '\\' . $this->extension->getVendorName() . '\\', $string);
+        return str_replace('\\' . $this->extension->getOriginalVendorName() . '\\',
+            '\\' . $this->extension->getVendorName() . '\\', $string);
     }
 
     /**
@@ -418,14 +426,17 @@ class RoundTrip implements SingletonInterface
      * @return void
      * @throws \Exception
      */
-    protected function mapOldControllerToCurrentClassObject(Model\DomainObject $oldDomainObject, Model\DomainObject $currentDomainObject)
-    {
+    protected function mapOldControllerToCurrentClassObject(
+        Model\DomainObject $oldDomainObject,
+        Model\DomainObject $currentDomainObject
+    ) {
         $extensionDir = $this->previousExtensionDirectory;
         $newClassName = $currentDomainObject->getName() . 'Controller';
         $newName = $currentDomainObject->getName();
         $oldName = $oldDomainObject->getName();
         $this->classObject->setName($newClassName);
-        $this->classObject->setDescription($this->replaceUpperAndLowerCase($oldName, $newName, $this->classObject->getDescription()));
+        $this->classObject->setDescription($this->replaceUpperAndLowerCase($oldName, $newName,
+            $this->classObject->getDescription()));
         if ($oldDomainObject->isAggregateRoot()) {
 
             // should we keep the old properties comments and tags?
@@ -454,7 +465,8 @@ class RoundTrip implements SingletonInterface
                         $injectMethod->getBodyStmts()
                     );
                     $injectMethod->setBodyStmts($initializeMethodBodyStmts);
-                    $injectMethod->setTag('param', $currentDomainObject->getFullyQualifiedDomainRepositoryClassName() . ' $' . $newName . 'Repository');
+                    $injectMethod->setTag('param',
+                        $currentDomainObject->getFullyQualifiedDomainRepositoryClassName() . ' $' . $newName . 'Repository');
                     $injectMethod->setName('inject' . $newName . 'Repository');
                     $parameter = new Model\ClassObject\MethodParameter(lcfirst($newName) . 'Repository');
                     $parameter->setTypeHint($currentDomainObject->getFullyQualifiedDomainRepositoryClassName());
@@ -480,7 +492,8 @@ class RoundTrip implements SingletonInterface
                         foreach ($parameters as &$parameter) {
                             if (strpos($parameter->getTypeHint(), $oldDomainObject->getFullQualifiedClassName()) > -1) {
                                 $parameter->setTypeHint($currentDomainObject->getFullQualifiedClassName());
-                                $parameter->setName($this->replaceUpperAndLowerCase($oldName, $newName, $parameter->getName()));
+                                $parameter->setName($this->replaceUpperAndLowerCase($oldName, $newName,
+                                    $parameter->getName()));
                                 $actionMethod->replaceParameter($parameter);
                             }
                         }
@@ -491,17 +504,20 @@ class RoundTrip implements SingletonInterface
                         }
                         $actionMethod->setTags($tags);
 
-                        $actionMethod->setDescription($this->replaceUpperAndLowerCase($oldName, $newName, $actionMethod->getDescription()));
+                        $actionMethod->setDescription($this->replaceUpperAndLowerCase($oldName, $newName,
+                            $actionMethod->getDescription()));
 
                         //TODO: this is not safe. Could rename unwanted variables
-                        $actionMethod->setBodyStmts($this->replaceUpperAndLowerCase($oldName, $newName, $actionMethod->getBodyStmts()));
+                        $actionMethod->setBodyStmts($this->replaceUpperAndLowerCase($oldName, $newName,
+                            $actionMethod->getBodyStmts()));
                         $this->classObject->setMethod($actionMethod);
                     }
                 }
             } else {
                 $this->classObject->removeMethod('initializeAction');
                 $this->classObject->removeMethod($injectMethodName);
-                $this->cleanUp(FileGenerator::getFolderForClassFile($extensionDir, 'Repository'), $oldName . 'Repository.php');
+                $this->cleanUp(FileGenerator::getFolderForClassFile($extensionDir, 'Repository'),
+                    $oldName . 'Repository.php');
             }
         }
 
@@ -562,8 +578,10 @@ class RoundTrip implements SingletonInterface
      *
      * return void (all actions are performed on $this->classObject
      */
-    protected function updateModelClassProperties(Model\DomainObject $oldDomainObject, Model\DomainObject $newDomainObject)
-    {
+    protected function updateModelClassProperties(
+        Model\DomainObject $oldDomainObject,
+        Model\DomainObject $newDomainObject
+    ) {
         $newProperties = [];
         foreach ($newDomainObject->getProperties() as $property) {
             $newProperties[$property->getUniqueIdentifier()] = $property;
@@ -641,7 +659,8 @@ class RoundTrip implements SingletonInterface
             $classProperty->setTag('var', $newProperty->getTypeForComment());
             $newDescription = $newProperty->getDescription();
             if (empty($newDescription) || $newDescription == $newProperty->getName()) {
-                $newDescription = str_replace($oldProperty->getName(), $newProperty->getName(), $classProperty->getDescription());
+                $newDescription = str_replace($oldProperty->getName(), $newProperty->getName(),
+                    $classProperty->getDescription());
             }
             $classProperty->setDescription($newDescription);
             $this->classObject->removeProperty($oldProperty->getName());
@@ -769,7 +788,8 @@ class RoundTrip implements SingletonInterface
 
             $oldMethodBody = $mergedMethod->getBodyStmts();
 
-            $newMethodBody = $this->replacePropertyNameInMethodBody($oldProperty->getName(), $newProperty->getName(), $oldMethodBody);
+            $newMethodBody = $this->replacePropertyNameInMethodBody($oldProperty->getName(), $newProperty->getName(),
+                $oldMethodBody);
             $mergedMethod->setBodyStmts($newMethodBody);
         }
 
@@ -783,7 +803,8 @@ class RoundTrip implements SingletonInterface
                 if ($oldParameterName == ClassBuilder::getParameterName($oldProperty, $methodType)) {
                     $newParameterName = ClassBuilder::getParameterName($newProperty, $methodType);
                     $methodParameter->setName($newParameterName);
-                    $newMethodBody = $this->replacePropertyNameInMethodBody($oldParameterName, $newParameterName, $mergedMethod->getBodyStmts());
+                    $newMethodBody = $this->replacePropertyNameInMethodBody($oldParameterName, $newParameterName,
+                        $mergedMethod->getBodyStmts());
                     $mergedMethod->setBodyStmts($newMethodBody);
                 }
                 $typeHint = $methodParameter->getTypeHint();
@@ -806,7 +827,8 @@ class RoundTrip implements SingletonInterface
         }
 
         // replace property names in description
-        $mergedMethod->setDescription(str_replace($oldProperty->getName(), $newProperty->getName(), $mergedMethod->getDescription()));
+        $mergedMethod->setDescription(str_replace($oldProperty->getName(), $newProperty->getName(),
+            $mergedMethod->getDescription()));
         if ($oldProperty instanceof AbstractRelation && $newProperty instanceof AbstractRelation) {
             $mergedMethod->setDescription(
                 str_replace(
@@ -1064,7 +1086,8 @@ class RoundTrip implements SingletonInterface
                     if (!is_dir($overrideDir)) {
                         GeneralUtility::mkdir_deep($tcaDir, 'Overrides');
                     }
-                    $success = GeneralUtility::writeFile($overrideDir . $domainObject->getDatabaseTableName() . '.php', $customFileContent);
+                    $success = GeneralUtility::writeFile($overrideDir . $domainObject->getDatabaseTableName() . '.php',
+                        $customFileContent);
                     if (!$success) {
                         throw new \Exception('File ' . $overrideDir . $domainObject->getDatabaseTableName() . '.php could not be created!');
                     } else {

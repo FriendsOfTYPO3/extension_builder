@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
 /*
@@ -71,11 +72,11 @@ class SwitchViewHelper extends AbstractViewHelper implements ChildNodeAccessInte
     }
 
     /**
-    * Arguments Initialization
-    */
+     * Arguments Initialization
+     */
     public function initializeArguments()
     {
-        $this->registerArgument('expression', 'mixed', '', TRUE);
+        $this->registerArgument('expression', 'mixed', '', true);
     }
 
     /**
@@ -88,7 +89,8 @@ class SwitchViewHelper extends AbstractViewHelper implements ChildNodeAccessInte
         $this->backupSwitchState();
         $templateVariableContainer = $this->renderingContext->getViewHelperVariableContainer();
 
-        $templateVariableContainer->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression', $this->arguments['expression']);
+        $templateVariableContainer->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression',
+            $this->arguments['expression']);
         $templateVariableContainer->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break', false);
 
         foreach ($this->childNodes as $childNode) {
@@ -99,7 +101,8 @@ class SwitchViewHelper extends AbstractViewHelper implements ChildNodeAccessInte
                 continue;
             }
             $content = $childNode->evaluate($this->renderingContext);
-            if ($templateVariableContainer->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break') === true) {
+            if ($templateVariableContainer->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
+                    'break') === true) {
                 break;
             }
         }
@@ -118,11 +121,15 @@ class SwitchViewHelper extends AbstractViewHelper implements ChildNodeAccessInte
      */
     protected function backupSwitchState()
     {
-        if ($this->renderingContext->getViewHelperVariableContainer()->exists('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression')) {
-            $this->backupSwitchExpression = $this->renderingContext->getViewHelperVariableContainer()->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression');
+        if ($this->renderingContext->getViewHelperVariableContainer()->exists('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
+            'switchExpression')) {
+            $this->backupSwitchExpression = $this->renderingContext->getViewHelperVariableContainer()->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
+                'switchExpression');
         }
-        if ($this->renderingContext->getViewHelperVariableContainer()->exists('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break')) {
-            $this->backupBreakState = $this->renderingContext->getViewHelperVariableContainer()->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break');
+        if ($this->renderingContext->getViewHelperVariableContainer()->exists('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
+            'break')) {
+            $this->backupBreakState = $this->renderingContext->getViewHelperVariableContainer()->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
+                'break');
         }
     }
 
@@ -141,7 +148,8 @@ class SwitchViewHelper extends AbstractViewHelper implements ChildNodeAccessInte
             );
         }
         if ($this->backupBreakState !== false) {
-            $this->renderingContext->getViewHelperVariableContainer()->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break', true);
+            $this->renderingContext->getViewHelperVariableContainer()->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
+                'break', true);
         }
     }
 }

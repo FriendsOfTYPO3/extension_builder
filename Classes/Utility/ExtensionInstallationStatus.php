@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Utility;
 
 /*
@@ -118,7 +119,8 @@ class ExtensionInstallationStatus
                 $fieldDefinitionsFromFile = $sqlHandler->getFieldDefinitions_fileContent($sqlContent);
                 if (count($fieldDefinitionsFromFile)) {
                     $fieldDefinitionsFromCurrentDatabase = $sqlHandler->getFieldDefinitions_database();
-                    $updateTableDefinition = $sqlHandler->getDatabaseExtra($fieldDefinitionsFromFile, $fieldDefinitionsFromCurrentDatabase);
+                    $updateTableDefinition = $sqlHandler->getDatabaseExtra($fieldDefinitionsFromFile,
+                        $fieldDefinitionsFromCurrentDatabase);
                     $this->updateStatements = $sqlHandler->getUpdateSuggestions($updateTableDefinition);
                     if (!empty($updateTableDefinition['extra']) || !empty($updateTableDefinition['diff']) || !empty($updateTableDefinition['diff_currentValues'])) {
                         $this->dbUpdateNeeded = true;
@@ -141,7 +143,8 @@ class ExtensionInstallationStatus
             if ($this->dbUpdateNeeded) {
                 foreach ($this->updateStatements as $type => $statements) {
                     foreach ($statements as $key => $statement) {
-                        if (in_array($type, ['change', 'add', 'create_table']) && in_array($key, $params['updateStatements'])) {
+                        if (in_array($type, ['change', 'add', 'create_table']) && in_array($key,
+                                $params['updateStatements'])) {
                             $res = $this->getDatabaseConnection()->admin_query($statement);
                             if ($res === false) {
                                 $hasErrors = true;

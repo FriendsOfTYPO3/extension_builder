@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Tests\Functional;
 
 /*
@@ -60,7 +61,8 @@ class CompatibilityTest extends BaseFunctionalTest
         if (file_exists($jsonFile)) {
             // compatibility adaptions for configurations from older versions
             $extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), true);
-            $extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON($extensionConfigurationJSON, false);
+            $extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON($extensionConfigurationJSON,
+                false);
         } else {
             $extensionConfigurationJSON = [];
             self::fail('JSON file not found');
@@ -101,14 +103,13 @@ class CompatibilityTest extends BaseFunctionalTest
                             [date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')],
                             $originalLines[$c]
                         );
-                        /** uncomment these lines to debug failing tests
-                        if (preg_replace('/\s+/', ' ', $originalLine) !=  preg_replace('/\s+/', ' ', $generatedLines[$c])) {
+                        /** uncomment these lines to debug failing tests */
+                         if (preg_replace('/\s+/', ' ', $originalLine) !=  preg_replace('/\s+/', ' ', $generatedLines[$c])) {
                             echo 'Mismatch: Line ' . $c . ':' . preg_replace('/\s+/', ' ', $originalLine);
                             echo 'Line ' . $c . ':' . preg_replace('/\s+/', ' ', $generatedLines[$c]);
                             echo 'in File ' . $referenceFile;
                             die();
-                        }
-                         * */
+                         }
                         self::assertEquals(
                             preg_replace('/\s+/', ' ', $originalLine),
                             preg_replace('/\s+/', ' ', $generatedLines[$c]),

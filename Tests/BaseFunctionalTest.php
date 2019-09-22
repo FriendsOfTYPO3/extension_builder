@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Tests;
 
 /*
@@ -86,7 +87,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
     /**
      * @var \org\bovigo\vfs\vfsStreamDirectory
      */
-     protected $testDir = NULL;
+    protected $testDir = null;
 
     protected $testExtensionsToLoad = ['typo3conf/ext/extension_builder'];
 
@@ -104,7 +105,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         $fixturesDir = vfsStream::newDirectory('Fixtures');
         $rootDir->addChild($fixturesDir);
 
-        vfsStream::copyFromFileSystem($this->fixturesPath, $fixturesDir, 1024*1024);
+        vfsStream::copyFromFileSystem($this->fixturesPath, $fixturesDir, 1024 * 1024);
 
         $yamlParser = new SpycYAMLParser();
         $settings = $yamlParser->YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
@@ -120,7 +121,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
             ->method('getExtensionDir')
             ->will(self::returnValue($dummyExtensionDir));
         if (is_dir($dummyExtensionDir)) {
-           GeneralUtility::mkdir($dummyExtensionDir, true);
+            GeneralUtility::mkdir($dummyExtensionDir, true);
         }
 
         $this->extension->setSettings($settings);
@@ -161,8 +162,10 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
             ]
         );
         // needed when sub routines in file generator are called without an initial setup
-        $this->fileGenerator->_set('codeTemplateRootPaths', [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/']);
-        $this->fileGenerator->_set('codeTemplatePartialPaths', [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials']);
+        $this->fileGenerator->_set('codeTemplateRootPaths',
+            [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/']);
+        $this->fileGenerator->_set('codeTemplatePartialPaths',
+            [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials']);
         $this->fileGenerator->_set('enableRoundtrip', true);
         $this->fileGenerator->_set('extension', $this->extension);
     }
@@ -170,7 +173,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
     protected function tearDown()
     {
         if (!empty($this->extension) && $this->extension->getExtensionKey() != null) {
-            GeneralUtility::rmdir($this->extension->getExtensionDir(), true);
+            //GeneralUtility::rmdir($this->extension->getExtensionDir(), true);
         }
     }
 
@@ -235,7 +238,8 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         if (@file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php')) {
             unlink($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php');
         }
-        self::assertFalse(file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php'), 'Dummy files could not be removed:' . $this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php');
+        self::assertFalse(file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php'),
+            'Dummy files could not be removed:' . $this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php');
     }
 
 }

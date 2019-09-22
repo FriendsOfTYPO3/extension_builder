@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Service;
 
 /*
@@ -79,7 +80,8 @@ class Printer extends Standard
      * @param array $comments
      * @return string
      */
-    protected function pComments(array $comments) : string {
+    protected function pComments(array $comments): string
+    {
         return $this->nl . parent::pComments($comments);
     }
 
@@ -90,7 +92,8 @@ class Printer extends Standard
      *
      * @return string Comma separated pretty printed nodes
      */
-    protected function pCommaSeparated(array $nodes) : string {
+    protected function pCommaSeparated(array $nodes): string
+    {
         $multiline = false;
         if (!empty($nodes)) {
             $startLine = reset($nodes)->getAttribute('startLine');

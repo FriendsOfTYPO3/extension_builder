@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\ViewHelpers\Format;
 
 /*
@@ -26,7 +27,6 @@ class RemoveMultipleNewlinesViewHelper extends AbstractViewHelper
      * Uppercase first character
      *
      * @return string The altered string.
-     * @author Christopher Hlubek <hlubek@networkteam.com>
      */
     public function render()
     {

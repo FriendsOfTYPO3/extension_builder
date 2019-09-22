@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
 /*
@@ -29,8 +30,9 @@ class MappingViewHelper extends AbstractConditionViewHelper
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
      * @return void
      */
-    public function injectExtensionBuilderConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
-    {
+    public function injectExtensionBuilderConfigurationManager(
+        ExtensionBuilderConfigurationManager $configurationManager
+    ) {
         $this->configurationManager = $configurationManager;
     }
 

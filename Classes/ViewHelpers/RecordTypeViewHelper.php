@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
 /*
@@ -34,17 +35,19 @@ class RecordTypeViewHelper extends AbstractViewHelper
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
      * @return void
      */
-    public function injectExtensionBuilderConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
-    {
+    public function injectExtensionBuilderConfigurationManager(
+        ExtensionBuilderConfigurationManager $configurationManager
+    ) {
         $this->configurationManager = $configurationManager;
     }
 
     /**
-    * Arguments Initialization
-    */
+     * Arguments Initialization
+     */
     public function initializeArguments()
     {
-        $this->registerArgument('domainObject', \EBT\ExtensionBuilder\Domain\Model\DomainObject::class, 'domainObject', TRUE);
+        $this->registerArgument('domainObject', \EBT\ExtensionBuilder\Domain\Model\DomainObject::class, 'domainObject',
+            true);
     }
 
     /**
