@@ -1,4 +1,5 @@
 <?php
+
 namespace ETB\ExtensionBuilder\Parser\ExtendedClasses;
 
 /*

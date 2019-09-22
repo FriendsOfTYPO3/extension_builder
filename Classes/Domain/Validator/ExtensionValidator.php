@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Domain\Validator;
 
 /*
@@ -170,8 +171,9 @@ class ExtensionValidator extends AbstractValidator
      * @param ExtensionBuilderConfigurationManager $configurationManager
      * @return void
      */
-    public function injectExtensionBuilderConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
-    {
+    public function injectExtensionBuilderConfigurationManager(
+        ExtensionBuilderConfigurationManager $configurationManager
+    ) {
         $this->configurationManager = $configurationManager;
     }
 
@@ -282,14 +284,16 @@ class ExtensionValidator extends AbstractValidator
         if (is_array($controllerActionCombinationConfiguration)) {
             $firstControllerAction = true;
             foreach ($controllerActionCombinationConfiguration as $controllerName => $actionNames) {
-                $this->validateActionConfiguration($controllerName, $actionNames, 'plugin ' . $plugin->getName(), $extension, $firstControllerAction);
+                $this->validateActionConfiguration($controllerName, $actionNames, 'plugin ' . $plugin->getName(),
+                    $extension, $firstControllerAction);
                 $firstControllerAction = false;
             }
         }
         $noncachableActionConfiguration = $plugin->getNoncacheableControllerActions();
         if (is_array($noncachableActionConfiguration)) {
             foreach ($noncachableActionConfiguration as $controllerName => $actionNames) {
-                $this->validateActionConfiguration($controllerName, $actionNames, 'plugin ' . $plugin->getName(), $extension);
+                $this->validateActionConfiguration($controllerName, $actionNames, 'plugin ' . $plugin->getName(),
+                    $extension);
             }
         }
         $switchableActionConfiguration = $plugin->getSwitchableControllerActions();
@@ -300,7 +304,8 @@ class ExtensionValidator extends AbstractValidator
                     // Format should be: Controller->action
                     list($controllerName, $actionName) = explode('->', $actions);
                     $configuredActions[] = $actionName;
-                    $this->validateActionConfiguration($controllerName, [$actionName], 'plugin ' . $plugin->getName(), $extension);
+                    $this->validateActionConfiguration($controllerName, [$actionName], 'plugin ' . $plugin->getName(),
+                        $extension);
                 }
                 $this->validateDependentActions($configuredActions, 'plugin ' . $plugin->getName());
             }
@@ -318,7 +323,8 @@ class ExtensionValidator extends AbstractValidator
         if (is_array($controllerActionCombinationConfiguration)) {
             $firstControllerAction = true;
             foreach ($controllerActionCombinationConfiguration as $controllerName => $actionNames) {
-                $this->validateActionConfiguration($controllerName, $actionNames, 'module ' . $backendModule->getName(), $extension, $firstControllerAction);
+                $this->validateActionConfiguration($controllerName, $actionNames, 'module ' . $backendModule->getName(),
+                    $extension, $firstControllerAction);
                 $firstControllerAction = false;
             }
         }
@@ -352,8 +358,13 @@ class ExtensionValidator extends AbstractValidator
      * @param bool $firstControllerAction
      * @return void
      */
-    private function validateActionConfiguration($controllerName, $actionNames, $label, $extension, $firstControllerAction = false)
-    {
+    private function validateActionConfiguration(
+        $controllerName,
+        $actionNames,
+        $label,
+        $extension,
+        $firstControllerAction = false
+    ) {
         if ($firstControllerAction) {
             // the first Controller action config is the default Controller action
             // we show a warning if that's an action that requires a domain object as parameter
@@ -414,7 +425,8 @@ class ExtensionValidator extends AbstractValidator
                 }
                 if (!empty($pluginConfiguration['actions']['switchableActions'])) {
                     $isValid = true;
-                    $lines = GeneralUtility::trimExplode(LF, $pluginConfiguration['actions']['switchableActions'], true);
+                    $lines = GeneralUtility::trimExplode(LF, $pluginConfiguration['actions']['switchableActions'],
+                        true);
                     $firstLine = true;
                     foreach ($lines as $line) {
                         if ($firstLine) {
@@ -540,7 +552,6 @@ class ExtensionValidator extends AbstractValidator
     }
 
     /**
-     * @author Sebastian Michaelsen <sebastian.gebhard@gmail.com>
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
      * @return void
      */
@@ -640,7 +651,8 @@ class ExtensionValidator extends AbstractValidator
             }
         }
         if ($tableName) {
-            if (in_array($tableName, ['tt_content', 'pages']) || preg_match('/^(pages_|be_|sys_|static_|cf_)/', $tableName)) {
+            if (in_array($tableName, ['tt_content', 'pages']) || preg_match('/^(pages_|be_|sys_|static_|cf_)/',
+                    $tableName)) {
                 $this->validationResult['warnings'][] = new ExtensionException(
                     'The configuration for table "' . $tableName . '" is not compatible' . LF .
                     ' with extbase. You have to configure it yourself if you want to map' . LF .
@@ -669,8 +681,8 @@ class ExtensionValidator extends AbstractValidator
         if (isset($GLOBALS['TCA'][$tableName]['ctrl']['type'])) {
             $columns = $this->getDatabaseConnection($tableName)->getSchemaManager()->listTableColumns($tableName);
             foreach ($columns as $column) {
-                if ($column->getName()  === $GLOBALS['TCA'][$tableName]['ctrl']['type']) {
-                    if ((String) $column->getType() === 'Integer') {
+                if ($column->getName() === $GLOBALS['TCA'][$tableName]['ctrl']['type']) {
+                    if ((String)$column->getType() === 'Integer') {
                         $this->validationResult['warnings'][] = new ExtensionException(
                             'This means the type field can not be used for defining the record type. ' . LF .
                             'You have to configure the mappings yourself if you want to map to this' . LF .
@@ -830,7 +842,6 @@ class ExtensionValidator extends AbstractValidator
     }
 
     /**
-     * @author Rens Admiraal
      * @param string $key
      * @return void
      */

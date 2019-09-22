@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Service;
 
 /*
@@ -53,7 +54,8 @@ class ParserService implements SingletonInterface
 
     protected $parser = null;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->parser = (new ParserFactory)->create(ParserFactory::ONLY_PHP7);
     }
 
@@ -156,5 +158,7 @@ class ParserService implements SingletonInterface
         return $stmts;
     }
 
-    public function initReduceCallbacks(){}
+    public function initReduceCallbacks()
+    {
+    }
 }

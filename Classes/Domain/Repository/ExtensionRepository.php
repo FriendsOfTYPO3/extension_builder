@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Domain\Repository;
 
 /*
@@ -34,8 +35,9 @@ class ExtensionRepository implements SingletonInterface
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
      * @return void
      */
-    public function injectExtensionBuilderConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
-    {
+    public function injectExtensionBuilderConfigurationManager(
+        ExtensionBuilderConfigurationManager $configurationManager
+    ) {
         $this->configurationManager = $configurationManager;
     }
 
@@ -84,6 +86,7 @@ class ExtensionRepository implements SingletonInterface
         if (defined('JSON_PRETTY_PRINT')) {
             $encodeOptions |= JSON_PRETTY_PRINT;
         }
-        GeneralUtility::writeFile($extension->getExtensionDir() . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE, json_encode($extensionBuildConfiguration, $encodeOptions));
+        GeneralUtility::writeFile($extension->getExtensionDir() . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE,
+            json_encode($extensionBuildConfiguration, $encodeOptions));
     }
 }

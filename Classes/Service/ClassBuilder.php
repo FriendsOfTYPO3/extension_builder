@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Service;
 
 /*
@@ -150,8 +151,11 @@ class ClassBuilder implements SingletonInterface
      * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
      * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
      */
-    public function generateModelClassFileObject($domainObject, $modelClassTemplatePath, $existingClassFileObject = null)
-    {
+    public function generateModelClassFileObject(
+        $domainObject,
+        $modelClassTemplatePath,
+        $existingClassFileObject = null
+    ) {
         $this->classObject = null;
         $this->templateFileObject = $this->parserService->parseFile($modelClassTemplatePath);
         $this->templateClassObject = $this->templateFileObject->getFirstClass();
@@ -231,7 +235,8 @@ class ClassBuilder implements SingletonInterface
             if ($domainProperty->getDescription()) {
                 $classProperty->setDescription($domainProperty->getDescription());
             } else {
-                $classProperty->setDescription(str_replace('property', $propertyName, $classProperty->getDescription()));
+                $classProperty->setDescription(str_replace('property', $propertyName,
+                    $classProperty->getDescription()));
             }
 
             if ($domainProperty->getHasDefaultValue() && $this->settings['setDefaultValuesForClassProperties'] !== false) {
@@ -287,7 +292,8 @@ class ClassBuilder implements SingletonInterface
             } else {
                 $constructorMethod = $this->classObject->getMethod('__construct');
             }
-            if (preg_match('/\$this->initStorageObjects()/', $this->printerService->render($constructorMethod->getBodyStmts())) < 1) {
+            if (preg_match('/\$this->initStorageObjects()/',
+                    $this->printerService->render($constructorMethod->getBodyStmts())) < 1) {
                 $this->classObject->setMethod($this->classObject->getMethod('__construct'));
             }
             $initStorageObjectsMethod = clone($this->templateClassObject->getMethod('initStorageObjects'));
@@ -295,7 +301,9 @@ class ClassBuilder implements SingletonInterface
             $templateBodyStmts = $initStorageObjectsMethod->getBodyStmts();
             $initStorageObjectsMethod->setModifier('protected');
             foreach ($anyToManyRelationProperties as $relationProperty) {
-                $methodBodyStmts = array_merge($methodBodyStmts, $this->parserService->replaceNodeProperty($templateBodyStmts, ['children' => $relationProperty->getName()], ['Expr_PropertyFetch', 'Expr_Variable']));
+                $methodBodyStmts = array_merge($methodBodyStmts,
+                    $this->parserService->replaceNodeProperty($templateBodyStmts,
+                        ['children' => $relationProperty->getName()], ['Expr_PropertyFetch', 'Expr_Variable']));
             }
             $initStorageObjectsMethod->setBodyStmts($methodBodyStmts);
             $this->classObject->setMethod($initStorageObjectsMethod);
@@ -714,8 +722,11 @@ class ClassBuilder implements SingletonInterface
      * @return \EBT\ExtensionBuilder\Domain\Model\File
      * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
      */
-    public function generateControllerClassFileObject($domainObject, $controllerClassTemplatePath, $existingClassFileObject = null)
-    {
+    public function generateControllerClassFileObject(
+        $domainObject,
+        $controllerClassTemplatePath,
+        $existingClassFileObject = null
+    ) {
         $this->classObject = null;
         $className = $domainObject->getName() . 'Controller';
         $this->templateFileObject = $this->parserService->parseFile($controllerClassTemplatePath);
@@ -786,8 +797,11 @@ class ClassBuilder implements SingletonInterface
      * @return \EBT\ExtensionBuilder\Domain\Model\File
      * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
      */
-    public function generateRepositoryClassFileObject($domainObject, $repositoryTemplateClassPath, $existingClassFileObject = null)
-    {
+    public function generateRepositoryClassFileObject(
+        $domainObject,
+        $repositoryTemplateClassPath,
+        $existingClassFileObject = null
+    ) {
         $this->classObject = null;
         $className = $domainObject->getName() . 'Repository';
         $this->templateFileObject = $this->parserService->parseFile($repositoryTemplateClassPath);

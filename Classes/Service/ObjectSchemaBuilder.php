@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Service;
 
 /*
@@ -50,8 +51,8 @@ class ObjectSchemaBuilder implements SingletonInterface
     /**
      *
      * @param array $jsonDomainObject
-     * @throws \Exception
      * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @throws \Exception
      */
     public function build(array $jsonDomainObject)
     {
@@ -83,7 +84,10 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (isset($jsonDomainObject['propertyGroup']['properties'])) {
             foreach ($jsonDomainObject['propertyGroup']['properties'] as $propertyJsonConfiguration) {
                 $propertyType = $propertyJsonConfiguration['propertyType'];
-                if (in_array($propertyType, ['Image', 'File']) && !empty($propertyJsonConfiguration['maxItems']) && $propertyJsonConfiguration['maxItems'] > 1) {
+                if (in_array($propertyType, [
+                        'Image',
+                        'File'
+                    ]) && !empty($propertyJsonConfiguration['maxItems']) && $propertyJsonConfiguration['maxItems'] > 1) {
                     $propertyJsonConfiguration['relationType'] = 'zeroToMany';
                     $propertyJsonConfiguration['relationName'] = $propertyJsonConfiguration['propertyName'];
                     $propertyJsonConfiguration['relationDescription'] = $propertyJsonConfiguration['propertyDescription'];
@@ -136,8 +140,8 @@ class ObjectSchemaBuilder implements SingletonInterface
     /**
      * @param array $relationJsonConfiguration
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     * @throws \Exception
      * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation
+     * @throws \Exception
      */
     public function buildRelation($relationJsonConfiguration, $domainObject)
     {

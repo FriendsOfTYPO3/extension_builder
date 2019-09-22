@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
 /*
@@ -47,7 +48,6 @@ class PluralizeViewHelper extends AbstractViewHelper
      * Pluralize a word
      *
      * @return string The pluralized string
-     * @author Christopher Hlubek <hlubek@networkteam.com>
      */
     public function render()
     {

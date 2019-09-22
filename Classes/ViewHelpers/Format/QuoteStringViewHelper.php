@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\ViewHelpers\Format;
 
 /*
@@ -27,11 +28,11 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 class QuoteStringViewHelper extends AbstractViewHelper
 {
     /**
-    * Arguments Initialization
-    */
+     * Arguments Initialization
+     */
     public function initializeArguments()
     {
-        $this->registerArgument('value', 'string', 'The string to addslashes', FALSE);
+        $this->registerArgument('value', 'string', 'The string to addslashes', false);
     }
 
     /**

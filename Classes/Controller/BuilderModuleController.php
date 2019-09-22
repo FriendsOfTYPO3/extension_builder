@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Controller;
 
 /*
@@ -91,8 +92,9 @@ class BuilderModuleController extends ActionController
      * @return void
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    public function injectExtensionBuilderConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
-    {
+    public function injectExtensionBuilderConfigurationManager(
+        ExtensionBuilderConfigurationManager $configurationManager
+    ) {
         $this->extensionBuilderConfigurationManager = $configurationManager;
         $this->extensionBuilderSettings = $this->extensionBuilderConfigurationManager->getSettings();
     }
@@ -174,7 +176,8 @@ class BuilderModuleController extends ActionController
      */
     public function domainmodellingAction()
     {
-        $this->view->assign('extPath', PathUtility::stripPathSitePrefix(ExtensionManagementUtility::extPath('extension_builder')));
+        $this->view->assign('extPath',
+            PathUtility::stripPathSitePrefix(ExtensionManagementUtility::extPath('extension_builder')));
         $this->view->assign('settings', $this->extensionBuilderConfigurationManager->getSettings());
         $this->view->assign('currentAction', $this->request->getControllerActionName());
         $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', ['firstTime' => 0]);
@@ -215,8 +218,8 @@ class BuilderModuleController extends ActionController
     /**
      * Generate the code files according to the transferred JSON configuration.
      *
-     * @throws \Exception
      * @return array (status => message)
+     * @throws \Exception
      */
     protected function rpcActionSave()
     {
@@ -276,7 +279,8 @@ class BuilderModuleController extends ActionController
                 if (empty($extensionSettings)) {
                     // no config file in an existing extension!
                     // this would result in a	 total overwrite so we create one and give a warning
-                    $this->extensionBuilderConfigurationManager->createInitialSettingsFile($extension, $this->extensionBuilderSettings['codeTemplateRootPaths']);
+                    $this->extensionBuilderConfigurationManager->createInitialSettingsFile($extension,
+                        $this->extensionBuilderSettings['codeTemplateRootPaths']);
                     return ['warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the extension builder the first time for this extension. <br />A settings file was generated in <br /><b>typo3conf/ext/" . $extension->getExtensionKey() . '/Configuration/ExtensionBuilder/settings.yaml.</b><br />Configure the overwrite settings, then save again.'];
                 }
                 try {
@@ -285,9 +289,11 @@ class BuilderModuleController extends ActionController
                     throw $e;
                 }
             } else {
-                if (!is_array($extensionSettings['ignoreWarnings']) || !in_array(ExtensionValidator::EXTENSION_DIR_EXISTS, $extensionSettings['ignoreWarnings'])) {
+                if (!is_array($extensionSettings['ignoreWarnings']) || !in_array(ExtensionValidator::EXTENSION_DIR_EXISTS,
+                        $extensionSettings['ignoreWarnings'])) {
                     $confirmationRequired = $this->handleValidationWarnings([
-                        new ExtensionException("This action will overwrite previously saved content!\n(Enable the roundtrip feature to avoid this warning).", ExtensionValidator::EXTENSION_DIR_EXISTS)
+                        new ExtensionException("This action will overwrite previously saved content!\n(Enable the roundtrip feature to avoid this warning).",
+                            ExtensionValidator::EXTENSION_DIR_EXISTS)
                     ]);
                     if (!empty($confirmationRequired)) {
                         return $confirmationRequired;

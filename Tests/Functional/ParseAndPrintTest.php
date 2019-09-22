@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Tests\Functional;
 
 /*
@@ -40,7 +41,6 @@ class ParseAndPrintTest extends BaseFunctionalTest
         $fileName = 'SimpleProperty.php';
         $this->parseAndPrint($fileName);
     }
-
 
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
 
 /*
@@ -388,7 +389,6 @@ abstract class AbstractProperty
     }
 
     /**
-
      * Get the validate annotation to be used in the domain model for this property.
      *
      * @return string
@@ -578,7 +578,8 @@ abstract class AbstractProperty
     /**
      * @return bool
      */
-    public function isSearchable() {
+    public function isSearchable()
+    {
         return $this->searchable;
     }
 }

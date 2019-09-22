@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Utility;
 
 /**
@@ -127,8 +128,8 @@ class SpycYAMLParser
      *   print_r($array);
      *  </code>
      * @access public
-     * @return array
      * @param string $input Path of YAML file or string containing YAML
+     * @return array
      */
     public static function YAMLLoad($input)
     {
@@ -152,8 +153,8 @@ class SpycYAMLParser
      *   print_r($array);
      *  </code>
      * @access public
-     * @return array
      * @param string $input String containing YAML
+     * @return array
      */
     public static function YAMLLoadString($input)
     {
@@ -176,11 +177,11 @@ class SpycYAMLParser
      * you can turn off wordwrap by passing in 0.
      *
      * @access public
-     * @return string
-     *
      * @param array $array PHP array
      * @param int $indent Pass in false to use the default, which is 2
      * @param int $wordwrap Pass in 0 for no wordwrap, false for default (40)
+     *
+     * @return string
      *
      * @throws \Exception
      */
@@ -205,11 +206,11 @@ class SpycYAMLParser
      * you can turn off wordwrap by passing in 0.
      *
      * @access public
-     * @return string
-     *
      * @param array $array PHP array
      * @param int $indent Pass in false to use the default, which is 2
      * @param int $wordwrap Pass in 0 for no wordwrap, false for default (40)
+     *
+     * @return string
      *
      * @throws \Exception
      */
@@ -252,11 +253,11 @@ class SpycYAMLParser
      * Attempts to convert a key / value array item to YAML
      *
      * @access private
-     * @return string
-     *
      * @param string $key The name of the key
      * @param mixed $value The value of the item
      * @param int $indent The indent of the current node
+     *
+     * @return string
      *
      * @throws \Exception
      */
@@ -287,10 +288,10 @@ class SpycYAMLParser
      * Attempts to convert an array to YAML
      *
      * @access private
-     * @return string
-     *
      * @param array $array The array you want to convert
      * @param int $indent The indent of the current level
+     *
+     * @return string
      *
      * @throws \Exception
      */
@@ -314,20 +315,23 @@ class SpycYAMLParser
      * Returns YAML from a key and a value
      *
      * @access private
-     * @return string
-     *
      * @param string $key The name of the key
      * @param mixed $value The value of the item
      * @param int $indent The indent of the current node
+     *
+     * @return string
      *
      * @throws \Exception
      */
     private function _dumpNode($key, $value, $indent, $previous_key = -1, $first_key = 0)
     {
         // do some folding here, for blocks
-        if (is_string($value) && ((strpos($value, PHP_EOL) !== false || strpos($value, ': ') !== false || strpos($value, '- ') !== false ||
-                    strpos($value, '*') !== false || strpos($value, '#') !== false || strpos($value, '<') !== false || strpos($value, '>') !== false ||
-                    strpos($value, '[') !== false || strpos($value, ']') !== false || strpos($value, '{') !== false || strpos($value, '}') !== false) || substr($value, -1, 1) == ':')
+        if (is_string($value) && ((strpos($value, PHP_EOL) !== false || strpos($value, ': ') !== false || strpos($value,
+                        '- ') !== false ||
+                    strpos($value, '*') !== false || strpos($value, '#') !== false || strpos($value,
+                        '<') !== false || strpos($value, '>') !== false ||
+                    strpos($value, '[') !== false || strpos($value, ']') !== false || strpos($value,
+                        '{') !== false || strpos($value, '}') !== false) || substr($value, -1, 1) == ':')
         ) {
             $value = $this->_doLiteralBlock($value, $indent);
         } else {
@@ -362,9 +366,9 @@ class SpycYAMLParser
     /**
      * Creates a literal block for dumping
      * @access private
-     * @return string
      * @param $value
      * @param $indent int The value of the indent
+     * @return string
      */
     private function _doLiteralBlock($value, $indent)
     {
@@ -387,8 +391,8 @@ class SpycYAMLParser
     /**
      * Folds a string of text, if necessary
      * @access private
-     * @return string
      * @param string $value The string you wish to fold
+     * @return string
      */
     private function _doFolding($value, $indent)
     {
@@ -512,8 +516,8 @@ class SpycYAMLParser
     /**
      * Parses YAML code and returns an array for a node
      * @access private
-     * @return array
      * @param string $line A line from the YAML file
+     * @return array
      */
     private function _parseLine($line)
     {

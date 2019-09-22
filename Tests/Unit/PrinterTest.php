@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Tests\Unit;
 
 /*
@@ -54,7 +55,8 @@ class PrinterTest extends BaseUnitTest
      */
     public function printSimplePropertyClass()
     {
-        self::assertTrue(is_writable($this->tmpDir), 'Directory not writable: ' . $this->tmpDir . '. Can\'t compare rendered files');
+        self::assertTrue(is_writable($this->tmpDir),
+            'Directory not writable: ' . $this->tmpDir . '. Can\'t compare rendered files');
         $fileName = 'SimpleProperty.php';
         $classFileObject = $this->parseAndWrite($fileName);
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
@@ -236,7 +238,8 @@ class PrinterTest extends BaseUnitTest
         $classFileObject = $this->parseAndWrite($fileName);
         $tags = $classFileObject->getFirstClass()->getMethod('testMethod')->getTagValues('param');
         self::assertEquals(count($tags), 3);
-        self::assertSame($tags, ['$string', 'array $arr', '\\EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter $n']);
+        self::assertSame($tags,
+            ['$string', 'array $arr', '\\EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter $n']);
     }
 
     /**
@@ -321,9 +324,11 @@ class PrinterTest extends BaseUnitTest
         if (!class_exists($className)) {
             require_once($pathToGeneratedFile);
         }
-        self::assertTrue(class_exists($className), 'Class "' . $className . '" does not exist! Tried ' . $pathToGeneratedFile);
+        self::assertTrue(class_exists($className),
+            'Class "' . $className . '" does not exist! Tried ' . $pathToGeneratedFile);
         $reflectedClass = new \ReflectionClass($className);
-        self::assertEquals(count($reflectedClass->getMethods()), count($classObject->getMethods()), 'Method count does not match');
+        self::assertEquals(count($reflectedClass->getMethods()), count($classObject->getMethods()),
+            'Method count does not match');
         self::assertEquals(count($reflectedClass->getProperties()), count($classObject->getProperties()));
         self::assertEquals(count($reflectedClass->getConstants()), count($classObject->getConstants()));
         if (strlen($classObject->getNamespaceName()) > 0) {

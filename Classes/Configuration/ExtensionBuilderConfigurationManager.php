@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Configuration;
 
 /*
@@ -73,8 +74,8 @@ class ExtensionBuilderConfigurationManager extends ConfigurationManager
     /**
      * Reads the configuration from this->inputData and returns it as array.
      *
-     * @throws \Exception
      * @return array
+     * @throws \Exception
      */
     public function getConfigurationFromModeler()
     {
@@ -258,7 +259,8 @@ class ExtensionBuilderConfigurationManager extends ConfigurationManager
         GeneralUtility::mkdir_deep($extension->getExtensionDir(), self::SETTINGS_DIR);
         $settings = file_get_contents($codeTemplateRootPaths[0] . 'Configuration/ExtensionBuilder/settings.yamlt');
         $settings = str_replace('{extension.extensionKey}', $extension->getExtensionKey(), $settings);
-        $settings = str_replace('{f:format.date(format:\'Y-m-d\\TH:i:s\\Z\',date:\'now\')}', date('Y-m-d\TH:i:s\Z'), $settings);
+        $settings = str_replace('{f:format.date(format:\'Y-m-d\\TH:i:s\\Z\',date:\'now\')}', date('Y-m-d\TH:i:s\Z'),
+            $settings);
         GeneralUtility::writeFile(
             $extension->getExtensionDir() . self::SETTINGS_DIR . 'settings.yaml',
             $settings

@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Service;
 
 /*
@@ -283,7 +284,8 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $settings = $this->configurationManager->getExtensionSettings($extension->getOriginalExtensionKey());
             // if an extension was renamed, a new extension dir is created and we
             // have to copy the old settings file to the new extension dir
-            copy($this->configurationManager->getSettingsFile($extension->getOriginalExtensionKey()), $this->configurationManager->getSettingsFile($extension->getExtensionKey()));
+            copy($this->configurationManager->getSettingsFile($extension->getOriginalExtensionKey()),
+                $this->configurationManager->getSettingsFile($extension->getExtensionKey()));
         } else {
             $settings = $this->configurationManager->getExtensionSettings($extension->getExtensionKey());
         }
@@ -375,7 +377,8 @@ class ExtensionSchemaBuilder implements SingletonInterface
         $backendModule->setDescription($backendModuleValues['description']);
         if (!empty($backendModuleValues['actions']['controllerActionCombinations'])) {
             $controllerActionCombinations = [];
-            $lines = GeneralUtility::trimExplode(LF, $backendModuleValues['actions']['controllerActionCombinations'], true);
+            $lines = GeneralUtility::trimExplode(LF, $backendModuleValues['actions']['controllerActionCombinations'],
+                true);
             foreach ($lines as $line) {
                 list($controllerName, $actionNames) = GeneralUtility::trimExplode('=>', $line);
                 $controllerActionCombinations[$controllerName] = GeneralUtility::trimExplode(',', $actionNames);

@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Tests\Unit;
 
 /*
@@ -136,7 +137,8 @@ class ClassParserTest extends BaseUnitTest
      */
     public function Parse_GeneralUtitliy()
     {
-        $this->parseClass(PATH_typo3 . 'sysext/core/Classes/Utility/GeneralUtility.php', '\\TYPO3\\CMS\\Core\\Utility\\GeneralUtility');
+        $this->parseClass(PATH_typo3 . 'sysext/core/Classes/Utility/GeneralUtility.php',
+            '\\TYPO3\\CMS\\Core\\Utility\\GeneralUtility');
     }
 
     /**
@@ -194,7 +196,8 @@ class ClassParserTest extends BaseUnitTest
     {
         $reflectionMethodCount = count($classReflection->getMethods());
         $classObjectMethodCount = count($classObject->getMethods());
-        self::assertEquals($classObjectMethodCount, $reflectionMethodCount, 'Not all Methods were found!: ' . $reflectionMethodCount);
+        self::assertEquals($classObjectMethodCount, $reflectionMethodCount,
+            'Not all Methods were found!: ' . $reflectionMethodCount);
     }
 
     /**

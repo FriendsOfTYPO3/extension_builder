@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
 /*
@@ -28,12 +29,12 @@ class MatchStringViewHelper extends AbstractViewHelper
 {
 
     /**
-    * Arguments Initialization
-    */
+     * Arguments Initialization
+     */
     public function initializeArguments()
     {
-        $this->registerArgument('match', 'string', 'RegEx', TRUE);
-        $this->registerArgument('in', 'string', 'the string to compare', TRUE);
+        $this->registerArgument('match', 'string', 'RegEx', true);
+        $this->registerArgument('in', 'string', 'the string to compare', true);
         $this->registerArgument('caseSensitive', 'boolean', 'caseSensitive', false);
     }
 

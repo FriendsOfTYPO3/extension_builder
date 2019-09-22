@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Tests\Functional;
 
 /*
@@ -44,12 +45,17 @@ class FileGeneratorTest extends BaseFunctionalTest
         $domainObject->addProperty($property);
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
         self::assertRegExp('/.*class ModelCgt1.*/', $classFileContent, 'Class declaration was not generated');
-        self::assertRegExp('/.*protected \\$blue.*/', $classFileContent, 'protected boolean property was not generated');
+        self::assertRegExp('/.*protected \\$blue.*/', $classFileContent,
+            'protected boolean property was not generated');
         self::assertRegExp('/.*\* \@var bool.*/', $classFileContent, 'var tag for boolean property was not generated');
-        self::assertRegExp('/.*\* @TYPO3\\\CMS\\\Extbase\\\Annotation\\\Validate\("NotEmpty"\).*/', $classFileContent, 'validate tag for required property was not generated');
-        self::assertRegExp('/.*public function getBlue\(\).*/', $classFileContent, 'Getter for boolean property was not generated');
-        self::assertRegExp('/.*public function setBlue\(\$blue\).*/', $classFileContent, 'Setter for boolean property was not generated');
-        self::assertRegExp('/.*public function isBlue\(\).*/', $classFileContent, 'is method for boolean property was not generated');
+        self::assertRegExp('/.*\* @TYPO3\\\CMS\\\Extbase\\\Annotation\\\Validate\("NotEmpty"\).*/', $classFileContent,
+            'validate tag for required property was not generated');
+        self::assertRegExp('/.*public function getBlue\(\).*/', $classFileContent,
+            'Getter for boolean property was not generated');
+        self::assertRegExp('/.*public function setBlue\(\$blue\).*/', $classFileContent,
+            'Setter for boolean property was not generated');
+        self::assertRegExp('/.*public function isBlue\(\).*/', $classFileContent,
+            'is method for boolean property was not generated');
     }
 
     /**
@@ -74,7 +80,7 @@ class FileGeneratorTest extends BaseFunctionalTest
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
         GeneralUtility::writeFile($modelClassPath, $classFileContent);
-        self::assertFileExists($modelClassPath,'File was not generated: ' . $modelClassPath);
+        self::assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
         $className = $domainObject->getFullQualifiedClassName();
         if (!class_exists($className)) {
             include_once($modelClassPath);
@@ -213,9 +219,11 @@ class FileGeneratorTest extends BaseFunctionalTest
         }
         self::assertTrue(class_exists($relatedClassName), 'Class was not generated:' . $relatedClassName);
 
-        $reflection =  new \ReflectionClass(new $className());
-        self::assertTrue($reflection->hasMethod('add' . ucfirst(Inflector::singularize($propertyName))), 'Add method was not generated');
-        self::assertTrue($reflection->hasMethod('remove' . ucfirst(Inflector::singularize($propertyName))), 'Remove method was not generated');
+        $reflection = new \ReflectionClass(new $className());
+        self::assertTrue($reflection->hasMethod('add' . ucfirst(Inflector::singularize($propertyName))),
+            'Add method was not generated');
+        self::assertTrue($reflection->hasMethod('remove' . ucfirst(Inflector::singularize($propertyName))),
+            'Remove method was not generated');
         self::assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)), 'Getter was not generated');
         self::assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)), 'Setter was not generated');
         $setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
@@ -228,13 +236,15 @@ class FileGeneratorTest extends BaseFunctionalTest
         $parameters = $addMethod->getParameters();
         self::assertEquals(1, count($parameters), 'Wrong parameter count in add method');
         $parameter = current($parameters);
-        self::assertEquals($parameter->getName(), Inflector::singularize($propertyName), 'Wrong parameter name in add method');
+        self::assertEquals($parameter->getName(), Inflector::singularize($propertyName),
+            'Wrong parameter name in add method');
 
         $removeMethod = $reflection->getMethod('remove' . ucfirst(Inflector::singularize($propertyName)));
         $parameters = $removeMethod->getParameters();
         self::assertEquals(1, count($parameters), 'Wrong parameter count in remove method');
         $parameter = current($parameters);
-        self::assertEquals($parameter->getName(), Inflector::singularize($propertyName) . 'ToRemove', 'Wrong parameter name in remove method');
+        self::assertEquals($parameter->getName(), Inflector::singularize($propertyName) . 'ToRemove',
+            'Wrong parameter name in remove method');
     }
 
     /**
@@ -267,8 +277,10 @@ class FileGeneratorTest extends BaseFunctionalTest
         include($modelClassPath);
         self::assertTrue(class_exists($className), 'Class was not generated:' . $className);
         $reflection = new \ReflectionClass(new $className());
-        self::assertTrue($reflection->hasMethod('add' . ucfirst(Inflector::singularize($propertyName))), 'Add method was not generated');
-        self::assertTrue($reflection->hasMethod('remove' . ucfirst(Inflector::singularize($propertyName))), 'Remove method was not generated');
+        self::assertTrue($reflection->hasMethod('add' . ucfirst(Inflector::singularize($propertyName))),
+            'Add method was not generated');
+        self::assertTrue($reflection->hasMethod('remove' . ucfirst(Inflector::singularize($propertyName))),
+            'Remove method was not generated');
         self::assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)), 'Getter was not generated');
         self::assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)), 'Setter was not generated');
         self::assertTrue($reflection->hasMethod('initStorageObjects'), 'initStorageObjects was not generated');
@@ -281,13 +293,15 @@ class FileGeneratorTest extends BaseFunctionalTest
         $parameters = $addMethod->getParameters();
         self::assertEquals(1, count($parameters), 'Wrong parameter count in add method');
         $parameter = current($parameters);
-        self::assertEquals($parameter->getName(), Inflector::singularize($propertyName), 'Wrong parameter name in add method');
+        self::assertEquals($parameter->getName(), Inflector::singularize($propertyName),
+            'Wrong parameter name in add method');
 
         $removeMethod = $reflection->getMethod('remove' . ucfirst(Inflector::singularize($propertyName)));
         $parameters = $removeMethod->getParameters();
         self::assertEquals(1, count($parameters), 'Wrong parameter count in remove method');
         $parameter = current($parameters);
-        self::assertEquals($parameter->getName(), Inflector::singularize($propertyName) . 'ToRemove', 'Wrong parameter name in remove method');
+        self::assertEquals($parameter->getName(), Inflector::singularize($propertyName) . 'ToRemove',
+            'Wrong parameter name in remove method');
     }
 
     /**
@@ -338,7 +352,8 @@ class FileGeneratorTest extends BaseFunctionalTest
         if (!class_exists($className)) {
             include($repositoryClassPath);
         }
-        self::assertTrue(class_exists($className), 'Class was not generated:' . $className . 'in ' . $repositoryClassPath);
+        self::assertTrue(class_exists($className),
+            'Class was not generated:' . $className . 'in ' . $repositoryClassPath);
     }
 
     /**
@@ -428,7 +443,8 @@ class FileGeneratorTest extends BaseFunctionalTest
         $plugin->setKey('test');
         $this->extension->addPlugin($plugin);
 
-        $setupFile = join(DIRECTORY_SEPARATOR, [$this->extension->getExtensionDir(), 'Configuration', 'TypoScript', 'setup.' . $deprecatedExtension]);
+        $setupFile = join(DIRECTORY_SEPARATOR,
+            [$this->extension->getExtensionDir(), 'Configuration', 'TypoScript', 'setup.' . $deprecatedExtension]);
 
         GeneralUtility::mkdir_deep(dirname($setupFile));
         GeneralUtility::writeFile($setupFile, "# some sample content");

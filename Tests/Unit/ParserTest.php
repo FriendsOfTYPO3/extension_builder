@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Tests\Unit;
 
 /*
@@ -57,7 +58,8 @@ class ParserTest extends BaseUnitTest
         self::assertEquals(count($classFileObject->getFirstClass()->getMethods()), 2);
         self::assertEquals(count($classFileObject->getFirstClass()->getProperties()), 1);
         self::assertEquals($classFileObject->getFirstClass()->getProperty('property')->getValue(), 'foo');
-        self::assertEquals($classFileObject->getFirstClass()->getProperty('property')->getModifierNames(), ['protected']);
+        self::assertEquals($classFileObject->getFirstClass()->getProperty('property')->getModifierNames(),
+            ['protected']);
     }
 
     /**
@@ -82,7 +84,8 @@ class ParserTest extends BaseUnitTest
         $this->parserService->setTraverser(new Traverser);
         $classFileObject = $this->parseFile('ClassWithArrayProperty.php');
         self::assertEquals(count($classFileObject->getFirstClass()->getProperties()), 1);
-        self::assertEquals($classFileObject->getFirstClass()->getProperty('arrProperty')->getModifierNames(), ['protected']);
+        self::assertEquals($classFileObject->getFirstClass()->getProperty('arrProperty')->getModifierNames(),
+            ['protected']);
     }
 
     /**
@@ -117,12 +120,15 @@ class ParserTest extends BaseUnitTest
         self::assertTrue($classObject->isAbstract(), 'Class is not abstract');
 
         self::assertTrue($classObject->getProperty('publicProperty')->isPublic(), 'publicProperty is not public');
-        self::assertTrue($classObject->getProperty('protectedProperty')->isProtected(), 'protectedProperty is not protected');
+        self::assertTrue($classObject->getProperty('protectedProperty')->isProtected(),
+            'protectedProperty is not protected');
         self::assertTrue($classObject->getProperty('privateProperty')->isPrivate(), 'privateProperty is not private');
-        self::assertFalse($classObject->getProperty('publicProperty')->isProtected(), 'Public property is is protected');
+        self::assertFalse($classObject->getProperty('publicProperty')->isProtected(),
+            'Public property is is protected');
         self::assertFalse($classObject->getProperty('privateProperty')->isPublic(), 'Public property is public');
         self::assertTrue($classObject->getMethod('abstractMethod')->isAbstract(), 'abstract Method is not abstract');
-        self::assertTrue($classObject->getMethod('staticFinalFunction')->isStatic(), 'staticFinalFunction is not static');
+        self::assertTrue($classObject->getMethod('staticFinalFunction')->isStatic(),
+            'staticFinalFunction is not static');
         self::assertTrue($classObject->getMethod('staticFinalFunction')->isFinal(), 'staticFinalFunction is not final');
     }
 
@@ -136,7 +142,8 @@ class ParserTest extends BaseUnitTest
         self::assertEquals(count($functions), 2);
         self::assertTrue(isset($functions['simpleFunction']));
         self::assertEquals(count($fileObject->getFunction('functionWithParameter')->getParameters()), 2);
-        self::assertEquals($fileObject->getFunction('functionWithParameter')->getParameterByPosition(1)->getName(), 'bar');
+        self::assertEquals($fileObject->getFunction('functionWithParameter')->getParameterByPosition(1)->getName(),
+            'bar');
     }
 
     /**

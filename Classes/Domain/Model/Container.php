@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Domain\Model;
 
 /*
@@ -59,14 +60,14 @@ class Container extends AbstractObject
     protected $classes = [];
 
     /**
-    * array with alias declarations
-    *
-    * Each declaration is an array of the following type:
-    * array(name => alias)
-    *
-    * @var string[]
-    */
-   protected $aliasDeclarations = [];
+     * array with alias declarations
+     *
+     * Each declaration is an array of the following type:
+     * array(name => alias)
+     *
+     * @var string[]
+     */
+    protected $aliasDeclarations = [];
 
     /**
      * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject

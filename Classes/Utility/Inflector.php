@@ -1,4 +1,5 @@
 <?php
+
 namespace EBT\ExtensionBuilder\Utility;
 
 /*
@@ -26,7 +27,6 @@ class Inflector
     /**
      * @param string $word The word to pluralize
      * @return string The pluralized word
-     * @author Christopher Hlubek
      */
     // TODO: These methods are static now, this breaks other places.
     public static function pluralize($word)
@@ -37,7 +37,6 @@ class Inflector
     /**
      * @param string $word The word to singularize
      * @return string The singularized word
-     * @author Sebastian Kurfürst <sbastian@typo3.org>
      */
     public static function singularize($word)
     {
