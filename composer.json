@@ -27,8 +27,8 @@
     "typo3/minimal": "^9"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^2.0",
-    "nimut/testing-framework": "^4.0"
+    "friendsofphp/php-cs-fixer": "^2",
+    "nimut/testing-framework": "^4.2"
   },
   "autoload": {
     "psr-4": {
