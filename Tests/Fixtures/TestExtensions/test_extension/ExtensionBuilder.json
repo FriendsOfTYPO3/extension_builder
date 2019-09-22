@@ -450,7 +450,7 @@
         "emConf": {
             "category": "misc",
             "custom_category": "",
-            "dependsOn": "typo3 => 8.7.0-8.7.99\n",
+            "dependsOn": "typo3 => 9.5.0-9.5.99\n",
             "disableLocalization": false,
             "disableVersioning": false,
             "skipGenerateDocumentationTemplate": false,
