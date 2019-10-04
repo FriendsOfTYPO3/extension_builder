@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2019-01-01T01:00:00Z" product-name="test_extension">
+	<file source-language="en" datatype="plaintext" original="EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_child3.xlf" date="2019-01-01T01:00:00Z" product-name="test_extension">
 		<header/>
 		<body>
-			<trans-unit id="name.description">
+			<trans-unit id="name.description" resname="name.description">
 				<source>name</source>
 			</trans-unit>
-			<trans-unit id="password.description">
+			<trans-unit id="password.description" resname="password.description">
 				<source>password</source>
 			</trans-unit>
-			<trans-unit id="image_property.description">
+			<trans-unit id="image_property.description" resname="image_property.description">
 				<source>imageProperty</source>
 			</trans-unit>
 		</body>

@@ -4,10 +4,10 @@
 		  product-name="test123">
 		<header/>
 		<body>
-			<trans-unit id="tx_test_index1">
+			<trans-unit id="tx_test_index1" resname="tx_test_index1">
 				<source>Label 1 modified</source>
 			</trans-unit>
-			<trans-unit id="tx_test_index2">
+			<trans-unit id="tx_test_index2" resname="tx_test_index2">
 				<source>Label 2</source>
 			</trans-unit>
 		</body>
