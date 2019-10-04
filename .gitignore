@@ -1,9 +1,9 @@
-.Build/*
-vendor/*
-composer.lock
-node_modules*
 .DS_Store
-.idea*
+/.idea*
+/.Build/*
+/vendor/*
+/composer.lock
+/node_modules*
 
 # created by rendering Documentation with Docker
-Documentation-GENERATED-temp
+/Documentation-GENERATED-temp
