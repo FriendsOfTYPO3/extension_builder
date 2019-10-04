@@ -1132,7 +1132,7 @@ class FileGenerator
      */
     public function generateTyposcriptSetup()
     {
-        return $this->renderTemplate('Configuration/TypoScript/setup.tst', [
+        return $this->renderTemplate('Configuration/TypoScript/setup.typoscriptt', [
             'extension' => $this->extension
         ]);
     }
@@ -1143,7 +1143,7 @@ class FileGenerator
      */
     public function generateTyposcriptConstants()
     {
-        return $this->renderTemplate('Configuration/TypoScript/constants.tst', [
+        return $this->renderTemplate('Configuration/TypoScript/constants.typoscriptt', [
             'extension' => $this->extension
         ]);
     }
