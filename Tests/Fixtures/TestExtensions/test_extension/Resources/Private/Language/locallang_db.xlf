@@ -1,90 +1,90 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2019-01-01T01:00:00Z" product-name="test_extension">
+	<file source-language="en" datatype="plaintext" original="EXT:test_extension/Resources/Private/Language/locallang_db.xlf" date="2019-01-01T01:00:00Z" product-name="test_extension">
 		<header/>
 		<body>
-			<trans-unit id="tx_testextension_domain_model_main">
+			<trans-unit id="tx_testextension_domain_model_main" resname="tx_testextension_domain_model_main">
 				<source>Main</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_main.name">
+			<trans-unit id="tx_testextension_domain_model_main.name" resname="tx_testextension_domain_model_main.name">
 				<source>Name</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_main.identifier">
+			<trans-unit id="tx_testextension_domain_model_main.identifier" resname="tx_testextension_domain_model_main.identifier">
 				<source>Identifier</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_main.description">
+			<trans-unit id="tx_testextension_domain_model_main.description" resname="tx_testextension_domain_model_main.description">
 				<source>Description</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_main.my_date">
+			<trans-unit id="tx_testextension_domain_model_main.my_date" resname="tx_testextension_domain_model_main.my_date">
 				<source>My Date</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_main.mail">
+			<trans-unit id="tx_testextension_domain_model_main.mail" resname="tx_testextension_domain_model_main.mail">
 				<source>Mail</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_main.child1">
+			<trans-unit id="tx_testextension_domain_model_main.child1" resname="tx_testextension_domain_model_main.child1">
 				<source>Child1</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_main.children2">
+			<trans-unit id="tx_testextension_domain_model_main.children2" resname="tx_testextension_domain_model_main.children2">
 				<source>Children2</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_main.child3">
+			<trans-unit id="tx_testextension_domain_model_main.child3" resname="tx_testextension_domain_model_main.child3">
 				<source>Child3</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_main.children4">
+			<trans-unit id="tx_testextension_domain_model_main.children4" resname="tx_testextension_domain_model_main.children4">
 				<source>Children4</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child1">
+			<trans-unit id="tx_testextension_domain_model_child1" resname="tx_testextension_domain_model_child1">
 				<source>Child1</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child1.name">
+			<trans-unit id="tx_testextension_domain_model_child1.name" resname="tx_testextension_domain_model_child1.name">
 				<source>Name</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child1.flag">
+			<trans-unit id="tx_testextension_domain_model_child1.flag" resname="tx_testextension_domain_model_child1.flag">
 				<source>Flag</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child2">
+			<trans-unit id="tx_testextension_domain_model_child2" resname="tx_testextension_domain_model_child2">
 				<source>Child2</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child2.name">
+			<trans-unit id="tx_testextension_domain_model_child2.name" resname="tx_testextension_domain_model_child2.name">
 				<source>Name</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child2.date_property1">
+			<trans-unit id="tx_testextension_domain_model_child2.date_property1" resname="tx_testextension_domain_model_child2.date_property1">
 				<source>Date Property1</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child2.date_property2">
+			<trans-unit id="tx_testextension_domain_model_child2.date_property2" resname="tx_testextension_domain_model_child2.date_property2">
 				<source>Date Property2</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child2.date_property3">
+			<trans-unit id="tx_testextension_domain_model_child2.date_property3" resname="tx_testextension_domain_model_child2.date_property3">
 				<source>Date Property3</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child2.date_property4">
+			<trans-unit id="tx_testextension_domain_model_child2.date_property4" resname="tx_testextension_domain_model_child2.date_property4">
 				<source>Date Property4</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child3">
+			<trans-unit id="tx_testextension_domain_model_child3" resname="tx_testextension_domain_model_child3">
 				<source>Child3</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child3.name">
+			<trans-unit id="tx_testextension_domain_model_child3.name" resname="tx_testextension_domain_model_child3.name">
 				<source>Name</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child3.password">
+			<trans-unit id="tx_testextension_domain_model_child3.password" resname="tx_testextension_domain_model_child3.password">
 				<source>Password</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child3.image_property">
+			<trans-unit id="tx_testextension_domain_model_child3.image_property" resname="tx_testextension_domain_model_child3.image_property">
 				<source>Image Property</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child4">
+			<trans-unit id="tx_testextension_domain_model_child4" resname="tx_testextension_domain_model_child4">
 				<source>Child4</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child4.name">
+			<trans-unit id="tx_testextension_domain_model_child4.name" resname="tx_testextension_domain_model_child4.name">
 				<source>Name</source>
 			</trans-unit>
-			<trans-unit id="tx_testextension_domain_model_child4.file_property">
+			<trans-unit id="tx_testextension_domain_model_child4.file_property" resname="tx_testextension_domain_model_child4.file_property">
 				<source>File Property</source>
 			</trans-unit>
-			<trans-unit id="tx_test_extension_testplugin.name">
+			<trans-unit id="tx_test_extension_testplugin.name" resname="tx_test_extension_testplugin.name">
 				<source>Test plugin</source>
 			</trans-unit>
-			<trans-unit id="tx_test_extension_testplugin.description">
+			<trans-unit id="tx_test_extension_testplugin.description" resname="tx_test_extension_testplugin.description">
 				<source>Just a simple test plugin</source>
 			</trans-unit>
 		</body>
