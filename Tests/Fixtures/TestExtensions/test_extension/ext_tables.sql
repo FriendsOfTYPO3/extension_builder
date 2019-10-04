@@ -11,7 +11,7 @@ CREATE TABLE tx_testextension_domain_model_main (
 	child1 int(11) unsigned DEFAULT '0',
 	children2 int(11) unsigned DEFAULT '0' NOT NULL,
 	child3 int(11) unsigned DEFAULT '0',
-	children4 int(11) unsigned DEFAULT '0' NOT NULL,
+	children4 int(11) unsigned DEFAULT '0' NOT NULL
 
 );
 
@@ -21,7 +21,7 @@ CREATE TABLE tx_testextension_domain_model_main (
 CREATE TABLE tx_testextension_domain_model_child1 (
 
 	name varchar(255) DEFAULT '' NOT NULL,
-	flag smallint(5) unsigned DEFAULT '0' NOT NULL,
+	flag smallint(5) unsigned DEFAULT '0' NOT NULL
 
 );
 
@@ -36,7 +36,7 @@ CREATE TABLE tx_testextension_domain_model_child2 (
 	date_property1 date DEFAULT NULL,
 	date_property2 datetime DEFAULT NULL,
 	date_property3 int(11) DEFAULT '0' NOT NULL,
-	date_property4 int(11) DEFAULT '0' NOT NULL,
+	date_property4 int(11) DEFAULT '0' NOT NULL
 
 );
 
@@ -47,7 +47,7 @@ CREATE TABLE tx_testextension_domain_model_child3 (
 
 	name varchar(255) DEFAULT '' NOT NULL,
 	password varchar(255) DEFAULT '' NOT NULL,
-	image_property int(11) unsigned NOT NULL default '0',
+	image_property int(11) unsigned NOT NULL default '0'
 
 );
 
@@ -57,7 +57,7 @@ CREATE TABLE tx_testextension_domain_model_child3 (
 CREATE TABLE tx_testextension_domain_model_child4 (
 
 	name varchar(255) DEFAULT '' NOT NULL,
-	file_property int(11) unsigned NOT NULL default '0',
+	file_property int(11) unsigned NOT NULL default '0'
 
 );
 
@@ -66,7 +66,7 @@ CREATE TABLE tx_testextension_domain_model_child4 (
 #
 CREATE TABLE tx_testextension_domain_model_child2 (
 
-	main int(11) unsigned DEFAULT '0' NOT NULL,
+	main int(11) unsigned DEFAULT '0' NOT NULL
 
 );
 
@@ -88,5 +88,5 @@ CREATE TABLE tx_testextension_main_child4_mm (
 # Table structure for table 'tx_testextension_domain_model_child3'
 #
 CREATE TABLE tx_testextension_domain_model_child3 (
-	categories int(11) unsigned DEFAULT '0' NOT NULL,
+	categories int(11) unsigned DEFAULT '0' NOT NULL
 );
