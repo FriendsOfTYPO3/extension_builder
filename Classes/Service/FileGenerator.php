@@ -233,6 +233,10 @@ class FileGenerator
                         'extension' => $this->extension
                     ]
                 );
+                if ($extensionFile === 'ext_tables.sql') {
+                    // replace trailing comma in last line before table definition end to get valid SQL
+                    $fileContents = preg_replace('/,(\\s*\\);)/', '$1', $fileContents);
+                }
                 $this->writeFile($this->extensionDirectory . $extensionFile, $fileContents);
             } catch (\Exception $e) {
                 throw new \Exception('Could not write ' . $extensionFile . ', error: ' . $e->getMessage());
