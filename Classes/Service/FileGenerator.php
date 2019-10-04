@@ -642,19 +642,18 @@ class FileGenerator
     protected function copyStaticFiles()
     {
         try {
-            $this->upload_copy_move(
-                ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/Icons/ext_icon.gif',
-                $this->extensionDirectory . 'ext_icon.gif'
-            );
-        } catch (\Exception $e) {
-            throw new \Exception('Could not copy ext_icon.gif, error: ' . $e->getMessage());
-        }
-
-        try {
             $this->mkdir_deep($this->extensionDirectory, 'Resources/Public');
             $publicResourcesDirectory = $this->extensionDirectory . 'Resources/Public/';
             $this->mkdir_deep($publicResourcesDirectory, 'Icons');
             $this->iconsDirectory = $publicResourcesDirectory . 'Icons/';
+            try {
+                $this->upload_copy_move(
+                    $this->getTemplatePath('Resources/Public/Icons/user_extension.svg'),
+                    $this->iconsDirectory . 'Extension.svg'
+                );
+            } catch (\Exception $e) {
+                throw new \Exception('Could not copy Extension.svg, error: ' . $e->getMessage());
+            }
             $needsRelationIcon = false;
             foreach ($this->extension->getDomainObjects() as $domainObject) {
                 if ($domainObject->hasRelations()) {
