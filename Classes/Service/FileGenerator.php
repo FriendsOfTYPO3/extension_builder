@@ -651,6 +651,11 @@ class FileGenerator
         }
 
         try {
+            $this->upload_copy_move(
+                $this->getTemplatePath('.editorconfig'),
+                $this->extensionDirectory . '.editorconfig'
+            );
+
             $this->mkdir_deep($this->extensionDirectory, 'Resources/Public');
             $publicResourcesDirectory = $this->extensionDirectory . 'Resources/Public/';
             $this->mkdir_deep($publicResourcesDirectory, 'Icons');
