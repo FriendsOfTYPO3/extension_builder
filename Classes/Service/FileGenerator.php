@@ -641,25 +641,22 @@ class FileGenerator
      */
     protected function copyStaticFiles()
     {
+        $publicResourcesDirectory = $this->extensionDirectory . 'Resources/Public/';
+        $this->iconsDirectory = $publicResourcesDirectory . 'Icons/';
+
         try {
-            $this->upload_copy_move(
-                ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/Icons/ext_icon.gif',
-                $this->extensionDirectory . 'ext_icon.gif'
-            );
+            $this->mkdir_deep($this->extensionDirectory, 'Resources/Public');
+            $this->mkdir_deep($publicResourcesDirectory, 'Icons');
         } catch (\Exception $e) {
-            throw new \Exception('Could not copy ext_icon.gif, error: ' . $e->getMessage());
+            throw new \Exception('Could not create public resources folder, error: ' . $e->getMessage());
         }
 
         try {
             $this->upload_copy_move(
-                $this->getTemplatePath('.editorconfig'),
-                $this->extensionDirectory . '.editorconfig'
+                $this->getTemplatePath('Resources/Public/Icons/user_extension.svg'),
+                $this->iconsDirectory . 'Extension.svg'
             );
 
-            $this->mkdir_deep($this->extensionDirectory, 'Resources/Public');
-            $publicResourcesDirectory = $this->extensionDirectory . 'Resources/Public/';
-            $this->mkdir_deep($publicResourcesDirectory, 'Icons');
-            $this->iconsDirectory = $publicResourcesDirectory . 'Icons/';
             $needsRelationIcon = false;
             foreach ($this->extension->getDomainObjects() as $domainObject) {
                 if ($domainObject->hasRelations()) {
@@ -689,8 +686,9 @@ class FileGenerator
                 }
             }
         } catch (\Exception $e) {
-            throw new \Exception('Could not create public resources folder, error: ' . $e->getMessage());
+            throw new \Exception('Could not copy/move icon, error: ' . $e->getMessage());
         }
+
     }
 
     /**

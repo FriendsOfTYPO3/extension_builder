@@ -87,8 +87,6 @@ Here is an example:
      Language: merge
      #Templates: keep
 
-  ext_icon.gif: keep
-
   Documentation.tmpl: skip
 
 staticDateInXliffFiles: *2014-05-03T06:04:48Z*
