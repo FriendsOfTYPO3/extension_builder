@@ -3,7 +3,7 @@
 	<file source-language="{extension.sourceLanguage}" datatype="plaintext" original="{fileName}" date="{f:if(condition:extension.settings.staticDateInXliffFiles, then:'{extension.settings.staticDateInXliffFiles}', else: '{f:format.date(format:\'Y-m-d\\TH:i:s\\Z\',date:\'now\')}')}" product-name="{extension.extensionKey}">
 		<header/>
 		<body><f:for each="{labelArray}" as="label" key="index">
-			<trans-unit id="{index}" resname="{index}"">
+			<trans-unit id="{index}" resname="{index}">
 				<source>{label}</source>
 			</trans-unit></f:for>
 		</body>
