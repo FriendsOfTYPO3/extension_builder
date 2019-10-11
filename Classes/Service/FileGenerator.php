@@ -641,19 +641,22 @@ class FileGenerator
      */
     protected function copyStaticFiles()
     {
+        $publicResourcesDirectory = $this->extensionDirectory . 'Resources/Public/';
+        $this->iconsDirectory = $publicResourcesDirectory . 'Icons/';
+        
         try {
             $this->mkdir_deep($this->extensionDirectory, 'Resources/Public');
-            $publicResourcesDirectory = $this->extensionDirectory . 'Resources/Public/';
             $this->mkdir_deep($publicResourcesDirectory, 'Icons');
-            $this->iconsDirectory = $publicResourcesDirectory . 'Icons/';
-            try {
-                $this->upload_copy_move(
-                    $this->getTemplatePath('Resources/Public/Icons/user_extension.svg'),
-                    $this->iconsDirectory . 'Extension.svg'
-                );
-            } catch (\Exception $e) {
-                throw new \Exception('Could not copy Extension.svg, error: ' . $e->getMessage());
-            }
+        } catch (\Exception $e) {
+            throw new \Exception('Could not create public resources folder, error: ' . $e->getMessage());
+        }
+
+        try {
+            $this->upload_copy_move(
+                $this->getTemplatePath('Resources/Public/Icons/user_extension.svg'),
+                $this->iconsDirectory . 'Extension.svg'
+            );
+
             $needsRelationIcon = false;
             foreach ($this->extension->getDomainObjects() as $domainObject) {
                 if ($domainObject->hasRelations()) {
@@ -683,7 +686,7 @@ class FileGenerator
                 }
             }
         } catch (\Exception $e) {
-            throw new \Exception('Could not create public resources folder, error: ' . $e->getMessage());
+            throw new \Exception('Could not copy/move icon, error: ' . $e->getMessage());
         }
     }
 
@@ -1036,11 +1039,14 @@ class FileGenerator
     {
         $targetFile = 'Resources/Private/Language/locallang' . $fileNameSuffix;
 
-        $variableArray = ['extension' => $this->extension];
-        if (strlen($variableName) > 0) {
+        $variableArray = [
+            'extension' => $this->extension,
+            'fileName' => 'EXT:' . $this->extension->getExtensionKey() . '/' . $targetFile,
+        ];
+        if ($variableName !== '') {
             $variableArray[$variableName] = $variable;
         }
-        $languageLabels = [];
+
         if ($variableName == 'domainObject') {
             $languageLabels = $this->localizationService->prepareLabelArrayForContextHelp($variable);
         } elseif ($variableName == 'backendModule') {
