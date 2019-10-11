@@ -49,13 +49,14 @@ overwriteSettings:
 			Repository:		merge
 
 	Resources:
+    Public:
+      Icons:
+        Extension.svg:    keep
 		Private:
 			Language:
 				locallang.xml:		keep
 
 			Templates:		keep
-
-	ext_icon.gif:			keep
 
 #	ext_localconf.php		merge
 
