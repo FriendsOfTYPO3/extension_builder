@@ -1,5 +1,4 @@
 <?php
-
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
 /*
@@ -25,13 +24,11 @@ class ListForeignKeyRelationsViewHelper extends AbstractViewHelper
 {
 
     /**
-     * Arguments Initialization
-     */
+    * Arguments Initialization
+    */
     public function initializeArguments()
     {
-        $this->registerArgument('extension', \EBT\ExtensionBuilder\Domain\Model\Extension::class, 'extension', true);
-        $this->registerArgument('domainObject', \EBT\ExtensionBuilder\Domain\Model\DomainObject::class, 'domainObject',
-            true);
+        $this->registerArgument('domainObject', \EBT\ExtensionBuilder\Domain\Model\DomainObject::class, 'domainObject', TRUE);
     }
 
     /**
@@ -41,8 +38,9 @@ class ListForeignKeyRelationsViewHelper extends AbstractViewHelper
     public function render()
     {
         $expectedDomainObject = $this->arguments['domainObject'];
+        $extension = $expectedDomainObject->getExtension();
         $results = [];
-        foreach ($this->arguments['extension']->getDomainObjects() as $domainObject) {
+        foreach ($extension->getDomainObjects() as $domainObject) {
             if (!count($domainObject->getProperties())) {
                 continue;
             }

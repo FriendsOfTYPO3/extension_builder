@@ -2,7 +2,7 @@
 <f:if condition="{domainObject.properties}">
 $tmp_{domainObject.extension.extensionKey}_columns = [<f:render partial="TCA/PropertiesDefinition.phpt" arguments="{domainObject:domainObject,settings:settings}"/>
 ];
-<f:for each="{k:listForeignKeyRelations(extension: domainObject.extension, domainObject: domainObject)}" as="relation">
+<f:for each="{k:listForeignKeyRelations(domainObject: domainObject)}" as="relation">
 $tmp_{domainObject.extension.extensionKey}_columns['{relation.foreignKeyName}'] = [
     'config' => [
         'type' => 'passthrough',
