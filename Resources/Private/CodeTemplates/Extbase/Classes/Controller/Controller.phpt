@@ -9,7 +9,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\Repository
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $domainObjectRepository = null;
 

@@ -34,6 +34,8 @@ class ClassBuilder implements SingletonInterface
 {
     const VALIDATE_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")';
     const CASCADE_REMOVE_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")';
+    const LAZY_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\ORM\Lazy';
+    const INJECT_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\Inject';
 
     /**
      * The class file object created to container the generated class
@@ -265,8 +267,8 @@ class ClassBuilder implements SingletonInterface
         if ($domainProperty->isRelation()) {
             /** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
             if ($domainProperty->getLazyLoading()) {
-                if (!$classProperty->isTaggedWith('lazy')) {
-                    $classProperty->setTag('lazy', '');
+                if (!$classProperty->isTaggedWith(self::LAZY_ANNOTATION)) {
+                    $classProperty->setTag(self::LAZY_ANNOTATION);
                 }
             }
         }
@@ -765,9 +767,10 @@ class ClassBuilder implements SingletonInterface
                 $this->classObject->setProperty($classProperty);
             }
             if (!$this->classObject->getProperty($repositoryName)->isTaggedWith('inject')
-                && !$this->classObject->methodExists('inject' . ucfirst($repositoryName))
+                    && !$this->classObject->getProperty($repositoryName)->isTaggedWith(self::INJECT_ANNOTATION)
+                    && !$this->classObject->methodExists('inject' . ucfirst($repositoryName))
             ) {
-                $this->classObject->getProperty($repositoryName)->setTag('inject');
+                $this->classObject->getProperty($repositoryName)->setTag(self::INJECT_ANNOTATION);
             }
         }
         foreach ($domainObject->getActions() as $action) {

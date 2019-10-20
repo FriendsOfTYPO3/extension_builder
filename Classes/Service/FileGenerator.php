@@ -32,13 +32,13 @@ class FileGenerator
 {
     /**
      * @var \EBT\ExtensionBuilder\Service\ClassBuilder
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      *
      */
     protected $classBuilder = null;
     /**
      * @var \EBT\ExtensionBuilder\Service\RoundTrip
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      *
      */
     protected $roundTripService = null;
@@ -76,7 +76,7 @@ class FileGenerator
     protected $iconsDirectory = '';
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $objectManager = null;
     /**
@@ -93,7 +93,7 @@ class FileGenerator
     protected $settings = [];
     /**
      * @var \EBT\ExtensionBuilder\Service\Printer
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $printerService = null;
     /**
@@ -129,7 +129,7 @@ class FileGenerator
     ];
     /**
      * @var \EBT\ExtensionBuilder\Service\LocalizationService
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      *
      */
     protected $localizationService = null;
