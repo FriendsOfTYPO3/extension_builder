@@ -35,6 +35,11 @@
                 --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
                 --palette--;;filePalette'
             ]
+        ],
+        'foreign_match_fields' => [
+            'fieldname' => '{property.fieldName}',
+            'tablenames' => '{domainObject.databaseTableName}',
+            'table_local' => 'sys_file',
         ]<f:if condition="{property.maxItems}">,
         'maxitems' => {property.maxItems}</f:if><f:if condition="{property.required}">,
         'minitems' => 1</f:if>
