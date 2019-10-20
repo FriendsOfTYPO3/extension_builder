@@ -71,7 +71,7 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
      *
      * @param string $name
      * @return void
-     * @lazy
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
     public function methodWithStrangePrecedingBlock($name)
     {
