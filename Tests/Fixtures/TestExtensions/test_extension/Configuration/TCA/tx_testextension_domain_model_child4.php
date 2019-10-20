@@ -166,10 +166,15 @@ return [
                             --palette--;;filePalette'
                         ]
                     ],
+                    'foreign_match_fields' => [
+                        'fieldname' => 'file_property',
+                        'tablenames' => 'tx_testextension_domain_model_child4',
+                        'table_local' => 'sys_file',
+                    ],
                     'maxitems' => 1
                 ]
             ),
         ],
-    
+
     ],
 ];
