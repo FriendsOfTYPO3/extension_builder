@@ -67,13 +67,13 @@ module.{extension.shortExtensionKey}_{backendModule.mainModule}_{extension.unpre
     persistence {
         storagePid = <k:curlyBrackets>$module.{extension.shortExtensionKey}_{backendModule.key}.persistence.storagePid</k:curlyBrackets>
     }
-    view {
+    view <k:curlyBrackets>
         templateRootPaths.0 = EXT:{extension.extensionKey}/Resources/Private/Backend/Templates/
         templateRootPaths.1 = <k:curlyBrackets>$module.{extension.shortExtensionKey}_{backendModule.key}.view.templateRootPath</k:curlyBrackets>
         partialRootPaths.0 = EXT:{extension.extensionKey}/Resources/Private/Backend/Partials/
         partialRootPaths.1 = <k:curlyBrackets>$module.{extension.shortExtensionKey}_{backendModule.key}.view.partialRootPath</k:curlyBrackets>
         layoutRootPaths.0 = EXT:{extension.extensionKey}/Resources/Private/Backend/Layouts/
         layoutRootPaths.1 = <k:curlyBrackets>$module.{extension.shortExtensionKey}_{backendModule.key}.view.layoutRootPath</k:curlyBrackets>
-    }
+    </k:curlyBrackets>
 }
 </f:for>
