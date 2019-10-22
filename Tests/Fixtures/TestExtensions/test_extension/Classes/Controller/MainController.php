@@ -21,9 +21,16 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * mainRepository
      *
      * @var \FIXTURE\TestExtension\Domain\Repository\MainRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $mainRepository = null;
+
+    /**
+    * @param \FIXTURE\TestExtension\Domain\Repository\MainRepository $mainRepository
+    */
+    public function injectMainRepository(\FIXTURE\TestExtension\Domain\Repository\MainRepository $mainRepository)
+    {
+        $this->mainRepository = $mainRepository;
+    }
 
     /**
      * action list
