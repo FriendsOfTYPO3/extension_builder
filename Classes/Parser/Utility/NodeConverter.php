@@ -28,8 +28,6 @@ use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
-use function PHPSTORM_META\type;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class NodeConverter
 {

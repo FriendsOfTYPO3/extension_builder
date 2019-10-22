@@ -21,7 +21,6 @@ use EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository;
 use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
 use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Service\FileGenerator;
-use EBT\ExtensionBuilder\Service\ParserService;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;

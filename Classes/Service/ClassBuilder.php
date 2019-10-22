@@ -251,14 +251,12 @@ class ClassBuilder implements SingletonInterface
 
         if ($domainProperty->getRequired()) {
             if (!$classProperty->isTaggedWith(self::VALIDATE_ANNOTATION)) {
-                $validateTag = explode(' ', trim($domainProperty->getValidateAnnotation()));
                 $classProperty->setTag(self::VALIDATE_ANNOTATION);
             }
         }
 
         if ($domainProperty->getCascadeRemove()) {
             if (!$classProperty->isTaggedWith(self::CASCADE_REMOVE_ANNOTATION)) {
-                $validateTag = explode(' ', trim($domainProperty->getCascadeRemoveAnnotation()));
                 $classProperty->setTag(self::CASCADE_REMOVE_ANNOTATION);
             }
         }
@@ -898,7 +896,6 @@ class ClassBuilder implements SingletonInterface
 
         // add the properties that were not in the domainObject
         $classProperties = $this->classObject->getProperties();
-        $sortedPropertyNames = array_keys($sortedProperties);
         foreach ($classProperties as $classProperty) {
             if (!in_array($classProperty->getName(), $sortedProperties)) {
                 $sortedProperties[$classProperty->getName()] = $classProperty;
