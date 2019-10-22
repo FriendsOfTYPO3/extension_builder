@@ -294,7 +294,7 @@ class ClassBuilder implements SingletonInterface
             } else {
                 $constructorMethod = $this->classObject->getMethod('__construct');
             }
-            if (preg_match('/\$this->initStorageObjects()/',
+            if (preg_match('/\$this->initStorageObjects\\(\\)/',
                     $this->printerService->render($constructorMethod->getBodyStmts())) < 1) {
                 $this->classObject->setMethod($this->classObject->getMethod('__construct'));
             }
