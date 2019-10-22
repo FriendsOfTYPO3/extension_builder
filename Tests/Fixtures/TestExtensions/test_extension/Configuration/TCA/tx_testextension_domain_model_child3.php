@@ -175,12 +175,17 @@ return [
                             --palette--;;filePalette'
                         ]
                     ],
+                    'foreign_match_fields' => [
+                        'fieldname' => 'image_property',
+                        'tablenames' => 'tx_testextension_domain_model_child3',
+                        'table_local' => 'sys_file',
+                    ],
                     'maxitems' => 1,
                     'minitems' => 1
                 ],
                 $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
             ),
         ],
-    
+
     ],
 ];

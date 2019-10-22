@@ -71,7 +71,6 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
      *
      * @param string $name
      * @return void
-     * @lazy
      */
     public function methodWithStrangePrecedingBlock($name)
     {

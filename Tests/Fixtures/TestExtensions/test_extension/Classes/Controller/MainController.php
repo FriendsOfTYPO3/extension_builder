@@ -2,7 +2,7 @@
 namespace FIXTURE\TestExtension\Controller;
 
 /***
- * 
+ *
  * This file is part of the "ExtensionBuilder Test Extension" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
@@ -21,7 +21,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * mainRepository
      *
      * @var \FIXTURE\TestExtension\Domain\Repository\MainRepository
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $mainRepository = null;
 
