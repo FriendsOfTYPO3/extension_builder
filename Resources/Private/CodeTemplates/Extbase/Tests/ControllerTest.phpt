@@ -1,5 +1,5 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}<?php
-namespace {extension.nameSpaceName}\Tests\Unit\Controller;
+namespace {extension.namespaceName}\Tests\Unit\Controller;
 
 /**
  * Test case.
