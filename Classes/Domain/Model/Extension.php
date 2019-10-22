@@ -16,12 +16,8 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  */
 
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
-use EBT\ExtensionBuilder\Domain\Model\BackendModule;
-use EBT\ExtensionBuilder\Domain\Model\DomainObject;
-use EBT\ExtensionBuilder\Domain\Model\Plugin;
 use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Schema for a whole extension

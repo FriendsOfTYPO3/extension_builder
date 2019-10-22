@@ -20,7 +20,6 @@ use EBT\ExtensionBuilder\Domain\Model\BackendModule;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Domain\Model\Person;
 use EBT\ExtensionBuilder\Domain\Model\Plugin;
-use EBT\ExtensionBuilder\Service\ObjectSchemaBuilder;
 use EBT\ExtensionBuilder\Utility\Tools;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

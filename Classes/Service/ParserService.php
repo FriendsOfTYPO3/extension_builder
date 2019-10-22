@@ -26,7 +26,6 @@ use PhpParser\NodeVisitor\CloningVisitor;
 use TYPO3\CMS\Core\Localization\Exception\FileNotFoundException;
 use TYPO3\CMS\Core\SingletonInterface;
 use PhpParser\ParserFactory;
-use PhpParser\NodeDumper;
 
 
 class ParserService implements SingletonInterface
@@ -63,7 +62,7 @@ class ParserService implements SingletonInterface
      * @param string $code
      * @return \EBT\ExtensionBuilder\Domain\Model\File
      */
-    public function parseCode($code, \PhpParser\ErrorHandler $errorHandler = null)
+    public function parseCode($code)
     {
         $stmts = $this->parser->parse($code);
 

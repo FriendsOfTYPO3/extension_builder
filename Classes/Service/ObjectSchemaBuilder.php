@@ -19,7 +19,6 @@ use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
-use EBT\ExtensionBuilder\Service\ValidationService;
 use EBT\ExtensionBuilder\Utility\Tools;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
