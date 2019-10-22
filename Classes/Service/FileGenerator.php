@@ -95,27 +95,12 @@ class FileGenerator
      */
     protected $iconsDirectory = '';
 
-    /**
-     * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
-     *
-     * @return void
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     */
-    public function injectExtensionBuilderConfigurationManager(
-        ExtensionBuilderConfigurationManager $configurationManager
-    ) {
-        // $this->extensionBuilderConfigurationManager = $configurationManager;
-        //$this->extensionBuilderSettings = $configurationManager->getSettings();
-    }
 
-    /**
-     * @var array
-     */
-    protected $overWriteSettings = [];
     /**
      * @var bool
      */
     protected $roundTripEnabled = false;
+
     /**
      * @var array
      */
