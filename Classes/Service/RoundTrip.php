@@ -73,17 +73,35 @@ class RoundTrip implements SingletonInterface
 
     /**
      * @var \EBT\ExtensionBuilder\Service\ParserService
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     *
      */
     protected $parserService = null;
 
     /**
+     * @param \EBT\ExtensionBuilder\Service\ParserService $parserService
+     * @return void
+     */
+    public function injectParserService(ParserService $parserService)
+    {
+        $this->parserService = $parserService;
+    }
+
+    /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     *
      */
     protected $configurationManager = null;
+
+    /**
+     * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
+     *
+     * @return void
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     */
+    public function injectExtensionBuilderConfigurationManager(
+        ExtensionBuilderConfigurationManager $configurationManager
+    ) {
+        $this->configurationManager = $configurationManager;
+    }
+
     /**
      * was the extension renamed?
      *
