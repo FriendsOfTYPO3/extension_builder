@@ -15,7 +15,6 @@ namespace EBT\ExtensionBuilder\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
-use EBT\ExtensionBuilder\Domain\Model\Extension;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
