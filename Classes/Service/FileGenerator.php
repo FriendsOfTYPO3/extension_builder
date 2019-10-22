@@ -15,6 +15,7 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
@@ -32,16 +33,35 @@ class FileGenerator
 {
     /**
      * @var \EBT\ExtensionBuilder\Service\ClassBuilder
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     *
      */
     protected $classBuilder = null;
+
+    /**
+     * @param \EBT\ExtensionBuilder\Service\ClassBuilder $classBuilder
+     * @return void
+     */
+    public function injectClassBuilder(ClassBuilder $classBuilder)
+    {
+        $this->classBuilder = $classBuilder;
+    }
+
+
     /**
      * @var \EBT\ExtensionBuilder\Service\RoundTrip
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     *
      */
     protected $roundTripService = null;
+
+    /**
+     * @param \EBT\ExtensionBuilder\Service\RoundTrip $roundTripService
+     * @return void
+     */
+    public function injectRoundTripService (RoundTrip $roundTripService)
+    {
+        $this->roundTripService = $roundTripService;
+    }
+
+
+
     /**
      * @var array
      */
@@ -74,11 +94,20 @@ class FileGenerator
      * @var string
      */
     protected $iconsDirectory = '';
+
     /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-     * @TYPO3\CMS\Extbase\Annotation\Inject
+     * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
+     *
+     * @return void
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    protected $objectManager = null;
+    public function injectExtensionBuilderConfigurationManager(
+        ExtensionBuilderConfigurationManager $configurationManager
+    ) {
+        // $this->extensionBuilderConfigurationManager = $configurationManager;
+        //$this->extensionBuilderSettings = $configurationManager->getSettings();
+    }
+
     /**
      * @var array
      */
@@ -91,11 +120,21 @@ class FileGenerator
      * @var array
      */
     protected $settings = [];
+
     /**
      * @var \EBT\ExtensionBuilder\Service\Printer
-     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $printerService = null;
+
+    /**
+     * @param \EBT\ExtensionBuilder\Service\Printer $printerService
+     * @return void
+     */
+    public function injectPrinterService(Printer $printerService)
+    {
+        $this->printerService = $printerService;
+    }
+
     /**
      * @var string[]
      */
@@ -127,12 +166,22 @@ class FileGenerator
     protected $deprecatedFileExtensions = [
         'typoscript' => ['ts', 'txt'],
     ];
+
     /**
      * @var \EBT\ExtensionBuilder\Service\LocalizationService
-     * @TYPO3\CMS\Extbase\Annotation\Inject
      *
      */
     protected $localizationService = null;
+
+    /**
+     * @param \EBT\ExtensionBuilder\Service\LocalizationService $localizationService
+     * @return void
+     */
+    public function injectLocalizationService (LocalizationService $localizationService)
+    {
+        $this->localizationService = $localizationService;
+    }
+
 
     /**
      * called by controller
@@ -748,7 +797,7 @@ class FileGenerator
     {
         $variables['settings'] = $this->settings;
         /* @var \TYPO3\CMS\Fluid\View\StandaloneView $standAloneView */
-        $standAloneView = $this->objectManager->get(StandaloneView::class);
+        $standAloneView = GeneralUtility::makeInstance(StandaloneView::class);
         $standAloneView->setLayoutRootPaths($this->codeTemplateRootPaths);
         $standAloneView->setPartialRootPaths($this->codeTemplatePartialPaths);
         $standAloneView->setFormat('txt');

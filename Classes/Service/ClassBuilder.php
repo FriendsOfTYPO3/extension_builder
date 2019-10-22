@@ -35,7 +35,6 @@ class ClassBuilder implements SingletonInterface
     const VALIDATE_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")';
     const CASCADE_REMOVE_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")';
     const LAZY_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\ORM\Lazy';
-    const INJECT_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\Inject';
 
     /**
      * The class file object created to container the generated class
@@ -340,6 +339,7 @@ class ClassBuilder implements SingletonInterface
             $this->classObject->setMethod($isMethod);
         }
     }
+
 
     /**
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
@@ -766,11 +766,10 @@ class ClassBuilder implements SingletonInterface
                 $classProperty->setTag('var', $domainObject->getFullyQualifiedDomainRepositoryClassName(), true);
                 $this->classObject->setProperty($classProperty);
             }
-            if (!$this->classObject->getProperty($repositoryName)->isTaggedWith('inject')
-                    && !$this->classObject->getProperty($repositoryName)->isTaggedWith(self::INJECT_ANNOTATION)
-                    && !$this->classObject->methodExists('inject' . ucfirst($repositoryName))
+            if (!$this->classObject->methodExists('inject' . ucfirst($repositoryName))
             ) {
-                $this->classObject->getProperty($repositoryName)->setTag(self::INJECT_ANNOTATION);
+                $injectRepositoryMethod = $this->buildInjectMethod($domainObject);
+                $this->classObject->addMethod($injectRepositoryMethod);
             }
         }
         foreach ($domainObject->getActions() as $action) {
@@ -784,6 +783,33 @@ class ClassBuilder implements SingletonInterface
             ->setName($this->extension->getNamespaceName() . '\\Controller')
             ->setClasses([$this->classObject]);
         return $this->classFileObject;
+    }
+
+    /**
+     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     *
+     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
+     */
+    protected function buildInjectMethod($domainObject)
+    {
+        $repositoryName = $domainObject->getName() . 'Repository';
+        $injectMethodName = 'inject' . $repositoryName;
+        if ($this->classObject->methodExists($injectMethodName)) {
+            $injectMethod = $this->classObject->getMethod($injectMethodName);
+        } else {
+            $injectMethod = clone $this->templateClassObject->getMethod('injectDomainObjectRepository')->setName($injectMethodName);
+            $replacements = [
+                'domainObjectRepository' => lcfirst($repositoryName),
+                '\\VENDOR\\Package\\Domain\\Repository\\DomainObjectRepository' => $domainObject->getFullyQualifiedDomainRepositoryClassName()
+            ];
+            $this->updateMethodBody($injectMethod, $replacements);
+            $injectMethod->getParameterByPosition(0)
+                ->setName(lcfirst($repositoryName))
+                ->setVarType($domainObject->getFullyQualifiedDomainRepositoryClassName())
+                ->setTypeHint($domainObject->getFullyQualifiedDomainRepositoryClassName());
+            $this->updateDocComment($injectMethod, $replacements);
+        }
+        return $injectMethod;
     }
 
     /**

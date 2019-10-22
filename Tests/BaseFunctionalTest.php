@@ -142,7 +142,6 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         $this->roundTripService->initialize($this->extension);
 
         $this->fileGenerator = $this->getAccessibleMock(FileGenerator::class, ['dummy']);
-        $this->inject($this->fileGenerator, 'objectManager', $this->objectManager);
         $this->inject($this->fileGenerator, 'printerService', $this->printerService);
         $this->inject($this->fileGenerator, 'localizationService', $localizationService);
         $this->inject($this->fileGenerator, 'classBuilder', $this->classBuilder);
