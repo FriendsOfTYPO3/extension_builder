@@ -799,14 +799,16 @@ class ClassBuilder implements SingletonInterface
         } else {
             $injectMethod = clone $this->templateClassObject->getMethod('injectDomainObjectRepository')->setName($injectMethodName);
             $replacements = [
-                'domainObjectRepository' => lcfirst($repositoryName),
-                '\\VENDOR\\Package\\Domain\\Repository\\DomainObjectRepository' => $domainObject->getFullyQualifiedDomainRepositoryClassName()
+                '\\VENDOR\\Package\\Domain\\Repository\\DomainObjectRepository' => $domainObject->getFullyQualifiedDomainRepositoryClassName(),
+                'domainObjectRepository' => lcfirst($repositoryName)
             ];
             $this->updateMethodBody($injectMethod, $replacements);
             $injectMethod->getParameterByPosition(0)
                 ->setName(lcfirst($repositoryName))
                 ->setVarType($domainObject->getFullyQualifiedDomainRepositoryClassName())
                 ->setTypeHint($domainObject->getFullyQualifiedDomainRepositoryClassName());
+            $injectMethod->removeTag('param');
+            $injectMethod->updateParamTags();
             $this->updateDocComment($injectMethod, $replacements);
         }
         return $injectMethod;
