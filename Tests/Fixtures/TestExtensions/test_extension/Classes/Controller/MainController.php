@@ -17,6 +17,7 @@ namespace FIXTURE\TestExtension\Controller;
  */
 class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
+
     /**
      * mainRepository
      *
