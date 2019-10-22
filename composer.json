@@ -42,7 +42,6 @@
     }
   },
   "replace": {
-    "friendsoftypo3/extension-builder": "self.version",
     "typo3-ter/extension-builder": "self.version"
   },
   "config": {
