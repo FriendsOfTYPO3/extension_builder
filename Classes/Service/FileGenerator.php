@@ -1311,6 +1311,16 @@ class FileGenerator
                 }
             }
 
+            // $targetFile might have a new name so check overwrite settings again
+            $overWriteMode = RoundTrip::getOverWriteSettingForPath(
+                $targetFile,
+                $this->extension
+            );
+            if ($overWriteMode == -1) {
+                // skip file creation
+                return;
+            }
+
             if ($overWriteMode == 1 && strpos($targetFile, 'Classes') === false) {
                 // classes are merged by the class builder
                 if ($fileExtension == 'html') {
