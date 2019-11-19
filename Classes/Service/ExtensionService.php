@@ -71,14 +71,10 @@ class ExtensionService
         return $storagePaths;
     }
 
-    /**
-     * @param string $path
-     * @return bool
-     */
     public function isComposerStoragePath(string $path): bool
     {
         foreach ($this->resolveComposerStoragePaths() as $composerStoragePath) {
-            if (StringUtility::beginsWith($path, $composerStoragePath)) {
+            if (strpos($path, $composerStoragePath) === 0) {
                 return true;
             }
         }

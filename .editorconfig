@@ -28,6 +28,10 @@ indent_size = 3
 [*.{yaml,yml}]
 indent_size = 2
 
+# HTML files
+[*.html]
+indent_style = tab
+
 # package.json
 # .travis.yml
 [{package.json,.travis.yml}]
