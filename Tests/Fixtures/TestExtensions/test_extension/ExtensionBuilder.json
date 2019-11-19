@@ -100,7 +100,7 @@
                             "relationName": "child1",
                             "relationType": "zeroToOne",
                             "relationWire": "[wired]",
-                            "renderType": "selectSingle",
+                            "renderType": "inline",
                             "uid": "894361328325"
                         },
                         {
