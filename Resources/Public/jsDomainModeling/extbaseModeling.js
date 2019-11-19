@@ -29,9 +29,9 @@ var extbaseModeling_wiringEditorLanguage = {
 		function updateRenderTypeOptions (selectedRelationType, renderTypeSelect) {
 			renderTypeSelect.find("option").hide();
 			var optionValueMap = {
-				'zeroToOne': ["selectSingle", "inline"],
-				'manyToOne': ["selectSingle"],
-				'zeroToMany': ["inline"],
+				'zeroToOne': ["selectSingle", "selectMultipleSideBySide", "inline"],
+				'manyToOne': ["selectSingle", "selectMultipleSideBySide"],
+				'zeroToMany': ["inline", "selectMultipleSideBySide"],
 				'manyToMany': ["selectMultipleSideBySide", "selectSingleBox", "selectCheckBox"]
 			};
 			var validOptions = optionValueMap[selectedRelationType];
