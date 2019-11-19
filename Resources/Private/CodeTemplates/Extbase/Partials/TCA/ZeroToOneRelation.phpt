@@ -1,15 +1,9 @@
-<f:switch expression="{property.renderType}"><f:case value="inline">[
-    'type' => 'inline',
+<f:switch expression="{property.renderType}"><f:case value="selectSingle">[
+    'type' => 'select',
+    'renderType' => 'selectSingle',
     'foreign_table' => '{property.foreignDatabaseTableName}',
     'minitems' => 0,
     'maxitems' => 1,
-    'appearance' => [
-        'collapseAll' => 0,
-        'levelLinksPosition' => 'top',
-        'showSynchronizationLink' => 1,
-        'showPossibleLocalizationRecords' => 1,
-        'showAllLocalizationLink' => 1
-    ],
 ],</f:case><f:case value="selectMultipleSideBySide">[
     'type' => 'select',
     'renderType' => '{property.renderType}',
@@ -30,11 +24,17 @@
         ],
     ],
 ],</f:case><f:defaultCase>[
-    'type' => 'select',
-    'renderType' => 'selectSingle',
+    'type' => 'inline',
     'foreign_table' => '{property.foreignDatabaseTableName}',
     'minitems' => 0,
     'maxitems' => 1,
+    'appearance' => [
+        'collapseAll' => 0,
+        'levelLinksPosition' => 'top',
+        'showSynchronizationLink' => 1,
+        'showPossibleLocalizationRecords' => 1,
+        'showAllLocalizationLink' => 1
+    ],
 ],</f:defaultCase></f:switch>
 
 
