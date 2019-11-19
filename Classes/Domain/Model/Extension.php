@@ -162,6 +162,11 @@ class Extension
     protected $previousExtensionKey = '';
 
     /**
+     * @var string|null
+     */
+    protected $storagePath;
+
+    /**
      * @return string
      */
     public function getExtensionKey()
@@ -227,7 +232,7 @@ class Extension
             if (empty($this->extensionKey)) {
                 throw new \Exception('ExtensionDir can only be created if an extensionKey is defined first');
             }
-            $this->extensionDir = PATH_typo3conf . 'ext/' . $this->extensionKey . '/';
+            $this->extensionDir = ($this->storagePath ?? PATH_typo3conf . 'ext/') . $this->extensionKey . '/';
         }
         return $this->extensionDir;
     }
@@ -714,6 +719,25 @@ class Extension
         } else {
             return $this->extensionDir;
         }
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStoragePath(): ?string
+    {
+        return $this->storagePath;
+    }
+
+    /**
+     * @param string|null $storagePath
+     */
+    public function setStoragePath(?string $storagePath): void
+    {
+        if ($storagePath !== null) {
+            $storagePath = rtrim($storagePath, '/') . '/';
+        }
+        $this->storagePath = $storagePath;
     }
 
     /**

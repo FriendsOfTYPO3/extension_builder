@@ -85,6 +85,7 @@ class ExtensionBuilderConfigurationManager extends ConfigurationManager
         $extensionConfigurationJson = json_decode($this->inputData['params']['working'], true);
         $extensionConfigurationJson = $this->reArrangeRelations($extensionConfigurationJson);
         $extensionConfigurationJson['modules'] = $this->checkForAbsoluteClassNames($extensionConfigurationJson['modules']);
+        $extensionConfigurationJson['storagePath'] = $this->inputData['params']['storagePath'] ?? null;
         return $extensionConfigurationJson;
     }
 
@@ -154,12 +155,13 @@ class ExtensionBuilderConfigurationManager extends ConfigurationManager
      * Reads the stored configuration (i.e. the extension model etc.).
      *
      * @param string $extensionKey
+     * @param string|null $storagePath
      * @return array|null
      */
-    public function getExtensionBuilderConfiguration($extensionKey)
+    public function getExtensionBuilderConfiguration($extensionKey, $storagePath = null)
     {
         $result = null;
-        $extensionConfigurationJson = self::getExtensionBuilderJson($extensionKey);
+        $extensionConfigurationJson = self::getExtensionBuilderJson($extensionKey, $storagePath);
         if ($extensionConfigurationJson) {
             $extensionConfigurationJson = $this->fixExtensionBuilderJSON($extensionConfigurationJson);
             $extensionConfigurationJson['properties']['originalExtensionKey'] = $extensionKey;
@@ -170,9 +172,15 @@ class ExtensionBuilderConfigurationManager extends ConfigurationManager
         return $result;
     }
 
-    public static function getExtensionBuilderJson($extensionKey)
+    /**
+     * @param string $extensionKey
+     * @param string|null $storagePath
+     * @return mixed|null
+     */
+    public static function getExtensionBuilderJson($extensionKey, $storagePath = null)
     {
-        $jsonFile = PATH_typo3conf . 'ext/' . $extensionKey . '/' . self::EXTENSION_BUILDER_SETTINGS_FILE;
+        $storagePath = $storagePath ?? PATH_typo3conf . 'ext/';
+        $jsonFile = $storagePath . $extensionKey . '/' . self::EXTENSION_BUILDER_SETTINGS_FILE;
         if (file_exists($jsonFile)) {
             return json_decode(file_get_contents($jsonFile), true);
         } else {

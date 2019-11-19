@@ -44,6 +44,11 @@ class ExtensionInstallationStatus
      */
     protected $dbUpdateNeeded = false;
 
+    /**
+     * @var bool
+     */
+    protected $usesComposerPath = false;
+
     public function __construct()
     {
         $this->installTool = GeneralUtility::makeInstance(InstallUtility::class);
@@ -55,6 +60,14 @@ class ExtensionInstallationStatus
     public function setExtension($extension)
     {
         $this->extension = $extension;
+    }
+
+    /**
+     * @param bool $usesComposerPath
+     */
+    public function setUsesComposerPath(bool $usesComposerPath): void
+    {
+        $this->usesComposerPath = $usesComposerPath;
     }
 
     /**
@@ -92,6 +105,12 @@ class ExtensionInstallationStatus
 
         if (!ExtensionManagementUtility::isLoaded($this->extension->getExtensionKey())) {
             $statusMessage .= '<p>Your Extension is not installed yet.</p>';
+            if ($this->usesComposerPath) {
+                $statusMessage .= sprintf(
+                    '<p>Execute <code>composer require %s</code> in terminal',
+                    $this->extension->getComposerInfo()['name']
+                );
+            }
         } else {
             $statusMessage .= '<br /><p>Please check the Install Tool for possible database updates!</p>';
         }

@@ -17,6 +17,7 @@ namespace EBT\ExtensionBuilder\Domain\Repository;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
+use EBT\ExtensionBuilder\Service\ExtensionService;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -32,6 +33,11 @@ class ExtensionRepository implements SingletonInterface
     protected $configurationManager = null;
 
     /**
+     * @var ExtensionService
+     */
+    protected $extensionService;
+
+    /**
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
      * @return void
      */
@@ -42,22 +48,46 @@ class ExtensionRepository implements SingletonInterface
     }
 
     /**
+     * @param ExtensionService $extensionService
+     */
+    public function injectExtensionService(ExtensionService $extensionService)
+    {
+        $this->extensionService = $extensionService;
+    }
+
+    /**
      * loops through all extensions in typo3conf/ext/
-     * and searchs for a JSON file with extension builder configuration
+     * and searches for a JSON file with extension builder configuration
+     *
      * @return array
      */
-    public function findAll()
+    public function findAll(): array
+    {
+        $extensions = [];
+        foreach ($this->extensionService->resolveStoragePaths() as $storagePath) {
+            $extensions = array_merge($extensions, $this->findAllInDirectory($storagePath));
+        }
+        return array_values($extensions);
+    }
+
+    /**
+     * @param string $storagePath
+     * @return array
+     */
+    protected function findAllInDirectory(string $storagePath): array
     {
         $result = [];
-        $extensionDirectoryHandle = opendir(PATH_typo3conf . 'ext/');
+        $extensionDirectoryHandle = opendir($storagePath);
         while (false !== ($singleExtensionDirectory = readdir($extensionDirectoryHandle))) {
-            if ($singleExtensionDirectory[0] == '.' || $singleExtensionDirectory[0] == '..' || !is_dir(PATH_typo3conf . 'ext/' . $singleExtensionDirectory)) {
+            if ($singleExtensionDirectory[0] == '.' || !is_dir($storagePath . $singleExtensionDirectory)) {
                 continue;
             }
-            $extensionBuilderConfiguration = $this->configurationManager->getExtensionBuilderConfiguration($singleExtensionDirectory);
+            $extensionBuilderConfiguration = $this->configurationManager
+                ->getExtensionBuilderConfiguration($singleExtensionDirectory, $storagePath);
             if ($extensionBuilderConfiguration !== null) {
-                $result[] = [
+                $result[$singleExtensionDirectory] = [
                     'name' => $singleExtensionDirectory,
+                    'storagePath' => $storagePath,
                     'working' => json_encode($extensionBuilderConfiguration)
                 ];
             }

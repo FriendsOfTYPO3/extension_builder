@@ -131,6 +131,8 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $this->setExtensionRelations($extensionBuildConfiguration, $extension);
         }
 
+        $extension->setStoragePath($extensionBuildConfiguration['storagePath'] ?? null);
+
         return $extension;
     }
 
