@@ -339,11 +339,15 @@ div:hover > .deleteButton {
   display: none; }
 #domainModelEditor .inputEx-fieldWrapper.dependant {
   display: none; }
-  #domainModelEditor .inputEx-fieldWrapper.dependant.advancedMode {
-    display: none; }
+#domainModelEditor .inputEx-fieldWrapper.dependant.advancedMode {
+  display: none; }
+#domainModelEditor .relationGroup fieldset.zeroToOne .advancedSettings .inputEx-Expanded .dependant.renderType {
+  display: block; }
 #domainModelEditor .relationGroup fieldset.manyToMany .advancedSettings .inputEx-Expanded .dependant.renderType {
   display: block; }
 #domainModelEditor .relationGroup fieldset.zeroToMany .advancedSettings .inputEx-Expanded .dependant.renderType {
+  display: block; }
+#domainModelEditor .relationGroup fieldset.manyToOne .advancedSettings .inputEx-Expanded .dependant.renderType {
   display: block; }
 
 #moduleBar {
