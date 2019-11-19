@@ -680,9 +680,9 @@
 					list.appendChild(li);
 				}
 			} else {
-			  list = document.createElement('div');
-			  list.innerText = 'No extensions found...';
-      }
+				list = document.createElement('div');
+				list.innerText = 'No extensions found...';
+			}
 			var panelBody = Dom.get('loadPanelBody');
 			panelBody.innerHTML = "";
 			panelBody.appendChild(list);

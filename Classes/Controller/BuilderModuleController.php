@@ -284,7 +284,6 @@ class BuilderModuleController extends ActionController
 
         if (!$extensionExistedBefore) {
             GeneralUtility::mkdir($extensionDirectory);
-            $extensionExistedBefore = false;
         }
         if ($usesComposerPath && !is_link($publicExtensionDirectory)) {
             symlink(
