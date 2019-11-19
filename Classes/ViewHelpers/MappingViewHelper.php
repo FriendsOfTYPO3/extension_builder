@@ -17,7 +17,7 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
 class MappingViewHelper extends AbstractConditionViewHelper
 {

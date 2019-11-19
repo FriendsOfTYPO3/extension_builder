@@ -15,9 +15,8 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\CMS\Fluid\Core\ViewHelper\Facets\ChildNodeAccessInterface;
+use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * Switch view helper which can be used to render content depending on a value or expression.
@@ -44,10 +43,10 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\Facets\ChildNodeAccessInterface;
  *
  * @api
  */
-class SwitchViewHelper extends AbstractViewHelper implements ChildNodeAccessInterface
+class SwitchViewHelper extends AbstractViewHelper
 {
     /**
-     * An array of \TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\AbstractNode
+     * An array of AbstractNode items
      * @var array
      */
     protected $childNodes = [];
@@ -61,7 +60,7 @@ class SwitchViewHelper extends AbstractViewHelper implements ChildNodeAccessInte
     protected $backupBreakState = false;
 
     /**
-     * Setter for ChildNodes - as defined in ChildNodeAccessInterface
+     * Setter for ChildNodes
      *
      * @param array $childNodes Child nodes of this syntax tree node
      * @return void
