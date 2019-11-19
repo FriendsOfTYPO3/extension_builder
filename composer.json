@@ -22,6 +22,7 @@
     }
   ],
   "require": {
+    "ext-json": "*",
     "typo3/cms-core": "~9.5",
     "nikic/php-parser": "^4.0",
     "typo3/cms-backend": "~9.5"

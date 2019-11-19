@@ -29,6 +29,18 @@
 						<a href="#" class="btn btn-default btn-sm" title="Save extension" id="WiringEditor-saveButton-button">
 							<core:icon identifier="actions-document-save" size="small" />
 						</a>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon input-group-icon">
+                                <span title="Storage Path">
+                                    <core:icon identifier="files-folder" size="small" />
+                                </span>
+                            </span>
+                            <select name="storagePath" id="storagePath" class="form-control form-control-adapt">
+                                <f:for each="{storagePaths}" as="storagePath">
+                                    <option value="{storagePath}">{storagePath}</option>
+                                </f:for>
+                            </select>
+                        </div>
 					</div>
 				</div>
 				<div class="module-docheader-bar-column-right">
