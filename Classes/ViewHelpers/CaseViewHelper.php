@@ -15,8 +15,8 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\CMS\Fluid\Core\ViewHelper\Exception;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * Case view helper that is only usable within the SwitchViewHelper.
@@ -40,7 +40,7 @@ class CaseViewHelper extends AbstractViewHelper
     /**
      *
      * @return string the contents of this view helper if $value equals the expression of the surrounding switch view helper, or $default is true. otherwise an empty string
-     * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
+     * @throws Exception
      *
      * @api
      */
