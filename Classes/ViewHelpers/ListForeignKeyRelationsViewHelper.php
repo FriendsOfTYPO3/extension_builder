@@ -15,7 +15,7 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  */
 
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * Indentation ViewHelper
