@@ -916,6 +916,7 @@ class Extension
             'name' => strtolower($this->vendorName) . '/' . $composerExtensionKey,
             'type' => 'typo3-cms-extension',
             'description' => $this->description,
+            'version' => $this->getVersion() ?: '1.0.0',
             'authors' => [],
             'require' => [
                 'typo3/cms-core' => '^9.5'
