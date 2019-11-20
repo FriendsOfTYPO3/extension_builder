@@ -239,6 +239,8 @@ class FileGenerator
         if ($extension->getGenerateDocumentationTemplate()) {
             $this->generateDocumentationFiles();
         }
+
+        $this->generateEmptyGitRepository();
     }
 
     protected function generateYamlSettingsFile()
@@ -766,6 +768,22 @@ class FileGenerator
         $this->writeFile($this->extensionDirectory . 'Documentation.tmpl/Index.rst', $fileContents);
         $fileContents = $this->renderTemplate('Documentation.tmpl/Settings.cfgt', ['extension' => $this->extension]);
         $this->writeFile($this->extensionDirectory . 'Documentation.tmpl/Settings.cfg', $fileContents);
+    }
+
+    protected function generateEmptyGitRepository()
+    {
+        $targetDirectory = $this->extensionDirectory . '.git/';
+        if (is_file($targetDirectory) || is_dir($targetDirectory) || is_link($targetDirectory)) {
+            return;
+        }
+        $sourceDirectory = ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Git/';
+        $targetDirectory = $this->extensionDirectory . '.git/';
+        foreach (['objects/info', 'objects/pack', 'refs/heads', 'refs/tags'] as $item) {
+            $this->mkdir_deep($targetDirectory . $item, '');
+        }
+        foreach (['config', 'description', 'HEAD', 'info/exclude'] as $item) {
+            $this->upload_copy_move($sourceDirectory . $item, $targetDirectory . $item);
+        }
     }
 
     /**
