@@ -10,7 +10,7 @@
     'foreign_table' => '{property.foreignDatabaseTableName}',
     'size' => 10,
     'autoSizeMax' => 30,
-    'maxitems' => 9999,
+    'maxitems' => 1,
     'multiple' => 0,
     'fieldControl' => [
         'editPopup' => [
