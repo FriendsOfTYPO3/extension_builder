@@ -1,6 +1,6 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}{escaping off}
-<k:switch expression="{property.type}">
-	<k:case value="Image">
+<f:switch expression="{property.type}">
+	<f:case value="Image">
 		<f:if condition="{property.zeroToManyRelation}">
 			<f:then>
 				<k:openingTag>f:for each="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.name}</k:curlyBrackets>" as="image" </k:openingTag>
@@ -11,8 +11,8 @@
 				<k:openingTag>f:image src="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.name}.originalResource.publicUrl</k:curlyBrackets>" width="200"/</k:openingTag>
 			</f:else>
 		</f:if>
-	</k:case>
-	<k:case value="File">
+	</f:case>
+	<f:case value="File">
 		<f:if condition="{property.zeroToManyRelation}">
 			<f:then>
 				<k:openingTag>f:for each="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.name}</k:curlyBrackets>" as="file" </k:openingTag>
@@ -27,8 +27,8 @@
 				</a>
 			</f:else>
 		</f:if>
-	</k:case>
-	<k:case value="">
+	</f:case>
+	<f:defaultCase>
 		<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets>
-	</k:case>
-</k:switch>
+	</f:defaultCase>
+</f:switch>
