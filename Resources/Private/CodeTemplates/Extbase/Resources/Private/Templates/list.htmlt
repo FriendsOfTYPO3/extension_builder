@@ -1,52 +1,52 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:format.raw><k:openingTag>html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"</k:openingTag>
-	<k:openingTag>f:layout name="Default" /</k:openingTag>
+<k:openingTag>f:layout name="Default" /</k:openingTag>
 
-	This Template is responsible for creating a table of domain objects.
+This Template is responsible for creating a table of domain objects.
 
 
-	If you modify this template, do not forget to change the overwrite settings
-	in /Configuration/ExtensionBuilder/settings.yaml:
-	  Resources:
-		Private:
-		  Templates:
-			List.html: keep
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        List.html: keep
 
-	Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
-	<k:openingTag>f:section name="content"</k:openingTag>
-		<h1>Listing for {domainObject.name}</h1>
+<k:openingTag>f:section name="content"</k:openingTag>
+    <h1>Listing for {domainObject.name}</h1>
 
-		<k:openingTag>f:flashMessages /</k:openingTag>
+    <k:openingTag>f:flashMessages /</k:openingTag>
 
-		<table  class="{extension.shortExtensionKey}" >
-			<k:format.removeMultipleNewlines><tr>
+    <table  class="{extension.shortExtensionKey}" >
+        <k:format.removeMultipleNewlines><tr>
 
-			<f:comment>Building up the table header</f:comment>
-				<f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
-				<th><k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag></th>
-				</f:if></f:for>
-				<th> </th>
-				<th> </th>
-			</tr>
-			</k:format.removeMultipleNewlines>
+        <f:comment>Building up the table header</f:comment>
+            <f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
+            <th><k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag></th>
+            </f:if></f:for>
+            <th> </th>
+            <th> </th>
+        </tr>
+        </k:format.removeMultipleNewlines>
 
-			<k:format.removeMultipleNewlines>
-			<f:comment>Creating the f:for which loops through all objects</f:comment>
+        <k:format.removeMultipleNewlines>
+        <f:comment>Creating the f:for which loops through all objects</f:comment>
 
-			<k:openingTag>f:for each="{domainObject.name -> k:format.lowercaseFirst() -> k:pluralize() -> k:curlyBrackets()}" as="{domainObject.name -> k:format.lowercaseFirst()}"</k:openingTag>
+        <k:openingTag>f:for each="{domainObject.name -> k:format.lowercaseFirst() -> k:pluralize() -> k:curlyBrackets()}" as="{domainObject.name -> k:format.lowercaseFirst()}"</k:openingTag>
 
-				<tr>
-				<f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
-					<td><k:openingTag>f:link.action action="show" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()} : {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>"</k:openingTag> <k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets><k:openingTag>/f:link.action</k:openingTag></td>
-				</f:if></f:for>
+            <tr>
+            <f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
+                <td><k:openingTag>f:link.action action="show" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()} : {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>"</k:openingTag> <k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets><k:openingTag>/f:link.action</k:openingTag></td>
+            </f:if></f:for>
 
-					<td><k:openingTag>f:link.action action="edit" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()} : {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Edit<k:openingTag>/f:link.action</k:openingTag></td>
-					<td><k:openingTag>f:link.action action="delete" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()} : {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Delete<k:openingTag>/f:link.action</k:openingTag></td>
-				</tr>
-			<k:openingTag>/f:for</k:openingTag>
-			</k:format.removeMultipleNewlines>
-		</table>
+                <td><k:openingTag>f:link.action action="edit" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()} : {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Edit<k:openingTag>/f:link.action</k:openingTag></td>
+                <td><k:openingTag>f:link.action action="delete" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()} : {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Delete<k:openingTag>/f:link.action</k:openingTag></td>
+            </tr>
+        <k:openingTag>/f:for</k:openingTag>
+        </k:format.removeMultipleNewlines>
+    </table>
 
-		<k:openingTag>f:link.action action="new"</k:openingTag>New {domainObject.name}<k:openingTag>/f:link.action</k:openingTag>
-	<k:openingTag>/f:section</k:openingTag>
+    <k:openingTag>f:link.action action="new"</k:openingTag>New {domainObject.name}<k:openingTag>/f:link.action</k:openingTag>
+<k:openingTag>/f:section</k:openingTag>
 <k:openingTag>/html</k:openingTag></f:format.raw>
