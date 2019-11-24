@@ -38,7 +38,7 @@
         ],
         'foreign_match_fields' => [
             'fieldname' => '{property.fieldName}',
-            'tablenames' => '{domainObject.databaseTableName}',
+            'tablenames' => '{property.domainObject.databaseTableName}',
             'table_local' => 'sys_file',
         ]<f:if condition="{property.maxItems}">,
         'maxitems' => {property.maxItems}</f:if><f:if condition="{property.required}">,
