@@ -13,15 +13,15 @@ in /Configuration/ExtensionBuilder/settings.yaml:
 Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
 <f:section name="content">
-<h1>Edit Main</h1>
+    <h1>Edit Main</h1>
 
-<f:flashMessages />
+    <f:flashMessages />
 
-<f:render partial="FormErrors" />
+    <f:render partial="FormErrors" />
 
-<f:form action="update" name="main" object="{main}" >
-<f:render partial="Main/FormFields" arguments="{main:main}" />
-	<f:form.submit value="Save" />
-</f:form>
+    <f:form action="update" name="main" object="{main}" >
+    <f:render partial="Main/FormFields" arguments="{main:main}" />
+        <f:form.submit value="Save" />
+    </f:form>
 </f:section>
 </html>
