@@ -83,7 +83,7 @@ class CompatibilityTest extends BaseFunctionalTest
 
         $this->fileGenerator->build($this->extension);
 
-        $diffOutput = new \SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder('', false);
+        $diffOutput = new \SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder('', true);
         $differ = new \SebastianBergmann\Diff\Differ($diffOutput);
 
         $referenceFiles = GeneralUtility::getAllFilesAndFoldersInPath([], $testExtensionDir, 'php,sql,html,typoscript');
