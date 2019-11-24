@@ -59,7 +59,7 @@ plugin.tx_testextension._CSS_DEFAULT_STYLE (
 
 )
 
- # Module configuration
+# Module configuration
 module.tx_testextension_web_testextensiontestmodule1 {
   persistence {
     storagePid = {$module.tx_testextension_testmodule1.persistence.storagePid}
