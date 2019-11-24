@@ -23,6 +23,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  * @see \TYPO3\CMS\Fluid\ViewHelpers\SwitchViewHelper
  *
  * @api
+ * @deprecated Use default `f:case` instead
  */
 class CaseViewHelper extends AbstractViewHelper
 {
@@ -48,10 +49,10 @@ class CaseViewHelper extends AbstractViewHelper
     {
         $default = false;
         $value = null;
-        if (!$this->hasArgument('default')) {
+        if ($this->hasArgument('default')) {
             $default = $this->arguments['default'];
         }
-        if (!$this->hasArgument('value')) {
+        if ($this->hasArgument('value')) {
             $value = $this->arguments['value'];
         }
 

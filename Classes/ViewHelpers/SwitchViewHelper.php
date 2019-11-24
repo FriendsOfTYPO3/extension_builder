@@ -42,6 +42,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  * Depending on the scenario this can be easier to extend and possibly contains less duplication.
  *
  * @api
+ * @deprecated Use default `f:switch` instead
  */
 class SwitchViewHelper extends AbstractViewHelper
 {
