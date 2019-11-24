@@ -5,6 +5,7 @@
     'type' => 'select',
     'renderType' => '{property.renderType}',
     'foreign_table' => '{property.foreignDatabaseTableName}',
+    'default' => 0,
     'size' => 10,
     'autoSizeMax' => 30,
     'maxitems' => 9999,
