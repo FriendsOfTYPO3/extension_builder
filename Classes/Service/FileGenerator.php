@@ -656,7 +656,14 @@ class FileGenerator
                     $this->generateTemplateFiles('Backend/');
                 }
             } catch (\Exception $e) {
-                throw new \Exception('Could not generate domain templates, error: ' . $e->getMessage());
+                throw new \Exception(
+                    sprintf(
+                        'Could not generate domain templates, error: %s in %s line %s',
+                        $e->getMessage(),
+                        $e->getFile(),
+                        $e->getLine()
+                    )
+                );
             }
         }
     }
