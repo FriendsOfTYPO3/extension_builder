@@ -151,7 +151,7 @@ return [
                 'rows' => 15,
                 'eval' => 'trim',
             ],
-            
+
         ],
         'my_date' => [
             'exclude' => true,
@@ -216,6 +216,7 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_testextension_domain_model_child3',
+                'default' => 0,
                 'minitems' => 0,
                 'maxitems' => 1,
             ],
@@ -244,8 +245,8 @@ return [
                     ],
                 ],
             ],
-            
+
         ],
-    
+
     ],
 ];
