@@ -30,11 +30,11 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
         <f:for each="{mains}" as="main">
             <tr>
-                <td><f:link.action action="show" arguments="{main : main}"> {main.name}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{main : main}"> {main.identifier}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{main : main}"> {main.description}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{main : main}"> {main.myDate -> f:format.date()}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{main : main}"> {main.mail}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{main : main}">{main.name}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{main : main}">{main.identifier}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{main : main}">{main.description}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{main : main}">{main.myDate -> f:format.date()}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{main : main}">{main.mail}</f:link.action></td>
                 <td><f:link.action action="edit" arguments="{main : main}">Edit</f:link.action></td>
                 <td><f:link.action action="delete" arguments="{main : main}">Delete</f:link.action></td>
             </tr>
