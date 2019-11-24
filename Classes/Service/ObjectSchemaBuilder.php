@@ -196,11 +196,14 @@ class ObjectSchemaBuilder implements SingletonInterface
                 $relation->setForeignKeyName($foreignKeyName);
                 $relation->setForeignDatabaseTableName($foreignDatabaseTableName);
             }
-            if ($relation->isFileReference() && !empty($relationJsonConfiguration['maxItems'])) {
-                /** @var $relation \EBT\ExtensionBuilder\Domain\Model\DomainObject\FileProperty */
-                $relation->setMaxItems($relationJsonConfiguration['maxItems']);
-                if (!empty($relationJsonConfiguration['allowedFileTypes'])) {
-                    $relation->setAllowedFileTypes($relationJsonConfiguration['allowedFileTypes']);
+            if ($relation->isFileReference()) {
+                $relation->setRenderType('inline');
+                if (!empty($relationJsonConfiguration['maxItems'])) {
+                    /** @var $relation \EBT\ExtensionBuilder\Domain\Model\DomainObject\FileProperty */
+                    $relation->setMaxItems($relationJsonConfiguration['maxItems']);
+                    if (!empty($relationJsonConfiguration['allowedFileTypes'])) {
+                        $relation->setAllowedFileTypes($relationJsonConfiguration['allowedFileTypes']);
+                    }
                 }
             }
         }
