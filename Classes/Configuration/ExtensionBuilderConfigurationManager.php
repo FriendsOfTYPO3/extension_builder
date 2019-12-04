@@ -117,7 +117,7 @@ class ExtensionBuilderConfigurationManager extends ConfigurationManager
         $settings = $typoscript['module.']['extension_builder.']['settings.'];
         $settings['extConf'] = $this->getExtensionBuilderSettings();
         if (empty($settings['publicResourcesPath'])) {
-            $settings['publicResourcesPath'] = ExtensionManagementUtility::siteRelPath('extension_builder') . 'Resources/Public/';
+            $settings['publicResourcesPath'] = ExtensionManagementUtility::extPath('extension_builder'). 'Resources/Public/';
         }
         return $settings;
     }
