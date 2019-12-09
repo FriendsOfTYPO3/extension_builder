@@ -18,6 +18,7 @@ namespace EBT\ExtensionBuilder\Service;
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model;
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
 use EBT\ExtensionBuilder\Domain\Model\NamespaceObject;
 use EBT\ExtensionBuilder\Parser\ClassFactory;
 use EBT\ExtensionBuilder\Utility\Inflector;
@@ -244,7 +245,7 @@ class ClassBuilder implements SingletonInterface
                 $classProperty->setDefault($domainProperty->getDefaultValue());
             }
 
-            if ($domainProperty->isZeroToManyRelation()) {
+            if ($domainProperty instanceof ZeroToManyRelation && ($domainProperty->getRenderType() ?: 'inline') === 'inline') {
                 $classProperty->setTag(self::CASCADE_REMOVE_ANNOTATION);
             }
         }
