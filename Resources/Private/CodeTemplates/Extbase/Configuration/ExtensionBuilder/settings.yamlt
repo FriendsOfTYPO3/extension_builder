@@ -49,6 +49,7 @@ overwriteSettings:
   Configuration:
     #TCA merge not possible - use overrides directory
     #TypoScript: keep
+    #GIT: false
 
   Resources:
     Private:
