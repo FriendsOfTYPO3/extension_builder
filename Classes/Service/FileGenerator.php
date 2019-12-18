@@ -239,7 +239,7 @@ class FileGenerator
         }
 
         $extensionSettings = $extension->getSettings();
-        if ($extensionSettings['overwriteSettings']['Configuration']['GIT'] ?? false) {
+        if ($extensionSettings['overwriteSettings']['.git'] ?? false) {
             $this->generateEmptyGitRepository();
             $this->generateGitIgnore();
         }
