@@ -40,6 +40,9 @@
 ############  extension settings  ##############
 
 overwriteSettings:
+  # uncomment if you don't want an empty git repository to be created
+  #.git: skip
+
   Classes:
     Controller: merge
     Domain:
@@ -49,7 +52,6 @@ overwriteSettings:
   Configuration:
     #TCA merge not possible - use overrides directory
     #TypoScript: keep
-    #GIT: false
 
   Resources:
     Private:
