@@ -6,7 +6,7 @@ Extending models or map to existing tables
 Extending models
 ----------------
 
-The ExtensionBuilder supports single table inheritance. That means, you can extend extbase models,
+The ExtensionBuilder supports single table inheritance (**STI**). That means, you can extend extbase models,
 either of your current extension or of other extensions. You have to enter the class name (not the model name!)
 of the model you want to extend in the domain object settings form in the field "Extend existing model class".
 The class has to be loadable, that means you can only extend classes of extensions that are installed.
