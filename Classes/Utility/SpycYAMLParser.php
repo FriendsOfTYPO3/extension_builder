@@ -306,9 +306,9 @@ class SpycYAMLParser
                 $previous_key = $key;
             }
             return $string;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

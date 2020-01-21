@@ -68,9 +68,9 @@ class Printer extends Standard
         $resultingCode = $this->render($stmts);
         if ($prependPHPTag) {
             return '<?php' . LF . $resultingCode . LF;
-        } else {
-            return $resultingCode . LF;
         }
+
+        return $resultingCode . LF;
     }
 
     /**
@@ -103,9 +103,8 @@ class Printer extends Standard
         }
         if ($multiline) {
             return $this->nl . $this->pImplode($nodes, ', ' . $this->nl) . $this->nl;
-        } else {
-            return $this->pImplode($nodes, ', ');
         }
-    }
 
+        return $this->pImplode($nodes, ', ');
+    }
 }

@@ -33,7 +33,6 @@ class File extends Container
      */
     protected $stmts = [];
 
-
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\FunctionObject[]
      */
@@ -84,9 +83,9 @@ class File extends Container
     {
         if (count($this->namespaces) > 0) {
             return reset($this->namespaces)->getClasses();
-        } else {
-            return $this->classes;
         }
+
+        return $this->classes;
     }
 
     /**
@@ -142,5 +141,4 @@ class File extends Container
     {
         $this->filePathAndName = $filePathAndName;
     }
-
 }

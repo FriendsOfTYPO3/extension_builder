@@ -50,6 +50,7 @@ abstract class AbstractObject
      * @var string
      */
     protected $name = '';
+
     /**
      * @var string
      */
@@ -461,7 +462,7 @@ abstract class AbstractObject
             if ($line === '*/') {
                 break;
             }
-            if (strlen($line) > 0 && strpos($line, '* @') !== false) {
+            if ($line !== '' && strpos($line, '* @') !== false) {
                 $this->parseTag(substr($line, strpos($line, '@')));
             } else {
                 if (count($this->tags) === 0) {
@@ -619,11 +620,7 @@ abstract class AbstractObject
      */
     public function isNamespaced()
     {
-        if (empty($this->namespaceName)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !empty($this->namespaceName);
     }
 
     /**

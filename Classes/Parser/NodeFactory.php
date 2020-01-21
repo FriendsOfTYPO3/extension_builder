@@ -305,9 +305,9 @@ class NodeFactory implements SingletonInterface
     {
         if ($name instanceof Name) {
             return $name;
-        } else {
-            return new Name($name);
         }
+
+        return new Name($name);
     }
 
     /**
@@ -322,21 +322,29 @@ class NodeFactory implements SingletonInterface
     {
         if ($value instanceof Node) {
             return $value;
-        } elseif (is_null($value)) {
-            return new ConstFetch(
-                new Name('null')
-            );
-        } elseif (is_bool($value)) {
-            return new ConstFetch(
-                new Name($value ? 'true' : 'false')
-            );
-        } elseif (is_int($value)) {
+        }
+
+        if ($value === null) {
+            return new ConstFetch(new Name('null'));
+        }
+
+        if (is_bool($value)) {
+            return new ConstFetch(new Name($value ? 'true' : 'false'));
+        }
+
+        if (is_int($value)) {
             return new LNumber($value);
-        } elseif (is_float($value)) {
+        }
+
+        if (is_float($value)) {
             return new DNumber($value);
-        } elseif (is_string($value)) {
+        }
+
+        if (is_string($value)) {
             return new String_($value);
-        } elseif (is_array($value)) {
+        }
+
+        if (is_array($value)) {
             $items = [];
             $lastKey = -1;
             foreach ($value as $itemKey => $itemValue) {
@@ -355,8 +363,8 @@ class NodeFactory implements SingletonInterface
             }
 
             return new Array_($items);
-        } else {
-            throw new \LogicException('Invalid value');
         }
+
+        throw new \LogicException('Invalid value');
     }
 }

@@ -137,8 +137,10 @@ class ExtensionInstallationStatus
                 $fieldDefinitionsFromFile = $sqlHandler->getFieldDefinitions_fileContent($sqlContent);
                 if (count($fieldDefinitionsFromFile)) {
                     $fieldDefinitionsFromCurrentDatabase = $sqlHandler->getFieldDefinitions_database();
-                    $updateTableDefinition = $sqlHandler->getDatabaseExtra($fieldDefinitionsFromFile,
-                        $fieldDefinitionsFromCurrentDatabase);
+                    $updateTableDefinition = $sqlHandler->getDatabaseExtra(
+                        $fieldDefinitionsFromFile,
+                        $fieldDefinitionsFromCurrentDatabase
+                    );
                     $this->updateStatements = $sqlHandler->getUpdateSuggestions($updateTableDefinition);
                     if (!empty($updateTableDefinition['extra']) || !empty($updateTableDefinition['diff']) || !empty($updateTableDefinition['diff_currentValues'])) {
                         $this->dbUpdateNeeded = true;
@@ -176,9 +178,9 @@ class ExtensionInstallationStatus
         }
         if ($hasErrors) {
             return ['error' => 'Database could not be updated. Please check it in the update wizzard of the install tool'];
-        } else {
-            return ['success' => 'Database was successfully updated'];
         }
+
+        return ['success' => 'Database was successfully updated'];
     }
 
     /**

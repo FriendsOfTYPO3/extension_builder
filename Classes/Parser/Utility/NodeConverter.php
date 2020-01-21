@@ -38,20 +38,19 @@ class NodeConverter
         Class_::MODIFIER_PUBLIC,
         Class_::MODIFIER_PROTECTED,
         Class_::MODIFIER_PRIVATE
-
     ];
 
     public static function getTypeHintFromVarType($varType)
     {
         if (in_array(strtolower($varType), ['integer', 'int', 'double', 'float', 'boolean', 'bool', 'string'])) {
             return '';
-        } else {
-            if (preg_match_all('/^[^a-zA-Z]|[^\w_]/', $varType, $matches) === 0) {
-                // has to be an allowed classname or 'array'
-                return $varType;
-            }
-            return '';
         }
+
+        if (preg_match_all('/^[^a-zA-Z]|[^\w_]/', $varType, $matches) === 0) {
+            // has to be an allowed classname or 'array'
+            return $varType;
+        }
+        return '';
     }
 
     /**
@@ -83,17 +82,28 @@ class NodeConverter
         if (\is_string($node) || \is_numeric($node)) {
             return $node;
         }
+
         if ($node instanceof Namespace_) {
             return implode('\\', $node->name->parts);
-        } elseif ($node instanceof FullyQualified) {
+        }
+
+        if ($node instanceof FullyQualified) {
             return '\\' . implode('\\', $node->parts);
-        } elseif ($node instanceof Name) {
+        }
+
+        if ($node instanceof Name) {
             return implode('\\', $node->parts);
-        } elseif ($node instanceof ConstFetch) {
+        }
+
+        if ($node instanceof ConstFetch) {
             return self::getValueFromNode($node->name);
-        } elseif ($node instanceof UnaryMinus) {
+        }
+
+        if ($node instanceof UnaryMinus) {
             return -1 * self::getValueFromNode($node->expr);
-        } elseif ($node instanceof Array_) {
+        }
+
+        if ($node instanceof Array_) {
             $value = [];
             $arrayItems = $node->items;
             foreach ($arrayItems as $arrayItemNode) {
@@ -106,11 +116,13 @@ class NodeConverter
                 }
             }
             return $value;
-        } elseif ($node instanceof Node) {
-            return $node->value;
-        } else {
-            return null;
         }
+
+        if ($node instanceof Node) {
+            return $node->value;
+        }
+
+        return null;
     }
 
     /**
@@ -125,21 +137,29 @@ class NodeConverter
     {
         if ($value instanceof Node) {
             return $value;
-        } elseif (is_null($value)) {
-            return new ConstFetch(
-                new Name('null')
-            );
-        } elseif (is_bool($value)) {
-            return new ConstFetch(
-                new Name($value ? 'true' : 'false')
-            );
-        } elseif (is_int($value)) {
+        }
+
+        if (is_null($value)) {
+            return new ConstFetch(new Name('null'));
+        }
+
+        if (is_bool($value)) {
+            return new ConstFetch(new Name($value ? 'true' : 'false'));
+        }
+
+        if (is_int($value)) {
             return new LNumber($value);
-        } elseif (is_float($value)) {
+        }
+
+        if (is_float($value)) {
             return new DNumber($value);
-        } elseif (is_string($value)) {
+        }
+
+        if (is_string($value)) {
             return new String_($value);
-        } elseif (is_array($value)) {
+        }
+
+        if (is_array($value)) {
             $items = [];
             $lastKey = -1;
             foreach ($value as $itemKey => $itemValue) {
@@ -158,9 +178,9 @@ class NodeConverter
             }
 
             return new Array_($items);
-        } else {
-            throw new \LogicException('Invalid value');
         }
+
+        throw new \LogicException('Invalid value');
     }
 
     /**
@@ -203,11 +223,13 @@ class NodeConverter
     {
         if (is_null($value)) {
             return '';
-        } elseif ($value == 'false' || $value == 'true') {
-            return 'bool';
-        } else {
-            return gettype($value);
         }
+
+        if ($value == 'false' || $value == 'true') {
+            return 'bool';
+        }
+
+        return gettype($value);
     }
 
     public static function getPropertyValueFromNode($node, $property)

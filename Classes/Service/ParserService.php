@@ -27,31 +27,29 @@ use TYPO3\CMS\Core\Localization\Exception\FileNotFoundException;
 use TYPO3\CMS\Core\SingletonInterface;
 use PhpParser\ParserFactory;
 
-
 class ParserService implements SingletonInterface
 {
     /**
      * @var \EBT\ExtensionBuilder\Parser\Visitor\FileVisitorInterface
      */
-    protected $fileVisitor = null;
+    protected $fileVisitor;
 
     /**
      * @var \EBT\ExtensionBuilder\Parser\TraverserInterface
      */
-    protected $traverser = null;
+    protected $traverser;
 
     /**
      * @var \EBT\ExtensionBuilder\Parser\ClassFactoryInterface
      */
-    protected $classFactory = null;
+    protected $classFactory;
 
     /**
      * @var \EBT\ExtensionBuilder\Parser\Visitor\FileVisitorInterface
      */
-    protected $classFileVisitor = null;
+    protected $classFileVisitor;
 
-
-    protected $parser = null;
+    protected $parser;
 
     public function __construct()
     {
@@ -79,8 +77,7 @@ class ParserService implements SingletonInterface
         $this->fileVisitor->setClassFactory($this->classFactory);
         $this->traverser->appendVisitor($this->fileVisitor);
         $this->traverser->traverse($stmts);
-        $fileObject = $this->fileVisitor->getFileObject();
-        return $fileObject;
+        return $this->fileVisitor->getFileObject();
     }
 
     /**

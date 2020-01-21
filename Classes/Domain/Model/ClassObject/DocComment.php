@@ -250,10 +250,10 @@ class DocComment extends Comment
 
         if ($singleLineCommentAllowed && count($docCommentLines) === 1) {
             return '/** ' . $docCommentLines[0] . ' */';
-        } else {
-            $docCommentLines = preg_replace('/\\s+$/', '', $docCommentLines);
-            $docCommentLines = preg_replace('/^/', ' * ', $docCommentLines);
-            return '/**' . PHP_EOL . implode(PHP_EOL, $docCommentLines) . PHP_EOL . ' */';
         }
+
+        $docCommentLines = preg_replace('/\\s+$/', '', $docCommentLines);
+        $docCommentLines = preg_replace('/^/', ' * ', $docCommentLines);
+        return '/**' . PHP_EOL . implode(PHP_EOL, $docCommentLines) . PHP_EOL . ' */';
     }
 }

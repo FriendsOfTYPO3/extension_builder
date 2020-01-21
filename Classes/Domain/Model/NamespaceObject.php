@@ -18,7 +18,6 @@ namespace EBT\ExtensionBuilder\Domain\Model;
 
 class NamespaceObject extends Container
 {
-
     /**
      * @param string $name
      */

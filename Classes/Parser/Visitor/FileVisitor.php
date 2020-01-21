@@ -72,8 +72,6 @@ class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
     }
 
     /**
-     *
-     *
      * @param \PhpParser\Node $node
      */
     public function enterNode(Node $node)

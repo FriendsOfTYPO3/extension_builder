@@ -177,13 +177,9 @@ class ObjectSchemaBuilder implements SingletonInterface
             if (!empty($relationJsonConfiguration['renderType'])) {
                 $relation->setRenderType($relationJsonConfiguration['renderType']);
             }
-            if (isset($extbaseClassConfiguration['tableName'])) {
-                $foreignDatabaseTableName = $extbaseClassConfiguration['tableName'];
-            } else {
-                $foreignDatabaseTableName = Tools::parseTableNameFromClassName(
+            $foreignDatabaseTableName = $extbaseClassConfiguration['tableName'] ?? Tools::parseTableNameFromClassName(
                     $relationJsonConfiguration['foreignRelationClass']
                 );
-            }
             $relation->setForeignDatabaseTableName($foreignDatabaseTableName);
             if ($relation instanceof ZeroToManyRelation) {
                 $foreignKeyName = strtolower($domainObject->getName());

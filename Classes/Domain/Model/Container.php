@@ -128,11 +128,7 @@ class Container extends AbstractObject
      */
     public function getConstant($constantName)
     {
-        if (isset($this->constants[$constantName])) {
-            return $this->constants[$constantName];
-        } else {
-            return null;
-        }
+        return $this->constants[$constantName] ?? null;
     }
 
     /**
@@ -214,11 +210,7 @@ class Container extends AbstractObject
      */
     public function getFunction($name)
     {
-        if (isset($this->functions[$name])) {
-            return $this->functions[$name];
-        } else {
-            return null;
-        }
+        return $this->functions[$name] ?? null;
     }
 
     /**

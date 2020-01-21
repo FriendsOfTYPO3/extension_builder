@@ -131,10 +131,7 @@ class Property extends AbstractObject
      */
     public function getHasDefaultValue()
     {
-        if (isset($this->default) && $this->default !== null) {
-            return true;
-        }
-        return false;
+        return isset($this->default) && $this->default !== null;
     }
 
     /**
@@ -145,10 +142,7 @@ class Property extends AbstractObject
      */
     public function getHasValue()
     {
-        if (isset($this->value) && $this->value !== null) {
-            return true;
-        }
-        return false;
+        return isset($this->value) && $this->value !== null;
     }
 
     /**

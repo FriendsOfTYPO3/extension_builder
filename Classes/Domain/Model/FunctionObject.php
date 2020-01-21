@@ -124,11 +124,7 @@ class FunctionObject extends AbstractObject
      */
     public function getParameterByPosition($position)
     {
-        if (isset($this->parameters[$position])) {
-            return $this->parameters[$position];
-        } else {
-            return null;
-        }
+        return $this->parameters[$position] ?? null;
     }
 
     /**
@@ -179,9 +175,9 @@ class FunctionObject extends AbstractObject
             unset($this->parameters[$parameterPosition]);
             $this->updateParamTags();
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
