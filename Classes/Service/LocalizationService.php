@@ -35,7 +35,7 @@ class LocalizationService implements SingletonInterface
      */
     protected function getXliffParser()
     {
-        if (is_null($this->xliffParser)) {
+        if ($this->xliffParser === null) {
             $this->xliffParser = Utility\GeneralUtility::makeInstance(XliffParser::class);
         }
         return $this->xliffParser;
@@ -107,11 +107,10 @@ class LocalizationService implements SingletonInterface
      */
     public function prepareLabelArrayForBackendModule($backendModule)
     {
-        $labelArray = [];
-        $labelArray['mlang_tabs_tab'] = htmlspecialchars($backendModule->getName());
-        $labelArray['mlang_labels_tabdescr'] = htmlspecialchars($backendModule->getDescription());
-        $labelArray['mlang_tabs_tab'] = htmlspecialchars($backendModule->getTabLabel());
-        return $labelArray;
+        return [
+            'mlang_labels_tabdescr' => htmlspecialchars($backendModule->getDescription()),
+            'mlang_tabs_tab' => htmlspecialchars($backendModule->getTabLabel()),
+        ];
     }
 
     /**

@@ -284,16 +284,25 @@ class ExtensionValidator extends AbstractValidator
         if (is_array($controllerActionCombinationConfiguration)) {
             $firstControllerAction = true;
             foreach ($controllerActionCombinationConfiguration as $controllerName => $actionNames) {
-                $this->validateActionConfiguration($controllerName, $actionNames, 'plugin ' . $plugin->getName(),
-                    $extension, $firstControllerAction);
+                $this->validateActionConfiguration(
+                    $controllerName,
+                    $actionNames,
+                    'plugin ' . $plugin->getName(),
+                    $extension,
+                    $firstControllerAction
+                );
                 $firstControllerAction = false;
             }
         }
         $noncachableActionConfiguration = $plugin->getNoncacheableControllerActions();
         if (is_array($noncachableActionConfiguration)) {
             foreach ($noncachableActionConfiguration as $controllerName => $actionNames) {
-                $this->validateActionConfiguration($controllerName, $actionNames, 'plugin ' . $plugin->getName(),
-                    $extension);
+                $this->validateActionConfiguration(
+                    $controllerName,
+                    $actionNames,
+                    'plugin ' . $plugin->getName(),
+                    $extension
+                );
             }
         }
         $switchableActionConfiguration = $plugin->getSwitchableControllerActions();
@@ -302,10 +311,14 @@ class ExtensionValidator extends AbstractValidator
                 $configuredActions = [];
                 foreach ($switchableAction['actions'] as $actions) {
                     // Format should be: Controller->action
-                    list($controllerName, $actionName) = explode('->', $actions);
+                    [$controllerName, $actionName] = explode('->', $actions);
                     $configuredActions[] = $actionName;
-                    $this->validateActionConfiguration($controllerName, [$actionName], 'plugin ' . $plugin->getName(),
-                        $extension);
+                    $this->validateActionConfiguration(
+                        $controllerName,
+                        [$actionName],
+                        'plugin ' . $plugin->getName(),
+                        $extension
+                    );
                 }
                 $this->validateDependentActions($configuredActions, 'plugin ' . $plugin->getName());
             }
@@ -323,8 +336,13 @@ class ExtensionValidator extends AbstractValidator
         if (is_array($controllerActionCombinationConfiguration)) {
             $firstControllerAction = true;
             foreach ($controllerActionCombinationConfiguration as $controllerName => $actionNames) {
-                $this->validateActionConfiguration($controllerName, $actionNames, 'module ' . $backendModule->getName(),
-                    $extension, $firstControllerAction);
+                $this->validateActionConfiguration(
+                    $controllerName,
+                    $actionNames,
+                    'module ' . $backendModule->getName(),
+                    $extension,
+                    $firstControllerAction
+                );
                 $firstControllerAction = false;
             }
         }
@@ -532,7 +550,7 @@ class ExtensionValidator extends AbstractValidator
             return;
         }
         $backendModuleKeys = [];
-        /** @var $backendModule \EBT\ExtensionBuilder\Domain\Model\BackendModule */
+        /** @var \EBT\ExtensionBuilder\Domain\Model\BackendModule $backendModule */
         foreach ($extension->getBackendModules() as $backendModule) {
             if (self::validateModuleKey($backendModule->getKey()) === 0) {
                 $this->validationResult['errors'][] = new \Exception(
@@ -554,6 +572,7 @@ class ExtensionValidator extends AbstractValidator
     /**
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
      * @return void
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     private function validateDomainObjects($extension)
     {
@@ -712,7 +731,7 @@ class ExtensionValidator extends AbstractValidator
                     self::ERROR_ACTIONNAME_DUPLICATE
                 );
             }
-            /**
+            /*
              * Character test
              * Allowed characters are: a-z (lowercase), A-Z (uppercase) and 0-9
              */
@@ -753,7 +772,7 @@ class ExtensionValidator extends AbstractValidator
                 );
             }
             $propertyName = $property->getName();
-            /**
+            /*
              * Character test
              * Allowed characters are: a-z (lowercase), A-Z (uppercase) and 0-9
              */
@@ -847,7 +866,7 @@ class ExtensionValidator extends AbstractValidator
      */
     private function validateExtensionKey($key)
     {
-        /**
+        /*
          * Character test
          * Allowed characters are: a-z (lowercase), 0-9 and '_' (underscore)
          */
@@ -858,7 +877,7 @@ class ExtensionValidator extends AbstractValidator
             );
         }
 
-        /**
+        /*
          * Start character
          * Extension keys cannot start or end with 0-9 and '_' (underscore)
          */
@@ -869,7 +888,7 @@ class ExtensionValidator extends AbstractValidator
             );
         }
 
-        /**
+        /*
          * Extension key length
          * An extension key must have minimum 3, maximum 30 characters (not counting underscores)
          */
@@ -881,7 +900,7 @@ class ExtensionValidator extends AbstractValidator
             );
         }
 
-        /**
+        /*
          * Reserved prefixes
          * The key must not being with one of the following prefixes: tx,pages,tt_,sys_,ts_language_,csh_
          */
@@ -894,7 +913,6 @@ class ExtensionValidator extends AbstractValidator
     }
 
     /**
-     *
      * @param string $word
      *
      * @return bool
@@ -905,7 +923,9 @@ class ExtensionValidator extends AbstractValidator
     }
 
     /**
-     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+     * @param string $tableName
+     *
+     * @return \TYPO3\CMS\Core\Database\Connection
      */
     protected function getDatabaseConnection($tableName)
     {

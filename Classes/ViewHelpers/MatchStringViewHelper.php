@@ -39,7 +39,6 @@ class MatchStringViewHelper extends AbstractViewHelper
     }
 
     /**
-     *
      * @return bool
      */
     public function render()

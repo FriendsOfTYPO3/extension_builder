@@ -32,13 +32,12 @@ class ExtensionService
             $this->resolveComposerStoragePaths()
         );
 
-        $storagePaths = array_map(
+        return array_map(
             function (string $storagePath) {
                 return rtrim($storagePath, '/') . '/';
             },
             $storagePaths
         );
-        return $storagePaths;
     }
 
     /**
