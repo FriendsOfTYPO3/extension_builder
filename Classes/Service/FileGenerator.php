@@ -44,7 +44,6 @@ class FileGenerator
         $this->classBuilder = $classBuilder;
     }
 
-
     /**
      * @var \EBT\ExtensionBuilder\Service\RoundTrip
      */
@@ -58,8 +57,6 @@ class FileGenerator
     {
         $this->roundTripService = $roundTripService;
     }
-
-
 
     /**
      * @var array
@@ -93,7 +90,6 @@ class FileGenerator
      * @var string
      */
     protected $iconsDirectory = '';
-
 
     /**
      * @var bool
@@ -165,7 +161,6 @@ class FileGenerator
     {
         $this->localizationService = $localizationService;
     }
-
 
     /**
      * called by controller
@@ -297,9 +292,7 @@ class FileGenerator
             $currentPluginKey = '';
             try {
                 foreach ($this->extension->getPlugins() as $plugin) {
-                    /**
-                     * @var $plugin \EBT\ExtensionBuilder\Domain\Model\Plugin
-                     */
+                    /** @var \EBT\ExtensionBuilder\Domain\Model\Plugin $plugin */
                     if ($plugin->getSwitchableControllerActions()) {
                         if (!is_dir($this->extensionDirectory . 'Configuration/FlexForms')) {
                             $this->mkdir_deep($this->extensionDirectory, 'Configuration/FlexForms');
@@ -332,9 +325,7 @@ class FileGenerator
             $domainObjects = $this->extension->getDomainObjects();
 
             foreach ($domainObjects as $domainObject) {
-                /**
-                 * @var $domainObject \EBT\ExtensionBuilder\Domain\Model\DomainObject
-                 */
+                /** @var $domainObject \EBT\ExtensionBuilder\Domain\Model\DomainObject */
                 if (!$domainObject->getMapToTable()) {
                     $fileContents = $this->generateTCA($domainObject);
                     $this->writeFile(
@@ -416,22 +407,17 @@ class FileGenerator
 
         $hasTemplates = false;
         foreach ($this->extension->getDomainObjects() as $domainObject) {
-            /**
-             * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-             */
+            /** @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
             // Do not generate anything if $domainObject is not an
             // Entity or has no actions defined
-            if (!$domainObject->getEntity() || (count($domainObject->getActions()) == 0)) {
+            if (!$domainObject->getEntity() || (count($domainObject->getActions()) === 0)) {
                 continue;
             }
             $domainTemplateDirectory = $absoluteTemplateRootFolder . 'Templates/' . $domainObject->getName() . '/';
             foreach ($domainObject->getActions() as $action) {
-                /**
-                 * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action
-                 */
+                /** @var \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action */
                 if ($action->getNeedsTemplate()
                     && $this->templateExists($templateRootFolder . 'Templates/' . $action->getName() . '.htmlt')
-
                 ) {
                     $hasTemplates = true;
                     $this->mkdir_deep(
@@ -481,8 +467,10 @@ class FileGenerator
             // Generate Layouts directory
             $this->mkdir_deep($absoluteTemplateRootFolder, 'Layouts');
             $layoutsDirectory = $absoluteTemplateRootFolder . 'Layouts/';
-            $this->writeFile($layoutsDirectory . 'Default.html',
-                $this->generateLayout($templateRootFolder . 'Layouts/'));
+            $this->writeFile(
+                $layoutsDirectory . 'Default.html',
+                $this->generateLayout($templateRootFolder . 'Layouts/')
+            );
         }
     }
 
@@ -562,6 +550,7 @@ class FileGenerator
      * files like PHP class files, templates etc.
      *
      * @throws \Exception
+     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
      */
     protected function generateDomainObjectRelatedFiles()
     {
@@ -582,9 +571,7 @@ class FileGenerator
                 $crudEnabledControllerTestsDirectory = $this->extensionDirectory . 'Tests/Unit/Controller/';
 
                 foreach ($this->extension->getDomainObjects() as $domainObject) {
-                    /**
-                     * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-                     */
+                    /** @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
                     $destinationFile = $domainModelDirectory . $domainObject->getName() . '.php';
 
                     $fileContents = $this->generateDomainObjectCode($domainObject);
@@ -734,7 +721,6 @@ class FileGenerator
         } catch (\Exception $e) {
             throw new \Exception('Could not copy/move icon, error: ' . $e->getMessage());
         }
-
     }
 
     /**
@@ -844,9 +830,9 @@ class FileGenerator
         if ($controllerClassFileObject) {
             $this->addLicenseHeader($controllerClassFileObject->getFirstClass());
             return $this->printerService->renderFileObject($controllerClassFileObject, true);
-        } else {
-            throw new \Exception('Class file for controller could not be generated');
         }
+
+        throw new \Exception('Class file for controller could not be generated');
     }
 
     /**
@@ -872,9 +858,9 @@ class FileGenerator
         if ($modelClassFileObject) {
             $this->addLicenseHeader($modelClassFileObject->getFirstClass());
             return $this->printerService->renderFileObject($modelClassFileObject, true);
-        } else {
-            throw new \Exception('Class file for domain object could not be generated');
         }
+
+        throw new \Exception('Class file for domain object could not be generated');
     }
 
     /**
@@ -918,9 +904,9 @@ class FileGenerator
         if ($repositoryClassFileObject) {
             $this->addLicenseHeader($repositoryClassFileObject->getFirstClass());
             return $this->printerService->renderFileObject($repositoryClassFileObject, true);
-        } else {
-            throw new \Exception('Class file for repository could not be generated');
         }
+
+        throw new \Exception('Class file for repository could not be generated');
     }
 
     /**
@@ -1115,8 +1101,10 @@ class FileGenerator
         } elseif ($variableName == 'backendModule') {
             $languageLabels = $this->localizationService->prepareLabelArrayForBackendModule($variable);
         } else {
-            $languageLabels = $this->localizationService->prepareLabelArray($this->extension,
-                'locallang' . $fileNameSuffix);
+            $languageLabels = $this->localizationService->prepareLabelArray(
+                $this->extension,
+                'locallang' . $fileNameSuffix
+            );
         }
 
         if ($this->fileShouldBeMerged($targetFile . '.xlf')) {
@@ -1246,18 +1234,15 @@ class FileGenerator
             $methodName = $methodType;
         }
 
-        $variables = [
-            'domainObject' => $domainObject,
-            'property' => $domainProperty,
-            'extension' => $this->extension,
-            'settings' => $this->settings
-        ];
-
-        $methodBody = $this->renderTemplate(
+        return $this->renderTemplate(
             'Partials/Classes/' . $classType . '/Methods/' . $methodName . 'MethodBody.phpt',
-            $variables
+            [
+                'domainObject' => $domainObject,
+                'property' => $domainProperty,
+                'extension' => $this->extension,
+                'settings' => $this->settings
+            ]
         );
-        return $methodBody;
     }
 
     /**
@@ -1292,9 +1277,9 @@ class FileGenerator
                 throw new \Exception('folder could not be created:' . $extensionDirectory . $classPath);
             }
             return $extensionDirectory . $classPath;
-        } else {
-            throw new \Exception('Unexpected classPath:' . $classPath);
         }
+
+        throw new \Exception('Unexpected classPath:' . $classPath);
     }
 
     /**
@@ -1368,11 +1353,7 @@ class FileGenerator
     protected function fileShouldBeMerged($destinationFile)
     {
         $overwriteSettings = RoundTrip::getOverWriteSettingForPath($destinationFile, $this->extension);
-        if ($this->roundTripEnabled && $overwriteSettings > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->roundTripEnabled && $overwriteSettings > 0;
     }
 
     /**
@@ -1387,12 +1368,11 @@ class FileGenerator
     {
         $customFileContent = '';
         if (file_exists($targetFile)) {
-
             // merge the files means append everything behind the split token
             $existingFileContent = file_get_contents($targetFile);
 
             $fileParts = explode(RoundTrip::SPLIT_TOKEN, $existingFileContent);
-            if (count($fileParts) == 2) {
+            if (count($fileParts) === 2) {
                 $customFileContent = str_replace('?>', '', $fileParts[1]);
             }
         }

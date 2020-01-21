@@ -243,7 +243,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
         }
 
         if (!empty($propertyConfiguration['emConf']['targetVersion'])) {
-            $extension->setTargetVersion(floatval($propertyConfiguration['emConf']['targetVersion']));
+            $extension->setTargetVersion((float)$propertyConfiguration['emConf']['targetVersion']);
         }
 
         if (!empty($propertyConfiguration['emConf']['custom_category'])) {
@@ -378,10 +378,13 @@ class ExtensionSchemaBuilder implements SingletonInterface
         $backendModule->setDescription($backendModuleValues['description']);
         if (!empty($backendModuleValues['actions']['controllerActionCombinations'])) {
             $controllerActionCombinations = [];
-            $lines = GeneralUtility::trimExplode(LF, $backendModuleValues['actions']['controllerActionCombinations'],
-                true);
+            $lines = GeneralUtility::trimExplode(
+                LF,
+                $backendModuleValues['actions']['controllerActionCombinations'],
+                true
+            );
             foreach ($lines as $line) {
-                list($controllerName, $actionNames) = GeneralUtility::trimExplode('=>', $line);
+                [$controllerName, $actionNames] = GeneralUtility::trimExplode('=>', $line);
                 $controllerActionCombinations[$controllerName] = GeneralUtility::trimExplode(',', $actionNames);
             }
             $backendModule->setControllerActionCombinations($controllerActionCombinations);
