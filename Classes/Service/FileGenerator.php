@@ -206,6 +206,8 @@ class FileGenerator
 
         $this->generateGitAttributes();
 
+        $this->generateEditorConfig();
+
         $this->generateComposerJson();
 
         GeneralUtility::mkdir_deep($this->extensionDirectory, 'Configuration');
@@ -972,6 +974,22 @@ class FileGenerator
             try {
                 $fileContents = $this->renderTemplate('gitattributes.t', []);
                 $this->writeFile($this->extension->getExtensionDir() . '.gitattributes', $fileContents);
+            } catch (\Exception $e) {
+                throw new \Exception('Could not create file, error: ' . $e->getMessage());
+            }
+        }
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function generateEditorConfig()
+    {
+        if (!file_exists($this->extensionDirectory . '.editorconfig')) {
+            // Generate .editorconfig
+            try {
+                $fileContents = $this->renderTemplate('editorconfig.t', []);
+                $this->writeFile($this->extension->getExtensionDir() . '.editorconfig', $fileContents);
             } catch (\Exception $e) {
                 throw new \Exception('Could not create file, error: ' . $e->getMessage());
             }
