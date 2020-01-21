@@ -202,9 +202,9 @@ class DomainObject
     {
         if ($this->description) {
             return $this->description;
-        } else {
-            return $this->getName();
         }
+
+        return $this->getName();
     }
 
     /**
@@ -403,9 +403,9 @@ class DomainObject
     {
         if ($this->entity) {
             return '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity';
-        } else {
-            return '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractValueObject';
         }
+
+        return '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractValueObject';
     }
 
     /**
@@ -418,9 +418,9 @@ class DomainObject
     {
         if (!$this->aggregateRoot) {
             return '';
-        } else {
-            return $this->getName() . 'Repository';
         }
+
+        return $this->getName() . 'Repository';
     }
 
     /**
@@ -477,9 +477,9 @@ class DomainObject
     {
         if (isset($this->properties[0])) {
             return $this->properties[0]->getFieldName();
-        } else {
-            return 'uid';
         }
+
+        return 'uid';
     }
 
     /**
@@ -571,11 +571,7 @@ class DomainObject
      */
     public function isMappedToExistingTable()
     {
-        if (!empty($this->mapToTable)) {
-            return true;
-        } else {
-            return false;
-        }
+        return !empty($this->mapToTable);
     }
 
     /**
@@ -583,12 +579,8 @@ class DomainObject
      */
     public function getNeedsTableCtrlDefinition()
     {
-        if ($this->mapToTable || $this->isSubClass()) {
-            // ctrl definitions should already be defined in both cases
-            return false;
-        } else {
-            return true;
-        }
+        // ctrl definitions should already be defined in both cases
+        return !($this->mapToTable || $this->isSubClass());
     }
 
     /**
@@ -622,11 +614,7 @@ class DomainObject
      */
     public function isSubClass()
     {
-        if (empty($this->parentClass)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !empty($this->parentClass);
     }
 
     /**

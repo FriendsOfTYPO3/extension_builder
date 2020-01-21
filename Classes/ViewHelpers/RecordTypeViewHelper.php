@@ -16,6 +16,7 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  */
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Utility\Tools;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
@@ -44,8 +45,7 @@ class RecordTypeViewHelper extends AbstractViewHelper
      */
     public function initializeArguments()
     {
-        $this->registerArgument('domainObject', \EBT\ExtensionBuilder\Domain\Model\DomainObject::class, 'domainObject',
-            true);
+        $this->registerArgument('domainObject', DomainObject::class, 'domainObject', true);
     }
 
     /**
