@@ -182,6 +182,7 @@ class FileGenerator
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
      *
      * @throws \Exception
+     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
      */
     public function build(Extension $extension)
     {
@@ -207,6 +208,8 @@ class FileGenerator
         }
 
         $this->generateGitIgnore();
+
+        $this->generateGitAttributes();
 
         $this->generateComposerJson();
 
@@ -968,7 +971,23 @@ class FileGenerator
                 $fileContents = $this->renderTemplate('gitignore.t', []);
                 $this->writeFile($this->extension->getExtensionDir() . '.gitignore', $fileContents);
             } catch (\Exception $e) {
-                throw new \Exception('Could not create folder, error: ' . $e->getMessage());
+                throw new \Exception('Could not create file, error: ' . $e->getMessage());
+            }
+        }
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function generateGitAttributes()
+    {
+        if (!file_exists($this->extensionDirectory . '.gitattributes')) {
+            // Generate .gitattributes
+            try {
+                $fileContents = $this->renderTemplate('gitattributes.t', []);
+                $this->writeFile($this->extension->getExtensionDir() . '.gitattributes', $fileContents);
+            } catch (\Exception $e) {
+                throw new \Exception('Could not create file, error: ' . $e->getMessage());
             }
         }
     }
