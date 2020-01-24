@@ -406,15 +406,7 @@ class ClassObject extends Container
      */
     public function propertyExists($propertyName)
     {
-        if (!is_array($this->methods)) {
-            return false;
-        }
-
-        if (in_array($propertyName, $this->getPropertyNames())) {
-            return true;
-        }
-
-        return false;
+        return is_array($this->methods) && in_array($propertyName, $this->getPropertyNames());
     }
 
     /**
