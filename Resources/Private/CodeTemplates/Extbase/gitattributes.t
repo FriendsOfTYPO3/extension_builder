@@ -6,4 +6,4 @@
 /.php_cs export-ignore
 /.scrutinizer.yml export-ignore
 /.travis.yml export-ignore
-/ExtensionBuilder.json
+/ExtensionBuilder.json export-ignore
