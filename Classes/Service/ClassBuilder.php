@@ -798,7 +798,7 @@ class ClassBuilder implements SingletonInterface
         } else {
             $injectMethod = clone $this->templateClassObject->getMethod('injectDomainObjectRepository')->setName($injectMethodName);
             $replacements = [
-                '\\VENDOR\\Package\\Domain\\Repository\\DomainObjectRepository' => $domainObject->getFullyQualifiedDomainRepositoryClassName(),
+                preg_quote('\\VENDOR\\Package\\Domain\\Repository\\DomainObjectRepository', '/') => $domainObject->getFullyQualifiedDomainRepositoryClassName(),
                 'domainObjectRepository' => lcfirst($repositoryName)
             ];
             $this->updateMethodBody($injectMethod, $replacements);
