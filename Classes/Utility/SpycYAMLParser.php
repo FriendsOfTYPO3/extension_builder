@@ -1038,7 +1038,7 @@ class SpycYAMLParser
         if ($line[0] == '#') {
             return true;
         }
-        if (trim($line, ' ' . CRLF . TAB) == '---') {
+        if (trim($line, ' ' . CRLF . "\t") == '---') {
             return true;
         }
         return false;
