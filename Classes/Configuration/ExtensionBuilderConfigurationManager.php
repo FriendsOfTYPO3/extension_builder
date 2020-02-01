@@ -18,11 +18,13 @@ namespace EBT\ExtensionBuilder\Configuration;
 use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
@@ -32,7 +34,7 @@ use TYPO3\CMS\Core\Http\JsonResponse;
 /**
  * Load settings from yaml file and from TYPO3_CONF_VARS extConf
  */
-class ExtensionBuilderConfigurationManager extends ConfigurationManager
+class ExtensionBuilderConfigurationManager
 {
     /**
      * @var string
@@ -50,6 +52,19 @@ class ExtensionBuilderConfigurationManager extends ConfigurationManager
      * @var array
      */
     private $inputData = [];
+
+    /**
+      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+      */
+     protected $configurationManager;
+
+     /**
+      * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
+      */
+     public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
+     {
+         $this->configurationManager = $configurationManager;
+     }
 
     /**
      * Wrapper for file_get_contents('php://input')
@@ -112,12 +127,12 @@ class ExtensionBuilderConfigurationManager extends ConfigurationManager
     public function getSettings($typoscript = null)
     {
         if ($typoscript == null) {
-            $typoscript = $this->getConfiguration(parent::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+            $typoscript = $this->configurationManager->getConfiguration($this->configurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         }
         $settings = $typoscript['module.']['extension_builder.']['settings.'];
         $settings['extConf'] = $this->getExtensionBuilderSettings();
         if (empty($settings['publicResourcesPath'])) {
-            $settings['publicResourcesPath'] = ExtensionManagementUtility::siteRelPath('extension_builder') . 'Resources/Public/';
+            $settings['publicResourcesPath'] = ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/';
         }
         return $settings;
     }
@@ -202,7 +217,7 @@ class ExtensionBuilderConfigurationManager extends ConfigurationManager
         if (strpos($className, '\\') === 0) {
             $className = substr($className, 1);
         }
-        $frameworkConfiguration = $this->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+        $frameworkConfiguration = $this->configurationManager->getConfiguration($this->configurationManager::CONFIGURATION_TYPE_FRAMEWORK);
         $classSettings = $frameworkConfiguration['persistence']['classes'][$className];
         if ($classSettings !== null) {
             if (isset($classSettings['subclasses']) && is_array($classSettings['subclasses'])) {
@@ -251,7 +266,7 @@ class ExtensionBuilderConfigurationManager extends ConfigurationManager
      */
     public function getSettingsFile($extensionKey)
     {
-        $extensionDir = PATH_typo3conf . 'ext/' . $extensionKey . '/';
+        $extensionDir = Environment::getPublicPath() . '/typo3conf/ext/' . $extensionKey . '/';
         return $extensionDir . self::SETTINGS_DIR . 'settings.yaml';
     }
 
@@ -553,7 +568,13 @@ class ExtensionBuilderConfigurationManager extends ConfigurationManager
                 'action' => 'dispatchRpc',
             ]
         ];
-        $smdJson->target = BackendUtility::getModuleUrl('tools_ExtensionBuilderExtensionbuilder', $parameters);
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        try {
+            $uri = $uriBuilder->buildUriFromRoute('tools_ExtensionBuilderExtensionbuilder', $parameters);
+        } catch (\TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException $e) {
+            $uri = $uriBuilder->buildUriFromRoutePath('tools_ExtensionBuilderExtensionbuilder', $parameters);
+        }
+        $smdJson->target = (string)$uri;
 
         return (new JsonResponse())->setPayload((array)$smdJson);
     }
