@@ -35,7 +35,7 @@ class ConfigurationViewHelper extends AbstractBackendViewHelper
         $this->pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
 
         $basePath = ExtensionManagementUtility::extPath('extension_builder');
-        $baseUrl = PathUtility::getCanonicalPath($basePath) . '/';
+        $baseUrl = '../' . PathUtility::stripPathSitePrefix($basePath);
         $this->pageRenderer->disableCompressJavascript();
         $this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/jquery.min.js');
         // SECTION: JAVASCRIPT FILES
