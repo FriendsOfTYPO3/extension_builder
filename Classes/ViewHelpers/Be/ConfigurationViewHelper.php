@@ -19,6 +19,7 @@ use TYPO3\CMS\Core\Localization\LocalizationFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBackendViewHelper;
 
@@ -33,7 +34,8 @@ class ConfigurationViewHelper extends AbstractBackendViewHelper
     {
         $this->pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
 
-        $baseUrl = '../' . ExtensionManagementUtility::siteRelPath('extension_builder');
+        $extPath = ExtensionManagementUtility::extPath('extension_builder');
+        $baseUrl = '../' . PathUtility::stripPathSitePrefix($extPath);
         $this->pageRenderer->disableCompressJavascript();
         $this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/jquery.min.js');
         // SECTION: JAVASCRIPT FILES
