@@ -174,13 +174,12 @@ class ObjectSchemaBuilder implements SingletonInterface
             $extbaseClassConfiguration = $this->configurationManager->getExtbaseClassConfiguration(
                 $relationJsonConfiguration['foreignRelationClass']
             );
-            if (isset($extbaseClassConfiguration['tableName'])) {
-                $foreignDatabaseTableName = $extbaseClassConfiguration['tableName'];
-            } else {
-                $foreignDatabaseTableName = Tools::parseTableNameFromClassName(
+            if (!empty($relationJsonConfiguration['renderType'])) {
+                $relation->setRenderType($relationJsonConfiguration['renderType']);
+            }
+            $foreignDatabaseTableName = $extbaseClassConfiguration['tableName'] ?? Tools::parseTableNameFromClassName(
                     $relationJsonConfiguration['foreignRelationClass']
                 );
-            }
             $relation->setForeignDatabaseTableName($foreignDatabaseTableName);
             if ($relation instanceof ZeroToManyRelation) {
                 $foreignKeyName = strtolower($domainObject->getName());
@@ -196,11 +195,14 @@ class ObjectSchemaBuilder implements SingletonInterface
                 $relation->setForeignKeyName($foreignKeyName);
                 $relation->setForeignDatabaseTableName($foreignDatabaseTableName);
             }
-            if ($relation->isFileReference() && !empty($relationJsonConfiguration['maxItems'])) {
-                /** @var $relation \EBT\ExtensionBuilder\Domain\Model\DomainObject\FileProperty */
-                $relation->setMaxItems($relationJsonConfiguration['maxItems']);
-                if (!empty($relationJsonConfiguration['allowedFileTypes'])) {
-                    $relation->setAllowedFileTypes($relationJsonConfiguration['allowedFileTypes']);
+            if ($relation->isFileReference()) {
+                $relation->setRenderType('inline');
+                if (!empty($relationJsonConfiguration['maxItems'])) {
+                    /** @var $relation \EBT\ExtensionBuilder\Domain\Model\DomainObject\FileProperty */
+                    $relation->setMaxItems($relationJsonConfiguration['maxItems']);
+                    if (!empty($relationJsonConfiguration['allowedFileTypes'])) {
+                        $relation->setAllowedFileTypes($relationJsonConfiguration['allowedFileTypes']);
+                    }
                 }
             }
         }

@@ -1,0 +1,9 @@
+/Documentation export-ignore
+/Tests export-ignore
+/.editorconfig export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.php_cs export-ignore
+/.scrutinizer.yml export-ignore
+/.travis.yml export-ignore
+/ExtensionBuilder.json export-ignore

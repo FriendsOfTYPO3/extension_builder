@@ -32,7 +32,6 @@ class ListForeignKeyRelationsViewHelper extends AbstractViewHelper
     }
 
     /**
-     *
      * @return array
      */
     public function render()
@@ -46,6 +45,7 @@ class ListForeignKeyRelationsViewHelper extends AbstractViewHelper
             }
             foreach ($domainObject->getProperties() as $property) {
                 if ($property instanceof ZeroToManyRelation
+                    && $property->getRenderType() === 'inline'
                     && $property->getForeignClassName() === $expectedDomainObject->getFullQualifiedClassName()
                 ) {
                     $results[] = $property;

@@ -380,9 +380,9 @@ class Extension
         }
         if (!empty($domainObjectsThatNeedMappingStatements)) {
             return $domainObjectsThatNeedMappingStatements;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -421,9 +421,9 @@ class Extension
         }
         if (!empty($classHierarchy)) {
             return $classHierarchy;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -454,11 +454,7 @@ class Extension
      */
     protected function isParentOf($domainObject1, $domainObject2, $classHierarchy)
     {
-        if ($domainObject2->getParentClass() === $domainObject1->getFullQualifiedClassName()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $domainObject2->getParentClass() === $domainObject1->getFullQualifiedClassName();
     }
 
     /**
@@ -473,8 +469,10 @@ class Extension
         $domainObject->setExtension($this);
         foreach (array_keys($this->domainObjects) as $existingDomainObjectName) {
             if (strtolower($domainObject->getName()) == strtolower($existingDomainObjectName)) {
-                throw new ExtensionException('Duplicate domain object name "' . $domainObject->getName() . '".',
-                    ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE);
+                throw new ExtensionException(
+                    'Duplicate domain object name "' . $domainObject->getName() . '".',
+                    ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE
+                );
             }
         }
         if ($domainObject->getNeedsUploadFolder()) {
@@ -489,10 +487,7 @@ class Extension
      */
     public function getDomainObjectByName($domainObjectName)
     {
-        if (isset($this->domainObjects[$domainObjectName])) {
-            return $this->domainObjects[$domainObjectName];
-        }
-        return null;
+        return $this->domainObjects[$domainObjectName] ?? null;
     }
 
     /**
@@ -570,11 +565,7 @@ class Extension
      */
     public function hasPlugins()
     {
-        if (count($this->plugins) > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return count($this->plugins) > 0;
     }
 
     /**
@@ -625,11 +616,7 @@ class Extension
      */
     public function hasBackendModules()
     {
-        if (count($this->backendModules) > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return count($this->backendModules) > 0;
     }
 
     public function getReadableState()
@@ -716,9 +703,9 @@ class Extension
             $this->previousExtensionDirectory = PATH_typo3conf . 'ext/' . $originalExtensionKey . '/';
             $this->previousExtensionKey = $originalExtensionKey;
             return $this->previousExtensionDirectory;
-        } else {
-            return $this->extensionDir;
         }
+
+        return $this->extensionDir;
     }
 
     /**
@@ -773,9 +760,9 @@ class Extension
     {
         if ($this->needsUploadFolder) {
             return 1;
-        } else {
-            return 0;
         }
+
+        return 0;
     }
 
     /**

@@ -9,7 +9,9 @@ var extbaseModeling_wiringEditorLanguage = {
 
 
 (function(){
-	var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event, lang = YAHOO.lang, dom = YAHOO.util.Dom;
+		var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event, lang = YAHOO.lang, dom = YAHOO.util.Dom;
+		var renderFields = inputEx.Group.prototype.renderFields;
+
 		function addFieldsetClass (selectElement) {
 			if ($(selectElement).parent().hasClass('isDependant')) {
 				return;
@@ -29,9 +31,9 @@ var extbaseModeling_wiringEditorLanguage = {
 		function updateRenderTypeOptions (selectedRelationType, renderTypeSelect) {
 			renderTypeSelect.find("option").hide();
 			var optionValueMap = {
-				'zeroToOne': ["selectSingle", "inline"],
-				'manyToOne': ["selectSingle"],
-				'zeroToMany': ["inline"],
+				'zeroToOne': ["selectSingle", "selectMultipleSideBySide", "inline"],
+				'manyToOne': ["selectSingle", "selectMultipleSideBySide"],
+				'zeroToMany': ["inline", "selectMultipleSideBySide"],
 				'manyToMany': ["selectMultipleSideBySide", "selectSingleBox", "selectCheckBox"]
 			};
 			var validOptions = optionValueMap[selectedRelationType];
@@ -44,6 +46,15 @@ var extbaseModeling_wiringEditorLanguage = {
 			}
 
 		}
+
+		inputEx.Group.prototype.renderFields = function(parentEl) {
+			renderFields.call(this, parentEl);
+			var selectElements = parentEl.querySelectorAll('fieldset select[name=relationType]');
+			for (var i = 0; i < selectElements.length; i++) {
+				// trigger options rendering & enabling for relationType selectors
+				addFieldsetClass(selectElements.item(i));
+			}
+		};
 
 		inputEx.SelectField.prototype.onChange = function (evt) {
 			addFieldsetClass(evt.target);

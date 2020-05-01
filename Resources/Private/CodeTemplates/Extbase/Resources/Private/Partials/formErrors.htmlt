@@ -9,6 +9,6 @@
 				</ul>
 			</li>
 		<k:openingTag>/f:for</k:openingTag></ul>
-<k:openingTag>/f:if</k:openingTag>
+    <k:openingTag>/f:if</k:openingTag>
 <k:openingTag>/f:form.validationResults</k:openingTag>
 <k:openingTag>/html</k:openingTag></f:format.raw>

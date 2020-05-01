@@ -233,6 +233,7 @@ abstract class AbstractProperty
 
     /**
      * @return bool true (if property is of type relation any to many)
+     * @deprecated Use `!instanceof ZeroToManyRelation` instead
      */
     public function isZeroToManyRelation()
     {
@@ -264,9 +265,9 @@ abstract class AbstractProperty
     {
         if ($this->description) {
             return $this->description;
-        } else {
-            return $this->getName();
         }
+
+        return $this->getName();
     }
 
     /**
@@ -481,9 +482,9 @@ abstract class AbstractProperty
     {
         if ($this->getFieldName() != GeneralUtility::camelCaseToLowerCaseUnderscored($this->name)) {
             return $this->getFieldName() . '.mapOnProperty = ' . $this->name;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -530,9 +531,9 @@ abstract class AbstractProperty
         $type = $this->getTypeForComment();
         if (substr($type, 0, 1) === chr(92)) {
             return substr($type, 1);
-        } else {
-            return $type;
         }
+
+        return $type;
     }
 
     /**

@@ -149,13 +149,7 @@ class ClassObject extends Container
      */
     public function getConstant($constantName)
     {
-        if (isset($this->constants[$constantName])) {
-            $result = $this->constants[$constantName];
-        } else {
-            $result = null;
-        }
-
-        return $result;
+        return $this->constants[$constantName] ?? null;
     }
 
     /**
@@ -412,17 +406,7 @@ class ClassObject extends Container
      */
     public function propertyExists($propertyName)
     {
-        if (!is_array($this->methods)) {
-            $result = false;
-        } else {
-            if (in_array($propertyName, $this->getPropertyNames())) {
-                $result = true;
-            } else {
-                $result = false;
-            }
-        }
-
-        return $result;
+        return is_array($this->methods) && in_array($propertyName, $this->getPropertyNames());
     }
 
     /**
@@ -433,12 +417,10 @@ class ClassObject extends Container
     {
         if (!$this->propertyExists($classProperty->getName())) {
             $this->properties[$classProperty->getName()] = $classProperty;
-            $result = true;
-        } else {
-            $result = false;
+            return true;
         }
 
-        return $result;
+        return false;
     }
 
     /**
@@ -669,5 +651,4 @@ class ClassObject extends Container
         $this->properties = [];
         $this->methods = [];
     }
-
 }

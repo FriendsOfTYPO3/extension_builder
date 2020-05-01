@@ -104,10 +104,12 @@ class Tools implements SingletonInterface
         $classNameParts = explode('\\', $className);
         if (count($classNameParts) > 6) {
             return 'Tx_' . $classNameParts[3] . '_' . $classNameParts[6];
-        } elseif (count($classNameParts) == 6) {
-            return 'Tx_' . $classNameParts[2] . '_' . $classNameParts[5];
-        } else {
-            return $className;
         }
+
+        if (count($classNameParts) == 6) {
+            return 'Tx_' . $classNameParts[2] . '_' . $classNameParts[5];
+        }
+
+        return $className;
     }
 }

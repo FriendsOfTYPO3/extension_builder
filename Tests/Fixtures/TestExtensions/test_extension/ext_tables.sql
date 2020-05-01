@@ -62,15 +62,6 @@ CREATE TABLE tx_testextension_domain_model_child4 (
 );
 
 #
-# Table structure for table 'tx_testextension_domain_model_child2'
-#
-CREATE TABLE tx_testextension_domain_model_child2 (
-
-	main int(11) unsigned DEFAULT '0' NOT NULL
-
-);
-
-#
 # Table structure for table 'tx_testextension_main_child4_mm'
 #
 CREATE TABLE tx_testextension_main_child4_mm (

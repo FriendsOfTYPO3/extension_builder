@@ -13,34 +13,34 @@ in /Configuration/ExtensionBuilder/settings.yaml:
 Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
 <f:section name="content">
-<h1>Listing for Main</h1>
+    <h1>Listing for Main</h1>
 
-<f:flashMessages />
+    <f:flashMessages />
 
-<table  class="tx_testextension" >
-	<tr>
-		<th><f:translate key="tx_testextension_domain_model_main.name" /></th>
-		<th><f:translate key="tx_testextension_domain_model_main.identifier" /></th>
-		<th><f:translate key="tx_testextension_domain_model_main.description" /></th>
-		<th><f:translate key="tx_testextension_domain_model_main.my_date" /></th>
-		<th><f:translate key="tx_testextension_domain_model_main.mail" /></th>
-		<th> </th>
-		<th> </th>
-	</tr>
+    <table  class="tx_testextension" >
+        <tr>
+            <th><f:translate key="tx_testextension_domain_model_main.name" /></th>
+            <th><f:translate key="tx_testextension_domain_model_main.identifier" /></th>
+            <th><f:translate key="tx_testextension_domain_model_main.description" /></th>
+            <th><f:translate key="tx_testextension_domain_model_main.my_date" /></th>
+            <th><f:translate key="tx_testextension_domain_model_main.mail" /></th>
+            <th> </th>
+            <th> </th>
+        </tr>
 
-	<f:for each="{mains}" as="main">
-		<tr>
-			<td><f:link.action action="show" arguments="{main : main}"> {main.name}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{main : main}"> {main.identifier}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{main : main}"> {main.description}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{main : main}"> {main.myDate -> f:format.date()}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{main : main}"> {main.mail}</f:link.action></td>
-			<td><f:link.action action="edit" arguments="{main : main}">Edit</f:link.action></td>
-			<td><f:link.action action="delete" arguments="{main : main}">Delete</f:link.action></td>
-		</tr>
-	</f:for>
-</table>
+        <f:for each="{mains}" as="main">
+            <tr>
+                <td><f:link.action action="show" arguments="{main : main}">{main.name}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{main : main}">{main.identifier}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{main : main}">{main.description}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{main : main}">{main.myDate -> f:format.date()}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{main : main}">{main.mail}</f:link.action></td>
+                <td><f:link.action action="edit" arguments="{main : main}">Edit</f:link.action></td>
+                <td><f:link.action action="delete" arguments="{main : main}">Delete</f:link.action></td>
+            </tr>
+        </f:for>
+    </table>
 
-<f:link.action action="new">New Main</f:link.action>
+    <f:link.action action="new">New Main</f:link.action>
 </f:section>
 </html>

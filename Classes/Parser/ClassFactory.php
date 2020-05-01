@@ -47,7 +47,7 @@ class ClassFactory implements SingletonInterface
             $classObject->addInterfaceName($interfaceNode);
         }
         $classObject->setModifiers($classNode->flags);
-        if (!is_null($classNode->extends)) {
+        if ($classNode->extends !== null) {
             $classObject->setParentClassName(NodeConverter::getValueFromNode($classNode->extends));
         }
         $this->addCommentsFromAttributes($classObject, $classNode);
@@ -140,14 +140,14 @@ class ClassFactory implements SingletonInterface
                 $getVarTypeFromParamTag = true;
             }
         }
-        /** @var $param \PhpParser\Builder\Param */
+        /** @var \PhpParser\Builder\Param $param */
         foreach ($node->params as $param) {
             $parameter = new Model\ClassObject\MethodParameter($param->var->name);
             $parameter->setPosition($position);
             $parameter->setStartLine($param->getAttribute('startLine'));
             $parameter->setEndLine($param->getAttribute('endLine'));
             $parameter->setPassedByReference($param->byRef);
-            if (!is_null($param->type)) {
+            if ($param->type !== null) {
                 $parameter->setTypeHint(NodeConverter::getNameFromNode($param->type));
                 if (!$getVarTypeFromParamTag) {
                     $parameter->setVarType(NodeConverter::getNameFromNode($param->type));
@@ -161,7 +161,7 @@ class ClassFactory implements SingletonInterface
                     $parameter->setTypeForParamTag($paramTag[0]);
                 }
             }
-            if (!is_null($param->default)) {
+            if ($param->default !== null) {
                 $parameter->setDefaultValue($param->default);
             }
             $object->setParameter($parameter);
