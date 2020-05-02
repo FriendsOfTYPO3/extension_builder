@@ -19,22 +19,23 @@ use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
 use TYPO3\CMS\Core\Http\JsonResponse;
 
-
 /**
  * Load settings from yaml file and from TYPO3_CONF_VARS extConf
  */
-class ExtensionBuilderConfigurationManager
+class ExtensionBuilderConfigurationManager implements SingletonInterface
 {
     /**
      * @var string
@@ -54,24 +55,24 @@ class ExtensionBuilderConfigurationManager
     private $inputData = [];
 
     /**
-      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
-      */
-     protected $configurationManager;
+     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+     */
+    protected $configurationManager;
 
-     /**
-      * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
-      */
-     public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
-     {
-         $this->configurationManager = $configurationManager;
-     }
+    /**
+     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
+     */
+    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
+    {
+        $this->configurationManager = $configurationManager;
+    }
 
     /**
      * Wrapper for file_get_contents('php://input')
      *
      * @return void
      */
-    public function parseRequest()
+    public function parseRequest(): void
     {
         $jsonString = file_get_contents('php://input');
         $this->inputData = json_decode($jsonString, true);
@@ -82,8 +83,7 @@ class ExtensionBuilderConfigurationManager
      */
     public function getParamsFromRequest()
     {
-        $params = $this->inputData['params'];
-        return $params;
+        return $this->inputData['params'];
     }
 
     /**
@@ -109,8 +109,7 @@ class ExtensionBuilderConfigurationManager
      */
     public function getSubActionFromRequest()
     {
-        $subAction = $this->inputData['method'];
-        return $subAction;
+        return $this->inputData['method'];
     }
 
     /**
@@ -119,14 +118,14 @@ class ExtensionBuilderConfigurationManager
      * - Settings configured in module.extension_builder typoscript
      * - Module settings configured in the extension manager
      *
-     * @param array $typoscript (optional)
+     * @param array|null $typoscript
      *
      * @return array
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    public function getSettings($typoscript = null)
+    public function getSettings($typoscript = null): array
     {
-        if ($typoscript == null) {
+        if ($typoscript === null) {
             $typoscript = $this->configurationManager->getConfiguration($this->configurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         }
         $settings = $typoscript['module.']['extension_builder.']['settings.'];
@@ -141,21 +140,19 @@ class ExtensionBuilderConfigurationManager
      * Get the extension_builder configuration (ext_template_conf).
      *
      * @return array
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
      */
-    public function getExtensionBuilderSettings()
+    public function getExtensionBuilderSettings(): array
     {
-        $settings = [];
-        if (!empty($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['extension_builder'])) {
-            $settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['extension_builder']);
-        }
-        return $settings;
+        return GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('extension_builder');
     }
 
     /**
      * @param string $extensionKey
      * @return array settings
      */
-    public function getExtensionSettings($extensionKey)
+    public function getExtensionSettings($extensionKey): array
     {
         $settings = [];
         $settingsFile = $this->getSettingsFile($extensionKey);
@@ -173,7 +170,7 @@ class ExtensionBuilderConfigurationManager
      * @param string|null $storagePath
      * @return array|null
      */
-    public function getExtensionBuilderConfiguration($extensionKey, $storagePath = null)
+    public function getExtensionBuilderConfiguration($extensionKey, $storagePath = null): ?array
     {
         $result = null;
         $extensionConfigurationJson = self::getExtensionBuilderJson($extensionKey, $storagePath);
@@ -198,9 +195,9 @@ class ExtensionBuilderConfigurationManager
         $jsonFile = $storagePath . $extensionKey . '/' . self::EXTENSION_BUILDER_SETTINGS_FILE;
         if (file_exists($jsonFile)) {
             return json_decode(file_get_contents($jsonFile), true);
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -211,7 +208,7 @@ class ExtensionBuilderConfigurationManager
      * @return array with configuration values
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    public function getExtbaseClassConfiguration($className)
+    public function getExtbaseClassConfiguration($className): array
     {
         $classConfiguration = [];
         if (strpos($className, '\\') === 0) {
@@ -264,7 +261,7 @@ class ExtensionBuilderConfigurationManager
      * @param string $extensionKey
      * @return string path
      */
-    public function getSettingsFile($extensionKey)
+    public function getSettingsFile($extensionKey): string
     {
         $extensionDir = Environment::getPublicPath() . '/typo3conf/ext/' . $extensionKey . '/';
         return $extensionDir . self::SETTINGS_DIR . 'settings.yaml';
@@ -277,13 +274,15 @@ class ExtensionBuilderConfigurationManager
      * @return void
      * @throws \Exception
      */
-    public function createInitialSettingsFile($extension, $codeTemplateRootPaths)
+    public function createInitialSettingsFile($extension, $codeTemplateRootPaths): void
     {
-        GeneralUtility::mkdir_deep($extension->getExtensionDir(), self::SETTINGS_DIR);
+        GeneralUtility::mkdir_deep($extension->getExtensionDir() . self::SETTINGS_DIR);
         $settings = file_get_contents($codeTemplateRootPaths[0] . 'Configuration/ExtensionBuilder/settings.yamlt');
         $settings = str_replace('{extension.extensionKey}', $extension->getExtensionKey(), $settings);
-        $settings = str_replace('{f:format.date(format:\'Y-m-d\\TH:i:s\\Z\',date:\'now\')}', date('Y-m-d\TH:i:s\Z'),
-            $settings);
+        $settings = str_replace(
+            '{f:format.date(format:\'Y-m-d\\TH:i:s\\Z\',date:\'now\')}', date('Y-m-d\TH:i:s\Z'),
+            $settings
+        );
         GeneralUtility::writeFile(
             $extension->getExtensionDir() . self::SETTINGS_DIR . 'settings.yaml',
             $settings
@@ -296,19 +295,19 @@ class ExtensionBuilderConfigurationManager
      * @param string $encodedTemplateRootPath
      * @return string
      */
-    public static function substituteExtensionPath($encodedTemplateRootPath)
+    public static function substituteExtensionPath($encodedTemplateRootPath): string
     {
         $result = '';
 
         if (GeneralUtility::isFirstPartOfStr($encodedTemplateRootPath, 'EXT:')) {
-            list($extKey, $script) = explode('/', substr($encodedTemplateRootPath, 4), 2);
+            [$extKey, $script] = explode('/', substr($encodedTemplateRootPath, 4), 2);
             if ($extKey && ExtensionManagementUtility::isLoaded($extKey)) {
                 $result = ExtensionManagementUtility::extPath($extKey) . $script;
             }
         } elseif (GeneralUtility::isAbsPath($encodedTemplateRootPath)) {
             $result = $encodedTemplateRootPath;
         } else {
-            $result = PATH_site . $encodedTemplateRootPath;
+            $result = Environment::getPublicPath() . '/' . $encodedTemplateRootPath;
         }
 
         return $result;
@@ -406,14 +405,9 @@ class ExtensionBuilderConfigurationManager
      * @param string $identifier
      * @return bool
      */
-    public function isConfirmed($identifier)
+    public function isConfirmed($identifier): bool
     {
-        if (isset($this->inputData['params'][$identifier]) &&
-            $this->inputData['params'][$identifier] == 1
-        ) {
-            return true;
-        }
-        return false;
+        return isset($this->inputData['params'][$identifier]) && $this->inputData['params'][$identifier] == 1;
     }
 
     /**
@@ -486,13 +480,13 @@ class ExtensionBuilderConfigurationManager
             if ($modules[$supposedModuleIndex]['value']['objectsettings']['uid'] == $uid) {
                 // everything as expected
                 return $result;
-            } else {
-                $moduleCounter = 0;
-                foreach ($modules as $module) {
-                    if ($module['value']['objectsettings']['uid'] == $uid) {
-                        $result['moduleId'] = $moduleCounter;
-                        return $result;
-                    }
+            }
+
+            $moduleCounter = 0;
+            foreach ($modules as $module) {
+                if ($module['value']['objectsettings']['uid'] == $uid) {
+                    $result['moduleId'] = $moduleCounter;
+                    return $result;
                 }
             }
         } elseif ($modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid'] == $uid) {

@@ -74,7 +74,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $domainObject->addProperty($property);
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
         $modelClassDir = 'Classes/Domain/Model/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
 
@@ -112,7 +112,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $domainObject->addProperty($property);
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
         $modelClassDir = 'Classes/Domain/Model/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
 
@@ -153,7 +153,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $domainObject->addProperty($relation);
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
         $modelClassDir = 'Classes/Domain/Model/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
 
@@ -194,7 +194,7 @@ class FileGeneratorTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
         $modelClassDir = 'Classes/Domain/Model/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
 
@@ -266,7 +266,7 @@ class FileGeneratorTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
         $modelClassDir = 'Classes/Domain/Model/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
 
@@ -318,7 +318,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateActionControllerCode($domainObject, false);
 
         $controllerClassDir = 'Classes/Controller/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $controllerClassDir);
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $controllerClassDir);
         $absControllerClassDir = $this->extension->getExtensionDir() . $controllerClassDir;
         self::assertTrue(is_dir($absControllerClassDir), 'Directory ' . $absControllerClassDir . ' was not created');
         $controllerClassPath = $absControllerClassDir . $domainObject->getName() . 'Controller.php';
@@ -342,7 +342,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainRepositoryCode($domainObject, false);
 
         $repositoryClassDir = 'Classes/Domain/Repository/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $repositoryClassDir);
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $repositoryClassDir);
         $absRepositoryClassDir = $this->extension->getExtensionDir() . $repositoryClassDir;
         self::assertTrue(is_dir($absRepositoryClassDir), 'Directory ' . $absRepositoryClassDir . ' was not created');
         $repositoryClassPath = $absRepositoryClassDir . $domainObject->getName() . 'Repository.php';

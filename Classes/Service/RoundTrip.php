@@ -19,6 +19,9 @@ use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use EBT\ExtensionBuilder\Utility\Inflector;
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -1012,10 +1015,12 @@ class RoundTrip implements SingletonInterface
 
     /**
      * @return array
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
      */
-    public static function getExtConfiguration()
+    public static function getExtConfiguration(): array
     {
-        return unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['extension_builder']);
+        return GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('extension_builder');
     }
 
     /**
@@ -1133,7 +1138,7 @@ class RoundTrip implements SingletonInterface
                 if (!empty($customFileContent)) {
                     $overrideDir = $tcaDir . 'Overrides/';
                     if (!is_dir($overrideDir)) {
-                        GeneralUtility::mkdir_deep($tcaDir, 'Overrides');
+                        GeneralUtility::mkdir_deep($tcaDir . 'Overrides');
                     }
                     $success = GeneralUtility::writeFile(
                         $overrideDir . $domainObject->getDatabaseTableName() . '.php',
