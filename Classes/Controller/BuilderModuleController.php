@@ -24,6 +24,7 @@ use EBT\ExtensionBuilder\Service\ExtensionService;
 use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -41,22 +42,22 @@ class BuilderModuleController extends ActionController
     /**
      * @var \EBT\ExtensionBuilder\Service\FileGenerator
      */
-    protected $fileGenerator = null;
+    protected $fileGenerator;
 
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      */
-    protected $extensionBuilderConfigurationManager = null;
+    protected $extensionBuilderConfigurationManager;
 
     /**
      * @var \EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus
      */
-    protected $extensionInstallationStatus = null;
+    protected $extensionInstallationStatus;
 
     /**
      * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
      */
-    protected $extensionSchemaBuilder = null;
+    protected $extensionSchemaBuilder;
 
     /**
      * @var ExtensionService
@@ -66,12 +67,12 @@ class BuilderModuleController extends ActionController
     /**
      * @var \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator
      */
-    protected $extensionValidator = null;
+    protected $extensionValidator;
 
     /**
      * @var \EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository
      */
-    protected $extensionRepository = null;
+    protected $extensionRepository;
 
     /**
      * Settings from various sources:
@@ -87,7 +88,7 @@ class BuilderModuleController extends ActionController
      * @param \EBT\ExtensionBuilder\Service\FileGenerator $fileGenerator
      * @return void
      */
-    public function injectFileGenerator(FileGenerator $fileGenerator)
+    public function injectFileGenerator(FileGenerator $fileGenerator): void
     {
         $this->fileGenerator = $fileGenerator;
     }
@@ -100,7 +101,7 @@ class BuilderModuleController extends ActionController
      */
     public function injectExtensionBuilderConfigurationManager(
         ExtensionBuilderConfigurationManager $configurationManager
-    ) {
+    ): void {
         $this->extensionBuilderConfigurationManager = $configurationManager;
         $this->extensionBuilderSettings = $this->extensionBuilderConfigurationManager->getSettings();
     }
@@ -109,7 +110,7 @@ class BuilderModuleController extends ActionController
      * @param \EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus $extensionInstallationStatus
      * @return void
      */
-    public function injectExtensionInstallationStatus(ExtensionInstallationStatus $extensionInstallationStatus)
+    public function injectExtensionInstallationStatus(ExtensionInstallationStatus $extensionInstallationStatus): void
     {
         $this->extensionInstallationStatus = $extensionInstallationStatus;
     }
@@ -118,7 +119,7 @@ class BuilderModuleController extends ActionController
      * @param \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder $extensionSchemaBuilder
      * @return void
      */
-    public function injectExtensionSchemaBuilder(ExtensionSchemaBuilder $extensionSchemaBuilder)
+    public function injectExtensionSchemaBuilder(ExtensionSchemaBuilder $extensionSchemaBuilder): void
     {
         $this->extensionSchemaBuilder = $extensionSchemaBuilder;
     }
@@ -126,7 +127,7 @@ class BuilderModuleController extends ActionController
     /**
      * @param ExtensionService $extensionService
      */
-    public function injectExtensionService(ExtensionService $extensionService)
+    public function injectExtensionService(ExtensionService $extensionService): void
     {
         $this->extensionService = $extensionService;
     }
@@ -135,7 +136,7 @@ class BuilderModuleController extends ActionController
      * @param \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator $extensionValidator
      * @return void
      */
-    public function injectExtensionValidator(ExtensionValidator $extensionValidator)
+    public function injectExtensionValidator(ExtensionValidator $extensionValidator): void
     {
         $this->extensionValidator = $extensionValidator;
     }
@@ -144,7 +145,7 @@ class BuilderModuleController extends ActionController
      * @param \EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository $extensionRepository
      * @return void
      */
-    public function injectExtensionRepository(ExtensionRepository $extensionRepository)
+    public function injectExtensionRepository(ExtensionRepository $extensionRepository): void
     {
         $this->extensionRepository = $extensionRepository;
     }
@@ -167,7 +168,7 @@ class BuilderModuleController extends ActionController
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->view->assign('currentAction', $this->request->getControllerActionName());
         $this->view->assign('settings', $this->extensionBuilderConfigurationManager->getSettings());
@@ -188,13 +189,14 @@ class BuilderModuleController extends ActionController
      * @return void
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    public function domainmodellingAction()
+    public function domainmodellingAction(): void
     {
-        $this->view->assign('extPath',
-            PathUtility::stripPathSitePrefix(ExtensionManagementUtility::extPath('extension_builder')));
-        $this->view->assign('settings', $this->extensionBuilderConfigurationManager->getSettings());
-        $this->view->assign('currentAction', $this->request->getControllerActionName());
-        $this->view->assign('storagePaths', $this->extensionService->resolveStoragePaths());
+        $this->view->assignMultiple([
+            'extPath' => PathUtility::stripPathSitePrefix(ExtensionManagementUtility::extPath('extension_builder')),
+            'settings' => $this->extensionBuilderConfigurationManager->getSettings(),
+            'currentAction' => $this->request->getControllerActionName(),
+            'storagePaths' => $this->extensionService->resolveStoragePaths(),
+        ]);
         $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', ['firstTime' => 0]);
     }
 
@@ -203,7 +205,7 @@ class BuilderModuleController extends ActionController
      *
      * @return string json encoded array
      */
-    public function dispatchRpcAction()
+    public function dispatchRpcAction(): string
     {
         try {
             $this->extensionBuilderConfigurationManager->parseRequest();
@@ -236,7 +238,7 @@ class BuilderModuleController extends ActionController
      * @return array (status => message)
      * @throws \Exception
      */
-    protected function rpcActionSave()
+    protected function rpcActionSave(): array
     {
         try {
             $extensionBuildConfiguration = $this->extensionBuilderConfigurationManager->getConfigurationFromModeler();
@@ -317,8 +319,9 @@ class BuilderModuleController extends ActionController
                     throw $e;
                 }
             } else {
-                if (!is_array($extensionSettings['ignoreWarnings']) || !in_array(ExtensionValidator::EXTENSION_DIR_EXISTS,
-                        $extensionSettings['ignoreWarnings'])) {
+                if (!is_array($extensionSettings['ignoreWarnings'])
+                    || !in_array(ExtensionValidator::EXTENSION_DIR_EXISTS, $extensionSettings['ignoreWarnings'])
+                ) {
                     $confirmationRequired = $this->handleValidationWarnings([
                         new ExtensionException("This action will overwrite previously saved content!\n(Enable the roundtrip feature to avoid this warning).",
                             ExtensionValidator::EXTENSION_DIR_EXISTS)
@@ -356,7 +359,7 @@ class BuilderModuleController extends ActionController
      *
      * @return array
      */
-    protected function rpcActionList()
+    protected function rpcActionList(): array
     {
         $extensions = $this->extensionRepository->findAll();
         return ['result' => $extensions, 'error' => null];
@@ -368,16 +371,17 @@ class BuilderModuleController extends ActionController
      * @param \Exception[] $warnings
      * @return array confirm (Question to confirm), confirmFieldName (is set to true if confirmed)
      */
-    protected function handleValidationWarnings(array $warnings)
+    protected function handleValidationWarnings(array $warnings): array
     {
-        $messagesPerErrorcode = [];
+        $messagesPerErrorCode = [];
         foreach ($warnings as $exception) {
-            if (!is_array($messagesPerErrorcode[$exception->getCode()])) {
-                $messagesPerErrorcode[$exception->getCode()] = [];
+            $errorCode = $exception->getCode();
+            if (!is_array($messagesPerErrorCode[$errorCode])) {
+                $messagesPerErrorCode[$errorCode] = [];
             }
-            $messagesPerErrorcode[$exception->getCode()][] = nl2br(htmlspecialchars($exception->getMessage())) . ' (Error ' . $exception->getCode() . ')<br /><br />';
+            $messagesPerErrorCode[$errorCode][] = nl2br(htmlspecialchars($exception->getMessage())) . ' (Error ' . $errorCode . ')<br /><br />';
         }
-        foreach ($messagesPerErrorcode as $errorCode => $messages) {
+        foreach ($messagesPerErrorCode as $errorCode => $messages) {
             if (!$this->extensionBuilderConfigurationManager->isConfirmed('allow' . $errorCode)) {
                 if ($errorCode == ExtensionValidator::ERROR_PROPERTY_RESERVED_SQL_WORD) {
                     $confirmMessage = 'SQL reserved names were found for these properties:<br />' .
@@ -400,7 +404,7 @@ class BuilderModuleController extends ActionController
     /**
      * @return array
      */
-    protected function rpcActionPerformDbUpdate()
+    protected function rpcActionPerformDbUpdate(): array
     {
         $params = $this->extensionBuilderConfigurationManager->getParamsFromRequest();
         return $this->extensionInstallationStatus->performDbUpdates($params);
@@ -409,9 +413,9 @@ class BuilderModuleController extends ActionController
     /**
      * Returns the global BackendUserAuthentication object.
      *
-     * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
+     * @return BackendUserAuthentication
      */
-    protected function getBackendUserAuthentication()
+    protected function getBackendUserAuthentication(): BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
     }

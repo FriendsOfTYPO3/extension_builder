@@ -15,11 +15,13 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Domain\Model\NamespaceObject;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -33,7 +35,7 @@ class FileGenerator
     /**
      * @var \EBT\ExtensionBuilder\Service\ClassBuilder
      */
-    protected $classBuilder = null;
+    protected $classBuilder;
 
     /**
      * @param \EBT\ExtensionBuilder\Service\ClassBuilder $classBuilder
@@ -47,7 +49,7 @@ class FileGenerator
     /**
      * @var \EBT\ExtensionBuilder\Service\RoundTrip
      */
-    protected $roundTripService = null;
+    protected $roundTripService;
 
     /**
      * @param \EBT\ExtensionBuilder\Service\RoundTrip $roundTripService
@@ -67,9 +69,9 @@ class FileGenerator
      */
     protected $codeTemplatePartialPaths = [];
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\Extension
+     * @var Extension
      */
-    protected $extension = null;
+    protected $extension;
     /**
      * @var string
      */
@@ -104,7 +106,7 @@ class FileGenerator
     /**
      * @var \EBT\ExtensionBuilder\Service\Printer
      */
-    protected $printerService = null;
+    protected $printerService;
 
     /**
      * @param \EBT\ExtensionBuilder\Service\Printer $printerService
@@ -151,7 +153,7 @@ class FileGenerator
      * @var \EBT\ExtensionBuilder\Service\LocalizationService
      *
      */
-    protected $localizationService = null;
+    protected $localizationService;
 
     /**
      * @param \EBT\ExtensionBuilder\Service\LocalizationService $localizationService
@@ -166,7 +168,7 @@ class FileGenerator
      * called by controller
      * @param array $settings
      */
-    public function setSettings($settings)
+    public function setSettings(array $settings)
     {
         $this->settings = $settings;
     }
@@ -174,15 +176,17 @@ class FileGenerator
     /**
      * The entry point to the class
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     * @param Extension $extension
      *
      * @throws \Exception
-     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
+     * @throws ExtensionException
      */
     public function build(Extension $extension)
     {
         $this->extension = $extension;
-        if ($this->settings['extConf']['enableRoundtrip'] == 1) {
+        $enableRoundtrip = (bool)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('extension_builder', 'enableRoundtrip');
+
+        if ($enableRoundtrip === true) {
             $this->roundTripEnabled = true;
             $this->roundTripService->initialize($extension);
         }
@@ -210,11 +214,11 @@ class FileGenerator
 
         $this->generateComposerJson();
 
-        GeneralUtility::mkdir_deep($this->extensionDirectory, 'Configuration');
+        GeneralUtility::mkdir_deep($this->extensionDirectory . 'Configuration');
 
         $this->configurationDirectory = $this->extensionDirectory . 'Configuration/';
 
-        GeneralUtility::mkdir_deep($this->extensionDirectory, 'Resources/Private');
+        GeneralUtility::mkdir_deep($this->extensionDirectory . 'Resources/Private');
 
         $this->privateResourcesDirectory = $this->extensionDirectory . 'Resources/Private/';
 
@@ -325,7 +329,7 @@ class FileGenerator
     {
         // Generate TCA
         try {
-            GeneralUtility::mkdir_deep($this->extensionDirectory, 'Configuration/TCA');
+            GeneralUtility::mkdir_deep($this->extensionDirectory . 'Configuration/TCA');
 
             $domainObjects = $this->extension->getDomainObjects();
 
@@ -349,7 +353,7 @@ class FileGenerator
                 }
             }
             if (count($domainObjectsNeedingOverrides) > 0) {
-                GeneralUtility::mkdir_deep($this->extensionDirectory, 'Configuration/TCA/Overrides');
+                GeneralUtility::mkdir_deep($this->extensionDirectory . 'Configuration/TCA/Overrides');
             }
             $tablesNeedingTypeFields = $this->extension->getTablesForTypeFieldDefinitions();
             foreach ($domainObjectsNeedingOverrides as $tableName => $domainObjects) {
@@ -372,7 +376,7 @@ class FileGenerator
     {
         // Generate locallang*.xlf files
         try {
-            GeneralUtility::mkdir_deep($this->privateResourcesDirectory, 'Language');
+            GeneralUtility::mkdir_deep($this->privateResourcesDirectory . 'Language');
             $this->languageDirectory = $this->privateResourcesDirectory . 'Language/';
             $fileContents = $this->generateLocallangFileContent();
             $this->writeFile($this->languageDirectory . 'locallang.xlf', $fileContents);
@@ -1308,7 +1312,7 @@ class FileGenerator
         }
         if (!empty($classPath)) {
             if (!is_dir($extensionDirectory . $classPath) && $createDirIfNotExist) {
-                GeneralUtility::mkdir_deep($extensionDirectory, $classPath);
+                GeneralUtility::mkdir_deep($extensionDirectory . $classPath);
             }
             if (!is_dir($extensionDirectory . $classPath) && $createDirIfNotExist) {
                 throw new \Exception('folder could not be created:' . $extensionDirectory . $classPath);
@@ -1363,7 +1367,9 @@ class FileGenerator
                 if ($fileExtension == 'html') {
                     //TODO: We need some kind of protocol to be displayed after code generation
                     return;
-                } elseif (in_array($fileExtension, $this->filesSupportingSplitToken)) {
+                }
+
+                if (in_array($fileExtension, $this->filesSupportingSplitToken)) {
                     $fileContents = $this->insertSplitToken($targetFile, $fileContents);
                 }
             } elseif (file_exists($targetFile) && $overWriteMode == 2) {
@@ -1461,7 +1467,7 @@ class FileGenerator
     protected function mkdir_deep($directory, $deepDirectory)
     {
         if (!$this->roundTripEnabled) {
-            GeneralUtility::mkdir_deep($directory, $deepDirectory);
+            GeneralUtility::mkdir_deep($directory . $deepDirectory);
         } else {
             $subDirectories = explode('/', $deepDirectory);
             $tmpBasePath = $directory;
@@ -1476,7 +1482,7 @@ class FileGenerator
                     return;
                 }
                 if (!is_dir($deepDirectory) || ($this->roundTripEnabled && $overWriteMode < 2)) {
-                    GeneralUtility::mkdir_deep($tmpBasePath, $subDirectory);
+                    GeneralUtility::mkdir_deep($tmpBasePath . $subDirectory);
                 }
                 $tmpBasePath .= $subDirectory . '/';
             }

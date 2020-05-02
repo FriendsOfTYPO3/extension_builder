@@ -224,7 +224,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         $domainObject = $this->buildDomainObject($modelName);
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
         $modelClassDir = 'Classes/Domain/Model/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
 
