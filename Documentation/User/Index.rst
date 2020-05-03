@@ -19,7 +19,7 @@ Using the Extension Builder
 Starting a new extension
 ------------------------
 
-To create a new Extension, go to the Domain Modelling view (1) and open the left panel by clicking on the small arrow on the upper left corner (2).
+To create a new extension, go to the Domain Modelling view (1) and open the left panel by clicking on the small arrow symbol ">|" on the upper left corner (2).
 
 .. figure:: ../Images/UserManual/modeler-start-extension-1.png
    :width: 90%
@@ -29,7 +29,7 @@ To create a new Extension, go to the Domain Modelling view (1) and open the left
 1. Create a domain model
 ------------------------
 
-Enter a meaningful Extension name (1), a `Vendor name <http://docs.typo3.org/flow/TYPO3FlowDocumentation/stable/TheDefinitiveGuide/PartV/CodingGuideLines/PHP.html#naming>`_ (2) (UpperCamelCase) and an extensionKey (3) (without spaces and in lowercase).
+Enter a meaningful extension name (1), a `vendor name <http://docs.typo3.org/flow/TYPO3FlowDocumentation/stable/TheDefinitiveGuide/PartV/CodingGuideLines/PHP.html#naming>`_ (2) (UpperCamelCase) and an extension key (3) (without spaces and in lowercase).
 You can add a person that will be listed in the generated files as author.
 
 .. figure:: ../Images/UserManual/modeler-start-extension-2.png
@@ -40,7 +40,7 @@ You can add a person that will be listed in the generated files as author.
 Then create at least one model by dragging it from the grey button "New Model Object" to the canvas.
 Give it a meaningful name starting with an uppercase letter.
 
-Open the Domain Settings and check Aggregate root if this model is the root of the other models of your domain.
+Open the domain settings and check the aggregate root if this model is the root of the other models of your domain.
 In general you need at least one aggregate root which has a corresponding repository to retrieve models from the persistence.
 
 .. figure:: ../Images/UserManual/modeler-object-settings.png
@@ -53,8 +53,8 @@ In general you need at least one aggregate root which has a corresponding reposi
 
    A simple way to find out, if a model is an aggregate root or not, is to consider if you can retrieve objects
    of this model by requesting them from another model or not.
-   So if you create a post Model and a Blog model, it is obvious that the Blog is the aggregate root and the
-   post is not. You can retrieve posts by requesting it from the blog model: $Blog->getPosts().
+   So if you create a post model and a blog model, it is obvious that the blog is the aggregate root and the
+   post is not. You can retrieve posts by requesting them from the blog model: $Blog->getPosts().
 
 
 Open the action panel and select the options you need. All actions you select will be configured as allowed actions for your plugin.
@@ -68,7 +68,7 @@ Open the action panel and select the options you need. All actions you select wi
 
    **Security check!**
 
-   Be aware that any action can be called just by adding a parameter to the URL where the plugin is included.
+   Be aware that any action can be called just by adding a parameter    to the URL where the plugin is included.
    If you provide an edit/update action link it will look like this:
 
    http\:\/\/mydomain.de/mypage/?tx_extensionkey_pluginkey[\ **action**\ ]=\ **edit**\ &tx_extensionkey_pluginkey[\ **profile**\ ]=\ **12**
@@ -86,8 +86,8 @@ Open the action panel and select the options you need. All actions you select wi
 2. Add properties
 -----------------
 
-The names of properties of the same model have to be unique, they must start with a lowercase letter, should only contain alphanumerical character and should be written in lowerCamelCase if neccessary.
-The description you enter here, will appear in the backend as help text near the property field.
+The names of properties of the same model have to be unique, they must start with a lowercase letter, they should only contain alphanumerical characters and they should be written in lowerCamelCase if necessary.
+The description you enter here, will appear in the back-end as a help text near the property field.
 
 3. Add relations
 ----------------
@@ -134,4 +134,4 @@ Have a look into :file:`typo3conf/ext/yourExtensionKey/` to see them. Now you ca
 
 You can find a more detailed description in the :doc:`/Developer/Index`
 
-If you modified the generated files but still want to modify the model in the graphical interface you have to enable :doc:`/Developer/Roundtrip`
+If you modified the generated files but still want to be able to modify the model in the graphical interface you have to enable :doc:`/Developer/Roundtrip`
