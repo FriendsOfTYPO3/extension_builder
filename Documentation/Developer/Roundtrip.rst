@@ -11,7 +11,7 @@ originally created files.
 This is, where "Roundtrip mode" is needed. It aims to preserve your manual changes and applying the new model
 configuration at the same time.
 
-The roundtrip mode is enabled by default. To disable it see the ExtensionBuilder Configuration :doc:`/Configuration/Index`
+The roundtrip mode is enabled by default. To disable it see the Extension Builder Configuration :doc:`/Configuration/Index`
 
 The general rule is: All stuff that is editable in the modeler should be applied in the modeler.
 For example if you need another dependency in :file:`ext_emconf.php` you should add it in the modeler and not in :file:`ext_emconf.php` itself.
@@ -29,7 +29,7 @@ Consequences of various actions:
 
 *   all classes and tables are renamed
 
-*   your code should be daptedt to the new names (not just overridden with the default code)
+*   your code should be adapted to the new names (not just overridden with the default code)
 
 
 **Changing the Vendor name is not yet supported**
@@ -41,7 +41,7 @@ Consequences of various actions:
 
 *   the corresponding getter and setter methods are updated
 
-*   TCA files and SQL definitions are new generated, modifications will be LOST
+*   TCA files and SQL definitions are newly generated, modifications will be LOST
 
 *   existing data in the corresponding table column will be LOST, except you RENAME the column in the database manually
 
