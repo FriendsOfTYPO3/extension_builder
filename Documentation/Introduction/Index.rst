@@ -13,7 +13,7 @@ Introduction
 
 The Extension Builder is a tool for TYPO3 extension developers to
 ease the implementation of extensions. It provides a "kickstart" mode
-to kickstart a simple frontend plugin with basic CRUD (Creat - Read - Update - Delete) functions
+to kickstart a simple frontend plugin with basic CRUD (Create - Read - Update - Delete) functions
 (not to be used in production mode) which can be extended and modified to the actual needs
 
 
@@ -31,8 +31,8 @@ classes (add new methods, modify the method bodies, add comments and annotations
 extension builder preserves your changes, even if you then rename models or properties in
 the modeler.
 
-The ExtensionBuilder is NOT intended to do TYPO3 CMS specific stuff, like extending pages or custom content elements,
-as the the old kickstarter. It focuses on extensions development in a sense of `Domain Driven Design <https://de.wikipedia.org/wiki/Domain-Driven_Design>`_
+The Extension Builder is NOT intended to do TYPO3 CMS specific stuff, like extending pages or custom content elements,
+as the old kickstarter has done it. It focuses on extension development in a sense of `Domain Driven Design <https://de.wikipedia.org/wiki/Domain-Driven_Design>`_
 
 
 .. _screenshots:
@@ -48,5 +48,5 @@ The Modeler provides a graphical interface to model your Domain
    :alt: Modeler Blog Example
 
 When you click on the "Save" button a complete code base for a TYPO3 extension is generated.
-You can install the generated plugins and test the output in the frontend.
+You can activate the generated extension plugin and test the output in the frontend.
 
