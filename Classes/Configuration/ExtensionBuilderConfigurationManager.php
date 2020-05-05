@@ -191,7 +191,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      */
     public static function getExtensionBuilderJson($extensionKey, $storagePath = null)
     {
-        $storagePath = $storagePath ?? PATH_typo3conf . 'ext/';
+        $storagePath = $storagePath ?? Environment::getPublicPath()  . '/typo3conf/ext/';
         $jsonFile = $storagePath . $extensionKey . '/' . self::EXTENSION_BUILDER_SETTINGS_FILE;
         if (file_exists($jsonFile)) {
             return json_decode(file_get_contents($jsonFile), true);
