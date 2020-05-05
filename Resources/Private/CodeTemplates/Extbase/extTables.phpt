@@ -6,7 +6,7 @@ call_user_func(
     {
 <f:for each="{extension.Plugins}" as="plugin">
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-            '{extension.vendorName}.{extension.extensionName}',
+            '{extension.extensionName}',
             '<k:format.uppercaseFirst>{plugin.key}</k:format.uppercaseFirst>',
             '<k:format.quoteString>{plugin.name}</k:format.quoteString>'
         );
@@ -20,7 +20,7 @@ call_user_func(
         if (TYPO3_MODE === 'BE') {
 <f:for each="{extension.BackendModules}" as="backendModule">
             \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-                '{extension.vendorName}.{extension.extensionName}',
+                '{extension.extensionName}',
                 '{backendModule.mainModule}', // Make module a submodule of '{backendModule.mainModule}'
                 '{backendModule.key}', // Submodule key
                 '', // Position
