@@ -49,7 +49,7 @@ In general you need at least one aggregate root which has a corresponding reposi
    A simple way to find out, if a model is an aggregate root or not, is to consider if you can retrieve objects
    of this model by requesting them from another model or not.
    So if you create a post model and a blog model, it is obvious that the blog is the aggregate root and the
-   post is not. You can retrieve posts by requesting them from the blog model: $Blog->getPosts().
+   post is not. You can retrieve posts by requesting them from the blog model: $blog->getPosts().
 
 
 Open the action panel and select the options you need. All actions you select will be configured as allowed actions for your plugin.
