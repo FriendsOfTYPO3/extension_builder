@@ -68,7 +68,7 @@ Open the action panel and select the options you need. All actions you select wi
 
    **Security check!**
 
-   Be aware that any action can be called just by adding a parameter    to the URL where the plugin is included.
+   Be aware that any action can be called just by adding a parameter to the URL where the plugin is included.
    If you provide an edit/update action link it will look like this:
 
    http\:\/\/mydomain.de/mypage/?tx_extensionkey_pluginkey[\ **action**\ ]=\ **edit**\ &tx_extensionkey_pluginkey[\ **profile**\ ]=\ **12**
