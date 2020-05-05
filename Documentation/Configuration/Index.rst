@@ -100,7 +100,7 @@ ignoreWarnings:
  To avoid the same warning on each save you can add the error code (which is displayed with the warning) to the list of
  ignoreWarnings. Just write one number per line indented 2 spaces
 
-Settings for Class Builder
+Settings for ClassBuilder
 --------------------------
 
 By default the Controller, Model and Repository classes inherit from the corresponding extbase class.
@@ -128,6 +128,6 @@ Here you see the defaults:
    setDefaultValuesForClassProperties: true
 
 setDefaultValuesForClassProperties: true
-  By default the Class Builder will assign all generated class properties the default value of its corresponding property
+  By default the ClassBuilder will assign all generated class properties the default value of its corresponding property
   type. (e.g. 0 for integers etc.) Set this to false if you have a use case where you don't want this behaviour, for example
   when you have a property of type "string" and want to distinguish if it is not (yet) set (NULL) or an empty string ('').
