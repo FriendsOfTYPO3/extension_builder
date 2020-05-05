@@ -6,7 +6,7 @@ call_user_func(
     {
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-            'FIXTURE.TestExtension',
+            'TestExtension',
             'Testplugin',
             'Test plugin'
         );
@@ -14,7 +14,7 @@ call_user_func(
         if (TYPO3_MODE === 'BE') {
 
             \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-                'FIXTURE.TestExtension',
+                'TestExtension',
                 'web', // Make module a submodule of 'web'
                 'testmodule1', // Submodule key
                 '', // Position
