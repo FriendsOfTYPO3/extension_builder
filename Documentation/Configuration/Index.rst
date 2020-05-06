@@ -6,9 +6,9 @@
 Configuration Reference
 =======================
 
-There are two places to configure the ExtensionBuilder:
+There are two places to configure the Extension Builder:
 
-1. in the extension manager configuration view for the ExtensionBuilder. These settings are applied "globally" in the TYPO3 instance.
+1. in the extension configuration view for the Extension Builder. These settings are applied "globally" in the TYPO3 instance.
 
 2. in the file :file:`Configuration/ExtensionBuilder/settings.yaml` of your extension. These settings are extension specific.
 
@@ -16,10 +16,10 @@ There are two places to configure the ExtensionBuilder:
 .. _custom-documentation-renderUserDocumentation:
 
 
-General extension builder configuration
+General Extension Builder configuration
 ```````````````````````````````````````
 
-Go to the extension manager and open the configuration of the Extension Builder. Here several settings are configurable:
+Go to the Settings - Extension Configuration and open the configuration of the Extension Builder. Here several settings are configurable:
 
 +----------------------------+-----------------------------------------------------------------------------------------------------------+--------------------------+
 |**Setting**                 |**Impact**                                                                                                 |**Default**               |
@@ -41,7 +41,7 @@ in your extension which contains the following extension specific configuration.
 Overwrite settings
 ------------------
 
-These settings only apply if the roundtrip feature of the extension builder is enabled in the extension manager
+These settings only apply if the roundtrip feature of the extension builder is enabled in the extension configuration.
 
 The nesting reflects the file structure: a setting applies to a file or recursive to all files and subfolders.
 
@@ -101,7 +101,7 @@ ignoreWarnings:
  ignoreWarnings. Just write one number per line indented 2 spaces
 
 Settings for ClassBuilder
--------------------------
+--------------------------
 
 By default the Controller, Model and Repository classes inherit from the corresponding extbase class.
 It might be useful to inherit from own classes (which should then extend the extbase classes).
