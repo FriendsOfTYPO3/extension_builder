@@ -22,6 +22,7 @@ use EBT\ExtensionBuilder\Utility\Inflector;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -1176,7 +1177,7 @@ class RoundTrip implements SingletonInterface
                 throw new \Exception('Backup directory is not an allowed absolute path: ' . $backupDir);
             }
         } else {
-            $backupDir = PATH_site . $backupDir;
+            $backupDir = Environment::getProjectPath() . '/'. $backupDir;
         }
         if (strrpos($backupDir, '/') < strlen($backupDir) - 1) {
             $backupDir .= '/';
