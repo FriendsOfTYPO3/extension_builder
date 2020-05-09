@@ -1177,11 +1177,7 @@ class RoundTrip implements SingletonInterface
                 throw new \Exception('Backup directory is not an allowed absolute path: ' . $backupDir);
             }
         } else {
-            if (Environment::isComposerMode()) {
-                $backupDir = Environment::getProjectPath() . '/'. $backupDir;
-            } else {
-                $backupDir = Environment::getPublicPath() . '/'. $backupDir;
-            }
+            $backupDir = Environment::getProjectPath() . '/'. $backupDir;
         }
         if (strrpos($backupDir, '/') < strlen($backupDir) - 1) {
             $backupDir .= '/';
