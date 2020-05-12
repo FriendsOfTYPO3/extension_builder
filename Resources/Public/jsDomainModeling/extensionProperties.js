@@ -172,12 +172,12 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							label: TYPO3.settings.extensionBuilder._LOCAL_LANG.target_version,
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_target_version,
 							selectOptions: [
-								'TYPO3 v 9.5'
+                'TYPO3 v 10.4'
 							],
-                            selectValues: ["9.5.0-9.5.99"],
-							value: '9.5.0-9.5.99'
-                        }
-                    },
+              selectValues: ["10.4.0-10.4.99"],
+              value: '10.4.0-10.4.99'
+						}
+					},
 					{
 						type: "text",
 						inputParams: {
@@ -187,7 +187,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 							description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_dependsOn,
 							cols:20,
 							rows:6,
-							value : "typo3 => 9.5.0-9.5.99\n"
+							value : "typo3 => 10.4.0-10.4.99\n"
 						}
 					}
 			]
