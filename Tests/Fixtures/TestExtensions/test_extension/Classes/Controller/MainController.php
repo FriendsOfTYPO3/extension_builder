@@ -82,7 +82,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action edit
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
-     * @ignorevalidation $main
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("main")
      * @return void
      */
     public function editAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
