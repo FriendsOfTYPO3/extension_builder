@@ -66,7 +66,7 @@ class ParserService implements SingletonInterface
 
         // set defaults
         if (null === $this->traverser) {
-            $this->traverser = new Traverser(true);
+            $this->traverser = new Traverser();
         }
         if (null === $this->fileVisitor) {
             $this->fileVisitor = new FileVisitor;
@@ -94,15 +94,6 @@ class ParserService implements SingletonInterface
         $fileObject = $this->parseCode($code);
         $fileObject->setFilePathAndName($fileName);
         return $fileObject;
-    }
-
-    /**
-     * @param string $code
-     * @return array
-     */
-    public function parseRawStatements($code)
-    {
-        return parent::parse($code);
     }
 
     /**
