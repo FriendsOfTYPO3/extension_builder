@@ -770,8 +770,8 @@ class FileGenerator
 
     protected function generateEmptyGitRepository()
     {
-        $targetDirectory = $this->extensionDirectory . '.git/';
-        if (is_file($this->extensionDirectory . '.git') || is_dir($targetDirectory) || is_link($targetDirectory)) {
+        $targetDirectory = $this->extensionDirectory . '.git';
+        if (is_file($targetDirectory) || is_dir($targetDirectory) || is_link($targetDirectory)) {
             return;
         }
         $sourceDirectory = ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Git/';
