@@ -584,7 +584,7 @@ class ClassBuilder implements SingletonInterface
             $actionMethod->updateParamTags();
 
             if ($actionName === 'edit') {
-                $actionMethod->setTag('TYPO3\CMS\Extbase\Annotation\IgnoreValidation', '("' . $parameterName . '")' );
+                $actionMethod->setTag('TYPO3\CMS\Extbase\Annotation\IgnoreValidation' . '("' . $parameterName . '")');
             }
         }
 
