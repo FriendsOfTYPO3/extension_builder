@@ -1,7 +1,7 @@
 .DS_Store
 /.idea*
-/.Build/*
-/vendor/*
+/.Build/
+/.phplint-cache
 /composer.lock
 /node_modules*
 
