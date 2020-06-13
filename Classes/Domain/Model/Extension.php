@@ -598,7 +598,7 @@ class Extension
      */
     public function addPlugin(\EBT\ExtensionBuilder\Domain\Model\Plugin $plugin)
     {
-        $this->plugins[] = $plugin;
+        $this->plugins->attach($plugin);
     }
 
     /**
@@ -630,7 +630,7 @@ class Extension
      */
     public function addBackendModule(\EBT\ExtensionBuilder\Domain\Model\BackendModule $backendModule)
     {
-        $this->backendModules[] = $backendModule;
+        $this->backendModules->attach($backendModule);
     }
 
     /**

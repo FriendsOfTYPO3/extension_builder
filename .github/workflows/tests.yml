@@ -1,0 +1,61 @@
+name: tests
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest]
+        php: [7.2]
+        typo3: [^7.6]
+
+    name: P${{ matrix.php }} - T${{ matrix.typo3 }}
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: extension_builder_tests
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache/files
+          key: dependencies-typo3-${{ matrix.typo3 }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, mysql, mysqli, pdo_mysql, bcmath, intl
+          coverage: none
+
+      - name: Install dependencies
+        run: composer require "typo3/cms:${{ matrix.typo3 }}" --dev --no-progress --no-interaction
+
+      - name: Check PHP syntax errors
+        run: find . -name \*.php ! -path "./.Build/*" -print0 | xargs -0 -n1 -P4 php -d display_errors=stderr -n -l > /dev/null
+
+      - name: Execute unit tests
+        run: TYPO3_PATH_WEB=$PWD/.Build/public .Build/bin/phpunit --colors -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml Tests/Unit/
+
+      - name: Execute functional tests
+        run: TYPO3_PATH_WEB=$PWD/.Build/public .Build/bin/phpunit --colors -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/FunctionalTests.xml Tests/Functional/
+        env:
+          typo3DatabaseName: extension_builder_tests
+          typo3DatabaseHost: 127.0.0.1
+          typo3DatabaseUsername: root
+          typo3DatabasePassword: password
+          typo3DatabasePort: ${{ job.services.mysql.ports[3306] }}

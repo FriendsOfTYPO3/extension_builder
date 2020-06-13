@@ -14,16 +14,26 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ManyToManyRelation;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
+use EBT\ExtensionBuilder\Parser\NodeFactory;
+use EBT\ExtensionBuilder\Service\ClassBuilder;
+use EBT\ExtensionBuilder\Service\Parser;
+use EBT\ExtensionBuilder\Service\Printer;
+use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 use EBT\ExtensionBuilder\Utility\Inflector;
 
-class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
+class ClassBuilderTest extends BaseUnitTest
 {
     /**
      * @var string
      */
     protected $modelName = 'Model1';
     /**
-     * @var \EBT\ExtensionBuilder\Service\ClassBuilder
+     * @var ClassBuilder
      */
     protected $classBuilder = null;
     /**
@@ -35,12 +45,12 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         parent::setUp();
 
-        $this->classBuilder = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\ClassBuilder::class, array('dummy'));
-        $parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
-        $printerService = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\Printer::class, array('dummy'));
-        $nodeFactory = new \EBT\ExtensionBuilder\Parser\NodeFactory();
+        $this->classBuilder = $this->getAccessibleMock(ClassBuilder::class, ['dummy']);
+        $parserService = new Parser(new \PhpParser\Lexer());
+        $printerService = $this->getAccessibleMock(Printer::class, ['dummy']);
+        $nodeFactory = new NodeFactory();
         $printerService->_set('nodeFactory', $nodeFactory);
-        $configurationManager = new \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager();
+        $configurationManager = new ExtensionBuilderConfigurationManager();
         $this->classBuilder->_set('parserService', $parserService);
         $this->classBuilder->_set('printerService', $printerService);
         $this->classBuilder->_set('configurationManager', $configurationManager);
@@ -54,7 +64,7 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         $domainObject = $this->buildDomainObject($this->modelName, true, true);
 
-        $property0 = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty('name');
+        $property0 = new StringProperty('name');
         $domainObject->addProperty($property0);
 
         $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $this->modelClassTemplatePath, false)->getFirstClass();
@@ -75,7 +85,7 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     public function classBuilderGeneratesGetterMethodForSimpleProperty()
     {
         $domainObject = $this->buildDomainObject($this->modelName, true, true);
-        $property0 = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty('name');
+        $property0 = new StringProperty('name');
         $property0->setRequired(true);
         $domainObject->addProperty($property0);
 
@@ -90,7 +100,7 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         $domainObject = $this->buildDomainObject($this->modelName, true, true);
 
-        $property = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty('blue');
+        $property = new BooleanProperty('blue');
         $property->setRequired(true);
         $domainObject->addProperty($property);
 
@@ -109,7 +119,7 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $domainObject1 = $this->buildDomainObject($this->modelName, true, true);
         $relatedDomainObject = $this->buildDomainObject($modelName2);
 
-        $relationProperty = new \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ManyToManyRelation($propertyName);
+        $relationProperty = new ManyToManyRelation($propertyName);
         $relationProperty->setForeignModel($relatedDomainObject);
         $domainObject1->addProperty($relationProperty);
 
@@ -134,24 +144,24 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
 
     public function propertyDefaultTypesProviderTypes()
     {
-        return array(
-            'boolean' => array('boolean', false),
-            'Date' => array('date', null),
-            'DateTime' => array('dateTime', null),
-            'file' => array('file', null),
-            'float' => array('float', 0.0),
-            'image' => array('image', null),
-            'integer' => array('integer', 0),
-            'nativeDate' => array('nativeDate', null),
-            'nativeDateTime' => array('nativeDateTime', null),
-            'password' => array('password', ''),
-            'richText' => array('richText', ''),
-            'select' => array('select', 0),
-            'string' => array('string', ''),
-            'text' => array('text', ''),
-            'time' => array('time', 0),
-            'timeSec' => array('timeSec', 0),
-        );
+        return [
+            'boolean' => ['boolean', false],
+            'Date' => ['date', null],
+            'DateTime' => ['dateTime', null],
+            'file' => ['file', null],
+            'float' => ['float', 0.0],
+            'image' => ['image', null],
+            'integer' => ['integer', 0],
+            'nativeDate' => ['nativeDate', null],
+            'nativeDateTime' => ['nativeDateTime', null],
+            'password' => ['password', ''],
+            'richText' => ['richText', ''],
+            'select' => ['select', 0],
+            'string' => ['string', ''],
+            'text' => ['text', ''],
+            'time' => ['time', 0],
+            'timeSec' => ['timeSec', 0],
+        ];
     }
 
     /**
@@ -165,7 +175,6 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $property = new $propertyClassName($propertyName);
         $domainObject->addProperty($property);
 
-        /** @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $modelClassObject */
         $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject, $this->modelClassTemplatePath, false)->getFirstClass();
 
         $propertyObject = $modelClassObject->getProperty($propertyName);

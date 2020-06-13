@@ -433,7 +433,7 @@
             "version": "0.9"
         },
         "extensionKey": "test_extension",
-        "name": "ExtensionBuilder Test Extension",
+        "name": "Extension Builder Test Extension",
         "originalExtensionKey": "test_extension",
         "originalVendorName": "FIXTURE",
         "persons": [

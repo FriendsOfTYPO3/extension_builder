@@ -16,9 +16,12 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
 
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
 use EBT\ExtensionBuilder\Domain\Model\Plugin;
+use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 use EBT\ExtensionBuilder\Utility\Inflector;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 
-class FileGeneratorTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
+class FileGeneratorTest extends BaseFunctionalTest
 {
     /**
      * Generate the appropriate code for a simple model class
@@ -61,12 +64,12 @@ class FileGeneratorTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
         $domainObject->addProperty($property);
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
         $modelClassDir = 'Classes/Domain/Model/';
-        \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
-        \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath, $classFileContent);
+        GeneralUtility::writeFile($modelClassPath, $classFileContent);
         self::assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
         $className = $domainObject->getFullQualifiedClassName();
         if (!class_exists($className)) {
@@ -98,12 +101,12 @@ class FileGeneratorTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
         $domainObject->addProperty($property);
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
         $modelClassDir = 'Classes/Domain/Model/';
-        \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
-        \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath, $classFileContent);
+        GeneralUtility::writeFile($modelClassPath, $classFileContent);
         self::assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
         $className = $domainObject->getFullQualifiedClassName();
         if (!class_exists($className)) {
@@ -139,20 +142,20 @@ class FileGeneratorTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
         $domainObject->addProperty($relation);
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
         $modelClassDir = 'Classes/Domain/Model/';
-        \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
-        \TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Class Content', 'extension_builder', 0, array('c' => $classFileContent, 'path' => $absModelClassDir));
-        \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath, $classFileContent);
+        GeneralUtility::devLog('Class Content', 'extension_builder', 0, ['c' => $classFileContent, 'path' => $absModelClassDir]);
+        GeneralUtility::writeFile($modelClassPath, $classFileContent);
         self::assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
         $className = $domainObject->getFullQualifiedClassName();
         if (!class_exists($className)) {
             include($modelClassPath);
         }
         self::assertTrue(class_exists($className), 'Class was not generated:' . $className);
-        $reflection = new \TYPO3\CMS\Extbase\Reflection\ClassReflection($className);
+        $reflection = new ClassReflection($className);
         self::assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)), 'Getter was not generated');
         self::assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)), 'Setter was not generated');
         $setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
@@ -184,12 +187,12 @@ class FileGeneratorTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
         $modelClassDir = 'Classes/Domain/Model/';
-        \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
-        \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath, $classFileContent);
+        GeneralUtility::writeFile($modelClassPath, $classFileContent);
         self::assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
         $className = $domainObject->getFullQualifiedClassName();
         if (!class_exists($className)) {
@@ -197,7 +200,7 @@ class FileGeneratorTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
         }
         self::assertTrue(class_exists($className), 'Class was not generated:' . $className);
 
-        $reflection = new \TYPO3\CMS\Extbase\Reflection\ClassReflection($className);
+        $reflection = new ClassReflection($className);
         self::assertTrue($reflection->hasMethod('add' . ucfirst(Inflector::singularize($propertyName))), 'Add method was not generated');
         self::assertTrue($reflection->hasMethod('remove' . ucfirst(Inflector::singularize($propertyName))), 'Remove method was not generated');
         self::assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)), 'Getter was not generated');
@@ -254,12 +257,12 @@ class FileGeneratorTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
         $modelClassDir = 'Classes/Domain/Model/';
-        \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
-        \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($modelClassPath, $classFileContent);
+        GeneralUtility::writeFile($modelClassPath, $classFileContent);
         self::assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
         $className = $domainObject->getFullQualifiedClassName();
         if (!class_exists($className)) {
@@ -267,7 +270,7 @@ class FileGeneratorTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
         }
         self::assertTrue(class_exists($className), 'Class was not generated:' . $className);
 
-        $reflection = new \TYPO3\CMS\Extbase\Reflection\ClassReflection($className);
+        $reflection = new ClassReflection($className);
         self::assertTrue($reflection->hasMethod('add' . ucfirst(Inflector::singularize($propertyName))), 'Add method was not generated');
         self::assertTrue($reflection->hasMethod('remove' . ucfirst(Inflector::singularize($propertyName))), 'Remove method was not generated');
         self::assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)), 'Getter was not generated');
@@ -314,17 +317,17 @@ class FileGeneratorTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
     public function writeSimpleControllerClassFromDomainObject()
     {
         $domainObject = $this->buildDomainObject('ModelCgt6', true);
-        $action = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Action');
+        $action = GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Action');
         $action->setName('list');
         $domainObject->addAction($action);
         $classFileContent = $this->fileGenerator->generateActionControllerCode($domainObject, false);
 
         $controllerClassDir = 'Classes/Controller/';
-        \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $controllerClassDir);
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $controllerClassDir);
         $absControllerClassDir = $this->extension->getExtensionDir() . $controllerClassDir;
         self::assertTrue(is_dir($absControllerClassDir), 'Directory ' . $absControllerClassDir . ' was not created');
         $controllerClassPath = $absControllerClassDir . $domainObject->getName() . 'Controller.php';
-        \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($controllerClassPath, $classFileContent);
+        GeneralUtility::writeFile($controllerClassPath, $classFileContent);
         self::assertFileExists($controllerClassPath, 'File was not generated: ' . $controllerClassPath);
         $className = $domainObject->getControllerClassName();
         if (!class_exists($className)) {
@@ -344,11 +347,11 @@ class FileGeneratorTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainRepositoryCode($domainObject, false);
 
         $repositoryClassDir = 'Classes/Domain/Repository/';
-        \TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $repositoryClassDir);
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir(), $repositoryClassDir);
         $absRepositoryClassDir = $this->extension->getExtensionDir() . $repositoryClassDir;
         self::assertTrue(is_dir($absRepositoryClassDir), 'Directory ' . $absRepositoryClassDir . ' was not created');
         $repositoryClassPath = $absRepositoryClassDir . $domainObject->getName() . 'Repository.php';
-        \TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($repositoryClassPath, $classFileContent);
+        GeneralUtility::writeFile($repositoryClassPath, $classFileContent);
         self::assertFileExists($repositoryClassPath, 'File was not generated: ' . $repositoryClassPath);
         $className = $domainObject->getFullyQualifiedDomainRepositoryClassName();
         if (!class_exists($className)) {
@@ -415,7 +418,7 @@ class FileGeneratorTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
 
         $extensionDir = $this->extension->getExtensionDir();
 
-        $extensionFiles = array('ext_emconf.php', 'ext_tables.php', 'ext_tables.sql', 'ext_localconf.php');
+        $extensionFiles = ['ext_emconf.php', 'ext_tables.php', 'ext_tables.sql', 'ext_localconf.php'];
         foreach ($extensionFiles as $extensionFile) {
             self::assertFileExists($extensionDir . $extensionFile, 'File was not generated: ' . $extensionFile);
         }
