@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
+
 /**
  * Some tests to compare the parsed and the generated source code
  * The are only equal if the source follows the same coding conventions
@@ -21,7 +23,7 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  *
  * Class ParseAndPrintTest
  */
-class ParseAndPrintTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
+class ParseAndPrintTest extends BaseFunctionalTest
 {
     protected function setUp()
     {
@@ -129,9 +131,8 @@ class ParseAndPrintTest extends \EBT\ExtensionBuilder\Tests\BaseFunctionalTest
     }
 
     /**
-     * @param $fileName
+     * @param string $fileName
      * @param string $subFolder
-     * @return \EBT\ExtensionBuilder\Domain\Model\File
      */
     protected function parseAndPrint($fileName, $subFolder = '')
     {

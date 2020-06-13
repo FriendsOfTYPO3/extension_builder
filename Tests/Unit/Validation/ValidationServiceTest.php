@@ -14,6 +14,9 @@ namespace EBT\ExtensionBuilder\Tests\Unit\Validation;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
+use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
+
 /**
  * test for validation service
  */
@@ -37,7 +40,7 @@ class ValidationServiceTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     public function testForReservedWord()
     {
-        self::assertTrue(\EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::isReservedWord('DATABASE'));
+        self::assertTrue(ExtensionValidator::isReservedWord('DATABASE'));
     }
 
     /**
@@ -45,44 +48,44 @@ class ValidationServiceTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     public function validateConfigurationFormatReturnsExceptionsOnDuplicatePropertyNames()
     {
-        $fixture = array(
-            'modules' => array(
-                array(
-                    'value' => array(
+        $fixture = [
+            'modules' => [
+                [
+                    'value' => [
                         'name' => 'Foo',
-                        'propertyGroup' => array(
-                            'properties' => array(
-                                array(
+                        'propertyGroup' => [
+                            'properties' => [
+                                [
                                     'propertyName' => 'bar'
-                                )
-                            )
-                        ),
-                        'relationGroup' => array(
-                            'relations' => array(
-                                array(
+                                ]
+                            ]
+                        ],
+                        'relationGroup' => [
+                            'relations' => [
+                                [
                                     'relationName' => 'bar'
-                                )
-                            )
-                        )
-                    )
-                )
-            ),
-            'properties' => array(
-                'plugins' => array(),
-                'backendModules' => array()
-            )
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'properties' => [
+                'plugins' => [],
+                'backendModules' => []
+            ]
 
-        );
-        $extensionValidator = new \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator();
+        ];
+        $extensionValidator = new ExtensionValidator();
 
         $result = $extensionValidator->validateConfigurationFormat($fixture);
-        $expected = array(
-            'errors' => array(),
-            'warnings' => array()
-        );
-        $expected['errors'][] = new \EBT\ExtensionBuilder\Domain\Exception\ExtensionException(
+        $expected = [
+            'errors' => [],
+            'warnings' => []
+        ];
+        $expected['errors'][] = new ExtensionException(
             'Property "bar" of Model "Foo" exists twice.',
-            \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator::ERROR_PROPERTY_DUPLICATE
+            ExtensionValidator::ERROR_PROPERTY_DUPLICATE
         );
         self::assertEquals($result, $expected);
     }

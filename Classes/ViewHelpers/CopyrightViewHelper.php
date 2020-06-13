@@ -30,7 +30,7 @@ class CopyrightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
      */
     public function render($date, $persons)
     {
-        $copyright = ' *  (c) ' . $date . ' ';
+        $copyright = ' * (c) ' . $date . ' ';
         $offset = strlen($copyright) - 2;
 
         foreach ($persons as $index => $person) {

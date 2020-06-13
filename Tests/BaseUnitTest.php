@@ -14,11 +14,15 @@ namespace EBT\ExtensionBuilder\Tests;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Utility\Spyc;
 use org\bovigo\vfs\vfsStream;
+use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 
-abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+abstract class BaseUnitTest extends UnitTestCase
 {
     /**
      * @var bool
@@ -42,7 +46,7 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     protected $fixturesPath = '';
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\Extension
+     * @var Extension
      */
     protected $extension = null;
 
@@ -58,7 +62,7 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
         $settings = Spyc::YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
 
-        $this->extension = $this->getMock(\EBT\ExtensionBuilder\Domain\Model\Extension::class, array('getExtensionDir'));
+        $this->extension = $this->getMock(Extension::class, ['getExtensionDir']);
         $this->extension->setVendorName('EBT');
         $this->extension->setExtensionKey('dummy');
         $this->extension->expects(
@@ -88,15 +92,11 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      * @param $name
      * @param $entity
      * @param $aggregateRoot
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     * @return DomainObject
      */
     protected function buildDomainObject($name, $entity = false, $aggregateRoot = false)
     {
-        $domainObject = $this->getAccessibleMock(
-            \EBT\ExtensionBuilder\Domain\Model\DomainObject::class,
-            array('dummy')
-        );
-        /* @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
+        $domainObject = $this->getAccessibleMock(DomainObject::class, ['dummy']);
         $domainObject->setExtension($this->extension);
         $domainObject->setName($name);
         $domainObject->setEntity($entity);
@@ -104,7 +104,7 @@ abstract class BaseUnitTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         if ($aggregateRoot) {
             $defaultActions = ['list', 'show', 'new', 'create', 'edit', 'update', 'delete'];
             foreach ($defaultActions as $actionName) {
-                $action = GeneralUtility::makeInstance('EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Action');
+                $action = GeneralUtility::makeInstance(Action::class);
                 $action->setName($actionName);
                 if ($actionName == 'deleted') {
                     $action->setNeedsTemplate = false;

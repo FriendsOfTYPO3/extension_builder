@@ -14,16 +14,23 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
+use EBT\ExtensionBuilder\Parser\NodeFactory;
+use EBT\ExtensionBuilder\Service\Parser;
+use EBT\ExtensionBuilder\Service\Printer;
+use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 use org\bovigo\vfs\vfsStream;
+use PhpParser\Lexer;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
+class PrinterTest extends BaseUnitTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Service\Parser
+     * @var Parser
      */
     protected $parserService = null;
     /**
-     * @var \EBT\ExtensionBuilder\Service\Printer
+     * @var Printer
      */
     protected $printerService = null;
     /**
@@ -37,10 +44,10 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $this->fixturesPath = PATH_typo3conf . 'ext/extension_builder/Tests/Fixtures/ClassParser/';
         vfsStream::setup('tmpDir');
         $this->tmpDir = vfsStream::url('tmpDir') . '/';
-        $this->printerService = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\Printer::class, array('dummy'));
-        $nodeFactory = new \EBT\ExtensionBuilder\Parser\NodeFactory();
+        $this->printerService = $this->getAccessibleMock(Printer::class, ['dummy']);
+        $nodeFactory = new NodeFactory();
         $this->printerService->_set('nodeFactory', $nodeFactory);
-        $this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
+        $this->parserService = new Parser(new Lexer());
     }
 
     /**
@@ -230,7 +237,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $classFileObject = $this->parseAndWrite($fileName);
         $tags = $classFileObject->getFirstClass()->getMethod('testMethod')->getTagValues('param');
         self::assertEquals(count($tags), 3);
-        self::assertSame($tags, array('$string', 'array $arr', '\\EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter $n'));
+        self::assertSame($tags, ['$string', 'array $arr', '\\EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter $n']);
     }
 
     /**
@@ -245,10 +252,10 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         self::assertEquals(count($tags), 2);
         self::assertSame(
             $tags,
-            array(
+            [
                 0 => '\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject',
                 1 => '\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TOOOL\Projects\Domain\Model\Calculation> $tests'
-            )
+            ]
         );
         self::assertSame(
             $testMethod->getParameterByPosition(0)->getTypeHint(),
@@ -266,14 +273,14 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
         $classFileObject = $this->parseAndWrite($fileName);
         self::assertSame(
             $classFileObject->getFirstClass()->getMethod('testMethod')->getParameterNames(),
-            array(
+            [
                 0 => 'number',
                 1 => 'stringParam',
                 2 => 'arr',
                 3 => 'booleanParam',
                 4 => 'float',
                 5 => 'n',
-            )
+            ]
         );
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
@@ -307,7 +314,7 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
     {
         self::assertTrue(file_exists($pathToGeneratedFile), $pathToGeneratedFile . 'not exists');
         $classObject = $classFileObject->getFirstClass();
-        self::assertTrue($classObject instanceof \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject);
+        self::assertTrue($classObject instanceof ClassObject);
         $className = $classObject->getQualifiedName();
         if (!class_exists($className)) {
             require_once($pathToGeneratedFile);
@@ -334,8 +341,8 @@ class PrinterTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
      */
     protected function compareGeneratedCodeWithOriginal($originalFile, $pathToGeneratedFile)
     {
-        $originalLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, file_get_contents($this->fixturesPath . $originalFile), true);
-        $generatedLines = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(LF, file_get_contents($pathToGeneratedFile), true);
+        $originalLines = GeneralUtility::trimExplode(LF, file_get_contents($this->fixturesPath . $originalFile), true);
+        $generatedLines = GeneralUtility::trimExplode(LF, file_get_contents($pathToGeneratedFile), true);
         self::assertEquals(
             $originalLines,
             $generatedLines,

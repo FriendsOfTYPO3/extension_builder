@@ -14,12 +14,25 @@ namespace EBT\ExtensionBuilder\Tests;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
+use EBT\ExtensionBuilder\Domain\Model\Extension;
+use EBT\ExtensionBuilder\Service\ClassBuilder;
+use EBT\ExtensionBuilder\Service\FileGenerator;
+use EBT\ExtensionBuilder\Service\LocalizationService;
+use EBT\ExtensionBuilder\Service\Parser;
+use EBT\ExtensionBuilder\Service\Printer;
+use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Utility\Spyc;
 use org\bovigo\vfs\vfsStream;
+use PhpParser\Lexer;
+use TYPO3\CMS\Core\Tests\FunctionalTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Object\UnknownClassException;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 
-abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
+abstract class BaseFunctionalTest extends FunctionalTestCase
 {
     /**
      * @var bool
@@ -43,42 +56,42 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
      */
     protected $fixturesPath = '';
     /**
-     * @var \EBT\ExtensionBuilder\Service\Parser
+     * @var Parser
      */
     protected $parserService = null;
     /**
-     * @var \EBT\ExtensionBuilder\Service\Printer
+     * @var Printer
      */
     protected $printerService = null;
     /**
-     * @var \EBT\ExtensionBuilder\Service\ClassBuilder
+     * @var ClassBuilder
      */
     protected $classBuilder = null;
     /**
-     * @var \EBT\ExtensionBuilder\Service\RoundTrip
+     * @var RoundTrip
      */
     protected $roundTripService = null;
     /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     * @var ObjectManager
      */
     protected $objectManager = null;
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\Extension
+     * @var Extension
      */
     protected $extension = null;
     /**
-     * @var \EBT\ExtensionBuilder\Service\FileGenerator
+     * @var FileGenerator
      */
     protected $fileGenerator = null;
-    protected $testExtensionsToLoad = array('typo3conf/ext/extension_builder');
+    protected $testExtensionsToLoad = ['typo3conf/ext/extension_builder'];
 
     protected function setUp()
     {
         parent::setUp();
 
-        $this->objectManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-        if (!class_exists('PhpParser\Parser')) {
-            throw new UnknownClassException('PhpParser not found!!');
+        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        if (!class_exists(\PhpParser\Parser::class)) {
+            throw new UnknownClassException('PhpParser not found!');
         }
         $this->fixturesPath = __DIR__ . '/Fixtures/';
 
@@ -89,7 +102,7 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
         $yamlParser = new Spyc();
         $settings = $yamlParser->YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
 
-        $this->extension = $this->getMock(\EBT\ExtensionBuilder\Domain\Model\Extension::class, array('getExtensionDir'));
+        $this->extension = $this->getMock(Extension::class, ['getExtensionDir']);
         $this->extension->setVendorName('EBT');
         $this->extension->setExtensionKey('dummy');
         $this->extension->expects(
@@ -102,21 +115,21 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
         $this->extension->setSettings($settings);
 
         // get instances to inject in Mocks
-        $configurationManager = $this->objectManager->get(\EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager::class);
+        $configurationManager = $this->objectManager->get(ExtensionBuilderConfigurationManager::class);
 
-        $this->parserService = new \EBT\ExtensionBuilder\Service\Parser(new \PhpParser\Lexer());
-        $this->printerService = $this->objectManager->get(\EBT\ExtensionBuilder\Service\Printer::class);
-        $localizationService = $this->objectManager->get(\EBT\ExtensionBuilder\Service\LocalizationService::class);
+        $this->parserService = new Parser(new Lexer());
+        $this->printerService = $this->objectManager->get(Printer::class);
+        $localizationService = $this->objectManager->get(LocalizationService::class);
 
-        $this->classBuilder = $this->objectManager->get(\EBT\ExtensionBuilder\Service\ClassBuilder::class);
+        $this->classBuilder = $this->objectManager->get(ClassBuilder::class);
         $this->classBuilder->initialize($this->extension);
 
-        $this->roundTripService = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\RoundTrip::class, array('dummy'));
+        $this->roundTripService = $this->getAccessibleMock(RoundTrip::class, ['dummy']);
         $this->inject($this->roundTripService, 'configurationManager', $configurationManager);
         $this->inject($this->roundTripService, 'parserService', $this->parserService);
         $this->roundTripService->initialize($this->extension);
 
-        $this->fileGenerator = $this->getAccessibleMock(\EBT\ExtensionBuilder\Service\FileGenerator::class, array('dummy'));
+        $this->fileGenerator = $this->getAccessibleMock(FileGenerator::class, ['dummy']);
         $this->inject($this->fileGenerator, 'objectManager', $this->objectManager);
         $this->inject($this->fileGenerator, 'printerService', $this->printerService);
         $this->inject($this->fileGenerator, 'localizationService', $localizationService);
@@ -128,12 +141,12 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
         $this->modelClassTemplatePath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
 
         $this->fileGenerator->setSettings(
-            array(
+            [
                 'codeTemplateRootPath' => $this->codeTemplateRootPath,
-                'extConf' => array(
+                'extConf' => [
                     'enableRoundtrip' => '1'
-                )
-            )
+                ]
+            ]
         );
         $this->fileGenerator->_set('codeTemplateRootPath', __DIR__ . '/../Resources/Private/CodeTemplates/Extbase/');
         $this->fileGenerator->_set('enableRoundtrip', true);
@@ -149,18 +162,15 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
 
     /**
      * Helper function
+     *
      * @param $name
      * @param $entity
      * @param $aggregateRoot
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     * @return DomainObject
      */
     protected function buildDomainObject($name, $entity = false, $aggregateRoot = false)
     {
-        $domainObject = $this->getAccessibleMock(
-            'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject',
-            array('dummy')
-        );
-        /* @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
+        $domainObject = $this->getAccessibleMock(DomainObject::class, ['dummy']);
         $domainObject->setExtension($this->extension);
         $domainObject->setName($name);
         $domainObject->setEntity($entity);
@@ -168,7 +178,7 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
         if ($aggregateRoot) {
             $defaultActions = ['list', 'show', 'new', 'create', 'edit', 'update', 'delete'];
             foreach ($defaultActions as $actionName) {
-                $action = GeneralUtility::makeInstance(\EBT\ExtensionBuilder\Domain\Model\DomainObject\Action::class);
+                $action = GeneralUtility::makeInstance(Action::class);
                 $action->setName($actionName);
                 if ($actionName == 'deleted') {
                     $action->setNeedsTemplate = false;
@@ -203,6 +213,9 @@ abstract class BaseFunctionalTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCa
         if (@file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php')) {
             unlink($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php');
         }
-        self::assertFalse(file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php'), 'Dummy files could not be removed:' . $this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php');
+        self::assertFalse(
+            file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php'),
+            'Dummy files could not be removed:' . $this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php'
+        );
     }
 }

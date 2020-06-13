@@ -1,8 +1,10 @@
-/.idea
-/.Build
-vendor/*
-composer.lock
-node_modules*
+/.idea*
+/.Build/
+*node_modules*
+*package-lock.json
+.DS_Store
+/composer.lock
+/.php_cs.cache
 
 # created by rendering Documentation with Docker
 /Documentation-GENERATED-temp

@@ -1,0 +1,6 @@
+* text=auto
+
+/.github export-ignore
+/Documentation export-ignore
+/Tests export-ignore
+/.* export-ignore
