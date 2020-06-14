@@ -28,7 +28,7 @@ class LocalizationService implements SingletonInterface
     /**
      * @var \TYPO3\CMS\Core\Localization\Parser\XliffParser
      */
-    protected $xliffParser = null;
+    protected $xliffParser;
 
     /**
      * @return object|\TYPO3\CMS\Core\Localization\Parser\XliffParser

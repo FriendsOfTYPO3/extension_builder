@@ -21,6 +21,7 @@ use EBT\ExtensionBuilder\Service\ParserService;
 use EBT\ExtensionBuilder\Service\Printer;
 use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 use org\bovigo\vfs\vfsStream;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class PrinterTest extends BaseUnitTest
@@ -28,11 +29,11 @@ class PrinterTest extends BaseUnitTest
     /**
      * @var \EBT\ExtensionBuilder\Service\ParserService
      */
-    protected $parserService = null;
+    protected $parserService;
     /**
      * @var \EBT\ExtensionBuilder\Service\Printer
      */
-    protected $printerService = null;
+    protected $printerService;
     /**
      * @var string
      */
@@ -41,10 +42,14 @@ class PrinterTest extends BaseUnitTest
     protected function setUp()
     {
         parent::setUp();
-        $this->fixturesPath = PATH_typo3conf . 'ext/extension_builder/Tests/Fixtures/ClassParser/';
+
+        $this->fixturesPath = Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Tests/Fixtures/ClassParser/';
+
         vfsStream::setup('tmpDir');
+
         $this->tmpDir = vfsStream::url('tmpDir') . '/';
         $this->printerService = $this->getAccessibleMock(Printer::class, ['dummy']);
+
         $nodeFactory = new NodeFactory();
         $this->printerService->_set('nodeFactory', $nodeFactory);
         $this->parserService = new ParserService();
@@ -53,10 +58,12 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printSimplePropertyClass()
+    public function printSimplePropertyClass(): void
     {
-        self::assertTrue(is_writable($this->tmpDir),
-            'Directory not writable: ' . $this->tmpDir . '. Can\'t compare rendered files');
+        self::assertTrue(
+            is_writable($this->tmpDir),
+            'Directory not writable: ' . $this->tmpDir . '. Can\'t compare rendered files'
+        );
         $fileName = 'SimpleProperty.php';
         $classFileObject = $this->parseAndWrite($fileName);
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
@@ -66,7 +73,7 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printClassWithMultipleProperties()
+    public function printClassWithMultipleProperties(): void
     {
         $fileName = 'ClassWithMultipleProperties.php';
         $classFileObject = $this->parseAndWrite($fileName);
@@ -76,7 +83,7 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printSimpleClassMethodWithManyParameter()
+    public function printSimpleClassMethodWithManyParameter(): void
     {
         $fileName = 'ClassMethodWithManyParameter.php';
         $classFileObject = $this->parseAndWrite($fileName);
@@ -87,7 +94,7 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printSimpleClassMethodWithMissingParameterTag()
+    public function printSimpleClassMethodWithMissingParameterTag(): void
     {
         $fileName = 'ClassMethodWithMissingParameterTag.php';
         $classFileObject = $this->parseAndWrite($fileName);
@@ -98,11 +105,12 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printClassWithIncludeStatement()
+    public function printClassWithIncludeStatement(): void
     {
         $fileName = 'ClassWithIncludeStatement.php';
         self::assertTrue(copy($this->fixturesPath . 'DummyIncludeFile1.php', $this->tmpDir . 'DummyIncludeFile1.php'));
         self::assertTrue(copy($this->fixturesPath . 'DummyIncludeFile2.php', $this->tmpDir . 'DummyIncludeFile2.php'));
+
         $classFileObject = $this->parseAndWrite($fileName);
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
@@ -111,7 +119,7 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printClassWithDefaultValuesInProperties()
+    public function printClassWithDefaultValuesInProperties(): void
     {
         $fileName = 'BasicClassWithDefaultValuesInProperties.php';
         $classFileObject = $this->parseAndWrite($fileName);
@@ -122,13 +130,14 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printClassWithPreStatements()
+    public function printClassWithPreStatements(): void
     {
         $fileName = 'ClassWithPreStatements.php';
         $classFileObject = $this->parseAndWrite($fileName);
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
         self::assertEquals(TX_PHPPARSER_TEST_FOO, 'BAR');
         self::assertEquals('FOO', TX_PHPPARSER_TEST_BAR);
+
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
@@ -136,13 +145,14 @@ class PrinterTest extends BaseUnitTest
      * @test
      *
      */
-    public function printClassWithPostStatements()
+    public function printClassWithPostStatements(): void
     {
         $fileName = 'ClassWithPostStatements.php';
         $classFileObject = $this->parseAndWrite($fileName);
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
         self::assertEquals(TX_PHPPARSER_TEST_FOO_POST, 'BAR');
         self::assertEquals('FOO', TX_PHPPARSER_TEST_BAR_POST);
+
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
@@ -150,20 +160,21 @@ class PrinterTest extends BaseUnitTest
      * @test
      *
      */
-    public function printClassWithPreAndPostStatements()
+    public function printClassWithPreAndPostStatements(): void
     {
         $fileName = 'ClassWithPreAndPostStatements.php';
         $classFileObject = $this->parseAndWrite($fileName);
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
         self::assertEquals(TX_PHPPARSER_TEST_FOO_PRE2, 'BAR');
         self::assertEquals('FOO', TX_PHPPARSER_TEST_BAR_POST2);
+
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
     /**
      * @test
      */
-    public function printSimpleNamespacedClass()
+    public function printSimpleNamespacedClass(): void
     {
         $fileName = 'SimpleNamespace.php';
         $classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
@@ -174,7 +185,7 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printSimpleNamespacedClassExtendingOtherClass()
+    public function printSimpleNamespacedClassExtendingOtherClass(): void
     {
         $fileName = 'SimpleNamespaceExtendingOtherClass.php';
         $classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
@@ -185,7 +196,7 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printSimpleNamespaceWithUseStatement()
+    public function printSimpleNamespaceWithUseStatement(): void
     {
         $fileName = 'SimpleNamespaceWithUseStatement.php';
         $classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
@@ -196,7 +207,7 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printMultipleNamespacedClass()
+    public function printMultipleNamespacedClass(): void
     {
         $fileName = 'MultipleNamespaces.php';
         $classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
@@ -209,7 +220,7 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printMultipleBracedNamespacedClass()
+    public function printMultipleBracedNamespacedClass(): void
     {
         $fileName = 'MultipleBracedNamespaces.php';
         $classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
@@ -221,7 +232,7 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printMultiLineArray()
+    public function printMultiLineArray(): void
     {
         $fileName = 'ClassWithArrayProperty.php';
         $classFileObject = $this->parseAndWrite($fileName);
@@ -237,9 +248,11 @@ class PrinterTest extends BaseUnitTest
         $fileName = 'ClassMethodWithMissingParameterTag.php';
         $classFileObject = $this->parseAndWrite($fileName);
         $tags = $classFileObject->getFirstClass()->getMethod('testMethod')->getTagValues('param');
-        self::assertEquals(count($tags), 3);
-        self::assertSame($tags,
-            ['$string', 'array $arr', '\\EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter $n']);
+        self::assertCount(3, $tags);
+        self::assertSame(
+            $tags,
+            ['$string', 'array $arr', '\\EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter $n']
+        );
     }
 
     /**
@@ -251,7 +264,7 @@ class PrinterTest extends BaseUnitTest
         $classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
         $testMethod = $classFileObject->getFirstClass()->getMethod('testMethod');
         $tags = $testMethod->getTagValues('param');
-        self::assertEquals(count($tags), 2);
+        self::assertCount(2, $tags);
         self::assertSame(
             $tags,
             [
@@ -260,8 +273,8 @@ class PrinterTest extends BaseUnitTest
             ]
         );
         self::assertSame(
-            $testMethod->getParameterByPosition(0)->getTypeHint(),
-            '\EBT\ExtensionBuilder\Domain\Model\DomainObject'
+            '\EBT\ExtensionBuilder\Domain\Model\DomainObject',
+            $testMethod->getParameterByPosition(0)->getTypeHint()
         );
         $this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
     }
@@ -269,7 +282,7 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printsClassMethodWithMultilineParameter()
+    public function printsClassMethodWithMultilineParameter(): void
     {
         $fileName = 'ClassMethodWithMultilineParameter.php';
         $classFileObject = $this->parseAndWrite($fileName);
@@ -282,7 +295,6 @@ class PrinterTest extends BaseUnitTest
                 3 => 'n',
                 4 => 'booleanParam',
                 5 => 'float',
-
             ]
         );
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
@@ -293,12 +305,11 @@ class PrinterTest extends BaseUnitTest
      * @param string $subFolder
      * @return \EBT\ExtensionBuilder\Domain\Model\File
      */
-    protected function parseAndWrite($fileName, $subFolder = '')
+    protected function parseAndWrite($fileName, $subFolder = ''): \EBT\ExtensionBuilder\Domain\Model\File
     {
         $classFilePath = $this->fixturesPath . $subFolder . $fileName;
-        self::assertTrue(file_exists($classFilePath));
+        self::assertFileExists($classFilePath);
 
-        $fileHandler = fopen($classFilePath, 'r');
         $classFileObject = $this->parserService->parseFile($classFilePath);
         $newClassFilePath = $this->tmpDir . $fileName;
         file_put_contents($newClassFilePath, $this->printerService->renderFileObject($classFileObject, true));
@@ -317,9 +328,9 @@ class PrinterTest extends BaseUnitTest
      */
     protected function compareClasses($classFileObject, $pathToGeneratedFile)
     {
-        self::assertTrue(file_exists($pathToGeneratedFile), $pathToGeneratedFile . 'not exists');
+        self::assertFileExists($pathToGeneratedFile, $pathToGeneratedFile . 'not exists');
         $classObject = $classFileObject->getFirstClass();
-        self::assertTrue($classObject instanceof ClassObject);
+        self::assertInstanceOf(ClassObject::class, $classObject);
         $className = $classObject->getQualifiedName();
         if (!class_exists($className)) {
             require_once($pathToGeneratedFile);
@@ -327,10 +338,13 @@ class PrinterTest extends BaseUnitTest
         self::assertTrue(class_exists($className),
             'Class "' . $className . '" does not exist! Tried ' . $pathToGeneratedFile);
         $reflectedClass = new \ReflectionClass($className);
-        self::assertEquals(count($reflectedClass->getMethods()), count($classObject->getMethods()),
-            'Method count does not match');
-        self::assertEquals(count($reflectedClass->getProperties()), count($classObject->getProperties()));
-        self::assertEquals(count($reflectedClass->getConstants()), count($classObject->getConstants()));
+        self::assertSameSize(
+            $reflectedClass->getMethods(),
+            $classObject->getMethods(),
+            'Method count does not match'
+        );
+        self::assertSameSize($reflectedClass->getProperties(), $classObject->getProperties());
+        self::assertSameSize($reflectedClass->getConstants(), $classObject->getConstants());
         if (strlen($classObject->getNamespaceName()) > 0) {
             self::assertEquals($reflectedClass->getNamespaceName(), $classObject->getNamespaceName());
         }

@@ -27,7 +27,6 @@ namespace EBT\Tests\Fixtures;
 
 class ClassMethodWithManyParameter
 {
-
     /**
      * This is the description
      *
@@ -40,8 +39,8 @@ class ClassMethodWithManyParameter
         $number = 7;
         if ($number > $tests->count()) {
             return $domainObject;
-        } else {
-            $domainObject->setName('Foo');
         }
+
+        $domainObject->setName('Foo');
     }
 }

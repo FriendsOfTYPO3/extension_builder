@@ -26,15 +26,15 @@ class ExtensionInstallationStatus
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
      */
-    protected $objectManager = null;
+    protected $objectManager;
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
-    protected $extension = null;
+    protected $extension;
     /**
      * @var InstallUtility
      */
-    protected $installTool = null;
+    protected $installTool;
     /**
      * @var array[]
      */

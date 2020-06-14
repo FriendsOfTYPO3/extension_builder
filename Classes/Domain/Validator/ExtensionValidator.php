@@ -159,7 +159,7 @@ class ExtensionValidator extends AbstractValidator
     /**
      * @var ExtensionBuilderConfigurationManager
      */
-    protected $configurationManager = null;
+    protected $configurationManager;
     /**
      * can be set in settings.yaml
      *

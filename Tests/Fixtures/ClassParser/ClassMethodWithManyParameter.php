@@ -43,8 +43,8 @@ class Tx_PhpParser_Test_ClassMethodWithManyParameter
     {
         if ($number > 3) {
             return 'bar';
-        } else {
-            return 'foo';
         }
+
+        return 'foo';
     }
 }

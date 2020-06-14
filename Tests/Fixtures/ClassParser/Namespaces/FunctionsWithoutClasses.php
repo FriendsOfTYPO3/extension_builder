@@ -14,7 +14,7 @@ function functionWithParameter($foo, $bar)
 {
     if ($foo != $bar) {
         return $foo;
-    } else {
-        return $bar;
     }
+
+    return $bar;
 }

@@ -29,9 +29,10 @@ class ValidationServiceTest extends BaseUnitTest
      * @test
      * @return void
      */
-    public function propertyRenamesFieldIfItMatchesReservedWord()
+    public function propertyRenamesFieldIfItMatchesReservedWord(): void
     {
         $domainObject = $this->buildDomainObject('SomeModel', true, true);
+
         $property = new StringProperty();
         $property->setName('Order');
         $property->setDomainObject($domainObject);
@@ -41,7 +42,7 @@ class ValidationServiceTest extends BaseUnitTest
     /**
      * @test
      */
-    public function testForReservedWord()
+    public function testForReservedWord(): void
     {
         self::assertTrue(ExtensionValidator::isReservedWord('DATABASE'));
     }
@@ -49,7 +50,7 @@ class ValidationServiceTest extends BaseUnitTest
     /**
      * @test
      */
-    public function validateConfigurationFormatReturnsExceptionsOnDuplicatePropertyNames()
+    public function validateConfigurationFormatReturnsExceptionsOnDuplicatePropertyNames(): void
     {
         $fixture = [
             'modules' => [
@@ -90,6 +91,6 @@ class ValidationServiceTest extends BaseUnitTest
             'Property "bar" of Model "Foo" exists twice.',
             ExtensionValidator::ERROR_PROPERTY_DUPLICATE
         );
-        self::assertEquals($result, $expected);
+        self::assertEquals($expected, $result);
     }
 }

@@ -19,6 +19,7 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
 
@@ -48,7 +49,7 @@ abstract class BaseUnitTest extends UnitTestCase
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
-    protected $extension = null;
+    protected $extension;
 
     protected function setUp()
     {
@@ -66,7 +67,7 @@ abstract class BaseUnitTest extends UnitTestCase
         $this->extension->setExtensionKey('dummy');
         $this->extension->setSettings($settings);
 
-        $this->codeTemplateRootPath = PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
+        $this->codeTemplateRootPath = Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
         $this->modelClassTemplatePath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
     }
 
@@ -81,18 +82,16 @@ abstract class BaseUnitTest extends UnitTestCase
 
     /**
      * Helper function
+     *
      * @param $name
      * @param $entity
      * @param $aggregateRoot
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     * @return DomainObject
      */
-    protected function buildDomainObject($name, $entity = false, $aggregateRoot = false)
+    protected function buildDomainObject($name, $entity = false, $aggregateRoot = false): DomainObject
     {
-        $domainObject = $this->getAccessibleMock(
-            DomainObject::class,
-            ['dummy']
-        );
-        /* @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
+        /* @var DomainObject $domainObject */
+        $domainObject = $this->getAccessibleMock(DomainObject::class, ['dummy']);
         $domainObject->setExtension($this->extension);
         $domainObject->setName($name);
         $domainObject->setEntity($entity);
@@ -102,7 +101,7 @@ abstract class BaseUnitTest extends UnitTestCase
             foreach ($defaultActions as $actionName) {
                 $action = GeneralUtility::makeInstance(Action::class);
                 $action->setName($actionName);
-                if ($actionName == 'deleted') {
+                if ($actionName === 'deleted') {
                     $action->setNeedsTemplate = false;
                 }
                 $domainObject->addAction($action);

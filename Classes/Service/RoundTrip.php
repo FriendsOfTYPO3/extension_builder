@@ -19,6 +19,9 @@ use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use EBT\ExtensionBuilder\Utility\Inflector;
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -35,11 +38,11 @@ class RoundTrip implements SingletonInterface
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
-    protected $previousExtension = null;
+    protected $previousExtension;
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
-    protected $extension = null;
+    protected $extension;
     /**
      * if an extension was renamed this property keeps the
      * original extensionDirectory
@@ -74,7 +77,7 @@ class RoundTrip implements SingletonInterface
     /**
      * @var \EBT\ExtensionBuilder\Service\ParserService
      */
-    protected $parserService = null;
+    protected $parserService;
 
     /**
      * @param \EBT\ExtensionBuilder\Service\ParserService $parserService
@@ -88,7 +91,7 @@ class RoundTrip implements SingletonInterface
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      */
-    protected $configurationManager = null;
+    protected $configurationManager;
 
     /**
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
@@ -111,12 +114,12 @@ class RoundTrip implements SingletonInterface
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
      */
-    protected $classObject = null;
+    protected $classObject;
     /**
      * The file object parsed from existing files
      * @var \EBT\ExtensionBuilder\Domain\Model\File
      */
-    protected $classFileObject = null;
+    protected $classFileObject;
     /**
      * @var array
      */
@@ -1012,8 +1015,10 @@ class RoundTrip implements SingletonInterface
 
     /**
      * @return array
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
      */
-    public static function getExtConfiguration()
+    public static function getExtConfiguration(): array
     {
         return unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['extension_builder']);
     }
@@ -1171,7 +1176,7 @@ class RoundTrip implements SingletonInterface
                 throw new \Exception('Backup directory is not an allowed absolute path: ' . $backupDir);
             }
         } else {
-            $backupDir = PATH_site . $backupDir;
+            $backupDir = Environment::getPublicPath() . '/' . $backupDir;
         }
         if (strrpos($backupDir, '/') < strlen($backupDir) - 1) {
             $backupDir .= '/';

@@ -17,6 +17,7 @@ namespace EBT\ExtensionBuilder\Domain\Model;
 
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -24,6 +25,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class Extension
 {
+    const STATE_ALPHA = 0;
+    const STATE_BETA = 1;
+    const STATE_STABLE = 2;
+    const STATE_EXPERIMENTAL = 3;
+    const STATE_TEST = 4;
+
     /**
      * the extension key
      *
@@ -97,11 +104,6 @@ class Extension
      * @var int
      */
     protected $state = 0;
-    const STATE_ALPHA = 0;
-    const STATE_BETA = 1;
-    const STATE_STABLE = 2;
-    const STATE_EXPERIMENTAL = 3;
-    const STATE_TEST = 4;
     /**
      * Is an upload folder required for this extension
      *
@@ -169,7 +171,7 @@ class Extension
     /**
      * @return string
      */
-    public function getExtensionKey()
+    public function getExtensionKey(): string
     {
         return $this->extensionKey;
     }
@@ -177,7 +179,7 @@ class Extension
     /**
      * @return string
      */
-    public function getExtensionName()
+    public function getExtensionName(): string
     {
         return GeneralUtility::underscoredToUpperCamelCase($this->extensionKey);
     }
@@ -185,7 +187,7 @@ class Extension
     /**
      * @param string $extensionKey
      */
-    public function setExtensionKey($extensionKey)
+    public function setExtensionKey(string $extensionKey): void
     {
         $this->extensionKey = $extensionKey;
     }
@@ -193,7 +195,7 @@ class Extension
     /**
      * @return string
      */
-    public function getOriginalExtensionKey()
+    public function getOriginalExtensionKey(): string
     {
         return $this->originalExtensionKey;
     }
@@ -201,7 +203,7 @@ class Extension
     /**
      * @param string $extensionKey
      */
-    public function setOriginalExtensionKey($extensionKey)
+    public function setOriginalExtensionKey(string $extensionKey): void
     {
         $this->originalExtensionKey = $extensionKey;
     }
@@ -209,7 +211,7 @@ class Extension
     /**
      * @param array $settings
      */
-    public function setSettings($settings)
+    public function setSettings($settings): void
     {
         $this->settings = $settings;
     }
@@ -217,7 +219,7 @@ class Extension
     /**
      * @return array
      */
-    public function getSettings()
+    public function getSettings(): array
     {
         return $this->settings;
     }
@@ -226,13 +228,13 @@ class Extension
      * @return string
      * @throws \Exception
      */
-    public function getExtensionDir()
+    public function getExtensionDir(): string
     {
         if (empty($this->extensionDir)) {
             if (empty($this->extensionKey)) {
                 throw new \Exception('ExtensionDir can only be created if an extensionKey is defined first');
             }
-            $this->extensionDir = ($this->storagePath ?? PATH_typo3conf . 'ext/') . $this->extensionKey . '/';
+            $this->extensionDir = ($this->storagePath ?? Environment::getPublicPath() . '/typo3conf/ext/') . $this->extensionKey . '/';
         }
         return $this->extensionDir;
     }
@@ -240,7 +242,7 @@ class Extension
     /**
      * @param string $extensionDir
      */
-    public function setExtensionDir($extensionDir)
+    public function setExtensionDir(string $extensionDir): void
     {
         $this->extensionDir = $extensionDir;
     }
@@ -248,7 +250,7 @@ class Extension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -256,7 +258,7 @@ class Extension
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -264,7 +266,7 @@ class Extension
     /**
      * @param string $vendorName
      */
-    public function setVendorName($vendorName)
+    public function setVendorName(string $vendorName): void
     {
         $this->vendorName = $vendorName;
     }
@@ -272,7 +274,7 @@ class Extension
     /**
      * @return string
      */
-    public function getVendorName()
+    public function getVendorName(): string
     {
         return $this->vendorName;
     }
@@ -280,7 +282,7 @@ class Extension
     /**
      * @return string
      */
-    public function getOriginalVendorName()
+    public function getOriginalVendorName(): string
     {
         return $this->originalVendorName;
     }
@@ -288,7 +290,7 @@ class Extension
     /**
      * @param string $vendorName
      */
-    public function setOriginalVendorName($vendorName)
+    public function setOriginalVendorName(string $vendorName): void
     {
         $this->originalVendorName = $vendorName;
     }
@@ -296,7 +298,7 @@ class Extension
     /**
      * @return string
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
@@ -304,7 +306,7 @@ class Extension
     /**
      * @param string $version
      */
-    public function setVersion($version)
+    public function setVersion($version): void
     {
         $this->version = $version;
     }
@@ -312,7 +314,7 @@ class Extension
     /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -320,7 +322,7 @@ class Extension
     /**
      * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
@@ -328,7 +330,7 @@ class Extension
     /**
      * @return int
      */
-    public function getState()
+    public function getState(): int
     {
         return $this->state;
     }
@@ -336,7 +338,7 @@ class Extension
     /**
      * @param int $state
      */
-    public function setState($state)
+    public function setState(int $state): void
     {
         $this->state = $state;
     }
@@ -344,7 +346,7 @@ class Extension
     /**
      * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject[]
      */
-    public function getDomainObjects()
+    public function getDomainObjects(): array
     {
         return $this->domainObjects;
     }
@@ -355,7 +357,7 @@ class Extension
      *
      * @return array
      */
-    public function getDomainObjectsForWhichAControllerShouldBeBuilt()
+    public function getDomainObjectsForWhichAControllerShouldBeBuilt(): array
     {
         $domainObjects = [];
         foreach ($this->domainObjects as $domainObject) {
@@ -370,7 +372,7 @@ class Extension
      * get all domainobjects that are mapped to existing tables
      * @return array|null
      */
-    public function getDomainObjectsThatNeedMappingStatements()
+    public function getDomainObjectsThatNeedMappingStatements(): ?array
     {
         $domainObjectsThatNeedMappingStatements = [];
         foreach ($this->domainObjects as $domainObject) {
@@ -389,7 +391,7 @@ class Extension
      * return tables that need a type field to enable
      * single table inheritance or mapping to an existing table
      */
-    public function getTablesForTypeFieldDefinitions()
+    public function getTablesForTypeFieldDefinitions(): array
     {
         $tableNames = [];
         foreach ($this->getDomainObjects() as $domainObject) {
@@ -404,7 +406,7 @@ class Extension
      * get all domainobjects that are mapped to existing tables
      * @return array|null
      */
-    public function getClassHierarchy()
+    public function getClassHierarchy(): ?array
     {
         $classHierarchy = [];
         foreach ($this->domainObjects as $domainObject) {
@@ -430,10 +432,10 @@ class Extension
      * needed to get the right order for models
      * extending other models parents have to be ordered before their children
      */
-    public function getDomainObjectsInHierarchicalOrder()
+    public function getDomainObjectsInHierarchicalOrder(): array
     {
         $domainObjects = $this->getDomainObjects();
-        $sortByParent = function (DomainObject $domainObject1, DomainObject $domainObject2) {
+        $sortByParent = static function (DomainObject $domainObject1, DomainObject $domainObject2) {
             if ($domainObject1->getParentClass() === $domainObject2->getFullQualifiedClassName()) {
                 return 1;
             }
@@ -452,7 +454,7 @@ class Extension
      * @param array $classHierarchy
      * @return bool
      */
-    protected function isParentOf($domainObject1, $domainObject2, $classHierarchy)
+    protected function isParentOf($domainObject1, $domainObject2, $classHierarchy): bool
     {
         return $domainObject2->getParentClass() === $domainObject1->getFullQualifiedClassName();
     }
@@ -464,7 +466,7 @@ class Extension
      *
      * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
      */
-    public function addDomainObject(DomainObject $domainObject)
+    public function addDomainObject(DomainObject $domainObject): void
     {
         $domainObject->setExtension($this);
         foreach (array_keys($this->domainObjects) as $existingDomainObjectName) {
@@ -485,7 +487,7 @@ class Extension
      * @param string $domainObjectName
      * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
      */
-    public function getDomainObjectByName($domainObjectName)
+    public function getDomainObjectByName($domainObjectName): ?DomainObject
     {
         return $this->domainObjects[$domainObjectName] ?? null;
     }
@@ -493,7 +495,7 @@ class Extension
     /**
      * returns the extension key a prefix tx_  and without underscore
      */
-    public function getShortExtensionKey()
+    public function getShortExtensionKey(): string
     {
         return 'tx_' . str_replace('_', '', $this->getExtensionKey());
     }
@@ -512,7 +514,7 @@ class Extension
      *
      * @return array<\EBT\ExtensionBuilder\Domain\Model\Person>
      */
-    public function getPersons()
+    public function getPersons(): array
     {
         return $this->persons;
     }
@@ -523,7 +525,7 @@ class Extension
      * @param array <\EBT\ExtensionBuilder\Domain\Model\Person> $persons
      * @return void
      */
-    public function setPersons($persons)
+    public function setPersons(array $persons): void
     {
         $this->persons = $persons;
     }
@@ -534,7 +536,7 @@ class Extension
      * @param \EBT\ExtensionBuilder\Domain\Model\Person $person
      * @return void
      */
-    public function addPerson($person)
+    public function addPerson($person): void
     {
         $this->persons[] = $person;
     }
@@ -545,7 +547,7 @@ class Extension
      * @param array<\EBT\ExtensionBuilder\Domain\Model\Plugin> $plugins
      * @return void
      */
-    public function setPlugins(array $plugins)
+    public function setPlugins(array $plugins): void
     {
         $this->plugins = $plugins;
     }
@@ -555,7 +557,7 @@ class Extension
      *
      * @return array<\EBT\ExtensionBuilder\Domain\Model\Plugin>
      */
-    public function getPlugins()
+    public function getPlugins(): array
     {
         return $this->plugins;
     }
@@ -563,7 +565,7 @@ class Extension
     /**
      * @return bool
      */
-    public function hasPlugins()
+    public function hasPlugins(): bool
     {
         return count($this->plugins) > 0;
     }
@@ -574,7 +576,7 @@ class Extension
      * @param \EBT\ExtensionBuilder\Domain\Model\Plugin
      * @return void
      */
-    public function addPlugin(Plugin $plugin)
+    public function addPlugin(Plugin $plugin): void
     {
         $this->plugins[] = $plugin;
     }
@@ -585,7 +587,7 @@ class Extension
      * @param array<\EBT\ExtensionBuilder\Domain\Model\BackendModule> $backendModules
      * @return void
      */
-    public function setBackendModules(array $backendModules)
+    public function setBackendModules(array $backendModules): void
     {
         $this->backendModules = $backendModules;
     }
@@ -595,7 +597,7 @@ class Extension
      *
      * @return array<\EBT\ExtensionBuilder\Domain\Model\Plugin>
      */
-    public function getBackendModules()
+    public function getBackendModules(): array
     {
         return $this->backendModules;
     }
@@ -606,7 +608,7 @@ class Extension
      * @param \EBT\ExtensionBuilder\Domain\Model\BackendModule
      * @return void
      */
-    public function addBackendModule(BackendModule $backendModule)
+    public function addBackendModule(BackendModule $backendModule): void
     {
         $this->backendModules[] = $backendModule;
     }
@@ -614,12 +616,12 @@ class Extension
     /**
      * @return bool
      */
-    public function hasBackendModules()
+    public function hasBackendModules(): bool
     {
         return count($this->backendModules) > 0;
     }
 
-    public function getReadableState()
+    public function getReadableState(): string
     {
         switch ($this->getState()) {
             case self::STATE_ALPHA:
@@ -639,7 +641,7 @@ class Extension
     /**
      * @return string
      */
-    public function getCssClassName()
+    public function getCssClassName(): string
     {
         return 'tx-' . str_replace('_', '-', $this->getExtensionKey());
     }
@@ -649,7 +651,7 @@ class Extension
      *
      * @return bool
      */
-    public function isModified($filePath)
+    public function isModified($filePath): bool
     {
         if (is_file($filePath) && isset($this->md5Hashes[$filePath])) {
             if (md5_file($filePath) != $this->md5Hashes[$filePath]) {
@@ -666,7 +668,7 @@ class Extension
      *
      * @return void
      */
-    public function setMD5Hashes(array $md5Hashes)
+    public function setMD5Hashes(array $md5Hashes): void
     {
         $this->md5Hashes = $md5Hashes;
     }
@@ -675,7 +677,7 @@ class Extension
      * getter for md5 hashes
      * @return array $md5Hashes
      */
-    public function getMD5Hashes()
+    public function getMD5Hashes(): array
     {
         return $this->md5Hashes;
     }
@@ -685,7 +687,7 @@ class Extension
      *
      * @param string $filePath
      */
-    public function setMD5Hash($filePath)
+    public function setMD5Hash($filePath): void
     {
         $this->md5Hashes[$filePath] = md5_file($filePath);
     }
@@ -696,11 +698,11 @@ class Extension
      *
      * @return string
      */
-    public function getPreviousExtensionDirectory()
+    public function getPreviousExtensionDirectory(): string
     {
         if ($this->isRenamed()) {
             $originalExtensionKey = $this->getOriginalExtensionKey();
-            $this->previousExtensionDirectory = PATH_typo3conf . 'ext/' . $originalExtensionKey . '/';
+            $this->previousExtensionDirectory = Environment::getPublicPath() . '/typo3conf/ext/' . $originalExtensionKey . '/';
             $this->previousExtensionKey = $originalExtensionKey;
             return $this->previousExtensionDirectory;
         }
@@ -730,7 +732,7 @@ class Extension
     /**
      * @return bool
      */
-    public function isRenamed()
+    public function isRenamed(): bool
     {
         $originalExtensionKey = $this->getOriginalExtensionKey();
         if (!empty($originalExtensionKey) && $originalExtensionKey != $this->getExtensionKey()) {
@@ -742,7 +744,7 @@ class Extension
     /**
      * @return bool
      */
-    public function vendorNameChanged()
+    public function vendorNameChanged(): bool
     {
         $originalVendorName = $this->getOriginalVendorName();
         if (!empty($originalVendorName) && $originalVendorName != $this->getVendorName()) {
@@ -756,19 +758,15 @@ class Extension
      *
      * @return bool $needsUploadFolder
      */
-    public function getNeedsUploadFolder()
+    public function getNeedsUploadFolder(): bool
     {
-        if ($this->needsUploadFolder) {
-            return 1;
-        }
-
-        return 0;
+        return $this->needsUploadFolder;
     }
 
     /**
      * @return string $uploadFolder
      */
-    public function getUploadFolder()
+    public function getUploadFolder(): string
     {
         return 'uploads/' . $this->getShortExtensionKey();
     }
@@ -776,7 +774,7 @@ class Extension
     /**
      * @return string
      */
-    public function getCategory()
+    public function getCategory(): ?string
     {
         return $this->category;
     }
@@ -784,7 +782,7 @@ class Extension
     /**
      * @param string $category
      */
-    public function setCategory($category)
+    public function setCategory(?string $category): void
     {
         $this->category = $category;
     }
@@ -792,7 +790,7 @@ class Extension
     /**
      * @param bool $supportVersioning
      */
-    public function setSupportVersioning($supportVersioning)
+    public function setSupportVersioning($supportVersioning): void
     {
         $this->supportVersioning = $supportVersioning;
     }
@@ -800,7 +798,7 @@ class Extension
     /**
      * @return bool
      */
-    public function getSupportVersioning()
+    public function getSupportVersioning(): bool
     {
         return $this->supportVersioning;
     }
@@ -808,7 +806,7 @@ class Extension
     /**
      * @param array $dependencies
      */
-    public function setDependencies($dependencies)
+    public function setDependencies($dependencies): void
     {
         $this->dependencies = $dependencies;
     }
@@ -816,7 +814,7 @@ class Extension
     /**
      * @return array
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return $this->dependencies;
     }
@@ -824,7 +822,7 @@ class Extension
     /**
      * @param float $targetVersion
      */
-    public function setTargetVersion($targetVersion)
+    public function setTargetVersion($targetVersion): void
     {
         $this->targetVersion = $targetVersion;
     }
@@ -832,7 +830,7 @@ class Extension
     /**
      * @return float
      */
-    public function getTargetVersion()
+    public function getTargetVersion(): float
     {
         return $this->targetVersion;
     }
@@ -840,7 +838,7 @@ class Extension
     /**
      * @return string
      */
-    public function getNamespaceName()
+    public function getNamespaceName(): string
     {
         return $this->getVendorName() . '\\' . $this->getExtensionName();
     }
@@ -848,7 +846,7 @@ class Extension
     /**
      * @param bool $supportLocalization
      */
-    public function setSupportLocalization($supportLocalization)
+    public function setSupportLocalization(bool $supportLocalization): void
     {
         $this->supportLocalization = $supportLocalization;
     }
@@ -856,7 +854,7 @@ class Extension
     /**
      * @return bool
      */
-    public function getSupportLocalization()
+    public function getSupportLocalization(): bool
     {
         return $this->supportLocalization;
     }
@@ -864,7 +862,7 @@ class Extension
     /**
      * @param bool $generateDocumentationTemplate
      */
-    public function setGenerateDocumentationTemplate($generateDocumentationTemplate)
+    public function setGenerateDocumentationTemplate(bool $generateDocumentationTemplate): void
     {
         $this->generateDocumentationTemplate = $generateDocumentationTemplate;
     }
@@ -872,7 +870,7 @@ class Extension
     /**
      * @return bool
      */
-    public function getGenerateDocumentationTemplate()
+    public function getGenerateDocumentationTemplate(): bool
     {
         return $this->generateDocumentationTemplate;
     }
@@ -880,7 +878,7 @@ class Extension
     /**
      * @return string
      */
-    public function getSourceLanguage()
+    public function getSourceLanguage(): string
     {
         return $this->sourceLanguage;
     }
@@ -888,7 +886,7 @@ class Extension
     /**
      * @param string $sourceLanguage
      */
-    public function setSourceLanguage($sourceLanguage)
+    public function setSourceLanguage(string $sourceLanguage): void
     {
         $this->sourceLanguage = $sourceLanguage;
     }
@@ -896,7 +894,7 @@ class Extension
     /**
      * @return array
      */
-    public function getComposerInfo()
+    public function getComposerInfo(): array
     {
         $composerExtensionKey = strtolower(str_replace('_', '-', $this->extensionKey));
         $info = [

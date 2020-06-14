@@ -31,13 +31,13 @@ abstract class AbstractRelation extends AbstractProperty
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
      */
-    protected $foreignModel = null;
+    protected $foreignModel;
     /**
      * the schema of the foreign class
      *
      * @var string
      */
-    protected $foreignClassName = null;
+    protected $foreignClassName;
     /**
      * @var string
      */
@@ -90,7 +90,7 @@ abstract class AbstractRelation extends AbstractProperty
     /**
      * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject The foreign class
      */
-    public function getForeignModel()
+    public function getForeignModel(): DomainObject
     {
         return $this->foreignModel;
     }
@@ -98,19 +98,19 @@ abstract class AbstractRelation extends AbstractProperty
     /**
      * @return string
      */
-    public function getForeignDatabaseTableName()
+    public function getForeignDatabaseTableName(): string
     {
         if (is_object($this->foreignModel)) {
             return $this->foreignModel->getDatabaseTableName();
-        } else {
-            return $this->foreignDatabaseTableName;
         }
+
+        return $this->foreignDatabaseTableName;
     }
 
     /**
      * @param string
      */
-    public function setForeignDatabaseTableName($foreignDatabaseTableName)
+    public function setForeignDatabaseTableName(string $foreignDatabaseTableName): void
     {
         $this->foreignDatabaseTableName = $foreignDatabaseTableName;
     }
@@ -118,7 +118,7 @@ abstract class AbstractRelation extends AbstractProperty
     /**
      * @return string The foreign class
      */
-    public function getForeignClassName()
+    public function getForeignClassName(): ?string
     {
         if (isset($this->foreignClassName)) {
             return $this->foreignClassName;
@@ -141,7 +141,7 @@ abstract class AbstractRelation extends AbstractProperty
     /**
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $foreignModel Set the foreign DomainObject of the relation
      */
-    public function setForeignModel(DomainObject $foreignModel)
+    public function setForeignModel(DomainObject $foreignModel): void
     {
         $this->foreignModel = $foreignModel;
     }
@@ -149,7 +149,7 @@ abstract class AbstractRelation extends AbstractProperty
     /**
      * @param string $foreignClassName Set the foreign class nsme of the relation
      */
-    public function setForeignClassName($foreignClassName)
+    public function setForeignClassName($foreignClassName): void
     {
         $this->foreignClassName = $foreignClassName;
     }
@@ -160,7 +160,7 @@ abstract class AbstractRelation extends AbstractProperty
      * @param bool $inlineEditing
      * @return void
      **/
-    public function setInlineEditing($inlineEditing)
+    public function setInlineEditing($inlineEditing): void
     {
         $this->inlineEditing = (bool)$inlineEditing;
     }
@@ -170,7 +170,7 @@ abstract class AbstractRelation extends AbstractProperty
      *
      * @return bool true if the field shopuld be rendered as IRRE field; false otherwise
      **/
-    public function getInlineEditing()
+    public function getInlineEditing(): bool
     {
         return (bool)$this->inlineEditing;
     }
@@ -181,7 +181,7 @@ abstract class AbstractRelation extends AbstractProperty
      * @param  $lazyLoading
      * @return void
      */
-    public function setLazyLoading($lazyLoading)
+    public function setLazyLoading($lazyLoading): void
     {
         $this->lazyLoading = $lazyLoading;
     }
@@ -191,12 +191,12 @@ abstract class AbstractRelation extends AbstractProperty
      *
      * @return bool
      */
-    public function getLazyLoading()
+    public function getLazyLoading(): bool
     {
         return $this->lazyLoading;
     }
 
-    public function getSqlDefinition()
+    public function getSqlDefinition(): string
     {
         // store 1:n relationships as comma separated list in case `select*` renderType is used
         if ($this instanceof ZeroToManyRelation && strpos($this->renderType, 'select') === 0) {
@@ -212,7 +212,7 @@ abstract class AbstractRelation extends AbstractProperty
      *
      * @return bool
      */
-    public function getIsDisplayable()
+    public function getIsDisplayable(): bool
     {
         return $this->isFileReference();
     }
@@ -220,12 +220,9 @@ abstract class AbstractRelation extends AbstractProperty
     /**
      * @return bool
      */
-    public function isFileReference()
+    public function isFileReference(): bool
     {
-        if ($this->foreignClassName == '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference') {
-            return true;
-        }
-        return false;
+        return $this->foreignClassName === '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference';
     }
 
     /**
@@ -233,7 +230,7 @@ abstract class AbstractRelation extends AbstractProperty
      *
      * @return string
      */
-    public function getAllowedFileTypes()
+    public function getAllowedFileTypes(): string
     {
         return $this->allowedFileTypes;
     }
@@ -245,7 +242,7 @@ abstract class AbstractRelation extends AbstractProperty
      *
      * @return string
      */
-    public function setAllowedFileTypes($allowedFileTypes)
+    public function setAllowedFileTypes($allowedFileTypes): string
     {
         return $this->allowedFileTypes = $allowedFileTypes;
     }
@@ -255,7 +252,7 @@ abstract class AbstractRelation extends AbstractProperty
      *
      * @return string
      */
-    public function getDisallowedFileTypes()
+    public function getDisallowedFileTypes(): string
     {
         return $this->disallowedFileTypes;
     }
@@ -267,16 +264,15 @@ abstract class AbstractRelation extends AbstractProperty
      *
      * @return string
      */
-    public function setDisallowedFileTypes($disallowedFileTypes)
+    public function setDisallowedFileTypes($disallowedFileTypes): string
     {
         return $this->disallowedFileTypes = $disallowedFileTypes;
     }
 
-
     /**
      * @return string
      */
-    public function getRenderType()
+    public function getRenderType(): string
     {
         return $this->renderType;
     }
@@ -284,7 +280,7 @@ abstract class AbstractRelation extends AbstractProperty
     /**
      * @param string $renderType
      */
-    public function setRenderType($renderType)
+    public function setRenderType($renderType): void
     {
         $this->renderType = $renderType;
     }

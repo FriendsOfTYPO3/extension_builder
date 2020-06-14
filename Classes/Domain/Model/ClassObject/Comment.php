@@ -42,7 +42,7 @@ class Comment
      * @param string $text
      * @return void
      */
-    public function setText($text)
+    public function setText(string $text)
     {
         $this->text = $text;
     }
@@ -50,7 +50,7 @@ class Comment
     /**
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }

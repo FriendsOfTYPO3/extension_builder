@@ -32,7 +32,7 @@ class ObjectSchemaBuilder implements SingletonInterface
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      */
-    protected $configurationManager = null;
+    protected $configurationManager;
     /**
      * @var string[]
      */

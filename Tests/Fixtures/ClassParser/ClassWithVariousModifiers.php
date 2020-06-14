@@ -28,7 +28,6 @@
  */
 abstract class Tx_PhpParser_Tests_ClassWithVariousModifiers
 {
-
     /**
      * @var string
      */

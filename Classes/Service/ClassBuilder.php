@@ -43,44 +43,44 @@ class ClassBuilder implements SingletonInterface
      * @var \EBT\ExtensionBuilder\Domain\Model\File
      *
      */
-    protected $classFileObject = null;
+    protected $classFileObject;
     /**
      * The current class object
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
      */
-    protected $classObject = null;
+    protected $classObject;
     /**
      * The template file object used for new created class files
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\File
      */
-    protected $templateFileObject = null;
+    protected $templateFileObject;
     /**
      * The template class object used for new created classes
      * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
      */
-    protected $templateClassObject = null;
+    protected $templateClassObject;
     /**
      * @var \EBT\ExtensionBuilder\Parser\ClassFactory
      */
-    protected $classFactory = null;
+    protected $classFactory;
     /**
      * @var \EBT\ExtensionBuilder\Service\ParserService
      */
-    protected $parserService = null;
+    protected $parserService;
     /**
      * @var \EBT\ExtensionBuilder\Service\Printer
      */
-    protected $printerService = null;
+    protected $printerService;
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      */
-    protected $configurationManager = null;
+    protected $configurationManager;
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
-    protected $extension = null;
+    protected $extension;
     /**
      * @var array
      */

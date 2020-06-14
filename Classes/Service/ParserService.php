@@ -15,6 +15,7 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Parser\ClassFactory;
 use EBT\ExtensionBuilder\Parser\ClassFactoryInterface;
 use EBT\ExtensionBuilder\Parser\Traverser;
@@ -58,7 +59,7 @@ class ParserService implements SingletonInterface
 
     /**
      * @param string $code
-     * @return \EBT\ExtensionBuilder\Domain\Model\File
+     * @return File
      */
     public function parseCode($code)
     {
@@ -82,15 +83,17 @@ class ParserService implements SingletonInterface
 
     /**
      * @param string $fileName
-     * @return \EBT\ExtensionBuilder\Domain\Model\File
+     * @return File
      */
-    public function parseFile($fileName)
+    public function parseFile(string $fileName): File
     {
         if (!file_exists($fileName)) {
             throw new FileNotFoundException('File "' . $fileName . '" not found!');
         }
-        $fileHandler = fopen($fileName, 'r');
+        $fileHandler = fopen($fileName, 'rb');
         $code = fread($fileHandler, filesize($fileName));
+        fclose($fileHandler);
+
         $fileObject = $this->parseCode($code);
         $fileObject->setFilePathAndName($fileName);
         return $fileObject;
@@ -134,12 +137,14 @@ class ParserService implements SingletonInterface
             $this->traverser = new Traverser;
         }
         $this->traverser->resetVisitors();
+
         $visitor = new ReplaceVisitor;
         $visitor->setNodeTypes($nodeTypes)
             ->setNodeProperty($nodeProperty)
             ->setReplacements($replacements);
         $this->traverser->addVisitor(new CloningVisitor);
         $this->traverser->appendVisitor($visitor);
+
         $stmts = $this->traverser->traverse($stmts);
         $this->traverser->resetVisitors();
         return $stmts;

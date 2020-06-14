@@ -30,7 +30,7 @@ class ExtensionRepository implements SingletonInterface
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      */
-    protected $configurationManager = null;
+    protected $configurationManager;
 
     /**
      * @var ExtensionService
@@ -43,14 +43,14 @@ class ExtensionRepository implements SingletonInterface
      */
     public function injectExtensionBuilderConfigurationManager(
         ExtensionBuilderConfigurationManager $configurationManager
-    ) {
+    ): void {
         $this->configurationManager = $configurationManager;
     }
 
     /**
      * @param ExtensionService $extensionService
      */
-    public function injectExtensionService(ExtensionService $extensionService)
+    public function injectExtensionService(ExtensionService $extensionService): void
     {
         $this->extensionService = $extensionService;
     }
@@ -103,7 +103,7 @@ class ExtensionRepository implements SingletonInterface
      * @throws \Exception
      * @throws \TYPO3\CMS\Core\Package\Exception
      */
-    public function saveExtensionConfiguration(Extension $extension)
+    public function saveExtensionConfiguration(Extension $extension): void
     {
         $extensionBuildConfiguration = $this->configurationManager->getConfigurationFromModeler();
         $extensionBuildConfiguration['log'] = [

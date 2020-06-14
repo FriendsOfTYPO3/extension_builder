@@ -22,24 +22,24 @@ class NativeDateProperty extends AbstractProperty
      *
      * @var \DateTime
      */
-    protected $defaultValue = null;
+    protected $defaultValue;
 
-    public function getTypeForComment()
+    public function getTypeForComment(): string
     {
         return '\\DateTime';
     }
 
-    public function getTypeHint()
+    public function getTypeHint(): string
     {
         return '\\DateTime';
     }
 
-    public function getSqlDefinition()
+    public function getSqlDefinition(): string
     {
         return $this->getFieldName() . " date DEFAULT NULL,";
     }
 
-    public function getNameToBeDisplayedInFluidTemplate()
+    public function getNameToBeDisplayedInFluidTemplate(): string
     {
         return $this->name . ' -> f:format.date()';
     }

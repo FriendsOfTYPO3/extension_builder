@@ -27,7 +27,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class MatchStringViewHelper extends AbstractViewHelper
 {
-
     /**
      * Arguments Initialization
      */
@@ -47,6 +46,6 @@ class MatchStringViewHelper extends AbstractViewHelper
         if (!$this->arguments['caseSensitive']) {
             $matchAsRegularExpression .= 'i';
         }
-        return (preg_match($matchAsRegularExpression, $this->arguments['in']) === 0) ? false : true;
+        return preg_match($matchAsRegularExpression, $this->arguments['in']) !== 0;
     }
 }

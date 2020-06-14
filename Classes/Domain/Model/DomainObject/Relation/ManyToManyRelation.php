@@ -28,7 +28,7 @@ class ManyToManyRelation extends AnyToManyRelation
      *
      * @return string The type.
      */
-    public function getTypeForComment()
+    public function getTypeForComment(): string
     {
         return '\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage<' . $this->getForeignClassName() . '>';
     }
@@ -38,7 +38,7 @@ class ManyToManyRelation extends AnyToManyRelation
      *
      * @return string The type hint.
      */
-    public function getTypeHint()
+    public function getTypeHint(): string
     {
         return '\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage';
     }
@@ -46,7 +46,7 @@ class ManyToManyRelation extends AnyToManyRelation
     /**
      * @return bool
      */
-    public function isOfTypeObjectStorage()
+    public function isOfTypeObjectStorage(): bool
     {
         return true;
     }
@@ -56,7 +56,7 @@ class ManyToManyRelation extends AnyToManyRelation
      *
      * @return bool
      */
-    public function getUseMMTable()
+    public function getUseMMTable(): bool
     {
         return true;
     }

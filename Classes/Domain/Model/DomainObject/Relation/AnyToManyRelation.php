@@ -38,18 +38,12 @@ abstract class AnyToManyRelation extends AbstractRelation
     protected $maxItems = 1;
 
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
-     */
-    protected $domainObject = null;
-
-
-    /**
      * Returns the relation table name. It is build by having 'tx_myextension_' followed by the
      * first domain object name followed by the second domain object name followed by '_mm'.
      *
      * @return string
      */
-    public function getRelationTableName()
+    public function getRelationTableName(): string
     {
         if (!empty($this->relationTableName)) {
             return $this->relationTableName;
@@ -69,7 +63,7 @@ abstract class AnyToManyRelation extends AbstractRelation
      * Setter for useExtendedRelationTableName
      * @param bool $useExtendedRelationTableName
      */
-    public function setUseExtendedRelationTableName($useExtendedRelationTableName)
+    public function setUseExtendedRelationTableName(bool $useExtendedRelationTableName): void
     {
         $this->useExtendedRelationTableName = $useExtendedRelationTableName;
     }
@@ -81,7 +75,7 @@ abstract class AnyToManyRelation extends AbstractRelation
      * @param $relationTableName
      * @return void
      */
-    public function setRelationTableName($relationTableName)
+    public function setRelationTableName(string $relationTableName): void
     {
         $this->relationTableName = $relationTableName;
     }
@@ -91,19 +85,19 @@ abstract class AnyToManyRelation extends AbstractRelation
      *
      * @return bool
      */
-    public function getUseMMTable()
+    public function getUseMMTable(): bool
     {
         if ($this->getInlineEditing()) {
             return false;
-        } else {
-            return true;
         }
+
+        return true;
     }
 
     /**
      * @return int
      */
-    public function getMaxItems()
+    public function getMaxItems(): int
     {
         return $this->maxItems;
     }
@@ -111,7 +105,7 @@ abstract class AnyToManyRelation extends AbstractRelation
     /**
      * @param int $maxItems
      */
-    public function setMaxItems($maxItems)
+    public function setMaxItems(int $maxItems): void
     {
         $this->maxItems = $maxItems;
     }

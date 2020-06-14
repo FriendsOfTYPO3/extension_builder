@@ -30,12 +30,12 @@ class ZeroToManyRelation extends AnyToManyRelation
      */
     protected $foreignKeyName = '';
 
-    public function getTypeForComment()
+    public function getTypeForComment(): string
     {
         return '\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage<' . $this->getForeignClassName() . '>';
     }
 
-    public function getTypeHint()
+    public function getTypeHint(): string
     {
         return '\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage';
     }
@@ -48,12 +48,12 @@ class ZeroToManyRelation extends AnyToManyRelation
                 $foreignKeyName = 'tx_' . $foreignKeyName;
             }
             return $foreignKeyName;
-        } else {
-            return $this->foreignKeyName;
         }
+
+        return $this->foreignKeyName;
     }
 
-    public function setForeignKeyName($foreignKeyName)
+    public function setForeignKeyName($foreignKeyName): void
     {
         $this->foreignKeyName = $foreignKeyName;
     }
@@ -63,17 +63,16 @@ class ZeroToManyRelation extends AnyToManyRelation
      *
      * @return bool
      */
-    public function getUseMMTable()
+    public function getUseMMTable(): bool
     {
         return false;
     }
 
     /**
-     *
      * @return bool true (if property is of type relation any to many)
      * @deprecated Use `instanceof ZeroToManyRelation` instead
      */
-    public function isZeroToManyRelation()
+    public function isZeroToManyRelation(): bool
     {
         return true;
     }

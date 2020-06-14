@@ -27,7 +27,7 @@ class BooleanProperty extends AbstractProperty
     /**
      * @return string
      */
-    public function getTypeForComment()
+    public function getTypeForComment(): string
     {
         return 'bool';
     }
@@ -35,7 +35,7 @@ class BooleanProperty extends AbstractProperty
     /**
      * @return string
      */
-    public function getTypeHint()
+    public function getTypeHint(): string
     {
         return '';
     }
@@ -43,7 +43,7 @@ class BooleanProperty extends AbstractProperty
     /**
      * @return string
      */
-    public function getSqlDefinition()
+    public function getSqlDefinition(): string
     {
         return $this->getFieldName() . " smallint(5) unsigned DEFAULT '0' NOT NULL,";
     }

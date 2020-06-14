@@ -14,6 +14,7 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
@@ -22,13 +23,12 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class ListForeignKeyRelationsViewHelper extends AbstractViewHelper
 {
-
     /**
     * Arguments Initialization
     */
     public function initializeArguments()
     {
-        $this->registerArgument('domainObject', \EBT\ExtensionBuilder\Domain\Model\DomainObject::class, 'domainObject', TRUE);
+        $this->registerArgument('domainObject', DomainObject::class, 'domainObject', TRUE);
     }
 
     /**

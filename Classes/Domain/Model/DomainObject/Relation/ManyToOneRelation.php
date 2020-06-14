@@ -23,17 +23,17 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
  */
 class ManyToOneRelation extends AbstractRelation
 {
-    public function getTypeForComment()
+    public function getTypeForComment(): ?string
     {
         return $this->getForeignClassName();
     }
 
-    public function getTypeHint()
+    public function getTypeHint(): ?string
     {
         return $this->getForeignClassName();
     }
 
-    public function getSqlDefinition()
+    public function getSqlDefinition(): string
     {
         return $this->getFieldName() . " int(11) unsigned DEFAULT '0',";
     }

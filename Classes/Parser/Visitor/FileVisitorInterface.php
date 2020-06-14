@@ -15,12 +15,15 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\File;
+use EBT\ExtensionBuilder\Parser\ClassFactoryInterface;
+
 interface FileVisitorInterface
 {
-    public function getFileObject();
+    public function getFileObject(): File;
 
     /**
-     * @param \EBT\ExtensionBuilder\Parser\ClassFactoryInterface $classFactory
+     * @param ClassFactoryInterface $classFactory
      */
-    public function setClassFactory($classFactory);
+    public function setClassFactory(ClassFactoryInterface $classFactory): void;
 }

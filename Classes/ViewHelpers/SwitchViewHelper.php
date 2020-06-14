@@ -54,7 +54,7 @@ class SwitchViewHelper extends AbstractViewHelper
     /**
      * @var mixed
      */
-    protected $backupSwitchExpression = null;
+    protected $backupSwitchExpression;
     /**
      * @var bool
      */
@@ -89,9 +89,16 @@ class SwitchViewHelper extends AbstractViewHelper
         $this->backupSwitchState();
         $templateVariableContainer = $this->renderingContext->getViewHelperVariableContainer();
 
-        $templateVariableContainer->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression',
-            $this->arguments['expression']);
-        $templateVariableContainer->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break', false);
+        $templateVariableContainer->addOrUpdate(
+            __CLASS__,
+            'switchExpression',
+            $this->arguments['expression']
+        );
+        $templateVariableContainer->addOrUpdate(
+            __CLASS__,
+            'break',
+            false
+        );
 
         foreach ($this->childNodes as $childNode) {
             if (
@@ -101,14 +108,15 @@ class SwitchViewHelper extends AbstractViewHelper
                 continue;
             }
             $content = $childNode->evaluate($this->renderingContext);
-            if ($templateVariableContainer->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
+            if ($templateVariableContainer->get(
+                    __CLASS__,
                     'break') === true) {
                 break;
             }
         }
 
-        $templateVariableContainer->remove('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'switchExpression');
-        $templateVariableContainer->remove('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break');
+        $templateVariableContainer->remove(__CLASS__, 'switchExpression');
+        $templateVariableContainer->remove(__CLASS__, 'break');
 
         $this->restoreSwitchState();
         return $content;
@@ -121,15 +129,23 @@ class SwitchViewHelper extends AbstractViewHelper
      */
     protected function backupSwitchState()
     {
-        if ($this->renderingContext->getViewHelperVariableContainer()->exists('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
-            'switchExpression')) {
-            $this->backupSwitchExpression = $this->renderingContext->getViewHelperVariableContainer()->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
-                'switchExpression');
+        if ($this->renderingContext->getViewHelperVariableContainer()->exists(
+            __CLASS__,
+            'switchExpression')
+        ) {
+            $this->backupSwitchExpression = $this->renderingContext->getViewHelperVariableContainer()->get(
+                __CLASS__,
+                'switchExpression'
+            );
         }
-        if ($this->renderingContext->getViewHelperVariableContainer()->exists('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
-            'break')) {
-            $this->backupBreakState = $this->renderingContext->getViewHelperVariableContainer()->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
-                'break');
+        if ($this->renderingContext->getViewHelperVariableContainer()->exists(
+            __CLASS__,
+            'break')
+        ) {
+            $this->backupBreakState = $this->renderingContext->getViewHelperVariableContainer()->get(
+                __CLASS__,
+                'break'
+            );
         }
     }
 
@@ -142,14 +158,17 @@ class SwitchViewHelper extends AbstractViewHelper
     {
         if ($this->backupSwitchExpression !== null) {
             $this->renderingContext->getViewHelperVariableContainer()->addOrUpdate(
-                'EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
+                __CLASS__,
                 'switchExpression',
                 $this->backupSwitchExpression
             );
         }
         if ($this->backupBreakState !== false) {
-            $this->renderingContext->getViewHelperVariableContainer()->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
-                'break', true);
+            $this->renderingContext->getViewHelperVariableContainer()->addOrUpdate(
+                __CLASS__,
+                'break',
+                true
+            );
         }
     }
 }

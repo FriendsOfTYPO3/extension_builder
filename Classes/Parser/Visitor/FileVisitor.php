@@ -16,6 +16,7 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  */
 
 use EBT\ExtensionBuilder\Domain\Model\File;
+use EBT\ExtensionBuilder\Parser\ClassFactoryInterface;
 use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
@@ -33,23 +34,23 @@ class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
      */
-    protected $currentClassObject = null;
+    protected $currentClassObject;
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\NamespaceObject
      */
-    protected $currentNamespace = null;
+    protected $currentNamespace;
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Container
      */
-    protected $currentContainer = null;
+    protected $currentContainer;
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\File
+     * @var File
      */
-    protected $fileObject = null;
+    protected $fileObject;
     /**
-     * @var \EBT\ExtensionBuilder\Parser\ClassFactoryInterface
+     * @var ClassFactoryInterface
      */
-    protected $classFactory = null;
+    protected $classFactory;
     /**
      * @var bool
      */
@@ -64,9 +65,9 @@ class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
     /**
      * @var \PhpParser\Node
      */
-    protected $lastNode = null;
+    protected $lastNode;
 
-    public function getFileObject()
+    public function getFileObject(): File
     {
         return $this->fileObject;
     }
@@ -157,15 +158,12 @@ class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
         $this->currentContainer = $this->fileObject;
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Parser\ClassFactoryInterface $classFactory
-     */
-    public function setClassFactory($classFactory)
+    public function setClassFactory(ClassFactoryInterface $classFactory): void
     {
         $this->classFactory = $classFactory;
     }
 
-    protected function isContainerNode($node)
+    protected function isContainerNode($node): bool
     {
         return ($node instanceof Node\Stmt\Namespace_ || $node instanceof Node\Stmt\Class_);
     }

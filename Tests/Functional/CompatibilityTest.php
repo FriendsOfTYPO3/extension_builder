@@ -18,6 +18,9 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
+use SebastianBergmann\Diff\Differ;
+use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -61,8 +64,9 @@ class CompatibilityTest extends BaseFunctionalTest
         if (file_exists($jsonFile)) {
             // compatibility adaptions for configurations from older versions
             $extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), true);
-            $extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON($extensionConfigurationJSON,
-                false);
+            $extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON(
+                $extensionConfigurationJSON
+            );
         } else {
             $extensionConfigurationJSON = [];
             self::fail('JSON file not found');
@@ -71,8 +75,12 @@ class CompatibilityTest extends BaseFunctionalTest
         $this->extension = $this->extensionSchemaBuilder->build($extensionConfigurationJSON);
         $this->fileGenerator->setSettings(
             [
-                'codeTemplateRootPaths.' => [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/'],
-                'codeTemplatePartialPaths.' => [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials'],
+                'codeTemplateRootPaths.' => [
+                    Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/'
+                ],
+                'codeTemplatePartialPaths.' => [
+                    Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials'
+                ],
                 'extConf' => [
                     'enableRoundtrip' => '0'
                 ]
@@ -83,8 +91,8 @@ class CompatibilityTest extends BaseFunctionalTest
 
         $this->fileGenerator->build($this->extension);
 
-        $diffOutput = new \SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder('', true);
-        $differ = new \SebastianBergmann\Diff\Differ($diffOutput);
+        $diffOutput = new UnifiedDiffOutputBuilder('', true);
+        $differ = new Differ($diffOutput);
 
         $referenceFiles = GeneralUtility::getAllFilesAndFoldersInPath([], $testExtensionDir, 'php,sql,html,typoscript');
         foreach ($referenceFiles as $referenceFile) {

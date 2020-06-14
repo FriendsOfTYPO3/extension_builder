@@ -16,6 +16,7 @@ namespace EBT\ExtensionBuilder\Utility;
  */
 
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use TYPO3\CMS\Core\SingletonInterface;
 
 /**
@@ -46,13 +47,12 @@ class Tools implements SingletonInterface
     }
 
     /**
-     *
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
      * @param string $methodType (set,add,remove)
      *
      * @return string method body
      */
-    public static function getParameterName(AbstractProperty $domainProperty, $methodType)
+    public static function getParameterName(AbstractProperty $domainProperty, string $methodType)
     {
         $propertyName = $domainProperty->getName();
 
@@ -73,20 +73,20 @@ class Tools implements SingletonInterface
      * @param string $methodType
      * @return string
      */
-    public static function getParamTag(AbstractProperty $domainProperty, $methodType)
+    public static function getParamTag(AbstractProperty $domainProperty, string $methodType)
     {
         switch ($methodType) {
             case 'set':
                 return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
 
             case 'add':
-                /** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
+                /** @var $domainProperty AbstractRelation */
                 $paramTag = $domainProperty->getForeignClassName();
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
                 return $paramTag;
 
             case 'remove':
-                /** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
+                /** @var $domainProperty AbstractRelation */
                 $paramTag = $domainProperty->getForeignClassName();
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
                 $paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';
@@ -106,7 +106,7 @@ class Tools implements SingletonInterface
             return 'Tx_' . $classNameParts[3] . '_' . $classNameParts[6];
         }
 
-        if (count($classNameParts) == 6) {
+        if (count($classNameParts) === 6) {
             return 'Tx_' . $classNameParts[2] . '_' . $classNameParts[5];
         }
 

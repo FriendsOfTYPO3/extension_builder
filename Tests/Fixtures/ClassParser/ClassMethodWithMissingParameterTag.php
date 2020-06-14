@@ -28,7 +28,6 @@
  */
 class Tx_PhpParser_Test_ClassMethodWithMissingParameterTag
 {
-
     /**
      * This is the description
      *
@@ -39,8 +38,8 @@ class Tx_PhpParser_Test_ClassMethodWithMissingParameterTag
     {
         if ($string > 3) {
             return 'bar';
-        } else {
-            return 'foo';
         }
+
+        return 'foo';
     }
 }

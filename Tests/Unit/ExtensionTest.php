@@ -22,9 +22,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * TODO testcase doesn't cover whole class
- *
  */
-class  ExtensionTest extends BaseUnitTest
+class ExtensionTest extends BaseUnitTest
 {
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Person[]
@@ -33,7 +32,7 @@ class  ExtensionTest extends BaseUnitTest
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
-    protected $extension = null;
+    protected $extension;
 
     protected function setUp()
     {
@@ -50,7 +49,7 @@ class  ExtensionTest extends BaseUnitTest
     /**
      * @test
      */
-    public function testGetPersonsSetPersons()
+    public function getPersonsSetPersons(): void
     {
         $this->extension->setPersons($this->persons);
         self::assertEquals($this->extension->getPersons(), $this->persons, 'Extensions Persons have been set wrong.');
@@ -59,16 +58,18 @@ class  ExtensionTest extends BaseUnitTest
     /**
      * @test
      */
-    public function testAddPerson()
+    public function addPerson(): void
     {
-        self::assertEquals($this->extension->getPersons(), [], 'Extensions Persons are not empty.');
+        self::assertEquals([], $this->extension->getPersons(), 'Extensions Persons are not empty.');
+
         $this->extension->addPerson($this->persons[0]);
         $this->extension->addPerson($this->persons[1]);
         $this->extension->addPerson($this->persons[2]);
-        self::assertEquals(count($this->extension->getPersons()), 3, 'To many Persons in Extension.');
+        self::assertCount(3, $this->extension->getPersons(), 'To many Persons in Extension.');
+
         $persons = $this->extension->getPersons();
-        self::assertEquals($persons[0]->getName(), '0', 'Wrong ordering of Persons in Extension.');
-        self::assertEquals($persons[1]->getName(), '1', 'Wrong ordering of Persons in Extension.');
-        self::assertEquals($persons[2]->getName(), '2', 'Wrong ordering of Persons in Extension.');
+        self::assertEquals('0', $persons[0]->getName(), 'Wrong ordering of Persons in Extension.');
+        self::assertEquals('1', $persons[1]->getName(), 'Wrong ordering of Persons in Extension.');
+        self::assertEquals('2', $persons[2]->getName(), 'Wrong ordering of Persons in Extension.');
     }
 }

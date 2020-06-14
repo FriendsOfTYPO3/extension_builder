@@ -35,7 +35,7 @@ class ConfigurationManagerTest extends BaseFunctionalTest
     /**
      * @test
      */
-    public function getExtbaseClassConfigurationReturnsCorrectValue()
+    public function getExtbaseClassConfigurationReturnsCorrectValue(): void
     {
         $classConfiguration = $this->configurationManager->getExtbaseClassConfiguration(FrontendUser::class);
         self::assertSame($classConfiguration['tableName'], 'fe_users');

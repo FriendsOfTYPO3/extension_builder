@@ -36,29 +36,30 @@ class ParseAndPrintTest extends BaseFunctionalTest
     /**
      * @test
      */
-    public function parseAndPrintSimplePropertyClass()
+    public function parseAndPrintSimplePropertyClass(): void
     {
         $fileName = 'SimpleProperty.php';
         $this->parseAndPrint($fileName);
     }
 
-
     /**
-     * @param $fileName
-     * @param string $subFolder
-     * @return \EBT\ExtensionBuilder\Domain\Model\File
+     * @param string $fileName
+     * @param string|null $subFolder
      */
-    protected function parseAndPrint($fileName, $subFolder = '')
+    protected function parseAndPrint($fileName, $subFolder = ''): void
     {
         $classFilePath = $this->fixturesPath . $subFolder . $fileName;
-        self::assertTrue(file_exists($classFilePath), 'File not found: ' . $subFolder . $fileName);
-        $fileHandler = fopen($classFilePath, 'r');
+        self::assertFileExists($classFilePath, 'File not found: ' . $subFolder . $fileName);
+
+        $fileHandler = fopen($classFilePath, 'rb');
         $code = fread($fileHandler, filesize($classFilePath));
+        fclose($fileHandler);
+
         $fileObject = $this->parserService->parseCode($code);
         self::assertEquals(
-            GeneralUtility::trimExplode(PHP_EOL, $this->printerService->renderFileObject($fileObject, true)),
             GeneralUtility::trimExplode(PHP_EOL, $code),
-            'Not equal'
+            GeneralUtility::trimExplode(PHP_EOL, $this->printerService->renderFileObject($fileObject, true)),
+            'File content is not equal'
         );
     }
 }

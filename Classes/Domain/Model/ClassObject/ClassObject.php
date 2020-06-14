@@ -74,14 +74,14 @@ class ClassObject extends Container
     protected $fileName = '';
 
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+     * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject|null
      */
-    protected $parentClass = null;
+    protected $parentClass;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $parentClassName = null;
+    protected $parentClassName;
 
     /**
      * @var bool
@@ -172,28 +172,22 @@ class ClassObject extends Container
      * @param string $methodName
      * @return bool
      */
-    public function methodExists($methodName)
+    public function methodExists(string $methodName): bool
     {
         if (!is_array($this->methods)) {
-            $result = false;
-        } else {
-            $methodNames = array_keys($this->methods);
-
-            if (is_array($methodNames) && in_array($methodName, $methodNames)) {
-                $result = true;
-            } else {
-                $result = false;
-            }
+            return false;
         }
 
-        return $result;
+        $methodNames = array_keys($this->methods);
+
+        return is_array($methodNames) && in_array($methodName, $methodNames);
     }
 
     /**
      * @param array $methods
      * @return void
      */
-    public function setMethods(array $methods)
+    public function setMethods(array $methods): void
     {
         $this->methods = $methods;
     }
@@ -322,7 +316,7 @@ class ClassObject extends Container
      * @param string $propertyName
      * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property
      */
-    public function getProperty($propertyName)
+    public function getProperty(string $propertyName)
     {
         if ($this->propertyExists($propertyName)) {
             if ($this->isTemplate) {
@@ -404,14 +398,14 @@ class ClassObject extends Container
      * @param string $propertyName
      * @return bool
      */
-    public function propertyExists($propertyName)
+    public function propertyExists($propertyName): bool
     {
         return is_array($this->methods) && in_array($propertyName, $this->getPropertyNames());
     }
 
     /**
      * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property $classProperty
-     * @return bool true if successfull added
+     * @return bool true if successfully added
      */
     public function addProperty(Property $classProperty)
     {
@@ -618,18 +612,18 @@ class ClassObject extends Container
 
     /**
      * @param string $parentClassName
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+     * @return $this
      */
-    public function setParentClassName($parentClassName)
+    public function setParentClassName(string $parentClassName): self
     {
         $this->parentClassName = $parentClassName;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getParentClassName()
+    public function getParentClassName(): ?string
     {
         return $this->parentClassName;
     }
@@ -637,7 +631,7 @@ class ClassObject extends Container
     /**
      * @return void
      */
-    public function removeParentClassName()
+    public function removeParentClassName(): void
     {
         $this->parentClassName = '';
     }
@@ -645,7 +639,7 @@ class ClassObject extends Container
     /**
      * @return void
      */
-    public function resetAll()
+    public function resetAll(): void
     {
         $this->constants = [];
         $this->properties = [];

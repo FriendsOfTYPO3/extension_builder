@@ -31,7 +31,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
     /**
      * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
      */
-    protected $extensionSchemaBuilder = null;
+    protected $extensionSchemaBuilder;
     /**
      * @var string
      */
@@ -40,12 +40,16 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
     protected function setUp()
     {
         parent::setUp();
-        $this->extension = $this->createMock(Extension::class, ['getOverWriteSettings']);
+
+        $this->extension = $this->createMock(Extension::class);
+
         $this->extensionSchemaBuilder = $this->getAccessibleMock(ExtensionSchemaBuilder::class, ['dummy']);
         $this->extensionSchemaBuilder->injectConfigurationManager(new ExtensionBuilderConfigurationManager());
+
         /** @var $objectSchemaBuilder \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder */
         $objectSchemaBuilder = $this->getAccessibleMock(ObjectSchemaBuilder::class, ['dummy']);
         $objectSchemaBuilder->injectConfigurationManager(new ExtensionBuilderConfigurationManager());
+
         $this->extensionSchemaBuilder->injectObjectSchemaBuilder($objectSchemaBuilder);
         $this->extensionKey = 'dummy';
     }
@@ -53,7 +57,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
     /**
      * @test
      */
-    public function conversionExtractsExtensionProperties()
+    public function conversionExtractsExtensionProperties(): void
     {
         $description = 'My cool fancy description';
         $name = 'ExtName';
@@ -88,15 +92,17 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
     /**
      * @test
      */
-    public function conversionExtractsPersons()
+    public function conversionExtractsPersons(): void
     {
         $persons = [];
         $persons[] = GeneralUtility::makeInstance(Person::class);
         $persons[] = GeneralUtility::makeInstance(Person::class);
+
         $persons[0]->setName('name0');
         $persons[0]->setRole('role0');
         $persons[0]->setEmail('email0');
         $persons[0]->setCompany('company0');
+
         $persons[1]->setName('name1');
         $persons[1]->setRole('role1');
         $persons[1]->setEmail('email1');
@@ -128,13 +134,13 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
             ]
         ];
         $extension = $this->extensionSchemaBuilder->build($input);
-        self::assertEquals($extension->getPersons(), $persons, 'Persons set wrong in ObjectBuilder.');
+        self::assertEquals($persons, $extension->getPersons(), 'Persons set wrong in ObjectBuilder.');
     }
 
     /**
      * @test
      */
-    public function conversionExtractsWholeExtensionMetadataWithRelations()
+    public function conversionExtractsWholeExtensionMetadataWithRelations(): void
     {
         $input = [
             'modules' => [
@@ -258,8 +264,10 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         $blog->setDescription('A blog object');
         $blog->setEntity(true);
         $blog->setAggregateRoot(false);
+
         $property = new StringProperty('name');
         $blog->addProperty($property);
+
         $property = new StringProperty('description');
         $blog->addProperty($property);
 
@@ -289,7 +297,10 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         $relation->setExcludeField(1);
         $post->addProperty($relation);
         $actualExtension = $this->extensionSchemaBuilder->build($input);
-        self::assertEquals($extension->getDomainObjects(), $actualExtension->getDomainObjects(),
-            'The extensions differ');
+        self::assertEquals(
+            $extension->getDomainObjects(),
+            $actualExtension->getDomainObjects(),
+            'The extensions differ'
+        );
     }
 }

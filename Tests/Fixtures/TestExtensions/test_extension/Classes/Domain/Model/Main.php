@@ -17,7 +17,6 @@ namespace FIXTURE\TestExtension\Domain\Model;
  */
 class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
-
     /**
      * This is not required
      *
@@ -200,7 +199,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->mail;
     }
 
-
     /**
      * Sets the mail
      *
@@ -211,7 +209,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->mail = $mail;
     }
-
 
     /**
      * Returns the child1
@@ -340,5 +337,4 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->children4 = $children4;
     }
-
 }

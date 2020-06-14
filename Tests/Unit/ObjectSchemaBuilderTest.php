@@ -33,21 +33,27 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      */
-    protected $configurationManager = null;
+    protected $configurationManager;
     /**
      * @var \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder
      */
-    protected $objectSchemaBuilder = null;
+    protected $objectSchemaBuilder;
 
     protected function setUp()
     {
         parent::setUp();
+
         $this->objectSchemaBuilder = $this->getAccessibleMock(ObjectSchemaBuilder::class, ['dummy']);
+
         $concreteConfigurationManager = $this->getAccessibleMock(BackendConfigurationManager::class);
+
         $typoScriptService = new TypoScriptService();
         $concreteConfigurationManager->_set('typoScriptService', $typoScriptService);
-        $this->configurationManager = $this->getAccessibleMock(ExtensionBuilderConfigurationManager::class,
-            ['getExtbaseClassConfiguration']);
+
+        $this->configurationManager = $this->getAccessibleMock(
+            ExtensionBuilderConfigurationManager::class,
+            ['getExtbaseClassConfiguration']
+        );
         $this->configurationManager->_set('concreteConfigurationManager', $concreteConfigurationManager);
         $this->objectSchemaBuilder->injectConfigurationManager($this->configurationManager);
     }
@@ -55,7 +61,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
     /**
      * @test
      */
-    public function domainObjectHasExpectedProperties()
+    public function domainObjectHasExpectedProperties(): void
     {
         $name = 'MyDomainObject';
         $description = 'My long domain object description';
@@ -95,8 +101,9 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
 
         $property0 = new StringProperty('name');
         $property0->setRequired(true);
-        $property1 = new IntegerProperty('type');
         $expected->addProperty($property0);
+
+        $property1 = new IntegerProperty('type');
         $expected->addProperty($property1);
 
         $testAction = GeneralUtility::makeInstance(Action::class);
@@ -108,13 +115,13 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
         $expected->addAction($listAction);
 
         $actual = $this->objectSchemaBuilder->build($input);
-        self::assertEquals($actual, $expected, 'Domain Object not built correctly.');
+        self::assertEquals($expected, $actual, 'Domain Object not built correctly.');
     }
 
     /**
      * @test
      */
-    public function domainObjectHasExpectedRelations()
+    public function domainObjectHasExpectedRelations(): void
     {
         $name = 'MyDomainObject';
         $description = 'My long domain object description';
@@ -156,12 +163,13 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
         $relation1->setRelatedToExternalModel(true);
         $relation1->setExcludeField(false);
         $relation1->setForeignDatabaseTableName('fe_users');
+        $expected->addProperty($relation1);
+
         $relation2 = new ManyToManyRelation('relation 2');
         $relation2->setForeignClassName($className);
         $relation2->setRelatedToExternalModel(true);
         $relation2->setExcludeField(false);
         $relation2->setForeignDatabaseTableName('fe_users');
-        $expected->addProperty($relation1);
         $expected->addProperty($relation2);
 
         $extbaseConfiguration = [
@@ -170,8 +178,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
         $this->configurationManager->expects(self::atLeastOnce())
             ->method('getExtbaseClassConfiguration')
             ->with($className)
-            ->will(self::returnValue($extbaseConfiguration)
-            );
+            ->will(self::returnValue($extbaseConfiguration));
         $actual = $this->objectSchemaBuilder->build($input);
         self::assertEquals($actual, $expected, 'Domain Object not built correctly.');
     }
@@ -179,7 +186,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
     /**
      * @test
      */
-    public function manyToManyRelationReturnsCorrectRelationTable()
+    public function manyToManyRelationReturnsCorrectRelationTable(): void
     {
         $name = 'MyDomainObject';
         $description = 'My long domain object description';
@@ -208,7 +215,10 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
         $extbaseConfiguration = [
             'tableName' => 'fe_users'
         ];
-        $this->configurationManager->expects(self::atLeastOnce())->method('getExtbaseClassConfiguration')->with($className)->will(self::returnValue($extbaseConfiguration));
+        $this->configurationManager->expects(self::atLeastOnce())
+            ->method('getExtbaseClassConfiguration')
+            ->with($className)
+            ->will(self::returnValue($extbaseConfiguration));
 
         $domainObject = $this->objectSchemaBuilder->build($input);
         $dummyExtension = new Extension();
@@ -231,7 +241,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
     /**
      * @test
      */
-    public function anyToManyRelationHasExpectedProperties()
+    public function anyToManyRelationHasExpectedProperties(): void
     {
         $domainObjectName1 = 'DomainObject1';
         $domainObjectName2 = 'DomainObject2';
@@ -261,6 +271,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
 
         $dummyExtension = new Extension();
         $dummyExtension->setExtensionKey('dummy');
+
         $domainObject1->setExtension($dummyExtension);
         $domainObject2->setExtension($dummyExtension);
 
@@ -277,7 +288,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
      * Find the mapped table for a foreign related class
      * @test
      */
-    public function anyToManyRelationToForeignClassBuildsCorrectRelationTableName()
+    public function anyToManyRelationToForeignClassBuildsCorrectRelationTableName(): void
     {
         $domainObjectName1 = 'DomainObject1';
         $description = 'My long domain object description';
@@ -306,7 +317,10 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
         $extbaseConfiguration = [
             'tableName' => 'fe_users'
         ];
-        $this->configurationManager->expects(self::atLeastOnce())->method('getExtbaseClassConfiguration')->with($className)->will(self::returnValue($extbaseConfiguration));
+        $this->configurationManager->expects(self::atLeastOnce())
+            ->method('getExtbaseClassConfiguration')
+            ->with($className)
+            ->will(self::returnValue($extbaseConfiguration));
 
         $domainObject1 = $this->objectSchemaBuilder->build($input);
 

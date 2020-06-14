@@ -82,7 +82,7 @@ class DomainObject
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
-    protected $extension = null;
+    protected $extension;
     /**
      * List of properties the domain object has.
      *
@@ -119,7 +119,7 @@ class DomainObject
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -128,7 +128,7 @@ class DomainObject
      * @param string $name
      * @return void
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -198,7 +198,7 @@ class DomainObject
     /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         if ($this->description) {
             return $this->description;
@@ -244,7 +244,7 @@ class DomainObject
     /**
      * @return bool true if it is an entity, false if it is a ValueObject
      */
-    public function getEntity()
+    public function getEntity(): bool
     {
         return $this->entity;
     }
@@ -252,7 +252,7 @@ class DomainObject
     /**
      * @return bool true if it is an entity, false if it is a ValueObject
      */
-    public function isEntity()
+    public function isEntity(): bool
     {
         return $this->getEntity();
     }
@@ -283,7 +283,7 @@ class DomainObject
     /**
      * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty[]
      */
-    public function getProperties()
+    public function getProperties(): array
     {
         return $this->properties;
     }
@@ -325,7 +325,7 @@ class DomainObject
      *
      * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation[]
      */
-    public function getAnyToManyRelationProperties()
+    public function getAnyToManyRelationProperties(): array
     {
         $relationProperties = [];
         foreach ($this->properties as $property) {
@@ -339,9 +339,9 @@ class DomainObject
     /**
      * @return bool
      */
-    public function hasRelations()
+    public function hasRelations(): bool
     {
-        return count($this->getAnyToManyRelationProperties()) == 0 && count($this->getZeroToManyRelationProperties()) == 0;
+        return count($this->getAnyToManyRelationProperties()) === 0 && count($this->getZeroToManyRelationProperties()) === 0;
     }
 
     /**
@@ -595,7 +595,7 @@ class DomainObject
     /**
      * @return string
      */
-    public function getParentClass()
+    public function getParentClass(): string
     {
         return $this->parentClass;
     }
@@ -603,16 +603,15 @@ class DomainObject
     /**
      * @return string
      */
-    public function getRecordType()
+    public function getRecordType(): string
     {
-        $recordType = 'Tx_' . $this->extension->getExtensionName() . '_' . $this->getName();
-        return $recordType;
+        return 'Tx_' . $this->extension->getExtensionName() . '_' . $this->getName();
     }
 
     /**
      * @return bool
      */
-    public function isSubClass()
+    public function isSubClass(): bool
     {
         return !empty($this->parentClass);
     }
@@ -622,7 +621,7 @@ class DomainObject
      *
      * @return void
      */
-    public function addChildObject(DomainObject $childObject)
+    public function addChildObject(DomainObject $childObject): void
     {
         $this->childObjects[] = $childObject;
     }
@@ -630,7 +629,7 @@ class DomainObject
     /**
      * @return bool
      */
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return count($this->childObjects) > 0;
     }
@@ -639,7 +638,7 @@ class DomainObject
      * wrapper for fluid
      * @return bool
      */
-    public function getHasChildren()
+    public function getHasChildren(): bool
     {
         return $this->hasChildren();
     }
@@ -656,7 +655,7 @@ class DomainObject
      * @param bool $sorting
      * @return void
      */
-    public function setSorting($sorting)
+    public function setSorting($sorting): void
     {
         $this->sorting = $sorting;
     }
@@ -664,7 +663,7 @@ class DomainObject
     /**
      * @return bool
      */
-    public function getSorting()
+    public function getSorting(): bool
     {
         return $this->sorting;
     }

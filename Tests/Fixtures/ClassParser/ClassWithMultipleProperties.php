@@ -28,11 +28,10 @@
  */
 abstract class Tx_PhpParser_Tests_ClassWithMultipleProperties
 {
-
     private $test = [
-        'test'    => 123,
-        'test5'    => 456,
-        'arr'    => [
+        'test' => 123,
+        'test5' => 456,
+        'arr' => [
             'sieben' => 7
         ]
     ];

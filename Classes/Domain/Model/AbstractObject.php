@@ -65,7 +65,7 @@ abstract class AbstractObject
     /**
      * @var string
      */
-    protected $docComment = null;
+    protected $docComment;
 
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\Comment[]
@@ -98,9 +98,9 @@ abstract class AbstractObject
      * Setter for name
      *
      * @param string $name name
-     * @return $this;
+     * @return $this
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
         return $this;
@@ -111,12 +111,12 @@ abstract class AbstractObject
      *
      * @return string name
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getQualifiedName()
+    public function getQualifiedName(): string
     {
         return $this->getNamespaceName() . '\\' . $this->getName();
     }
@@ -128,7 +128,7 @@ abstract class AbstractObject
      * @param string $tagName : Tag name to check for
      * @return bool true if such a tag has been defined, otherwise false
      */
-    public function isTaggedWith($tagName)
+    public function isTaggedWith($tagName): bool
     {
         return (isset($this->tags[$tagName]));
     }
@@ -138,7 +138,7 @@ abstract class AbstractObject
      *
      * @return array Tags and values
      */
-    public function getTags()
+    public function getTags(): array
     {
         return $this->tags;
     }
@@ -146,7 +146,7 @@ abstract class AbstractObject
     /**
      * @return bool
      */
-    public function hasTags()
+    public function hasTags(): bool
     {
         return count($this->getTags()) > 0;
     }
@@ -171,7 +171,7 @@ abstract class AbstractObject
      * @param bool $override
      * @return $this
      */
-    public function setTag($tagName, $tagValue = '', $override = true)
+    public function setTag($tagName, $tagValue = '', $override = true): self
     {
         if (!$override && isset($this->tags[$tagName])) {
             if (!is_array($this->tags[$tagName])) {
@@ -191,18 +191,18 @@ abstract class AbstractObject
      * @param string $tagName
      * @return void
      */
-    public function removeTag($tagName)
+    public function removeTag(string $tagName): void
     {
-        //TODO: multiple tags with same tagname must be possible (param etc.)
+        //TODO: multiple tags with same tag name must be possible (param etc.)
         unset($this->tags[$tagName]);
     }
 
     /**
      * Returns the values of the specified tag
      * @param string $tagName
-     * @return string Values of the given tag
+     * @return array|string Values of the given tag
      */
-    public function getTagValues($tagName)
+    public function getTagValues(string $tagName)
     {
         if (!$this->isTaggedWith($tagName)) {
             throw new \InvalidArgumentException('Tag "' . $tagName . '" does not exist.', 1337645712);
@@ -216,7 +216,7 @@ abstract class AbstractObject
      * @param string $tagName
      * @return string Value of the given tag
      */
-    public function getTagValue($tagName)
+    public function getTagValue($tagName): string
     {
         $tagValues = $this->getTagValues($tagName);
         if (is_array($tagValues) && count($tagValues) > 1) {
@@ -261,7 +261,7 @@ abstract class AbstractObject
      *
      * @return string $description
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -284,7 +284,7 @@ abstract class AbstractObject
      *
      * @return void
      */
-    public function setDescriptionLines($descriptionLines)
+    public function setDescriptionLines($descriptionLines): void
     {
         $this->descriptionLines = $descriptionLines;
         $this->description = implode(' ', $descriptionLines);
@@ -296,7 +296,7 @@ abstract class AbstractObject
      * @param string $description Property description
      * @return $this
      */
-    public function setDescription($description)
+    public function setDescription(string $description): self
     {
         $this->description = $description;
         $this->descriptionLines = explode(PHP_EOL, wordwrap($description, 80, PHP_EOL));
@@ -304,11 +304,9 @@ abstract class AbstractObject
     }
 
     /**
-     *
-     *
      * @return bool true if the description isn't empty
      */
-    public function hasDescription()
+    public function hasDescription(): bool
     {
         return !empty($this->description);
     }
@@ -318,9 +316,9 @@ abstract class AbstractObject
      * since modifiers are claculated bitwise)
      *
      * @param int $modifiers modifiers
-     * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject (for fluid interface)
+     * @return $this (for fluid interface)
      */
-    public function setModifiers($modifiers)
+    public function setModifiers($modifiers): self
     {
         $this->modifiers = $modifiers;
         return $this;
@@ -331,11 +329,11 @@ abstract class AbstractObject
      *
      * @param string $modifierName
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject (for fluid interface)
+     * @return $this (for fluid interface)
      * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
      * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
      */
-    public function addModifier($modifierName)
+    public function addModifier($modifierName): self
     {
         $modifier = $this->mapModifierNames[$modifierName];
         if (!in_array($modifierName, $this->getModifierNames())) {
@@ -351,11 +349,11 @@ abstract class AbstractObject
      *
      * @param string $modifierName
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject (for fluid interface)
+     * @return $this (for fluid interface)
      * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
      * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
      */
-    public function setModifier($modifierName)
+    public function setModifier($modifierName): self
     {
         if (in_array($modifierName, $this->getModifierNames())) {
             return $this; // modifier is already present
@@ -376,18 +374,18 @@ abstract class AbstractObject
 
     /**
      * @param string $modifierName
-     * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject (for fluid interface)
+     * @return $this (for fluid interface)
      */
-    public function removeModifier($modifierName)
+    public function removeModifier($modifierName): self
     {
         $this->modifiers ^= $this->mapModifierNames[$modifierName];
         return $this;
     }
 
     /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject (for fluid interface)
+     * @return $this (for fluid interface)
      */
-    public function removeAllModifiers()
+    public function removeAllModifiers(): self
     {
         $this->modifiers = 0;
         return $this;
@@ -418,21 +416,24 @@ abstract class AbstractObject
     /**
      * validate if the modifier can be added to the current modifiers or not
      *
-     * @param $modifier
+     * @param int $modifier
      * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
      * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
      */
-    protected function validateModifier($modifier)
+    protected function validateModifier($modifier): void
     {
-        if ($modifier == Class_::MODIFIER_FINAL && $this->isAbstract() ||
-            $modifier == Class_::MODIFIER_ABSTRACT && $this->isFinal()
+        if ($modifier == Class_::MODIFIER_FINAL && $this->isAbstract()
+            || $modifier == Class_::MODIFIER_ABSTRACT && $this->isFinal()
         ) {
             throw new SyntaxError('Abstract and Final can\'t be applied both to same object');
-        } elseif ($modifier == Class_::MODIFIER_STATIC && $this->isAbstract() ||
-            $modifier == Class_::MODIFIER_ABSTRACT && $this->isStatic()
+        }
+
+        if ($modifier == Class_::MODIFIER_STATIC && $this->isAbstract()
+            || $modifier == Class_::MODIFIER_ABSTRACT && $this->isStatic()
         ) {
             throw new FileNotFoundException('Abstract and Static can\'t be applied both to same object');
         }
+
         try {
             Class_::verifyModifier($this->modifiers, $modifier);
         } catch (\PhpParser\Error $e) {

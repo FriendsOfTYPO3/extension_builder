@@ -37,7 +37,7 @@ class HumanizeViewHelper extends AbstractViewHelper
     /**
      * @var \EBT\ExtensionBuilder\Utility\Inflector
      */
-    protected $inflector = null;
+    protected $inflector;
 
     public function __construct()
     {

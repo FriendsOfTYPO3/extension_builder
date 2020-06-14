@@ -31,7 +31,6 @@ namespace DUMMY\Dummy\Domain\Model;
  */
 class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
-
     /**
      * This is the property
      *
