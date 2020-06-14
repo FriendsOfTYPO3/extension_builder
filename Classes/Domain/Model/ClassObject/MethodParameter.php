@@ -38,7 +38,7 @@ class MethodParameter extends AbstractObject
     /**
      * @var mixed
      */
-    protected $defaultValue = null;
+    protected $defaultValue;
     /**
      * @var int
      */
@@ -69,17 +69,9 @@ class MethodParameter extends AbstractObject
     }
 
     /**
-     * @return string $name
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * @return string
      */
-    public function getVarType()
+    public function getVarType(): string
     {
         if (empty($this->varType) && !empty($this->typeHint)) {
             return $this->typeHint;
@@ -91,7 +83,7 @@ class MethodParameter extends AbstractObject
      * @param string $varType
      * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter This method is used in fluent interfaces!
      */
-    public function setVarType($varType)
+    public function setVarType($varType): self
     {
         $this->varType = $varType;
         return $this;
@@ -100,7 +92,7 @@ class MethodParameter extends AbstractObject
     /**
      * @return int $position
      */
-    public function getPosition()
+    public function getPosition(): int
     {
         return $this->position;
     }
@@ -109,7 +101,7 @@ class MethodParameter extends AbstractObject
      * @param int $position
      * @return void
      */
-    public function setPosition($position)
+    public function setPosition(int $position): void
     {
         $this->position = $position;
     }
@@ -126,7 +118,7 @@ class MethodParameter extends AbstractObject
      * @param mixed $defaultValue
      * @return void
      */
-    public function setDefaultValue($defaultValue = null)
+    public function setDefaultValue($defaultValue = null): void
     {
         $this->defaultValue = $defaultValue;
     }
@@ -134,7 +126,7 @@ class MethodParameter extends AbstractObject
     /**
      * @return bool
      */
-    public function isOptional()
+    public function isOptional(): bool
     {
         return $this->optional;
     }
@@ -143,7 +135,7 @@ class MethodParameter extends AbstractObject
      * @param bool $optional
      * @return void
      */
-    public function setOptional($optional)
+    public function setOptional($optional): void
     {
         $this->optional = $optional;
     }
@@ -151,7 +143,7 @@ class MethodParameter extends AbstractObject
     /**
      * @return bool
      */
-    public function isPassedByReference()
+    public function isPassedByReference(): bool
     {
         return $this->passedByReference;
     }
@@ -159,7 +151,7 @@ class MethodParameter extends AbstractObject
     /**
      * @return bool
      */
-    public function getPassedByReference()
+    public function getPassedByReference(): bool
     {
         return $this->passedByReference;
     }
@@ -168,7 +160,7 @@ class MethodParameter extends AbstractObject
      * @param bool $passedByReference
      * @return void
      */
-    public function setPassedByReference($passedByReference)
+    public function setPassedByReference(bool $passedByReference): void
     {
         $this->passedByReference = $passedByReference;
     }
@@ -176,16 +168,16 @@ class MethodParameter extends AbstractObject
     /**
      * @return string
      */
-    public function getTypeHint()
+    public function getTypeHint(): string
     {
         return $this->typeHint;
     }
 
     /**
      * @param string $typeHint
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter This method is used in fluent interfaces!
+     * @return $this This method is used in fluent interfaces!
      */
-    public function setTypeHint($typeHint)
+    public function setTypeHint(string $typeHint): self
     {
         $this->typeHint = $typeHint;
         return $this;
@@ -194,7 +186,7 @@ class MethodParameter extends AbstractObject
     /**
      * @return bool
      */
-    public function hasTypeHint()
+    public function hasTypeHint(): bool
     {
         return !empty($this->typeHint);
     }

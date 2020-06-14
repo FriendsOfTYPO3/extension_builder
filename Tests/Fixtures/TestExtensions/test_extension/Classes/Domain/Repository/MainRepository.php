@@ -17,7 +17,6 @@ namespace FIXTURE\TestExtension\Domain\Repository;
  */
 class MainRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-
     /**
      * @var array
      */

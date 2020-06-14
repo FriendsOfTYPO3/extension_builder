@@ -36,7 +36,6 @@ class QuoteStringViewHelper extends AbstractViewHelper
     }
 
     /**
-     *
      * @return string
      */
     public function render()
@@ -45,7 +44,7 @@ class QuoteStringViewHelper extends AbstractViewHelper
         if ($this->hasArgument('value')) {
             $value = $this->arguments['value'];
         }
-        if ($value == null) {
+        if ($value === null) {
             $value = $this->renderChildren();
         }
 

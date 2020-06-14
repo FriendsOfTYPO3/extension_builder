@@ -99,7 +99,7 @@ class Container extends AbstractObject
     /**
      * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject[]
      */
-    public function getClasses()
+    public function getClasses(): array
     {
         return $this->classes;
     }

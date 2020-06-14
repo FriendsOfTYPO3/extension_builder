@@ -73,5 +73,4 @@ class Child1Test extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
             $this->subject
         );
     }
-
 }

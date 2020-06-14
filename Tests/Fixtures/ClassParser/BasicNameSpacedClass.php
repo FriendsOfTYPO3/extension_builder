@@ -30,7 +30,6 @@ namespace FOO;
  */
 class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicNameSpacedClass
 {
-
     protected $names;
 
     const TEST = "test";
@@ -38,7 +37,6 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicNameSpacedClass
     const TEST2 = 'test';
 
     /**
-     *
      * @return array $names
      */
     public function getNames()
@@ -62,7 +60,6 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicNameSpacedClass
     }
 
     /**
-     *
      * @param array $names
      * @return void
      */

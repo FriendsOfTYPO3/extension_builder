@@ -24,17 +24,17 @@ class TimeProperty extends AbstractProperty
      */
     protected $defaultValue = 0;
 
-    public function getTypeForComment()
+    public function getTypeForComment(): string
     {
         return 'int';
     }
 
-    public function getTypeHint()
+    public function getTypeHint(): string
     {
         return 'int';
     }
 
-    public function getSqlDefinition()
+    public function getSqlDefinition(): string
     {
         return $this->getFieldName() . ' int(11) DEFAULT \'0\' NOT NULL,';
     }

@@ -16,31 +16,33 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  */
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
+use TYPO3\CMS\Core\Core\Environment;
 
 class RoundTripRenameVendorTest extends BaseFunctionalTest
 {
     /**
      * @var \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder
      */
-    protected $objectSchemaBuilder = null;
+    protected $objectSchemaBuilder;
     /**
-     * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
+     * @var ExtensionSchemaBuilder
      */
-    protected $extensionSchemaBuilder = null;
+    protected $extensionSchemaBuilder;
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
-    protected $fixtureExtension = null;
+    protected $fixtureExtension;
 
     protected function setUp()
     {
         parent::setUp();
         $this->configurationManager = $this->getAccessibleMock(
-            'EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager',
+            ExtensionBuilderConfigurationManager::class,
             ['dummy']
         );
-        $this->extensionSchemaBuilder = $this->objectManager->get('EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder');
+        $this->extensionSchemaBuilder = $this->objectManager->get(ExtensionSchemaBuilder::class);
 
         $testExtensionDir = $this->fixturesPath . 'TestExtensions/test_extension/';
         $jsonFile = $testExtensionDir . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
@@ -48,8 +50,10 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
         if (file_exists($jsonFile)) {
             // compatibility adaptions for configurations from older versions
             $extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), true);
-            $extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON($extensionConfigurationJSON,
-                false);
+            $extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON(
+                $extensionConfigurationJSON,
+                false
+            );
         } else {
             $extensionConfigurationJSON = [];
             self::fail('JSON file not found: ' . $jsonFile);
@@ -60,12 +64,15 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
         $this->roundTripService->_set('extension', $this->fixtureExtension);
         $this->roundTripService->_set('previousExtensionDirectory', $testExtensionDir);
         $this->roundTripService->_set('extensionDirectory', $testExtensionDir);
-        $this->roundTripService->_set('previousDomainObjects', [
-            $this->fixtureExtension->getDomainObjectByName('Main')->getUniqueIdentifier() => $this->fixtureExtension->getDomainObjectByName('Main')
-        ]);
+        $this->roundTripService->_set(
+            'previousDomainObjects',
+            [
+                $this->fixtureExtension->getDomainObjectByName('Main')->getUniqueIdentifier() => $this->fixtureExtension->getDomainObjectByName('Main')
+            ]
+        );
         $this->fileGenerator->setSettings(
             [
-                'codeTemplateRootPath' => PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/',
+                'codeTemplateRootPath' => Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/',
                 'extConf' => [
                     'enableRoundtrip' => '1'
                 ]
@@ -99,8 +106,10 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
         $controllerClassFile = $this->roundTripService->getControllerClassFile($this->fixtureExtension->getDomainObjectByName('Main'));
         $controllerClassObject = $controllerClassFile->getFirstClass();
         $repositoryProperty = current($controllerClassObject->getProperties());
-        self::assertEquals('\VENDOR\TestExtension\Domain\Repository\MainRepository',
-            $repositoryProperty->getTagValues('var'));
+        self::assertEquals(
+            '\VENDOR\TestExtension\Domain\Repository\MainRepository',
+            $repositoryProperty->getTagValues('var')
+        );
     }
 
     /**
@@ -114,10 +123,17 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
         $modelClassFile = $this->roundTripService->getDomainModelClassFile($this->fixtureExtension->getDomainObjectByName('Main'));
         $modelClassObject = $modelClassFile->getFirstClass();
         $properties = $modelClassObject->getProperties();
-        self::assertEquals('\VENDOR\TestExtension\Domain\Model\Child1', $properties['child1']->getTagValue('var'));
-        self::assertEquals('\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\TestExtension\Domain\Model\Child2>',
-            $properties['children2']->getTagValue('var'));
-        self::assertEquals('\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\TestExtension\Domain\Model\Child4>',
-            $properties['children4']->getTagValue('var'));
+        self::assertEquals(
+            '\VENDOR\TestExtension\Domain\Model\Child1',
+            $properties['child1']->getTagValue('var')
+        );
+        self::assertEquals(
+            '\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\TestExtension\Domain\Model\Child2>',
+            $properties['children2']->getTagValue('var')
+        );
+        self::assertEquals(
+            '\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\TestExtension\Domain\Model\Child4>',
+            $properties['children4']->getTagValue('var')
+        );
     }
 }

@@ -19,6 +19,8 @@ use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ManyToManyRelation;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
+use EBT\ExtensionBuilder\Exception\FileNotFoundException;
+use EBT\ExtensionBuilder\Exception\SyntaxError;
 use EBT\ExtensionBuilder\Parser\NodeFactory;
 use EBT\ExtensionBuilder\Service\ClassBuilder;
 use EBT\ExtensionBuilder\Service\ParserService;
@@ -35,7 +37,7 @@ class ClassBuilderTest extends BaseUnitTest
     /**
      * @var \EBT\ExtensionBuilder\Service\ClassBuilder
      */
-    protected $classBuilder = null;
+    protected $classBuilder;
     /**
      * @var string
      */
@@ -46,10 +48,13 @@ class ClassBuilderTest extends BaseUnitTest
         parent::setUp();
 
         $this->classBuilder = $this->getAccessibleMock(ClassBuilder::class, ['dummy']);
+
         $parserService = new ParserService();
         $printerService = $this->getAccessibleMock(Printer::class, ['dummy']);
+
         $nodeFactory = new NodeFactory();
         $printerService->_set('nodeFactory', $nodeFactory);
+
         $configurationManager = new ExtensionBuilderConfigurationManager();
         $this->classBuilder->_set('parserService', $parserService);
         $this->classBuilder->_set('printerService', $printerService);
@@ -60,45 +65,53 @@ class ClassBuilderTest extends BaseUnitTest
     /**
      * @test
      */
-    public function classBuilderGeneratesSetterMethodForSimpleProperty()
+    public function classBuilderGeneratesSetterMethodForSimpleProperty(): void
     {
         $domainObject = $this->buildDomainObject($this->modelName, true, true);
 
         $property0 = new StringProperty('name');
         $domainObject->addProperty($property0);
 
-        $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject,
-            $this->modelClassTemplatePath, false)->getFirstClass();
+        $modelClassObject = $this->classBuilder->generateModelClassFileObject(
+            $domainObject,
+            $this->modelClassTemplatePath,
+            false
+        )->getFirstClass();
 
-        self::assertTrue(is_object($modelClassObject), 'No model class object');
+        self::assertIsObject($modelClassObject, 'No model class object');
         self::assertTrue($modelClassObject->methodExists('setName'), 'No method: setName');
 
         $setNameMethod = $modelClassObject->getMethod('setName');
         $parameters = $setNameMethod->getParameters();
-        self::assertEquals(count($parameters), 1);
+        self::assertCount(1, $parameters);
+
         $firstParameter = array_shift($parameters);
-        self::assertEquals($firstParameter->getName(), 'name');
+        self::assertEquals('name', $firstParameter->getName());
     }
 
     /**
      * @test
      */
-    public function classBuilderGeneratesGetterMethodForSimpleProperty()
+    public function classBuilderGeneratesGetterMethodForSimpleProperty(): void
     {
         $domainObject = $this->buildDomainObject($this->modelName, true, true);
+
         $property0 = new StringProperty('name');
         $property0->setRequired(true);
         $domainObject->addProperty($property0);
 
-        $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject,
-            $this->modelClassTemplatePath, false)->getFirstClass();
+        $modelClassObject = $this->classBuilder->generateModelClassFileObject(
+            $domainObject,
+            $this->modelClassTemplatePath,
+            false
+        )->getFirstClass();
         self::assertTrue($modelClassObject->methodExists('getName'), 'No method: getName');
     }
 
     /**
      * @test
      */
-    public function classBuilderGeneratesIsMethodForBooleanProperty()
+    public function classBuilderGeneratesIsMethodForBooleanProperty(): void
     {
         $domainObject = $this->buildDomainObject($this->modelName, true, true);
 
@@ -106,15 +119,18 @@ class ClassBuilderTest extends BaseUnitTest
         $property->setRequired(true);
         $domainObject->addProperty($property);
 
-        $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject,
-            $this->modelClassTemplatePath, false)->getFirstClass();
+        $modelClassObject = $this->classBuilder->generateModelClassFileObject(
+            $domainObject,
+            $this->modelClassTemplatePath,
+            false
+        )->getFirstClass();
         self::assertTrue($modelClassObject->methodExists('isBlue'), 'No method: isBlue');
     }
 
     /**
      * @test
      */
-    public function classBuilderGeneratesMethodsForRelationProperty()
+    public function classBuilderGeneratesMethodsForRelationProperty(): void
     {
         $modelName2 = 'Model2';
         $propertyName = 'relNames';
@@ -126,32 +142,56 @@ class ClassBuilderTest extends BaseUnitTest
         $relationProperty->setForeignModel($relatedDomainObject);
         $domainObject1->addProperty($relationProperty);
 
-        $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject1,
-            $this->modelClassTemplatePath, false)->getFirstClass();
+        $modelClassObject = $this->classBuilder->generateModelClassFileObject(
+            $domainObject1,
+            $this->modelClassTemplatePath,
+            false
+        )->getFirstClass();
 
-        self::assertTrue($modelClassObject->methodExists('add' . ucfirst(Inflector::singularize($propertyName))),
-            'Add method was not generated');
-        self::assertTrue($modelClassObject->methodExists('remove' . ucfirst(Inflector::singularize($propertyName))),
-            'Remove method was not generated');
-        self::assertTrue($modelClassObject->methodExists('set' . ucfirst($propertyName)), 'Setter was not generated');
-        self::assertTrue($modelClassObject->methodExists('set' . ucfirst($propertyName)), 'Setter was not generated');
+        self::assertTrue(
+            $modelClassObject->methodExists('add' . ucfirst(Inflector::singularize($propertyName))),
+            'Add method was not generated'
+        );
+        self::assertTrue(
+            $modelClassObject->methodExists('remove' . ucfirst(Inflector::singularize($propertyName))),
+            'Remove method was not generated'
+        );
+        self::assertTrue(
+            $modelClassObject->methodExists('set' . ucfirst($propertyName)),
+            'Setter was not generated'
+        );
+        self::assertTrue(
+            $modelClassObject->methodExists('set' . ucfirst($propertyName)),
+            'Setter was not generated'
+        );
 
         $addMethod = $modelClassObject->getMethod('add' . ucfirst(Inflector::singularize($propertyName)));
         self::assertTrue($addMethod->isTaggedWith('param'), 'No param tag set for setter method');
+
         $paramTagValues = $addMethod->getTagValues('param');
-        self::assertTrue((strpos($paramTagValues, $relatedDomainObject->getFullQualifiedClassName()) === 0),
-            'Wrong param tag:' . $paramTagValues);
+        self::assertEquals(
+            0,
+            strpos($paramTagValues, $relatedDomainObject->getFullQualifiedClassName()),
+            'Wrong param tag:' . $paramTagValues
+        );
 
         $parameters = $addMethod->getParameters();
-        self::assertTrue((count($parameters) == 1), 'Wrong parameter count in add method');
+        self::assertCount(1, $parameters, 'Wrong parameter count in add method');
+
         $parameter = current($parameters);
-        self::assertTrue(($parameter->getName() == Inflector::singularize($propertyName)),
-            'Wrong parameter name in add method');
-        self::assertTrue(($parameter->getTypeHint() == $relatedDomainObject->getFullQualifiedClassName()),
-            'Wrong type hint for add method parameter:' . $parameter->getTypeHint());
+        self::assertEquals(
+            Inflector::singularize($propertyName),
+            $parameter->getName(),
+            'Wrong parameter name in add method'
+        );
+        self::assertEquals(
+            $relatedDomainObject->getFullQualifiedClassName(),
+            $parameter->getTypeHint(),
+            'Wrong type hint for add method parameter:' . $parameter->getTypeHint()
+        );
     }
 
-    public function propertyDefaultTypesProviderTypes()
+    public function propertyDefaultTypesProviderTypes(): array
     {
         return [
             'boolean' => ['boolean', false],
@@ -176,17 +216,26 @@ class ClassBuilderTest extends BaseUnitTest
     /**
      * @test
      * @dataProvider propertyDefaultTypesProviderTypes
+     * @param string $propertyName
+     * @param mixed $propertyDefaultValue
+     * @throws FileNotFoundException
+     * @throws SyntaxError
      */
-    public function classBuilderGeneratesPropertyDefault($propertyName, $propertyDefaultValue)
+    public function classBuilderGeneratesPropertyDefault(string $propertyName, $propertyDefaultValue): void
     {
         $domainObject = $this->buildDomainObject($this->modelName, true, true);
+
         $propertyClassName = '\\EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\' . ucfirst($propertyName) . 'Property';
+
         $property = new $propertyClassName($propertyName);
         $domainObject->addProperty($property);
 
         /** @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $modelClassObject */
-        $modelClassObject = $this->classBuilder->generateModelClassFileObject($domainObject,
-            $this->modelClassTemplatePath, false)->getFirstClass();
+        $modelClassObject = $this->classBuilder->generateModelClassFileObject(
+            $domainObject,
+            $this->modelClassTemplatePath,
+            false
+        )->getFirstClass();
 
         $propertyObject = $modelClassObject->getProperty($propertyName);
         self::assertSame($propertyDefaultValue, $propertyObject->getDefault());

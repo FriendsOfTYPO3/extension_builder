@@ -31,7 +31,6 @@ use EBT\ExtensionBuilder\Configuration as Config;
  */
 class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
-
     /**
      * This is the property
      *

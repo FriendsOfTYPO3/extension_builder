@@ -2,7 +2,6 @@
 
 class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithInterfaces implements PHPUnit_Framework_IncompleteTest, PHPUnit_Framework_MockObject_Stub
 {
-
     protected $names;
 
     const TEST = 'test';
@@ -41,7 +40,6 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithInterfaces impleme
     }
 
     /**
-     *
      * @param array $names
      * @return void
      */

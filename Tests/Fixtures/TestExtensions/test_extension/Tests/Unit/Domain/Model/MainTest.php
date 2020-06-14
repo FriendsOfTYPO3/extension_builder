@@ -150,7 +150,6 @@ class MainTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         );
     }
 
-
     /**
      * @test
      */

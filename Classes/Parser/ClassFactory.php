@@ -16,6 +16,11 @@ namespace EBT\ExtensionBuilder\Parser;
  */
 
 use EBT\ExtensionBuilder\Domain\Model;
+use EBT\ExtensionBuilder\Domain\Model\AbstractObject;
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\Method;
+use EBT\ExtensionBuilder\Domain\Model\FunctionObject;
+use EBT\ExtensionBuilder\Domain\Model\NamespaceObject;
 use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 use PhpParser\Comment;
 use PhpParser\Comment\Doc;
@@ -32,17 +37,16 @@ use TYPO3\CMS\Core\SingletonInterface;
  * factory for class objects and related objects (methods, properties etc)
  *
  * builds objects from PHP-Parser nodes
- *
  */
-class ClassFactory implements SingletonInterface
+class ClassFactory implements ClassFactoryInterface, SingletonInterface
 {
     /**
      * @param \PhpParser\Node\Stmt\Class_ $classNode
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+     * @return ClassObject
      */
-    public function buildClassObject(Class_ $classNode)
+    public function buildClassObject(Class_ $classNode): ClassObject
     {
-        $classObject = new Model\ClassObject\ClassObject($classNode->name);
+        $classObject = new ClassObject($classNode->name);
         foreach ($classNode->implements as $interfaceNode) {
             $classObject->addInterfaceName($interfaceNode);
         }
@@ -56,11 +60,11 @@ class ClassFactory implements SingletonInterface
 
     /**
      * @param \PhpParser\Node\Stmt\ClassMethod $methodNode
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
+     * @return Method
      */
-    public function buildClassMethodObject(ClassMethod $methodNode)
+    public function buildClassMethodObject(ClassMethod $methodNode): Method
     {
-        $methodObject = new Model\ClassObject\Method($methodNode->name->name);
+        $methodObject = new Method($methodNode->name->name);
         $methodObject->setModifiers($methodNode->flags);
         $this->addCommentsFromAttributes($methodObject, $methodNode);
         $this->setFunctionProperties($methodNode, $methodObject);
@@ -69,11 +73,11 @@ class ClassFactory implements SingletonInterface
 
     /**
      * @param \PhpParser\Node\Stmt\Function_ $functionNode
-     * @return \EBT\ExtensionBuilder\Domain\Model\FunctionObject
+     * @return FunctionObject
      */
-    public function buildFunctionObject(Function_ $functionNode)
+    public function buildFunctionObject(Function_ $functionNode): FunctionObject
     {
-        $functionObject = new Model\FunctionObject(NodeConverter::getNameFromNode($functionNode->name));
+        $functionObject = new FunctionObject(NodeConverter::getNameFromNode($functionNode->name));
         $this->addCommentsFromAttributes($functionObject, $functionNode);
         $this->setFunctionProperties($functionNode, $functionObject);
         return $functionObject;
@@ -83,7 +87,7 @@ class ClassFactory implements SingletonInterface
      * @param \PhpParser\Node\Stmt\Property $propertyNode
      * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property
      */
-    public function buildPropertyObject(Property $propertyNode)
+    public function buildPropertyObject(Property $propertyNode): \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property
     {
         $propertyName = '';
         $propertyDefault = null;
@@ -108,38 +112,38 @@ class ClassFactory implements SingletonInterface
     }
 
     /**
-     * @param \PhpParser\Node\Stmt\Namespace_ $nameSpaceNode
-     * @return \EBT\ExtensionBuilder\Domain\Model\NamespaceObject
+     * @param Namespace_ $nameSpaceNode
+     * @return NamespaceObject
      */
-    public function buildNamespaceObject(Namespace_ $nameSpaceNode)
+    public function buildNamespaceObject(Namespace_ $nameSpaceNode): NamespaceObject
     {
-        $nameSpaceObject = new Model\NamespaceObject(NodeConverter::getValueFromNode($nameSpaceNode));
+        $nameSpaceObject = new NamespaceObject(NodeConverter::getValueFromNode($nameSpaceNode));
         $this->addCommentsFromAttributes($nameSpaceObject, $nameSpaceNode);
         return $nameSpaceObject;
     }
 
     /**
-     * @param \PhpParser\Node\Stmt $node
-     * @param \EBT\ExtensionBuilder\Domain\Model\FunctionObject $object
-     * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject
+     * @param Stmt $node
+     * @param FunctionObject $object
+     * @return AbstractObject
      */
-    protected function setFunctionProperties(Stmt $node, Model\FunctionObject $object)
+    protected function setFunctionProperties(Stmt $node, FunctionObject $object)
     {
         if (property_exists($node, 'flags')) {
             $object->setModifiers($node->flags);
         }
         $object->setBodyStmts($node->stmts);
-        $position = 0;
         $object->setStartLine($node->getAttribute('startLine'));
         $object->setEndLine($node->getAttribute('endLine'));
         $getVarTypeFromParamTag = false;
         $paramTags = [];
         if ($object->isTaggedWith('param') && is_array($object->getTagValues('param'))) {
             $paramTags = $object->getTagValues('param');
-            if (count($paramTags) == count($node->params)) {
+            if (count($paramTags) === count($node->params)) {
                 $getVarTypeFromParamTag = true;
             }
         }
+        $position = 0;
         /** @var \PhpParser\Builder\Param $param */
         foreach ($node->params as $param) {
             $parameter = new Model\ClassObject\MethodParameter($param->var->name);
@@ -172,10 +176,10 @@ class ClassFactory implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\AbstractObject $object
-     * @param \PhpParser\Node\Stmt $node
+     * @param AbstractObject $object
+     * @param Stmt $node
      */
-    protected function addCommentsFromAttributes(Model\AbstractObject $object, Stmt $node)
+    protected function addCommentsFromAttributes(AbstractObject $object, Stmt $node)
     {
         $comments = $node->getAttribute('comments');
         if (is_array($comments)) {

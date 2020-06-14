@@ -79,7 +79,7 @@ class File extends Container
     /**
      * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject[]
      */
-    public function getClasses()
+    public function getClasses(): array
     {
         if (count($this->namespaces) > 0) {
             return reset($this->namespaces)->getClasses();
@@ -129,7 +129,7 @@ class File extends Container
     /**
      * @return bool
      */
-    public function hasNamespaces()
+    public function hasNamespaces(): bool
     {
         return (count($this->namespaces) > 0);
     }
@@ -137,7 +137,7 @@ class File extends Container
     /**
      * @param string $filePathAndName
      */
-    public function setFilePathAndName($filePathAndName)
+    public function setFilePathAndName(string $filePathAndName): void
     {
         $this->filePathAndName = $filePathAndName;
     }

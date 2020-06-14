@@ -32,7 +32,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      */
-    protected $configurationManager = null;
+    protected $configurationManager;
 
     /**
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
@@ -200,15 +200,11 @@ class ExtensionSchemaBuilder implements SingletonInterface
      * @param array $propertyConfiguration
      * @return void
      */
-    protected function setExtensionProperties(&$extension, $propertyConfiguration)
+    protected function setExtensionProperties(&$extension, $propertyConfiguration): void
     {
-        // name
         $extension->setName(trim($propertyConfiguration['name']));
-        // description
         $extension->setDescription($propertyConfiguration['description']);
-        // extensionKey
         $extension->setExtensionKey(trim($propertyConfiguration['extensionKey']));
-        // vendorName
         $extension->setVendorName(trim($propertyConfiguration['vendorName']));
 
         if (!empty($propertyConfiguration['emConf']['sourceLanguage'])) {
@@ -235,7 +231,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $lines = GeneralUtility::trimExplode(LF, $propertyConfiguration['emConf']['dependsOn']);
             foreach ($lines as $line) {
                 if (strpos($line, '=>')) {
-                    list($extensionKey, $version) = GeneralUtility::trimExplode('=>', $line);
+                    [$extensionKey, $version] = GeneralUtility::trimExplode('=>', $line);
                     $dependencies[$extensionKey] = $version;
                 }
             }
@@ -255,7 +251,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
         $extension->setCategory($category);
 
         // state
-        $state = 0;
+        $state = Extension::STATE_ALPHA;
         switch ($propertyConfiguration['emConf']['state']) {
             case 'alpha':
                 $state = Extension::STATE_ALPHA;
@@ -285,8 +281,10 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $settings = $this->configurationManager->getExtensionSettings($extension->getOriginalExtensionKey());
             // if an extension was renamed, a new extension dir is created and we
             // have to copy the old settings file to the new extension dir
-            copy($this->configurationManager->getSettingsFile($extension->getOriginalExtensionKey()),
-                $this->configurationManager->getSettingsFile($extension->getExtensionKey()));
+            copy(
+                $this->configurationManager->getSettingsFile($extension->getOriginalExtensionKey()),
+                $this->configurationManager->getSettingsFile($extension->getExtensionKey())
+            );
         } else {
             $settings = $this->configurationManager->getExtensionSettings($extension->getExtensionKey());
         }
@@ -300,7 +298,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
      * @param array $personValues
      * @return \EBT\ExtensionBuilder\Domain\Model\Person
      */
-    protected function buildPerson($personValues)
+    protected function buildPerson(array $personValues)
     {
         $person = GeneralUtility::makeInstance(Person::class);
         $person->setName($personValues['name']);
@@ -314,7 +312,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
      * @param array $pluginValues
      * @return \EBT\ExtensionBuilder\Domain\Model\Plugin
      */
-    protected function buildPlugin($pluginValues)
+    protected function buildPlugin(array $pluginValues)
     {
         $plugin = GeneralUtility::makeInstance(Plugin::class);
         $plugin->setName($pluginValues['name']);
@@ -325,7 +323,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $controllerActionCombinations = [];
             $lines = GeneralUtility::trimExplode(LF, $pluginValues['actions']['controllerActionCombinations'], true);
             foreach ($lines as $line) {
-                list($controllerName, $actionNames) = GeneralUtility::trimExplode('=>', $line);
+                [$controllerName, $actionNames] = GeneralUtility::trimExplode('=>', $line);
                 if (!empty($actionNames)) {
                     $controllerActionCombinations[$controllerName] = GeneralUtility::trimExplode(',', $actionNames);
                 }
@@ -333,15 +331,15 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $plugin->setControllerActionCombinations($controllerActionCombinations);
         }
         if (!empty($pluginValues['actions']['noncacheableActions'])) {
-            $noncacheableControllerActions = [];
+            $nonCacheableControllerActions = [];
             $lines = GeneralUtility::trimExplode(LF, $pluginValues['actions']['noncacheableActions'], true);
             foreach ($lines as $line) {
-                list($controllerName, $actionNames) = GeneralUtility::trimExplode('=>', $line);
+                [$controllerName, $actionNames] = GeneralUtility::trimExplode('=>', $line);
                 if (!empty($actionNames)) {
-                    $noncacheableControllerActions[$controllerName] = GeneralUtility::trimExplode(',', $actionNames);
+                    $nonCacheableControllerActions[$controllerName] = GeneralUtility::trimExplode(',', $actionNames);
                 }
             }
-            $plugin->setNoncacheableControllerActions($noncacheableControllerActions);
+            $plugin->setNoncacheableControllerActions($nonCacheableControllerActions);
         }
         if (!empty($pluginValues['actions']['switchableActions'])) {
             $switchableControllerActions = [];
@@ -368,7 +366,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
      * @param array $backendModuleValues
      * @return \EBT\ExtensionBuilder\Domain\Model\BackendModule
      */
-    protected function buildBackendModule($backendModuleValues)
+    protected function buildBackendModule($backendModuleValues): BackendModule
     {
         $backendModule = GeneralUtility::makeInstance(BackendModule::class);
         $backendModule->setName($backendModuleValues['name']);

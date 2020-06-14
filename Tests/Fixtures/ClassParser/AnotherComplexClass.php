@@ -55,7 +55,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
     /**
      * @var \Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
      */
-    private static $instance = null;
+    private static $instance;
 
     protected $classFiles;
     protected $packagePath;
@@ -113,8 +113,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
      */
     public function getComponent($componentName)
     {
-
-        //Avoid component manager creating multiple instances of itself:
+        // Avoid component manager creating multiple instances of itself:
         if (get_class($this) == $componentName) {
             return $this;
         }
@@ -347,8 +346,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
      */
     protected function getComponentScope($componentName, $componentConfiguration)
     {
-        $scope = !is_null($componentConfiguration['scope']) ? $componentConfiguration['scope'] : 'prototype';
-        return $scope;
+        return !is_null($componentConfiguration['scope']) ? $componentConfiguration['scope'] : 'prototype';
     }
 
     /**
@@ -422,7 +420,6 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
 
             if (is_array($this->tsConf['additionalIncludePaths.'])) {
                 foreach ($this->tsConf['additionalIncludePaths.'] as $dir) {
-                    $temp = [];
                     $temp = $this->buildArrayOfClassFiles($dir);
 
                     $this->classFiles = array_merge($temp, $this->classFiles);

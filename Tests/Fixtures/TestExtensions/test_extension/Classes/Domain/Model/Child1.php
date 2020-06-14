@@ -31,7 +31,6 @@ class Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $flag = false;
 
-
     /**
      * Returns the name
      *
@@ -83,5 +82,4 @@ class Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->flag;
     }
-    
 }
