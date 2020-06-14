@@ -70,7 +70,7 @@ class DocComment extends Comment
     /**
      * @return bool
      */
-    public function hasDescription()
+    public function hasDescription(): bool
     {
         return !empty($this->description);
     }
@@ -79,7 +79,7 @@ class DocComment extends Comment
      * @param string $description
      * @return void
      */
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
         $this->description = $description;
         // TODO: enable automated splitting into lines after certain number of characters?
@@ -89,7 +89,7 @@ class DocComment extends Comment
     /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -98,7 +98,7 @@ class DocComment extends Comment
      * @param array $tags
      * @return void
      */
-    public function setTags(array $tags)
+    public function setTags(array $tags): void
     {
         $this->tags = $tags;
     }
@@ -109,7 +109,7 @@ class DocComment extends Comment
      * @param bool $override
      * @return void
      */
-    public function setTag($tagName, $tagValue = null, $override = false)
+    public function setTag(string $tagName, $tagValue = null, bool $override = false)
     {
         if (!$override && isset($this->tags[$tagName])) {
             if (!is_array($this->tags[$tagName])) {
@@ -125,7 +125,7 @@ class DocComment extends Comment
     /**
      * @return array
      */
-    public function getTags()
+    public function getTags(): array
     {
         return $this->tags;
     }
@@ -138,7 +138,7 @@ class DocComment extends Comment
      * @return array The tag's values
      * @throws \InvalidArgumentException
      */
-    public function getTagValues($tagName)
+    public function getTagValues(string $tagName): array
     {
         if (!$this->isTaggedWith($tagName)) {
             throw new \InvalidArgumentException('Tag "' . $tagName . '" does not exist.', 1337645712);
@@ -152,9 +152,9 @@ class DocComment extends Comment
      * @param string $tagName
      * @return void
      */
-    public function removeTag($tagName)
+    public function removeTag($tagName): void
     {
-        //TODO: multiple tags with same tagname must be possible (param etc.)
+        //TODO: multiple tags with same tag name must be possible (param etc.)
         unset($this->tags[$tagName]);
     }
 
@@ -164,9 +164,9 @@ class DocComment extends Comment
      * @param string $tagName The tag name to check for
      * @return bool true the tag exists, otherwise false
      */
-    public function isTaggedWith($tagName)
+    public function isTaggedWith($tagName): bool
     {
-        return (isset($this->tags[$tagName]));
+        return isset($this->tags[$tagName]);
     }
 
     /**
@@ -176,7 +176,7 @@ class DocComment extends Comment
      * @param string $line A line of a doc comment which starts with an @-sign
      * @return void
      */
-    protected function parseTag($line)
+    protected function parseTag(string $line)
     {
         $tagAndValue = [];
         if (preg_match('/@([A-Za-z0-9\\\-]+)(\(.*\))? ?(.*)/', $line, $tagAndValue) === 0) {
@@ -196,7 +196,7 @@ class DocComment extends Comment
      * @param string $value
      * @return void
      */
-    public function setValue($value)
+    public function setValue(string $value): void
     {
         $this->initialize($value);
     }
@@ -204,7 +204,7 @@ class DocComment extends Comment
     /**
      * @return string
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->toString(true);
     }
@@ -215,7 +215,7 @@ class DocComment extends Comment
      * @param bool $singleLineCommentAllowed
      * @return string String representation
      */
-    public function toString($singleLineCommentAllowed = false)
+    public function toString(bool $singleLineCommentAllowed = false)
     {
         $docCommentLines = [];
 

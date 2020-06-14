@@ -55,8 +55,8 @@ class Tx_PhpParser_Test_ClassMethodWithMultilineParameter
         );
         if ($number > 3 && $booleanParam) {
             return 'bar';
-        } else {
-            return 'foo';
         }
+
+        return 'foo';
     }
 }

@@ -20,7 +20,6 @@ require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extens
 
 final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
 {
-
     protected $name='test;';
     private $propertiesInOneLine;
 
@@ -34,7 +33,6 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
     ];
 
     /**
-     *
      * @return string $name
      */
     public function getName()
@@ -104,12 +102,12 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
     }
     const another_Constant = 'r5r_8';
     // single line comment
-public $testProperty4 = 123;
+    public $testProperty4 = 123;
 }
 
 /**
  *  dfg dfg dfg dfg
  */
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility:: extPath('extension_builder') . 'Tests/Fixtures/ClassParser/BasicClass.php');   include_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Fixtures/ClassParser/ComplexClass.php'); // test
+require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Fixtures/ClassParser/BasicClass.php');   include_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Fixtures/ClassParser/ComplexClass.php'); // test
 
 include_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Fixtures/ClassParser/ComplexClass.php'); // test

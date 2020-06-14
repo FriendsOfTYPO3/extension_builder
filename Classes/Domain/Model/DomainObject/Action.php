@@ -34,7 +34,7 @@ class Action
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
      */
-    protected $domainObject = null;
+    protected $domainObject;
     /**
      * Is a template required for this action?
      *
@@ -87,22 +87,20 @@ class Action
      *
      * @var bool|null
      */
-    protected $cacheable = null;
+    protected $cacheable;
 
     /**
-     *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     *
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -111,7 +109,7 @@ class Action
      * DO NOT CALL DIRECTLY! This is being called by addAction() automatically.
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject the domain object this actions belongs to
      */
-    public function setDomainObject(DomainObject $domainObject)
+    public function setDomainObject(DomainObject $domainObject): void
     {
         $this->domainObject = $domainObject;
     }
@@ -119,7 +117,7 @@ class Action
     /**
      * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
      */
-    public function getDomainObject()
+    public function getDomainObject(): DomainObject
     {
         return $this->domainObject;
     }
@@ -129,7 +127,7 @@ class Action
      *
      * @return bool
      */
-    public function getNeedsTemplate()
+    public function getNeedsTemplate(): bool
     {
         if (in_array($this->getName(), $this->actionNamesWithNoRendering)) {
             $this->needsTemplate = false;
@@ -144,7 +142,7 @@ class Action
      *
      * @return bool
      */
-    public function getNeedsForm()
+    public function getNeedsForm(): bool
     {
         if (in_array($this->getName(), $this->actionNamesWithForm)) {
             $this->needsForm = true;
@@ -159,9 +157,9 @@ class Action
      *
      * @return bool
      */
-    public function getNeedsPropertyPartial()
+    public function getNeedsPropertyPartial(): bool
     {
-        if ($this->getName() == 'show') {
+        if ($this->getName() === 'show') {
             $this->needsPropertyPartial = true;
         } else {
             $this->needsPropertyPartial = false;
@@ -174,7 +172,7 @@ class Action
      *
      * @param bool $cacheable
      */
-    public function setCacheable($cacheable)
+    public function setCacheable(bool $cacheable): void
     {
         $this->cacheable = $cacheable;
     }
@@ -184,7 +182,7 @@ class Action
      *
      * @return bool|null $cacheable
      */
-    public function getCacheable()
+    public function getCacheable(): ?bool
     {
         return $this->isCacheable();
     }

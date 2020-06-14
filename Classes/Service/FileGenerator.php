@@ -15,11 +15,13 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Domain\Model\NamespaceObject;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -33,7 +35,7 @@ class FileGenerator
     /**
      * @var \EBT\ExtensionBuilder\Service\ClassBuilder
      */
-    protected $classBuilder = null;
+    protected $classBuilder;
 
     /**
      * @param \EBT\ExtensionBuilder\Service\ClassBuilder $classBuilder
@@ -47,7 +49,7 @@ class FileGenerator
     /**
      * @var \EBT\ExtensionBuilder\Service\RoundTrip
      */
-    protected $roundTripService = null;
+    protected $roundTripService;
 
     /**
      * @param \EBT\ExtensionBuilder\Service\RoundTrip $roundTripService
@@ -67,9 +69,9 @@ class FileGenerator
      */
     protected $codeTemplatePartialPaths = [];
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\Extension
+     * @var Extension
      */
-    protected $extension = null;
+    protected $extension;
     /**
      * @var string
      */
@@ -104,7 +106,7 @@ class FileGenerator
     /**
      * @var \EBT\ExtensionBuilder\Service\Printer
      */
-    protected $printerService = null;
+    protected $printerService;
 
     /**
      * @param \EBT\ExtensionBuilder\Service\Printer $printerService
@@ -151,7 +153,7 @@ class FileGenerator
      * @var \EBT\ExtensionBuilder\Service\LocalizationService
      *
      */
-    protected $localizationService = null;
+    protected $localizationService;
 
     /**
      * @param \EBT\ExtensionBuilder\Service\LocalizationService $localizationService
@@ -166,7 +168,7 @@ class FileGenerator
      * called by controller
      * @param array $settings
      */
-    public function setSettings($settings)
+    public function setSettings(array $settings)
     {
         $this->settings = $settings;
     }
@@ -174,10 +176,10 @@ class FileGenerator
     /**
      * The entry point to the class
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     * @param Extension $extension
      *
      * @throws \Exception
-     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
+     * @throws ExtensionException
      */
     public function build(Extension $extension)
     {
@@ -1363,7 +1365,9 @@ class FileGenerator
                 if ($fileExtension == 'html') {
                     //TODO: We need some kind of protocol to be displayed after code generation
                     return;
-                } elseif (in_array($fileExtension, $this->filesSupportingSplitToken)) {
+                }
+
+                if (in_array($fileExtension, $this->filesSupportingSplitToken)) {
                     $fileContents = $this->insertSplitToken($targetFile, $fileContents);
                 }
             } elseif (file_exists($targetFile) && $overWriteMode == 2) {

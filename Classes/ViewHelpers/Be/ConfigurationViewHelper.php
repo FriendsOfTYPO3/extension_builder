@@ -27,7 +27,7 @@ class ConfigurationViewHelper extends AbstractBackendViewHelper
     /**
      * @var \TYPO3\CMS\Core\Page\PageRenderer
      */
-    private $pageRenderer = null;
+    private $pageRenderer;
 
     public function render()
     {

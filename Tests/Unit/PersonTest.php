@@ -24,7 +24,7 @@ class PersonTest extends BaseUnitTest
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Person
      */
-    protected $person = null;
+    protected $person;
 
     protected function setUp()
     {
@@ -35,7 +35,7 @@ class PersonTest extends BaseUnitTest
     /**
      * @test
      */
-    public function GettersSettersTest()
+    public function gettersSettersTest(): void
     {
         $name = 'John Doe';
         $role = 'Tester';
@@ -47,9 +47,9 @@ class PersonTest extends BaseUnitTest
         $this->person->setEmail($email);
         $this->person->setCompany($company);
 
-        self::assertEquals($this->person->getName(), $name, 'Persons name was set wrong.');
-        self::assertEquals($this->person->getRole(), $role, 'Persons role was set wrong.');
-        self::assertEquals($this->person->getEmail(), $email, 'Persons email was set wrong.');
-        self::assertEquals($this->person->getCompany(), $company, 'Persons company was set wrong.');
+        self::assertEquals($name, $this->person->getName(), 'Persons name was set wrong.');
+        self::assertEquals($role, $this->person->getRole(), 'Persons role was set wrong.');
+        self::assertEquals($email, $this->person->getEmail(), 'Persons email was set wrong.');
+        self::assertEquals($company, $this->person->getCompany(), 'Persons company was set wrong.');
     }
 }

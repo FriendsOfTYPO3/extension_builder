@@ -31,18 +31,18 @@ class Property extends AbstractObject
     /**
      * @var mixed
      */
-    protected $default = null;
+    protected $default;
     /**
      * @var mixed
      */
-    protected $value = null;
+    protected $value;
     /**
      * In case of properties of type array we need to preserve the parsed statements
      * to be able to reapply the original linebrakes.
      *
      * @var \PhpParser\NodeAbstract
      */
-    protected $defaultValueNode = null;
+    protected $defaultValueNode;
 
     /**
      * @param string $name
@@ -55,9 +55,9 @@ class Property extends AbstractObject
 
     /**
      * @param string $name
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property
+     * @return $this
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
         return $this;

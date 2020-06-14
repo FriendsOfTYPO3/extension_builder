@@ -4,7 +4,6 @@ defined('TYPO3_MODE') || die('Access denied.');
 call_user_func(
     function()
     {
-
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
             'FIXTURE.TestExtension',
             'Testplugin',
@@ -27,7 +26,6 @@ call_user_func(
                     'labels' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_testmodule1.xlf',
                 ]
             );
-
         }
 
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('test_extension', 'Configuration/TypoScript', 'ExtensionBuilder Test Extension');
@@ -46,6 +44,5 @@ call_user_func(
 
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_testextension_domain_model_child4', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_child4.xlf');
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_testextension_domain_model_child4');
-
     }
 );

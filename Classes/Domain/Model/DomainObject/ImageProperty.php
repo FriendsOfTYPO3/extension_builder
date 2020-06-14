@@ -22,7 +22,7 @@ class ImageProperty extends AbstractProperty
      *
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
      */
-    protected $defaultValue = null;
+    protected $defaultValue;
     /**
      * flag that this property needs an upload folder
      *
@@ -52,17 +52,17 @@ class ImageProperty extends AbstractProperty
      */
     protected $cascadeRemove = true;
 
-    public function getTypeForComment()
+    public function getTypeForComment(): string
     {
         return '\TYPO3\CMS\Extbase\Domain\Model\FileReference';
     }
 
-    public function getTypeHint()
+    public function getTypeHint(): string
     {
         return '\TYPO3\CMS\Extbase\Domain\Model\FileReference';
     }
 
-    public function getSqlDefinition()
+    public function getSqlDefinition(): string
     {
         return $this->getFieldName() . " int(11) unsigned NOT NULL default '0',";
     }
@@ -119,7 +119,7 @@ class ImageProperty extends AbstractProperty
      *
      * @return string
      */
-    public function getNameToBeDisplayedInFluidTemplate()
+    public function getNameToBeDisplayedInFluidTemplate(): string
     {
         return $this->name . '.originalResource.name';
     }

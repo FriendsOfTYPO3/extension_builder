@@ -28,6 +28,35 @@ class Plugin
     protected $description = '';
 
     /**
+     * @var string
+     */
+    protected $type = '';
+
+    /**
+     * @var string
+     */
+    protected $key = '';
+
+    /**
+     * array('controller' => 'MyController', 'actions' => 'action1,action2')
+     *
+     * @var string[]
+     */
+    protected $controllerActionCombinations = [];
+
+    /**
+     * array('controller' => 'MyController', 'actions' => 'action1,action2')
+     *
+     * @var string[]
+     */
+    protected $noncacheableControllerActions = [];
+
+    /**
+     * @var string[]
+     */
+    protected $switchableControllerActions = [];
+
+    /**
      * @return string
      */
     public function getDescription()
@@ -44,34 +73,9 @@ class Plugin
     }
 
     /**
-     * @var string
-     */
-    protected $type = '';
-    /**
-     * @var string
-     */
-    protected $key = '';
-    /**
-     * array('controller' => 'MyController', 'actions' => 'action1,action2')
-     *
-     * @var string[]
-     */
-    protected $controllerActionCombinations = [];
-    /**
-     * array('controller' => 'MyController', 'actions' => 'action1,action2')
-     *
-     * @var string[]
-     */
-    protected $noncacheableControllerActions = [];
-    /**
-     * @var string[]
-     */
-    protected $switchableControllerActions = [];
-
-    /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -80,7 +84,7 @@ class Plugin
      * @param string $name
      * @return void
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -89,7 +93,7 @@ class Plugin
      * @param string $type
      * @return void
      */
-    public function setType($type)
+    public function setType($type): void
     {
         $this->type = $type;
     }
@@ -97,7 +101,7 @@ class Plugin
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -106,7 +110,7 @@ class Plugin
      * @param string $key
      * @return void
      */
-    public function setKey($key)
+    public function setKey($key): void
     {
         $this->key = strtolower($key);
     }
@@ -114,7 +118,7 @@ class Plugin
     /**
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
@@ -144,12 +148,12 @@ class Plugin
     }
 
     /**
-     * @param array $noncacheableControllerActions
+     * @param array $nonCacheableControllerActions
      * @return void
      */
-    public function setNoncacheableControllerActions(array $noncacheableControllerActions)
+    public function setNoncacheableControllerActions(array $nonCacheableControllerActions)
     {
-        $this->noncacheableControllerActions = $noncacheableControllerActions;
+        $this->noncacheableControllerActions = $nonCacheableControllerActions;
     }
 
     /**

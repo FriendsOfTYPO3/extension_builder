@@ -1,9 +1,9 @@
-.DS_Store
 /.idea*
 /.Build/
-/.phplint-cache
-/composer.lock
 /node_modules*
+/var/
+.DS_Store
+/composer.lock
 
 # created by rendering Documentation with Docker
 /Documentation-GENERATED-temp
