@@ -15,16 +15,6 @@ jobs:
 
     name: P${{ matrix.php }} - T${{ matrix.typo3 }}
 
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_DATABASE: extension_builder
-          MYSQL_ROOT_PASSWORD: password
-        ports:
-          - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -57,8 +47,4 @@ jobs:
         run: .Build/bin/phpunit --colors  -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml Tests/Functional/
         env:
           TYPO3_PATH_WEB: $PWD/.Build/Web
-          typo3DatabaseName: extension_builder
-          typo3DatabaseHost: 127.0.0.1
-          typo3DatabaseUsername: root
-          typo3DatabasePassword: password
-          typo3DatabasePort: ${{ job.services.mysql.ports[3306] }}
+          typo3DatabaseDriver: pdo_sqlite
