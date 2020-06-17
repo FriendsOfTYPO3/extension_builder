@@ -1,101 +1,67 @@
-﻿.. ---------------------------------------------------------------
-   This is the start file. It gets displayed as first page
-   https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us/GeneralConventions/DirectoryFilenames.html#supported-filenames-and-formats
-   ---------------------------------------------------------------
-
-.. ---------------------------------------------------------------
-   More information about creating an extension manual:
-   https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us/WritingDocForExtension/CreateWithExtensionBuilder.html
-   ---------------------------------------------------------------
-
-.. ---------------------------------------------------------------
-   comments start with 2 dots and a blank
-   they can continue on the next line
-   ---------------------------------------------------------------
-
-.. ---------------------------------------------------------------
-   every .rst file should include Includes.txt
-   use correct path!
-   ---------------------------------------------------------------
+.. every .rst file should include Includes.txt
+.. use correct path!
 
 .. include:: Includes.txt
 
-.. ---------------------------------------------------------------
-   Every manual should have a start label for cross-referencing to
-   start page. Do not remove this!
-   ---------------------------------------------------------------
+.. Every manual should have a start label for cross-referencing to
+.. start page. Do not remove this!
 
 .. _start:
-
-.. ---------------------------------------------------------------
-   This is the doctitle
-   ---------------------------------------------------------------
 
 =============================================================
 {extension.name}
 =============================================================
 
-:Extension Key:
-    {extension.extensionKey}
-
 :Version:
-    |release|
+   |release|
 
 :Language:
-    en
+   en
 
-:Copyright:
-    <f:format.date format="Y">NOW</f:format.date>
-
-:Author:
-    <f:for each="{extension.persons}" as="person" iteration="counter"><f:if condition="{counter.index} > 0">, </f:if>{person.name}</f:for>
+:Authors:
+   <f:for each="{extension.persons}" as="person" iteration="counter"><f:if condition="{counter.index} > 0">, </f:if>{person.name}</f:for>
 
 :Email:
-    <f:for each="{extension.persons}" as="person" iteration="counter"><f:if condition="{counter.index} > 0">, </f:if>{person.email}</f:for>
+   <f:for each="{extension.persons}" as="person" iteration="counter"><f:if condition="{counter.index} > 0">, </f:if>{person.email}</f:for>
 
 :License:
-   This extension documentation is published under the `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`__ (Creative Commons) license
-
-
+   This extension documentation is published under the
+   `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`__ (Creative Commons)
+   license
 
 {extension.description}
 
-
-
 **TYPO3**
 
-   The content of this document is related to TYPO3 CMS,
-   a GNU/GPL CMS/Framework available from `typo3.org
-   <https://typo3.org/>`_ .
+The content of this document is related to TYPO3 CMS,
+a GNU/GPL CMS/Framework available from `typo3.org <https://typo3.org/>`_ .
 
-**Community Documentation:**
+**Community Documentation**
 
-    This documentation is community documentation for the TYPO3 extension {extension.name}
+This documentation is community documentation for the TYPO3 extension {extension.name}
 
-    It is maintained as part of this third party extension.
+It is maintained as part of this third party extension.
 
-    If you find an error or something is missing, please:
-    `Report a Problem <https://github.com/TYPO3-Documentation/TYPO3CMS-Example-ExtensionManual/issues/new>`__
+If you find an error or something is missing, please:
+`Report a Problem <https://github.com/TYPO3-Documentation/TYPO3CMS-Example-ExtensionManual/issues/new>`__
 
-**Sitemap:**
+**Extension Manual**
 
-   :ref:`sitemap`
+This documentation is for the TYPO3 extension {extension.extensionKey}.
 
-.. ---------------------------------------------------------------
-   This generates the menu
-   https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us/WritingReST/MenuHierarchy.html
-   ---------------------------------------------------------------
+**For Contributors**
+
+You are welcome to help improve this guide.
+Just click on "Edit me on GitHub" on the top right to submit your change request.
 
 .. toctree::
    :maxdepth: 3
-   :hidden:
 
    Introduction/Index
-   User/Index
+   Editor/Index
    Installation/Index
    Configuration/Index
    Developer/Index
    KnownProblems/Index
-   ToDoList/Index
    ChangeLog/Index
    Sitemap

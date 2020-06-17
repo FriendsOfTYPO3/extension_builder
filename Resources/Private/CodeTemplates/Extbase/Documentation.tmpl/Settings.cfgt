@@ -1,10 +1,8 @@
-# coding: utf-8
-
 # #####
 #
 # Settings.cfg - A TYPO3 Documentation Project's Configuration File
 # Information about Settings.cfg:
-#   https://docs.typo3.org/typo3cms/HowToDocument/GeneralConventions/DirectoryFilenames.html#settings-cfg
+#   https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us/GeneralConventions/DirectoryFilenames.html#settings-cfg
 #
 # About Syntax:
 #   See https://docs.python.org/2/library/configparser.html
@@ -33,7 +31,7 @@ release     = {extension.version}
 # ...  (recommended) displayed in footer
 # .................................................................................
 
-copyright   = Copyright since <f:format.date format="Y">NOW</f:format.date> by <f:for each="{extension.persons}" as="person" iteration="counter"><f:if condition="{counter.index} > 0">, </f:if>{person.name}</f:for>
+copyright   = by <f:for each="{extension.persons}" as="person" iteration="counter"><f:if condition="{counter.index} > 0">, </f:if>{person.name}</f:for>
 
 [html_theme_options]
 
@@ -80,7 +78,7 @@ h2document    = https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us
 # t3coreapi     = https://docs.typo3.org/m/typo3/reference-coreapi/master/en-us/
 # t3editors     = https://docs.typo3.org/m/typo3/tutorial-editors/master/en-us/
 # t3extbasebook = https://docs.typo3.org/m/typo3/book-extbasefluid/master/en-us/Index.html
-# t3install     = https://docs.typo3.org/m/typo3/guide-installation/master/en-us/
+#t3install     = https://docs.typo3.org/m/typo3/guide-installation/master/en-us/
 # t3l10n        = https://docs.typo3.org/m/typo3/guide-frontendlocalization/master/en-us/
 # t3start       = https://docs.typo3.org/m/typo3/tutorial-getting-started/master/en-us/
 # t3sitepackage = https://docs.typo3.org/m/typo3/tutorial-sitepackage/master/en-us/
@@ -95,3 +93,4 @@ t3tsref       = https://docs.typo3.org/m/typo3/reference-typoscript/master/en-us
 # This is required for embedding YouTube videos
 
 any_name_youtube = sphinxcontrib.youtube
+
