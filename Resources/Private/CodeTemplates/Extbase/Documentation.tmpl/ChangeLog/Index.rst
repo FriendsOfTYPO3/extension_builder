@@ -1,16 +1,12 @@
-﻿.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../Includes.txt
-
 
 .. _changelog:
 
-ChangeLog
-=========
+==========
+Change log
+==========
 
-Providing a change log chapter is optional. You can also refer
-users to the ChangeLog file inside the extension or to some repository's
-commit listing.
+Version 1.0.0
+-------------
+
+Use this chapter to inform users of your extension about changes you made with each released version.
