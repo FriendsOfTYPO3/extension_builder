@@ -2,15 +2,12 @@
 
 class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClass
 {
-
     protected $names;
 
     const TEST = 'test';
-
     const TEST2 = 'test';
 
     /**
-     *
      * @return array $names
      */
     public function getNames()
@@ -37,7 +34,6 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClass
     }
 
     /**
-     *
      * @param array $names
      * @return void
      */

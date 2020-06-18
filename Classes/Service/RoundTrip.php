@@ -39,11 +39,11 @@ class RoundTrip implements SingletonInterface
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
-    protected $previousExtension = null;
+    protected $previousExtension;
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
-    protected $extension = null;
+    protected $extension;
     /**
      * if an extension was renamed this property keeps the
      * original extensionDirectory
@@ -78,7 +78,7 @@ class RoundTrip implements SingletonInterface
     /**
      * @var \EBT\ExtensionBuilder\Service\ParserService
      */
-    protected $parserService = null;
+    protected $parserService;
 
     /**
      * @param \EBT\ExtensionBuilder\Service\ParserService $parserService
@@ -92,7 +92,7 @@ class RoundTrip implements SingletonInterface
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      */
-    protected $configurationManager = null;
+    protected $configurationManager;
 
     /**
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
@@ -115,12 +115,12 @@ class RoundTrip implements SingletonInterface
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
      */
-    protected $classObject = null;
+    protected $classObject;
     /**
      * The file object parsed from existing files
      * @var \EBT\ExtensionBuilder\Domain\Model\File
      */
-    protected $classFileObject = null;
+    protected $classFileObject;
     /**
      * @var array
      */
@@ -1177,7 +1177,7 @@ class RoundTrip implements SingletonInterface
                 throw new \Exception('Backup directory is not an allowed absolute path: ' . $backupDir);
             }
         } else {
-            $backupDir = Environment::getProjectPath() . '/'. $backupDir;
+            $backupDir = Environment::getProjectPath() . '/' . $backupDir;
         }
         if (strrpos($backupDir, '/') < strlen($backupDir) - 1) {
             $backupDir .= '/';

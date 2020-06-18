@@ -774,7 +774,7 @@ class FileGenerator
 
     protected function generateEmptyGitRepository()
     {
-        $targetDirectory = $this->extensionDirectory . '.git/';
+        $targetDirectory = $this->extensionDirectory . '.git';
         if (is_file($targetDirectory) || is_dir($targetDirectory) || is_link($targetDirectory)) {
             return;
         }

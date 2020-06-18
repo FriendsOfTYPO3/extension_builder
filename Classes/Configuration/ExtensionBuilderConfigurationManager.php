@@ -15,6 +15,7 @@ namespace EBT\ExtensionBuilder\Configuration;
  * The TYPO3 project - inspiring people to share!
  */
 
+use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -152,13 +153,12 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @param string $extensionKey
      * @return array settings
      */
-    public function getExtensionSettings($extensionKey): array
+    public function getExtensionSettings(string $extensionKey): array
     {
         $settings = [];
         $settingsFile = $this->getSettingsFile($extensionKey);
         if (file_exists($settingsFile)) {
-            $yamlParser = new SpycYAMLParser();
-            $settings = $yamlParser->YAMLLoadString(file_get_contents($settingsFile));
+            $settings = SpycYAMLParser::YAMLLoadString(file_get_contents($settingsFile));
         }
         return $settings;
     }
@@ -263,24 +263,24 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      */
     public function getSettingsFile($extensionKey): string
     {
-        $extensionDir = Environment::getPublicPath() . '/typo3conf/ext/' . $extensionKey . '/';
-        return $extensionDir . self::SETTINGS_DIR . 'settings.yaml';
+        return Environment::getPublicPath() . '/typo3conf/ext/' . $extensionKey . '/' . self::SETTINGS_DIR . 'settings.yaml';
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     * @param Extension $extension
      * @param array $codeTemplateRootPaths
      *
      * @return void
      * @throws \Exception
      */
-    public function createInitialSettingsFile($extension, $codeTemplateRootPaths): void
+    public function createInitialSettingsFile(Extension $extension, array $codeTemplateRootPaths): void
     {
         GeneralUtility::mkdir_deep($extension->getExtensionDir() . self::SETTINGS_DIR);
         $settings = file_get_contents($codeTemplateRootPaths[0] . 'Configuration/ExtensionBuilder/settings.yamlt');
         $settings = str_replace('{extension.extensionKey}', $extension->getExtensionKey(), $settings);
         $settings = str_replace(
-            '{f:format.date(format:\'Y-m-d\\TH:i:s\\Z\',date:\'now\')}', date('Y-m-d\TH:i:s\Z'),
+            '{f:format.date(format:\'Y-m-d\\TH:i:s\\Z\',date:\'now\')}',
+            date('Y-m-d\TH:i:s\Z'),
             $settings
         );
         GeneralUtility::writeFile(
@@ -323,8 +323,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     {
         $extensionConfigurationJson['modules'] = $this->resetOutboundedPositions($extensionConfigurationJson['modules']);
         $extensionConfigurationJson['modules'] = $this->mapAdvancedMode($extensionConfigurationJson['modules']);
-        $extensionConfigurationJson = $this->reArrangeRelations($extensionConfigurationJson);
-        return $extensionConfigurationJson;
+        return $this->reArrangeRelations($extensionConfigurationJson);
     }
 
     /**
@@ -349,7 +348,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
             'foreignRelationClass'
         ];
         foreach ($jsonConfig as &$module) {
-            for ($i = 0; $i < count($module['value']['relationGroup']['relations']); $i++) {
+            for ($i = 0, $relations = count($module['value']['relationGroup']['relations']); $i < $relations; $i++) {
                 if ($prepareForModeler) {
                     if (empty($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
                         $module['value']['relationGroup']['relations'][$i]['advancedSettings'] = [];
@@ -444,7 +443,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
             $parts = explode('_', $wire['src']['terminal']);
             $supposedRelationIndex = $parts[1];
             $uid = $wire['src']['uid'];
-            $wire['src'] = self::findModuleIndexByRelationUid(
+            $wire['src'] = $this->findModuleIndexByRelationUid(
                 $wire['src']['uid'],
                 $jsonConfig['modules'],
                 $wire['src']['moduleId'],
@@ -453,7 +452,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
             $wire['src']['uid'] = $uid;
 
             $uid = $wire['tgt']['uid'];
-            $wire['tgt'] = self::findModuleIndexByRelationUid(
+            $wire['tgt'] = $this->findModuleIndexByRelationUid(
                 $wire['tgt']['uid'],
                 $jsonConfig['modules'],
                 $wire['tgt']['moduleId']
@@ -518,7 +517,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      */
     public function getParentClassForValueObject($extensionKey)
     {
-        $settings = self::getExtensionSettings($extensionKey);
+        $settings = $this->getExtensionSettings($extensionKey);
         if (isset($settings['classBuilder']['Model']['AbstractValueObject']['parentClass'])) {
             $parentClass = $settings['classBuilder']['Model']['AbstractValueObject']['parentClass'];
         } else {
@@ -528,13 +527,13 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     }
 
     /**
-     * @param $extensionKey
+     * @param string $extensionKey
      *
      * @return string
      */
-    public function getParentClassForEntityObject($extensionKey)
+    public function getParentClassForEntityObject(string $extensionKey)
     {
-        $settings = self::getExtensionSettings($extensionKey);
+        $settings = $this->getExtensionSettings($extensionKey);
         if (isset($settings['classBuilder']['Model']['AbstractEntity']['parentClass'])) {
             $parentClass = $settings['classBuilder']['Model']['AbstractEntity']['parentClass'];
         } else {

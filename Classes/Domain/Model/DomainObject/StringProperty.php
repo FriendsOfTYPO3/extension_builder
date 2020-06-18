@@ -23,23 +23,22 @@ class StringProperty extends AbstractProperty
      * @var string
      */
     protected $defaultValue = '';
-
     /**
      * @var bool
      */
     protected $searchable = true;
 
-    public function getTypeForComment()
+    public function getTypeForComment(): string
     {
         return 'string';
     }
 
-    public function getTypeHint()
+    public function getTypeHint(): string
     {
         return '';
     }
 
-    public function getSqlDefinition()
+    public function getSqlDefinition(): string
     {
         return $this->getFieldName() . " varchar(255) DEFAULT '' NOT NULL,";
     }

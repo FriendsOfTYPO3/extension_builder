@@ -27,7 +27,7 @@ class Printer extends Standard
     /**
      * @var \EBT\ExtensionBuilder\Parser\NodeFactory
      */
-    protected $nodeFactory = null;
+    protected $nodeFactory;
     /**
      * @var bool
      */

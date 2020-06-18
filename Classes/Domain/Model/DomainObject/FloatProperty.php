@@ -24,17 +24,17 @@ class FloatProperty extends AbstractProperty
      */
     protected $defaultValue = 0.0;
 
-    public function getTypeForComment()
+    public function getTypeForComment(): string
     {
         return 'float';
     }
 
-    public function getTypeHint()
+    public function getTypeHint(): string
     {
         return '';
     }
 
-    public function getSqlDefinition()
+    public function getSqlDefinition(): string
     {
         return $this->getFieldName() . " double(11,2) DEFAULT '0.00' NOT NULL,";
     }

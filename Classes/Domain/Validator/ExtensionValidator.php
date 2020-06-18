@@ -159,7 +159,7 @@ class ExtensionValidator extends AbstractValidator
     /**
      * @var ExtensionBuilderConfigurationManager
      */
-    protected $configurationManager = null;
+    protected $configurationManager;
     /**
      * can be set in settings.yaml
      *
@@ -599,7 +599,7 @@ class ExtensionValidator extends AbstractValidator
             }
 
             $objectName = $domainObject->getName();
-            $firstChar = $objectName{0};
+            $firstChar = $objectName[0];
             if (strtolower($firstChar) == $firstChar) {
                 $this->validationResult['errors'][] = new ExtensionException(
                     'Illegal first character of domain object name "' . $domainObject->getName() . '". Please use UpperCamelCase.',
@@ -784,7 +784,7 @@ class ExtensionValidator extends AbstractValidator
                 );
             }
 
-            $firstChar = $propertyName{0};
+            $firstChar = $propertyName[0];
             if (strtoupper($firstChar) == $firstChar) {
                 $this->validationResult['errors'][] = new ExtensionException(
                     'Illegal first character of property name "' . $property->getName() . '" of domain object "' .

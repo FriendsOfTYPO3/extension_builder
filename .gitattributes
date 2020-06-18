@@ -1,0 +1,9 @@
+* text=auto
+
+/.github export-ignore
+/Documentation export-ignore
+/Tests export-ignore
+/.editorconfig export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/crowdin.yaml export-ignore

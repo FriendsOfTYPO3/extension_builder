@@ -28,7 +28,7 @@ class RecordTypeViewHelper extends AbstractViewHelper
     /**
      * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
      */
-    protected $configurationManager = null;
+    protected $configurationManager;
 
     /**
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager

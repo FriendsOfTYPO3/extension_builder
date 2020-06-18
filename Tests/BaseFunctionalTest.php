@@ -16,6 +16,7 @@ namespace EBT\ExtensionBuilder\Tests;
  */
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Service\ClassBuilder;
@@ -26,10 +27,9 @@ use EBT\ExtensionBuilder\Service\Printer;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use org\bovigo\vfs\vfsStream;
-use PhpParser\Lexer;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Object\UnknownClassException;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
 abstract class BaseFunctionalTest extends FunctionalTestCase
@@ -58,36 +58,36 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
     /**
      * @var \EBT\ExtensionBuilder\Service\ParserService
      */
-    protected $parserService = null;
+    protected $parserService;
     /**
      * @var \EBT\ExtensionBuilder\Service\Printer
      */
-    protected $printerService = null;
+    protected $printerService;
     /**
      * @var \EBT\ExtensionBuilder\Service\ClassBuilder
      */
-    protected $classBuilder = null;
+    protected $classBuilder;
     /**
      * @var \EBT\ExtensionBuilder\Service\RoundTrip
      */
-    protected $roundTripService = null;
+    protected $roundTripService;
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
      */
-    protected $objectManager = null;
+    protected $objectManager;
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
-    protected $extension = null;
+    protected $extension;
     /**
      * @var \EBT\ExtensionBuilder\Service\FileGenerator
      */
-    protected $fileGenerator = null;
+    protected $fileGenerator;
 
     /**
      * @var \org\bovigo\vfs\vfsStreamDirectory
      */
-    protected $testDir = null;
+    protected $testDir;
 
     protected $testExtensionsToLoad = ['typo3conf/ext/extension_builder'];
 
@@ -116,12 +116,11 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         $this->extension->setVendorName('EBT');
         $this->extension->setExtensionKey('dummy');
         $dummyExtensionDir = 'dummy';
-        $this->extension->expects(
-            self::any())
+        $this->extension->expects(self::any())
             ->method('getExtensionDir')
             ->will(self::returnValue($dummyExtensionDir));
         if (is_dir($dummyExtensionDir)) {
-            GeneralUtility::mkdir($dummyExtensionDir, true);
+            GeneralUtility::mkdir($dummyExtensionDir);
         }
 
         $this->extension->setSettings($settings);
@@ -148,23 +147,27 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
 
         $this->inject($this->fileGenerator, 'roundTripService', $this->roundTripService);
 
-        $this->codeTemplateRootPath = PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
+        $this->codeTemplateRootPath = Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
         $this->modelClassTemplatePath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
 
         $this->fileGenerator->setSettings(
             [
-                'codeTemplateRootPaths.' => [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/'],
-                'codeTemplatePartialPaths.' => [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials'],
+                'codeTemplateRootPaths.' => [Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/'],
+                'codeTemplatePartialPaths.' => [Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials'],
                 'extConf' => [
                     'enableRoundtrip' => '1'
                 ]
             ]
         );
         // needed when sub routines in file generator are called without an initial setup
-        $this->fileGenerator->_set('codeTemplateRootPaths',
-            [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/']);
-        $this->fileGenerator->_set('codeTemplatePartialPaths',
-            [PATH_typo3conf . 'ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials']);
+        $this->fileGenerator->_set(
+            'codeTemplateRootPaths',
+            [Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/']
+        );
+        $this->fileGenerator->_set(
+            'codeTemplatePartialPaths',
+            [Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials']
+        );
         $this->fileGenerator->_set('enableRoundtrip', true);
         $this->fileGenerator->_set('extension', $this->extension);
     }
@@ -181,15 +184,12 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
      * @param $name
      * @param $entity
      * @param $aggregateRoot
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     * @return DomainObject
      */
-    protected function buildDomainObject($name, $entity = false, $aggregateRoot = false)
+    protected function buildDomainObject($name, $entity = false, $aggregateRoot = false): DomainObject
     {
-        $domainObject = $this->getAccessibleMock(
-            'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject',
-            ['dummy']
-        );
-        /* @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
+        /* @var DomainObject $domainObject */
+        $domainObject = $this->getAccessibleMock(DomainObject::class, ['dummy']);
         $domainObject->setExtension($this->extension);
         $domainObject->setName($name);
         $domainObject->setEntity($entity);
@@ -199,7 +199,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
             foreach ($defaultActions as $actionName) {
                 $action = GeneralUtility::makeInstance(Action::class);
                 $action->setName($actionName);
-                if ($actionName == 'deleted') {
+                if ($actionName === 'deleted') {
                     $action->setNeedsTemplate = false;
                 }
                 $domainObject->addAction($action);
@@ -219,26 +219,25 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
      * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
      * @throws \Exception
      */
-    protected function generateInitialModelClassFile($modelName)
+    protected function generateInitialModelClassFile($modelName): void
     {
         $domainObject = $this->buildDomainObject($modelName);
-        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
+        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
         $modelClassDir = 'Classes/Domain/Model/';
         GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
-        self::assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
+        self::assertDirectoryExists($absModelClassDir, 'Directory ' . $absModelClassDir . ' was not created');
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
         GeneralUtility::writeFile($modelClassPath, $classFileContent);
     }
 
-    protected function removeInitialModelClassFile($modelName)
+    protected function removeInitialModelClassFile($modelName): void
     {
-        if (@file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php')) {
-            unlink($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php');
+        $file = $this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php';
+        if (@file_exists($file)) {
+            unlink($file);
         }
-        self::assertFalse(file_exists($this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php'),
-            'Dummy files could not be removed:' . $this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php');
+        self::assertFileNotExists($file, 'Dummy file could not be removed:' . $file);
     }
-
 }

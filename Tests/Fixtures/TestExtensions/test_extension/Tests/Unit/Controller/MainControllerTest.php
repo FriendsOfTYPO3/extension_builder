@@ -8,7 +8,6 @@ namespace FIXTURE\TestExtension\Tests\Unit\Controller;
  */
 class MainControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
-
     /**
      * @var \FIXTURE\TestExtension\Controller\MainController
      */
@@ -33,7 +32,6 @@ class MainControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function listActionFetchesAllMainsFromRepositoryAndAssignsThemToView()
     {
-
         $allMains = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
             ->disableOriginalConstructor()
             ->getMock();

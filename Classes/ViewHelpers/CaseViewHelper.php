@@ -33,13 +33,21 @@ class CaseViewHelper extends AbstractViewHelper
      */
     public function initializeArguments()
     {
-        $this->registerArgument('value', 'mixed', 'The switch value. If it matches, the child will be rendered', false);
-        $this->registerArgument('default', 'boolean',
-            'If this is set, this child will be rendered, if none else matches', false);
+        $this->registerArgument(
+            'value',
+            'mixed',
+            'The switch value. If it matches, the child will be rendered',
+            false
+        );
+        $this->registerArgument(
+            'default',
+            'boolean',
+            'If this is set, this child will be rendered, if none else matches',
+            false
+        );
     }
 
     /**
-     *
      * @return string the contents of this view helper if $value equals the expression of the surrounding switch view helper, or $default is true. otherwise an empty string
      * @throws Exception
      *
@@ -57,20 +65,25 @@ class CaseViewHelper extends AbstractViewHelper
         }
 
         $viewHelperVariableContainer = $this->renderingContext->getViewHelperVariableContainer();
-        if (!$viewHelperVariableContainer->exists('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
+        if (!$viewHelperVariableContainer->exists(
+            SwitchViewHelper::class,
             'switchExpression')) {
             throw new Exception('The case View helper can only be used within a switch View helper', 1368112037);
         }
         if (is_null($value) && $default === false) {
             throw new Exception('The case View helper must have either value or default argument', 1382867521);
         }
-        $switchExpression = $viewHelperVariableContainer->get('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper',
+        $switchExpression = $viewHelperVariableContainer->get(
+            SwitchViewHelper::class,
             'switchExpression');
 
         // non-type-safe comparison by intention
         if ($default === true || $switchExpression == $this->arguments['value']) {
-            $viewHelperVariableContainer->addOrUpdate('EBT\ExtensionBuilder\ViewHelpers\SwitchViewHelper', 'break',
-                true);
+            $viewHelperVariableContainer->addOrUpdate(
+                SwitchViewHelper::class,
+                'break',
+                true
+            );
             return $this->renderChildren();
         }
         return '';
