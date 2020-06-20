@@ -1007,7 +1007,7 @@ class RoundTrip implements SingletonInterface
             return;
         }
         if (!is_file($path . $fileName)) {
-            GeneralUtility::devLog('cleanUp File not found: ' . $path . $fileName, 'extension_builder', 1);
+            self::log('cleanUp File not found: ' . $path . $fileName, 'extension_builder', 1);
             return;
         }
         unlink($path . $fileName);
@@ -1081,14 +1081,15 @@ class RoundTrip implements SingletonInterface
             $existingTca = self::getTcaForDomainObject($domainObject);
             if ($existingTca) {
                 foreach ($domainObject->getAnyToManyRelationProperties() as $relationProperty) {
-                    if (isset($existingTca['columns'][$relationProperty->getName()]['config']['MM'])) {
+                    $relationTableName = GeneralUtility::camelCaseToLowerCaseUnderscored($relationProperty->getName());
+                    if (isset($existingTca['columns'][$relationTableName]['config']['MM'])) {
                         self::log(
                             'Relation table for Model ' . $domainObject->getName() . ' relation ' . $relationProperty->getName(),
                             0,
-                            $existingTca['columns'][$relationProperty->getName()]['config']
+                            $existingTca['columns'][$relationTableName]['config']
                         );
                         $relationProperty->setRelationTableName(
-                            $existingTca['columns'][$relationProperty->getName()]['config']['MM']
+                            $existingTca['columns'][$relationTableName]['config']['MM']
                         );
                     }
                 }
