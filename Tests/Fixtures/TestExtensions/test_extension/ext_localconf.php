@@ -7,11 +7,11 @@ call_user_func(
             'TestExtension',
             'Testplugin',
             [
-                'Main' => 'list, show, new, create, edit, update, delete'
+                \FIXTURE\TestExtension\Controller\MainController::class => 'list, show, new, create, edit, update, delete'
             ],
             // non-cacheable actions
             [
-                'Main' => 'create, update, delete'
+                \FIXTURE\TestExtension\Controller\MainController::class => 'create, update, delete'
             ]
         );
 
