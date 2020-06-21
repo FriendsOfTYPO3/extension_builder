@@ -66,13 +66,6 @@ abstract class AbstractProperty
     protected $value;
 
     /**
-     * Is an upload folder required for this property
-     *
-     * @var bool
-     */
-    protected $needsUploadFolder = false;
-
-    /**
      * The domain object this property belongs to.
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
@@ -483,16 +476,6 @@ abstract class AbstractProperty
         }
 
         return null;
-    }
-
-    /**
-     * Getter for $needsUploadFolder
-     *
-     * @return bool $needsUploadFolder
-     */
-    public function getNeedsUploadFolder(): bool
-    {
-        return $this->needsUploadFolder;
     }
 
     /**

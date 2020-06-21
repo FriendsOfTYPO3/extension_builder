@@ -337,9 +337,6 @@ class BuilderModuleController extends ActionController
             $this->extensionInstallationStatus->setExtension($extension);
             $this->extensionInstallationStatus->setUsesComposerPath($usesComposerPath);
             $message = '<p>The Extension was saved</p>' . $this->extensionInstallationStatus->getStatusMessage();
-            if ($extension->getNeedsUploadFolder()) {
-                $message .= '<br />Notice: File upload is not yet implemented.';
-            }
             $result = ['success' => $message, 'usesComposerPath' => $usesComposerPath];
             if ($this->extensionInstallationStatus->isDbUpdateNeeded()) {
                 $result['confirmUpdate'] = true;

@@ -105,12 +105,6 @@ class Extension
      */
     protected $state = 0;
     /**
-     * Is an upload folder required for this extension
-     *
-     * @var bool
-     */
-    protected $needsUploadFolder = false;
-    /**
      * an array keeping all md5 hashes of all files in the extension to detect modifications
      *
      * @var string[]
@@ -477,9 +471,6 @@ class Extension
                 );
             }
         }
-        if ($domainObject->getNeedsUploadFolder()) {
-            $this->needsUploadFolder = true;
-        }
         $this->domainObjects[$domainObject->getName()] = $domainObject;
     }
 
@@ -751,24 +742,6 @@ class Extension
             $this->renamed = true;
         }
         return $this->renamed;
-    }
-
-    /**
-     * Getter for $needsUploadFolder
-     *
-     * @return bool $needsUploadFolder
-     */
-    public function getNeedsUploadFolder(): bool
-    {
-        return $this->needsUploadFolder;
-    }
-
-    /**
-     * @return string $uploadFolder
-     */
-    public function getUploadFolder(): string
-    {
-        return 'uploads/' . $this->getShortExtensionKey();
     }
 
     /**

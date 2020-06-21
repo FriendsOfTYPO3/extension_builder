@@ -17,7 +17,6 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'John Doe',
     'author_email' => 'mail@typo3.com',
     'state' => 'alpha',
-    'uploadfolder' => true,
     'createDirs' => '',
     'clearCacheOnLoad' => 0,
     'version' => '0.9',
