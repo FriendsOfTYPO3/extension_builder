@@ -96,12 +96,6 @@ class DomainObject
      */
     protected $actions = [];
     /**
-     * Is an upload folder required for this domain object?
-     *
-     * @var bool
-     */
-    protected $needsUploadFolder = false;
-    /**
      * @var string
      */
     protected $mapToTable = '';
@@ -274,9 +268,6 @@ class DomainObject
     public function addProperty(DomainObject\AbstractProperty $property)
     {
         $property->setDomainObject($this);
-        if ($property->getNeedsUploadFolder()) {
-            $this->needsUploadFolder = true;
-        }
         $this->properties[] = $property;
     }
 
@@ -515,14 +506,6 @@ class DomainObject
             }
         }
         return $propertiesWithMappingStatements;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getNeedsUploadFolder()
-    {
-        return $this->needsUploadFolder;
     }
 
     /**

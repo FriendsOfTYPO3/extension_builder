@@ -15,7 +15,6 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'Nico de Haen',
     'author_email' => 'mail@ndh-websolutions.de',
     'state' => 'beta',
-    'uploadfolder' => true,
     'createDirs' => 'uploads/tx_extensionbuilder/backups',
     'version' => '9.11.0',
     'constraints' => [

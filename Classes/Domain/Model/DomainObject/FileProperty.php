@@ -39,12 +39,6 @@ class FileProperty extends AbstractProperty
      */
     protected $disallowedFileTypes = 'php';
     /**
-     * flag that this property needs an upload folder
-     *
-     * @var bool
-     */
-    protected $needsUploadFolder = true;
-    /**
      * @var int
      */
     protected $maxItems = 1;

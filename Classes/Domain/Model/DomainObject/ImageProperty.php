@@ -24,12 +24,6 @@ class ImageProperty extends AbstractProperty
      */
     protected $defaultValue;
     /**
-     * flag that this property needs an upload folder
-     *
-     * @var bool
-     */
-    protected $needsUploadFolder = true;
-    /**
      * allowed file types for this property
      * @var string (comma separated filetypes)
      */
