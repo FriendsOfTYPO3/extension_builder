@@ -8,7 +8,8 @@ in /Configuration/ExtensionBuilder/settings.yaml:
   Resources:
     Private:
       Templates:
-        New.html: keep
+        {domainObject.name}:
+          New.html: keep
 
 Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
