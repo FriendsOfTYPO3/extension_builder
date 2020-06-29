@@ -1,69 +1,66 @@
 {
-  "name": "friendsoftypo3/extension-builder",
-  "type": "typo3-cms-extension",
-  "description": "Tool to kickstart and maintain TYPO3 extensions",
-  "keywords": [
-    "TYPO3",
-    "extension",
-    "extension_builder"
-  ],
-  "homepage": "https://github.com/FriendsOfTYPO3/extension_builder",
-  "license": [
-    "GPL-2.0-or-later"
-  ],
-  "authors": [
-    {
-      "name": "Nico de Haen",
-      "role": "Developer"
-    },
-    {
-      "name": "extension_builder Development Team",
-      "role": "Developer"
-    }
-  ],
-  "require": {
-    "ext-json": "*",
-    "nikic/php-parser": "^4.0",
-    "typo3/cms-core": "^9.5 || ^10",
-    "typo3/cms-backend": "^9.5 || ^10"
-  },
-  "require-dev": {
-    "friendsofphp/php-cs-fixer": "^2",
-    "nimut/testing-framework": "^4",
-    "sebastian/diff": "^3.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "EBT\\ExtensionBuilder\\": "Classes/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "EBT\\ExtensionBuilder\\Tests\\": "Tests/",
-      "TYPO3\\CMS\\Core\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/core/Tests/"
-    }
-  },
-  "replace": {
-    "typo3-ter/extension-builder": "self.version"
-  },
-  "config": {
-    "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin",
-    "preferred-install": {
-      "typo3/cms": "source",
-      "*": "dist"
-    }
-  },
-  "scripts": {
-    "post-autoload-dump": [
-      "mkdir -p .Build/Web/typo3conf/ext/",
-      "[ -L .Build/Web/typo3conf/ext/extension_builder ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/extension_builder"
-    ]
-  },
-  "extra": {
-    "typo3/cms": {
-      "cms-package-dir": "{$vendor-dir}/typo3/cms",
-      "web-dir": ".Build/Web"
-    }
-  }
+	"name": "friendsoftypo3/extension-builder",
+	"type": "typo3-cms-extension",
+	"description": "Tool to kickstart and maintain TYPO3 extensions",
+	"keywords": [
+		"TYPO3",
+		"extension",
+		"extension_builder"
+	],
+	"homepage": "https://github.com/FriendsOfTYPO3/extension_builder",
+	"license": "GPL-2.0-or-later",
+	"authors": [
+		{
+			"name": "Nico de Haen",
+			"role": "Developer"
+		},
+		{
+			"name": "extension_builder Development Team",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"ext-json": "*",
+		"nikic/php-parser": "^4.5",
+		"typo3/cms-backend": "^10.4",
+		"typo3/cms-core": "^10.4"
+	},
+	"require-dev": {
+		"friendsofphp/php-cs-fixer": "^2",
+		"nimut/testing-framework": "^5.0",
+		"sebastian/diff": "^3.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"EBT\\ExtensionBuilder\\": "Classes/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"EBT\\ExtensionBuilder\\Tests\\": "Tests/"
+		}
+	},
+	"replace": {
+		"typo3-ter/extension-builder": "self.version"
+	},
+	"config": {
+		"vendor-dir": ".Build/vendor",
+		"bin-dir": ".Build/bin",
+		"preferred-install": {
+			"typo3/cms": "source",
+			"*": "dist"
+		}
+	},
+	"scripts": {
+		"post-autoload-dump": [
+			"mkdir -p .Build/Web/typo3conf/ext/",
+			"[ -L .Build/Web/typo3conf/ext/extension_builder ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/extension_builder"
+		]
+	},
+	"extra": {
+		"typo3/cms": {
+			"cms-package-dir": "{$vendor-dir}/typo3/cms",
+			"web-dir": ".Build/Web"
+		}
+	}
 }
