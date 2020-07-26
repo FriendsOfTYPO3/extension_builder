@@ -876,7 +876,7 @@ class Extension
             'description' => $this->description,
             'authors' => [],
             'require' => [
-                'typo3/cms-core' => '^9.5'
+                'typo3/cms-core' => '^10.4'
             ],
             'autoload' => [
                 'psr-4' => [
