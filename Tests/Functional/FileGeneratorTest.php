@@ -122,7 +122,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         self::assertTrue($reflection->hasMethod('is' . ucfirst($propertyName)), 'isMethod was not generated');
 
         $setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
-        $parameters = $setterMethod['params'];
+        $parameters = $setterMethod->getParameters();
         self::assertCount(1, $parameters, 'Wrong parameter count in setter method');
 
         $firstParameterName = current(array_keys($parameters));
@@ -164,7 +164,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         self::assertFalse($reflection->hasMethod('is' . ucfirst($propertyName)), 'isMethod should not be generated');
 
         $setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
-        $parameters = $setterMethod['params'];
+        $parameters = $setterMethod->getParameters();
         self::assertCount(1, $parameters, 'Wrong parameter count in setter method');
 
         $firstParameterName = current(array_keys($parameters));

@@ -57,9 +57,9 @@ class RecordTypeViewHelper extends AbstractViewHelper
     public function render()
     {
         $domainObject = $this->arguments['domainObject'];
-        $classSettings = $this->configurationManager->getExtbaseClassConfiguration($domainObject->getParentClass());
-        if (isset($classSettings['recordType'])) {
-            $parentRecordType = Tools::convertClassNameToRecordType($classSettings['recordType']);
+        $recordType = $this->configurationManager->getRecordType($domainObject->getParentClass());
+        if ($recordType) {
+            $parentRecordType = Tools::convertClassNameToRecordType($recordType);
         } else {
             $parentRecordType = Tools::convertClassNameToRecordType($domainObject->getParentClass());
             $existingTypes = $GLOBALS['TCA'][$domainObject->getDatabaseTableName()]['types'];
@@ -69,11 +69,13 @@ class RecordTypeViewHelper extends AbstractViewHelper
                     $parentRecordType = 1;
                 } else {
                     //if it not exists get first existing key
-                    $parentRecordType = reset(array_keys($existingTypes));
+                    $keys = array_keys($existingTypes);
+                    $parentRecordType = reset($keys);
                 }
             }
         }
-        $this->templateVariableContainer->add('parentModelName', end(explode('\\', $domainObject->getParentClass())));
+        $parts = explode('\\', $domainObject->getParentClass());
+        $this->templateVariableContainer->add('parentModelName', end($parts));
         $this->templateVariableContainer->add('parentRecordType', $parentRecordType);
         $content = $this->renderChildren();
         $this->templateVariableContainer->remove('parentRecordType');

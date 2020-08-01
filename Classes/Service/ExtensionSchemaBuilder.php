@@ -102,9 +102,9 @@ class ExtensionSchemaBuilder implements SingletonInterface
                 $domainObject = $this->objectSchemaBuilder->build($singleModule['value']);
                 if ($domainObject->isSubClass() && !$domainObject->isMappedToExistingTable()) {
                     // we try to get the table from Extbase configuration
-                    $classSettings = $this->configurationManager->getExtbaseClassConfiguration($domainObject->getParentClass());
-                    if (isset($classSettings['tableName'])) {
-                        $tableName = $classSettings['tableName'];
+                    $table = $this->configurationManager->getPersistenceTable($domainObject->getParentClass());
+                    if ($table) {
+                        $tableName = $table;
                     } else {
                         // we use the default table name
                         $tableName = Tools::parseTableNameFromClassName($domainObject->getParentClass());

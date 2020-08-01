@@ -171,15 +171,15 @@ class ObjectSchemaBuilder implements SingletonInterface
             }
             $relation->setForeignClassName($relationJsonConfiguration['foreignRelationClass']);
             $relation->setRelatedToExternalModel(true);
-            $extbaseClassConfiguration = $this->configurationManager->getExtbaseClassConfiguration(
+            $tableName = $this->configurationManager->getPersistenceTable(
                 $relationJsonConfiguration['foreignRelationClass']
             );
             if (!empty($relationJsonConfiguration['renderType'])) {
                 $relation->setRenderType($relationJsonConfiguration['renderType']);
             }
-            $foreignDatabaseTableName = $extbaseClassConfiguration['tableName'] ?? Tools::parseTableNameFromClassName(
-                    $relationJsonConfiguration['foreignRelationClass']
-                );
+            $foreignDatabaseTableName = $tableName ?? Tools::parseTableNameFromClassName(
+                $relationJsonConfiguration['foreignRelationClass']
+            );
             $relation->setForeignDatabaseTableName($foreignDatabaseTableName);
             if ($relation instanceof ZeroToManyRelation) {
                 $foreignKeyName = strtolower($domainObject->getName());

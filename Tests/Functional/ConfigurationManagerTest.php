@@ -35,9 +35,9 @@ class ConfigurationManagerTest extends BaseFunctionalTest
     /**
      * @test
      */
-    public function getExtbaseClassConfigurationReturnsCorrectValue(): void
+    public function getPersistenceTableReturnsCorrectValue(): void
     {
-        $classConfiguration = $this->configurationManager->getExtbaseClassConfiguration(FrontendUser::class);
-        self::assertSame($classConfiguration['tableName'], 'fe_users');
+        $tableName = $this->configurationManager->getPersistenceTable(FrontendUser::class);
+        self::assertSame($tableName, 'fe_users');
     }
 }

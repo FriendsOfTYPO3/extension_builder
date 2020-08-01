@@ -647,8 +647,8 @@ class ExtensionValidator extends AbstractValidator
         $tableName = $domainObject->getMapToTable();
         $extensionPrefix = 'Tx_' . $domainObject->getExtension()->getExtensionName() . '_Domain_Model_';
         if (!empty($parentClass)) {
-            $classConfiguration = $this->configurationManager->getExtbaseClassConfiguration($parentClass);
-            if (!isset($classConfiguration['tableName'])) {
+            $tableName = $this->configurationManager->getPersistenceTable($parentClass);
+            if (!$tableName) {
                 if (!$tableName) {
                     $this->validationResult['errors'][] = new ExtensionException(
                         'Mapping configuration error in domain object ' . $domainObject->getName() . ': ' . LF .
@@ -656,9 +656,6 @@ class ExtensionValidator extends AbstractValidator
                         self::ERROR_MAPPING_NO_TABLE
                     );
                 }
-            } else {
-                // get the table name from the parent class configuration
-                $tableName = $classConfiguration['tableName'];
             }
 
             if (!class_exists($parentClass, true)) {
