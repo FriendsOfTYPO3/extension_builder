@@ -18,13 +18,13 @@
  */
 require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Fixtures/ClassParser/BasicClass.php');
 
+const testConstant = '123';
+const testConstant2 = 0.56;
+
 final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
 {
     protected $name='test;';
     private $propertiesInOneLine;
-
-    const testConstant = '123';
-    const testConstant2 = 0.56;
 
     protected $defaultOrderings = [
         'title' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING,

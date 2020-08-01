@@ -32,6 +32,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
 use TYPO3\CMS\Core\Http\JsonResponse;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * Load settings from yaml file and from TYPO3_CONF_VARS extConf
@@ -201,58 +202,16 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     }
 
     /**
-     * This is mainly copied from DataMapFactory.
      *
-     * @param string $className
-     *
-     * @return array with configuration values
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    public function getExtbaseClassConfiguration($className): array
-    {
-        $classConfiguration = [];
-        if (strpos($className, '\\') === 0) {
-            $className = substr($className, 1);
-        }
-        $frameworkConfiguration = $this->configurationManager->getConfiguration($this->configurationManager::CONFIGURATION_TYPE_FRAMEWORK);
-        $classSettings = $frameworkConfiguration['persistence']['classes'][$className];
-        if ($classSettings !== null) {
-            if (isset($classSettings['subclasses']) && is_array($classSettings['subclasses'])) {
-                $classConfiguration['subclasses'] = $classSettings['subclasses'];
-            }
-            if (isset($classSettings['mapping']['recordType']) && strlen($classSettings['mapping']['recordType']) > 0) {
-                $classConfiguration['recordType'] = $classSettings['mapping']['recordType'];
-            }
-            if (isset($classSettings['mapping']['tableName']) && strlen($classSettings['mapping']['tableName']) > 0) {
-                $classConfiguration['tableName'] = $classSettings['mapping']['tableName'];
-            }
-            $classHierachy = array_merge([$className], class_parents($className));
-            $columnMapping = [];
-            foreach ($classHierachy as $currentClassName) {
-                if (in_array(
-                    $currentClassName,
-                    [
-                        AbstractEntity::class,
-                        AbstractValueObject::class
-                    ]
-                )) {
-                    break;
-                }
-                $currentClassSettings = $frameworkConfiguration['persistence']['classes'][$currentClassName];
-                if ($currentClassSettings !== null) {
-                    if (isset($currentClassSettings['mapping']['columns']) && is_array($currentClassSettings['mapping']['columns'])) {
-                        ArrayUtility::mergeRecursiveWithOverrule(
-                            $columnMapping,
-                            $currentClassSettings['mapping']['columns'],
-                            0,
-                            // false means: do not include empty values form 2nd array
-                            false
-                        );
-                    }
-                }
-            }
-        }
-        return $classConfiguration;
+    public function getPersistenceTable($className) {
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        return $objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class)->getDataMap($className)->getTableName();
+    }
+
+    public function getRecordType($className) {
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        return $objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class)->getDataMap($className)->getRecordType();
     }
 
     /**
