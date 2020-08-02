@@ -45,17 +45,11 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
 
         $this->objectSchemaBuilder = $this->getAccessibleMock(ObjectSchemaBuilder::class, ['dummy']);
 
-//        $concreteConfigurationManager = $this->getAccessibleMock(BackendConfigurationManager::class);
-
-        $typoScriptService = new TypoScriptService();
-//        $concreteConfigurationManager->_set('typoScriptService', $typoScriptService);
-
-//        $this->configurationManager = $this->getAccessibleMock(
-//            ExtensionBuilderConfigurationManager::class,
-//            ['getExtbaseClassConfiguration']
-//        );
-//        $this->configurationManager->_set('concreteConfigurationManager', $concreteConfigurationManager);
-//        $this->objectSchemaBuilder->injectConfigurationManager($this->configurationManager);
+        $this->configurationManager = $this->getAccessibleMock(
+            ExtensionBuilderConfigurationManager::class,
+            ['getPersistenceTable']
+        );
+        $this->objectSchemaBuilder->injectConfigurationManager($this->configurationManager);
     }
 
     /**
@@ -123,9 +117,9 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
      */
     public function domainObjectHasExpectedRelations(): void
     {
-        $this->markTestSkipped(
-          'TODO: find a replacement for ConfigurationManager->getClassConfiguration'
-        );
+//        $this->markTestSkipped(
+//          'TODO: find a replacement for ConfigurationManager->getClassConfiguration'
+//        );
         $name = 'MyDomainObject';
         $description = 'My long domain object description';
         $className = '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser';
@@ -175,13 +169,10 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
         $relation2->setForeignDatabaseTableName('fe_users');
         $expected->addProperty($relation2);
 
-        $extbaseConfiguration = [
-            'tableName' => 'fe_users'
-        ];
         $this->configurationManager->expects(self::atLeastOnce())
-            ->method('getExtbaseClassConfiguration')
+            ->method('getPersistenceTable')
             ->with($className)
-            ->will(self::returnValue($extbaseConfiguration));
+            ->will(self::returnValue('fe_users'));
         $actual = $this->objectSchemaBuilder->build($input);
         self::assertEquals($actual, $expected, 'Domain Object not built correctly.');
     }
@@ -191,9 +182,6 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
      */
     public function manyToManyRelationReturnsCorrectRelationTable(): void
     {
-        $this->markTestSkipped(
-          'TODO: find a replacement for ConfigurationManager->getClassConfiguration'
-        );
         $name = 'MyDomainObject';
         $description = 'My long domain object description';
         $relationName = 'Relation1';
@@ -218,13 +206,10 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
             ],
         ];
 
-        $extbaseConfiguration = [
-            'tableName' => 'fe_users'
-        ];
         $this->configurationManager->expects(self::atLeastOnce())
-            ->method('getExtbaseClassConfiguration')
+            ->method('getPersistenceTable')
             ->with($className)
-            ->will(self::returnValue($extbaseConfiguration));
+            ->will(self::returnValue('fe_users'));
 
         $domainObject = $this->objectSchemaBuilder->build($input);
         $dummyExtension = new Extension();
@@ -249,9 +234,6 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
      */
     public function anyToManyRelationHasExpectedProperties(): void
     {
-        $this->markTestSkipped(
-          'TODO: find a replacement for ConfigurationManager->getClassConfiguration'
-        );
         $domainObjectName1 = 'DomainObject1';
         $domainObjectName2 = 'DomainObject2';
         $description = 'My long domain object description';
@@ -299,9 +281,6 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
      */
     public function anyToManyRelationToForeignClassBuildsCorrectRelationTableName(): void
     {
-        $this->markTestSkipped(
-          'TODO: find a replacement for ConfigurationManager->getClassConfiguration'
-        );
         $domainObjectName1 = 'DomainObject1';
         $description = 'My long domain object description';
         $relationName = 'Relation1';
@@ -326,13 +305,10 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
             ],
         ];
 
-        $extbaseConfiguration = [
-            'tableName' => 'fe_users'
-        ];
         $this->configurationManager->expects(self::atLeastOnce())
-            ->method('getExtbaseClassConfiguration')
+            ->method('getPersistenceTable')
             ->with($className)
-            ->will(self::returnValue($extbaseConfiguration));
+            ->will(self::returnValue('fe_users'));
 
         $domainObject1 = $this->objectSchemaBuilder->build($input);
 
