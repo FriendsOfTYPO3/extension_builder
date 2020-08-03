@@ -2,8 +2,8 @@
 <k:openingTag>f:be.container</k:openingTag>
     <div class="module">
         <div class="module-docheader t3js-module-docheader">
-            <div class="module-docheader-functions">
-                <div class="left">
+            <div class="module-docheader-bar module-docheader-bar-navigation row">
+                <div class="module-docheader-bar-column-left">
                     <k:openingTag>f:be.buttons.csh /</k:openingTag>
                     <k:openingTag>f:be.menus.actionMenu</k:openingTag>
                         <k:openingTag>f:be.menus.actionMenuItem label="Overview" controller="{domainObject.name}" action="list" /</k:openingTag>
@@ -16,16 +16,16 @@
                         </k:format.removeMultipleNewlines>
                     <k:openingTag>/f:be.menus.actionMenu</k:openingTag>
                 </div>
-                <div class="right">
+                <div class="module-docheader-bar-column-right">
                     <k:openingTag>f:be.pagePath /</k:openingTag>
                     <k:openingTag>f:be.pageInfo /</k:openingTag>
                 </div>
             </div>
-            <div class="module-docheader-buttons">
-                <div class="left">
+            <div class="module-docheader-bar module-docheader-bar-buttons">
+                <div class="module-docheader-bar-column-left">
 
                 </div>
-                <div class="right">
+                <div class="module-docheader-bar-column-right">
                     <k:openingTag>f:be.buttons.shortcut /</k:openingTag>
                 </div>
             </div>
