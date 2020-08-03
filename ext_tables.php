@@ -6,12 +6,12 @@ if (TYPO3_MODE === 'BE') {
      * Register Backend Module
      */
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-        'EBT.ExtensionBuilder',
+        'ExtensionBuilder',
         'tools',
         'extensionbuilder',
         '',
         [
-            'BuilderModule' => 'index,domainmodelling,dispatchRpc',
+            \EBT\ExtensionBuilder\Controller\BuilderModuleController::class => 'index,domainmodelling,dispatchRpc',
         ],
         [
             'access' => 'user,group',

@@ -25,9 +25,9 @@ call_user_func(
                 '{backendModule.key}', // Submodule key
                 '', // Position
                 [<f:if condition="{backendModule.controllerActionCombinations}"><f:then>
-                    <f:for each="{backendModule.controllerActionCombinations}" as="actionNames" key="controllerName">'{controllerName}' => '<f:for each="{actionNames}" as="actionName" iteration="i">{actionName}<f:if condition="{i.isLast} == 0">, </f:if></f:for>',
+                    <f:for each="{backendModule.controllerActionCombinations}" as="actionNames" key="controllerName">\{extension.vendorName}\{extension.extensionName}\Controller\{controllerName}Controller::class => '<f:for each="{actionNames}" as="actionName" iteration="i">{actionName}<f:if condition="{i.isLast} == 0">, </f:if></f:for>',
                     </f:for></f:then><f:else>
-                    <f:for each="{extension.domainObjectsForWhichAControllerShouldBeBuilt}" as="domainObject">'{domainObject.name}' => '<f:for each="{domainObject.actions}" as="action" iteration="actionIterator">{action.name}<f:if condition="{actionIterator.isLast} == 0">, </f:if></f:for>',</f:for></f:else></f:if>
+                    <f:for each="{extension.domainObjectsForWhichAControllerShouldBeBuilt}" as="domainObject">\{extension.vendorName}\{extension.extensionName}\Controller\{domainObject.name}Controller::class => '<f:for each="{domainObject.actions}" as="action" iteration="actionIterator">{action.name}<f:if condition="{actionIterator.isLast} == 0">, </f:if></f:for>',</f:for></f:else></f:if>
                 ],
                 [
                     'access' => 'user,group',
