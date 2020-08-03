@@ -202,14 +202,21 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     }
 
     /**
-     *
+     * @param $className string
+     * @return string
      */
-    public function getPersistenceTable($className) {
+    public function getPersistenceTable($className)
+    {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         return $objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class)->getDataMap($className)->getTableName();
     }
 
-    public function getRecordType($className) {
+    /**
+     * @param $className
+     * @return string
+     */
+    public function getRecordType($className)
+    {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         return $objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class)->getDataMap($className)->getRecordType();
     }
