@@ -33,6 +33,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
 /**
  * Load settings from yaml file and from TYPO3_CONF_VARS extConf
@@ -208,7 +209,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     public function getPersistenceTable($className)
     {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        return $objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class)->getDataMap($className)->getTableName();
+        return $objectManager->get(DataMapper::class)->getDataMap($className)->getTableName();
     }
 
     /**
@@ -218,7 +219,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     public function getRecordType($className)
     {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        return $objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class)->getDataMap($className)->getRecordType();
+        return $objectManager->get(DataMapper::class)->getDataMap($className)->getRecordType();
     }
 
     /**
