@@ -77,7 +77,7 @@ Enter the basic meta data for your extension in the left panel of the modeler:
 Adding plugins
 ``````````````
 
-Every extension that should generate output in the front-end needs a plugin. It will be shown in the "plugin type" field
+Every extension that should generate output in the frontend needs a plugin. It will be shown in the "plugin type" field
 of the content element "Plugin". You can add it to your extension in the left panel:
 
 +--------+---------------------------------------------------------+
@@ -142,7 +142,7 @@ Each property has these fields:
 +----------------+-----------------------------------------+----------------------------------------------------------------------------+
 
 
-The front-end form handling of the property types file and image are not yet implemented, due to a missing implementation in extbase.
+The frontend form handling of the property types file and image are not yet implemented, due to a missing implementation in extbase.
 You have to implement the upload handling yourself! The property select list has no configuration options in the modeler
 yet. You have to add the items list in the TCA configuration.
 
