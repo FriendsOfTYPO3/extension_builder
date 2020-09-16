@@ -81,27 +81,27 @@ Every extension that should generate output in the frontend needs a plugin. It w
 of the content element "Plugin". You can add it to your extension in the left panel:
 
 +--------+---------------------------------------------------------+
-|**Name**|A short, speaking name that is displayed in the backend |
+|**Name**|A short, speaking name that is displayed in the backend  |
 +--------+---------------------------------------------------------+
 |**Key** |A unique key to identify the plugin in your extension    |
 +--------+---------------------------------------------------------+
 
 
 Adding backend modules
-```````````````````````
+``````````````````````
 
 If your extension needs a module in the backend you have to add it in the left panel:
 
 +---------------+---------------------------------------------------------------------+
-|**Name**       |A short, speaking name that is displayed in the backend             |
+|**Name**       |A short, speaking name that is displayed in the backend              |
 +---------------+---------------------------------------------------------------------+
 |**Key**        |A unique key to identify the module in your extension                |
 +---------------+---------------------------------------------------------------------+
-|**Description**|Here you can describe what your backend module does                 |
+|**Description**|Here you can describe what your backend module does                  |
 +---------------+---------------------------------------------------------------------+
 |**Tab label**  |A tooltip that is displayed on mouseover                             |
 +---------------+---------------------------------------------------------------------+
-|**Main module**|The section in the backends left menu, where your module is located |
+|**Main module**|The section in the backends left menu, where your module is located  |
 +---------------+---------------------------------------------------------------------+
 
 Creating a model
