@@ -80,11 +80,11 @@ Adding plugins
 Every extension that should generate output in the frontend needs a plugin. It will be shown in the "plugin type" field
 of the content element "Plugin". You can add it to your extension in the left panel:
 
-+--------+---------------------------------------------------------+
-|**Name**|A short, speaking name that is displayed in the backend  |
-+--------+---------------------------------------------------------+
-|**Key** |A unique key to identify the plugin in your extension    |
-+--------+---------------------------------------------------------+
++--------+-------------------------------------------------------+
+|**Name**|A short, speaking name that is displayed in the backend|
++--------+-------------------------------------------------------+
+|**Key** |A unique key to identify the plugin in your extension  |
++--------+-------------------------------------------------------+
 
 
 Adding backend modules
@@ -92,17 +92,17 @@ Adding backend modules
 
 If your extension needs a module in the backend you have to add it in the left panel:
 
-+---------------+---------------------------------------------------------------------+
-|**Name**       |A short, speaking name that is displayed in the backend              |
-+---------------+---------------------------------------------------------------------+
-|**Key**        |A unique key to identify the module in your extension                |
-+---------------+---------------------------------------------------------------------+
-|**Description**|Here you can describe what your backend module does                  |
-+---------------+---------------------------------------------------------------------+
-|**Tab label**  |A tooltip that is displayed on mouseover                             |
-+---------------+---------------------------------------------------------------------+
-|**Main module**|The section in the backends left menu, where your module is located  |
-+---------------+---------------------------------------------------------------------+
++---------------+-------------------------------------------------------------------+
+|**Name**       |A short, speaking name that is displayed in the backend            |
++---------------+-------------------------------------------------------------------+
+|**Key**        |A unique key to identify the module in your extension              |
++---------------+-------------------------------------------------------------------+
+|**Description**|Here you can describe what your backend module does                |
++---------------+-------------------------------------------------------------------+
+|**Tab label**  |A tooltip that is displayed on mouseover                           |
++---------------+-------------------------------------------------------------------+
+|**Main module**|The section in the backends left menu, where your module is located|
++---------------+-------------------------------------------------------------------+
 
 Creating a model
 ````````````````
@@ -196,17 +196,17 @@ Try to fix the error and save again. Be aware: your model configuration will be 
 
 The Extension Builder still has many limitations. The main missing features are:
 
-+----------------------+----------------------------------------------------------------------------+
-|TCA                   |Many TCA configurations are not yet configurable in the modeler             |
-+----------------------+----------------------------------------------------------------------------+
-|Extend existing models|There is no reliable implementation to extend existing models               |
-+----------------------+----------------------------------------------------------------------------+
-|SQL field types       |You can't fine tune the database field types                                |
-+----------------------+----------------------------------------------------------------------------+
-|Class hierarchy       |You can't extend models of extensions that are not activated                |
-+----------------------+----------------------------------------------------------------------------+
-|Non SQL persistence   |You can't create models that should not be persisted in the database        |
-+----------------------+----------------------------------------------------------------------------+
++----------------------+--------------------------------------------------------------------+
+|TCA                   |Many TCA configurations are not yet configurable in the modeler     |
++----------------------+--------------------------------------------------------------------+
+|Extend existing models|There is no reliable implementation to extend existing models       |
++----------------------+--------------------------------------------------------------------+
+|SQL field types       |You can't fine tune the database field types                        |
++----------------------+--------------------------------------------------------------------+
+|Class hierarchy       |You can't extend models of extensions that are not activated        |
++----------------------+--------------------------------------------------------------------+
+|Non SQL persistence   |You can't create models that should not be persisted in the database|
++----------------------+--------------------------------------------------------------------+
 
 
 .. toctree::
