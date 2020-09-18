@@ -30,12 +30,12 @@ Creating a new extension
 Naming conventions
 ``````````````````
 
-When to use uppercase, lowercase or CamelCase and other restricions:
+When to use uppercase, lowercase or CamelCase and other restrictions:
 
 +-------------------+-----------------------------------------------------+-------------------+
 |**Property**       |**Restriction**                                      |**Scope**          |
 +-------------------+-----------------------------------------------------+-------------------+
-|extension_key      |lowercase, alpha numeric,no space                    |Unique in TER      |
+|extension_key      |lowercase, alpha numeric and -_, no space            |Unique in TER      |
 |                   |prefix not:\tx_\|u_\|user_\|pages_\|tt_\|sys_\|csh_  |                   |
 +-------------------+-----------------------------------------------------+-------------------+
 |Extension Name     |No restrictions                                      |Unique in TER      |
@@ -80,11 +80,11 @@ Adding plugins
 Every extension that should generate output in the frontend needs a plugin. It will be shown in the "plugin type" field
 of the content element "Plugin". You can add it to your extension in the left panel:
 
-+--------+--------------------------------------------------------+
-|**Name**|A short, speaking name that is displayed in the backend |
-+--------+--------------------------------------------------------+
-|**Key** |A unique key to identify the plugin in your extension   |
-+--------+--------------------------------------------------------+
++--------+-------------------------------------------------------+
+|**Name**|A short, speaking name that is displayed in the backend|
++--------+-------------------------------------------------------+
+|**Key** |A unique key to identify the plugin in your extension  |
++--------+-------------------------------------------------------+
 
 
 Adding backend modules
@@ -92,17 +92,17 @@ Adding backend modules
 
 If your extension needs a module in the backend you have to add it in the left panel:
 
-+---------------+--------------------------------------------------------------------+
-|**Name**       |A short, speaking name that is displayed in the backend             |
-+---------------+--------------------------------------------------------------------+
-|**Key**        |A unique key to identify the module in your extension               |
-+---------------+--------------------------------------------------------------------+
-|**Description**|Here you can describe what your backend module does                 |
-+---------------+--------------------------------------------------------------------+
-|**Tab label**  |A tooltip that is displayed on mouseover                            |
-+---------------+--------------------------------------------------------------------+
-|**Main module**|The section in the backends left menu, where your module is located |
-+---------------+--------------------------------------------------------------------+
++---------------+-------------------------------------------------------------------+
+|**Name**       |A short, speaking name that is displayed in the backend            |
++---------------+-------------------------------------------------------------------+
+|**Key**        |A unique key to identify the module in your extension              |
++---------------+-------------------------------------------------------------------+
+|**Description**|Here you can describe what your backend module does                |
++---------------+-------------------------------------------------------------------+
+|**Tab label**  |A tooltip that is displayed on mouseover                           |
++---------------+-------------------------------------------------------------------+
+|**Main module**|The section in the backends left menu, where your module is located|
++---------------+-------------------------------------------------------------------+
 
 Creating a model
 ````````````````
@@ -192,21 +192,21 @@ Saving the extension
 
 Click on the Save button at the bottom of the modeler. It might take some time, until all files are written to disk.
 If an error occures, in most cases an error message will be displayed (for example in an invalid name was choosen).
-Try to fix the error and save again. Be aware: you model configuration will be lost, if you close the browser window before a successfull saving.
+Try to fix the error and save again. Be aware: your model configuration will be lost, if you close the browser window before a successfull saving.
 
 The Extension Builder still has many limitations. The main missing features are:
 
-+----------------------+----------------------------------------------------------------------------+
-|TCA                   |Many TCA configurations are not yet configurable in the modeler             |
-+----------------------+----------------------------------------------------------------------------+
-|Extend existing models|There is no reliable implementation to extend existing models               |
-+----------------------+----------------------------------------------------------------------------+
-|SQL field types       |You can't fine tune the database field types                                |
-+----------------------+----------------------------------------------------------------------------+
-|Class hierarchy       |You can't extend models of extensions that are not installed                |
-+----------------------+----------------------------------------------------------------------------+
-|Non SQL persistence   |You can't create models that should not be persisted in the database        |
-+----------------------+----------------------------------------------------------------------------+
++----------------------+--------------------------------------------------------------------+
+|TCA                   |Many TCA configurations are not yet configurable in the modeler     |
++----------------------+--------------------------------------------------------------------+
+|Extend existing models|There is no reliable implementation to extend existing models       |
++----------------------+--------------------------------------------------------------------+
+|SQL field types       |You can't fine tune the database field types                        |
++----------------------+--------------------------------------------------------------------+
+|Class hierarchy       |You can't extend models of extensions that are not activated        |
++----------------------+--------------------------------------------------------------------+
+|Non SQL persistence   |You can't create models that should not be persisted in the database|
++----------------------+--------------------------------------------------------------------+
 
 
 .. toctree::
