@@ -18,7 +18,7 @@ call_user_func(
                 'testmodule1', // Submodule key
                 '', // Position
                 [
-                    'Main' => 'list, show, new, create, edit, update, delete',
+                    \FIXTURE\TestExtension\Controller\MainController::class => 'list, show, new, create, edit, update, delete',
                 ],
                 [
                     'access' => 'user,group',
