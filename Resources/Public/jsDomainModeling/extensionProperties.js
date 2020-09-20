@@ -313,16 +313,6 @@ extbaseModeling_wiringEditorLanguage.propertiesFields =
 											cols: 38,
 											rows: 3
 										}
-									},
-									{
-										type: "text",
-										inputParams: {
-											name: "switchableActions",
-											label: TYPO3.settings.extensionBuilder._LOCAL_LANG.switchableActions,
-											description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_switchableActions,
-											cols: 38,
-											rows: 3
-										}
 									}
 								]
 							}

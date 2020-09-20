@@ -341,24 +341,6 @@ class ExtensionSchemaBuilder implements SingletonInterface
             }
             $plugin->setNoncacheableControllerActions($nonCacheableControllerActions);
         }
-        if (!empty($pluginValues['actions']['switchableActions'])) {
-            $switchableControllerActions = [];
-            $lines = GeneralUtility::trimExplode(LF, $pluginValues['actions']['switchableActions'], true);
-            $switchableAction = [];
-            foreach ($lines as $line) {
-                if (strpos($line, '->') === false) {
-                    if (isset($switchableAction['label'])) {
-                        // start a new array
-                        $switchableAction = [];
-                    }
-                    $switchableAction['label'] = trim($line);
-                } else {
-                    $switchableAction['actions'] = GeneralUtility::trimExplode(';', $line, true);
-                    $switchableControllerActions[] = $switchableAction;
-                }
-            }
-            $plugin->setSwitchableControllerActions($switchableControllerActions);
-        }
         return $plugin;
     }
 

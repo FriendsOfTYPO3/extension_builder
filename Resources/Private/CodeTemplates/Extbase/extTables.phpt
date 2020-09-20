@@ -10,10 +10,6 @@ call_user_func(
             '<k:format.uppercaseFirst>{plugin.key}</k:format.uppercaseFirst>',
             '<k:format.quoteString>{plugin.name}</k:format.quoteString>'
         );
-<f:if condition="{plugin.switchableControllerActions}">
-        $pluginSignature = str_replace('_', '', '{extension.extensionKey}') . '_{plugin.key}';
-        $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:{extension.extensionKey}/Configuration/FlexForms/flexform_{plugin.key}.xml');</f:if>
 </f:for>
 
 <f:if condition="{extension.BackendModules}">

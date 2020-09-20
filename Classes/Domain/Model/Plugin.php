@@ -52,11 +52,6 @@ class Plugin
     protected $noncacheableControllerActions = [];
 
     /**
-     * @var string[]
-     */
-    protected $switchableControllerActions = [];
-
-    /**
      * @return string
      */
     public function getDescription()
@@ -167,20 +162,4 @@ class Plugin
         return $this->noncacheableControllerActions;
     }
 
-    /**
-     * @param array $switchableControllerActions
-     * @return void
-     */
-    public function setSwitchableControllerActions($switchableControllerActions)
-    {
-        $this->switchableControllerActions = $switchableControllerActions;
-    }
-
-    /**
-     * @return array
-     */
-    public function getSwitchableControllerActions()
-    {
-        return $this->switchableControllerActions;
-    }
 }

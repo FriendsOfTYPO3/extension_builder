@@ -196,16 +196,6 @@
 				<source>Typically create, delete and update actions should not be cached. (Same format as above)
 				</source>
 			</trans-unit>
-			<trans-unit id="switchableActions" resname="switchableActions">
-				<source>Switchable actions</source>
-			</trans-unit>
-			<trans-unit id="descr_switchableActions" resname="descr_switchableActions">
-				<source>Make actions switchable in the plugin's form. One line for the label, one for the list of
-					allowed Controller-&gt;action pairs (semicolon separated). Example: &lt;br /&gt;Display items&lt;br
-					/&gt;Model-&gt;list; Model-&gt;show;&lt;br /&gt;Admin&lt;br /&gt;Model-&gt;new; Model-&gt;create;
-					Model-&gt;edit; Model-&gt;update;
-				</source>
-			</trans-unit>
 			<trans-unit id="backendModules" resname="backendModules">
 				<source>Backend modules</source>
 			</trans-unit>
