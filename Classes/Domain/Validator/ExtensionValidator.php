@@ -305,24 +305,6 @@ class ExtensionValidator extends AbstractValidator
                 );
             }
         }
-        $switchableActionConfiguration = $plugin->getSwitchableControllerActions();
-        if (is_array($switchableActionConfiguration)) {
-            foreach ($switchableActionConfiguration as $switchableAction) {
-                $configuredActions = [];
-                foreach ($switchableAction['actions'] as $actions) {
-                    // Format should be: Controller->action
-                    [$controllerName, $actionName] = explode('->', $actions);
-                    $configuredActions[] = $actionName;
-                    $this->validateActionConfiguration(
-                        $controllerName,
-                        [$actionName],
-                        'plugin ' . $plugin->getName(),
-                        $extension
-                    );
-                }
-                $this->validateDependentActions($configuredActions, 'plugin ' . $plugin->getName());
-            }
-        }
     }
 
     /**
@@ -439,38 +421,6 @@ class ExtensionValidator extends AbstractValidator
                                 self::ERROR_MISCONFIGURATION
                             );
                         }
-                    }
-                }
-                if (!empty($pluginConfiguration['actions']['switchableActions'])) {
-                    $isValid = true;
-                    $lines = GeneralUtility::trimExplode(LF, $pluginConfiguration['actions']['switchableActions'],
-                        true);
-                    $firstLine = true;
-                    foreach ($lines as $line) {
-                        if ($firstLine) {
-                            // label for flexform select
-                            if (!preg_match('/^[a-zA-Z0-9_\-\s]*$/', $line)) {
-                                $isValid = false;
-                            }
-                            $firstLine = false;
-                        } else {
-                            $parts = GeneralUtility::trimExplode(';', $line, true);
-                            if (count($parts) < 1) {
-                                $isValid = false;
-                            }
-                            foreach ($parts as $part) {
-                                if (!empty($part) && count(GeneralUtility::trimExplode('->', $part, true)) != 2) {
-                                    $isValid = false;
-                                }
-                            }
-                            $firstLine = true;
-                        }
-                    }
-                    if (!$isValid) {
-                        $this->validationResult['warnings'][] = new ExtensionException(
-                            'Wrong format in configuration for switchable ControllerActions in plugin ' . $pluginName,
-                            self::ERROR_MISCONFIGURATION
-                        );
                     }
                 }
             }

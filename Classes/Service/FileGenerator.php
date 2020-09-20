@@ -298,27 +298,6 @@ class FileGenerator
             } catch (\Exception $e) {
                 throw new \Exception('Could not write ext_localconf.php. Error: ' . $e->getMessage());
             }
-            $currentPluginKey = '';
-            try {
-                foreach ($this->extension->getPlugins() as $plugin) {
-                    /** @var \EBT\ExtensionBuilder\Domain\Model\Plugin $plugin */
-                    if ($plugin->getSwitchableControllerActions()) {
-                        if (!is_dir($this->extensionDirectory . 'Configuration/FlexForms')) {
-                            $this->mkdir_deep($this->extensionDirectory, 'Configuration/FlexForms');
-                        }
-                        $currentPluginKey = $plugin->getKey();
-                        $fileContents = $this->renderTemplate('Configuration/Flexforms/flexform.xmlt', [
-                            'plugin' => $plugin
-                        ]);
-                        $this->writeFile(
-                            $this->extensionDirectory . 'Configuration/FlexForms/flexform_' . $currentPluginKey . '.xml',
-                            $fileContents
-                        );
-                    }
-                }
-            } catch (\Exception $e) {
-                throw new \Exception('Could not write  flexform_' . $currentPluginKey . '.xml. Error: ' . $e->getMessage());
-            }
         }
     }
 
