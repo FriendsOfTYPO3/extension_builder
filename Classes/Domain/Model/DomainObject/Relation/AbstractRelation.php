@@ -31,7 +31,7 @@ abstract class AbstractRelation extends AbstractProperty
      *
      * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
      */
-    protected $foreignModel;
+    protected $foreignModel = null;
     /**
      * the schema of the foreign class
      *
@@ -90,7 +90,7 @@ abstract class AbstractRelation extends AbstractProperty
     /**
      * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject The foreign class
      */
-    public function getForeignModel(): DomainObject
+    public function getForeignModel(): ?DomainObject
     {
         return $this->foreignModel;
     }
