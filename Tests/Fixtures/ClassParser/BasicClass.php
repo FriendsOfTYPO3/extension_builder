@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClass
 {

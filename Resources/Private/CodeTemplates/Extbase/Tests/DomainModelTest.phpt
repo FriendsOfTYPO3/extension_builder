@@ -1,4 +1,5 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}<?php
+declare(strict_types=1);
 namespace {extension.namespaceName}\Tests\Unit\Domain\Model;
 
 /**
