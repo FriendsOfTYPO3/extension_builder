@@ -64,15 +64,14 @@ class Printer extends Standard
      * @param bool $prependPHPTag
      * @return string
      */
-    public function renderFileObject(File $fileObject, $prependPHPTag = false)
+    public function renderFileObject(File $fileObject, $addDeclareStrictTypes = true)
     {
         $stmts = $this->nodeFactory->getFileStatements($fileObject);
         $resultingCode = $this->render($stmts);
-        if ($prependPHPTag) {
-            return '<?php' . LF . $resultingCode . LF;
+        if ($addDeclareStrictTypes) {
+            $resultingCode = 'declare(strict_types=1);' . LF . LF . $resultingCode;
         }
-
-        return $resultingCode . LF;
+        return '<?php' . LF . $resultingCode . LF;
     }
 
     /**

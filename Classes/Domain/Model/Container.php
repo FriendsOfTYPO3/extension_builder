@@ -263,4 +263,5 @@ class Container extends AbstractObject
     {
         return $this->aliasDeclarations;
     }
+
 }

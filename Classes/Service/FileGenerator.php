@@ -838,7 +838,7 @@ class FileGenerator
         // returns a class object if an existing class was found
         if ($controllerClassFileObject) {
             $this->addLicenseHeader($controllerClassFileObject->getFirstClass());
-            return $this->printerService->renderFileObject($controllerClassFileObject, true);
+            return $this->writeClassFile($controllerClassFileObject);
         }
 
         throw new \Exception('Class file for controller could not be generated');
@@ -866,7 +866,7 @@ class FileGenerator
             $modelTemplateClassPath, $existingClassFileObject);
         if ($modelClassFileObject) {
             $this->addLicenseHeader($modelClassFileObject->getFirstClass());
-            return $this->printerService->renderFileObject($modelClassFileObject, true);
+            return $this->writeClassFile($modelClassFileObject);
         }
 
         throw new \Exception('Class file for domain object could not be generated');
@@ -887,6 +887,7 @@ class FileGenerator
         $classFile->addNamespace($nameSpace);
         return $this->printerService->renderFileObject($classFile, true);
     }
+
 
     /**
      * Generates the code for the repository class
@@ -912,7 +913,7 @@ class FileGenerator
         );
         if ($repositoryClassFileObject) {
             $this->addLicenseHeader($repositoryClassFileObject->getFirstClass());
-            return $this->printerService->renderFileObject($repositoryClassFileObject, true);
+            return $this->writeClassFile($repositoryClassFileObject);
         }
 
         throw new \Exception('Class file for repository could not be generated');
@@ -1321,6 +1322,12 @@ class FileGenerator
         }
 
         throw new \Exception('Unexpected classPath:' . $classPath);
+    }
+
+    protected function writeClassFile($classFileObject) {
+        $extensionSettings = $this->extension->getSettings();
+        $declareStrictTypes = isset($extensionSettings['declareStrictTypes']) ? $extensionSettings['declareStrictTypes'] : true;
+        return $this->printerService->renderFileObject($classFileObject, $declareStrictTypes);
     }
 
     /**

@@ -111,7 +111,7 @@ class NodeFactory implements SingletonInterface
      */
     public function getFileStatements(File $fileObject)
     {
-        $stmts = $this->getContainerStatements($fileObject);
+        $stmts = [];
         if ($fileObject->hasNamespaces()) {
             foreach ($fileObject->getNamespaces() as $namespace) {
                 $stmts[] = $this->buildNamespaceNode($namespace);
@@ -120,6 +120,8 @@ class NodeFactory implements SingletonInterface
                 }
                 $stmts = array_merge($stmts, $this->getContainerStatements($namespace));
             }
+        } else {
+            $stmts = $this->getContainerStatements($fileObject);
         }
         return $stmts;
     }
