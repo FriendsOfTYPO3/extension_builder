@@ -141,5 +141,4 @@ class File extends Container
     {
         $this->filePathAndName = $filePathAndName;
     }
-
 }

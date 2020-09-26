@@ -63,7 +63,7 @@ overwriteSettings:
 
 #  ext_tables.sql: merge
 
-## add declare stric types in php files
+## add declare strict types in php files
 declareStrictTypes: true
 
 ## use static date attribute in xliff files ##
