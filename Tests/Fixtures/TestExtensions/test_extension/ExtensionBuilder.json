@@ -475,7 +475,7 @@
             {
                 "actions": {
                     "controllerActionCombinations": "",
-                    "noncacheableActions": "",
+                    "noncacheableActions": ""
                 },
                 "description": "Just a simple test plugin",
                 "key": "testplugin",
