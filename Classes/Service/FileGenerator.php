@@ -872,21 +872,6 @@ class FileGenerator
         throw new \Exception('Class file for domain object could not be generated');
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
-     *
-     * @return string
-     * @throws \Exception
-     */
-    protected function renderClassFile($classObject)
-    {
-        $nameSpace = new NamespaceObject($classObject->getNamespaceName());
-        $this->addLicenseHeader($classObject);
-        $nameSpace->addClass($classObject);
-        $classFile = new File;
-        $classFile->addNamespace($nameSpace);
-        return $this->printerService->renderFileObject($classFile, true);
-    }
 
 
     /**
@@ -1255,36 +1240,6 @@ class FileGenerator
         return $this->renderTemplate('ext_typoscript_setup.txtt', [
             'extension' => $this->extension
         ]);
-    }
-
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
-     * @param string $classType
-     * @param string $methodType (used for add, get set etc.)
-     * @param string $methodName (used for concrete methods like createAction, initialze etc.)
-     *
-     * @return string method body
-     * @throws \Exception
-     */
-    public function getDefaultMethodBody($domainObject, $domainProperty, $classType, $methodType, $methodName)
-    {
-        if ($classType == 'Controller' && !in_array($methodName, self::$defaultActions)) {
-            return '';
-        }
-        if (!empty($methodType) && empty($methodName)) {
-            $methodName = $methodType;
-        }
-
-        return $this->renderTemplate(
-            'Partials/Classes/' . $classType . '/Methods/' . $methodName . 'MethodBody.phpt',
-            [
-                'domainObject' => $domainObject,
-                'property' => $domainProperty,
-                'extension' => $this->extension,
-                'settings' => $this->settings
-            ]
-        );
     }
 
     /**

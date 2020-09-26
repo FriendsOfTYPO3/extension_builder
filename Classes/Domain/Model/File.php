@@ -44,11 +44,6 @@ class File extends Container
     protected $comment = '';
 
     /**
-     * @var bool
-     */
-    protected $useStrictDeclaration = true;
-
-    /**
      */
     public function __clone()
     {
@@ -147,10 +142,4 @@ class File extends Container
         $this->filePathAndName = $filePathAndName;
     }
 
-    /**
-     * @param bool $useStrict
-     */
-    public function setUseStrictDeclaration(bool $useStrict) {
-        $this->useStrictDeclaration = $useStrict;
-    }
 }
