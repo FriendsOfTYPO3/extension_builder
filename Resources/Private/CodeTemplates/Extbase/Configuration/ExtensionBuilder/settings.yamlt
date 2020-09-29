@@ -63,6 +63,9 @@ overwriteSettings:
 
 #  ext_tables.sql: merge
 
+## add declare strict types in php files
+declareStrictTypes: true
+
 ## use static date attribute in xliff files ##
 #staticDateInXliffFiles: {f:format.date(format:'Y-m-d\TH:i:00\Z',date:'now')}
 

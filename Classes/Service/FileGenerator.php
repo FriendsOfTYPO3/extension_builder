@@ -817,7 +817,7 @@ class FileGenerator
         // returns a class object if an existing class was found
         if ($controllerClassFileObject) {
             $this->addLicenseHeader($controllerClassFileObject->getFirstClass());
-            return $this->printerService->renderFileObject($controllerClassFileObject, true);
+            return $this->writeClassFile($controllerClassFileObject);
         }
 
         throw new \Exception('Class file for controller could not be generated');
@@ -845,27 +845,13 @@ class FileGenerator
             $modelTemplateClassPath, $existingClassFileObject);
         if ($modelClassFileObject) {
             $this->addLicenseHeader($modelClassFileObject->getFirstClass());
-            return $this->printerService->renderFileObject($modelClassFileObject, true);
+            return $this->writeClassFile($modelClassFileObject);
         }
 
         throw new \Exception('Class file for domain object could not be generated');
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
-     *
-     * @return string
-     * @throws \Exception
-     */
-    protected function renderClassFile($classObject)
-    {
-        $nameSpace = new NamespaceObject($classObject->getNamespaceName());
-        $this->addLicenseHeader($classObject);
-        $nameSpace->addClass($classObject);
-        $classFile = new File;
-        $classFile->addNamespace($nameSpace);
-        return $this->printerService->renderFileObject($classFile, true);
-    }
+
 
     /**
      * Generates the code for the repository class
@@ -891,7 +877,7 @@ class FileGenerator
         );
         if ($repositoryClassFileObject) {
             $this->addLicenseHeader($repositoryClassFileObject->getFirstClass());
-            return $this->printerService->renderFileObject($repositoryClassFileObject, true);
+            return $this->writeClassFile($repositoryClassFileObject);
         }
 
         throw new \Exception('Class file for repository could not be generated');
@@ -1236,36 +1222,6 @@ class FileGenerator
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
-     * @param string $classType
-     * @param string $methodType (used for add, get set etc.)
-     * @param string $methodName (used for concrete methods like createAction, initialze etc.)
-     *
-     * @return string method body
-     * @throws \Exception
-     */
-    public function getDefaultMethodBody($domainObject, $domainProperty, $classType, $methodType, $methodName)
-    {
-        if ($classType == 'Controller' && !in_array($methodName, self::$defaultActions)) {
-            return '';
-        }
-        if (!empty($methodType) && empty($methodName)) {
-            $methodName = $methodType;
-        }
-
-        return $this->renderTemplate(
-            'Partials/Classes/' . $classType . '/Methods/' . $methodName . 'MethodBody.phpt',
-            [
-                'domainObject' => $domainObject,
-                'property' => $domainProperty,
-                'extension' => $this->extension,
-                'settings' => $this->settings
-            ]
-        );
-    }
-
-    /**
      * @param string $extensionDirectory
      * @param string $classType
      * @param bool $createDirIfNotExist
@@ -1300,6 +1256,20 @@ class FileGenerator
         }
 
         throw new \Exception('Unexpected classPath:' . $classPath);
+    }
+
+    /**
+     * passes the declareStrictTypes flag from settings
+     * as argument to printer Service
+     *
+     * @param $classFileObject
+     * @return string
+     */
+    protected function writeClassFile($classFileObject)
+    {
+        $extensionSettings = $this->extension->getSettings();
+        $declareStrictTypes = isset($extensionSettings['declareStrictTypes']) ? $extensionSettings['declareStrictTypes'] : true;
+        return $this->printerService->renderFileObject($classFileObject, $declareStrictTypes);
     }
 
     /**
