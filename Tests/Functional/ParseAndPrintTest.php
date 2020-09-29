@@ -58,7 +58,7 @@ class ParseAndPrintTest extends BaseFunctionalTest
         $fileObject = $this->parserService->parseCode($code);
         self::assertEquals(
             GeneralUtility::trimExplode(PHP_EOL, $code),
-            GeneralUtility::trimExplode(PHP_EOL, $this->printerService->renderFileObject($fileObject, true)),
+            GeneralUtility::trimExplode(PHP_EOL, $this->printerService->renderFileObject($fileObject)),
             'File content is not equal'
         );
     }

@@ -137,7 +137,7 @@ class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
                 $this->onFirstLevel = true;
                 $function = $this->classFactory->buildFunctionObject($node);
                 $this->currentContainer->addFunction($function);
-            } elseif (!$node instanceof Node\Name) {
+            } elseif (!$node instanceof Node\Name && !$node instanceof Node\Stmt\Declare_) {
                 // any other nodes (except the name node of the current container node)
                 // go into statements container
                 if ($this->currentContainer->getFirstClass() === false) {
