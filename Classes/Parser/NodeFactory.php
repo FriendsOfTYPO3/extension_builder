@@ -113,17 +113,16 @@ class NodeFactory implements SingletonInterface
     {
         if (!$fileObject->hasNamespaces()) {
             return $this->getContainerStatements($fileObject);
-        } else {
-            $stmts = [];
-            foreach ($fileObject->getNamespaces() as $namespace) {
-                $stmts[] = $this->buildNamespaceNode($namespace);
-                foreach ($namespace->getAliasDeclarations() as $aliasDeclaration) {
-                    $stmts[] = $this->buildUseStatementNode($aliasDeclaration['name'], $aliasDeclaration['alias']);
-                }
-                $stmts = array_merge($stmts, $this->getContainerStatements($namespace));
-            }
-            return $stmts;
         }
+        $stmts = [];
+        foreach ($fileObject->getNamespaces() as $namespace) {
+            $stmts[] = $this->buildNamespaceNode($namespace);
+            foreach ($namespace->getAliasDeclarations() as $aliasDeclaration) {
+                $stmts[] = $this->buildUseStatementNode($aliasDeclaration['name'], $aliasDeclaration['alias']);
+            }
+            $stmts = array_merge($stmts, $this->getContainerStatements($namespace));
+        }
+        return $stmts;
     }
 
     /**
