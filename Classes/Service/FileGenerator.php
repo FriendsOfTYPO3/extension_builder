@@ -1279,7 +1279,15 @@ class FileGenerator
         throw new \Exception('Unexpected classPath:' . $classPath);
     }
 
-    protected function writeClassFile($classFileObject) {
+    /**
+     * passes the declareStrictTypes flag from settings
+     * as argument to printer Service
+     *
+     * @param $classFileObject
+     * @return string
+     */
+    protected function writeClassFile($classFileObject)
+    {
         $extensionSettings = $this->extension->getSettings();
         $declareStrictTypes = isset($extensionSettings['declareStrictTypes']) ? $extensionSettings['declareStrictTypes'] : true;
         return $this->printerService->renderFileObject($classFileObject, $declareStrictTypes);
