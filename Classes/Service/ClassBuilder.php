@@ -292,14 +292,14 @@ class ClassBuilder implements SingletonInterface
             } else {
                 $constructorMethod = $this->classObject->getMethod('__construct');
             }
-            if (preg_match('/\$this->initStorageObjects\\(\\)/',
+            if (preg_match('/\$this->initializeObject\\(\\)/',
                     $this->printerService->render($constructorMethod->getBodyStmts())) < 1) {
                 $this->classObject->setMethod($this->classObject->getMethod('__construct'));
             }
-            $initStorageObjectsMethod = clone($this->templateClassObject->getMethod('initStorageObjects'));
+            $initObjectMethod = clone($this->templateClassObject->getMethod('initializeObject'));
             $methodBodyStmts = [];
-            $templateBodyStmts = $initStorageObjectsMethod->getBodyStmts();
-            $initStorageObjectsMethod->setModifier('protected');
+            $templateBodyStmts = $initObjectMethod->getBodyStmts();
+            $initObjectMethod->setModifier('protected');
             foreach ($anyToManyRelationProperties as $relationProperty) {
                 $methodBodyStmts = array_merge(
                     $methodBodyStmts,
@@ -310,10 +310,10 @@ class ClassBuilder implements SingletonInterface
                     )
                 );
             }
-            $initStorageObjectsMethod->setBodyStmts($methodBodyStmts);
-            $this->classObject->setMethod($initStorageObjectsMethod);
-        } elseif ($this->classObject->methodExists('initStorageObjects')) {
-            $this->classObject->getMethod('initStorageObjects')->setBodyStmts([]);
+            $initObjectMethod->setBodyStmts($methodBodyStmts);
+            $this->classObject->setMethod($initObjectMethod);
+        } elseif ($this->classObject->methodExists('initializeObject')) {
+            $this->classObject->getMethod('initializeObject')->setBodyStmts([]);
         }
     }
 

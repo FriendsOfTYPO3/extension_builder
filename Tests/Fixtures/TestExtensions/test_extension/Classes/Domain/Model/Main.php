@@ -88,21 +88,21 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function __construct()
     {
         //Do not remove the next line: It would break the functionality
-        $this->initStorageObjects();
+        $this->initializeObject();
     }
 
     /**
-     * Initializes all ObjectStorage properties
+     * Initializes all ObjectStorage properties when model is reconstructed from DB (where __construct is not called)
      * Do not modify this method!
      * It will be rewritten on each save in the extension builder
      * You may modify the constructor of this class instead
      *
      * @return void
      */
-    protected function initStorageObjects()
+    protected function initializeObject()
     {
-        $this->children2 = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-        $this->children4 = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->children2 = $this->children2 ?: new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->children4 = $this->children4 ?: new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
     /**

@@ -339,7 +339,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         );
         self::assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)), 'Getter was not generated');
         self::assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)), 'Setter was not generated');
-        self::assertTrue($reflection->hasMethod('initStorageObjects'), 'initStorageObjects was not generated');
+        self::assertTrue($reflection->hasMethod('initializeObject'), 'initializeObject was not generated');
 
         $setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
         $parameters = $setterMethod->getParameters();
