@@ -1,8 +1,5 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}{escaping off}<k:format.trim>
 <f:for each="{extension.domainObjects}" as="domainObject">
-#
-# Table structure for table '{domainObject.databaseTableName}'
-#
 CREATE TABLE {domainObject.databaseTableName} (
 <f:for each="{k:listForeignKeyRelations(domainObject:domainObject)}" as="relation">
 	{relation.foreignKeyName} int(11) unsigned DEFAULT '0' NOT NULL,</f:for>
@@ -20,9 +17,7 @@ CREATE TABLE {domainObject.databaseTableName} (
    <f:groupedFor each="{domainObject.zeroToManyRelationProperties}" as="relationsWithSameForeignTable" groupBy="foreignDatabaseTableName" groupKey="tableName">
       <f:if condition="{tableName}">
         <f:if condition="{relation.renderType} == 'inline'"><f:if condition="{tableName} == 'sys_file_reference'"><f:else>
-#
-# Table structure for table '{tableName}'
-#
+
 CREATE TABLE {tableName} (
 <f:for each="{relationsWithSameForeignTable}" as="relation">
 	{relation.foreignKeyName} int(11) unsigned DEFAULT '0' NOT NULL,
@@ -32,9 +27,7 @@ CREATE TABLE {tableName} (
       </f:if>
    </f:groupedFor>
    <f:if condition="{domainObject.categorizable}">
-#
-# Table structure for table '{domainObject.databaseTableName}'
-#
+
 CREATE TABLE {domainObject.databaseTableName} (
 	categories int(11) unsigned DEFAULT '0' NOT NULL,
 );
@@ -42,9 +35,7 @@ CREATE TABLE {domainObject.databaseTableName} (
 
    <f:for each="{domainObject.anyToManyRelationProperties}" as="relation">
       <f:if condition="{relation.useMMTable}">
-#
-# Table structure for table '{relation.relationTableName}'
-#
+
 CREATE TABLE {relation.relationTableName} (
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
