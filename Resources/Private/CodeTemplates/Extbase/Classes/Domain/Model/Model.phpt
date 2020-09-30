@@ -22,20 +22,20 @@ class Model extends AbstractEntity
     public function __construct()
     {
         //Do not remove the next line: It would break the functionality
-        $this->initStorageObjects();
+        $this->initializeObject();
     }
 
     /**
-     * Initializes all ObjectStorage properties
+     * Initializes all ObjectStorage properties when model is reconstructed from DB (where __construct is not called)
      * Do not modify this method!
      * It will be rewritten on each save in the extension builder
      * You may modify the constructor of this class instead
      *
      * @return void
      */
-    protected function initStorageObjects()
+    protected function initializeObject()
     {
-        $this->children = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->children = $this->children ?: new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
     /**
