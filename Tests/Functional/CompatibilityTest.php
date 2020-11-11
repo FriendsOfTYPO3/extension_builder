@@ -64,6 +64,7 @@ class CompatibilityTest extends BaseFunctionalTest
         if (file_exists($jsonFile)) {
             // compatibility adaptions for configurations from older versions
             $extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), true);
+            $extensionConfigurationJSON['storagePath'] = $this->fixturesPath . 'TestExtensions/';
             $extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON(
                 $extensionConfigurationJSON
             );
@@ -71,7 +72,6 @@ class CompatibilityTest extends BaseFunctionalTest
             $extensionConfigurationJSON = [];
             self::fail('JSON file not found');
         }
-
         $this->extension = $this->extensionSchemaBuilder->build($extensionConfigurationJSON);
         $this->fileGenerator->setSettings(
             [

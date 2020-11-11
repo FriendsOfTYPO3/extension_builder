@@ -74,7 +74,8 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                     'state' => $state,
                     'version' => $version
                 ]
-            ]
+            ],
+            'storagePath' => 'tmp'
         ];
 
         $extension = new Extension();
@@ -84,6 +85,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         $extension->setState($state);
         $extension->setVersion($version);
         $extension->setExtensionDir('');
+        $extension->setStoragePath('tmp');
 
         $actual = $this->extensionSchemaBuilder->build($input);
         self::assertEquals($extension, $actual, 'Extension properties were not extracted.');
@@ -131,7 +133,8 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                     ],
                 ],
                 'state' => 'beta'
-            ]
+            ],
+            'storagePath' => 'tmp'
         ];
         $extension = $this->extensionSchemaBuilder->build($input);
         self::assertEquals($persons, $extension->getPersons(), 'Persons set wrong in ObjectBuilder.');
@@ -249,7 +252,8 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                         'terminal' => 'relationWire_0'
                     ]
                 ]
-            ]
+            ],
+            'storagePath' => 'tmp'
         ];
 
         $extension = new Extension();
@@ -258,6 +262,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         $extension->setExtensionKey($this->extensionKey);
         $extension->setDescription('Some description');
         $extension->setExtensionDir('');
+        $extension->setStoragePath('tmp');
 
         $blog = new DomainObject();
         $blog->setName('Blog');

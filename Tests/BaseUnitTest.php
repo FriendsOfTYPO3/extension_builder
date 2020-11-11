@@ -67,6 +67,8 @@ abstract class BaseUnitTest extends UnitTestCase
         $this->extension->setExtensionKey('dummy');
         $this->extension->setSettings($settings);
 
+        $this->extension->setStoragePath($this->fixturesPath);
+
         $this->codeTemplateRootPath = Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
         $this->modelClassTemplatePath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
     }
