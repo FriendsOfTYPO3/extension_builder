@@ -280,9 +280,9 @@ class RoundTrip implements SingletonInterface
                 } elseif (!empty($oldParentClass)) {
                     // the old object had a parent class setting, but it's removed now
                     if ($currentDomainObject->isEntity()) {
-                        $parentClass = $this->configurationManager->getParentClassForEntityObject($this->extension->getExtensionKey());
+                        $parentClass = $this->configurationManager->getParentClassForEntityObject($this->extension);
                     } else {
-                        $parentClass = $this->configurationManager->getParentClassForValueObject($this->extension->getExtensionKey());
+                        $parentClass = $this->configurationManager->getParentClassForValueObject($this->extension);
                     }
                     $this->classObject->setParentClassName($parentClass);
                 }
@@ -290,12 +290,12 @@ class RoundTrip implements SingletonInterface
                 if ($currentDomainObject->isEntity() && !$oldDomainObject->isEntity()) {
                     // the object type was changed in the modeler
                     $this->classObject->setParentClassName(
-                        $this->configurationManager->getParentClassForEntityObject($this->extension->getExtensionKey())
+                        $this->configurationManager->getParentClassForEntityObject($this->extension)
                     );
                 } elseif (!$currentDomainObject->isEntity() && $oldDomainObject->isEntity()) {
                     // the object type was changed in the modeler
                     $this->classObject->setParentClassName(
-                        $this->configurationManager->getParentClassForValueObject($this->extension->getExtensionKey())
+                        $this->configurationManager->getParentClassForValueObject($this->extension)
                     );
                 }
                 $this->classFileObject->setClasses([$this->classObject]);

@@ -497,16 +497,25 @@ class DomainObject
     /**
      * @return array
      */
-    public function hasPropertiesThatNeedMappingStatements()
+    public function getHasPropertiesWithMappingStatements()
     {
-        $propertiesWithMappingStatements = [];
-        foreach ($this->properties as $property) {
-            if ($property->getMappingStatement()) {
-                $propertiesWithMappingStatements[] = $property;
-            }
-        }
-        return $propertiesWithMappingStatements;
+        $propertiesWithMappingStatements = $this->getPropertiesThatNeedMappingStatements();
+        return count($propertiesWithMappingStatements) > 0;
     }
+
+    /**
+    * @return array
+    */
+       public function getPropertiesThatNeedMappingStatements()
+       {
+           $propertiesWithMappingStatements = [];
+           foreach ($this->properties as $property) {
+               if ($property->getMappingStatement()) {
+                   $propertiesWithMappingStatements[] = $property;
+               }
+           }
+           return $propertiesWithMappingStatements;
+       }
 
     /**
      * @return bool
@@ -544,7 +553,7 @@ class DomainObject
             return true;
         }
 
-        return $this->hasPropertiesThatNeedMappingStatements();
+        return $this->getHasPropertiesWithMappingStatements();
     }
 
     /**

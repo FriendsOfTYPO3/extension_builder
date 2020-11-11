@@ -232,6 +232,8 @@ class FileGenerator
 
         $this->generateTCAFiles();
 
+        $this->generateExtbaseConfigClass();
+
         $this->generateTyposcriptFiles();
 
         $this->generateHtaccessFile();
@@ -520,16 +522,17 @@ class FileGenerator
             } catch (\Exception $e) {
                 throw new \Exception('Could not generate typoscript constants, error: ' . $e->getMessage());
             }
-        }
 
-        // Generate Static TypoScript
-        try {
-            if ($this->extension->getDomainObjectsThatNeedMappingStatements()) {
-                $fileContents = $this->generateStaticTyposcript();
-                $this->writeFile($this->extensionDirectory . 'ext_typoscript_setup.typoscript', $fileContents);
+            // Generate Static TypoScript
+            try {
+                if ($this->extension->getDomainObjectsThatNeedMappingStatements()) {
+                    $fileContents = $this->generateStaticTyposcript();
+                    $this->writeFile($this->extensionDirectory . 'ext_typoscript_setup.typoscript', $fileContents);
+                }
+            } catch (\Exception $e) {
+                throw new \Exception('Could not generate static typoscript, error: ' . $e->getMessage());
             }
-        } catch (\Exception $e) {
-            throw new \Exception('Could not generate static typoscript, error: ' . $e->getMessage());
+
         }
     }
 
@@ -915,6 +918,23 @@ class FileGenerator
             'controllerName' => $controllerName,
             'domainObject' => $domainObject
         ]);
+    }
+
+    public function generateExtbaseConfigClass() {
+        try {
+           if ($this->extension->getDomainObjectsThatNeedMappingStatements()) {
+               if (!is_dir($this->configurationDirectory . '/Extbase/Persistence/')) {
+                   mkdir($this->configurationDirectory . '/Extbase/Persistence/', 0775, true);
+               }
+               $fileContents = $this->renderTemplate('Configuration/Extbase/Persistence/Classes.phpt', [
+                   'extension' => $this->extension
+               ]);
+               $this->writeFile($this->configurationDirectory . '/Extbase/Persistence/Classes.php', $fileContents);
+           }
+        } catch (\Exception $e) {
+           throw new \Exception('Could not generate Extbase Persistence Class Configuration, error: ' . $e->getMessage());
+        }
+
     }
 
     /**
