@@ -124,6 +124,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         }
 
         $this->extension->setSettings($settings);
+        $this->extension->setStoragePath('dummy');
 
         // get instances to inject in Mocks
         $configurationManager = $this->objectManager->get(ExtensionBuilderConfigurationManager::class);
