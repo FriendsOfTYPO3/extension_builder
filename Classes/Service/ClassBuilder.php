@@ -206,10 +206,10 @@ class ClassBuilder implements SingletonInterface
         if ($domainObject->isEntity()) {
             $parentClass = $domainObject->getParentClass();
             if (empty($parentClass)) {
-                $parentClass = $this->configurationManager->getParentClassForEntityObject($this->extension->getExtensionKey());
+                $parentClass = $this->configurationManager->getParentClassForEntityObject($this->extension);
             }
         } else {
-            $parentClass = $this->configurationManager->getParentClassForValueObject($this->extension->getExtensionKey());
+            $parentClass = $this->configurationManager->getParentClassForValueObject($this->extension);
         }
         $this->classObject->setParentClassName($parentClass);
         $this->classObject->setDescription($domainObject->getDescription());

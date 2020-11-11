@@ -155,10 +155,10 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @param string $extensionKey
      * @return array settings
      */
-    public function getExtensionSettings(string $extensionKey): array
+    public function getExtensionSettings(string $extensionKey, string $extensionStoragePath): array
     {
         $settings = [];
-        $settingsFile = $this->getSettingsFile($extensionKey);
+        $settingsFile = $this->getSettingsFile($extensionKey, $extensionStoragePath);
         if (file_exists($settingsFile)) {
             $settings = SpycYAMLParser::YAMLLoadString(file_get_contents($settingsFile));
         }
@@ -228,9 +228,9 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @param string $extensionKey
      * @return string path
      */
-    public function getSettingsFile($extensionKey): string
+    public function getSettingsFile($extensionKey, $storagePath): string
     {
-        return Environment::getPublicPath() . '/typo3conf/ext/' . $extensionKey . '/' . self::SETTINGS_DIR . 'settings.yaml';
+        return $storagePath . $extensionKey . '/' . self::SETTINGS_DIR . 'settings.yaml';
     }
 
     /**
@@ -478,13 +478,13 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     }
 
     /**
-     * @param $extensionKey
+     * @param Extension $extension
      *
      * @return string
      */
-    public function getParentClassForValueObject($extensionKey)
+    public function getParentClassForValueObject(Extension $extension)
     {
-        $settings = $this->getExtensionSettings($extensionKey);
+        $settings = $this->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
         if (isset($settings['classBuilder']['Model']['AbstractValueObject']['parentClass'])) {
             $parentClass = $settings['classBuilder']['Model']['AbstractValueObject']['parentClass'];
         } else {
@@ -494,13 +494,13 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     }
 
     /**
-     * @param string $extensionKey
+     * @param Extension $extension
      *
      * @return string
      */
-    public function getParentClassForEntityObject(string $extensionKey)
+    public function getParentClassForEntityObject(Extension $extension)
     {
-        $settings = $this->getExtensionSettings($extensionKey);
+        $settings = $this->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
         if (isset($settings['classBuilder']['Model']['AbstractEntity']['parentClass'])) {
             $parentClass = $settings['classBuilder']['Model']['AbstractEntity']['parentClass'];
         } else {

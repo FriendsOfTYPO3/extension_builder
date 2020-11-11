@@ -74,6 +74,8 @@ class ExtensionSchemaBuilder implements SingletonInterface
             throw new \Exception('Extension properties not submitted!');
         }
 
+        $extension->setStoragePath($extensionBuildConfiguration['storagePath'] ?? null);
+
         $this->setExtensionProperties($extension, $globalProperties);
 
         if (is_array($globalProperties['persons'])) {
@@ -130,8 +132,6 @@ class ExtensionSchemaBuilder implements SingletonInterface
         if (is_array($extensionBuildConfiguration['wires'])) {
             $this->setExtensionRelations($extensionBuildConfiguration, $extension);
         }
-
-        $extension->setStoragePath($extensionBuildConfiguration['storagePath'] ?? null);
 
         return $extension;
     }
@@ -278,15 +278,21 @@ class ExtensionSchemaBuilder implements SingletonInterface
         }
 
         if (!empty($propertyConfiguration['originalExtensionKey']) && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()) {
-            $settings = $this->configurationManager->getExtensionSettings($extension->getOriginalExtensionKey());
+            $settings = $this->configurationManager->getExtensionSettings($extension->getOriginalExtensionKey(), $extension->getStoragePath());
             // if an extension was renamed, a new extension dir is created and we
             // have to copy the old settings file to the new extension dir
+            $source = $this->configurationManager->getSettingsFile($extension->getOriginalExtensionKey(), $extension->getStoragePath());
+            $target = $this->configurationManager->getSettingsFile($extension->getExtensionKey(), $extension->getStoragePath());
+            $pathInfo = pathinfo($target);
+            if (!is_dir($pathInfo['dirname'])) {
+                mkdir($pathInfo['dirname'], 0775, true);
+            }
             copy(
-                $this->configurationManager->getSettingsFile($extension->getOriginalExtensionKey()),
-                $this->configurationManager->getSettingsFile($extension->getExtensionKey())
+                $source,
+                $target
             );
         } else {
-            $settings = $this->configurationManager->getExtensionSettings($extension->getExtensionKey());
+            $settings = $this->configurationManager->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
         }
 
         if (!empty($settings)) {

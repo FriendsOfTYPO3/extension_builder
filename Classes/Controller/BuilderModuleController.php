@@ -302,7 +302,7 @@ class BuilderModuleController extends ActionController
                     throw $e;
                 }
             }
-            $extensionSettings = $this->extensionBuilderConfigurationManager->getExtensionSettings($extension->getExtensionKey());
+            $extensionSettings = $this->extensionBuilderConfigurationManager->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
             if ($this->extensionBuilderSettings['extConf']['enableRoundtrip'] === '1') {
                 if (empty($extensionSettings)) {
                     // no config file in an existing extension!
