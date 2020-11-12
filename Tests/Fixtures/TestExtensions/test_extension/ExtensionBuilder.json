@@ -535,7 +535,7 @@
         }
     ],
 	"storagePath": "\/var\/www\/html\/public\/typo3conf\/ext\/",
-    "log": {
+	"log": {
         "last_modified": "2019-09-22 06:49",
         "extension_builder_version": "9.10.0",
         "be_user": " (2)"
