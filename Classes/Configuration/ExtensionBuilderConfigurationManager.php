@@ -25,12 +25,9 @@ use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExis
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
@@ -153,6 +150,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
 
     /**
      * @param string $extensionKey
+     * @param string $extensionStoragePath
      * @return array settings
      */
     public function getExtensionSettings(string $extensionKey, string $extensionStoragePath): array
@@ -226,6 +224,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * Get the file name and path of the settings file.
      *
      * @param string $extensionKey
+     * @param string $storagePath
      * @return string path
      */
     public function getSettingsFile($extensionKey, $storagePath): string
