@@ -495,7 +495,7 @@ class DomainObject
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getHasPropertiesWithMappingStatements()
     {
