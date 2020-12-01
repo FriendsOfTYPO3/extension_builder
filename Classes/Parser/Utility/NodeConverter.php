@@ -22,6 +22,7 @@ use PhpParser\Node\Expr\ConstFetch;
 use PhpParser\Node\Expr\UnaryMinus;
 use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
+use PhpParser\Node\NullableType;
 use PhpParser\Node\Scalar\DNumber;
 use PhpParser\Node\Scalar\LNumber;
 use PhpParser\Node\Scalar\String_;
@@ -116,6 +117,10 @@ class NodeConverter
                 }
             }
             return $value;
+        }
+        
+        if ($node instanceof NullableType) {
+            return '?' . self::getValueFromNode($node->type);
         }
 
         if ($node instanceof Node) {
