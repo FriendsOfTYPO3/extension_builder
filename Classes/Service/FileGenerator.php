@@ -532,7 +532,6 @@ class FileGenerator
             } catch (\Exception $e) {
                 throw new \Exception('Could not generate static typoscript, error: ' . $e->getMessage());
             }
-
         }
     }
 
@@ -920,7 +919,8 @@ class FileGenerator
         ]);
     }
 
-    public function generateExtbaseConfigClass() {
+    public function generateExtbaseConfigClass()
+    {
         try {
            if ($this->extension->getDomainObjectsThatNeedMappingStatements()) {
                if (!is_dir($this->configurationDirectory . '/Extbase/Persistence/')) {
@@ -934,7 +934,6 @@ class FileGenerator
         } catch (\Exception $e) {
            throw new \Exception('Could not generate Extbase Persistence Class Configuration, error: ' . $e->getMessage());
         }
-
     }
 
     /**
