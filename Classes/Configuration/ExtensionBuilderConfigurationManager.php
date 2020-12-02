@@ -227,7 +227,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @param string $storagePath
      * @return string path
      */
-    public function getSettingsFile($extensionKey, $storagePath): string
+    public function getSettingsFile( $extensionKey, $storagePath): string
     {
         return $storagePath . $extensionKey . '/' . self::SETTINGS_DIR . 'settings.yaml';
     }
