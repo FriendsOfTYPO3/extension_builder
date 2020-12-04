@@ -2,21 +2,21 @@
 <label for="name">
 	<f:translate key="tx_testextension_domain_model_main.name" />
 </label><br />
-	<f:form.textfield property="name" /><br />
+	<f:form.textfield property="name" id="name" /><br />
 <label for="identifier">
 	<f:translate key="tx_testextension_domain_model_main.identifier" /> <span class="required">(required)</span>
 </label><br />
-	<f:form.textfield property="identifier" /><br />
+	<f:form.textfield property="identifier" id="identifier" /><br />
 <label for="description">
 	<f:translate key="tx_testextension_domain_model_main.description" />
 </label><br />
-	<f:form.textarea property="description" cols="40" rows="15" /><br />
+	<f:form.textarea property="description" id="description" cols="40" rows="15" /><br />
 <label for="myDate">
 	<f:translate key="tx_testextension_domain_model_main.my_date" />
 </label><br />
-	<f:form.textfield property="myDate" value="{main.myDate->f:format.date()}" /><br />
+	<f:form.textfield property="myDate" id="myDate" value="{main.myDate->f:format.date()}" /><br />
 <label for="mail">
         <f:translate key="tx_testextension_domain_model_main.mail" />
 </label><br />
-        <f:form.textfield type="email" property="mail" /><br />
+        <f:form.textfield type="email" property="mail" id="mail" /><br />
 </html>

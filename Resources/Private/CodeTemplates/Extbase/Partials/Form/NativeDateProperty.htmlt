@@ -1,1 +1,1 @@
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}f:form.textfield property="{property.name}" value="<f:format.raw><k:curlyBrackets>{domainObject.name-> k:format.lowercaseFirst()}.{property.name}->f:format.date()</k:curlyBrackets></f:format.raw>"
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}f:form.textfield property="{property.name}" id="{property.name}" value="<f:format.raw><k:curlyBrackets>{domainObject.name-> k:format.lowercaseFirst()}.{property.name}->f:format.date()</k:curlyBrackets></f:format.raw>"
