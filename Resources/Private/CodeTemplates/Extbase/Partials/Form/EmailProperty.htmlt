@@ -1,1 +1,1 @@
-f:form.textfield type="email" property="{property.name}"
+f:form.textfield type="email" property="{property.name}" id="{property.name}"
