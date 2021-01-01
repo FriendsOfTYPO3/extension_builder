@@ -143,8 +143,8 @@
 				<source>Source language for xliff files</source>
 			</trans-unit>
 			<trans-unit id="descr_sourceLanguage" resname="descr_sourceLanguage">
-				<source>The source language for xliff files is the language in which the "source" of a label is defined,
-					which can be translated into other languages. In general it should be english.
+				<source>The source language for xliff files is the 2 letter language code in which the "source" of a label is defined.
+					In general it should be "en" for English. This label can later be translated into other languages. 
 				</source>
 			</trans-unit>
 			<trans-unit id="dependsOn" resname="dependsOn">
