@@ -1,0 +1,1 @@
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}f:form.textfield property="{property.name}" value="<k:curlyBrackets>{domainObject.name-> k:format.lowercaseFirst()}.{property.name}->f:format.date()</k:curlyBrackets>"

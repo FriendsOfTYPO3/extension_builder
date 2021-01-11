@@ -209,6 +209,7 @@ class ClassBuilderTest extends BaseUnitTest
             'select' => ['select', 0],
             'string' => ['string', ''],
             'text' => ['text', ''],
+            'nativeTime' => ['nativeTime', null],
             'time' => ['time', 0],
             'timeSec' => ['timeSec', 0],
         ];
