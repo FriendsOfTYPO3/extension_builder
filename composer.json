@@ -52,8 +52,22 @@
 	},
 	"scripts": {
 		"post-autoload-dump": [
-			"mkdir -p .Build/Web/typo3conf/ext/",
-			"[ -L .Build/Web/typo3conf/ext/extension_builder ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/extension_builder"
+			"@prepare-extension-test-structure"
+		],
+		"prepare-extension-test-structure": [
+			"Nimut\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
+		],
+		"unit-tests": "TYPO3_PATH_ROOT=$PWD/.Build/public .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml --stop-on-failure Tests/Unit",
+		"functional-tests": "TYPO3_PATH_ROOT=$PWD/.Build/public typo3DatabaseDriver=pdo_sqlite .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml --stop-on-failure Tests/Functional",
+		"test": [
+			"@test-php-cs-fixer",
+			"@unit-tests",
+			"@functional-tests"
+		],
+		"test-php-cs-fixer": [
+			".Build/bin/php-cs-fixer fix --config=.php_cs -v --dry-run --stop-on-violation --using-cache=no ./Classes/",
+			".Build/bin/php-cs-fixer fix --config=.php_cs -v --dry-run --stop-on-violation --using-cache=no ./Configuration/",
+			".Build/bin/php-cs-fixer fix --config=.php_cs -v --dry-run --stop-on-violation --using-cache=no ./Tests/"
 		]
 	},
 	"extra": {
