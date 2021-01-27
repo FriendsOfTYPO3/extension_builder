@@ -16,10 +16,20 @@ namespace EBT\ExtensionBuilder\Service;
  */
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
-use EBT\ExtensionBuilder\Domain\Model;
+use EBT\ExtensionBuilder\Domain\Model\AbstractObject;
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\Method;
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
+use EBT\ExtensionBuilder\Domain\Model\Extension;
+use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Domain\Model\NamespaceObject;
+use EBT\ExtensionBuilder\Exception\FileNotFoundException;
+use EBT\ExtensionBuilder\Exception\SyntaxError;
 use EBT\ExtensionBuilder\Parser\ClassFactory;
 use EBT\ExtensionBuilder\Utility\Inflector;
 use EBT\ExtensionBuilder\Utility\Tools;
@@ -40,45 +50,45 @@ class ClassBuilder implements SingletonInterface
     /**
      * The class file object created to container the generated class
      *
-     * @var \EBT\ExtensionBuilder\Domain\Model\File
+     * @var File
      *
      */
     protected $classFileObject;
     /**
      * The current class object
      *
-     * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+     * @var ClassObject
      */
     protected $classObject;
     /**
      * The template file object used for new created class files
      *
-     * @var \EBT\ExtensionBuilder\Domain\Model\File
+     * @var File
      */
     protected $templateFileObject;
     /**
      * The template class object used for new created classes
-     * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+     * @var ClassObject
      */
     protected $templateClassObject;
     /**
-     * @var \EBT\ExtensionBuilder\Parser\ClassFactory
+     * @var ClassFactory
      */
     protected $classFactory;
     /**
-     * @var \EBT\ExtensionBuilder\Service\ParserService
+     * @var ParserService
      */
     protected $parserService;
     /**
-     * @var \EBT\ExtensionBuilder\Service\Printer
+     * @var Printer
      */
     protected $printerService;
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
+     * @var ExtensionBuilderConfigurationManager
      */
     protected $configurationManager;
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\Extension
+     * @var Extension
      */
     protected $extension;
     /**
@@ -91,7 +101,7 @@ class ClassBuilder implements SingletonInterface
     protected $extensionDirectory = '';
 
     /**
-     * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
+     * @param ExtensionBuilderConfigurationManager $configurationManager
      * @return void
      */
     public function injectConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
@@ -100,7 +110,7 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Service\ParserService $parserService
+     * @param ParserService $parserService
      * @return void
      */
     public function injectParserService(ParserService $parserService)
@@ -109,7 +119,7 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Service\Printer $printerService
+     * @param Printer $printerService
      * @return void
      */
     public function injectPrinterService(Printer $printerService)
@@ -118,7 +128,7 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Parser\ClassFactory $classFactory
+     * @param ClassFactory $classFactory
      * @return void
      */
     public function injectClassFactory(ClassFactory $classFactory)
@@ -127,12 +137,12 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     * @param Extension $extension
      *
      * @return void
      * @throws \Exception
      */
-    public function initialize(Model\Extension $extension)
+    public function initialize(Extension $extension)
     {
         $this->extension = $extension;
         $settings = $extension->getSettings();
@@ -145,13 +155,13 @@ class ClassBuilder implements SingletonInterface
      * it keeps all methods and properties including user modified method bodies and
      * comments needed to create a domain object class file
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      * @param string $modelClassTemplatePath
-     * @param \EBT\ExtensionBuilder\Domain\Model\File $existingClassFileObject
+     * @param File|null $existingClassFileObject
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\File
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
+     * @return File
+     * @throws FileNotFoundException
+     * @throws SyntaxError
      */
     public function generateModelClassFileObject(
         $domainObject,
@@ -193,11 +203,11 @@ class ClassBuilder implements SingletonInterface
     /**
      * Create a new class object based on the template and the related domain object
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      *
      * @return void
      */
-    protected function createNewModelClassObject($domainObject)
+    protected function createNewModelClassObject(DomainObject $domainObject): void
     {
         $this->classFileObject = clone($this->templateFileObject);
         $this->classObject = clone($this->templateFileObject->getFirstClass());
@@ -216,10 +226,10 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
+     * @param AbstractProperty $domainProperty
      * @return void
      */
-    protected function addClassProperty($domainProperty)
+    protected function addClassProperty($domainProperty): void
     {
         // TODO the following part still needs some enhancement:
         // what should be obligatory in existing properties and methods
@@ -263,7 +273,7 @@ class ClassBuilder implements SingletonInterface
         }
 
         if ($domainProperty->isRelation()) {
-            /** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
+            /** @var $domainProperty AbstractRelation */
             if ($domainProperty->getLazyLoading()) {
                 if (!$classProperty->isTaggedWith(self::LAZY_ANNOTATION)) {
                     $classProperty->setTag(self::LAZY_ANNOTATION);
@@ -275,13 +285,13 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      *
      * @return void
-     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
+     * @throws SyntaxError
+     * @throws FileNotFoundException
      */
-    protected function addInitStorageObjectCalls(Model\DomainObject $domainObject)
+    protected function addInitStorageObjectCalls(DomainObject $domainObject): void
     {
         $anyToManyRelationProperties = $domainObject->getAnyToManyRelationProperties();
         if (count($anyToManyRelationProperties) > 0) {
@@ -299,7 +309,7 @@ class ClassBuilder implements SingletonInterface
             $initObjectMethod = clone($this->templateClassObject->getMethod('initializeObject'));
             $methodBodyStmts = [];
             $templateBodyStmts = $initObjectMethod->getBodyStmts();
-            $initObjectMethod->setModifier('protected');
+            $initObjectMethod->setModifier('public');
             foreach ($anyToManyRelationProperties as $relationProperty) {
                 $methodBodyStmts = array_merge(
                     $methodBodyStmts,
@@ -320,13 +330,13 @@ class ClassBuilder implements SingletonInterface
     /**
      * add all setter/getter/add/remove etc. methods
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
+     * @param AbstractProperty $domainProperty
      *
      * @return void
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
+     * @throws FileNotFoundException
+     * @throws SyntaxError
      */
-    protected function setPropertyRelatedMethods($domainProperty)
+    protected function setPropertyRelatedMethods($domainProperty): void
     {
         if ($domainProperty->isAnyToManyRelation()) {
             $addMethod = $this->buildAddMethod($domainProperty);
@@ -344,13 +354,12 @@ class ClassBuilder implements SingletonInterface
         }
     }
 
-
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
+     * @param AbstractProperty $domainProperty
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
+     * @return Method
      */
-    protected function buildGetterMethod($domainProperty)
+    protected function buildGetterMethod(AbstractProperty $domainProperty): Method
     {
         $propertyName = $domainProperty->getName();
         // add (or update) a getter method
@@ -371,11 +380,11 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
+     * @param AbstractProperty $domainProperty
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
+     * @return Method
      */
-    protected function buildSetterMethod($domainProperty)
+    protected function buildSetterMethod(AbstractProperty $domainProperty): Method
     {
         $propertyName = $domainProperty->getName();
         // add (or update) a setter method
@@ -410,13 +419,13 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation $domainProperty
+     * @param AbstractRelation $domainProperty
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
+     * @return Method
+     * @throws FileNotFoundException
+     * @throws SyntaxError
      */
-    protected function buildAddMethod($domainProperty)
+    protected function buildAddMethod($domainProperty): Method
     {
         $propertyName = $domainProperty->getName();
         $addMethodName = self::getMethodName($domainProperty, 'add');
@@ -466,13 +475,13 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation $domainProperty
+     * @param AbstractRelation $domainProperty
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
+     * @return Method
+     * @throws FileNotFoundException
+     * @throws SyntaxError
      */
-    protected function buildRemoveMethod($domainProperty)
+    protected function buildRemoveMethod($domainProperty): Method
     {
         $propertyName = $domainProperty->getName();
         $removeMethodName = self::getMethodName($domainProperty, 'remove');
@@ -528,11 +537,11 @@ class ClassBuilder implements SingletonInterface
     /**
      * Builds a method that checks the current boolean state of a property
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
+     * @param AbstractProperty $domainProperty
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
+     * @return Method
      */
-    protected function buildIsMethod($domainProperty)
+    protected function buildIsMethod(AbstractProperty $domainProperty): Method
     {
         $isMethodName = self::getMethodName($domainProperty, 'is');
 
@@ -554,12 +563,12 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param Action $action
+     * @param DomainObject $domainObject
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
+     * @return Method
      */
-    protected function buildActionMethod(Model\DomainObject\Action $action, Model\DomainObject $domainObject)
+    protected function buildActionMethod(Action $action, DomainObject $domainObject): Method
     {
         $actionName = $action->getName();
         $actionMethodName = $actionName . 'Action';
@@ -600,11 +609,11 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
+     * @param AbstractProperty $domainProperty
      * @param string $methodType (get,set,add,remove,is)
      * @return string method name
      */
-    public static function getMethodName($domainProperty, $methodType)
+    public static function getMethodName(AbstractProperty $domainProperty, string $methodType): ?string
     {
         $propertyName = $domainProperty->getName();
         switch ($methodType) {
@@ -622,11 +631,11 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method $method
+     * @param Method $method
      * @param array $replacements
      * @return void
      */
-    protected function updateMethodBody($method, $replacements)
+    protected function updateMethodBody(Method $method, array $replacements): void
     {
         $stmts = $method->getBodyStmts();
 
@@ -646,10 +655,10 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\AbstractObject $object
+     * @param AbstractObject $object
      * @param array $replacements
      */
-    protected function updateDocComment($object, $replacements)
+    protected function updateDocComment($object, array $replacements)
     {
         $docComment = $object->getDocComment();
         // reset all tags (they will be restored from the parsed doc comment string)
@@ -665,11 +674,11 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
+     * @param AbstractProperty $domainProperty
      * @param string $methodType (set,add,remove)
      * @return string method body
      */
-    public static function getParameterName($domainProperty, $methodType)
+    public static function getParameterName(AbstractProperty $domainProperty, string $methodType)
     {
         $propertyName = $domainProperty->getName();
 
@@ -684,23 +693,23 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
+     * @param AbstractProperty $domainProperty
      * @param string $methodType
      *
      * @return string
      */
-    public static function getParamTag($domainProperty, $methodType)
+    public static function getParamTag(AbstractProperty $domainProperty, string $methodType)
     {
         switch ($methodType) {
             case 'set':
                 return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
             case 'add':
-                /** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
+                /** @var $domainProperty AbstractRelation */
                 $paramTag = $domainProperty->getForeignClassName();
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
                 return $paramTag;
             case 'remove':
-                /** @var $domainProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
+                /** @var $domainProperty AbstractRelation */
                 $paramTag = $domainProperty->getForeignClassName();
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
                 $paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';
@@ -713,16 +722,16 @@ class ClassBuilder implements SingletonInterface
      * it keeps all methods and properties including user modified method bodies and
      * comments that are required to create a controller class file
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     * @param $controllerClassTemplatePath
-     * @param \EBT\ExtensionBuilder\Domain\Model\File $existingClassFileObject
+     * @param DomainObject $domainObject
+     * @param string $controllerClassTemplatePath
+     * @param null $existingClassFileObject
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\File
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
+     * @return File
+     * @throws FileNotFoundException
      */
     public function generateControllerClassFileObject(
-        $domainObject,
-        $controllerClassTemplatePath,
+        DomainObject $domainObject,
+        string $controllerClassTemplatePath,
         $existingClassFileObject = null
     ) {
         $this->classObject = null;
@@ -777,11 +786,11 @@ class ClassBuilder implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Method
+     * @return Method
      */
-    protected function buildInjectMethod($domainObject)
+    protected function buildInjectMethod(DomainObject $domainObject)
     {
         $repositoryName = $domainObject->getName() . 'Repository';
         $injectMethodName = 'inject' . $repositoryName;
@@ -812,16 +821,16 @@ class ClassBuilder implements SingletonInterface
      * user modified method bodies and comments
      * needed to create a repository class file
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     * @param $repositoryTemplateClassPath
-     * @param \EBT\ExtensionBuilder\Domain\Model\File $existingClassFileObject
+     * @param DomainObject $domainObject
+     * @param string $repositoryTemplateClassPath
+     * @param null $existingClassFileObject
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\File
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
+     * @return File
+     * @throws FileNotFoundException
      */
     public function generateRepositoryClassFileObject(
-        $domainObject,
-        $repositoryTemplateClassPath,
+        DomainObject $domainObject,
+        string $repositoryTemplateClassPath,
         $existingClassFileObject = null
     ) {
         $this->classObject = null;
@@ -859,7 +868,7 @@ class ClassBuilder implements SingletonInterface
     /**
      * Not used right now
      * TODO: Needs better implementation
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      * @return void
      */
     public function sortMethods($domainObject)

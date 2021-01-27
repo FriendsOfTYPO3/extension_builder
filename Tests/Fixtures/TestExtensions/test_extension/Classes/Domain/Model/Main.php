@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace FIXTURE\TestExtension\Domain\Model;
 
-/***
+/**
  *
  * This file is part of the "ExtensionBuilder Test Extension" Extension for TYPO3 CMS.
  *
@@ -10,8 +10,7 @@ namespace FIXTURE\TestExtension\Domain\Model;
  * LICENSE.txt file that was distributed with this source code.
  *
  *  (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
- *
- ***/
+ */
 
 /**
  * Main
@@ -88,7 +87,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function __construct()
     {
-        //Do not remove the next line: It would break the functionality
+        // Do not remove the next line: It would break the functionality
         $this->initializeObject();
     }
 
@@ -100,7 +99,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return void
      */
-    protected function initializeObject()
+    public function initializeObject()
     {
         $this->children2 = $this->children2 ?: new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         $this->children4 = $this->children4 ?: new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();

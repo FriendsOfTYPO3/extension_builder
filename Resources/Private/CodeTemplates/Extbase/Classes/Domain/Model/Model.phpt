@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace VENDOR\Package\Domain\Model;
 
 /**
@@ -7,7 +8,6 @@ namespace VENDOR\Package\Domain\Model;
  */
 class Model extends AbstractEntity
 {
-
     /**
      * property
      *
@@ -22,7 +22,7 @@ class Model extends AbstractEntity
 
     public function __construct()
     {
-        //Do not remove the next line: It would break the functionality
+        // Do not remove the next line: It would break the functionality
         $this->initializeObject();
     }
 
@@ -34,7 +34,7 @@ class Model extends AbstractEntity
      *
      * @return void
      */
-    protected function initializeObject()
+    public function initializeObject()
     {
         $this->children = $this->children ?: new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
