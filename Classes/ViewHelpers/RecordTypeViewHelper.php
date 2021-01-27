@@ -57,7 +57,10 @@ class RecordTypeViewHelper extends AbstractViewHelper
     public function render()
     {
         $domainObject = $this->arguments['domainObject'];
-        $recordType = $this->configurationManager->getRecordType($domainObject->getParentClass());
+        $recordType = null;
+        if (!empty($domainObject->getParentClass())) {
+            $recordType = $this->configurationManager->getRecordType($domainObject->getParentClass());
+        }
         if ($recordType) {
             $parentRecordType = Tools::convertClassNameToRecordType($recordType);
         } else {
