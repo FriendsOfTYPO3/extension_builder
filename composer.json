@@ -43,8 +43,8 @@
 		"typo3-ter/extension-builder": "self.version"
 	},
 	"config": {
-		"vendor-dir": ".Build/vendor",
 		"bin-dir": ".Build/bin",
+		"vendor-dir": ".Build/vendor",
 		"preferred-install": {
 			"typo3/cms": "source",
 			"*": "dist"
@@ -58,8 +58,10 @@
 	},
 	"extra": {
 		"typo3/cms": {
+			"extension-key": "extension_builder",
 			"cms-package-dir": "{$vendor-dir}/typo3/cms",
-			"web-dir": ".Build/Web"
+			"app-dir": ".Build",
+			"web-dir": ".Build/public"
 		}
 	}
 }

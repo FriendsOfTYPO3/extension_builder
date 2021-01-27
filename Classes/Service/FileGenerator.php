@@ -895,7 +895,7 @@ class FileGenerator
      */
     public function generateDomainModelTests(DomainObject $domainObject)
     {
-        return $this->renderTemplate('Tests/DomainModelTest.phpt', [
+        return $this->renderTemplate('Tests/Unit/DomainModelTest.phpt', [
             'extension' => $this->extension,
             'domainObject' => $domainObject
         ]);
@@ -912,7 +912,7 @@ class FileGenerator
      */
     public function generateControllerTests($controllerName, DomainObject $domainObject)
     {
-        return $this->renderTemplate('Tests/ControllerTest.phpt', [
+        return $this->renderTemplate('Tests/Unit/ControllerTest.phpt', [
             'extension' => $this->extension,
             'controllerName' => $controllerName,
             'domainObject' => $domainObject
