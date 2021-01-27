@@ -154,51 +154,51 @@ class RoundTrip implements SingletonInterface
             $this->previousExtensionDirectory = $extension->getPreviousExtensionDirectory();
             $this->previousExtensionKey = $extension->getOriginalExtensionKey();
             $this->extensionRenamed = true;
-        }
 
-        // Rename the old kickstarter.json file to ExtensionBuilder.json
-        if (file_exists($this->previousExtensionDirectory . 'kickstarter.json')) {
-            rename(
-                $this->previousExtensionDirectory . 'kickstarter.json',
-                $this->previousExtensionDirectory . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE
-            );
-        }
-
-        if (file_exists($this->previousExtensionDirectory . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE)) {
-            $extensionSchemaBuilder = GeneralUtility::makeInstance(ExtensionSchemaBuilder::class);
-            $jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey);
-            $this->previousExtension = $extensionSchemaBuilder->build($jsonConfig);
-            $previousDomainObjects = $this->previousExtension->getDomainObjects();
-            /** @var $previousDomainObjects \EBT\ExtensionBuilder\Domain\Model\DomainObject[] */
-            foreach ($previousDomainObjects as $oldDomainObject) {
-                $this->previousDomainObjects[$oldDomainObject->getUniqueIdentifier()] = $oldDomainObject;
-                self::log(
-                    'Old domain object: ' . $oldDomainObject->getName() . ' - ' . $oldDomainObject->getUniqueIdentifier(),
-                    0,
-                    $jsonConfig
+            // Rename the old kickstarter.json file to ExtensionBuilder.json
+            if (file_exists($this->previousExtensionDirectory . 'kickstarter.json')) {
+                rename(
+                    $this->previousExtensionDirectory . 'kickstarter.json',
+                    $this->previousExtensionDirectory . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE
                 );
             }
 
-            /**
-             * now we store all renamed domainObjects in an array to enable
-             * detection of renaming in relationProperties (property->getForeignModel)
-             * we also build an array with the new unique identifiers to detect
-             * deleting of domainObjects
-             */
-            $currentDomainsObjects = [];
-            foreach ($this->extension->getDomainObjects() as $domainObject) {
-                /** @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
-                if (isset($this->previousDomainObjects[$domainObject->getUniqueIdentifier()])) {
-                    if ($this->previousDomainObjects[$domainObject->getUniqueIdentifier()]->getName() != $domainObject->getName()) {
-                        $renamedDomainObjects[$domainObject->getUniqueIdentifier()] = $domainObject;
-                    }
+            if (file_exists($this->previousExtensionDirectory . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE)) {
+                $extensionSchemaBuilder = GeneralUtility::makeInstance(ExtensionSchemaBuilder::class);
+                $jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey);
+                $this->previousExtension = $extensionSchemaBuilder->build($jsonConfig);
+                $previousDomainObjects = $this->previousExtension->getDomainObjects();
+                /** @var $previousDomainObjects \EBT\ExtensionBuilder\Domain\Model\DomainObject[] */
+                foreach ($previousDomainObjects as $oldDomainObject) {
+                    $this->previousDomainObjects[$oldDomainObject->getUniqueIdentifier()] = $oldDomainObject;
+                    self::log(
+                        'Old domain object: ' . $oldDomainObject->getName() . ' - ' . $oldDomainObject->getUniqueIdentifier(),
+                        0,
+                        $jsonConfig
+                    );
                 }
-                $currentDomainsObjects[$domainObject->getUniqueIdentifier()] = $domainObject;
-            }
-            // remove deleted objects
-            foreach ($previousDomainObjects as $oldDomainObject) {
-                if (!isset($currentDomainsObjects[$oldDomainObject->getUniqueIdentifier()])) {
-                    $this->removeDomainObjectFiles($oldDomainObject);
+
+                /**
+                 * now we store all renamed domainObjects in an array to enable
+                 * detection of renaming in relationProperties (property->getForeignModel)
+                 * we also build an array with the new unique identifiers to detect
+                 * deleting of domainObjects
+                 */
+                $currentDomainsObjects = [];
+                foreach ($this->extension->getDomainObjects() as $domainObject) {
+                    /** @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
+                    if (isset($this->previousDomainObjects[$domainObject->getUniqueIdentifier()])) {
+                        if ($this->previousDomainObjects[$domainObject->getUniqueIdentifier()]->getName() != $domainObject->getName()) {
+                            $renamedDomainObjects[$domainObject->getUniqueIdentifier()] = $domainObject;
+                        }
+                    }
+                    $currentDomainsObjects[$domainObject->getUniqueIdentifier()] = $domainObject;
+                }
+                // remove deleted objects
+                foreach ($previousDomainObjects as $oldDomainObject) {
+                    if (!isset($currentDomainsObjects[$oldDomainObject->getUniqueIdentifier()])) {
+                        $this->removeDomainObjectFiles($oldDomainObject);
+                    }
                 }
             }
         }
