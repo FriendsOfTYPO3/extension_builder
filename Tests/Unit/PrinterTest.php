@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Tests\Unit;
 
@@ -243,7 +244,7 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printsClassMethodWithMissingParameterTag()
+    public function printsClassMethodWithMissingParameterTag(): void
     {
         $fileName = 'ClassMethodWithMissingParameterTag.php';
         $classFileObject = $this->parseAndWrite($fileName);
@@ -258,7 +259,7 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printsNamespacedClassMethodWitNamespacedParameter()
+    public function printsNamespacedClassMethodWitNamespacedParameter(): void
     {
         $fileName = 'ClassMethodWithManyParameter.php';
         $classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');

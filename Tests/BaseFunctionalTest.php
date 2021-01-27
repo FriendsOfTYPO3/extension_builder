@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Tests;
 
@@ -89,7 +90,9 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
      */
     protected $testDir;
 
-    protected $testExtensionsToLoad = ['typo3conf/ext/extension_builder'];
+    protected $testExtensionsToLoad = [
+        'typo3conf/ext/extension_builder'
+    ];
 
     protected function setUp()
     {

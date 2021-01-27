@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace FIXTURE\TestExtension\Domain\Model;
 
-/***
+/**
  *
  * This file is part of the "ExtensionBuilder Test Extension" Extension for TYPO3 CMS.
  *
@@ -10,8 +10,7 @@ namespace FIXTURE\TestExtension\Domain\Model;
  * LICENSE.txt file that was distributed with this source code.
  *
  *  (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
- *
- ***/
+ */
 
 /**
  * Child1

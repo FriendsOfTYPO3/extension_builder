@@ -33,12 +33,12 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 class FileGenerator
 {
     /**
-     * @var \EBT\ExtensionBuilder\Service\ClassBuilder
+     * @var ClassBuilder
      */
     protected $classBuilder;
 
     /**
-     * @param \EBT\ExtensionBuilder\Service\ClassBuilder $classBuilder
+     * @param ClassBuilder $classBuilder
      * @return void
      */
     public function injectClassBuilder(ClassBuilder $classBuilder)
@@ -47,12 +47,12 @@ class FileGenerator
     }
 
     /**
-     * @var \EBT\ExtensionBuilder\Service\RoundTrip
+     * @var RoundTrip
      */
     protected $roundTripService;
 
     /**
-     * @param \EBT\ExtensionBuilder\Service\RoundTrip $roundTripService
+     * @param RoundTrip $roundTripService
      * @return void
      */
     public function injectRoundTripService (RoundTrip $roundTripService)
@@ -129,6 +129,7 @@ class FileGenerator
         'showAction',
         'updateAction'
     ];
+
     /**
      * all file types where a split token makes sense
      *
@@ -141,6 +142,7 @@ class FileGenerator
         'ts', // Typoscript
         'typoscript', // Typoscript
     ];
+
     /**
      * A map of deprecated file extensions
      * @var string[][]
@@ -150,16 +152,16 @@ class FileGenerator
     ];
 
     /**
-     * @var \EBT\ExtensionBuilder\Service\LocalizationService
+     * @var LocalizationService
      *
      */
     protected $localizationService;
 
     /**
-     * @param \EBT\ExtensionBuilder\Service\LocalizationService $localizationService
+     * @param LocalizationService $localizationService
      * @return void
      */
-    public function injectLocalizationService (LocalizationService $localizationService)
+    public function injectLocalizationService(LocalizationService $localizationService): void
     {
         $this->localizationService = $localizationService;
     }
@@ -852,8 +854,6 @@ class FileGenerator
 
         throw new \Exception('Class file for domain object could not be generated');
     }
-
-
 
     /**
      * Generates the code for the repository class

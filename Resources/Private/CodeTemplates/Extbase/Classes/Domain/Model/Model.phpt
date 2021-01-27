@@ -18,7 +18,7 @@ class Model extends AbstractEntity
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child> $children
      */
-    protected $children = null;
+    protected $children;
 
     public function __construct()
     {

@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-namespace EBT\ExtensionBuilder\Tests\Unit;
+namespace EBT\ExtensionBuilder\Tests\Functional;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -22,7 +23,7 @@ use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 class ConfigurationManagerTest extends BaseFunctionalTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
+     * @var ExtensionBuilderConfigurationManager
      */
     protected $configurationManager;
 

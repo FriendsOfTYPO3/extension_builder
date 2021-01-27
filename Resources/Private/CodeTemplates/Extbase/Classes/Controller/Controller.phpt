@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace VENDOR\Package\Controller;
 
 /**
@@ -7,17 +8,16 @@ namespace VENDOR\Package\Controller;
  */
 class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-
-
     /**
      * @var \VENDOR\Package\Domain\Repository\DomainObjectRepository
      */
-    protected $domainObjectRepository = null;
+    protected $domainObjectRepository;
 
     /**
      * @param \VENDOR\Package\Domain\Repository\DomainObjectRepository
      */
-    public function injectDomainObjectRepository(VENDOR\Package\Domain\Repository\DomainObjectRepository $domainObjectRepository) {
+    public function injectDomainObjectRepository(VENDOR\Package\Domain\Repository\DomainObjectRepository $domainObjectRepository)
+    {
         $this->domainObjectRepository = $domainObjectRepository;
     }
 

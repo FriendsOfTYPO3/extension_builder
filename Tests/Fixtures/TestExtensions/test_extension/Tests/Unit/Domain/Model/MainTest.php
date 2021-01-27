@@ -1,18 +1,21 @@
 <?php
 declare(strict_types=1);
+
 namespace FIXTURE\TestExtension\Tests\Unit\Domain\Model;
 
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+
 /**
- * Test case.
+ * Test case
  *
  * @author John Doe <mail@typo3.com>
  */
-class MainTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+class MainTest extends UnitTestCase
 {
     /**
      * @var \FIXTURE\TestExtension\Domain\Model\Main
      */
-    protected $subject = null;
+    protected $subject;
 
     protected function setUp()
     {

@@ -485,11 +485,10 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     {
         $settings = $this->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
         if (isset($settings['classBuilder']['Model']['AbstractValueObject']['parentClass'])) {
-            $parentClass = $settings['classBuilder']['Model']['AbstractValueObject']['parentClass'];
-        } else {
-            $parentClass = '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractValueObject';
+            return $settings['classBuilder']['Model']['AbstractValueObject']['parentClass'];
         }
-        return $parentClass;
+
+        return '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractValueObject';
     }
 
     /**
@@ -501,11 +500,10 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     {
         $settings = $this->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
         if (isset($settings['classBuilder']['Model']['AbstractEntity']['parentClass'])) {
-            $parentClass = $settings['classBuilder']['Model']['AbstractEntity']['parentClass'];
-        } else {
-            $parentClass = '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity';
+            return $settings['classBuilder']['Model']['AbstractEntity']['parentClass'];
         }
-        return $parentClass;
+
+        return '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity';
     }
 
     /**
