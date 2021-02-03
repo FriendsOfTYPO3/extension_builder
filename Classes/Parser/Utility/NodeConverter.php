@@ -237,7 +237,7 @@ class NodeConverter
         if (is_string($node->$property)) {
             return $node->$property;
         }
-        if (property_exists($node->$property, $property)) {
+        if (is_object($node->$property) && property_exists($node->$property, $property)) {
             return $node->$property->$property;
         }
     }
