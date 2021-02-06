@@ -18,7 +18,6 @@ namespace EBT\ExtensionBuilder\Service;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
-use TYPO3\CMS\Core\Utility\StringUtility;
 
 class ExtensionService
 {
@@ -27,10 +26,11 @@ class ExtensionService
      */
     public function resolveStoragePaths(): array
     {
-        $storagePaths = array_merge(
-            [Environment::getExtensionsPath()],
-            $this->resolveComposerStoragePaths()
-        );
+        if (Environment::isComposerMode()) {
+            $storagePaths = $this->resolveComposerStoragePaths();
+        } else {
+            $storagePaths = [Environment::getExtensionsPath()];
+        }
 
         return array_map(
             function (string $storagePath) {
@@ -45,7 +45,7 @@ class ExtensionService
      */
     public function resolveComposerStoragePaths(): array
     {
-        if (!defined('TYPO3_COMPOSER_MODE') || !TYPO3_COMPOSER_MODE) {
+        if (!Environment::isComposerMode()) {
             return [];
         }
 
