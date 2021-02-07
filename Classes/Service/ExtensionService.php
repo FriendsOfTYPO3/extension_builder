@@ -21,6 +21,13 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 
 class ExtensionService
 {
+    const COMPOSER_PATH_WARNING = "You are running TYPO3 in composer mode. You have to configure at
+        least one local path repository in your composer.json if you want to create an extensions with
+        ExtensionBuilder.<br /> See <a style='text-decoration: underline' target='_blank'
+        href='https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html'>
+        Documentation
+        </a>";
+
     /**
      * @return string[]
      */
@@ -79,4 +86,14 @@ class ExtensionService
         }
         return false;
     }
+
+    public function isStoragePathConfigured(): bool
+    {
+        if (Environment::isComposerMode() && count($this->resolveStoragePaths()) === 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }

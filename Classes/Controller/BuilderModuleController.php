@@ -191,11 +191,16 @@ class BuilderModuleController extends ActionController
      */
     public function domainmodellingAction(): void
     {
+        $initialWarnings = [];
+        if ($this->extensionService->isStoragePathConfigured()) {
+            $initialWarnings[] = $this->extensionService::COMPOSER_PATH_WARNING;
+        }
         $this->view->assignMultiple([
             'extPath' => PathUtility::stripPathSitePrefix(ExtensionManagementUtility::extPath('extension_builder')),
             'settings' => $this->extensionBuilderConfigurationManager->getSettings(),
             'currentAction' => $this->request->getControllerActionName(),
             'storagePaths' => $this->extensionService->resolveStoragePaths(),
+            'initialWarnings' => $initialWarnings
         ]);
         $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', ['firstTime' => 0]);
     }
