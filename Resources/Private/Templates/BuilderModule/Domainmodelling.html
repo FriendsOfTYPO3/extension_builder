@@ -14,7 +14,12 @@
 
 		YAHOO.util.Event.onDOMReady( function() {
 			var editor = new WireIt.WiringEditor(extbaseModeling_wiringEditorLanguage);
+			const initialWarnings = {initialWarnings -> f:format.json() -> f:format.raw()};
+			if (initialWarnings.length > 0) {
+				editor.alert('Warning', initialWarnings.join('<br />'));
+			}
 		});
+
 	</script>
 
 	<div id="domainModelEditor" class="yui-skin-sam">
