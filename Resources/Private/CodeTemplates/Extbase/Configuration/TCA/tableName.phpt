@@ -62,14 +62,6 @@ return [
             'config' => [
                 'type' => 'passthrough',
             ],
-        ],</f:if><f:if condition="{extension.supportVersioning}">
-        't3ver_label' => [
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'max' => 255,
-            ],
         ],</f:if><f:if condition="{domainObject.addHiddenField}">
         'hidden' => [
             'exclude' => true,
