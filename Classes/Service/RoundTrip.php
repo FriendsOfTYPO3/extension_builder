@@ -36,6 +36,13 @@ class RoundTrip implements SingletonInterface
      * @var string
      */
     const SPLIT_TOKEN = '## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder';
+
+    const OVERWRITE_SETTINGS_SKIP = -1;
+
+    const OVERWRITE_SETTINGS_MERGE = 1;
+
+    const OVERWRITE_SETTINGS_KEEP = 2;
+
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
@@ -1041,9 +1048,9 @@ class RoundTrip implements SingletonInterface
     public static function getOverWriteSettingForPath($path, $extension)
     {
         $map = [
-            'skip' => -1,
-            'merge' => 1,
-            'keep' => 2
+            'skip' => self::OVERWRITE_SETTINGS_SKIP,
+            'merge' => self::OVERWRITE_SETTINGS_MERGE,
+            'keep' => self::OVERWRITE_SETTINGS_KEEP,
         ];
 
         $settings = $extension->getSettings();

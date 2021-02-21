@@ -27,6 +27,10 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
+const OVERWRITE_SETTING_SKIP = 1;
+const OVERWRITE_SETTING_KEEP = 1;
+const OVERWRITE_SETTING_MERGE = 1;
+
 /**
  * Creates (or updates) all the required files for an extension
  */
@@ -923,13 +927,13 @@ class FileGenerator
     {
         try {
            if ($this->extension->getDomainObjectsThatNeedMappingStatements()) {
-               if (!is_dir($this->configurationDirectory . '/Extbase/Persistence/')) {
-                   mkdir($this->configurationDirectory . '/Extbase/Persistence/', 0775, true);
+               if (!is_dir($this->configurationDirectory . 'Extbase/Persistence/')) {
+                   mkdir($this->configurationDirectory . 'Extbase/Persistence/', 0775, true);
                }
                $fileContents = $this->renderTemplate('Configuration/Extbase/Persistence/Classes.phpt', [
                    'extension' => $this->extension
                ]);
-               $this->writeFile($this->configurationDirectory . '/Extbase/Persistence/Classes.php', $fileContents);
+               $this->writeFile($this->configurationDirectory . 'Extbase/Persistence/Classes.php', $fileContents);
            }
         } catch (\Exception $e) {
            throw new \Exception('Could not generate Extbase Persistence Class Configuration, error: ' . $e->getMessage());
@@ -1309,7 +1313,7 @@ class FileGenerator
                 $targetFile,
                 $this->extension
             );
-            if ($overWriteMode == -1) {
+            if ($overWriteMode == RoundTrip::OVERWRITE_SETTINGS_SKIP) {
                 // skip file creation
                 return;
             }
@@ -1330,7 +1334,7 @@ class FileGenerator
                 }
             }
 
-            if ($overWriteMode == 1 && strpos($targetFile, 'Classes') === false) {
+            if ($overWriteMode == RoundTrip::OVERWRITE_SETTINGS_MERGE && strpos($targetFile, 'Classes') === false) {
                 // classes are merged by the class builder
                 if ($fileExtension == 'html') {
                     //TODO: We need some kind of protocol to be displayed after code generation
@@ -1340,7 +1344,7 @@ class FileGenerator
                 if (in_array($fileExtension, $this->filesSupportingSplitToken)) {
                     $fileContents = $this->insertSplitToken($targetFile, $fileContents);
                 }
-            } elseif (file_exists($targetFile) && $overWriteMode == 2) {
+            } elseif (file_exists($targetFile) && $overWriteMode == RoundTrip::OVERWRITE_SETTINGS_KEEP) {
                 // keep the existing file
                 return;
             }
