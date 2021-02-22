@@ -27,10 +27,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-const OVERWRITE_SETTING_SKIP = 1;
-const OVERWRITE_SETTING_KEEP = 1;
-const OVERWRITE_SETTING_MERGE = 1;
-
 /**
  * Creates (or updates) all the required files for an extension
  */
