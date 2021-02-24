@@ -237,6 +237,9 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (isset($propertyJsonConfiguration['propertyIsExcludeField'])) {
             $property->setExcludeField($propertyJsonConfiguration['propertyIsExcludeField']);
         }
+        if (isset($propertyJsonConfiguration['propertyIsL10nModeExclude'])) {
+            $property->setL10nModeExclude($propertyJsonConfiguration['propertyIsL10nModeExclude']);
+        }
         if ($property->isFileReference() && !empty($propertyJsonConfiguration['maxItems'])) {
             $property->setMaxItems($propertyJsonConfiguration['maxItems']);
         }
