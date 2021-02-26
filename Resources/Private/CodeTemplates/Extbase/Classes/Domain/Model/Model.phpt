@@ -34,7 +34,7 @@ class Model extends AbstractEntity
      *
      * @return void
      */
-    public function initializeObject()
+    public function initializeObject(): void
     {
         $this->children = $this->children ?: new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
@@ -44,7 +44,7 @@ class Model extends AbstractEntity
      *
      * @param string $property
      */
-    public function setProperty($property)
+    public function setProperty(string $property): void
     {
         $this->property = $property;
     }
@@ -54,7 +54,7 @@ class Model extends AbstractEntity
      *
      * @return string
      */
-    public function getProperty()
+    public function getProperty(): string
     {
         return $this->property;
     }
@@ -72,7 +72,7 @@ class Model extends AbstractEntity
      *
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child> $children
      */
-    public function getChildren()
+    public function getChildren(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
     {
         return $this->children;
     }
@@ -83,7 +83,7 @@ class Model extends AbstractEntity
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child> $children
      * @return void
      */
-    public function setChildren($children)
+    public function setChildren(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $children): void
     {
         $this->children = $children;
     }
@@ -94,7 +94,7 @@ class Model extends AbstractEntity
      * @param \VENDOR\Package\Domain\Model\Child $child
      * @return void
      */
-    public function addChild(\VENDOR\Package\Domain\Model\Child $child)
+    public function addChild(\VENDOR\Package\Domain\Model\Child $child): void
     {
         $this->children->attach($child);
     }
@@ -105,7 +105,7 @@ class Model extends AbstractEntity
      * @param \VENDOR\Package\Domain\Model\Child $child
      * @return void
      */
-    public function removeChild(\VENDOR\Package\Domain\Model\Child $childToRemove)
+    public function removeChild(\VENDOR\Package\Domain\Model\Child $childToRemove): void
     {
         $this->children->detach($childToRemove);
     }

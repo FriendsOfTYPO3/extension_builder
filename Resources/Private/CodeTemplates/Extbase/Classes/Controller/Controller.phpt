@@ -16,7 +16,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * @param \VENDOR\Package\Domain\Repository\DomainObjectRepository
      */
-    public function injectDomainObjectRepository(VENDOR\Package\Domain\Repository\DomainObjectRepository $domainObjectRepository)
+    public function injectDomainObjectRepository(VENDOR\Package\Domain\Repository\DomainObjectRepository $domainObjectRepository): void
     {
         $this->domainObjectRepository = $domainObjectRepository;
     }
@@ -24,7 +24,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * action list
      *
-     * @return void
+     * @return string|object|null or :void
      */
     public function listAction()
     {
@@ -36,7 +36,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action show
      *
      * @param \VENDOR\Package\Domain\Model\DomainObject $domainObject
-     * @return void
+     * @return string|object|null or :void
      */
     public function showAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject)
     {
@@ -46,7 +46,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * action new
      *
-     * @return void
+     * @return string|object|null or :void
      */
     public function newAction()
     {
@@ -56,7 +56,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action create
      *
      * @param \VENDOR\Package\Domain\Model\DomainObject $newDomainObject
-     * @return void
+     * @return string|object|null or :void
      */
     public function createAction(\VENDOR\Package\Domain\Model\DomainObject $newDomainObject)
     {
@@ -69,7 +69,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action edit
      *
      * @param \VENDOR\Package\Domain\Model\DomainObject $domainObject
-     * @return void
+     * @return string|object|null or :void
      */
     public function editAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject)
     {
@@ -80,7 +80,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action update
      *
      * @param \VENDOR\Package\Domain\Model\DomainObject $domainObject
-     * @return void
+     * @return string|object|null or :void
      */
     public function updateAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject)
     {
@@ -93,7 +93,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action delete
      *
      * @param \VENDOR\Package\Domain\Model\DomainObject $domainObject
-     * @return void
+     * @return string|object|null or :void
      */
     public function deleteAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject)
     {
@@ -103,7 +103,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
-     * @return void
+     * @return string|object|null or :void
      */
     public function genericAction()
     {
