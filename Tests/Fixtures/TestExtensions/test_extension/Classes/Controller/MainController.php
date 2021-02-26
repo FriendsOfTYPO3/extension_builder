@@ -35,7 +35,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * action list
      *
-     * @return void
+     * @return string|object|null|void
      */
     public function listAction()
     {
@@ -47,7 +47,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action show
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
-     * @return void
+     * @return string|object|null|void
      */
     public function showAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
     {
@@ -57,7 +57,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * action new
      *
-     * @return void
+     * @return string|object|null|void
      */
     public function newAction()
     {
@@ -68,7 +68,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action create
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $newMain
-     * @return void
+     * @return string|object|null|void
      */
     public function createAction(\FIXTURE\TestExtension\Domain\Model\Main $newMain)
     {
@@ -82,7 +82,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("main")
-     * @return void
+     * @return string|object|null|void
      */
     public function editAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
     {
@@ -93,7 +93,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action update
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
-     * @return void
+     * @return string|object|null|void
      */
     public function updateAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
     {
@@ -106,7 +106,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action delete
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
-     * @return void
+     * @return string|object|null|void
      */
     public function deleteAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
     {
