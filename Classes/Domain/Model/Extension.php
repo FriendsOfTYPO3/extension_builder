@@ -890,6 +890,11 @@ class Extension
             ],
             'replace' => [
                 'typo3-ter/' . $composerExtensionKey => 'self.version'
+            ],
+            'extra' => [
+                'typo3/cms' => [
+                    'extension-key' => $this->extensionKey
+                ]
             ]
         ];
         foreach ($this->persons as $person) {
