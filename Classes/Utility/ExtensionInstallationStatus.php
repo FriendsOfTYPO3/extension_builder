@@ -107,7 +107,7 @@ class ExtensionInstallationStatus
             $statusMessage .= '<p>Your Extension is not installed yet.</p>';
             if ($this->usesComposerPath) {
                 $statusMessage .= sprintf(
-                    '<p>Execute <code>composer require %s</code> in terminal',
+                    '<p>Add <code>"%1$s": "@dev"</code> to the <code>"require"</code> section of your project composer.json<br>Execute <code>composer require %1$s:@dev</code> in terminal',
                     $this->extension->getComposerInfo()['name']
                 );
             }
