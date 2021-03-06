@@ -17,8 +17,6 @@ $EM_CONF[$_EXTKEY] = [
     'author' => '<f:for each="{extension.persons}" as="person" iteration="counter"><f:if condition="{counter.index} > 0">, </f:if>{person.name}</f:for>',
     'author_email' => '<f:for each="{extension.persons}" as="person" iteration="counter"><f:if condition="{person.email}"><f:if condition="{counter.index} > 0">, </f:if>{person.email}</f:if></f:for>',
     'state' => '{extension.readableState}',
-    'uploadfolder' => {extension.needsUploadFolder},
-    'createDirs' => '',
     'clearCacheOnLoad' => 0,
     'version' => '{extension.version}',
     'constraints' => [
