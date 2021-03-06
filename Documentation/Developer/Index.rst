@@ -52,18 +52,18 @@ When to use uppercase, lowercase or CamelCase and other restrictions:
 Extension meta data
 ```````````````````
 
-Enter the basic meta data for your extension in the left panel of the modeler:
+Enter the basic meta data for the extension in the left panel of the modeler:
 
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
 |**Name**       |Enter here the name for your extension, that is displayed in the backend                                                   |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
 |**Key**        |The extension key is a unique identifier for your extension                                                                |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
-|**Description**|More details what your extension does                                                                                      |
+|**Description**|More details what the extension does                                                                                       |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
 |**Version**    |A good versioning schema helps to track changes and versions. We recommend `Semantic Versioning <http://semver.org/>`_     |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
-|**State**      |The state shows other users if your extension has already reached a stable state. Otherwise it can be alpha or beta.       |
+|**State**      |The state shows if the extension has already reached a stable phase, or if it is still in alpha or beta.                   |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
 |**Persons**    |Possibility to add developers or project managers                                                                          |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
