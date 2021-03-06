@@ -15,8 +15,8 @@ on the link in the upper right corner in the modeler.
    You can enable/disable the advanced options with the access key "a"
 
 
-If you use the advanced options you should know what you do. There a many possibilities to run into misconfiguration,
-when using the advanced options. They are for special settings as they might be useful for the experienced TYPO3 developer.
+If you use the advanced options, you should know what you do. There a many possibilities to run into misconfiguration,
+when using the advanced options. They are for special settings, as they might be useful for the experienced TYPO3 developer.
 
 
 Creating a new extension
@@ -25,15 +25,15 @@ Creating a new extension
 Naming conventions
 ``````````````````
 
-When to use uppercase, lowercase or CamelCase and other restricions:
+When to use uppercase, lowercase or CamelCase and other restrictions:
 
 +-------------------+-----------------------------------------------------+-------------------+
 |**Property**       |**Restriction**                                      |**Scope**          |
 +-------------------+-----------------------------------------------------+-------------------+
-|extension_key      |lowercase, alpha numeric,no space                    |Unique in TER      |
+|extension_key      |lowercase, alphanumeric, no space                    |Unique in TER      |
 |                   |prefix not:\tx_\|u_\|user_\|pages_\|tt_\|sys_\|csh_  |                   |
 +-------------------+-----------------------------------------------------+-------------------+
-|Extension Name     |No restrictions                                      |Unique in TER      |
+|Extension Name     |No restrictions                                      |No restrictions    |
 +-------------------+-----------------------------------------------------+-------------------+
 |ModelName          |UpperCamelCase                                       |Unique in extension|
 +-------------------+-----------------------------------------------------+-------------------+
@@ -59,11 +59,11 @@ Enter the basic meta data for your extension in the left panel of the modeler:
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
 |**Key**        |The extension key is a unique identifier for your extension                                                                |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
-|**Description**|Here you can describe more in detail what your extension does                                                              |
+|**Description**|Here you can describe in more detail what your extension does                                                              |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
 |**Version**    |A good versioning schema helps you to track changes and versions. We recommend `Semantic Versioning <http://semver.org/>`_ |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
-|**State**      |The state shows other users if your extension has already reached a stable state or not                                    |
+|**State**      |The state shows other users if your extension has already reached a stable state. Otherwise it can be alpha or beta.       |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
 |**Persons**    |Here you can add developers or project managers                                                                            |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
@@ -122,23 +122,23 @@ Adding a property
 
 Each property has these fields:
 
-+----------------+-----------------------------------------+----------------------------------------------------------------------------+
-|**Field name**  |**Description**                          |**Results in the sources**                                                  |
-+----------------+-----------------------------------------+----------------------------------------------------------------------------+
-|Property name   |lowerCamelCase name                      |name of class property and a corresponding table column                     |
-+----------------+-----------------------------------------+----------------------------------------------------------------------------+
-|Property type   |vartype                                  |Some of the types are not completely implemented or configurable (see below)|
-+----------------+-----------------------------------------+----------------------------------------------------------------------------+
-|Description     |Is displayed as helptext                 |entry in locallang csh files                                                |
-+----------------+-----------------------------------------+----------------------------------------------------------------------------+
-|Is required     |Is this field required?                  |Validation notEmpty in Frontend and Backend forms                           |
-+----------------+-----------------------------------------+----------------------------------------------------------------------------+
-|Is exclude field|Is listed as exclude field in the backend|Non admin users won't see this field, except it is explicitly allowed       |
-+----------------+-----------------------------------------+----------------------------------------------------------------------------+
++-----------------+-----------------------------------------+----------------------------------------------------------------------------+
+|**Field name**   |**Description**                          |**Results in the sources**                                                  |
++-----------------+-----------------------------------------+----------------------------------------------------------------------------+
+|Property name    |lowerCamelCase name                      |name of class property and a corresponding table column                     |
++-----------------+-----------------------------------------+----------------------------------------------------------------------------+
+|Property type    |vartype                                  |Some of the types are not completely implemented or configurable (see below)|
++-----------------+-----------------------------------------+----------------------------------------------------------------------------+
+|Description      |Is displayed as context sensitive help   |entry in locallang csh files                                                |
++-----------------+-----------------------------------------+----------------------------------------------------------------------------+
+|Is required      |Is this field required?                  |Validation notEmpty in Frontend and Backend forms                           |
++-----------------+-----------------------------------------+----------------------------------------------------------------------------+
+|Is exclude field|Is listed as exclude field in the backend |Non admin users won't see this field, except it is explicitly allowed       |
++-----------------+-----------------------------------------+----------------------------------------------------------------------------+
 
 
 The frontend form handling of the property types file and image are not yet implemented, due to a missing implementation in extbase.
-You have to implement the upload handling yourself! The property select list has no configuration options in the modeler
+You have to implement the upload handling by yourself! The property select list has no configuration options in the modeler
 yet. You have to add the items list in the TCA configuration.
 
 Adding a relation
@@ -153,7 +153,7 @@ Relations connect two models. Here is a description of the fields:
 +----------------+---------------------------------------------------------------------------------------+---------------------------------------------------------------------+
 |Type            |database relation                                                                      |Explanation see below                                                |
 +----------------+---------------------------------------------------------------------------------------+---------------------------------------------------------------------+
-|Description     |Is displayed as helptext                                                               |entry in locallang csh files                                         |
+|Description     |Is displayed as context sensitive help                                                 |entry in locallang csh files                                         |
 +----------------+---------------------------------------------------------------------------------------+---------------------------------------------------------------------+
 |Is exclude field|Is listed as exclude field in the backend                                              |Non admin users won't see this field, except it is explicitly allowed|
 +----------------+---------------------------------------------------------------------------------------+---------------------------------------------------------------------+
