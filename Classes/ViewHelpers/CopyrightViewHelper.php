@@ -45,7 +45,7 @@ class CopyrightViewHelper extends AbstractViewHelper
      */
     public function render()
     {
-        $copyright = ' *  (c) ' . $this->arguments['date'] . ' ';
+        $copyright = ' * (c) ' . $this->arguments['date'] . ' ';
         $offset = strlen($copyright) - 2;
 
         foreach ($this->arguments['persons'] as $index => $person) {
