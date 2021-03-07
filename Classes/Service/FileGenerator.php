@@ -1011,9 +1011,12 @@ class FileGenerator
         $comments = $classObject->getComments();
         $needsLicenseHeader = true;
         foreach ($comments as $comment) {
-            if (strpos($comment, 'license information') !== false) {
+            if (strpos($comment, 'license') !== false) {
                 $needsLicenseHeader = false;
             }
+        }
+        if (strpos($classObject->getDescription(), 'license') !== false) {
+           $needsLicenseHeader = false;
         }
         $extensionSettings = $this->extension->getSettings();
         if ($needsLicenseHeader && empty($extensionSettings['skipDocComment'])) {
