@@ -68,7 +68,7 @@ abstract class AbstractObject
     protected $docComment;
 
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\Comment[]
+     * @var string[]
      */
     protected $comments = [];
 
@@ -456,8 +456,10 @@ abstract class AbstractObject
      */
     public function setDocComment($docComment)
     {
+
         $lines = explode(chr(10), $docComment);
-        foreach ($lines as $line) {
+        foreach ($lines as $index => $line) {
+            // extract description & tags from comment text
             $line = preg_replace('/(\\s*\\*\\/\\s*)?$/', '', $line);
             $line = trim($line);
             if ($line === '*/') {
@@ -466,14 +468,20 @@ abstract class AbstractObject
             if ($line !== '' && strpos($line, '* @') !== false) {
                 $this->parseTag(substr($line, strpos($line, '@')));
             } else {
-                if (count($this->tags) === 0) {
-                    $this->description .= preg_replace('/\\s*\\/?[\\\\*]*\\s?(.*)$/', '$1', $line) . PHP_EOL;
+                $plainLine = preg_replace('/\\s*\\/?[\\\\*]*\\s?(.*)$/', '$1', $line);
+                // add line to description if:
+                // no tag yet (tags should be placed below text)
+                // and line is not empty
+                // or line is empty and not first or last line
+                if (count($this->tags) === 0 && (!empty($plainLine) || (!empty($this->description) && $index !== count($lines) - 1))) {
+                    $this->description .= $plainLine . PHP_EOL;
                 }
             }
         }
-        $this->descriptionLines = GeneralUtility::trimExplode(PHP_EOL, $this->description, true);
         $this->description = trim($this->description);
+        $this->descriptionLines = explode(PHP_EOL, $this->description);
     }
+
 
     /**
      * Parses a line of a doc comment for a tag and its value.
@@ -538,7 +546,19 @@ abstract class AbstractObject
             }
         }
         $docCommentLines = preg_replace('/\\s+$/', '', $docCommentLines);
-        $docCommentLines = preg_replace('/^/', ' * ', $docCommentLines);
+        $docCommentLines = array_reduce($docCommentLines, function($acc, $item) {
+            $c = count($acc);
+            if ($c > 1 && empty($item) && empty($acc[$c-1])) {
+                // skip second empty line
+
+            } else {
+                $acc[] = $item;
+            }
+            return $acc;
+        }, []);
+        array_walk($docCommentLines, function(&$line) {
+            $line = empty($line) ? ' *' : ' * ' . $line;
+        });
         return '/**' . PHP_EOL . implode(PHP_EOL, $docCommentLines) . PHP_EOL . ' */';
     }
 
@@ -558,19 +578,17 @@ abstract class AbstractObject
      */
     public function addComment($commentText)
     {
+        // parsed comments have no line at the end
+        // generated comments have
+        $lastChar = substr($commentText, -1);
+        if ($lastChar !== PHP_EOL) {
+            $commentText .= PHP_EOL;
+        }
         $this->comments[] = $commentText;
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\Comment[] $comments
-     */
-    public function setComments($comments)
-    {
-        $this->comments = $comments;
-    }
-
-    /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Comment[]
+     * @return string[]
      */
     public function getComments()
     {

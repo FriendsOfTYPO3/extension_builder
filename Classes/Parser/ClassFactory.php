@@ -182,14 +182,27 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
     protected function addCommentsFromAttributes(AbstractObject $object, Stmt $node)
     {
         $comments = $node->getAttribute('comments');
+        $docComments = [];
         if (is_array($comments)) {
             foreach ($comments as $comment) {
                 if ($comment instanceof Doc) {
-                    $object->setDocComment($comment->getReformattedText());
+                    $docComments[] = $comment;
                 } elseif ($comment instanceof Comment) {
                     $object->addComment($comment->getText());
                 }
             }
+        }
+        $dc = count($docComments);
+        if ($dc > 1) {
+            foreach($docComments as $index => $docComment) {
+                if ($index < $dc -1) {
+                    $object->addComment($docComment->getText());
+                } else {
+                    $object->setDocComment($docComment->getText());
+                }
+            }
+        } else if ($dc === 1) {
+            $object->setDocComment($docComments[0]->getText());
         }
     }
 }
