@@ -8,15 +8,15 @@ Developer Corner
 
 Target group: **Developers**
 
-Please be aware that some configuration options are only available if you activate the "Advanced options" by clicking
+Please be aware that some configuration options are only available if the "Advanced options" is activated by clicking
 on the link in the upper right corner in the modeler.
 
 .. tip::
-   You can enable/disable the advanced options with the access key "a"
+   The advanced options are enabled/disabled with the access key "a"
 
 
-If you use the advanced options you should know what you do. There a many possibilities to run into misconfiguration,
-when using the advanced options. They are for special settings as they might be useful for the experienced TYPO3 developer.
+Use the advanced options with care. There a many possibilities to run into misconfiguration,
+when using the advanced options. They are for special settings, as they might be useful for the experienced TYPO3 developer.
 
 
 Creating a new extension
@@ -25,15 +25,15 @@ Creating a new extension
 Naming conventions
 ``````````````````
 
-When to use uppercase, lowercase or CamelCase and other restricions:
+When to use uppercase, lowercase or CamelCase and other restrictions:
 
 +-------------------+-----------------------------------------------------+-------------------+
 |**Property**       |**Restriction**                                      |**Scope**          |
 +-------------------+-----------------------------------------------------+-------------------+
-|extension_key      |lowercase, alpha numeric,no space                    |Unique in TER      |
+|extension_key      |lowercase, alphanumeric, no space                    |Unique in TER      |
 |                   |prefix not:\tx_\|u_\|user_\|pages_\|tt_\|sys_\|csh_  |                   |
 +-------------------+-----------------------------------------------------+-------------------+
-|Extension Name     |No restrictions                                      |Unique in TER      |
+|Extension Name     |No restrictions                                      |No restrictions    |
 +-------------------+-----------------------------------------------------+-------------------+
 |ModelName          |UpperCamelCase                                       |Unique in extension|
 +-------------------+-----------------------------------------------------+-------------------+
@@ -52,20 +52,20 @@ When to use uppercase, lowercase or CamelCase and other restricions:
 Extension meta data
 ```````````````````
 
-Enter the basic meta data for your extension in the left panel of the modeler:
+Enter the basic meta data for the extension in the left panel of the modeler:
 
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
 |**Name**       |Enter here the name for your extension, that is displayed in the backend                                                   |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
 |**Key**        |The extension key is a unique identifier for your extension                                                                |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
-|**Description**|Here you can describe more in detail what your extension does                                                              |
+|**Description**|More details what the extension does                                                                                       |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
-|**Version**    |A good versioning schema helps you to track changes and versions. We recommend `Semantic Versioning <http://semver.org/>`_ |
+|**Version**    |A good versioning schema helps to track changes and versions. We recommend `Semantic Versioning <http://semver.org/>`_     |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
-|**State**      |The state shows other users if your extension has already reached a stable state or not                                    |
+|**State**      |The state shows if the extension has already reached a stable phase, or if it is still in alpha or beta.                   |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
-|**Persons**    |Here you can add developers or project managers                                                                            |
+|**Persons**    |Possibility to add developers or project managers                                                                          |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
 
 
@@ -73,7 +73,7 @@ Adding plugins
 ``````````````
 
 Every extension that should generate output in the frontend needs a plugin. It will be shown in the "plugin type" field
-of the content element "Plugin". You can add it to your extension in the left panel:
+of the content element "Plugin". It can be added to your extension in the left panel:
 
 +--------+--------------------------------------------------------+
 |**Name**|A short, speaking name that is displayed in the backend |
@@ -85,18 +85,18 @@ of the content element "Plugin". You can add it to your extension in the left pa
 Adding backend modules
 ``````````````````````
 
-If your extension needs a module in the backend you have to add it in the left panel:
+If your extension needs a module in the backend, this can be added in the left panel:
 
 +---------------+--------------------------------------------------------------------+
 |**Name**       |A short, speaking name that is displayed in the backend             |
 +---------------+--------------------------------------------------------------------+
-|**Key**        |A unique key to identify the module in your extension               |
+|**Key**        |A unique key to identify the module in the extension                |
 +---------------+--------------------------------------------------------------------+
-|**Description**|Here you can describe what your backend module does                 |
+|**Description**|Description what the backend module does                            |
 +---------------+--------------------------------------------------------------------+
 |**Tab label**  |A tooltip that is displayed on mouseover                            |
 +---------------+--------------------------------------------------------------------+
-|**Main module**|The section in the backends left menu, where your module is located |
+|**Main module**|The section in the backends left menu, where the module is located  |
 +---------------+--------------------------------------------------------------------+
 
 Creating a model
@@ -108,38 +108,38 @@ Then click at the title bar and enter a name in UpperCamelCase. The model name m
 Adding an entity/value object
 '''''''''''''''''''''''''''''
 
-You can to select, if your model is an entity or value object and if it is an aggregate root.
+It is selectable, if the model is an entity or a value object, and if it is an aggregate root.
 
 Adding an action
 ''''''''''''''''
 
-You can define which actions should be generated. If your model is an aggregate root you might add all default
-`CRUD <http://de.wikipedia.org/wiki/CRUD>`_ actions. Each action will result in a controller method and a template with
-the same name. You can add custom actions later in the controller class.
+It can be defined which actions should be generated. If a model is an aggregate root, all default
+`CRUD <http://de.wikipedia.org/wiki/CRUD>`_ actions can be added. Each action will result in a controller method 
+and a template with the same name. Custom actions can be added later in the controller class.
 
 Adding a property
 '''''''''''''''''
 
 Each property has these fields:
 
-+----------------+-----------------------------------------+----------------------------------------------------------------------------+
-|**Field name**  |**Description**                          |**Results in the sources**                                                  |
-+----------------+-----------------------------------------+----------------------------------------------------------------------------+
-|Property name   |lowerCamelCase name                      |name of class property and a corresponding table column                     |
-+----------------+-----------------------------------------+----------------------------------------------------------------------------+
-|Property type   |vartype                                  |Some of the types are not completely implemented or configurable (see below)|
-+----------------+-----------------------------------------+----------------------------------------------------------------------------+
-|Description     |Is displayed as helptext                 |entry in locallang csh files                                                |
-+----------------+-----------------------------------------+----------------------------------------------------------------------------+
-|Is required     |Is this field required?                  |Validation notEmpty in Frontend and Backend forms                           |
-+----------------+-----------------------------------------+----------------------------------------------------------------------------+
-|Is exclude field|Is listed as exclude field in the backend|Non admin users won't see this field, except it is explicitly allowed       |
-+----------------+-----------------------------------------+----------------------------------------------------------------------------+
++-----------------+-----------------------------------------+----------------------------------------------------------------------------+
+|**Field name**   |**Description**                          |**Results in the sources**                                                  |
++-----------------+-----------------------------------------+----------------------------------------------------------------------------+
+|Property name    |lowerCamelCase name                      |name of class property and a corresponding table column                     |
++-----------------+-----------------------------------------+----------------------------------------------------------------------------+
+|Property type    |vartype                                  |Some of the types are not completely implemented or configurable (see below)|
++-----------------+-----------------------------------------+----------------------------------------------------------------------------+
+|Description      |Is displayed as context sensitive help   |entry in locallang csh files                                                |
++-----------------+-----------------------------------------+----------------------------------------------------------------------------+
+|Is required      |Is this field required?                  |Validation notEmpty in Frontend and Backend forms                           |
++-----------------+-----------------------------------------+----------------------------------------------------------------------------+
+|Is exclude field|Is listed as exclude field in the backend |Non admin users won't see this field, except it is explicitly allowed       |
++-----------------+-----------------------------------------+----------------------------------------------------------------------------+
 
 
-The frontend form handling of the property types file and image are not yet implemented, due to a missing implementation in extbase.
-You have to implement the upload handling yourself! The property select list has no configuration options in the modeler
-yet. You have to add the items list in the TCA configuration.
+The frontend form handling of the property types file and image are not yet implemented, due to a missing implementation in Extbase.
+The upload handling must be coded by the programmer! The property select list has no configuration options in the modeler
+yet. The items list must be inserted into the TCA configuration.
 
 Adding a relation
 '''''''''''''''''
@@ -153,7 +153,7 @@ Relations connect two models. Here is a description of the fields:
 +----------------+---------------------------------------------------------------------------------------+---------------------------------------------------------------------+
 |Type            |database relation                                                                      |Explanation see below                                                |
 +----------------+---------------------------------------------------------------------------------------+---------------------------------------------------------------------+
-|Description     |Is displayed as helptext                                                               |entry in locallang csh files                                         |
+|Description     |Is displayed as context sensitive help                                                 |entry in locallang csh files                                         |
 +----------------+---------------------------------------------------------------------------------------+---------------------------------------------------------------------+
 |Is exclude field|Is listed as exclude field in the backend                                              |Non admin users won't see this field, except it is explicitly allowed|
 +----------------+---------------------------------------------------------------------------------------+---------------------------------------------------------------------+
@@ -179,15 +179,15 @@ Relations connect two models. Here is a description of the fields:
    **m:n relations**
     These are always implemented with a MM relation table and will result in a multi select in the backend
 
-After adding a relation to the model you have to connect it to the related model. Click on the round bullet near the relation
-name and drag it to the bullet at the top of the related model. (Not the other way round)
+After adding a relation to the model it must be connected to the related model. This is achieved by a click 
+on the round bullet near the relation name and by dragging it to the bullet at the top of the related model. (Not the other way round)
 
 Saving the extension
 ''''''''''''''''''''
 
-Click on the Save button at the bottom of the modeler. It might take some time, until all files are written to disk.
+This is done by a click on the Save button at the bottom of the modeler. It might take some time, until all files are written to disk.
 If an error occures, in most cases an error message will be displayed (for example in an invalid name was choosen).
-Try to fix the error and save again. Be aware: you model configuration will be lost, if you close the browser window before a successfull saving.
+Such an error must be fixed, before it can be saved. Be aware: the model configuration will be lost, if the browser window is closed before a successful saving.
 
 The Extension Builder still has many limitations. The main missing features are:
 
