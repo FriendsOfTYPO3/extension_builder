@@ -75,11 +75,11 @@ Adding plugins
 Every extension that should generate output in the frontend needs a plugin. It will be shown in the "plugin type" field
 of the content element "Plugin". It can be added to your extension in the left panel:
 
-+--------+---------------------------------------------------------+
-|**Name**| A short, speaking name that is displayed in the backend |
-+--------+---------------------------------------------------------+
-|**Key** | A unique key to identify the plugin in your extension   |
-+--------+---------------------------------------------------------+
++--------+--------------------------------------------------------+
+|**Name**|A short, speaking name that is displayed in the backend |
++--------+--------------------------------------------------------+
+|**Key** |A unique key to identify the plugin in your extension   |
++--------+--------------------------------------------------------+
 
 
 Adding backend modules
