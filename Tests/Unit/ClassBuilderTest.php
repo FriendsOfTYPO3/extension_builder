@@ -151,6 +151,7 @@ class ClassBuilderTest extends \EBT\ExtensionBuilder\Tests\BaseUnitTest
             'text' => array('text', ''),
             'time' => array('time', 0),
             'timeSec' => array('timeSec', 0),
+            'slug' => ['slug', ''],
         );
     }
 
