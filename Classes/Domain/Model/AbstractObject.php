@@ -57,7 +57,7 @@ abstract class AbstractObject
     protected $namespaceName = '';
 
     /**
-     * modifiers  (privat, static abstract etc. not to mix up with "isModified" )
+     * modifiers (privat, static abstract etc. not to mix up with "isModified" )
      * @var int
      */
     protected $modifiers;
@@ -456,7 +456,6 @@ abstract class AbstractObject
      */
     public function setDocComment($docComment)
     {
-
         $lines = explode(chr(10), $docComment);
         foreach ($lines as $index => $line) {
             // extract description & tags from comment text
@@ -473,7 +472,9 @@ abstract class AbstractObject
                 // no tag yet (tags should be placed below text)
                 // and line is not empty
                 // or line is empty and not first or last line
-                if (count($this->tags) === 0 && (!empty($plainLine) || (!empty($this->description) && $index !== count($lines) - 1))) {
+                if (count($this->tags) === 0
+                    && (!empty($plainLine) || (!empty($this->description) && $index !== count($lines) - 1))
+                ) {
                     $this->description .= $plainLine . PHP_EOL;
                 }
             }
@@ -481,7 +482,6 @@ abstract class AbstractObject
         $this->description = trim($this->description);
         $this->descriptionLines = explode(PHP_EOL, $this->description);
     }
-
 
     /**
      * Parses a line of a doc comment for a tag and its value.
@@ -546,11 +546,10 @@ abstract class AbstractObject
             }
         }
         $docCommentLines = preg_replace('/\\s+$/', '', $docCommentLines);
-        $docCommentLines = array_reduce($docCommentLines, function($acc, $item) {
+        $docCommentLines = array_reduce($docCommentLines, function(array $acc, string $item) {
             $c = count($acc);
             if ($c > 1 && empty($item) && empty($acc[$c-1])) {
                 // skip second empty line
-
             } else {
                 $acc[] = $item;
             }

@@ -194,14 +194,14 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
         }
         $dc = count($docComments);
         if ($dc > 1) {
-            foreach($docComments as $index => $docComment) {
+            foreach ($docComments as $index => $docComment) {
                 if ($index < $dc -1) {
                     $object->addComment($docComment->getText());
                 } else {
                     $object->setDocComment($docComment->getText());
                 }
             }
-        } else if ($dc === 1) {
+        } elseif ($dc === 1) {
             $object->setDocComment($docComments[0]->getText());
         }
     }
