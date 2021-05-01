@@ -290,34 +290,33 @@ class FileGenerator
     /**
      * @throws \Exception
      */
-    protected function generatePluginFiles()
+    protected function generatePluginFiles(): void
     {
-        if ($this->extension->getPlugins()) {
-            try {
-                $fileContents = $this->renderTemplate(GeneralUtility::underscoredToLowerCamelCase('ext_localconf.phpt'),
-                    [
-                        'extension' => $this->extension
-                    ]);
-                $this->writeFile($this->extensionDirectory . 'ext_localconf.php', $fileContents);
-            } catch (\Exception $e) {
-                throw new \Exception('Could not write ext_localconf.php. Error: ' . $e->getMessage());
-            }
+        if (!$this->extension->hasPlugins()) {
+            return;
+        }
+        try {
+            $fileContents = $this->renderTemplate(GeneralUtility::underscoredToLowerCamelCase('ext_localconf.phpt'),
+                [
+                    'extension' => $this->extension
+                ]);
+            $this->writeFile($this->extensionDirectory . 'ext_localconf.php', $fileContents);
+        } catch (\Exception $e) {
+            throw new \Exception('Could not write ext_localconf.php. Error: ' . $e->getMessage());
         }
     }
 
     /**
      * @throws \Exception
      */
-    protected function generateTCAFiles()
+    protected function generateTCAFiles(): void
     {
-        // Generate TCA
         try {
             GeneralUtility::mkdir_deep($this->extensionDirectory . 'Configuration/TCA');
 
             $domainObjects = $this->extension->getDomainObjects();
 
             foreach ($domainObjects as $domainObject) {
-                /** @var $domainObject \EBT\ExtensionBuilder\Domain\Model\DomainObject */
                 if (!$domainObject->getMapToTable()) {
                     $fileContents = $this->generateTCA($domainObject);
                     $this->writeFile(
@@ -335,15 +334,27 @@ class FileGenerator
                     $domainObjectsNeedingOverrides[$domainObject->getDatabaseTableName()][] = $domainObject;
                 }
             }
-            if (count($domainObjectsNeedingOverrides) > 0) {
-                GeneralUtility::mkdir_deep($this->extensionDirectory . 'Configuration/TCA/Overrides');
-            }
+            GeneralUtility::mkdir_deep($this->extensionDirectory . 'Configuration/TCA/Overrides');
             $tablesNeedingTypeFields = $this->extension->getTablesForTypeFieldDefinitions();
             foreach ($domainObjectsNeedingOverrides as $tableName => $domainObjects) {
-                $addRecordTypeField = in_array($tableName, $tablesNeedingTypeFields);
+                $addRecordTypeField = in_array($tableName, $tablesNeedingTypeFields, true);
                 $fileContents = $this->generateTCAOverride($domainObjects, $addRecordTypeField);
                 $this->writeFile(
                     $this->configurationDirectory . 'TCA/Overrides/' . $tableName . '.php',
+                    $fileContents
+                );
+            }
+
+            $fileContents = $this->generateTCAOverrideSysTemplate();
+            $this->writeFile(
+                $this->configurationDirectory . 'TCA/Overrides/sys_template.php',
+                $fileContents
+            );
+
+            if ($this->extension->hasPlugins()) {
+                $fileContents = $this->generateTCAOverrideTtContent();
+                $this->writeFile(
+                    $this->configurationDirectory . 'TCA/Overrides/tt_content.php',
                     $fileContents
                 );
             }
@@ -1196,6 +1207,32 @@ class FileGenerator
             'rootDomainObject' => reset($domainObjects),
             'domainObjects' => $domainObjects,
             'addRecordTypeField' => $addRecordTypeField
+        ]);
+    }
+
+    /**
+     * Add TCA configuration for tt_content
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public function generateTCAOverrideTtContent()
+    {
+        return $this->renderTemplate('Configuration/TCA/Overrides/tt_content.phpt', [
+            'extension' => $this->extension,
+        ]);
+    }
+
+    /**
+     * Add TCA configuration for sys_template
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public function generateTCAOverrideSysTemplate()
+    {
+        return $this->renderTemplate('Configuration/TCA/Overrides/sys_template.phpt', [
+            'extension' => $this->extension,
         ]);
     }
 

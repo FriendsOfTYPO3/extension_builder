@@ -451,9 +451,11 @@ class FileGeneratorTest extends BaseFunctionalTest
 
         $this->fileGenerator->build($this->extension);
 
-        self::assertFileExists($this->extension->getExtensionDir() . 'Classes/Domain/Model/' . $domainObject->getName() . '.php');
-        self::assertFileExists($this->extension->getExtensionDir() . 'Classes/Domain/Repository/' . $domainObject->getName() . 'Repository.php');
-        self::assertFileExists($this->extension->getExtensionDir() . 'Classes/Controller/' . $domainObject->getName() . 'Controller.php');
+        $extensionDir = $this->extension->getExtensionDir();
+
+        self::assertFileExists($extensionDir . 'Classes/Domain/Model/' . $domainObject->getName() . '.php');
+        self::assertFileExists($extensionDir . 'Classes/Domain/Repository/' . $domainObject->getName() . 'Repository.php');
+        self::assertFileExists($extensionDir . 'Classes/Controller/' . $domainObject->getName() . 'Controller.php');
     }
 
     /**
@@ -494,6 +496,8 @@ class FileGeneratorTest extends BaseFunctionalTest
         }
 
         self::assertFileExists($extensionDir . 'Configuration/TCA/' . $domainObject->getDatabaseTableName() . '.php');
+        self::assertFileExists($extensionDir . 'Configuration/TCA/Overrides/sys_template.php');
+        self::assertFileExists($extensionDir . 'Configuration/TCA/Overrides/tt_content.php');
         self::assertFileExists($extensionDir . 'Configuration/ExtensionBuilder/settings.yaml');
         self::assertFileExists($extensionDir . 'Configuration/TypoScript/setup.typoscript');
         self::assertFileExists($extensionDir . 'Configuration/TypoScript/constants.typoscript');
