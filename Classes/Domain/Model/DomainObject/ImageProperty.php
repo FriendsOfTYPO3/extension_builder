@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
 
 class ImageProperty extends AbstractProperty
 {
@@ -74,36 +76,17 @@ class ImageProperty extends AbstractProperty
         return $this->allowedFileTypes;
     }
 
-    /**
-     * setter for allowed file types
-     *
-     * @param $allowedFileTypes
-     *
-     * @return string
-     */
-    public function setAllowedFileTypes($allowedFileTypes)
+    public function setAllowedFileTypes(string $allowedFileTypes): string
     {
         return $this->allowedFileTypes = $allowedFileTypes;
     }
 
-    /**
-     * getter for disallowed file types
-     *
-     * @return bool
-     */
-    public function getDisallowedFileTypes()
+    public function getDisallowedFileTypes(): string
     {
         return $this->disallowedFileTypes;
     }
 
-    /**
-     * setter for disallowed file types
-     *
-     * @param $disallowedFileTypes
-     *
-     * @return string
-     */
-    public function setDisallowedFileTypes($disallowedFileTypes)
+    public function setDisallowedFileTypes(string $disallowedFileTypes): string
     {
         return $this->disallowedFileTypes = $disallowedFileTypes;
     }
@@ -118,18 +101,12 @@ class ImageProperty extends AbstractProperty
         return $this->name . '.originalResource.name';
     }
 
-    /**
-     * @return int
-     */
-    public function getMaxItems()
+    public function getMaxItems(): int
     {
         return $this->maxItems;
     }
 
-    /**
-     * @param int $maxItems
-     */
-    public function setMaxItems($maxItems)
+    public function setMaxItems(int $maxItems): void
     {
         $this->maxItems = $maxItems;
     }

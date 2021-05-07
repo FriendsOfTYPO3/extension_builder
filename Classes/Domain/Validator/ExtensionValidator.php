@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Validator;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,18 +15,25 @@ namespace EBT\ExtensionBuilder\Domain\Validator;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Validator;
+
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
+use EBT\ExtensionBuilder\Domain\Model\BackendModule;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
+use EBT\ExtensionBuilder\Domain\Model\Extension;
+use EBT\ExtensionBuilder\Domain\Model\Plugin;
 use EBT\ExtensionBuilder\Service\ValidationService;
+use Exception;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * Schema for a whole extension
- *
  */
 class ExtensionValidator extends AbstractValidator
 {
@@ -39,123 +46,124 @@ class ExtensionValidator extends AbstractValidator
     /**
      * @var int
      */
-    const ERROR_EXTKEY_LENGTH = 0;
+    public const ERROR_EXTKEY_LENGTH = 0;
     /**
      * @var int
      */
-    const ERROR_EXTKEY_ILLEGAL_CHARACTERS = 1;
+    public const ERROR_EXTKEY_ILLEGAL_CHARACTERS = 1;
     /**
      * @var int
      */
-    const ERROR_EXTKEY_ILLEGAL_PREFIX = 2;
+    public const ERROR_EXTKEY_ILLEGAL_PREFIX = 2;
     /**
      * @var int
      */
-    const ERROR_EXTKEY_ILLEGAL_FIRST_CHARACTER = 3;
+    public const ERROR_EXTKEY_ILLEGAL_FIRST_CHARACTER = 3;
     /**
      * @var int
      */
-    const ERROR_DOMAINOBJECT_ILLEGAL_CHARACTER = 100;
+    public const ERROR_DOMAINOBJECT_ILLEGAL_CHARACTER = 100;
     /**
      * @var int
      */
-    const ERROR_DOMAINOBJECT_NO_NAME = 101;
+    public const ERROR_DOMAINOBJECT_NO_NAME = 101;
     /**
      * @var int
      */
-    const ERROR_DOMAINOBJECT_LOWER_FIRST_CHARACTER = 102;
+    public const ERROR_DOMAINOBJECT_LOWER_FIRST_CHARACTER = 102;
     /**
      * @var int
      */
-    const ERROR_DOMAINOBJECT_DUPLICATE = 103;
+    public const ERROR_DOMAINOBJECT_DUPLICATE = 103;
     /**
      * @var int
      */
-    const ERROR_PROPERTY_NO_NAME = 200;
+    public const ERROR_PROPERTY_NO_NAME = 200;
     /**
      * @var int
      */
-    const ERROR_PROPERTY_DUPLICATE = 201;
+    public const ERROR_PROPERTY_DUPLICATE = 201;
     /**
      * @var int
      */
-    const ERROR_PROPERTY_ILLEGAL_CHARACTER = 202;
+    public const ERROR_PROPERTY_ILLEGAL_CHARACTER = 202;
     /**
      * @var int
      */
-    const ERROR_PROPERTY_UPPER_FIRST_CHARACTER = 203;
+    public const ERROR_PROPERTY_UPPER_FIRST_CHARACTER = 203;
     /**
      * @var int
      */
-    const ERROR_PROPERTY_RESERVED_WORD = 204;
+    public const ERROR_PROPERTY_RESERVED_WORD = 204;
     /**
      * @var int
      */
-    const ERROR_PROPERTY_RESERVED_SQL_WORD = 205;
+    public const ERROR_PROPERTY_RESERVED_SQL_WORD = 205;
     /**
      * @var int
      */
-    const ERROR_PLUGIN_DUPLICATE_KEY = 300;
+    public const ERROR_PLUGIN_DUPLICATE_KEY = 300;
     /**
      * @var int
      */
-    const ERROR_PLUGIN_INVALID_KEY = 301;
+    public const ERROR_PLUGIN_INVALID_KEY = 301;
     /**
      * @var int
      */
-    const ERROR_BACKENDMODULE_DUPLICATE_KEY = 400;
+    public const ERROR_BACKENDMODULE_DUPLICATE_KEY = 400;
     /**
      * @var int
      */
-    const ERROR_BACKENDMODULE_INVALID_KEY = 401;
+    public const ERROR_BACKENDMODULE_INVALID_KEY = 401;
     /**
      * @var int
      */
-    const ERROR_ACTIONNAME_DUPLICATE = 501;
+    public const ERROR_ACTIONNAME_DUPLICATE = 501;
     /**
      * @var int
      */
-    const ERROR_ACTIONNAME_ILLEGAL_CHARACTER = 502;
+    public const ERROR_ACTIONNAME_ILLEGAL_CHARACTER = 502;
     /**
      * @var int
      */
-    const ERROR_MISCONFIGURATION = 503;
+    public const ERROR_MISCONFIGURATION = 503;
     /**
      * @var int
      */
-    const ERROR_ACTION_MISCONFIGURATION = 504;
+    public const ERROR_ACTION_MISCONFIGURATION = 504;
     /**
      * @var int
      */
-    const EXTENSION_DIR_EXISTS = 500;
+    public const EXTENSION_DIR_EXISTS = 500;
     /**
      * @var int
      */
-    const ERROR_MAPPING_NO_TCA = 600;
+    public const ERROR_MAPPING_NO_TCA = 600;
     /**
      * @var int
      */
-    const ERROR_MAPPING_NO_PARENTCLASS = 601;
+    public const ERROR_MAPPING_NO_PARENT_CLASS = 601;
     /**
      * @var int
      */
-    const ERROR_MAPPING_NO_TABLE = 602;
+    public const ERROR_MAPPING_NO_TABLE = 602;
     /**
      * @var int
      */
-    const ERROR_MAPPING_NO_FOREIGNCLASS = 603;
+    public const ERROR_MAPPING_NO_FOREIGN_CLASS = 603;
     /**
      * @var int
      */
-    const ERROR_MAPPING_WIRE_AND_FOREIGNCLASS = 604;
+    public const ERROR_MAPPING_WIRE_AND_FOREIGN_CLASS = 604;
     /**
      * @var int
      */
-    const ERROR_MAPPING_WRONG_TYPEFIELD_CONFIGURATION = 605;
+    public const ERROR_MAPPING_WRONG_TYPE_FIELD_CONFIGURATION = 605;
     /**
      * @var int
      */
-    const ERROR_MAPPING_TO_INCOMPATIBLE_TABLE = 606;
+    public const ERROR_MAPPING_TO_INCOMPATIBLE_TABLE = 606;
+
     /**
      * @var ExtensionBuilderConfigurationManager
      */
@@ -167,13 +175,9 @@ class ExtensionValidator extends AbstractValidator
      */
     protected $warningsToIgnore = [];
 
-    /**
-     * @param ExtensionBuilderConfigurationManager $configurationManager
-     * @return void
-     */
     public function injectExtensionBuilderConfigurationManager(
         ExtensionBuilderConfigurationManager $configurationManager
-    ) {
+    ): void {
         $this->configurationManager = $configurationManager;
     }
 
@@ -187,11 +191,10 @@ class ExtensionValidator extends AbstractValidator
     /**
      * Validate the given extension
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     * @param Extension $extension
      *
      * @return array[]
-     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
-     * @throws \Exception
+     * @throws Exception
      */
     public function isValid($extension)
     {
@@ -223,12 +226,10 @@ class ExtensionValidator extends AbstractValidator
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-     *
-     * @return void
-     * @throws \Exception
+     * @param Extension $extension
+     * @throws Exception
      */
-    protected function checkExistingExtensions($extension)
+    protected function checkExistingExtensions(Extension $extension): void
     {
         if (is_dir($extension->getExtensionDir())) {
             $settingsFile = $extension->getExtensionDir() .
@@ -242,27 +243,22 @@ class ExtensionValidator extends AbstractValidator
         }
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-     * @return void
-     */
-    private function validatePlugins($extension)
+    private function validatePlugins(Extension $extension): void
     {
         if (count($extension->getPlugins()) < 1) {
             return;
         }
         $pluginKeys = [];
-        /** @var $plugin \EBT\ExtensionBuilder\Domain\Model\Plugin */
         foreach ($extension->getPlugins() as $plugin) {
-            if (self::validatePluginKey($plugin->getKey()) === 0) {
-                $this->validationResult['errors'][] = new \Exception(
+            if (self::validatePluginKey($plugin->getKey()) === false) {
+                $this->validationResult['errors'][] = new Exception(
                     'Invalid plugin key in plugin ' . $plugin->getName() . ': "' . $plugin->getKey() . '".' . LF .
                     'Only alphanumeric character without spaces are allowed',
                     self::ERROR_PLUGIN_INVALID_KEY
                 );
             }
-            if (in_array($plugin->getKey(), $pluginKeys)) {
-                $this->validationResult['errors'][] = new \Exception(
+            if (in_array($plugin->getKey(), $pluginKeys, true)) {
+                $this->validationResult['errors'][] = new Exception(
                     'Duplicate plugin key: "' . $plugin->getKey() . '". Plugin keys must be unique.',
                     self::ERROR_PLUGIN_DUPLICATE_KEY
                 );
@@ -273,12 +269,7 @@ class ExtensionValidator extends AbstractValidator
         }
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\Plugin $plugin
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-     * @return void
-     */
-    private function validatePluginConfiguration($plugin, $extension)
+    private function validatePluginConfiguration(Plugin $plugin, Extension $extension): void
     {
         $controllerActionCombinationConfiguration = $plugin->getControllerActionCombinations();
         if (is_array($controllerActionCombinationConfiguration)) {
@@ -294,9 +285,9 @@ class ExtensionValidator extends AbstractValidator
                 $firstControllerAction = false;
             }
         }
-        $noncachableActionConfiguration = $plugin->getNoncacheableControllerActions();
-        if (is_array($noncachableActionConfiguration)) {
-            foreach ($noncachableActionConfiguration as $controllerName => $actionNames) {
+        $nonCacheableControllerActions = $plugin->getNonCacheableControllerActions();
+        if (is_array($nonCacheableControllerActions)) {
+            foreach ($nonCacheableControllerActions as $controllerName => $actionNames) {
                 $this->validateActionConfiguration(
                     $controllerName,
                     $actionNames,
@@ -307,12 +298,7 @@ class ExtensionValidator extends AbstractValidator
         }
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\BackendModule $backendModule
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-     * @return void
-     */
-    private function validateBackendModuleConfiguration($backendModule, $extension)
+    private function validateBackendModuleConfiguration(BackendModule $backendModule, Extension $extension): void
     {
         $controllerActionCombinationConfiguration = $backendModule->getControllerActionCombinations();
         if (is_array($controllerActionCombinationConfiguration)) {
@@ -330,7 +316,7 @@ class ExtensionValidator extends AbstractValidator
         }
     }
 
-    private function validateDependentActions($actionNames, $name)
+    private function validateDependentActions(array $actionNames, string $name): void
     {
         if ((in_array('new', $actionNames) && !in_array('create', $actionNames)) ||
             (in_array('create', $actionNames) && !in_array('new', $actionNames))
@@ -354,17 +340,16 @@ class ExtensionValidator extends AbstractValidator
      * @param string $controllerName
      * @param array $actionNames
      * @param string $label related plugin or module
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     * @param Extension $extension
      * @param bool $firstControllerAction
-     * @return void
      */
     private function validateActionConfiguration(
-        $controllerName,
-        $actionNames,
-        $label,
-        $extension,
-        $firstControllerAction = false
-    ) {
+        string $controllerName,
+        array $actionNames,
+        string $label,
+        Extension $extension,
+        bool $firstControllerAction = false
+    ): void {
         if ($firstControllerAction) {
             // the first Controller action config is the default Controller action
             // we show a warning if that's an action that requires a domain object as parameter
@@ -392,7 +377,7 @@ class ExtensionValidator extends AbstractValidator
             }
 
             foreach ($actionNames as $actionName) {
-                if (!in_array($actionName, $existingActionNames)) {
+                if (!in_array($actionName, $existingActionNames, true)) {
                     $this->validationResult['warnings'][] = new ExtensionException(
                         'Potential misconfiguration in ' . $label . ':' . LF . 'Controller ' . $controllerName . ' has no action named ' . $actionName,
                         self::ERROR_ACTION_MISCONFIGURATION
@@ -402,11 +387,7 @@ class ExtensionValidator extends AbstractValidator
         }
     }
 
-    /**
-     * @param array $configuration
-     * @return array
-     */
-    public function validateConfigurationFormat($configuration)
+    public function validateConfigurationFormat(array $configuration): array
     {
         foreach ($configuration['properties']['plugins'] as $pluginConfiguration) {
             $pluginName = $pluginConfiguration['name'];
@@ -446,7 +427,7 @@ class ExtensionValidator extends AbstractValidator
             $propertyNames = [];
             if (isset($domainObjectConfiguration['value']['propertyGroup']['properties'])) {
                 foreach ($domainObjectConfiguration['value']['propertyGroup']['properties'] as $property) {
-                    if (in_array($property['propertyName'], $propertyNames)) {
+                    if (in_array($property['propertyName'], $propertyNames, true)) {
                         $this->validationResult['errors'][] = new ExtensionException(
                             'Property "' . $property['propertyName'] . '" of Model "' . $domainObjectConfiguration['value']['name'] . '" exists twice.',
                             self::ERROR_PROPERTY_DUPLICATE
@@ -458,7 +439,7 @@ class ExtensionValidator extends AbstractValidator
             // check relation names, since these will result in class properties too
             if (isset($domainObjectConfiguration['value']['relationGroup']['relations'])) {
                 foreach ($domainObjectConfiguration['value']['relationGroup']['relations'] as $property) {
-                    if (in_array($property['relationName'], $propertyNames)) {
+                    if (in_array($property['relationName'], $propertyNames, true)) {
                         $this->validationResult['errors'][] = new ExtensionException(
                             'Property "' . $property['relationName'] . '" of Model "' . $domainObjectConfiguration['value']['name'] . '" exists twice.',
                             self::ERROR_PROPERTY_DUPLICATE
@@ -471,17 +452,13 @@ class ExtensionValidator extends AbstractValidator
         return $this->validationResult;
     }
 
-    /**
-     * @param string $configuration
-     * @return bool
-     */
-    protected function validateActionConfigFormat($configuration)
+    protected function validateActionConfigFormat(string $configuration): bool
     {
         $isValid = true;
         $lines = GeneralUtility::trimExplode(LF, $configuration, true);
         foreach ($lines as $line) {
             $test = GeneralUtility::trimExplode('=>', $line, true);
-            if (count($test) != 2) {
+            if (count($test) !== 2) {
                 $isValid = false;
             } elseif (!preg_match('/^[a-zA-Z0-9_,\s]*$/', $test[1])) {
                 $isValid = false;
@@ -490,26 +467,21 @@ class ExtensionValidator extends AbstractValidator
         return $isValid;
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-     * @return void
-     */
-    private function validateBackendModules($extension)
+    private function validateBackendModules(Extension $extension): void
     {
         if (count($extension->getBackendModules()) < 1) {
             return;
         }
         $backendModuleKeys = [];
-        /** @var \EBT\ExtensionBuilder\Domain\Model\BackendModule $backendModule */
         foreach ($extension->getBackendModules() as $backendModule) {
             if (self::validateModuleKey($backendModule->getKey()) === 0) {
-                $this->validationResult['errors'][] = new \Exception(
+                $this->validationResult['errors'][] = new Exception(
                     'Invalid key in backend module "' . $backendModule->getName() . LF . '". Only alphanumeric character without spaces are allowed',
                     self::ERROR_BACKENDMODULE_INVALID_KEY
                 );
             }
-            if (in_array($backendModule->getKey(), $backendModuleKeys)) {
-                $this->validationResult['errors'][] = new \Exception(
+            if (in_array($backendModule->getKey(), $backendModuleKeys, true)) {
+                $this->validationResult['errors'][] = new Exception(
                     'Duplicate backend module key: "' . $backendModule->getKey() . LF . '". Backend module keys must be unique.',
                     self::ERROR_BACKENDMODULE_DUPLICATE_KEY
                 );
@@ -520,11 +492,10 @@ class ExtensionValidator extends AbstractValidator
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-     * @return void
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @param Extension $extension
+     * @throws InvalidConfigurationTypeException
      */
-    private function validateDomainObjects($extension)
+    private function validateDomainObjects(Extension $extension): void
     {
         $actionCounter = 0;
         foreach ($extension->getDomainObjects() as $domainObject) {
@@ -587,11 +558,11 @@ class ExtensionValidator extends AbstractValidator
      * cover all cases:
      * 1. extend TYPO3 class like fe_users (no mapping table needed)
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      *
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws InvalidConfigurationTypeException
      */
-    private function validateMapping(DomainObject $domainObject)
+    private function validateMapping(DomainObject $domainObject): void
     {
         $parentClass = $domainObject->getParentClass();
         $tableName = $domainObject->getMapToTable();
@@ -610,13 +581,15 @@ class ExtensionValidator extends AbstractValidator
                 $this->validationResult['errors'][] = new ExtensionException(
                     'Mapping configuration error in domain object ' . $domainObject->getName() . ': the parent class ' . LF .
                     $parentClass . 'seems not to exist ',
-                    self::ERROR_MAPPING_NO_PARENTCLASS
+                    self::ERROR_MAPPING_NO_PARENT_CLASS
                 );
             }
         }
         if ($tableName) {
-            if (in_array($tableName, ['tt_content', 'pages']) || preg_match('/^(pages_|be_|sys_|static_|cf_)/',
-                    $tableName)) {
+            if (in_array($tableName, ['tt_content', 'pages']) || preg_match(
+                '/^(pages_|be_|sys_|static_|cf_)/',
+                $tableName
+            )) {
                 $this->validationResult['warnings'][] = new ExtensionException(
                     'The configuration for table "' . $tableName . '" is not compatible' . LF .
                     ' with extbase. You have to configure it yourself if you want to map' . LF .
@@ -630,7 +603,7 @@ class ExtensionValidator extends AbstractValidator
                     $this->validationResult['errors'][] = new ExtensionException(
                         'Mapping configuration error in domain object ' . $domainObject->getName() . ': you have to define' . LF .
                         'a parent class if you map to a table of another domain object of the same extension ',
-                        self::ERROR_MAPPING_NO_PARENTCLASS
+                        self::ERROR_MAPPING_NO_PARENT_CLASS
                     );
                 }
             }
@@ -646,12 +619,12 @@ class ExtensionValidator extends AbstractValidator
             $columns = $this->getDatabaseConnection($tableName)->getSchemaManager()->listTableColumns($tableName);
             foreach ($columns as $column) {
                 if ($column->getName() === $GLOBALS['TCA'][$tableName]['ctrl']['type']) {
-                    if ((String)$column->getType() === 'Integer') {
+                    if ((string)$column->getType() === 'Integer') {
                         $this->validationResult['warnings'][] = new ExtensionException(
                             'This means the type field can not be used for defining the record type. ' . LF .
                             'You have to configure the mappings yourself if you want to map to this' . LF .
                             'table or extend the correlated class',
-                            self::ERROR_MAPPING_WRONG_TYPEFIELD_CONFIGURATION
+                            self::ERROR_MAPPING_WRONG_TYPE_FIELD_CONFIGURATION
                         );
                     }
                 }
@@ -661,15 +634,14 @@ class ExtensionValidator extends AbstractValidator
 
     /**
      * $actions = $domainObject->getActions();
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     * @return void
+     * @param DomainObject $domainObject
      */
-    private function validateDomainObjectActions(DomainObject $domainObject)
+    private function validateDomainObjectActions(DomainObject $domainObject): void
     {
         $actionNames = [];
         $actions = $domainObject->getActions();
         foreach ($actions as $action) {
-            if (in_array($action->getName(), $actionNames)) {
+            if (in_array($action->getName(), $actionNames, true)) {
                 $this->validationResult['errors'][] = new ExtensionException(
                     'Duplicate action name "' . $action->getName() . '" of ' . $domainObject->getName() . LF .
                     '; action names have to be unique for each model',
@@ -692,7 +664,7 @@ class ExtensionValidator extends AbstractValidator
         $this->validateDependentActions($actionNames, 'Domain object ' . $domainObject->getName());
 
         $firstAction = reset($actionNames);
-        if ($firstAction == 'show' || $firstAction == 'edit' || $firstAction == 'delete') {
+        if ($firstAction === 'show' || $firstAction === 'edit' || $firstAction === 'delete') {
             $this->validationResult['warnings'][] = new ExtensionException(
                 'Potential misconfiguration in Domain object ' . $domainObject->getName() . ':' . LF .
                 'First action could not be default action since "' . $firstAction . '" action needs a parameter',
@@ -701,11 +673,7 @@ class ExtensionValidator extends AbstractValidator
         }
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     * @return void
-     */
-    private function validateProperties($domainObject)
+    private function validateProperties(DomainObject $domainObject): void
     {
         $propertyNames = [];
         foreach ($domainObject->getProperties() as $property) {
@@ -757,7 +725,7 @@ class ExtensionValidator extends AbstractValidator
             }
 
             // Check for duplicate property names
-            if (in_array($propertyName, $propertyNames)) {
+            if (in_array($propertyName, $propertyNames, true)) {
                 $this->validationResult['errors'][] = new ExtensionException(
                     'Property "' . $property->getName() . '" of ' . $domainObject->getName() . ' exists twice.',
                     self::ERROR_PROPERTY_DUPLICATE
@@ -770,15 +738,17 @@ class ExtensionValidator extends AbstractValidator
                     if (!class_exists($property->getForeignClassName())) {
                         $this->validationResult['errors'][] = new ExtensionException(
                             'Related class not loadable: "' . $property->getForeignClassName() . '" configured in relation "' . $property->getName() . '".',
-                            self::ERROR_MAPPING_NO_FOREIGNCLASS
+                            self::ERROR_MAPPING_NO_FOREIGN_CLASS
                         );
                     }
                 }
-                if ($property->getForeignModel() && ($property->getForeignModel()->getFullQualifiedClassName() != $property->getForeignClassName())) {
+                if ($property->getForeignModel()
+                    && ($property->getForeignModel()->getFullQualifiedClassName() != $property->getForeignClassName())
+                ) {
                     $this->validationResult['errors'][] = new ExtensionException(
                         'Relation "' . $property->getName() . '" in model "' . $domainObject->getName() .
                         '" has a external class relation and a wire to ' . $property->getForeignModel()->getName(),
-                        self::ERROR_MAPPING_WIRE_AND_FOREIGNCLASS
+                        self::ERROR_MAPPING_WIRE_AND_FOREIGN_CLASS
                     );
                 }
             }
@@ -787,29 +757,30 @@ class ExtensionValidator extends AbstractValidator
 
     /**
      * validates a plugin key
+     *
      * @param string $key
-     * @return bool true if valid
+     * @return bool
      */
-    private static function validatePluginKey($key)
+    private static function validatePluginKey(string $key): bool
     {
-        return preg_match('/^[a-zA-Z0-9_\-]*$/', $key);
+        return preg_match('/^[a-zA-Z0-9_\-]*$/', $key) === 1;
     }
 
     /**
      * validates a backend module key
+     *
      * @param string $key
-     * @return bool true if valid
+     * @return bool
      */
-    private static function validateModuleKey($key)
+    private static function validateModuleKey(string $key): bool
     {
-        return preg_match('/^[a-zA-Z0-9_\-]*$/', $key);
+        return preg_match('/^[a-zA-Z0-9_\-]*$/', $key) === 1;
     }
 
     /**
      * @param string $key
-     * @return void
      */
-    private function validateExtensionKey($key)
+    private function validateExtensionKey(string $key): void
     {
         /*
          * Character test
@@ -857,22 +828,12 @@ class ExtensionValidator extends AbstractValidator
         }
     }
 
-    /**
-     * @param string $word
-     *
-     * @return bool
-     */
-    public static function isReservedWord($word)
+    public static function isReservedWord(string $word): bool
     {
         return ValidationService::isReservedMYSQLWord($word) || ValidationService::isReservedTYPO3Word($word);
     }
 
-    /**
-     * @param string $tableName
-     *
-     * @return \TYPO3\CMS\Core\Database\Connection
-     */
-    protected function getDatabaseConnection($tableName)
+    protected function getDatabaseConnection(string $tableName): Connection
     {
         return GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($tableName);
     }

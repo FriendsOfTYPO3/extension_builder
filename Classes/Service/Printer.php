@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Service;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Service;
+
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Parser\NodeFactory;
 use PhpParser\Node;
@@ -27,22 +29,15 @@ use PhpParser\PrettyPrinter\Standard;
 class Printer extends Standard
 {
     /**
-     * @var \EBT\ExtensionBuilder\Parser\NodeFactory
+     * @var NodeFactory
      */
     protected $nodeFactory;
     /**
      * @var bool
      */
     protected $canUseSemicolonNamespaces = true;
-    /**
-     * @var string
-     */
-    protected $indentToken = '    ';
 
-    /**
-     * @param \EBT\ExtensionBuilder\Parser\NodeFactory $nodeFactory
-     */
-    public function injectNodeFactory(NodeFactory $nodeFactory)
+    public function injectNodeFactory(NodeFactory $nodeFactory): void
     {
         $this->nodeFactory = $nodeFactory;
     }
@@ -51,7 +46,7 @@ class Printer extends Standard
      * @param mixed $stmts
      * @return string
      */
-    public function render($stmts)
+    public function render($stmts): string
     {
         if (!is_array($stmts)) {
             $stmts = [$stmts];
@@ -59,17 +54,12 @@ class Printer extends Standard
         return $this->prettyPrint($stmts);
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\File
-     * @param bool $prependPHPTag
-     * @return string
-     */
-    public function renderFileObject(File $fileObject, $addDeclareStrictTypes = true)
+    public function renderFileObject(File $fileObject, bool $addDeclareStrictTypes = true): string
     {
         $stmts = $this->nodeFactory->getFileStatements($fileObject);
         $resultingCode = $this->render($stmts);
         if ($addDeclareStrictTypes) {
-            $resultingCode = 'declare(strict_types=1);' . LF . LF . $resultingCode;
+            $resultingCode = LF . 'declare(strict_types=1);' . LF . LF . $resultingCode;
         }
         return '<?php' . LF . $resultingCode . LF;
     }
@@ -115,7 +105,8 @@ class Printer extends Standard
      * @param Declare_ $node
      * @return string
      */
-    protected function pStmt_Declare(Declare_ $node) {
+    protected function pStmt_Declare(Declare_ $node)
+    {
         return 'declare(' . $this->pCommaSeparated($node->declares) . ')'
                . (null !== $node->stmts ? ' {' . $this->pStmts($node->stmts) . $this->nl . '}' : ';');
     }

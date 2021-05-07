@@ -3,7 +3,6 @@ declare(strict_types=1);
 namespace FIXTURE\TestExtension\Controller;
 
 /**
- *
  * This file is part of the "ExtensionBuilder Test Extension" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the

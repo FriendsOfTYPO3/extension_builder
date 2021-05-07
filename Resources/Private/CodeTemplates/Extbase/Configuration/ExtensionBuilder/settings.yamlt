@@ -1,13 +1,13 @@
 #
 # Extension Builder settings for extension {extension.extensionKey}
-# generated {f:format.date(format:'Y-m-d\TH:i:00\Z',date:'now')}
+# generated {f:format.date(format:'Y-m-d\TH:i:s\Z',date:'now')}
 #
 # See http://www.yaml.org/spec/1.2/spec.html
 #
 
 ---
 
-###########    Overwrite settings  ###########
+#############  Overwrite settings  ###########
 #
 # These settings only apply, if the roundtrip feature of the extension builder
 # is enabled in the extension manager
@@ -35,9 +35,8 @@
 #   These settings may break the functionality of the extension builder!
 #   Handle with care!
 #
-#
 
-############  extension settings  ##############
+#############  Extension settings  ###########
 
 overwriteSettings:
   Classes:
@@ -57,32 +56,29 @@ overwriteSettings:
       #Partials: keep
       #Templates: keep
       Backend:
-          #Layouts: keep
-          #Partials: keep
-          #Templates: keep
+        #Layouts: keep
+        #Partials: keep
+        #Templates: keep
 
   user_extension.svg: keep
-
 #  ext_localconf.php: merge
-
 #  ext_tables.php: merge
-
 #  ext_tables.sql: merge
 
 ## add declare strict types in php files
 declareStrictTypes: true
 
-## use static date attribute in xliff files ##
-#staticDateInXliffFiles: {f:format.date(format:'Y-m-d\TH:i:00\Z',date:'now')}
+## use static date attribute in xliff files
+#staticDateInXliffFiles: '{f:format.date(format:'Y-m-d\TH:i:s\Z',date:'now')}'
 
-## skip docComment (license header) ##
-#skipDocComment
+## skip docComment (license header)
+#skipDocComment: false
 
-## list of error codes for warnings that should be ignored ##
+## list of error codes for warnings that should be ignored
 #ignoreWarnings:
   #503
 
-######### settings for classBuilder #############################
+#############  settings for classBuilder  #######################
 #
 # here you may define default parent classes for your classes
 # these settings only apply for new generated classes

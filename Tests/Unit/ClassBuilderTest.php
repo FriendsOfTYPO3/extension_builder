@@ -1,7 +1,6 @@
 <?php
-declare(strict_types=1);
 
-namespace EBT\ExtensionBuilder\Tests\Unit;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -16,7 +15,10 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Tests\Unit;
+
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ManyToManyRelation;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
@@ -44,7 +46,7 @@ class ClassBuilderTest extends BaseUnitTest
      */
     protected $modelClassTemplatePath = '';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -76,7 +78,7 @@ class ClassBuilderTest extends BaseUnitTest
         $modelClassObject = $this->classBuilder->generateModelClassFileObject(
             $domainObject,
             $this->modelClassTemplatePath,
-            false
+            null
         )->getFirstClass();
 
         self::assertIsObject($modelClassObject, 'No model class object');
@@ -104,7 +106,7 @@ class ClassBuilderTest extends BaseUnitTest
         $modelClassObject = $this->classBuilder->generateModelClassFileObject(
             $domainObject,
             $this->modelClassTemplatePath,
-            false
+            null
         )->getFirstClass();
         self::assertTrue($modelClassObject->methodExists('getName'), 'No method: getName');
     }
@@ -123,7 +125,7 @@ class ClassBuilderTest extends BaseUnitTest
         $modelClassObject = $this->classBuilder->generateModelClassFileObject(
             $domainObject,
             $this->modelClassTemplatePath,
-            false
+            null
         )->getFirstClass();
         self::assertTrue($modelClassObject->methodExists('isBlue'), 'No method: isBlue');
     }
@@ -146,7 +148,7 @@ class ClassBuilderTest extends BaseUnitTest
         $modelClassObject = $this->classBuilder->generateModelClassFileObject(
             $domainObject1,
             $this->modelClassTemplatePath,
-            false
+            null
         )->getFirstClass();
 
         self::assertTrue(
@@ -232,11 +234,11 @@ class ClassBuilderTest extends BaseUnitTest
         $property = new $propertyClassName($propertyName);
         $domainObject->addProperty($property);
 
-        /** @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $modelClassObject */
+        /** @var ClassObject $modelClassObject */
         $modelClassObject = $this->classBuilder->generateModelClassFileObject(
             $domainObject,
             $this->modelClassTemplatePath,
-            false
+            null
         )->getFirstClass();
 
         $propertyObject = $modelClassObject->getProperty($propertyName);

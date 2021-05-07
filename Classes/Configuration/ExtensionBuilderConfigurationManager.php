@@ -1,7 +1,5 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Configuration;
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,20 +13,23 @@ namespace EBT\ExtensionBuilder\Configuration;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Configuration;
+
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
@@ -55,22 +56,17 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     private $inputData = [];
 
     /**
-     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+     * @var ConfigurationManagerInterface
      */
     protected $configurationManager;
 
-    /**
-     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
-     */
-    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
+    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager): void
     {
         $this->configurationManager = $configurationManager;
     }
 
     /**
      * Wrapper for file_get_contents('php://input')
-     *
-     * @return void
      */
     public function parseRequest(): void
     {
@@ -123,7 +119,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @return array
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    public function getSettings($typoscript = null): array
+    public function getSettings(?array $typoscript = null): array
     {
         if ($typoscript === null) {
             $typoscript = $this->configurationManager->getConfiguration($this->configurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
@@ -170,7 +166,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @param string|null $storagePath
      * @return array|null
      */
-    public function getExtensionBuilderConfiguration($extensionKey, $storagePath = null): ?array
+    public function getExtensionBuilderConfiguration(string $extensionKey, ?string $storagePath = null): ?array
     {
         $result = null;
         $extensionConfigurationJson = self::getExtensionBuilderJson($extensionKey, $storagePath);
@@ -191,7 +187,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      */
     public static function getExtensionBuilderJson($extensionKey, $storagePath = null)
     {
-        $storagePath = $storagePath ?? Environment::getPublicPath()  . '/typo3conf/ext/';
+        $storagePath = $storagePath ?? Environment::getPublicPath() . '/typo3conf/ext/';
         $jsonFile = $storagePath . $extensionKey . '/' . self::EXTENSION_BUILDER_SETTINGS_FILE;
         if (file_exists($jsonFile)) {
             return json_decode(file_get_contents($jsonFile), true);
@@ -203,18 +199,20 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     /**
      * @param $className string
      * @return string
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
-    public function getPersistenceTable($className)
+    public function getPersistenceTable(string $className)
     {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         return $objectManager->get(DataMapper::class)->getDataMap($className)->getTableName();
     }
 
     /**
-     * @param $className
+     * @param string $className
      * @return string
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
-    public function getRecordType($className)
+    public function getRecordType(string $className): ?string
     {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         return $objectManager->get(DataMapper::class)->getDataMap($className)->getRecordType();
@@ -227,7 +225,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @param string $storagePath
      * @return string path
      */
-    public function getSettingsFile( $extensionKey, $storagePath): string
+    public function getSettingsFile(string $extensionKey, string $storagePath): string
     {
         return $storagePath . $extensionKey . '/' . self::SETTINGS_DIR . 'settings.yaml';
     }
@@ -236,13 +234,13 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @param Extension $extension
      * @param array $codeTemplateRootPaths
      *
-     * @return void
      * @throws \Exception
      */
     public function createInitialSettingsFile(Extension $extension, array $codeTemplateRootPaths): void
     {
         GeneralUtility::mkdir_deep($extension->getExtensionDir() . self::SETTINGS_DIR);
-        $settings = file_get_contents($codeTemplateRootPaths[0] . 'Configuration/ExtensionBuilder/settings.yamlt');
+        $substitutedExtensionPath = self::substituteExtensionPath($codeTemplateRootPaths[0]);
+        $settings = file_get_contents($substitutedExtensionPath . self::SETTINGS_DIR . 'settings.yamlt');
         $settings = str_replace('{extension.extensionKey}', $extension->getExtensionKey(), $settings);
         $settings = str_replace(
             '{f:format.date(format:\'Y-m-d\\TH:i:s\\Z\',date:\'now\')}',
@@ -261,22 +259,21 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @param string $encodedTemplateRootPath
      * @return string
      */
-    public static function substituteExtensionPath($encodedTemplateRootPath): string
+    public static function substituteExtensionPath(string $encodedTemplateRootPath): string
     {
-        $result = '';
-
         if (GeneralUtility::isFirstPartOfStr($encodedTemplateRootPath, 'EXT:')) {
             [$extKey, $script] = explode('/', substr($encodedTemplateRootPath, 4), 2);
             if ($extKey && ExtensionManagementUtility::isLoaded($extKey)) {
-                $result = ExtensionManagementUtility::extPath($extKey) . $script;
+                return ExtensionManagementUtility::extPath($extKey) . $script;
             }
-        } elseif (GeneralUtility::isAbsPath($encodedTemplateRootPath)) {
-            $result = $encodedTemplateRootPath;
-        } else {
-            $result = Environment::getPublicPath() . '/' . $encodedTemplateRootPath;
+            return '';
         }
 
-        return $result;
+        if (GeneralUtility::isAbsPath($encodedTemplateRootPath)) {
+            return $encodedTemplateRootPath;
+        }
+
+        return Environment::getPublicPath() . '/' . $encodedTemplateRootPath;
     }
 
     /**
@@ -285,7 +282,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @param array $extensionConfigurationJson
      * @return array the modified configuration
      */
-    public function fixExtensionBuilderJSON($extensionConfigurationJson)
+    public function fixExtensionBuilderJSON(array $extensionConfigurationJson): array
     {
         $extensionConfigurationJson['modules'] = $this->resetOutboundedPositions($extensionConfigurationJson['modules']);
         $extensionConfigurationJson['modules'] = $this->mapAdvancedMode($extensionConfigurationJson['modules']);
@@ -302,7 +299,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      *
      * @return array modified json
      */
-    protected function mapAdvancedMode($jsonConfig, $prepareForModeler = true)
+    protected function mapAdvancedMode(array $jsonConfig, bool $prepareForModeler = true): array
     {
         $fieldsToMap = [
             'relationType',
@@ -370,7 +367,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @param string $identifier
      * @return bool
      */
-    public function isConfirmed($identifier): bool
+    public function isConfirmed(string $identifier): bool
     {
         return isset($this->inputData['params'][$identifier]) && $this->inputData['params'][$identifier] == 1;
     }
@@ -381,7 +378,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @param array $jsonConfig
      * @return array
      */
-    protected function resetOutboundedPositions($jsonConfig)
+    protected function resetOutboundedPositions(array $jsonConfig): array
     {
         foreach ($jsonConfig as &$module) {
             if ($module['config']['position'][0] < 0) {
@@ -402,7 +399,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @param array $jsonConfig
      * @return array
      */
-    protected function reArrangeRelations($jsonConfig)
+    protected function reArrangeRelations(array $jsonConfig): array
     {
         foreach ($jsonConfig['wires'] as &$wire) {
             // format: relation_1
@@ -512,6 +509,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      *
      * @param ServerRequestInterface $request
      * @return ResponseInterface
+     * @throws RouteNotFoundException
      */
     public function getWiringEditorSmd(ServerRequestInterface $request): ResponseInterface
     {
@@ -528,7 +526,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
         try {
             $uri = $uriBuilder->buildUriFromRoute('tools_ExtensionBuilderExtensionbuilder', $parameters);
-        } catch (\TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException $e) {
+        } catch (RouteNotFoundException $e) {
             $uri = $uriBuilder->buildUriFromRoutePath('tools_ExtensionBuilderExtensionbuilder', $parameters);
         }
         $smdJson->target = (string)$uri;

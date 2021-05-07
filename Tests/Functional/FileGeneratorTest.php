@@ -1,7 +1,6 @@
 <?php
-declare(strict_types=1);
 
-namespace EBT\ExtensionBuilder\Tests\Functional;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -16,6 +15,8 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Tests\Functional;
+
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty;
@@ -24,6 +25,7 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
 use EBT\ExtensionBuilder\Domain\Model\Plugin;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 use EBT\ExtensionBuilder\Utility\Inflector;
+use ReflectionClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ReflectionService;
 
@@ -203,7 +205,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         self::assertTrue(class_exists($className), 'Class was not generated:' . $className);
         include_once($modelClassPath);
 
-        $reflectionClass = new \ReflectionClass(new $className());
+        $reflectionClass = new ReflectionClass(new $className());
         self::assertTrue($reflectionClass->hasMethod('get' . ucfirst($propertyName)), 'Getter was not generated');
         self::assertTrue($reflectionClass->hasMethod('set' . ucfirst($propertyName)), 'Setter was not generated');
 
@@ -256,7 +258,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         }
         self::assertTrue(class_exists($relatedClassName), 'Class was not generated:' . $relatedClassName);
 
-        $reflection = new \ReflectionClass(new $className());
+        $reflection = new ReflectionClass(new $className());
         self::assertTrue(
             $reflection->hasMethod('add' . ucfirst(Inflector::singularize($propertyName))),
             'Add method was not generated'
@@ -283,7 +285,8 @@ class FileGeneratorTest extends BaseFunctionalTest
         self::assertEquals(
             Inflector::singularize($propertyName),
             $parameter->getName(),
-            'Wrong parameter name in add method');
+            'Wrong parameter name in add method'
+        );
 
         $removeMethod = $reflection->getMethod('remove' . ucfirst(Inflector::singularize($propertyName)));
         $parameters = $removeMethod->getParameters();
@@ -329,7 +332,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         include($modelClassPath);
         self::assertTrue(class_exists($className), 'Class was not generated:' . $className);
 
-        $reflection = new \ReflectionClass(new $className());
+        $reflection = new ReflectionClass(new $className());
         self::assertTrue(
             $reflection->hasMethod('add' . ucfirst(Inflector::singularize($propertyName))),
             'Add method was not generated'
@@ -532,7 +535,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         );
 
         GeneralUtility::mkdir_deep(dirname($setupFile));
-        GeneralUtility::writeFile($setupFile, "# some sample content");
+        GeneralUtility::writeFile($setupFile, '# some sample content');
 
         $this->fileGenerator->build($this->extension);
 

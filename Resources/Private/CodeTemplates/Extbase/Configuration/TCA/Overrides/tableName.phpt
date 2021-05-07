@@ -5,7 +5,10 @@ defined('TYPO3_MODE') || die();
 
 <f:for each="{domainObjects}" as="domainObject"><f:if condition="{domainObject.mappedToExistingTable}">
 <f:render partial="TCA/Columns.phpt" arguments="{extension: domainObject.extension, domainObject:domainObject, settings:settings}" />
-$GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$GLOBALS['TCA']['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = ['LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}','{domainObject.recordType}'];
+$GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$GLOBALS['TCA']['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = [
+    'LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}',
+    '{domainObject.recordType}'
+];
 </f:if><f:if condition="{domainObject.categorizable}">
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
    '{extension.extensionKey}',

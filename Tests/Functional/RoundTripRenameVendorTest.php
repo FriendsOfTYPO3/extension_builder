@@ -1,7 +1,6 @@
 <?php
-declare(strict_types=1);
 
-namespace EBT\ExtensionBuilder\Tests\Functional;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -16,15 +15,19 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Tests\Functional;
+
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
+use EBT\ExtensionBuilder\Service\ObjectSchemaBuilder;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 use TYPO3\CMS\Core\Core\Environment;
 
 class RoundTripRenameVendorTest extends BaseFunctionalTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder
+     * @var ObjectSchemaBuilder
      */
     protected $objectSchemaBuilder;
     /**
@@ -32,11 +35,11 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
      */
     protected $extensionSchemaBuilder;
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\Extension
+     * @var Extension
      */
     protected $fixtureExtension;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->configurationManager = $this->getAccessibleMock(
@@ -81,7 +84,7 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
         );
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         // overwrite parent tearDown to avoid deletion of fixture extension
     }
@@ -89,7 +92,7 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
     /**
      * @test
      */
-    public function changeVendorNameResultsInNewNamespace()
+    public function changeVendorNameResultsInNewNamespace(): void
     {
         $this->fixtureExtension->setOriginalVendorName('FIXTURE');
         $this->fixtureExtension->setVendorName('VENDOR');
@@ -99,7 +102,7 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
     /**
      * @test
      */
-    public function changeVendorNameResultsInUpdatedTagsInControllerClass()
+    public function changeVendorNameResultsInUpdatedTagsInControllerClass(): void
     {
         $this->fixtureExtension->setOriginalVendorName('FIXTURE');
         $this->fixtureExtension->setVendorName('VENDOR');
@@ -116,7 +119,7 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
     /**
      * @test
      */
-    public function changeVendorNameResultsInUpdatedTagsInModelClass()
+    public function changeVendorNameResultsInUpdatedTagsInModelClass(): void
     {
         $this->fixtureExtension->setOriginalVendorName('FIXTURE');
         $this->fixtureExtension->setVendorName('VENDOR');

@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Parser\Utility;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,7 +15,11 @@ namespace EBT\ExtensionBuilder\Parser\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Parser\Utility;
+
+use LogicException;
 use PhpParser\Node;
+use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\ConstFetch;
@@ -76,11 +80,11 @@ class NodeConverter
      *
      * @static
      * @param $node
-     * @return array|null|string
+     * @return array|string|null
      */
     public static function getValueFromNode($node)
     {
-        if (\is_string($node) || \is_numeric($node)) {
+        if (is_string($node) || is_numeric($node)) {
             return $node;
         }
 
@@ -110,7 +114,7 @@ class NodeConverter
             foreach ($arrayItems as $arrayItemNode) {
                 $itemKey = $arrayItemNode->key;
                 $itemValue = $arrayItemNode->value;
-                if (is_null($itemKey)) {
+                if (null === $itemKey) {
                     $value[] = self::normalizeValue($itemValue);
                 } else {
                     $value[self::getValueFromNode($itemKey)] = self::normalizeValue($itemValue);
@@ -118,7 +122,7 @@ class NodeConverter
             }
             return $value;
         }
-        
+
         if ($node instanceof NullableType) {
             return '?' . self::getValueFromNode($node->type);
         }
@@ -136,7 +140,7 @@ class NodeConverter
      *
      * @param mixed $value The value to normalize
      *
-     * @return \PhpParser\Node\Expr The normalized value
+     * @return Expr The normalized value
      */
     public static function normalizeValue($value)
     {
@@ -144,7 +148,7 @@ class NodeConverter
             return $value;
         }
 
-        if (is_null($value)) {
+        if (null === $value) {
             return new ConstFetch(new Name('null'));
         }
 
@@ -185,7 +189,7 @@ class NodeConverter
             return new Array_($items);
         }
 
-        throw new \LogicException('Invalid value');
+        throw new LogicException('Invalid value');
     }
 
     /**
@@ -194,10 +198,10 @@ class NodeConverter
      * \PhpParser\Node\Stmt\Class_Const
      *
      * @static
-     * @param \PhpParser\Node
+     * @param Node $node
      * @return array
      */
-    public static function convertClassConstantNodeToArray(Node $node)
+    public static function convertClassConstantNodeToArray(Node $node): array
     {
         $constantsArray = [];
         $consts = $node->consts;
@@ -213,10 +217,10 @@ class NodeConverter
      * with keys name and alias
      *
      * @static
-     * @param \PhpParser\Node\Stmt\Use_
+     * @param Use_ $node
      * @return array
      */
-    public static function convertUseAliasStatementNodeToArray(Use_ $node)
+    public static function convertUseAliasStatementNodeToArray(Use_ $node): array
     {
         return [
             'name' => self::getValueFromNode($node->uses[0]->name),
@@ -224,9 +228,9 @@ class NodeConverter
         ];
     }
 
-    public static function getVarTypeFromValue($value)
+    public static function getVarTypeFromValue($value): string
     {
-        if (is_null($value)) {
+        if (null === $value) {
             return '';
         }
 

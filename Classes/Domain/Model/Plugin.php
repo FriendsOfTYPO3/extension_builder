@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model;
+
 class Plugin
 {
     /**
@@ -28,7 +30,7 @@ class Plugin
     protected $description = '';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $type = '';
 
@@ -38,91 +40,60 @@ class Plugin
     protected $key = '';
 
     /**
-     * array('controller' => 'MyController', 'actions' => 'action1,action2')
+     * ['controller' => 'MyController', 'actions' => 'action1,action2']
      *
      * @var string[]
      */
     protected $controllerActionCombinations = [];
 
     /**
-     * array('controller' => 'MyController', 'actions' => 'action1,action2')
+     * ['controller' => 'MyController', 'actions' => 'action1,action2']
      *
      * @var string[]
      */
-    protected $noncacheableControllerActions = [];
+    protected $nonCacheableControllerActions = [];
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     * @return void
-     */
-    public function setName($name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @param string $type
-     * @return void
-     */
-    public function setType($type): void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $key
-     * @return void
-     */
-    public function setKey($key): void
+    public function setKey(string $key): void
     {
         $this->key = strtolower($key);
     }
 
-    /**
-     * @return string
-     */
     public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * @param array $controllerActionCombinations
-     * @return void
-     */
-    public function setControllerActionCombinations(array $controllerActionCombinations)
+    public function setControllerActionCombinations(array $controllerActionCombinations): void
     {
         $this->controllerActionCombinations = $controllerActionCombinations;
     }
@@ -134,7 +105,7 @@ class Plugin
      *
      * @return array|null
      */
-    public function getControllerActionCombinations()
+    public function getControllerActionCombinations(): ?array
     {
         if (empty($this->controllerActionCombinations)) {
             return null;
@@ -142,24 +113,16 @@ class Plugin
         return $this->controllerActionCombinations;
     }
 
-    /**
-     * @param array $nonCacheableControllerActions
-     * @return void
-     */
-    public function setNoncacheableControllerActions(array $nonCacheableControllerActions)
+    public function setNonCacheableControllerActions(array $nonCacheableControllerActions): void
     {
-        $this->noncacheableControllerActions = $nonCacheableControllerActions;
+        $this->nonCacheableControllerActions = $nonCacheableControllerActions;
     }
 
-    /**
-     * @return array
-     */
-    public function getNoncacheableControllerActions()
+    public function getNonCacheableControllerActions(): ?array
     {
-        if (empty($this->noncacheableControllerActions)) {
+        if (empty($this->nonCacheableControllerActions)) {
             return null;
         }
-        return $this->noncacheableControllerActions;
+        return $this->nonCacheableControllerActions;
     }
-
 }

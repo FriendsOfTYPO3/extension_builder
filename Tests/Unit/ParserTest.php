@@ -1,7 +1,6 @@
 <?php
-declare(strict_types=1);
 
-namespace EBT\ExtensionBuilder\Tests\Unit;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -16,6 +15,8 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Tests\Unit;
+
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Parser\Traverser;
 use EBT\ExtensionBuilder\Service\ParserService;
@@ -25,11 +26,11 @@ use TYPO3\CMS\Core\Core\Environment;
 class ParserTest extends BaseUnitTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Service\ParserService
+     * @var ParserService
      */
     protected $parserService;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->fixturesPath = Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Tests/Fixtures/ClassParser/';
@@ -56,7 +57,7 @@ class ParserTest extends BaseUnitTest
      */
     public function parseSimplePropertyWithGetterAndSetter(): void
     {
-        $this->parserService->setTraverser(new Traverser);
+        $this->parserService->setTraverser(new Traverser());
         $classFileObject = $this->parseFile('SimplePropertyWithGetterAndSetter.php');
         self::assertCount(2, $classFileObject->getFirstClass()->getMethods());
         self::assertCount(1, $classFileObject->getFirstClass()->getProperties());
@@ -87,7 +88,7 @@ class ParserTest extends BaseUnitTest
      */
     public function parseArrayProperty(): void
     {
-        $this->parserService->setTraverser(new Traverser);
+        $this->parserService->setTraverser(new Traverser());
         $classFileObject = $this->parseFile('ClassWithArrayProperty.php');
         self::assertCount(1, $classFileObject->getFirstClass()->getProperties());
         self::assertEquals(

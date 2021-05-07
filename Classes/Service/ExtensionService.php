@@ -1,7 +1,5 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Service;
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,18 +13,19 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Service;
+
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
 class ExtensionService
 {
-    const COMPOSER_PATH_WARNING = "You are running TYPO3 in composer mode. You have to configure at
+    public const COMPOSER_PATH_WARNING = "You are running TYPO3 in composer mode. You have to configure at
         least one local path repository in your composer.json if you want to create an extension with
         ExtensionBuilder.<br /> See <a style='text-decoration: underline' target='_blank'
         href='https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html'>
-        Documentation
-        </a>";
+        Documentation</a>";
 
     /**
      * @return string[]
@@ -40,7 +39,7 @@ class ExtensionService
         }
 
         return array_map(
-            function (string $storagePath) {
+            static function (string $storagePath) {
                 return rtrim($storagePath, '/') . '/';
             },
             $storagePaths
@@ -91,5 +90,4 @@ class ExtensionService
     {
         return !Environment::isComposerMode() || count($this->resolveStoragePaths()) > 0;
     }
-
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Service;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,11 +15,16 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Service;
+
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\FileProperty;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
 use EBT\ExtensionBuilder\Utility\Tools;
+use Exception;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -30,7 +35,7 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 class ObjectSchemaBuilder implements SingletonInterface
 {
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
+     * @var ExtensionBuilderConfigurationManager
      */
     protected $configurationManager;
     /**
@@ -38,22 +43,17 @@ class ObjectSchemaBuilder implements SingletonInterface
      */
     protected $relatedForeignTables = [];
 
-    /**
-     * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
-     * @return void
-     */
-    public function injectConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
+    public function injectConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager): void
     {
         $this->configurationManager = $configurationManager;
     }
 
     /**
-     *
      * @param array $jsonDomainObject
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     * @throws \Exception
+     * @return DomainObject $domainObject
+     * @throws Exception
      */
-    public function build(array $jsonDomainObject)
+    public function build(array $jsonDomainObject): DomainObject
     {
         $domainObject = GeneralUtility::makeInstance(DomainObject::class);
         $domainObject->setUniqueIdentifier($jsonDomainObject['objectsettings']['uid']);
@@ -83,10 +83,10 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (isset($jsonDomainObject['propertyGroup']['properties'])) {
             foreach ($jsonDomainObject['propertyGroup']['properties'] as $propertyJsonConfiguration) {
                 $propertyType = $propertyJsonConfiguration['propertyType'];
-                if (in_array($propertyType, [
-                        'Image',
-                        'File'
-                    ]) && !empty($propertyJsonConfiguration['maxItems']) && $propertyJsonConfiguration['maxItems'] > 1) {
+                if (in_array($propertyType, ['Image', 'File'])
+                    && !empty($propertyJsonConfiguration['maxItems'])
+                    && $propertyJsonConfiguration['maxItems'] > 1
+                ) {
                     $propertyJsonConfiguration['relationType'] = 'zeroToMany';
                     $propertyJsonConfiguration['relationName'] = $propertyJsonConfiguration['propertyName'];
                     $propertyJsonConfiguration['relationDescription'] = $propertyJsonConfiguration['propertyDescription'];
@@ -138,27 +138,25 @@ class ObjectSchemaBuilder implements SingletonInterface
 
     /**
      * @param array $relationJsonConfiguration
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation
-     * @throws \Exception
+     * @param DomainObject $domainObject
+     * @return AbstractRelation
+     * @throws Exception
      */
-    public function buildRelation($relationJsonConfiguration, $domainObject)
+    public function buildRelation(array $relationJsonConfiguration, DomainObject $domainObject): AbstractRelation
     {
         $relationSchemaClassName = 'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Relation\\';
         $relationSchemaClassName .= ucfirst($relationJsonConfiguration['relationType']) . 'Relation';
         if (!class_exists($relationSchemaClassName)) {
-            throw new \Exception(
+            throw new Exception(
                 'Relation of type ' . $relationSchemaClassName . ' not found (configured in "' .
                 $relationJsonConfiguration['relationName'] . '")'
             );
         }
-        /**
-         * @var $relation \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation
-         */
-        $relation = new $relationSchemaClassName;
+        /** @var AbstractRelation $relation */
+        $relation = new $relationSchemaClassName();
         $relation->setName($relationJsonConfiguration['relationName']);
         $relation->setLazyLoading((bool)$relationJsonConfiguration['lazyLoading']);
-        $relation->setExcludeField($relationJsonConfiguration['propertyIsExcludeField']);
+        $relation->setExcludeField((bool)$relationJsonConfiguration['propertyIsExcludeField']);
         $relation->setDescription($relationJsonConfiguration['relationDescription']);
         $relation->setUniqueIdentifier($relationJsonConfiguration['uid']);
         $relation->setType($relationJsonConfiguration['type']);
@@ -198,7 +196,7 @@ class ObjectSchemaBuilder implements SingletonInterface
             if ($relation->isFileReference()) {
                 $relation->setRenderType('inline');
                 if (!empty($relationJsonConfiguration['maxItems'])) {
-                    /** @var $relation \EBT\ExtensionBuilder\Domain\Model\DomainObject\FileProperty */
+                    /** @var FileProperty $relation */
                     $relation->setMaxItems($relationJsonConfiguration['maxItems']);
                     if (!empty($relationJsonConfiguration['allowedFileTypes'])) {
                         $relation->setAllowedFileTypes($relationJsonConfiguration['allowedFileTypes']);
@@ -210,18 +208,18 @@ class ObjectSchemaBuilder implements SingletonInterface
     }
 
     /**
-     * @param $propertyJsonConfiguration
+     * @param array $propertyJsonConfiguration
      * @return object
-     * @throws \InvalidArgumentException
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function buildProperty($propertyJsonConfiguration)
+    public static function buildProperty(array $propertyJsonConfiguration)
     {
         $propertyType = $propertyJsonConfiguration['propertyType'];
         $propertyClassName = 'EBT\\ExtensionBuilder\\Domain\Model\\DomainObject\\' . $propertyType . 'Property';
         if (!class_exists($propertyClassName)) {
-            throw new \Exception('Property of type ' . $propertyType . ' not found');
+            throw new Exception('Property of type ' . $propertyType . ' not found');
         }
+        /** @var DomainObject\AbstractProperty $property */
         $property = GeneralUtility::makeInstance($propertyClassName);
         $property->setUniqueIdentifier($propertyJsonConfiguration['uid']);
         $property->setName($propertyJsonConfiguration['propertyName']);
@@ -241,7 +239,7 @@ class ObjectSchemaBuilder implements SingletonInterface
             $property->setL10nModeExclude($propertyJsonConfiguration['propertyIsL10nModeExclude']);
         }
         if ($property->isFileReference() && !empty($propertyJsonConfiguration['maxItems'])) {
-            $property->setMaxItems($propertyJsonConfiguration['maxItems']);
+            $property->setMaxItems((int)$propertyJsonConfiguration['maxItems']);
         }
         return $property;
     }

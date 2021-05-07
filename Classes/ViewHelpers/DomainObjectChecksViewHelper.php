@@ -21,7 +21,7 @@ use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
-class MappingViewHelper extends AbstractConditionViewHelper
+class DomainObjectChecksViewHelper extends AbstractConditionViewHelper
 {
     /**
      * @var ExtensionBuilderConfigurationManager
@@ -69,24 +69,24 @@ class MappingViewHelper extends AbstractConditionViewHelper
         switch ($this->arguments['renderCondition']) {
             case 'isMappedToInternalTable':
                 if (!$isMappedToExternalTable) {
-                    return $this->renderThenChild();
+                    return true;
                 }
 
-                return $this->renderElseChild();
+                return false;
 
             case 'isMappedToExternalTable':
                 if ($isMappedToExternalTable) {
-                    return $this->renderThenChild();
+                    return true;
                 }
 
-                return $this->renderElseChild();
+                return false;
 
             case 'needsTypeField':
                 if ($this->needsTypeField($domainObject, $isMappedToExternalTable)) {
-                    return $this->renderThenChild();
+                    return true;
                 }
 
-                return $this->renderElseChild();
+                return false;
         }
 
         return '';
@@ -105,11 +105,10 @@ class MappingViewHelper extends AbstractConditionViewHelper
      */
     protected function needsTypeField(DomainObject $domainObject, bool $isMappedToExternalTable): bool
     {
+        $needsTypeField = false;
         if ($isMappedToExternalTable || $domainObject->getChildObjects()) {
             $tableName = $domainObject->getDatabaseTableName();
-            if (!isset($GLOBALS['TCA'][$tableName]['ctrl']['type'])
-                || $GLOBALS['TCA'][$tableName]['ctrl']['type'] === 'tx_extbase_type'
-            ) {
+            if (!isset($GLOBALS['TCA'][$tableName]['ctrl']['type']) || $GLOBALS['TCA'][$tableName]['ctrl']['type'] == 'tx_extbase_type') {
                 /*
                  * if the type field is set but equals the default extbase record type field name it might
                  * have been defined by the current extension and thus has to be defined again when rewriting TCA definitions

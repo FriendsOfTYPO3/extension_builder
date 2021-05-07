@@ -1,7 +1,6 @@
 <?php
-declare(strict_types=1);
 
-namespace EBT\ExtensionBuilder\Tests\Unit;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +14,8 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace EBT\ExtensionBuilder\Tests\Unit;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
@@ -38,7 +39,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
      */
     protected $extensionKey = '';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -47,7 +48,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         $this->extensionSchemaBuilder = $this->getAccessibleMock(ExtensionSchemaBuilder::class, ['dummy']);
         $this->extensionSchemaBuilder->injectConfigurationManager(new ExtensionBuilderConfigurationManager());
 
-        /** @var $objectSchemaBuilder \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder */
+        /** @var ObjectSchemaBuilder $objectSchemaBuilder */
         $objectSchemaBuilder = $this->getAccessibleMock(ObjectSchemaBuilder::class, ['dummy']);
         $objectSchemaBuilder->injectConfigurationManager(new ExtensionBuilderConfigurationManager());
 
@@ -295,12 +296,12 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
 
         $relation = new ZeroToManyRelation('posts');
         $relation->setForeignModel($post);
-        $relation->setExcludeField(1);
+        $relation->setExcludeField(true);
         $blog->addProperty($relation);
 
         $relation = new ZeroToManyRelation('comments');
         $relation->setForeignModel($comment);
-        $relation->setExcludeField(1);
+        $relation->setExcludeField(true);
         $post->addProperty($relation);
         $actualExtension = $this->extensionSchemaBuilder->build($input);
         self::assertEquals(

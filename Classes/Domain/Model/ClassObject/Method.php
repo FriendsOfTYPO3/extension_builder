@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
 
 use EBT\ExtensionBuilder\Domain\Model\FunctionObject;
 

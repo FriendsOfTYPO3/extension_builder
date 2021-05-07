@@ -25,8 +25,8 @@ Otherwise your changes will be overwritten the next time you save the extension 
             <f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
             <th><k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag></th>
             </f:if></f:for>
-            <th> </th>
-            <th> </th>
+            <th></th>
+            <th></th>
         </tr>
         </k:format.removeMultipleNewlines>
 

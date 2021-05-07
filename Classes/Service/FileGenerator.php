@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Service;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,12 +15,19 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Service;
+
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
+use EBT\ExtensionBuilder\Domain\Model\BackendModule;
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Domain\Model\File;
-use EBT\ExtensionBuilder\Domain\Model\NamespaceObject;
+use EBT\ExtensionBuilder\Exception\FileNotFoundException;
+use EBT\ExtensionBuilder\Exception\SyntaxError;
+use Exception;
+use RuntimeException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -32,34 +39,6 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
  */
 class FileGenerator
 {
-    /**
-     * @var ClassBuilder
-     */
-    protected $classBuilder;
-
-    /**
-     * @param ClassBuilder $classBuilder
-     * @return void
-     */
-    public function injectClassBuilder(ClassBuilder $classBuilder)
-    {
-        $this->classBuilder = $classBuilder;
-    }
-
-    /**
-     * @var RoundTrip
-     */
-    protected $roundTripService;
-
-    /**
-     * @param RoundTrip $roundTripService
-     * @return void
-     */
-    public function injectRoundTripService (RoundTrip $roundTripService)
-    {
-        $this->roundTripService = $roundTripService;
-    }
-
     /**
      * @var array
      */
@@ -92,31 +71,10 @@ class FileGenerator
      * @var string
      */
     protected $iconsDirectory = '';
-
     /**
      * @var bool
      */
     protected $roundTripEnabled = false;
-
-    /**
-     * @var array
-     */
-    protected $settings = [];
-
-    /**
-     * @var \EBT\ExtensionBuilder\Service\Printer
-     */
-    protected $printerService;
-
-    /**
-     * @param \EBT\ExtensionBuilder\Service\Printer $printerService
-     * @return void
-     */
-    public function injectPrinterService(Printer $printerService)
-    {
-        $this->printerService = $printerService;
-    }
-
     /**
      * @var string[]
      */
@@ -129,7 +87,6 @@ class FileGenerator
         'showAction',
         'updateAction'
     ];
-
     /**
      * all file types where a split token makes sense
      *
@@ -142,7 +99,6 @@ class FileGenerator
         'ts', // Typoscript
         'typoscript', // Typoscript
     ];
-
     /**
      * A map of deprecated file extensions
      * @var string[][]
@@ -150,17 +106,42 @@ class FileGenerator
     protected $deprecatedFileExtensions = [
         'typoscript' => ['ts', 'txt'],
     ];
-
     /**
      * @var LocalizationService
-     *
      */
     protected $localizationService;
-
     /**
-     * @param LocalizationService $localizationService
-     * @return void
+     * @var array
      */
+    protected $settings = [];
+    /**
+     * @var ClassBuilder
+     */
+    protected $classBuilder;
+    /**
+     * @var RoundTrip
+     */
+    protected $roundTripService;
+    /**
+     * @var Printer
+     */
+    protected $printerService;
+
+    public function injectClassBuilder(ClassBuilder $classBuilder): void
+    {
+        $this->classBuilder = $classBuilder;
+    }
+
+    public function injectRoundTripService(RoundTrip $roundTripService): void
+    {
+        $this->roundTripService = $roundTripService;
+    }
+
+    public function injectPrinterService(Printer $printerService): void
+    {
+        $this->printerService = $printerService;
+    }
+
     public function injectLocalizationService(LocalizationService $localizationService): void
     {
         $this->localizationService = $localizationService;
@@ -170,7 +151,7 @@ class FileGenerator
      * called by controller
      * @param array $settings
      */
-    public function setSettings(array $settings)
+    public function setSettings(array $settings): void
     {
         $this->settings = $settings;
     }
@@ -180,10 +161,10 @@ class FileGenerator
      *
      * @param Extension $extension
      *
-     * @throws \Exception
+     * @throws Exception
      * @throws ExtensionException
      */
-    public function build(Extension $extension)
+    public function build(Extension $extension): void
     {
         $this->extension = $extension;
         $enableRoundtrip = (bool)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('extension_builder', 'enableRoundtrip');
@@ -195,12 +176,12 @@ class FileGenerator
         if (isset($this->settings['codeTemplateRootPaths.'])) {
             $this->codeTemplateRootPaths = $this->settings['codeTemplateRootPaths.'];
         } else {
-            throw new \Exception('No codeTemplateRootPath configured');
+            throw new Exception('No codeTemplateRootPath configured');
         }
         if (isset($this->settings['codeTemplatePartialPaths.'])) {
             $this->codeTemplatePartialPaths = $this->settings['codeTemplatePartialPaths.'];
         } else {
-            throw new \Exception('No codeTemplatePartialPaths configured');
+            throw new Exception('No codeTemplatePartialPaths configured');
         }
         // Base directory already exists at this point
         $this->extensionDirectory = $this->extension->getExtensionDir();
@@ -251,7 +232,7 @@ class FileGenerator
         $this->generateEmptyGitRepository();
     }
 
-    protected function generateYamlSettingsFile()
+    protected function generateYamlSettingsFile(): void
     {
         if (!file_exists($this->configurationDirectory . 'ExtensionBuilder/settings.yaml')) {
             GeneralUtility::mkdir($this->configurationDirectory . 'ExtensionBuilder');
@@ -262,9 +243,9 @@ class FileGenerator
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function generateExtensionFiles()
+    protected function generateExtensionFiles(): void
     {
         // Generate ext_emconf.php, ext_tables.* and TCA definition
         $extensionFiles = ['ext_emconf.php', 'ext_tables.php', 'ext_tables.sql'];
@@ -281,14 +262,14 @@ class FileGenerator
                     $fileContents = preg_replace('/,(\\s*\\);)/', '$1', $fileContents);
                 }
                 $this->writeFile($this->extensionDirectory . $extensionFile, $fileContents);
-            } catch (\Exception $e) {
-                throw new \Exception('Could not write ' . $extensionFile . ', error: ' . $e->getMessage());
+            } catch (Exception $e) {
+                throw new Exception('Could not write ' . $extensionFile . ', error: ' . $e->getMessage());
             }
         }
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function generatePluginFiles(): void
     {
@@ -296,18 +277,20 @@ class FileGenerator
             return;
         }
         try {
-            $fileContents = $this->renderTemplate(GeneralUtility::underscoredToLowerCamelCase('ext_localconf.phpt'),
+            $fileContents = $this->renderTemplate(
+                GeneralUtility::underscoredToLowerCamelCase('ext_localconf.phpt'),
                 [
                     'extension' => $this->extension
-                ]);
+                ]
+            );
             $this->writeFile($this->extensionDirectory . 'ext_localconf.php', $fileContents);
-        } catch (\Exception $e) {
-            throw new \Exception('Could not write ext_localconf.php. Error: ' . $e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception('Could not write ext_localconf.php. Error: ' . $e->getMessage());
         }
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function generateTCAFiles(): void
     {
@@ -358,26 +341,28 @@ class FileGenerator
                     $fileContents
                 );
             }
-        } catch (\Exception $e) {
-            throw new \Exception('Could not generate TCA files, error: ' . $e->getMessage() . $e->getFile());
+        } catch (Exception $e) {
+            throw new Exception('Could not generate TCA files, error: ' . $e->getMessage() . $e->getFile());
         }
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function generateLocallangFiles()
+    protected function generateLocallangFiles(): void
     {
         // Generate locallang*.xlf files
         try {
             GeneralUtility::mkdir_deep($this->privateResourcesDirectory . 'Language');
             $this->languageDirectory = $this->privateResourcesDirectory . 'Language/';
+
             $fileContents = $this->generateLocallangFileContent();
             $this->writeFile($this->languageDirectory . 'locallang.xlf', $fileContents);
+
             $fileContents = $this->generateLocallangFileContent('_db');
             $this->writeFile($this->languageDirectory . 'locallang_db.xlf', $fileContents);
+
             if ($this->extension->hasBackendModules()) {
-                /** @var \EBT\ExtensionBuilder\Domain\Model\BackendModule $backendModule */
                 foreach ($this->extension->getBackendModules() as $backendModule) {
                     $fileContents = $this->generateLocallangFileContent('_mod', 'backendModule', $backendModule);
                     $this->writeFile(
@@ -393,24 +378,24 @@ class FileGenerator
                     $fileContents
                 );
             }
-        } catch (\Exception $e) {
-            throw new \Exception('Could not generate locallang files, error: ' . $e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception('Could not generate locallang files, error: ' . $e->getMessage());
         }
     }
 
     /**
      * @param string $templateSubFolder
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function generateTemplateFiles($templateSubFolder = '')
+    protected function generateTemplateFiles(string $templateSubFolder = ''): void
     {
         $templateRootFolder = 'Resources/Private/' . $templateSubFolder;
         $absoluteTemplateRootFolder = $this->extensionDirectory . $templateRootFolder;
 
         $hasTemplates = false;
         foreach ($this->extension->getDomainObjects() as $domainObject) {
-            /** @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
+            /** @var DomainObject $domainObject */
             // Do not generate anything if $domainObject is not an
             // Entity or has no actions defined
             if (!$domainObject->getEntity() || (count($domainObject->getActions()) === 0)) {
@@ -418,7 +403,7 @@ class FileGenerator
             }
             $domainTemplateDirectory = $absoluteTemplateRootFolder . 'Templates/' . $domainObject->getName() . '/';
             foreach ($domainObject->getActions() as $action) {
-                /** @var \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action */
+                /** @var Action $action */
                 if ($action->getNeedsTemplate()
                     && $this->templateExists($templateRootFolder . 'Templates/' . $action->getName() . '.htmlt')
                 ) {
@@ -480,12 +465,12 @@ class FileGenerator
     /**
      * get template file according to configured template root paths
      *
-     * @param $fileName
+     * @param string $fileName
      *
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function getTemplatePath($fileName)
+    protected function getTemplatePath(string $fileName): string
     {
         foreach (array_reverse($this->codeTemplateRootPaths) as $rootPath) {
             $path = GeneralUtility::getFileAbsFileName($rootPath);
@@ -493,28 +478,23 @@ class FileGenerator
                 return $path . $fileName;
             }
         }
-        throw new \Exception('template not found: ' . $fileName);
+        throw new Exception('template not found: ' . $fileName);
     }
 
-    /**
-     * @param $fileName
-     *
-     * @return bool
-     */
-    protected function templateExists($fileName)
+    protected function templateExists(string $fileName): bool
     {
         try {
             $this->getTemplatePath($fileName);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function generateTyposcriptFiles()
+    protected function generateTyposcriptFiles(): void
     {
         if ($this->extension->hasPlugins() || $this->extension->hasBackendModules()) {
             // Generate TypoScript setup
@@ -523,8 +503,8 @@ class FileGenerator
                 $typoscriptDirectory = $this->extensionDirectory . 'Configuration/TypoScript/';
                 $fileContents = $this->generateTyposcriptSetup();
                 $this->writeFile($typoscriptDirectory . 'setup.typoscript', $fileContents);
-            } catch (\Exception $e) {
-                throw new \Exception('Could not generate typoscript setup, error: ' . $e->getMessage());
+            } catch (Exception $e) {
+                throw new Exception('Could not generate typoscript setup, error: ' . $e->getMessage());
             }
 
             // Generate TypoScript constants
@@ -532,8 +512,8 @@ class FileGenerator
                 $typoscriptDirectory = $this->extensionDirectory . 'Configuration/TypoScript/';
                 $fileContents = $this->generateTyposcriptConstants();
                 $this->writeFile($typoscriptDirectory . 'constants.typoscript', $fileContents);
-            } catch (\Exception $e) {
-                throw new \Exception('Could not generate typoscript constants, error: ' . $e->getMessage());
+            } catch (Exception $e) {
+                throw new Exception('Could not generate typoscript constants, error: ' . $e->getMessage());
             }
 
             // Generate Static TypoScript
@@ -542,8 +522,8 @@ class FileGenerator
                     $fileContents = $this->generateStaticTyposcript();
                     $this->writeFile($this->extensionDirectory . 'ext_typoscript_setup.typoscript', $fileContents);
                 }
-            } catch (\Exception $e) {
-                throw new \Exception('Could not generate static typoscript, error: ' . $e->getMessage());
+            } catch (Exception $e) {
+                throw new Exception('Could not generate static typoscript, error: ' . $e->getMessage());
             }
         }
     }
@@ -552,10 +532,10 @@ class FileGenerator
      * generate all domainObject related
      * files like PHP class files, templates etc.
      *
-     * @throws \Exception
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
+     * @throws Exception
+     * @throws FileNotFoundException
      */
-    protected function generateDomainObjectRelatedFiles()
+    protected function generateDomainObjectRelatedFiles(): void
     {
         if (count($this->extension->getDomainObjects()) > 0) {
             $this->classBuilder->initialize($this->extension);
@@ -574,7 +554,6 @@ class FileGenerator
                 $crudEnabledControllerTestsDirectory = $this->extensionDirectory . 'Tests/Unit/Controller/';
 
                 foreach ($this->extension->getDomainObjects() as $domainObject) {
-                    /** @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
                     $destinationFile = $domainModelDirectory . $domainObject->getName() . '.php';
 
                     $fileContents = $this->generateDomainObjectCode($domainObject);
@@ -608,9 +587,26 @@ class FileGenerator
                     $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
                     $this->writeFile($domainModelTestsDirectory . $domainObject->getName() . 'Test.php', $fileContents);
                 }
-            } catch (\Exception $e) {
-                throw new \Exception('Could not generate domain model, error: ' . $e->getMessage());
+            } catch (Exception $e) {
+                throw new Exception('Could not generate domain model, error: ' . $e->getMessage());
             }
+
+            // Generate Functional Tests
+            try {
+                $this->mkdir_deep($this->extensionDirectory, 'Tests/Functional');
+                $functionalTestsDirectory = $this->extensionDirectory . 'Tests/Functional/';
+
+                // Generate basic FunctionalTests
+                $fileContents = $this->generateFunctionalTests();
+                $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
+                $this->writeFile(
+                    $functionalTestsDirectory . 'BasicTest.php',
+                    $fileContents
+                );
+            } catch (Exception $e) {
+                throw new Exception('Could not generate functional tests, error: ' . $e->getMessage());
+            }
+
             // Generate Action Controller
             try {
                 $this->mkdir_deep($this->extensionDirectory, 'Classes/Controller');
@@ -633,8 +629,8 @@ class FileGenerator
                         $fileContents
                     );
                 }
-            } catch (\Exception $e) {
-                throw new \Exception('Could not generate action controller, error: ' . $e->getMessage());
+            } catch (Exception $e) {
+                throw new Exception('Could not generate action controller, error: ' . $e->getMessage());
             }
 
             // Generate Domain Templates
@@ -645,8 +641,8 @@ class FileGenerator
                 if ($this->extension->hasBackendModules()) {
                     $this->generateTemplateFiles('Backend/');
                 }
-            } catch (\Exception $e) {
-                throw new \Exception(
+            } catch (Exception $e) {
+                throw new Exception(
                     sprintf(
                         'Could not generate domain templates, error: %s in %s line %s',
                         $e->getMessage(),
@@ -659,23 +655,23 @@ class FileGenerator
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function generateHtaccessFile()
+    protected function generateHtaccessFile(): void
     {
         // Generate Private Resources .htaccess
         try {
             $fileContents = $this->generatePrivateResourcesHtaccess();
             $this->writeFile($this->privateResourcesDirectory . '.htaccess', $fileContents);
-        } catch (\Exception $e) {
-            throw new \Exception('Could not create private resources folder, error: ' . $e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception('Could not create private resources folder, error: ' . $e->getMessage());
         }
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function copyStaticFiles()
+    protected function copyStaticFiles(): void
     {
         $publicResourcesDirectory = $this->extensionDirectory . 'Resources/Public/';
         $this->iconsDirectory = $publicResourcesDirectory . 'Icons/';
@@ -683,8 +679,8 @@ class FileGenerator
         try {
             $this->mkdir_deep($this->extensionDirectory, 'Resources/Public');
             $this->mkdir_deep($publicResourcesDirectory, 'Icons');
-        } catch (\Exception $e) {
-            throw new \Exception('Could not create public resources folder, error: ' . $e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception('Could not create public resources folder, error: ' . $e->getMessage());
         }
 
         try {
@@ -721,17 +717,17 @@ class FileGenerator
                     );
                 }
             }
-        } catch (\Exception $e) {
-            throw new \Exception('Could not copy/move icon, error: ' . $e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception('Could not copy/move icon, error: ' . $e->getMessage());
         }
     }
 
     /**
      * generate the folder structure for reST documentation
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function generateDocumentationFiles()
+    protected function generateDocumentationFiles(): void
     {
         $this->mkdir_deep($this->extensionDirectory, 'Documentation.tmpl');
         $docFiles = [];
@@ -766,7 +762,7 @@ class FileGenerator
         $this->writeFile($this->extensionDirectory . 'Documentation.tmpl/Settings.cfg', $fileContents);
     }
 
-    protected function generateEmptyGitRepository()
+    protected function generateEmptyGitRepository(): void
     {
         $targetDirectory = $this->extensionDirectory . '.git';
         if (is_file($targetDirectory) || is_dir($targetDirectory) || is_link($targetDirectory)) {
@@ -788,13 +784,13 @@ class FileGenerator
      * @param string $filePath
      * @param array $variables
      *
-     * @return null|string|string[]
-     * @throws \Exception
+     * @return string|string[]|null
+     * @throws Exception
      */
-    public function renderTemplate($filePath, $variables)
+    public function renderTemplate(string $filePath, array $variables)
     {
         $variables['settings'] = $this->settings;
-        /* @var \TYPO3\CMS\Fluid\View\StandaloneView $standAloneView */
+        /* @var StandaloneView $standAloneView */
         $standAloneView = GeneralUtility::makeInstance(StandaloneView::class);
         $standAloneView->setLayoutRootPaths($this->codeTemplateRootPaths);
         $standAloneView->setPartialRootPaths($this->codeTemplatePartialPaths);
@@ -809,15 +805,15 @@ class FileGenerator
 
     /**
      * Generates the code for the controller class
-     * Either from ectionController template or from class partial
+     * Either from actionController template or from class partial
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      *
      * @return string
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \Exception
+     * @throws FileNotFoundException
+     * @throws Exception
      */
-    public function generateActionControllerCode(DomainObject $domainObject)
+    public function generateActionControllerCode(DomainObject $domainObject): string
     {
         $controllerTemplateFilePath = $this->getTemplatePath('Classes/Controller/Controller.phpt');
         $existingClassFileObject = null;
@@ -830,53 +826,56 @@ class FileGenerator
             $existingClassFileObject
         );
         // returns a class object if an existing class was found
-        if ($controllerClassFileObject) {
+        if ($controllerClassFileObject instanceof File) {
             $this->addLicenseHeader($controllerClassFileObject->getFirstClass());
             return $this->writeClassFile($controllerClassFileObject);
         }
 
-        throw new \Exception('Class file for controller could not be generated');
+        throw new Exception('Class file for controller could not be generated');
     }
 
     /**
      * Generates the code for the domain model class
      * Either from domainObject template or from class partial
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      *
      * @return string
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
-     * @throws \Exception
+     * @throws FileNotFoundException
+     * @throws SyntaxError
+     * @throws Exception
      */
-    public function generateDomainObjectCode(DomainObject $domainObject)
+    public function generateDomainObjectCode(DomainObject $domainObject): string
     {
         $modelTemplateClassPath = $this->getTemplatePath('Classes/Domain/Model/Model.phpt');
         $existingClassFileObject = null;
         if ($this->roundTripEnabled) {
             $existingClassFileObject = $this->roundTripService->getDomainModelClassFile($domainObject);
         }
-        $modelClassFileObject = $this->classBuilder->generateModelClassFileObject($domainObject,
-            $modelTemplateClassPath, $existingClassFileObject);
+        $modelClassFileObject = $this->classBuilder->generateModelClassFileObject(
+            $domainObject,
+            $modelTemplateClassPath,
+            $existingClassFileObject
+        );
         if ($modelClassFileObject) {
             $this->addLicenseHeader($modelClassFileObject->getFirstClass());
             return $this->writeClassFile($modelClassFileObject);
         }
 
-        throw new \Exception('Class file for domain object could not be generated');
+        throw new Exception('Class file for domain object could not be generated');
     }
 
     /**
      * Generates the code for the repository class
      * Either from domainRepository template or from class partial
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      *
      * @return string
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \Exception
+     * @throws FileNotFoundException
+     * @throws Exception
      */
-    public function generateDomainRepositoryCode(DomainObject $domainObject)
+    public function generateDomainRepositoryCode(DomainObject $domainObject): string
     {
         $repositoryTemplateClassPath = $this->getTemplatePath('Classes/Domain/Repository/Repository.phpt');
         $existingClassFileObject = null;
@@ -893,16 +892,16 @@ class FileGenerator
             return $this->writeClassFile($repositoryClassFileObject);
         }
 
-        throw new \Exception('Class file for repository could not be generated');
+        throw new Exception('Class file for repository could not be generated');
     }
 
     /**
      * Generate the tests for a model
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      *
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function generateDomainModelTests(DomainObject $domainObject)
     {
@@ -916,12 +915,12 @@ class FileGenerator
      * Generate the tests for a CRUD-enabled controller
      *
      * @param string $controllerName
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      *
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
-    public function generateControllerTests($controllerName, DomainObject $domainObject)
+    public function generateControllerTests(string $controllerName, DomainObject $domainObject)
     {
         return $this->renderTemplate('Tests/Unit/ControllerTest.phpt', [
             'extension' => $this->extension,
@@ -930,67 +929,87 @@ class FileGenerator
         ]);
     }
 
-    public function generateExtbaseConfigClass()
+    /**
+     * @throws Exception
+     */
+    public function generateExtbaseConfigClass(): void
     {
         try {
-           if ($this->extension->getDomainObjectsThatNeedMappingStatements()) {
-               if (!is_dir($this->configurationDirectory . 'Extbase/Persistence/')) {
-                   mkdir($this->configurationDirectory . 'Extbase/Persistence/', 0775, true);
-               }
-               $fileContents = $this->renderTemplate('Configuration/Extbase/Persistence/Classes.phpt', [
+            if ($this->extension->getDomainObjectsThatNeedMappingStatements()) {
+                if (!is_dir($this->configurationDirectory . 'Extbase/Persistence/')) {
+                    if (!mkdir($concurrentDirectory = $this->configurationDirectory . 'Extbase/Persistence/', 0775, true)
+                       && !is_dir($concurrentDirectory)
+                   ) {
+                        throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+                    }
+                }
+                $fileContents = $this->renderTemplate('Configuration/Extbase/Persistence/Classes.phpt', [
                    'extension' => $this->extension
                ]);
-               $this->writeFile($this->configurationDirectory . 'Extbase/Persistence/Classes.php', $fileContents);
-           }
-        } catch (\Exception $e) {
-           throw new \Exception('Could not generate Extbase Persistence Class Configuration, error: ' . $e->getMessage());
+                $this->writeFile($this->configurationDirectory . 'Extbase/Persistence/Classes.php', $fileContents);
+            }
+        } catch (Exception $e) {
+            throw new Exception('Could not generate Extbase Persistence Class Configuration, error: ' . $e->getMessage());
         }
     }
 
     /**
-     * @throws \Exception
+     * Generate a functional test
+     *
+     * @return string
+     * @throws Exception
      */
-    public function generateGitIgnore()
+    public function generateFunctionalTests()
+    {
+        return $this->renderTemplate('Tests/Functional/BasicTest.phpt', [
+            'extension' => $this->extension,
+        ]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function generateGitIgnore(): void
     {
         if (!file_exists($this->extensionDirectory . '.gitignore')) {
             // Generate .gitignore
             try {
                 $fileContents = $this->renderTemplate('gitignore.t', []);
                 $this->writeFile($this->extension->getExtensionDir() . '.gitignore', $fileContents);
-            } catch (\Exception $e) {
-                throw new \Exception('Could not create file, error: ' . $e->getMessage());
+            } catch (Exception $e) {
+                throw new Exception('Could not create file, error: ' . $e->getMessage());
             }
         }
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    public function generateGitAttributes()
+    public function generateGitAttributes(): void
     {
         if (!file_exists($this->extensionDirectory . '.gitattributes')) {
             // Generate .gitattributes
             try {
                 $fileContents = $this->renderTemplate('gitattributes.t', []);
                 $this->writeFile($this->extension->getExtensionDir() . '.gitattributes', $fileContents);
-            } catch (\Exception $e) {
-                throw new \Exception('Could not create file, error: ' . $e->getMessage());
+            } catch (Exception $e) {
+                throw new Exception('Could not create file, error: ' . $e->getMessage());
             }
         }
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    public function generateEditorConfig()
+    public function generateEditorConfig(): void
     {
         if (!file_exists($this->extensionDirectory . '.editorconfig')) {
             // Generate .editorconfig
             try {
                 $fileContents = $this->renderTemplate('editorconfig.t', []);
                 $this->writeFile($this->extension->getExtensionDir() . '.editorconfig', $fileContents);
-            } catch (\Exception $e) {
-                throw new \Exception('Could not create file, error: ' . $e->getMessage());
+            } catch (Exception $e) {
+                throw new Exception('Could not create file, error: ' . $e->getMessage());
             }
         }
     }
@@ -998,26 +1017,28 @@ class FileGenerator
     /**
      * create a basic composer file (only if none exists)
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function generateComposerJson()
+    public function generateComposerJson(): void
     {
         if (!file_exists($this->extensionDirectory . 'composer.json')) {
             $composerInfo = $this->extension->getComposerInfo();
-            $this->writeFile($this->extension->getExtensionDir() . 'composer.json',
-                json_encode($composerInfo, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            $this->writeFile(
+                $this->extension->getExtensionDir() . 'composer.json',
+                json_encode($composerInfo, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
+            );
         }
     }
 
     /**
      * generate a docComment for class files. Add a license header if none found
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
+     * @param ClassObject $classObject
      *
      * @return void;
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function addLicenseHeader($classObject)
+    protected function addLicenseHeader(ClassObject $classObject): void
     {
         $comments = $classObject->getComments();
         $needsLicenseHeader = true;
@@ -1027,7 +1048,7 @@ class FileGenerator
             }
         }
         if (strpos($classObject->getDescription(), 'license') !== false) {
-           $needsLicenseHeader = false;
+            $needsLicenseHeader = false;
         }
         $extensionSettings = $this->extension->getSettings();
         if ($needsLicenseHeader && empty($extensionSettings['skipDocComment'])) {
@@ -1044,13 +1065,13 @@ class FileGenerator
      * other Action templates will just be created emtpy
      *
      * @param string $templateRootFolder
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Action $action
+     * @param DomainObject $domainObject
+     * @param Action $action
      *
      * @return string The generated Template code (might be empty)
-     * @throws \Exception
+     * @throws Exception
      */
-    public function generateDomainTemplate($templateRootFolder, DomainObject $domainObject, Action $action)
+    public function generateDomainTemplate(string $templateRootFolder, DomainObject $domainObject, Action $action)
     {
         return $this->renderTemplate($templateRootFolder . $action->getName() . '.htmlt', [
             'domainObject' => $domainObject,
@@ -1060,13 +1081,13 @@ class FileGenerator
     }
 
     /**
-     * @param $templateRootFolder
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param string $templateRootFolder
+     * @param DomainObject $domainObject
      *
-     * @return null|string|string[]
-     * @throws \Exception
+     * @return string|string[]|null
+     * @throws Exception
      */
-    public function generateDomainFormFieldsPartial($templateRootFolder, DomainObject $domainObject)
+    public function generateDomainFormFieldsPartial(string $templateRootFolder, DomainObject $domainObject)
     {
         return $this->renderTemplate($templateRootFolder . 'formFields.htmlt', [
             'extension' => $this->extension,
@@ -1075,13 +1096,13 @@ class FileGenerator
     }
 
     /**
-     * @param $templateRootFolder
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param string $templateRootFolder
+     * @param DomainObject $domainObject
      *
-     * @return null|string|string[]
-     * @throws \Exception
+     * @return string|string[]|null
+     * @throws Exception
      */
-    public function generateDomainPropertiesPartial($templateRootFolder, DomainObject $domainObject)
+    public function generateDomainPropertiesPartial(string $templateRootFolder, DomainObject $domainObject)
     {
         return $this->renderTemplate($templateRootFolder . 'properties.htmlt', [
             'extension' => $this->extension,
@@ -1090,12 +1111,12 @@ class FileGenerator
     }
 
     /**
-     * @param $templateRootFolder
+     * @param string $templateRootFolder
      *
-     * @return null|string|string[]
-     * @throws \Exception
+     * @return string|string[]|null
+     * @throws Exception
      */
-    public function generateFormErrorsPartial($templateRootFolder)
+    public function generateFormErrorsPartial(string $templateRootFolder)
     {
         return $this->renderTemplate($templateRootFolder . 'formErrors.htmlt', [
             'extension' => $this->extension
@@ -1103,12 +1124,12 @@ class FileGenerator
     }
 
     /**
-     * @param $templateRootFolder
+     * @param string $templateRootFolder
      *
-     * @return null|string|string[]
-     * @throws \Exception
+     * @return string|string[]|null
+     * @throws Exception
      */
-    public function generateLayout($templateRootFolder)
+    public function generateLayout(string $templateRootFolder)
     {
         return $this->renderTemplate($templateRootFolder . 'default.htmlt', [
             'extension' => $this->extension
@@ -1118,12 +1139,12 @@ class FileGenerator
     /**
      * @param string $fileNameSuffix (_db, _csh, _mod)
      * @param string $variableName
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $variable
+     * @param DomainObject|BackendModule $variable
      *
-     * @return mixed
-     * @throws \Exception
+     * @return string|string[]|null
+     * @throws Exception
      */
-    protected function generateLocallangFileContent($fileNameSuffix = '', $variableName = '', $variable = null)
+    protected function generateLocallangFileContent(string $fileNameSuffix = '', string $variableName = '', $variable = null)
     {
         $targetFile = 'Resources/Private/Language/locallang' . $fileNameSuffix;
 
@@ -1135,21 +1156,11 @@ class FileGenerator
             $variableArray[$variableName] = $variable;
         }
 
-        if ($variableName == 'domainObject') {
-            $languageLabels = $this->localizationService->prepareLabelArrayForContextHelp($variable);
-        } elseif ($variableName == 'backendModule') {
-            $languageLabels = $this->localizationService->prepareLabelArrayForBackendModule($variable);
-        } else {
-            $languageLabels = $this->localizationService->prepareLabelArray(
-                $this->extension,
-                'locallang' . $fileNameSuffix
-            );
-        }
+        $languageLabels = $this->getLanguageLabelsForVariable($variableName, $variable, $fileNameSuffix);
 
         if ($this->fileShouldBeMerged($targetFile . '.xlf')) {
-            $existingFile = null;
             $filenameToLookFor = $this->extensionDirectory . $targetFile;
-            if ($variableName == 'domainObject') {
+            if ($variableName === 'domainObject') {
                 $filenameToLookFor .= '_' . $variable->getDatabaseTableName();
             }
             $existingFile = $filenameToLookFor . '.xlf';
@@ -1165,12 +1176,30 @@ class FileGenerator
             return '';
         }
         $variableArray['labelArray'] = $languageLabels;
-        return $this->renderTemplate('Resources/Private/Language/locallang.xlf' . 't', $variableArray);
+
+        // TODO: sort by name like LFEditor
+        return $this->renderTemplate('Resources/Private/Language/locallang.xlft', $variableArray);
+    }
+
+    protected function getLanguageLabelsForVariable(string $variableName, $variable, string $fileNameSuffix): array
+    {
+        if ($variableName === 'domainObject') {
+            return $this->localizationService->prepareLabelArrayForContextHelp($variable);
+        }
+
+        if ($variableName === 'backendModule') {
+            return $this->localizationService->prepareLabelArrayForBackendModule($variable);
+        }
+
+        return $this->localizationService->prepareLabelArray(
+            $this->extension,
+            'locallang' . $fileNameSuffix
+        );
     }
 
     /**
-     * @return null|string|string[]
-     * @throws \Exception
+     * @return string|string[]|null
+     * @throws Exception
      */
     public function generatePrivateResourcesHtaccess()
     {
@@ -1178,10 +1207,10 @@ class FileGenerator
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      *
-     * @return null|string|string[]
-     * @throws \Exception
+     * @return string|string[]|null
+     * @throws Exception
      */
     public function generateTCA(DomainObject $domainObject)
     {
@@ -1195,12 +1224,12 @@ class FileGenerator
      * Overrides are needed for single table inheritance
      *
      * @param array $domainObjects
-     * @param $addRecordTypeField
+     * @param bool $addRecordTypeField
      *
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
-    public function generateTCAOverride(array $domainObjects, $addRecordTypeField)
+    public function generateTCAOverride(array $domainObjects, bool $addRecordTypeField)
     {
         return $this->renderTemplate('Configuration/TCA/Overrides/tableName.phpt', [
             'extension' => $this->extension,
@@ -1214,7 +1243,7 @@ class FileGenerator
      * Add TCA configuration for tt_content
      *
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function generateTCAOverrideTtContent()
     {
@@ -1227,7 +1256,7 @@ class FileGenerator
      * Add TCA configuration for sys_template
      *
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function generateTCAOverrideSysTemplate()
     {
@@ -1237,8 +1266,8 @@ class FileGenerator
     }
 
     /**
-     * @return null|string|string[]
-     * @throws \Exception
+     * @return string|string[]|null
+     * @throws Exception
      */
     public function generateYamlSettings()
     {
@@ -1248,8 +1277,8 @@ class FileGenerator
     }
 
     /**
-     * @return null|string|string[]
-     * @throws \Exception
+     * @return string|string[]|null
+     * @throws Exception
      */
     public function generateTyposcriptSetup()
     {
@@ -1259,8 +1288,8 @@ class FileGenerator
     }
 
     /**
-     * @return null|string|string[]
-     * @throws \Exception
+     * @return string|string[]|null
+     * @throws Exception
      */
     public function generateTyposcriptConstants()
     {
@@ -1270,8 +1299,8 @@ class FileGenerator
     }
 
     /**
-     * @return null|string|string[]
-     * @throws \Exception
+     * @return string|string[]|null
+     * @throws Exception
      */
     public function generateStaticTyposcript()
     {
@@ -1286,9 +1315,9 @@ class FileGenerator
      * @param bool $createDirIfNotExist
      *
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function getFolderForClassFile($extensionDirectory, $classType, $createDirIfNotExist = true)
+    public static function getFolderForClassFile(string $extensionDirectory, string $classType, bool $createDirIfNotExist = true): string
     {
         $classPath = '';
         switch ($classType) {
@@ -1305,29 +1334,29 @@ class FileGenerator
                 break;
         }
         if (!empty($classPath)) {
-            if (!is_dir($extensionDirectory . $classPath) && $createDirIfNotExist) {
+            if ($createDirIfNotExist && !is_dir($extensionDirectory . $classPath)) {
                 GeneralUtility::mkdir_deep($extensionDirectory . $classPath);
             }
-            if (!is_dir($extensionDirectory . $classPath) && $createDirIfNotExist) {
-                throw new \Exception('folder could not be created:' . $extensionDirectory . $classPath);
+            if ($createDirIfNotExist && !is_dir($extensionDirectory . $classPath)) {
+                throw new Exception('folder could not be created:' . $extensionDirectory . $classPath);
             }
             return $extensionDirectory . $classPath;
         }
 
-        throw new \Exception('Unexpected classPath:' . $classPath);
+        throw new Exception('Unexpected classPath:' . $classPath);
     }
 
     /**
      * passes the declareStrictTypes flag from settings
      * as argument to printer Service
      *
-     * @param $classFileObject
+     * @param File $classFileObject
      * @return string
      */
-    protected function writeClassFile($classFileObject)
+    protected function writeClassFile(File $classFileObject): string
     {
         $extensionSettings = $this->extension->getSettings();
-        $declareStrictTypes = isset($extensionSettings['declareStrictTypes']) ? $extensionSettings['declareStrictTypes'] : true;
+        $declareStrictTypes = $extensionSettings['declareStrictTypes'] ?? true;
         return $this->printerService->renderFileObject($classFileObject, $declareStrictTypes);
     }
 
@@ -1338,11 +1367,9 @@ class FileGenerator
      * path and filename of the targetFile, relative to extension dir:
      * @param string $targetFile
      * @param string $fileContents
-     * @return void
-     * @throws \Exception
-     *
+     * @throws Exception
      */
-    protected function writeFile($targetFile, $fileContents)
+    protected function writeFile(string $targetFile, string $fileContents): void
     {
         if ($this->roundTripEnabled) {
             $overWriteMode = RoundTrip::getOverWriteSettingForPath(
@@ -1361,8 +1388,11 @@ class FileGenerator
             // exists, write to THAT file in order to avoid breaking users' extensions.
             if (array_key_exists($fileExtension, $this->deprecatedFileExtensions)) {
                 foreach ($this->deprecatedFileExtensions[$fileExtension] as $possibleExistingExtension) {
-                    $possibleAlternateTarget = str_replace('.' . $fileExtension, '.' . $possibleExistingExtension,
-                        $targetFile);
+                    $possibleAlternateTarget = str_replace(
+                        '.' . $fileExtension,
+                        '.' . $possibleExistingExtension,
+                        $targetFile
+                    );
                     if (file_exists($possibleAlternateTarget)) {
                         $targetFile = $possibleAlternateTarget;
                         break;
@@ -1391,7 +1421,7 @@ class FileGenerator
         }
         $success = GeneralUtility::writeFile($targetFile, $fileContents);
         if (!$success) {
-            throw new \Exception('File ' . $targetFile . ' could not be created!');
+            throw new Exception('File ' . $targetFile . ' could not be created!');
         }
     }
 
@@ -1399,9 +1429,9 @@ class FileGenerator
      * @param $destinationFile
      *
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function fileShouldBeMerged($destinationFile)
+    protected function fileShouldBeMerged($destinationFile): bool
     {
         $overwriteSettings = RoundTrip::getOverWriteSettingForPath($destinationFile, $this->extension);
         return $this->roundTripEnabled && $overwriteSettings > 0;
@@ -1413,7 +1443,7 @@ class FileGenerator
      *
      * @param $targetFile
      * @param $fileContents
-     * @return mixed|string
+     * @return string
      */
     protected function insertSplitToken($targetFile, $fileContents)
     {
@@ -1449,9 +1479,9 @@ class FileGenerator
      * @param string $sourceFile
      * @param string $targetFile the path and filename of the targetFile
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function upload_copy_move($sourceFile, $targetFile)
+    protected function upload_copy_move(string $sourceFile, string $targetFile): void
     {
         $overWriteMode = RoundTrip::getOverWriteSettingForPath($targetFile, $this->extension);
         if ($overWriteMode === -1) {
@@ -1470,30 +1500,31 @@ class FileGenerator
      * @param string $directory base path
      * @param string $deepDirectory
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function mkdir_deep($directory, $deepDirectory)
+    protected function mkdir_deep(string $directory, string $deepDirectory): void
     {
         if (!$this->roundTripEnabled) {
             GeneralUtility::mkdir_deep($directory . $deepDirectory);
-        } else {
-            $subDirectories = explode('/', $deepDirectory);
-            $tmpBasePath = $directory;
-            foreach ($subDirectories as $subDirectory) {
-                $overWriteMode = RoundTrip::getOverWriteSettingForPath(
-                    $tmpBasePath . $subDirectory,
-                    $this->extension
-                );
-                //throw new \Exception($directory . $subDirectory . '/' . $overWriteMode);
-                if ($overWriteMode === -1) {
-                    // skip creation
-                    return;
-                }
-                if (!is_dir($deepDirectory) || ($this->roundTripEnabled && $overWriteMode < 2)) {
-                    GeneralUtility::mkdir_deep($tmpBasePath . $subDirectory);
-                }
-                $tmpBasePath .= $subDirectory . '/';
+            return;
+        }
+
+        $subDirectories = explode('/', $deepDirectory);
+        $tmpBasePath = $directory;
+        foreach ($subDirectories as $subDirectory) {
+            $overWriteMode = RoundTrip::getOverWriteSettingForPath(
+                $tmpBasePath . $subDirectory,
+                $this->extension
+            );
+            //throw new \Exception($directory . $subDirectory . '/' . $overWriteMode);
+            if ($overWriteMode === -1) {
+                // skip creation
+                return;
             }
+            if (!is_dir($deepDirectory) || ($this->roundTripEnabled && $overWriteMode < 2)) {
+                GeneralUtility::mkdir_deep($tmpBasePath . $subDirectory);
+            }
+            $tmpBasePath .= $subDirectory . '/';
         }
     }
 }

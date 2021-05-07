@@ -1,7 +1,5 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model;
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,6 +13,7 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model;
 
 class NamespaceObject extends Container
 {
@@ -27,63 +26,18 @@ class NamespaceObject extends Container
     }
 
     /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
-     */
-    public function getFirstClass()
-    {
-        $classes = $this->getClasses();
-        return reset($classes);
-    }
-
-    /**
      * @param array $preIncludes
-     * @return void
      */
-    public function setPreIncludes($preIncludes)
+    public function setPreIncludes($preIncludes): void
     {
         $this->preIncludes = $preIncludes;
     }
 
     /**
-     * @return array
-     */
-    public function getPreIncludes()
-    {
-        return $this->preIncludes;
-    }
-
-    /**
-     * @param array $preInclude
-     * @return void
-     */
-    public function addPreInclude($preInclude)
-    {
-        $this->preIncludes[] = $preInclude;
-    }
-
-    /**
      * @param array $postIncludes
-     * @return void
      */
-    public function setPostIncludes($postIncludes)
+    public function setPostIncludes($postIncludes): void
     {
         $this->postIncludes = $postIncludes;
-    }
-
-    /**
-     * @return array
-     */
-    public function getPostIncludes()
-    {
-        return $this->postIncludes;
-    }
-
-    /**
-     * @param array $postInclude
-     * @return void
-     */
-    public function addPostInclude($postInclude)
-    {
-        $this->postIncludes[] = $postInclude;
     }
 }

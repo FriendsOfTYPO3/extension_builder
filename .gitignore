@@ -5,6 +5,7 @@
 /var/
 .DS_Store
 /composer.lock
+/.php_cs.cache
 
 # created by rendering Documentation with Docker
 /Documentation-GENERATED-temp

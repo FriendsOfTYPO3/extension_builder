@@ -156,7 +156,7 @@
 				</source>
 			</trans-unit>
 			<trans-unit id="persons" resname="persons">
-				<source>Extension Authors</source>
+				<source>Extension authors</source>
 			</trans-unit>
 			<trans-unit id="role" resname="role">
 				<source>Role</source>
@@ -165,7 +165,7 @@
 				<source>Developer</source>
 			</trans-unit>
 			<trans-unit id="product_manager" resname="product_manager">
-				<source>Product Manager</source>
+				<source>Product manager</source>
 			</trans-unit>
 			<trans-unit id="email" resname="email">
 				<source>Email</source>

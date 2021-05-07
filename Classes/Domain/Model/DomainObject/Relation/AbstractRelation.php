@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
 
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
@@ -29,9 +31,9 @@ abstract class AbstractRelation extends AbstractProperty
     /**
      * the schema of the foreign class
      *
-     * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     * @var DomainObject
      */
-    protected $foreignModel = null;
+    protected $foreignModel;
     /**
      * the schema of the foreign class
      *
@@ -77,7 +79,7 @@ abstract class AbstractRelation extends AbstractProperty
      */
     protected $renderType = '';
 
-    public function setRelatedToExternalModel($relatedToExternalModel)
+    public function setRelatedToExternalModel($relatedToExternalModel): void
     {
         $this->relatedToExternalModel = $relatedToExternalModel;
     }
@@ -88,7 +90,7 @@ abstract class AbstractRelation extends AbstractProperty
     }
 
     /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject The foreign class
+     * @return DomainObject The foreign class
      */
     public function getForeignModel(): ?DomainObject
     {
@@ -129,7 +131,7 @@ abstract class AbstractRelation extends AbstractProperty
         return null;
     }
 
-    public function getForeignModelName()
+    public function getForeignModelName(): string
     {
         if (is_object($this->foreignModel)) {
             return $this->foreignModel->getName();
@@ -139,7 +141,7 @@ abstract class AbstractRelation extends AbstractProperty
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $foreignModel Set the foreign DomainObject of the relation
+     * @param DomainObject $foreignModel Set the foreign DomainObject of the relation
      */
     public function setForeignModel(DomainObject $foreignModel): void
     {
@@ -149,7 +151,7 @@ abstract class AbstractRelation extends AbstractProperty
     /**
      * @param string $foreignClassName Set the foreign class nsme of the relation
      */
-    public function setForeignClassName($foreignClassName): void
+    public function setForeignClassName(string $foreignClassName): void
     {
         $this->foreignClassName = $foreignClassName;
     }
@@ -158,7 +160,6 @@ abstract class AbstractRelation extends AbstractProperty
      * Sets the flag, if the relation should be rendered as IRRE field.
      *
      * @param bool $inlineEditing
-     * @return void
      **/
     public function setInlineEditing($inlineEditing): void
     {
@@ -179,7 +180,6 @@ abstract class AbstractRelation extends AbstractProperty
      * Sets the lazyLoading flag
      *
      * @param  $lazyLoading
-     * @return void
      */
     public function setLazyLoading($lazyLoading): void
     {
@@ -200,7 +200,7 @@ abstract class AbstractRelation extends AbstractProperty
     {
         // store 1:n relationships as comma separated list in case `select*` renderType is used
         if ($this instanceof ZeroToManyRelation && strpos($this->renderType, 'select') === 0) {
-            return $this->getFieldName() . " text NOT NULL,";
+            return $this->getFieldName() . ' text NOT NULL,';
         }
         return $this->getFieldName() . " int(11) unsigned DEFAULT '0' NOT NULL,";
     }

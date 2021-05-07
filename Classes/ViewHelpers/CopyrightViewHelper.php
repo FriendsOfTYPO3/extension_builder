@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,11 +15,12 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * Format the Copyright notice
- *
  */
 class CopyrightViewHelper extends AbstractViewHelper
 {
@@ -30,7 +31,7 @@ class CopyrightViewHelper extends AbstractViewHelper
     /**
      * Arguments Initialization
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('date', 'string', 'Date', true);
         $this->registerArgument('persons', 'array', 'Array with persons', true);
@@ -39,11 +40,9 @@ class CopyrightViewHelper extends AbstractViewHelper
     /**
      * Format the copyright holder's name(s)
      *
-     * @param string $date
-     * @param array $persons (\EBT\ExtensionBuilder\Domain\Model\Person )
      * @return string The copyright ownership
      */
-    public function render()
+    public function render(): string
     {
         $copyright = ' * (c) ' . $this->arguments['date'] . ' ';
         $offset = strlen($copyright) - 2;

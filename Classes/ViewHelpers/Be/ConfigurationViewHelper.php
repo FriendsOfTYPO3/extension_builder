@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers\Be;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Be;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\ViewHelpers\Be;
+
 use TYPO3\CMS\Core\Localization\LocalizationFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -26,13 +28,13 @@ use TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBackendViewHelper;
 class ConfigurationViewHelper extends AbstractBackendViewHelper
 {
     /**
-     * @var \TYPO3\CMS\Core\Page\PageRenderer
+     * @var PageRenderer
      */
     private $pageRenderer;
 
-    public function render()
+    public function render(): void
     {
-        $this->pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $this->pageRenderer = $this->getPageRenderer();
 
         $extPath = ExtensionManagementUtility::extPath('extension_builder');
         $baseUrl = '../' . PathUtility::stripPathSitePrefix($extPath);
@@ -71,8 +73,13 @@ class ConfigurationViewHelper extends AbstractBackendViewHelper
         $this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/TypeField.js');
 
         // WireIt
-        $this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/excanvas.js',
-            'text/javascript', true, false, '<!--[if IE]>|<![endif]-->');
+        $this->pageRenderer->addJsFile(
+            $baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/excanvas.js',
+            'text/javascript',
+            true,
+            false,
+            '<!--[if IE]>|<![endif]-->'
+        );
         $this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/WireIt.js');
         $this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/CanvasElement.js');
         $this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/js/Wire.js');
@@ -128,14 +135,14 @@ class ConfigurationViewHelper extends AbstractBackendViewHelper
      *
      * Example:
      *        error.name becomes TYPO3.settings.extension_builder._LOCAL_LANG.error_name
-     *
-     * @return void
      */
-    private function setLocallangSettings()
+    private function setLocallangSettings(): void
     {
         $languageFactory = GeneralUtility::makeInstance(LocalizationFactory::class);
-        $LL = $languageFactory->getParsedData('EXT:extension_builder/Resources/Private/Language/locallang.xml',
-            'default');
+        $LL = $languageFactory->getParsedData(
+            'EXT:extension_builder/Resources/Private/Language/locallang.xlf',
+            'default'
+        );
         if (!empty($LL['default']) && is_array($LL['default'])) {
             foreach ($LL['default'] as $key => $value) {
                 $this->pageRenderer->addInlineSetting(

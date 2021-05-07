@@ -1,7 +1,5 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Parser\Visitor;
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,7 +13,13 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Parser\Visitor;
+
 use PhpParser\Node;
+use PhpParser\Node\Expr\Array_;
+use PhpParser\Node\Expr\ArrayItem;
+use PhpParser\Node\Expr\FuncCall;
+use PhpParser\Node\Scalar\String_;
 use PhpParser\NodeVisitorAbstract;
 
 class FormatVisitor extends NodeVisitorAbstract
@@ -27,19 +31,19 @@ class FormatVisitor extends NodeVisitorAbstract
 
     public function enterNode(Node $node)
     {
-        if (self::$first && $node instanceof Node\Expr\FuncCall) {
+        if (self::$first && $node instanceof FuncCall) {
             self::$first = false;
-            return new Node\Expr\Array_([
-                new Node\Expr\ArrayItem(
+            return new Array_([
+                new ArrayItem(
                     self::parseArgs($node),
-                    new Node\Scalar\String_($node->name)
+                    new String_($node->name)
                 )
             ]);
         }
-        if (!self::$first && $node instanceof Node\Expr\FuncCall) {
-            return new Node\Expr\ArrayItem(
+        if (!self::$first && $node instanceof FuncCall) {
+            return new ArrayItem(
                 self::parseArgs($node),
-                new Node\Scalar\String_($node->name)
+                new String_($node->name)
             );
         }
         return $node;
@@ -49,11 +53,11 @@ class FormatVisitor extends NodeVisitorAbstract
     {
         if (count($node->args) > 1) {
             foreach ($node->args as $k2 => &$arg) {
-                if ($arg->value instanceof Node\Expr\FuncCall) {
-                    $arg = new Node\Expr\Array_([$arg]);
+                if ($arg->value instanceof FuncCall) {
+                    $arg = new Array_([$arg]);
                 }
             }
         }
-        return new Node\Expr\Array_($node->args);
+        return new Array_($node->args);
     }
 }

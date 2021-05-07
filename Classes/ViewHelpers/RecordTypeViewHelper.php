@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,35 +15,33 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Utility\Tools;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-/**
- * Class RecordTypeViewHelper
- */
 class RecordTypeViewHelper extends AbstractViewHelper
 {
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
+     * @var ExtensionBuilderConfigurationManager
      */
     protected $configurationManager;
 
     /**
-     * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
-     * @return void
+     * @param ExtensionBuilderConfigurationManager $configurationManager
      */
     public function injectExtensionBuilderConfigurationManager(
         ExtensionBuilderConfigurationManager $configurationManager
-    ) {
+    ): void {
         $this->configurationManager = $configurationManager;
     }
 
     /**
      * Arguments Initialization
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('domainObject', DomainObject::class, 'domainObject', true);
     }
@@ -54,7 +52,7 @@ class RecordTypeViewHelper extends AbstractViewHelper
      * @return string
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    public function render()
+    public function render(): string
     {
         $domainObject = $this->arguments['domainObject'];
         $recordType = null;

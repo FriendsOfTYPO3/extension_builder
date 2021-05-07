@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Controller;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Controller;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace EBT\ExtensionBuilder\Controller;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
@@ -29,7 +31,9 @@ use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
+use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 
 /**
  * Controller of the Extension Builder extension
@@ -40,22 +44,22 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 class BuilderModuleController extends ActionController
 {
     /**
-     * @var \EBT\ExtensionBuilder\Service\FileGenerator
+     * @var FileGenerator
      */
     protected $fileGenerator;
 
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
+     * @var ExtensionBuilderConfigurationManager
      */
     protected $extensionBuilderConfigurationManager;
 
     /**
-     * @var \EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus
+     * @var ExtensionInstallationStatus
      */
     protected $extensionInstallationStatus;
 
     /**
-     * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
+     * @var ExtensionSchemaBuilder
      */
     protected $extensionSchemaBuilder;
 
@@ -65,12 +69,12 @@ class BuilderModuleController extends ActionController
     protected $extensionService;
 
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator
+     * @var ExtensionValidator
      */
     protected $extensionValidator;
 
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository
+     * @var ExtensionRepository
      */
     protected $extensionRepository;
 
@@ -84,21 +88,11 @@ class BuilderModuleController extends ActionController
      */
     protected $extensionBuilderSettings = [];
 
-    /**
-     * @param \EBT\ExtensionBuilder\Service\FileGenerator $fileGenerator
-     * @return void
-     */
     public function injectFileGenerator(FileGenerator $fileGenerator): void
     {
         $this->fileGenerator = $fileGenerator;
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
-     *
-     * @return void
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     */
     public function injectExtensionBuilderConfigurationManager(
         ExtensionBuilderConfigurationManager $configurationManager
     ): void {
@@ -106,54 +100,32 @@ class BuilderModuleController extends ActionController
         $this->extensionBuilderSettings = $this->extensionBuilderConfigurationManager->getSettings();
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus $extensionInstallationStatus
-     * @return void
-     */
     public function injectExtensionInstallationStatus(ExtensionInstallationStatus $extensionInstallationStatus): void
     {
         $this->extensionInstallationStatus = $extensionInstallationStatus;
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder $extensionSchemaBuilder
-     * @return void
-     */
     public function injectExtensionSchemaBuilder(ExtensionSchemaBuilder $extensionSchemaBuilder): void
     {
         $this->extensionSchemaBuilder = $extensionSchemaBuilder;
     }
 
-    /**
-     * @param ExtensionService $extensionService
-     */
     public function injectExtensionService(ExtensionService $extensionService): void
     {
         $this->extensionService = $extensionService;
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator $extensionValidator
-     * @return void
-     */
     public function injectExtensionValidator(ExtensionValidator $extensionValidator): void
     {
         $this->extensionValidator = $extensionValidator;
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Repository\ExtensionRepository $extensionRepository
-     * @return void
-     */
     public function injectExtensionRepository(ExtensionRepository $extensionRepository): void
     {
         $this->extensionRepository = $extensionRepository;
     }
 
-    /**
-     * @return void
-     */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         $this->fileGenerator->setSettings($this->extensionBuilderSettings);
     }
@@ -164,9 +136,8 @@ class BuilderModuleController extends ActionController
      * This is the default action, showing some introduction but after the first
      * loading the user should immediately be redirected to the domainmodellingAction.
      *
-     * @return void
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws InvalidConfigurationTypeException
+     * @throws StopActionException
      */
     public function indexAction(): void
     {
@@ -186,8 +157,7 @@ class BuilderModuleController extends ActionController
      * Nothing more to do here, since the next action is invoked by the Javascript
      * interface.
      *
-     * @return void
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws InvalidConfigurationTypeException
      */
     public function domainmodellingAction(): void
     {
@@ -256,7 +226,7 @@ class BuilderModuleController extends ActionController
             }
             if (!empty($validationConfigurationResult['errors'])) {
                 $errorMessage = '';
-                /** @var $exception \Exception */
+                /** @var \Exception $exception */
                 foreach ($validationConfigurationResult['errors'] as $exception) {
                     $errorMessage .= '<br />' . $exception->getMessage();
                 }
@@ -271,7 +241,7 @@ class BuilderModuleController extends ActionController
         $validationResult = $this->extensionValidator->isValid($extension);
         if (!empty($validationResult['errors'])) {
             $errorMessage = '';
-            /** @var $exception \Exception */
+            /** @var \Exception $exception */
             foreach ($validationResult['errors'] as $exception) {
                 $errorMessage .= '<br />' . $exception->getMessage();
             }
@@ -314,9 +284,10 @@ class BuilderModuleController extends ActionController
                     // this would result in a	 total overwrite so we create one and give a warning
                     $this->extensionBuilderConfigurationManager->createInitialSettingsFile(
                         $extension,
-                        $this->extensionBuilderSettings['codeTemplateRootPaths']
+                        $this->extensionBuilderSettings['codeTemplateRootPaths.']
                     );
-                    return ['warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the extension builder the first time for this extension. <br />A settings file was generated in <br /><b>typo3conf/ext/" . $extension->getExtensionKey() . '/Configuration/ExtensionBuilder/settings.yaml.</b><br />Configure the overwrite settings, then save again.'];
+                    $extensionPath = Environment::isComposerMode() ? 'packages/' : 'typo3conf/ext/';
+                    return ['warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the extension builder the first time for this extension. <br />A settings file was generated in <br /><b>" . $extensionPath . $extension->getExtensionKey() . '/Configuration/ExtensionBuilder/settings.yaml.</b><br />Configure the overwrite settings, then save again.'];
                 }
                 try {
                     RoundTrip::prepareExtensionForRoundtrip($extension);
@@ -328,8 +299,10 @@ class BuilderModuleController extends ActionController
                     || !in_array(ExtensionValidator::EXTENSION_DIR_EXISTS, $extensionSettings['ignoreWarnings'])
                 ) {
                     $confirmationRequired = $this->handleValidationWarnings([
-                        new ExtensionException("This action will overwrite previously saved content!\n(Enable the roundtrip feature to avoid this warning).",
-                            ExtensionValidator::EXTENSION_DIR_EXISTS)
+                        new ExtensionException(
+                            "This action will overwrite previously saved content!\n(Enable the roundtrip feature to avoid this warning).",
+                            ExtensionValidator::EXTENSION_DIR_EXISTS
+                        )
                     ]);
                     if (!empty($confirmationRequired)) {
                         return $confirmationRequired;
@@ -364,7 +337,10 @@ class BuilderModuleController extends ActionController
     protected function rpcActionList(): array
     {
         $extensions = $this->extensionRepository->findAll();
-        return ['result' => $extensions, 'error' => null];
+        return [
+            'result' => $extensions,
+            'error' => null
+        ];
     }
 
     /**
@@ -403,20 +379,12 @@ class BuilderModuleController extends ActionController
         return [];
     }
 
-    /**
-     * @return array
-     */
     protected function rpcActionPerformDbUpdate(): array
     {
         $params = $this->extensionBuilderConfigurationManager->getParamsFromRequest();
         return $this->extensionInstallationStatus->performDbUpdates($params);
     }
 
-    /**
-     * Returns the global BackendUserAuthentication object.
-     *
-     * @return BackendUserAuthentication
-     */
     protected function getBackendUserAuthentication(): BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];

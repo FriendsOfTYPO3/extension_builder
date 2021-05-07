@@ -1,7 +1,6 @@
 <?php
-declare(strict_types=1);
 
-namespace EBT\ExtensionBuilder\Tests\Unit;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -16,6 +15,8 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Tests\Unit;
+
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
@@ -26,21 +27,20 @@ use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Service\ObjectSchemaBuilder;
 use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
-use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 
 class ObjectSchemaBuilderTest extends BaseUnitTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
+     * @var ExtensionBuilderConfigurationManager
      */
     protected $configurationManager;
+
     /**
-     * @var \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder
+     * @var ObjectSchemaBuilder
      */
     protected $objectSchemaBuilder;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -173,7 +173,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
         $this->configurationManager->expects(self::atLeastOnce())
             ->method('getPersistenceTable')
             ->with($className)
-            ->will(self::returnValue('fe_users'));
+            ->willReturn('fe_users');
         $actual = $this->objectSchemaBuilder->build($input);
         self::assertEquals($actual, $expected, 'Domain Object not built correctly.');
     }
@@ -210,7 +210,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
         $this->configurationManager->expects(self::atLeastOnce())
             ->method('getPersistenceTable')
             ->with($className)
-            ->will(self::returnValue('fe_users'));
+            ->willReturn('fe_users');
 
         $domainObject = $this->objectSchemaBuilder->build($input);
         $dummyExtension = new Extension();
@@ -309,7 +309,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
         $this->configurationManager->expects(self::atLeastOnce())
             ->method('getPersistenceTable')
             ->with($className)
-            ->will(self::returnValue('fe_users'));
+            ->willReturn('fe_users');
 
         $domainObject1 = $this->objectSchemaBuilder->build($input);
 

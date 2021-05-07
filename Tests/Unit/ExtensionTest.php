@@ -1,7 +1,6 @@
 <?php
-declare(strict_types=1);
 
-namespace EBT\ExtensionBuilder\Tests\Unit;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -16,6 +15,8 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Tests\Unit;
+
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Domain\Model\Person;
 use EBT\ExtensionBuilder\Tests\BaseUnitTest;
@@ -27,15 +28,15 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class ExtensionTest extends BaseUnitTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\Person[]
+     * @var Person[]
      */
     protected $persons = [];
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\Extension
+     * @var Extension
      */
     protected $extension;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->extension = GeneralUtility::makeInstance(Extension::class);
