@@ -97,7 +97,7 @@ class Extension
     /**
      * @var bool
      */
-    protected $generateDocumentationTemplate = true;
+    protected $generateDocumentationTemplate = false;
     /**
      * @var string
      */
@@ -128,7 +128,7 @@ class Extension
     /**
      * plugins
      *
-     * @var array<\EBT\ExtensionBuilder\Domain\Model\Plugin>
+     * @var array<Plugin>
      */
     private $plugins = [];
     /**
@@ -150,7 +150,7 @@ class Extension
      * the lowest required TYPO3 version
      * @var float
      */
-    private $targetVersion = 6.0;
+    private $targetVersion = 10.0;
     /**
      * @var string
      */

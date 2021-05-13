@@ -453,7 +453,7 @@
             "dependsOn": "typo3 => 9.5.0-9.5.99\n",
             "disableLocalization": false,
             "disableVersioning": false,
-            "skipGenerateDocumentationTemplate": false,
+            "generateDocumentationTemplate": true,
             "sourceLanguage": "en",
             "state": "alpha",
             "targetVersion": "9.5.0-9.5.99",

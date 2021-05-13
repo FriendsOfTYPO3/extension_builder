@@ -157,9 +157,9 @@ extbaseModeling_wiringEditorLanguage.propertiesFields = [
         {
           type: 'boolean',
           inputParams: {
-            name: 'skipGenerateDocumentationTemplate',
-            label: TYPO3.settings.extensionBuilder._LOCAL_LANG.skipGenerateDocumentationTemplate,
-            description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_skipGenerateDocumentationTemplate,
+            name: 'generateDocumentationTemplate',
+            label: TYPO3.settings.extensionBuilder._LOCAL_LANG.generateDocumentationTemplate,
+            description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_generateDocumentationTemplate,
             value: 1
           }
         },
