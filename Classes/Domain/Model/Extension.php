@@ -251,7 +251,7 @@ class Extension
         return $this->version;
     }
 
-    public function setVersion(?string $version): void
+    public function setVersion(string $version): void
     {
         $this->version = $version;
     }

@@ -31,7 +31,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class ExtensionSchemaBuilderTest extends BaseUnitTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
+     * @var ExtensionSchemaBuilder
      */
     protected $extensionSchemaBuilder;
     /**
@@ -118,7 +118,8 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                 'extensionKey' => 'myExtensionKey',
                 'name' => 'myName',
                 'emConf' => [
-                    'state' => 'beta'
+                    'state' => 'beta',
+                    'version' => ''
                 ],
                 'persons' => [
                     [
@@ -230,7 +231,8 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                 'extensionKey' => $this->extensionKey,
                 'name' => 'My ext name',
                 'emConf' => [
-                    'state' => 'beta'
+                    'state' => 'beta',
+                    'version' => '1.0.0',
                 ]
             ],
             'wires' => [
@@ -261,6 +263,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         $extension = new Extension();
         $extension->setName('My ext name');
         $extension->setState(Extension::STATE_BETA);
+        $extension->setVersion('1.0.0');
         $extension->setExtensionKey($this->extensionKey);
         $extension->setDescription('Some description');
         $extension->setExtensionDir('');
@@ -303,6 +306,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         $relation->setForeignModel($comment);
         $relation->setExcludeField(true);
         $post->addProperty($relation);
+
         $actualExtension = $this->extensionSchemaBuilder->build($input);
         self::assertEquals(
             $extension->getDomainObjects(),

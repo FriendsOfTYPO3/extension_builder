@@ -236,7 +236,7 @@ class Container extends AbstractObject
     }
 
     /**
-     * @param string $aliasDeclaration
+     * @param array $aliasDeclaration
      */
     public function addAliasDeclaration($aliasDeclaration): void
     {

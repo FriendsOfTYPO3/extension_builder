@@ -65,12 +65,12 @@ class ObjectSchemaBuilder implements SingletonInterface
         } else {
             $domainObject->setEntity(false);
         }
-        $domainObject->setAggregateRoot($jsonDomainObject['objectsettings']['aggregateRoot']);
-        $domainObject->setSorting($jsonDomainObject['objectsettings']['sorting']);
-        $domainObject->setAddDeletedField($jsonDomainObject['objectsettings']['addDeletedField']);
-        $domainObject->setAddHiddenField($jsonDomainObject['objectsettings']['addHiddenField']);
-        $domainObject->setAddStarttimeEndtimeFields($jsonDomainObject['objectsettings']['addStarttimeEndtimeFields']);
-        $domainObject->setCategorizable($jsonDomainObject['objectsettings']['categorizable']);
+        $domainObject->setAggregateRoot($jsonDomainObject['objectsettings']['aggregateRoot'] ?? false);
+        $domainObject->setSorting($jsonDomainObject['objectsettings']['sorting'] ?? false);
+        $domainObject->setAddDeletedField($jsonDomainObject['objectsettings']['addDeletedField'] ?? false);
+        $domainObject->setAddHiddenField($jsonDomainObject['objectsettings']['addHiddenField'] ?? false);
+        $domainObject->setAddStarttimeEndtimeFields($jsonDomainObject['objectsettings']['addStarttimeEndtimeFields'] ?? false);
+        $domainObject->setCategorizable($jsonDomainObject['objectsettings']['categorizable'] ?? false);
 
         // extended settings
         if (!empty($jsonDomainObject['objectsettings']['mapToTable'])) {

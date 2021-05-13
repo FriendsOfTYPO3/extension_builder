@@ -16,6 +16,7 @@
 namespace EBT\ExtensionBuilder\Service;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\BackendModule;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
@@ -56,14 +57,13 @@ class ExtensionSchemaBuilder implements SingletonInterface
     /**
      * @param array $extensionBuildConfiguration
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
+     * @return Extension $extension
+     * @throws ExtensionException
      * @throws Exception
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    public function build(array $extensionBuildConfiguration)
+    public function build(array $extensionBuildConfiguration): Extension
     {
-        /** @var $extension \EBT\ExtensionBuilder\Domain\Model\Extension */
+        /** @var $extension Extension */
         $extension = GeneralUtility::makeInstance(Extension::class);
         $globalProperties = $extensionBuildConfiguration['properties'];
         if (!is_array($globalProperties)) {
@@ -134,10 +134,10 @@ class ExtensionSchemaBuilder implements SingletonInterface
 
     /**
      * @param array $extensionBuildConfiguration
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     * @param Extension $extension
      * @throws Exception
      */
-    protected function setExtensionRelations($extensionBuildConfiguration, &$extension): void
+    protected function setExtensionRelations(array $extensionBuildConfiguration, Extension $extension): void
     {
         $existingRelations = [];
         foreach ($extensionBuildConfiguration['wires'] as $wire) {
@@ -210,7 +210,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $extension->setSupportLocalization(false);
         }
 
-        if (!empty($propertyConfiguration['emConf']['skipGenerateDocumentationTemplate'])) {
+        if (empty($propertyConfiguration['emConf']['generateDocumentationTemplate'])) {
             $extension->setGenerateDocumentationTemplate(false);
         }
 
@@ -268,7 +268,9 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $extension->setOriginalExtensionKey($propertyConfiguration['originalExtensionKey']);
         }
 
-        if (!empty($propertyConfiguration['originalExtensionKey']) && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()) {
+        if (!empty($propertyConfiguration['originalExtensionKey'])
+            && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()
+        ) {
             $settings = $this->configurationManager->getExtensionSettings($extension->getOriginalExtensionKey(), $extension->getStoragePath());
             // if an extension was renamed, a new extension dir is created and we
             // have to copy the old settings file to the new extension dir

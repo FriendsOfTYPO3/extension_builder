@@ -32,9 +32,9 @@ class DomainObject
      */
     protected $name = '';
     /**
-     * @var string
+     * @var string|null
      */
-    protected $uniqueIdentifier = '';
+    protected $uniqueIdentifier;
     /**
      * @var string
      */
@@ -157,15 +157,12 @@ class DomainObject
         return $result;
     }
 
-    public function getUniqueIdentifier(): string
+    public function getUniqueIdentifier(): ?string
     {
         return $this->uniqueIdentifier;
     }
 
-    /**
-     * @param string $uniqueIdentifier
-     */
-    public function setUniqueIdentifier(string $uniqueIdentifier): void
+    public function setUniqueIdentifier(?string $uniqueIdentifier): void
     {
         $this->uniqueIdentifier = $uniqueIdentifier;
     }
