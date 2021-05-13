@@ -20,6 +20,7 @@
 		}
 	],
 	"require": {
+		"php": "^7.2",
 		"ext-json": "*",
 		"nikic/php-parser": "^4.10.4",
 		"typo3/cms-backend": "^10.4.10"

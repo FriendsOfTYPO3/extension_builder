@@ -352,6 +352,9 @@
 			<trans-unit id="show" resname="show">
 				<source>show</source>
 			</trans-unit>
+			<trans-unit id="index" resname="index">
+				<source>index</source>
+			</trans-unit>
 			<trans-unit id="list" resname="list">
 				<source>list</source>
 			</trans-unit>

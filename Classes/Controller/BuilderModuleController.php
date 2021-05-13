@@ -163,7 +163,7 @@ class BuilderModuleController extends ActionController
     {
         $initialWarnings = [];
         if (!$this->extensionService->isStoragePathConfigured()) {
-            $initialWarnings[] = $this->extensionService::COMPOSER_PATH_WARNING;
+            $initialWarnings[] = ExtensionService::COMPOSER_PATH_WARNING;
         }
         $this->view->assignMultiple([
             'extPath' => PathUtility::stripPathSitePrefix(ExtensionManagementUtility::extPath('extension_builder')),
