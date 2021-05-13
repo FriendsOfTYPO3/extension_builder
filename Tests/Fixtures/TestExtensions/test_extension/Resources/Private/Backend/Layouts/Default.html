@@ -1,31 +1,29 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:be.container>
-	<div class="typo3-fullDoc">
-		<div id="typo3-docheader">
-			<div class="typo3-docheader-functions">
-				<div class="left">
+    <div class="module">
+        <div class="module-docheader t3js-module-docheader">
+            <div class="module-docheader-bar module-docheader-bar-navigation row">
+				<div class="module-docheader-bar-column-left">
 					<f:be.buttons.csh />
 					<f:be.menus.actionMenu>
 						<f:be.menus.actionMenuItem label="Overview" controller="" action="list" />
 						<f:be.menus.actionMenuItem label="Create new Main" action="new" controller="Main" />
 					</f:be.menus.actionMenu>
 				</div>
-				<div class="right">
+				<div class="module-docheader-bar-column-right">
 					<f:be.pagePath />
 					<f:be.pageInfo />
 				</div>
 			</div>
-			<div class="typo3-docheader-buttons">
-				<div class="left">
-
-				</div>
-				<div class="right">
-					<f:be.buttons.shortcut />
-				</div>
-			</div>
-
+            <div class="module-docheader-bar module-docheader-bar-buttons">
+                <div class="module-docheader-bar-column-left">
+                </div>
+                <div class="module-docheader-bar-column-right">
+                    <f:be.buttons.shortcut />
+                </div>
+            </div>
 		</div>
-		<div id="typo3-docbody">
+		<div id="module-docbody">
 			<div id="typo3-inner-docbody">
 				<f:flashMessages />
 				<f:render section="content" />

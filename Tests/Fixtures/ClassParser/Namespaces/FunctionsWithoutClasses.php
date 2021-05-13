@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Tx_PhpParser\Tests;
 
 function simpleFunction()

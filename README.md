@@ -10,12 +10,12 @@ The Extension Builder helps you build and manage your Extbase based TYPO3 extens
 It ships a graphical editor to build your domain model and generates most of the boiler-plate code necessary for you.
 This includes TCA, Models, Repositories, language files and other things.
 
-You can find the **full documentation** on: https://docs.typo3.org/typo3cms/extensions/extension_builder/Index.html
+You can find the **full documentation** on: https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/Index.html
 
 ## Roundtrip mode
 
 The editing (or roundtrip) mode even allows to modify an existing extension (previously created by Extension Builder)
-without loosing your manual changes. See https://docs.typo3.org/typo3cms/extensions/extension_builder/Developer/Roundtrip.html
+without loosing your manual changes. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/Developer/Roundtrip.html
 
 Keep in mind though that the code created by Extension Builder is only a starting point for you actual implementation of
 functionality and is in no sense "production ready"!

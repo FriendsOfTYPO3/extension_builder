@@ -1,7 +1,5 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Utility;
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,13 +13,14 @@ namespace EBT\ExtensionBuilder\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Utility;
+
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use TYPO3\CMS\Core\SingletonInterface;
 
 /**
  * provides helper methods
- *
  */
 class Tools implements SingletonInterface
 {
@@ -39,15 +38,14 @@ class Tools implements SingletonInterface
         // could be: TYPO3\CMS\Extbase\Domain\Model\FrontendUser
         // or: VENDOR\Extension\Domain\Model\Foo
         if (count($classNameParts) > 5) {
-            $tableName = strtolower('tx_' . implode('_', array_slice($classNameParts, 2)));
-        } else {
-            $tableName = strtolower('tx_' . implode('_', array_slice($classNameParts, 1)));
+            return strtolower('tx_' . implode('_', array_slice($classNameParts, 2)));
         }
-        return $tableName;
+
+        return strtolower('tx_' . implode('_', array_slice($classNameParts, 1)));
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
+     * @param AbstractProperty $domainProperty
      * @param string $methodType (set,add,remove)
      *
      * @return string method body
@@ -69,7 +67,7 @@ class Tools implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
+     * @param AbstractProperty $domainProperty
      * @param string $methodType
      * @return string
      */
@@ -80,13 +78,13 @@ class Tools implements SingletonInterface
                 return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
 
             case 'add':
-                /** @var $domainProperty AbstractRelation */
+                /** @var AbstractRelation $domainProperty */
                 $paramTag = $domainProperty->getForeignClassName();
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
                 return $paramTag;
 
             case 'remove':
-                /** @var $domainProperty AbstractRelation */
+                /** @var AbstractRelation $domainProperty */
                 $paramTag = $domainProperty->getForeignClassName();
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
                 $paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';
@@ -96,10 +94,10 @@ class Tools implements SingletonInterface
 
     /**
      * Build record type from TX_Vendor_Package_Modelname
-     * @param $className
+     * @param string $className
      * @return string
      */
-    public static function convertClassNameToRecordType($className)
+    public static function convertClassNameToRecordType(string $className): string
     {
         $classNameParts = explode('\\', $className);
         if (count($classNameParts) > 6) {

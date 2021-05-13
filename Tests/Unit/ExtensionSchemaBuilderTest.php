@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Tests\Unit;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace EBT\ExtensionBuilder\Tests\Unit;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
@@ -29,7 +31,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class ExtensionSchemaBuilderTest extends BaseUnitTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
+     * @var ExtensionSchemaBuilder
      */
     protected $extensionSchemaBuilder;
     /**
@@ -37,7 +39,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
      */
     protected $extensionKey = '';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -46,7 +48,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         $this->extensionSchemaBuilder = $this->getAccessibleMock(ExtensionSchemaBuilder::class, ['dummy']);
         $this->extensionSchemaBuilder->injectConfigurationManager(new ExtensionBuilderConfigurationManager());
 
-        /** @var $objectSchemaBuilder \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder */
+        /** @var ObjectSchemaBuilder $objectSchemaBuilder */
         $objectSchemaBuilder = $this->getAccessibleMock(ObjectSchemaBuilder::class, ['dummy']);
         $objectSchemaBuilder->injectConfigurationManager(new ExtensionBuilderConfigurationManager());
 
@@ -74,7 +76,8 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                     'state' => $state,
                     'version' => $version
                 ]
-            ]
+            ],
+            'storagePath' => 'tmp'
         ];
 
         $extension = new Extension();
@@ -84,6 +87,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         $extension->setState($state);
         $extension->setVersion($version);
         $extension->setExtensionDir('');
+        $extension->setStoragePath('tmp');
 
         $actual = $this->extensionSchemaBuilder->build($input);
         self::assertEquals($extension, $actual, 'Extension properties were not extracted.');
@@ -114,7 +118,8 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                 'extensionKey' => 'myExtensionKey',
                 'name' => 'myName',
                 'emConf' => [
-                    'state' => 'beta'
+                    'state' => 'beta',
+                    'version' => ''
                 ],
                 'persons' => [
                     [
@@ -131,7 +136,8 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                     ],
                 ],
                 'state' => 'beta'
-            ]
+            ],
+            'storagePath' => 'tmp'
         ];
         $extension = $this->extensionSchemaBuilder->build($input);
         self::assertEquals($persons, $extension->getPersons(), 'Persons set wrong in ObjectBuilder.');
@@ -225,7 +231,8 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                 'extensionKey' => $this->extensionKey,
                 'name' => 'My ext name',
                 'emConf' => [
-                    'state' => 'beta'
+                    'state' => 'beta',
+                    'version' => '1.0.0',
                 ]
             ],
             'wires' => [
@@ -249,15 +256,18 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                         'terminal' => 'relationWire_0'
                     ]
                 ]
-            ]
+            ],
+            'storagePath' => 'tmp'
         ];
 
         $extension = new Extension();
         $extension->setName('My ext name');
         $extension->setState(Extension::STATE_BETA);
+        $extension->setVersion('1.0.0');
         $extension->setExtensionKey($this->extensionKey);
         $extension->setDescription('Some description');
         $extension->setExtensionDir('');
+        $extension->setStoragePath('tmp');
 
         $blog = new DomainObject();
         $blog->setName('Blog');
@@ -289,13 +299,14 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
 
         $relation = new ZeroToManyRelation('posts');
         $relation->setForeignModel($post);
-        $relation->setExcludeField(1);
+        $relation->setExcludeField(true);
         $blog->addProperty($relation);
 
         $relation = new ZeroToManyRelation('comments');
         $relation->setForeignModel($comment);
-        $relation->setExcludeField(1);
+        $relation->setExcludeField(true);
         $post->addProperty($relation);
+
         $actualExtension = $this->extensionSchemaBuilder->build($input);
         self::assertEquals(
             $extension->getDomainObjects(),

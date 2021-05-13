@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
@@ -22,21 +24,20 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 class MappingViewHelper extends AbstractConditionViewHelper
 {
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
+     * @var ExtensionBuilderConfigurationManager
      */
     protected $configurationManager;
 
     /**
-     * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
-     * @return void
+     * @param ExtensionBuilderConfigurationManager $configurationManager
      */
     public function injectExtensionBuilderConfigurationManager(
         ExtensionBuilderConfigurationManager $configurationManager
-    ) {
+    ): void {
         $this->configurationManager = $configurationManager;
     }
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('domainObject', 'object', '', true);
@@ -50,7 +51,6 @@ class MappingViewHelper extends AbstractConditionViewHelper
      */
     public function render()
     {
-        $content = '';
         /** @var DomainObject $domainObject */
         $domainObject = $this->arguments['domainObject'];
         $extensionPrefix = 'Tx_' . $domainObject->getExtension()->getExtensionName();
@@ -67,39 +67,35 @@ class MappingViewHelper extends AbstractConditionViewHelper
         }
 
         switch ($this->arguments['renderCondition']) {
-
             case 'isMappedToInternalTable':
                 if (!$isMappedToExternalTable) {
-                    $content = $this->renderThenChild();
-                } else {
-                    $content = $this->renderElseChild();
+                    return $this->renderThenChild();
                 }
-                break;
+
+                return $this->renderElseChild();
 
             case 'isMappedToExternalTable':
                 if ($isMappedToExternalTable) {
-                    $content = $this->renderThenChild();
-                } else {
-                    $content = $this->renderElseChild();
+                    return $this->renderThenChild();
                 }
-                break;
+
+                return $this->renderElseChild();
 
             case 'needsTypeField':
                 if ($this->needsTypeField($domainObject, $isMappedToExternalTable)) {
-                    $content = $this->renderThenChild();
-                } else {
-                    $content = $this->renderElseChild();
+                    return $this->renderThenChild();
                 }
-                break;
+
+                return $this->renderElseChild();
         }
 
-        return $content;
+        return '';
     }
 
     /**
-     * Do we have to create a typefield in database and configuration?
+     * Do we have to create a type field in database and configuration?
      *
-     * A typefield is needed if either the domain objects extends another class
+     * A type field is needed if either the domain objects extends another class
      * or if other domain objects of this extension extend it or if it is mapped
      * to an existing table
      *
@@ -107,13 +103,14 @@ class MappingViewHelper extends AbstractConditionViewHelper
      * @param bool $isMappedToExternalTable
      * @return bool
      */
-    protected function needsTypeField(DomainObject $domainObject, $isMappedToExternalTable)
+    protected function needsTypeField(DomainObject $domainObject, bool $isMappedToExternalTable): bool
     {
-        $needsTypeField = false;
-        if ($domainObject->getChildObjects() || $isMappedToExternalTable) {
+        if ($isMappedToExternalTable || $domainObject->getChildObjects()) {
             $tableName = $domainObject->getDatabaseTableName();
-            if (!isset($GLOBALS['TCA'][$tableName]['ctrl']['type']) || $GLOBALS['TCA'][$tableName]['ctrl']['type'] == 'tx_extbase_type') {
-                /**
+            if (!isset($GLOBALS['TCA'][$tableName]['ctrl']['type'])
+                || $GLOBALS['TCA'][$tableName]['ctrl']['type'] === 'tx_extbase_type'
+            ) {
+                /*
                  * if the type field is set but equals the default extbase record type field name it might
                  * have been defined by the current extension and thus has to be defined again when rewriting TCA definitions
                  * this might result in duplicate definition, but the type field definition is always wrapped in a condition
@@ -122,9 +119,9 @@ class MappingViewHelper extends AbstractConditionViewHelper
                  * If we don't check the TCA at runtime it would result in a repetition of type field definitions
                  * in case an extension has multiple models extending other models of the same extension
                  */
-                $needsTypeField = true;
+                return true;
             }
         }
-        return $needsTypeField;
+        return false;
     }
 }

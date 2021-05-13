@@ -1,17 +1,17 @@
 <?php
-defined('TYPO3_MODE') || die('Access denied.');
+defined('TYPO3_MODE') || die();
 call_user_func(
     function()
     {
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'FIXTURE.TestExtension',
+            'TestExtension',
             'Testplugin',
             [
-                'Main' => 'list, show, new, create, edit, update, delete'
+                \FIXTURE\TestExtension\Controller\MainController::class => 'list, show, new, create, edit, update, delete'
             ],
             // non-cacheable actions
             [
-                'Main' => 'create, update, delete'
+                \FIXTURE\TestExtension\Controller\MainController::class => 'create, update, delete'
             ]
         );
 

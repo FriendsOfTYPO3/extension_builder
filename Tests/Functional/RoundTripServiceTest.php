@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Tests\Functional;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Tests\Functional;
+
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
 use EBT\ExtensionBuilder\Service\ObjectSchemaBuilder;
@@ -23,21 +25,21 @@ use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 class RoundTripServiceTest extends BaseFunctionalTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder
+     * @var ObjectSchemaBuilder
      */
     protected $objectSchemaBuilder;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->objectSchemaBuilder = $this->objectManager->get(ObjectSchemaBuilder::class);
     }
 
     /**
-     * Write a simple model class for a non aggregate root domain obbject
+     * Write a simple model class for a non aggregate root domain object
      * @test
      */
-    public function relatedMethodsReflectRenamingAProperty()
+    public function relatedMethodsReflectRenamingAProperty(): void
     {
         $modelName = 'model7';
         $this->generateInitialModelClassFile($modelName);
@@ -59,7 +61,7 @@ class RoundTripServiceTest extends BaseFunctionalTest
         $modelClassObject = $this->classBuilder->generateModelClassFileObject(
             $domainObject,
             $templateClass,
-            false
+            null
         )->getFirstClass();
         self::assertIsObject($modelClassObject, 'No class object');
 
@@ -89,7 +91,7 @@ class RoundTripServiceTest extends BaseFunctionalTest
     /**
      * @test
      */
-    public function relatedMethodsReflectRenamingARelation()
+    public function relatedMethodsReflectRenamingARelation(): void
     {
         $modelName = 'Model8';
         $this->generateInitialModelClassFile($modelName);
@@ -121,7 +123,7 @@ class RoundTripServiceTest extends BaseFunctionalTest
         $modelClassObject = $this->classBuilder->generateModelClassFileObject(
             $domainObject,
             $templateClass,
-            false
+            null
         )->getFirstClass();
         self::assertIsObject($modelClassObject, 'No class object');
 
@@ -146,7 +148,7 @@ class RoundTripServiceTest extends BaseFunctionalTest
         $newDomainObject->addProperty($newRelation);
         $newDomainObject->setUniqueIdentifier($uniqueIdentifier2);
 
-        // now the slass object should be updated
+        // now the class object should be updated
         $this->roundTripService->_call('updateModelClassProperties', $domainObject, $newDomainObject);
         $modifiedModelClassObject = $this->roundTripService->_get('classObject');
 
@@ -160,7 +162,7 @@ class RoundTripServiceTest extends BaseFunctionalTest
      * Write a simple model class for a non aggregate root domain object
      * @test
      */
-    public function relatedMethodsReflectRenamingARelatedModel()
+    public function relatedMethodsReflectRenamingARelatedModel(): void
     {
         $modelName = 'Model8';
         $this->generateInitialModelClassFile($modelName);
@@ -192,7 +194,7 @@ class RoundTripServiceTest extends BaseFunctionalTest
         $modelClassObject = $this->classBuilder->generateModelClassFileObject(
             $domainObject,
             $this->modelClassTemplatePath,
-            false
+            null
         )->getFirstClass();
 
         self::assertIsObject($modelClassObject, 'No class object');

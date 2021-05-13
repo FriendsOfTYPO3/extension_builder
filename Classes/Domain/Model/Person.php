@@ -1,7 +1,5 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model;
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,6 +13,8 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model;
+
 /**
  * A person participating in the project somehow (i.e. as a developer).
  */
@@ -26,7 +26,7 @@ class Person
      * Extend here and in the locallang (mlang_Tx_ExtensionBuilder_domain_model_person_[rolekey from array]) to add new Roles.
      *
      * @var string[]
-     * @transient
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Transient
      */
     protected static $ROLES = ['developer', 'product_manager'];
     /**
@@ -59,9 +59,8 @@ class Person
 
     /**
      * @param string $name
-     * @return void
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -76,9 +75,8 @@ class Person
 
     /**
      * @param string $role
-     * @return void
      */
-    public function setRole($role)
+    public function setRole($role): void
     {
         $this->role = $role;
     }
@@ -93,9 +91,8 @@ class Person
 
     /**
      * @param string $email
-     * @return void
      */
-    public function setEmail($email)
+    public function setEmail($email): void
     {
         $this->email = $email;
     }
@@ -110,9 +107,8 @@ class Person
 
     /**
      * @param string $company
-     * @return void
      */
-    public function setCompany($company)
+    public function setCompany($company): void
     {
         $this->company = $company;
     }

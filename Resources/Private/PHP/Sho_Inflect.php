@@ -163,8 +163,8 @@ class Sho_Inflect
     {
         if ($count == 1) {
             return "1 $string";
-        } else {
-            return $count . ' ' . self::pluralize($string);
         }
+
+        return $count . ' ' . self::pluralize($string);
     }
 }

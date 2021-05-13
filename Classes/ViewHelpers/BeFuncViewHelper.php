@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -22,9 +24,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  * = Examples =
  *
- * <f:null>{anyString}</f:null>
- *
- *
+ * <k:beFunc>{anyString}</k:beFunc>
  */
 class BeFuncViewHelper extends AbstractViewHelper
 {
@@ -36,10 +36,9 @@ class BeFuncViewHelper extends AbstractViewHelper
     /**
      * Render without processing
      *
-     *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         return $this->renderChildren();
     }

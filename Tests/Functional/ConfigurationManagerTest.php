@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Tests\Unit;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Tests\Functional;
+
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
@@ -22,11 +24,11 @@ use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 class ConfigurationManagerTest extends BaseFunctionalTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
+     * @var ExtensionBuilderConfigurationManager
      */
     protected $configurationManager;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->configurationManager = $this->objectManager->get(ExtensionBuilderConfigurationManager::class);
@@ -35,9 +37,9 @@ class ConfigurationManagerTest extends BaseFunctionalTest
     /**
      * @test
      */
-    public function getExtbaseClassConfigurationReturnsCorrectValue(): void
+    public function getPersistenceTableReturnsCorrectValue(): void
     {
-        $classConfiguration = $this->configurationManager->getExtbaseClassConfiguration(FrontendUser::class);
-        self::assertSame($classConfiguration['tableName'], 'fe_users');
+        $tableName = $this->configurationManager->getPersistenceTable(FrontendUser::class);
+        self::assertSame($tableName, 'fe_users');
     }
 }

@@ -1,6 +1,3 @@
-#
-# Table structure for table 'tx_testextension_domain_model_main'
-#
 CREATE TABLE tx_testextension_domain_model_main (
 
 	name varchar(255) DEFAULT '' NOT NULL,
@@ -15,9 +12,6 @@ CREATE TABLE tx_testextension_domain_model_main (
 
 );
 
-#
-# Table structure for table 'tx_testextension_domain_model_child1'
-#
 CREATE TABLE tx_testextension_domain_model_child1 (
 
 	name varchar(255) DEFAULT '' NOT NULL,
@@ -25,9 +19,6 @@ CREATE TABLE tx_testextension_domain_model_child1 (
 
 );
 
-#
-# Table structure for table 'tx_testextension_domain_model_child2'
-#
 CREATE TABLE tx_testextension_domain_model_child2 (
 
 	main int(11) unsigned DEFAULT '0' NOT NULL,
@@ -40,9 +31,6 @@ CREATE TABLE tx_testextension_domain_model_child2 (
 
 );
 
-#
-# Table structure for table 'tx_testextension_domain_model_child3'
-#
 CREATE TABLE tx_testextension_domain_model_child3 (
 
 	name varchar(255) DEFAULT '' NOT NULL,
@@ -51,9 +39,6 @@ CREATE TABLE tx_testextension_domain_model_child3 (
 
 );
 
-#
-# Table structure for table 'tx_testextension_domain_model_child4'
-#
 CREATE TABLE tx_testextension_domain_model_child4 (
 
 	name varchar(255) DEFAULT '' NOT NULL,
@@ -61,9 +46,6 @@ CREATE TABLE tx_testextension_domain_model_child4 (
 
 );
 
-#
-# Table structure for table 'tx_testextension_main_child4_mm'
-#
 CREATE TABLE tx_testextension_main_child4_mm (
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
@@ -75,9 +57,6 @@ CREATE TABLE tx_testextension_main_child4_mm (
 	KEY uid_foreign (uid_foreign)
 );
 
-#
-# Table structure for table 'tx_testextension_domain_model_child3'
-#
 CREATE TABLE tx_testextension_domain_model_child3 (
 	categories int(11) unsigned DEFAULT '0' NOT NULL
 );

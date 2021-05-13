@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
 
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
@@ -66,16 +68,9 @@ abstract class AbstractProperty
     protected $value;
 
     /**
-     * Is an upload folder required for this property
-     *
-     * @var bool
-     */
-    protected $needsUploadFolder = false;
-
-    /**
      * The domain object this property belongs to.
      *
-     * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     * @var DomainObject
      */
     protected $class;
 
@@ -99,7 +94,7 @@ abstract class AbstractProperty
     protected $type = '';
 
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     * @var DomainObject
      */
     protected $domainObject;
 
@@ -123,10 +118,7 @@ abstract class AbstractProperty
      */
     protected $searchable = false;
 
-    /**
-     * @param string $propertyName
-     */
-    public function __construct($propertyName = '')
+    public function __construct(string $propertyName = '')
     {
         if (!empty($propertyName)) {
             $this->name = $propertyName;
@@ -146,28 +138,18 @@ abstract class AbstractProperty
     /**
      * Get the domain object this property belongs to.
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     * @return DomainObject
      */
     public function getClass(): DomainObject
     {
         return $this->class;
     }
 
-    /**
-     * Get property name
-     *
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set property name
-     *
-     * @param string $name Property name
-     */
     public function setName(string $name): void
     {
         $this->name = $name;
@@ -193,29 +175,16 @@ abstract class AbstractProperty
         $this->defaultValue = $defaultValue;
     }
 
-    /**
-     * @return bool
-     */
     public function getHasDefaultValue(): bool
     {
         return isset($this->defaultValue);
     }
 
-    /**
-     * Get property uniqueIdentifier
-     *
-     * @return string
-     */
     public function getUniqueIdentifier(): string
     {
         return $this->uniqueIdentifier;
     }
 
-    /**
-     * Set property uniqueIdentifier
-     *
-     * @param string|null $uniqueIdentifier
-     */
     public function setUniqueIdentifier(?string $uniqueIdentifier): void
     {
         $this->uniqueIdentifier = $uniqueIdentifier;
@@ -335,32 +304,16 @@ abstract class AbstractProperty
         return $this->cascadeRemove;
     }
 
-    /**
-     * Set whether this property is required
-     *
-     * @param bool $required
-     */
-    public function setRequired($required): void
+    public function setRequired(bool $required): void
     {
         $this->required = $required;
     }
 
-    /**
-     * Set whether this property is exclude field
-     *
-     * @param bool $excludeField
-     * @return void
-     */
-    public function setExcludeField($excludeField): void
+    public function setExcludeField(bool $excludeField): void
     {
         $this->excludeField = $excludeField;
     }
 
-    /**
-     * true if this property is an exclude field, false otherwise.
-     *
-     * @return bool
-     */
     public function getExcludeField(): bool
     {
         return $this->excludeField;
@@ -370,7 +323,6 @@ abstract class AbstractProperty
      * Set whether this property is l10n_mode = exclude
      *
      * @param bool $l10nModeExclude
-     * @return void
      */
     public function setL10nModeExclude($l10nModeExclude): void
     {
@@ -400,9 +352,6 @@ abstract class AbstractProperty
         return '';
     }
 
-    /**
-     * @return string
-     */
     public function getCascadeRemoveAnnotation(): string
     {
         if ($this->cascadeRemove) {
@@ -455,7 +404,7 @@ abstract class AbstractProperty
     /**
      * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject the domain object this property belongs to
+     * @param DomainObject $domainObject the domain object this property belongs to
      */
     public function setDomainObject(DomainObject $domainObject): void
     {
@@ -463,7 +412,7 @@ abstract class AbstractProperty
     }
 
     /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @return DomainObject $domainObject
      */
     public function getDomainObject(): DomainObject
     {
@@ -479,52 +428,28 @@ abstract class AbstractProperty
     public function getMappingStatement(): ?string
     {
         if ($this->getFieldName() != GeneralUtility::camelCaseToLowerCaseUnderscored($this->name)) {
-            return $this->getFieldName() . '.mapOnProperty = ' . $this->name;
+            return $statement = "'" . $this->name . "' => [\n\t'fieldName' => '" . $this->getFieldName() . "'\n],";
         }
 
         return null;
     }
 
-    /**
-     * Getter for $needsUploadFolder
-     *
-     * @return bool $needsUploadFolder
-     */
-    public function getNeedsUploadFolder(): bool
-    {
-        return $this->needsUploadFolder;
-    }
-
-    /**
-     * @return bool
-     */
     public function isNew(): bool
     {
         return $this->new;
     }
 
-    /**
-     * @param bool $new
-     */
     public function setNew(bool $new): void
     {
         $this->new = $new;
     }
 
-    /**
-     * Getter for $useRTE
-     *
-     * @return bool $useRTE
-     */
     public function getUseRTE(): bool
     {
         return $this->useRTE;
     }
 
-    /**
-     * @return string
-     */
-    public function getUnqualifiedType()
+    public function getUnqualifiedType(): string
     {
         $type = $this->getTypeForComment();
         if (substr($type, 0, 1) === chr(92)) {

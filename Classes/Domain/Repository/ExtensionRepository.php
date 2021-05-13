@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Repository;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,9 +15,13 @@ namespace EBT\ExtensionBuilder\Domain\Repository;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Repository;
+
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Service\ExtensionService;
+use Exception;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -28,7 +32,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class ExtensionRepository implements SingletonInterface
 {
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
+     * @var ExtensionBuilderConfigurationManager
      */
     protected $configurationManager;
 
@@ -37,19 +41,12 @@ class ExtensionRepository implements SingletonInterface
      */
     protected $extensionService;
 
-    /**
-     * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
-     * @return void
-     */
     public function injectExtensionBuilderConfigurationManager(
         ExtensionBuilderConfigurationManager $configurationManager
     ): void {
         $this->configurationManager = $configurationManager;
     }
 
-    /**
-     * @param ExtensionService $extensionService
-     */
     public function injectExtensionService(ExtensionService $extensionService): void
     {
         $this->extensionService = $extensionService;
@@ -70,10 +67,6 @@ class ExtensionRepository implements SingletonInterface
         return array_values($extensions);
     }
 
-    /**
-     * @param string $storagePath
-     * @return array
-     */
     protected function findAllInDirectory(string $storagePath): array
     {
         $result = [];
@@ -98,9 +91,9 @@ class ExtensionRepository implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     * @param Extension $extension
      *
-     * @throws \Exception
+     * @throws Exception
      * @throws \TYPO3\CMS\Core\Package\Exception
      */
     public function saveExtensionConfiguration(Extension $extension): void
@@ -109,7 +102,7 @@ class ExtensionRepository implements SingletonInterface
         $extensionBuildConfiguration['log'] = [
             'last_modified' => date('Y-m-d h:i'),
             'extension_builder_version' => ExtensionManagementUtility::getExtensionVersion('extension_builder'),
-            'be_user' => $GLOBALS['BE_USER']->user['realName'] . ' (' . $GLOBALS['BE_USER']->user['uid'] . ')'
+            'be_user' => $this->getBackendUserAuthentication()->user['realName'] . ' (' . $this->getBackendUserAuthentication()->user['uid'] . ')'
         ];
         $encodeOptions = 0;
         // option JSON_PRETTY_PRINT is available since PHP 5.4.0
@@ -120,5 +113,10 @@ class ExtensionRepository implements SingletonInterface
             $extension->getExtensionDir() . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE,
             json_encode($extensionBuildConfiguration, $encodeOptions)
         );
+    }
+
+    protected function getBackendUserAuthentication(): BackendUserAuthentication
+    {
+        return $GLOBALS['BE_USER'];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Service;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Service;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace EBT\ExtensionBuilder\Service;
 
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -350,42 +352,22 @@ class ValidationService implements SingletonInterface
         'RegexIterator',
     ];
 
-    /**
-     * @param string $word
-     *
-     * @return bool
-     */
-    public static function isReservedTYPO3Word($word)
+    public static function isReservedTYPO3Word(string $word): bool
     {
         return in_array(GeneralUtility::camelCaseToLowerCaseUnderscored($word), self::$reservedTYPO3ColumnNames);
     }
 
-    /**
-     * @param string $word
-     *
-     * @return bool
-     */
-    public static function isReservedExtbaseWord($word)
+    public static function isReservedExtbaseWord(string $word): bool
     {
         return in_array($word, self::$reservedExtbaseNames);
     }
 
-    /**
-     * @param string $word
-     *
-     * @return bool
-     */
-    public static function isReservedMYSQLWord($word)
+    public static function isReservedMYSQLWord(string $word): bool
     {
         return in_array(strtoupper($word), self::$reservedMYSQLWords);
     }
 
-    /**
-     * @param string $word
-     *
-     * @return bool
-     */
-    public static function isReservedWord($word)
+    public static function isReservedWord(string $word): bool
     {
         return self::isReservedMYSQLWord($word) || self::isReservedTYPO3Word($word);
     }

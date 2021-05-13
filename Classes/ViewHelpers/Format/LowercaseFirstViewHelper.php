@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers\Format;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,21 +15,22 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Format;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\ViewHelpers\Format;
+
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * Wrapper for PHPs ucfirst function.
- * @see http://www.php.net/manual/en/ucfirst
+ * Wrapper for PHPs lcfirst function.
+ * @see http://www.php.net/manual/en/lcfirst
  *
  * = Examples =
  *
  * <code title="Example">
- * <k:uppercaseFirst>{textWithMixedCase}</k:uppercaseFirst>
+ * <k:lowercaseFirst>{TextWithMixedCase}</k:lowercaseFirst>
  * </code>
  *
  * Output:
- * TextWithMixedCase
- *
+ * textWithMixedCase
  */
 class LowercaseFirstViewHelper extends AbstractViewHelper
 {
@@ -38,9 +39,8 @@ class LowercaseFirstViewHelper extends AbstractViewHelper
      *
      * @return string The altered string.
      */
-    public function render()
+    public function render(): string
     {
-        $content = $this->renderChildren();
-        return lcfirst($content);
+        return lcfirst($this->renderChildren());
     }
 }

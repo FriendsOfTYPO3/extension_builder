@@ -122,7 +122,25 @@ If you want a backend module for your extension, you have to add a backend modul
 ---------------------
 
 If your model represents the domain you wanted to implement you can hit the "Save" button at the bottom. The Extension Builder generates all required files for you.
-Have a look into :file:`typo3conf/ext/yourExtensionKey/` to see them. Now you can start implementing your logic.
+**The location of the generated extension depends on your local setup:**
+
+Composer mode
+^^^^^^^^^^^^^
+If you run TYPO3 in `Composer Mode <https://docs.typo3.org/m/typo3/guide-installation/master/en-us/QuickInstall/Composer/Index.html>`_
+you have to provide and configure a local `path repository <https://getcomposer.org/doc/05-repositories.md#path>`_ **before you save your extension**. The ExtensionBuilder will read the path from your composer.json and offer you this path as the destination
+for saving the extension. ExtensionBuilder will create a symlink in typo3conf/ext/ to your extension.
+
+.. figure:: ../Images/User/select-destination.png
+   :width: 400px
+   :align: left
+   :alt: Select destination
+
+Non composer mode
+^^^^^^^^^^^^^^^^^
+
+If you are **not** in composer mode the generated extension will go to :file:`typo3conf/ext/your_extension_key/`.
+
+Once the extension is saved you should be able to install it in the ExtensionManager and use it.
 
 .. caution::
    Please be aware that the generated extension is NOT ready for use in production context!

@@ -34,7 +34,7 @@ $url_0: url(background_pixel.png);
 		}
 	}
 	&.domainmodelling {
-		padding: 89px 0 0 0 !important;
+		padding: 66px 0 0 0 !important;
 	}
 }
 
@@ -403,7 +403,7 @@ div {
 	&.advancedSettings legend {
 		color: $color_celeste_approx;
 		margin-left: 20px;
-		margin-top: -19px;
+		margin-top: -24px;
 		position: absolute;
 		z-index: 500;
 	}
@@ -448,6 +448,7 @@ div {
 		float: left;
 		position: absolute;
 		right: 0;
+        margin-top: 7px;
 	}
 	&.WiringEditor-module-New div.mainGroup {
 		border-bottom: 1px solid $color_mountain_mist_approx;
@@ -556,7 +557,7 @@ div {
 	height: auto;
 	margin: 5px;
 	padding: 5px;
-	width: 130px;
+	width: 140px;
 	span {
 		position: relative;
 		top: -3px;
@@ -576,11 +577,18 @@ div {
 	}
 }
 
+div.inputEx-Group-collapseImg {
+    margin-top: 5px;
+}
+
 .relationGroup {
 	width: 210px;
 	.checkBoxFieldWrapper div.inputEx-label {
 		width: 55%;
 	}
+    div.inputEx-Group-collapseImg{
+        margin-top: 0;
+    }
 }
 
 .objectSettings {
@@ -611,15 +619,16 @@ div {
 	.relations {
 		.inputEx-ListField-Arrow {
 			float: right;
-			margin-right: 15px;
-			margin-top: -18px;
+			margin-right: 17px;
+			margin-top: -22px;
 		}
 		.inputEx-ListField-ArrowDown {
-			margin-right: 30px;
+			margin-right: 32px;
 		}
 	}
 	.inputEx-ListField-Arrow {
 		float: left;
+        margin-top: 6px;
 	}
 	.textfieldWrapper div.inputEx-label {
 		width: 100%;
@@ -767,6 +776,7 @@ legend.inputEx-Group-legend {
 	font-weight: 700;
 	padding-top: 4px;
 	width: auto;
+    margin-bottom: 0;
 }
 
 a.inputEx-List-link {
@@ -857,4 +867,8 @@ label.helpAvailable {
 
 .selectFieldWrapper .inputEx-label {
 	float: none;
+}
+
+div.WireIt-InputExTerminal div.WireIt-Terminal {
+    top: -8px;
 }

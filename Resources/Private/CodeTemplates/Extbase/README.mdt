@@ -1,0 +1,39 @@
+# TYPO3 Extension {extension.name}
+
+[![Total Downloads](https://poser.pugx.org/{vendorName}/{composerExtensionKey}/d/total.svg)](https://packagist.org/packages/{vendorName}/{composerExtensionKey})
+[![License](https://poser.pugx.org/{vendorName}/{composerExtensionKey}/license.svg)](https://packagist.org/packages/{vendorName}/{composerExtensionKey})
+
+{extension.description}
+
+## Table of content
+
+- [Installation](#installation)
+    - [TER](#typo3-extension-repository)
+    - [Composer](#composer)
+- [License](#license)
+- [Links](#links)
+
+## Installation
+
+### TYPO3 extension repository
+
+If you want to install {extension.name} into your existing TYPO3 installation, the [{extension.name} extension from the TER](https://typo3.org/extensions/repository/view/{extension.extensionKey}) is recommended.
+You can download and install it directly from the Extension Manager of your TYPO3 instance.
+
+### Composer
+
+```bash
+composer require {vendorName}/{composerExtensionKey}
+```
+
+## License
+
+Distributed under the GPL Open Source license. See ``LICENSE.txt`` for more information.
+
+## Contributing
+
+1. Fork it (<https://github.com/{vendorName}/{composerExtensionKey}/fork>)
+2. Create your feature branch (`git checkout -b feature/fooBar origin/master`)
+3. Commit your changes (`git commit -am 'Add some fooBar'`)
+4. Push to the branch (`git push origin feature/fooBar`)
+5. Create a new Pull Request

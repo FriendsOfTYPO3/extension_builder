@@ -1,1 +1,1 @@
-f:form.textarea property="{property.name}" cols="40" rows="15"
+f:form.textarea property="{property.name}" id="{property.name}" cols="40" rows="15"

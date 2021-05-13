@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
 
 /**
  * Creates a request an dispatches it to the controller which was specified
@@ -38,7 +40,7 @@ class ZeroToOneRelation extends AbstractRelation
         return $this->getFieldName() . " int(11) unsigned DEFAULT '0',";
     }
 
-    public function getUnqualifiedType()
+    public function getUnqualifiedType(): string
     {
         return $this->getForeignModelName();
     }

@@ -1,7 +1,5 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Utility;
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,12 +13,15 @@ namespace EBT\ExtensionBuilder\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Utility;
+
+use Sho_Inflect;
+
 require(__DIR__ . '/../../Resources/Private/PHP/Sho_Inflect.php');
 
 /**
  * Inflector utilities for the Extension Builder. This is a basic conversion from PHP
  * class and field names to a human readable form.
- *
  */
 class Inflector
 {
@@ -31,7 +32,7 @@ class Inflector
     // TODO: These methods are static now, this breaks other places.
     public static function pluralize($word)
     {
-        return \Sho_Inflect::pluralize($word);
+        return Sho_Inflect::pluralize($word);
     }
 
     /**
@@ -40,7 +41,7 @@ class Inflector
      */
     public static function singularize($word)
     {
-        return \Sho_Inflect::singularize($word);
+        return Sho_Inflect::singularize($word);
     }
 
     /**
@@ -58,7 +59,6 @@ class Inflector
             $delimiter = '_';
         }
         $string = str_replace($delimiter, ' ', $string);
-        $string = ucwords($string);
-        return $string;
+        return ucwords($string);
     }
 }

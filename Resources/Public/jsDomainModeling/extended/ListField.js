@@ -255,10 +255,10 @@
 		   // Arrows to order:
 		   if(this.options.sortable) {
 		      var arrowUp = inputEx.cn('div', {className: 'inputEx-ListField-Arrow inputEx-ListField-ArrowUp t3js-icon icon icon-size-small '});
-		      arrowUp.innerHTML = '<span class="icon-markup"> <img src="./sysext/core/Resources/Public/Icons/T3Icons/actions/actions-move-up.svg" width="16" height="16"> </span>';
+		      arrowUp.innerHTML = '<span class="icon-markup"> <img src="./sysext/core/Resources/Public/Icons/T3Icons/svgs/actions/actions-caret-up.svg" width="16" height="16"> </span>';
 		      Event.addListener(arrowUp, 'click', this.onArrowUp, this, true);
 		      var arrowDown = inputEx.cn('div', {className: 'inputEx-ListField-Arrow inputEx-ListField-ArrowDown t3js-icon icon icon-size-small '});
-			   arrowDown.innerHTML = '<span class="icon-markup"> <img src="./sysext/core/Resources/Public/Icons/T3Icons/actions/actions-move-down.svg" width="16" height="16"> </span>';
+			   arrowDown.innerHTML = '<span class="icon-markup"> <img src="./sysext/core/Resources/Public/Icons/T3Icons/svgs/actions/actions-caret-down.svg" width="16" height="16"> </span>';
 		      Event.addListener(arrowDown, 'click', this.onArrowDown, this, true);
 		      newDiv.appendChild( arrowUp );
 		      newDiv.appendChild( arrowDown );
@@ -267,7 +267,7 @@
 		   // Delete link
 		   if(!this.options.useButtons) {
 		      var delButton = inputEx.cn('div', {className: 'inputEx-List-link t3js-icon icon icon-size-small icon-state-default t3-icon-edit-delete deleteButton icon-actions-edit-delete'}, null, this.options.listRemoveLabel);
-			  delButton.innerHTML = '<span class="icon-markup"><img src="./sysext/core/Resources/Public/Icons/T3Icons/actions/actions-edit-delete.svg" width="16" height="16"></span>';
+			  delButton.innerHTML = '<span class="icon-markup"><img src="./sysext/core/Resources/Public/Icons/T3Icons/svgs/actions/actions-delete.svg" width="16" height="16"></span>';
 		      Event.addListener( delButton, 'click', this.onDelete, this, true);
 		      newDiv.appendChild( delButton );
 	      }

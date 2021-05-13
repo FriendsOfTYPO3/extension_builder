@@ -1,7 +1,5 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,11 +13,12 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 
 /**
  * An action defined for a domain object
- *
  */
 class Action
 {
@@ -32,7 +31,7 @@ class Action
     /**
      * the domain object this action belongs to
      *
-     * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     * @var DomainObject
      */
     protected $domainObject;
     /**
@@ -107,7 +106,7 @@ class Action
 
     /**
      * DO NOT CALL DIRECTLY! This is being called by addAction() automatically.
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject the domain object this actions belongs to
+     * @param DomainObject $domainObject the domain object this actions belongs to
      */
     public function setDomainObject(DomainObject $domainObject): void
     {
@@ -115,7 +114,7 @@ class Action
     }
 
     /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     * @return DomainObject
      */
     public function getDomainObject(): DomainObject
     {

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /*                                                                        *
  * This script is part of the TYPO3 project - inspiring people to share!  *
  *                                                                        *

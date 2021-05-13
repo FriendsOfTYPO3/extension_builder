@@ -5,13 +5,13 @@ if (!isset($GLOBALS['TCA']['{databaseTableName}']['ctrl']['type'])) {
     $tempColumns{extension.shortExtensionKey}_{databaseTableName} = [];
     $tempColumns{extension.shortExtensionKey}_{databaseTableName}[$GLOBALS['TCA']['{databaseTableName}']['ctrl']['type']] = [
         'exclude' => true,
-        'label'   => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{extension.shortExtensionKey}.tx_extbase_type',
+        'label' => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{extension.shortExtensionKey}.tx_extbase_type',
         'config' => [
             'type' => 'select',
             'renderType' => 'selectSingle',
             'items' => [
-                ['',''],
-                ['{domainObject.name}','{domainObject.recordType}']
+                ['', ''],
+                ['{domainObject.name}', '{domainObject.recordType}']
             ],
             'default' => '{domainObject.recordType}',
             'size' => 1,

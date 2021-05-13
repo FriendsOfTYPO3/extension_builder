@@ -212,7 +212,7 @@
 			if (this.options.close) {
 				// Close button
 				//this.closeButton = WireIt.cn('div', {className: this.options.closeButtonClassName});
-				this.closeButton = WireIt.cn('img', {className: this.options.closeButtonClassName, src: './sysext/core/Resources/Public/Icons/T3Icons/actions/actions-edit-delete.svg', width: 16});
+				this.closeButton = WireIt.cn('img', {className: this.options.closeButtonClassName, src: './sysext/core/Resources/Public/Icons/T3Icons/svgs/actions/actions-delete.svg', width: 16});
 				this.el.appendChild(this.closeButton);
 				Event.addListener(this.closeButton, "click", this.onCloseButton, this, true);
 			}

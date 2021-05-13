@@ -1,1 +1,3 @@
-/vendor/
+.Build/
+.idea/
+composer.lock

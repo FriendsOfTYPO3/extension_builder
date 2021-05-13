@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
 
 abstract class AnyToManyRelation extends AbstractRelation
 {
@@ -73,7 +75,6 @@ abstract class AnyToManyRelation extends AbstractRelation
      * if a table name is configured in TCA the table name is ste to the configured name
      *
      * @param $relationTableName
-     * @return void
      */
     public function setRelationTableName(string $relationTableName): void
     {

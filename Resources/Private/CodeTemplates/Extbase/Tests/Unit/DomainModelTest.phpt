@@ -1,17 +1,21 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}<?php
+declare(strict_types=1);
+
 namespace {extension.namespaceName}\Tests\Unit\Domain\Model;
 
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+
 /**
- * Test case.
+ * Test case
 <f:if condition="{extension.persons}"> *
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
 </f:for></f:if> */
-class {domainObject.name}Test extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+class {domainObject.name}Test extends UnitTestCase
 {
     /**
      * @var {domainObject.fullQualifiedClassName}
      */
-    protected $subject = null;
+    protected $subject;
 
     protected function setUp()
     {

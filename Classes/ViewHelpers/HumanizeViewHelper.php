@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,8 +15,9 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
 use EBT\ExtensionBuilder\Utility\Inflector;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -30,24 +31,13 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  * Output:
  * Foo Bar
- *
  */
 class HumanizeViewHelper extends AbstractViewHelper
 {
     /**
-     * @var \EBT\ExtensionBuilder\Utility\Inflector
-     */
-    protected $inflector;
-
-    public function __construct()
-    {
-        $this->inflector = GeneralUtility::makeInstance(Inflector::class);
-    }
-
-    /**
      * Arguments Initialization
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('string', 'string', 'The string to make human readable', true);
     }
@@ -57,12 +47,13 @@ class HumanizeViewHelper extends AbstractViewHelper
      *
      * @return string The human readable string
      */
-    public function render()
+    public function render(): string
     {
         $string = $this->arguments['string'];
         if ($string === null) {
             $string = $this->renderChildren();
         }
-        return $this->inflector->humanize($string);
+
+        return Inflector::humanize($string);
     }
 }

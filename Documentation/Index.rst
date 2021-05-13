@@ -32,7 +32,7 @@ Extension Builder
       Extension Development, ExtensionBuilder, Kickstarter, Extbase, Fluid, DDD, Domain Driven Design, Graphical modeler
 
    :Copyright:
-      Nico de Haen
+      ExtensionBuilder Team
 
    :Author:
       ExtensionBuilder Team, Nico de Haen
@@ -42,13 +42,13 @@ Extension Builder
 
    :License:
       This document is published under the Open Content License
-      available from http://www.opencontent.org/opl.shtml
+      available from https://www.opencontent.org/openpub/
 
    :Rendered:
       |today|
 
    The content of this document is related to TYPO3,
-   a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
+   a GNU/GPL CMS/Framework available from `www.typo3.org <https://www.typo3.org/>`_.
 
    **Table of Contents**
 

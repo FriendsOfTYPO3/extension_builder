@@ -1,17 +1,21 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}<?php
+declare(strict_types=1);
+
 namespace {extension.namespaceName}\Tests\Unit\Controller;
 
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+
 /**
- * Test case.
+ * Test case
 <f:if condition="{extension.persons}"> *
 <f:for each="{extension.persons}" as="person"> * @author {person.name} <f:if condition="{person.email}"><{person.email}></f:if>
 </f:for></f:if> */
-class {controllerName}Test extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+class {controllerName}Test extends UnitTestCase
 {
     /**
      * @var \{domainObject.controllerClassName}
      */
-    protected $subject = null;
+    protected $subject;
 
     protected function setUp()
     {
@@ -34,7 +38,6 @@ class {controllerName}Test extends \TYPO3\TestingFramework\Core\Unit\UnitTestCas
      */
     public function listActionFetchesAll{domainObject.name -> k:pluralize()}FromRepositoryAndAssignsThemToView()
     {
-
         $all{domainObject.name -> k:pluralize()} = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
             ->disableOriginalConstructor()
             ->getMock();

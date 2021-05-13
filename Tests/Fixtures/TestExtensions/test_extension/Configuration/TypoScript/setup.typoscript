@@ -1,4 +1,3 @@
-
 plugin.tx_testextension_testplugin {
   view {
     templateRootPaths.0 = EXT:test_extension/Resources/Private/Templates/

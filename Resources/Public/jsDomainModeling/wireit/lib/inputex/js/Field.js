@@ -118,7 +118,7 @@
 				this.labelDiv.appendChild(this.labelEl);
 				if (this.options.helpLink) {
 					linkEl = inputEx.cn('a', {href: this.options.helpLink, target: '_blank', title: 'Open TYPO3 documentation in new window'});
-					linkEl.innerHTML = '<img src="./sysext/core/Resources/Public/Icons/T3Icons/apps/apps-toolbar-menu-help.svg" width="12" height="12" style="margin-left: 10px; margin-bottom:2px">';
+					linkEl.innerHTML = '<img src="./sysext/core/Resources/Public/Icons/T3Icons/svgs/apps/apps-toolbar-menu-help.svg" width="12" height="12" style="margin-left: 10px; margin-bottom:2px">';
 					this.labelDiv.appendChild(linkEl);
 				}
 				this.divEl.appendChild(this.labelDiv);

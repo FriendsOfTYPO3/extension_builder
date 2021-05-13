@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Exception;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,12 +15,10 @@ namespace EBT\ExtensionBuilder\Domain\Exception;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Exception;
+
 use EBT\ExtensionBuilder\Exception;
 
-/**
- * Schema for a whole extension
- *
- */
 class ExtensionException extends Exception
 {
 }

@@ -1,4 +1,3 @@
-
 plugin.tx_testextension_testplugin {
   view {
     # cat=plugin.tx_testextension_testplugin/file; type=string; label=Path to template root (FE)
