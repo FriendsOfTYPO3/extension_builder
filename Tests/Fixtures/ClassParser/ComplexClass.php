@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * multiline comment test
  * @author Nico de Haen
@@ -82,7 +84,7 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
     private $anotherProperty = "test456_'\"";
     private $arrayProperty1 = [2,6,'test'];
     private $arrayProperty2 = ['test'=>3,'b' => 'q'];
-    public static $constProperty = testConstant;
+    public static $constProperty = self::testConstant;
 
     /**
      * @static

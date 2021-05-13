@@ -1,8 +1,11 @@
 <?php
+declare(strict_types=1);
+
 namespace Parser\Test\Model;
 
 use EBT\ExtensionBuilder\Domain\Model;
 use EBT\ExtensionBuilder\Domain\Model\Test;
+
 /***************************************************************
  *  Copyright notice
  *

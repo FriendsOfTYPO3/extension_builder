@@ -1,15 +1,15 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:format.raw><k:openingTag>html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"</k:openingTag>
 <k:openingTag>f:layout name="Default" /</k:openingTag>
 
-This Template is responsible for creating a table of domain objects.
-
+This template is responsible for creating a table of domain objects.
 
 If you modify this template, do not forget to change the overwrite settings
 in /Configuration/ExtensionBuilder/settings.yaml:
   Resources:
     Private:
       Templates:
-        List.html: keep
+        {domainObject.name}:
+          List.html: keep
 
 Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
@@ -25,8 +25,8 @@ Otherwise your changes will be overwritten the next time you save the extension 
             <f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
             <th><k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag></th>
             </f:if></f:for>
-            <th> </th>
-            <th> </th>
+            <th></th>
+            <th></th>
         </tr>
         </k:format.removeMultipleNewlines>
 

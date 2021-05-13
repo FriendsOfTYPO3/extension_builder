@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Tests\Unit;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,23 +15,28 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Tests\Unit;
+
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
+use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Parser\NodeFactory;
 use EBT\ExtensionBuilder\Service\ParserService;
 use EBT\ExtensionBuilder\Service\Printer;
 use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 use org\bovigo\vfs\vfsStream;
+use ReflectionClass;
+use ReflectionException;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class PrinterTest extends BaseUnitTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Service\ParserService
+     * @var ParserService
      */
     protected $parserService;
     /**
-     * @var \EBT\ExtensionBuilder\Service\Printer
+     * @var Printer
      */
     protected $printerService;
     /**
@@ -39,7 +44,7 @@ class PrinterTest extends BaseUnitTest
      */
     protected $tmpDir = '';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -143,7 +148,6 @@ class PrinterTest extends BaseUnitTest
 
     /**
      * @test
-     *
      */
     public function printClassWithPostStatements(): void
     {
@@ -158,7 +162,6 @@ class PrinterTest extends BaseUnitTest
 
     /**
      * @test
-     *
      */
     public function printClassWithPreAndPostStatements(): void
     {
@@ -243,7 +246,7 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printsClassMethodWithMissingParameterTag()
+    public function printsClassMethodWithMissingParameterTag(): void
     {
         $fileName = 'ClassMethodWithMissingParameterTag.php';
         $classFileObject = $this->parseAndWrite($fileName);
@@ -258,7 +261,7 @@ class PrinterTest extends BaseUnitTest
     /**
      * @test
      */
-    public function printsNamespacedClassMethodWitNamespacedParameter()
+    public function printsNamespacedClassMethodWitNamespacedParameter(): void
     {
         $fileName = 'ClassMethodWithManyParameter.php';
         $classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
@@ -300,12 +303,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @param $fileName
-     * @param string $subFolder
-     * @return \EBT\ExtensionBuilder\Domain\Model\File
-     */
-    protected function parseAndWrite($fileName, $subFolder = ''): \EBT\ExtensionBuilder\Domain\Model\File
+    protected function parseAndWrite(string $fileName, string $subFolder = ''): File
     {
         $classFilePath = $this->fixturesPath . $subFolder . $fileName;
         self::assertFileExists($classFilePath);
@@ -320,13 +318,13 @@ class PrinterTest extends BaseUnitTest
      * includes the generated file and compares the reflection class
      * with the class object
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\File $classFileObject
+     * @param File $classFileObject
      * @param string $pathToGeneratedFile
      *
-     * @return \ReflectionClass
-     * @throws \ReflectionException
+     * @return ReflectionClass
+     * @throws ReflectionException
      */
-    protected function compareClasses($classFileObject, $pathToGeneratedFile)
+    protected function compareClasses(File $classFileObject, string $pathToGeneratedFile)
     {
         self::assertFileExists($pathToGeneratedFile, $pathToGeneratedFile . 'not exists');
         $classObject = $classFileObject->getFirstClass();
@@ -335,9 +333,11 @@ class PrinterTest extends BaseUnitTest
         if (!class_exists($className)) {
             require_once($pathToGeneratedFile);
         }
-        self::assertTrue(class_exists($className),
-            'Class "' . $className . '" does not exist! Tried ' . $pathToGeneratedFile);
-        $reflectedClass = new \ReflectionClass($className);
+        self::assertTrue(
+            class_exists($className),
+            'Class "' . $className . '" does not exist! Tried ' . $pathToGeneratedFile
+        );
+        $reflectedClass = new ReflectionClass($className);
         self::assertSameSize(
             $reflectedClass->getMethods(),
             $classObject->getMethods(),
@@ -351,16 +351,12 @@ class PrinterTest extends BaseUnitTest
         return $reflectedClass;
     }
 
-    protected function parseFile($relativeFilePath)
+    protected function parseFile(string $relativeFilePath): File
     {
         return $this->parserService->parseFile($this->fixturesPath . $relativeFilePath);
     }
 
-    /**
-     * @param string $originalFile
-     * @param string $pathToGeneratedFile
-     */
-    protected function compareGeneratedCodeWithOriginal($originalFile, $pathToGeneratedFile)
+    protected function compareGeneratedCodeWithOriginal(string $originalFile, string $pathToGeneratedFile): void
     {
         $originalLines = GeneralUtility::trimExplode(LF, file_get_contents($this->fixturesPath . $originalFile), true);
         $generatedLines = GeneralUtility::trimExplode(LF, file_get_contents($pathToGeneratedFile), true);

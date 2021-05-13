@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Tests;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Tests;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Tests;
+
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
@@ -26,11 +28,13 @@ use EBT\ExtensionBuilder\Service\ParserService;
 use EBT\ExtensionBuilder\Service\Printer;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
+use Exception;
+use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
 abstract class BaseFunctionalTest extends FunctionalTestCase
 {
@@ -56,42 +60,44 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
      */
     protected $fixturesPath = '';
     /**
-     * @var \EBT\ExtensionBuilder\Service\ParserService
+     * @var ParserService
      */
     protected $parserService;
     /**
-     * @var \EBT\ExtensionBuilder\Service\Printer
+     * @var Printer
      */
     protected $printerService;
     /**
-     * @var \EBT\ExtensionBuilder\Service\ClassBuilder
+     * @var ClassBuilder
      */
     protected $classBuilder;
     /**
-     * @var \EBT\ExtensionBuilder\Service\RoundTrip
+     * @var RoundTrip
      */
     protected $roundTripService;
     /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     * @var ObjectManager
      */
     protected $objectManager;
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\Extension
+     * @var Extension
      */
     protected $extension;
     /**
-     * @var \EBT\ExtensionBuilder\Service\FileGenerator
+     * @var FileGenerator
      */
     protected $fileGenerator;
 
     /**
-     * @var \org\bovigo\vfs\vfsStreamDirectory
+     * @var vfsStreamDirectory
      */
     protected $testDir;
 
-    protected $testExtensionsToLoad = ['typo3conf/ext/extension_builder'];
+    protected $testExtensionsToLoad = [
+        'typo3conf/ext/extension_builder'
+    ];
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -118,12 +124,13 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         $dummyExtensionDir = 'dummy';
         $this->extension->expects(self::any())
             ->method('getExtensionDir')
-            ->will(self::returnValue($dummyExtensionDir));
+            ->willReturn($dummyExtensionDir);
         if (is_dir($dummyExtensionDir)) {
             GeneralUtility::mkdir($dummyExtensionDir);
         }
 
         $this->extension->setSettings($settings);
+        $this->extension->setStoragePath('dummy');
 
         // get instances to inject in Mocks
         $configurationManager = $this->objectManager->get(ExtensionBuilderConfigurationManager::class);
@@ -172,7 +179,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         $this->fileGenerator->_set('extension', $this->extension);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (!empty($this->extension) && $this->extension->getExtensionKey() != null) {
             GeneralUtility::rmdir($this->extension->getExtensionDir(), true);
@@ -217,7 +224,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
      *
      * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
      * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
-     * @throws \Exception
+     * @throws Exception
      */
     protected function generateInitialModelClassFile($modelName): void
     {

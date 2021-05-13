@@ -1,8 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 namespace VENDOR\Package\Domain\Repository;
 
 /**
- *  DomainObject Repository
+ * DomainObject Repository
  */
 class DomainObjectRepository
 {

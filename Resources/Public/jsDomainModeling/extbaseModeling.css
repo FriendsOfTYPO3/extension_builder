@@ -8,8 +8,9 @@ div.propertyGroup textarea, div.propertyGroup input[type=text], div.propertyGrou
   .module-body.index a {
     color: #666;
     font-weight: 700; }
+
 .module-body.domainmodelling {
-  padding: 89px 0 0 0 !important; }
+  padding: 66px 0 0 0 !important; }
 
 .yui-layout-unit-left {
   background-color: #eee; }
@@ -42,6 +43,7 @@ div.propertyGroup textarea, div.propertyGroup input[type=text], div.propertyGrou
   position: absolute;
   width: 220px;
   z-index: 1000; }
+
 .WireIt-Container .advancedSettings.expanded {
   margin-left: -8px; }
 
@@ -57,19 +59,24 @@ div.WireIt-Container {
     border: 1px solid #ccc;
     padding: 10px 3px;
     position: relative; }
+
 div.WireIt-Container-focused {
   box-shadow: 10px 10px 10px #aaa !important;
   filter: alpha(opacity=100);
   opacity: 1;
   z-index: 6; }
+
 div.WireIt-Layer {
   background-image: url(background_pixel.png); }
+
 div#typo3-docbody {
   height: 100%;
   padding: 0; }
+
 div#domainModelEditor {
   height: 100%;
   width: 100%; }
+
 div.WireIt-Container-ddhandle {
   background-color: #ccc;
   border: 1px solid #ccc;
@@ -84,14 +91,17 @@ div.WireIt-Container-ddhandle {
   width: auto; }
   div.WireIt-Container-ddhandle span {
     display: none; }
+
 div.WireIt-InputExTerminal {
   float: left;
   height: 21px;
   position: absolute;
   top: -20px;
   width: 21px; }
+
 div.WireIt-ImageContainer {
   width: auto; }
+
 div.extbase-modelTitleEditor {
   color: #333;
   cursor: move;
@@ -102,9 +112,11 @@ div.extbase-modelTitleEditor {
   position: absolute;
   text-align: center;
   top: -32px; }
+
 div#moduleProxy {
   padding-left: 0;
   white-space: nowrap; }
+
 div.propertyGroup {
   border: none;
   padding: 1px 6px 0;
@@ -150,6 +162,7 @@ div.propertyGroup {
     font-weight: 400; }
   div.propertyGroup .textfieldWrapper.small input[type=text] {
     width: 40px; }
+
 div.relationGroup {
   border: none;
   padding: 1px 6px 0;
@@ -210,6 +223,7 @@ div.relationGroup {
     border: 1px solid #666; }
   div.relationGroup .advancedMode.textfieldWrapper {
     margin-right: 5px; }
+
 div.inputEx-label {
   display: block;
   margin-bottom: 3px;
@@ -219,22 +233,28 @@ div.inputEx-label {
   div.inputEx-label label {
     line-height: 20px;
     min-height: 20px; }
+
 div.objectSettings .inputEx-StringField-wrapper {
   width: 190px; }
+
 div.objectSettings .textfieldWrapper input[type=text] {
   width: 90%; }
+
 div.objectSettings .textfieldWrapper textarea {
   width: 90%; }
+
 div.objectSettings .inputEx-Field.inputEx-CheckBox {
   float: left; }
   div.objectSettings .inputEx-Field.inputEx-CheckBox input {
     float: right; }
+
 div#wireEditorMessageBox {
   min-width: 200px;
   padding: 0 15px 15px; }
   div#wireEditorMessageBox .error {
     color: red;
     font-weight: 700; }
+
 div.inputEx-description {
   background-color: #eee;
   border: 1px solid orange;
@@ -247,6 +267,7 @@ div.inputEx-description {
   padding: 8px;
   position: absolute;
   z-index: 10000; }
+
 div#propertiesForm {
   margin-bottom: 100px; }
   div#propertiesForm div.mainGroup {
@@ -260,58 +281,77 @@ div#propertiesForm {
     margin-bottom: 5px; }
   div#propertiesForm fieldset {
     padding-top: 10px; }
+
 div.hiddenField {
   display: none; }
+
 div.terminalFieldWrap {
   display: none; }
+
 div.advancedSettings legend {
   color: #ccc;
   margin-left: 20px;
-  margin-top: -19px;
+  margin-top: -24px;
   position: absolute;
   z-index: 500; }
+
 div.inputEx-Group fieldset.inputEx-Collapsed legend:hover div.inputEx-Group-collapseImg {
   background-position: -8px -400px; }
+
 div.inputEx-Group fieldset.inputEx-Collapsed legend div.inputEx-Group-collapseImg {
   background-position: -8px -320px; }
+
 div.inputEx-Group fieldset.inputEx-Expanded legend:hover div.inputEx-Group-collapseImg {
   background-position: -8px -81px; }
+
 div.inputEx-Group fieldset.inputEx-Expanded legend div.inputEx-Group-collapseImg {
   background-position: -8px 0; }
+
 div.Bubble div.body {
   cursor: move;
   height: 45px;
   opacity: 0.9;
   width: 70px; }
+
 div.inputEx-InPlaceEdit-visu:hover {
   background-color: transparent; }
+
 div.mainGroup .inputEx-Field.inputEx-CheckBox {
   width: 12%; }
   div.mainGroup .inputEx-Field.inputEx-CheckBox input {
     float: right; }
+
 div.actionGroup .inputEx-ListField {
   width: 98%; }
+
 div.inputEx-List-link.deleteButton {
   cursor: pointer;
   float: left;
   position: absolute;
-  right: 0; }
+  right: 0;
+  margin-top: 7px; }
+
 div.WiringEditor-module-New div.mainGroup {
   border-bottom: 1px solid #999;
   margin-bottom: 10px;
   padding-bottom: 10px; }
+
 div.positionGroup div.inputEx-fieldWrapper {
   margin-bottom: 2px; }
+
 div:hover > .inputEx-ListField-Arrow {
   display: inline-block; }
+
 div:hover > .WireIt-Container-closebutton.t3-icon-edit-delete {
   display: inline-block; }
+
 div:hover > .WireIt-Container-closebutton.icon {
   cursor: pointer;
   display: block;
   position: absolute;
   right: 5px;
   top: 5px; }
+
 div:hover > .deleteButton {
   display: inline-block; }
 
@@ -320,34 +360,41 @@ div:hover > .deleteButton {
 
 #domainModelEditor legend {
   font-size: 11px; }
+
 #domainModelEditor .collapse {
   display: block;
   visibility: visible; }
+
 #domainModelEditor .t3-icon {
   font-size: 1px; }
+
 #domainModelEditor.showAdvancedOptions fieldset.inputEx-Collapsed div.inputEx-fieldWrapper.advancedMode {
   display: none; }
+
 #domainModelEditor.showAdvancedOptions fieldset.File .inputEx-fieldWrapper.dependant.fileOnly.advancedMode {
   display: block; }
+
 #domainModelEditor.showAdvancedOptions fieldset.Image .inputEx-fieldWrapper.dependant.imageOnly.advancedMode {
   display: block; }
+
 #domainModelEditor.showAdvancedOptions fieldset.String .inputEx-fieldWrapper.dependant.stringOnly.advancedMode {
   display: block; }
+
 #domainModelEditor.showAdvancedOptions .inputEx-fieldWrapper.advancedMode {
   display: block; }
+
 #domainModelEditor .inputEx-fieldWrapper.advancedMode {
   display: none; }
+
 #domainModelEditor .inputEx-fieldWrapper.dependant {
   display: none; }
-#domainModelEditor .inputEx-fieldWrapper.dependant.advancedMode {
-  display: none; }
-#domainModelEditor .relationGroup fieldset.zeroToOne .advancedSettings .inputEx-Expanded .dependant.renderType {
-  display: block; }
+  #domainModelEditor .inputEx-fieldWrapper.dependant.advancedMode {
+    display: none; }
+
 #domainModelEditor .relationGroup fieldset.manyToMany .advancedSettings .inputEx-Expanded .dependant.renderType {
   display: block; }
+
 #domainModelEditor .relationGroup fieldset.zeroToMany .advancedSettings .inputEx-Expanded .dependant.renderType {
-  display: block; }
-#domainModelEditor .relationGroup fieldset.manyToOne .advancedSettings .inputEx-Expanded .dependant.renderType {
   display: block; }
 
 #moduleBar {
@@ -370,7 +417,7 @@ div:hover > .deleteButton {
   height: auto;
   margin: 5px;
   padding: 5px;
-  width: 130px; }
+  width: 140px; }
   .WiringEditor-module span {
     position: relative;
     top: -3px; }
@@ -380,13 +427,19 @@ div:hover > .deleteButton {
 
 .inputEx-InPlaceEdit-editor input[type="text"] {
   width: 150px; }
+
 .inputEx-InPlaceEdit-editor .inputEx-InPlaceEdit-OkButton {
   font-size: 0; }
+
+div.inputEx-Group-collapseImg {
+  margin-top: 5px; }
 
 .relationGroup {
   width: 210px; }
   .relationGroup .checkBoxFieldWrapper div.inputEx-label {
     width: 55%; }
+  .relationGroup div.inputEx-Group-collapseImg {
+    margin-top: 0; }
 
 .objectSettings {
   width: 210px; }
@@ -403,43 +456,57 @@ div:hover > .deleteButton {
   height: 15px; }
   .inputEx-Group .checkBoxFieldWrapper div.inputEx-label label {
     white-space: nowrap; }
+
 .inputEx-Group .inputEx-CheckBox {
   height: 15px; }
+
 .inputEx-Group .relations .inputEx-ListField-Arrow {
   float: right;
-  margin-right: 15px;
-  margin-top: -18px; }
+  margin-right: 17px;
+  margin-top: -22px; }
+
 .inputEx-Group .relations .inputEx-ListField-ArrowDown {
-  margin-right: 30px; }
+  margin-right: 32px; }
+
 .inputEx-Group .inputEx-ListField-Arrow {
-  float: left; }
+  float: left;
+  margin-top: 6px; }
+
 .inputEx-Group .textfieldWrapper div.inputEx-label {
   width: 100%; }
 
 .textfieldWrapper .inputEx-label {
   float: none; }
+
 .textfieldWrapper div.inputEx-label {
   text-align: left; }
 
 .inputEx-StringField-wrapper input[type=text] {
   font-size: 9pt; }
+
 .inputEx-StringField-wrapper textarea {
   font-size: 9pt; }
 
 .showAdvancedOptions div.relationGroup textarea {
   font-weight: 400; }
+
 .showAdvancedOptions div.relationGroup input[type=text] {
   font-weight: 400; }
+
 .showAdvancedOptions div.relationGroup input[type=text][name=relationName] {
   border: 1px solid #fff;
   font-weight: 700; }
+
 .showAdvancedOptions div.propertyGroup textarea {
   font-weight: 400; }
+
 .showAdvancedOptions div.propertyGroup input[type=text] {
   font-weight: 400; }
+
 .showAdvancedOptions div.propertyGroup select {
   border: 1px solid #666;
   margin: 4px 0; }
+
 .showAdvancedOptions .inputEx-ListField-childContainer > div {
   border-top: 1px solid #bbb; }
 
@@ -457,12 +524,14 @@ div:hover > .deleteButton {
 
 .yui-layout .yui-layout-unit-left .yui-layout-hd {
   z-index: 10; }
+
 .yui-layout .yui-layout-unit div.yui-layout-hd .collapse {
   background-position-y: -158px !important;
   height: 18px; }
 
 #wireEditorConfirmMessageBox strong {
   font-weight: 700; }
+
 #wireEditorConfirmMessageBox ol.warnings {
   padding-left: 50px;
   text-align: left; }
@@ -484,6 +553,7 @@ input[disabled] {
 #tools-ExtensionBuilderExtensionbuilder .module-docheader-bar .module-icon {
   float: right;
   margin: 5px; }
+
 #tools-ExtensionBuilderExtensionbuilder .module-docheader-bar .docheader-funcmenu {
   float: right; }
 
@@ -507,7 +577,8 @@ legend.inputEx-Group-legend {
   color: #666;
   font-weight: 700;
   padding-top: 4px;
-  width: auto; }
+  width: auto;
+  margin-bottom: 0; }
 
 a.inputEx-List-link {
   color: #f1a21b;
@@ -536,9 +607,11 @@ label.helpAvailable {
 #propertiesForm div.inputEx-Group input[type=text] {
   padding: 3px;
   width: 200px; }
+
 #propertiesForm div.inputEx-Group textarea {
   padding: 3px;
   width: 200px; }
+
 #propertiesForm div.inputEx-Group div.wideTextfields div.inputEx-label {
   text-align: left;
   width: 135px; }
@@ -576,3 +649,6 @@ label.helpAvailable {
 
 .selectFieldWrapper .inputEx-label {
   float: none; }
+
+div.WireIt-InputExTerminal div.WireIt-Terminal {
+  top: -8px; }

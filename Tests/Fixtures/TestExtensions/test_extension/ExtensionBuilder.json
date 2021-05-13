@@ -453,7 +453,7 @@
             "dependsOn": "typo3 => 9.5.0-9.5.99\n",
             "disableLocalization": false,
             "disableVersioning": false,
-            "skipGenerateDocumentationTemplate": false,
+            "generateDocumentationTemplate": true,
             "sourceLanguage": "en",
             "state": "alpha",
             "targetVersion": "9.5.0-9.5.99",
@@ -475,8 +475,7 @@
             {
                 "actions": {
                     "controllerActionCombinations": "",
-                    "noncacheableActions": "",
-                    "switchableActions": ""
+                    "noncacheableActions": ""
                 },
                 "description": "Just a simple test plugin",
                 "key": "testplugin",
@@ -535,6 +534,7 @@
             }
         }
     ],
+    "storagePath": "\/var\/www\/html\/public\/typo3conf\/ext\/",
     "log": {
         "last_modified": "2019-09-22 06:49",
         "extension_builder_version": "9.10.0",

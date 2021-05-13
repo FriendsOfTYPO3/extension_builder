@@ -1,5 +1,4 @@
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:for each="{extension.plugins}" as="plugin">
-plugin.{extension.shortExtensionKey}_{plugin.key} {
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:for each="{extension.plugins}" as="plugin">plugin.{extension.shortExtensionKey}_{plugin.key} {
     view <k:curlyBrackets>
         templateRootPaths.0 = EXT:{extension.extensionKey}/Resources/Private/Templates/
         templateRootPaths.1 = <k:curlyBrackets>$plugin.{extension.shortExtensionKey}_{plugin.key}.view.templateRootPath</k:curlyBrackets>

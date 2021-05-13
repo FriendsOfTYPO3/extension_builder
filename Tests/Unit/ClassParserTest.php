@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Tests\Unit;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,17 +15,21 @@ namespace EBT\ExtensionBuilder\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Tests\Unit;
+
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 use EBT\ExtensionBuilder\Service\ParserService;
 use EBT\ExtensionBuilder\Tests\BaseUnitTest;
-use PhpParser\Lexer;
+use ReflectionClass;
+use ReflectionException;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Extbase\Reflection\ClassSchema;
 use TYPO3\CMS\Extbase\Reflection\ReflectionService;
 
 class ClassParserTest extends BaseUnitTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Service\ParserService
+     * @var ParserService
      */
     protected $parserService;
     /**
@@ -35,7 +39,7 @@ class ClassParserTest extends BaseUnitTest
      */
     protected $debugMode = false;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->parserService = new ParserService();
@@ -90,7 +94,6 @@ class ClassParserTest extends BaseUnitTest
 
     /**
      * Parse a with interfaces
-     *
      */
     public function parseClassWithInterfaces(): void
     {
@@ -108,7 +111,6 @@ class ClassParserTest extends BaseUnitTest
 
     /**
      * Parse a with interfaces
-     *
      */
     public function parseClassWithAliasDeclarations(): void
     {
@@ -125,7 +127,6 @@ class ClassParserTest extends BaseUnitTest
 
     /**
      * Parse a complex class from a file
-     *
      */
     public function parseAnotherComplexClass(): void
     {
@@ -135,7 +136,6 @@ class ClassParserTest extends BaseUnitTest
 
     /**
      * Parse a big class from a file
-     *
      */
     public function parseGeneralUtitliy(): void
     {
@@ -152,9 +152,9 @@ class ClassParserTest extends BaseUnitTest
      * @param $file
      * @param $className
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+     * @return ClassObject
      * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function parseClass($file, $className): ClassObject
     {
@@ -164,7 +164,7 @@ class ClassParserTest extends BaseUnitTest
 
         $classReflectionService = new ReflectionService();
         $classSchema = $classReflectionService->getClassSchema($className);
-        $this->parserFindsAllConstants($classObject, new \ReflectionClass($className));
+        $this->parserFindsAllConstants($classObject, new ReflectionClass($className));
         $this->parserFindsAllMethods($classObject, $classSchema);
         $this->parserFindsAllProperties($classObject, $classSchema);
         return $classObject;
@@ -174,11 +174,10 @@ class ClassParserTest extends BaseUnitTest
      * compares the number of methods found by parsing with those
      * retrieved from the reflection class
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
-     * @param \TYPO3\CMS\Extbase\Reflection\ClassSchema $classReflection
-     * @return void
+     * @param ClassObject $classObject
+     * @param ClassSchema|ReflectionClass $classReflection
      */
-    public function parserFindsAllConstants($classObject, $classReflection): void
+    private function parserFindsAllConstants(ClassObject $classObject, $classReflection): void
     {
         $reflectionConstantCount = count($classReflection->getConstants());
         $classObjectConstantCount = count($classObject->getConstants());
@@ -193,11 +192,10 @@ class ClassParserTest extends BaseUnitTest
      * compares the number of methods found by parsing
      * with those retrieved from the reflection class
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
-     * @param \TYPO3\CMS\Extbase\Reflection\ClassSchema $classReflection
-     * @return void
+     * @param ClassObject $classObject
+     * @param ClassSchema|ReflectionClass $classReflection
      */
-    public function parserFindsAllMethods($classObject, $classReflection): void
+    private function parserFindsAllMethods(ClassObject $classObject, $classReflection): void
     {
         $reflectionMethodCount = count($classReflection->getMethods());
         $classObjectMethodCount = count($classObject->getMethods());
@@ -212,11 +210,10 @@ class ClassParserTest extends BaseUnitTest
      * compares the number of properties found by parsing
      * with those retrieved from the reflection class
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $classObject
-     * @param \TYPO3\CMS\Extbase\Reflection\ClassSchema $classReflection
-     * @return void
+     * @param ClassObject $classObject
+     * @param ClassSchema|ReflectionClass $classReflection
      */
-    public function parserFindsAllProperties($classObject, $classReflection): void
+    private function parserFindsAllProperties(ClassObject $classObject, $classReflection): void
     {
         $reflectionPropertyCount = count($classReflection->getProperties());
         $classObjectPropertyCount = count($classObject->getProperties());

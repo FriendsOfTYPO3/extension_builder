@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace EBT\ExtensionBuilder\Domain\Model;
 
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter;
 
@@ -43,12 +45,7 @@ class FunctionObject extends AbstractObject
      */
     protected $endLine = -1;
 
-    /**
-     * __construct
-     *
-     * @param string $name
-     */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
@@ -60,7 +57,7 @@ class FunctionObject extends AbstractObject
     {
         $clonedParameters = [];
         foreach ($this->parameters as $parameter) {
-            $clonedParameters[] = clone($parameter);
+            $clonedParameters[] = clone $parameter;
         }
         $this->parameters = $clonedParameters;
     }
@@ -155,7 +152,6 @@ class FunctionObject extends AbstractObject
      * replace a single parameter, depending on position
      *
      * @param MethodParameter $parameter
-     * @return void
      */
     public function replaceParameter(MethodParameter $parameter): void
     {

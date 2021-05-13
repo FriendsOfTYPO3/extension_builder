@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Parser\Visitor;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Parser\Visitor;
+
 use EBT\ExtensionBuilder\Parser\NodeFactory;
 use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 use PhpParser\Node;
@@ -22,7 +24,6 @@ use PhpParser\NodeVisitorAbstract;
 
 /**
  * replaces all occurances of new "className" and static class calls like "className::"
- *
  */
 class ReplaceClassNamesVisitor extends NodeVisitorAbstract
 {
@@ -44,8 +45,8 @@ class ReplaceClassNamesVisitor extends NodeVisitorAbstract
     protected $newClassPrefix = '';
 
     /**
-     * @param \PhpParser\Node $node
-     * @return \PhpParser\Node
+     * @param Node $node
+     * @return Node
      */
     public function leaveNode(Node $node)
     {
@@ -60,24 +61,24 @@ class ReplaceClassNamesVisitor extends NodeVisitorAbstract
         return $node;
     }
 
-    public function beforeTraverse(array $nodes)
+    public function beforeTraverse(array $nodes): void
     {
     }
 
-    public function enterNode(Node $node)
+    public function enterNode(Node $node): void
     {
     }
 
-    public function afterTraverse(array $nodes)
+    public function afterTraverse(array $nodes): void
     {
     }
 
-    public function setNewClassPrefix($newClassPrefix)
+    public function setNewClassPrefix($newClassPrefix): void
     {
         $this->newClassPrefix = $newClassPrefix;
     }
 
-    public function setOldClassPrefix($oldClassPrefix)
+    public function setOldClassPrefix($oldClassPrefix): void
     {
         $this->oldClassPrefix = $oldClassPrefix;
     }

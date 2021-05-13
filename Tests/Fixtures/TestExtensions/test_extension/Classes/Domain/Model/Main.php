@@ -1,16 +1,15 @@
 <?php
+declare(strict_types=1);
 namespace FIXTURE\TestExtension\Domain\Model;
 
-/***
- *
+/**
  * This file is part of the "ExtensionBuilder Test Extension" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
- *
- ***/
+ * (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
+ */
 
 /**
  * Main
@@ -87,22 +86,22 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function __construct()
     {
-        //Do not remove the next line: It would break the functionality
-        $this->initStorageObjects();
+        // Do not remove the next line: It would break the functionality
+        $this->initializeObject();
     }
 
     /**
-     * Initializes all ObjectStorage properties
+     * Initializes all ObjectStorage properties when model is reconstructed from DB (where __construct is not called)
      * Do not modify this method!
      * It will be rewritten on each save in the extension builder
      * You may modify the constructor of this class instead
      *
      * @return void
      */
-    protected function initStorageObjects()
+    public function initializeObject()
     {
-        $this->children2 = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-        $this->children4 = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->children2 = $this->children2 ?: new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->children4 = $this->children4 ?: new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
     /**

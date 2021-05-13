@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers\Format;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Format;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\ViewHelpers\Format;
+
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -23,22 +25,18 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  * = Examples =
  *
  * <f:quoteString>{anyString}</f:quoteString>
- *
  */
 class QuoteStringViewHelper extends AbstractViewHelper
 {
     /**
      * Arguments Initialization
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('value', 'string', 'The string to addslashes', false);
     }
 
-    /**
-     * @return string
-     */
-    public function render()
+    public function render(): string
     {
         $value = null;
         if ($this->hasArgument('value')) {

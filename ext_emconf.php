@@ -15,12 +15,10 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'Nico de Haen',
     'author_email' => 'mail@ndh-websolutions.de',
     'state' => 'beta',
-    'uploadfolder' => true,
-    'createDirs' => 'uploads/tx_extensionbuilder/backups',
-    'version' => '9.10.3',
+    'version' => '9.11.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '9.5.0-9.5.99'
+            'typo3' => '9.5.0-10.9.99'
         ],
         'conflicts' => [],
         'suggests' => []

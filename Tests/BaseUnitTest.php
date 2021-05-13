@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Tests;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,13 +15,15 @@ namespace EBT\ExtensionBuilder\Tests;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Tests;
+
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 abstract class BaseUnitTest extends UnitTestCase
 {
@@ -47,11 +49,11 @@ abstract class BaseUnitTest extends UnitTestCase
      */
     protected $fixturesPath = '';
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\Extension
+     * @var Extension
      */
     protected $extension;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -67,11 +69,13 @@ abstract class BaseUnitTest extends UnitTestCase
         $this->extension->setExtensionKey('dummy');
         $this->extension->setSettings($settings);
 
+        $this->extension->setStoragePath($this->fixturesPath);
+
         $this->codeTemplateRootPath = Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
         $this->modelClassTemplatePath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (!empty($this->extension) && $this->extension->getExtensionKey() != null) {
             GeneralUtility::rmdir($this->extension->getExtensionDir(), true);
@@ -84,11 +88,11 @@ abstract class BaseUnitTest extends UnitTestCase
      * Helper function
      *
      * @param $name
-     * @param $entity
-     * @param $aggregateRoot
+     * @param bool $entity
+     * @param bool $aggregateRoot
      * @return DomainObject
      */
-    protected function buildDomainObject($name, $entity = false, $aggregateRoot = false): DomainObject
+    protected function buildDomainObject($name, bool $entity = false, bool $aggregateRoot = false): DomainObject
     {
         /* @var DomainObject $domainObject */
         $domainObject = $this->getAccessibleMock(DomainObject::class, ['dummy']);

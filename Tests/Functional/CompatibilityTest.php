@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Tests\Functional;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Tests\Functional;
+
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
@@ -24,26 +26,23 @@ use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- *
  * This tests takes a extension configuration generated with Version 1.0
  * generates a complete Extension and compares it with the
  * one generated with Version 1
  *
- *
  * @author Nico de Haen
- *
  */
 class CompatibilityTest extends BaseFunctionalTest
 {
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
+     * @var ExtensionBuilderConfigurationManager
      */
-    protected $configurationManager = null;
-    /**
-     * @var \EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder
-     */
-    protected $extensionSchemaBuilder = null;
+    protected $configurationManager;
 
+    /**
+     * @var ExtensionSchemaBuilder
+     */
+    protected $extensionSchemaBuilder;
 
     /**
      * This test creates an extension based on a JSON file, generated
@@ -53,7 +52,7 @@ class CompatibilityTest extends BaseFunctionalTest
      *
      * @test
      */
-    public function generateExtensionFromVersion3Configuration()
+    public function generateExtensionFromVersion3Configuration(): void
     {
         $this->configurationManager = $this->getAccessibleMock(ExtensionBuilderConfigurationManager::class, ['dummy']);
         $this->extensionSchemaBuilder = $this->objectManager->get(ExtensionSchemaBuilder::class);
@@ -64,6 +63,7 @@ class CompatibilityTest extends BaseFunctionalTest
         if (file_exists($jsonFile)) {
             // compatibility adaptions for configurations from older versions
             $extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), true);
+            $extensionConfigurationJSON['storagePath'] = $this->fixturesPath . 'TestExtensions/';
             $extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON(
                 $extensionConfigurationJSON
             );
@@ -71,7 +71,6 @@ class CompatibilityTest extends BaseFunctionalTest
             $extensionConfigurationJSON = [];
             self::fail('JSON file not found');
         }
-
         $this->extension = $this->extensionSchemaBuilder->build($extensionConfigurationJSON);
         $this->fileGenerator->setSettings(
             [

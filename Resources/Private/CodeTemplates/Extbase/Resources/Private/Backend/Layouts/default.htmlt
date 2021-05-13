@@ -1,9 +1,9 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}{escaping off}<f:format.raw><k:openingTag>html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"</k:openingTag>
 <k:openingTag>f:be.container</k:openingTag>
-    <div class="typo3-fullDoc">
-        <div id="typo3-docheader">
-            <div class="typo3-docheader-functions">
-                <div class="left">
+    <div class="module">
+        <div class="module-docheader t3js-module-docheader">
+            <div class="module-docheader-bar module-docheader-bar-navigation row">
+                <div class="module-docheader-bar-column-left">
                     <k:openingTag>f:be.buttons.csh /</k:openingTag>
                     <k:openingTag>f:be.menus.actionMenu</k:openingTag>
                         <k:openingTag>f:be.menus.actionMenuItem label="Overview" controller="{domainObject.name}" action="list" /</k:openingTag>
@@ -16,22 +16,21 @@
                         </k:format.removeMultipleNewlines>
                     <k:openingTag>/f:be.menus.actionMenu</k:openingTag>
                 </div>
-                <div class="right">
+                <div class="module-docheader-bar-column-right">
                     <k:openingTag>f:be.pagePath /</k:openingTag>
                     <k:openingTag>f:be.pageInfo /</k:openingTag>
                 </div>
             </div>
-            <div class="typo3-docheader-buttons">
-                <div class="left">
+            <div class="module-docheader-bar module-docheader-bar-buttons">
+                <div class="module-docheader-bar-column-left">
 
                 </div>
-                <div class="right">
+                <div class="module-docheader-bar-column-right">
                     <k:openingTag>f:be.buttons.shortcut /</k:openingTag>
                 </div>
             </div>
-
         </div>
-        <div id="typo3-docbody">
+        <div id="module-docbody">
             <div id="typo3-inner-docbody">
                 <k:openingTag>f:flashMessages /</k:openingTag>
                 <k:openingTag>f:render section="content" /</k:openingTag>

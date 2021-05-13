@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Tests\Functional;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Tests\Functional;
+
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -27,7 +29,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ParseAndPrintTest extends BaseFunctionalTest
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->fixturesPath .= 'ClassParser/';
@@ -42,11 +44,7 @@ class ParseAndPrintTest extends BaseFunctionalTest
         $this->parseAndPrint($fileName);
     }
 
-    /**
-     * @param string $fileName
-     * @param string|null $subFolder
-     */
-    protected function parseAndPrint($fileName, $subFolder = ''): void
+    protected function parseAndPrint(string $fileName, string $subFolder = ''): void
     {
         $classFilePath = $this->fixturesPath . $subFolder . $fileName;
         self::assertFileExists($classFilePath, 'File not found: ' . $subFolder . $fileName);
@@ -58,7 +56,7 @@ class ParseAndPrintTest extends BaseFunctionalTest
         $fileObject = $this->parserService->parseCode($code);
         self::assertEquals(
             GeneralUtility::trimExplode(PHP_EOL, $code),
-            GeneralUtility::trimExplode(PHP_EOL, $this->printerService->renderFileObject($fileObject, true)),
+            GeneralUtility::trimExplode(PHP_EOL, $this->printerService->renderFileObject($fileObject)),
             'File content is not equal'
         );
     }

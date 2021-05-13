@@ -1,7 +1,5 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Service;
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,12 +13,19 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Service;
+
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
+use EBT\ExtensionBuilder\Domain\Model\File;
+use EBT\ExtensionBuilder\Exception\FileNotFoundException;
 use EBT\ExtensionBuilder\Utility\Inflector;
+use Exception;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -35,6 +40,13 @@ class RoundTrip implements SingletonInterface
      * @var string
      */
     const SPLIT_TOKEN = '## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder';
+
+    const OVERWRITE_SETTINGS_SKIP = -1;
+
+    const OVERWRITE_SETTINGS_MERGE = 1;
+
+    const OVERWRITE_SETTINGS_KEEP = 2;
+
     /**
      * @var \EBT\ExtensionBuilder\Domain\Model\Extension
      */
@@ -65,12 +77,12 @@ class RoundTrip implements SingletonInterface
      */
     protected $previousExtensionKey = '';
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject[]
+     * @var DomainObject[]
      */
     protected $previousDomainObjects = [];
 
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject[]
+     * @var DomainObject[]
      */
     protected $renamedDomainObjects = [];
 
@@ -81,9 +93,8 @@ class RoundTrip implements SingletonInterface
 
     /**
      * @param \EBT\ExtensionBuilder\Service\ParserService $parserService
-     * @return void
      */
-    public function injectParserService(ParserService $parserService)
+    public function injectParserService(ParserService $parserService): void
     {
         $this->parserService = $parserService;
     }
@@ -96,12 +107,11 @@ class RoundTrip implements SingletonInterface
     /**
      * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
      *
-     * @return void
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     public function injectExtensionBuilderConfigurationManager(
         ExtensionBuilderConfigurationManager $configurationManager
-    ) {
+    ): void {
         $this->configurationManager = $configurationManager;
     }
 
@@ -117,7 +127,7 @@ class RoundTrip implements SingletonInterface
     protected $classObject;
     /**
      * The file object parsed from existing files
-     * @var \EBT\ExtensionBuilder\Domain\Model\File
+     * @var File
      */
     protected $classFileObject;
     /**
@@ -133,10 +143,10 @@ class RoundTrip implements SingletonInterface
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
      *
      * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
-     * @throws \Exception
+     * @throws Exception
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    public function initialize(Model\Extension $extension)
+    public function initialize(Model\Extension $extension): void
     {
         $this->extension = $extension;
         $this->extensionDirectory = $this->extension->getExtensionDir();
@@ -168,7 +178,7 @@ class RoundTrip implements SingletonInterface
             $jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey);
             $this->previousExtension = $extensionSchemaBuilder->build($jsonConfig);
             $previousDomainObjects = $this->previousExtension->getDomainObjects();
-            /** @var $previousDomainObjects \EBT\ExtensionBuilder\Domain\Model\DomainObject[] */
+            /** @var $previousDomainObjects DomainObject[] */
             foreach ($previousDomainObjects as $oldDomainObject) {
                 $this->previousDomainObjects[$oldDomainObject->getUniqueIdentifier()] = $oldDomainObject;
                 self::log(
@@ -186,7 +196,7 @@ class RoundTrip implements SingletonInterface
              */
             $currentDomainsObjects = [];
             foreach ($this->extension->getDomainObjects() as $domainObject) {
-                /** @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject */
+                /** @var DomainObject $domainObject */
                 if (isset($this->previousDomainObjects[$domainObject->getUniqueIdentifier()])) {
                     if ($this->previousDomainObjects[$domainObject->getUniqueIdentifier()]->getName() != $domainObject->getName()) {
                         $renamedDomainObjects[$domainObject->getUniqueIdentifier()] = $domainObject;
@@ -212,20 +222,23 @@ class RoundTrip implements SingletonInterface
      * Methods are either removed/added or updated according to
      * the new property names
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $currentDomainObject
+     * @param DomainObject $currentDomainObject
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\File|null OR null
-     * @throws \Exception
+     * @return File|null OR null
+     * @throws Exception
      */
-    public function getDomainModelClassFile(Model\DomainObject $currentDomainObject)
+    public function getDomainModelClassFile(DomainObject $currentDomainObject)
     {
         if (isset($this->previousDomainObjects[$currentDomainObject->getUniqueIdentifier()])) {
             self::log('domainObject identified:' . $currentDomainObject->getName());
             $oldDomainObject = $this->previousDomainObjects[$currentDomainObject->getUniqueIdentifier()];
-            /** @var \EBT\ExtensionBuilder\Domain\Model\DomainObject $oldDomainObject */
+            /** @var DomainObject $oldDomainObject */
             $extensionDir = $this->previousExtensionDirectory;
-            $fileName = FileGenerator::getFolderForClassFile($extensionDir, 'Model',
-                    false) . $oldDomainObject->getName() . '.php';
+            $fileName = FileGenerator::getFolderForClassFile(
+                $extensionDir,
+                'Model',
+                false
+            ) . $oldDomainObject->getName() . '.php';
             if (file_exists($fileName)) {
                 // import the classObject from the existing file
                 $this->classFileObject = $this->parserService->parseFile($fileName);
@@ -279,9 +292,9 @@ class RoundTrip implements SingletonInterface
                 } elseif (!empty($oldParentClass)) {
                     // the old object had a parent class setting, but it's removed now
                     if ($currentDomainObject->isEntity()) {
-                        $parentClass = $this->configurationManager->getParentClassForEntityObject($this->extension->getExtensionKey());
+                        $parentClass = $this->configurationManager->getParentClassForEntityObject($this->extension);
                     } else {
-                        $parentClass = $this->configurationManager->getParentClassForValueObject($this->extension->getExtensionKey());
+                        $parentClass = $this->configurationManager->getParentClassForValueObject($this->extension);
                     }
                     $this->classObject->setParentClassName($parentClass);
                 }
@@ -289,12 +302,12 @@ class RoundTrip implements SingletonInterface
                 if ($currentDomainObject->isEntity() && !$oldDomainObject->isEntity()) {
                     // the object type was changed in the modeler
                     $this->classObject->setParentClassName(
-                        $this->configurationManager->getParentClassForEntityObject($this->extension->getExtensionKey())
+                        $this->configurationManager->getParentClassForEntityObject($this->extension)
                     );
                 } elseif (!$currentDomainObject->isEntity() && $oldDomainObject->isEntity()) {
                     // the object type was changed in the modeler
                     $this->classObject->setParentClassName(
-                        $this->configurationManager->getParentClassForValueObject($this->extension->getExtensionKey())
+                        $this->configurationManager->getParentClassForValueObject($this->extension)
                     );
                 }
                 $this->classFileObject->setClasses([$this->classObject]);
@@ -330,13 +343,13 @@ class RoundTrip implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $currentDomainObject
+     * @param DomainObject $currentDomainObject
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\File|null
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \Exception
+     * @return File|null
+     * @throws FileNotFoundException
+     * @throws Exception
      */
-    public function getControllerClassFile(Model\DomainObject $currentDomainObject)
+    public function getControllerClassFile(DomainObject $currentDomainObject)
     {
         $extensionDir = $this->previousExtensionDirectory;
         if (isset($this->previousDomainObjects[$currentDomainObject->getUniqueIdentifier()])) {
@@ -408,7 +421,7 @@ class RoundTrip implements SingletonInterface
     /**
      * update all relevant namespace parts in tags, typehints etc.
      */
-    protected function updateVendorName()
+    protected function updateVendorName(): void
     {
         $this->classObject->setNamespaceName($this->renameVendor($this->classObject->getNamespaceName()));
         foreach ($this->classObject->getProperties() as $property) {
@@ -457,23 +470,25 @@ class RoundTrip implements SingletonInterface
     /**
      * If a domainObject was renamed
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $oldDomainObject
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $currentDomainObject
+     * @param DomainObject $oldDomainObject
+     * @param DomainObject $currentDomainObject
      *
-     * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     protected function mapOldControllerToCurrentClassObject(
-        Model\DomainObject $oldDomainObject,
-        Model\DomainObject $currentDomainObject
-    ) {
+        DomainObject $oldDomainObject,
+        DomainObject $currentDomainObject
+    ): void {
         $extensionDir = $this->previousExtensionDirectory;
         $newClassName = $currentDomainObject->getName() . 'Controller';
         $newName = $currentDomainObject->getName();
         $oldName = $oldDomainObject->getName();
         $this->classObject->setName($newClassName);
-        $this->classObject->setDescription($this->replaceUpperAndLowerCase($oldName, $newName,
-            $this->classObject->getDescription()));
+        $this->classObject->setDescription($this->replaceUpperAndLowerCase(
+            $oldName,
+            $newName,
+            $this->classObject->getDescription()
+        ));
         if ($oldDomainObject->isAggregateRoot()) {
 
             // should we keep the old properties comments and tags?
@@ -502,8 +517,10 @@ class RoundTrip implements SingletonInterface
                         $injectMethod->getBodyStmts()
                     );
                     $injectMethod->setBodyStmts($initializeMethodBodyStmts);
-                    $injectMethod->setTag('param',
-                        $currentDomainObject->getFullyQualifiedDomainRepositoryClassName() . ' $' . $newName . 'Repository');
+                    $injectMethod->setTag(
+                        'param',
+                        $currentDomainObject->getFullyQualifiedDomainRepositoryClassName() . ' $' . $newName . 'Repository'
+                    );
                     $injectMethod->setName('inject' . $newName . 'Repository');
                     $parameter = new Model\ClassObject\MethodParameter(lcfirst($newName) . 'Repository');
                     $parameter->setTypeHint($currentDomainObject->getFullyQualifiedDomainRepositoryClassName());
@@ -580,13 +597,13 @@ class RoundTrip implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $currentDomainObject
+     * @param DomainObject $currentDomainObject
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\File|null
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \Exception
+     * @return File|null
+     * @throws FileNotFoundException
+     * @throws Exception
      */
-    public function getRepositoryClassFile(Model\DomainObject $currentDomainObject)
+    public function getRepositoryClassFile(DomainObject $currentDomainObject)
     {
         $extensionDir = $this->previousExtensionDirectory;
         if (isset($this->previousDomainObjects[$currentDomainObject->getUniqueIdentifier()])) {
@@ -627,15 +644,15 @@ class RoundTrip implements SingletonInterface
      * Compare the properties of each object and remove/update
      * the properties and the related methods
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $oldDomainObject
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $newDomainObject
+     * @param DomainObject $oldDomainObject
+     * @param DomainObject $newDomainObject
      *
      * return void (all actions are performed on $this->classObject
      */
     protected function updateModelClassProperties(
-        Model\DomainObject $oldDomainObject,
-        Model\DomainObject $newDomainObject
-    ) {
+        DomainObject $oldDomainObject,
+        DomainObject $newDomainObject
+    ): void {
         $newProperties = [];
         foreach ($newDomainObject->getProperties() as $property) {
             $newProperties[$property->getUniqueIdentifier()] = $property;
@@ -680,10 +697,8 @@ class RoundTrip implements SingletonInterface
     /**
      * Removes all related methods, if a property was removed
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $propertyToRemove
-     *
-     * @return void
      */
-    protected function removePropertyAndRelatedMethods($propertyToRemove)
+    protected function removePropertyAndRelatedMethods($propertyToRemove): void
     {
         $propertyName = $propertyToRemove->getName();
         $this->classObject->removeProperty($propertyName);
@@ -702,10 +717,8 @@ class RoundTrip implements SingletonInterface
      * Rename a property and update comment (var tag and description)
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $oldProperty
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $newProperty
-     *
-     * @return void
      */
-    protected function updateProperty($oldProperty, $newProperty)
+    protected function updateProperty($oldProperty, $newProperty): void
     {
         $classProperty = $this->classObject->getProperty($oldProperty->getName());
         if ($classProperty) {
@@ -790,10 +803,8 @@ class RoundTrip implements SingletonInterface
     /**
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $oldProperty
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $newProperty
-     *
-     * @return void
      */
-    protected function updatePropertyRelatedMethods($oldProperty, $newProperty)
+    protected function updatePropertyRelatedMethods($oldProperty, $newProperty): void
     {
         if ($newProperty->isAnyToManyRelation()) {
             $this->updateMethod($oldProperty, $newProperty, 'add');
@@ -823,10 +834,8 @@ class RoundTrip implements SingletonInterface
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $oldProperty
      * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $newProperty
      * @param string $methodType get,set,add,remove,is
-     *
-     * @return void
      */
-    protected function updateMethod($oldProperty, $newProperty, $methodType)
+    protected function updateMethod($oldProperty, $newProperty, $methodType): void
     {
         $oldMethodName = ClassBuilder::getMethodName($oldProperty, $methodType);
         // the method to be merged
@@ -845,8 +854,11 @@ class RoundTrip implements SingletonInterface
 
             $oldMethodBody = $mergedMethod->getBodyStmts();
 
-            $newMethodBody = $this->replacePropertyNameInMethodBody($oldProperty->getName(), $newProperty->getName(),
-                $oldMethodBody);
+            $newMethodBody = $this->replacePropertyNameInMethodBody(
+                $oldProperty->getName(),
+                $newProperty->getName(),
+                $oldMethodBody
+            );
             $mergedMethod->setBodyStmts($newMethodBody);
         }
 
@@ -860,8 +872,11 @@ class RoundTrip implements SingletonInterface
                 if ($oldParameterName == ClassBuilder::getParameterName($oldProperty, $methodType)) {
                     $newParameterName = ClassBuilder::getParameterName($newProperty, $methodType);
                     $methodParameter->setName($newParameterName);
-                    $newMethodBody = $this->replacePropertyNameInMethodBody($oldParameterName, $newParameterName,
-                        $mergedMethod->getBodyStmts());
+                    $newMethodBody = $this->replacePropertyNameInMethodBody(
+                        $oldParameterName,
+                        $newParameterName,
+                        $mergedMethod->getBodyStmts()
+                    );
                     $mergedMethod->setBodyStmts($newMethodBody);
                 }
                 $typeHint = $methodParameter->getTypeHint();
@@ -884,8 +899,11 @@ class RoundTrip implements SingletonInterface
         }
 
         // replace property names in description
-        $mergedMethod->setDescription(str_replace($oldProperty->getName(), $newProperty->getName(),
-            $mergedMethod->getDescription()));
+        $mergedMethod->setDescription(str_replace(
+            $oldProperty->getName(),
+            $newProperty->getName(),
+            $mergedMethod->getDescription()
+        ));
         if ($oldProperty instanceof AbstractRelation && $newProperty instanceof AbstractRelation) {
             $mergedMethod->setDescription(
                 str_replace(
@@ -939,23 +957,21 @@ class RoundTrip implements SingletonInterface
     public function getForeignClassName($relation)
     {
         if ($relation->getForeignModel() && isset($this->renamedDomainObjects[$relation->getForeignModel()->getUniqueIdentifier()])) {
-            /** @var $renamedObject \EBT\ExtensionBuilder\Domain\Model\DomainObject */
+            /** @var $renamedObject DomainObject */
             $renamedObject = $this->renamedDomainObjects[$relation->getForeignModel()->getUniqueIdentifier()];
             return $renamedObject->getQualifiedClassName();
-        } else {
-            return $relation->getForeignClassName();
         }
+        return $relation->getForeignClassName();
     }
 
     /**
      * remove domainObject related files if a domainObject was deleted
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      *
-     * @return void
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function removeDomainObjectFiles(Model\DomainObject $domainObject)
+    protected function removeDomainObjectFiles(DomainObject $domainObject): void
     {
         self::log('Remove domainObject ' . $domainObject->getName());
         $this->cleanUp(
@@ -998,9 +1014,8 @@ class RoundTrip implements SingletonInterface
      * renaming of ModelObjects or changed types
      * @param string $path
      * @param string $fileName
-     * @return void
      */
-    public function cleanUp($path, $fileName)
+    public function cleanUp($path, $fileName): void
     {
         if ($this->extensionRenamed) {
             // wo won't delete the old extension!
@@ -1020,7 +1035,7 @@ class RoundTrip implements SingletonInterface
      */
     public static function getExtConfiguration(): array
     {
-        return unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['extension_builder']);
+        return GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('extension_builder');
     }
 
     /**
@@ -1035,19 +1050,19 @@ class RoundTrip implements SingletonInterface
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
      *
      * @return int overWriteSetting
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getOverWriteSettingForPath($path, $extension)
     {
         $map = [
-            'skip' => -1,
-            'merge' => 1,
-            'keep' => 2
+            'skip' => self::OVERWRITE_SETTINGS_SKIP,
+            'merge' => self::OVERWRITE_SETTINGS_MERGE,
+            'keep' => self::OVERWRITE_SETTINGS_KEEP,
         ];
 
         $settings = $extension->getSettings();
         if (!is_array($settings)) {
-            throw new \Exception('overWrite settings could not be parsed');
+            throw new Exception('overWrite settings could not be parsed');
         }
         if (strpos($path, $extension->getExtensionDir()) === 0) {
             $path = str_replace($extension->getExtensionDir(), '', $path);
@@ -1072,10 +1087,9 @@ class RoundTrip implements SingletonInterface
      *
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
      *
-     * @return void
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function prepareExtensionForRoundtrip(&$extension)
+    public static function prepareExtensionForRoundtrip(&$extension): void
     {
         foreach ($extension->getDomainObjects() as $domainObject) {
             $existingTca = self::getTcaForDomainObject($domainObject);
@@ -1096,7 +1110,7 @@ class RoundTrip implements SingletonInterface
             }
             if (file_exists($extension->getExtensionDir() . 'Configuration/TCA/' . $domainObject->getName() . '.php')) {
                 $extensionConfigurationJson = ExtensionBuilderConfigurationManager::getExtensionBuilderJson($extension->getExtensionKey());
-                if (floatval($extensionConfigurationJson['log']['extension_builder_version']) <= 6.2) {
+                if ((float)($extensionConfigurationJson['log']['extension_builder_version']) <= 6.2) {
                     self::moveAdditionalTcaToOverrideFile($domainObject);
                 }
             }
@@ -1108,7 +1122,7 @@ class RoundTrip implements SingletonInterface
      * extension is installed
      * TODO: check for previous table name if an extension is renamed
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      *
      * @return array
      */
@@ -1122,11 +1136,11 @@ class RoundTrip implements SingletonInterface
      * Move custom TCA in files generated by EB versions <= 6.2
      * to the appropriate overrides files
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function moveAdditionalTcaToOverrideFile($domainObject)
+    public static function moveAdditionalTcaToOverrideFile($domainObject): void
     {
         $tcaDir = $domainObject->getExtension()->getExtensionDir() . 'Configuration/TCA/';
         $existingTcaFile = $tcaDir . $domainObject->getName() . '.php';
@@ -1139,14 +1153,14 @@ class RoundTrip implements SingletonInterface
                 if (!empty($customFileContent)) {
                     $overrideDir = $tcaDir . 'Overrides/';
                     if (!is_dir($overrideDir)) {
-                        GeneralUtility::mkdir_deep($tcaDir, 'Overrides');
+                        GeneralUtility::mkdir_deep($tcaDir . 'Overrides');
                     }
                     $success = GeneralUtility::writeFile(
                         $overrideDir . $domainObject->getDatabaseTableName() . '.php',
                         $customFileContent
                     );
                     if (!$success) {
-                        throw new \Exception('File ' . $overrideDir . $domainObject->getDatabaseTableName() . '.php could not be created!');
+                        throw new Exception('File ' . $overrideDir . $domainObject->getDatabaseTableName() . '.php could not be created!');
                     }
 
                     unlink($existingTcaFile);
@@ -1159,35 +1173,34 @@ class RoundTrip implements SingletonInterface
      * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
      * @param string $backupDir
      *
-     * @return void
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function backupExtension(Model\Extension $extension, $backupDir)
+    public static function backupExtension(Model\Extension $extension, $backupDir): void
     {
         if (empty($backupDir)) {
-            throw new \Exception('Please define a backup directory in extension configuration!');
+            throw new Exception('Please define a backup directory in extension configuration!');
         }
 
         if (!GeneralUtility::validPathStr($backupDir)) {
-            throw new \Exception('Backup directory is not a valid path: ' . $backupDir);
+            throw new Exception('Backup directory is not a valid path: ' . $backupDir);
         }
 
         if (GeneralUtility::isAbsPath($backupDir)) {
             if (!GeneralUtility::isAllowedAbsPath($backupDir)) {
-                throw new \Exception('Backup directory is not an allowed absolute path: ' . $backupDir);
+                throw new Exception('Backup directory is not an allowed absolute path: ' . $backupDir);
             }
         } else {
-            $backupDir = Environment::getPublicPath() . '/' . $backupDir;
+            $backupDir = Environment::getProjectPath() . '/' . $backupDir;
         }
         if (strrpos($backupDir, '/') < strlen($backupDir) - 1) {
             $backupDir .= '/';
         }
         if (!is_dir($backupDir)) {
-            throw new \Exception('Backup directory does not exist: ' . $backupDir);
+            throw new Exception('Backup directory does not exist: ' . $backupDir);
         }
 
         if (!is_writable($backupDir)) {
-            throw new \Exception('Backup directory is not writable: ' . $backupDir);
+            throw new Exception('Backup directory is not writable: ' . $backupDir);
         }
 
         $backupDir .= $extension->getExtensionKey();
@@ -1205,13 +1218,13 @@ class RoundTrip implements SingletonInterface
         $extensionDir = substr($extension->getExtensionDir(), 0, strlen($extension->getExtensionDir()) - 1);
         try {
             self::recurse_copy($extensionDir, $backupDir);
-        } catch (\Exception $e) {
-            throw new \Exception('Code generation aborted:' . $e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception('Code generation aborted:' . $e->getMessage());
         }
         self::log('Backup created in ' . $backupDir);
     }
 
-    protected static function log($message, $severity = 0, $data = [])
+    protected static function log($message, $severity = 0, $data = []): void
     {
         // TODO implement logging
     }
@@ -1220,10 +1233,9 @@ class RoundTrip implements SingletonInterface
      * @param string $src path to copy
      * @param string $dst destination
      *
-     * @return void
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function recurse_copy($src, $dst)
+    public static function recurse_copy($src, $dst): void
     {
         $dir = opendir($src);
         @mkdir($dst);
@@ -1234,7 +1246,7 @@ class RoundTrip implements SingletonInterface
                 } else {
                     $success = copy($src . '/' . $file, $dst . '/' . $file);
                     if (!$success) {
-                        throw new \Exception('Could not copy ' . $src . '/' . $file . ' to ' . $dst . '/' . $file);
+                        throw new Exception('Could not copy ' . $src . '/' . $file . ' to ' . $dst . '/' . $file);
                     }
                 }
             }

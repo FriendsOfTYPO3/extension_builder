@@ -12,11 +12,10 @@ $tmp_{domainObject.extension.extensionKey}_columns['{relation.foreignKeyName}'] 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('{domainObject.databaseTableName}',$tmp_{domainObject.extension.extensionKey}_columns);
 </f:if>
 <k:recordType domainObject="{domainObject}">
-/* inherit and extend the show items from the parent class */
-
+// inherit and extend the show items from the parent class
 if (isset($GLOBALS['TCA']['{domainObject.databaseTableName}']['types']['{parentRecordType}']['showitem'])) {
     $GLOBALS['TCA']['{domainObject.databaseTableName}']['types']['{domainObject.recordType}']['showitem'] = $GLOBALS['TCA']['{domainObject.databaseTableName}']['types']['{parentRecordType}']['showitem'];
-} elseif(is_array($GLOBALS['TCA']['{domainObject.databaseTableName}']['types'])) {
+} elseif (is_array($GLOBALS['TCA']['{domainObject.databaseTableName}']['types'])) {
     // use first entry in types array
     ${domainObject.databaseTableName}_type_definition = reset($GLOBALS['TCA']['{domainObject.databaseTableName}']['types']);
     $GLOBALS['TCA']['{domainObject.databaseTableName}']['types']['{domainObject.recordType}']['showitem'] = ${domainObject.databaseTableName}_type_definition['showitem'];

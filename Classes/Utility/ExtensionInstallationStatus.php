@@ -1,7 +1,5 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Utility;
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,6 +13,12 @@ namespace EBT\ExtensionBuilder\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Utility;
+
+use EBT\ExtensionBuilder\Domain\Model\Extension;
+use Exception;
+use mysqli_result;
+use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -24,11 +28,11 @@ use TYPO3\CMS\Install\Service\SqlSchemaMigrationService;
 class ExtensionInstallationStatus
 {
     /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     * @var ObjectManager
      */
     protected $objectManager;
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\Extension
+     * @var Extension
      */
     protected $extension;
     /**
@@ -43,7 +47,6 @@ class ExtensionInstallationStatus
      * @var bool
      */
     protected $dbUpdateNeeded = false;
-
     /**
      * @var bool
      */
@@ -55,9 +58,9 @@ class ExtensionInstallationStatus
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     * @param Extension $extension
      */
-    public function setExtension($extension)
+    public function setExtension($extension): void
     {
         $this->extension = $extension;
     }
@@ -72,7 +75,7 @@ class ExtensionInstallationStatus
 
     /**
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function getStatusMessage()
     {
@@ -107,7 +110,7 @@ class ExtensionInstallationStatus
             $statusMessage .= '<p>Your Extension is not installed yet.</p>';
             if ($this->usesComposerPath) {
                 $statusMessage .= sprintf(
-                    '<p>Execute <code>composer require %s</code> in terminal',
+                    '<p>Add <code>"%1$s": "@dev"</code> to the <code>"require"</code> section of your project composer.json<br>Execute <code>composer require %1$s:@dev</code> in terminal',
                     $this->extension->getComposerInfo()['name']
                 );
             }
@@ -120,17 +123,15 @@ class ExtensionInstallationStatus
 
     /**
      * @param string $extensionKey
-     *
-     * @return void
      */
-    public function checkForDbUpdate($extensionKey)
+    public function checkForDbUpdate($extensionKey): void
     {
         $this->dbUpdateNeeded = false;
         if (ExtensionManagementUtility::isLoaded($extensionKey)) {
             $sqlFile = ExtensionManagementUtility::extPath($extensionKey) . 'ext_tables.sql';
             if (@file_exists($sqlFile)) {
                 $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-                /* @var \TYPO3\CMS\Install\Service\SqlSchemaMigrationService $sqlHandler */
+                /** @var SqlSchemaMigrationService $sqlHandler */
                 $sqlHandler = GeneralUtility::makeInstance(SqlSchemaMigrationService::class);
 
                 $sqlContent = GeneralUtility::getUrl($sqlFile);
@@ -163,12 +164,13 @@ class ExtensionInstallationStatus
             if ($this->dbUpdateNeeded) {
                 foreach ($this->updateStatements as $type => $statements) {
                     foreach ($statements as $key => $statement) {
-                        if (in_array($type, ['change', 'add', 'create_table']) && in_array($key,
-                                $params['updateStatements'])) {
+                        if (in_array($type, ['change', 'add', 'create_table'])
+                            && in_array($key, $params['updateStatements'])
+                        ) {
                             $res = $this->getDatabaseConnection()->admin_query($statement);
                             if ($res === false) {
                                 $hasErrors = true;
-                            } elseif (is_resource($res) || is_a($res, \mysqli_result::class)) {
+                            } elseif (is_resource($res) || is_a($res, mysqli_result::class)) {
                                 $this->getDatabaseConnection()->sql_free_result($res);
                             }
                         }
@@ -200,7 +202,7 @@ class ExtensionInstallationStatus
     }
 
     /**
-     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+     * @return DatabaseConnection
      */
     protected function getDatabaseConnection()
     {

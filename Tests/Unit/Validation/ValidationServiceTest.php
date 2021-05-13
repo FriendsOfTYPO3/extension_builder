@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Tests\Unit\Validation;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Tests\Unit\Validation;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Tests\Unit\Validation;
+
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
 use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
@@ -27,7 +29,6 @@ class ValidationServiceTest extends BaseUnitTest
 {
     /**
      * @test
-     * @return void
      */
     public function propertyRenamesFieldIfItMatchesReservedWord(): void
     {
@@ -78,7 +79,6 @@ class ValidationServiceTest extends BaseUnitTest
                 'plugins' => [],
                 'backendModules' => []
             ]
-
         ];
         $extensionValidator = new ExtensionValidator();
 

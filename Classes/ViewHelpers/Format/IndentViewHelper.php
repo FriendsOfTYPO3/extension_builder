@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers\Format;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,11 +15,12 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Format;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\ViewHelpers\Format;
+
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * Indentation ViewHelper
- *
  */
 class IndentViewHelper extends AbstractViewHelper
 {
@@ -28,15 +29,12 @@ class IndentViewHelper extends AbstractViewHelper
     /**
      * Arguments Initialization
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('indentation', 'integer', 'number of spaces to indent', true);
     }
 
-    /**
-     * @return bool true or false
-     */
-    public function render()
+    public function render(): string
     {
         $outputToIndent = $this->renderChildren();
         $lineArray = explode(chr(10), $outputToIndent);

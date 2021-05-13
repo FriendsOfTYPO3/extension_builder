@@ -1,7 +1,5 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Service;
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,12 +13,19 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Service;
+
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\BackendModule;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Domain\Model\Person;
 use EBT\ExtensionBuilder\Domain\Model\Plugin;
 use EBT\ExtensionBuilder\Utility\Tools;
+use Exception;
+use RuntimeException;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -30,29 +35,21 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class ExtensionSchemaBuilder implements SingletonInterface
 {
     /**
-     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
+     * @var ExtensionBuilderConfigurationManager
      */
     protected $configurationManager;
 
-    /**
-     * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
-     * @return void
-     */
-    public function injectConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager)
+    public function injectConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager): void
     {
         $this->configurationManager = $configurationManager;
     }
 
     /**
-     * @var \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder
+     * @var ObjectSchemaBuilder
      */
     protected $objectSchemaBuilder;
 
-    /**
-     * @param \EBT\ExtensionBuilder\Service\ObjectSchemaBuilder $objectSchemaBuilder
-     * @return void
-     */
-    public function injectObjectSchemaBuilder(ObjectSchemaBuilder $objectSchemaBuilder)
+    public function injectObjectSchemaBuilder(ObjectSchemaBuilder $objectSchemaBuilder): void
     {
         $this->objectSchemaBuilder = $objectSchemaBuilder;
     }
@@ -60,19 +57,20 @@ class ExtensionSchemaBuilder implements SingletonInterface
     /**
      * @param array $extensionBuildConfiguration
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
-     * @throws \Exception
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @return Extension $extension
+     * @throws ExtensionException
+     * @throws Exception
      */
-    public function build(array $extensionBuildConfiguration)
+    public function build(array $extensionBuildConfiguration): Extension
     {
-        /** @var $extension \EBT\ExtensionBuilder\Domain\Model\Extension */
+        /** @var $extension Extension */
         $extension = GeneralUtility::makeInstance(Extension::class);
         $globalProperties = $extensionBuildConfiguration['properties'];
         if (!is_array($globalProperties)) {
-            throw new \Exception('Extension properties not submitted!');
+            throw new Exception('Extension properties not submitted!');
         }
+
+        $extension->setStoragePath($extensionBuildConfiguration['storagePath'] ?? null);
 
         $this->setExtensionProperties($extension, $globalProperties);
 
@@ -102,15 +100,15 @@ class ExtensionSchemaBuilder implements SingletonInterface
                 $domainObject = $this->objectSchemaBuilder->build($singleModule['value']);
                 if ($domainObject->isSubClass() && !$domainObject->isMappedToExistingTable()) {
                     // we try to get the table from Extbase configuration
-                    $classSettings = $this->configurationManager->getExtbaseClassConfiguration($domainObject->getParentClass());
-                    if (isset($classSettings['tableName'])) {
-                        $tableName = $classSettings['tableName'];
+                    $table = $this->configurationManager->getPersistenceTable($domainObject->getParentClass());
+                    if ($table) {
+                        $tableName = $table;
                     } else {
                         // we use the default table name
                         $tableName = Tools::parseTableNameFromClassName($domainObject->getParentClass());
                     }
                     if (!isset($GLOBALS['TCA'][$tableName])) {
-                        throw new \Exception('Table definitions for table ' . $tableName . ' could not be loaded. You can only map to tables with existing TCA or extend classes of installed extensions!');
+                        throw new Exception('Table definitions for table ' . $tableName . ' could not be loaded. You can only map to tables with existing TCA or extend classes of installed extensions!');
                     }
                     $domainObject->setMapToTable($tableName);
                 }
@@ -131,17 +129,15 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $this->setExtensionRelations($extensionBuildConfiguration, $extension);
         }
 
-        $extension->setStoragePath($extensionBuildConfiguration['storagePath'] ?? null);
-
         return $extension;
     }
 
     /**
      * @param array $extensionBuildConfiguration
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-     * @throws \Exception
+     * @param Extension $extension
+     * @throws Exception
      */
-    protected function setExtensionRelations($extensionBuildConfiguration, &$extension)
+    protected function setExtensionRelations(array $extensionBuildConfiguration, Extension $extension): void
     {
         $existingRelations = [];
         foreach ($extensionBuildConfiguration['wires'] as $wire) {
@@ -153,7 +149,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
                     $wire['src'] = $wire['tgt'];
                     $wire['tgt'] = ['moduleId' => $tgtModuleId, 'terminal' => 'SOURCES'];
                 } else {
-                    throw new \Exception('A wire has always to connect a relation with a model, not with another relation');
+                    throw new Exception('A wire has always to connect a relation with a model, not with another relation');
                 }
             }
             $srcModuleId = $wire['src']['moduleId'];
@@ -162,7 +158,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
 
             if (!is_array($relationJsonConfiguration)) {
                 $errorMessage = 'Missing relation config in domain object: ' . $extensionBuildConfiguration['modules'][$srcModuleId]['value']['name'];
-                throw new \Exception($errorMessage);
+                throw new Exception($errorMessage);
             }
 
             $foreignModelName = $extensionBuildConfiguration['modules'][$wire['tgt']['moduleId']]['value']['name'];
@@ -174,14 +170,14 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $domainObject = $extension->getDomainObjectByName($localModelName);
             $relation = $domainObject->getPropertyByName($relationJsonConfiguration['relationName']);
             if (!$relation) {
-                throw new \Exception('Relation not found: ' . $localModelName . '->' . $relationJsonConfiguration['relationName']);
+                throw new Exception('Relation not found: ' . $localModelName . '->' . $relationJsonConfiguration['relationName']);
             }
             // get unique foreign key names for multiple relations to the same foreign class
             if (in_array($foreignModelName, $existingRelations[$localModelName])) {
-                if (is_a($relation, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation')) {
+                if (is_a($relation, ZeroToManyRelation::class)) {
                     $relation->setForeignKeyName(strtolower($localModelName) . count($existingRelations[$localModelName]));
                 }
-                if (is_a($relation, '\EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation')) {
+                if (is_a($relation, AnyToManyRelation::class)) {
                     $relation->setUseExtendedRelationTableName(true);
                 }
             }
@@ -195,12 +191,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
         }
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-     * @param array $propertyConfiguration
-     * @return void
-     */
-    protected function setExtensionProperties(&$extension, $propertyConfiguration): void
+    protected function setExtensionProperties(Extension $extension, array $propertyConfiguration): void
     {
         $extension->setName(trim($propertyConfiguration['name']));
         $extension->setDescription($propertyConfiguration['description']);
@@ -219,7 +210,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $extension->setSupportLocalization(false);
         }
 
-        if (!empty($propertyConfiguration['emConf']['skipGenerateDocumentationTemplate'])) {
+        if (empty($propertyConfiguration['emConf']['generateDocumentationTemplate'])) {
             $extension->setGenerateDocumentationTemplate(false);
         }
 
@@ -277,16 +268,23 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $extension->setOriginalExtensionKey($propertyConfiguration['originalExtensionKey']);
         }
 
-        if (!empty($propertyConfiguration['originalExtensionKey']) && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()) {
-            $settings = $this->configurationManager->getExtensionSettings($extension->getOriginalExtensionKey());
+        if (!empty($propertyConfiguration['originalExtensionKey'])
+            && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()
+        ) {
+            $settings = $this->configurationManager->getExtensionSettings($extension->getOriginalExtensionKey(), $extension->getStoragePath());
             // if an extension was renamed, a new extension dir is created and we
             // have to copy the old settings file to the new extension dir
-            copy(
-                $this->configurationManager->getSettingsFile($extension->getOriginalExtensionKey()),
-                $this->configurationManager->getSettingsFile($extension->getExtensionKey())
-            );
+            $source = $this->configurationManager->getSettingsFile($extension->getOriginalExtensionKey(), $extension->getStoragePath());
+            $target = $this->configurationManager->getSettingsFile($extension->getExtensionKey(), $extension->getStoragePath());
+            $pathInfo = pathinfo($target);
+            if (!is_dir($pathInfo['dirname'])) {
+                if (!mkdir($concurrentDirectory = $pathInfo['dirname'], 0775, true) && !is_dir($concurrentDirectory)) {
+                    throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+                }
+            }
+            copy($source, $target);
         } else {
-            $settings = $this->configurationManager->getExtensionSettings($extension->getExtensionKey());
+            $settings = $this->configurationManager->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
         }
 
         if (!empty($settings)) {
@@ -294,11 +292,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
         }
     }
 
-    /**
-     * @param array $personValues
-     * @return \EBT\ExtensionBuilder\Domain\Model\Person
-     */
-    protected function buildPerson(array $personValues)
+    protected function buildPerson(array $personValues): Person
     {
         $person = GeneralUtility::makeInstance(Person::class);
         $person->setName($personValues['name']);
@@ -308,11 +302,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
         return $person;
     }
 
-    /**
-     * @param array $pluginValues
-     * @return \EBT\ExtensionBuilder\Domain\Model\Plugin
-     */
-    protected function buildPlugin(array $pluginValues)
+    protected function buildPlugin(array $pluginValues): Plugin
     {
         $plugin = GeneralUtility::makeInstance(Plugin::class);
         $plugin->setName($pluginValues['name']);
@@ -339,34 +329,12 @@ class ExtensionSchemaBuilder implements SingletonInterface
                     $nonCacheableControllerActions[$controllerName] = GeneralUtility::trimExplode(',', $actionNames);
                 }
             }
-            $plugin->setNoncacheableControllerActions($nonCacheableControllerActions);
-        }
-        if (!empty($pluginValues['actions']['switchableActions'])) {
-            $switchableControllerActions = [];
-            $lines = GeneralUtility::trimExplode(LF, $pluginValues['actions']['switchableActions'], true);
-            $switchableAction = [];
-            foreach ($lines as $line) {
-                if (strpos($line, '->') === false) {
-                    if (isset($switchableAction['label'])) {
-                        // start a new array
-                        $switchableAction = [];
-                    }
-                    $switchableAction['label'] = trim($line);
-                } else {
-                    $switchableAction['actions'] = GeneralUtility::trimExplode(';', $line, true);
-                    $switchableControllerActions[] = $switchableAction;
-                }
-            }
-            $plugin->setSwitchableControllerActions($switchableControllerActions);
+            $plugin->setNonCacheableControllerActions($nonCacheableControllerActions);
         }
         return $plugin;
     }
 
-    /**
-     * @param array $backendModuleValues
-     * @return \EBT\ExtensionBuilder\Domain\Model\BackendModule
-     */
-    protected function buildBackendModule($backendModuleValues): BackendModule
+    protected function buildBackendModule(array $backendModuleValues): BackendModule
     {
         $backendModule = GeneralUtility::makeInstance(BackendModule::class);
         $backendModule->setName($backendModuleValues['name']);
