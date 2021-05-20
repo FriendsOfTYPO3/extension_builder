@@ -31,7 +31,7 @@ When to use uppercase, lowercase or CamelCase and other restrictions:
 |**Property**       |**Restriction**                                      |**Scope**          |
 +-------------------+-----------------------------------------------------+-------------------+
 |extension_key      |lowercase, alphanumeric, no space                    |Unique in TER      |
-|                   |prefix not:\tx_\|u_\|user_\|pages_\|tt_\|sys_\|csh_  |                   |
+|                   |prefix not:\tx_\|u_\|user_\|pages_\sys_\|csh_        |                   |
 +-------------------+-----------------------------------------------------+-------------------+
 |Extension Name     |No restrictions                                      |No restrictions    |
 +-------------------+-----------------------------------------------------+-------------------+
