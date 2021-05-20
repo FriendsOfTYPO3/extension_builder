@@ -818,7 +818,7 @@ class ExtensionValidator extends AbstractValidator
 
         /*
          * Reserved prefixes
-         * The key must not being with one of the following prefixes: tx,pages,sys_,ts_language_,csh_
+         * The extension key must not have one of the following prefixes: tx,pages,sys_,ts_language_,csh_
          */
         if (preg_match('/^(tx|pages_|sys_|ts_language_|csh_)/', $key)) {
             $this->validationResult['errors'][] = new ExtensionException(
