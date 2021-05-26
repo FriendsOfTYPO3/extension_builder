@@ -53,7 +53,7 @@ class File extends Container
     public function getClassByName(string $className): ?ClassObject
     {
         foreach ($this->getClasses() as $class) {
-            if ($class->getName() == $className) {
+            if ($class->getName() === $className) {
                 return $class;
             }
         }

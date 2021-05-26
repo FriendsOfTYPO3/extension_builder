@@ -930,7 +930,7 @@ class RoundTrip implements SingletonInterface
      *
      * @return array
      */
-    protected function replacePropertyNameInMethodBody($oldName, $newName, $methodBodyStmts)
+    protected function replacePropertyNameInMethodBody(string $oldName, string $newName, $methodBodyStmts)
     {
         return $this->parserService->replaceNodeProperty(
             $methodBodyStmts,
