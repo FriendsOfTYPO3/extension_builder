@@ -197,7 +197,7 @@ class ObjectSchemaBuilder implements SingletonInterface
                 $relation->setRenderType('inline');
                 if (!empty($relationJsonConfiguration['maxItems'])) {
                     /** @var FileProperty $relation */
-                    $relation->setMaxItems($relationJsonConfiguration['maxItems']);
+                    $relation->setMaxItems((int)$relationJsonConfiguration['maxItems']);
                     if (!empty($relationJsonConfiguration['allowedFileTypes'])) {
                         $relation->setAllowedFileTypes($relationJsonConfiguration['allowedFileTypes']);
                     }
