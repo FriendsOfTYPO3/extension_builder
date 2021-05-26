@@ -420,7 +420,7 @@ abstract class AbstractProperty
     public function getMappingStatement(): ?string
     {
         if ($this->getFieldName() != GeneralUtility::camelCaseToLowerCaseUnderscored($this->name)) {
-            return $statement = "'" . $this->name . "' => [\n\t'fieldName' => '" . $this->getFieldName() . "'\n],";
+            return "'" . $this->name . "' => [\n\t'fieldName' => '" . $this->getFieldName() . "'\n],";
         }
 
         return null;

@@ -205,9 +205,12 @@ class NodeConverter
     public static function convertClassConstantNodeToArray(Node $node): array
     {
         $constantsArray = [];
-        $consts = $node->consts;
-        foreach ($consts as $const) {
-            $constantsArray[] = ['name' => $const->name, 'value' => self::getValueFromNode($const->value)];
+        $constants = $node->consts;
+        foreach ($constants as $const) {
+            $constantsArray[] = [
+                'name' => $const->name,
+                'value' => self::getValueFromNode($const->value)
+            ];
         }
         return $constantsArray;
     }
@@ -250,6 +253,7 @@ class NodeConverter
         if (is_object($node->$property) && property_exists($node->$property, $property)) {
             return $node->$property->$property;
         }
+        return null;
     }
 
     public static function getNameFromNode($node)

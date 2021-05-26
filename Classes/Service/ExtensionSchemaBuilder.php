@@ -41,15 +41,15 @@ class ExtensionSchemaBuilder implements SingletonInterface
      */
     protected $configurationManager;
 
-    public function injectConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager): void
-    {
-        $this->configurationManager = $configurationManager;
-    }
-
     /**
      * @var ObjectSchemaBuilder
      */
     protected $objectSchemaBuilder;
+
+    public function injectConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager): void
+    {
+        $this->configurationManager = $configurationManager;
+    }
 
     public function injectObjectSchemaBuilder(ObjectSchemaBuilder $objectSchemaBuilder): void
     {
@@ -82,6 +82,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
                 $extension->addPerson($person);
             }
         }
+
         if (is_array($globalProperties['plugins'])) {
             foreach ($globalProperties['plugins'] as $pluginValues) {
                 $plugin = $this->buildPlugin($pluginValues);

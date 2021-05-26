@@ -101,6 +101,7 @@ class ObjectSchemaBuilder implements SingletonInterface
             }
         }
 
+        // relations
         if (isset($jsonDomainObject['relationGroup']['relations'])) {
             foreach ($jsonDomainObject['relationGroup']['relations'] as $relationJsonConfiguration) {
                 $relation = $this->buildRelation($relationJsonConfiguration, $domainObject);
@@ -108,7 +109,7 @@ class ObjectSchemaBuilder implements SingletonInterface
             }
         }
 
-        //actions
+        // actions
         if (isset($jsonDomainObject['actionGroup'])) {
             foreach ($jsonDomainObject['actionGroup'] as $jsonActionName => $actionValue) {
                 if ($jsonActionName == 'customActions' && !empty($actionValue)) {
@@ -225,7 +226,7 @@ class ObjectSchemaBuilder implements SingletonInterface
         $property->setName($propertyJsonConfiguration['propertyName']);
         $property->setDescription($propertyJsonConfiguration['propertyDescription']);
 
-        if ($propertyType == 'File' && !empty($propertyJsonConfiguration['allowedFileTypes'])) {
+        if ($propertyType === 'File' && !empty($propertyJsonConfiguration['allowedFileTypes'])) {
             $property->setAllowedFileTypes($propertyJsonConfiguration['allowedFileTypes']);
         }
 

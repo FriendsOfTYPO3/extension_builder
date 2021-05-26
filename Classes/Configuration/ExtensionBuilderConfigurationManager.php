@@ -148,12 +148,11 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
 
     public function getExtensionSettings(string $extensionKey, string $extensionStoragePath): array
     {
-        $settings = [];
         $settingsFile = $this->getSettingsFile($extensionKey, $extensionStoragePath);
-        if (file_exists($settingsFile)) {
-            $settings = SpycYAMLParser::YAMLLoadString(file_get_contents($settingsFile));
+        if (!file_exists($settingsFile)) {
+            return [];
         }
-        return $settings;
+        return SpycYAMLParser::YAMLLoadString(file_get_contents($settingsFile));
     }
 
     /**
@@ -165,16 +164,14 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      */
     public function getExtensionBuilderConfiguration(string $extensionKey, ?string $storagePath = null): ?array
     {
-        $result = null;
         $extensionConfigurationJson = self::getExtensionBuilderJson($extensionKey, $storagePath);
         if ($extensionConfigurationJson) {
             $extensionConfigurationJson = $this->fixExtensionBuilderJSON($extensionConfigurationJson);
             $extensionConfigurationJson['properties']['originalExtensionKey'] = $extensionKey;
             $extensionConfigurationJson['properties']['originalVendorName'] = $extensionConfigurationJson['properties']['vendorName'];
-            $result = $extensionConfigurationJson;
+            return $extensionConfigurationJson;
         }
-
-        return $result;
+        return null;
     }
 
     public static function getExtensionBuilderJson(string $extensionKey, ?string $storagePath = null)
@@ -472,21 +469,15 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     public function getParentClassForValueObject(Extension $extension): string
     {
         $settings = $this->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
-        if (isset($settings['classBuilder']['Model']['AbstractValueObject']['parentClass'])) {
-            return $settings['classBuilder']['Model']['AbstractValueObject']['parentClass'];
-        }
-
-        return '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractValueObject';
+        return $settings['classBuilder']['Model']['AbstractValueObject']['parentClass'] ??
+            '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractValueObject';
     }
 
     public function getParentClassForEntityObject(Extension $extension): string
     {
         $settings = $this->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
-        if (isset($settings['classBuilder']['Model']['AbstractEntity']['parentClass'])) {
-            return $settings['classBuilder']['Model']['AbstractEntity']['parentClass'];
-        }
-
-        return '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity';
+        return $settings['classBuilder']['Model']['AbstractEntity']['parentClass'] ??
+            '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity';
     }
 
     /**

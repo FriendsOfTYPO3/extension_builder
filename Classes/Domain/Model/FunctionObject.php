@@ -139,7 +139,7 @@ class FunctionObject extends AbstractObject
 
     public function removeParameter(string $parameterName, int $parameterPosition): bool
     {
-        if (isset($this->parameters[$parameterPosition]) && $this->parameters[$parameterPosition]->getName() == $parameterName) {
+        if (isset($this->parameters[$parameterPosition]) && $this->parameters[$parameterPosition]->getName() === $parameterName) {
             unset($this->parameters[$parameterPosition]);
             $this->updateParamTags();
             return true;

@@ -27,11 +27,6 @@ use PhpParser\Node\Stmt\TraitUse;
 class ClassObject extends Container
 {
     /**
-     * @var array
-     */
-    protected $constants = [];
-
-    /**
      * @var Property[]
      */
     protected $properties = [];
@@ -52,11 +47,6 @@ class ClassObject extends Container
      * @var string
      */
     protected $appendedBlock = '';
-
-    /**
-     * @var array
-     */
-    protected $aliasDeclarations = [];
 
     /**
      * @var array
@@ -378,7 +368,7 @@ class ClassObject extends Container
      */
     public function addAliasDeclaration($alias): void
     {
-        if (!in_array($alias, $this->aliasDeclarations)) {
+        if (!in_array($alias, $this->aliasDeclarations, true)) {
             $this->aliasDeclarations[] = $alias;
         }
     }

@@ -48,7 +48,6 @@ class ReplaceVisitor extends NodeVisitorAbstract
     {
         $nodeProperty = $this->nodeProperty;
         $nodeTypeMatch = false;
-        $type = $node->getType();
         if (!empty($this->nodeTypes)) {
             if (in_array($node->getType(), $this->nodeTypes)) {
                 $nodeTypeMatch = true;
