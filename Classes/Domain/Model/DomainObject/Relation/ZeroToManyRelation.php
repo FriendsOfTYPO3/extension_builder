@@ -60,11 +60,6 @@ class ZeroToManyRelation extends AnyToManyRelation
         $this->foreignKeyName = $foreignKeyName;
     }
 
-    /**
-     * Overwrite parent function
-     *
-     * @return bool
-     */
     public function getUseMMTable(): bool
     {
         return false;

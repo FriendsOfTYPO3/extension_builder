@@ -32,6 +32,7 @@ use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\Node\Stmt\Use_;
+use PhpParser\NodeAbstract;
 use PhpParser\NodeVisitorAbstract;
 
 /**
@@ -193,7 +194,7 @@ class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
         $this->classFactory = $classFactory;
     }
 
-    protected function isContainerNode($node): bool
+    protected function isContainerNode(NodeAbstract $node): bool
     {
         return $node instanceof Namespace_ || $node instanceof Class_;
     }

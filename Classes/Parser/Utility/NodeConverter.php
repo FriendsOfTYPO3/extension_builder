@@ -33,6 +33,7 @@ use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
+use PhpParser\NodeAbstract;
 
 class NodeConverter
 {
@@ -79,7 +80,7 @@ class NodeConverter
      * //TODO: support more node types?
      *
      * @static
-     * @param $node
+     * @param NodeAbstract|string $node
      * @return array|string|null
      */
     public static function getValueFromNode($node)

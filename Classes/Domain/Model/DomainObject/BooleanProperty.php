@@ -26,25 +26,16 @@ class BooleanProperty extends AbstractProperty
      */
     protected $defaultValue = false;
 
-    /**
-     * @return string
-     */
     public function getTypeForComment(): string
     {
         return 'bool';
     }
 
-    /**
-     * @return string
-     */
     public function getTypeHint(): string
     {
         return '';
     }
 
-    /**
-     * @return string
-     */
     public function getSqlDefinition(): string
     {
         return $this->getFieldName() . " smallint(5) unsigned DEFAULT '0' NOT NULL,";

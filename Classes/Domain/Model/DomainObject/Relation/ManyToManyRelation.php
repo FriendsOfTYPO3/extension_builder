@@ -45,9 +45,6 @@ class ManyToManyRelation extends AnyToManyRelation
         return '\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage';
     }
 
-    /**
-     * @return bool
-     */
     public function isOfTypeObjectStorage(): bool
     {
         return true;

@@ -50,11 +50,7 @@ class File extends Container
         $this->classes = $clonedClasses;
     }
 
-    /**
-     * @param string $className
-     * @return ClassObject|null
-     */
-    public function getClassByName($className)
+    public function getClassByName(string $className): ?ClassObject
     {
         foreach ($this->getClasses() as $class) {
             if ($class->getName() == $className) {
@@ -88,9 +84,6 @@ class File extends Container
         return reset($classes);
     }
 
-    /**
-     * @param NamespaceObject $namespace
-     */
     public function addNamespace(NamespaceObject $namespace): void
     {
         $this->namespaces[] = $namespace;

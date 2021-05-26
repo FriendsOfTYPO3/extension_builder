@@ -144,11 +144,6 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         return GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('extension_builder');
     }
 
-    /**
-     * @param string $extensionKey
-     * @param string $extensionStoragePath
-     * @return array settings
-     */
     public function getExtensionSettings(string $extensionKey, string $extensionStoragePath): array
     {
         $settings = [];
@@ -180,12 +175,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         return $result;
     }
 
-    /**
-     * @param string $extensionKey
-     * @param string|null $storagePath
-     * @return mixed|null
-     */
-    public static function getExtensionBuilderJson($extensionKey, $storagePath = null)
+    public static function getExtensionBuilderJson(string $extensionKey, ?string $storagePath = null)
     {
         $storagePath = $storagePath ?? Environment::getPublicPath() . '/typo3conf/ext/';
         $jsonFile = $storagePath . $extensionKey . '/' . self::EXTENSION_BUILDER_SETTINGS_FILE;
@@ -201,7 +191,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @return string
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
-    public function getPersistenceTable(string $className)
+    public function getPersistenceTable(string $className): string
     {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         return $objectManager->get(DataMapper::class)->getDataMap($className)->getTableName();
@@ -429,11 +419,15 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @param int $uid
      * @param array $modules
      * @param int $supposedModuleIndex
-     * @param int $supposedRelationIndex
+     * @param int|null $supposedRelationIndex
      * @return array
      */
-    protected function findModuleIndexByRelationUid($uid, $modules, $supposedModuleIndex, $supposedRelationIndex = null)
-    {
+    protected function findModuleIndexByRelationUid(
+        int $uid,
+        array $modules,
+        int $supposedModuleIndex,
+        ?int $supposedRelationIndex = null
+    ): array {
         $result = [
             'moduleId' => $supposedModuleIndex
         ];
@@ -473,12 +467,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         return $result;
     }
 
-    /**
-     * @param Extension $extension
-     *
-     * @return string
-     */
-    public function getParentClassForValueObject(Extension $extension)
+    public function getParentClassForValueObject(Extension $extension): string
     {
         $settings = $this->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
         if (isset($settings['classBuilder']['Model']['AbstractValueObject']['parentClass'])) {
@@ -488,12 +477,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         return '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractValueObject';
     }
 
-    /**
-     * @param Extension $extension
-     *
-     * @return string
-     */
-    public function getParentClassForEntityObject(Extension $extension)
+    public function getParentClassForEntityObject(Extension $extension): string
     {
         $settings = $this->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
         if (isset($settings['classBuilder']['Model']['AbstractEntity']['parentClass'])) {

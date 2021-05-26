@@ -256,7 +256,7 @@ class ClassBuilder implements SingletonInterface
         }
 
         if ($domainProperty->isRelation()) {
-            /** @var $domainProperty AbstractRelation */
+            /** @var AbstractRelation $domainProperty */
             if ($domainProperty->getLazyLoading()) {
                 if (!$classProperty->isTaggedWith(self::LAZY_ANNOTATION)) {
                     $classProperty->setTag(self::LAZY_ANNOTATION);
@@ -319,7 +319,7 @@ class ClassBuilder implements SingletonInterface
      * @throws FileNotFoundException
      * @throws SyntaxError
      */
-    protected function setPropertyRelatedMethods($domainProperty): void
+    protected function setPropertyRelatedMethods(AbstractProperty $domainProperty): void
     {
         if ($domainProperty->isAnyToManyRelation()) {
             $addMethod = $this->buildAddMethod($domainProperty);
@@ -337,11 +337,6 @@ class ClassBuilder implements SingletonInterface
         }
     }
 
-    /**
-     * @param AbstractProperty $domainProperty
-     *
-     * @return Method
-     */
     protected function buildGetterMethod(AbstractProperty $domainProperty): Method
     {
         $propertyName = $domainProperty->getName();
@@ -362,11 +357,6 @@ class ClassBuilder implements SingletonInterface
         return $getterMethod;
     }
 
-    /**
-     * @param AbstractProperty $domainProperty
-     *
-     * @return Method
-     */
     protected function buildSetterMethod(AbstractProperty $domainProperty): Method
     {
         $propertyName = $domainProperty->getName();
@@ -408,7 +398,7 @@ class ClassBuilder implements SingletonInterface
      * @throws FileNotFoundException
      * @throws SyntaxError
      */
-    protected function buildAddMethod($domainProperty): Method
+    protected function buildAddMethod(AbstractRelation $domainProperty): Method
     {
         $propertyName = $domainProperty->getName();
         $addMethodName = self::getMethodName($domainProperty, 'add');
@@ -464,7 +454,7 @@ class ClassBuilder implements SingletonInterface
      * @throws FileNotFoundException
      * @throws SyntaxError
      */
-    protected function buildRemoveMethod($domainProperty): Method
+    protected function buildRemoveMethod(AbstractRelation $domainProperty): Method
     {
         $propertyName = $domainProperty->getName();
         $removeMethodName = self::getMethodName($domainProperty, 'remove');
@@ -614,10 +604,6 @@ class ClassBuilder implements SingletonInterface
         return null;
     }
 
-    /**
-     * @param Method $method
-     * @param array $replacements
-     */
     protected function updateMethodBody(Method $method, array $replacements): void
     {
         $stmts = $method->getBodyStmts();
@@ -637,11 +623,7 @@ class ClassBuilder implements SingletonInterface
         $method->setBodyStmts($stmts);
     }
 
-    /**
-     * @param AbstractObject $object
-     * @param array $replacements
-     */
-    protected function updateDocComment($object, array $replacements): void
+    protected function updateDocComment(AbstractObject $object, array $replacements): void
     {
         $docComment = $object->getDocComment();
         // reset all tags (they will be restored from the parsed doc comment string)
@@ -656,12 +638,7 @@ class ClassBuilder implements SingletonInterface
         $object->setDocComment($parsedDocCommentString);
     }
 
-    /**
-     * @param AbstractProperty $domainProperty
-     * @param string $methodType (set,add,remove)
-     * @return string method body
-     */
-    public static function getParameterName(AbstractProperty $domainProperty, string $methodType)
+    public static function getParameterName(AbstractProperty $domainProperty, string $methodType): ?string
     {
         $propertyName = $domainProperty->getName();
 
@@ -676,13 +653,7 @@ class ClassBuilder implements SingletonInterface
         return null;
     }
 
-    /**
-     * @param AbstractProperty $domainProperty
-     * @param string $methodType
-     *
-     * @return string
-     */
-    public static function getParamTag(AbstractProperty $domainProperty, string $methodType)
+    public static function getParamTag(AbstractProperty $domainProperty, string $methodType): ?string
     {
         switch ($methodType) {
             case 'set':
@@ -771,11 +742,6 @@ class ClassBuilder implements SingletonInterface
         return $this->classFileObject;
     }
 
-    /**
-     * @param DomainObject $domainObject
-     *
-     * @return Method
-     */
     protected function buildInjectMethod(DomainObject $domainObject): Method
     {
         $repositoryName = $domainObject->getName() . 'Repository';
@@ -818,7 +784,7 @@ class ClassBuilder implements SingletonInterface
         DomainObject $domainObject,
         string $repositoryTemplateClassPath,
         $existingClassFileObject = null
-    ) {
+    ): File {
         $this->classObject = null;
         $className = $domainObject->getName() . 'Repository';
         $this->templateFileObject = $this->parserService->parseFile($repositoryTemplateClassPath);
