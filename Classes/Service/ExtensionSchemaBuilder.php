@@ -243,27 +243,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
         }
 
         $extension->setCategory($category);
-
-        // state
-        $state = Extension::STATE_ALPHA;
-        switch ($propertyConfiguration['emConf']['state']) {
-            case 'alpha':
-                $state = Extension::STATE_ALPHA;
-                break;
-            case 'beta':
-                $state = Extension::STATE_BETA;
-                break;
-            case 'stable':
-                $state = Extension::STATE_STABLE;
-                break;
-            case 'experimental':
-                $state = Extension::STATE_EXPERIMENTAL;
-                break;
-            case 'test':
-                $state = Extension::STATE_TEST;
-                break;
-        }
-        $extension->setState($state);
+        $extension->setState($this->getStateByName($propertyConfiguration['emConf']['state']));
 
         if (!empty($propertyConfiguration['originalExtensionKey'])) {
             // handle renaming of extensions
@@ -293,6 +273,23 @@ class ExtensionSchemaBuilder implements SingletonInterface
         if (!empty($settings)) {
             $extension->setSettings($settings);
         }
+    }
+
+    protected function getStateByName(string $stateKey): int
+    {
+        switch ($stateKey) {
+            case 'alpha':
+                return Extension::STATE_ALPHA;
+            case 'beta':
+                return Extension::STATE_BETA;
+            case 'stable':
+                return Extension::STATE_STABLE;
+            case 'experimental':
+                return Extension::STATE_EXPERIMENTAL;
+            case 'test':
+                return Extension::STATE_TEST;
+        }
+        return Extension::STATE_ALPHA;
     }
 
     protected function buildPerson(array $personValues): Person
