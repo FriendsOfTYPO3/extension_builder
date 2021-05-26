@@ -547,11 +547,11 @@ class FileGenerator
                 $domainRepositoryDirectory = 'Classes/Domain/Repository/';
                 $this->mkdir_deep($this->extensionDirectory, $domainRepositoryDirectory);
 
-                $this->mkdir_deep($this->extensionDirectory, 'Tests/Unit/Domain/Model');
                 $domainModelTestsDirectory = $this->extensionDirectory . 'Tests/Unit/Domain/Model/';
+                $this->mkdir_deep($this->extensionDirectory, 'Tests/Unit/Domain/Model');
 
-                $this->mkdir_deep($this->extensionDirectory, 'Tests/Unit/Controller');
                 $crudEnabledControllerTestsDirectory = $this->extensionDirectory . 'Tests/Unit/Controller/';
+                $this->mkdir_deep($this->extensionDirectory, 'Tests/Unit/Controller');
 
                 foreach ($this->extension->getDomainObjects() as $domainObject) {
                     $destinationFile = $domainModelDirectory . $domainObject->getName() . '.php';

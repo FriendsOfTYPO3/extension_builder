@@ -782,12 +782,11 @@ class RoundTrip implements SingletonInterface
         if (strpos($stringToParse, $separatorToken) === false) {
             $separatorToken = '_';
         }
-        $result = str_replace(
+        return str_replace(
             $separatorToken . ucfirst($this->previousExtensionKey) . $separatorToken,
             $separatorToken . ucfirst($this->extension->getExtensionKey()) . $separatorToken,
             $stringToParse
         );
-        return $result;
     }
 
     /**
@@ -917,8 +916,7 @@ class RoundTrip implements SingletonInterface
     protected function replaceUpperAndLowerCase($search, $replace, $haystack)
     {
         $result = str_replace(ucfirst($search), ucfirst($replace), $haystack);
-        $result = str_replace(lcfirst($search), lcfirst($replace), $result);
-        return $result;
+        return str_replace(lcfirst($search), lcfirst($replace), $result);
     }
 
     /**
@@ -946,7 +944,9 @@ class RoundTrip implements SingletonInterface
      */
     public function getForeignClassName(AbstractRelation $relation)
     {
-        if ($relation->getForeignModel() && isset($this->renamedDomainObjects[$relation->getForeignModel()->getUniqueIdentifier()])) {
+        if ($relation->getForeignModel()
+            && isset($this->renamedDomainObjects[$relation->getForeignModel()->getUniqueIdentifier()])
+        ) {
             /** @var $renamedObject DomainObject */
             $renamedObject = $this->renamedDomainObjects[$relation->getForeignModel()->getUniqueIdentifier()];
             return $renamedObject->getQualifiedClassName();
