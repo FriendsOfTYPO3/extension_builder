@@ -76,7 +76,7 @@ class FileGeneratorTest extends BaseFunctionalTest
             'Getter for boolean property was not generated'
         );
         self::assertRegExp(
-            '/.*public function setBlue\(\$blue\).*/',
+            '/.*public function setBlue\(bool \$blue\).*/',
             $classFileContent,
             'Setter for boolean property was not generated'
         );

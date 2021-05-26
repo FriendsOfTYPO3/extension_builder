@@ -46,7 +46,7 @@ class Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $name
      * @return void
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -67,7 +67,7 @@ class Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param bool $flag
      * @return void
      */
-    public function setFlag($flag)
+    public function setFlag(bool $flag)
     {
         $this->flag = $flag;
     }

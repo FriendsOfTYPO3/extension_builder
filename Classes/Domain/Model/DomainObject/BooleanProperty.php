@@ -33,7 +33,7 @@ class BooleanProperty extends AbstractProperty
 
     public function getTypeHint(): string
     {
-        return '';
+        return 'bool';
     }
 
     public function getSqlDefinition(): string

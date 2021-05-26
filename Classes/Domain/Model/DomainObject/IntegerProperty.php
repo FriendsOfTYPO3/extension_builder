@@ -33,7 +33,7 @@ class IntegerProperty extends AbstractProperty
 
     public function getTypeHint(): string
     {
-        return '';
+        return 'int';
     }
 
     public function getSqlDefinition(): string
