@@ -74,12 +74,12 @@ class NodeFactory implements SingletonInterface
                 $stmts[] = $statement;
             }
 
-            foreach ($classObject->getMethods() as $method) {
-                $methods[$method->getName()] = $this->buildMethodNode($method);
-            }
-
             foreach ($classObject->getProperties() as $property) {
                 $properties[$property->getName()] = $this->buildPropertyNode($property);
+            }
+
+            foreach ($classObject->getMethods() as $method) {
+                $methods[$method->getName()] = $this->buildMethodNode($method);
             }
 
             $constants = $classObject->getConstants();
@@ -160,6 +160,7 @@ class NodeFactory implements SingletonInterface
             }
         }
         $methodNodeBuilder->addStmts($methodObject->getBodyStmts());
+
         $methodNode = $methodNodeBuilder->getNode();
         $methodNode->flags = $methodObject->getModifiers();
         $methodNode->setAttribute('startLine', $methodObject->getStartLine());
