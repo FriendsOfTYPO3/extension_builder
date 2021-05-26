@@ -16,9 +16,13 @@
 namespace EBT\ExtensionBuilder\Service;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model;
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
+use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Exception\FileNotFoundException;
 use EBT\ExtensionBuilder\Utility\Inflector;
@@ -29,6 +33,7 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 
 /**
  * Performs all changes that are required to adapt the
@@ -42,17 +47,15 @@ class RoundTrip implements SingletonInterface
     const SPLIT_TOKEN = '## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder';
 
     const OVERWRITE_SETTINGS_SKIP = -1;
-
     const OVERWRITE_SETTINGS_MERGE = 1;
-
     const OVERWRITE_SETTINGS_KEEP = 2;
 
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\Extension
+     * @var Extension
      */
     protected $previousExtension;
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\Extension
+     * @var Extension
      */
     protected $extension;
     /**
@@ -80,41 +83,18 @@ class RoundTrip implements SingletonInterface
      * @var DomainObject[]
      */
     protected $previousDomainObjects = [];
-
     /**
      * @var DomainObject[]
      */
     protected $renamedDomainObjects = [];
-
     /**
-     * @var \EBT\ExtensionBuilder\Service\ParserService
+     * @var ParserService
      */
     protected $parserService;
-
     /**
-     * @param \EBT\ExtensionBuilder\Service\ParserService $parserService
-     */
-    public function injectParserService(ParserService $parserService): void
-    {
-        $this->parserService = $parserService;
-    }
-
-    /**
-     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
+     * @var ExtensionBuilderConfigurationManager
      */
     protected $configurationManager;
-
-    /**
-     * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
-     *
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     */
-    public function injectExtensionBuilderConfigurationManager(
-        ExtensionBuilderConfigurationManager $configurationManager
-    ): void {
-        $this->configurationManager = $configurationManager;
-    }
-
     /**
      * was the extension renamed?
      *
@@ -122,7 +102,7 @@ class RoundTrip implements SingletonInterface
      */
     protected $extensionRenamed = false;
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+     * @var ClassObject
      */
     protected $classObject;
     /**
@@ -135,18 +115,29 @@ class RoundTrip implements SingletonInterface
      */
     protected $settings = [];
 
+    public function injectParserService(ParserService $parserService): void
+    {
+        $this->parserService = $parserService;
+    }
+
+    public function injectExtensionBuilderConfigurationManager(
+        ExtensionBuilderConfigurationManager $configurationManager
+    ): void {
+        $this->configurationManager = $configurationManager;
+    }
+
     /**
      * If a JSON file is found in the extensions directory the previous version
      * of the extension is build to compare it with the new configuration coming
      * from the extension builder input
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     * @param Extension $extension
      *
-     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
+     * @throws ExtensionException
      * @throws Exception
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws InvalidConfigurationTypeException
      */
-    public function initialize(Model\Extension $extension): void
+    public function initialize(Extension $extension): void
     {
         $this->extension = $extension;
         $this->extensionDirectory = $this->extension->getExtensionDir();
@@ -224,7 +215,7 @@ class RoundTrip implements SingletonInterface
      *
      * @param DomainObject $currentDomainObject
      *
-     * @return File|null OR null
+     * @return File|null
      * @throws Exception
      */
     public function getDomainModelClassFile(DomainObject $currentDomainObject)
@@ -346,7 +337,6 @@ class RoundTrip implements SingletonInterface
      * @param DomainObject $currentDomainObject
      *
      * @return File|null
-     * @throws FileNotFoundException
      * @throws Exception
      */
     public function getControllerClassFile(DomainObject $currentDomainObject)
@@ -660,8 +650,8 @@ class RoundTrip implements SingletonInterface
 
         // compare all old properties with new ones
         foreach ($oldDomainObject->getProperties() as $oldProperty) {
-            /* @var  Model\DomainObject\AbstractProperty $oldProperty
-             * @var  Model\DomainObject\AbstractProperty $newProperty
+            /* @var AbstractProperty $oldProperty
+             * @var AbstractProperty $newProperty
              */
             if (isset($newProperties[$oldProperty->getUniqueIdentifier()])) {
                 $newProperty = $newProperties[$oldProperty->getUniqueIdentifier()];
@@ -696,9 +686,9 @@ class RoundTrip implements SingletonInterface
 
     /**
      * Removes all related methods, if a property was removed
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $propertyToRemove
+     * @param AbstractProperty $propertyToRemove
      */
-    protected function removePropertyAndRelatedMethods($propertyToRemove): void
+    protected function removePropertyAndRelatedMethods(AbstractProperty $propertyToRemove): void
     {
         $propertyName = $propertyToRemove->getName();
         $this->classObject->removeProperty($propertyName);
@@ -715,10 +705,10 @@ class RoundTrip implements SingletonInterface
 
     /**
      * Rename a property and update comment (var tag and description)
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $oldProperty
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $newProperty
+     * @param AbstractProperty $oldProperty
+     * @param AbstractProperty $newProperty
      */
-    protected function updateProperty($oldProperty, $newProperty): void
+    protected function updateProperty(AbstractProperty $oldProperty, AbstractProperty $newProperty): void
     {
         $classProperty = $this->classObject->getProperty($oldProperty->getName());
         if ($classProperty) {
@@ -742,12 +732,12 @@ class RoundTrip implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $oldProperty
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $newProperty
+     * @param AbstractProperty $oldProperty
+     * @param AbstractProperty $newProperty
      *
      * @return bool
      */
-    protected function relatedMethodsNeedUpdate($oldProperty, $newProperty)
+    protected function relatedMethodsNeedUpdate(AbstractProperty $oldProperty, AbstractProperty $newProperty)
     {
         if ($this->extensionRenamed) {
             return true;
@@ -764,7 +754,7 @@ class RoundTrip implements SingletonInterface
             return true;
         }
         if ($newProperty->isRelation()) {
-            /** @var $oldProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
+            /** @var AbstractRelation $oldProperty */
             // if only the related domain object was renamed
             $previousClassName = $this->updateExtensionKey($oldProperty->getForeignClassName());
             if ($this->getForeignClassName($newProperty) != $previousClassName) {
@@ -778,12 +768,12 @@ class RoundTrip implements SingletonInterface
     }
 
     /**
-     * replace occurences of the old extension key with the new one
+     * replace occurrences of the old extension key with the new one
      * used to compare classNames
-     * @param $stringToParse
+     * @param string $stringToParse
      * @return string
      */
-    protected function updateExtensionKey($stringToParse)
+    protected function updateExtensionKey(string $stringToParse): string
     {
         if (!$this->extensionRenamed) {
             return $stringToParse;
@@ -801,10 +791,10 @@ class RoundTrip implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $oldProperty
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $newProperty
+     * @param AbstractProperty $oldProperty
+     * @param AbstractProperty $newProperty
      */
-    protected function updatePropertyRelatedMethods($oldProperty, $newProperty): void
+    protected function updatePropertyRelatedMethods(AbstractProperty $oldProperty, AbstractProperty $newProperty): void
     {
         if ($newProperty->isAnyToManyRelation()) {
             $this->updateMethod($oldProperty, $newProperty, 'add');
@@ -831,11 +821,11 @@ class RoundTrip implements SingletonInterface
      * update means renaming of method name, parameter and replacing
      * parameter names in method body
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $oldProperty
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $newProperty
+     * @param AbstractProperty $oldProperty
+     * @param AbstractProperty $newProperty
      * @param string $methodType get,set,add,remove,is
      */
-    protected function updateMethod($oldProperty, $newProperty, $methodType): void
+    protected function updateMethod(AbstractProperty $oldProperty, AbstractProperty $newProperty, string $methodType): void
     {
         $oldMethodName = ClassBuilder::getMethodName($oldProperty, $methodType);
         // the method to be merged
@@ -882,7 +872,7 @@ class RoundTrip implements SingletonInterface
                 $typeHint = $methodParameter->getTypeHint();
                 if ($typeHint) {
                     if ($oldProperty->isRelation()) {
-                        /** @var $oldProperty \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation */
+                        /** @var AbstractRelation $oldProperty */
                         if ($typeHint == $oldProperty->getForeignClassName()) {
                             $methodParameter->setTypeHint($this->updateExtensionKey($this->getForeignClassName($newProperty)));
                         }
@@ -922,7 +912,7 @@ class RoundTrip implements SingletonInterface
      * @param string $replace
      * @param string $haystack
      *
-     * @return string[] with replaced values
+     * @return string with replaced values
      */
     protected function replaceUpperAndLowerCase($search, $replace, $haystack)
     {
@@ -948,13 +938,13 @@ class RoundTrip implements SingletonInterface
         );
     }
 
-    /**comments
+    /**
      * if the foreign DomainObject was renamed, the relation has to be updated also
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation $relation
+     * @param AbstractRelation $relation
      * @return string className of foreign class
      */
-    public function getForeignClassName($relation)
+    public function getForeignClassName(AbstractRelation $relation)
     {
         if ($relation->getForeignModel() && isset($this->renamedDomainObjects[$relation->getForeignModel()->getUniqueIdentifier()])) {
             /** @var $renamedObject DomainObject */
@@ -1015,7 +1005,7 @@ class RoundTrip implements SingletonInterface
      * @param string $path
      * @param string $fileName
      */
-    public function cleanUp($path, $fileName): void
+    public function cleanUp(string $path, string $fileName): void
     {
         if ($this->extensionRenamed) {
             // wo won't delete the old extension!
@@ -1047,12 +1037,12 @@ class RoundTrip implements SingletonInterface
      * 2  for keep existing file
      *
      * @param string $path of the file to get the settings for
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     * @param Extension $extension
      *
      * @return int overWriteSetting
      * @throws Exception
      */
-    public static function getOverWriteSettingForPath($path, $extension)
+    public static function getOverWriteSettingForPath(string $path, Extension $extension): ?int
     {
         $map = [
             'skip' => self::OVERWRITE_SETTINGS_SKIP,
@@ -1085,11 +1075,11 @@ class RoundTrip implements SingletonInterface
     /**
      * parse existing tca and set appropriate properties
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     * @param Extension $extension
      *
      * @throws Exception
      */
-    public static function prepareExtensionForRoundtrip(&$extension): void
+    public static function prepareExtensionForRoundtrip(Extension $extension): void
     {
         foreach ($extension->getDomainObjects() as $domainObject) {
             $existingTca = self::getTcaForDomainObject($domainObject);
@@ -1126,7 +1116,7 @@ class RoundTrip implements SingletonInterface
      *
      * @return array
      */
-    protected static function getTcaForDomainObject($domainObject)
+    protected static function getTcaForDomainObject(DomainObject $domainObject)
     {
         $tableName = $domainObject->getDatabaseTableName();
         return $GLOBALS['TCA'][$tableName] ?? null;
@@ -1140,7 +1130,7 @@ class RoundTrip implements SingletonInterface
      *
      * @throws Exception
      */
-    public static function moveAdditionalTcaToOverrideFile($domainObject): void
+    public static function moveAdditionalTcaToOverrideFile(DomainObject $domainObject): void
     {
         $tcaDir = $domainObject->getExtension()->getExtensionDir() . 'Configuration/TCA/';
         $existingTcaFile = $tcaDir . $domainObject->getName() . '.php';
@@ -1170,12 +1160,12 @@ class RoundTrip implements SingletonInterface
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
+     * @param Extension $extension
      * @param string $backupDir
      *
      * @throws Exception
      */
-    public static function backupExtension(Model\Extension $extension, $backupDir): void
+    public static function backupExtension(Extension $extension, $backupDir): void
     {
         if (empty($backupDir)) {
             throw new Exception('Please define a backup directory in extension configuration!');

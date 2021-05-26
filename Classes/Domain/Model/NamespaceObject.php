@@ -17,26 +17,17 @@ namespace EBT\ExtensionBuilder\Domain\Model;
 
 class NamespaceObject extends Container
 {
-    /**
-     * @param string $name
-     */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @param array $preIncludes
-     */
-    public function setPreIncludes($preIncludes): void
+    public function setPreIncludes(array $preIncludes): void
     {
         $this->preIncludes = $preIncludes;
     }
 
-    /**
-     * @param array $postIncludes
-     */
-    public function setPostIncludes($postIncludes): void
+    public function setPostIncludes(array $postIncludes): void
     {
         $this->postIncludes = $postIncludes;
     }

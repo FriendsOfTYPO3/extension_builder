@@ -88,17 +88,11 @@ class Action
      */
     protected $cacheable;
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name): void
     {
         $this->name = $name;
@@ -113,9 +107,6 @@ class Action
         $this->domainObject = $domainObject;
     }
 
-    /**
-     * @return DomainObject
-     */
     public function getDomainObject(): DomainObject
     {
         return $this->domainObject;
@@ -166,32 +157,17 @@ class Action
         return $this->needsPropertyPartial;
     }
 
-    /**
-     * setter for cacheable flag
-     *
-     * @param bool $cacheable
-     */
     public function setCacheable(bool $cacheable): void
     {
         $this->cacheable = $cacheable;
     }
 
-    /**
-     * Getter for cacheable
-     *
-     * @return bool|null $cacheable
-     */
     public function getCacheable(): ?bool
     {
         return $this->isCacheable();
     }
 
-    /**
-     * should this action be cacheable
-     *
-     * @return bool
-     */
-    public function isCacheable()
+    public function isCacheable(): ?bool
     {
         if (!isset($this->cacheable)) {
             $this->cacheable = !in_array($this->getName(), $this->actionNamesThatShouldNotBeCached);

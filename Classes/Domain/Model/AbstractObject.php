@@ -21,6 +21,7 @@ use EBT\ExtensionBuilder\Exception\FileNotFoundException;
 use EBT\ExtensionBuilder\Exception\SyntaxError;
 use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 use InvalidArgumentException;
+use PhpParser\Node\Identifier;
 use PhpParser\Node\Stmt\Class_;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -49,7 +50,7 @@ abstract class AbstractObject
         'final' => Class_::MODIFIER_FINAL
     ];
     /**
-     * @var string|\PhpParser\Node\Identifier
+     * @var string|Identifier
      */
     protected $name = '';
 
@@ -96,12 +97,6 @@ abstract class AbstractObject
      */
     protected $isModified = false;
 
-    /**
-     * Setter for name
-     *
-     * @param string $name name
-     * @return $this
-     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -111,7 +106,7 @@ abstract class AbstractObject
     /**
      * Getter for name
      *
-     * @return string|\PhpParser\Node\Identifier name
+     * @return string|Identifier
      */
     public function getName()
     {
@@ -145,9 +140,6 @@ abstract class AbstractObject
         return $this->tags;
     }
 
-    /**
-     * @return bool
-     */
     public function hasTags(): bool
     {
         return count($this->getTags()) > 0;
@@ -159,7 +151,7 @@ abstract class AbstractObject
      *
      * @return $this;
      */
-    public function setTags($tags): self
+    public function setTags(array $tags): self
     {
         $this->tags = $tags;
         return $this;
@@ -238,7 +230,7 @@ abstract class AbstractObject
      *
      * @return array
      */
-    public function getAnnotations()
+    public function getAnnotations(): array
     {
         $annotations = [];
         $tags = $this->getTags();
@@ -302,9 +294,6 @@ abstract class AbstractObject
         return $this;
     }
 
-    /**
-     * @return bool true if the description isn't empty
-     */
     public function hasDescription(): bool
     {
         return !empty($this->description);
@@ -329,8 +318,8 @@ abstract class AbstractObject
      * @param string $modifierName
      *
      * @return $this (for fluid interface)
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
+     * @throws FileNotFoundException
+     * @throws SyntaxError
      */
     public function addModifier(string $modifierName): self
     {
@@ -349,8 +338,8 @@ abstract class AbstractObject
      * @param string $modifierName
      *
      * @return $this (for fluid interface)
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
+     * @throws FileNotFoundException
+     * @throws SyntaxError
      */
     public function setModifier(string $modifierName): self
     {
@@ -371,40 +360,23 @@ abstract class AbstractObject
         return $this;
     }
 
-    /**
-     * @param string $modifierName
-     * @return $this (for fluid interface)
-     */
     public function removeModifier(string $modifierName): self
     {
         $this->modifiers ^= $this->mapModifierNames[$modifierName];
         return $this;
     }
 
-    /**
-     * @return $this (for fluid interface)
-     */
     public function removeAllModifiers(): self
     {
         $this->modifiers = 0;
         return $this;
     }
 
-    /**
-     * Getter for modifiers
-     *
-     * @return int
-     */
     public function getModifiers(): int
     {
         return $this->modifiers;
     }
 
-    /**
-     * getModifierNames
-     *
-     * @return array
-     */
     public function getModifierNames(): array
     {
         $modifiers = $this->getModifiers();
@@ -415,10 +387,10 @@ abstract class AbstractObject
      * validate if the modifier can be added to the current modifiers or not
      *
      * @param int $modifier
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
+     * @throws FileNotFoundException
+     * @throws SyntaxError
      */
-    protected function validateModifier($modifier): void
+    protected function validateModifier(int $modifier): void
     {
         if (($modifier == Class_::MODIFIER_FINAL && $this->isAbstract())
             || ($modifier == Class_::MODIFIER_ABSTRACT && $this->isFinal())
@@ -486,7 +458,7 @@ abstract class AbstractObject
      *
      * @param string $line A line of a doc comment which starts with an @-sign
      */
-    protected function parseTag($line): void
+    protected function parseTag(string $line): void
     {
         $tagAndValue = [];
         if (preg_match('/@([A-Za-z0-9\\\-]+)(\(.*\))? ?(.*)/', $line, $tagAndValue) === 0) {
@@ -567,9 +539,6 @@ abstract class AbstractObject
         return !empty($this->docComment);
     }
 
-    /**
-     * @param string $commentText
-     */
     public function addComment(string $commentText): void
     {
         // parsed comments have no line at the end

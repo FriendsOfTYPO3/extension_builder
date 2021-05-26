@@ -89,7 +89,7 @@ abstract class AbstractProperty
     protected $useRTE = false;
 
     /**
-     * @var string the property type of this property
+     * @var string the data type of this property
      */
     protected $type = '';
 
@@ -286,19 +286,11 @@ abstract class AbstractProperty
      */
     abstract public function getTypeHint(): ?string;
 
-    /**
-     * true if this property is required, false otherwise.
-     *
-     * @return bool
-     */
     public function getRequired(): bool
     {
         return $this->required;
     }
 
-    /**
-     * @return bool
-     */
     public function getCascadeRemove(): bool
     {
         return $this->cascadeRemove;
@@ -475,33 +467,21 @@ abstract class AbstractProperty
         return $this->value;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $type
-     */
     public function setType(?string $type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * @return bool
-     */
     public function isFileReference(): bool
     {
         return in_array($this->type, ['Image', 'File']);
     }
 
-    /**
-     * @return bool
-     */
     public function isSearchable(): bool
     {
         return $this->searchable;

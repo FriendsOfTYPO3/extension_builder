@@ -40,17 +40,11 @@ class Comment
         $this->line = $line;
     }
 
-    /**
-     * @param string $text
-     */
     public function setText(string $text): void
     {
         $this->text = $text;
     }
 
-    /**
-     * @return string
-     */
     public function getText(): string
     {
         return $this->text;
