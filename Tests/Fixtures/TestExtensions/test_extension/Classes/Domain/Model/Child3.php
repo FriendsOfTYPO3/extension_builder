@@ -56,7 +56,7 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $name
      * @return void
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -77,7 +77,7 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $password
      * @return void
      */
-    public function setPassword($password)
+    public function setPassword(string $password)
     {
         $this->password = $password;
     }

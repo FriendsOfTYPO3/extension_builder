@@ -120,7 +120,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $name
      * @return void
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -141,7 +141,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $identifier
      * @return void
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier(string $identifier)
     {
         $this->identifier = $identifier;
     }
@@ -162,7 +162,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $description
      * @return void
      */
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
         $this->description = $description;
     }
@@ -204,7 +204,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $mail
      * @return void
      */
-    public function setMail($mail)
+    public function setMail(string $mail)
     {
         $this->mail = $mail;
     }

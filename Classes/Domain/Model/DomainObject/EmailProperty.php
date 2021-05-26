@@ -37,7 +37,7 @@ class EmailProperty extends AbstractProperty
 
     public function getTypeHint(): string
     {
-        return '';
+        return 'string';
     }
 
     public function getSqlDefinition(): string
