@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -44,9 +46,9 @@ use TYPO3\CMS\Core\SingletonInterface;
  */
 class ClassBuilder implements SingletonInterface
 {
-    const VALIDATE_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")';
-    const CASCADE_REMOVE_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")';
-    const LAZY_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\ORM\Lazy';
+    public const VALIDATE_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")';
+    public const CASCADE_REMOVE_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")';
+    public const LAZY_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\ORM\Lazy';
 
     /**
      * The class file object created to container the generated class
@@ -209,7 +211,7 @@ class ClassBuilder implements SingletonInterface
     /**
      * @param AbstractProperty $domainProperty
      */
-    protected function addClassProperty($domainProperty): void
+    protected function addClassProperty(AbstractProperty $domainProperty): void
     {
         // TODO the following part still needs some enhancement:
         // what should be obligatory in existing properties and methods
@@ -554,7 +556,7 @@ class ClassBuilder implements SingletonInterface
         }
         if (in_array($actionName, ['show', 'edit', 'create', 'update', 'delete'])) {
             // these actions need a parameter
-            if (in_array($actionName, ['create'])) {
+            if ($actionName === 'create') {
                 $parameterName = 'new' . $domainObject->getName();
             } else {
                 $parameterName = lcfirst($domainObject->getName());
@@ -798,7 +800,7 @@ class ClassBuilder implements SingletonInterface
             }
         }
 
-        if ($this->classObject == null) {
+        if ($this->classObject === null) {
             $this->classFileObject = clone $this->templateFileObject;
             $this->classObject = clone $this->templateClassObject;
             $this->classObject->resetAll();

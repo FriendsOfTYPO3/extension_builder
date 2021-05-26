@@ -392,14 +392,14 @@ abstract class AbstractObject
      */
     protected function validateModifier(int $modifier): void
     {
-        if (($modifier == Class_::MODIFIER_FINAL && $this->isAbstract())
-            || ($modifier == Class_::MODIFIER_ABSTRACT && $this->isFinal())
+        if (($modifier === Class_::MODIFIER_FINAL && $this->isAbstract())
+            || ($modifier === Class_::MODIFIER_ABSTRACT && $this->isFinal())
         ) {
             throw new SyntaxError('Abstract and Final can\'t be applied both to same object');
         }
 
-        if (($modifier == Class_::MODIFIER_STATIC && $this->isAbstract())
-            || ($modifier == Class_::MODIFIER_ABSTRACT && $this->isStatic())
+        if (($modifier === Class_::MODIFIER_STATIC && $this->isAbstract())
+            || ($modifier === Class_::MODIFIER_ABSTRACT && $this->isStatic())
         ) {
             throw new FileNotFoundException('Abstract and Static can\'t be applied both to same object');
         }

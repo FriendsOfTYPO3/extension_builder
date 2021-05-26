@@ -64,16 +64,17 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         $description = 'My cool fancy description';
         $name = 'ExtName';
         $extensionKey = $this->extensionKey;
-        $state = 0;
         $version = '1.0.4';
+        $vendor = 'Vendor';
 
         $input = [
             'properties' => [
                 'description' => $description,
                 'extensionKey' => $extensionKey,
                 'name' => $name,
+                'vendorName' => $vendor,
                 'emConf' => [
-                    'state' => $state,
+                    'state' => 'alpha',
                     'version' => $version
                 ]
             ],
@@ -84,7 +85,8 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         $extension->setDescription($description);
         $extension->setName($name);
         $extension->setExtensionKey($extensionKey);
-        $extension->setState($state);
+        $extension->setState(Extension::STATE_ALPHA);
+        $extension->setVendorName($vendor);
         $extension->setVersion($version);
         $extension->setExtensionDir('');
         $extension->setStoragePath('tmp');
@@ -117,6 +119,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                 'description' => 'myDescription',
                 'extensionKey' => 'myExtensionKey',
                 'name' => 'myName',
+                'vendorName' => 'Vendor',
                 'emConf' => [
                     'state' => 'beta',
                     'version' => ''
@@ -230,6 +233,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                 'description' => 'Some description',
                 'extensionKey' => $this->extensionKey,
                 'name' => 'My ext name',
+                'vendorName' => 'Vendor',
                 'emConf' => [
                     'state' => 'beta',
                     'version' => '1.0.0',
@@ -268,6 +272,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         $extension->setDescription('Some description');
         $extension->setExtensionDir('');
         $extension->setStoragePath('tmp');
+        $extension->setVendorName('Vendor');
 
         $blog = new DomainObject();
         $blog->setName('Blog');
