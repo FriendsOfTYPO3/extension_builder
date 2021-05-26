@@ -7,7 +7,7 @@ namespace VENDOR\Package\Domain\Model;
 /**
  * Class Model
  */
-class Model extends AbstractEntity
+class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
     /**
      * property
