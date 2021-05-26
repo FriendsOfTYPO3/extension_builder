@@ -112,28 +112,21 @@ class Container extends AbstractObject
         $this->constants[$name] = $value;
     }
 
-    /**
-     * @return array constants
-     */
-    public function getConstants()
+    public function getConstants(): array
     {
         return $this->constants;
     }
 
     /**
-     * @param $constantName
+     * @param string $constantName
      * @return mixed
      */
-    public function getConstant($constantName)
+    public function getConstant(string $constantName)
     {
         return $this->constants[$constantName] ?? null;
     }
 
-    /**
-     * @param string $constantName
-     * @return bool true if successfully removed
-     */
-    public function removeConstant($constantName)
+    public function removeConstant(string $constantName): bool
     {
         if (isset($this->constants[$constantName])) {
             unset($this->constants[$constantName]);
@@ -150,10 +143,7 @@ class Container extends AbstractObject
         $this->postIncludes[] = $postInclude;
     }
 
-    /**
-     * @return array
-     */
-    public function getPostIncludes()
+    public function getPostIncludes(): array
     {
         return $this->postIncludes;
     }
@@ -166,10 +156,7 @@ class Container extends AbstractObject
         $this->preIncludes[] = $preInclude;
     }
 
-    /**
-     * @return array
-     */
-    public function getPreIncludes()
+    public function getPreIncludes(): array
     {
         return $this->preIncludes;
     }
@@ -193,7 +180,7 @@ class Container extends AbstractObject
     /**
      * @return FunctionObject[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return $this->functions;
     }
@@ -211,25 +198,16 @@ class Container extends AbstractObject
         $this->postClassStatements[] = $postClassStatements;
     }
 
-    /**
-     * @return array
-     */
     public function getPostClassStatements(): array
     {
         return $this->postClassStatements;
     }
 
-    /**
-     * @param Node $preClassStatements
-     */
-    public function addPreClassStatements($preClassStatements): void
+    public function addPreClassStatements(Node $preClassStatements): void
     {
         $this->preClassStatements[] = $preClassStatements;
     }
 
-    /**
-     * @return array
-     */
     public function getPreClassStatements(): array
     {
         return $this->preClassStatements;
@@ -246,7 +224,7 @@ class Container extends AbstractObject
     /**
      * @return string[]
      */
-    public function getAliasDeclarations()
+    public function getAliasDeclarations(): array
     {
         return $this->aliasDeclarations;
     }

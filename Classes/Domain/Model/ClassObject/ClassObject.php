@@ -19,6 +19,7 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
 
 use EBT\ExtensionBuilder\Domain\Model\Container;
 use PhpParser\Node;
+use PhpParser\Node\Stmt\TraitUse;
 
 /**
  * Class schema representing a "PHP class" in the context of software development
@@ -89,10 +90,7 @@ class ClassObject extends Container
      */
     protected $isTemplate = false;
 
-    /**
-     * @param string $name
-     */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
@@ -255,9 +253,6 @@ class ClassObject extends Container
         return null;
     }
 
-    /**
-     * @param array $properties
-     */
     public function setProperties(array $properties): void
     {
         $this->properties = $properties;
@@ -271,10 +266,6 @@ class ClassObject extends Container
         return $this->properties;
     }
 
-    /**
-     * @param string $propertyName
-     * @return bool true if successfully removed
-     */
     public function removeProperty(string $propertyName): bool
     {
         if ($this->propertyExists($propertyName)) {
@@ -309,10 +300,6 @@ class ClassObject extends Container
         return is_array($this->methods) && in_array($propertyName, $this->getPropertyNames(), true);
     }
 
-    /**
-     * @param Property $classProperty
-     * @return bool true if successfully added
-     */
     public function addProperty(Property $classProperty): bool
     {
         if (!$this->propertyExists($classProperty->getName())) {
@@ -387,7 +374,7 @@ class ClassObject extends Container
     }
 
     /**
-     * @param $alias
+     * @param string $alias
      */
     public function addAliasDeclaration($alias): void
     {
@@ -396,25 +383,14 @@ class ClassObject extends Container
         }
     }
 
-    /**
-     * @return array
-     */
-    public function getAliasDeclarations()
-    {
-        return $this->aliasDeclarations;
-    }
-
-    public function addUseTraitStatement(string $statement): void
+    public function addUseTraitStatement(TraitUse $statement): void
     {
         if (!in_array($statement, $this->useTraitStatements)) {
             $this->useTraitStatements[] = $statement;
         }
     }
 
-    /**
-     * @return array
-     */
-    public function getUseTraitStatement()
+    public function getUseTraitStatement(): array
     {
         return $this->useTraitStatements;
     }
@@ -442,10 +418,7 @@ class ClassObject extends Container
         return in_array($interfaceName, $this->interfaceNames);
     }
 
-    /**
-     * @param $interfaceNameToRemove
-     */
-    public function removeInterface($interfaceNameToRemove): void
+    public function removeInterface(string $interfaceNameToRemove): void
     {
         $interfaceNames = [];
         foreach ($this->interfaceNames as $interfaceName) {

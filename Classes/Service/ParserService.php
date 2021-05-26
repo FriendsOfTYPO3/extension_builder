@@ -79,10 +79,6 @@ class ParserService implements SingletonInterface
         return $this->fileVisitor->getFileObject();
     }
 
-    /**
-     * @param string $fileName
-     * @return File
-     */
     public function parseFile(string $fileName): File
     {
         if (!file_exists($fileName)) {
@@ -97,37 +93,21 @@ class ParserService implements SingletonInterface
         return $fileObject;
     }
 
-    /**
-     * @param FileVisitorInterface $visitor
-     */
     public function setFileVisitor(FileVisitorInterface $visitor): void
     {
         $this->classFileVisitor = $visitor;
     }
 
-    /**
-     * @param TraverserInterface $traverser
-     */
     public function setTraverser(TraverserInterface $traverser): void
     {
         $this->traverser = $traverser;
     }
 
-    /**
-     * @param ClassFactoryInterface $classFactory
-     */
     public function setClassFactory(ClassFactoryInterface $classFactory): void
     {
         $this->classFactory = $classFactory;
     }
 
-    /**
-     * @param array $stmts
-     * @param array $replacements
-     * @param array|null $nodeTypes
-     * @param string $nodeProperty
-     * @return array
-     */
     public function replaceNodeProperty(
         array $stmts,
         array $replacements,

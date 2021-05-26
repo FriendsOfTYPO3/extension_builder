@@ -27,9 +27,6 @@ use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Property;
 
-/**
- * interface for class factory
- */
 interface ClassFactoryInterface
 {
     public function buildClassObject(Class_ $node): ClassObject;

@@ -61,10 +61,6 @@ abstract class AnyToManyRelation extends AbstractRelation
         return $relationTableName;
     }
 
-    /**
-     * Setter for useExtendedRelationTableName
-     * @param bool $useExtendedRelationTableName
-     */
     public function setUseExtendedRelationTableName(bool $useExtendedRelationTableName): void
     {
         $this->useExtendedRelationTableName = $useExtendedRelationTableName;
@@ -74,7 +70,7 @@ abstract class AnyToManyRelation extends AbstractRelation
      * setter for relation table name
      * if a table name is configured in TCA the table name is ste to the configured name
      *
-     * @param $relationTableName
+     * @param string $relationTableName
      */
     public function setRelationTableName(string $relationTableName): void
     {
@@ -95,17 +91,11 @@ abstract class AnyToManyRelation extends AbstractRelation
         return true;
     }
 
-    /**
-     * @return int
-     */
     public function getMaxItems(): int
     {
         return $this->maxItems;
     }
 
-    /**
-     * @param int $maxItems
-     */
     public function setMaxItems(int $maxItems): void
     {
         $this->maxItems = $maxItems;

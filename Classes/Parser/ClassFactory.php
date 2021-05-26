@@ -45,7 +45,7 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
 {
     public function buildClassObject(Class_ $classNode): ClassObject
     {
-        $classObject = new ClassObject($classNode->name);
+        $classObject = new ClassObject((string)$classNode->name);
         foreach ($classNode->implements as $interfaceNode) {
             $classObject->addInterfaceName($interfaceNode);
         }

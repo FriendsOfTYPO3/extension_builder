@@ -167,9 +167,6 @@ class DomainObject
         $this->uniqueIdentifier = $uniqueIdentifier;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         if ($this->description) {
@@ -179,9 +176,6 @@ class DomainObject
         return $this->getName();
     }
 
-    /**
-     * @param string $description
-     */
     public function setDescription(string $description): void
     {
         $this->description = $description;
@@ -195,9 +189,6 @@ class DomainObject
         return $this->aggregateRoot;
     }
 
-    /**
-     * @return bool
-     */
     public function isAggregateRoot(): bool
     {
         return $this->getAggregateRoot();
@@ -230,14 +221,11 @@ class DomainObject
     /**
      * @param $entity $entity true if it is an entity, false if it is a ValueObject
      */
-    public function setEntity($entity): void
+    public function setEntity(bool $entity): void
     {
-        $this->entity = (bool)$entity;
+        $this->entity = $entity;
     }
 
-    /**
-     * @param AbstractProperty $property
-     */
     public function addProperty(AbstractProperty $property): void
     {
         $property->setDomainObject($this);
@@ -257,7 +245,7 @@ class DomainObject
      *
      * @return AbstractProperty|null
      */
-    public function getPropertyByName($propertyName)
+    public function getPropertyByName(string $propertyName)
     {
         foreach ($this->properties as $property) {
             if ($property->getName() == $propertyName) {
@@ -273,7 +261,7 @@ class DomainObject
      *
      * @return ZeroToManyRelation[]
      */
-    public function getZeroToManyRelationProperties()
+    public function getZeroToManyRelationProperties(): array
     {
         $relationProperties = [];
         foreach ($this->properties as $property) {
@@ -300,17 +288,11 @@ class DomainObject
         return $relationProperties;
     }
 
-    /**
-     * @return bool
-     */
     public function hasRelations(): bool
     {
         return count($this->getAnyToManyRelationProperties()) === 0 && count($this->getZeroToManyRelationProperties()) === 0;
     }
 
-    /**
-     * @param Action $action
-     */
     public function addAction(Action $action): void
     {
         $action->setDomainObject($this);

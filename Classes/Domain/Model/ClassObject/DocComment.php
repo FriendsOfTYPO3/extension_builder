@@ -51,7 +51,7 @@ class DocComment extends Comment
      *
      * @param string $docComment
      */
-    public function initialize($docComment): void
+    public function initialize(string $docComment): void
     {
         $lines = explode(chr(10), $docComment);
         foreach ($lines as $line) {

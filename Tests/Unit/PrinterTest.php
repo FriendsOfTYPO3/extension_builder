@@ -324,7 +324,7 @@ class PrinterTest extends BaseUnitTest
      * @return ReflectionClass
      * @throws ReflectionException
      */
-    protected function compareClasses(File $classFileObject, string $pathToGeneratedFile)
+    protected function compareClasses(File $classFileObject, string $pathToGeneratedFile): ReflectionClass
     {
         self::assertFileExists($pathToGeneratedFile, $pathToGeneratedFile . 'not exists');
         $classObject = $classFileObject->getFirstClass();

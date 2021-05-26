@@ -24,8 +24,5 @@ interface FileVisitorInterface
 {
     public function getFileObject(): File;
 
-    /**
-     * @param ClassFactoryInterface $classFactory
-     */
     public function setClassFactory(ClassFactoryInterface $classFactory): void;
 }

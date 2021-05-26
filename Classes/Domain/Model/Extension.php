@@ -381,13 +381,7 @@ class Extension
         return $domainObjects;
     }
 
-    /**
-     * @param DomainObject $domainObject1
-     * @param DomainObject $domainObject2
-     * @param array $classHierarchy
-     * @return bool
-     */
-    protected function isParentOf(DomainObject $domainObject1, DomainObject $domainObject2, $classHierarchy): bool
+    protected function isParentOf(DomainObject $domainObject1, DomainObject $domainObject2): bool
     {
         return $domainObject2->getParentClass() === $domainObject1->getFullQualifiedClassName();
     }
@@ -397,7 +391,7 @@ class Extension
      *
      * @param DomainObject $domainObject
      *
-     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
+     * @throws ExtensionException
      */
     public function addDomainObject(DomainObject $domainObject): void
     {
@@ -413,11 +407,7 @@ class Extension
         $this->domainObjects[$domainObject->getName()] = $domainObject;
     }
 
-    /**
-     * @param string $domainObjectName
-     * @return DomainObject
-     */
-    public function getDomainObjectByName($domainObjectName): ?DomainObject
+    public function getDomainObjectByName(string $domainObjectName): ?DomainObject
     {
         return $this->domainObjects[$domainObjectName] ?? null;
     }

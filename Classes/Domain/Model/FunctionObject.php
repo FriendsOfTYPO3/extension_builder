@@ -77,11 +77,6 @@ class FunctionObject extends AbstractObject
         return $this;
     }
 
-    /**
-     * Getter for body statements
-     *
-     * @return array body
-     */
     public function getBodyStmts(): array
     {
         return $this->bodyStmts;
@@ -97,16 +92,11 @@ class FunctionObject extends AbstractObject
         return $this->parameters;
     }
 
-    /**
-     * getter for parameter names
-     *
-     * @return array parameter names
-     */
     public function getParameterNames(): array
     {
         $parameterNames = [];
         if (is_array($this->parameters)) {
-            /** @var $parameter MethodParameter */
+            /** @var MethodParameter $parameter */
             foreach ($this->parameters as $parameter) {
                 $parameterNames[] = $parameter->getName();
             }
@@ -114,11 +104,6 @@ class FunctionObject extends AbstractObject
         return $parameterNames;
     }
 
-    /**
-     * @param int $position
-     *
-     * @return MethodParameter|null
-     */
     public function getParameterByPosition(int $position): ?MethodParameter
     {
         return $this->parameters[$position] ?? null;
@@ -136,12 +121,6 @@ class FunctionObject extends AbstractObject
         return $this;
     }
 
-    /**
-     * setter for a single parameter
-     *
-     * @param MethodParameter $parameter
-     * @return $this
-     */
     public function setParameter(MethodParameter $parameter): self
     {
         $this->parameters[$parameter->getPosition()] = $parameter;
@@ -158,13 +137,6 @@ class FunctionObject extends AbstractObject
         $this->parameters[$parameter->getPosition()] = $parameter;
     }
 
-    /**
-     * removes a parameter
-     *
-     * @param string $parameterName
-     * @param int $parameterPosition
-     * @return bool true (if successfully removed)
-     */
     public function removeParameter(string $parameterName, int $parameterPosition): bool
     {
         if (isset($this->parameters[$parameterPosition]) && $this->parameters[$parameterPosition]->getName() == $parameterName) {
@@ -176,14 +148,6 @@ class FunctionObject extends AbstractObject
         return false;
     }
 
-    /**
-     * renameParameter
-     *
-     * @param string $oldName
-     * @param string $newName
-     * @param int $parameterPosition
-     * @return bool true (if successfully removed)
-     */
     public function renameParameter(string $oldName, string $newName, int $parameterPosition): bool
     {
         if (isset($this->parameters[$parameterPosition])) {
@@ -198,16 +162,16 @@ class FunctionObject extends AbstractObject
     }
 
     /**
-     * TODO: THe sorting of tags/annotations should be controlled
+     * TODO: The sorting of tags/annotations should be controlled
      *
-     * @return []
+     * @return array
      */
-    public function getAnnotations()
+    public function getAnnotations(): array
     {
         $annotations = parent::getAnnotations();
         if (is_array($this->parameters) && count($this->parameters) > 0 && !$this->isTaggedWith('param')) {
             $paramTags = [];
-            /** @var $parameter MethodParameter */
+            /** @var MethodParameter $parameter */
             foreach ($this->parameters as $parameter) {
                 $paramTags[] = 'param ' . strtolower($parameter->getVarType()) . '$' . $parameter->getName();
             }
@@ -283,25 +247,16 @@ class FunctionObject extends AbstractObject
         $this->startLine = $startLine;
     }
 
-    /**
-     * @return int
-     */
     public function getStartLine(): int
     {
         return $this->startLine;
     }
 
-    /**
-     * @param int $endLine
-     */
     public function setEndLine(int $endLine): void
     {
         $this->endLine = $endLine;
     }
 
-    /**
-     * @return int
-     */
     public function getEndLine(): int
     {
         return $this->endLine;

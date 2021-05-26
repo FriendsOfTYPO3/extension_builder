@@ -19,12 +19,9 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use TYPO3\CMS\Core\SingletonInterface;
 
-/**
- * provides helper methods
- */
 class Tools implements SingletonInterface
 {
-    public static function parseTableNameFromClassName($className)
+    public static function parseTableNameFromClassName($className): string
     {
         if (strpos($className, '\\') !== false) {
             if (strpos($className, '\\') === 0) {
@@ -50,7 +47,7 @@ class Tools implements SingletonInterface
      *
      * @return string method body
      */
-    public static function getParameterName(AbstractProperty $domainProperty, string $methodType)
+    public static function getParameterName(AbstractProperty $domainProperty, string $methodType): ?string
     {
         $propertyName = $domainProperty->getName();
 
@@ -64,14 +61,10 @@ class Tools implements SingletonInterface
             case 'remove':
                 return Inflector::singularize($propertyName) . 'ToRemove';
         }
+        return null;
     }
 
-    /**
-     * @param AbstractProperty $domainProperty
-     * @param string $methodType
-     * @return string
-     */
-    public static function getParamTag(AbstractProperty $domainProperty, string $methodType)
+    public static function getParamTag(AbstractProperty $domainProperty, string $methodType): ?string
     {
         switch ($methodType) {
             case 'set':
@@ -90,6 +83,7 @@ class Tools implements SingletonInterface
                 $paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';
                 return $paramTag;
         }
+        return null;
     }
 
     /**

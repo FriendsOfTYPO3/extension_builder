@@ -226,8 +226,8 @@ class BuilderModuleController extends ActionController
             }
             if (!empty($validationConfigurationResult['errors'])) {
                 $errorMessage = '';
-                /** @var \Exception $exception */
                 foreach ($validationConfigurationResult['errors'] as $exception) {
+                    /** @var \Exception $exception */
                     $errorMessage .= '<br />' . $exception->getMessage();
                 }
                 throw new \Exception($errorMessage);
