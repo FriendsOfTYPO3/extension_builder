@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -88,7 +90,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @return array
      * @throws \Exception
      */
-    public function getConfigurationFromModeler()
+    public function getConfigurationFromModeler(): array
     {
         if (empty($this->inputData)) {
             throw new \Exception('No inputData!');
@@ -394,10 +396,10 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         foreach ($jsonConfig['wires'] as &$wire) {
             // format: relation_1
             $parts = explode('_', $wire['src']['terminal']);
-            $supposedRelationIndex = $parts[1];
+            $supposedRelationIndex = (int)$parts[1];
             $uid = $wire['src']['uid'];
             $wire['src'] = $this->findModuleIndexByRelationUid(
-                $wire['src']['uid'],
+                (int)$wire['src']['uid'],
                 $jsonConfig['modules'],
                 $wire['src']['moduleId'],
                 $supposedRelationIndex
@@ -406,7 +408,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
 
             $uid = $wire['tgt']['uid'];
             $wire['tgt'] = $this->findModuleIndexByRelationUid(
-                $wire['tgt']['uid'],
+                (int)$wire['tgt']['uid'],
                 $jsonConfig['modules'],
                 $wire['tgt']['moduleId']
             );
