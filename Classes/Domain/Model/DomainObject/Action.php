@@ -89,6 +89,12 @@ class Action
      * @var bool|null
      */
     protected $cacheable;
+    /**
+     * Whether this is a custom action and needs a custom fluid template
+     *
+     * @var bool
+     */
+    protected $customAction = false;
 
     public function getName(): string
     {
@@ -175,5 +181,15 @@ class Action
             $this->cacheable = !in_array($this->getName(), $this->actionNamesThatShouldNotBeCached);
         }
         return $this->cacheable;
+    }
+
+    public function isCustomAction(): bool
+    {
+        return $this->customAction;
+    }
+
+    public function setCustomAction(bool $customAction): void
+    {
+        $this->customAction = $customAction;
     }
 }
