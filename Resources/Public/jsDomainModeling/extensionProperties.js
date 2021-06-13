@@ -126,14 +126,20 @@ extbaseModeling_wiringEditorLanguage.propertiesFields = [
           inputParams: {
             name: 'state',
             label: TYPO3.settings.extensionBuilder._LOCAL_LANG.state,
+            selectValues: [
+              'alpha',
+              'beta',
+              'stable',
+              'experimental',
+              'test'
+            ],
             selectOptions: [
               TYPO3.settings.extensionBuilder._LOCAL_LANG.alpha,
               TYPO3.settings.extensionBuilder._LOCAL_LANG.beta,
               TYPO3.settings.extensionBuilder._LOCAL_LANG.stable,
               TYPO3.settings.extensionBuilder._LOCAL_LANG.experimental,
               TYPO3.settings.extensionBuilder._LOCAL_LANG.test
-            ],
-            selectValues: ['alpha','beta','stable','experimental','test']
+            ]
           }
         },
         {
@@ -180,11 +186,11 @@ extbaseModeling_wiringEditorLanguage.propertiesFields = [
             id: 'targetVersionSelector',
             label: TYPO3.settings.extensionBuilder._LOCAL_LANG.target_version,
             description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_target_version,
-            selectOptions: [
-              'TYPO3 v10.4'
-            ],
             selectValues: [
               '10.4.0-10.4.99'
+            ],
+            selectOptions: [
+              'TYPO3 v10.4'
             ],
             value: '10.4.0-10.4.99'
           }
@@ -196,8 +202,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields = [
             name: 'dependsOn',
             id: 'extensionDependencies',
             description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_dependsOn,
-            cols:20,
-            rows:6,
+            cols: 20,
+            rows: 6,
             value: 'typo3 => 10.4.0-10.4.99\n'
           }
         }
@@ -228,13 +234,13 @@ extbaseModeling_wiringEditorLanguage.propertiesFields = [
               inputParams: {
                 name: 'role',
                 label: TYPO3.settings.extensionBuilder._LOCAL_LANG.role,
-                selectOptions: [
-                  TYPO3.settings.extensionBuilder._LOCAL_LANG.developer,
-                  TYPO3.settings.extensionBuilder._LOCAL_LANG.product_manager
-                ],
                 selectValues: [
                   'Developer',
                   'Product Manager'
+                ],
+                selectOptions: [
+                  TYPO3.settings.extensionBuilder._LOCAL_LANG.developer,
+                  TYPO3.settings.extensionBuilder._LOCAL_LANG.product_manager
                 ]
               }
             },
@@ -293,8 +299,8 @@ extbaseModeling_wiringEditorLanguage.propertiesFields = [
                 name: 'description',
                 label: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
                 required: false,
-                cols:20,
-                rows:6
+                cols: 20,
+                rows: 6
               }
             },
             {
@@ -304,7 +310,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields = [
                 collapsed: true,
                 legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.advancedOptions,
                 name: 'actions',
-                className:'wideTextfields',
+                className: 'wideTextfields',
                 fields: [
                   {
                     type: 'text',
