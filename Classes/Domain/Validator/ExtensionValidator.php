@@ -22,6 +22,7 @@ use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\BackendModule;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Domain\Model\Plugin;
 use EBT\ExtensionBuilder\Service\ValidationService;
@@ -99,6 +100,10 @@ class ExtensionValidator extends AbstractValidator
      * @var int
      */
     public const ERROR_PROPERTY_RESERVED_SQL_WORD = 205;
+    /**
+     * @var int
+     */
+    public const ERROR_PROPERTY_DUPLICATE_IN_RELATION = 206;
     /**
      * @var int
      */
@@ -734,7 +739,8 @@ class ExtensionValidator extends AbstractValidator
             $propertyNames[] = $propertyName;
 
             if ($property instanceof AbstractRelation) {
-                if (!$property->getForeignModel() && $property->getForeignClassName()) {
+                $foreignModel = $property->getForeignModel();
+                if (!($foreignModel instanceof DomainObject) && $property->getForeignClassName()) {
                     if (!class_exists($property->getForeignClassName())) {
                         $this->validationResult['errors'][] = new ExtensionException(
                             'Related class not loadable: "' . $property->getForeignClassName() . '" configured in relation "' . $property->getName() . '".',
@@ -742,14 +748,26 @@ class ExtensionValidator extends AbstractValidator
                         );
                     }
                 }
-                if ($property->getForeignModel()
-                    && ($property->getForeignModel()->getFullQualifiedClassName() != $property->getForeignClassName())
-                ) {
-                    $this->validationResult['errors'][] = new ExtensionException(
-                        'Relation "' . $property->getName() . '" in model "' . $domainObject->getName() .
-                        '" has a external class relation and a wire to ' . $property->getForeignModel()->getName(),
-                        self::ERROR_MAPPING_WIRE_AND_FOREIGN_CLASS
-                    );
+                if ($foreignModel instanceof DomainObject) {
+                    if ($foreignModel->getFullQualifiedClassName() != $property->getForeignClassName()) {
+                        $this->validationResult['errors'][] = new ExtensionException(
+                            'Relation "' . $property->getName() . '" in model "' . $domainObject->getName() .
+                            '" has an external class relation and a wire to ' . $foreignModel->getName(),
+                            self::ERROR_MAPPING_WIRE_AND_FOREIGN_CLASS
+                        );
+                    }
+                    // Don't allow a duplicated property name in the foreign model matching the name of the relation
+                    if ($property instanceof ZeroToManyRelation && $property->getRenderType() === 'inline') {
+                        foreach ($foreignModel->getProperties() as $foreignProperty) {
+                            if ($property->getName() === $foreignProperty->getName()) {
+                                $this->validationResult['errors'][] = new ExtensionException(
+                                    'Relation "' . $property->getName() . '" in model "' . $domainObject->getName() .
+                                    '" has an external class relation to ' . $foreignModel->getName() . ' which has a property with the same name',
+                                    self::ERROR_PROPERTY_DUPLICATE_IN_RELATION
+                                );
+                            }
+                        }
+                    }
                 }
             }
         }
