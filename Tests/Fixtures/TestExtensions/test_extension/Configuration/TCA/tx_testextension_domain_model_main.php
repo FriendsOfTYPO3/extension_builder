@@ -111,7 +111,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
+                'eval' => 'trim',
+                'default' => ''
             ],
         ],
         'identifier' => [
@@ -120,7 +121,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim,required'
+                'eval' => 'trim,required',
+                'default' => ''
             ],
         ],
         'description' => [
@@ -139,7 +141,6 @@ return [
                 'rows' => 15,
                 'eval' => 'trim',
             ],
-
         ],
         'my_date' => [
             'exclude' => true,
@@ -159,7 +160,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'nospace,email'
+                'eval' => 'nospace,email',
+                'default' => ''
             ]
         ],
         'child1' => [

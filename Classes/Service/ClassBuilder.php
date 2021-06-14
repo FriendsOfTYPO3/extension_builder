@@ -219,13 +219,19 @@ class ClassBuilder implements SingletonInterface
         // add the property to class Object (or update an existing class Object property)
         if ($this->classObject->propertyExists($propertyName)) {
             $classProperty = $this->classObject->getProperty($propertyName);
+            $classProperty->setTag('var', $domainProperty->getTypeForComment());
+            $classProperty->setVarType($domainProperty->getTypeHint());
             if ($this->settings['setDefaultValuesForClassProperties'] !== false) {
                 $classProperty->setDefault($domainProperty->getDefaultValue());
+            }
+            if ($domainProperty->isNullableProperty() === true && $domainProperty->getNullable() === true) {
+                $classProperty->setDefault(null);
             }
         } else {
             $classProperty = clone $this->templateClassObject->getProperty('property');
             $classProperty->setName($propertyName);
             $classProperty->setTag('var', $domainProperty->getTypeForComment());
+            $classProperty->setVarType($domainProperty->getTypeHint());
             if ($domainProperty->getDescription()) {
                 $classProperty->setDescription($domainProperty->getDescription());
             } else {
@@ -238,6 +244,9 @@ class ClassBuilder implements SingletonInterface
 
             if ($domainProperty->getHasDefaultValue() && $this->settings['setDefaultValuesForClassProperties'] !== false) {
                 $classProperty->setDefault($domainProperty->getDefaultValue());
+            }
+            if ($domainProperty->isNullableProperty() === true && $domainProperty->getNullable() === true) {
+                $classProperty->setDefault(null);
             }
 
             if ($domainProperty instanceof ZeroToManyRelation && ($domainProperty->getRenderType() ?: 'inline') === 'inline') {

@@ -110,7 +110,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
+                'eval' => 'trim',
+                'default' => ''
             ],
         ],
         'file_property' => [

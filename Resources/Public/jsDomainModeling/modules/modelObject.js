@@ -356,6 +356,16 @@ extbaseModeling_wiringEditorLanguage.modules.push({
                       {
                         type: 'boolean',
                         inputParams: {
+                          classname: 'dependant stringOnly textOnly passwordOnly emailOnly integerOnly floatOnly dateOnly dateTimeOnly dateTimeStampOnly timeOnly timeTimeStampOnly timeSecOnly',
+                          label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isNullable,
+                          advancedMode: true,
+                          name: 'propertyIsNullable',
+                          value: false
+                        }
+                      },
+                      {
+                        type: 'boolean',
+                        inputParams: {
                           label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isExcludeField,
                           advancedMode: true,
                           name: 'propertyIsExcludeField',

@@ -110,7 +110,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
+                'eval' => 'trim',
+                'default' => ''
             ],
         ],
         'flag' => [
@@ -118,9 +119,11 @@ return [
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child1.flag',
             'config' => [
                 'type' => 'check',
+                'renderType' => 'checkboxToggle',
                 'items' => [
-                    '1' => [
-                        '0' => 'LLL:EXT:lang/locallang_core.xlf:labels.enabled'
+                    [
+                        0 => '',
+                        1 => '',
                     ]
                 ],
                 'default' => 0,

@@ -101,6 +101,16 @@ abstract class AbstractProperty
     /**
      * @var bool
      */
+    protected $nullable = false;
+
+    /**
+     * @var bool define whether a property is nullable in TCA
+     */
+    protected static $isNullable = false;
+
+    /**
+     * @var bool
+     */
     protected $excludeField = false;
 
     /**
@@ -299,6 +309,21 @@ abstract class AbstractProperty
     public function setRequired(bool $required): void
     {
         $this->required = $required;
+    }
+
+    public function setNullable(bool $nullable): void
+    {
+        $this->nullable = $nullable;
+    }
+
+    public function getNullable(): bool
+    {
+        return $this->nullable;
+    }
+
+    public function isNullableProperty(): bool
+    {
+        return static::$isNullable;
     }
 
     public function setExcludeField(bool $excludeField): void

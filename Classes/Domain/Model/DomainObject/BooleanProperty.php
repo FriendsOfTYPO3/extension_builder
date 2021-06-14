@@ -38,6 +38,6 @@ class BooleanProperty extends AbstractProperty
 
     public function getSqlDefinition(): string
     {
-        return $this->getFieldName() . " smallint(5) unsigned DEFAULT '0' NOT NULL,";
+        return $this->getFieldName() . " smallint(1) unsigned NOT NULL DEFAULT '0',";
     }
 }

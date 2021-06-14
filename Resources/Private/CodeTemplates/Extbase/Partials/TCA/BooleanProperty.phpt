@@ -1,8 +1,10 @@
 [
     'type' => 'check',
+    'renderType' => 'checkboxToggle',
     'items' => [
-        '1' => [
-            '0' => 'LLL:EXT:lang/locallang_core.xlf:labels.enabled'
+        [
+            0 => '',
+            1 => '',
         ]
     ],
     'default' => 0,
