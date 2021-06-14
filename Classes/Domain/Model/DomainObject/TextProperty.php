@@ -30,18 +30,22 @@ class TextProperty extends AbstractProperty
      */
     protected $searchable = true;
 
+    protected static $isNullable = true;
+
     public function getTypeForComment(): string
     {
-        return 'string';
+        return ($this->nullable) ? 'string|null' : 'string';
     }
 
     public function getTypeHint(): string
     {
-        return 'string';
+        return ($this->nullable) ? '?string' : 'string';
     }
 
     public function getSqlDefinition(): string
     {
-        return $this->getFieldName() . ' text,';
+        return ($this->nullable)
+            ? $this->getFieldName() . ' text DEFAULT NULL,'
+            : $this->getFieldName() . " text NOT NULL DEFAULT '',";
     }
 }

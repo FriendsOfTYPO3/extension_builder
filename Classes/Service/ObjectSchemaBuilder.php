@@ -157,6 +157,7 @@ class ObjectSchemaBuilder implements SingletonInterface
         $relation = new $relationSchemaClassName();
         $relation->setName($relationJsonConfiguration['relationName']);
         $relation->setLazyLoading((bool)$relationJsonConfiguration['lazyLoading']);
+        $relation->setNullable((bool)$relationJsonConfiguration['propertyIsNullable']);
         $relation->setExcludeField((bool)$relationJsonConfiguration['propertyIsExcludeField']);
         $relation->setDescription($relationJsonConfiguration['relationDescription']);
         $relation->setUniqueIdentifier($relationJsonConfiguration['uid']);
@@ -232,6 +233,9 @@ class ObjectSchemaBuilder implements SingletonInterface
 
         if (isset($propertyJsonConfiguration['propertyIsRequired'])) {
             $property->setRequired($propertyJsonConfiguration['propertyIsRequired']);
+        }
+        if (isset($propertyJsonConfiguration['propertyIsNullable'])) {
+            $property->setNullable($propertyJsonConfiguration['propertyIsNullable']);
         }
         if (isset($propertyJsonConfiguration['propertyIsExcludeField'])) {
             $property->setExcludeField($propertyJsonConfiguration['propertyIsExcludeField']);

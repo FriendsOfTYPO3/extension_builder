@@ -38,6 +38,8 @@
 						this.options.sentValues = this.sentValues; // for compatibility
 						this.checkedValue = this.sentValues[0];
 						this.uncheckedValue = this.sentValues[1];
+						this.options.advancedMode = options.advancedMode ? options.advancedMode : false;
+						this.options.classname = options.classname;
 					},
 
 					/**
@@ -53,6 +55,12 @@
 						this.rightLabelEl = inputEx.cn('label', {"for": checkBoxId, className: 'inputEx-CheckBox-rightLabel'}, null, this.options.rightLabel);
 						this.fieldContainer.appendChild(this.rightLabelEl);
 						Dom.addClass(this.divEl,'checkBoxFieldWrapper');
+						if(this.options.advancedMode) {
+							Dom.addClass(this.divEl, "advancedMode");
+						}
+						if(this.options.classname) {
+							Dom.addClass(this.divEl, this.options.classname);
+						}
 
 						// Keep state of checkbox in a hidden field (format : this.checkedValue or this.uncheckedValue)
 						this.hiddenEl = inputEx.cn('input', {type: 'hidden', name: this.options.name || '', value: this.el.checked ? this.checkedValue : this.uncheckedValue});

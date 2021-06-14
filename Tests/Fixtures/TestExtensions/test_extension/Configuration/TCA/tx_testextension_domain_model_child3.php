@@ -110,7 +110,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim,required'
+                'eval' => 'trim,required',
+                'default' => ''
             ],
         ],
         'password' => [
@@ -119,7 +120,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'nospace,password'
+                'eval' => 'nospace,password',
+                'default' => ''
             ]
         ],
         'image_property' => [

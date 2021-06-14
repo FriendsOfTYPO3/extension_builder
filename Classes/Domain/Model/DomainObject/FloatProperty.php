@@ -26,18 +26,22 @@ class FloatProperty extends AbstractProperty
      */
     protected $defaultValue = 0.0;
 
+    protected static $isNullable = true;
+
     public function getTypeForComment(): string
     {
-        return 'float';
+        return ($this->nullable) ? 'float|null' : 'float';
     }
 
     public function getTypeHint(): string
     {
-        return 'float';
+        return ($this->nullable) ? '?float' : 'float';
     }
 
     public function getSqlDefinition(): string
     {
-        return $this->getFieldName() . " double(11,2) DEFAULT '0.00' NOT NULL,";
+        return ($this->nullable)
+            ? $this->getFieldName() . ' double(11,2) DEFAULT NULL,'
+            : $this->getFieldName() . " double(11,2) NOT NULL DEFAULT '0.00',";
     }
 }

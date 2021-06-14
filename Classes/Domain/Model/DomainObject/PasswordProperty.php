@@ -26,18 +26,22 @@ class PasswordProperty extends AbstractProperty
      */
     protected $defaultValue = '';
 
+    protected static $isNullable = true;
+
     public function getTypeForComment(): string
     {
-        return 'string';
+        return ($this->nullable) ? 'string|null' : 'string';
     }
 
     public function getTypeHint(): string
     {
-        return 'string';
+        return ($this->nullable) ? '?string' : 'string';
     }
 
     public function getSqlDefinition(): string
     {
-        return $this->getFieldName() . " varchar(255) DEFAULT '' NOT NULL,";
+        return ($this->nullable)
+            ? $this->getFieldName() . ' varchar(255) DEFAULT NULL,'
+            : $this->getFieldName() . " varchar(255) NOT NULL DEFAULT '',";
     }
 }

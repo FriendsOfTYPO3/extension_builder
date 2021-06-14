@@ -60,7 +60,9 @@ class ImageProperty extends AbstractProperty
 
     public function getSqlDefinition(): string
     {
-        return $this->getFieldName() . " int(11) unsigned NOT NULL default '0',";
+        return ($this->nullable)
+            ? $this->getFieldName() . ' int(11) unsigned DEFAULT NULL,'
+            : $this->getFieldName() . " int(11) unsigned NOT NULL DEFAULT '0',";
     }
 
     /**

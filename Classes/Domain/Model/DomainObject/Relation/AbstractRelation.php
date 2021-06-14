@@ -202,7 +202,7 @@ abstract class AbstractRelation extends AbstractProperty
         if ($this instanceof ZeroToManyRelation && strpos($this->renderType, 'select') === 0) {
             return $this->getFieldName() . ' text NOT NULL,';
         }
-        return $this->getFieldName() . " int(11) unsigned DEFAULT '0' NOT NULL,";
+        return $this->getFieldName() . " int(11) unsigned NOT NULL DEFAULT '0',";
     }
 
     /**

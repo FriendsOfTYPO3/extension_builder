@@ -256,6 +256,12 @@
 			<trans-unit id="select" resname="select">
 				<source>Dropdown</source>
 			</trans-unit>
+			<trans-unit id="isNullable" resname="isNullable">
+				<source>Is nullable?</source>
+			</trans-unit>
+			<trans-unit id="descr_isNullable" resname="descr_isNullable">
+				<source>If set to true, this field can be null</source>
+			</trans-unit>
 			<trans-unit id="isExcludeField" resname="isExcludeField">
 				<source>Is exclude field?</source>
 			</trans-unit>

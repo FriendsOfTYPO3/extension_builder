@@ -102,7 +102,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $property = new BooleanProperty($propertyName);
         $property->setRequired(true);
         $domainObject->addProperty($property);
-        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
+        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
         $modelClassDir = 'Classes/Domain/Model/';
         GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
@@ -144,7 +144,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $domainObject = $this->buildDomainObject($modelName);
         $property = new StringProperty($propertyName);
         $domainObject->addProperty($property);
-        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
+        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
         $modelClassDir = 'Classes/Domain/Model/';
         GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
@@ -189,7 +189,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $relation = new Relation\ZeroToOneRelation($propertyName);
         $relation->setForeignModel($relatedDomainObject);
         $domainObject->addProperty($relation);
-        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
+        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
         $modelClassDir = 'Classes/Domain/Model/';
         GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
@@ -231,7 +231,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $relation->setForeignModel($relatedDomainObject);
         $domainObject->addProperty($relation);
 
-        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
+        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
         $modelClassDir = 'Classes/Domain/Model/';
         GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
@@ -246,7 +246,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         }
         self::assertTrue(class_exists($className), 'Class was not generated:' . $className);
 
-        $relatedClassFileContent = $this->fileGenerator->generateDomainObjectCode($relatedDomainObject, false);
+        $relatedClassFileContent = $this->fileGenerator->generateDomainObjectCode($relatedDomainObject);
 
         $relatedModelClassPath = $absModelClassDir . $relatedDomainObject->getName() . '.php';
         GeneralUtility::writeFile($relatedModelClassPath, $relatedClassFileContent);
@@ -318,7 +318,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $relation->setInlineEditing(false);
         $domainObject->addProperty($relation);
 
-        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject, false);
+        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
         $modelClassDir = 'Classes/Domain/Model/';
         GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
@@ -388,7 +388,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $action->setName('list');
         $domainObject->addAction($action);
 
-        $classFileContent = $this->fileGenerator->generateActionControllerCode($domainObject, false);
+        $classFileContent = $this->fileGenerator->generateActionControllerCode($domainObject);
 
         $controllerClassDir = 'Classes/Controller/';
         GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $controllerClassDir);
@@ -414,7 +414,7 @@ class FileGeneratorTest extends BaseFunctionalTest
     public function writeRepositoryClassFromDomainObject(): void
     {
         $domainObject = $this->buildDomainObject('ModelCgt6', true, true);
-        $classFileContent = $this->fileGenerator->generateDomainRepositoryCode($domainObject, false);
+        $classFileContent = $this->fileGenerator->generateDomainRepositoryCode($domainObject);
 
         $repositoryClassDir = 'Classes/Domain/Repository/';
         GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $repositoryClassDir);
