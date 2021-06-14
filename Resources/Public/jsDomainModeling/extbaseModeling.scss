@@ -500,15 +500,48 @@ div {
 			&.inputEx-Collapsed div.inputEx-fieldWrapper.advancedMode {
 				display: none;
 			}
-			&.File .inputEx-fieldWrapper.dependant.fileOnly.advancedMode {
-				display: block;
-			}
-			&.Image .inputEx-fieldWrapper.dependant.imageOnly.advancedMode {
-				display: block;
-			}
 			&.String .inputEx-fieldWrapper.dependant.stringOnly.advancedMode {
 				display: block;
 			}
+            &.Text .inputEx-fieldWrapper.dependant.textOnly.advancedMode {
+                display: block;
+            }
+            &.Password .inputEx-fieldWrapper.dependant.passwordOnly.advancedMode {
+                display: block;
+            }
+            &.Email .inputEx-fieldWrapper.dependant.emailOnly.advancedMode {
+                display: block;
+            }
+            &.Integer .inputEx-fieldWrapper.dependant.integerOnly.advancedMode {
+                display: block;
+            }
+            &.Float .inputEx-fieldWrapper.dependant.floatOnly.advancedMode {
+                display: block;
+            }
+            &.Date .inputEx-fieldWrapper.dependant.dateOnly.advancedMode {
+                display: block;
+            }
+            &.DateTime .inputEx-fieldWrapper.dependant.dateTimeOnly.advancedMode {
+                display: block;
+            }
+            &.DateTimeStamp .inputEx-fieldWrapper.dependant.dateTimeStampOnly.advancedMode {
+                display: block;
+            }
+            &.Time .inputEx-fieldWrapper.dependant.timeOnly.advancedMode {
+                display: block;
+            }
+            &.TimeTimeStamp .inputEx-fieldWrapper.dependant.timeTimeStampOnly.advancedMode {
+                display: block;
+            }
+            &.TimeSec .inputEx-fieldWrapper.dependant.timeSecOnly.advancedMode {
+                display: block;
+            }
+            &.File .inputEx-fieldWrapper.dependant.fileOnly.advancedMode {
+                display: block;
+            }
+            &.Image .inputEx-fieldWrapper.dependant.imageOnly.advancedMode {
+                display: block;
+            }
 		}
 		.inputEx-fieldWrapper.advancedMode {
 			display: block;

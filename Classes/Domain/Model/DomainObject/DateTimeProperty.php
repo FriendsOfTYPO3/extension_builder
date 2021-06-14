@@ -28,6 +28,8 @@ class DateTimeProperty extends AbstractProperty
      */
     protected $defaultValue;
 
+    protected static $isNullable = true;
+
     public function getTypeForComment(): string
     {
         return '\\DateTime';
@@ -40,7 +42,7 @@ class DateTimeProperty extends AbstractProperty
 
     public function getSqlDefinition(): string
     {
-        return $this->getFieldName() . ' int(11) DEFAULT \'0\' NOT NULL,';
+        return $this->getFieldName() . " int(11) NOT NULL DEFAULT '0',";
     }
 
     public function getNameToBeDisplayedInFluidTemplate(): string
