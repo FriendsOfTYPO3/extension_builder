@@ -394,18 +394,21 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
             // format: relation_1
             $parts = explode('_', $wire['src']['terminal']);
             $supposedRelationIndex = (int)$parts[1];
+
+            // Source
             $uid = $wire['src']['uid'];
             $wire['src'] = $this->findModuleIndexByRelationUid(
-                (int)$wire['src']['uid'],
+                $wire['src']['uid'],
                 $jsonConfig['modules'],
                 $wire['src']['moduleId'],
                 $supposedRelationIndex
             );
             $wire['src']['uid'] = $uid;
 
+            // Target
             $uid = $wire['tgt']['uid'];
             $wire['tgt'] = $this->findModuleIndexByRelationUid(
-                (int)$wire['tgt']['uid'],
+                $wire['tgt']['uid'],
                 $jsonConfig['modules'],
                 $wire['tgt']['moduleId']
             );
@@ -415,14 +418,14 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     }
 
     /**
-     * @param int $uid
+     * @param string $uid
      * @param array $modules
      * @param int $supposedModuleIndex
      * @param int|null $supposedRelationIndex
      * @return array
      */
     protected function findModuleIndexByRelationUid(
-        int $uid,
+        string $uid,
         array $modules,
         int $supposedModuleIndex,
         ?int $supposedRelationIndex = null
@@ -430,38 +433,40 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         $result = [
             'moduleId' => $supposedModuleIndex
         ];
-        if ($supposedRelationIndex == null) {
+        if ($supposedRelationIndex === null) {
             $result['terminal'] = 'SOURCES';
-            if ($modules[$supposedModuleIndex]['value']['objectsettings']['uid'] == $uid) {
+            if ($modules[$supposedModuleIndex]['value']['objectsettings']['uid'] === $uid) {
                 // everything as expected
                 return $result;
             }
 
             $moduleCounter = 0;
             foreach ($modules as $module) {
-                if ($module['value']['objectsettings']['uid'] == $uid) {
+                if ($module['value']['objectsettings']['uid'] === $uid) {
                     $result['moduleId'] = $moduleCounter;
                     return $result;
                 }
             }
-        } elseif ($modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid'] == $uid) {
-            $result['terminal'] = 'relationWire_' . $supposedRelationIndex;
-            // everything as expected
             return $result;
-        } else {
-            $moduleCounter = 0;
-            foreach ($modules as $module) {
-                $relationCounter = 0;
-                foreach ($module['value']['relationGroup']['relations'] as $relation) {
-                    if ($relation['uid'] == $uid) {
-                        $result['moduleId'] = $moduleCounter;
-                        $result['terminal'] = 'relationWire_' . $relationCounter;
-                        return $result;
-                    }
-                    $relationCounter++;
+        }
+
+        if ($modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid'] === $uid) {
+            $result['terminal'] = 'relationWire_' . $supposedRelationIndex;
+            return $result;
+        }
+
+        $moduleCounter = 0;
+        foreach ($modules as $module) {
+            $relationCounter = 0;
+            foreach ($module['value']['relationGroup']['relations'] as $relation) {
+                if ($relation['uid'] === $uid) {
+                    $result['moduleId'] = $moduleCounter;
+                    $result['terminal'] = 'relationWire_' . $relationCounter;
+                    return $result;
                 }
-                $moduleCounter++;
+                $relationCounter++;
             }
+            $moduleCounter++;
         }
         return $result;
     }
