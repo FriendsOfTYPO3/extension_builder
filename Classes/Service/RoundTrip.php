@@ -1182,11 +1182,12 @@ class RoundTrip implements SingletonInterface
         } else {
             $backupDir = Environment::getProjectPath() . '/' . $backupDir;
         }
+        // Add trailing slash
         if (strrpos($backupDir, '/') < strlen($backupDir) - 1) {
             $backupDir .= '/';
         }
         if (!is_dir($backupDir)) {
-            throw new Exception('Backup directory does not exist: ' . $backupDir);
+            GeneralUtility::mkdir_deep($backupDir);
         }
 
         if (!is_writable($backupDir)) {
@@ -1198,6 +1199,7 @@ class RoundTrip implements SingletonInterface
         if (!is_dir($backupDir)) {
             GeneralUtility::mkdir($backupDir);
         }
+        // Add trailing slash
         if (strrpos($backupDir, '/') < strlen($backupDir) - 1) {
             $backupDir .= '/';
         }
@@ -1205,7 +1207,8 @@ class RoundTrip implements SingletonInterface
         if (!is_dir($backupDir)) {
             GeneralUtility::mkdir($backupDir);
         }
-        $extensionDir = substr($extension->getExtensionDir(), 0, strlen($extension->getExtensionDir()) - 1);
+        // Remove trailing slash
+        $extensionDir = substr($extension->getExtensionDir(), 0, -1);
         try {
             self::recurse_copy($extensionDir, $backupDir);
         } catch (Exception $e) {
@@ -1225,12 +1228,12 @@ class RoundTrip implements SingletonInterface
      *
      * @throws Exception
      */
-    public static function recurse_copy($src, $dst): void
+    public static function recurse_copy(string $src, string $dst): void
     {
         $dir = opendir($src);
-        @mkdir($dst);
+        GeneralUtility::mkdir($dst);
         while (false !== ($file = readdir($dir))) {
-            if (($file != '.') && ($file != '..')) {
+            if ($file !== '.' && $file !== '..') {
                 if (is_dir($src . '/' . $file)) {
                     self::recurse_copy($src . '/' . $file, $dst . '/' . $file);
                 } else {
