@@ -112,23 +112,27 @@ class ObjectSchemaBuilder implements SingletonInterface
         // actions
         if (isset($jsonDomainObject['actionGroup'])) {
             foreach ($jsonDomainObject['actionGroup'] as $jsonActionName => $actionValue) {
-                if ($jsonActionName == 'customActions' && !empty($actionValue)) {
-                    $actionNames = $actionValue;
-                } elseif ($actionValue == 1) {
+                if ($actionValue === true) {
                     $jsonActionName = preg_replace('/^_default[0-9]_*/', '', $jsonActionName);
-                    if ($jsonActionName == 'edit_update' || $jsonActionName == 'new_create') {
+                    if ($jsonActionName === 'edit_update' || $jsonActionName === 'new_create') {
                         $actionNames = explode('_', $jsonActionName);
                     } else {
                         $actionNames = [$jsonActionName];
                     }
-                } else {
-                    $actionNames = [];
-                }
 
-                if (!empty($actionNames)) {
                     foreach ($actionNames as $actionName) {
                         $action = GeneralUtility::makeInstance(Action::class);
                         $action->setName($actionName);
+                        $domainObject->addAction($action);
+                    }
+                    continue;
+                }
+
+                if ($jsonActionName === 'customActions' && !empty($actionValue)) {
+                    foreach ($actionValue as $actionName) {
+                        $action = GeneralUtility::makeInstance(Action::class);
+                        $action->setName($actionName);
+                        $action->setCustomAction(true);
                         $domainObject->addAction($action);
                     }
                 }

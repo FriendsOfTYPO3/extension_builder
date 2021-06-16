@@ -82,8 +82,10 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
                 ]
             ],
             'actionGroup' => [
-                'customActions' => ['test'],
-                'list' => 1,
+                'customActions' => [
+                    'test'
+                ],
+                'list' => true,
             ],
             'relationGroup' => []
         ];
@@ -103,6 +105,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
 
         $testAction = GeneralUtility::makeInstance(Action::class);
         $testAction->setName('test');
+        $testAction->setCustomAction(true);
         $expected->addAction($testAction);
 
         $listAction = GeneralUtility::makeInstance(Action::class);
