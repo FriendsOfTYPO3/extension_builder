@@ -1,0 +1,17 @@
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:format.raw><k:openingTag>html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"</k:openingTag>
+<k:openingTag>f:layout name="Default" /</k:openingTag>
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        {domainObject.name}:
+          {action.name -> k:format.uppercaseFirst()}.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<k:openingTag>f:section name="content"</k:openingTag>
+    <h1>Template for {action.name} action</h1>
+<k:openingTag>/f:section</k:openingTag>
+<k:openingTag>/html</k:openingTag></f:format.raw>

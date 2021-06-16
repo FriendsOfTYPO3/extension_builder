@@ -404,8 +404,12 @@ class FileGenerator
             $domainTemplateDirectory = $absoluteTemplateRootFolder . 'Templates/' . $domainObject->getName() . '/';
             foreach ($domainObject->getActions() as $action) {
                 /** @var Action $action */
-                if ($action->getNeedsTemplate()
-                    && $this->templateExists($templateRootFolder . 'Templates/' . $action->getName() . '.htmlt')
+                if (
+                    $action->isCustomAction()
+                    || (
+                        $action->getNeedsTemplate()
+                        && $this->templateExists($templateRootFolder . 'Templates/' . $action->getName() . '.htmlt')
+                    )
                 ) {
                     $hasTemplates = true;
                     $this->mkdir_deep(
@@ -1073,7 +1077,8 @@ class FileGenerator
      */
     public function generateDomainTemplate(string $templateRootFolder, DomainObject $domainObject, Action $action)
     {
-        return $this->renderTemplate($templateRootFolder . $action->getName() . '.htmlt', [
+        $fileName = $action->isCustomAction() ? 'custom' : $action->getName();
+        return $this->renderTemplate($templateRootFolder . $fileName . '.htmlt', [
             'domainObject' => $domainObject,
             'action' => $action,
             'extension' => $this->extension
