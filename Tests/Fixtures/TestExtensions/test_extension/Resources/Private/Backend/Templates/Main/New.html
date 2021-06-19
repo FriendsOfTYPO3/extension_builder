@@ -1,4 +1,8 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
 <f:layout name="Default" />
 
 This template displays a NEW form for the current domain object.
@@ -14,7 +18,15 @@ in /Configuration/ExtensionBuilder/settings.yaml:
 
 Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
-<f:section name="content">
+<f:section name="Buttons">
+    <be:moduleLayout.button.linkButton
+        icon="actions-view-go-back"
+        title="{f:translate(id: 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.goBack')}"
+        link="{f:uri.action(controller: 'Main', action: 'list')}"
+    />
+</f:section>
+
+<f:section name="Content">
     <h1>New Main</h1>
 
     <f:flashMessages />
@@ -23,7 +35,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
     <f:form action="create" name="newMain" object="{newMain}">
     <f:render partial="Main/FormFields" />
-        <f:form.submit value="Create new" />
+        <f:form.submit value="Create new" class="btn btn-default"/>
     </f:form>
 </f:section>
 </html>

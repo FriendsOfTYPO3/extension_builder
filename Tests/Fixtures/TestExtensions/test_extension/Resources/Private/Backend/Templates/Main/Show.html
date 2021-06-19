@@ -1,4 +1,8 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
 <f:layout name="Default" />
 
 This template is responsible for displaying a single view for a domain object
@@ -14,12 +18,19 @@ in /Configuration/ExtensionBuilder/settings.yaml:
 
 Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
-<f:section name="content">
+<f:section name="Buttons">
+    <be:moduleLayout.button.linkButton
+        icon="actions-view-go-back"
+        title="{f:translate(id: 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.goBack')}"
+        link="{f:uri.action(controller: 'Main', action: 'list')}"
+    />
+</f:section>
+
+<f:section name="Content">
     <h1>Single View for Main</h1>
 
     <f:flashMessages />
-    <f:render partial="Main/Properties" arguments="{main:main}" />
-    <f:link.action action="list">Back to list</f:link.action><br />
-    <f:link.action action="create">New Main</f:link.action>
+    <f:render partial="Main/Properties" arguments="{main: main}" />
+    <f:link.action action="list" class="btn btn-default">Back to list</f:link.action>
 </f:section>
 </html>
