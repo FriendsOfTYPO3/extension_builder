@@ -1,4 +1,8 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
 <f:layout name="Default" />
 
 This template is responsible for creating a table of domain objects.
@@ -14,12 +18,20 @@ in /Configuration/ExtensionBuilder/settings.yaml:
 
 Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
-<f:section name="content">
+<f:section name="Buttons">
+    <be:moduleLayout.button.linkButton
+        icon="actions-add"
+        title="{f:translate(id: 'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:newRecordGeneral')}"
+        link="{f:uri.action(controller: 'Main', action: 'new')}"
+    />
+</f:section>
+
+<f:section name="Content">
     <h1>Listing for Main</h1>
 
     <f:flashMessages />
 
-    <table  class="tx_testextension" >
+    <table class="tx_testextension">
         <tr>
             <th><f:translate key="tx_testextension_domain_model_main.name" /></th>
             <th><f:translate key="tx_testextension_domain_model_main.identifier" /></th>
@@ -32,17 +44,17 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
         <f:for each="{mains}" as="main">
             <tr>
-                <td><f:link.action action="show" arguments="{main : main}"> {main.name}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{main : main}"> {main.identifier}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{main : main}"> {main.description}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{main : main}"> {main.myDate -> f:format.date()}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{main : main}"> {main.mail}</f:link.action></td>
-                <td><f:link.action action="edit" arguments="{main : main}">Edit</f:link.action></td>
-                <td><f:link.action action="delete" arguments="{main : main}">Delete</f:link.action></td>
+                <td><f:link.action action="show" arguments="{main: main}">{main.name}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{main: main}">{main.identifier}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{main: main}">{main.description}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{main: main}">{main.myDate -> f:format.date()}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{main: main}">{main.mail}</f:link.action></td>
+                <td><f:link.action action="edit" arguments="{main: main}" class="btn btn-default">Edit</f:link.action></td>
+                <td><f:link.action action="delete" arguments="{main: main}" class="btn btn-danger">Delete</f:link.action></td>
             </tr>
         </f:for>
     </table>
 
-    <f:link.action action="new">New Main</f:link.action>
+    <f:link.action action="new" class="btn btn-default">New Main</f:link.action>
 </f:section>
 </html>
