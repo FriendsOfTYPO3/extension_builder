@@ -462,7 +462,7 @@ extbaseModeling_wiringEditorLanguage.modules.push({
                           className: 'terminalFieldWrap',
                           ddConfig: {
                             type: 'input',
-                            allowedTypes: ['output', 'input']
+                            allowedTypes: ['output']
                           }
                         }
                       }
