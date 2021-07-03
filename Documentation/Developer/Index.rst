@@ -8,15 +8,15 @@ Developer Corner
 
 Target group: **Developers**
 
-Please be aware that some configuration options are only available if the "Advanced options" is activated by clicking
-on the link in the upper right corner in the modeler.
+Please be aware that some configuration options are only available if the "Advanced options" is
+activated by clicking on the link in the upper right corner in the modeler.
 
 .. tip::
    The advanced options are enabled/disabled with the access key "a"
 
 
-Use the advanced options with care. There a many possibilities to run into misconfiguration,
-when using the advanced options. They are for special settings, as they might be useful for the experienced TYPO3 developer.
+Use the advanced options with care. They are for special settings, 
+useful for the experienced TYPO3 developer.
 
 
 Creating a new extension
