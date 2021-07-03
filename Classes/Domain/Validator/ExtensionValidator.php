@@ -585,7 +585,7 @@ class ExtensionValidator extends AbstractValidator
             } else {
                 $this->validationResult['errors'][] = new ExtensionException(
                     'Mapping configuration error in domain object ' . $domainObject->getName() . ': the parent class ' . LF .
-                    $parentClass . 'seems not to exist ',
+                    $parentClass . ' seems not to exist',
                     self::ERROR_MAPPING_NO_PARENT_CLASS
                 );
             }
