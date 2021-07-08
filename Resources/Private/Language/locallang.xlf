@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
+<file source-language="en" datatype="plaintext" original="EXT:extension_builder/Resources/Private/Language/locallang.xlf" date="2012-02-29T20:52:35Z"
 		  product-name="extension_builder">
 		<header/>
 		<body>
@@ -519,4 +520,5 @@
 				<source>Do you really want to clear the current working board and load the selected pipe? Unsaved changes will get lost!</source>
 			</trans-unit>
 		</body>
+	</file>
 </xliff>
