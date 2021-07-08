@@ -72,7 +72,7 @@ For example:
        $blog = new \Vendor\Example\Domain\Model\Blog();
 
        $blogRepository = $this->getMock(
-           'Vendor\\Example\\Domain\\Repository\\BlogRepository',
+           \Vendor\Example\Domain\Repository\BlogRepository::class,
            ['remove'],
            [],
            '',
@@ -87,9 +87,9 @@ For example:
 Running your unit tests
 -----------------------
 
-Unit tests of your extension can be run in the backend with the TYPO3 Extension `phpunit <http://typo3.org/extensions/repository/view/phpunit>`_
+Unit tests of your extension can be run in the backend with the TYPO3 Extension `phpunit <https://extensions.typo3.org/extension/phpunit>`_
 
-The `Unit Testing page <http://wiki.typo3.org/Unit_Testing_TYPO3>`_ in the TYPO3 wiki provides some hints for those
+The `Unit Testing page <https://docs.typo3.org/m/typo3/reference-coreapi/master/en-us/Testing/Index.html>`_ provides some hints for those
 who like to run their tests natively with phpunit from the command-line.
 
 

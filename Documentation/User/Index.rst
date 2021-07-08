@@ -1,4 +1,4 @@
-﻿.. include:: ../Includes.txt
+.. include:: ../Includes.txt
 
 
 .. _user-manual:
@@ -24,7 +24,7 @@ To create a new extension, go to the Domain Modelling view (1) and open the left
 1. Create a domain model
 ------------------------
 
-Enter a meaningful extension name (1), a `vendor name <http://docs.typo3.org/flow/TYPO3FlowDocumentation/stable/TheDefinitiveGuide/PartV/CodingGuideLines/PHP.html#naming>`_ (2) (UpperCamelCase) and an extension key (3) (without spaces and in lowercase).
+Enter a meaningful extension name (1), a vendor name (2) (UpperCamelCase) and an extension key (3) (without spaces and in lowercase).
 You can add a person that will be listed in the generated files as author.
 
 .. figure:: ../Images/UserManual/modeler-start-extension-b.png
@@ -77,7 +77,6 @@ Open the action panel and select the options you need. All actions you select wi
    This would delete profile 23 if you forget to implement access checks or other appropriate constraints.
 
 
-
 2. Add properties
 -----------------
 
@@ -126,8 +125,9 @@ If your model represents the domain you wanted to implement you can hit the "Sav
 
 Composer mode
 ^^^^^^^^^^^^^
-If you run TYPO3 in `Composer Mode <https://docs.typo3.org/m/typo3/guide-installation/master/en-us/QuickInstall/Composer/Index.html>`_
-you have to provide and configure a local `path repository <https://getcomposer.org/doc/05-repositories.md#path>`_ **before you save your extension**. The ExtensionBuilder will read the path from your composer.json and offer you this path as the destination
+If you run TYPO3 in `Composer Mode <https://docs.typo3.org/m/typo3/guide-installation/10.4/en-us/QuickInstall/Composer/Index.html>`_
+you have to provide and configure a local `path repository <https://getcomposer.org/doc/05-repositories.md#path>`_ **before you save your extension**.
+The ExtensionBuilder will read the path from your composer.json and offer you this path as the destination
 for saving the extension. ExtensionBuilder will create a symlink in typo3conf/ext/ to your extension.
 
 .. figure:: ../Images/User/select-destination.png
