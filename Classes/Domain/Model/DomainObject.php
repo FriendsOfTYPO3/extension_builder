@@ -50,7 +50,7 @@ class DomainObject
      *
      * @var string
      */
-    protected $renameTable = '';
+    protected $tableName = '';
     /**
      * If true, the element is sortable in the TYPO3 backend.
      *
@@ -208,14 +208,14 @@ class DomainObject
         $this->aggregateRoot = $aggregateRoot;
     }
 
-    public function getRenameTable(): string
+    public function getTableName(): string
     {
-        return $this->renameTable;
+        return $this->tableName;
     }
 
-    public function setRenameTable(string $renameTable): void
+    public function setTableName(string $tableName): void
     {
-        $this->renameTable = $renameTable;
+        $this->tableName = $tableName;
     }
 
     /**
