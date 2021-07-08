@@ -337,6 +337,12 @@
 			<trans-unit id="descr_mapToTable" resname="descr_mapToTable">
 				<source>If the model should extend an existing table, you can configure this here</source>
 			</trans-unit>
+			<trans-unit id="renameTable" resname="renameTable">
+				<source>Rename domain table</source>
+			</trans-unit>
+			<trans-unit id="descr_renameTable" resname="descr_renameTable">
+				<source>If you want to use a different domain name for your table than the default one which the extension builder normally generates based on the domain name.</source>
+			</trans-unit>
 			<trans-unit id="parentClass" resname="parentClass">
 				<source>Extend existing model class</source>
 			</trans-unit>
