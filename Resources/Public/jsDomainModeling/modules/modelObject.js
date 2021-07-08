@@ -62,6 +62,16 @@ extbaseModeling_wiringEditorLanguage.modules.push({
               }
             },
             {
+                type: 'string',
+                inputParams: {
+                    name: 'renameTable',
+                    advancedMode: true,
+                    label: TYPO3.settings.extensionBuilder._LOCAL_LANG.renameTable,
+                    description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_renameTable,
+                    required: false
+                }
+            },
+            {
               type: 'boolean',
               inputParams: {
                 name: 'sorting',
