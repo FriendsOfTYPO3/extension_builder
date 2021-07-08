@@ -64,10 +64,10 @@ extbaseModeling_wiringEditorLanguage.modules.push({
             {
                 type: 'string',
                 inputParams: {
-                    name: 'renameTable',
+                    name: 'tableName',
                     advancedMode: true,
-                    label: TYPO3.settings.extensionBuilder._LOCAL_LANG.renameTable,
-                    description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_renameTable,
+                    label: TYPO3.settings.extensionBuilder._LOCAL_LANG.tableName,
+                    description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_tableName,
                     required: false
                 }
             },
