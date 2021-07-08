@@ -1,4 +1,4 @@
-﻿
+
 .. include:: Includes.txt
 
 .. _start:
@@ -61,6 +61,4 @@ Extension Builder
    User/Index
    Configuration/Index
    Developer/Index
-   KnownProblems/Index
    ToDoList/Index
-   ChangeLog/Index

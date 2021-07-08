@@ -15,10 +15,10 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'Nico de Haen',
     'author_email' => 'mail@ndh-websolutions.de',
     'state' => 'beta',
-    'version' => '9.11.0',
+    'version' => '10.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '9.5.0-10.9.99'
+            'typo3' => '10.4.0-10.9.99'
         ],
         'conflicts' => [],
         'suggests' => []

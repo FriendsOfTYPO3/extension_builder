@@ -422,17 +422,17 @@ class FileGenerator
                         $action
                     );
                     $this->writeFile($domainTemplateDirectory . ucfirst($action->getName()) . '.html', $fileContents);
-                    // generate partials for formfields
+                    // generate partials for form fields
                     if ($action->getNeedsForm()) {
                         $this->mkdir_deep($absoluteTemplateRootFolder, 'Partials');
                         $partialDirectory = $absoluteTemplateRootFolder . 'Partials/';
                         $this->mkdir_deep($partialDirectory, $domainObject->getName());
-                        $formfieldsPartial = $partialDirectory . $domainObject->getName() . '/FormFields.html';
+                        $formFieldsPartial = $partialDirectory . $domainObject->getName() . '/FormFields.html';
                         $fileContents = $this->generateDomainFormFieldsPartial(
                             $templateRootFolder . 'Partials/',
                             $domainObject
                         );
-                        $this->writeFile($formfieldsPartial, $fileContents);
+                        $this->writeFile($formFieldsPartial, $fileContents);
                         if (!file_exists($partialDirectory . 'FormErrors.html')) {
                             $this->writeFile(
                                 $partialDirectory . 'FormErrors.html',

@@ -54,3 +54,6 @@ indent_size = 2
 # .htaccess
 [{_.htaccess,.htaccess,htaccess.t}]
 indent_style = tab
+
+[*.phpt]
+insert_final_newline = false
