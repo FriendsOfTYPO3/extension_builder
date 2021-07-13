@@ -1,6 +1,9 @@
 <?php
+
 declare(strict_types=1);
+
 namespace FIXTURE\TestExtension\Domain\Repository;
+
 
 /**
  * This file is part of the "ExtensionBuilder Test Extension" Extension for TYPO3 CMS.
@@ -16,6 +19,7 @@ namespace FIXTURE\TestExtension\Domain\Repository;
  */
 class MainRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
+
     /**
      * @var array
      */
