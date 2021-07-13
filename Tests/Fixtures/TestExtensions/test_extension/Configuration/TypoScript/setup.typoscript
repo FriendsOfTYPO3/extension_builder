@@ -55,7 +55,6 @@ plugin.tx_testextension._CSS_DEFAULT_STYLE (
     .typo3-messages .message-ok {
         color:green;
     }
-
 )
 
 # Module configuration

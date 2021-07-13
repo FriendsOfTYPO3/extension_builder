@@ -1,6 +1,9 @@
 <?php
+
 declare(strict_types=1);
+
 namespace FIXTURE\TestExtension\Controller;
+
 
 /**
  * This file is part of the "ExtensionBuilder Test Extension" Extension for TYPO3 CMS.
@@ -16,6 +19,7 @@ namespace FIXTURE\TestExtension\Controller;
  */
 class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
+
     /**
      * mainRepository
      *
@@ -24,8 +28,8 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected $mainRepository = null;
 
     /**
-    * @param \FIXTURE\TestExtension\Domain\Repository\MainRepository $mainRepository
-    */
+     * @param \FIXTURE\TestExtension\Domain\Repository\MainRepository $mainRepository
+     */
     public function injectMainRepository(\FIXTURE\TestExtension\Domain\Repository\MainRepository $mainRepository)
     {
         $this->mainRepository = $mainRepository;
@@ -60,7 +64,6 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function newAction()
     {
-
     }
 
     /**
@@ -112,5 +115,14 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         $this->mainRepository->remove($main);
         $this->redirect('list');
+    }
+
+    /**
+     * action custom
+     *
+     * @return string|object|null|void
+     */
+    public function customAction()
+    {
     }
 }

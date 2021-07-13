@@ -8,7 +8,7 @@ call_user_func(static function() {
         'testmodule1',
         '',
         [
-            \FIXTURE\TestExtension\Controller\MainController::class => 'list, show, new, create, edit, update, delete',
+            \FIXTURE\TestExtension\Controller\MainController::class => 'list, show, new, create, edit, update, delete, custom',
         ],
         [
             'access' => 'user,group',

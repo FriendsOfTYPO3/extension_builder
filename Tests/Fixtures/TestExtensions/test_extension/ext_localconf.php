@@ -6,11 +6,11 @@ call_user_func(static function() {
         'TestExtension',
         'Testplugin',
         [
-            \FIXTURE\TestExtension\Controller\MainController::class => 'list, show, new, create, edit, update, delete'
+            \FIXTURE\TestExtension\Controller\MainController::class => 'list, show, new, create, edit, update, delete, custom'
         ],
         // non-cacheable actions
         [
-            \FIXTURE\TestExtension\Controller\MainController::class => 'create, update, delete'
+            \FIXTURE\TestExtension\Controller\MainController::class => 'create, update, delete, '
         ]
     );
 
