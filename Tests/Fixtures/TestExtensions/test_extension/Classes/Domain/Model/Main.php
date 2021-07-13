@@ -1,6 +1,9 @@
 <?php
+
 declare(strict_types=1);
+
 namespace FIXTURE\TestExtension\Domain\Model;
+
 
 /**
  * This file is part of the "ExtensionBuilder Test Extension" Extension for TYPO3 CMS.
@@ -16,6 +19,7 @@ namespace FIXTURE\TestExtension\Domain\Model;
  */
 class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
+
     /**
      * This is not required
      *
@@ -86,6 +90,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function __construct()
     {
+
         // Do not remove the next line: It would break the functionality
         $this->initializeObject();
     }
@@ -189,10 +194,10 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-    * Returns the mail
-    *
-    * @return string $mail
-    */
+     * Returns the mail
+     *
+     * @return string $mail
+     */
     public function getMail()
     {
         return $this->mail;

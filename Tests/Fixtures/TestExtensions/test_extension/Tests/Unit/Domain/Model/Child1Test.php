@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace FIXTURE\TestExtension\Tests\Unit\Domain\Model;
 
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;

@@ -141,6 +141,7 @@ return [
                 'rows' => 15,
                 'eval' => 'trim',
             ],
+            
         ],
         'my_date' => [
             'exclude' => true,
@@ -180,6 +181,7 @@ return [
                     'showAllLocalizationLink' => 1
                 ],
             ],
+
         ],
         'children2' => [
             'exclude' => true,
@@ -210,6 +212,7 @@ return [
                 'minitems' => 0,
                 'maxitems' => 1,
             ],
+            
         ],
         'children4' => [
             'exclude' => true,
@@ -235,8 +238,8 @@ return [
                     ],
                 ],
             ],
-
+            
         ],
-
+    
     ],
 ];

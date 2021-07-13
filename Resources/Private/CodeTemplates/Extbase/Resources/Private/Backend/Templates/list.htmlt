@@ -14,7 +14,7 @@ in /Configuration/ExtensionBuilder/settings.yaml:
       Backend:
         Templates:
           {domainObject.name}:
-            List.html: keep
+            {action.name -> k:format.uppercaseFirst()}.html: keep
 
 Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 

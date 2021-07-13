@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_main.xlf" date="2019-01-01T01:00:00Z" product-name="test_extension">
+	<file source-language="en" datatype="plaintext" original="EXT:test_extension/Resources/Private/Language/locallang_csh" date="2021-07-13T20:13:32Z" product-name="test_extension">
 		<header/>
 		<body>
 			<trans-unit id="name.description" resname="name.description">
@@ -8,6 +8,9 @@
 			</trans-unit>
 			<trans-unit id="identifier.description" resname="identifier.description">
 				<source>This is required</source>
+			</trans-unit>
+			<trans-unit id="description.description" resname="description.description">
+				<source>description</source>
 			</trans-unit>
 			<trans-unit id="my_date.description" resname="my_date.description">
 				<source>Just a date</source>
