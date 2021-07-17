@@ -31,6 +31,7 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\NativeTimeProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\PasswordProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\RichTextProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\SelectProperty;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\SlugProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\TextProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\TimeProperty;
@@ -789,6 +790,46 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             '/.*public function setColor\(int \$color\).*/',
             $classFileContent,
             'Setter for select property was not generated'
+        );
+    }
+
+    /**
+     * Write a simple model class for a non aggregate root domain object with one slug property
+     *
+     * @test
+     */
+    public function writeModelClassWithSlugProperty(): void
+    {
+        $modelName = 'ModelWithSlugProperty';
+        $propertyName = 'slug';
+        $domainObject = $this->buildDomainObject($modelName);
+
+        $property = new SlugProperty($propertyName);
+        $domainObject->addProperty($property);
+
+        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
+
+        self::assertRegExp(
+            '/.*\* \@var string.*/',
+            $classFileContent,
+            'var tag for slug property was not generated'
+        );
+
+        self::assertRegExp(
+            '/.*protected \\$slug = \'\';.*/',
+            $classFileContent,
+            'slug property was not generated'
+        );
+
+        self::assertRegExp(
+            '/.*public function getSlug\(\).*/',
+            $classFileContent,
+            'Getter for slug property was not generated'
+        );
+        self::assertRegExp(
+            '/.*public function setSlug\(string \$slug\).*/',
+            $classFileContent,
+            'Setter for slug property was not generated'
         );
     }
 
