@@ -23,7 +23,8 @@
 		"php": "^7.2",
 		"ext-json": "*",
 		"nikic/php-parser": "^4.10.4",
-		"typo3/cms-backend": "^10.4.10"
+		"typo3/cms-backend": "^10.4",
+		"typo3/cms-core": "^10.4"
 	},
 	"require-dev": {
 		"friendsofphp/php-cs-fixer": "^2.18",
@@ -50,7 +51,6 @@
 		"bin-dir": ".Build/bin",
 		"vendor-dir": ".Build/vendor",
 		"preferred-install": {
-			"typo3/cms": "source",
 			"*": "dist"
 		}
 	},

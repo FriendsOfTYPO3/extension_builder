@@ -1,9 +1,10 @@
 # TYPO3 Extension "extension_builder"
 
-<a href="https://github.com/FriendsOfTYPO3/extension_builder/actions"><img src="https://github.com/FriendsOfTYPO3/extension_builder/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/friendsoftypo3/extension-builder"><img src="https://poser.pugx.org/friendsoftypo3/extension-builder/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/friendsoftypo3/extension-builder"><img src="https://poser.pugx.org/friendsoftypo3/extension-builder/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/friendsoftypo3/extension-builder"><img src="https://poser.pugx.org/friendsoftypo3/extension-builder/license.svg" alt="License"></a>
+[![Build Status](https://github.com/FriendsOfTYPO3/extension_builder/workflows/tests/badge.svg)](https://github.com/FriendsOfTYPO3/extension_builder/actions)
+[![Total Downloads](https://poser.pugx.org/friendsoftypo3/extension-builder/d/total.svg)](https://packagist.org/packages/friendsoftypo3/extension-builder)
+[![Latest Stable Version](https://poser.pugx.org/friendsoftypo3/extension-builder/v/stable.svg)](https://packagist.org/packages/friendsoftypo3/extension-builder)
+[![License](https://poser.pugx.org/friendsoftypo3/extension-builder/license.svg)](https://packagist.org/packages/friendsoftypo3/extension-builder)
+[![TYPO3](https://img.shields.io/badge/TYPO3-10.4-orange.svg)](https://get.typo3.org/version/10)
 
 The Extension Builder helps you build and manage your Extbase based TYPO3 extensions.
 
@@ -18,26 +19,42 @@ The editing (or roundtrip) mode even allows to modify an existing extension (pre
 without loosing your manual changes. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/Developer/Roundtrip.html
 
 Keep in mind though that the code created by Extension Builder is only a starting point for you actual implementation of
-functionality and is in no sense "production ready"!
+functionality and is in no sense "production ready"! For upgrading an extension to a newer TYPO3 version we recommend using
+[TYPO3 Rector](https://github.com/sabbelasichon/typo3-rector).
 
-## Which version of Extension Builder to use?
+## Usage
 
-### The Extension Builder GIT version
+### Installation
 
-For each TYPO3 core version there is a branch that matches the minor version.
-The master branch of this repository aims to be compatible with the latest development of the TYPO3 core.
+#### Installation using Composer
 
-We encourage every developer to use the latest matching source directly from github or to load those via composer.
+The recommended way to install the extension is using Composer.
 
-### The Extension Builder TER version
+Run the following command within your Composer based TYPO3 project:
 
-The TER (TYPO3 Extension Repository) version of the Extension Builder is primary thought for people who want to have an
-easy introduction to learn how an extbase extension works. There will be a release every once in a while, but to have an
-up-to-date maintenance it is suggested to rather stick to our recommendation above and use the github version.
+```bash
+composer require friendsoftypo3/extension-builder
+```
 
+#### Installation as extension from TYPO3 Extension Repository (TER)
+
+Download and install the [extension](https://extensions.typo3.org/extension/extension_builder) with the extension manager module in the TYPO3 backend.
+
+#### Installation using git
+
+For each TYPO3 core version there is a branch that matches the major version.
+The master branch aims to be compatible with the latest development of the TYPO3 core.
+
+Run the following command within your Composer based TYPO3 project:
+
+```bash
+composer require friendsoftypo3/extension-builder:dev-master
+# or for a specific branch run:
+composer require friendsoftypo3/extension-builder:9.x-dev
+```
 
 ## Making Extension Builder even better
 
-You found a bug, You have a fix?
+You found a bug, you have a fix?
 
-Don't hesitate to create an issue or push a pull request. Any help is really welcome. Thanks.
+Don't hesitate to create an issue or a pull request. Any help is really welcome. Thanks.

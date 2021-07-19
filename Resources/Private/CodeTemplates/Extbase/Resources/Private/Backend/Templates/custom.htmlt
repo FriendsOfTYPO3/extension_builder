@@ -5,8 +5,6 @@
 
 <k:openingTag>f:layout name="Default" /</k:openingTag>
 
-This template is responsible for displaying a single view for a domain object
-
 If you modify this template, do not forget to change the overwrite settings
 in /Configuration/ExtensionBuilder/settings.yaml:
   Resources:
@@ -27,10 +25,6 @@ Otherwise your changes will be overwritten the next time you save the extension 
 <k:openingTag>/f:section</k:openingTag>
 
 <k:openingTag>f:section name="Content"</k:openingTag>
-    <h1>Single View for {domainObject.name}</h1>
-
-    <k:openingTag>f:flashMessages /</k:openingTag>
-    <k:openingTag>f:render partial="{domainObject.name}/Properties" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}: {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>" /</k:openingTag>
-    <k:openingTag>f:link.action action="list" class="btn btn-default"</k:openingTag>Back to list<k:openingTag>/f:link.action</k:openingTag>
+    <h1>Template for {action.name} action</h1>
 <k:openingTag>/f:section</k:openingTag>
 <k:openingTag>/html</k:openingTag></f:format.raw>

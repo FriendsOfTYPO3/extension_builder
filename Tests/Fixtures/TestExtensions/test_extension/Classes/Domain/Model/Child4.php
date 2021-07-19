@@ -1,6 +1,9 @@
 <?php
+
 declare(strict_types=1);
+
 namespace FIXTURE\TestExtension\Domain\Model;
+
 
 /**
  * This file is part of the "ExtensionBuilder Test Extension" Extension for TYPO3 CMS.
@@ -16,6 +19,7 @@ namespace FIXTURE\TestExtension\Domain\Model;
  */
 class Child4 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
+
     /**
      * name
      *
