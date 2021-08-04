@@ -16,7 +16,7 @@ defined('TYPO3_MODE') || die();
     '{extension.extensionName}',
     '<k:format.uppercaseFirst>{plugin.key}</k:format.uppercaseFirst>',
     '<k:format.quoteString>{plugin.name}</k:format.quoteString>',
-    'EXT:<k:format.lowercaseFirst>{extension.extensionName}</k:format.lowercaseFirst>/Resources/Public/Icons/user_plugin_<k:format.lowercaseFirst>{plugin.key}</k:format.lowercaseFirst>.svg',<f:if condition="{extension.Plugins -> f:count()} > 1">
+    'EXT:<k:format.lowercaseFirst>{extension.extensionName}</k:format.lowercaseFirst>/Resources/Public/Icons/user_plugin_<k:format.lowercaseFirst>{plugin.key}</k:format.lowercaseFirst>.svg'<f:if condition="{extension.Plugins -> f:count()} > 1">,
     '<k:format.lowercaseFirst>{extension.extensionName}</k:format.lowercaseFirst>'</f:if>
 );
 </f:for>
