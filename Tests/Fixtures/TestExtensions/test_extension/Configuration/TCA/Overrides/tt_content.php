@@ -5,5 +5,5 @@ defined('TYPO3_MODE') || die();
     'TestExtension',
     'Testplugin',
     'Test plugin',
-	'EXT:testExtension/Resources/Public/Icons/user_plugin_testplugin.svg',
+	'EXT:testExtension/Resources/Public/Icons/user_plugin_testplugin.svg'
 );
