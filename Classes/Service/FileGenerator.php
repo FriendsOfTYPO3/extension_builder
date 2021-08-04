@@ -356,10 +356,10 @@ class FileGenerator
             GeneralUtility::mkdir_deep($this->privateResourcesDirectory . 'Language');
             $this->languageDirectory = $this->privateResourcesDirectory . 'Language/';
 
-            $fileContents = $this->generateLocallangFileContent();
+            $fileContents = $this->generateLocallangFileContent('.xlf');
             $this->writeFile($this->languageDirectory . 'locallang.xlf', $fileContents);
 
-            $fileContents = $this->generateLocallangFileContent('_db');
+            $fileContents = $this->generateLocallangFileContent('_db.xlf');
             $this->writeFile($this->languageDirectory . 'locallang_db.xlf', $fileContents);
 
             if ($this->extension->hasBackendModules()) {
@@ -372,7 +372,7 @@ class FileGenerator
                 }
             }
             foreach ($this->extension->getDomainObjects() as $domainObject) {
-                $fileContents = $this->generateLocallangFileContent('_csh', 'domainObject', $domainObject);
+                $fileContents = $this->generateLocallangFileContent('_csh_' . $domainObject->getDatabaseTableName() . '.xlf', 'domainObject', $domainObject);
                 $this->writeFile(
                     $this->languageDirectory . 'locallang_csh_' . $domainObject->getDatabaseTableName() . '.xlf',
                     $fileContents
