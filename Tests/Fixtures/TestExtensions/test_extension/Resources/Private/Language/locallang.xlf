@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="EXT:test_extension/Resources/Private/Language/locallang" date="2021-07-13T20:13:32Z" product-name="test_extension">
+	<file source-language="en" datatype="plaintext" original="EXT:test_extension/Resources/Private/Language/locallang.xlf" date="2021-07-13T20:13:32Z" product-name="test_extension">
 		<header/>
 		<body>
 			<trans-unit id="tx_testextension_domain_model_main" resname="tx_testextension_domain_model_main">
