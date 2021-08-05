@@ -4,7 +4,7 @@ defined('TYPO3_MODE') || die();
 call_user_func(static function() {<f:for each="{extension.plugins}" as="plugin">
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         '{extension.extensionName}',
-        '<k:format.uppercaseFirst>{plugin.key}</k:format.uppercaseFirst>',
+        '{plugin.key -> k:format.uppercaseFirst()}',
         [<f:if condition="{plugin.controllerActionCombinations}"><f:then>
             <f:for each="{plugin.controllerActionCombinations}" as="actionNames" key="controllerName" iteration="j">\{extension.vendorName}\{extension.extensionName}\Controller\{controllerName}Controller::class => '<f:for each="{actionNames}" as="actionName" iteration="i">{actionName}<f:if condition="{i.isLast} == 0">, </f:if></f:for>'<f:if condition="{j.isLast} == 0">,
             </f:if></f:for></f:then><f:else>
