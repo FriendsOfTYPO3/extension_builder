@@ -24,6 +24,7 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\EmailProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\FileProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\FloatProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\ImageProperty;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\InputLinkProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\IntegerProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\NativeDateProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\NativeDateTimeProperty;
@@ -426,6 +427,47 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
 
     /**
+     * Write a simple model class for a non aggregate root domain object with one link property
+     *
+     * @test
+     */
+    public function writeModelClassWithInputLinkProperty(): void
+    {
+        $modelName = 'ModelWithInputLinkProperty';
+        $propertyName = 'link';
+        $domainObject = $this->buildDomainObject($modelName);
+
+        $property = new InputLinkProperty($propertyName);
+        $domainObject->addProperty($property);
+
+        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
+
+        self::assertRegExp(
+            '/.*\* \@var string.*/',
+            $classFileContent,
+            'var tag for link property was not generated'
+        );
+
+        self::assertRegExp(
+            '/.*protected \\$link = \'\';.*/',
+            $classFileContent,
+            'link property was not generated'
+        );
+
+        self::assertRegExp(
+            '/.*public function getLink\(\).*/',
+            $classFileContent,
+            'Getter for link property was not generated'
+        );
+        self::assertRegExp(
+            '/.*public function setLink\(string \$link\).*/',
+            $classFileContent,
+            'Setter for link property was not generated'
+        );
+    }
+
+
+    /**
      * Write a simple model class for a non aggregate root domain object with one int property
      *
      * @test
@@ -792,6 +834,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             'Setter for select property was not generated'
         );
     }
+
 
     /**
      * Write a simple model class for a non aggregate root domain object with one slug property
