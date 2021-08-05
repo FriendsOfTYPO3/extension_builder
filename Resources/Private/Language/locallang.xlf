@@ -418,6 +418,9 @@
 			<trans-unit id="nativeDate" resname="nativeDate">
 				<source>Date</source>
 			</trans-unit>
+			<trans-unit id="inputLink" resname="inputLink">
+				<source>Link</source>
+			</trans-unit>
 			<trans-unit id="time" resname="time">
 				<source>Time (timestamp)*</source>
 			</trans-unit>
