@@ -55,5 +55,5 @@ indent_size = 2
 [{_.htaccess,.htaccess,htaccess.t}]
 indent_style = tab
 
-[*.phpt]
+[*{.phpt,htmlt}]
 insert_final_newline = false
