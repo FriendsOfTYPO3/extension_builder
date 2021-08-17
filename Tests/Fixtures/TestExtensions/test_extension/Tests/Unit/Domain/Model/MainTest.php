@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace FIXTURE\TestExtension\Tests\Unit\Domain\Model;
 
+use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
@@ -13,17 +15,21 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 class MainTest extends UnitTestCase
 {
     /**
-     * @var \FIXTURE\TestExtension\Domain\Model\Main
+     * @var \FIXTURE\TestExtension\Domain\Model\Main|MockObject|AccessibleObjectInterface
      */
     protected $subject;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
-        $this->subject = new \FIXTURE\TestExtension\Domain\Model\Main();
+
+        $this->subject = $this->getAccessibleMock(
+            \FIXTURE\TestExtension\Domain\Model\Main::class,
+            ['dummy']
+        );
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }
@@ -31,7 +37,7 @@ class MainTest extends UnitTestCase
     /**
      * @test
      */
-    public function getNameReturnsInitialValueForString()
+    public function getNameReturnsInitialValueForString(): void
     {
         self::assertSame(
             '',
@@ -42,21 +48,17 @@ class MainTest extends UnitTestCase
     /**
      * @test
      */
-    public function setNameForStringSetsName()
+    public function setNameForStringSetsName(): void
     {
         $this->subject->setName('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
-            'Conceived at T3CON10',
-            'name',
-            $this->subject
-        );
+        self::assertEquals('Conceived at T3CON10', $this->subject->_get('name'));
     }
 
     /**
      * @test
      */
-    public function getIdentifierReturnsInitialValueForString()
+    public function getIdentifierReturnsInitialValueForString(): void
     {
         self::assertSame(
             '',
@@ -67,21 +69,17 @@ class MainTest extends UnitTestCase
     /**
      * @test
      */
-    public function setIdentifierForStringSetsIdentifier()
+    public function setIdentifierForStringSetsIdentifier(): void
     {
         $this->subject->setIdentifier('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
-            'Conceived at T3CON10',
-            'identifier',
-            $this->subject
-        );
+        self::assertEquals('Conceived at T3CON10', $this->subject->_get('identifier'));
     }
 
     /**
      * @test
      */
-    public function getDescriptionReturnsInitialValueForString()
+    public function getDescriptionReturnsInitialValueForString(): void
     {
         self::assertSame(
             '',
@@ -92,21 +90,17 @@ class MainTest extends UnitTestCase
     /**
      * @test
      */
-    public function setDescriptionForStringSetsDescription()
+    public function setDescriptionForStringSetsDescription(): void
     {
         $this->subject->setDescription('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
-            'Conceived at T3CON10',
-            'description',
-            $this->subject
-        );
+        self::assertEquals('Conceived at T3CON10', $this->subject->_get('description'));
     }
 
     /**
      * @test
      */
-    public function getMyDateReturnsInitialValueForDateTime()
+    public function getMyDateReturnsInitialValueForDateTime(): void
     {
         self::assertEquals(
             null,
@@ -117,22 +111,18 @@ class MainTest extends UnitTestCase
     /**
      * @test
      */
-    public function setMyDateForDateTimeSetsMyDate()
+    public function setMyDateForDateTimeSetsMyDate(): void
     {
         $dateTimeFixture = new \DateTime();
         $this->subject->setMyDate($dateTimeFixture);
 
-        self::assertAttributeEquals(
-            $dateTimeFixture,
-            'myDate',
-            $this->subject
-        );
+        self::assertEquals($dateTimeFixture, $this->subject->_get('myDate'));
     }
 
     /**
      * @test
      */
-    public function getMailReturnsInitialValueForString()
+    public function getMailReturnsInitialValueForString(): void
     {
         self::assertSame(
             '',
@@ -143,21 +133,17 @@ class MainTest extends UnitTestCase
     /**
      * @test
      */
-    public function setMailForStringSetsMail()
+    public function setMailForStringSetsMail(): void
     {
         $this->subject->setMail('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
-            'Conceived at T3CON10',
-            'mail',
-            $this->subject
-        );
+        self::assertEquals('Conceived at T3CON10', $this->subject->_get('mail'));
     }
 
     /**
      * @test
      */
-    public function getChild1ReturnsInitialValueForChild1()
+    public function getChild1ReturnsInitialValueForChild1(): void
     {
         self::assertEquals(
             null,
@@ -168,22 +154,18 @@ class MainTest extends UnitTestCase
     /**
      * @test
      */
-    public function setChild1ForChild1SetsChild1()
+    public function setChild1ForChild1SetsChild1(): void
     {
         $child1Fixture = new \FIXTURE\TestExtension\Domain\Model\Child1();
         $this->subject->setChild1($child1Fixture);
 
-        self::assertAttributeEquals(
-            $child1Fixture,
-            'child1',
-            $this->subject
-        );
+        self::assertEquals($child1Fixture, $this->subject->_get('child1'));
     }
 
     /**
      * @test
      */
-    public function getChildren2ReturnsInitialValueForChild2()
+    public function getChildren2ReturnsInitialValueForChild2(): void
     {
         $newObjectStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         self::assertEquals(
@@ -195,33 +177,29 @@ class MainTest extends UnitTestCase
     /**
      * @test
      */
-    public function setChildren2ForObjectStorageContainingChild2SetsChildren2()
+    public function setChildren2ForObjectStorageContainingChild2SetsChildren2(): void
     {
         $children2 = new \FIXTURE\TestExtension\Domain\Model\Child2();
         $objectStorageHoldingExactlyOneChildren2 = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         $objectStorageHoldingExactlyOneChildren2->attach($children2);
         $this->subject->setChildren2($objectStorageHoldingExactlyOneChildren2);
 
-        self::assertAttributeEquals(
-            $objectStorageHoldingExactlyOneChildren2,
-            'children2',
-            $this->subject
-        );
+        self::assertEquals($objectStorageHoldingExactlyOneChildren2, $this->subject->_get('children2'));
     }
 
     /**
      * @test
      */
-    public function addChildren2ToObjectStorageHoldingChildren2()
+    public function addChildren2ToObjectStorageHoldingChildren2(): void
     {
         $children2 = new \FIXTURE\TestExtension\Domain\Model\Child2();
         $children2ObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
-            ->setMethods(['attach'])
+            ->onlyMethods(['attach'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $children2ObjectStorageMock->expects(self::once())->method('attach')->with(self::equalTo($children2));
-        $this->inject($this->subject, 'children2', $children2ObjectStorageMock);
+        $this->subject->_set('children2', $children2ObjectStorageMock);
 
         $this->subject->addChildren2($children2);
     }
@@ -229,16 +207,16 @@ class MainTest extends UnitTestCase
     /**
      * @test
      */
-    public function removeChildren2FromObjectStorageHoldingChildren2()
+    public function removeChildren2FromObjectStorageHoldingChildren2(): void
     {
         $children2 = new \FIXTURE\TestExtension\Domain\Model\Child2();
         $children2ObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
-            ->setMethods(['detach'])
+            ->onlyMethods(['detach'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $children2ObjectStorageMock->expects(self::once())->method('detach')->with(self::equalTo($children2));
-        $this->inject($this->subject, 'children2', $children2ObjectStorageMock);
+        $this->subject->_set('children2', $children2ObjectStorageMock);
 
         $this->subject->removeChildren2($children2);
     }
@@ -246,7 +224,7 @@ class MainTest extends UnitTestCase
     /**
      * @test
      */
-    public function getChild3ReturnsInitialValueForChild3()
+    public function getChild3ReturnsInitialValueForChild3(): void
     {
         self::assertEquals(
             null,
@@ -257,22 +235,18 @@ class MainTest extends UnitTestCase
     /**
      * @test
      */
-    public function setChild3ForChild3SetsChild3()
+    public function setChild3ForChild3SetsChild3(): void
     {
         $child3Fixture = new \FIXTURE\TestExtension\Domain\Model\Child3();
         $this->subject->setChild3($child3Fixture);
 
-        self::assertAttributeEquals(
-            $child3Fixture,
-            'child3',
-            $this->subject
-        );
+        self::assertEquals($child3Fixture, $this->subject->_get('child3'));
     }
 
     /**
      * @test
      */
-    public function getChildren4ReturnsInitialValueForChild4()
+    public function getChildren4ReturnsInitialValueForChild4(): void
     {
         $newObjectStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         self::assertEquals(
@@ -284,33 +258,29 @@ class MainTest extends UnitTestCase
     /**
      * @test
      */
-    public function setChildren4ForObjectStorageContainingChild4SetsChildren4()
+    public function setChildren4ForObjectStorageContainingChild4SetsChildren4(): void
     {
         $children4 = new \FIXTURE\TestExtension\Domain\Model\Child4();
         $objectStorageHoldingExactlyOneChildren4 = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         $objectStorageHoldingExactlyOneChildren4->attach($children4);
         $this->subject->setChildren4($objectStorageHoldingExactlyOneChildren4);
 
-        self::assertAttributeEquals(
-            $objectStorageHoldingExactlyOneChildren4,
-            'children4',
-            $this->subject
-        );
+        self::assertEquals($objectStorageHoldingExactlyOneChildren4, $this->subject->_get('children4'));
     }
 
     /**
      * @test
      */
-    public function addChildren4ToObjectStorageHoldingChildren4()
+    public function addChildren4ToObjectStorageHoldingChildren4(): void
     {
         $children4 = new \FIXTURE\TestExtension\Domain\Model\Child4();
         $children4ObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
-            ->setMethods(['attach'])
+            ->onlyMethods(['attach'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $children4ObjectStorageMock->expects(self::once())->method('attach')->with(self::equalTo($children4));
-        $this->inject($this->subject, 'children4', $children4ObjectStorageMock);
+        $this->subject->_set('children4', $children4ObjectStorageMock);
 
         $this->subject->addChildren4($children4);
     }
@@ -318,16 +288,16 @@ class MainTest extends UnitTestCase
     /**
      * @test
      */
-    public function removeChildren4FromObjectStorageHoldingChildren4()
+    public function removeChildren4FromObjectStorageHoldingChildren4(): void
     {
         $children4 = new \FIXTURE\TestExtension\Domain\Model\Child4();
         $children4ObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
-            ->setMethods(['detach'])
+            ->onlyMethods(['detach'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $children4ObjectStorageMock->expects(self::once())->method('detach')->with(self::equalTo($children4));
-        $this->inject($this->subject, 'children4', $children4ObjectStorageMock);
+        $this->subject->_set('children4', $children4ObjectStorageMock);
 
         $this->subject->removeChildren4($children4);
     }

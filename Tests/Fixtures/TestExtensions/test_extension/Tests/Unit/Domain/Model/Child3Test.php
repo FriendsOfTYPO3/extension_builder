@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace FIXTURE\TestExtension\Tests\Unit\Domain\Model;
 
+use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
@@ -13,17 +15,21 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 class Child3Test extends UnitTestCase
 {
     /**
-     * @var \FIXTURE\TestExtension\Domain\Model\Child3
+     * @var \FIXTURE\TestExtension\Domain\Model\Child3|MockObject|AccessibleObjectInterface
      */
     protected $subject;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
-        $this->subject = new \FIXTURE\TestExtension\Domain\Model\Child3();
+
+        $this->subject = $this->getAccessibleMock(
+            \FIXTURE\TestExtension\Domain\Model\Child3::class,
+            ['dummy']
+        );
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }
@@ -31,7 +37,7 @@ class Child3Test extends UnitTestCase
     /**
      * @test
      */
-    public function getNameReturnsInitialValueForString()
+    public function getNameReturnsInitialValueForString(): void
     {
         self::assertSame(
             '',
@@ -42,21 +48,17 @@ class Child3Test extends UnitTestCase
     /**
      * @test
      */
-    public function setNameForStringSetsName()
+    public function setNameForStringSetsName(): void
     {
         $this->subject->setName('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
-            'Conceived at T3CON10',
-            'name',
-            $this->subject
-        );
+        self::assertEquals('Conceived at T3CON10', $this->subject->_get('name'));
     }
 
     /**
      * @test
      */
-    public function getPasswordReturnsInitialValueForString()
+    public function getPasswordReturnsInitialValueForString(): void
     {
         self::assertSame(
             '',
@@ -67,21 +69,17 @@ class Child3Test extends UnitTestCase
     /**
      * @test
      */
-    public function setPasswordForStringSetsPassword()
+    public function setPasswordForStringSetsPassword(): void
     {
         $this->subject->setPassword('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
-            'Conceived at T3CON10',
-            'password',
-            $this->subject
-        );
+        self::assertEquals('Conceived at T3CON10', $this->subject->_get('password'));
     }
 
     /**
      * @test
      */
-    public function getImagePropertyReturnsInitialValueForFileReference()
+    public function getImagePropertyReturnsInitialValueForFileReference(): void
     {
         self::assertEquals(
             null,
@@ -92,15 +90,11 @@ class Child3Test extends UnitTestCase
     /**
      * @test
      */
-    public function setImagePropertyForFileReferenceSetsImageProperty()
+    public function setImagePropertyForFileReferenceSetsImageProperty(): void
     {
         $fileReferenceFixture = new \TYPO3\CMS\Extbase\Domain\Model\FileReference();
         $this->subject->setImageProperty($fileReferenceFixture);
 
-        self::assertAttributeEquals(
-            $fileReferenceFixture,
-            'imageProperty',
-            $this->subject
-        );
+        self::assertEquals($fileReferenceFixture, $this->subject->_get('imageProperty'));
     }
 }
