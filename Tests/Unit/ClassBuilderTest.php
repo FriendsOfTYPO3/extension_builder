@@ -36,15 +36,11 @@ class ClassBuilderTest extends BaseUnitTest
     /**
      * @var string
      */
-    protected $modelName = 'Model1';
+    private $modelName = 'Model1';
     /**
-     * @var \EBT\ExtensionBuilder\Service\ClassBuilder
+     * @var ClassBuilder
      */
-    protected $classBuilder;
-    /**
-     * @var string
-     */
-    protected $modelClassTemplatePath = '';
+    private $classBuilder;
 
     protected function setUp(): void
     {

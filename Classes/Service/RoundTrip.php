@@ -169,7 +169,7 @@ class RoundTrip implements SingletonInterface
             $jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey);
             $this->previousExtension = $extensionSchemaBuilder->build($jsonConfig);
             $previousDomainObjects = $this->previousExtension->getDomainObjects();
-            /** @var $previousDomainObjects DomainObject[] */
+            /** @var DomainObject[] $previousDomainObjects */
             foreach ($previousDomainObjects as $oldDomainObject) {
                 $this->previousDomainObjects[$oldDomainObject->getUniqueIdentifier()] = $oldDomainObject;
                 self::log(
@@ -947,7 +947,6 @@ class RoundTrip implements SingletonInterface
         if ($relation->getForeignModel()
             && isset($this->renamedDomainObjects[$relation->getForeignModel()->getUniqueIdentifier()])
         ) {
-            /** @var $renamedObject DomainObject */
             $renamedObject = $this->renamedDomainObjects[$relation->getForeignModel()->getUniqueIdentifier()];
             return $renamedObject->getQualifiedClassName();
         }

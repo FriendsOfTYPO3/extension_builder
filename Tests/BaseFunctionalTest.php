@@ -21,6 +21,8 @@ use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
+use EBT\ExtensionBuilder\Exception\FileNotFoundException;
+use EBT\ExtensionBuilder\Exception\SyntaxError;
 use EBT\ExtensionBuilder\Service\ClassBuilder;
 use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Service\LocalizationService;
@@ -76,10 +78,6 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
      */
     protected $roundTripService;
     /**
-     * @var ObjectManager
-     */
-    protected $objectManager;
-    /**
      * @var Extension
      */
     protected $extension;
@@ -97,11 +95,14 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         'typo3conf/ext/extension_builder'
     ];
 
+    /**
+     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     */
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->fixturesPath = __DIR__ . '/Fixtures/';
 
         $rootDir = vfsStream::setup('root');
@@ -113,8 +114,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
 
         vfsStream::copyFromFileSystem($this->fixturesPath, $fixturesDir, 1024 * 1024);
 
-        $yamlParser = new SpycYAMLParser();
-        $settings = $yamlParser->YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
+        $settings = SpycYAMLParser::YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
 
         $this->extension = $this->getMockBuilder(Extension::class)
             ->enableProxyingToOriginalMethods()
@@ -133,13 +133,13 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         $this->extension->setStoragePath('dummy');
 
         // get instances to inject in Mocks
-        $configurationManager = $this->objectManager->get(ExtensionBuilderConfigurationManager::class);
+        $configurationManager = GeneralUtility::makeInstance(ExtensionBuilderConfigurationManager::class);
 
         $this->parserService = new ParserService();
-        $this->printerService = $this->objectManager->get(Printer::class);
-        $localizationService = $this->objectManager->get(LocalizationService::class);
+        $this->printerService = GeneralUtility::makeInstance(Printer::class);
+        $localizationService = GeneralUtility::makeInstance(LocalizationService::class);
 
-        $this->classBuilder = $this->objectManager->get(ClassBuilder::class);
+        $this->classBuilder = GeneralUtility::makeInstance(ClassBuilder::class);
         $this->classBuilder->initialize($this->extension);
 
         $this->roundTripService = $this->getAccessibleMock(RoundTrip::class, ['dummy']);
@@ -179,21 +179,25 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         $this->fileGenerator->_set('extension', $this->extension);
     }
 
+    /**
+     * @throws Exception
+     */
     protected function tearDown(): void
     {
-        if (!empty($this->extension) && $this->extension->getExtensionKey() != null) {
+        if (!empty($this->extension) && $this->extension->getExtensionKey() !== null) {
             GeneralUtility::rmdir($this->extension->getExtensionDir(), true);
         }
     }
 
     /**
      * Helper function
+     *
      * @param $name
-     * @param $entity
-     * @param $aggregateRoot
+     * @param bool $entity
+     * @param bool $aggregateRoot
      * @return DomainObject
      */
-    protected function buildDomainObject($name, $entity = false, $aggregateRoot = false): DomainObject
+    protected function buildDomainObject($name, bool $entity = false, bool $aggregateRoot = false): DomainObject
     {
         /* @var DomainObject $domainObject */
         $domainObject = $this->getAccessibleMock(DomainObject::class, ['dummy']);
@@ -216,17 +220,17 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
     }
 
     /**
-     * Builds an initial class file to test parsing and modifiying of existing classes
+     * Builds an initial class file to test parsing and modifying of existing classes
      *
      * This class file is generated based on the CodeTemplates
      *
      * @param string $modelName
      *
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
+     * @throws FileNotFoundException
+     * @throws SyntaxError
      * @throws Exception
      */
-    protected function generateInitialModelClassFile($modelName): void
+    protected function generateInitialModelClassFile(string $modelName): void
     {
         $domainObject = $this->buildDomainObject($modelName);
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
@@ -239,7 +243,10 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         GeneralUtility::writeFile($modelClassPath, $classFileContent);
     }
 
-    protected function removeInitialModelClassFile($modelName): void
+    /**
+     * @throws Exception
+     */
+    protected function removeInitialModelClassFile(string $modelName): void
     {
         $file = $this->extension->getExtensionDir() . $this->modelClassDir . $modelName . '.php';
         if (@file_exists($file)) {

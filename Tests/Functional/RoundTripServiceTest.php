@@ -21,18 +21,19 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
 use EBT\ExtensionBuilder\Service\ObjectSchemaBuilder;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class RoundTripServiceTest extends BaseFunctionalTest
 {
     /**
      * @var ObjectSchemaBuilder
      */
-    protected $objectSchemaBuilder;
+    private $objectSchemaBuilder;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->objectSchemaBuilder = $this->objectManager->get(ObjectSchemaBuilder::class);
+        $this->objectSchemaBuilder = GeneralUtility::makeInstance(ObjectSchemaBuilder::class);
     }
 
     /**
