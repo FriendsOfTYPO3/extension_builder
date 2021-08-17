@@ -32,7 +32,6 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
 /**
@@ -188,23 +187,11 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     /**
      * @param $className string
      * @return string
-     * @throws \TYPO3\CMS\Extbase\Object\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
     public function getPersistenceTable(string $className): string
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        return $objectManager->get(DataMapper::class)->getDataMap($className)->getTableName();
-    }
-
-    /**
-     * @param string $className
-     * @return string
-     * @throws \TYPO3\CMS\Extbase\Object\Exception
-     */
-    public function getRecordType(string $className): ?string
-    {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        return $objectManager->get(DataMapper::class)->getDataMap($className)->getRecordType();
+        return GeneralUtility::makeInstance(DataMapper::class)->getDataMap($className)->getTableName();
     }
 
     /**

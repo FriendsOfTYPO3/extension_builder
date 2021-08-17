@@ -23,16 +23,11 @@ use mysqli_result;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extensionmanager\Utility\InstallUtility;
 use TYPO3\CMS\Install\Service\SqlSchemaMigrationService;
 
 class ExtensionInstallationStatus
 {
-    /**
-     * @var ObjectManager
-     */
-    protected $objectManager;
     /**
      * @var Extension
      */
@@ -132,7 +127,6 @@ class ExtensionInstallationStatus
         if (ExtensionManagementUtility::isLoaded($extensionKey)) {
             $sqlFile = ExtensionManagementUtility::extPath($extensionKey) . 'ext_tables.sql';
             if (@file_exists($sqlFile)) {
-                $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
                 /** @var SqlSchemaMigrationService $sqlHandler */
                 $sqlHandler = GeneralUtility::makeInstance(SqlSchemaMigrationService::class);
 

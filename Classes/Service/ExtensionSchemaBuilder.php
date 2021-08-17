@@ -65,7 +65,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
      */
     public function build(array $extensionBuildConfiguration): Extension
     {
-        /** @var $extension Extension */
+        /** @var Extension $extension */
         $extension = GeneralUtility::makeInstance(Extension::class);
         $globalProperties = $extensionBuildConfiguration['properties'];
         if (!is_array($globalProperties)) {

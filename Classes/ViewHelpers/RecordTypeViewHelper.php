@@ -17,25 +17,21 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
-use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Utility\Tools;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 class RecordTypeViewHelper extends AbstractViewHelper
 {
     /**
-     * @var ExtensionBuilderConfigurationManager
+     * @var DataMapper
      */
-    protected $configurationManager;
+    private $dataMapper;
 
-    /**
-     * @param ExtensionBuilderConfigurationManager $configurationManager
-     */
-    public function injectExtensionBuilderConfigurationManager(
-        ExtensionBuilderConfigurationManager $configurationManager
-    ): void {
-        $this->configurationManager = $configurationManager;
+    public function injectDataMapper(DataMapper $dataMapper): void
+    {
+        $this->dataMapper = $dataMapper;
     }
 
     /**
@@ -50,14 +46,14 @@ class RecordTypeViewHelper extends AbstractViewHelper
      * Helper function to find the parents class recordType
      *
      * @return string
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
     public function render(): string
     {
         $domainObject = $this->arguments['domainObject'];
         $recordType = null;
         if (!empty($domainObject->getParentClass())) {
-            $recordType = $this->configurationManager->getRecordType($domainObject->getParentClass());
+            $recordType = $this->dataMapper->getDataMap($domainObject->getParentClass())->getRecordType();
         }
         if ($recordType) {
             $parentRecordType = Tools::convertClassNameToRecordType($recordType);
