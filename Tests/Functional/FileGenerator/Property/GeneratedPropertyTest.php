@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace EBT\ExtensionBuilder\Tests\Functional\FileGenerator\Property;
 
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\ColorPickerProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\DateProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\DateTimeProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\EmailProperty;
@@ -84,6 +85,47 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             '/.*public function isActive\(\).*/',
             $classFileContent,
             'is method for boolean property was not generated'
+        );
+    }
+
+
+    /**
+     * Write a simple model class for a non aggregate root domain object with one color picker property
+     *
+     * @test
+     */
+    public function writeModelClassWithColorPickerProperty(): void
+    {
+        $modelName = 'ModelWithColorPickerProperty';
+        $propertyName = 'color';
+        $domainObject = $this->buildDomainObject($modelName);
+
+        $property = new ColorPickerProperty($propertyName);
+        $domainObject->addProperty($property);
+
+        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
+
+        self::assertRegExp(
+            '/.*\* \@var string.*/',
+            $classFileContent,
+            'var tag for color picker property was not generated'
+        );
+
+        self::assertRegExp(
+            '/.*protected \\$color = \'\';.*/',
+            $classFileContent,
+            'color picker property was not generated'
+        );
+
+        self::assertRegExp(
+            '/.*public function getColor\(\).*/',
+            $classFileContent,
+            'Getter for color picker property was not generated'
+        );
+        self::assertRegExp(
+            '/.*public function setColor\(string \$color\).*/',
+            $classFileContent,
+            'Setter for color picker property was not generated'
         );
     }
 
