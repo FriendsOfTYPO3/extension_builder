@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace FIXTURE\TestExtension\Tests\Unit\Domain\Model;
 
+use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
@@ -13,17 +15,21 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 class Child1Test extends UnitTestCase
 {
     /**
-     * @var \FIXTURE\TestExtension\Domain\Model\Child1
+     * @var \FIXTURE\TestExtension\Domain\Model\Child1|MockObject|AccessibleObjectInterface
      */
     protected $subject;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
-        $this->subject = new \FIXTURE\TestExtension\Domain\Model\Child1();
+
+        $this->subject = $this->getAccessibleMock(
+            \FIXTURE\TestExtension\Domain\Model\Child1::class,
+            ['dummy']
+        );
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }
@@ -31,7 +37,7 @@ class Child1Test extends UnitTestCase
     /**
      * @test
      */
-    public function getNameReturnsInitialValueForString()
+    public function getNameReturnsInitialValueForString(): void
     {
         self::assertSame(
             '',
@@ -42,39 +48,28 @@ class Child1Test extends UnitTestCase
     /**
      * @test
      */
-    public function setNameForStringSetsName()
+    public function setNameForStringSetsName(): void
     {
         $this->subject->setName('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
-            'Conceived at T3CON10',
-            'name',
-            $this->subject
-        );
+        self::assertEquals('Conceived at T3CON10', $this->subject->_get('name'));
     }
 
     /**
      * @test
      */
-    public function getFlagReturnsInitialValueForBool()
+    public function getFlagReturnsInitialValueForBool(): void
     {
-        self::assertSame(
-            false,
-            $this->subject->getFlag()
-        );
+        self::assertFalse($this->subject->getFlag());
     }
 
     /**
      * @test
      */
-    public function setFlagForBoolSetsFlag()
+    public function setFlagForBoolSetsFlag(): void
     {
         $this->subject->setFlag(true);
 
-        self::assertAttributeEquals(
-            true,
-            'flag',
-            $this->subject
-        );
+        self::assertEquals(true, $this->subject->_get('flag'));
     }
 }
