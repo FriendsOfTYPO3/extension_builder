@@ -293,7 +293,8 @@ extbaseModeling_wiringEditorLanguage.modules.push({
                             'TimeSec',
                             'Select',
                             'File',
-                            'Image'
+                            'Image',
+                            'PassThrough',
                           ],
                           selectOptions: [
                             TYPO3.settings.extensionBuilder._LOCAL_LANG.string,
@@ -316,7 +317,8 @@ extbaseModeling_wiringEditorLanguage.modules.push({
                             TYPO3.settings.extensionBuilder._LOCAL_LANG.timeSec,
                             TYPO3.settings.extensionBuilder._LOCAL_LANG.selectList,
                             TYPO3.settings.extensionBuilder._LOCAL_LANG.file,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.image
+                            TYPO3.settings.extensionBuilder._LOCAL_LANG.image,
+                            TYPO3.settings.extensionBuilder._LOCAL_LANG.passThrough,
                           ]
                         }
                       },
