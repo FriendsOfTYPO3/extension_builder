@@ -15,5 +15,10 @@
         "psr-4": {
             "FIXTURE\\TestExtension\\": "Classes"
         }
-    }
+    },
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "test_extension"
+		}
+	}
 }
