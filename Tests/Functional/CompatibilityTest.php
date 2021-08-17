@@ -35,16 +35,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class CompatibilityTest extends BaseFunctionalTest
 {
     /**
-     * @var ExtensionBuilderConfigurationManager
-     */
-    protected $configurationManager;
-
-    /**
-     * @var ExtensionSchemaBuilder
-     */
-    protected $extensionSchemaBuilder;
-
-    /**
      * This test creates an extension based on a JSON file, generated
      * with version 1.0 of the ExtensionBuilder and compares all
      * generated files with the originally created ones
@@ -54,8 +44,8 @@ class CompatibilityTest extends BaseFunctionalTest
      */
     public function generateExtensionFromVersion3Configuration(): void
     {
-        $this->configurationManager = $this->getAccessibleMock(ExtensionBuilderConfigurationManager::class, ['dummy']);
-        $this->extensionSchemaBuilder = $this->objectManager->get(ExtensionSchemaBuilder::class);
+        $configurationManager = $this->getAccessibleMock(ExtensionBuilderConfigurationManager::class, ['dummy']);
+        $extensionSchemaBuilder = GeneralUtility::makeInstance(ExtensionSchemaBuilder::class);
 
         $testExtensionDir = $this->fixturesPath . 'TestExtensions/test_extension/';
         $jsonFile = $testExtensionDir . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
@@ -64,14 +54,14 @@ class CompatibilityTest extends BaseFunctionalTest
             // compatibility adaptions for configurations from older versions
             $extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), true);
             $extensionConfigurationJSON['storagePath'] = $this->fixturesPath . 'TestExtensions/';
-            $extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON(
+            $extensionConfigurationJSON = $configurationManager->fixExtensionBuilderJSON(
                 $extensionConfigurationJSON
             );
         } else {
             $extensionConfigurationJSON = [];
             self::fail('JSON file not found');
         }
-        $this->extension = $this->extensionSchemaBuilder->build($extensionConfigurationJSON);
+        $this->extension = $extensionSchemaBuilder->build($extensionConfigurationJSON);
         $this->fileGenerator->setSettings([
             'codeTemplateRootPaths.' => [
                 Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/'

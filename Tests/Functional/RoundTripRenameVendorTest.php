@@ -18,35 +18,35 @@ declare(strict_types=1);
 namespace EBT\ExtensionBuilder\Tests\Functional;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
-use EBT\ExtensionBuilder\Service\ObjectSchemaBuilder;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
+use Nimut\TestingFramework\MockObject\AccessibleMockObjectInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class RoundTripRenameVendorTest extends BaseFunctionalTest
 {
     /**
-     * @var ObjectSchemaBuilder
-     */
-    protected $objectSchemaBuilder;
-    /**
-     * @var ExtensionSchemaBuilder
-     */
-    protected $extensionSchemaBuilder;
-    /**
      * @var Extension
      */
-    protected $fixtureExtension;
+    private $fixtureExtension;
 
+    /**
+     * @throws ExtensionException
+     */
     protected function setUp(): void
     {
         parent::setUp();
-        $this->configurationManager = $this->getAccessibleMock(
+
+        /** @var ExtensionBuilderConfigurationManager|AccessibleMockObjectInterface|MockObject $configurationManager */
+        $configurationManager = $this->getAccessibleMock(
             ExtensionBuilderConfigurationManager::class,
             ['dummy']
         );
-        $this->extensionSchemaBuilder = $this->objectManager->get(ExtensionSchemaBuilder::class);
+        $extensionSchemaBuilder = GeneralUtility::makeInstance(ExtensionSchemaBuilder::class);
 
         $testExtensionDir = $this->fixturesPath . 'TestExtensions/test_extension/';
         $jsonFile = $testExtensionDir . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
@@ -54,16 +54,15 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
         if (file_exists($jsonFile)) {
             // compatibility adaptions for configurations from older versions
             $extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), true);
-            $extensionConfigurationJSON = $this->configurationManager->fixExtensionBuilderJSON(
-                $extensionConfigurationJSON,
-                false
+            $extensionConfigurationJSON = $configurationManager->fixExtensionBuilderJSON(
+                $extensionConfigurationJSON
             );
         } else {
             $extensionConfigurationJSON = [];
             self::fail('JSON file not found: ' . $jsonFile);
         }
 
-        $this->fixtureExtension = $this->extensionSchemaBuilder->build($extensionConfigurationJSON);
+        $this->fixtureExtension = $extensionSchemaBuilder->build($extensionConfigurationJSON);
         $this->fixtureExtension->setExtensionDir($testExtensionDir);
         $this->roundTripService->_set('extension', $this->fixtureExtension);
         $this->roundTripService->_set('previousExtensionDirectory', $testExtensionDir);

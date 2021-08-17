@@ -670,12 +670,12 @@ class ClassBuilder implements SingletonInterface
             case 'set':
                 return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
             case 'add':
-                /** @var $domainProperty AbstractRelation */
+                /** @var AbstractRelation $domainProperty */
                 $paramTag = $domainProperty->getForeignClassName();
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
                 return $paramTag;
             case 'remove':
-                /** @var $domainProperty AbstractRelation */
+                /** @var AbstractRelation $domainProperty */
                 $paramTag = $domainProperty->getForeignClassName();
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
                 $paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';

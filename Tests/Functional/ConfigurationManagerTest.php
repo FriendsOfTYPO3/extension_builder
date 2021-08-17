@@ -19,6 +19,7 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 
 class ConfigurationManagerTest extends BaseFunctionalTest
@@ -26,16 +27,17 @@ class ConfigurationManagerTest extends BaseFunctionalTest
     /**
      * @var ExtensionBuilderConfigurationManager
      */
-    protected $configurationManager;
+    private $configurationManager;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->configurationManager = $this->objectManager->get(ExtensionBuilderConfigurationManager::class);
+        $this->configurationManager = GeneralUtility::makeInstance(ExtensionBuilderConfigurationManager::class);
     }
 
     /**
      * @test
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     public function getPersistenceTableReturnsCorrectValue(): void
     {
