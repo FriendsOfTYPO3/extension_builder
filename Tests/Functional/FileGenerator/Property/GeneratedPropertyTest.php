@@ -30,6 +30,7 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\IntegerProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\NativeDateProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\NativeDateTimeProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\NativeTimeProperty;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\PassThroughProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\PasswordProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\RichTextProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\SelectProperty;
@@ -710,6 +711,47 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             '/.*public function setTime\(\\\\DateTime \$time\).*/',
             $classFileContent,
             'Setter for native time property was not generated'
+        );
+    }
+
+
+    /**
+     * Write a simple model class for a non aggregate root domain object with one pass through property
+     *
+     * @test
+     */
+    public function writeModelClassWithPassThroughProperty(): void
+    {
+        $modelName = 'ModelWithPassThroughProperty';
+        $propertyName = 'passThrough';
+        $domainObject = $this->buildDomainObject($modelName);
+
+        $property = new PassThroughProperty($propertyName);
+        $domainObject->addProperty($property);
+
+        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
+
+        self::assertRegExp(
+            '/.*\* \@var mixed.*/',
+            $classFileContent,
+            'var tag for pass through property was not generated'
+        );
+
+        self::assertRegExp(
+            '/.*protected \\$passThrough = null;.*/',
+            $classFileContent,
+            'pass through property was not generated'
+        );
+
+        self::assertRegExp(
+            '/.*public function getPassThrough\(\).*/',
+            $classFileContent,
+            'Getter for pass through property was not generated'
+        );
+        self::assertRegExp(
+            '/.*public function setPassThrough\(\$passThrough\).*/',
+            $classFileContent,
+            'Setter for pass through property was not generated'
         );
     }
 
