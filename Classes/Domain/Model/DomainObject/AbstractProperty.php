@@ -399,6 +399,16 @@ abstract class AbstractProperty
     }
 
     /**
+     * Is this property persistable in a database?
+     *
+     * @return bool true if this property can be displayed inside a fluid template
+     */
+    public function getIsPersistable(): bool
+    {
+        return true;
+    }
+
+    /**
      * The string to be used inside object accessors to display this property.
      *
      * @return string

@@ -2,8 +2,8 @@
 <f:for each="{extension.domainObjects}" as="domainObject">
 <f:if condition="{domainObject.properties -> f:count()} > 0 || {k:domainObjectChecks(renderCondition: 'needsTypeField', domainObject: domainObject)}">
 CREATE TABLE {domainObject.databaseTableName} (<f:for each="{k:listForeignKeyRelations(domainObject:domainObject)}" as="relation">
-	{relation.foreignKeyName} int(11) unsigned DEFAULT '0' NOT NULL,</f:for><f:for each="{domainObject.properties}" as="property">
-	{property.sqlDefinition}</f:for><k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">
+	{relation.foreignKeyName} int(11) unsigned DEFAULT '0' NOT NULL,</f:for><f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isPersistable}">
+	{property.sqlDefinition}</f:if></f:for><k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">
 	tx_extbase_type varchar(255) DEFAULT '' NOT NULL,</k:mapping>
 );
 </f:if>
