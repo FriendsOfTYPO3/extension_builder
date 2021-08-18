@@ -295,6 +295,7 @@ extbaseModeling_wiringEditorLanguage.modules.push({
                             'File',
                             'Image',
                             'PassThrough',
+                            'None',
                           ],
                           selectOptions: [
                             TYPO3.settings.extensionBuilder._LOCAL_LANG.string,
@@ -319,6 +320,7 @@ extbaseModeling_wiringEditorLanguage.modules.push({
                             TYPO3.settings.extensionBuilder._LOCAL_LANG.file,
                             TYPO3.settings.extensionBuilder._LOCAL_LANG.image,
                             TYPO3.settings.extensionBuilder._LOCAL_LANG.passThrough,
+                            TYPO3.settings.extensionBuilder._LOCAL_LANG.none,
                           ]
                         }
                       },
