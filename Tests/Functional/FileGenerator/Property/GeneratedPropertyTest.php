@@ -30,6 +30,7 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\IntegerProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\NativeDateProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\NativeDateTimeProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\NativeTimeProperty;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\NoneProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\PassThroughProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\PasswordProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\RichTextProperty;
@@ -711,6 +712,47 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             '/.*public function setTime\(\\\\DateTime \$time\).*/',
             $classFileContent,
             'Setter for native time property was not generated'
+        );
+    }
+
+
+    /**
+     * Write a simple model class for a non aggregate root domain object with one none property
+     *
+     * @test
+     */
+    public function writeModelClassWithNoneProperty(): void
+    {
+        $modelName = 'ModelWithNoneProperty';
+        $propertyName = 'none';
+        $domainObject = $this->buildDomainObject($modelName);
+
+        $property = new NoneProperty($propertyName);
+        $domainObject->addProperty($property);
+
+        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
+
+        self::assertRegExp(
+            '/.*\* \@var mixed.*/',
+            $classFileContent,
+            'var tag for none property was not generated'
+        );
+
+        self::assertRegExp(
+            '/.*protected \\$none = null;.*/',
+            $classFileContent,
+            'none property was not generated'
+        );
+
+        self::assertRegExp(
+            '/.*public function getNone\(\).*/',
+            $classFileContent,
+            'Getter for none property was not generated'
+        );
+        self::assertRegExp(
+            '/.*public function setNone\(\$none\).*/',
+            $classFileContent,
+            'Setter for none property was not generated'
         );
     }
 

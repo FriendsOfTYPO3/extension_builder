@@ -457,6 +457,9 @@
 			<trans-unit id="passThrough" resname="passThrough">
 				<source>Pass through</source>
 			</trans-unit>
+			<trans-unit id="none" resname="none">
+				<source>None</source>
+			</trans-unit>
 			<trans-unit id="allowedFileTypes" resname="allowedFileTypes">
 				<source>Allowed file types</source>
 			</trans-unit>
