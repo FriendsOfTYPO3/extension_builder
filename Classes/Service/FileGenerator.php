@@ -189,7 +189,9 @@ class FileGenerator
             GeneralUtility::mkdir($this->extensionDirectory);
         }
 
-        $this->generateEditorConfig();
+        if ($extension->getGenerateEditorConfig()) {
+            $this->generateEditorConfig();
+        }
 
         $this->generateComposerJson();
 
