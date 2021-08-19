@@ -731,13 +731,7 @@ class RoundTrip implements SingletonInterface
         }
     }
 
-    /**
-     * @param AbstractProperty $oldProperty
-     * @param AbstractProperty $newProperty
-     *
-     * @return bool
-     */
-    protected function relatedMethodsNeedUpdate(AbstractProperty $oldProperty, AbstractProperty $newProperty)
+    protected function relatedMethodsNeedUpdate(AbstractProperty $oldProperty, AbstractProperty $newProperty): bool
     {
         if ($this->extensionRenamed) {
             return true;
