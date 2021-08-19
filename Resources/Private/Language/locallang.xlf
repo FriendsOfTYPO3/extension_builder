@@ -139,6 +139,12 @@
 			<trans-unit id="descr_generateDocumentationTemplate" resname="descr_generateDocumentationTemplate">
 				<source>Check this if you want a documentation template generated for your extension.</source>
 			</trans-unit>
+			<trans-unit id="generateEditorConfig" resname="generateEditorConfig">
+				<source>Generate editorconfig file</source>
+			</trans-unit>
+			<trans-unit id="descr_generateEditorConfig" resname="descr_generateEditorConfig">
+				<source>Check this if you want a generated editorconfig file for your extension.</source>
+			</trans-unit>
 			<trans-unit id="generateEmptyGitRepository" resname="generateEmptyGitRepository">
 				<source>Generate empty git repository</source>
 			</trans-unit>

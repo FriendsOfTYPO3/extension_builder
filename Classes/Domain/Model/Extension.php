@@ -103,6 +103,10 @@ class Extension
      */
     protected $generateEmptyGitRepository = false;
     /**
+     * @var bool
+     */
+    protected $generateEditorConfig = false;
+    /**
      * @var string
      */
     protected $sourceLanguage = 'en';
@@ -672,6 +676,16 @@ class Extension
     public function getGenerateEmptyGitRepository(): bool
     {
         return $this->generateEmptyGitRepository;
+    }
+
+    public function getGenerateEditorConfig(): bool
+    {
+        return $this->generateEditorConfig;
+    }
+
+    public function setGenerateEditorConfig(bool $generateEditorConfig): void
+    {
+        $this->generateEditorConfig = $generateEditorConfig;
     }
 
     public function getSourceLanguage(): string

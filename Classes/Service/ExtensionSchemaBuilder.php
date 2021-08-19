@@ -221,6 +221,10 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $extension->setGenerateEmptyGitRepository(true);
         }
 
+        if ($propertyConfiguration['emConf']['generateEditorConfig']) {
+            $extension->setGenerateEditorConfig(true);
+        }
+
         // various extension properties
         $extension->setVersion($propertyConfiguration['emConf']['version']);
 
