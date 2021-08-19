@@ -170,6 +170,15 @@ extbaseModeling_wiringEditorLanguage.propertiesFields = [
           }
         },
         {
+          type: 'boolean',
+          inputParams: {
+            name: 'generateEmptyGitRepository',
+            label: TYPO3.settings.extensionBuilder._LOCAL_LANG.generateEmptyGitRepository,
+            description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_generateEmptyGitRepository,
+            value: 1
+          }
+        },
+        {
           type: 'string',
           inputParams: {
             name: 'sourceLanguage',
