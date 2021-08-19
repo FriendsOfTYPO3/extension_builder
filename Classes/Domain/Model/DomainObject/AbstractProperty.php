@@ -21,6 +21,7 @@ use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation;
+use EBT\ExtensionBuilder\Service\ClassBuilder;
 use EBT\ExtensionBuilder\Service\ValidationService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -364,7 +365,7 @@ abstract class AbstractProperty
     public function getValidateAnnotation(): string
     {
         if ($this->required) {
-            return '@TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")';
+            return '@' . ClassBuilder::VALIDATE_ANNOTATION;
         }
         return '';
     }
@@ -438,9 +439,6 @@ abstract class AbstractProperty
         $this->domainObject = $domainObject;
     }
 
-    /**
-     * @return DomainObject $domainObject
-     */
     public function getDomainObject(): DomainObject
     {
         return $this->domainObject;

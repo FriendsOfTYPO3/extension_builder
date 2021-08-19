@@ -254,24 +254,24 @@ class ClassBuilder implements SingletonInterface
             }
         }
 
-        if ($domainProperty->getRequired()) {
-            if (!$classProperty->isTaggedWith(self::VALIDATE_ANNOTATION)) {
-                $classProperty->setTag(self::VALIDATE_ANNOTATION);
-            }
+        if ($domainProperty->getRequired() && !$classProperty->isTaggedWith(self::VALIDATE_ANNOTATION)) {
+            $classProperty->setTag(self::VALIDATE_ANNOTATION);
+        } elseif (!$domainProperty->getRequired() && $classProperty->isTaggedWith(self::VALIDATE_ANNOTATION)) {
+            $classProperty->removeTag(self::VALIDATE_ANNOTATION);
         }
 
-        if ($domainProperty->getCascadeRemove()) {
-            if (!$classProperty->isTaggedWith(self::CASCADE_REMOVE_ANNOTATION)) {
-                $classProperty->setTag(self::CASCADE_REMOVE_ANNOTATION);
-            }
+        if ($domainProperty->getCascadeRemove() && !$classProperty->isTaggedWith(self::CASCADE_REMOVE_ANNOTATION)) {
+            $classProperty->setTag(self::CASCADE_REMOVE_ANNOTATION);
+        } elseif (!$domainProperty->getCascadeRemove() && $classProperty->isTaggedWith(self::CASCADE_REMOVE_ANNOTATION)) {
+            $classProperty->removeTag(self::CASCADE_REMOVE_ANNOTATION);
         }
 
         if ($domainProperty->isRelation()) {
             /** @var AbstractRelation $domainProperty */
-            if ($domainProperty->getLazyLoading()) {
-                if (!$classProperty->isTaggedWith(self::LAZY_ANNOTATION)) {
-                    $classProperty->setTag(self::LAZY_ANNOTATION);
-                }
+            if ($domainProperty->getLazyLoading() && !$classProperty->isTaggedWith(self::LAZY_ANNOTATION)) {
+                $classProperty->setTag(self::LAZY_ANNOTATION);
+            } elseif (!$domainProperty->getLazyLoading() && $classProperty->isTaggedWith(self::LAZY_ANNOTATION)) {
+                $classProperty->removeTag(self::LAZY_ANNOTATION);
             }
         }
 

@@ -32,6 +32,8 @@ class ZeroToManyRelation extends AnyToManyRelation
      */
     protected $foreignKeyName = '';
 
+    protected $cascadeRemove = true;
+
     public function getTypeForComment(): string
     {
         return '\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage<' . $this->getForeignClassName() . '>';
