@@ -1,34 +1,29 @@
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}{escaping off}
-<f:switch expression="{property.type}">
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}{escaping off}<f:switch expression="{property.type}">
 	<f:case value="Image">
 		<f:if condition="{property.zeroToManyRelation}">
 			<f:then>
-				<k:openingTag>f:for each="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.name}</k:curlyBrackets>" as="image" </k:openingTag>
-					<k:openingTag>f:image src="<k:curlyBrackets>image.originalResource.publicUrl</k:curlyBrackets>" width="200"/</k:openingTag>
-				<k:openingTag>/f:for</k:openingTag>
-			</f:then>
-			<f:else>
+            <k:openingTag>f:for each="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.name}</k:curlyBrackets>" as="image" </k:openingTag>
+                <k:openingTag>f:image src="<k:curlyBrackets>image.originalResource.publicUrl</k:curlyBrackets>" width="200"/</k:openingTag>
+            <k:openingTag>/f:for</k:openingTag>
+        </f:then>
+            <f:else>
 				<k:openingTag>f:image src="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.name}.originalResource.publicUrl</k:curlyBrackets>" width="200"/</k:openingTag>
-			</f:else>
-		</f:if>
-	</f:case>
+            </f:else>
+        </f:if></f:case>
 	<f:case value="File">
 		<f:if condition="{property.zeroToManyRelation}">
 			<f:then>
-				<k:openingTag>f:for each="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.name}</k:curlyBrackets>" as="file" </k:openingTag>
-					<a href="<k:curlyBrackets>file.originalResource.publicUrl</k:curlyBrackets>">
-						<k:curlyBrackets>file.originalResource.name</k:curlyBrackets>
-					</a>
-				<k:openingTag>/f:for</k:openingTag>
-			</f:then>
+            <k:openingTag>f:for each="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.name}</k:curlyBrackets>" as="file" </k:openingTag>
+                <a href="<k:curlyBrackets>file.originalResource.publicUrl</k:curlyBrackets>">
+                    <k:curlyBrackets>file.originalResource.name</k:curlyBrackets>
+                </a>
+            <k:openingTag>/f:for</k:openingTag>
+        </f:then>
 			<f:else>
 				<a href="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.name}.originalResource.publicUrl</k:curlyBrackets>">
 					<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.name}.originalResource.name</k:curlyBrackets>
 				</a>
 			</f:else>
-		</f:if>
-	</f:case>
-	<f:defaultCase>
-		<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets>
-	</f:defaultCase>
+        </f:if></f:case>
+	<f:defaultCase><k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets></f:defaultCase>
 </f:switch>

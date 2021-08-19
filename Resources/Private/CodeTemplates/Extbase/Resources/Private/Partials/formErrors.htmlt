@@ -2,13 +2,15 @@
 <k:openingTag>f:form.validationResults</k:openingTag>
 	<k:openingTag>f:if condition="<k:curlyBrackets>validationResults.flattenedErrors</k:curlyBrackets>"</k:openingTag>
 		<ul>
-		<k:openingTag>f:for each="<k:curlyBrackets>validationResults.flattenedErrors</k:curlyBrackets>" key="propertyPath" as="errors"</k:openingTag>
-			<li>
-			<k:curlyBrackets>propertyPath</k:curlyBrackets>: <ul>
-				<k:openingTag>f:for each="<k:curlyBrackets>errors</k:curlyBrackets>" as="error"</k:openingTag><li><k:curlyBrackets>error</k:curlyBrackets></li><k:openingTag>/f:for</k:openingTag>
-				</ul>
-			</li>
-		<k:openingTag>/f:for</k:openingTag></ul>
+		    <k:openingTag>f:for each="<k:curlyBrackets>validationResults.flattenedErrors</k:curlyBrackets>" key="propertyPath" as="errors"</k:openingTag>
+                <li>
+                    <k:curlyBrackets>propertyPath</k:curlyBrackets>:
+                    <ul>
+                        <k:openingTag>f:for each="<k:curlyBrackets>errors</k:curlyBrackets>" as="error"</k:openingTag><li><k:curlyBrackets>error</k:curlyBrackets></li><k:openingTag>/f:for</k:openingTag>
+                    </ul>
+                </li>
+		    <k:openingTag>/f:for</k:openingTag>
+		</ul>
     <k:openingTag>/f:if</k:openingTag>
 <k:openingTag>/f:form.validationResults</k:openingTag>
 <k:openingTag>/html</k:openingTag></f:format.raw>
