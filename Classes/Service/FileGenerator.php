@@ -189,10 +189,6 @@ class FileGenerator
             GeneralUtility::mkdir($this->extensionDirectory);
         }
 
-        $this->generateGitIgnore();
-
-        $this->generateGitAttributes();
-
         $this->generateEditorConfig();
 
         $this->generateComposerJson();
@@ -229,7 +225,11 @@ class FileGenerator
             $this->generateDocumentationFiles();
         }
 
-        $this->generateEmptyGitRepository();
+        if ($extension->getGenerateEmptyGitRepository()) {
+            $this->generateEmptyGitRepository();
+            $this->generateGitIgnore();
+            $this->generateGitAttributes();
+        }
     }
 
     protected function generateYamlSettingsFile(): void
@@ -773,12 +773,11 @@ class FileGenerator
             return;
         }
         $sourceDirectory = ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Git/';
-        $targetDirectory = $this->extensionDirectory . '.git/';
         foreach (['objects/info', 'objects/pack', 'refs/heads', 'refs/tags'] as $item) {
-            $this->mkdir_deep($targetDirectory . $item, '');
+            $this->mkdir_deep($targetDirectory . '/' . $item, '');
         }
         foreach (['config', 'description', 'HEAD', 'info/exclude'] as $item) {
-            $this->upload_copy_move($sourceDirectory . $item, $targetDirectory . $item);
+            $this->upload_copy_move($sourceDirectory . $item, $targetDirectory . '/' . $item);
         }
     }
 

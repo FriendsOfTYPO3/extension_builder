@@ -178,9 +178,10 @@
           Dom.removeClass(divElement, 'expanded');
           Dom.addClass(divElement, 'collapsed');
         } else {
-          /** @type {HTMLElement} */
-          var container = divElement.parents('.WireIt-Container')[0];
-          if (container.length) {
+          var containers = divElement.parents('.WireIt-Container');
+          if (containers.length > 0) {
+            /** @type {HTMLElement} */
+            var container = containers[0];
             container.querySelectorAll('.inputEx-Expanded, .fieldset').forEach(function (el, i) {
               Dom.removeClass(el, 'inputEx-Expanded');
               Dom.addClass(el, 'inputEx-Collapsed');

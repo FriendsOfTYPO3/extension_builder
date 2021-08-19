@@ -139,6 +139,12 @@
 			<trans-unit id="descr_generateDocumentationTemplate" resname="descr_generateDocumentationTemplate">
 				<source>Check this if you want a documentation template generated for your extension.</source>
 			</trans-unit>
+			<trans-unit id="generateEmptyGitRepository" resname="generateEmptyGitRepository">
+				<source>Generate empty git repository</source>
+			</trans-unit>
+			<trans-unit id="descr_generateEmptyGitRepository" resname="descr_generateEmptyGitRepository">
+				<source>Check this if you want to generate an empty git repository for your extension and want to publish it later on.</source>
+			</trans-unit>
 			<trans-unit id="sourceLanguage" resname="sourceLanguage">
 				<source>Source language for xliff files</source>
 			</trans-unit>

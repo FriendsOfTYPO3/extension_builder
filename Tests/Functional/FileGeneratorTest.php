@@ -489,11 +489,21 @@ class FileGeneratorTest extends BaseFunctionalTest
         $plugin->setKey('test');
         $this->extension->addPlugin($plugin);
 
+        $this->extension->setGenerateEmptyGitRepository(true);
+
         $this->fileGenerator->build($this->extension);
 
         $extensionDir = $this->extension->getExtensionDir();
 
-        $extensionFiles = ['ext_emconf.php', 'ext_tables.php', 'ext_tables.sql', 'ext_localconf.php'];
+        $extensionFiles = [
+            'ext_emconf.php',
+            'ext_tables.php',
+            'ext_tables.sql',
+            'ext_localconf.php',
+            '.git/config',
+            '.gitignore',
+            '.gitattributes',
+        ];
         foreach ($extensionFiles as $extensionFile) {
             self::assertFileExists($extensionDir . $extensionFile, 'File was not generated: ' . $extensionFile);
         }
