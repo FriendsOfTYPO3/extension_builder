@@ -179,6 +179,15 @@ extbaseModeling_wiringEditorLanguage.propertiesFields = [
           }
         },
         {
+          type: 'boolean',
+          inputParams: {
+            name: 'generateEditorConfig',
+            label: TYPO3.settings.extensionBuilder._LOCAL_LANG.generateEditorConfig,
+            description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_generateEditorConfig,
+            value: 1
+          }
+        },
+        {
           type: 'string',
           inputParams: {
             name: 'sourceLanguage',
