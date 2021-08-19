@@ -38,8 +38,10 @@ class ConfigurationViewHelper extends AbstractBackendViewHelper
 
         $extPath = ExtensionManagementUtility::extPath('extension_builder');
         $baseUrl = '../' . PathUtility::stripPathSitePrefix($extPath);
+
+        $this->getModuleTemplate()->setBodyTag('<body class="yui-skin-sam">');
+
         $this->pageRenderer->disableCompressJavascript();
-        $this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/jquery.min.js');
         // SECTION: JAVASCRIPT FILES
         // YUI Basis Files
         $this->pageRenderer->addJsFile($baseUrl . 'Resources/Public/jsDomainModeling/wireit/lib/yui/utilities/utilities.js');

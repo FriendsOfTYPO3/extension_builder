@@ -170,24 +170,30 @@
        * Toggle the collapse state
        */
       toggleCollapse: function () {
-        var fieldset = $(this.fieldset),
-          divElement = $(this.divEl);
-        if (fieldset.hasClass('inputEx-Expanded')) {
-          fieldset.removeClass('inputEx-Expanded').addClass('inputEx-Collapsed');
-          $(this.divEl).removeClass('expanded').addClass('collapsed');
+        var fieldset = Dom.get(this.fieldset),
+          divElement = Dom.get(this.divEl);
+        if (Dom.hasClass(fieldset, 'inputEx-Expanded')) {
+          Dom.removeClass(fieldset, 'inputEx-Expanded')
+          Dom.addClass(fieldset, 'inputEx-Collapsed');
+          Dom.removeClass(divElement, 'expanded');
+          Dom.addClass(divElement, 'collapsed');
         } else {
-          var container = divElement.parents('.WireIt-Container').first();
+          /** @type {HTMLElement} */
+          var container = divElement.parents('.WireIt-Container')[0];
           if (container.length) {
-            //var containerId = container.id;
-            container.find('.inputEx-Expanded,.fieldset').each(function (index, el) {
-              $(el).removeClass('inputEx-Expanded').addClass('inputEx-Collapsed');
+            container.querySelectorAll('.inputEx-Expanded, .fieldset').forEach(function (el, i) {
+              Dom.removeClass(el, 'inputEx-Expanded');
+              Dom.addClass(el, 'inputEx-Collapsed');
             });
-            $('.expanded').each(function (index, el) {
-              $(el).removeClass('expanded').addClass('collapsed');
+            document.querySelectorAll('.expanded').forEach(function (el, i) {
+              Dom.removeClass(el, 'expanded');
+              Dom.addClass(el, 'collapsed');
             });
           }
-          fieldset.removeClass('inputEx-Collapsed').addClass('inputEx-Expanded');
-          divElement.removeClass('collapsed').addClass('expanded');
+          Dom.removeClass(fieldset, 'inputEx-Collapsed');
+          Dom.addClass(fieldset, 'inputEx-Expanded');
+          Dom.removeClass(divElement, 'collapsed');
+          Dom.addClass(divElement, 'expanded');
         }
       },
 

@@ -825,20 +825,13 @@
 
 		// add uids to terminals to identify the connection from relations
 		// to other models
-		getUidForTerminal	:	function(terminal) {
-			var parentId,
-				terminalUid;
-			if (terminal.el.getAttribute('title') == 'SOURCES') {
-				// id of the module
-				terminalUid = $(terminal.el).parents('.WireIt-Container').first().find('input[name="uid"]').val();
-			}
-			else {
-				// id of the wrapper of the first field in the fieldset
-				terminalUid = $(terminal.el).parents('.relationGroup').find('input[name="uid"]').val();
-			}
-			return terminalUid;
-		}
-
+		getUidForTerminal: function(terminal) {
+      if (terminal.el.getAttribute('title') === 'SOURCES') {
+        // id of the module
+        return Dom.get(terminal.el).parents('.WireIt-Container')[0].querySelector('input[name="uid"]').value;
+      }
+      // id of the wrapper of the first field in the fieldset
+      return Dom.get(terminal.el).parents('.relationGroup')[0].querySelector('input[name="uid"]').value;
+    }
 	};
-
 })();
