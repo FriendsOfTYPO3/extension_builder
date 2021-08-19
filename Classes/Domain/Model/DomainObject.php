@@ -240,12 +240,7 @@ class DomainObject
         return $this->properties;
     }
 
-    /**
-     * @param string $propertyName
-     *
-     * @return AbstractProperty|null
-     */
-    public function getPropertyByName(string $propertyName)
+    public function getPropertyByName(string $propertyName): ?AbstractProperty
     {
         foreach ($this->properties as $property) {
             if ($property->getName() == $propertyName) {
