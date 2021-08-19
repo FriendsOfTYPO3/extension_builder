@@ -478,6 +478,7 @@
             "disableLocalization": false,
             "disableVersioning": false,
             "generateDocumentationTemplate": true,
+            "generateEmptyGitRepository": true,
             "sourceLanguage": "en",
             "state": "alpha",
             "targetVersion": "10.4.0-10.4.99",

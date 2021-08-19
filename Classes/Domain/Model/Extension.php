@@ -99,6 +99,10 @@ class Extension
      */
     protected $generateDocumentationTemplate = false;
     /**
+     * @var bool
+     */
+    protected $generateEmptyGitRepository = false;
+    /**
      * @var string
      */
     protected $sourceLanguage = 'en';
@@ -658,6 +662,16 @@ class Extension
     public function getGenerateDocumentationTemplate(): bool
     {
         return $this->generateDocumentationTemplate;
+    }
+
+    public function setGenerateEmptyGitRepository(bool $generateEmptyGitRepository): void
+    {
+        $this->generateEmptyGitRepository = $generateEmptyGitRepository;
+    }
+
+    public function getGenerateEmptyGitRepository(): bool
+    {
+        return $this->generateEmptyGitRepository;
     }
 
     public function getSourceLanguage(): string
