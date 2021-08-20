@@ -36,7 +36,6 @@ use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 abstract class BaseFunctionalTest extends FunctionalTestCase
 {
@@ -85,7 +84,6 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
      * @var FileGenerator
      */
     protected $fileGenerator;
-
     /**
      * @var vfsStreamDirectory
      */
