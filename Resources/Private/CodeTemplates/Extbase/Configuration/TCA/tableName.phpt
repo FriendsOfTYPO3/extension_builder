@@ -21,7 +21,7 @@ return [
         'iconfile' => 'EXT:{domainObject.extension.extensionKey}/Resources/Public/Icons/{domainObject.databaseTableName}.gif'
     ],
     'types' => [
-        <f:if condition="{domainObject.hasChildren}"><f:then>'{domainObject.recordType}'</f:then><f:else>'1'</f:else></f:if> => ['showitem' => '<f:if condition="{extension.supportLocalization}">sys_language_uid, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addHiddenField}">hidden, </f:if><f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}{f:if(condition: i.isLast, else: ', ')}</f:for><f:if condition="{domainObject.addStarttimeEndtimeFields}">, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime</f:if>'],
+        <f:if condition="{domainObject.hasChildren}"><f:then>'{domainObject.recordType}'</f:then><f:else>'1'</f:else></f:if> => ['showitem' => '<f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}{f:if(condition: i.isLast, else: ', ')}</f:for><f:if condition="{extension.supportLocalization}">, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language, sys_language_uid, l10n_parent, l10n_diffsource, </f:if><f:if condition="{domainObject.addStarttimeEndtimeFields} || {domainObject.addHiddenField}">--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, </f:if><f:if condition="{domainObject.addHiddenField}">hidden, </f:if><f:if condition="{domainObject.addStarttimeEndtimeFields}">starttime, endtime</f:if>'],
     ],
     'columns' => [<f:if condition="{extension.supportLocalization}">
         'sys_language_uid' => [
