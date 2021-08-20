@@ -58,3 +58,13 @@ composer require friendsoftypo3/extension-builder:9.x-dev
 You found a bug, you have a fix?
 
 Don't hesitate to create an issue or a pull request. Any help is really welcome. Thanks.
+
+### Compile scss
+
+The preferred way is to use yarn but npm also works. In that case just replace `yarn` with `npm`.
+
+```bash
+cd Resources/Public/jsDomainModeling/
+yarn install
+yarn build-css
+```
