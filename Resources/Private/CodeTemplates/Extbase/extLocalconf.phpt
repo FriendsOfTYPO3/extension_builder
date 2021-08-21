@@ -1,7 +1,7 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}<?php
 defined('TYPO3_MODE') || die();
 
-call_user_func(static function() {<f:for each="{extension.plugins}" as="plugin">
+(static function() {<f:for each="{extension.plugins}" as="plugin">
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         '{extension.extensionName}',
         '{plugin.key -> k:format.uppercaseFirst()}',
@@ -46,4 +46,4 @@ call_user_func(static function() {<f:for each="{extension.plugins}" as="plugin">
         \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         ['source' => 'EXT:{extension.extensionKey}/Resources/Public/Icons/user_plugin_{plugin.key}.svg']
     );</f:for>
-});
+})();
