@@ -1,7 +1,7 @@
 <?php
 defined('TYPO3_MODE') || die();
 
-call_user_func(static function() {
+(static function() {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'TestExtension',
         'Testplugin',
@@ -40,4 +40,4 @@ call_user_func(static function() {
         \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         ['source' => 'EXT:test_extension/Resources/Public/Icons/user_plugin_testplugin.svg']
     );
-});
+})();

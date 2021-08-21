@@ -1,7 +1,7 @@
 <?php
 defined('TYPO3_MODE') || die();
 
-call_user_func(static function() {
+(static function() {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
         'TestExtension',
         'web',
@@ -31,4 +31,4 @@ call_user_func(static function() {
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_testextension_domain_model_child4', 'EXT:test_extension/Resources/Private/Language/locallang_csh_tx_testextension_domain_model_child4.xlf');
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_testextension_domain_model_child4');
-});
+})();
