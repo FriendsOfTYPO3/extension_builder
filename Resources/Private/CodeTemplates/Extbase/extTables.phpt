@@ -1,7 +1,7 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}<?php
 defined('TYPO3_MODE') || die();
 
-call_user_func(static function() {<f:if condition="{extension.BackendModules}"><f:for each="{extension.BackendModules}" as="backendModule">
+(static function() {<f:if condition="{extension.BackendModules}"><f:for each="{extension.BackendModules}" as="backendModule">
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
         '{extension.extensionName}',
         '{backendModule.mainModule}',
@@ -22,4 +22,4 @@ call_user_func(static function() {<f:if condition="{extension.BackendModules}"><
 </f:if><f:for each="{extension.domainObjects}" as="domainObject"><f:if condition="{domainObject.mappedToExistingTable}"><f:else>
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('{domainObject.databaseTableName}', 'EXT:{extension.extensionKey}/Resources/Private/Language/locallang_csh_{domainObject.databaseTableName}.xlf');
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('{domainObject.databaseTableName}');
-</f:else></f:if></f:for>});
+</f:else></f:if></f:for>})();
