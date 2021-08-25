@@ -1,6 +1,6 @@
 {
   "name": "extension_builder",
-  "version": "8.7.0",
+  "version": "10.0.0",
   "description": "",
   "dependencies": {
     "node-sass": "^4.5.0",
@@ -8,7 +8,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "build-css": "node-sass --include-path scss extbaseModeling.scss  extbaseModeling.css"
+    "watch": "node-sass --watch --output-style compressed --include-path scss extbaseModeling.scss extbaseModeling.css",
+    "build-css": "node-sass --output-style compressed --include-path scss extbaseModeling.scss extbaseModeling.css"
   },
   "repository": {
     "type": "git",
