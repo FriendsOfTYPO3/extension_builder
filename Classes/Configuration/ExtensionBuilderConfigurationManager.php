@@ -97,12 +97,11 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         $extensionConfigurationJson = json_decode($this->inputData['params']['working'], true);
         $extensionConfigurationJson = $this->reArrangeRelations($extensionConfigurationJson);
         $extensionConfigurationJson['modules'] = $this->checkForAbsoluteClassNames($extensionConfigurationJson['modules']);
-        $extensionConfigurationJson['storagePath'] = $this->inputData['params']['storagePath'] ?? null;
         return $extensionConfigurationJson;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSubActionFromRequest()
     {

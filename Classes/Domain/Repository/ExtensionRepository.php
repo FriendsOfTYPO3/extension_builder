@@ -99,6 +99,7 @@ class ExtensionRepository implements SingletonInterface
     public function saveExtensionConfiguration(Extension $extension): void
     {
         $extensionBuildConfiguration = $this->configurationManager->getConfigurationFromModeler();
+        $extensionBuildConfiguration['storagePath'] = $extension->getStoragePath();
         $extensionBuildConfiguration['log'] = [
             'last_modified' => date('Y-m-d h:i'),
             'extension_builder_version' => ExtensionManagementUtility::getExtensionVersion('extension_builder'),
