@@ -44,7 +44,6 @@ use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 
 class GeneratedPropertyTest extends BaseFunctionalTest
 {
-
     /**
      * Write a simple model class for a non aggregate root domain object with one boolean property
      *

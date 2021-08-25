@@ -131,8 +131,6 @@ YAHOO.util.Event.onAvailable('extensionDependencies-field', function () {
 });
 
 YAHOO.util.Event.onAvailable('toggleAdvancedOptions', function () {
-  document.querySelector('.t3js-module-docheader-bar-buttons').style.display = 'block';
-
   if (window.top.location.href === window.location.href) {
     document.querySelector('#opennewwindow').style.display = 'none';
   }

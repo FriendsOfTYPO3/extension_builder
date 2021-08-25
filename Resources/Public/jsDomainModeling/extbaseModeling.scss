@@ -26,15 +26,14 @@ $url_0: url(background_pixel.png);
 }
 
 .module-body {
+    padding: 66px 0 0 0 !important;
+
 	&.index {
 		min-height: 900px;
 		a {
 			color: $color_storm_dust_approx;
 			font-weight: 700;
 		}
-	}
-	&.domainmodelling {
-		padding: 66px 0 0 0 !important;
 	}
 }
 
@@ -757,10 +756,6 @@ div.inputEx-Group-collapseImg {
 	}
 }
 
-.t3js-module-docheader-bar-buttons {
-	display: none;
-}
-
 input[disabled] {
 	display: none;
 }
@@ -771,16 +766,6 @@ input[disabled] {
 
 .deleteButton {
 	display: none;
-}
-
-#tools-ExtensionBuilderExtensionbuilder .module-docheader-bar {
-	.module-icon {
-		float: right;
-		margin: 5px;
-	}
-	.docheader-funcmenu {
-		float: right;
-	}
 }
 
 .yui-skin-sam .yui-layout {
@@ -796,11 +781,6 @@ input[disabled] {
 		background-color: transparent;
 		border: none;
 	}
-}
-
-.typo3-docheader-buttons .access-key {
-	font-weight: 700;
-	text-decoration: underline;
 }
 
 legend.inputEx-Group-legend {
@@ -822,12 +802,13 @@ a.inputEx-List-link {
 	width: 170px;
 }
 
-.propertyGroup .checkBoxFieldWrapper div.inputEx-label {
-	width: 65%;
-}
-
-.propertyGroup .checkBoxFieldWrapper.advanced {
-	min-width: 180px;
+.propertyGroup {
+    .checkBoxFieldWrapper div.inputEx-label {
+        width: 65%;
+    }
+    .checkBoxFieldWrapper.advanced {
+        min-width: 180px;
+    }
 }
 
 .properties .inputEx-ListField {
@@ -844,11 +825,16 @@ label.helpAvailable {
 }
 
 #propertiesForm div.inputEx-Group {
+    // They can't be full width because of the up and down arrows and the scrollbar
 	input[type=text] {
 		padding: 3px;
 		width: 200px;
 	}
 	textarea {
+		padding: 3px;
+		width: 200px;
+	}
+	select {
 		padding: 3px;
 		width: 200px;
 	}
