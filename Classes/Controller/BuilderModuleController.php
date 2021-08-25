@@ -25,15 +25,25 @@ use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Service\ExtensionService;
 use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Service\RoundTrip;
+use EBT\ExtensionBuilder\Template\Components\Buttons\LinkButtonWithId;
 use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Backend\Template\Components\ButtonBar;
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Http\HtmlResponse;
+use TYPO3\CMS\Core\Imaging\Icon;
+use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Localization\LocalizationFactory;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
-use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Controller of the Extension Builder extension
@@ -77,6 +87,16 @@ class BuilderModuleController extends ActionController
      * @var ExtensionRepository
      */
     protected $extensionRepository;
+
+    /**
+     * @var ModuleTemplate|null
+     */
+    protected $moduleTemplate = null;
+
+    /**
+     * @var PageRenderer
+     */
+    protected $pageRenderer;
 
     /**
      * Settings from various sources:
@@ -125,6 +145,11 @@ class BuilderModuleController extends ActionController
         $this->extensionRepository = $extensionRepository;
     }
 
+    public function injectPageRenderer(PageRenderer $pageRenderer): void
+    {
+        $this->pageRenderer = $pageRenderer;
+    }
+
     public function initializeAction(): void
     {
         $this->fileGenerator->setSettings($this->extensionBuilderSettings);
@@ -136,43 +161,285 @@ class BuilderModuleController extends ActionController
      * This is the default action, showing some introduction but after the first
      * loading the user should immediately be redirected to the domainmodellingAction.
      *
-     * @throws InvalidConfigurationTypeException
+     * @return string|ResponseInterface
      * @throws StopActionException
      */
-    public function indexAction(): void
+    public function indexAction()
     {
+        $this->moduleTemplate = GeneralUtility::makeInstance(ModuleTemplate::class);
+        $this->moduleTemplate->setTitle('Extension Builder');
+
+        $this->addMainMenu('index');
+
         $this->view->assign('currentAction', $this->request->getControllerActionName());
-        $this->view->assign('settings', $this->extensionBuilderConfigurationManager->getSettings());
+
         if (!$this->request->hasArgument('action')) {
             $userSettings = $this->getBackendUserAuthentication()->getModuleData('extensionbuilder');
             if ($userSettings['firstTime'] === 0) {
+                // No backwards compatibility possible as ForwardResponse exists only in V11
                 $this->forward('domainmodelling');
             }
         }
+
+        $this->moduleTemplate->setContent($this->view->render());
+
+        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '11.0.0', '<')) {
+            return $this->moduleTemplate->renderContent();
+        }
+        return new HtmlResponse($this->moduleTemplate->renderContent());
     }
 
     /**
      * Loads the Domainmodelling template.
      *
-     * Nothing more to do here, since the next action is invoked by the Javascript
-     * interface.
-     *
-     * @throws InvalidConfigurationTypeException
+     * @return string|ResponseInterface
      */
-    public function domainmodellingAction(): void
+    public function domainmodellingAction()
     {
+        $this->moduleTemplate = GeneralUtility::makeInstance(ModuleTemplate::class);
+        $this->moduleTemplate->setBodyTag('<body class="yui-skin-sam">');
+        $this->moduleTemplate->setTitle('Extension Builder');
+
+        $this->addMainMenu('domainmodelling');
+        //$this->addStoragePathMenu();
+
+        $this->addLeftButtons();
+        $this->addRightButtons();
+
+        $this->addAssets();
+
+        $extPath = ExtensionManagementUtility::extPath('extension_builder');
+        $this->pageRenderer->addInlineSettingArray(
+            'extensionBuilder',
+            ['baseUrl' => '../' . PathUtility::stripPathSitePrefix($extPath)]
+        );
+
+        $this->setLocallangSettings();
+
         $initialWarnings = [];
         if (!$this->extensionService->isStoragePathConfigured()) {
             $initialWarnings[] = ExtensionService::COMPOSER_PATH_WARNING;
         }
         $this->view->assignMultiple([
-            'extPath' => PathUtility::stripPathSitePrefix(ExtensionManagementUtility::extPath('extension_builder')),
-            'settings' => $this->extensionBuilderConfigurationManager->getSettings(),
-            'currentAction' => $this->request->getControllerActionName(),
-            'storagePaths' => $this->extensionService->resolveStoragePaths(),
             'initialWarnings' => $initialWarnings
         ]);
         $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', ['firstTime' => 0]);
+
+        $this->moduleTemplate->setContent($this->view->render());
+
+        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '11.0.0', '<')) {
+            return $this->moduleTemplate->renderContent();
+        }
+        return new HtmlResponse($this->moduleTemplate->renderContent());
+    }
+
+    protected function addMainMenu(string $currentAction): void
+    {
+        $menu = $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
+        $menu->setIdentifier('ExtensionBuilderMainModuleMenu');
+        $menu->addMenuItem(
+            $menu->makeMenuItem()
+                ->setTitle('Introduction')
+                ->setHref($this->uriBuilder->uriFor('index'))
+                ->setActive($currentAction === 'index')
+        );
+        $menu->addMenuItem(
+            $menu->makeMenuItem()
+                ->setTitle('Domain Modelling')
+                ->setHref($this->uriBuilder->uriFor('domainmodelling'))
+                ->setActive($currentAction === 'domainmodelling')
+        );
+        $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
+    }
+
+    /*
+     * This does not work as intended as the dropdown menu will only show a value if there are at least 2 entries
+     * and additionally submit the value when changed which we don't want.
+     *
+    //protected function addStoragePathMenu(): void
+    {
+        $menu = $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
+        $menu->setIdentifier('storagePath');
+        $menu->setLabel('Storage Path:');
+
+        $storagePaths = $this->extensionService->resolveStoragePaths();
+        foreach ($storagePaths as $storagePath) {
+            $menu->addMenuItem(
+                $menu->makeMenuItem()
+                    ->setTitle($storagePath)
+                    ->setHref($storagePath)
+            );
+        }
+        $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
+    }*/
+
+    protected function addLeftButtons(): void
+    {
+        $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
+
+        $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            ->setIcon($this->moduleTemplate->getIconFactory()->getIcon('actions-system-list-open', Icon::SIZE_SMALL))
+            ->setTitle('Open extension')
+            ->setId('WiringEditor-loadButton-button')
+            ->setHref('#');
+        $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
+
+        $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            ->setIcon($this->moduleTemplate->getIconFactory()->getIcon('actions-document-new', Icon::SIZE_SMALL))
+            ->setTitle('New extension')
+            ->setId('WiringEditor-newButton-button')
+            ->setHref('#');
+        $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
+
+        $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            ->setIcon($this->moduleTemplate->getIconFactory()->getIcon('actions-document-save', Icon::SIZE_SMALL))
+            ->setTitle('Save extension')
+            ->setId('WiringEditor-saveButton-button')
+            ->setHref('#');
+        $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
+    }
+
+    protected function addRightButtons(): void
+    {
+        $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
+
+        $this->registerAdvancedOptionsButtonToButtonBar($buttonBar, ButtonBar::BUTTON_POSITION_RIGHT, 2);
+        $this->registerOpenInNewWindowButtonToButtonBar($buttonBar, ButtonBar::BUTTON_POSITION_RIGHT, 3);
+    }
+
+    protected function registerOpenInNewWindowButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void
+    {
+        $requestUri = GeneralUtility::linkThisScript();
+        $aOnClick = 'vHWin=window.open('
+            . GeneralUtility::quoteJSvalue($requestUri)
+            . ',\'width=670,height=500,status=0,menubar=0,scrollbars=1,resizable=1\');vHWin.focus();return false;';
+
+        $openInNewWindowButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            ->setHref('#')
+            ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.openInNewWindow'))
+            ->setIcon($this->moduleTemplate->getIconFactory()->getIcon('actions-window-open', Icon::SIZE_SMALL))
+            ->setOnClick($aOnClick)
+            ->setId('opennewwindow');
+
+        $buttonBar->addButton($openInNewWindowButton, $position, $group);
+    }
+
+    protected function registerAdvancedOptionsButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void
+    {
+        $advancedOptionsButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            ->setIcon($this->moduleTemplate->getIconFactory()->getIcon('content-menu-pages', Icon::SIZE_SMALL))
+            ->setTitle('<span class="simpleMode">Show</span><span class="advancedMode">Hide</span> advanced options.')
+            ->setId('toggleAdvancedOptions')
+            ->setHref('#')
+            ->setShowLabelText(true);
+        $buttonBar->addButton($advancedOptionsButton, $position, $group);
+    }
+
+    protected function getLanguageService(): LanguageService
+    {
+        return $GLOBALS['LANG'];
+    }
+
+    protected function addAssets(): void
+    {
+        // SECTION: JAVASCRIPT FILES
+        // YUI Basis Files
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/utilities/utilities.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/resize/resize-min.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/layout/layout-min.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/container/container-min.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/json/json-min.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/button/button-min.js');
+
+        // YUI-RPC
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui-rpc.js');
+
+        // InputEx with wirable options
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/inputex.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Field.js');
+
+        // extended fields for enabling unique ids
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extended/ListField.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extended/Group.js');
+
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/inputex/WirableField-beta.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Visus.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/StringField.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/Textarea.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/SelectField.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/EmailField.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/UrlField.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/CheckBox.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/InPlaceEdit.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/MenuField.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/TypeField.js');
+
+        // WireIt
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/WireIt.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/CanvasElement.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Wire.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Terminal.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/DD.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/DDResize.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Container.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/ImageContainer.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Layer.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/inputex/FormContainer-beta.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/LayerMap.js');
+
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/WiringEditor.js');
+
+        // Extbase Modelling definition
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extbaseModeling.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/layout.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extensionProperties.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/modules/modelObject.js');
+
+        // collapsible forms in relations
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/modules/extendedModelObject.js');
+
+        // SECTION: CSS Files
+        // YUI CSS
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/reset-fonts-grids/reset-fonts-grids.css');
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/assets/skins/sam/skin.css');
+
+        // InputEx CSS
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/css/inputEx.css');
+
+        // WireIt CSS
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/css/WireIt.css');
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/css/WireItEditor.css');
+
+        // Custom CSS
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extbaseModeling.css');
+    }
+
+    /**
+     * This method loads the locallang.xml file (default language), and
+     * adds all keys found in it to the TYPO3.settings.extension_builder._LOCAL_LANG object
+     * translated into the current language
+     *
+     * Dots in a key are replaced by a _
+     *
+     * Example:
+     *        error.name becomes TYPO3.settings.extension_builder._LOCAL_LANG.error_name
+     */
+    protected function setLocallangSettings(): void
+    {
+        $languageFactory = GeneralUtility::makeInstance(LocalizationFactory::class);
+        $localizationArray = $languageFactory->getParsedData(
+            'EXT:extension_builder/Resources/Private/Language/locallang.xlf',
+            'default'
+        );
+        if (!empty($localizationArray['default']) && is_array($localizationArray['default'])) {
+            foreach ($localizationArray['default'] as $key => $value) {
+                $this->pageRenderer->addInlineSetting(
+                    'extensionBuilder._LOCAL_LANG',
+                    str_replace('.', '_', $key),
+                    LocalizationUtility::translate($key, 'ExtensionBuilder')
+                );
+            }
+        }
     }
 
     /**
@@ -217,6 +484,14 @@ class BuilderModuleController extends ActionController
     {
         try {
             $extensionBuildConfiguration = $this->extensionBuilderConfigurationManager->getConfigurationFromModeler();
+
+            $storagePaths = $this->extensionService->resolveStoragePaths();
+            $storagePath = reset($storagePaths);
+            if ($storagePath === false) {
+                throw new \Exception('The storage path could not be detected.');
+            }
+            $extensionBuildConfiguration['storagePath'] = $storagePath;
+
             $validationConfigurationResult = $this->extensionValidator->validateConfigurationFormat($extensionBuildConfiguration);
             if (!empty($validationConfigurationResult['warnings'])) {
                 $confirmationRequired = $this->handleValidationWarnings($validationConfigurationResult['warnings']);
@@ -314,7 +589,11 @@ class BuilderModuleController extends ActionController
             $this->fileGenerator->build($extension);
             $this->extensionInstallationStatus->setExtension($extension);
             $this->extensionInstallationStatus->setUsesComposerPath($usesComposerPath);
-            $message = '<p>The Extension was saved</p>' . $this->extensionInstallationStatus->getStatusMessage();
+            $message = sprintf(
+                '<p>The Extension was successfully saved in the directory: "%s"</p>%s',
+                $extensionDirectory,
+                $this->extensionInstallationStatus->getStatusMessage()
+            );
             $result = ['success' => $message, 'usesComposerPath' => $usesComposerPath];
             if ($this->extensionInstallationStatus->isDbUpdateNeeded()) {
                 $result['confirmUpdate'] = true;

@@ -366,15 +366,7 @@
 		 */
 		saveModule: function(login) {
 
-            if (typeof login == 'undefined') {
-				var baseUrl;
-				if (typeof parent.TYPO3.configuration != 'undefined') {
-					baseUrl = parent.TYPO3.configuration.PATH_typo3;
-				}
-				else {
-					baseUrl = window.location.href.split('index.php')[0];
-				}
-
+      if (typeof login == 'undefined') {
 				Connect.asyncRequest(
 						'POST',
 						TYPO3.settings.ajaxUrls['login_timedout']
@@ -406,15 +398,12 @@
 			this.showSpinnerPanel.show();
 			this.dataToSubmit.name = value.name;
 			this.dataToSubmit.working = JSON.stringify(value.working);
-			this.dataToSubmit.storagePath = document.querySelector('#storagePath').value;
 			this.service.saveWiring(this.dataToSubmit, {
 				success: this.saveModuleSuccess,
 				failure: this.saveModuleFailure,
 				scope: this
 			});
-
 		},
-
 
 		validateModels: function(value) {
 			var modelNames = {},

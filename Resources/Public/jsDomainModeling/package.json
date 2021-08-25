@@ -7,10 +7,10 @@
     "nodemon": "^1.11.0"
   },
   "devDependencies": {},
-  "scripts": {
-    "watch": "node-sass --watch --output-style compressed --include-path scss extbaseModeling.scss extbaseModeling.css",
-    "build-css": "node-sass --output-style compressed --include-path scss extbaseModeling.scss extbaseModeling.css"
-  },
+	"scripts": {
+		"watch": "node-sass --watch --output-style compressed --include-path scss extbaseModeling.scss extbaseModeling.css",
+		"build-css": "node-sass --output-style compressed --include-path scss extbaseModeling.scss extbaseModeling.css"
+	},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/FriendsOfTYPO3/extension_builder.git"
