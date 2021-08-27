@@ -20,19 +20,20 @@
 		}
 	],
 	"require": {
-		"php": "^7.2",
+		"php": "^7.4 || ^8.0",
 		"ext-json": "*",
 		"nikic/php-parser": "^4.10.4",
-		"typo3/cms-backend": "^10.4",
-		"typo3/cms-core": "^10.4"
+		"typo3/cms-backend": "^11.4",
+		"typo3/cms-core": "^11.4"
 	},
 	"require-dev": {
 		"friendsofphp/php-cs-fixer": "^2.18",
-		"nimut/testing-framework": "^5.0",
 		"roave/security-advisories": "dev-latest",
 		"sebastian/diff": "^3.0",
-		"typo3/cms-frontend": "^10.4",
-		"typo3/coding-standards": "^0.3.0"
+		"typo3/cms-frontend": "^11.3",
+		"typo3/cms-install": "^11.4",
+		"typo3/coding-standards": "^0.3.0",
+		"typo3/testing-framework": "^6.11"
 	},
 	"autoload": {
 		"psr-4": {
@@ -59,10 +60,10 @@
 			"@prepare-extension-test-structure"
 		],
 		"prepare-extension-test-structure": [
-			"Nimut\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
+			"TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
 		],
-		"unit-tests": "TYPO3_PATH_ROOT=$PWD/.Build/public .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml --stop-on-failure Tests/Unit",
-		"functional-tests": "TYPO3_PATH_ROOT=$PWD/.Build/public typo3DatabaseDriver=pdo_sqlite .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml --stop-on-failure Tests/Functional",
+		"unit-tests": "TYPO3_PATH_ROOT=$PWD/.Build/public .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml --stop-on-failure Tests/Unit",
+		"functional-tests": "TYPO3_PATH_ROOT=$PWD/.Build/public typo3DatabaseDriver=pdo_sqlite .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml --stop-on-failure Tests/Functional",
 		"test": [
 			"@test-php-cs-fixer",
 			"@unit-tests",
