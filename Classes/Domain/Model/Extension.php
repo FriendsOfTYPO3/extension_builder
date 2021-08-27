@@ -703,7 +703,7 @@ class Extension
         $extensionKey = $this->extensionKey;
         $composerExtensionKey = strtolower(str_replace('_', '-', $extensionKey));
         $info = [
-            'name' => strtolower(str_replace('_', '-', GeneralUtility::camelCaseToLowerCaseUnderscored($this->vendorName))) . '/' . $composerExtensionKey,
+            'name' => strtolower(str_replace('_', '', GeneralUtility::camelCaseToLowerCaseUnderscored($this->vendorName))) . '/' . $composerExtensionKey,
             'type' => 'typo3-cms-extension',
             'description' => $this->description,
             'authors' => [],
