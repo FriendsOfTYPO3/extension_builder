@@ -20,6 +20,8 @@ namespace EBT\ExtensionBuilder\Tests\Functional;
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
+use Nimut\TestingFramework\MockObject\AccessibleMockObjectInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use SebastianBergmann\Diff\Differ;
 use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
 use TYPO3\CMS\Core\Core\Environment;
@@ -41,9 +43,11 @@ class CompatibilityTest extends BaseFunctionalTest
      * This test should help, to find compatibility breaking changes
      *
      * @test
+     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
      */
     public function generateExtensionFromVersion3Configuration(): void
     {
+        /** @var ExtensionBuilderConfigurationManager|MockObject|AccessibleMockObjectInterface $configurationManager */
         $configurationManager = $this->getAccessibleMock(ExtensionBuilderConfigurationManager::class, ['dummy']);
         $extensionSchemaBuilder = GeneralUtility::makeInstance(ExtensionSchemaBuilder::class);
 
@@ -81,47 +85,44 @@ class CompatibilityTest extends BaseFunctionalTest
         $diffOutput = new UnifiedDiffOutputBuilder('', true);
         $differ = new Differ($diffOutput);
 
-        $referenceFiles = GeneralUtility::getAllFilesAndFoldersInPath([], $testExtensionDir, 'php,sql,html,typoscript');
+        $referenceFiles = GeneralUtility::getAllFilesAndFoldersInPath([], $testExtensionDir, 'php,sql,html,typoscript,json');
         foreach ($referenceFiles as $referenceFile) {
             $createdFile = str_replace($testExtensionDir, $this->extension->getExtensionDir(), $referenceFile);
-            if (!in_array(basename($createdFile), ['ExtensionBuilder.json'])) {
-                $referenceFileContent = str_replace(
-                    ['2019-09-22T01:00:00Z', '2019-09-22', '###YEAR###', '2019'],
-                    [date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')],
-                    file_get_contents($referenceFile)
-                );
-                self::assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');
-                // do not compare files that contain a formatted DateTime, as it might have changed between file creation and this comparison
-                if (strpos($referenceFile, 'ext_emconf') !== false) {
-                    continue;
-                }
-
-                $generatedFileContent = str_replace(
-                    ['2019-01-01T01:00:00Z', '2019-01-01', '###YEAR###', '2019'],
-                    [date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')],
-                    file_get_contents($createdFile)
-                );
-
-                // remove spaces at end of line (also clears space-only lines)
-                $referenceFileContent = preg_replace('#\s+$#m', '', $referenceFileContent);
-                $generatedFileContent = preg_replace('#\s+$#m', '', $generatedFileContent);
-                // normalize multiple line-breaks
-                $referenceFileContent = preg_replace('#(\r\n|\n)+#ms', "\n", $referenceFileContent);
-                $generatedFileContent = preg_replace('#(\r\n|\n)+#ms', "\n", $generatedFileContent);
-                $referenceFileContent = preg_replace('#^\s+#m', "\t", $referenceFileContent);
-                $generatedFileContent = preg_replace('#^\s+#m', "\t", $generatedFileContent);
-                $differences = $differ->diff($referenceFileContent, $generatedFileContent);
-
-                self::assertEmpty(
-                    trim($differences),
-                    sprintf(
-                        "Differences detected:\n\n--- %s (reference)\n+++ %s (generated)\n%s",
-                        $createdFile,
-                        $createdFile,
-                        $differences
-                    )
-                );
+            if (basename($createdFile) === 'ExtensionBuilder.json') {
+                continue;
             }
+            $referenceFileContent = str_replace(
+                ['2019-09-22T01:00:00Z', '2019-09-22', '###YEAR###', '2019'],
+                [date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')],
+                file_get_contents($referenceFile)
+            );
+            self::assertFileExists($createdFile, 'File ' . $createdFile . ' was not created!');
+
+            $generatedFileContent = str_replace(
+                ['2019-01-01T01:00:00Z', '2019-01-01', '###YEAR###', '2019'],
+                [date('Y-m-d\TH:i:00\Z'), date('Y-m-d'), date('Y'), date('Y')],
+                file_get_contents($createdFile)
+            );
+
+            // remove spaces at end of line (also clears space-only lines)
+            $referenceFileContent = preg_replace('#\s+$#m', '', $referenceFileContent);
+            $generatedFileContent = preg_replace('#\s+$#m', '', $generatedFileContent);
+            // normalize multiple line-breaks
+            $referenceFileContent = preg_replace('#(\r\n|\n)+#ms', "\n", $referenceFileContent);
+            $generatedFileContent = preg_replace('#(\r\n|\n)+#ms', "\n", $generatedFileContent);
+            $referenceFileContent = preg_replace('#^\s+#m', "\t", $referenceFileContent);
+            $generatedFileContent = preg_replace('#^\s+#m', "\t", $generatedFileContent);
+            $differences = $differ->diff($referenceFileContent, $generatedFileContent);
+
+            self::assertEmpty(
+                trim($differences),
+                sprintf(
+                    "Differences detected:\n\n--- %s (reference)\n+++ %s (generated)\n%s",
+                    $createdFile,
+                    $createdFile,
+                    $differences
+                )
+            );
         }
     }
 }
