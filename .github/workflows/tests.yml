@@ -16,8 +16,8 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [7.2, 7.3, 7.4]
-        typo3: [^10.4]
+        php: [7.4]
+        typo3: [^11.4]
 
     name: P${{ matrix.php }} - T${{ matrix.typo3 }}
 
@@ -35,7 +35,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, mysql, mysqli, pdo_mysql, bcmath, intl
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, intl
           coverage: none
 
       - name: Install dependencies
@@ -45,12 +45,12 @@ jobs:
         run: find . -name \*.php ! -path "./.Build/*" -print0 | xargs -0 -n1 -P4 php -d display_errors=stderr -n -l > /dev/null
 
       - name: Execute unit tests
-        run: .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml Tests/Unit/
+        run: .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/
         env:
           TYPO3_PATH_WEB: $PWD/.Build/public
 
       - name: Execute functional tests
-        run: .Build/bin/phpunit --colors  -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml Tests/Functional/
+        run: .Build/bin/phpunit --colors  -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/
         env:
           TYPO3_PATH_WEB: $PWD/.Build/public
           typo3DatabaseDriver: pdo_sqlite

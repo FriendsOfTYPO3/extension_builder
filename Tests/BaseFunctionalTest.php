@@ -31,11 +31,11 @@ use EBT\ExtensionBuilder\Service\Printer;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use Exception;
-use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 abstract class BaseFunctionalTest extends FunctionalTestCase
 {

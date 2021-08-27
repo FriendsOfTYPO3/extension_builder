@@ -12,11 +12,3 @@ services:
 
   EBT\ExtensionBuilder\Service\Printer:
     public: true
-
-  # TYPO Extbase stuff
-  # can be dropped with TYPO3 11
-  TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper:
-    public: true
-    shared: true
-    arguments:
-      $query: null

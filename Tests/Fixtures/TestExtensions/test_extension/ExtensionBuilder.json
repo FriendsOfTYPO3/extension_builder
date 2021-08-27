@@ -539,7 +539,7 @@
         "emConf": {
             "category": "misc",
             "custom_category": "",
-            "dependsOn": "typo3 => 9.5.0-9.5.99\n",
+            "dependsOn": "typo3 => 11.5.0-11.5.99\n",
             "disableLocalization": false,
             "disableVersioning": false,
             "generateDocumentationTemplate": true,
@@ -547,8 +547,8 @@
             "generateEmptyGitRepository": true,
             "sourceLanguage": "en",
             "state": "alpha",
-            "targetVersion": "10.4.0-10.4.99",
-            "version": "0.9"
+            "targetVersion": "11.5.0-11.5.99",
+            "version": "1.0.0"
         },
         "extensionKey": "test_extension",
         "name": "ExtensionBuilder Test Extension",
