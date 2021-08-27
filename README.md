@@ -4,7 +4,7 @@
 [![Total Downloads](https://poser.pugx.org/friendsoftypo3/extension-builder/d/total.svg)](https://packagist.org/packages/friendsoftypo3/extension-builder)
 [![Latest Stable Version](https://poser.pugx.org/friendsoftypo3/extension-builder/v/stable.svg)](https://packagist.org/packages/friendsoftypo3/extension-builder)
 [![License](https://poser.pugx.org/friendsoftypo3/extension-builder/license.svg)](https://packagist.org/packages/friendsoftypo3/extension-builder)
-[![TYPO3](https://img.shields.io/badge/TYPO3-10.4-orange.svg)](https://get.typo3.org/version/10)
+[![TYPO3](https://img.shields.io/badge/TYPO3-11-orange.svg)](https://get.typo3.org/version/11)
 
 The Extension Builder helps you build and manage your Extbase based TYPO3 extensions.
 
@@ -51,6 +51,7 @@ Run the following command within your Composer based TYPO3 project:
 composer require friendsoftypo3/extension-builder:dev-master
 # or for a specific branch run:
 composer require friendsoftypo3/extension-builder:9.x-dev
+composer require friendsoftypo3/extension-builder:10.x-dev
 ```
 
 ## Making Extension Builder even better
