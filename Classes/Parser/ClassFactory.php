@@ -26,6 +26,7 @@ use EBT\ExtensionBuilder\Domain\Model\NamespaceObject;
 use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 use PhpParser\Comment;
 use PhpParser\Comment\Doc;
+use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;
@@ -61,6 +62,10 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
     {
         $methodObject = new Method($methodNode->name->name);
         $methodObject->setModifiers($methodNode->flags);
+        $returnType = $methodNode->getReturnType();
+        if ($returnType instanceof FullyQualified) {
+            $methodObject->setReturnType($returnType->toCodeString());
+        }
         $this->addCommentsFromAttributes($methodObject, $methodNode);
         $this->setFunctionProperties($methodNode, $methodObject);
         return $methodObject;

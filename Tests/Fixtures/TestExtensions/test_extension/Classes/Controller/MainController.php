@@ -38,39 +38,41 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * action list
      *
-     * @return string|object|null|void
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function listAction()
+    public function listAction(): \Psr\Http\Message\ResponseInterface
     {
         $mains = $this->mainRepository->findAll();
         $this->view->assign('mains', $mains);
+        return $this->htmlResponse();
     }
 
     /**
      * action show
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
-     * @return string|object|null|void
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function showAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
+    public function showAction(\FIXTURE\TestExtension\Domain\Model\Main $main): \Psr\Http\Message\ResponseInterface
     {
         $this->view->assign('main', $main);
+        return $this->htmlResponse();
     }
 
     /**
      * action new
      *
-     * @return string|object|null|void
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function newAction()
+    public function newAction(): \Psr\Http\Message\ResponseInterface
     {
+        return $this->htmlResponse();
     }
 
     /**
      * action create
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $newMain
-     * @return string|object|null|void
      */
     public function createAction(\FIXTURE\TestExtension\Domain\Model\Main $newMain)
     {
@@ -84,18 +86,18 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("main")
-     * @return string|object|null|void
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function editAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
+    public function editAction(\FIXTURE\TestExtension\Domain\Model\Main $main): \Psr\Http\Message\ResponseInterface
     {
         $this->view->assign('main', $main);
+        return $this->htmlResponse();
     }
 
     /**
      * action update
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
-     * @return string|object|null|void
      */
     public function updateAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
     {
@@ -108,7 +110,6 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action delete
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
-     * @return string|object|null|void
      */
     public function deleteAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
     {
@@ -120,9 +121,10 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * action custom
      *
-     * @return string|object|null|void
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function customAction()
+    public function customAction(): \Psr\Http\Message\ResponseInterface
     {
+        return $this->htmlResponse();
     }
 }

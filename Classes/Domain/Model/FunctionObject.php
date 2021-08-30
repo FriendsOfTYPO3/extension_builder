@@ -25,6 +25,10 @@ use EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter;
 class FunctionObject extends AbstractObject
 {
     /**
+     * @var string|null
+     */
+    protected $returnType;
+    /**
      * stmts of this methods body
      *
      * @var array
@@ -60,6 +64,17 @@ class FunctionObject extends AbstractObject
             $clonedParameters[] = clone $parameter;
         }
         $this->parameters = $clonedParameters;
+    }
+
+    public function getReturnType(): ?string
+    {
+        return $this->returnType;
+    }
+
+    public function setReturnType(?string $returnType): self
+    {
+        $this->returnType = $returnType;
+        return $this;
     }
 
     /**
