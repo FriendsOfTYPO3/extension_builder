@@ -164,7 +164,7 @@ class BuilderModuleController extends ActionController
      * @return string|ResponseInterface
      * @throws StopActionException
      */
-    public function indexAction()
+    public function indexAction(): ResponseInterface
     {
         $this->moduleTemplate = GeneralUtility::makeInstance(ModuleTemplate::class);
         $this->moduleTemplate->setTitle('Extension Builder');
@@ -194,7 +194,7 @@ class BuilderModuleController extends ActionController
      *
      * @return string|ResponseInterface
      */
-    public function domainmodellingAction()
+    public function domainmodellingAction(): ResponseInterface
     {
         $this->moduleTemplate = GeneralUtility::makeInstance(ModuleTemplate::class);
         $this->moduleTemplate->setBodyTag('<body class="yui-skin-sam">');
@@ -445,9 +445,9 @@ class BuilderModuleController extends ActionController
     /**
      * Main entry point for the buttons in the Javascript frontend.
      *
-     * @return string json encoded array
+     * @return ResponseInterface json encoded array
      */
-    public function dispatchRpcAction(): string
+    public function dispatchRpcAction(): ResponseInterface
     {
         try {
             $this->extensionBuilderConfigurationManager->parseRequest();
@@ -471,7 +471,7 @@ class BuilderModuleController extends ActionController
         } catch (\Exception $e) {
             $response = ['error' => $e->getMessage()];
         }
-        return json_encode($response);
+        return $this->jsonResponse(json_encode($response));
     }
 
     /**

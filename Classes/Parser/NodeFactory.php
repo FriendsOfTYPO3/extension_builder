@@ -159,6 +159,10 @@ class NodeFactory implements SingletonInterface
                 $methodNodeBuilder->addParam($parameterNode);
             }
         }
+        $returnType = $methodObject->getReturnType();
+        if ($returnType !== null) {
+            $methodNodeBuilder->setReturnType(new Name\FullyQualified(ltrim($returnType, '\\')));
+        }
         $methodNodeBuilder->addStmts($methodObject->getBodyStmts());
 
         $methodNode = $methodNodeBuilder->getNode();

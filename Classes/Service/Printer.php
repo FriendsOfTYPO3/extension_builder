@@ -20,6 +20,7 @@ namespace EBT\ExtensionBuilder\Service;
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Parser\NodeFactory;
 use PhpParser\Node;
+use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Declare_;
 use PhpParser\PrettyPrinter\Standard;
 
@@ -109,5 +110,17 @@ class Printer extends Standard
     {
         return 'declare(' . $this->pCommaSeparated($node->declares) . ')'
                . (null !== $node->stmts ? ' {' . $this->pStmts($node->stmts) . $this->nl . '}' : ';');
+    }
+
+    protected function pStmt_ClassMethod(ClassMethod $node)
+    {
+        return $this->pAttrGroups($node->attrGroups)
+            . $this->pModifiers($node->flags)
+            . 'function ' . ($node->byRef ? '&' : '') . $node->name
+            . '(' . $this->pMaybeMultiline($node->params) . ')'
+            . (null !== $node->returnType ? ': ' . $this->p($node->returnType) : '') // Removed extra space
+            . (null !== $node->stmts
+                ? $this->nl . '{' . $this->pStmts($node->stmts) . $this->nl . '}'
+                : ';');
     }
 }
