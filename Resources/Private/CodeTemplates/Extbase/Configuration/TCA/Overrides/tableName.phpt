@@ -1,5 +1,5 @@
 <?php
-defined('TYPO3_MODE') || die();
+defined('TYPO3') || die();
 
 <f:if condition="{addRecordTypeField}"><f:render partial="TCA/TypeField.phpt" arguments="{domainObject:rootDomainObject,databaseTableName:rootDomainObject.databaseTableName, extension:extension, settings:settings}" /></f:if>
 

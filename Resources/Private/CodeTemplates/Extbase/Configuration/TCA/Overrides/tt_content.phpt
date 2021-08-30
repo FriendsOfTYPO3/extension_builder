@@ -1,5 +1,5 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}<?php
-defined('TYPO3_MODE') || die();
+defined('TYPO3') || die();
 
 <f:for each="{extension.Plugins}" as="plugin">
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(

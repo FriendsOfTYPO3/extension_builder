@@ -1,5 +1,5 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}<?php
-defined('TYPO3_MODE') || die();
+defined('TYPO3') || die();
 
 (static function() {<f:if condition="{extension.BackendModules}"><f:for each="{extension.BackendModules}" as="backendModule">
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
