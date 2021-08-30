@@ -41,8 +41,8 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -160,9 +160,6 @@ class BuilderModuleController extends ActionController
      *
      * This is the default action, showing some introduction but after the first
      * loading the user should immediately be redirected to the domainmodellingAction.
-     *
-     * @return string|ResponseInterface
-     * @throws StopActionException
      */
     public function indexAction(): ResponseInterface
     {
@@ -176,8 +173,7 @@ class BuilderModuleController extends ActionController
         if (!$this->request->hasArgument('action')) {
             $userSettings = $this->getBackendUserAuthentication()->getModuleData('extensionbuilder');
             if ($userSettings['firstTime'] === 0) {
-                // No backwards compatibility possible as ForwardResponse exists only in V11
-                $this->forward('domainmodelling');
+                return new ForwardResponse('domainmodelling');
             }
         }
 
@@ -189,11 +185,6 @@ class BuilderModuleController extends ActionController
         return new HtmlResponse($this->moduleTemplate->renderContent());
     }
 
-    /**
-     * Loads the Domainmodelling template.
-     *
-     * @return string|ResponseInterface
-     */
     public function domainmodellingAction(): ResponseInterface
     {
         $this->moduleTemplate = GeneralUtility::makeInstance(ModuleTemplate::class);
