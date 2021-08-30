@@ -1,5 +1,5 @@
 <?php
-defined('TYPO3_MODE') || die();
+defined('TYPO3') || die();
 
 // Register Backend Module
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
