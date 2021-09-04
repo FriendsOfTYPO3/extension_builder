@@ -209,6 +209,8 @@ class FileGenerator
 
         $this->generatePluginFiles();
 
+        $this->generateIconsFile();
+
         $this->copyStaticFiles();
 
         $this->generateTCAFiles();
@@ -288,6 +290,29 @@ class FileGenerator
             $this->writeFile($this->extensionDirectory . 'ext_localconf.php', $fileContents);
         } catch (Exception $e) {
             throw new Exception('Could not write ext_localconf.php. Error: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function generateIconsFile(): void
+    {
+        if (!$this->extension->hasPlugins()) {
+            return;
+        }
+        try {
+            GeneralUtility::mkdir_deep($this->extensionDirectory . 'Configuration');
+
+            $fileContents = $this->renderTemplate(
+                'Configuration/Icons.phpt',
+                [
+                    'extension' => $this->extension
+                ]
+            );
+            $this->writeFile($this->extensionDirectory . 'Configuration/Icons.php', $fileContents);
+        } catch (Exception $e) {
+            throw new Exception('Could not write Configuration/Icons.php. Error: ' . $e->getMessage());
         }
     }
 

@@ -365,7 +365,7 @@ class FileGeneratorTest extends BaseFunctionalTest
 
         $removeMethod = $reflection->getMethod('remove' . ucfirst(Inflector::singularize($propertyName)));
         $parameters = $removeMethod->getParameters();
-        self::assertEquals(1, count($parameters), 'Wrong parameter count in remove method');
+        self::assertCount(1, $parameters, 'Wrong parameter count in remove method');
 
         $parameter = current($parameters);
         self::assertEquals(
@@ -456,9 +456,9 @@ class FileGeneratorTest extends BaseFunctionalTest
 
         $extensionDir = $this->extension->getExtensionDir();
 
+        self::assertFileExists($extensionDir . 'Classes/Controller/' . $domainObject->getName() . 'Controller.php');
         self::assertFileExists($extensionDir . 'Classes/Domain/Model/' . $domainObject->getName() . '.php');
         self::assertFileExists($extensionDir . 'Classes/Domain/Repository/' . $domainObject->getName() . 'Repository.php');
-        self::assertFileExists($extensionDir . 'Classes/Controller/' . $domainObject->getName() . 'Controller.php');
     }
 
     /**
@@ -505,22 +505,21 @@ class FileGeneratorTest extends BaseFunctionalTest
             'ext_localconf.php',
             'ext_tables.php',
             'ext_tables.sql',
+            'Configuration/ExtensionBuilder/settings.yaml',
+            'Configuration/TCA/Overrides/sys_template.php',
+            'Configuration/TCA/Overrides/tt_content.php',
+            'Configuration/TCA/' . $domainObject->getDatabaseTableName() . '.php',
+            'Configuration/TypoScript/constants.typoscript',
+            'Configuration/TypoScript/setup.typoscript',
+            'Configuration/Icons.php',
+            'Resources/Private/Partials/' . $domainObject->getName() . '/Properties.html',
+            'Resources/Private/Partials/' . $domainObject->getName() . '/FormFields.html',
+            'Resources/Private/Language/locallang.xlf',
+            'Resources/Private/Language/locallang_db.xlf',
         ];
         foreach ($extensionFiles as $extensionFile) {
             self::assertFileExists($extensionDir . $extensionFile, 'File was not generated: ' . $extensionFile);
         }
-
-        self::assertFileExists($extensionDir . 'Configuration/TCA/' . $domainObject->getDatabaseTableName() . '.php');
-        self::assertFileExists($extensionDir . 'Configuration/TCA/Overrides/sys_template.php');
-        self::assertFileExists($extensionDir . 'Configuration/TCA/Overrides/tt_content.php');
-        self::assertFileExists($extensionDir . 'Configuration/ExtensionBuilder/settings.yaml');
-        self::assertFileExists($extensionDir . 'Configuration/TypoScript/setup.typoscript');
-        self::assertFileExists($extensionDir . 'Configuration/TypoScript/constants.typoscript');
-
-        self::assertFileExists($extensionDir . 'Resources/Private/Language/locallang_db.xlf');
-        self::assertFileExists($extensionDir . 'Resources/Private/Language/locallang.xlf');
-        self::assertFileExists($extensionDir . 'Resources/Private/Partials/' . $domainObject->getName() . '/Properties.html');
-        self::assertFileExists($extensionDir . 'Resources/Private/Partials/' . $domainObject->getName() . '/FormFields.html');
     }
 
     public function getDeprecatedTypoScriptExtensionsDataProvider(): array
