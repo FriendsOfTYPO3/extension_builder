@@ -33,11 +33,4 @@ defined('TYPO3') || die();
             }
        }'
     );
-
-    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-    $iconRegistry->registerIcon(
-        'test_extension-plugin-testplugin',
-        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-        ['source' => 'EXT:test_extension/Resources/Public/Icons/user_plugin_testplugin.svg']
-    );
 })();

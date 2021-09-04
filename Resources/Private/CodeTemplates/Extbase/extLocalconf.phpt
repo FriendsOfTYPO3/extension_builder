@@ -39,11 +39,4 @@ defined('TYPO3') || die();
             </k:curlyBrackets>
        </k:curlyBrackets>'
     );
-
-    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);<f:for each="{extension.plugins}" as="plugin">
-    $iconRegistry->registerIcon(
-        '{extension.extensionKey}-plugin-{plugin.key}',
-        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-        ['source' => 'EXT:{extension.extensionKey}/Resources/Public/Icons/user_plugin_{plugin.key}.svg']
-    );</f:for>
 })();
