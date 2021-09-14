@@ -15,31 +15,14 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace EBT\ExtensionBuilder\Tests\Unit\Validation;
+namespace EBT\ExtensionBuilder\Tests\Unit\Domain\Validator;
 
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
-use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
 use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
 use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 
-/**
- * test for validation service
- */
 class ValidationServiceTest extends BaseUnitTest
 {
-    /**
-     * @test
-     */
-    public function propertyRenamesFieldIfItMatchesReservedWord(): void
-    {
-        $domainObject = $this->buildDomainObject('SomeModel', true, true);
-
-        $property = new StringProperty();
-        $property->setName('Order');
-        $property->setDomainObject($domainObject);
-        self::assertEquals('tx_dummy_order', $property->getFieldName());
-    }
-
     /**
      * @test
      */

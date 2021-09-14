@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace EBT\ExtensionBuilder\Tests\Functional;
+namespace EBT\ExtensionBuilder\Tests\Functional\Service;
 
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -40,8 +40,7 @@ class ParseAndPrintTest extends BaseFunctionalTest
      */
     public function parseAndPrintSimplePropertyClass(): void
     {
-        $fileName = 'SimpleProperty.php';
-        $this->parseAndPrint($fileName);
+        $this->parseAndPrint('SimpleProperty.php');
     }
 
     protected function parseAndPrint(string $fileName, string $subFolder = ''): void
