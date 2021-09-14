@@ -81,6 +81,15 @@
 			<trans-unit id="tx_testextension_domain_model_child4.file_property" resname="tx_testextension_domain_model_child4.file_property">
 				<source>File Property</source>
 			</trans-unit>
+			<trans-unit id="tx_testextension_domain_model_category" resname="tx_testextension_domain_model_category">
+				<source>Category</source>
+			</trans-unit>
+			<trans-unit id="tx_testextension_domain_model_category.name" resname="tx_testextension_domain_model_category.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_testextension_domain_model_category.categories" resname="tx_testextension_domain_model_category.categories">
+				<source>Categories</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
