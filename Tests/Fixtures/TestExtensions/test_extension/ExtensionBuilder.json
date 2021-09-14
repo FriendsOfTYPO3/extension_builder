@@ -455,6 +455,71 @@
                     "relations": []
                 }
             }
+        },
+        {
+            "config": {
+                "position": [
+                    1173,
+                    170
+                ]
+            },
+            "name": "New Model Object",
+            "value": {
+                "actionGroup": {
+                    "_default0_index": false,
+                    "_default1_list": false,
+                    "_default2_show": false,
+                    "_default3_new_create": false,
+                    "_default4_edit_update": false,
+                    "_default5_delete": false,
+                    "customActions": []
+                },
+                "name": "Category",
+                "objectsettings": {
+                    "addDeletedField": true,
+                    "addHiddenField": true,
+                    "addStarttimeEndtimeFields": true,
+                    "aggregateRoot": true,
+                    "categorizable": false,
+                    "description": "A model with a relation to itself",
+                    "mapToTable": "",
+                    "parentClass": "",
+                    "sorting": false,
+                    "type": "Entity",
+                    "uid": "1008606523743"
+                },
+                "propertyGroup": {
+                    "properties": [
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "",
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
+                            "propertyIsRequired": false,
+                            "propertyName": "name",
+                            "propertyType": "String",
+                            "uid": "928662274872"
+                        }
+                    ]
+                },
+                "relationGroup": {
+                    "relations": [
+                        {
+                            "foreignRelationClass": "",
+                            "lazyLoading": false,
+                            "propertyIsExcludeField": true,
+                            "relationDescription": "",
+                            "relationName": "categories",
+                            "relationType": "zeroToMany",
+                            "relationWire": "[wired]",
+                            "renderType": "inline",
+                            "uid": "242406357107"
+                        }
+                    ]
+                }
+            }
         }
     ],
     "properties": {
@@ -478,6 +543,7 @@
             "disableLocalization": false,
             "disableVersioning": false,
             "generateDocumentationTemplate": true,
+            "generateEditorConfig": false,
             "generateEmptyGitRepository": true,
             "sourceLanguage": "en",
             "state": "alpha",
@@ -556,6 +622,18 @@
                 "moduleId": 4,
                 "terminal": "SOURCES",
                 "uid": "1356595175721"
+            }
+        },
+        {
+            "src": {
+                "moduleId": 5,
+                "terminal": "relationWire_0",
+                "uid": "242406357107"
+            },
+            "tgt": {
+                "moduleId": 5,
+                "terminal": "SOURCES",
+                "uid": "1008606523743"
             }
         }
     ],

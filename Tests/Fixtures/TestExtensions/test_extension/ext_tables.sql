@@ -35,6 +35,12 @@ CREATE TABLE tx_testextension_domain_model_child4 (
 	file_property int(11) unsigned NOT NULL DEFAULT '0'
 );
 
+CREATE TABLE tx_testextension_domain_model_category (
+	category int(11) unsigned DEFAULT '0' NOT NULL,
+	name varchar(255) NOT NULL DEFAULT '',
+	categories int(11) unsigned NOT NULL DEFAULT '0'
+);
+
 CREATE TABLE tx_testextension_main_child4_mm (
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
