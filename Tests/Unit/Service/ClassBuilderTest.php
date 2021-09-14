@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace EBT\ExtensionBuilder\Tests\Unit;
+namespace EBT\ExtensionBuilder\Tests\Unit\Service;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;

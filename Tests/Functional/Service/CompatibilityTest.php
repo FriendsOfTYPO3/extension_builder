@@ -15,9 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace EBT\ExtensionBuilder\Tests\Functional;
+namespace EBT\ExtensionBuilder\Tests\Functional\Service;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 use Nimut\TestingFramework\MockObject\AccessibleMockObjectInterface;
@@ -43,7 +44,7 @@ class CompatibilityTest extends BaseFunctionalTest
      * This test should help, to find compatibility breaking changes
      *
      * @test
-     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
+     * @throws ExtensionException
      */
     public function generateExtensionFromVersion3Configuration(): void
     {
