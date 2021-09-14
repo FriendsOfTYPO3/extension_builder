@@ -759,7 +759,9 @@ class ExtensionValidator extends AbstractValidator
                     // Don't allow a duplicated property name in the foreign model matching the name of the relation
                     if ($property instanceof ZeroToManyRelation && $property->getRenderType() === 'inline') {
                         foreach ($foreignModel->getProperties() as $foreignProperty) {
-                            if ($property->getName() === $foreignProperty->getName()) {
+                            if ($domainObject->getName() !== $foreignModel->getName()
+                                && $property->getName() === $foreignProperty->getName()
+                            ) {
                                 $this->validationResult['errors'][] = new ExtensionException(
                                     'Relation "' . $property->getName() . '" in model "' . $domainObject->getName() .
                                     '" has an external class relation to ' . $foreignModel->getName() . ' which has a property with the same name',
