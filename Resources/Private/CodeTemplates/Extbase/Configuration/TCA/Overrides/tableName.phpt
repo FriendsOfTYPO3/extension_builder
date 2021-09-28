@@ -9,12 +9,7 @@ $GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$GLOBALS['TCA']['
     'LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}',
     '{domainObject.recordType}'
 ];
-</f:if><f:if condition="{domainObject.categorizable}">
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
-   '{extension.extensionKey}',
-   '{domainObject.databaseTableName}'
-);</f:if>
-</f:for>
+</f:if></f:for>
 <f:if condition="{domainObject.mappedToExistingTable}">
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
     '{domainObject.mapToTable}',

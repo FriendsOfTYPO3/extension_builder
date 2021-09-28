@@ -93,7 +93,11 @@ return [
                 ]
             ],
         ],
-
+        'categories' => [
+            'config'=> [
+                'type' => 'category',
+            ],
+        ],
         'name' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3.name',
