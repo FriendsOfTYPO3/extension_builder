@@ -93,8 +93,12 @@ return [
                     'allowLanguageSynchronization' => true
                 ]
             ],
-        ],</f:if>
-        <k:format.indent indentation="1"><f:render partial="TCA/PropertiesDefinition.phpt" arguments="{domainObject:domainObject,settings:settings}"/></k:format.indent><f:for each="{k:listForeignKeyRelations( domainObject: domainObject)}" as="relation">
+        ],</f:if><f:if condition="{domainObject.categorizable}">
+        'categories' => [
+            'config'=> [
+                'type' => 'category',
+            ],
+        ],</f:if><k:format.indent indentation="1"><f:render partial="TCA/PropertiesDefinition.phpt" arguments="{domainObject:domainObject,settings:settings}"/></k:format.indent><f:for each="{k:listForeignKeyRelations(domainObject: domainObject)}" as="relation">
         '{relation.foreignKeyName}' => [
             'config' => [
                 'type' => 'passthrough',
