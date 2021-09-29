@@ -3,7 +3,5 @@
 /.github export-ignore
 /Documentation export-ignore
 /Tests export-ignore
-/.editorconfig export-ignore
-/.gitattributes export-ignore
-/.gitignore export-ignore
+/.* export-ignore
 /crowdin.yaml export-ignore
