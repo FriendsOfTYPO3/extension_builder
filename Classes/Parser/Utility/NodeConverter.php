@@ -22,6 +22,7 @@ use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
+use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\ConstFetch;
 use PhpParser\Node\Expr\UnaryMinus;
 use PhpParser\Node\Name;
@@ -126,6 +127,10 @@ class NodeConverter
 
         if ($node instanceof NullableType) {
             return '?' . self::getValueFromNode($node->type);
+        }
+
+        if ($node instanceof ClassConstFetch) {
+            return $node->name;
         }
 
         if ($node instanceof Node) {
@@ -245,7 +250,7 @@ class NodeConverter
         return gettype($value);
     }
 
-    public static function getPropertyValueFromNode($node, $property)
+    public static function getPropertyValueFromNode(Node $node, $property)
     {
         if (is_string($node->$property)) {
             return $node->$property;
@@ -256,9 +261,9 @@ class NodeConverter
         return null;
     }
 
-    public static function getNameFromNode($node)
+    public static function getNameFromNode(Node $node)
     {
-        if (is_string($node->name)) {
+        if (property_exists($node, 'name') && is_string($node->name)) {
             return $node->name;
         }
         if (property_exists($node, 'var') && property_exists($node->var, 'name')) {

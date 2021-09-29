@@ -76,21 +76,21 @@ class ExtensionSchemaBuilder implements SingletonInterface
 
         $this->setExtensionProperties($extension, $globalProperties);
 
-        if (is_array($globalProperties['persons'])) {
+        if (isset($globalProperties['persons']) && is_array($globalProperties['persons'])) {
             foreach ($globalProperties['persons'] as $personValues) {
                 $person = $this->buildPerson($personValues);
                 $extension->addPerson($person);
             }
         }
 
-        if (is_array($globalProperties['plugins'])) {
+        if (isset($globalProperties['plugins']) && is_array($globalProperties['plugins'])) {
             foreach ($globalProperties['plugins'] as $pluginValues) {
                 $plugin = $this->buildPlugin($pluginValues);
                 $extension->addPlugin($plugin);
             }
         }
 
-        if (is_array($globalProperties['backendModules'])) {
+        if (isset($globalProperties['backendModules']) && is_array($globalProperties['backendModules'])) {
             foreach ($globalProperties['backendModules'] as $backendModuleValues) {
                 $backendModule = $this->buildBackendModule($backendModuleValues);
                 $extension->addBackendModule($backendModule);
@@ -98,7 +98,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
         }
 
         // classes
-        if (is_array($extensionBuildConfiguration['modules'])) {
+        if (isset($extensionBuildConfiguration['modules']) && is_array($extensionBuildConfiguration['modules'])) {
             foreach ($extensionBuildConfiguration['modules'] as $singleModule) {
                 $domainObject = $this->objectSchemaBuilder->build($singleModule['value']);
                 if ($domainObject->isSubClass() && !$domainObject->isMappedToExistingTable()) {
@@ -128,7 +128,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
         }
 
         // relations
-        if (is_array($extensionBuildConfiguration['wires'])) {
+        if (isset($extensionBuildConfiguration['wires']) && is_array($extensionBuildConfiguration['wires'])) {
             $this->setExtensionRelations($extensionBuildConfiguration, $extension);
         }
 
@@ -205,11 +205,11 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $extension->setSourceLanguage($propertyConfiguration['emConf']['sourceLanguage']);
         }
 
-        if ($propertyConfiguration['emConf']['disableVersioning']) {
+        if ($propertyConfiguration['emConf']['disableVersioning'] ?? false) {
             $extension->setSupportVersioning(false);
         }
 
-        if ($propertyConfiguration['emConf']['disableLocalization']) {
+        if ($propertyConfiguration['emConf']['disableLocalization'] ?? false) {
             $extension->setSupportLocalization(false);
         }
 
@@ -217,11 +217,11 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $extension->setGenerateDocumentationTemplate(false);
         }
 
-        if ($propertyConfiguration['emConf']['generateEmptyGitRepository']) {
+        if ($propertyConfiguration['emConf']['generateEmptyGitRepository'] ?? false) {
             $extension->setGenerateEmptyGitRepository(true);
         }
 
-        if ($propertyConfiguration['emConf']['generateEditorConfig']) {
+        if ($propertyConfiguration['emConf']['generateEditorConfig'] ?? false) {
             $extension->setGenerateEditorConfig(true);
         }
 
@@ -247,7 +247,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
         if (!empty($propertyConfiguration['emConf']['custom_category'])) {
             $category = $propertyConfiguration['emConf']['custom_category'];
         } else {
-            $category = $propertyConfiguration['emConf']['category'];
+            $category = $propertyConfiguration['emConf']['category'] ?? null;
         }
 
         $extension->setCategory($category);
