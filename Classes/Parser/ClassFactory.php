@@ -24,9 +24,9 @@ use EBT\ExtensionBuilder\Domain\Model\ClassObject\Method;
 use EBT\ExtensionBuilder\Domain\Model\FunctionObject;
 use EBT\ExtensionBuilder\Domain\Model\NamespaceObject;
 use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
-use PhpParser\Builder\Param;
 use PhpParser\Comment;
 use PhpParser\Comment\Doc;
+use PhpParser\Node\Param;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
@@ -138,7 +138,7 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
                 // if there is not type hint but a varType in the param tag,
                 // we set the varType of the parameter
                 $paramTag = explode(' ', $paramTags[$position]);
-                if ($paramTag[0] !== '$' . $param->name) {
+                if ($paramTag[0] !== '$' . $param->var->name) {
                     $parameter->setVarType($paramTag[0]);
                     $parameter->setTypeForParamTag($paramTag[0]);
                 }
