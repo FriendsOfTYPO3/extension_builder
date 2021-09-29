@@ -29,20 +29,4 @@ CREATE TABLE {domainObject.databaseTableName} (
 	categories int(11) unsigned DEFAULT '0' NOT NULL,
 );
    </f:if>
-
-   <f:for each="{domainObject.anyToManyRelationProperties}" as="relation">
-      <f:if condition="{relation.useMMTable}">
-
-CREATE TABLE {relation.relationTableName} (
-	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
-	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
-	sorting int(11) unsigned DEFAULT '0' NOT NULL,
-	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
-
-	PRIMARY KEY (uid_local,uid_foreign),
-	KEY uid_local (uid_local),
-	KEY uid_foreign (uid_foreign)
-);
-       </f:if>
-    </f:for>
 </f:for>
