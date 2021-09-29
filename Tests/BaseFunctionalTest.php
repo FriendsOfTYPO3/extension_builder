@@ -141,16 +141,16 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         $this->classBuilder->initialize($this->extension);
 
         $this->roundTripService = $this->getAccessibleMock(RoundTrip::class, ['dummy']);
-        $this->inject($this->roundTripService, 'configurationManager', $configurationManager);
-        $this->inject($this->roundTripService, 'parserService', $this->parserService);
+        $this->roundTripService->_set('configurationManager', $configurationManager);
+        $this->roundTripService->_set('parserService', $this->parserService);
         $this->roundTripService->initialize($this->extension);
 
         $this->fileGenerator = $this->getAccessibleMock(FileGenerator::class, ['dummy']);
-        $this->inject($this->fileGenerator, 'printerService', $this->printerService);
-        $this->inject($this->fileGenerator, 'localizationService', $localizationService);
-        $this->inject($this->fileGenerator, 'classBuilder', $this->classBuilder);
+        $this->fileGenerator->_set('printerService', $this->printerService);
+        $this->fileGenerator->_set('localizationService', $localizationService);
+        $this->fileGenerator->_set('classBuilder', $this->classBuilder);
 
-        $this->inject($this->fileGenerator, 'roundTripService', $this->roundTripService);
+        $this->fileGenerator->_set('roundTripService', $this->roundTripService);
 
         $this->codeTemplateRootPath = Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
         $this->modelClassTemplatePath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
