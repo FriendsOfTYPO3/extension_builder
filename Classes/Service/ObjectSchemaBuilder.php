@@ -56,7 +56,7 @@ class ObjectSchemaBuilder implements SingletonInterface
     public function build(array $jsonDomainObject): DomainObject
     {
         $domainObject = GeneralUtility::makeInstance(DomainObject::class);
-        $domainObject->setUniqueIdentifier($jsonDomainObject['objectsettings']['uid']);
+        $domainObject->setUniqueIdentifier($jsonDomainObject['objectsettings']['uid'] ?? null);
 
         $domainObject->setName($jsonDomainObject['name']);
         $domainObject->setDescription($jsonDomainObject['objectsettings']['description']);
@@ -160,12 +160,12 @@ class ObjectSchemaBuilder implements SingletonInterface
         /** @var AbstractRelation $relation */
         $relation = new $relationSchemaClassName();
         $relation->setName($relationJsonConfiguration['relationName']);
-        $relation->setLazyLoading((bool)$relationJsonConfiguration['lazyLoading']);
-        $relation->setNullable((bool)$relationJsonConfiguration['propertyIsNullable']);
+        $relation->setLazyLoading((bool)($relationJsonConfiguration['lazyLoading'] ?? false));
+        $relation->setNullable((bool)($relationJsonConfiguration['propertyIsNullable'] ?? false));
         $relation->setExcludeField((bool)$relationJsonConfiguration['propertyIsExcludeField']);
-        $relation->setDescription($relationJsonConfiguration['relationDescription']);
-        $relation->setUniqueIdentifier($relationJsonConfiguration['uid']);
-        $relation->setType($relationJsonConfiguration['type']);
+        $relation->setDescription($relationJsonConfiguration['relationDescription'] ?? '');
+        $relation->setUniqueIdentifier($relationJsonConfiguration['uid'] ?? '');
+        $relation->setType($relationJsonConfiguration['type'] ?? '');
 
         if (!empty($relationJsonConfiguration['foreignRelationClass'])) {
             // relations without wires
@@ -227,9 +227,11 @@ class ObjectSchemaBuilder implements SingletonInterface
         }
         /** @var DomainObject\AbstractProperty $property */
         $property = GeneralUtility::makeInstance($propertyClassName);
-        $property->setUniqueIdentifier($propertyJsonConfiguration['uid']);
+        $property->setUniqueIdentifier($propertyJsonConfiguration['uid'] ?? '');
         $property->setName($propertyJsonConfiguration['propertyName']);
-        $property->setDescription($propertyJsonConfiguration['propertyDescription']);
+        if (isset($propertyJsonConfiguration['propertyDescription'])) {
+            $property->setDescription($propertyJsonConfiguration['propertyDescription']);
+        }
 
         if ($propertyType === 'File' && !empty($propertyJsonConfiguration['allowedFileTypes'])) {
             $property->setAllowedFileTypes($propertyJsonConfiguration['allowedFileTypes']);
