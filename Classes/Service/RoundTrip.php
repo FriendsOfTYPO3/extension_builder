@@ -17,8 +17,8 @@ namespace EBT\ExtensionBuilder\Service;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
-use EBT\ExtensionBuilder\Domain\Model;
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
@@ -512,7 +512,7 @@ class RoundTrip implements SingletonInterface
                         $currentDomainObject->getFullyQualifiedDomainRepositoryClassName() . ' $' . $newName . 'Repository'
                     );
                     $injectMethod->setName('inject' . $newName . 'Repository');
-                    $parameter = new Model\ClassObject\MethodParameter(lcfirst($newName) . 'Repository');
+                    $parameter = new MethodParameter(lcfirst($newName) . 'Repository');
                     $parameter->setTypeHint($currentDomainObject->getFullyQualifiedDomainRepositoryClassName());
                     $parameter->setPosition(0);
                     $injectMethod->replaceParameter($parameter);

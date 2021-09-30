@@ -21,6 +21,7 @@ use EBT\ExtensionBuilder\Domain\Model;
 use EBT\ExtensionBuilder\Domain\Model\AbstractObject;
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\Method;
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter;
 use EBT\ExtensionBuilder\Domain\Model\FunctionObject;
 use EBT\ExtensionBuilder\Domain\Model\NamespaceObject;
 use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
@@ -129,7 +130,7 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
         $position = 0;
         foreach ($node->params as $param) {
             /** @var Param $param */
-            $parameter = new Model\ClassObject\MethodParameter($param->var->name);
+            $parameter = new MethodParameter($param->var->name);
             $parameter->setPosition($position);
             $parameter->setStartLine($param->getAttribute('startLine'));
             $parameter->setEndLine($param->getAttribute('endLine'));

@@ -35,6 +35,7 @@ use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\ConstFetch;
 use PhpParser\Node\Name;
+use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Param;
 use PhpParser\Node\Scalar\DNumber;
 use PhpParser\Node\Scalar\LNumber;
@@ -161,7 +162,7 @@ class NodeFactory implements SingletonInterface
         }
         $returnType = $methodObject->getReturnType();
         if ($returnType !== null) {
-            $methodNodeBuilder->setReturnType(new Name\FullyQualified(ltrim($returnType, '\\')));
+            $methodNodeBuilder->setReturnType(new FullyQualified(ltrim($returnType, '\\')));
         }
         $methodNodeBuilder->addStmts($methodObject->getBodyStmts());
 
