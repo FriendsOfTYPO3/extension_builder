@@ -9,7 +9,13 @@ namespace PHPSTORM_META {
     override(
         \TYPO3\TestingFramework\Core\BaseTestCase::getAccessibleMock(0),
         map([
-            '' =>  '@|\PHPUnit\Framework\MockObject\MockObject|\TYPO3\TestingFramework\Core\AccessibleObjectInterface',
+            '' => '@|\PHPUnit\Framework\MockObject\MockObject|\TYPO3\TestingFramework\Core\AccessibleObjectInterface',
+        ])
+    );
+    override(
+        \TYPO3\TestingFramework\Core\BaseTestCase::getAccessibleMockForAbstractClass(0),
+        map([
+            '' => '@|\PHPUnit\Framework\MockObject\MockObject|\TYPO3\TestingFramework\Core\AccessibleObjectInterface',
         ])
     );
 
@@ -18,13 +24,13 @@ namespace PHPSTORM_META {
     override(
         \Nimut\TestingFramework\TestCase\AbstractTestCase::getAccessibleMock(0),
         map([
-            '' =>  '@|\PHPUnit\Framework\MockObject\MockObject|\Nimut\TestingFramework\MockObject\AccessibleMockObjectInterface',
+            '' => '@|\PHPUnit\Framework\MockObject\MockObject|\Nimut\TestingFramework\MockObject\AccessibleMockObjectInterface',
         ])
     );
     override(
         \Nimut\TestingFramework\TestCase\AbstractTestCase::getAccessibleMockForAbstractClass(0),
         map([
-            '' =>  '@|\PHPUnit\Framework\MockObject\MockObject|\Nimut\TestingFramework\MockObject\AccessibleMockObjectInterface',
+            '' => '@|\PHPUnit\Framework\MockObject\MockObject|\Nimut\TestingFramework\MockObject\AccessibleMockObjectInterface',
         ])
     );
 }
