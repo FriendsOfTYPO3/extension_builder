@@ -196,7 +196,7 @@ class ExtensionValidator extends AbstractValidator
      * @return array[]
      * @throws Exception
      */
-    public function isValid($extension)
+    public function isValid($extension): array
     {
         $extensionSettings = $extension->getSettings();
         if (isset($extensionSettings['ignoreWarnings'])) {

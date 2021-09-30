@@ -288,7 +288,7 @@ class DomainObject
         $this->extension = $extension;
     }
 
-    public function getExtension(): Extension
+    public function getExtension(): ?Extension
     {
         return $this->extension;
     }
@@ -430,7 +430,7 @@ class DomainObject
      *
      * @return bool|array
      */
-    public function getNeedsMappingStatement()
+    public function getNeedsMappingStatement(): bool
     {
         if (!empty($this->mapToTable)) {
             return true;
@@ -555,7 +555,7 @@ class DomainObject
     /**
      * @return array|AbstractProperty[]
      */
-    public function getSearchableProperties()
+    public function getSearchableProperties(): array
     {
         return array_filter($this->properties, static function ($property) {
             return $property->isSearchable();

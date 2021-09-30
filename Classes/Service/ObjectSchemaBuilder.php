@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Service;
 
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
@@ -212,10 +213,10 @@ class ObjectSchemaBuilder implements SingletonInterface
 
     /**
      * @param array $propertyJsonConfiguration
-     * @return object
+     * @return AbstractProperty
      * @throws Exception
      */
-    public static function buildProperty(array $propertyJsonConfiguration)
+    public static function buildProperty(array $propertyJsonConfiguration): AbstractProperty
     {
         $propertyType = $propertyJsonConfiguration['propertyType'];
         $propertyClassName = 'EBT\\ExtensionBuilder\\Domain\Model\\DomainObject\\' . $propertyType . 'Property';

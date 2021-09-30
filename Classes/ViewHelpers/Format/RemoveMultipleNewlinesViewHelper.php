@@ -24,7 +24,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class RemoveMultipleNewlinesViewHelper extends AbstractViewHelper
 {
-    public function render(): string
+    public function render(): ?string
     {
         $content = trim($this->renderChildren());
 

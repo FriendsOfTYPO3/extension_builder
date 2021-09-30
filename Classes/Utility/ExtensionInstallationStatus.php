@@ -59,10 +59,9 @@ class ExtensionInstallationStatus
     }
 
     /**
-     * @return string
      * @throws Exception
      */
-    public function getStatusMessage()
+    public function getStatusMessage(): string
     {
         $statusMessage = '';
         // $this->checkForDbUpdate($this->extension->getExtensionKey());
@@ -140,7 +139,7 @@ class ExtensionInstallationStatus
      *
      * @return array
      */
-    public function performDbUpdates(array $params)
+    public function performDbUpdates(array $params): array
     {
         $hasErrors = false;
         if (!empty($params['updateStatements']) && !empty($params['extensionKey'])) {
@@ -169,18 +168,12 @@ class ExtensionInstallationStatus
         return ['success' => 'Database was successfully updated'];
     }
 
-    /**
-     * @return bool
-     */
-    public function isDbUpdateNeeded()
+    public function isDbUpdateNeeded(): bool
     {
         return $this->dbUpdateNeeded;
     }
 
-    /**
-     * @return array
-     */
-    public function getUpdateStatements()
+    public function getUpdateStatements(): array
     {
         return $this->updateStatements;
     }

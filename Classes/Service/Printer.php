@@ -101,13 +101,13 @@ class Printer extends Standard
      * @param Declare_ $node
      * @return string
      */
-    protected function pStmt_Declare(Declare_ $node)
+    protected function pStmt_Declare(Declare_ $node): string
     {
         return 'declare(' . $this->pCommaSeparated($node->declares) . ')'
                . (null !== $node->stmts ? ' {' . $this->pStmts($node->stmts) . $this->nl . '}' : ';');
     }
 
-    protected function pStmt_ClassMethod(ClassMethod $node)
+    protected function pStmt_ClassMethod(ClassMethod $node): string
     {
         return $this->pAttrGroups($node->attrGroups)
             . $this->pModifiers($node->flags)

@@ -24,10 +24,8 @@ class LinkButtonWithId extends LinkButton
     /**
      * Get type
      * Pretend that we are a link button to make the button valid
-     *
-     * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return LinkButton::class;
     }
@@ -50,10 +48,8 @@ class LinkButtonWithId extends LinkButton
 
     /**
      * Renders the markup for the button
-     *
-     * @return string
      */
-    public function render()
+    public function render(): string
     {
         $attributes = [
             'href' => $this->getHref(),

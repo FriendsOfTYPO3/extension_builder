@@ -120,7 +120,7 @@ class LocalizationService implements SingletonInterface
      *
      * @return array
      */
-    public function flattenLocallangArray(array $array, string $format, string $languageKey)
+    public function flattenLocallangArray(array $array, string $format, string $languageKey): array
     {
         $cleanMergedLabelArray = [];
         if ($format === 'xlf') {
