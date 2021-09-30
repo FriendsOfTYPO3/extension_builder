@@ -25,8 +25,7 @@ class PasswordProperty extends AbstractProperty
      * @var string
      */
     protected $defaultValue = '';
-
-    protected static $isNullable = true;
+    protected static bool $isNullable = true;
 
     public function getTypeForComment(): string
     {

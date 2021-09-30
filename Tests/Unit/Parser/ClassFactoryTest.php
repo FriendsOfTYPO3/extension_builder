@@ -10,10 +10,7 @@ use PhpParser\BuilderFactory;
 
 class ClassFactoryTest extends BaseUnitTest
 {
-    /**
-     * @var ClassFactory
-     */
-    protected $classFactory;
+    protected ClassFactory $classFactory;
 
     protected function setUp(): void
     {

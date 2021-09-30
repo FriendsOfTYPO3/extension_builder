@@ -22,18 +22,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class DocComment extends Comment
 {
-    /**
-     * @var string
-     */
-    protected $description = '';
+    protected string $description = '';
     /**
      * @var string[]
      */
-    protected $descriptionLines = [];
-    /**
-     * @var array
-     */
-    protected $tags = [];
+    protected array $descriptionLines = [];
+    protected array $tags = [];
 
     /**
      * @param string $text Comment text (including comment delimiters like /*)

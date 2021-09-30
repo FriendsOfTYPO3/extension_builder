@@ -30,15 +30,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ObjectSchemaBuilderTest extends BaseUnitTest
 {
-    /**
-     * @var ExtensionBuilderConfigurationManager
-     */
-    protected $configurationManager;
-
-    /**
-     * @var ObjectSchemaBuilder
-     */
-    protected $objectSchemaBuilder;
+    protected ExtensionBuilderConfigurationManager $configurationManager;
+    protected ObjectSchemaBuilder $objectSchemaBuilder;
 
     protected function setUp(): void
     {

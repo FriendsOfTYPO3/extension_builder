@@ -30,31 +30,16 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 abstract class AbstractProperty
 {
-    /**
-     * @var string
-     */
-    protected $uniqueIdentifier = '';
+    protected ?string $uniqueIdentifier = '';
 
-    /**
-     * name of the property
-     *
-     * @var string
-     */
-    protected $name = '';
+    protected string $name = '';
 
-    /**
-     * description of property
-     *
-     * @var string
-     */
-    protected $description = '';
+    protected ?string $description = '';
 
     /**
      * whether the property is required
-     *
-     * @var bool
      */
-    protected $required = false;
+    protected bool $required = false;
 
     /**
      * property's default value
@@ -73,61 +58,39 @@ abstract class AbstractProperty
      *
      * @var DomainObject
      */
-    protected $class;
+    protected DomainObject $class;
 
     /**
      * is set to true, if this property was new added
-     *
-     * @var bool
      */
-    protected $new = true;
+    protected bool $new = true;
 
     /**
      * use RTE in Backend
-     *
-     * @var bool
      */
-    protected $useRTE = false;
+    protected bool $useRTE = false;
 
     /**
-     * @var string the data type of this property
+     * @var string|null the data type of this property
      */
-    protected $type = '';
+    protected ?string $type = '';
 
-    /**
-     * @var DomainObject
-     */
-    protected $domainObject;
+    protected ?DomainObject $domainObject = null;
 
-    /**
-     * @var bool
-     */
-    protected $nullable = false;
+    protected bool $nullable = false;
 
     /**
      * @var bool define whether a property is nullable in TCA
      */
-    protected static $isNullable = false;
+    protected static bool $isNullable = false;
 
-    /**
-     * @var bool
-     */
-    protected $excludeField = false;
+    protected bool $excludeField = false;
 
-    /**
-     * @var bool
-     */
-    protected $l10nModeExclude = false;
+    protected bool $l10nModeExclude = false;
 
-    /**
-     * @var bool
-     */
-    protected $cascadeRemove = false;
+    protected bool $cascadeRemove = false;
 
-    /**
-     * @var bool
-     */
-    protected $searchable = false;
+    protected bool $searchable = false;
 
     public function __construct(string $propertyName = '')
     {
@@ -139,7 +102,7 @@ abstract class AbstractProperty
     /**
      * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $class the class this property belongs to
+     * @param ClassObject $class the class this property belongs to
      */
     public function setClass(ClassObject $class): void
     {

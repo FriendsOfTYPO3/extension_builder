@@ -28,10 +28,7 @@ use TYPO3\CMS\Install\Service\SqlSchemaMigrationService;
 
 class ExtensionInstallationStatus
 {
-    /**
-     * @var Extension
-     */
-    protected $extension;
+    protected ?Extension $extension = null;
     /**
      * @var InstallUtility
      */
@@ -40,24 +37,15 @@ class ExtensionInstallationStatus
      * @var array[]
      */
     protected $updateStatements = [];
-    /**
-     * @var bool
-     */
-    protected $dbUpdateNeeded = false;
-    /**
-     * @var bool
-     */
-    protected $usesComposerPath = false;
+    protected bool $dbUpdateNeeded = false;
+    protected bool $usesComposerPath = false;
 
     public function __construct()
     {
         $this->installTool = GeneralUtility::makeInstance(InstallUtility::class);
     }
 
-    /**
-     * @param Extension $extension
-     */
-    public function setExtension($extension): void
+    public function setExtension(Extension $extension): void
     {
         $this->extension = $extension;
     }

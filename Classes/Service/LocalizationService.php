@@ -31,10 +31,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class LocalizationService implements SingletonInterface
 {
-    /**
-     * @var XliffParser
-     */
-    protected $xliffParser;
+    protected ?XliffParser $xliffParser = null;
 
     protected function getXliffParser(): XliffParser
     {

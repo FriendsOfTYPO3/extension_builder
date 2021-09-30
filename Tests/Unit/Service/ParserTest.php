@@ -25,10 +25,7 @@ use TYPO3\CMS\Core\Core\Environment;
 
 class ParserTest extends BaseUnitTest
 {
-    /**
-     * @var ParserService
-     */
-    protected $parserService;
+    protected ParserService $parserService;
 
     protected function setUp(): void
     {

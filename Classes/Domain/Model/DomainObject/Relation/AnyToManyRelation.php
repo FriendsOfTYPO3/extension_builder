@@ -21,23 +21,16 @@ abstract class AnyToManyRelation extends AbstractRelation
 {
     /**
      * The mm relation table name
-     *
-     * @var string
      */
-    protected $relationTableName = '';
+    protected string $relationTableName = '';
 
     /**
      * Use tbl1_field1_tbl2_mm as table name to enable multiple relations
      * to the same foreign class
-     *
-     * @var bool
      */
-    protected $useExtendedRelationTableName = false;
+    protected bool $useExtendedRelationTableName = false;
 
-    /**
-     * @var int
-     */
-    protected $maxItems = 1;
+    protected int $maxItems = 1;
 
     /**
      * Returns the relation table name. It is build by having 'tx_myextension_' followed by the

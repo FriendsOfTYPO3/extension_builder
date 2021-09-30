@@ -29,11 +29,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 class BeFuncViewHelper extends AbstractViewHelper
 {
     /**
-     * @var bool
-     */
-    protected $objectAccessorPostProcessorEnabled = false;
-
-    /**
      * Render without processing
      *
      * @return string

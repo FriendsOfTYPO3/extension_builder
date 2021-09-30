@@ -23,10 +23,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
 class DomainObjectChecksViewHelper extends AbstractConditionViewHelper
 {
-    /**
-     * @var ExtensionBuilderConfigurationManager
-     */
-    protected $configurationManager;
+    protected ExtensionBuilderConfigurationManager $configurationManager;
 
     /**
      * @param ExtensionBuilderConfigurationManager $configurationManager

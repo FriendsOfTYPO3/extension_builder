@@ -50,57 +50,26 @@ class ClassBuilder implements SingletonInterface
     public const CASCADE_REMOVE_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")';
     public const LAZY_ANNOTATION = 'TYPO3\CMS\Extbase\Annotation\ORM\Lazy';
 
+    protected ExtensionBuilderConfigurationManager $configurationManager;
+    protected ParserService $parserService;
+    protected Printer $printerService;
+    protected ClassFactory $classFactory;
     /**
      * The class file object created to container the generated class
-     *
-     * @var File
      */
-    protected $classFileObject;
-    /**
-     * The current class object
-     *
-     * @var ClassObject
-     */
-    protected $classObject;
+    protected ?File $classFileObject = null;
+    protected ?ClassObject $classObject = null;
     /**
      * The template file object used for new created class files
-     *
-     * @var File
      */
-    protected $templateFileObject;
+    protected ?File $templateFileObject = null;
     /**
      * The template class object used for new created classes
-     * @var ClassObject
      */
-    protected $templateClassObject;
-    /**
-     * @var ClassFactory
-     */
-    protected $classFactory;
-    /**
-     * @var ParserService
-     */
-    protected $parserService;
-    /**
-     * @var Printer
-     */
-    protected $printerService;
-    /**
-     * @var ExtensionBuilderConfigurationManager
-     */
-    protected $configurationManager;
-    /**
-     * @var Extension
-     */
-    protected $extension;
-    /**
-     * @var array
-     */
-    protected $settings = [];
-    /**
-     * @var string
-     */
-    protected $extensionDirectory = '';
+    protected ?ClassObject $templateClassObject = null;
+    protected ?Extension $extension = null;
+    protected array $settings = [];
+    protected string $extensionDirectory = '';
 
     public function injectConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager): void
     {

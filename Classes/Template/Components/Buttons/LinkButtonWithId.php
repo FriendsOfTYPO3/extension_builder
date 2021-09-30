@@ -34,28 +34,14 @@ class LinkButtonWithId extends LinkButton
 
     /**
      * id attribute of the link
-     *
-     * @var string
      */
-    protected $id = '';
+    protected string $id = '';
 
-    /**
-     * Get id
-     *
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * Set id
-     *
-     * @param string $id attribute
-     *
-     * @return $this
-     */
     public function setId(string $id): self
     {
         $this->id = $id;

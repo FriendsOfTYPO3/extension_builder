@@ -33,14 +33,8 @@ use EBT\ExtensionBuilder\Utility\Inflector;
 
 class ClassBuilderTest extends BaseUnitTest
 {
-    /**
-     * @var string
-     */
-    private $modelName = 'Model1';
-    /**
-     * @var ClassBuilder
-     */
-    private $classBuilder;
+    private string $modelName = 'Model1';
+    private ClassBuilder $classBuilder;
 
     protected function setUp(): void
     {

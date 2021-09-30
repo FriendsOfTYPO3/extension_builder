@@ -19,28 +19,14 @@ namespace EBT\ExtensionBuilder\Domain\Model;
 
 class BackendModule
 {
-    /**
-     * @var string
-     */
-    protected $name = '';
-    /**
-     * @var string
-     */
-    protected $description = '';
-    /**
-     * @var string
-     */
-    protected $tabLabel = '';
+    protected string $name = '';
+    protected string $description = '';
+    protected string $tabLabel = '';
     /**
      * The mainModule of the module (default is 'web')
-     *
-     * @var string
      */
-    protected $mainModule = 'web';
-    /**
-     * @var string
-     */
-    protected $key = '';
+    protected string $mainModule = 'web';
+    protected string $key = '';
     /**
      * array with configuration arrays
      *
@@ -48,7 +34,7 @@ class BackendModule
      *
      * @var string[]
      */
-    protected $controllerActionCombinations = [];
+    protected array $controllerActionCombinations = [];
 
     public function getName(): string
     {

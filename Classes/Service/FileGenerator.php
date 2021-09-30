@@ -39,46 +39,23 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
  */
 class FileGenerator
 {
-    /**
-     * @var array
-     */
-    protected $codeTemplateRootPaths = [];
-    /**
-     * @var array
-     */
-    protected $codeTemplatePartialPaths = [];
-    /**
-     * @var Extension
-     */
-    protected $extension;
-    /**
-     * @var string
-     */
-    protected $extensionDirectory = '';
-    /**
-     * @var string
-     */
-    protected $configurationDirectory = '';
-    /**
-     * @var string
-     */
-    protected $languageDirectory = '';
-    /**
-     * @var string
-     */
-    protected $privateResourcesDirectory = '';
-    /**
-     * @var string
-     */
-    protected $iconsDirectory = '';
-    /**
-     * @var bool
-     */
-    protected $roundTripEnabled = false;
+    protected ClassBuilder $classBuilder;
+    protected RoundTrip $roundTripService;
+    protected Printer $printerService;
+    protected LocalizationService $localizationService;
+    protected array $codeTemplateRootPaths = [];
+    protected array $codeTemplatePartialPaths = [];
+    protected ?Extension $extension = null;
+    protected string $extensionDirectory = '';
+    protected string $configurationDirectory = '';
+    protected string $languageDirectory = '';
+    protected string $privateResourcesDirectory = '';
+    protected string $iconsDirectory = '';
+    protected bool $roundTripEnabled = false;
     /**
      * @var string[]
      */
-    public static $defaultActions = [
+    public static array $defaultActions = [
         'createAction',
         'deleteAction',
         'editAction',
@@ -92,7 +69,7 @@ class FileGenerator
      *
      * @var string[]
      */
-    protected $filesSupportingSplitToken = [
+    protected array $filesSupportingSplitToken = [
         'php', //ext_tables, localconf
         'sql',
         'txt', // Typoscript
@@ -103,29 +80,10 @@ class FileGenerator
      * A map of deprecated file extensions
      * @var string[][]
      */
-    protected $deprecatedFileExtensions = [
+    protected array $deprecatedFileExtensions = [
         'typoscript' => ['ts', 'txt'],
     ];
-    /**
-     * @var LocalizationService
-     */
-    protected $localizationService;
-    /**
-     * @var array
-     */
-    protected $settings = [];
-    /**
-     * @var ClassBuilder
-     */
-    protected $classBuilder;
-    /**
-     * @var RoundTrip
-     */
-    protected $roundTripService;
-    /**
-     * @var Printer
-     */
-    protected $printerService;
+    protected array $settings = [];
 
     public function injectClassBuilder(ClassBuilder $classBuilder): void
     {

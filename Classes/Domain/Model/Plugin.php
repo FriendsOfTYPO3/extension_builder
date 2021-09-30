@@ -19,39 +19,22 @@ namespace EBT\ExtensionBuilder\Domain\Model;
 
 class Plugin
 {
-    /**
-     * @var string
-     */
-    protected $name = '';
-
-    /**
-     * @var string
-     */
-    protected $description = '';
-
-    /**
-     * @var string|null
-     */
-    protected $type = '';
-
-    /**
-     * @var string
-     */
-    protected $key = '';
-
+    protected string $name = '';
+    protected string $description = '';
+    protected ?string $type = '';
+    protected string $key = '';
     /**
      * ['controller' => 'MyController', 'actions' => 'action1,action2']
      *
      * @var string[]
      */
-    protected $controllerActionCombinations = [];
-
+    protected array $controllerActionCombinations = [];
     /**
      * ['controller' => 'MyController', 'actions' => 'action1,action2']
      *
      * @var string[]
      */
-    protected $nonCacheableControllerActions = [];
+    protected array $nonCacheableControllerActions = [];
 
     public function getDescription(): string
     {

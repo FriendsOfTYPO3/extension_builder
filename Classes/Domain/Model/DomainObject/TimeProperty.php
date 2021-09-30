@@ -25,8 +25,7 @@ class TimeProperty extends AbstractProperty
      * @var int
      */
     protected $defaultValue = 0;
-
-    protected static $isNullable = true;
+    protected static bool $isNullable = true;
 
     public function getTypeForComment(): string
     {

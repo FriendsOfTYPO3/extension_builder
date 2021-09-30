@@ -25,14 +25,8 @@ class RichTextProperty extends AbstractProperty
      * @var string
      */
     protected $defaultValue = '';
-    /**
-     * @var bool
-     */
-    protected $useRTE = true;
-    /**
-     * @var bool
-     */
-    protected $searchable = true;
+    protected bool $useRTE = true;
+    protected bool $searchable = true;
 
     public function getTypeForComment(): string
     {

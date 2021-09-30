@@ -33,25 +33,14 @@ class FileProperty extends AbstractProperty
      *
      * @var string (comma separated filetypes)
      */
-    protected $allowedFileTypes = '';
+    protected string $allowedFileTypes = '';
     /**
      * not allowed file types for this property (comma-separated file types)
-     *
-     * @var string
      */
-    protected $disallowedFileTypes = 'php';
-    /**
-     * @var int
-     */
-    protected $maxItems = 1;
-    /**
-     * @var string
-     */
-    protected $type = 'File';
-    /**
-     * @var bool
-     */
-    protected $cascadeRemove = true;
+    protected string $disallowedFileTypes = 'php';
+    protected int $maxItems = 1;
+    protected ?string $type = 'File';
+    protected bool $cascadeRemove = true;
 
     public function getTypeForComment(): string
     {

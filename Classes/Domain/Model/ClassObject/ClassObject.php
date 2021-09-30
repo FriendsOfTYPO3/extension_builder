@@ -29,56 +29,37 @@ class ClassObject extends Container
     /**
      * @var Property[]
      */
-    protected $properties = [];
+    protected array $properties = [];
 
     /**
      * @var Method[]
      */
-    protected $methods = [];
+    protected array $methods = [];
 
     /**
      * @var string[]
      */
-    protected $interfaceNames = [];
+    protected array $interfaceNames = [];
 
     /**
      * All lines that were found below the class declaration.
-     *
-     * @var string
      */
-    protected $appendedBlock = '';
+    protected string $appendedBlock = '';
 
-    /**
-     * @var array
-     */
-    protected $useTraitStatements = [];
+    protected array $useTraitStatements = [];
 
-    /**
-     * @var bool
-     */
-    protected $isFileBased = false;
+    protected bool $isFileBased = false;
 
     /**
      * the path to the file this class was defined in
-     *
-     * @var string
      */
-    protected $fileName = '';
+    protected string $fileName = '';
 
-    /**
-     * @var ClassObject|null
-     */
-    protected $parentClass;
+    protected ?ClassObject $parentClass = null;
 
-    /**
-     * @var string|null
-     */
-    protected $parentClassName;
+    protected ?string $parentClassName = null;
 
-    /**
-     * @var bool
-     */
-    protected $isTemplate = false;
+    protected bool $isTemplate = false;
 
     public function __construct(string $name)
     {

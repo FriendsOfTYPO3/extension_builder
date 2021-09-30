@@ -21,25 +21,19 @@ use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 
 class File extends Container
 {
-    /**
-     * @var string
-     */
-    protected $filePathAndName = '';
+    protected string $filePathAndName = '';
 
     /**
      * @var NamespaceObject[]
      */
-    protected $namespaces = [];
+    protected array $namespaces = [];
 
     /**
      * @var array all statements
      */
-    protected $stmts = [];
+    protected array $stmts = [];
 
-    /**
-     * @var string
-     */
-    protected $comment = '';
+    protected string $comment = '';
 
     public function __clone()
     {

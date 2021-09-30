@@ -41,7 +41,7 @@ class NodeConverter
     /**
      * @var int[]
      */
-    public static $accessorModifiers = [
+    public static array $accessorModifiers = [
         Class_::MODIFIER_PUBLIC,
         Class_::MODIFIER_PROTECTED,
         Class_::MODIFIER_PRIVATE

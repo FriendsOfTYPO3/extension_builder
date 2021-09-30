@@ -26,40 +26,30 @@ class Action
 {
     /**
      * the action's name
-     *
-     * @var string
      */
-    protected $name = '';
+    protected string $name = '';
     /**
      * the domain object this action belongs to
-     *
-     * @var DomainObject
      */
-    protected $domainObject;
+    protected ?DomainObject $domainObject = null;
     /**
      * Is a template required for this action?
-     *
-     * @var bool
      */
-    protected $needsTemplate = false;
+    protected bool $needsTemplate = false;
     /**
      * Is a form required in the template for this action?
-     *
-     * @var bool
      */
-    protected $needsForm = false;
+    protected bool $needsForm = false;
     /**
      * Is a property partial required in the template for this action?
-     *
-     * @var bool
      */
-    protected $needsPropertyPartial = false;
+    protected bool $needsPropertyPartial = false;
     /**
      * these actions do not need a template since they are never rendered
      *
      * @var string[]
      */
-    protected $actionNamesWithNoRendering = [
+    protected array $actionNamesWithNoRendering = [
         'create',
         'update',
         'delete'
@@ -69,7 +59,7 @@ class Action
      *
      * @var string[]
      */
-    protected $actionNamesWithForm = [
+    protected array $actionNamesWithForm = [
         'new',
         'edit'
     ];
@@ -78,23 +68,19 @@ class Action
      *
      * @var string[]
      */
-    protected $actionNamesThatShouldNotBeCached = [
+    protected array $actionNamesThatShouldNotBeCached = [
         'create',
         'update',
         'delete'
     ];
     /**
      * flag: true if the action is cacheable
-     *
-     * @var bool|null
      */
-    protected $cacheable;
+    protected ?bool $cacheable = null;
     /**
      * Whether this is a custom action and needs a custom fluid template
-     *
-     * @var bool
      */
-    protected $customAction = false;
+    protected bool $customAction = false;
 
     public function getName(): string
     {

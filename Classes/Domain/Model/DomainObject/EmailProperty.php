@@ -25,12 +25,8 @@ class EmailProperty extends AbstractProperty
      * @var string
      */
     protected $defaultValue = '';
-    /**
-     * @var bool
-     */
-    protected $searchable = true;
-
-    protected static $isNullable = true;
+    protected bool $searchable = true;
+    protected static bool $isNullable = true;
 
     public function getTypeForComment(): string
     {

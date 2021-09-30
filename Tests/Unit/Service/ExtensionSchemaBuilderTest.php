@@ -30,14 +30,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ExtensionSchemaBuilderTest extends BaseUnitTest
 {
-    /**
-     * @var ExtensionSchemaBuilder
-     */
-    protected $extensionSchemaBuilder;
-    /**
-     * @var string
-     */
-    protected $extensionKey = '';
+    protected ExtensionSchemaBuilder $extensionSchemaBuilder;
+    protected string $extensionKey = '';
 
     protected function setUp(): void
     {

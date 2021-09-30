@@ -25,10 +25,7 @@ class SlugProperty extends AbstractProperty
      * @var string
      */
     protected $defaultValue = '';
-    /**
-     * @var bool
-     */
-    protected $searchable = true;
+    protected bool $searchable = true;
 
     public function getTypeForComment(): string
     {
