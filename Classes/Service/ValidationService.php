@@ -32,7 +32,7 @@ class ValidationService implements SingletonInterface
      *
      * @var string[]
      */
-    public static $reservedMYSQLWords = [
+    public static array $reservedMYSQLWords = [
         'ACCESSIBLE',
         'ADD',
         'ALL',
@@ -324,7 +324,7 @@ class ValidationService implements SingletonInterface
      *
      * @var string[]
      */
-    public static $reservedTYPO3ColumnNames = [
+    public static array $reservedTYPO3ColumnNames = [
         'uid',
         'pid',
         'endtime',
@@ -356,7 +356,7 @@ class ValidationService implements SingletonInterface
      *
      * @var string[]
      */
-    public static $reservedExtbaseNames = [
+    public static array $reservedExtbaseNames = [
         'Class',
         'Format',
         'Action',

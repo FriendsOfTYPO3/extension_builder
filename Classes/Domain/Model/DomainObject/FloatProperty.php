@@ -25,8 +25,7 @@ class FloatProperty extends AbstractProperty
      * @var float
      */
     protected $defaultValue = 0.0;
-
-    protected static $isNullable = true;
+    protected static bool $isNullable = true;
 
     public function getTypeForComment(): string
     {

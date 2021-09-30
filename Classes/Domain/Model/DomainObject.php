@@ -27,92 +27,61 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
  */
 class DomainObject
 {
-    /**
-     * @var string
-     */
-    protected $name = '';
-    /**
-     * @var string|null
-     */
-    protected $uniqueIdentifier;
-    /**
-     * @var string
-     */
-    protected $description = '';
+    protected string $name = '';
+    protected ?string $uniqueIdentifier = null;
+    protected string $description = '';
     /**
      * If true, this is an aggregate root.
-     *
-     * @var bool
      */
-    protected $aggregateRoot = false;
+    protected bool $aggregateRoot = false;
     /**
      * If true, the element is sortable in the TYPO3 backend.
-     *
-     * @var bool
      */
-    protected $sorting = false;
+    protected bool $sorting = false;
     /**
      * If true, the related record has a "deleted" enable field.
-     *
-     * @var bool
      */
-    protected $addDeletedField = false;
+    protected bool $addDeletedField = false;
     /**
      * If true, the related record has a "hidden" enable field.
-     *
-     * @var bool
      */
-    protected $addHiddenField = false;
+    protected bool $addHiddenField = false;
     /**
      * If true, the related record has a "starttime/endtime" enable field.
-     *
-     * @var bool
      */
-    protected $addStarttimeEndtimeFields = false;
+    protected bool $addStarttimeEndtimeFields = false;
     /**
      * If true, the element is categorizable in the TYPO3 backend.
-     *
-     * @var bool
      */
-    protected $categorizable = false;
+    protected bool $categorizable = false;
     /**
      * If true, this is an entity. If false, it is a ValueObject.
-     *
-     * @var bool
      */
-    protected $entity = false;
+    protected bool $entity = false;
     /**
      * The extension this domain object belongs to.
-     *
-     * @var Extension
      */
-    protected $extension;
+    protected ?Extension $extension = null;
     /**
      * List of properties the domain object has.
      *
      * @var AbstractProperty[]
      */
-    protected $properties = [];
+    protected array $properties = [];
     /**
      * List of actions the domain object has.
      *
      * @var Action[]
      */
-    protected $actions = [];
-    /**
-     * @var string
-     */
-    protected $mapToTable = '';
-    /**
-     * @var string
-     */
-    protected $parentClass = '';
+    protected array $actions = [];
+    protected string $mapToTable = '';
+    protected string $parentClass = '';
     /**
      * Domain objects that extend the current object (as declared in this extension).
      *
      * @var DomainObject[]
      */
-    protected $childObjects = [];
+    protected array $childObjects = [];
 
     public function getName(): string
     {

@@ -32,26 +32,11 @@ abstract class BaseUnitTest extends UnitTestCase
      */
     protected $backupGlobals = false;
 
-    /**
-     * @var string
-     */
-    protected $modelClassDir = 'Classes/Domain/Model/';
-    /**
-     * @var string
-     */
-    protected $codeTemplateRootPath = '';
-    /**
-     * @var string
-     */
-    protected $modelClassTemplatePath = '';
-    /**
-     * @var string
-     */
-    protected $fixturesPath = '';
-    /**
-     * @var Extension
-     */
-    protected $extension;
+    protected string $modelClassDir = 'Classes/Domain/Model/';
+    protected string $codeTemplateRootPath = '';
+    protected string $modelClassTemplatePath = '';
+    protected string $fixturesPath = '';
+    protected Extension $extension;
 
     protected function setUp(): void
     {

@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace EBT\ExtensionBuilder\Tests;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
@@ -35,6 +36,7 @@ use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 abstract class BaseFunctionalTest extends FunctionalTestCase
@@ -44,58 +46,26 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
      */
     protected $backupGlobals = false;
 
-    /**
-     * @var string
-     */
-    protected $modelClassDir = 'Classes/Domain/Model/';
-    /**
-     * @var string
-     */
-    protected $codeTemplateRootPath = '';
-    /**
-     * @var string
-     */
-    protected $modelClassTemplatePath = '';
-    /**
-     * @var string
-     */
-    protected $fixturesPath = '';
-    /**
-     * @var ParserService
-     */
-    protected $parserService;
-    /**
-     * @var Printer
-     */
-    protected $printerService;
-    /**
-     * @var ClassBuilder
-     */
-    protected $classBuilder;
-    /**
-     * @var RoundTrip
-     */
-    protected $roundTripService;
-    /**
-     * @var Extension
-     */
-    protected $extension;
-    /**
-     * @var FileGenerator
-     */
-    protected $fileGenerator;
-    /**
-     * @var vfsStreamDirectory
-     */
-    protected $testDir;
+    protected string $modelClassDir = 'Classes/Domain/Model/';
+    protected string $codeTemplateRootPath = '';
+    protected string $modelClassTemplatePath = '';
+    protected string $fixturesPath = '';
+    protected ParserService $parserService;
+    protected Printer $printerService;
+    protected ClassBuilder $classBuilder;
+    protected RoundTrip $roundTripService;
+    protected Extension $extension;
+    protected FileGenerator $fileGenerator;
+    protected vfsStreamDirectory $testDir;
 
     protected $testExtensionsToLoad = [
         'typo3conf/ext/extension_builder'
     ];
 
     /**
-     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws ExtensionException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws InvalidConfigurationTypeException
      */
     protected function setUp(): void
     {

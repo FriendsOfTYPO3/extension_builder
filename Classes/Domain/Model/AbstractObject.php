@@ -42,7 +42,7 @@ abstract class AbstractObject
      *
      * @var int[]
      */
-    private $mapModifierNames = [
+    private array $mapModifierNames = [
         'public' => Class_::MODIFIER_PUBLIC,
         'protected' => Class_::MODIFIER_PROTECTED,
         'private' => Class_::MODIFIER_PRIVATE,
@@ -55,48 +55,36 @@ abstract class AbstractObject
      */
     protected $name = '';
 
-    /**
-     * @var string
-     */
-    protected $namespaceName = '';
+    protected string $namespaceName = '';
 
     /**
      * modifiers (privat, static abstract etc. not to mix up with "isModified" )
-     * @var int
      */
-    protected $modifiers;
+    protected ?int $modifiers = null;
 
-    /**
-     * @var string
-     */
-    protected $docComment;
+    protected string $docComment;
 
     /**
      * @var string[]
      */
     protected $comments = [];
 
-    /**
-     * @var string
-     */
-    protected $description = '';
+    protected string $description = '';
 
     /**
      * @var string[]
      */
-    protected $descriptionLines = [];
+    protected array $descriptionLines = [];
 
     /**
      * @var string[]
      */
-    protected $tags = [];
+    protected array $tags = [];
 
     /**
      * this flag is set to true if a modification of an object was detected
-     *
-     * @var bool
      */
-    protected $isModified = false;
+    protected bool $isModified = false;
 
     public function setName(string $name): self
     {

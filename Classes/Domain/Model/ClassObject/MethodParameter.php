@@ -25,42 +25,18 @@ use EBT\ExtensionBuilder\Domain\Model\AbstractObject;
  */
 class MethodParameter extends AbstractObject
 {
-    /**
-     * @var string
-     */
-    protected $varType = '';
-    /**
-     * @var string
-     */
-    protected $typeHint = '';
-    /**
-     * @var string
-     */
-    protected $typeForParamTag = '';
+    protected string $varType = '';
+    protected string $typeHint = '';
+    protected string $typeForParamTag = '';
     /**
      * @var mixed
      */
     protected $defaultValue;
-    /**
-     * @var int
-     */
-    protected $position = 0;
-    /**
-     * @var bool
-     */
-    protected $optional = false;
-    /**
-     * @var int
-     */
-    protected $startLine = -1;
-    /**
-     * @var int
-     */
-    protected $endLine = -1;
-    /**
-     * @var bool
-     */
-    protected $passedByReference = false;
+    protected int $position = 0;
+    protected bool $optional = false;
+    protected int $startLine = -1;
+    protected int $endLine = -1;
+    protected bool $passedByReference = false;
 
     public function __construct(string $name)
     {

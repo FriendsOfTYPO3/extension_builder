@@ -27,18 +27,9 @@ use PhpParser\NodeVisitorAbstract;
  */
 class ReplaceVisitor extends NodeVisitorAbstract
 {
-    /**
-     * @var array|null
-     */
-    protected $nodeTypes = [];
-    /**
-     * @var string
-     */
-    protected $nodeProperty = '';
-    /**
-     * @var array
-     */
-    protected $replacements = [];
+    protected ?array $nodeTypes = [];
+    protected string $nodeProperty = '';
+    protected array $replacements = [];
 
     /**
      * @param Node $node

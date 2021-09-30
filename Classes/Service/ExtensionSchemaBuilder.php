@@ -36,15 +36,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ExtensionSchemaBuilder implements SingletonInterface
 {
-    /**
-     * @var ExtensionBuilderConfigurationManager
-     */
-    protected $configurationManager;
-
-    /**
-     * @var ObjectSchemaBuilder
-     */
-    protected $objectSchemaBuilder;
+    protected ExtensionBuilderConfigurationManager $configurationManager;
+    protected ObjectSchemaBuilder $objectSchemaBuilder;
 
     public function injectConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager): void
     {

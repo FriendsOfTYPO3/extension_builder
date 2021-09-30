@@ -29,24 +29,15 @@ class ImageProperty extends AbstractProperty
      * allowed file types for this property
      * @var string (comma separated filetypes)
      */
-    protected $allowedFileTypes = '';
+    protected string $allowedFileTypes = '';
     /**
      * not allowed file types for this property
      * @var string (comma separated filetypes)
      */
-    protected $disallowedFileTypes = '';
-    /**
-     * @var string
-     */
-    protected $type = 'Image';
-    /**
-     * @var int
-     */
-    protected $maxItems = 1;
-    /**
-     * @var bool
-     */
-    protected $cascadeRemove = true;
+    protected string $disallowedFileTypes = '';
+    protected ?string $type = 'Image';
+    protected int $maxItems = 1;
+    protected bool $cascadeRemove = true;
 
     public function getTypeForComment(): string
     {

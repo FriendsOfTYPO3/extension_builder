@@ -27,12 +27,9 @@ use EBT\ExtensionBuilder\Service\ValidationService;
  */
 class ZeroToManyRelation extends AnyToManyRelation
 {
-    /**
-     * @var string
-     */
-    protected $foreignKeyName = '';
+    protected string $foreignKeyName = '';
 
-    protected $cascadeRemove = true;
+    protected bool $cascadeRemove = true;
 
     public function getTypeForComment(): string
     {

@@ -38,59 +38,28 @@ class SpycYAMLParser
     /**
      * Setting this to true will force YAMLDump to enclose any string value in
      * quotes. false by default.
-     *
-     * @var bool
      */
-    public $setting_dump_force_quotes = false;
+    public bool $setting_dump_force_quotes = false;
     /**
      * Setting this to true will force YAMLLoad to use syck_load function when
      * possible. false by default.
-     *
-     * @var bool
      */
-    public $setting_use_syck_is_possible = false;
-    /**
-     * @var int
-     */
-    private $_dumpIndent = 0;
-    /**
-     * @var int
-     */
-    private $_dumpWordWrap = 0;
-    /**
-     * @var bool
-     */
-    private $_containsGroupAnchor = false;
-    /**
-     * @var bool
-     */
-    private $_containsGroupAlias = false;
-    /**
-     * @var array
-     */
-    private $path = [];
-    /**
-     * @var array
-     */
-    private $result = [];
-    /**
-     * @var string
-     */
-    private $LiteralPlaceHolder = '___YAML_Literal_Block___';
-    /**
-     * @var array
-     */
-    private $SavedGroups = [];
-    /**
-     * @var int
-     */
-    private $indent = 0;
+    public bool $setting_use_syck_is_possible = false;
+    private int $_dumpIndent = 0;
+    private int $_dumpWordWrap = 0;
+    private bool $_containsGroupAnchor = false;
+    private bool $_containsGroupAlias = false;
+    private array $path = [];
+    private array $result = [];
+    private string $LiteralPlaceHolder = '___YAML_Literal_Block___';
+    private array $SavedGroups = [];
+    private int $indent = 0;
     /**
      * Path modifier that should be applied after adding current element.
      *
      * @var int[]
      */
-    private $delayedPath = [];
+    private array $delayedPath = [];
     /**
      * @var mixed
      */

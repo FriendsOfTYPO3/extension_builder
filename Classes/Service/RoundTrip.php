@@ -50,70 +50,43 @@ class RoundTrip implements SingletonInterface
     const OVERWRITE_SETTINGS_MERGE = 1;
     const OVERWRITE_SETTINGS_KEEP = 2;
 
-    /**
-     * @var Extension
-     */
-    protected $previousExtension;
-    /**
-     * @var Extension
-     */
-    protected $extension;
+    protected ParserService $parserService;
+    protected ExtensionBuilderConfigurationManager $configurationManager;
+    protected ?Extension $previousExtension = null;
+    protected ?Extension $extension = null;
     /**
      * if an extension was renamed this property keeps the
      * original extensionDirectory
      * otherwise it is set to the current extensionDir
-     *
-     * @var string
      */
-    protected $previousExtensionDirectory = '';
+    protected string $previousExtensionDirectory = '';
     /**
      * the directory of the current extension
-     *
-     * @var string
      */
-    protected $extensionDirectory = '';
+    protected string $extensionDirectory = '';
     /**
      * if an extension was renamed this property keeps the old key
      * otherwise it is set to the current extensionKey
-     *
-     * @var string
      */
-    protected $previousExtensionKey = '';
+    protected string $previousExtensionKey = '';
     /**
      * @var DomainObject[]
      */
-    protected $previousDomainObjects = [];
+    protected array $previousDomainObjects = [];
     /**
      * @var DomainObject[]
      */
-    protected $renamedDomainObjects = [];
-    /**
-     * @var ParserService
-     */
-    protected $parserService;
-    /**
-     * @var ExtensionBuilderConfigurationManager
-     */
-    protected $configurationManager;
+    protected array $renamedDomainObjects = [];
     /**
      * was the extension renamed?
-     *
-     * @var bool
      */
-    protected $extensionRenamed = false;
-    /**
-     * @var ClassObject
-     */
-    protected $classObject;
+    protected bool $extensionRenamed = false;
+    protected ?ClassObject $classObject = null;
     /**
      * The file object parsed from existing files
-     * @var File
      */
-    protected $classFileObject;
-    /**
-     * @var array
-     */
-    protected $settings = [];
+    protected ?File $classFileObject = null;
+    protected array $settings = [];
 
     public function injectParserService(ParserService $parserService): void
     {

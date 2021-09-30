@@ -23,10 +23,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class PersonTest extends BaseUnitTest
 {
-    /**
-     * @var Person
-     */
-    protected $person;
+    protected Person $person;
 
     protected function setUp(): void
     {

@@ -22,26 +22,25 @@ use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
-use Nimut\TestingFramework\MockObject\AccessibleMockObjectInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
+use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
 class RoundTripRenameVendorTest extends BaseFunctionalTest
 {
-    /**
-     * @var Extension
-     */
-    private $fixtureExtension;
+    private Extension $fixtureExtension;
 
     /**
      * @throws ExtensionException
+     * @throws InvalidConfigurationTypeException
      */
     protected function setUp(): void
     {
         parent::setUp();
 
-        /** @var ExtensionBuilderConfigurationManager|AccessibleMockObjectInterface|MockObject $configurationManager */
+        /** @var ExtensionBuilderConfigurationManager|AccessibleObjectInterface|MockObject $configurationManager */
         $configurationManager = $this->getAccessibleMock(
             ExtensionBuilderConfigurationManager::class,
             ['dummy']

@@ -53,60 +53,31 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class BuilderModuleController extends ActionController
 {
-    /**
-     * @var FileGenerator
-     */
-    protected $fileGenerator;
+    protected FileGenerator $fileGenerator;
 
-    /**
-     * @var ExtensionBuilderConfigurationManager
-     */
-    protected $extensionBuilderConfigurationManager;
+    protected ExtensionBuilderConfigurationManager $extensionBuilderConfigurationManager;
 
-    /**
-     * @var ExtensionInstallationStatus
-     */
-    protected $extensionInstallationStatus;
+    protected ExtensionInstallationStatus $extensionInstallationStatus;
 
-    /**
-     * @var ExtensionSchemaBuilder
-     */
-    protected $extensionSchemaBuilder;
+    protected ExtensionSchemaBuilder $extensionSchemaBuilder;
 
-    /**
-     * @var ExtensionService
-     */
-    protected $extensionService;
+    protected ExtensionService $extensionService;
 
-    /**
-     * @var ExtensionValidator
-     */
-    protected $extensionValidator;
+    protected ExtensionValidator $extensionValidator;
 
-    /**
-     * @var ExtensionRepository
-     */
-    protected $extensionRepository;
+    protected ExtensionRepository $extensionRepository;
 
-    /**
-     * @var ModuleTemplate|null
-     */
-    protected $moduleTemplate = null;
+    protected ModuleTemplate $moduleTemplate;
 
-    /**
-     * @var PageRenderer
-     */
-    protected $pageRenderer;
+    protected PageRenderer $pageRenderer;
 
     /**
      * Settings from various sources:
      *
      * - Settings configured in module.extension_builder typoscript
      * - Module settings configured in the extension manager
-     *
-     * @var array
      */
-    protected $extensionBuilderSettings = [];
+    protected array $extensionBuilderSettings = [];
 
     public function injectFileGenerator(FileGenerator $fileGenerator): void
     {

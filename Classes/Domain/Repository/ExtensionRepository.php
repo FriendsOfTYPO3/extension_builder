@@ -31,15 +31,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ExtensionRepository implements SingletonInterface
 {
-    /**
-     * @var ExtensionBuilderConfigurationManager
-     */
-    protected $configurationManager;
-
-    /**
-     * @var ExtensionService
-     */
-    protected $extensionService;
+    protected ExtensionBuilderConfigurationManager $configurationManager;
+    protected ExtensionService $extensionService;
 
     public function injectExtensionBuilderConfigurationManager(
         ExtensionBuilderConfigurationManager $configurationManager

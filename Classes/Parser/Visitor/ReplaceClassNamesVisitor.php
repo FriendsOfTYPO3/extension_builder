@@ -27,22 +27,10 @@ use PhpParser\NodeVisitorAbstract;
  */
 class ReplaceClassNamesVisitor extends NodeVisitorAbstract
 {
-    /**
-     * @var string
-     */
-    protected $nodeType = '';
-    /**
-     * @var string
-     */
-    protected $nodeProperty = '';
-    /**
-     * @var string
-     */
-    protected $oldClassPrefix = '';
-    /**
-     * @var string
-     */
-    protected $newClassPrefix = '';
+    protected string $nodeType = '';
+    protected string $nodeProperty = '';
+    protected string $oldClassPrefix = '';
+    protected string $newClassPrefix = '';
 
     /**
      * @param Node $node
