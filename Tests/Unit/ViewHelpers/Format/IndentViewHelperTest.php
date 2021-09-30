@@ -48,9 +48,8 @@ class IndentViewHelperTest extends ViewHelperBaseTestcase
      * @test
      * @dataProvider renderDataProvider
      */
-    public function render(string $template, int $level, string $expected): void
+    public function renderWithChildren(string $template, int $level, string $expected): void
     {
-        /** @var IndentViewHelper|MockObject $viewHelper */
         $viewHelper = $this->getAccessibleMock(IndentViewHelper::class, ['renderChildren']);
         $viewHelper->expects(self::once())->method('renderChildren')->willReturn($template);
 
