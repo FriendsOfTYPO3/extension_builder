@@ -65,7 +65,7 @@ class NodeConverter
      * @param int $modifiers
      * @return array with names as strings
      */
-    public static function modifierToNames($modifiers)
+    public static function modifierToNames($modifiers): array
     {
         $modifierString = ($modifiers & Class_::MODIFIER_PUBLIC ? 'public ' : '') .
             ($modifiers & Class_::MODIFIER_PROTECTED ? 'protected ' : '') .
@@ -148,7 +148,7 @@ class NodeConverter
      *
      * @return Expr The normalized value
      */
-    public static function normalizeValue($value)
+    public static function normalizeValue($value): Node
     {
         if ($value instanceof Node) {
             return $value;

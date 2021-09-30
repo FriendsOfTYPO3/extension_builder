@@ -368,7 +368,7 @@ class Extension
      * returns the extension key without underscore
      * (Used in Typoscript module signature)
      */
-    public function getUnprefixedShortExtensionKey()
+    public function getUnprefixedShortExtensionKey(): string
     {
         return str_replace('_', '', $this->getExtensionKey());
     }

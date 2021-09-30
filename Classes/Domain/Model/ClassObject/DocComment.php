@@ -182,7 +182,7 @@ class DocComment extends Comment
      * @param bool $singleLineCommentAllowed
      * @return string String representation
      */
-    public function toString(bool $singleLineCommentAllowed = false)
+    public function toString(bool $singleLineCommentAllowed = false): string
     {
         $docCommentLines = [];
 

@@ -772,19 +772,18 @@ class FileGenerator
      * @param string $filePath
      * @param array $variables
      *
-     * @return string|string[]|null
+     * @return string|null
      * @throws Exception
      */
-    public function renderTemplate(string $filePath, array $variables)
+    public function renderTemplate(string $filePath, array $variables): ?string
     {
         $variables['settings'] = $this->settings;
-        /* @var StandaloneView $standAloneView */
+
         $standAloneView = GeneralUtility::makeInstance(StandaloneView::class);
         $standAloneView->setLayoutRootPaths($this->codeTemplateRootPaths);
         $standAloneView->setPartialRootPaths($this->codeTemplatePartialPaths);
         $standAloneView->setFormat('txt');
-        $templatePathAndFilename = $this->getTemplatePath($filePath);
-        $standAloneView->setTemplatePathAndFilename($templatePathAndFilename);
+        $standAloneView->setTemplatePathAndFilename($this->getTemplatePath($filePath));
         $standAloneView->assignMultiple($variables);
         $renderedContent = $standAloneView->render();
         // remove all double empty lines (coming from fluid)
@@ -888,10 +887,10 @@ class FileGenerator
      *
      * @param DomainObject $domainObject
      *
-     * @return string
+     * @return string|null
      * @throws Exception
      */
-    public function generateDomainModelTests(DomainObject $domainObject)
+    public function generateDomainModelTests(DomainObject $domainObject): ?string
     {
         return $this->renderTemplate('Tests/Unit/DomainModelTest.phpt', [
             'extension' => $this->extension,
@@ -905,10 +904,10 @@ class FileGenerator
      * @param string $controllerName
      * @param DomainObject $domainObject
      *
-     * @return string
+     * @return string|null
      * @throws Exception
      */
-    public function generateControllerTests(string $controllerName, DomainObject $domainObject)
+    public function generateControllerTests(string $controllerName, DomainObject $domainObject): ?string
     {
         return $this->renderTemplate('Tests/Unit/ControllerTest.phpt', [
             'extension' => $this->extension,
@@ -944,10 +943,10 @@ class FileGenerator
     /**
      * Generate a functional test
      *
-     * @return string
+     * @return string|null
      * @throws Exception
      */
-    public function generateFunctionalTests()
+    public function generateFunctionalTests(): ?string
     {
         return $this->renderTemplate('Tests/Functional/BasicTest.phpt', [
             'extension' => $this->extension,
@@ -1056,10 +1055,10 @@ class FileGenerator
      * @param DomainObject $domainObject
      * @param Action $action
      *
-     * @return string The generated Template code (might be empty)
+     * @return string|null The generated Template code (might be empty)
      * @throws Exception
      */
-    public function generateDomainTemplate(string $templateRootFolder, DomainObject $domainObject, Action $action)
+    public function generateDomainTemplate(string $templateRootFolder, DomainObject $domainObject, Action $action): ?string
     {
         $fileName = $action->isCustomAction() ? 'custom' : $action->getName();
         return $this->renderTemplate($templateRootFolder . $fileName . '.htmlt', [
@@ -1073,10 +1072,10 @@ class FileGenerator
      * @param string $templateRootFolder
      * @param DomainObject $domainObject
      *
-     * @return string|string[]|null
+     * @return string|null
      * @throws Exception
      */
-    public function generateDomainFormFieldsPartial(string $templateRootFolder, DomainObject $domainObject)
+    public function generateDomainFormFieldsPartial(string $templateRootFolder, DomainObject $domainObject): ?string
     {
         return $this->renderTemplate($templateRootFolder . 'formFields.htmlt', [
             'extension' => $this->extension,
@@ -1088,10 +1087,10 @@ class FileGenerator
      * @param string $templateRootFolder
      * @param DomainObject $domainObject
      *
-     * @return string|string[]|null
+     * @return string|null
      * @throws Exception
      */
-    public function generateDomainPropertiesPartial(string $templateRootFolder, DomainObject $domainObject)
+    public function generateDomainPropertiesPartial(string $templateRootFolder, DomainObject $domainObject): ?string
     {
         return $this->renderTemplate($templateRootFolder . 'properties.htmlt', [
             'extension' => $this->extension,
@@ -1102,10 +1101,10 @@ class FileGenerator
     /**
      * @param string $templateRootFolder
      *
-     * @return string|string[]|null
+     * @return string|null
      * @throws Exception
      */
-    public function generateFormErrorsPartial(string $templateRootFolder)
+    public function generateFormErrorsPartial(string $templateRootFolder): ?string
     {
         return $this->renderTemplate($templateRootFolder . 'formErrors.htmlt', [
             'extension' => $this->extension
@@ -1115,10 +1114,10 @@ class FileGenerator
     /**
      * @param string $templateRootFolder
      *
-     * @return string|string[]|null
+     * @return string|null
      * @throws Exception
      */
-    public function generateLayout(string $templateRootFolder)
+    public function generateLayout(string $templateRootFolder): ?string
     {
         return $this->renderTemplate($templateRootFolder . 'default.htmlt', [
             'extension' => $this->extension
@@ -1130,10 +1129,10 @@ class FileGenerator
      * @param string $variableName
      * @param DomainObject|BackendModule $variable
      *
-     * @return string|string[]|null
+     * @return string|null
      * @throws Exception
      */
-    protected function generateLocallangFileContent(string $fileNameSuffix = '', string $variableName = '', $variable = null)
+    protected function generateLocallangFileContent(string $fileNameSuffix = '', string $variableName = '', $variable = null): ?string
     {
         $targetFile = 'Resources/Private/Language/locallang' . $fileNameSuffix;
 
@@ -1187,10 +1186,10 @@ class FileGenerator
     }
 
     /**
-     * @return string|string[]|null
+     * @return string|null
      * @throws Exception
      */
-    public function generatePrivateResourcesHtaccess()
+    public function generatePrivateResourcesHtaccess(): ?string
     {
         return $this->renderTemplate('Resources/Private/htaccess.t', []);
     }
@@ -1198,10 +1197,10 @@ class FileGenerator
     /**
      * @param DomainObject $domainObject
      *
-     * @return string|string[]|null
+     * @return string|null
      * @throws Exception
      */
-    public function generateTCA(DomainObject $domainObject)
+    public function generateTCA(DomainObject $domainObject): ?string
     {
         return $this->renderTemplate('Configuration/TCA/tableName.phpt', [
             'extension' => $this->extension,
@@ -1218,7 +1217,7 @@ class FileGenerator
      * @return mixed
      * @throws Exception
      */
-    public function generateTCAOverride(array $domainObjects, bool $addRecordTypeField)
+    public function generateTCAOverride(array $domainObjects, bool $addRecordTypeField): ?string
     {
         return $this->renderTemplate('Configuration/TCA/Overrides/tableName.phpt', [
             'extension' => $this->extension,
@@ -1234,7 +1233,7 @@ class FileGenerator
      * @return mixed
      * @throws Exception
      */
-    public function generateTCAOverrideTtContent()
+    public function generateTCAOverrideTtContent(): ?string
     {
         return $this->renderTemplate('Configuration/TCA/Overrides/tt_content.phpt', [
             'extension' => $this->extension,
@@ -1244,10 +1243,10 @@ class FileGenerator
     /**
      * Add TCA configuration for sys_template
      *
-     * @return mixed
+     * @return string|null
      * @throws Exception
      */
-    public function generateTCAOverrideSysTemplate()
+    public function generateTCAOverrideSysTemplate(): ?string
     {
         return $this->renderTemplate('Configuration/TCA/Overrides/sys_template.phpt', [
             'extension' => $this->extension,
@@ -1255,10 +1254,10 @@ class FileGenerator
     }
 
     /**
-     * @return string|string[]|null
+     * @return string|null
      * @throws Exception
      */
-    public function generateYamlSettings()
+    public function generateYamlSettings(): ?string
     {
         return $this->renderTemplate('Configuration/ExtensionBuilder/settings.yamlt', [
             'extension' => $this->extension
@@ -1266,10 +1265,10 @@ class FileGenerator
     }
 
     /**
-     * @return string|string[]|null
+     * @return string|null
      * @throws Exception
      */
-    public function generateTyposcriptSetup()
+    public function generateTyposcriptSetup(): ?string
     {
         return $this->renderTemplate('Configuration/TypoScript/setup.typoscriptt', [
             'extension' => $this->extension
@@ -1277,10 +1276,10 @@ class FileGenerator
     }
 
     /**
-     * @return string|string[]|null
+     * @return string|null
      * @throws Exception
      */
-    public function generateTyposcriptConstants()
+    public function generateTyposcriptConstants(): ?string
     {
         return $this->renderTemplate('Configuration/TypoScript/constants.typoscriptt', [
             'extension' => $this->extension
@@ -1288,10 +1287,10 @@ class FileGenerator
     }
 
     /**
-     * @return string|string[]|null
+     * @return string|null
      * @throws Exception
      */
-    public function generateStaticTyposcript()
+    public function generateStaticTyposcript(): ?string
     {
         return $this->renderTemplate('ext_typoscript_setup.txtt', [
             'extension' => $this->extension
@@ -1429,12 +1428,8 @@ class FileGenerator
     /**
      * Inserts the token into the file content
      * and preserves everything below the token
-     *
-     * @param $targetFile
-     * @param $fileContents
-     * @return string
      */
-    protected function insertSplitToken($targetFile, $fileContents)
+    protected function insertSplitToken(string $targetFile, string $fileContents): string
     {
         $customFileContent = '';
         if (file_exists($targetFile)) {
@@ -1449,7 +1444,7 @@ class FileGenerator
 
         $fileExtension = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-        if ($fileExtension == 'php') {
+        if ($fileExtension === 'php') {
             $fileContents = str_replace('?>', '', $fileContents);
             $fileContents .= RoundTrip::SPLIT_TOKEN;
         } else {
