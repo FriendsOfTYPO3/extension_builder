@@ -42,45 +42,19 @@ use PhpParser\NodeVisitorAbstract;
  */
 class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
 {
-    /**
-     * @var array
-     */
-    protected $properties = [];
-    /**
-     * @var ClassObject
-     */
-    protected $currentClassObject;
-    /**
-     * @var NamespaceObject
-     */
-    protected $currentNamespace;
-    /**
-     * @var Container
-     */
-    protected $currentContainer;
-    /**
-     * @var File
-     */
-    protected $fileObject;
-    /**
-     * @var ClassFactoryInterface
-     */
-    protected $classFactory;
-    /**
-     * @var bool
-     */
-    protected $onFirstLevel = true;
+    protected array $properties = [];
+    protected ?ClassObject $currentClassObject = null;
+    protected ?NamespaceObject $currentNamespace = null;
+    protected Container $currentContainer;
+    protected ?File $fileObject = null;
+    protected ?ClassFactoryInterface $classFactory = null;
+    protected bool $onFirstLevel = true;
     /**
      * currently not used, might be useful for filtering etc.
      * it keeps a reference to the current "first level" node
-     *
-     * @var array
      */
-    protected $contextStack = [];
-    /**
-     * @var Node
-     */
-    protected $lastNode;
+    protected array $contextStack = [];
+    protected ?Node $lastNode = null;
 
     public function getFileObject(): File
     {

@@ -24,10 +24,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 class RecordTypeViewHelper extends AbstractViewHelper
 {
-    /**
-     * @var DataMapper
-     */
-    private $dataMapper;
+    private DataMapper $dataMapper;
 
     public function injectDataMapper(DataMapper $dataMapper): void
     {

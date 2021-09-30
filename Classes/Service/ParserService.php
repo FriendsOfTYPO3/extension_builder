@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Service;
 
+use PhpParser\Parser;
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Parser\ClassFactory;
 use EBT\ExtensionBuilder\Parser\ClassFactoryInterface;
@@ -32,27 +33,11 @@ use TYPO3\CMS\Core\SingletonInterface;
 
 class ParserService implements SingletonInterface
 {
-    /**
-     * @var FileVisitorInterface
-     */
-    protected $fileVisitor;
-
-    /**
-     * @var TraverserInterface
-     */
-    protected $traverser;
-
-    /**
-     * @var ClassFactoryInterface
-     */
-    protected $classFactory;
-
-    /**
-     * @var FileVisitorInterface
-     */
-    protected $classFileVisitor;
-
-    protected $parser;
+    protected ?FileVisitor $fileVisitor = null;
+    protected ?TraverserInterface $traverser = null;
+    protected ?ClassFactoryInterface $classFactory = null;
+    protected ?FileVisitorInterface $classFileVisitor = null;
+    protected Parser $parser;
 
     public function __construct()
     {

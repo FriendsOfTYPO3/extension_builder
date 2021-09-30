@@ -36,142 +36,78 @@ class Extension
 
     /**
      * the extension key
-     *
-     * @var string
      */
-    protected $extensionKey = '';
-    /**
-     * @var string
-     */
-    protected $vendorName = '';
-    /**
-     * extension's name
-     *
-     * @var string
-     */
-    protected $name = '';
-    /**
-     * extension directory
-     *
-     * @var string
-     */
-    protected $extensionDir = '';
-    /**
-     * extension's version
-     *
-     * @var string|null
-     */
-    protected $version = '';
-    /**
-     * @var string
-     */
-    protected $description = '';
+    protected string $extensionKey = '';
+    protected string $vendorName = '';
+    protected string $name = '';
+    protected string $extensionDir = '';
+    protected string $version = '';
+    protected string $description = '';
     /**
      * The original extension key (if an extension was renamed)
-     *
-     * @var string
      */
-    protected $originalExtensionKey = '';
+    protected string $originalExtensionKey = '';
     /**
      * The initial vendorname (if the vendor name was changed)
-     *
-     * @var string
      */
-    protected $originalVendorName = '';
-    /**
-     * @var array
-     */
-    protected $settings = [];
-    /**
-     * @var string
-     */
-    protected $category;
-    /**
-     * @var bool
-     */
-    protected $supportVersioning = true;
-    /**
-     * @var bool
-     */
-    protected $supportLocalization = true;
-    /**
-     * @var bool
-     */
-    protected $generateDocumentationTemplate = false;
-    /**
-     * @var bool
-     */
-    protected $generateEmptyGitRepository = false;
-    /**
-     * @var bool
-     */
-    protected $generateEditorConfig = false;
-    /**
-     * @var string
-     */
-    protected $sourceLanguage = 'en';
+    protected string $originalVendorName = '';
+    protected array $settings = [];
+    protected ?string $category = null;
+    protected bool $supportVersioning = true;
+    protected bool $supportLocalization = true;
+    protected bool $generateDocumentationTemplate = false;
+    protected bool $generateEmptyGitRepository = false;
+    protected bool $generateEditorConfig = false;
+    protected string $sourceLanguage = 'en';
     /**
      * The extension's state. One of the STATE_* constants.
-     * @var int
      */
-    protected $state = 0;
+    protected int $state = 0;
     /**
      * an array keeping all md5 hashes of all files in the extension to detect modifications
      *
      * @var string[]
      */
-    protected $md5Hashes = [];
+    protected array $md5Hashes = [];
     /**
      * all domain objects
      *
      * @var DomainObject[]
      */
-    protected $domainObjects = [];
+    protected array $domainObjects = [];
     /**
      * the Persons working on the Extension
      *
      * @var Person[]
      */
-    protected $persons = [];
+    protected array $persons = [];
     /**
      * plugins
      *
      * @var array<Plugin>
      */
-    private $plugins = [];
+    private array $plugins = [];
     /**
      * backend modules
      *
      * @var array<BackendModule>
      */
-    private $backendModules = [];
+    private array $backendModules = [];
     /**
      * was the extension renamed?
-     * @var bool
      */
-    private $renamed = false;
+    private bool $renamed = false;
     /**
      * @var array
      */
-    private $dependencies = [];
+    private array $dependencies = [];
     /**
      * the lowest required TYPO3 version
-     * @var float
      */
-    private $targetVersion = 10.0;
-    /**
-     * @var string
-     */
-    protected $previousExtensionDirectory = '';
-    /**
-     * @var string
-     */
-    protected $previousExtensionKey = '';
-
-    /**
-     * @var string|null
-     */
-    protected $storagePath;
+    private float $targetVersion = 10.0;
+    protected string $previousExtensionDirectory = '';
+    protected string $previousExtensionKey = '';
+    protected ?string $storagePath;
 
     public function getExtensionKey(): string
     {

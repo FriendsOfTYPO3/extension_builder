@@ -30,26 +30,16 @@ class Person
      * @var string[]
      * @TYPO3\CMS\Extbase\Annotation\ORM\Transient
      */
-    protected static $ROLES = ['developer', 'product_manager'];
-    /**
-     * @var string
-     */
-    protected $name = '';
+    protected static array $ROLES = ['developer', 'product_manager'];
+    protected string $name = '';
     /**
      * TODO validation?
      *
-     * @var string
      * @see \EBT\ExtensionBuilder\Domain\Model\Person::ROLES
      */
-    protected $role = '';
-    /**
-     * @var string
-     */
-    protected $email = '';
-    /**
-     * @var string
-     */
-    protected $company = '';
+    protected string $role = '';
+    protected string $email = '';
+    protected string $company = '';
 
     public function getName(): string
     {

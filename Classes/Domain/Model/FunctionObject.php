@@ -24,30 +24,16 @@ use EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter;
  */
 class FunctionObject extends AbstractObject
 {
-    /**
-     * @var string|null
-     */
-    protected $returnType;
-    /**
-     * stmts of this methods body
-     *
-     * @var array
-     */
-    protected $bodyStmts = [];
+    protected ?string $returnType = null;
+    protected array $bodyStmts = [];
     /**
      * parameters
      *
      * @var MethodParameter[]
      */
-    protected $parameters = [];
-    /**
-     * @var int
-     */
-    protected $startLine = -1;
-    /**
-     * @var int
-     */
-    protected $endLine = -1;
+    protected array $parameters = [];
+    protected int $startLine = -1;
+    protected int $endLine = -1;
 
     public function __construct(string $name)
     {

@@ -26,10 +26,7 @@ use PhpParser\NodeVisitorAbstract;
 
 class FormatVisitor extends NodeVisitorAbstract
 {
-    /**
-     * @var bool
-     */
-    public static $first = true;
+    public static bool $first = true;
 
     public function enterNode(Node $node)
     {

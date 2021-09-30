@@ -28,16 +28,11 @@ use TYPO3\CMS\Extbase\Reflection\ReflectionService;
 
 class ClassParserTest extends BaseUnitTest
 {
-    /**
-     * @var ParserService
-     */
-    protected $parserService;
+    protected ParserService $parserService;
     /**
      * set to true to see an overview of the parsed class objects in the backend
-     *
-     * @var bool
      */
-    protected $debugMode = false;
+    protected bool $debugMode = false;
 
     protected function setUp(): void
     {

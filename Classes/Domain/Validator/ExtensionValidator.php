@@ -169,16 +169,11 @@ class ExtensionValidator extends AbstractValidator
      */
     public const ERROR_MAPPING_TO_INCOMPATIBLE_TABLE = 606;
 
-    /**
-     * @var ExtensionBuilderConfigurationManager
-     */
-    protected $configurationManager;
+    protected ExtensionBuilderConfigurationManager $configurationManager;
     /**
      * can be set in settings.yaml
-     *
-     * @var array
      */
-    protected $warningsToIgnore = [];
+    protected array $warningsToIgnore = [];
 
     public function injectExtensionBuilderConfigurationManager(
         ExtensionBuilderConfigurationManager $configurationManager
@@ -191,7 +186,7 @@ class ExtensionValidator extends AbstractValidator
      *
      * @var array[]
      */
-    protected $validationResult = ['errors' => [], 'warnings' => []];
+    protected array $validationResult = ['errors' => [], 'warnings' => []];
 
     /**
      * Validate the given extension

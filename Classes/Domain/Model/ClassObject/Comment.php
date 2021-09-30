@@ -21,14 +21,9 @@ class Comment
 {
     /**
      * the raw comment content
-     *
-     * @var string
      */
-    protected $text = '';
-    /**
-     * @var int
-     */
-    protected $line = -1;
+    protected string $text = '';
+    protected int $line = -1;
 
     /**
      * @param string $text Comment text (including comment delimiters like /*)

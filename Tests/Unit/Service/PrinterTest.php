@@ -31,18 +31,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class PrinterTest extends BaseUnitTest
 {
-    /**
-     * @var ParserService
-     */
-    protected $parserService;
-    /**
-     * @var Printer
-     */
-    protected $printerService;
-    /**
-     * @var string
-     */
-    protected $tmpDir = '';
+    protected ParserService $parserService;
+    protected Printer $printerService;
+    protected string $tmpDir = '';
 
     protected function setUp(): void
     {

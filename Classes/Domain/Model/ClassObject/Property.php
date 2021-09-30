@@ -27,10 +27,8 @@ class Property extends AbstractObject
 {
     /**
      * PHP var type of this property (read from "@var" annotation in doc comment)
-     *
-     * @var string
      */
-    protected $varType = '';
+    protected string $varType = '';
     /**
      * @var mixed
      */
@@ -42,15 +40,10 @@ class Property extends AbstractObject
     /**
      * In case of properties of type array we need to preserve the parsed statements
      * to be able to reapply the original linebrakes.
-     *
-     * @var NodeAbstract
      */
-    protected $defaultValueNode;
+    protected ?NodeAbstract $defaultValueNode = null;
 
-    /**
-     * @param string $name
-     */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
     }

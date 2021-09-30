@@ -30,11 +30,7 @@ class ExtensionTest extends BaseUnitTest
     /**
      * @var Person[]
      */
-    protected $persons = [];
-    /**
-     * @var Extension
-     */
-    protected $extension;
+    protected array $persons = [];
 
     protected function setUp(): void
     {

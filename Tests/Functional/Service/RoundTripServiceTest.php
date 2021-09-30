@@ -25,10 +25,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class RoundTripServiceTest extends BaseFunctionalTest
 {
-    /**
-     * @var ObjectSchemaBuilder
-     */
-    private $objectSchemaBuilder;
+    private ObjectSchemaBuilder $objectSchemaBuilder;
 
     protected function setUp(): void
     {
