@@ -17,16 +17,23 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 class CurlyBracketsViewHelper extends AbstractViewHelper
 {
+    use CompileWithRenderStatic;
+
     protected $escapeOutput = false;
 
     protected $escapeChildren = false;
 
-    public function render(): string
-    {
-        return '{' . $this->renderChildren() . '}';
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        return '{' . $renderChildrenClosure() . '}';
     }
 }

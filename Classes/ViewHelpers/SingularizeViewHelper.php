@@ -18,7 +18,9 @@ declare(strict_types=1);
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
 use EBT\ExtensionBuilder\Utility\Inflector;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * Singularize a word
@@ -34,14 +36,14 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class SingularizeViewHelper extends AbstractViewHelper
 {
-    /**
-     * Singularize a word
-     *
-     * @return string The singularized string
-     */
-    public function render(): string
-    {
-        $content = $this->renderChildren();
+    use CompileWithRenderStatic;
+
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        $content = $renderChildrenClosure();
         return Inflector::singularize($content);
     }
 }

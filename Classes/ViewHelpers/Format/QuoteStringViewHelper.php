@@ -17,35 +17,43 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers\Format;
 
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * View helper which returns a quoted string
  *
  * = Examples =
  *
- * <f:quoteString>{anyString}</f:quoteString>
+ * <k:quoteString>{anyString}</k:quoteString>
+ * <k:quoteString value="{anyString}"/>
+ * {anyString -> k:quoteString()}
  */
 class QuoteStringViewHelper extends AbstractViewHelper
 {
-    /**
-     * Arguments Initialization
-     */
+    use CompileWithContentArgumentAndRenderStatic;
+
     public function initializeArguments(): void
     {
-        $this->registerArgument('value', 'string', 'The string to addslashes', false);
+        $this->registerArgument('value', 'string', 'The string to add slashes', false);
     }
 
-    public function render(): string
-    {
-        $value = null;
-        if ($this->hasArgument('value')) {
-            $value = $this->arguments['value'];
-        }
-        if ($value === null) {
-            $value = $this->renderChildren();
-        }
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        return addslashes(self::getValue($arguments, $renderChildrenClosure));
+    }
 
-        return addslashes($value);
+    private static function getValue(
+        array $arguments,
+        \Closure $renderChildrenClosure
+    ) {
+        if (isset($rguments['value'])) {
+            return $arguments['value'];
+        }
+        return $renderChildrenClosure();
     }
 }

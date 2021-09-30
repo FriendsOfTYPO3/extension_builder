@@ -35,12 +35,12 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
     /**
      * @throws ExtensionException
      * @throws InvalidConfigurationTypeException
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function setUp(): void
     {
         parent::setUp();
 
-        /** @var ExtensionBuilderConfigurationManager|AccessibleObjectInterface|MockObject $configurationManager */
         $configurationManager = $this->getAccessibleMock(
             ExtensionBuilderConfigurationManager::class,
             ['dummy']

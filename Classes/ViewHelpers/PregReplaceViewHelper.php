@@ -17,17 +17,22 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * View helper for preg_replace
  *
  * = Examples =
  * <k:pregReplace match="/this/" replace="that" subject="this" />
- * {k:pregReplace(match:'/this/', replace:'that', subject:'this')}
+ * {k:pregReplace(match: '/this/', replace: 'that', subject: 'this')}
+ * {string -> k:pregReplace(match: '/this/', replace: 'that')}
  */
 class PregReplaceViewHelper extends AbstractViewHelper
 {
+    use CompileWithContentArgumentAndRenderStatic;
+
     /**
      * Arguments Initialization
      */
@@ -35,16 +40,19 @@ class PregReplaceViewHelper extends AbstractViewHelper
     {
         $this->registerArgument('match', 'string', 'pattern', true);
         $this->registerArgument('replace', 'string', 'replacement', true);
-        $this->registerArgument('subject', 'string', 'subject', true);
+        $this->registerArgument('subject', 'string', 'subject', false);
     }
 
-    /**
-     * Execute the preg_replace
-     *
-     * @return mixed
-     */
-    public function render()
-    {
-        return preg_replace($this->arguments['match'], $this->arguments['replace'], $this->arguments['subject']);
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        $subject = $renderChildrenClosure();
+        if ($subject === null) {
+            return '';
+        }
+
+        return preg_replace($arguments['match'], $arguments['replace'], $subject);
     }
 }
