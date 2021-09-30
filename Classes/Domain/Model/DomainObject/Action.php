@@ -101,7 +101,7 @@ class Action
         $this->domainObject = $domainObject;
     }
 
-    public function getDomainObject(): DomainObject
+    public function getDomainObject(): ?DomainObject
     {
         return $this->domainObject;
     }
@@ -156,12 +156,12 @@ class Action
         $this->cacheable = $cacheable;
     }
 
-    public function getCacheable(): ?bool
+    public function getCacheable(): bool
     {
         return $this->isCacheable();
     }
 
-    public function isCacheable(): ?bool
+    public function isCacheable(): bool
     {
         if (!isset($this->cacheable)) {
             $this->cacheable = !in_array($this->getName(), $this->actionNamesThatShouldNotBeCached);

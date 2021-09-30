@@ -48,7 +48,7 @@ class FormatVisitor extends NodeVisitorAbstract
         return $node;
     }
 
-    public static function parseArgs(&$node)
+    public static function parseArgs(&$node): Array_
     {
         if (count($node->args) > 1) {
             foreach ($node->args as $k2 => &$arg) {

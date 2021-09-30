@@ -24,7 +24,6 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Domain\Model\File;
-use EBT\ExtensionBuilder\Exception\FileNotFoundException;
 use EBT\ExtensionBuilder\Utility\Inflector;
 use Exception;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
@@ -191,7 +190,7 @@ class RoundTrip implements SingletonInterface
      * @return File|null
      * @throws Exception
      */
-    public function getDomainModelClassFile(DomainObject $currentDomainObject)
+    public function getDomainModelClassFile(DomainObject $currentDomainObject): ?File
     {
         if (isset($this->previousDomainObjects[$currentDomainObject->getUniqueIdentifier()])) {
             self::log('domainObject identified:' . $currentDomainObject->getName());
@@ -312,7 +311,7 @@ class RoundTrip implements SingletonInterface
      * @return File|null
      * @throws Exception
      */
-    public function getControllerClassFile(DomainObject $currentDomainObject)
+    public function getControllerClassFile(DomainObject $currentDomainObject): ?File
     {
         $extensionDir = $this->previousExtensionDirectory;
         if (isset($this->previousDomainObjects[$currentDomainObject->getUniqueIdentifier()])) {
@@ -453,7 +452,6 @@ class RoundTrip implements SingletonInterface
             $this->classObject->getDescription()
         ));
         if ($oldDomainObject->isAggregateRoot()) {
-
             // should we keep the old properties comments and tags?
             $this->classObject->removeProperty(lcfirst($oldName) . 'Repository');
             $injectMethodName = 'inject' . $oldName . 'Repository';
@@ -563,10 +561,9 @@ class RoundTrip implements SingletonInterface
      * @param DomainObject $currentDomainObject
      *
      * @return File|null
-     * @throws FileNotFoundException
      * @throws Exception
      */
-    public function getRepositoryClassFile(DomainObject $currentDomainObject)
+    public function getRepositoryClassFile(DomainObject $currentDomainObject): ?File
     {
         $extensionDir = $this->previousExtensionDirectory;
         if (isset($this->previousDomainObjects[$currentDomainObject->getUniqueIdentifier()])) {
@@ -880,7 +877,7 @@ class RoundTrip implements SingletonInterface
      *
      * @return string with replaced values
      */
-    protected function replaceUpperAndLowerCase($search, $replace, $haystack)
+    protected function replaceUpperAndLowerCase(string $search, string $replace, $haystack): string
     {
         $result = str_replace(ucfirst($search), ucfirst($replace), $haystack);
         return str_replace(lcfirst($search), lcfirst($replace), $result);
@@ -892,10 +889,9 @@ class RoundTrip implements SingletonInterface
      * @param string $oldName
      * @param string $newName
      * @param string[] $methodBodyStmts
-     *
      * @return array
      */
-    protected function replacePropertyNameInMethodBody(string $oldName, string $newName, $methodBodyStmts)
+    protected function replacePropertyNameInMethodBody(string $oldName, string $newName, array $methodBodyStmts): array
     {
         return $this->parserService->replaceNodeProperty(
             $methodBodyStmts,
@@ -907,9 +903,9 @@ class RoundTrip implements SingletonInterface
      * if the foreign DomainObject was renamed, the relation has to be updated also
      *
      * @param AbstractRelation $relation
-     * @return string className of foreign class
+     * @return string|null className of foreign class
      */
-    public function getForeignClassName(AbstractRelation $relation)
+    public function getForeignClassName(AbstractRelation $relation): ?string
     {
         if ($relation->getForeignModel()
             && isset($this->renamedDomainObjects[$relation->getForeignModel()->getUniqueIdentifier()])
@@ -1005,7 +1001,7 @@ class RoundTrip implements SingletonInterface
      * @param string $path of the file to get the settings for
      * @param Extension $extension
      *
-     * @return int overWriteSetting
+     * @return int|null
      * @throws Exception
      */
     public static function getOverWriteSettingForPath(string $path, Extension $extension): ?int
@@ -1077,12 +1073,8 @@ class RoundTrip implements SingletonInterface
      * Returns the current TCA for a domain objects table if the
      * extension is installed
      * TODO: check for previous table name if an extension is renamed
-     *
-     * @param DomainObject $domainObject
-     *
-     * @return array
      */
-    protected static function getTcaForDomainObject(DomainObject $domainObject)
+    protected static function getTcaForDomainObject(DomainObject $domainObject): ?array
     {
         $tableName = $domainObject->getDatabaseTableName();
         return $GLOBALS['TCA'][$tableName] ?? null;
@@ -1127,11 +1119,11 @@ class RoundTrip implements SingletonInterface
 
     /**
      * @param Extension $extension
-     * @param string $backupDir
+     * @param string|null $backupDir
      *
      * @throws Exception
      */
-    public static function backupExtension(Extension $extension, $backupDir): void
+    public static function backupExtension(Extension $extension, ?string $backupDir): void
     {
         if (empty($backupDir)) {
             throw new Exception('Please define a backup directory in extension configuration!');

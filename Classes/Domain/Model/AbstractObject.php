@@ -77,7 +77,7 @@ abstract class AbstractObject
     protected array $descriptionLines = [];
 
     /**
-     * @var string[]
+     * @var string[]|array[]
      */
     protected array $tags = [];
 
@@ -361,7 +361,7 @@ abstract class AbstractObject
         return $this;
     }
 
-    public function getModifiers(): int
+    public function getModifiers(): ?int
     {
         return $this->modifiers;
     }

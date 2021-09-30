@@ -94,10 +94,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         return $extensionConfigurationJson;
     }
 
-    /**
-     * @return string
-     */
-    public function getSubActionFromRequest()
+    public function getSubActionFromRequest(): string
     {
         return $this->inputData['method'];
     }
@@ -470,10 +467,10 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * the module token.
      *
      * @param ServerRequestInterface $request
-     * @return ResponseInterface
+     * @return JsonResponse
      * @throws RouteNotFoundException
      */
-    public function getWiringEditorSmd(ServerRequestInterface $request): ResponseInterface
+    public function getWiringEditorSmd(ServerRequestInterface $request): JsonResponse
     {
         $smdJsonString = file_get_contents(
             ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd'

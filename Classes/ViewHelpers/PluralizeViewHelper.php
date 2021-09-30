@@ -39,7 +39,7 @@ class PluralizeViewHelper extends AbstractViewHelper
      *
      * @return string The pluralized string
      */
-    public function render()
+    public function render(): string
     {
         $content = $this->renderChildren();
         $pluralizedContent = Inflector::pluralize($content);

@@ -277,7 +277,7 @@ class NodeFactory implements SingletonInterface
      *
      * @return \PhpParser\Node\Expr The normalized value
      */
-    protected static function buildNodeFromValue($value)
+    protected static function buildNodeFromValue($value): Node
     {
         if ($value instanceof Node) {
             return $value;
