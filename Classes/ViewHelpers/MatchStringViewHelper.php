@@ -17,7 +17,9 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * View helper to check if one string contains another string
@@ -28,6 +30,8 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class MatchStringViewHelper extends AbstractViewHelper
 {
+    use CompileWithRenderStatic;
+
     /**
      * Arguments Initialization
      */
@@ -38,12 +42,15 @@ class MatchStringViewHelper extends AbstractViewHelper
         $this->registerArgument('caseSensitive', 'boolean', 'caseSensitive', false);
     }
 
-    public function render(): bool
-    {
-        $matchAsRegularExpression = '/' . $this->arguments['match'] . '/';
-        if (!$this->arguments['caseSensitive']) {
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        $matchAsRegularExpression = '/' . $arguments['match'] . '/';
+        if (!$arguments['caseSensitive']) {
             $matchAsRegularExpression .= 'i';
         }
-        return preg_match($matchAsRegularExpression, $this->arguments['in']) !== 0;
+        return preg_match($matchAsRegularExpression, $arguments['in']) !== 0;
     }
 }

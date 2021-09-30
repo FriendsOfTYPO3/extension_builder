@@ -105,10 +105,11 @@ class DomainObjectChecksViewHelper extends AbstractConditionViewHelper
      */
     protected function needsTypeField(DomainObject $domainObject, bool $isMappedToExternalTable): bool
     {
-        $needsTypeField = false;
         if ($isMappedToExternalTable || $domainObject->getChildObjects()) {
             $tableName = $domainObject->getDatabaseTableName();
-            if (!isset($GLOBALS['TCA'][$tableName]['ctrl']['type']) || $GLOBALS['TCA'][$tableName]['ctrl']['type'] == 'tx_extbase_type') {
+            if (!isset($GLOBALS['TCA'][$tableName]['ctrl']['type'])
+                || $GLOBALS['TCA'][$tableName]['ctrl']['type'] === 'tx_extbase_type'
+            ) {
                 /*
                  * if the type field is set but equals the default extbase record type field name it might
                  * have been defined by the current extension and thus has to be defined again when rewriting TCA definitions

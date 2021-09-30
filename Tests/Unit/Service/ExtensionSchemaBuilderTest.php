@@ -48,7 +48,6 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         $this->extensionSchemaBuilder = $this->getAccessibleMock(ExtensionSchemaBuilder::class, ['dummy']);
         $this->extensionSchemaBuilder->injectConfigurationManager(new ExtensionBuilderConfigurationManager());
 
-        /** @var ObjectSchemaBuilder $objectSchemaBuilder */
         $objectSchemaBuilder = $this->getAccessibleMock(ObjectSchemaBuilder::class, ['dummy']);
         $objectSchemaBuilder->injectConfigurationManager(new ExtensionBuilderConfigurationManager());
 
@@ -101,18 +100,17 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
     public function conversionExtractsPersons(): void
     {
         $persons = [];
-        $persons[] = GeneralUtility::makeInstance(Person::class);
-        $persons[] = GeneralUtility::makeInstance(Person::class);
+        $persons[] = (new Person())
+            ->setName('name0')
+            ->setRole('role0')
+            ->setEmail('email0')
+            ->setCompany('company0');
 
-        $persons[0]->setName('name0');
-        $persons[0]->setRole('role0');
-        $persons[0]->setEmail('email0');
-        $persons[0]->setCompany('company0');
-
-        $persons[1]->setName('name1');
-        $persons[1]->setRole('role1');
-        $persons[1]->setEmail('email1');
-        $persons[1]->setCompany('company1');
+        $persons[] = (new Person())
+            ->setName('name1')
+            ->setRole('role1')
+            ->setEmail('email1')
+            ->setCompany('company1');
 
         $input = [
             'properties' => [

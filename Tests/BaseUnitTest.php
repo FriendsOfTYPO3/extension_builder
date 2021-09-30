@@ -94,7 +94,6 @@ abstract class BaseUnitTest extends UnitTestCase
      */
     protected function buildDomainObject($name, bool $entity = false, bool $aggregateRoot = false): DomainObject
     {
-        /* @var DomainObject $domainObject */
         $domainObject = $this->getAccessibleMock(DomainObject::class, ['dummy']);
         $domainObject->setExtension($this->extension);
         $domainObject->setName($name);

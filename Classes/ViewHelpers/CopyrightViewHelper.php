@@ -17,13 +17,17 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
- * Format the Copyright notice
+ * Format the copyright holder's name(s)
  */
 class CopyrightViewHelper extends AbstractViewHelper
 {
+    use CompileWithRenderStatic;
+
     protected $escapeOutput = false;
 
     protected $escapeChildren = false;
@@ -37,17 +41,15 @@ class CopyrightViewHelper extends AbstractViewHelper
         $this->registerArgument('persons', 'array', 'Array with persons', true);
     }
 
-    /**
-     * Format the copyright holder's name(s)
-     *
-     * @return string The copyright ownership
-     */
-    public function render(): string
-    {
-        $copyright = ' * (c) ' . $this->arguments['date'] . ' ';
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        $copyright = ' * (c) ' . $arguments['date'] . ' ';
         $offset = strlen($copyright) - 2;
 
-        foreach ($this->arguments['persons'] as $index => $person) {
+        foreach ($arguments['persons'] as $index => $person) {
             $entry = '';
 
             if ($index !== 0) {

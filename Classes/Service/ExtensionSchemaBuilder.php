@@ -23,8 +23,8 @@ use EBT\ExtensionBuilder\Domain\Model\BackendModule;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
-use EBT\ExtensionBuilder\Domain\Model\Person;
 use EBT\ExtensionBuilder\Domain\Model\Plugin;
+use EBT\ExtensionBuilder\Factory\PersonFactory;
 use EBT\ExtensionBuilder\Utility\Tools;
 use Exception;
 use RuntimeException;
@@ -65,7 +65,6 @@ class ExtensionSchemaBuilder implements SingletonInterface
      */
     public function build(array $extensionBuildConfiguration): Extension
     {
-        /** @var Extension $extension */
         $extension = GeneralUtility::makeInstance(Extension::class);
         $globalProperties = $extensionBuildConfiguration['properties'];
         if (!is_array($globalProperties)) {
@@ -77,8 +76,9 @@ class ExtensionSchemaBuilder implements SingletonInterface
         $this->setExtensionProperties($extension, $globalProperties);
 
         if (isset($globalProperties['persons']) && is_array($globalProperties['persons'])) {
+            $personFactory = new PersonFactory();
             foreach ($globalProperties['persons'] as $personValues) {
-                $person = $this->buildPerson($personValues);
+                $person = $personFactory->buildPerson($personValues);
                 $extension->addPerson($person);
             }
         }
@@ -298,16 +298,6 @@ class ExtensionSchemaBuilder implements SingletonInterface
                 return Extension::STATE_TEST;
         }
         return Extension::STATE_ALPHA;
-    }
-
-    protected function buildPerson(array $personValues): Person
-    {
-        $person = GeneralUtility::makeInstance(Person::class);
-        $person->setName($personValues['name']);
-        $person->setRole($personValues['role']);
-        $person->setEmail($personValues['email']);
-        $person->setCompany($personValues['company']);
-        return $person;
     }
 
     protected function buildPlugin(array $pluginValues): Plugin

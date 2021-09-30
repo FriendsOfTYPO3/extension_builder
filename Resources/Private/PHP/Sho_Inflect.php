@@ -21,7 +21,7 @@
 //   Removed dangerous singularization rule for /([^f])ves$/ => $1fe
 //   Added more specific rules for singularizing lives, wives, knives, sheaves, loaves, and leaves and thieves
 //   Added exception to /(us)es$/ => $1 rule for houses => house and blouses => blouse
-//   Added excpetions for feet, geese and teeth
+//   Added exceptions for feet, geese and teeth
 //   Added rule for deer -> deer
 
 // Changes:
@@ -31,7 +31,7 @@
 
 class Sho_Inflect
 {
-    public static $plural = array(
+    public static $plural = [
         '/(quiz)$/i'               => '$1zes',
         '/^(ox)$/i'                => '$1en',
         '/([m|l])ouse$/i'          => '$1ice',
@@ -51,9 +51,9 @@ class Sho_Inflect
         '/(us)$/i'                 => '$1es',
         '/s$/i'                    => 's',
         '/$/'                      => 's'
-    );
+    ];
 
-    public static $singular = array(
+    public static $singular = [
         '/(quiz)zes$/i'             => '$1',
         '/(matr)ices$/i'            => '$1ix',
         '/(vert|ind)ices$/i'        => '$1ex',
@@ -82,9 +82,9 @@ class Sho_Inflect
         '/(corpse)s$/i'             => '$1',
         '/(us)es$/i'                => '$1',
         '/s$/i'                     => ''
-    );
+    ];
 
-    public static $irregular = array(
+    public static $irregular = [
         'move'   => 'moves',
         'foot'   => 'feet',
         'goose'  => 'geese',
@@ -92,10 +92,10 @@ class Sho_Inflect
         'child'  => 'children',
         'man'    => 'men',
         'tooth'  => 'teeth',
-//      'person' => 'people'
-    );
+        'person' => 'people'
+    ];
 
-    public static $uncountable = array(
+    public static $uncountable = [
         'sheep',
         'fish',
         'deer',
@@ -105,9 +105,9 @@ class Sho_Inflect
         'rice',
         'information',
         'equipment'
-    );
+    ];
 
-    public static function pluralize($string)
+    public static function pluralize(string $string): string
     {
         // save some time in the case that singular and plural are the same
         if (in_array(strtolower($string), self::$uncountable)) {
@@ -133,7 +133,7 @@ class Sho_Inflect
         return $string;
     }
 
-    public static function singularize($string)
+    public static function singularize(string $string): string
     {
         // save some time in the case that singular and plural are the same
         if (in_array(strtolower($string), self::$uncountable)) {
@@ -159,9 +159,9 @@ class Sho_Inflect
         return $string;
     }
 
-    public static function pluralize_if($count, $string)
+    public static function pluralize_if(int $count, string $string): string
     {
-        if ($count == 1) {
+        if ($count === 1) {
             return "1 $string";
         }
 

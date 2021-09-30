@@ -17,7 +17,9 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers\Format;
 
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * Wrapper for PHPs ucfirst function.
@@ -34,11 +36,13 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class UppercaseFirstViewHelper extends AbstractViewHelper
 {
-    /**
-     * Uppercase first character
-     */
-    public function render(): string
-    {
-        return ucfirst($this->renderChildren());
+    use CompileWithRenderStatic;
+
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        return ucfirst($renderChildrenClosure());
     }
 }

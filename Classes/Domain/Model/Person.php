@@ -56,9 +56,10 @@ class Person
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(string $name): self
     {
         $this->name = $name;
+        return $this;
     }
 
     public function getRole(): string
@@ -66,9 +67,10 @@ class Person
         return $this->role;
     }
 
-    public function setRole(string $role): void
+    public function setRole(string $role): self
     {
         $this->role = $role;
+        return $this;
     }
 
     public function getEmail(): string
@@ -76,9 +78,10 @@ class Person
         return $this->email;
     }
 
-    public function setEmail(string $email): void
+    public function setEmail(string $email): self
     {
         $this->email = $email;
+        return $this;
     }
 
     public function getCompany(): string
@@ -86,8 +89,9 @@ class Person
         return $this->company;
     }
 
-    public function setCompany(string $company): void
+    public function setCompany(string $company): self
     {
         $this->company = $company;
+        return $this;
     }
 }

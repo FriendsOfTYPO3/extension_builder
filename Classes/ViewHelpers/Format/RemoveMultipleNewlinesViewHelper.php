@@ -17,19 +17,26 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers\Format;
 
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * Removes all linebreaks
  */
 class RemoveMultipleNewlinesViewHelper extends AbstractViewHelper
 {
-    public function render(): string
-    {
-        $content = trim($this->renderChildren());
+    use CompileWithRenderStatic;
+
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        $content = trim($renderChildrenClosure());
 
         // Collapse whitespace lines
         $content = preg_replace('/^\\s+$/m', '', $content);
-        return preg_replace('/\\n\\n+/', LF, $content);
+        return preg_replace('/\\n\\n+/', chr(10), $content);
     }
 }

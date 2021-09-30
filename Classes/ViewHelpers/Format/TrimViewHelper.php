@@ -17,18 +17,22 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers\Format;
 
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * Wrapper for PHPs trim function.
  */
 class TrimViewHelper extends AbstractViewHelper
 {
-    /**
-     * @return string The altered string.
-     */
-    public function render(): string
-    {
-        return trim($this->renderChildren());
+    use CompileWithRenderStatic;
+
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        return trim($renderChildrenClosure());
     }
 }

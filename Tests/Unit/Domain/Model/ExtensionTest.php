@@ -40,12 +40,9 @@ class ExtensionTest extends BaseUnitTest
     {
         parent::setUp();
         $this->extension = GeneralUtility::makeInstance(Extension::class);
-        $this->persons[] = GeneralUtility::makeInstance(Person::class);
-        $this->persons[] = GeneralUtility::makeInstance(Person::class);
-        $this->persons[] = GeneralUtility::makeInstance(Person::class);
-        $this->persons[0]->setName('0');
-        $this->persons[1]->setName('1');
-        $this->persons[2]->setName('2');
+        $this->persons[] = (new Person())->setName('0');
+        $this->persons[] = (new Person())->setName('1');
+        $this->persons[] = (new Person())->setName('2');
     }
 
     /**

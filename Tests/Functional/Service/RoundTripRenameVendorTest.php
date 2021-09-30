@@ -26,6 +26,7 @@ use Nimut\TestingFramework\MockObject\AccessibleMockObjectInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 
 class RoundTripRenameVendorTest extends BaseFunctionalTest
 {
@@ -36,12 +37,13 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
 
     /**
      * @throws ExtensionException
+     * @throws InvalidConfigurationTypeException
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function setUp(): void
     {
         parent::setUp();
 
-        /** @var ExtensionBuilderConfigurationManager|AccessibleMockObjectInterface|MockObject $configurationManager */
         $configurationManager = $this->getAccessibleMock(
             ExtensionBuilderConfigurationManager::class,
             ['dummy']

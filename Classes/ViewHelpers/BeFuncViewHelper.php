@@ -17,7 +17,9 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * View helper which return input as it is
@@ -28,18 +30,13 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class BeFuncViewHelper extends AbstractViewHelper
 {
-    /**
-     * @var bool
-     */
-    protected $objectAccessorPostProcessorEnabled = false;
+    use CompileWithRenderStatic;
 
-    /**
-     * Render without processing
-     *
-     * @return string
-     */
-    public function render(): string
-    {
-        return $this->renderChildren();
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        return $renderChildrenClosure();
     }
 }
