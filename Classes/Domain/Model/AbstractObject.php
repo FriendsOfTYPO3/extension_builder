@@ -21,6 +21,7 @@ use EBT\ExtensionBuilder\Exception\FileNotFoundException;
 use EBT\ExtensionBuilder\Exception\SyntaxError;
 use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 use InvalidArgumentException;
+use PhpParser\Error;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Stmt\Class_;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -406,7 +407,7 @@ abstract class AbstractObject
 
         try {
             Class_::verifyModifier($this->modifiers, $modifier);
-        } catch (\PhpParser\Error $e) {
+        } catch (Error $e) {
             throw new SyntaxError(
                 'Only one access modifier can be applied to one object. Use setModifier to avoid this exception'
             );
