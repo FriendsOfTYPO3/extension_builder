@@ -21,8 +21,6 @@ use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
-use Nimut\TestingFramework\MockObject\AccessibleMockObjectInterface;
-use PHPUnit\Framework\MockObject\MockObject;
 use SebastianBergmann\Diff\Differ;
 use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
 use TYPO3\CMS\Core\Core\Environment;
@@ -48,7 +46,6 @@ class CompatibilityTest extends BaseFunctionalTest
      */
     public function generateExtensionFromVersion3Configuration(): void
     {
-        /** @var ExtensionBuilderConfigurationManager|MockObject|AccessibleMockObjectInterface $configurationManager */
         $configurationManager = $this->getAccessibleMock(ExtensionBuilderConfigurationManager::class, ['dummy']);
         $extensionSchemaBuilder = GeneralUtility::makeInstance(ExtensionSchemaBuilder::class);
 
