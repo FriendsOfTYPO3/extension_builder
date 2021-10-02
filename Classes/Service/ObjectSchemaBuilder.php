@@ -53,7 +53,7 @@ class ObjectSchemaBuilder implements SingletonInterface
      */
     public function build(array $jsonDomainObject): DomainObject
     {
-        $domainObject = GeneralUtility::makeInstance(DomainObject::class);
+        $domainObject = new DomainObject();
         $domainObject->setUniqueIdentifier($jsonDomainObject['objectsettings']['uid'] ?? null);
 
         $domainObject->setName($jsonDomainObject['name']);
@@ -119,7 +119,7 @@ class ObjectSchemaBuilder implements SingletonInterface
                     }
 
                     foreach ($actionNames as $actionName) {
-                        $action = GeneralUtility::makeInstance(Action::class);
+                        $action = new Action();
                         $action->setName($actionName);
                         $domainObject->addAction($action);
                     }
@@ -128,7 +128,7 @@ class ObjectSchemaBuilder implements SingletonInterface
 
                 if ($jsonActionName === 'customActions' && !empty($actionValue)) {
                     foreach ($actionValue as $actionName) {
-                        $action = GeneralUtility::makeInstance(Action::class);
+                        $action = new Action();
                         $action->setName($actionName);
                         $action->setCustomAction(true);
                         $domainObject->addAction($action);
