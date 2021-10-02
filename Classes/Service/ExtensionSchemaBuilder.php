@@ -19,12 +19,14 @@ namespace EBT\ExtensionBuilder\Service;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
-use EBT\ExtensionBuilder\Domain\Model\BackendModule;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
-use EBT\ExtensionBuilder\Domain\Model\Plugin;
+use EBT\ExtensionBuilder\Factory\BackendModuleFactory;
 use EBT\ExtensionBuilder\Factory\PersonFactory;
+use EBT\ExtensionBuilder\Factory\PluginFactory;
 use EBT\ExtensionBuilder\Utility\Tools;
 use Exception;
 use RuntimeException;
@@ -77,15 +79,17 @@ class ExtensionSchemaBuilder implements SingletonInterface
         }
 
         if (isset($globalProperties['plugins']) && is_array($globalProperties['plugins'])) {
+            $pluginFactory = new PluginFactory();
             foreach ($globalProperties['plugins'] as $pluginValues) {
-                $plugin = $this->buildPlugin($pluginValues);
+                $plugin = $pluginFactory->buildPlugin($pluginValues);
                 $extension->addPlugin($plugin);
             }
         }
 
         if (isset($globalProperties['backendModules']) && is_array($globalProperties['backendModules'])) {
+            $backendModuleFactory = new BackendModuleFactory();
             foreach ($globalProperties['backendModules'] as $backendModuleValues) {
-                $backendModule = $this->buildBackendModule($backendModuleValues);
+                $backendModule = $backendModuleFactory->buildBackendModule($backendModuleValues);
                 $extension->addBackendModule($backendModule);
             }
         }
@@ -153,8 +157,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $relationJsonConfiguration = $extensionBuildConfiguration['modules'][$srcModuleId]['value']['relationGroup']['relations'][$relationId];
 
             if (!is_array($relationJsonConfiguration)) {
-                $errorMessage = 'Missing relation config in domain object: ' . $extensionBuildConfiguration['modules'][$srcModuleId]['value']['name'];
-                throw new Exception($errorMessage);
+                throw new Exception('Missing relation config in domain object: ' . $extensionBuildConfiguration['modules'][$srcModuleId]['value']['name']);
             }
 
             $foreignModelName = $extensionBuildConfiguration['modules'][$wire['tgt']['moduleId']]['value']['name'];
@@ -164,8 +167,11 @@ class ExtensionSchemaBuilder implements SingletonInterface
                 $existingRelations[$localModelName] = [];
             }
             $domainObject = $extension->getDomainObjectByName($localModelName);
+            if (!($domainObject instanceof DomainObject)) {
+                throw new Exception('DomainObject not found: ' . $localModelName);
+            }
             $relation = $domainObject->getPropertyByName($relationJsonConfiguration['relationName']);
-            if (!$relation) {
+            if (!($relation instanceof AbstractProperty)) {
                 throw new Exception('Relation not found: ' . $localModelName . '->' . $relationJsonConfiguration['relationName']);
             }
             // get unique foreign key names for multiple relations to the same foreign class
@@ -291,61 +297,5 @@ class ExtensionSchemaBuilder implements SingletonInterface
                 return Extension::STATE_TEST;
         }
         return Extension::STATE_ALPHA;
-    }
-
-    protected function buildPlugin(array $pluginValues): Plugin
-    {
-        $plugin = GeneralUtility::makeInstance(Plugin::class);
-        $plugin->setName($pluginValues['name']);
-        $plugin->setDescription($pluginValues['description']);
-        $plugin->setType($pluginValues['type']);
-        $plugin->setKey($pluginValues['key']);
-        if (!empty($pluginValues['actions']['controllerActionCombinations'])) {
-            $controllerActionCombinations = [];
-            $lines = GeneralUtility::trimExplode(LF, $pluginValues['actions']['controllerActionCombinations'], true);
-            foreach ($lines as $line) {
-                [$controllerName, $actionNames] = GeneralUtility::trimExplode('=>', $line);
-                if (!empty($actionNames)) {
-                    $controllerActionCombinations[$controllerName] = GeneralUtility::trimExplode(',', $actionNames);
-                }
-            }
-            $plugin->setControllerActionCombinations($controllerActionCombinations);
-        }
-        if (!empty($pluginValues['actions']['noncacheableActions'])) {
-            $nonCacheableControllerActions = [];
-            $lines = GeneralUtility::trimExplode(LF, $pluginValues['actions']['noncacheableActions'], true);
-            foreach ($lines as $line) {
-                [$controllerName, $actionNames] = GeneralUtility::trimExplode('=>', $line);
-                if (!empty($actionNames)) {
-                    $nonCacheableControllerActions[$controllerName] = GeneralUtility::trimExplode(',', $actionNames);
-                }
-            }
-            $plugin->setNonCacheableControllerActions($nonCacheableControllerActions);
-        }
-        return $plugin;
-    }
-
-    protected function buildBackendModule(array $backendModuleValues): BackendModule
-    {
-        $backendModule = GeneralUtility::makeInstance(BackendModule::class);
-        $backendModule->setName($backendModuleValues['name']);
-        $backendModule->setMainModule($backendModuleValues['mainModule']);
-        $backendModule->setTabLabel($backendModuleValues['tabLabel']);
-        $backendModule->setKey($backendModuleValues['key']);
-        $backendModule->setDescription($backendModuleValues['description']);
-        if (!empty($backendModuleValues['actions']['controllerActionCombinations'])) {
-            $controllerActionCombinations = [];
-            $lines = GeneralUtility::trimExplode(
-                LF,
-                $backendModuleValues['actions']['controllerActionCombinations'],
-                true
-            );
-            foreach ($lines as $line) {
-                [$controllerName, $actionNames] = GeneralUtility::trimExplode('=>', $line);
-                $controllerActionCombinations[$controllerName] = GeneralUtility::trimExplode(',', $actionNames);
-            }
-            $backendModule->setControllerActionCombinations($controllerActionCombinations);
-        }
-        return $backendModule;
     }
 }
