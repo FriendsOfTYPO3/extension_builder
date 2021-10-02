@@ -30,7 +30,7 @@
 		"friendsofphp/php-cs-fixer": "^2.18",
 		"roave/security-advisories": "dev-latest",
 		"sebastian/diff": "^3.0",
-		"typo3/cms-frontend": "^11.3",
+		"typo3/cms-frontend": "^11.4",
 		"typo3/cms-install": "^11.4",
 		"typo3/coding-standards": "^0.3.0",
 		"typo3/testing-framework": "^6.11"
