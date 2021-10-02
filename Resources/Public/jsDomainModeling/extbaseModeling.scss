@@ -25,16 +25,20 @@ $url_0: url(background_pixel.png);
 	cursor: pointer;
 }
 
-.module-body {
-    padding: 66px 0 0 0 !important;
+.module {
+    display: flex;
+    flex-direction: column;
 
-	&.index {
-		min-height: 900px;
-		a {
-			color: $color_storm_dust_approx;
-			font-weight: 700;
-		}
-	}
+    .module-body {
+        flex: 1;
+
+        padding: 0 !important;
+    }
+}
+
+// The modeling canvas
+#modelingLayer {
+    height: 100%;
 }
 
 .yui-layout-unit-left {
@@ -108,14 +112,6 @@ div {
 	}
 	&.WireIt-Layer {
 		background-image: $url_0;
-	}
-	&#typo3-docbody {
-		height: 100%;
-		padding: 0;
-	}
-	&#domainModelEditor {
-		height: 100%;
-		width: 100%;
 	}
 	&.WireIt-Container-ddhandle {
 		background-color: $color_celeste_approx;
@@ -479,20 +475,17 @@ div {
 	}
 }
 
-#modelingLayer {
-	height: 100%;
-}
-
+// The main container
 #domainModelEditor {
+    height: 100%;
+    width: 100%;
+
 	legend {
 		font-size: 11px;
 	}
 	.collapse {
 		display: block;
 		visibility: visible;
-	}
-	.t3-icon {
-		font-size: 1px;
 	}
 	&.showAdvancedOptions {
 		fieldset {
@@ -567,6 +560,7 @@ div {
 	}
 }
 
+// New Model Object element
 #moduleBar {
 	cursor: move;
 	padding: 3px;
@@ -594,10 +588,6 @@ div {
 		position: relative;
 		top: -3px;
 	}
-}
-
-#toolbar {
-	position: static;
 }
 
 .inputEx-InPlaceEdit-editor {
