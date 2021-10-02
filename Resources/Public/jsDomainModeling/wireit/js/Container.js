@@ -210,11 +210,22 @@
 			}
 
 			if (this.options.close) {
-				// Close button
-				//this.closeButton = WireIt.cn('div', {className: this.options.closeButtonClassName});
-				this.closeButton = WireIt.cn('img', {className: this.options.closeButtonClassName, src: './sysext/core/Resources/Public/Icons/T3Icons/svgs/actions/actions-delete.svg', width: 16});
-				this.el.appendChild(this.closeButton);
-				Event.addListener(this.closeButton, "click", this.onCloseButton, this, true);
+        // Close button
+        //this.closeButton = WireIt.cn('div', {className: this.options.closeButtonClassName});
+        this.closeButton = WireIt.cn(
+          'span',
+          {
+            className: this.options.closeButtonClassName,
+          },
+          null,
+          '<span class="t3js-icon icon icon-size-small icon-state-default">' +
+          '<span class="icon-markup">' +
+          '<svg class="icon-color"><use xlink:href="/typo3/sysext/core/Resources/Public/Icons/T3Icons/sprites/actions.svg#actions-delete"></use></svg>' +
+          '</span>' +
+          '</span>'
+        );
+        this.el.appendChild(this.closeButton);
+        Event.addListener(this.closeButton, "click", this.onCloseButton, this, true);
 			}
 
 			// Append to the layer element
