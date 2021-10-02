@@ -250,12 +250,20 @@
         // Arrows to order:
         if (this.options.sortable) {
           var arrowUp = inputEx.cn('div', {className: 'inputEx-ListField-Arrow inputEx-ListField-ArrowUp t3js-icon icon icon-size-small '});
-          arrowUp.innerHTML = '<span class="icon-markup"> <img src="./sysext/core/Resources/Public/Icons/T3Icons/svgs/actions/actions-caret-up.svg" width="16" height="16"> </span>';
+          arrowUp.innerHTML = '<span class="t3js-icon icon icon-size-small icon-state-default">' +
+            '<span class="icon-markup">' +
+            '<svg class="icon-color"><use xlink:href="/typo3/sysext/core/Resources/Public/Icons/T3Icons/sprites/actions.svg#actions-caret-up"></use></svg>' +
+            '</span>' +
+            '</span>';
           Event.addListener(arrowUp, 'click', this.onArrowUp, this, true);
           newDiv.appendChild(arrowUp);
 
           var arrowDown = inputEx.cn('div', {className: 'inputEx-ListField-Arrow inputEx-ListField-ArrowDown t3js-icon icon icon-size-small '});
-          arrowDown.innerHTML = '<span class="icon-markup"> <img src="./sysext/core/Resources/Public/Icons/T3Icons/svgs/actions/actions-caret-down.svg" width="16" height="16"> </span>';
+          arrowDown.innerHTML = '<span class="t3js-icon icon icon-size-small icon-state-default">' +
+            '<span class="icon-markup">' +
+            '<svg class="icon-color"><use xlink:href="/typo3/sysext/core/Resources/Public/Icons/T3Icons/sprites/actions.svg#actions-caret-down"></use></svg>' +
+            '</span>' +
+            '</span>';
           Event.addListener(arrowDown, 'click', this.onArrowDown, this, true);
           newDiv.appendChild(arrowDown);
         }
@@ -263,7 +271,11 @@
         // Delete link
         if (!this.options.useButtons) {
           var delButton = inputEx.cn('div', {className: 'inputEx-List-link t3js-icon icon icon-size-small icon-state-default t3-icon-edit-delete deleteButton icon-actions-edit-delete'}, null, this.options.listRemoveLabel);
-          delButton.innerHTML = '<span class="icon-markup"><img src="./sysext/core/Resources/Public/Icons/T3Icons/svgs/actions/actions-delete.svg" width="16" height="16"></span>';
+          delButton.innerHTML = '<span class="t3js-icon icon icon-size-small icon-state-default" style="display: inline-block; width:16px; height: 16px;">' +
+            '<span class="icon-markup">' +
+            '<svg class="icon-color"><use xlink:href="/typo3/sysext/core/Resources/Public/Icons/T3Icons/sprites/actions.svg#actions-delete"></use></svg>' +
+            '</span>' +
+            '</span>';
           Event.addListener(delButton, 'click', this.onDelete, this, true);
           newDiv.appendChild(delButton);
         }
@@ -282,7 +294,7 @@
        * @param {Event} e Original click event
        */
       onArrowUp: function (e) {
-        var childElement = Event.getTarget(e).parentNode.parentNode.parentNode;
+        var childElement = Event.getTarget(e).parentNode.parentNode.parentNode.parentNode.parentNode;
 
         var previousChildNode = null;
         var nodeIndex = -1;
@@ -332,7 +344,7 @@
        * @param {Event} e Original click event
        */
       onArrowDown: function (e) {
-        var childElement = Event.getTarget(e).parentNode.parentNode.parentNode;
+        var childElement = Event.getTarget(e).parentNode.parentNode.parentNode.parentNode.parentNode;
 
         var nodeIndex = -1;
         var nextChildNode = null;
@@ -379,7 +391,7 @@
         Event.stopEvent(e);
 
         // Get the wrapping div element
-        var elementDiv = Event.getTarget(e).parentNode.parentNode.parentNode;
+        var elementDiv = Event.getTarget(e).parentNode.parentNode.parentNode.parentNode.parentNode;
 
         // Get the index of the subField
         var index = -1;
