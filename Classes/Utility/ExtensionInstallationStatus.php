@@ -19,27 +19,14 @@ namespace EBT\ExtensionBuilder\Utility;
 
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use Exception;
-use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extensionmanager\Utility\InstallUtility;
-use TYPO3\CMS\Install\Service\SqlSchemaMigrationService;
 
 class ExtensionInstallationStatus
 {
     protected ?Extension $extension = null;
-    /**
-     * @var InstallUtility
-     */
-    protected $installTool;
-    protected $updateStatements = [];
+    protected array $updateStatements = [];
     protected bool $dbUpdateNeeded = false;
     protected bool $usesComposerPath = false;
-
-    public function __construct()
-    {
-        $this->installTool = GeneralUtility::makeInstance(InstallUtility::class);
-    }
 
     public function setExtension(Extension $extension): void
     {
@@ -150,14 +137,14 @@ class ExtensionInstallationStatus
         }
 
         return ['success' => 'Database was successfully updated'];
-    }
+    }*/
 
     public function isDbUpdateNeeded(): bool
     {
         return $this->dbUpdateNeeded;
     }
 
-    public function getUpdateStatements(): array
+    /*public function getUpdateStatements(): array
     {
         return $this->updateStatements;
     }
