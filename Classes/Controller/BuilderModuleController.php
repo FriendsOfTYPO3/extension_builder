@@ -137,7 +137,7 @@ class BuilderModuleController extends ActionController
 
         if (!$this->request->hasArgument('action')) {
             $userSettings = $this->getBackendUserAuthentication()->getModuleData('extensionbuilder');
-            if ($userSettings['firstTime'] === 0) {
+            if (($userSettings['firstTime'] ?? 1) === 0) {
                 return new ForwardResponse('domainmodelling');
             }
         }
