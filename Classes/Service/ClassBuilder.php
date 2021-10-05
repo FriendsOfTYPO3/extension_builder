@@ -100,7 +100,7 @@ class ClassBuilder implements SingletonInterface
     {
         $this->extension = $extension;
         $settings = $extension->getSettings();
-        $this->settings = $settings['classBuilder'];
+        $this->settings = $settings['classBuilder'] ?? [];
         $this->extensionDirectory = $this->extension->getExtensionDir();
     }
 

@@ -45,12 +45,6 @@ use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
-/**
- * Controller of the Extension Builder extension
- *
- * @category    Controller
- * @license     http://www.gnu.org/copyleft/gpl.html
- */
 class BuilderModuleController extends ActionController
 {
     protected FileGenerator $fileGenerator;
@@ -185,6 +179,11 @@ class BuilderModuleController extends ActionController
         $this->view->assignMultiple([
             'initialWarnings' => $initialWarnings
         ]);
+        $this->pageRenderer->addInlineSetting(
+            'extensionBuilder.publicResourceWebPath',
+            'core',
+            PathUtility::getPublicResourceWebPath('EXT:core/Resources/Public/')
+        );
         $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', ['firstTime' => 0]);
 
         $this->moduleTemplate->setContent($this->view->render());
@@ -518,13 +517,22 @@ class BuilderModuleController extends ActionController
             if ($this->extensionBuilderSettings['extConf']['enableRoundtrip'] === '1') {
                 if (empty($extensionSettings)) {
                     // no config file in an existing extension!
-                    // this would result in a	 total overwrite so we create one and give a warning
+                    // this would result in a total overwrite so we create one and give a warning
                     $this->extensionBuilderConfigurationManager->createInitialSettingsFile(
                         $extension,
                         $this->extensionBuilderSettings['codeTemplateRootPaths.']
                     );
                     $extensionPath = Environment::isComposerMode() ? 'packages/' : 'typo3conf/ext/';
-                    return ['warning' => "<span class='error'>Roundtrip is enabled but no configuration file was found.</span><br />This might happen if you use the extension builder the first time for this extension. <br />A settings file was generated in <br /><b>" . $extensionPath . $extension->getExtensionKey() . '/Configuration/ExtensionBuilder/settings.yaml.</b><br />Configure the overwrite settings, then save again.'];
+                    return [
+                        'warning' => sprintf(
+                            '<span class="error">Roundtrip is enabled but no configuration file was found.</span><br />'
+                            . 'This might happen if you use the extension builder the first time for this extension.<br />'
+                            . 'A settings file was generated in<br />'
+                            . '<b>%s/Configuration/ExtensionBuilder/settings.yaml.</b><br />'
+                            . 'Configure the overwrite settings, then save again.',
+                            $extensionPath . $extension->getExtensionKey()
+                        )
+                    ];
                 }
                 try {
                     RoundTrip::prepareExtensionForRoundtrip($extension);

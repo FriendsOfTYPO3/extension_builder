@@ -22,6 +22,7 @@ use EBT\ExtensionBuilder\Service\ParserService;
 use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 use ReflectionClass;
 use ReflectionException;
+use TYPO3\CMS\Core\Cache\Frontend\NullFrontend;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Extbase\Reflection\ClassSchema;
 use TYPO3\CMS\Extbase\Reflection\ReflectionService;
@@ -157,7 +158,7 @@ class ClassParserTest extends BaseUnitTest
         self::assertInstanceOf(ClassObject::class, $classObject);
         require_once($file);
 
-        $classReflectionService = new ReflectionService();
+        $classReflectionService = new ReflectionService(new NullFrontend('extbase'), 'ClassSchemata');
         $classSchema = $classReflectionService->getClassSchema($className);
         $this->parserFindsAllConstants($classObject, new ReflectionClass($className));
         $this->parserFindsAllMethods($classObject, $classSchema);

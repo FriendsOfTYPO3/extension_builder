@@ -26,6 +26,7 @@ use EBT\ExtensionBuilder\Domain\Model\Plugin;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 use EBT\ExtensionBuilder\Utility\Inflector;
 use ReflectionClass;
+use TYPO3\CMS\Core\Cache\Frontend\NullFrontend;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ReflectionService;
 
@@ -118,7 +119,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         }
         self::assertTrue(class_exists($className), 'Class was not generated:' . $className);
 
-        $reflectionService = new ReflectionService();
+        $reflectionService = new ReflectionService(new NullFrontend('extbase'), 'ClassSchemata');
         $reflection = $reflectionService->getClassSchema(new $className());
         self::assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)), 'Getter was not generated');
         self::assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)), 'Setter was not generated');
@@ -160,7 +161,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         }
         self::assertTrue(class_exists($className), 'Class was not generated:' . $className);
 
-        $reflectionService = new ReflectionService();
+        $reflectionService = new ReflectionService(new NullFrontend('extbase'), 'ClassSchemata');
         $reflection = $reflectionService->getClassSchema(new $className());
         self::assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)), 'Getter was not generated');
         self::assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)), 'Setter was not generated');
