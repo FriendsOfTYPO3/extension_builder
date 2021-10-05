@@ -252,7 +252,7 @@
           var arrowUp = inputEx.cn('div', {className: 'inputEx-ListField-Arrow inputEx-ListField-ArrowUp t3js-icon icon icon-size-small '});
           arrowUp.innerHTML = '<span class="t3js-icon icon icon-size-small icon-state-default">' +
             '<span class="icon-markup">' +
-            '<svg class="icon-color"><use xlink:href="/typo3/sysext/core/Resources/Public/Icons/T3Icons/sprites/actions.svg#actions-caret-up"></use></svg>' +
+            '<svg class="icon-color"><use xlink:href="' + TYPO3.settings.extensionBuilder.publicResourceWebPath.core + 'Icons/T3Icons/sprites/actions.svg#actions-caret-up"></use></svg>' +
             '</span>' +
             '</span>';
           Event.addListener(arrowUp, 'click', this.onArrowUp, this, true);
@@ -261,7 +261,7 @@
           var arrowDown = inputEx.cn('div', {className: 'inputEx-ListField-Arrow inputEx-ListField-ArrowDown t3js-icon icon icon-size-small '});
           arrowDown.innerHTML = '<span class="t3js-icon icon icon-size-small icon-state-default">' +
             '<span class="icon-markup">' +
-            '<svg class="icon-color"><use xlink:href="/typo3/sysext/core/Resources/Public/Icons/T3Icons/sprites/actions.svg#actions-caret-down"></use></svg>' +
+            '<svg class="icon-color"><use xlink:href="' + TYPO3.settings.extensionBuilder.publicResourceWebPath.core + 'Icons/T3Icons/sprites/actions.svg#actions-caret-down"></use></svg>' +
             '</span>' +
             '</span>';
           Event.addListener(arrowDown, 'click', this.onArrowDown, this, true);
@@ -273,7 +273,7 @@
           var delButton = inputEx.cn('div', {className: 'inputEx-List-link t3js-icon icon icon-size-small icon-state-default t3-icon-edit-delete deleteButton icon-actions-edit-delete'}, null, this.options.listRemoveLabel);
           delButton.innerHTML = '<span class="t3js-icon icon icon-size-small icon-state-default" style="display: inline-block; width:16px; height: 16px;">' +
             '<span class="icon-markup">' +
-            '<svg class="icon-color"><use xlink:href="/typo3/sysext/core/Resources/Public/Icons/T3Icons/sprites/actions.svg#actions-delete"></use></svg>' +
+            '<svg class="icon-color"><use xlink:href="' + TYPO3.settings.extensionBuilder.publicResourceWebPath.core + 'Icons/T3Icons/sprites/actions.svg#actions-delete"></use></svg>' +
             '</span>' +
             '</span>';
           Event.addListener(delButton, 'click', this.onDelete, this, true);

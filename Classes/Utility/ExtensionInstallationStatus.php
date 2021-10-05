@@ -19,7 +19,6 @@ namespace EBT\ExtensionBuilder\Utility;
 
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use Exception;
-use mysqli_result;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -33,9 +32,6 @@ class ExtensionInstallationStatus
      * @var InstallUtility
      */
     protected $installTool;
-    /**
-     * @var array[]
-     */
     protected $updateStatements = [];
     protected bool $dbUpdateNeeded = false;
     protected bool $usesComposerPath = false;
@@ -50,9 +46,6 @@ class ExtensionInstallationStatus
         $this->extension = $extension;
     }
 
-    /**
-     * @param bool $usesComposerPath
-     */
     public function setUsesComposerPath(bool $usesComposerPath): void
     {
         $this->usesComposerPath = $usesComposerPath;
@@ -94,7 +87,7 @@ class ExtensionInstallationStatus
             $statusMessage .= '<p>Your Extension is not installed yet.</p>';
             if ($this->usesComposerPath) {
                 $statusMessage .= sprintf(
-                    '<p>Add <code>"%1$s": "@dev"</code> to the <code>"require"</code> section of your project composer.json<br>Execute <code>composer require %1$s:@dev</code> in terminal',
+                    'Execute <code>composer require %1$s:@dev</code> in terminal',
                     $this->extension->getComposerInfo()['name']
                 );
             }
@@ -105,16 +98,12 @@ class ExtensionInstallationStatus
         return $statusMessage;
     }
 
-    /**
-     * @param string $extensionKey
-     */
-    public function checkForDbUpdate($extensionKey): void
+    /*public function checkForDbUpdate(string $extensionKey): void
     {
         $this->dbUpdateNeeded = false;
         if (ExtensionManagementUtility::isLoaded($extensionKey)) {
             $sqlFile = ExtensionManagementUtility::extPath($extensionKey) . 'ext_tables.sql';
             if (@file_exists($sqlFile)) {
-                /** @var SqlSchemaMigrationService $sqlHandler */
                 $sqlHandler = GeneralUtility::makeInstance(SqlSchemaMigrationService::class);
 
                 $sqlContent = GeneralUtility::getUrl($sqlFile);
@@ -134,11 +123,6 @@ class ExtensionInstallationStatus
         }
     }
 
-    /**
-     * @param array $params
-     *
-     * @return array
-     */
     public function performDbUpdates(array $params): array
     {
         $hasErrors = false;
@@ -178,11 +162,8 @@ class ExtensionInstallationStatus
         return $this->updateStatements;
     }
 
-    /**
-     * @return DatabaseConnection
-     */
     protected function getDatabaseConnection()
     {
         return $GLOBALS['TYPO3_DB'];
-    }
+    }*/
 }
