@@ -228,7 +228,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      */
     public static function substituteExtensionPath(string $encodedTemplateRootPath): string
     {
-        if (GeneralUtility::isFirstPartOfStr($encodedTemplateRootPath, 'EXT:')) {
+        if (str_starts_with($encodedTemplateRootPath, 'EXT:')) {
             [$extKey, $script] = explode('/', substr($encodedTemplateRootPath, 4), 2);
             if ($extKey && ExtensionManagementUtility::isLoaded($extKey)) {
                 return ExtensionManagementUtility::extPath($extKey) . $script;
