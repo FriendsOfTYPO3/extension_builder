@@ -20,14 +20,10 @@ namespace EBT\ExtensionBuilder\Tests\Functional\Configuration;
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 
 class ConfigurationManagerTest extends BaseFunctionalTest
 {
-    /**
-     * @var ExtensionBuilderConfigurationManager
-     */
-    private $configurationManager;
+    private ExtensionBuilderConfigurationManager $configurationManager;
 
     protected function setUp(): void
     {
@@ -37,11 +33,19 @@ class ConfigurationManagerTest extends BaseFunctionalTest
 
     /**
      * @test
-     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
-    public function getPersistenceTableReturnsCorrectValue(): void
+    public function getParentClassForValueObject(): void
     {
-        $tableName = $this->configurationManager->getPersistenceTable(FrontendUser::class);
-        self::assertSame($tableName, 'fe_users');
+        $parentClassForValueObject = $this->configurationManager->getParentClassForValueObject($this->extension);
+        self::assertSame('\TYPO3\CMS\Extbase\DomainObject\AbstractValueObject', $parentClassForValueObject);
+    }
+
+    /**
+     * @test
+     */
+    public function getParentClassForEntityObject(): void
+    {
+        $parentClassForValueObject = $this->configurationManager->getParentClassForEntityObject($this->extension);
+        self::assertSame('\TYPO3\CMS\Extbase\DomainObject\AbstractEntity', $parentClassForValueObject);
     }
 }
