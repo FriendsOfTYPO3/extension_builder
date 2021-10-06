@@ -32,6 +32,7 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 
 /**
@@ -1133,7 +1134,7 @@ class RoundTrip implements SingletonInterface
             throw new Exception('Backup directory is not a valid path: ' . $backupDir);
         }
 
-        if (GeneralUtility::isAbsPath($backupDir)) {
+        if (PathUtility::isAbsolutePath($backupDir)) {
             if (!GeneralUtility::isAllowedAbsPath($backupDir)) {
                 throw new Exception('Backup directory is not an allowed absolute path: ' . $backupDir);
             }

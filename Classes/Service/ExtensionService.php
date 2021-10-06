@@ -18,7 +18,6 @@ declare(strict_types=1);
 namespace EBT\ExtensionBuilder\Service;
 
 use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
 class ExtensionService
@@ -71,7 +70,7 @@ class ExtensionService
             if (($repository['options']['symlink'] ?? null) === false) {
                 continue;
             }
-            if (GeneralUtility::isAbsPath($repository['url'])) {
+            if (PathUtility::isAbsolutePath($repository['url'])) {
                 $storagePaths[] = $repository['url'];
             } else {
                 $repositoryPath = PathUtility::getCanonicalPath($projectPath . '/' . $repository['url']);

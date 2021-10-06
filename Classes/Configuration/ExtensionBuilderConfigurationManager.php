@@ -31,6 +31,7 @@ use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
@@ -235,7 +236,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
             return '';
         }
 
-        if (GeneralUtility::isAbsPath($encodedTemplateRootPath)) {
+        if (PathUtility::isAbsolutePath($encodedTemplateRootPath)) {
             return $encodedTemplateRootPath;
         }
 
