@@ -430,7 +430,7 @@ class SpycYAMLParser
             }
 
             while (++$i < $cnt && self::greedilyNeedNextLine($line)) {
-                $line = rtrim($line, ' ' . PHP_EOL . TAB . CR) . ' ' . ltrim($Source[$i], ' ' . TAB);
+                $line = rtrim($line, ' ' . PHP_EOL . "\t" . CR) . ' ' . ltrim($Source[$i], ' ' . "\t");
             }
             $i--;
 
