@@ -30,40 +30,45 @@ use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Imaging\Icon;
+use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LocalizationFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class BuilderModuleController extends ActionController
 {
-    protected FileGenerator $fileGenerator;
+    private FileGenerator $fileGenerator;
 
-    protected ExtensionBuilderConfigurationManager $extensionBuilderConfigurationManager;
+    private ExtensionBuilderConfigurationManager $extensionBuilderConfigurationManager;
 
-    protected ExtensionInstallationStatus $extensionInstallationStatus;
+    private ExtensionInstallationStatus $extensionInstallationStatus;
 
-    protected ExtensionSchemaBuilder $extensionSchemaBuilder;
+    private ExtensionSchemaBuilder $extensionSchemaBuilder;
 
-    protected ExtensionService $extensionService;
+    private ExtensionService $extensionService;
 
-    protected ExtensionValidator $extensionValidator;
+    private ExtensionValidator $extensionValidator;
 
-    protected ExtensionRepository $extensionRepository;
+    private ExtensionRepository $extensionRepository;
 
-    protected ModuleTemplate $moduleTemplate;
+    private ModuleTemplateFactory $moduleTemplateFactory;
 
-    protected PageRenderer $pageRenderer;
+    private ModuleTemplate $moduleTemplate;
+
+    private PageRenderer $pageRenderer;
+
+    private IconFactory $iconFactory;
 
     /**
      * Settings from various sources:
@@ -110,9 +115,19 @@ class BuilderModuleController extends ActionController
         $this->extensionRepository = $extensionRepository;
     }
 
+    public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory): void
+    {
+        $this->moduleTemplateFactory = $moduleTemplateFactory;
+    }
+
     public function injectPageRenderer(PageRenderer $pageRenderer): void
     {
         $this->pageRenderer = $pageRenderer;
+    }
+
+    public function injectIconFactory(IconFactory $iconFactory): void
+    {
+        $this->iconFactory = $iconFactory;
     }
 
     public function initializeAction(): void
@@ -128,7 +143,7 @@ class BuilderModuleController extends ActionController
      */
     public function indexAction(): ResponseInterface
     {
-        $this->moduleTemplate = GeneralUtility::makeInstance(ModuleTemplate::class);
+        $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setTitle('Extension Builder');
 
         $this->addMainMenu('index');
@@ -144,15 +159,12 @@ class BuilderModuleController extends ActionController
 
         $this->moduleTemplate->setContent($this->view->render());
 
-        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '11.0.0', '<')) {
-            return $this->moduleTemplate->renderContent();
-        }
         return new HtmlResponse($this->moduleTemplate->renderContent());
     }
 
     public function domainmodellingAction(): ResponseInterface
     {
-        $this->moduleTemplate = GeneralUtility::makeInstance(ModuleTemplate::class);
+        $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setBodyTag('<body class="yui-skin-sam">');
         $this->moduleTemplate->setTitle('Extension Builder');
 
@@ -188,10 +200,7 @@ class BuilderModuleController extends ActionController
 
         $this->moduleTemplate->setContent($this->view->render());
 
-        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '11.0.0', '<')) {
-            return $this->moduleTemplate->renderContent();
-        }
-        return new HtmlResponse($this->moduleTemplate->renderContent());
+        return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
 
     protected function addMainMenu(string $currentAction): void
@@ -239,21 +248,21 @@ class BuilderModuleController extends ActionController
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
         $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-            ->setIcon($this->moduleTemplate->getIconFactory()->getIcon('actions-system-list-open', Icon::SIZE_SMALL))
+            ->setIcon($this->iconFactory->getIcon('actions-system-list-open', Icon::SIZE_SMALL))
             ->setTitle('Open extension')
             ->setId('WiringEditor-loadButton-button')
             ->setHref('#');
         $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
 
         $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-            ->setIcon($this->moduleTemplate->getIconFactory()->getIcon('actions-document-new', Icon::SIZE_SMALL))
+            ->setIcon($this->iconFactory->getIcon('actions-document-new', Icon::SIZE_SMALL))
             ->setTitle('New extension')
             ->setId('WiringEditor-newButton-button')
             ->setHref('#');
         $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
 
         $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-            ->setIcon($this->moduleTemplate->getIconFactory()->getIcon('actions-document-save', Icon::SIZE_SMALL))
+            ->setIcon($this->iconFactory->getIcon('actions-document-save', Icon::SIZE_SMALL))
             ->setTitle('Save extension')
             ->setId('WiringEditor-saveButton-button')
             ->setHref('#');
@@ -278,7 +287,7 @@ class BuilderModuleController extends ActionController
         $openInNewWindowButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
             ->setHref('#')
             ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.openInNewWindow'))
-            ->setIcon($this->moduleTemplate->getIconFactory()->getIcon('actions-window-open', Icon::SIZE_SMALL))
+            ->setIcon($this->iconFactory->getIcon('actions-window-open', Icon::SIZE_SMALL))
             ->setOnClick($aOnClick)
             ->setId('opennewwindow');
 
@@ -288,7 +297,7 @@ class BuilderModuleController extends ActionController
     protected function registerAdvancedOptionsButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void
     {
         $advancedOptionsButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-            ->setIcon($this->moduleTemplate->getIconFactory()->getIcon('content-menu-pages', Icon::SIZE_SMALL))
+            ->setIcon($this->iconFactory->getIcon('content-menu-pages', Icon::SIZE_SMALL))
             ->setTitle('<span class="simpleMode">Show</span><span class="advancedMode">Hide</span> advanced options.')
             ->setId('toggleAdvancedOptions')
             ->setHref('#')
