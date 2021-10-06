@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace {extension.namespaceName}\Tests\Unit\Controller;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use TYPO3Fluid\Fluid\View\ViewInterface;
 
 /**
  * Test case
