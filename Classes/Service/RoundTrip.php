@@ -1024,11 +1024,13 @@ class RoundTrip implements SingletonInterface
         $overWriteSettings = $settings['overwriteSettings'] ?? [];
 
         foreach ($pathParts as $pathPart) {
-            if (isset($overWriteSettings[$pathPart]) && is_array($overWriteSettings[$pathPart])) {
-                // step one level deeper
-                $overWriteSettings = $overWriteSettings[$pathPart];
-            } else {
-                return $map[$overWriteSettings[$pathPart]];
+            if (isset($overWriteSettings[$pathPart])) {
+                if(is_array($overWriteSettings[$pathPart])) {
+                    // step one level deeper
+                    $overWriteSettings = $overWriteSettings[$pathPart];
+                } else {
+                    return $map[$overWriteSettings[$pathPart]];
+                }
             }
         }
 
