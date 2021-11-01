@@ -3,6 +3,7 @@
 
 .. _introduction:
 
+============
 Introduction
 ============
 
@@ -15,7 +16,7 @@ to kickstart a simple frontend plugin with basic CRUD (Create - Read - Update - 
 .. _what-it-does:
 
 What does it do?
-----------------
+================
 
 The Extension Builder helps you to build TYPO3 extensions based on extbase and fluid.
 You can design your model with a graphic modeler and create Plugins or Backend modules.
@@ -33,7 +34,7 @@ as the old kickstarter has done it. It focuses on extension development in a sen
 .. _screenshots:
 
 Screenshots
------------
+===========
 
 The Modeler provides a graphical interface to model your Domain
 

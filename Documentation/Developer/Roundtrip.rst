@@ -1,10 +1,11 @@
 .. include:: ../Includes.txt
 
+==============
 Roundtrip mode
 ==============
 
 Editing an existing extension
-`````````````````````````````
+=============================
 
 Sooner or later it comes to the point, where you have to add or rename models but already changed code of the
 originally created files.
@@ -19,7 +20,7 @@ For example if you need another dependency in :file:`ext_emconf.php` you should 
 Be sure to configure the :ref:`configuration-overwritesettings`
 
 Overview of the roundtrip features
-``````````````````````````````````
+==================================
 
 Consequences of various actions:
 
