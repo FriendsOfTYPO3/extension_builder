@@ -49,7 +49,7 @@
 				<source>The vendor name is the first part of the new package identifier</source>
 			</trans-unit>
 			<trans-unit id="short_description" resname="short_description">
-				<source>Descr.</source>
+				<source>Description</source>
 			</trans-unit>
 			<trans-unit id="description" resname="description">
 				<source>Description</source>
@@ -300,7 +300,7 @@
 				<source>Is aggregate root?</source>
 			</trans-unit>
 			<trans-unit id="descr_isAggregateRoot" resname="descr_isAggregateRoot">
-				<source>If true, the extension builder will generate a repository for this model</source>
+				<source>If true, the Extension Builder will generate a repository for this model</source>
 			</trans-unit>
 			<trans-unit id="enableSorting" resname="enableSorting">
 				<source>Enable sorting?</source>
@@ -354,7 +354,7 @@
 				<source>Action type</source>
 			</trans-unit>
 			<trans-unit id="descr_actionType" resname="descr_actionType">
-				<source>For each selected action, the extension builder will generate a template and a action method in
+				<source>For each selected action, the Extension Builder will generate a template and a action method in
 					the controller of this model. If the model is an aggregate root the default CRUD actions will be
 					generated per default.
 				</source>
