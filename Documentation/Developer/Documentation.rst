@@ -1,9 +1,4 @@
-.. include:: ../Includes.txt
-
-.. On this page, there are some links using the intersphinx link mechanism (:ref: ...).
-   If you are reading the .rst (text) version of this file (and not the rendered version), go to
-   https://docs.typo3.org/typo3cms/extensions/extension_builder/Developer/Documentation.html
-   to be able to follow the links.
+.. include:: /Includes.rst.txt
 
 ====================
 Create Documentation
