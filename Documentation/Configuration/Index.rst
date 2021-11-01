@@ -3,6 +3,7 @@
 
 .. _configuration:
 
+=======================
 Configuration Reference
 =======================
 
@@ -17,7 +18,7 @@ There are two places to configure the Extension Builder:
 
 
 General Extension Builder configuration
-```````````````````````````````````````
+=======================================
 
 Go to the Settings - Extension Configuration and open the configuration of the Extension Builder. Here several settings are configurable:
 
@@ -32,7 +33,8 @@ Go to the Settings - Extension Configuration and open the configuration of the E
 +----------------------------+-----------------------------------------------------------------------------------------------------------+--------------------------+
 
 Extension specific configuration
-````````````````````````````````
+================================
+
 After the initial creation of the extension, you will find the file :file:`Configuration/ExtensionBuilder/settings.yaml`
 in your extension which contains the following extension specific configuration.
 

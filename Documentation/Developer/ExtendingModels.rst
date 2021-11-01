@@ -1,10 +1,11 @@
 .. include:: ../Includes.txt
 
+==========================================
 Extending models or map to existing tables
 ==========================================
 
 Extending models
-----------------
+================
 
 The ExtensionBuilder supports single table inheritance. That means, you can extend extbase models,
 either of your current extension or of other extensions. You have to enter the class name (not the model name!)
@@ -31,7 +32,7 @@ the backend form and a new tab showing the properties that contains the new prop
 Example: Extend frontend user
 
 Mapping to tables
------------------
+=================
 
 Often you want to store your models in an existing table, for example if there is no extbase model for that table yet (like tt_address). Then you can enter the tablename in the domain object settings form in the field "Map to existing table". The ExtensionBuilder will then add fields to that table for each property you added to your model. If you name the properties according to the existing column names you can access the existing fields with the getters and setters of your model and no new columns are generated.
 
@@ -81,7 +82,7 @@ The backend form for the extended frontend user
    Do not use STI of external models in extensions you want to publish in TER. You (and the user who download your extension) have no control of how many other extensions try to extend the same model which will result in unexpected behaviour!
 
 Relations to models of other extensions
----------------------------------------
+=======================================
 
 If you want to add a relation to a model that does not belong to your current extension you have to enter the
 class name (not the model name!) of that model in the relations settings form. The related class has to be loadable,
