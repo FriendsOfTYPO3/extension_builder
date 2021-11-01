@@ -3,16 +3,17 @@
 
 .. _user-manual:
 
+============
 Users Manual
 ============
 
 Target group: **Developers**
 
 Using the Extension Builder
----------------------------
+===========================
 
 Starting a new extension
-------------------------
+========================
 
 To create a new extension, go to the Domain Modelling view (1) and open the left panel by clicking on the small arrow symbol ">|" on the upper left corner (2).
 
@@ -22,7 +23,7 @@ To create a new extension, go to the Domain Modelling view (1) and open the left
    :alt: Modeler Start Extension
 
 1. Create a domain model
-------------------------
+========================
 
 Enter a meaningful extension name (1), a vendor name (2) (UpperCamelCase) and an extension key (3) (without spaces and in lowercase).
 You can add a person that will be listed in the generated files as author.
@@ -78,13 +79,13 @@ Open the action panel and select the options you need. All actions you select wi
 
 
 2. Add properties
------------------
+=================
 
 The names of properties of the same model have to be unique, they must start with a lowercase letter, they should only contain alphanumerical characters and they should be written in lowerCamelCase if necessary.
 The description you enter here, will appear in the back-end as a help text near the property field.
 
 3. Add relations
-----------------
+================
 
 If you create multiple models you may want to connect them by relations. A relation should have a lowerCamelCase name like properties and can be
 connected to the related model by dragging the mouse from the round connector at the relation property to the connector at the top of the related model.
@@ -106,25 +107,26 @@ These relations are possible:
 Besides that you can decide if you want to edit the related objects in the backend "inline" that is in the form of the "parent" object or as a select field.
 
 4. Create a plugin
-------------------
+==================
 
 If you want to create an extension that generates output in the frontend create a plugin with a meaningful
 name and a lowercase key without spaces.
 
 
 5. And/Or create a backend module
----------------------------------
+=================================
 
 If you want a backend module for your extension, you have to add a backend module in the left panel of the modeler
 
 6. Save the extension
----------------------
+=====================
 
 If your model represents the domain you wanted to implement you can hit the "Save" button at the bottom. The Extension Builder generates all required files for you.
 **The location of the generated extension depends on your local setup:**
 
 Composer mode
-^^^^^^^^^^^^^
+-------------
+
 If you run TYPO3 in `Composer Mode <https://docs.typo3.org/m/typo3/guide-installation/10.4/en-us/QuickInstall/Composer/Index.html>`_
 you have to provide and configure a local `path repository <https://getcomposer.org/doc/05-repositories.md#path>`_ **before you save your extension**.
 The ExtensionBuilder will read the path from your composer.json and offer you this path as the destination
@@ -136,7 +138,7 @@ for saving the extension. ExtensionBuilder will create a symlink in typo3conf/ex
    :alt: Select destination
 
 Non composer mode
-^^^^^^^^^^^^^^^^^
+-----------------
 
 If you are **not** in composer mode the generated extension will go to :file:`typo3conf/ext/your_extension_key/`.
 

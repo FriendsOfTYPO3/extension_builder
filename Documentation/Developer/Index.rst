@@ -3,6 +3,7 @@
 
 .. _developer:
 
+================
 Developer Corner
 ================
 
@@ -15,15 +16,15 @@ activated by clicking on the link in the upper right corner in the modeler.
    The advanced options are enabled/disabled with the access key "a"
 
 
-Use the advanced options with care. They are for special settings, 
+Use the advanced options with care. They are for special settings,
 useful for the experienced TYPO3 developer.
 
 
 Creating a new extension
-------------------------
+========================
 
 Naming conventions
-``````````````````
+------------------
 
 When to use uppercase, lowercase or CamelCase and other restrictions:
 
@@ -50,7 +51,7 @@ When to use uppercase, lowercase or CamelCase and other restrictions:
 
 
 Extension meta data
-```````````````````
+-------------------
 
 Enter the basic meta data for the extension in the left panel of the modeler:
 
@@ -70,7 +71,7 @@ Enter the basic meta data for the extension in the left panel of the modeler:
 
 
 Adding plugins
-``````````````
+--------------
 
 Every extension that should generate output in the frontend needs a plugin. It will be shown in the "plugin type" field
 of the content element "Plugin". It can be added to your extension in the left panel:
@@ -83,7 +84,7 @@ of the content element "Plugin". It can be added to your extension in the left p
 
 
 Adding backend modules
-``````````````````````
+----------------------
 
 If your extension needs a module in the backend, this can be added in the left panel:
 
@@ -100,25 +101,25 @@ If your extension needs a module in the backend, this can be added in the left p
 +---------------+--------------------------------------------------------------------+
 
 Creating a model
-````````````````
+----------------
 
 Click on the "New Model Object" button in the upper left corner and drag it to a free place in the modeler.
 Then click at the title bar and enter a name in UpperCamelCase. The model name must be unique in the extension.
 
 Adding an entity/value object
-'''''''''''''''''''''''''''''
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It is selectable, if the model is an entity or a value object, and if it is an aggregate root.
 
 Adding an action
-''''''''''''''''
+~~~~~~~~~~~~~~~~
 
 It can be defined which actions should be generated. If a model is an aggregate root, all default
-`CRUD <http://de.wikipedia.org/wiki/CRUD>`_ actions can be added. Each action will result in a controller method 
+`CRUD <http://de.wikipedia.org/wiki/CRUD>`_ actions can be added. Each action will result in a controller method
 and a template with the same name. Custom actions can be added later in the controller class.
 
 Adding a property
-'''''''''''''''''
+~~~~~~~~~~~~~~~~~
 
 Each property has these fields:
 
@@ -142,7 +143,7 @@ The upload handling must be coded by the programmer! The property select list ha
 yet. The items list must be inserted into the TCA configuration.
 
 Adding a relation
-'''''''''''''''''
+~~~~~~~~~~~~~~~~~
 
 Relations connect two models. Here is a description of the fields:
 
@@ -179,11 +180,11 @@ Relations connect two models. Here is a description of the fields:
    **m:n relations**
     These are always implemented with a MM relation table and will result in a multi select in the backend
 
-After adding a relation to the model it must be connected to the related model. This is achieved by a click 
+After adding a relation to the model it must be connected to the related model. This is achieved by a click
 on the round bullet near the relation name and by dragging it to the bullet at the top of the related model. (Not the other way round)
 
 Saving the extension
-''''''''''''''''''''
+~~~~~~~~~~~~~~~~~~~~
 
 This is done by a click on the Save button at the bottom of the modeler. It might take some time, until all files are written to disk.
 If an error occures, in most cases an error message will be displayed (for example in an invalid name was choosen).
