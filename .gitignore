@@ -1,4 +1,8 @@
-.Build/*
+/.idea
+/.Build
 vendor/*
 composer.lock
 node_modules*
+
+# created by rendering Documentation with Docker
+/Documentation-GENERATED-temp
