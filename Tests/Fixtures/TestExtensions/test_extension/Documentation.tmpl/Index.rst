@@ -32,7 +32,7 @@
    ---------------------------------------------------------------
 
 =============================================================
-ExtensionBuilder Test Extension
+Extension Builder Test Extension
 =============================================================
 
 :Extension Key:
@@ -56,7 +56,7 @@ ExtensionBuilder Test Extension
 :License:
    This extension documentation is published under the `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`__ (Creative Commons) license
 
-This is just a test extension created by the ExtensionBuilder
+This is just a test extension created by the Extension Builder
 
 **TYPO3**
 
@@ -66,7 +66,7 @@ This is just a test extension created by the ExtensionBuilder
 
 **Community Documentation:**
 
-    This documentation is community documentation for the TYPO3 extension ExtensionBuilder Test Extension
+    This documentation is community documentation for the TYPO3 extension Extension Builder Test Extension
 
     It is maintained as part of this third party extension.
 

@@ -25,9 +25,9 @@ class ExtensionService
 {
     public const COMPOSER_PATH_WARNING = 'You are running TYPO3 in composer mode. You have to configure at
         least one local path repository in your composer.json in order to create an extension with
-        ExtensionBuilder. The recommended way is to create a "packages" folder where your extension is loaded from and symlinked into typo3conf/ext afterwards.<br /><br />
+        Extension Builder. The recommended way is to create a "packages" folder where your extension is loaded from and symlinked into typo3conf/ext afterwards.<br /><br />
         Please execute <code>mkdir -p packages && composer config repositories.local path "packages/*"</code> in your terminal in the project root directory.
-        After that reload the ExtensionBuilder.<br /><br />
+        After that reload the Extension Builder.<br /><br />
         See <a style="text-decoration: underline" target="_blank"
         href="https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html">
         Documentation</a>';
