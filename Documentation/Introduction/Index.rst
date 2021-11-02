@@ -17,7 +17,7 @@ to kickstart a simple frontend plugin with basic CRUD (Create - Read - Update - 
 What does it do?
 ================
 
-The Extension Builder helps you to build TYPO3 extensions based on extbase and fluid.
+The Extension Builder helps you to build TYPO3 extensions based on Extbase and fluid.
 You can design your model with a graphic modeler and create Plugins or Backend modules.
 All required files are generated and you will have a basic extension where you can insert
 your domain logic. In contrary to the former kickstarter the Extension Builder has an edit
