@@ -42,7 +42,7 @@ in your extension which contains the following extension specific configuration.
 Overwrite settings
 ------------------
 
-These settings only apply if the roundtrip feature of the extension builder is enabled in the extension configuration.
+These settings only apply if the roundtrip feature of the Extension Builder is enabled in the extension configuration.
 
 The nesting reflects the file structure: a setting applies to a file or recursive to all files and subfolders.
 
@@ -65,7 +65,7 @@ skip:
 
 .. warning::
 
-   \* These settings may break the functionality to edit your extension in the extension builder! Handle with care!
+   \* These settings may break the functionality to edit your extension in the Extension Builder! Handle with care!
 
 
 Here is an example:
