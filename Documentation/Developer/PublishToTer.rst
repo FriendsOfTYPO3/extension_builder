@@ -14,8 +14,8 @@ can alter data, as explained in :ref:`user-manual`.
 
 Read these online resources before publishing:
 
-* `Extbase and Fluid Guide <https://docs.typo3.org/typo3cms/ExtbaseGuide/Index.html>`_
-*  :ref:`TYPO3 Security Guide <t3security:types-of-security-threats>`
+*  :doc:`TYPO3 Extbase and Fluid Guide <t3extbasebook:Index>`
+*  :doc:`TYPO3 Security Guide <t3coreapi:Security/Index>`
 
 Documentation
 =============
