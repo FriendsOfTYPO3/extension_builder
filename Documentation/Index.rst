@@ -57,6 +57,7 @@ Extension Builder
    :glob:
 
    Introduction/Index
+   Installation/Index
    User/Index
    Configuration/Index
    Developer/Index
