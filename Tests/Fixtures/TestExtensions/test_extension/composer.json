@@ -1,7 +1,7 @@
 {
 	"name": "fixture/test-extension",
 	"type": "typo3-cms-extension",
-	"description": "This is just a test extension created by the ExtensionBuilder",
+	"description": "This is just a test extension created by the Extension Builder",
 	"authors": [
 		{
 			"name": "John Doe",

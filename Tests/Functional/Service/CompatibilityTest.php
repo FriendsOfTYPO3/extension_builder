@@ -37,7 +37,7 @@ class CompatibilityTest extends BaseFunctionalTest
 {
     /**
      * This test creates an extension based on a JSON file, generated
-     * with version 1.0 of the ExtensionBuilder and compares all
+     * with version 1.0 of the Extension Builder and compares all
      * generated files with the originally created ones
      * This test should help, to find compatibility breaking changes
      *

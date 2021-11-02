@@ -1,8 +1,8 @@
 <?php
 
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'ExtensionBuilder Test Extension',
-    'description' => 'This is just a test extension created by the ExtensionBuilder',
+    'title' => 'Extension Builder Test Extension',
+    'description' => 'This is just a test extension created by the Extension Builder',
     'category' => 'misc',
     'author' => 'John Doe',
     'author_email' => 'mail@typo3.com',
