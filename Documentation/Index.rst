@@ -19,7 +19,7 @@ Extension Builder
 
    :Description:
       The Extension Builder helps you to build TYPO3 extensions based on Extbase and Fluid.
-      You can design your model with a graphic modeler and create plugins or backend modules.
+      You can design your model with a graphical modeler and create plugins or backend modules.
       All required files are generated and you will have a basic extension where you can insert your domain logic.
 
       In contrary to the former kickstarter the Extension Builder has an edit mode that enables the continuous use
