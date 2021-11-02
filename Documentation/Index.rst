@@ -28,7 +28,7 @@ Extension Builder
       properties in the modeler.
 
    :Keywords:
-      Extension Development, ExtensionBuilder, Kickstarter, Extbase, Fluid, DDD, Domain Driven Design, Graphical modeler
+      Extension development, ExtensionBuilder, Kickstarter, Extbase, Fluid, DDD, Domain Driven Design, Graphical modeler
 
    :Copyright:
       Extension Builder Team
