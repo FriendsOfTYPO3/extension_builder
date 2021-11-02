@@ -6,8 +6,6 @@
 Users Manual
 ============
 
-Target group: **Developers**
-
 Using the Extension Builder
 ===========================
 
