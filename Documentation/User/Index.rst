@@ -128,8 +128,8 @@ Composer mode
 
 If you run TYPO3 in `Composer Mode <https://docs.typo3.org/m/typo3/guide-installation/10.4/en-us/QuickInstall/Composer/Index.html>`_
 you have to provide and configure a local `path repository <https://getcomposer.org/doc/05-repositories.md#path>`_ **before you save your extension**.
-The ExtensionBuilder will read the path from your composer.json and offer you this path as the destination
-for saving the extension. ExtensionBuilder will create a symlink in typo3conf/ext/ to your extension.
+The Extension Builder will read the path from your composer.json and offer you this path as the destination
+for saving the extension. Extension Builder will create a symlink in typo3conf/ext/ to your extension.
 
 .. figure:: ../Images/User/select-destination.png
    :width: 400px

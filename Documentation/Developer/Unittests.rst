@@ -4,7 +4,7 @@
 Unit tests
 ==========
 
-The ExtensionBuilder creates a basic set of unit tests for the generated code of your extension. This chapter gives
+The Extension Builder creates a basic set of unit tests for the generated code of your extension. This chapter gives
 you an overview about the generated tests and explains it's opportunities and limits.
 
 If you're new to unit tests we encourage you to spend some time to learn the benefits of software testing.
@@ -13,7 +13,7 @@ It will certainly improve the quality of your software, but will also help to im
 What parts are covered by the generated tests?
 ==============================================
 
-The ExtensionBuilder generates default unit tests for the public API of
+The Extension Builder generates default unit tests for the public API of
 
 1. domain models
 2. default controller actions
@@ -107,7 +107,7 @@ start right away.
 It also allows you to refactor with less fear of breaking things. Code which is covered by tests is less likely for
 unexpected behaviour after refactoring. Of course this depends on the test cases and the complexity of the code.
 However the logic of the generated code is simple and so are the tests. They are meant as a starting point.
-Don't expect too much magic. It's all bound to the limits of modeling tools like the extension builder: As soon as your
+Don't expect too much magic. It's all bound to the limits of modeling tools like the Extension Builder: As soon as your
 code pulls off the road, your unit tests will also.
 
 Nevertheless, you can enjoy the green bar feeling for any generated extension.
