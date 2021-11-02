@@ -104,8 +104,8 @@ ignoreWarnings:
 Settings for ClassBuilder
 --------------------------
 
-By default the Controller, Model and Repository classes inherit from the corresponding extbase class.
-It might be useful to inherit from own classes (which should then extend the extbase classes).
+By default the Controller, Model and Repository classes inherit from the corresponding Extbase class.
+It might be useful to inherit from own classes (which should then extend the Extbase classes).
 
 Here you see the defaults:
 
