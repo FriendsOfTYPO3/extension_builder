@@ -34,10 +34,7 @@ Extension Builder
       Extension Builder Team
 
    :Author:
-      Extension Builder Team, Nico de Haen
-
-   :Email:
-      typo3@ndh-websolutions.de
+      Extension Builder Team
 
    :License:
       This document is published under the Open Content License
