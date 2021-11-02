@@ -6,8 +6,6 @@
 Developer Corner
 ================
 
-Target group: **Developers**
-
 Please be aware that some configuration options are only available if the "Advanced options" is
 activated by clicking on the link in the upper right corner in the modeler.
 
