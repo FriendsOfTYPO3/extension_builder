@@ -4,7 +4,7 @@
 Create Documentation
 ====================
 
-The extension builder already generated sample documentation for your extension.
+The Extension Builder already generated sample documentation for your extension.
 
 #. Adapt the reST files to your extension: Remove unused files, modify existing
    ones and/or create new files.
@@ -62,5 +62,5 @@ Publish Your Documentation
 
 Once you publish your extension, your documentation will automatically be rendered on docs.typo3.org.
 
-Look at the `documentation for the extension builder
+Look at the `documentation for the Extension Builder
 <https://docs.typo3.org/typo3cms/extensions/extension_builder/Index.html>`__ for an example.

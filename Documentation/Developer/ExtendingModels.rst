@@ -7,7 +7,7 @@ Extending models or map to existing tables
 Extending models
 ================
 
-The ExtensionBuilder supports single table inheritance. That means, you can extend extbase models,
+The Extension Builder supports single table inheritance. That means, you can extend extbase models,
 either of your current extension or of other extensions. You have to enter the class name (not the model name!)
 of the model you want to extend in the domain object settings form in the field "Extend existing model class".
 The class has to be loadable, that means you can only extend classes of extensions that are installed.
@@ -16,9 +16,9 @@ the backend form and a new tab showing the properties that contains the new prop
 
 .. note::
 
-   Since the single table inheritance depends on the ``$TCA[ctrl][type]`` field, the ExtensionBuilder tries to detect if there
+   Since the single table inheritance depends on the ``$TCA[ctrl][type]`` field, the Extension Builder tries to detect if there
    is already a type field configured and if so extends it with a new item for your new extended model. Otherwise the
-   ExtensionBuilder creates a new column ``extbase_record_type`` and configure it as new type field. This might result in
+   Extension Builder creates a new column ``extbase_record_type`` and configure it as new type field. This might result in
    errors in certain cases. Especially if you don't see any form at all, when opening existing records in the backend,
    have a look at the type field configuration and at the existing values in the type field!
 
@@ -34,7 +34,7 @@ Example: Extend frontend user
 Mapping to tables
 =================
 
-Often you want to store your models in an existing table, for example if there is no extbase model for that table yet (like tt_address). Then you can enter the tablename in the domain object settings form in the field "Map to existing table". The ExtensionBuilder will then add fields to that table for each property you added to your model. If you name the properties according to the existing column names you can access the existing fields with the getters and setters of your model and no new columns are generated.
+Often you want to store your models in an existing table, for example if there is no extbase model for that table yet (like tt_address). Then you can enter the tablename in the domain object settings form in the field "Map to existing table". The Extension Builder will then add fields to that table for each property you added to your model. If you name the properties according to the existing column names you can access the existing fields with the getters and setters of your model and no new columns are generated.
 
 
 .. figure:: ../Images/Developer/Map-to-tt_address.png
