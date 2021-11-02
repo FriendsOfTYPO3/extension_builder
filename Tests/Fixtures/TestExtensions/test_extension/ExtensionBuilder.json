@@ -535,7 +535,7 @@
                 "tabLabel": "Compatibility test"
             }
         ],
-        "description": "This is just a test extension created by the ExtensionBuilder",
+        "description": "This is just a test extension created by the Extension Builder",
         "emConf": {
             "category": "misc",
             "custom_category": "",
@@ -551,7 +551,7 @@
             "version": "1.0.0"
         },
         "extensionKey": "test_extension",
-        "name": "ExtensionBuilder Test Extension",
+        "name": "Extension Builder Test Extension",
         "originalExtensionKey": "test_extension",
         "originalVendorName": "FIXTURE",
         "persons": [
