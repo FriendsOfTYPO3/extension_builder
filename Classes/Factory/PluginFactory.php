@@ -27,7 +27,7 @@ class PluginFactory
         $plugin = new Plugin();
         $plugin->setName($pluginValues['name']);
         $plugin->setDescription($pluginValues['description']);
-        $plugin->setType($pluginValues['type']);
+        $plugin->setType($pluginValues['type'] ?? null);
         $plugin->setKey($pluginValues['key']);
 
         if (!empty($pluginValues['actions']['controllerActionCombinations'])) {

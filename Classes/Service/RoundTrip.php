@@ -1028,7 +1028,7 @@ class RoundTrip implements SingletonInterface
                 // step one level deeper
                 $overWriteSettings = $overWriteSettings[$pathPart];
             } else {
-                return $map[$overWriteSettings[$pathPart]];
+                return $map[$overWriteSettings[$pathPart] ?? ''] ?? null;
             }
         }
 
