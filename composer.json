@@ -78,6 +78,7 @@
 			"extension-key": "extension_builder",
 			"cms-package-dir": "{$vendor-dir}/typo3/cms",
 			"app-dir": ".Build",
+			"ignore-as-root": false,
 			"web-dir": ".Build/public"
 		}
 	}
