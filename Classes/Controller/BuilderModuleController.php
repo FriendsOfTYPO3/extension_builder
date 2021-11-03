@@ -176,10 +176,9 @@ class BuilderModuleController extends ActionController
 
         $this->addAssets();
 
-        $extPath = ExtensionManagementUtility::extPath('extension_builder');
         $this->pageRenderer->addInlineSettingArray(
             'extensionBuilder',
-            ['baseUrl' => '../' . PathUtility::stripPathSitePrefix($extPath)]
+            ['publicResourcesUrl' => PathUtility::getPublicResourceWebPath('EXT:extension_builder/Resources/Public')]
         );
 
         $this->setLocallangSettings();
