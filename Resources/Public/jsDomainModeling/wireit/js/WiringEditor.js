@@ -140,7 +140,7 @@
 		);
 
 		this.showSpinnerPanel.setHeader("Saving, please wait...");
-		this.showSpinnerPanel.setBody('<img src="' + TYPO3.settings.extensionBuilder.baseUrl + 'Resources/Public/jsDomainModeling/wireit/images/loading.gif" />');
+		this.showSpinnerPanel.setBody('<img src="' + TYPO3.settings.extensionBuilder.publicResourcesUrl + '/jsDomainModeling/wireit/images/loading.gif" />');
 		this.showSpinnerPanel.render(document.body);
 
 
