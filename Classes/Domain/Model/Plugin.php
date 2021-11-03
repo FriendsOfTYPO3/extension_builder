@@ -21,7 +21,6 @@ class Plugin
 {
     protected string $name = '';
     protected string $description = '';
-    protected ?string $type = '';
     protected string $key = '';
     /**
      * ['controller' => 'MyController', 'actions' => 'action1,action2']
@@ -54,16 +53,6 @@ class Plugin
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-    public function setType(?string $type): void
-    {
-        $this->type = $type;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
     }
 
     public function setKey(string $key): void
