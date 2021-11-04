@@ -24,7 +24,7 @@ Go to the Settings - Extension Configuration and open the configuration of the E
 +----------------------------+-----------------------------------------------------------------------------------------------------------+--------------------------+
 |**Setting**                 |**Impact**                                                                                                 |**Default**               |
 +----------------------------+-----------------------------------------------------------------------------------------------------------+--------------------------+
-|Enable edit mode (roundtrip)|If you don't set this to true, all files are newly generated each time you save your configuration         |false                     |
+|Enable roundtrip mode       |If you don't set this to true, all files are newly generated each time you save your configuration         |false                     |
 +----------------------------+-----------------------------------------------------------------------------------------------------------+--------------------------+
 |Backup on each save         |The Extension Builder will generate a backup of the whole extension, if this is set to true                |true                      |
 +----------------------------+-----------------------------------------------------------------------------------------------------------+--------------------------+
