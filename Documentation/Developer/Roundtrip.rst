@@ -9,7 +9,7 @@ Editing an existing extension
 
 Sooner or later it comes to the point, where you have to add or rename models but already changed code of the
 originally created files.
-This is, where "Roundtrip mode" is needed. It aims to preserve your manual changes and applying the new model
+This is, where the *roundtrip mode* is needed. It aims to preserve your manual changes and applying the new model
 configuration at the same time.
 
 The roundtrip mode is enabled by default. To disable it see the Extension Builder Configuration :doc:`/Configuration/Index`

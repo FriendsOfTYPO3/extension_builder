@@ -38,7 +38,7 @@ generates boiler plate code that can be installed and further developed.
 Roundtrip mode
 ==============
 
-The editing (or roundtrip) mode even allows to modify an existing extension (previously created by Extension Builder)
+The roundtrip mode even allows to modify an existing extension (previously created by Extension Builder)
 without loosing your manual changes. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/Developer/Roundtrip.html
 
 Keep in mind though that the code created by Extension Builder is only a starting point for you actual implementation of
