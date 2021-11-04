@@ -27,8 +27,13 @@ TYPO3 Extension ``extension_builder``
 The *Extension Builder* helps you to develop a TYPO3 extension based on the
 domain-driven MVC framework `Extbase <https://docs.typo3.org/m/typo3/book-extbasefluid/master/en-us/0-Introduction/Index.html>`__
 and the templating engine `Fluid <https://docs.typo3.org/m/typo3/book-extbasefluid/master/en-us/8-Fluid/Index.html>`__.
-It provides a graphical editor to specify and connect domain models and
-generates boiler plate code that can be installed and further developed.
+
+It provides a graphical editor to define domain models and their relations
+as well as associated controllers with basic actions.
+It also provides a mask to define extension metadata, frontend plugins and
+backend modules that use the previously defined controllers and actions.
+Finally, it generates an extension with boilerplate code that can be installed
+and further developed.
 
 :Repository:  https://github.com/FriendsOfTYPO3/extension_builder
 :Read online: https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/
@@ -38,12 +43,8 @@ generates boiler plate code that can be installed and further developed.
 Roundtrip mode
 ==============
 
-The roundtrip mode even allows to modify an existing extension (previously created by Extension Builder)
-without loosing your manual changes. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/Developer/Roundtrip.html
-
 Keep in mind though that the code created by Extension Builder is only a starting point for you actual implementation of
-functionality and is in no sense "production ready"! For upgrading an extension to a newer TYPO3 version we recommend using
-`TYPO3 Rector <https://github.com/sabbelasichon/typo3-rector>`__.
+functionality and is in no sense "production ready"!
 
 Making Extension Builder even better
 ====================================
