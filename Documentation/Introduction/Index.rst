@@ -25,12 +25,7 @@ backend modules that use the previously defined controllers and actions.
 Finally, it generates an extension with boilerplate code that can be installed
 and further developed.
 
-.. figure:: ../Images/Introduction/modeler-blogexample.png
-   :width: 700px
-   :align: left
-   :alt: Graphical editor
-
-   Graphical editor
+.. include:: /Images/AutomaticScreenshots/GraphicalEditorBlogExample.rst.txt
 
 .. code-block:: none
    :caption: Generated extension with boilerplate code
