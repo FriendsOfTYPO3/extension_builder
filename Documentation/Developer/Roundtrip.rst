@@ -17,7 +17,7 @@ The roundtrip mode is enabled by default. To disable it see the Extension Builde
 The general rule is: All stuff that is editable in the modeler should be applied in the modeler.
 For example if you need another dependency in :file:`ext_emconf.php` you should add it in the modeler and not in :file:`ext_emconf.php` itself.
 
-Be sure to configure the :ref:`configuration-overwritesettings`
+Be sure to configure the :ref:`overwrite-settings`
 
 Overview of the roundtrip features
 ==================================
