@@ -10,7 +10,7 @@ Security
 ========
 
 Please make sure to check twice all possible security issues. Add access control to all default ControllerActions which
-can alter data, as explained in :ref:`user-manual`.
+can alter data, as explained in :ref:`graphical-editor`.
 
 Read these online resources before publishing:
 
