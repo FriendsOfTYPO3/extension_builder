@@ -57,7 +57,8 @@ Extension Builder
 
    Introduction/Index
    Installation/Index
-   User/Index
+   GraphicalEditor/Index
    Configuration/Index
    Developer/Index
+   Security/Index
    ToDoList/Index
