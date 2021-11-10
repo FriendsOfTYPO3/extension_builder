@@ -17,6 +17,11 @@ view (1)
 and ensure that the properties form is expanded by clicking on the small arrow
 symbol :guilabel:`>|` on the upper left corner (2).
 
+Please note that some configuration options are only available when the advanced
+options are displayed by clicking the :guilabel:`Show advanced options` button
+in the upper right corner. These options are mainly for experienced TYPO3
+developers (3).
+
 .. figure:: ../Images/UserManual/modeler-start-extension-a.png
    :width: 200px
    :align: left
@@ -25,8 +30,44 @@ symbol :guilabel:`>|` on the upper left corner (2).
 2. Insert meta data of extension
 ================================
 
-Enter a meaningful extension name (1), a vendor name (2) (UpperCamelCase) and an
-extension key (3) (without spaces and in lowercase).
+Enter meaningful meta data of your extension in the properties form on the left side:
+
++----------------------+----------------------------------------------------------------------------------------------------------+
+|**Name**              |The extension name can be any string and is used as ``title`` property in the extension configuration     |
+|                      |file :file:`ext_emconf.php`.                                                                              |
+|                      |It is displayed, for example, in the `TYPO3 Extension Repository (TER) <https://extensions.typo3.org/>`__ |
+|                      |and the Extension Manager module.                                                                         |
+|                      |                                                                                                          |
+|                      |An example is "The EBT Blog".                                                                             |
++----------------------+----------------------------------------------------------------------------------------------------------+
+|**Vendor name**       |The vendor name must be an UpperCamelCase, alphanumeric string. It is used                                |
+|                      |                                                                                                          |
+|                      |- in the namespace of PHP classes: ``<VendorName>\<ExtensionName>\<Path>\<To>\<ClassName>`` and           |
+|                      |- in the ``name`` property of the :file:`composer.json`: ``<vendorname>/<extension-key>``.                |
+|                      |                                                                                                          |
+|                      |An example is "Ebt".                                                                                      |
++----------------------+----------------------------------------------------------------------------------------------------------+
+|**Key**               |The extension key must be a lowercase, underscored, alphanumeric string.                                  |
+|                      |It must be unique throughout the TER and is best composed of the vendor name and an extension specific    |
+|                      |name, such as ``<vendorname>_<extension_name>``, where it must not start with "tx\_", "u\_", "user\_",    |
+|                      |"pages\_", "sys\_", and "csh\_". It is used                                                               |
+|                      |                                                                                                          |
+|                      |- as extension directory name :file:`<extension_key>/`,                                                   |
+|                      |- in the language files: ``product-name=<extension_key>`` and                                             |
+|                      |- in the :file:`composer.json`: ``name: <vendor-name>/<extension-key>``.                                  |
+|                      |                                                                                                          |
+|                      |An example is "ebt_blog".                                                                                 |
++----------------------+----------------------------------------------------------------------------------------------------------+
+|**Description**       |The extension description can be any text. It is used as ``description`` property in extension            |
+|                      |configuration files :file:`ext_emconf.php` and :file:`composer.json`.                                     |
++----------------------+----------------------------------------------------------------------------------------------------------+
+|**Version**           |A good versioning scheme helps to track the changes. We recommend *Semantic Versioning*.                  |
++----------------------+----------------------------------------------------------------------------------------------------------+
+|**State**             |The status indicates whether the extension has already reached a stable phase, or whether it is still in  |
+|                      |alpha or beta.                                                                                            |
++----------------------+----------------------------------------------------------------------------------------------------------+
+|**Extension authors** |There is a possibility to add developers or project managers here.                                        |
++----------------------+----------------------------------------------------------------------------------------------------------+
 
 .. figure:: ../Images/UserManual/modeler-start-extension-b.png
    :width: 500px
@@ -37,21 +78,44 @@ extension key (3) (without spaces and in lowercase).
 ========================
 
 Then create at least one model by dragging the grey tile "New Model Object"
-to the canvas. Give it a meaningful name starting with an uppercase letter.
+to the canvas. Give it a meaningful name, which must be an UpperCamelCase,
+alphanumeric string, for example "Blog".
 
 3.a. Edit domain object settings
 --------------------------------
 
-Open the :guilabel:`Domain object settings` and check :guilabel:`aggregate root`
-if this model is the root of the other models of your domain.
-In general you need at least one aggregate root which has a corresponding
-repository to retrieve models from the persistence.
-A simple way to find out, if a model is an aggregate root or not, is to consider
-if you can retrieve objects of this model by requesting them from another model
-or not.
-So if you create a blog model and a post model, it is obvious that the blog is
-the aggregate root and the post is not. You can retrieve posts by requesting
-them from the blog model: ``$blog->getPosts()``.
+Edit the general settings of the model by opening the :guilabel:`Domain object settings`
+subsection.
+
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Is aggregate root?**             |Check this option if this model combines other models into an aggregate. Models outside the  |
+|                                   |aggregate may contain references to this root model, but not to other objects in the         |
+|                                   |aggregate. The aggregate root checks the consistency of changes in the aggregate.            |
+|                                   |An example is a blog object that has related post objects that can only be accessed through  |
+|                                   |the blog object with ``$blog->getPosts()``.                                                  |
+|                                   |                                                                                             |
+|                                   |Checking this option in the Extension Builder means that a controller class is generated for |
+|                                   |this model, whose actions can be defined in the following :guilabel:`Default actions`        |
+|                                   |subsection.                                                                                  |
+|                                   |Additionally, a repository class is generated that allows to retrieve all objects of this    |
+|                                   |model from the persistence layer, i.e. in most scenarios from the database.                  |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Description**                    |The model description can be any text. It is used in the PHPDoc comment of the model class.  |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Object type**                    |Select whether the model is an *entity* or a *value object*.                                 |
+|(Advanced options)                 |                                                                                             |
+|                                   |An entity is identified by a unique identifier and its properties usually change during the  |
+|                                   |application run. An example is a customer whose name, address, email, etc. may change, but   |
+|                                   |can always be identified by the customer ID.                                                 |
+|                                   |                                                                                             |
+|                                   |A value object is identified by its property values and is usually used as a more complex    |
+|                                   |entity property. An example is an address that is identified by its street, house number,    |
+|                                   |city and postal code and would no longer be the same address if any of its values changed.   |
+|                                   |                                                                                             |
+|                                   |**Note**: As of TYPO3 v11, it is recommended to specify any model of type "entity" due to    |
+|                                   |the implementation details of Extbase. However, this might change in upcoming TYPO3          |
+|                                   |versions.                                                                                    |
++-----------------------------------+---------------------------------------------------------------------------------------------+
 
 .. figure:: ../Images/UserManual/modeler-object-settings.png
    :width: 200px
@@ -61,10 +125,11 @@ them from the blog model: ``$blog->getPosts()``.
 3.b. Add actions
 ----------------
 
-If the model is an aggregate root, open the :guilabel:`Default actions` panel and
-choose actions you need and add custom actions if required.
-All selected actions will be made available in the controller which is
-created along to the model.
+If the model is an aggregate root, open the :guilabel:`Default actions` section
+and select the actions you need and add custom actions if required.
+All selected actions are made available in the controller that is created along
+with the model, and a Fluid template with an appropriate name is generated for
+each action.
 
 .. figure:: ../Images/UserManual/modeler-actions.png
    :width: 250px
@@ -74,52 +139,175 @@ created along to the model.
 3.c. Add properties
 -------------------
 
-Expand the :guilabel:`properties` subsection.
-The name of a property should only contain alphanumerical characters and be of lowerCamelCase format.
-The description will be displayed in the TYPO3 backend as a help popover when clicking on the property field.
+Expand the :guilabel:`properties` subsection to add model properties:
+
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Property name**                  |The property name must be a lowerCamelCase, alphanumeric string. It is used                  |
+|                                   |                                                                                             |
+|                                   |- in language files and model classes as ``<propertyName>`` and                              |
+|                                   |- in the database table as ``<property_name>``.                                              |
+|                                   |                                                                                             |
+|                                   |An example is "firstName".                                                                   |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Property type**                  |Select the type of the property. This determines the field type in the database table, the   |
+|                                   |TCA type for TYPO3 backend rendering, and the Fluid type for TYPO3 frontend rendering.       |
+|                                   |                                                                                             |
+|                                   |**Note**: As of TYPO3 v11, the types marked with an asterisk (\*) are not fully implemented  |
+|                                   |for frontend rendering for various reasons. For example, the frontend handling of the types  |
+|                                   |"file" and "image" is not yet implemented, because an implementation in Extbase is missing.  |
+|                                   |The implementation details are left to the developers in consultation with the TYPO3         |
+|                                   |community.                                                                                   |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Description**                    |The property description can be any text. It is displayed in the *List* module of the TYPO3  |
+|(Advanced options)                 |backend as context sensitive help when you click on the property field.                      |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Is required?**                   |Enable this option if this property must be set in TYPO3 frontend and backend.               |
+|(Advanced options)                 |                                                                                             |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Is exclude field?**              |Enable this option if you want to be able to hide this property from non-administrators      |
+|(Advanced options)                 |in the TYPO3 backend.                                                                        |
++-----------------------------------+---------------------------------------------------------------------------------------------+
 
 3.d. Add relations
 ------------------
 
 If you create multiple models you may want to connect them by relations.
-A relation property can be added in the :guilabel:`relations` subsection,
-must have a lowerCamelCase name and contain alphanumerical characters only –
-like an ordinary property.
-When being added, it can be connected to the related model by dragging the round connector
-of the relation property and dropping it at the connector of the related model.
-When expanding the relation property panel you can select the type of relation:
+A relation property can be added in the :guilabel:`relations` subsection.
+When being added, it can be connected to the related model by dragging the round
+connector of the relation property and dropping it at the connector of the
+related model. When expanding the relation property panel you can refine the
+type of relation.
 
-* **1:1** means you have one property in your model representing one specific object of the related model. For example if you say a person has only one account and that account is not used by anyone else you can define it as 1:1.
-
-* **1:n** means you have a property in your model representing multiple objects of the related model but each of them has no other relation. A blog has multiple posts, but each post only belongs to one blog.
-
-* **n:1** means you have a property in your model representing a single object of the related model, but the related model can have multiple relations. For example, each person has a certain place of birth, but many people can have the same place of birth.
-
-* **m:n** means the property of your model consists of multiple objects of the related model. For example a book can have multiple authors and each author has written multiple books.
-
-Besides that you can choose in the :guilabel:`Render type` select box if you
-want to create, link and edit the related objects in the TYPO3 backend
-:doc:`inline <t3tca:ColumnsConfig/Type/Inline/Index>`
-or create and edit them separately and link in a :doc:`select field <t3tca:ColumnsConfig/Type/Select/Index>`.
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Name**                           |The relation property name must be a lowerCamelCase, alphanumeric string. It is used like an |
+|                                   |ordinary property.                                                                           |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Type**                           |These relation types are available:                                                          |
+|                                   |                                                                                             |
+|                                   |**one-to-one (1:1)**                                                                         |
+|                                   |                                                                                             |
+|                                   |This relation property can be associated with a specific object of the related model and     |
+|                                   |that object has no other relation. This setting results in a side-by-side selection field    |
+|                                   |with a maximum of 1 selected item in the TYPO3 backend.                                      |
+|                                   |An example is a person who has only one account and this account is not used by any other    |
+|                                   |person.                                                                                      |
+|                                   |                                                                                             |
+|                                   |**one-to-many (1:n)**                                                                        |
+|                                   |                                                                                             |
+|                                   |This relation property can be associated with multiple objects in the related model, but     |
+|                                   |each of those objects has no other relation. This is rendered either as a side-by-side       |
+|                                   |selection field or as an *Inline-Relational-Record-Editing* (IRRE) field in the TYPO3        |
+|                                   |backend (see *Render type* property). An example is a blog with multiple posts, but each     |
+|                                   |post belongs to only one blog.                                                               |
+|                                   |                                                                                             |
+|                                   |**many-to-one (n:1)**                                                                        |
+|                                   |                                                                                             |
+|                                   |This relation property can be associated with a specific object of the related model, but    |
+|                                   |that object can have multiple relations. This is represented in the TYPO3 backend as a       |
+|                                   |side-by-side selection field with a maximum number of 1 selected item. An example is when    |
+|                                   |each person has a specific birthplace, but many people can have the same birthplace.         |
+|                                   |                                                                                             |
+|                                   |**many-to-many (m:n)**                                                                       |
+|                                   |                                                                                             |
+|                                   |This relation property can be associated with multiple objects of the related model, and     |
+|                                   |each of these objects can also have multiple relations. This is represented as either a      |
+|                                   |side-by-side selection field, a multi-select checkbox, or a multi-select selection box, and  |
+|                                   |is always implemented with an additional many-to-many database table. An example is when a   |
+|                                   |book may have multiple authors and each author has written multiple books.                   |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Render type**                    |This option is only available for the relation types "1:n" and "m:n" and defines the         |
+|                                   |display of the relation property field in the TYPO3 backend. See *Type* description for      |
+|                                   |more details.                                                                                |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Description**                    |The relation description can be any text. It is displayed in the *List* module of the TYPO3  |
+|                                   |backend as context sensitive help when you click on the relation property field.             |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Is exclude field?**              |Enable this option if you want to be able to hide this relation property from                |
+|(Advanced options)                 |non-administrators in the TYPO3 backend.                                                     |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Lazy loading**                   |Should the related objects be loaded when the model object is instantiated (*eager loading*) |
+|(Advanced options)                 |or on demand (*lazy loading*). Lazy loading relation properties are provided with a          |
+|                                   |``@lazy`` PHPDoc annotation in the model class.                                              |
++-----------------------------------+---------------------------------------------------------------------------------------------+
 
 4. Create a frontend plugin
 ===========================
 
 If you want to create an extension that generates output in the TYPO3 frontend,
-add a plugin in the subsection :guilabel:`Plugins` of the properties form.
-The name should be meaningful and the key be lowercase without spaces.
+add a plugin in the :guilabel:`Frontend plugins` subsection of the property form.
+It will then be available for selection in the type field of the
+TYPO3 content element "General Plugin".
 
-[TODO]: Where is the description rendered?
-[TODO]: Write about controller and actions.
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Name**                           |The plugin name can be any string. It is displayed in the list of available plugins in the   |
+|                                   |TYPO3 content element wizard. An example is "Latest articles".                               |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Key**                            |The plugin key must be a lowercase, alphanumeric string. It is used to identify the plugin   |
+|                                   |of your extension. An example is "latestarticles".                                           |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Description**                    |The plugin description can be any text. It is displayed in the list of available plugins in  |
+|                                   |the TYPO3 content element wizard below the plugin name.                                      |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Controller action combinations** |In each line all actions of a controller supported by this plugin are listed by              |
+|                                   |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
+|                                   |default action. Actions are defined in the related aggregate root model, and the controller  |
+|                                   |name corresponds to the model name.                                                          |
+|                                   |                                                                                             |
+|                                   |An example is                                                                                |
+|                                   |                                                                                             |
+|                                   |.. code-block:: none                                                                         |
+|                                   |                                                                                             |
+|                                   |   Blog => list,show,create,save,edit,update                                                 |
+|                                   |   Author => list,show                                                                       |
+|                                   |                                                                                             |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Non cacheable actions**          |Each line lists all actions of a controller that should not be cached. This list is a subset |
+|                                   |of the *Controller action combinations* property list.                                       |
+|                                   |                                                                                             |
+|                                   |An example is                                                                                |
+|                                   |                                                                                             |
+|                                   |.. code-block:: none                                                                         |
+|                                   |                                                                                             |
+|                                   |   Blog => create,save,edit,update                                                           |
+|                                   |                                                                                             |
++-----------------------------------+---------------------------------------------------------------------------------------------+
 
 5. Create a backend module
 ==========================
 
 If your extension should provide a TYPO3 backend module,
-you have to add a backend module in the left panel of the modeler.
+add a module in the :guilabel:`Backend modules` subsection of the property form.
+It will then be available in the module menu on the left side of the TYPO3
+backend.
 
-[TODO]: Where is the description, tab label, main module rendered?
-[TODO]: Write about controller and actions.
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Name**                           |The module name can be any string. It is currently used only internally in the               |
+|                                   |Extension Builder, for example in validation results. An example is "EBT Blogs".             |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Key**                            |The module key must be a lowercase, alphanumeric string. It is used to identify the module   |
+|                                   |of your extension. An example is "ebtblogs".                                                 |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Description**                    |The module description can be any text. It is displayed in the *About* module of the         |
+|                                   |TYPO3 backend.                                                                               |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Tab label**                      |The module name in the TYPO3 module menu can be any string.                                  |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Main module**                    |This is the module key of the section in the TYPO3 module menu to which the module is        |
+|                                   |assigned. For example, "web" or "site".                                                      |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Controller action combinations** |In each line all actions of a controller supported by this module are listed by              |
+|                                   |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
+|                                   |default action. Actions are defined in the related aggregate root model, and the controller  |
+|                                   |name corresponds to the model name.                                                          |
+|                                   |                                                                                             |
+|                                   |An example is                                                                                |
+|                                   |                                                                                             |
+|                                   |.. code-block:: none                                                                         |
+|                                   |                                                                                             |
+|                                   |   Blog => list,show,create,save,edit,update,delete                                          |
+|                                   |   Author => list,show,create,save,edit,update,delete                                        |
+|                                   |                                                                                             |
++-----------------------------------+---------------------------------------------------------------------------------------------+
 
 6. Save the extension
 =====================
