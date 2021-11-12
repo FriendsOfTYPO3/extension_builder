@@ -51,7 +51,7 @@ Extension Builder
    **Table of Contents**
 
 .. toctree::
-   :maxdepth: 5
+   :maxdepth: 2
    :titlesonly:
    :glob:
 
@@ -60,5 +60,6 @@ Extension Builder
    GraphicalEditor/Index
    Configuration/Index
    Security/Index
+   PublishToTer/Index
    InDepth/Index
    Contribution/Index
