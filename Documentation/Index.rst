@@ -61,4 +61,4 @@ Extension Builder
    Configuration/Index
    Developer/Index
    Security/Index
-   ToDoList/Index
+   Contribution/Index
