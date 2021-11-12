@@ -9,7 +9,7 @@ Before you publish your extension to TER you should carefully check these points
 Security
 ========
 
-Please make sure to check twice all possible security issues. Add access control to all default ControllerActions which
+Please make sure to check twice all possible security issues. Add access control to all default controller actions which
 can alter data, as explained in :ref:`graphical-editor`.
 
 Read these online resources before publishing:
