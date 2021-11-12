@@ -23,7 +23,7 @@ the backend form and a new tab showing the properties that contains the new prop
    have a look at the type field configuration and at the existing values in the type field!
 
 
-.. figure:: ../Images/Developer/Extend-Frontenduser.png
+.. figure:: ../Images/InDepth/Extend-Frontenduser.png
    :width: 200px
    :align: left
    :alt: Extend Frontend user
@@ -37,7 +37,7 @@ Mapping to tables
 Often you want to store your models in an existing table, for example if there is no Extbase model for that table yet (like tt_address). Then you can enter the tablename in the domain object settings form in the field "Map to existing table". The Extension Builder will then add fields to that table for each property you added to your model. If you name the properties according to the existing column names you can access the existing fields with the getters and setters of your model and no new columns are generated.
 
 
-.. figure:: ../Images/Developer/Map-to-tt_address.png
+.. figure:: ../Images/InDepth/Map-to-tt_address.png
    :width: 400px
    :align: left
    :alt: Map to tt_address
@@ -45,14 +45,14 @@ Often you want to store your models in an existing table, for example if there i
 
 Example: map to table tt_address
 
-.. figure:: ../Images/Developer/Database-Update.png
+.. figure:: ../Images/InDepth/Database-Update.png
    :width: 500px
    :align: left
    :alt: DB update
 
 The resulting database updates
 
-.. figure:: ../Images/Developer/Backendform-Frontenduser.png
+.. figure:: ../Images/InDepth/Backendform-Frontenduser.png
    :width: 500px
    :align: left
    :alt: Backend form

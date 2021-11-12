@@ -59,6 +59,6 @@ Extension Builder
    Installation/Index
    GraphicalEditor/Index
    Configuration/Index
-   Developer/Index
    Security/Index
+   InDepth/Index
    Contribution/Index

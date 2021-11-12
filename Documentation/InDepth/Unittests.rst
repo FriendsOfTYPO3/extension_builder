@@ -46,8 +46,8 @@ For example:
 
 All types of properties are covered, for example integers, strings, file references or relations to other domain models.
 
-Covered ControllerActions
--------------------------
+Covered controller actions
+--------------------------
 
 * listAction()
 * showAction()
@@ -57,7 +57,7 @@ Covered ControllerActions
 * updateAction()
 * deleteAction()
 
-The ControllerAction tests cover the following behavior expectations:
+The controller action tests cover the following behavior expectations:
 
 * asserting data is assigned to a view
 * asserting the action delegates data modifications to a repository, like adding, updating, removing or fetching objects

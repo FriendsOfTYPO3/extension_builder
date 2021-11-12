@@ -344,7 +344,7 @@ Once the extension is saved you should be able to install it in the Extension Ma
 ======================
 
 Now you can start modifying the generated files in your IDE. If you still want to be able to modify the
-model in the graphical editor you have to enable :doc:`/Developer/Roundtrip` before loading the extension
+model in the graphical editor you have to enable :doc:`/InDepth/Roundtrip` before loading the extension
 in the Extension Builder again.
 
 [TODO]: Roundtrip link should link to page "Configuration" as soon as it is linkable there.
