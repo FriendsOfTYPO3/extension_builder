@@ -58,6 +58,7 @@ Extension Builder
    Introduction/Index
    Installation/Index
    GraphicalEditor/Index
+   GeneratedExtension/Index
    Configuration/Index
    Security/Index
    PublishToTer/Index
