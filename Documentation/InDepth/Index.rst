@@ -1,10 +1,10 @@
 .. include:: /Includes.rst.txt
 
-.. _developer:
+.. _in-depth:
 
-================
-Developer Corner
-================
+========
+In-Depth
+========
 
 .. toctree::
    :maxdepth: 2

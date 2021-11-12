@@ -46,8 +46,8 @@ Render With the Sphinx Extension
 --------------------------------
 
 
-#. Install the `sphinx <http://typo3.org/extensions/repository/view/sphinx>`_ and the
-   `restdoc <http://typo3.org/extensions/repository/view/restdoc>`_ extensions
+#. Install the `sphinx <https://typo3.org/extensions/repository/view/sphinx>`_ and the
+   `restdoc <https://typo3.org/extensions/repository/view/restdoc>`_ extensions
 
 #. Follow the instructions in the video at `Sphinx documentation <https://docs.typo3.org/typo3cms/extensions/sphinx/>`_
 

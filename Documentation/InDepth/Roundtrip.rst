@@ -78,7 +78,7 @@ Consequences of various actions:
 
 **If you rename a model:**
 
-*   the corresponding classes (Model, Controller, Repository) will be renamed
+*   the corresponding classes (model, controller, repository) will be renamed
 
 *   all methods, properties and constants are preserved
 
@@ -90,4 +90,4 @@ Consequences of various actions:
 
 **Create a backup of your extension!**
 
-If you don't use a versioning system like `git <http://git-scm.com>`_ or `svn <http://subversion.tigris.org>`_, this is perhaps the right moment to start using it
+If you don't use a versioning system like `git <https://git-scm.com>`_ or `svn <https://subversion.tigris.org>`_, this is perhaps the right moment to start using it
