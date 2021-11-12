@@ -46,13 +46,6 @@ Roundtrip mode
 Keep in mind though that the code created by Extension Builder is only a starting point for you actual implementation of
 functionality and is in no sense "production ready"!
 
-Making Extension Builder even better
-====================================
-
-You found a bug, you have a fix?
-
-Don't hesitate to create an issue or a pull request. Any help is really welcome. Thanks.
-
 Compile scss
 ============
 
