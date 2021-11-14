@@ -134,10 +134,10 @@
 				</source>
 			</trans-unit>
 			<trans-unit id="generateDocumentationTemplate" resname="generateDocumentationTemplate">
-				<source>Generate documentation template</source>
+				<source>Generate documentation</source>
 			</trans-unit>
 			<trans-unit id="descr_generateDocumentationTemplate" resname="descr_generateDocumentationTemplate">
-				<source>Check this if you want a documentation template generated for your extension.</source>
+				<source>Check this if you want a documentation generated for your extension.</source>
 			</trans-unit>
 			<trans-unit id="generateEditorConfig" resname="generateEditorConfig">
 				<source>Generate editorconfig file</source>
