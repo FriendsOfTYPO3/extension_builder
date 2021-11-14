@@ -30,11 +30,6 @@ class Plugin
     protected $description = '';
 
     /**
-     * @var string|null
-     */
-    protected $type = '';
-
-    /**
      * @var string
      */
     protected $key = '';
@@ -71,16 +66,6 @@ class Plugin
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-    public function setType(?string $type): void
-    {
-        $this->type = $type;
-    }
-
-    public function getType(): string
-    {
-        return $this->type;
     }
 
     public function setKey(string $key): void

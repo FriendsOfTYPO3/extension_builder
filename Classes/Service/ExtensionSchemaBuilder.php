@@ -305,7 +305,6 @@ class ExtensionSchemaBuilder implements SingletonInterface
         $plugin = GeneralUtility::makeInstance(Plugin::class);
         $plugin->setName($pluginValues['name']);
         $plugin->setDescription($pluginValues['description']);
-        $plugin->setType($pluginValues['type']);
         $plugin->setKey($pluginValues['key']);
         if (!empty($pluginValues['actions']['controllerActionCombinations'])) {
             $controllerActionCombinations = [];
