@@ -87,7 +87,7 @@ Here is an example:
      Language: merge
      #Templates: keep
 
-  Documentation.tmpl: skip
+  Documentation: skip
 
 staticDateInXliffFiles: *2014-05-03T06:04:48Z*
  if not set (default) the date attribute in xliff files is updated each time you save a modeler configuration. If you
