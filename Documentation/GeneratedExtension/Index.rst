@@ -20,26 +20,26 @@ previous chapter:
        ├── ext_tables.sql
        ├── ExtensionBuilder.json
        ├── Classes/
-           ├── Controller/
+           ├── Controller/..
            └── Domain/
-               ├── Model/
-               └── Repository/
+               ├── Model/..
+               └── Repository/..
        ├── Configuration/
-           ├── ExtensionBuilder/
-           ├── TCA/
-           └── TypoScript/
+           ├── ExtensionBuilder/..
+           ├── TCA/..
+           └── TypoScript/..
        ├── Documentation/..
        ├── Resources/
            ├── Private/
-               ├── Language/
-               ├── Layouts/
-               ├── Partials/
-               └── Templates/
+               ├── Language/..
+               ├── Layouts/..
+               ├── Partials/..
+               └── Templates/..
            └── Public/
-               └── Icons/
-       └── Tests/..
-           ├── Functional/
-           └── Unit/
+               └── Icons/..
+       └── Tests/
+           ├── Functional/..
+           └── Unit/..
 
 .. _basic-extension-files:
 
@@ -76,6 +76,59 @@ Read the section ":ref:`documentation`" how to proceed with the documentation.
 The Extension Builder stores some internal data in the :file:`ExtensionBuilder.json`
 file and in the :file:`Configuration/ExtensionBuilder/` folder which should be
 kept as long as the extension is edited in the Extension Builder.
+
+.. _domain-modeling-files:
+
+Domain modeling files
+=====================
+
+Most of the extension files are created for modeling the domain and configuring
+frontend plugins and backend modules:
+
+.. code-block:: none
+
+   .
+   └── ebt_blog/
+       ├── ext_localconf.php
+       ├── ext_tables.php
+       ├── ext_tables.sql
+       ├── Classes/
+           ├── Controller/..
+           └── Domain/
+               ├── Model/..
+               └── Repository/..
+       ├── Configuration/
+           ├── TCA/..
+           └── TypoScript/..
+       ├── Resources/
+           ├── Private/
+               ├── Language/..
+               ├── Layouts/..
+               ├── Partials/..
+               └── Templates/..
+           └── Public/
+               └── Icons/..
+       └── Tests/
+           ├── Functional/..
+           └── Unit/..
+
+The frontend plugins are registered in the :file:`ext_localconf.php` file and
+the backend modules are registered in the :file:`ext_tables.php` file.
+The associated views are configured in the :file:`Configuration/TypoScript/`
+folder and the Fluid view templates are bundled in the :file:`Resources/Private/`
+folder.
+
+The database schema of the domain model is defined in the :file:`ext_tables.sql`
+file.
+The Extbase classes that define the domain model are provided in the
+:file:`Classes/` folder, their presentation in the TYPO3 backend is configured
+in the :file:`Configuration/TCA/` folder.
+Last but not least, the tests of the PHP classes are located in the folder
+:file:`Tests/`.
+
+For more information on tests, see the section ":ref:`tests`" and for everything
+else, please refer to the :doc:`Extbase & Fluid book <t3extbasebook:Index>` of
+the official TYPO3 documentation.
 
 .. _documentation:
 
