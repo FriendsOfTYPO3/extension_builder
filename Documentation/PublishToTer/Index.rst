@@ -30,7 +30,7 @@ publishing your extension, you can secure your extension by reading and applying
 
 and write appropriate documentation following
 
-* :ref:`writing-documentation`
+* :ref:`documentation`
 
 before publishing the extension on TER and Packagist, following the official
 :doc:`publishing guide <t3coreapi:ExtensionArchitecture/PublishExtension/Index>`.
