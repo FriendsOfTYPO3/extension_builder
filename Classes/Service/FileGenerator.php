@@ -735,11 +735,11 @@ class FileGenerator
      */
     protected function generateDocumentationFiles(): void
     {
-        $this->mkdir_deep($this->extensionDirectory, 'Documentation.tmpl');
+        $this->mkdir_deep($this->extensionDirectory, 'Documentation');
         $docFiles = [];
         $docFiles = GeneralUtility::getAllFilesAndFoldersInPath(
             $docFiles,
-            ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Extbase/Documentation.tmpl/',
+            ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Extbase/Documentation/',
             '',
             true,
             5,
@@ -749,7 +749,7 @@ class FileGenerator
             if (is_dir($docFile)) {
                 $this->mkdir_deep(
                     $this->extensionDirectory,
-                    'Documentation.tmpl/' . str_replace($this->getTemplatePath('Documentation.tmpl/'), '', $docFile)
+                    'Documentation/' . str_replace($this->getTemplatePath('Documentation/'), '', $docFile)
                 );
             } elseif (strpos($docFile, '.rstt') === false && strpos($docFile, '.ymlt') === false) {
                 $this->upload_copy_move(
@@ -762,10 +762,10 @@ class FileGenerator
                 );
             }
         }
-        $fileContents = $this->renderTemplate('Documentation.tmpl/Index.rstt', ['extension' => $this->extension]);
-        $this->writeFile($this->extensionDirectory . 'Documentation.tmpl/Index.rst', $fileContents);
-        $fileContents = $this->renderTemplate('Documentation.tmpl/Settings.cfgt', ['extension' => $this->extension]);
-        $this->writeFile($this->extensionDirectory . 'Documentation.tmpl/Settings.cfg', $fileContents);
+        $fileContents = $this->renderTemplate('Documentation/Index.rstt', ['extension' => $this->extension]);
+        $this->writeFile($this->extensionDirectory . 'Documentation/Index.rst', $fileContents);
+        $fileContents = $this->renderTemplate('Documentation/Settings.cfgt', ['extension' => $this->extension]);
+        $this->writeFile($this->extensionDirectory . 'Documentation/Settings.cfg', $fileContents);
     }
 
     protected function generateEmptyGitRepository(): void
