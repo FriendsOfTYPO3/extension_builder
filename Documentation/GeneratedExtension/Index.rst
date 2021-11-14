@@ -6,6 +6,77 @@
 Generated extension
 ===================
 
+The generated extension looks like this, following the blog example from the
+previous chapter:
+
+.. code-block:: none
+
+   .
+   └── ebt_blog/
+       ├── composer.json
+       ├── ext_emconf.php
+       ├── ext_localconf.php
+       ├── ext_tables.php
+       ├── ext_tables.sql
+       ├── ExtensionBuilder.json
+       ├── Classes/
+           ├── Controller/
+           └── Domain/
+               ├── Model/
+               └── Repository/
+       ├── Configuration/
+           ├── ExtensionBuilder/
+           ├── TCA/
+           └── TypoScript/
+       ├── Documentation/..
+       ├── Resources/
+           ├── Private/
+               ├── Language/
+               ├── Layouts/
+               ├── Partials/
+               └── Templates/
+           └── Public/
+               └── Icons/
+       └── Tests/..
+           ├── Functional/
+           └── Unit/
+
+.. _basic-extension-files:
+
+Basic extension files
+=====================
+
+The minimum set of extension files generated when only the required metadata
+has been entered into the property form and no domain modeling has been
+performed:
+
+.. code-block:: none
+
+   .
+   └── ebt_blog/
+       ├── composer.json
+       ├── ext_emconf.php
+       ├── ExtensionBuilder.json
+       ├── Configuration/
+           └── ExtensionBuilder/..
+       ├── Documentation/..
+       └── Resources/
+           └── Public/
+               └── Icons/
+                   └── Extension.svg
+
+The extension metadata is stored in the :file:`composer.json` and :file:`ext_emconf.php`
+files and is used for installations in Composer mode and Legacy mode
+respectively.
+The extension icon :file:`Extension.svg` is displayed in the list of extensions of the
+Extension Manager module.
+The :file:`Documentation/` folder contains a basic set of documentation files.
+Read the section ":ref:`documentation`" how to proceed with the documentation.
+
+The Extension Builder stores some internal data in the :file:`ExtensionBuilder.json`
+file and in the :file:`Configuration/ExtensionBuilder/` folder which should be
+kept as long as the extension is edited in the Extension Builder.
+
 .. _documentation:
 
 Documentation
