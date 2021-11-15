@@ -29,7 +29,8 @@ configurable:
 +----------------------------+-------------------------------------------------------------------------------+------------------------------------+
 |Enable roundtrip mode       |If you enable the *roundtrip mode*, you can modify the generated files and     |true                                |
 |                            |your changes will be preserved even if you customize the extension again in    |                                    |
-|                            |the Extension Builder.                                                         |                                    |
+|                            |the Extension Builder. For more information on the roundtrip mode, see the     |                                    |
+|                            |page ":doc:`/InDepth/Roundtrip`".                                              |                                    |
 |                            |                                                                               |                                    |
 |                            |If you disable it (*kickstart mode*), all files are regenerated every time you |                                    |
 |                            |save in the Extension Builder.                                                 |                                    |
