@@ -40,12 +40,6 @@ and further developed.
 
 **TODO: The following text should be moved into the documentation.**
 
-Roundtrip mode
-==============
-
-Keep in mind though that the code created by Extension Builder is only a starting point for you actual implementation of
-functionality and is in no sense "production ready"!
-
 Compile scss
 ============
 
