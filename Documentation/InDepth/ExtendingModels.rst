@@ -7,88 +7,104 @@ Extending models or map to existing tables
 Extending models
 ================
 
-The Extension Builder supports single table inheritance. That means, you can extend Extbase models,
-either of your current extension or of other extensions. You have to enter the class name (not the model name!)
-of the model you want to extend in the domain object settings form in the field "Extend existing model class".
-The class has to be loadable, that means you can only extend classes of extensions that are installed.
-After saving and updating the database (if necessary) you should find a dropdown "Extbase Record Type" in
-the backend form and a new tab showing the properties that contains the new properties.
+The Extension Builder supports *single table inheritance*.
+This means you can extend Extbase models, either from your current extension or
+from other extensions. You must enter the fully qualified class name of the
+model you want to extend in the :guilabel:`Extend existing model class` field
+in the domain object settings form. The class must be loadable, i.e. you can
+only extend classes of extensions that are installed. After saving and updating
+the database (if necessary), you should find a drop-down list `Record Type` and
+a new tab with the new properties in the backend record form.
 
 .. note::
 
-   Since the single table inheritance depends on the ``$TCA[ctrl][type]`` field, the Extension Builder tries to detect if there
-   is already a type field configured and if so extends it with a new item for your new extended model. Otherwise the
-   Extension Builder creates a new column ``extbase_record_type`` and configure it as new type field. This might result in
-   errors in certain cases. Especially if you don't see any form at all, when opening existing records in the backend,
-   have a look at the type field configuration and at the existing values in the type field!
+   Since single table inheritance depends on the ``$TCA[ctrl][type]`` field,
+   the Extension Builder tries to detect if a type field is already configured,
+   and if so, it adds your model as new type. Otherwise, the Extension Builder
+   creates a new :sql:`tx_extbase_type` field and configures it as a new type
+   field. This can lead to errors in certain cases. Especially if you don`t see
+   any form at all when opening existing records in the backend, look at the
+   type field configuration and the existing values in the type field!
 
+In this example, the frontend user model was extended:
 
 .. figure:: ../Images/InDepth/Extend-Frontenduser.png
    :width: 200px
    :align: left
    :alt: Extend Frontend user
 
-
-Example: Extend frontend user
-
 Mapping to tables
 =================
 
-Often you want to store your models in an existing table, for example if there is no Extbase model for that table yet (like tt_address). Then you can enter the tablename in the domain object settings form in the field "Map to existing table". The Extension Builder will then add fields to that table for each property you added to your model. If you name the properties according to the existing column names you can access the existing fields with the getters and setters of your model and no new columns are generated.
+If you want to store a model in an existing table, for example if there is no
+Extbase model for that table yet (like :sql:`tt_address`), then you can enter
+the table name in the :guilabel:`Map to existing table` field in the domain
+object settings form.
+The Extension Builder will then add fields to this table for each property you
+added to your model. If you name the properties according to the existing field
+names, you can access the existing fields with your model's getters and setters,
+and no new fields are created.
 
+In this example the model is mapped to table :sql:`tt_address`:
 
 .. figure:: ../Images/InDepth/Map-to-tt_address.png
    :width: 400px
    :align: left
-   :alt: Map to tt_address
+   :alt: Mapping to tt_address
 
-
-Example: map to table tt_address
+and these are the resulting database updates:
 
 .. figure:: ../Images/InDepth/Database-Update.png
    :width: 500px
    :align: left
-   :alt: DB update
+   :alt: Database updates of tt_address mapping
 
-The resulting database updates
+and this is the backend form of the extended frontend user:
 
 .. figure:: ../Images/InDepth/Backendform-Frontenduser.png
    :width: 500px
    :align: left
-   :alt: Backend form
-
-The backend form for the extended frontend user
-
+   :alt: Backend form of mapped model
 
 .. note::
 
-   **Restrictions for STI (Single table inheritance)**
+   **Restrictions for single table inheritance**
 
-   You should be aware, that the mapping to an existing table has some side effects: Extbase will store the model in
-   the table. When it tries to restore the model, for example if a parameter ``tx_myext_myplugin[modelname]=23`` is
-   passed to a controller, it has to find the right subclass. This is implemented by a type field, which is the type
-   field defined in ``$GLOBALS[TCA][my_table][ctrl][type]``.
-   But in many system table like pages or tt_content the type field is used for different purposes, for example the
-   type field of tt_content holds the Content Type of the record and is used to find the right rendering definition for
-   that record. Now, when you map your model to tt_content this will add a new type value which has no rendering
-   definition at all.
+   You should be aware that mapping to an existing table has some side effects:
+   Extbase stores the model type in the table. When it tries to restore the
+   model, for example when a parameter :samp:`tx_myext_myplugin[modelname]=23`
+   is passed to a controller, it must find the correct subclass. This is
+   implemented by a type field defined in :php:`$GLOBALS[TCA][<table>][ctrl][type]`.
+   But in many TYPO3 Core tables like :sql:`pages` or :sql:`tt_content` the type
+   field is used for other purposes, for example the type field of tt_content
+   contains the content type of the record and is used to find the correct
+   rendering definition for that record. Now when you map your model to
+   tt_content, a new type value is added that is not a rendering definition.
 
-   Another issue related to single table inheritance is, that there is no real implementation in TYPO3 to avoid
-   conflicts if multiple extensions extend the same model. If there are 3 extension which extend a news model,
-   you have always to decide, which model you will use. You can't use the features of all subclasses in one model.
+   Another problem related to single table inheritance is that there is no real
+   implementation in TYPO3 to avoid conflicts when multiple extensions extend
+   the same model. If there are 3 extensions extending a news model, you always
+   have to decide which model to use. You can't use the features of all
+   subclasses in one model.
 
 .. caution::
 
-   Do not use STI of external models in extensions you want to publish in TER. You (and the user who download your extension) have no control of how many other extensions try to extend the same model which will result in unexpected behaviour!
+   Do not use single table inheritance from external models in extensions that
+   you want to publish in TER and Packagist. Extension users have no control
+   over how many other extensions try to extend the same model, which will lead
+   to unexpected behavior!
 
 Relations to models of other extensions
 =======================================
 
-If you want to add a relation to a model that does not belong to your current extension you have to enter the
-class name (not the model name!) of that model in the relations settings form. The related class has to be loadable,
-so you can only add models of extensions that are installed.
+If you want to add a relation to a model that is not part of your current
+extension, you must enter the fully qualified class name of that model in the
+relation settings form. The related class must be loadable, so you can only add
+models from installed extensions.
 
 .. tip::
-   Don't forget to add the extension which models you extend in the dependencies field in the left property panel.
-   Only then the PackageManager will care for the right order loading the extensions
 
+   Do not forget to enter the TYPO3 extension of the model your model inherits
+   from in the :guilabel:`Depends on` field of the properties form. Only then
+   the Package Manager will take care of the correct order when loading the
+   extensions.

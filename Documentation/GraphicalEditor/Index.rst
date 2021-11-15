@@ -116,6 +116,28 @@ subsection.
 |                                   |the implementation details of Extbase. However, this might change in upcoming TYPO3          |
 |                                   |versions.                                                                                    |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Map to existing table**          |Instead of creating a new database table for the model, you can let it use an existing       |
+|(Advanced options)                 |table. This can be useful if there is no Extbase model for this table yet. Enter the         |
+|                                   |appropriate table name in this field. Each model property will be assigned to an existing    |
+|                                   |table field if both names match, otherwise the table field will be created. This check takes |
+|                                   |into account that the property name is a lowerCamelCase and the table field name is a        |
+|                                   |lowercase, underscored string, for example the ``firstName`` property matches the            |
+|                                   |``first_name`` field. For more information on this topic, see the page                       |
+|                                   |":doc:`/InDepth/ExtendingModels`".                                                           |
+|                                   |                                                                                             |
+|                                   |An example is "tt_address".                                                                  |
++-----------------------------------+---------------------------------------------------------------------------------------------+
+|**Extend existing model class**    |Extbase supports *single table inheritance*, which means that a model can inherit from       |
+|(Advanced options)                 |another model and both are persisted in the same database table, optionally using only a     |
+|                                   |subset of the table fields. The model class to inherit from must be specified as a fully     |
+|                                   |qualified class name and must exist in the current TYPO3 instance. Each model property will  |
+|                                   |be assigned to an existing table field if both names match, otherwise the table field will   |
+|                                   |be newly created. Additionally, a table field :sql:`tx_extbase_type` is created to specify   |
+|                                   |the model class stored in this table row. For more information on this topic, see the        |
+|                                   |":doc:`/InDepth/ExtendingModels`" page.                                                      |
+|                                   |                                                                                             |
+|                                   |An example is "\\TYPO3\\CMS\\Extbase\\Domain\\Model\\Category".                              |
++-----------------------------------+---------------------------------------------------------------------------------------------+
 
 .. figure:: ../Images/UserManual/modeler-object-settings.png
    :width: 200px
@@ -214,6 +236,9 @@ type of relation.
 |                                   |side-by-side selection field, a multi-select checkbox, or a multi-select selection box, and  |
 |                                   |is always implemented with an additional many-to-many database table. An example is when a   |
 |                                   |book may have multiple authors and each author has written multiple books.                   |
+|                                   |                                                                                             |
+|                                   |[TODO]: Add note of adding a second relation property for m:n and of adjusting the           |
+|                                   |m:n-table-name of both generated TCA files.                                                  |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Render type**                    |This option is only available for the relation types "1:n" and "m:n" and defines the         |
 |                                   |display of the relation property field in the TYPO3 backend. See *Type* description for      |
