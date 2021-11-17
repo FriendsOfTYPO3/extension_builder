@@ -11,26 +11,23 @@ To create a TYPO3 extension based on Extbase & Fluid, follow these steps:
 1. Open the graphical editor
 ============================
 
-Go to the Extension Builder backend module,
+Go to the backend module of the Extension Builder,
 switch to the graphical editor by selecting the :guilabel:`Domain Modelling`
 view (1)
-and ensure that the properties form is expanded by clicking on the small arrow
-symbol :guilabel:`>|` on the upper left corner (2).
+and ensure that the properties form (2) is expanded, located on the left side of
+the graphical modeler (3).
 
-Please note that some configuration options are only available when the advanced
-options are displayed by clicking the :guilabel:`Show advanced options` button
-in the upper right corner. These options are mainly for experienced TYPO3
-developers (3).
+Please note that some configuration options are only available if the advanced
+options are enabled by clicking the :guilabel:`Show advanced options` button
+in the upper right corner (4). These options are mainly intended for experienced
+TYPO3 developers.
 
-.. figure:: ../Images/UserManual/modeler-start-extension-a.png
-   :width: 200px
-   :align: left
-   :alt: Modeler Start Extension
+.. include:: /Images/AutomaticScreenshots/GraphicalEditor.rst.txt
 
 2. Insert meta data of extension
 ================================
 
-Enter meaningful meta data of your extension in the properties form on the left side:
+Enter meaningful meta data of your extension in the properties form (2) on the left side:
 
 +----------------------+----------------------------------------------------------------------------------------------------------+
 |**Name**              |The extension name can be any string and is used as ``title`` property in the extension configuration     |
@@ -62,17 +59,13 @@ Enter meaningful meta data of your extension in the properties form on the left 
 |                      |configuration files :file:`ext_emconf.php` and :file:`composer.json`.                                     |
 +----------------------+----------------------------------------------------------------------------------------------------------+
 |**Version**           |A good versioning scheme helps to track the changes. We recommend *Semantic Versioning*.                  |
+|(More options)        |                                                                                                          |
 +----------------------+----------------------------------------------------------------------------------------------------------+
 |**State**             |The status indicates whether the extension has already reached a stable phase, or whether it is still in  |
-|                      |alpha or beta.                                                                                            |
+|(More options)        |alpha or beta.                                                                                            |
 +----------------------+----------------------------------------------------------------------------------------------------------+
 |**Extension authors** |There is a possibility to add developers or project managers here.                                        |
 +----------------------+----------------------------------------------------------------------------------------------------------+
-
-.. figure:: ../Images/UserManual/modeler-start-extension-b.png
-   :width: 500px
-   :align: left
-   :alt: Modeler Start Example
 
 3. Create a domain model
 ========================
@@ -139,10 +132,7 @@ subsection.
 |                                   |An example is "\\TYPO3\\CMS\\Extbase\\Domain\\Model\\Category".                              |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 
-.. figure:: ../Images/UserManual/modeler-object-settings.png
-   :width: 200px
-   :align: left
-   :alt: Modeler Object Settings
+.. include:: /Images/AutomaticScreenshots/DomainObjectSettings.rst.txt
 
 3.b. Add actions
 ----------------
@@ -153,10 +143,7 @@ All selected actions are made available in the controller that is created along
 with the model, and a Fluid template with an appropriate name is generated for
 each action.
 
-.. figure:: ../Images/UserManual/modeler-actions.png
-   :width: 250px
-   :align: left
-   :alt: Modeler Actions
+.. include:: /Images/AutomaticScreenshots/Actions.rst.txt
 
 3.c. Add properties
 -------------------
@@ -189,6 +176,8 @@ Expand the :guilabel:`properties` subsection to add model properties:
 |**Is exclude field?**              |Enable this option if you want to be able to hide this property from non-administrators      |
 |(Advanced options)                 |in the TYPO3 backend.                                                                        |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
+
+.. include:: /Images/AutomaticScreenshots/Properties.rst.txt
 
 3.d. Add relations
 ------------------
@@ -255,6 +244,8 @@ type of relation.
 |                                   |``@lazy`` PHPDoc annotation in the model class.                                              |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 
+.. include:: /Images/AutomaticScreenshots/Relations.rst.txt
+
 4. Create a frontend plugin
 ===========================
 
@@ -297,6 +288,8 @@ TYPO3 content element "General Plugin".
 |                                   |                                                                                             |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 
+.. include:: /Images/AutomaticScreenshots/FrontendPlugins.rst.txt
+
 5. Create a backend module
 ==========================
 
@@ -329,10 +322,12 @@ backend.
 |                                   |                                                                                             |
 |                                   |.. code-block:: none                                                                         |
 |                                   |                                                                                             |
-|                                   |   Blog => list,show,create,save,edit,update,delete                                          |
+|                                   |   Blog => list,show,create,save,edit,update,delete,duplicate                                |
 |                                   |   Author => list,show,create,save,edit,update,delete                                        |
 |                                   |                                                                                             |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
+
+.. include:: /Images/AutomaticScreenshots/BackendModules.rst.txt
 
 6. Save the extension
 =====================
@@ -352,11 +347,6 @@ for saving the extension. Extension Builder will create a symlink :file:`typo3co
 
 [TODO]: Is an additional ``composer require <package-name>`` required?
 
-.. figure:: ../Images/User/select-destination.png
-   :width: 400px
-   :align: left
-   :alt: Select destination
-
 Legacy mode
 -----------
 
@@ -373,3 +363,5 @@ model in the graphical editor you have to enable :doc:`/InDepth/Roundtrip` befor
 in the Extension Builder again.
 
 [TODO]: Roundtrip link should link to page "Configuration" as soon as it is linkable there.
+
+.. include:: /Images/AutomaticScreenshots/GraphicalEditorBlogExampleFullPage.rst.txt
