@@ -37,16 +37,4 @@ and further developed.
 
 :Repository:  https://github.com/FriendsOfTYPO3/extension_builder
 :Read online: https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/
-
-**TODO: The following text should be moved into the documentation.**
-
-Compile scss
-============
-
-The preferred way is to use yarn but npm also works. In that case just replace ``yarn`` with ``npm``.
-
-.. code-block:: bash
-
-   cd Resources/Public/jsDomainModeling/
-   yarn install
-   yarn build-css
+:TER: https://extensions.typo3.org/extension/extension_builder
