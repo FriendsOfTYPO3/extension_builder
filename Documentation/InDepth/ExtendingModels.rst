@@ -28,7 +28,8 @@ a new tab with the new properties in the backend record form.
 
 In this example, the frontend user model was extended:
 
-.. figure:: ../Images/InDepth/Extend-Frontenduser.png
+.. figure:: ../Images/ManualScreenshots/Extend-Frontenduser.png
+   :class: with-shadow
    :width: 200px
    :align: left
    :alt: Extend Frontend user
@@ -47,21 +48,24 @@ and no new fields are created.
 
 In this example the model is mapped to table :sql:`tt_address`:
 
-.. figure:: ../Images/InDepth/Map-to-tt_address.png
+.. figure:: ../Images/ManualScreenshots/Map-to-tt_address.png
+   :class: with-shadow
    :width: 400px
    :align: left
    :alt: Mapping to tt_address
 
 and these are the resulting database updates:
 
-.. figure:: ../Images/InDepth/Database-Update.png
+.. figure:: ../Images/ManualScreenshots/Database-Update.png
+   :class: with-shadow
    :width: 500px
    :align: left
    :alt: Database updates of tt_address mapping
 
 and this is the backend form of the extended frontend user:
 
-.. figure:: ../Images/InDepth/Backendform-Frontenduser.png
+.. figure:: ../Images/ManualScreenshots/Backendform-Frontenduser.png
+   :class: with-shadow
    :width: 500px
    :align: left
    :alt: Backend form of mapped model
