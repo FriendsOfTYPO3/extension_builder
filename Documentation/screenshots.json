@@ -206,6 +206,12 @@
 						"altText": "Graphical editor with blog example",
 						"captionText": "Graphical editor with blog example"
 					}
+				],
+				"SingleTableInheritance": [
+					{"comment": "The screenshots of single table inheritance on page \"/In-Depth/ExtendingModels.rst\" cannot be captured automatically yet. It requires"},
+					{"comment": "- A valid output directory of Extension Builder in acceptance tests; see https://github.com/FriendsOfTYPO3/extension_builder/issues/532."},
+					{"comment": "- An Extbase class of the TYPO3 Core available for class inheritance; if using FrontendUser or BackendUser it currently does not show the tx_extbase_type field in the Database Analyzer (maybe a Core bug?)."},
+					{"comment": "- A database table of the TYPO3 Core available for class mapping; if using sys_language it currently does not show the tx_extbase_type field in the Database Analyzer (maybe a Core bug?)."}
 				]
 			}
 		}
