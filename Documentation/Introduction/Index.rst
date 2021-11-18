@@ -26,8 +26,9 @@ What does it do?
 
 It provides a graphical modeler to define domain models and their relations
 as well as associated controllers with basic actions.
-It also provides a mask to define extension metadata, frontend plugins and
-backend modules that use the previously defined controllers and actions.
+It also provides a properties form to define extension metadata, frontend
+plugins and backend modules that use the previously defined controllers
+and actions.
 Finally, it generates an extension with boilerplate code that can be installed
 and further developed.
 
