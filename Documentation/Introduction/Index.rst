@@ -24,7 +24,7 @@ let the graphical editor of the Extension Builder assist you:
 What does it do?
 ================
 
-It provides a graphical editor to define domain models and their relations
+It provides a graphical modeler to define domain models and their relations
 as well as associated controllers with basic actions.
 It also provides a mask to define extension metadata, frontend plugins and
 backend modules that use the previously defined controllers and actions.
@@ -54,7 +54,7 @@ In addition to the *kickstart mode*, the Extension Builder also provides a
 even after you have started making manual changes to the files.
 In this mode, the Extension Builder retains the manual changes,
 such as new methods, changed method bodies, comments and annotations,
-even if you change the extension in the graphical modeler.
+even if you change the extension in the graphical editor.
 
 .. _what-does-it-not-do:
 

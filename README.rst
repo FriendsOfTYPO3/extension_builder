@@ -28,7 +28,7 @@ The *Extension Builder* helps you to develop a TYPO3 extension based on the
 domain-driven MVC framework `Extbase <https://docs.typo3.org/m/typo3/book-extbasefluid/master/en-us/0-Introduction/Index.html>`__
 and the templating engine `Fluid <https://docs.typo3.org/m/typo3/book-extbasefluid/master/en-us/8-Fluid/Index.html>`__.
 
-It provides a graphical editor to define domain models and their relations
+It provides a graphical modeler to define domain models and their relations
 as well as associated controllers with basic actions.
 It also provides a mask to define extension metadata, frontend plugins and
 backend modules that use the previously defined controllers and actions.

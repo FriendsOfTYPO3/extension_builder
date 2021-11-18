@@ -27,10 +27,11 @@ Extension Builder
       even after you have started making manual changes to the files.
       In this mode, the Extension Builder retains the manual changes,
       such as new methods, changed method bodies, comments and annotations,
-      even if you change the extension in the graphical modeler.
+      even if you change the extension in the graphical editor.
 
    :Keywords:
-      Extension development, Extension Builder, Kickstarter, Extbase, Fluid, DDD, Domain Driven Design, Graphical modeler
+      Extension development, Extension Builder, Kickstarter, Extbase, Fluid, DDD,
+      Domain Driven Design, Graphical modeler, Graphical editor
 
    :Copyright:
       Extension Builder Team
