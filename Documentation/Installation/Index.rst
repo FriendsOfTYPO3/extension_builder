@@ -16,7 +16,7 @@ Admin rights are required to install and activate the Extension Builder.
 
 .. _installation_composer:
 
-With Composer
+Composer mode
 =============
 
 If your TYPO3 installation uses Composer, install the latest Extension Builder
@@ -46,8 +46,8 @@ installed via Composer using the Extension Manager. Activate it as follows:
 
 .. _installation_legacy:
 
-Without Composer
-================
+Legacy mode
+===========
 
 If you are working with a TYPO3 installation that does not use Composer, install
 the extension in the Extension Manager:
