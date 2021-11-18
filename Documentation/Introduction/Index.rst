@@ -28,14 +28,14 @@ It provides a graphical modeler to define domain models and their relations
 as well as associated controllers with basic actions.
 It also provides a properties form to define extension metadata, frontend
 plugins and backend modules that use the previously defined controllers
-and actions.
-Finally, it generates a basic extension with that can be installed
-and further developed.
+and actions:
 
 .. include:: /Images/AutomaticScreenshots/GraphicalEditorBlogExampleWindow.rst.txt
 
+Finally, it generates a basic extension with that can be installed
+and further developed:
+
 .. code-block:: none
-   :caption: Generated extension
 
    .
    └── ebt_blog/
