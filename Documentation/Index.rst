@@ -31,7 +31,7 @@ Extension Builder
 
    :Keywords:
       Extension development, Extension Builder, Kickstarter, Extbase, Fluid, DDD,
-      Domain Driven Design, Graphical modeler, Graphical editor
+      Domain-Driven Design, Graphical modeler, Graphical editor
 
    :Copyright:
       Extension Builder Team
