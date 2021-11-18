@@ -80,22 +80,6 @@ files and subfolders of a file path.
 +----------------------------+-------------------------------------------------------------------------------+
 |skip                        |These files are not created.\*                                                 |
 +----------------------------+-------------------------------------------------------------------------------+
-|staticDateInXliffFiles      |By default, the date attribute in language files is updated every time you     |
-|                            |save in the Extension Builder.                                                 |
-|                            |This can be confusing in a version control system if all language files are    |
-|                            |marked as changed even if no labels have been added or changed.                |
-|                            |To prevent this effect, you can set a static date –                            |
-|                            |although this is not recommended because the modification date can be useful   |
-|                            |in the translation context.                                                    |
-+----------------------------+-------------------------------------------------------------------------------+
-|ignoreWarnings              |Some modeling configurations result in warnings.                               |
-|                            |For example, if you configure a show action as a default action, you are       |
-|                            |warned that you need to define a parameter of a domain object to be shown.     |
-|                            |However, there may be use cases where you want to ignore the warning and thus  |
-|                            |prevent it from appearing every time you save. Add the warning code that will  |
-|                            |be displayed with the warning to the list of this setting. Each code should be |
-|                            |listed on its own line and indented by 2 spaces.                               |
-+----------------------------+-------------------------------------------------------------------------------+
 
 .. warning::
 
@@ -123,9 +107,6 @@ This is an example of the :file:`settings.yaml` file:
          #Templates: keep
 
      Documentation.tmpl: skip
-
-[TODO]: Add staticDateInXliffFiles = *2014-05-03T06:04:48Z* to example file
-[TODO]: Add ignoreWarnings to example file
 
 .. _class-building:
 
@@ -178,4 +159,39 @@ This is an example of the :file:`settings.yaml` file:
 
      setDefaultValuesForClassProperties: true
 
-[TODO]: Is the existence of the inherited class checked when the classes are generated?
+.. _miscellaneous:
+
+Miscellaneous
+-------------
+
+There are more options both for the timestamps of the language files and for
+working with the Extension Builder itself.
+
++----------------------------+-------------------------------------------------------------------------------+
+|**Setting**                 |**Description**                                                                |
++----------------------------+-------------------------------------------------------------------------------+
+|staticDateInXliffFiles      |By default, the date attribute in language files is updated every time you     |
+|                            |save in the Extension Builder.                                                 |
+|                            |This can be confusing in a version control system if all language files are    |
+|                            |marked as changed even if no labels have been added or changed.                |
+|                            |To prevent this effect, you can set a static date –                            |
+|                            |although this is not recommended because the modification date can be useful   |
+|                            |in the translation context.                                                    |
++----------------------------+-------------------------------------------------------------------------------+
+|ignoreWarnings              |Some modeling configurations result in warnings.                               |
+|                            |For example, if you configure a show action as a default action, you are       |
+|                            |warned that you need to define a parameter of a domain object to be shown.     |
+|                            |However, there may be use cases where you want to ignore the warning and thus  |
+|                            |prevent it from appearing every time you save. Add the warning code that will  |
+|                            |be displayed with the warning to the list of this setting. Each code should be |
+|                            |listed on its own line and indented by 2 spaces.                               |
++----------------------------+-------------------------------------------------------------------------------+
+
+This is an example of the :file:`settings.yaml` file:
+
+.. code-block:: yaml
+
+   staticDateInXliffFiles: 2021-11-18T12:37:00Z
+
+   ignoreWarnings:
+     503
