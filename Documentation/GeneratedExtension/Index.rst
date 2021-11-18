@@ -55,7 +55,7 @@ Basic extension files
 =====================
 
 The minimum set of extension files generated when only the required metadata
-has been entered into the property form and no domain modeling has been
+has been entered into the properties form and no domain modeling has been
 performed:
 
 .. code-block:: none
@@ -145,7 +145,7 @@ Documentation
 
 The Extension Builder has already created sample documentation for your
 extension if you have :guilabel:`Generate documentation template` enabled in
-the property form.
+the properties form.
 
 .. _writing-documentation:
 

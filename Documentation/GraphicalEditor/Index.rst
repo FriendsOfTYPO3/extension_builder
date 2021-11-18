@@ -265,7 +265,7 @@ type of relation.
 ===========================
 
 If you want to create an extension that generates output in the TYPO3 frontend,
-add a plugin in the :guilabel:`Frontend plugins` subsection of the property form.
+add a plugin in the :guilabel:`Frontend plugins` subsection of the properties form.
 It will then be available for selection in the type field of the
 TYPO3 content element "General Plugin".
 
@@ -309,7 +309,7 @@ TYPO3 content element "General Plugin".
 ==========================
 
 If your extension should provide a TYPO3 backend module,
-add a module in the :guilabel:`Backend modules` subsection of the property form.
+add a module in the :guilabel:`Backend modules` subsection of the properties form.
 It will then be available in the module menu on the left side of the TYPO3
 backend.
 
