@@ -8,6 +8,12 @@ Installation
 
 Admin rights are required to install and activate the Extension Builder.
 
+.. contents::
+   :backlinks: top
+   :class: compact-list
+   :depth: 1
+   :local:
+
 .. _installation_composer:
 
 With Composer

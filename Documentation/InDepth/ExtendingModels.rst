@@ -4,6 +4,16 @@
 Extending models or map to existing tables
 ==========================================
 
+Since the TYPO3 Core already contains a number of database tables and Extbase
+models, it may prove useful to reuse or extend existing entities instead of
+creating new ones:
+
+.. contents::
+   :backlinks: top
+   :class: compact-list
+   :depth: 1
+   :local:
+
 Extending models
 ================
 
