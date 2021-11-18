@@ -68,8 +68,8 @@ performed:
 The extension metadata is stored in the :file:`composer.json` and :file:`ext_emconf.php`
 files and is used for installations in Composer mode and Legacy mode
 respectively.
-The extension icon :file:`Extension.svg` is displayed in the list of extensions of the
-Extension Manager module.
+The extension icon :file:`Extension.svg` is displayed in the list of extensions
+of the Extension Manager module.
 The :file:`Documentation/` folder contains a basic set of documentation files.
 Read the section ":ref:`documentation`" how to proceed with the documentation.
 
@@ -166,6 +166,16 @@ locally to test the output. The recommended method is to use the official
 TYPO3 Documentation Team Docker image, but you can also install all the required
 rendering tools from scratch. You can find more about this in the official TYPO3
 documentation on the page ":doc:`h2document:RenderingDocs/Index`".
+
+For example, on a Linux host with Docker installed, rendering boils down to
+these commands:
+
+.. code-block:: bash
+
+   cd <path-to-extension>
+   source <(docker run --rm t3docs/render-documentation show-shell-commands)
+   dockrun_t3rd makehtml
+   xdg-open "Documentation-GENERATED-temp/Result/project/0.0.0/Index.html"
 
 .. _publish-documentation:
 
