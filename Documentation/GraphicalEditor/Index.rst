@@ -8,6 +8,12 @@ Graphical editor
 
 To create a TYPO3 extension based on Extbase & Fluid, follow these steps:
 
+.. contents::
+   :backlinks: top
+   :class: compact-list
+   :depth: 2
+   :local:
+
 1. Open the graphical editor
 ============================
 
@@ -250,7 +256,7 @@ type of relation.
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Lazy loading**                   |Should the related objects be loaded when the model object is instantiated (*eager loading*) |
 |(Advanced options)                 |or on demand (*lazy loading*). Lazy loading relation properties are provided with a          |
-|                                   |``@lazy`` PHPDoc annotation in the model class.                                              |
+|                                   |:php:`@TYPO3\CMS\Extbase\Annotation\ORM\Lazy` PHPDoc annotation in the model class.          |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 
 .. include:: /Images/AutomaticScreenshots/Relations.rst.txt
@@ -346,8 +352,8 @@ If your model represents the domain you wanted to implement you can hit the
 The Extension Builder generates all required files for you in a location that
 depends on your local setup:
 
-Composer mode
--------------
+6.a. Composer mode
+------------------
 
 If you run TYPO3 in :doc:`Composer mode <t3start:Installation/Install>`, you
 have to specify and configure a `local path repository <https://getcomposer.org/doc/05-repositories.md#path>`_
@@ -381,8 +387,8 @@ To install the extension in the TYPO3 instance you have to execute the usual:
 
    composer require ebt/ebt-blog:@dev
 
-Legacy mode
------------
+6.b. Legacy mode
+----------------
 
 If you run TYPO3 in :doc:`Legacy mode <t3start:Installation/LegacyInstallation>`
 the extension will be generated directly at :file:`typo3conf/ext/<extension_key>/`.

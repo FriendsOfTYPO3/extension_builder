@@ -4,15 +4,21 @@
 Roundtrip mode
 ==============
 
+Sooner or later you get to the point where you need to add or rename models,
+but already changed code of the originally created files. At this point the
+*roundtrip mode* is needed. It aims to preserve your manual changes while
+applying the new model configuration:
+
+.. contents::
+   :backlinks: top
+   :class: compact-list
+   :depth: 1
+   :local:
+
 .. _editing-existing-extension:
 
 Editing an existing extension
 =============================
-
-Sooner or later you get to the point where you need to add or rename models,
-but already changed code of the originally created files. At this point the
-*roundtrip mode* is needed. It aims to preserve your manual changes while
-applying the new model configuration.
 
 The roundtrip mode is enabled by default. To disable it, see the Extension
 Builder configuration :doc:`/Configuration/Index`.

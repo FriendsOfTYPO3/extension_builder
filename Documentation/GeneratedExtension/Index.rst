@@ -41,6 +41,14 @@ previous chapter:
            ├── Functional/..
            └── Unit/..
 
+It is explained in more detail in the following sections:
+
+.. contents::
+   :backlinks: top
+   :class: compact-list
+   :depth: 2
+   :local:
+
 .. _basic-extension-files:
 
 Basic extension files

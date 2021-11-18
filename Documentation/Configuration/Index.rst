@@ -14,6 +14,11 @@ There are two places to configure the Extension Builder:
 2. Locally, in the file :file:`Configuration/ExtensionBuilder/settings.yaml`
    of the generated extension.
 
+.. contents::
+   :backlinks: top
+   :class: compact-list
+   :depth: 2
+   :local:
 
 .. _global-configuration:
 
@@ -41,7 +46,6 @@ configurable:
 |Backup directory            |The directory where the Extension Builder stores the backup –                  |var/tx_extensionbuilder/backups     |
 |                            |specified as an absolute path or relative to ``PATH_site``.                    |                                    |
 +----------------------------+-------------------------------------------------------------------------------+------------------------------------+
-
 
 .. _local-configuration:
 
