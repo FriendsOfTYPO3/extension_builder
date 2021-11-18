@@ -11,7 +11,13 @@ domain-driven MVC framework :doc:`Extbase <t3extbasebook:0-Introduction/Index>`
 and the templating engine :doc:`Fluid <t3extbasebook:8-Fluid/Index>`.
 
 Instead of creating an extension file structure from scratch,
-let the graphical editor of the Extension Builder assist you.
+let the graphical editor of the Extension Builder assist you:
+
+.. contents::
+   :backlinks: top
+   :class: compact-list
+   :depth: 1
+   :local:
 
 .. _what-does-it-do:
 
