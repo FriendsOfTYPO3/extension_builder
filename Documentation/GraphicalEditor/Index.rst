@@ -27,7 +27,13 @@ TYPO3 developers.
 2. Insert meta data of extension
 ================================
 
-Enter meaningful meta data of your extension in the properties form (2) on the left side:
+Enter meaningful meta data of your extension in the properties form (2) on the
+left side.
+
+Once you have filled in the required *Name*, *Vendor name* and *Key* fields,
+you can click the :guilabel:`Save` button at the top to create the extension
+skeleton in your file system based on your configuration.
+Feel encouraged to save frequently.
 
 +----------------------+----------------------------------------------------------------------------------------------------------+
 |**Name**              |The extension name can be any string and is used as ``title`` property in the extension configuration     |
@@ -70,9 +76,11 @@ Enter meaningful meta data of your extension in the properties form (2) on the l
 3. Create a domain model
 ========================
 
-Then create at least one model by dragging the grey tile "New Model Object"
-to the canvas. Give it a meaningful name, which must be an UpperCamelCase,
-alphanumeric string, for example "Blog".
+If you want to extend the extension skeleton to implement business logic, create
+at least one model by dragging the gray :guilabel:`New Model Object` tile onto
+the canvas.
+Give it a meaningful name, which must be an UpperCamelCase, alphanumeric string,
+for example "Blog".
 
 3.a. Edit domain object settings
 --------------------------------
@@ -170,8 +178,9 @@ Expand the :guilabel:`properties` subsection to add model properties:
 |**Description**                    |The property description can be any text. It is displayed in the *List* module of the TYPO3  |
 |(Advanced options)                 |backend as context sensitive help when you click on the property field.                      |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
-|**Is required?**                   |Enable this option if this property must be set in TYPO3 frontend and backend.               |
-|(Advanced options)                 |                                                                                             |
+|**Is required?**                   |Enable this option if this property must be set in TYPO3 frontend. Required properties are   |
+|(Advanced options)                 |provided with a :php:`@TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")` PHPDoc annotation  |
+|                                   |in the model class.                                                                          |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Is exclude field?**              |Enable this option if you want to be able to hide this property from non-administrators      |
 |(Advanced options)                 |in the TYPO3 backend.                                                                        |
@@ -340,12 +349,37 @@ depends on your local setup:
 Composer mode
 -------------
 
-If you run TYPO3 in :doc:`Composer mode <t3start:Installation/Install>`
-you have to provide and configure a local `path repository <https://getcomposer.org/doc/05-repositories.md#path>`_ before you save your extension.
-The Extension Builder will read the path from the TYPO3 project :file:`composer.json` and offer it as target path
-for saving the extension. Extension Builder will create a symlink :file:`typo3conf/ext/<extension_key>/` to your extension.
+If you run TYPO3 in :doc:`Composer mode <t3start:Installation/Install>`, you
+have to specify and configure a `local path repository <https://getcomposer.org/doc/05-repositories.md#path>`_
+before saving your extension. Extension Builder reads the path from the TYPO3
+project :file:`composer.json` and offers it as a target path to save the
+extension. Extension Builder creates a symlink :file:`typo3conf/ext/<extension_key>/`
+to your extension.
 
-[TODO]: Is an additional ``composer require <package-name>`` required?
+The local path repository is normally configured as follows:
+
+.. code-block:: js
+
+   {
+       "repositories": {
+           "packages": {
+               "type": "path",
+               "url": "packages/*"
+           }
+       }
+   }
+
+To install the extension in the TYPO3 instance you have to execute the usual:
+
+.. code-block:: bash
+
+   composer require <extension-package-name>:@dev
+
+, for example:
+
+.. code-block:: bash
+
+   composer require ebt/ebt-blog:@dev
 
 Legacy mode
 -----------
@@ -353,15 +387,15 @@ Legacy mode
 If you run TYPO3 in :doc:`Legacy mode <t3start:Installation/LegacyInstallation>`
 the extension will be generated directly at :file:`typo3conf/ext/<extension_key>/`.
 
-Once the extension is saved you should be able to install it in the Extension Manager.
+Once the extension is saved you should be able to install it in the Extension
+Manager.
 
 7. Continue developing
 ======================
 
-Now you can start modifying the generated files in your IDE. If you still want to be able to modify the
-model in the graphical editor you have to enable :doc:`/InDepth/Roundtrip` before loading the extension
-in the Extension Builder again.
-
-[TODO]: Roundtrip link should link to page "Configuration" as soon as it is linkable there.
+Now you can start modifying the generated files in your IDE. If you still want
+to be able to modify the model in the graphical editor you have to make sure
+that the *roundtrip mode* is activated in the :doc:`configuration </Configuration/Index>`,
+before loading the extension in the Extension Builder again.
 
 .. include:: /Images/AutomaticScreenshots/GraphicalEditorBlogExampleFullPage.rst.txt
