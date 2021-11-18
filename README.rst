@@ -33,7 +33,7 @@ as well as associated controllers with basic actions.
 It also provides a properties form to define extension metadata, frontend
 plugins and backend modules that use the previously defined controllers
 and actions.
-Finally, it generates an extension with boilerplate code that can be installed
+Finally, it generates a basic extension that can be installed
 and further developed.
 
 :Repository:  https://github.com/FriendsOfTYPO3/extension_builder

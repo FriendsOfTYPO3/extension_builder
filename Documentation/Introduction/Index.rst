@@ -29,13 +29,13 @@ as well as associated controllers with basic actions.
 It also provides a properties form to define extension metadata, frontend
 plugins and backend modules that use the previously defined controllers
 and actions.
-Finally, it generates an extension with boilerplate code that can be installed
+Finally, it generates a basic extension with that can be installed
 and further developed.
 
 .. include:: /Images/AutomaticScreenshots/GraphicalEditorBlogExampleWindow.rst.txt
 
 .. code-block:: none
-   :caption: Generated extension with boilerplate code
+   :caption: Generated extension
 
    .
    └── ebt_blog/
