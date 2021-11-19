@@ -213,40 +213,60 @@ type of relation.
 |                                   |**one-to-one (1:1)**                                                                         |
 |                                   |                                                                                             |
 |                                   |This relation property can be associated with a specific object of the related model and     |
-|                                   |that object has no other relation. This setting results in a side-by-side selection field    |
-|                                   |with a maximum of 1 selected item in the TYPO3 backend.                                      |
-|                                   |An example is a person who has only one account and this account is not used by any other    |
-|                                   |person.                                                                                      |
+|                                   |that object has no other relation. An example is a person who has only one account and       |
+|                                   |this account is not used by any other person.                                                |
+|                                   |                                                                                             |
+|                                   |This setting results in a side-by-side selection field with a maximum of 1 selected item in  |
+|                                   |the TYPO3 backend.                                                                           |
 |                                   |                                                                                             |
 |                                   |**one-to-many (1:n)**                                                                        |
 |                                   |                                                                                             |
-|                                   |This relation property can be associated with multiple objects in the related model, but     |
-|                                   |each of those objects has no other relation. This is rendered either as a side-by-side       |
-|                                   |selection field or as an *Inline-Relational-Record-Editing* (IRRE) field in the TYPO3        |
-|                                   |backend (see *Render type* property). An example is a blog with multiple posts, but each     |
-|                                   |post belongs to only one blog.                                                               |
+|                                   |This relation property can be associated with multiple objects of the related model, but     |
+|                                   |each of those objects has no other relation. An example is a blog with multiple posts,       |
+|                                   |but each post belongs to only one blog.                                                      |
+|                                   |                                                                                             |
+|                                   |See *Render type* description for more details on the rendering of the property in the TYPO3 |
+|                                   |backend.                                                                                     |
 |                                   |                                                                                             |
 |                                   |**many-to-one (n:1)**                                                                        |
 |                                   |                                                                                             |
 |                                   |This relation property can be associated with a specific object of the related model, but    |
-|                                   |that object can have multiple relations. This is represented in the TYPO3 backend as a       |
-|                                   |side-by-side selection field with a maximum number of 1 selected item. An example is when    |
-|                                   |each person has a specific birthplace, but many people can have the same birthplace.         |
+|                                   |that object can have multiple relations. An example is when each person has a specific       |
+|                                   |birthplace, but many people can have the same birthplace.                                    |
+|                                   |                                                                                             |
+|                                   |This is represented in the TYPO3 backend as a side-by-side selection field with a maximum    |
+|                                   |number of 1 selected item.                                                                   |
 |                                   |                                                                                             |
 |                                   |**many-to-many (m:n)**                                                                       |
 |                                   |                                                                                             |
 |                                   |This relation property can be associated with multiple objects of the related model, and     |
-|                                   |each of these objects can also have multiple relations. This is represented as either a      |
-|                                   |side-by-side selection field, a multi-select checkbox, or a multi-select selection box, and  |
-|                                   |is always implemented with an additional many-to-many database table. An example is when a   |
-|                                   |book may have multiple authors and each author has written multiple books.                   |
+|                                   |each of these objects can also have multiple relations. An example is when a book may have   |
+|                                   |multiple authors and each author has written multiple books.                                 |
 |                                   |                                                                                             |
-|                                   |[TODO]: Add note of adding a second relation property for m:n and of adjusting the           |
-|                                   |m:n-table-name of both generated TCA files.                                                  |
+|                                   |See *Render type* description for more details on the rendering of the property in the TYPO3 |
+|                                   |backend.                                                                                     |
+|                                   |                                                                                             |
+|                                   |Note: For this relation to work properly, you must perform two additional tasks:             |
+|                                   |                                                                                             |
+|                                   |1. Add a many-to-many relation property in the related model as well and connect it to       |
+|                                   |   this model.                                                                               |
+|                                   |2. Match the database table name in the                                                      |
+|                                   |   :ref:`MM property <t3tca:columns-select-properties-mm>` of the TCA files of both models   |
+|                                   |   in the generated extension. If this is not the case, the relations of one model are       |
+|                                   |   stored in a different database table than the relations of the related model.             |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Render type**                    |This option is only available for the relation types "1:n" and "m:n" and defines the         |
-|                                   |display of the relation property field in the TYPO3 backend. See *Type* description for      |
-|                                   |more details.                                                                                |
+|                                   |display of the relation property field in the TYPO3 backend:                                 |
+|                                   |                                                                                             |
+|                                   |**one-to-many (1:n)**                                                                        |
+|                                   |                                                                                             |
+|                                   |This can be rendered either as a side-by-side selection field or as an                       |
+|                                   |*Inline-Relational-Record-Editing* (IRRE) field.                                             |
+|                                   |                                                                                             |
+|                                   |**many-to-many (m:n)**                                                                       |
+|                                   |                                                                                             |
+|                                   |This can be represented as either a side-by-side selection field, a multi-select checkbox,   |
+|                                   |or a multi-select selection box.                                                             |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Description**                    |The relation description can be any text. It is displayed in the *List* module of the TYPO3  |
 |                                   |backend as context sensitive help when you click on the relation property field.             |
