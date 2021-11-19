@@ -49,14 +49,14 @@ It is explained in more detail in the following sections:
    :depth: 2
    :local:
 
-.. _basic-extension-files:
+.. _extension-skeleton:
 
-Basic extension files
-=====================
+Extension skeleton
+==================
 
-The minimum set of extension files generated when only the required metadata
-has been entered into the properties form and no domain modeling has been
-performed:
+This is the minimum set of extension files generated when only the required
+metadata has been entered into the properties form and no domain modeling has
+been performed:
 
 .. code-block:: none
 
