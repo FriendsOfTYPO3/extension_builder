@@ -260,13 +260,17 @@ type of relation.
 |                                   |                                                                                             |
 |                                   |**one-to-many (1:n)**                                                                        |
 |                                   |                                                                                             |
-|                                   |This can be rendered either as a side-by-side selection field or as an                       |
-|                                   |*Inline-Relational-Record-Editing* (IRRE) field.                                             |
+|                                   |This can be rendered either as a                                                             |
+|                                   |:doc:`side-by-side selection box <t3tca:ColumnsConfig/Type/Select/MultipleSideBySide/Index>` |
+|                                   |or as an                                                                                     |
+|                                   |:doc:`inline-relational-record-editing field <t3tca:ColumnsConfig/Type/Inline/Index>`.       |
 |                                   |                                                                                             |
 |                                   |**many-to-many (m:n)**                                                                       |
 |                                   |                                                                                             |
-|                                   |This can be represented as either a side-by-side selection field, a multi-select checkbox,   |
-|                                   |or a multi-select selection box.                                                             |
+|                                   |This can be represented as either a                                                          |
+|                                   |:doc:`side-by-side selection box <t3tca:ColumnsConfig/Type/Select/MultipleSideBySide/Index>` |
+|                                   |, a :doc:`multi-select checkbox <t3tca:ColumnsConfig/Type/Select/CheckBox/Index>`,           |
+|                                   |or a :doc:`multi-select selection box <t3tca:ColumnsConfig/Type/Select/SingleBox/Index>`.    |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Description**                    |The relation description can be any text. It is displayed in the *List* module of the TYPO3  |
 |                                   |backend as context sensitive help when you click on the relation property field.             |
