@@ -4,10 +4,11 @@
 Roundtrip mode
 ==============
 
-Sooner or later you get to the point where you need to add or rename models,
-but already changed code of the originally created files. At this point the
-*roundtrip mode* is needed. It aims to preserve your manual changes while
-applying the new model configuration:
+Sooner or later you get to the point where you need to add or rename domain
+objects, but already changed code of the originally created files. At this
+point the *roundtrip mode* is needed.
+It aims to preserve your manual changes while applying the new domain model
+configuration:
 
 .. contents::
    :backlinks: top
@@ -96,13 +97,14 @@ Consequences of various actions:
 *  existing data in many-to-many database tables will be LOST, except you RENAME
    the table manually
 
-**If you rename a model:**
+**If you rename a domain object:**
 
-*  the corresponding classes (model, controller, repository) will be renamed
+*  the corresponding classes (domain object, controller, repository) will be
+   renamed
 
 *  all methods, properties and constants are preserved
 
-*  relations to this model are updated
+*  relations to this domain object are updated
 
 *  references to the renamed classes in OTHER classes are NOT updated (!)
 

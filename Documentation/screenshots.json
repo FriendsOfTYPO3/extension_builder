@@ -86,9 +86,9 @@
 						"altText": "The backend modules",
 						"captionText": "The backend modules"
 					},
-					{"comment": "*******************************"},
-					{"comment": "Domain modeling - Create models"},
-					{"comment": "*******************************"},
+					{"comment": "***************************************"},
+					{"comment": "Domain modeling - Create domain objects"},
+					{"comment": "***************************************"},
 					{"action": "dragAndDrop", "source": "#moduleBar", "target": "#modelingLayer"},
 					{"action": "setCssOfElement", "selector": "//div[text()='(click to edit)']/ancestor::div[contains(@class, \"WireIt-Container\")][1]", "css": {"left": "350px", "top": "100px"}},
 					{"action": "click", "link": "//div[text()='(click to edit)']/ancestor::div[contains(@class, \"WireIt-Container\")][1]//div[contains(@class,'inputEx-InPlaceEdit-visu')]"},
@@ -154,8 +154,8 @@
 						"action": "makeScreenshotOfElement",
 						"selector": "//div[text()='Blog']/ancestor::div[contains(@class, \"WireIt-Container\")][1]//div[contains(@class,'properties')]",
 						"fileName": "Properties",
-						"altText": "The model properties",
-						"captionText": "The model properties"
+						"altText": "The domain object properties",
+						"captionText": "The domain object properties"
 					},
 					{"action": "click", "link": "//div[text()='Blog']/ancestor::div[contains(@class, \"WireIt-Container\")][1]//div[contains(@class,'properties')]//legend"},
 					{"comment": "***************************"},
@@ -180,8 +180,8 @@
 						"action": "makeScreenshotOfElement",
 						"selector": "//div[text()='Blog']/ancestor::div[contains(@class, \"WireIt-Container\")][1]//div[contains(@class,'relations')]//div[contains(@class,'inputEx-ListField-childContainer')]/div[1]//div[contains(@class,'advancedSettings')]",
 						"fileName": "Relations",
-						"altText": "The model relations",
-						"captionText": "The model relations"
+						"altText": "The domain object relations",
+						"captionText": "The domain object relations"
 					},
 					{"action": "click", "link": "//div[text()='Blog']/ancestor::div[contains(@class, \"WireIt-Container\")][1]//div[contains(@class,'relations')]//div[contains(@class,'inputEx-ListField-childContainer')]/div[1]//div[contains(@class,'inputEx-Group-collapseImg')]"},
 					{"comment": "******************************************"},
@@ -208,7 +208,7 @@
 					}
 				],
 				"SingleTableInheritance": [
-					{"comment": "The screenshots of single table inheritance on page \"/In-Depth/ExtendingModels.rst\" cannot be captured automatically yet. It requires"},
+					{"comment": "The screenshots of single table inheritance on page \"/In-Depth/ExtendingDomainObjects.rst\" cannot be captured automatically yet. It requires"},
 					{"comment": "- A valid output directory of Extension Builder in acceptance tests; see https://github.com/FriendsOfTYPO3/extension_builder/issues/532."},
 					{"comment": "- An Extbase class of the TYPO3 Core available for class inheritance; if using FrontendUser or BackendUser it currently does not show the tx_extbase_type field in the Database Analyzer (maybe a Core bug?)."},
 					{"comment": "- A database table of the TYPO3 Core available for class mapping; if using sys_language it currently does not show the tx_extbase_type field in the Database Analyzer (maybe a Core bug?)."}
