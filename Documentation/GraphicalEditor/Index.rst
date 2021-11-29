@@ -70,7 +70,7 @@ Feel encouraged to save frequently.
 |**Description**       |The extension description can be any text. It is used as ``description`` property in extension            |
 |                      |configuration files :file:`ext_emconf.php` and :file:`composer.json`.                                     |
 +----------------------+----------------------------------------------------------------------------------------------------------+
-|**Version**           |A good versioning scheme helps to track the changes. We recommend *Semantic Versioning*.                  |
+|**Version**           |A good versioning scheme helps to track the changes. We recommend *semantic versioning*.                  |
 |(More options)        |                                                                                                          |
 +----------------------+----------------------------------------------------------------------------------------------------------+
 |**State**             |The status indicates whether the extension has already reached a stable phase, or whether it is still in  |
@@ -181,8 +181,7 @@ Expand the :guilabel:`properties` subsection to add domain object properties:
 |                                   |**Note**: As of TYPO3 v11, the types marked with an asterisk (\*) are not fully implemented  |
 |                                   |for frontend rendering for various reasons. For example, the frontend handling of the types  |
 |                                   |"file" and "image" is not yet implemented, because an implementation in Extbase is missing.  |
-|                                   |The implementation details are left to the developers in consultation with the TYPO3         |
-|                                   |community.                                                                                   |
+|                                   |For these, many implementation examples can be found on the Internet.                        |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Description**                    |The property description can be any text. It is displayed in the *List* module of the TYPO3  |
 |(Advanced options)                 |backend as context sensitive help when you click on the property field.                      |
@@ -249,7 +248,8 @@ type of relation.
 |                                   |See *Render type* description for more details on the rendering of the property in the TYPO3 |
 |                                   |backend.                                                                                     |
 |                                   |                                                                                             |
-|                                   |Note: For this relation to work properly, you must perform two additional tasks:             |
+|                                   |**Note**: For the many-to-many relation to work properly, you must perform two additional    |
+|                                   |tasks:                                                                                       |
 |                                   |                                                                                             |
 |                                   |1. Add a many-to-many relation property in the related domain object as well and connect it  |
 |                                   |   to this object.                                                                           |
@@ -258,7 +258,7 @@ type of relation.
 |                                   |   objects in the generated extension. If this is not the case, the relations of one object  |
 |                                   |   are stored in a different database table than the relations of the related object.        |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
-|**Render type**                    |This option is only available for the relation types "1:n" and "m:n" and defines the         |
+|**Render type**                    |This option is only available for the one-to-many and many-to-many relations and defines the |
 |                                   |display of the relation property field in the TYPO3 backend:                                 |
 |                                   |                                                                                             |
 |                                   |**one-to-many (1:n)**                                                                        |

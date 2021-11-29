@@ -29,6 +29,5 @@ the blog would be deleted instead of being edited.
 
 You have to make sure in your receiving controller to only allow context-specific
 actions and generally restrict access to critical actions.
-[TODO]: Give more detailed solution.
 
 
