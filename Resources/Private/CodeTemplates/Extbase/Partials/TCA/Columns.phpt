@@ -9,7 +9,7 @@ $tmp_{domainObject.extension.extensionKey}_columns['{relation.foreignKeyName}'] 
     ]
 ];</f:for>
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('{domainObject.databaseTableName}',$tmp_{domainObject.extension.extensionKey}_columns);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('{domainObject.databaseTableName}', $tmp_{domainObject.extension.extensionKey}_columns);
 </f:if>
 <k:recordType domainObject="{domainObject}">
 // inherit and extend the show items from the parent class
