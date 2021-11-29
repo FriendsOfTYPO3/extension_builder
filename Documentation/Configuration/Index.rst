@@ -117,9 +117,9 @@ This is an example of the :file:`settings.yaml` file:
 Class building
 --------------
 
-By default, the generated controller, model and repository classes inherit from
-the corresponding Extbase classes. It might be useful to inherit from your own
-classes - which should then extend the Extbase classes.
+By default, the generated controller, domain object and repository classes
+inherit from the corresponding Extbase classes. It might be useful to inherit
+from your own classes - which should then extend the Extbase classes.
 
 The nesting reflects the class hierarchy and is restricted to the classes
 

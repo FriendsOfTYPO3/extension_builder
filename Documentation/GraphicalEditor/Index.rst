@@ -79,11 +79,11 @@ Feel encouraged to save frequently.
 |**Extension authors** |There is a possibility to add developers or project managers here.                                        |
 +----------------------+----------------------------------------------------------------------------------------------------------+
 
-3. Create a domain model
-========================
+3. Create a domain object
+=========================
 
 If you want to extend the extension skeleton to implement business logic, create
-at least one model by dragging the gray :guilabel:`New Model Object` tile onto
+at least one domain object by dragging the gray :guilabel:`New Model Object` tile onto
 the canvas.
 Give it a meaningful name, which must be an UpperCamelCase, alphanumeric string,
 for example "Blog".
@@ -91,25 +91,26 @@ for example "Blog".
 3.a. Edit domain object settings
 --------------------------------
 
-Edit the general settings of the model by opening the :guilabel:`Domain object settings`
-subsection.
+Edit the general settings of the domain object by opening the
+:guilabel:`Domain object settings` subsection.
 
 +-----------------------------------+---------------------------------------------------------------------------------------------+
-|**Is aggregate root?**             |Check this option if this model combines other models into an aggregate. Models outside the  |
-|                                   |aggregate may contain references to this root model, but not to other objects in the         |
-|                                   |aggregate. The aggregate root checks the consistency of changes in the aggregate.            |
-|                                   |An example is a blog object that has related post objects that can only be accessed through  |
+|**Is aggregate root?**             |Check this option if this domain object combines other objects into an aggregate. Objects    |
+|                                   |outside the aggregate may contain references to this root object, but not to other objects   |
+|                                   |in the aggregate. The aggregate root checks the consistency of changes in the aggregate.     |
+|                                   |An example is a blog object that has a related post object that can only be accessed through |
 |                                   |the blog object with ``$blog->getPosts()``.                                                  |
 |                                   |                                                                                             |
 |                                   |Checking this option in the Extension Builder means that a controller class is generated for |
-|                                   |this model, whose actions can be defined in the following :guilabel:`Default actions`        |
+|                                   |this object, whose actions can be defined in the following :guilabel:`Default actions`       |
 |                                   |subsection.                                                                                  |
-|                                   |Additionally, a repository class is generated that allows to retrieve all objects of this    |
-|                                   |model from the persistence layer, i.e. in most scenarios from the database.                  |
+|                                   |Additionally, a repository class is generated that allows to retrieve all instances of this  |
+|                                   |domain object from the persistence layer, i.e. in most scenarios from the database.          |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
-|**Description**                    |The model description can be any text. It is used in the PHPDoc comment of the model class.  |
+|**Description**                    |The domain object description can be any text. It is used in the PHPDoc comment of its       |
+|                                   |class.                                                                                       |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
-|**Object type**                    |Select whether the model is an *entity* or a *value object*.                                 |
+|**Object type**                    |Select whether the domain object is an *entity* or a *value object*.                         |
 |(Advanced options)                 |                                                                                             |
 |                                   |An entity is identified by a unique identifier and its properties usually change during the  |
 |                                   |application run. An example is a customer whose name, address, email, etc. may change, but   |
@@ -119,29 +120,31 @@ subsection.
 |                                   |entity property. An example is an address that is identified by its street, house number,    |
 |                                   |city and postal code and would no longer be the same address if any of its values changed.   |
 |                                   |                                                                                             |
-|                                   |**Note**: As of TYPO3 v11, it is recommended to specify any model of type "entity" due to    |
-|                                   |the implementation details of Extbase. However, this might change in upcoming TYPO3          |
+|                                   |**Note**: As of TYPO3 v11, it is recommended to specify any domain object of type "entity"   |
+|                                   |due to the implementation details of Extbase. However, this might change in upcoming TYPO3   |
 |                                   |versions.                                                                                    |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
-|**Map to existing table**          |Instead of creating a new database table for the model, you can let it use an existing       |
-|(Advanced options)                 |table. This can be useful if there is no Extbase model for this table yet. Enter the         |
-|                                   |appropriate table name in this field. Each model property will be assigned to an existing    |
-|                                   |table field if both names match, otherwise the table field will be created. This check takes |
-|                                   |into account that the property name is a lowerCamelCase and the table field name is a        |
-|                                   |lowercase, underscored string, for example the ``firstName`` property matches the            |
+|**Map to existing table**          |Instead of creating a new database table for the domain object, you can let it use an        |
+|(Advanced options)                 |existing table. This can be useful if there is no domain object class using this table yet.  |
+|                                   |Enter the appropriate table name in this field. Each object property will be assigned to an  |
+|                                   |existing table field if both names match, otherwise the table field will be created.         |
+|                                   |This check takes into account that the property name is a lowerCamelCase and the table field |
+|                                   |name is a lowercase, underscored string, for example the ``firstName`` property matches the  |
 |                                   |``first_name`` field. For more information on this topic, see the page                       |
-|                                   |":doc:`/InDepth/ExtendingModels`".                                                           |
+|                                   |":doc:`/InDepth/ExtendingDomainObjects`".                                                    |
 |                                   |                                                                                             |
 |                                   |An example is "tt_address".                                                                  |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
-|**Extend existing model class**    |Extbase supports *single table inheritance*, which means that a model can inherit from       |
-|(Advanced options)                 |another model and both are persisted in the same database table, optionally using only a     |
-|                                   |subset of the table fields. The model class to inherit from must be specified as a fully     |
-|                                   |qualified class name and must exist in the current TYPO3 instance. Each model property will  |
-|                                   |be assigned to an existing table field if both names match, otherwise the table field will   |
-|                                   |be newly created. Additionally, a table field :sql:`tx_extbase_type` is created to specify   |
-|                                   |the model class stored in this table row. For more information on this topic, see the        |
-|                                   |":doc:`/InDepth/ExtendingModels`" page.                                                      |
+|**Extend existing model class**    |Extbase supports *single table inheritance*, which means that a domain object class can      |
+|(Advanced options)                 |inherit from another domain object class and instances of both are persisted in the same     |
+|                                   |database table, optionally using only a subset of the table fields. The class to inherit     |
+|                                   |from must be specified as a fully qualified class name and must exist in the current TYPO3   |
+|                                   |instance.                                                                                    |
+|                                   |Each object property will be assigned to an existing table field if both names match,        |
+|                                   |otherwise the table field will be newly created. Additionally, a table field                 |
+|                                   |:sql:`tx_extbase_type` is created to specify the domain object class stored in this table    |
+|                                   |row. For more information on this topic, see the ":doc:`/InDepth/ExtendingDomainObjects`"    |
+|                                   |page.                                                                                        |
 |                                   |                                                                                             |
 |                                   |An example is "\\TYPO3\\CMS\\Extbase\\Domain\\Model\\Category".                              |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
@@ -151,23 +154,23 @@ subsection.
 3.b. Add actions
 ----------------
 
-If the model is an aggregate root, open the :guilabel:`Default actions` section
+If the domain object is an aggregate root, open the :guilabel:`Default actions` section
 and select the actions you need and add custom actions if required.
-All selected actions are made available in the controller that is created along
-with the model, and a Fluid template with an appropriate name is generated for
-each action.
+All selected actions are made available in the controller class that is created
+along with the domain object class, and a Fluid template with an appropriate name is
+generated for each action.
 
 .. include:: /Images/AutomaticScreenshots/Actions.rst.txt
 
 3.c. Add properties
 -------------------
 
-Expand the :guilabel:`properties` subsection to add model properties:
+Expand the :guilabel:`properties` subsection to add domain object properties:
 
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Property name**                  |The property name must be a lowerCamelCase, alphanumeric string. It is used                  |
 |                                   |                                                                                             |
-|                                   |- in language files and model classes as ``<propertyName>`` and                              |
+|                                   |- in language files and domain object classes as ``<propertyName>`` and                      |
 |                                   |- in the database table as ``<property_name>``.                                              |
 |                                   |                                                                                             |
 |                                   |An example is "firstName".                                                                   |
@@ -186,7 +189,7 @@ Expand the :guilabel:`properties` subsection to add model properties:
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Is required?**                   |Enable this option if this property must be set in TYPO3 frontend. Required properties are   |
 |(Advanced options)                 |provided with a :php:`@TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")` PHPDoc annotation  |
-|                                   |in the model class.                                                                          |
+|                                   |in the domain object class.                                                                  |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Is exclude field?**              |Enable this option if you want to be able to hide this property from non-administrators      |
 |(Advanced options)                 |in the TYPO3 backend.                                                                        |
@@ -197,11 +200,11 @@ Expand the :guilabel:`properties` subsection to add model properties:
 3.d. Add relations
 ------------------
 
-If you create multiple models you may want to connect them by relations.
+If you create multiple domain objects you may want to connect them by relations.
 A relation property can be added in the :guilabel:`relations` subsection.
-When being added, it can be connected to the related model by dragging the round
-connector of the relation property and dropping it at the connector of the
-related model. When expanding the relation property panel you can refine the
+When being added, it can be connected to the related object by dragging the
+round connector of the relation property and dropping it at the connector of the
+related object. When expanding the relation property panel you can refine the
 type of relation.
 
 +-----------------------------------+---------------------------------------------------------------------------------------------+
@@ -212,48 +215,48 @@ type of relation.
 |                                   |                                                                                             |
 |                                   |**one-to-one (1:1)**                                                                         |
 |                                   |                                                                                             |
-|                                   |This relation property can be associated with a specific object of the related model and     |
-|                                   |that object has no other relation. An example is a person who has only one account and       |
-|                                   |this account is not used by any other person.                                                |
+|                                   |This relation property can be associated with a specific instance of the related domain      |
+|                                   |object and that instance has no other relation. An example is a person who has only one      |
+|                                   |account and this account is not used by any other person.                                    |
 |                                   |                                                                                             |
 |                                   |This setting results in a side-by-side selection field with a maximum of 1 selected item in  |
 |                                   |the TYPO3 backend.                                                                           |
 |                                   |                                                                                             |
 |                                   |**one-to-many (1:n)**                                                                        |
 |                                   |                                                                                             |
-|                                   |This relation property can be associated with multiple objects of the related model, but     |
-|                                   |each of those objects has no other relation. An example is a blog with multiple posts,       |
-|                                   |but each post belongs to only one blog.                                                      |
+|                                   |This relation property can be associated with multiple instances of the related domain       |
+|                                   |object, but each of those instances has no other relation. An example is a blog with         |
+|                                   |multiple posts, but each post belongs to only one blog.                                      |
 |                                   |                                                                                             |
 |                                   |See *Render type* description for more details on the rendering of the property in the TYPO3 |
 |                                   |backend.                                                                                     |
 |                                   |                                                                                             |
 |                                   |**many-to-one (n:1)**                                                                        |
 |                                   |                                                                                             |
-|                                   |This relation property can be associated with a specific object of the related model, but    |
-|                                   |that object can have multiple relations. An example is when each person has a specific       |
-|                                   |birthplace, but many people can have the same birthplace.                                    |
+|                                   |This relation property can be associated with a specific instance of the related domain      |
+|                                   |object, but that instance can have multiple relations. An example is when each person has    |
+|                                   |a specific birthplace, but many people can have the same birthplace.                         |
 |                                   |                                                                                             |
 |                                   |This is represented in the TYPO3 backend as a side-by-side selection field with a maximum    |
 |                                   |number of 1 selected item.                                                                   |
 |                                   |                                                                                             |
 |                                   |**many-to-many (m:n)**                                                                       |
 |                                   |                                                                                             |
-|                                   |This relation property can be associated with multiple objects of the related model, and     |
-|                                   |each of these objects can also have multiple relations. An example is when a book may have   |
-|                                   |multiple authors and each author has written multiple books.                                 |
+|                                   |This relation property can be associated with multiple instances of the related domain       |
+|                                   |object, and each of these instances can also have multiple relations. An example is when a   |
+|                                   |book may have multiple authors and each author has written multiple books.                   |
 |                                   |                                                                                             |
 |                                   |See *Render type* description for more details on the rendering of the property in the TYPO3 |
 |                                   |backend.                                                                                     |
 |                                   |                                                                                             |
 |                                   |Note: For this relation to work properly, you must perform two additional tasks:             |
 |                                   |                                                                                             |
-|                                   |1. Add a many-to-many relation property in the related model as well and connect it to       |
-|                                   |   this model.                                                                               |
+|                                   |1. Add a many-to-many relation property in the related domain object as well and connect it  |
+|                                   |   to this object.                                                                           |
 |                                   |2. Match the database table name in the                                                      |
-|                                   |   :ref:`MM property <t3tca:columns-select-properties-mm>` of the TCA files of both models   |
-|                                   |   in the generated extension. If this is not the case, the relations of one model are       |
-|                                   |   stored in a different database table than the relations of the related model.             |
+|                                   |   :ref:`MM property <t3tca:columns-select-properties-mm>` of the TCA files of both domain   |
+|                                   |   objects in the generated extension. If this is not the case, the relations of one object  |
+|                                   |   are stored in a different database table than the relations of the related object.        |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Render type**                    |This option is only available for the relation types "1:n" and "m:n" and defines the         |
 |                                   |display of the relation property field in the TYPO3 backend:                                 |
@@ -278,9 +281,10 @@ type of relation.
 |**Is exclude field?**              |Enable this option if you want to be able to hide this relation property from                |
 |(Advanced options)                 |non-administrators in the TYPO3 backend.                                                     |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
-|**Lazy loading**                   |Should the related objects be loaded when the model object is instantiated (*eager loading*) |
-|(Advanced options)                 |or on demand (*lazy loading*). Lazy loading relation properties are provided with a          |
-|                                   |:php:`@TYPO3\CMS\Extbase\Annotation\ORM\Lazy` PHPDoc annotation in the model class.          |
+|**Lazy loading**                   |Should the related instances be loaded when an instance of this domain is created            |
+|(Advanced options)                 |(*eager loading*) or on demand (*lazy loading*). Lazy loading relation properties are        |
+|                                   |provided with a :php:`@TYPO3\CMS\Extbase\Annotation\ORM\Lazy` PHPDoc annotation in the       |
+|                                   |domain object class.                                                                         |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 
 .. include:: /Images/AutomaticScreenshots/Relations.rst.txt
@@ -305,8 +309,8 @@ TYPO3 content element "General Plugin".
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Controller action combinations** |In each line all actions of a controller supported by this plugin are listed by              |
 |                                   |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
-|                                   |default action. Actions are defined in the related aggregate root model, and the controller  |
-|                                   |name corresponds to the model name.                                                          |
+|                                   |default action. Actions are defined in the related aggregate root object, and the controller |
+|                                   |name corresponds to the object name.                                                         |
 |                                   |                                                                                             |
 |                                   |An example is                                                                                |
 |                                   |                                                                                             |
@@ -354,8 +358,8 @@ backend.
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Controller action combinations** |In each line all actions of a controller supported by this module are listed by              |
 |                                   |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
-|                                   |default action. Actions are defined in the related aggregate root model, and the controller  |
-|                                   |name corresponds to the model name.                                                          |
+|                                   |default action. Actions are defined in the related aggregate root object, and the controller |
+|                                   |name corresponds to the object name.                                                         |
 |                                   |                                                                                             |
 |                                   |An example is                                                                                |
 |                                   |                                                                                             |
@@ -424,8 +428,9 @@ Manager.
 ======================
 
 Now you can start modifying the generated files in your IDE. If you still want
-to be able to modify the model in the graphical editor you have to make sure
-that the *roundtrip mode* is activated in the :doc:`configuration </Configuration/Index>`,
-before loading the extension in the Extension Builder again.
+to be able to modify the domain model in the graphical editor you have to make
+sure that the *roundtrip mode* is activated in the
+:doc:`configuration </Configuration/Index>`, before loading the extension in the
+Extension Builder again.
 
 .. include:: /Images/AutomaticScreenshots/GraphicalEditorBlogExampleFullPage.rst.txt

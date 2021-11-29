@@ -128,10 +128,11 @@ folder.
 
 The database schema of the domain model is defined in the :file:`ext_tables.sql`
 file.
-The Extbase classes that define the domain model are provided in the
-:file:`Classes/` folder, their presentation in the TYPO3 backend is configured
-in the :file:`Configuration/TCA/` folder.
-Last but not least, the tests of the PHP classes are located in the folder
+The controller classes are provided in the folder :file:`Classes/Controller/`,
+the classes that define the domain model are provided in the
+folder :file:`Classes/Domain/` and their representation in the TYPO3 backend
+is configured in the folder :file:`Configuration/TCA/`.
+Last but not least, the tests of the classes are located in the folder
 :file:`Tests/`.
 
 For more information on tests, see the section ":ref:`tests`" and for everything
@@ -229,15 +230,15 @@ Covered classes and methods
 
 The Extension Builder generates unit tests for the public API of
 
-1. domain models and
+1. domain objects and
 2. default controller actions.
 
-.. _covered-domain-model-methods:
+.. _covered-domain-object-methods:
 
-Covered domain model methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Covered domain object methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The covered domain model methods match the patterns
+The covered methods of domain object classes match the patterns
 
 *  get*()
 *  set*()
@@ -262,7 +263,7 @@ For example:
    }
 
 All types of properties are covered, for example integers, strings, file
-references or relations to other domain models.
+references or relations to other domain objects.
 
 .. _covered-controller-actions:
 

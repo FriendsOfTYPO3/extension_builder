@@ -4,7 +4,7 @@
 .. =========================================================
 
 .. figure:: /Images/AutomaticScreenshots/Relations.png
-   :alt: The model relations
+   :alt: The domain object relations
    :class: with-shadow
 
-   The model relations
+   The domain object relations
