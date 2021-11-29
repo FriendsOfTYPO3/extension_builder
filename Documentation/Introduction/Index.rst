@@ -24,7 +24,7 @@ let the graphical editor of the Extension Builder assist you:
 What does it do?
 ================
 
-It provides a graphical modeler to define domain models and their relations
+It provides a graphical modeler to define domain objects and their relations
 as well as associated controllers with basic actions.
 It also provides a properties form to define extension metadata, frontend
 plugins and backend modules that use the previously defined controllers
@@ -70,7 +70,8 @@ sense of *Domain-Driven Design*.
 Unlike the deprecated *Kickstarter* extension, the Extension Builder is not
 intended for creating your own TYPO3 content elements.
 To create them, you should either use the Extension Builder to create a TYPO3
-extension skeleton (without models, controllers, plugins and modules) and add
+extension skeleton (without domain objects, controllers, plugins and modules)
+and add
 :doc:`TYPO3 content elements manually <t3coreapi:ApiOverview/ContentElements/AddingYourOwnContentElements>`,
 or use one of the dedicate extensions like `Mask <https://extensions.typo3.org/extension/mask>`__
 or `Dynamic Content Elements (DCE) <https://extensions.typo3.org/extension/dce>`__

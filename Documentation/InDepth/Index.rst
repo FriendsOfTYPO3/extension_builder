@@ -14,4 +14,4 @@ are explained:
    :maxdepth: 1
 
    Roundtrip
-   ExtendingModels
+   ExtendingDomainObjects
