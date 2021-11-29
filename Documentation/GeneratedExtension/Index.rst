@@ -153,8 +153,6 @@ the properties form.
 Writing documentation
 ---------------------
 
-Now rename the sample folder :file:`Documentation.tmpl/` to :file:`Documentation/`.
-
 The generated documentation is written in the *reStructuredText* (reST)
 markup language with support for *Sphinx directives* and provides a typical
 documentation structure with some dummy entries. More about how to document with

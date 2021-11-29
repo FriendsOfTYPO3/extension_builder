@@ -110,7 +110,7 @@ This is an example of the :file:`settings.yaml` file:
          Language: merge
          #Templates: keep
 
-     Documentation.tmpl: skip
+     Documentation: skip
 
 .. _class-building:
 
