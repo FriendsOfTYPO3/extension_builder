@@ -1,0 +1,5 @@
+.. figure:: /Images/ManualScreenshots/Actions.png
+   :alt: The associated controller actions
+   :class: with-shadow
+
+   The associated controller actions

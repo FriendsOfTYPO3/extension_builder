@@ -1,0 +1,5 @@
+.. figure:: /Images/ManualScreenshots/BackendModules.png
+   :alt: The backend modules
+   :class: with-shadow
+
+   The backend modules
