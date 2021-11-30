@@ -145,7 +145,7 @@ Documentation
 =============
 
 The Extension Builder has already created sample documentation for your
-extension if you have :guilabel:`Generate documentation template` enabled in
+extension if you have :guilabel:`Generate documentation` enabled in
 the properties form.
 
 .. _writing-documentation:
@@ -280,9 +280,9 @@ The covered controller actions match the names
 
 and test the following behavior:
 
-*  asserting data in the action is assigned to the view
+*  asserting data in the action is assigned to the view and
 *  asserting the action delegates data modifications to a repository,
-   like adding, updating, removing or fetching objects
+   like adding, updating, removing or fetching objects.
 
 For example:
 
