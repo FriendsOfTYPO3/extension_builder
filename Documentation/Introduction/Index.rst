@@ -30,7 +30,7 @@ It also provides a properties form to define extension metadata, frontend
 plugins and backend modules that use the previously defined controllers
 and actions:
 
-.. include:: /Images/AutomaticScreenshots/GraphicalEditorBlogExampleWindow.rst.txt
+.. include:: /Images/ManualScreenshots/GraphicalEditorBlogExampleWindow.rst.txt
 
 Finally, it generates a basic extension with that can be installed
 and further developed:
