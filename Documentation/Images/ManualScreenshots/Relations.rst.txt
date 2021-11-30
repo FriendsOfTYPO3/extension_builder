@@ -1,0 +1,5 @@
+.. figure:: /Images/ManualScreenshots/Relations.png
+   :alt: The domain object relations
+   :class: with-shadow
+
+   The domain object relations
