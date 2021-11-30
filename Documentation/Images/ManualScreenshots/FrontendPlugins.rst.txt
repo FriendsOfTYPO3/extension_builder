@@ -1,0 +1,5 @@
+.. figure:: /Images/ManualScreenshots/FrontendPlugins.png
+   :alt: The frontend plugins
+   :class: with-shadow
+
+   The frontend plugins

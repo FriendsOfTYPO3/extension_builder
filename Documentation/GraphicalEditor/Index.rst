@@ -28,7 +28,7 @@ options are enabled by clicking the :guilabel:`Show advanced options` button
 in the upper right corner (4). These options are mainly intended for experienced
 TYPO3 developers.
 
-.. include:: /Images/AutomaticScreenshots/GraphicalEditor.rst.txt
+.. include:: /Images/ManualScreenshots/GraphicalEditor.rst.txt
 
 2. Insert meta data of extension
 ================================
@@ -149,7 +149,7 @@ Edit the general settings of the domain object by opening the
 |                                   |An example is "\\TYPO3\\CMS\\Extbase\\Domain\\Model\\Category".                              |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 
-.. include:: /Images/AutomaticScreenshots/DomainObjectSettings.rst.txt
+.. include:: /Images/ManualScreenshots/DomainObjectSettings.rst.txt
 
 3.b. Add actions
 ----------------
@@ -160,7 +160,7 @@ All selected actions are made available in the controller class that is created
 along with the domain object class, and a Fluid template with an appropriate name is
 generated for each action.
 
-.. include:: /Images/AutomaticScreenshots/Actions.rst.txt
+.. include:: /Images/ManualScreenshots/Actions.rst.txt
 
 3.c. Add properties
 -------------------
@@ -194,7 +194,7 @@ Expand the :guilabel:`properties` subsection to add domain object properties:
 |(Advanced options)                 |in the TYPO3 backend.                                                                        |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 
-.. include:: /Images/AutomaticScreenshots/Properties.rst.txt
+.. include:: /Images/ManualScreenshots/Properties.rst.txt
 
 3.d. Add relations
 ------------------
@@ -287,7 +287,7 @@ type of relation.
 |                                   |domain object class.                                                                         |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 
-.. include:: /Images/AutomaticScreenshots/Relations.rst.txt
+.. include:: /Images/ManualScreenshots/Relations.rst.txt
 
 4. Create a frontend plugin
 ===========================
@@ -331,7 +331,7 @@ TYPO3 content element "General Plugin".
 |                                   |                                                                                             |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 
-.. include:: /Images/AutomaticScreenshots/FrontendPlugins.rst.txt
+.. include:: /Images/ManualScreenshots/FrontendPlugins.rst.txt
 
 5. Create a backend module
 ==========================
@@ -370,7 +370,7 @@ backend.
 |                                   |                                                                                             |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 
-.. include:: /Images/AutomaticScreenshots/BackendModules.rst.txt
+.. include:: /Images/ManualScreenshots/BackendModules.rst.txt
 
 6. Save the extension
 =====================
@@ -433,4 +433,4 @@ sure that the *roundtrip mode* is activated in the
 :doc:`configuration </Configuration/Index>`, before loading the extension in the
 Extension Builder again.
 
-.. include:: /Images/AutomaticScreenshots/GraphicalEditorBlogExampleFullPage.rst.txt
+.. include:: /Images/ManualScreenshots/GraphicalEditorBlogExampleFullPage.rst.txt
