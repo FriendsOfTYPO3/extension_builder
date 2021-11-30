@@ -1,0 +1,5 @@
+.. figure:: /Images/ManualScreenshots/DomainObjectSettings.png
+   :alt: The domain object settings
+   :class: with-shadow
+
+   The domain object settings
