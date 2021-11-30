@@ -1,5 +1,6 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}<?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 return [<f:for each="{extension.domainObjectsThatNeedMappingStatements}" as="domainObject">
     \{domainObject.qualifiedClassName}::class => [
