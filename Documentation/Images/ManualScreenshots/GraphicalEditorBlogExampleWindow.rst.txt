@@ -1,0 +1,5 @@
+.. figure:: /Images/ManualScreenshots/GraphicalEditorBlogExampleWindow.png
+   :alt: Graphical editor with blog example
+   :class: with-shadow
+
+   Graphical editor with blog example

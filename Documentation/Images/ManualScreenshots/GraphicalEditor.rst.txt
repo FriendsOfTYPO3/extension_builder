@@ -1,0 +1,5 @@
+.. figure:: /Images/ManualScreenshots/GraphicalEditor.png
+   :alt: Graphical editor
+   :class: with-shadow
+
+   Graphical editor
