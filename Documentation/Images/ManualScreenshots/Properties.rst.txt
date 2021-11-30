@@ -1,0 +1,5 @@
+.. figure:: /Images/ManualScreenshots/Properties.png
+   :alt: The domain object properties
+   :class: with-shadow
+
+   The domain object properties
