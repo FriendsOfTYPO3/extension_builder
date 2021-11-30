@@ -58,8 +58,8 @@
 					{"action": "fillField", "value": "latestarticles", "field": "#propertiesForm .plugins .inputEx-ListField-childContainer input[name=\"key\"]"},
 					{"action": "fillField", "value": "Basic blog plugin of Extension Builder documentation.", "field": "#propertiesForm .plugins .inputEx-ListField-childContainer textarea[name=\"description\"]"},
 					{"action": "click", "link": "#propertiesForm .plugins .inputEx-ListField-childContainer legend"},
-					{"action": "fillField", "value": "Blog => list,show,create,save,edit,update", "field": "#propertiesForm .plugins .inputEx-ListField-childContainer textarea[name=\"controllerActionCombinations\"]"},
-					{"action": "fillField", "value": "Blog => create,save,edit,update", "field": "#propertiesForm .plugins .inputEx-ListField-childContainer textarea[name=\"noncacheableActions\"]"},
+					{"action": "fillField", "value": "Blog => list,show,new,create,edit,update", "field": "#propertiesForm .plugins .inputEx-ListField-childContainer textarea[name=\"controllerActionCombinations\"]"},
+					{"action": "fillField", "value": "Blog => new,create,edit,update", "field": "#propertiesForm .plugins .inputEx-ListField-childContainer textarea[name=\"noncacheableActions\"]"},
 					{"action": "click", "link": "#modelingLayer"},
 					{
 						"action": "makeScreenshotOfElement",
@@ -77,7 +77,7 @@
 					{"action": "fillField", "value": "This is a basic blog module.", "field": "#propertiesForm .bottomBorder .inputEx-ListField-childContainer input[name=\"description\"]"},
 					{"action": "fillField", "value": "EBT Blogs", "field": "#propertiesForm .bottomBorder .inputEx-ListField-childContainer input[name=\"tabLabel\"]"},
 					{"action": "click", "link": "#propertiesForm .bottomBorder .inputEx-ListField-childContainer legend"},
-					{"action": "fillField", "value": "Blog => list,show,create,save,edit,update,delete,duplicate", "field": "#propertiesForm .bottomBorder .inputEx-ListField-childContainer textarea[name=\"controllerActionCombinations\"]"},
+					{"action": "fillField", "value": "Blog => list,show,new,create,edit,update,delete,duplicate", "field": "#propertiesForm .bottomBorder .inputEx-ListField-childContainer textarea[name=\"controllerActionCombinations\"]"},
 					{"action": "click", "link": "#modelingLayer"},
 					{
 						"action": "makeScreenshotOfElement",
