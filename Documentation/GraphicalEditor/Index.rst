@@ -316,7 +316,7 @@ TYPO3 content element "General Plugin".
 |                                   |                                                                                             |
 |                                   |.. code-block:: none                                                                         |
 |                                   |                                                                                             |
-|                                   |   Blog => list,show,create,save,edit,update                                                 |
+|                                   |   Blog => list,show,new,create,edit,update                                                  |
 |                                   |   Author => list,show                                                                       |
 |                                   |                                                                                             |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
@@ -327,7 +327,7 @@ TYPO3 content element "General Plugin".
 |                                   |                                                                                             |
 |                                   |.. code-block:: none                                                                         |
 |                                   |                                                                                             |
-|                                   |   Blog => create,save,edit,update                                                           |
+|                                   |   Blog => new,create,edit,update                                                            |
 |                                   |                                                                                             |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 
@@ -365,8 +365,8 @@ backend.
 |                                   |                                                                                             |
 |                                   |.. code-block:: none                                                                         |
 |                                   |                                                                                             |
-|                                   |   Blog => list,show,create,save,edit,update,delete,duplicate                                |
-|                                   |   Author => list,show,create,save,edit,update,delete                                        |
+|                                   |   Blog => list,show,new,create,edit,update,delete,duplicate                                 |
+|                                   |   Author => list,show,new,create,edit,update,delete                                         |
 |                                   |                                                                                             |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 
