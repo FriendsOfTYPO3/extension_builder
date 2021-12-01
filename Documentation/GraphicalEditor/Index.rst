@@ -308,7 +308,7 @@ TYPO3 content element "General Plugin".
 |                                   |the TYPO3 content element wizard below the plugin name.                                      |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Controller action combinations** |In each line all actions of a controller supported by this plugin are listed by              |
-|                                   |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
+|(Advanced options)                 |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
 |                                   |default action. Actions are defined in the related aggregate root object, and the controller |
 |                                   |name corresponds to the object name.                                                         |
 |                                   |                                                                                             |
@@ -321,7 +321,7 @@ TYPO3 content element "General Plugin".
 |                                   |                                                                                             |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Non cacheable actions**          |Each line lists all actions of a controller that should not be cached. This list is a subset |
-|                                   |of the *Controller action combinations* property list.                                       |
+|(Advanced options)                 |of the *Controller action combinations* property list.                                       |
 |                                   |                                                                                             |
 |                                   |An example is                                                                                |
 |                                   |                                                                                             |
@@ -357,7 +357,7 @@ backend.
 |                                   |assigned. For example, "web" or "site".                                                      |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Controller action combinations** |In each line all actions of a controller supported by this module are listed by              |
-|                                   |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
+|(Advanced options)                 |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
 |                                   |default action. Actions are defined in the related aggregate root object, and the controller |
 |                                   |name corresponds to the object name.                                                         |
 |                                   |                                                                                             |
