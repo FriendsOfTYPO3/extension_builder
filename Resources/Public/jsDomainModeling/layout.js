@@ -18,11 +18,6 @@ extbaseModeling_wiringEditorLanguage.layoutOptions = {
       body: 'center',
       gutter: '5px',
       scroll: false
-    },
-    {
-      position: 'bottom',
-      height: 27,
-      body: 'bottom'
     }
   ]
 };
