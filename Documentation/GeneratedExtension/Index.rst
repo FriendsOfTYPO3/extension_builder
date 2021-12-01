@@ -250,14 +250,11 @@ For example:
    /**
     * @test
     */
-   public function setNameForStringSetsName() {
-       $this->subject->setName('Conceived at T3CON10');
+   public function setTitleForStringSetsTitle(): void
+   {
+      $this->subject->setTitle('Conceived at T3CON10');
 
-       self::assertAttributeEquals(
-           'Conceived at T3CON10',
-           'name',
-           $this->subject
-       );
+      self::assertEquals('Conceived at T3CON10', $this->subject->_get('title'));
    }
 
 All types of properties are covered, for example integers, strings, file
@@ -291,18 +288,17 @@ For example:
    /**
     * @test
     */
-   public function deleteActionRemovesTheGivenBlogFromBlogRepository() {
-       $blog = new \Vendor\Example\Domain\Model\Blog();
+   public function deleteActionRemovesTheGivenBlogFromBlogRepository(): void
+   {
+       $blog = new \Ebt\EbtBlog\Domain\Model\Blog();
 
-       $blogRepository = $this->getMock(
-           \Vendor\Example\Domain\Repository\BlogRepository::class,
-           ['remove'],
-           [],
-           '',
-           false
-       );
+       $blogRepository = $this->getMockBuilder(\Ebt\EbtBlog\Domain\Repository\BlogRepository::class)
+           ->onlyMethods(['remove'])
+           ->disableOriginalConstructor()
+           ->getMock();
+
        $blogRepository->expects(self::once())->method('remove')->with($blog);
-       $this->inject($this->subject, 'blogRepository', $blogRepository);
+       $this->subject->_set('blogRepository', $blogRepository);
 
        $this->subject->deleteAction($blog);
    }
