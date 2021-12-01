@@ -120,7 +120,7 @@ Edit the general settings of the domain object by opening the
 |                                   |entity property. An example is an address that is identified by its street, house number,    |
 |                                   |city and postal code and would no longer be the same address if any of its values changed.   |
 |                                   |                                                                                             |
-|                                   |**Note**: As of TYPO3 v11, it is recommended to specify any domain object of type "entity"   |
+|                                   |**Note**: As of TYPO3 v9, it is recommended to specify any domain object of type "entity"    |
 |                                   |due to the implementation details of Extbase. However, this might change in upcoming TYPO3   |
 |                                   |versions.                                                                                    |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
@@ -178,7 +178,7 @@ Expand the :guilabel:`properties` subsection to add domain object properties:
 |**Property type**                  |Select the type of the property. This determines the field type in the database table, the   |
 |                                   |TCA type for TYPO3 backend rendering, and the Fluid type for TYPO3 frontend rendering.       |
 |                                   |                                                                                             |
-|                                   |**Note**: As of TYPO3 v11, the types marked with an asterisk (\*) are not fully implemented  |
+|                                   |**Note**: As of TYPO3 v9, the types marked with an asterisk (\*) are not fully implemented   |
 |                                   |for frontend rendering for various reasons. For example, the frontend handling of the types  |
 |                                   |"file" and "image" is not yet implemented, because an implementation in Extbase is missing.  |
 |                                   |For these, many implementation examples can be found on the Internet.                        |
@@ -218,8 +218,8 @@ type of relation.
 |                                   |object and that instance has no other relation. An example is a person who has only one      |
 |                                   |account and this account is not used by any other person.                                    |
 |                                   |                                                                                             |
-|                                   |This setting results in a side-by-side selection field with a maximum of 1 selected item in  |
-|                                   |the TYPO3 backend.                                                                           |
+|                                   |See *Render type* description for more details on the rendering of the property in the TYPO3 |
+|                                   |backend.                                                                                     |
 |                                   |                                                                                             |
 |                                   |**one-to-many (1:n)**                                                                        |
 |                                   |                                                                                             |
@@ -236,8 +236,8 @@ type of relation.
 |                                   |object, but that instance can have multiple relations. An example is when each person has    |
 |                                   |a specific birthplace, but many people can have the same birthplace.                         |
 |                                   |                                                                                             |
-|                                   |This is represented in the TYPO3 backend as a side-by-side selection field with a maximum    |
-|                                   |number of 1 selected item.                                                                   |
+|                                   |See *Render type* description for more details on the rendering of the property in the TYPO3 |
+|                                   |backend.                                                                                     |
 |                                   |                                                                                             |
 |                                   |**many-to-many (m:n)**                                                                       |
 |                                   |                                                                                             |
@@ -261,19 +261,34 @@ type of relation.
 |**Render type**                    |This option is only available for the one-to-many and many-to-many relations and defines the |
 |                                   |display of the relation property field in the TYPO3 backend:                                 |
 |                                   |                                                                                             |
+|                                   |**one-to-one (1:1)**                                                                         |
+|                                   |                                                                                             |
+|                                   |This can be rendered either as a                                                             |
+|                                   |:doc:`side-by-side selection box <t3tca:ColumnsConfig/Type/selectMultipleSideBySide>`        |
+|                                   |, an :doc:`inline-relational-record-editing field <t3tca:ColumnsConfig/Type/Inline>`         |
+|                                   |or as a :doc:`dropdown <t3tca:ColumnsConfig/Type/selectSingleBox>`                           |
+|                                   |– with a maximum number of 1 selected item.                                                  |
+|                                   |                                                                                             |
 |                                   |**one-to-many (1:n)**                                                                        |
 |                                   |                                                                                             |
 |                                   |This can be rendered either as a                                                             |
-|                                   |:doc:`side-by-side selection box <t3tca:ColumnsConfig/Type/Select/MultipleSideBySide/Index>` |
+|                                   |:doc:`side-by-side selection box <t3tca:ColumnsConfig/Type/selectMultipleSideBySide>`        |
 |                                   |or as an                                                                                     |
-|                                   |:doc:`inline-relational-record-editing field <t3tca:ColumnsConfig/Type/Inline/Index>`.       |
+|                                   |:doc:`inline-relational-record-editing field <t3tca:ColumnsConfig/Type/Inline>`.             |
+|                                   |                                                                                             |
+|                                   |**many-to-one (n:1)**                                                                        |
+|                                   |                                                                                             |
+|                                   |This can be represented as either a                                                          |
+|                                   |:doc:`side-by-side selection box <t3tca:ColumnsConfig/Type/selectMultipleSideBySide>`        |
+|                                   |or a :doc:`dropdown <t3tca:ColumnsConfig/Type/selectSingleBox>`                              |
+|                                   |– with a maximum number of 1 selected item.                                                  |
 |                                   |                                                                                             |
 |                                   |**many-to-many (m:n)**                                                                       |
 |                                   |                                                                                             |
 |                                   |This can be represented as either a                                                          |
-|                                   |:doc:`side-by-side selection box <t3tca:ColumnsConfig/Type/Select/MultipleSideBySide/Index>` |
-|                                   |, a :doc:`multi-select checkbox <t3tca:ColumnsConfig/Type/Select/CheckBox/Index>`,           |
-|                                   |or a :doc:`multi-select selection box <t3tca:ColumnsConfig/Type/Select/SingleBox/Index>`.    |
+|                                   |:doc:`side-by-side selection box <t3tca:ColumnsConfig/Type/selectMultipleSideBySide>`        |
+|                                   |, a :doc:`multi-select checkbox <t3tca:ColumnsConfig/Type/selectCheckBox>`,                  |
+|                                   |or a :doc:`multi-select selection box <t3tca:ColumnsConfig/Type/selectSingleBox>`.           |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Description**                    |The relation description can be any text. It is displayed in the *List* module of the TYPO3  |
 |                                   |backend as context sensitive help when you click on the relation property field.             |
@@ -308,7 +323,7 @@ TYPO3 content element "General Plugin".
 |                                   |the TYPO3 content element wizard below the plugin name.                                      |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Controller action combinations** |In each line all actions of a controller supported by this plugin are listed by              |
-|                                   |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
+|(Advanced options)                 |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
 |                                   |default action. Actions are defined in the related aggregate root object, and the controller |
 |                                   |name corresponds to the object name.                                                         |
 |                                   |                                                                                             |
@@ -321,7 +336,7 @@ TYPO3 content element "General Plugin".
 |                                   |                                                                                             |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Non cacheable actions**          |Each line lists all actions of a controller that should not be cached. This list is a subset |
-|                                   |of the *Controller action combinations* property list.                                       |
+|(Advanced options)                 |of the *Controller action combinations* property list.                                       |
 |                                   |                                                                                             |
 |                                   |An example is                                                                                |
 |                                   |                                                                                             |
@@ -357,7 +372,7 @@ backend.
 |                                   |assigned. For example, "web" or "site".                                                      |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Controller action combinations** |In each line all actions of a controller supported by this module are listed by              |
-|                                   |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
+|(Advanced options)                 |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
 |                                   |default action. Actions are defined in the related aggregate root object, and the controller |
 |                                   |name corresponds to the object name.                                                         |
 |                                   |                                                                                             |
@@ -383,8 +398,8 @@ depends on your local setup:
 6.a. Composer mode
 ------------------
 
-If you run TYPO3 in :doc:`Composer mode <t3start:Installation/Install>`, you
-have to specify and configure a `local path repository <https://getcomposer.org/doc/05-repositories.md#path>`_
+If you run TYPO3 in :doc:`Composer mode <t3install:QuickInstall/Composer/Index>`,
+you have to specify and configure a `local path repository <https://getcomposer.org/doc/05-repositories.md#path>`_
 before saving your extension. Extension Builder reads the path from the TYPO3
 project :file:`composer.json` and offers it as a target path to save the
 extension. Extension Builder creates a symlink :file:`typo3conf/ext/<extension_key>/`
@@ -418,7 +433,7 @@ To install the extension in the TYPO3 instance you have to execute the usual:
 6.b. Legacy mode
 ----------------
 
-If you run TYPO3 in :doc:`Legacy mode <t3start:Installation/LegacyInstallation>`
+If you run TYPO3 in :doc:`Legacy mode <t3install:QuickInstall/GetAndUnpack/Index>`
 the extension will be generated directly at :file:`typo3conf/ext/<extension_key>/`.
 
 Once the extension is saved you should be able to install it in the Extension

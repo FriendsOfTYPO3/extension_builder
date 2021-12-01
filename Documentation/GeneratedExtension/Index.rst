@@ -13,6 +13,9 @@ previous chapter:
 
    .
    └── ebt_blog/
+       ├── .editorconfig
+       ├── .gitattributes
+       ├── .gitignore
        ├── composer.json
        ├── ext_emconf.php
        ├── ext_localconf.php
@@ -28,7 +31,7 @@ previous chapter:
            ├── ExtensionBuilder/..
            ├── TCA/..
            └── TypoScript/..
-       ├── Documentation/..
+       ├── Documentation.tmpl/..
        ├── Resources/
            ├── Private/
                ├── Language/..
@@ -38,7 +41,6 @@ previous chapter:
            └── Public/
                └── Icons/..
        └── Tests/
-           ├── Functional/..
            └── Unit/..
 
 It is explained in more detail in the following sections:
@@ -62,23 +64,31 @@ been performed:
 
    .
    └── ebt_blog/
+       ├── .editorconfig
+       ├── .gitattributes
+       ├── .gitignore
        ├── composer.json
        ├── ext_emconf.php
        ├── ExtensionBuilder.json
        ├── Configuration/
            └── ExtensionBuilder/..
-       ├── Documentation/..
+       ├── Documentation.tmpl/..
        └── Resources/
            └── Public/
                └── Icons/
                    └── Extension.svg
+
+TYPO3-compliant coding styles are defined in the :file:`.editorconfig` file,
+the :file:`.gitattributes` file contains files and folders of a TYPO3 extension
+that should not be included in a release and :file:`.gitignore` defines which
+ones should not be under version control.
 
 The extension metadata is stored in the :file:`composer.json` and :file:`ext_emconf.php`
 files and is used for installations in Composer mode and Legacy mode
 respectively.
 The extension icon :file:`Extension.svg` is displayed in the list of extensions
 of the Extension Manager module.
-The :file:`Documentation/` folder contains a basic set of documentation files.
+The :file:`Documentation.tmpl/` folder contains a basic set of documentation files.
 Read the section ":ref:`documentation`" how to proceed with the documentation.
 
 The Extension Builder stores some internal data in the :file:`ExtensionBuilder.json`
@@ -117,7 +127,6 @@ frontend plugins and backend modules:
            └── Public/
                └── Icons/..
        └── Tests/
-           ├── Functional/..
            └── Unit/..
 
 The frontend plugins are registered in the :file:`ext_localconf.php` file and
@@ -145,13 +154,15 @@ Documentation
 =============
 
 The Extension Builder has already created sample documentation for your
-extension if you have :guilabel:`Generate documentation` enabled in
+extension if you have not enabled :guilabel:`Don't generate doc-template` in
 the properties form.
 
 .. _writing-documentation:
 
 Writing documentation
 ---------------------
+
+Now rename the sample folder :file:`Documentation.tmpl/` to :file:`Documentation/`.
 
 The generated documentation is written in the *reStructuredText* (reST)
 markup language with support for *Sphinx directives* and provides a typical
@@ -210,7 +221,7 @@ experience). To simplify testing, the general functionality for writing tests is
 bundled in the `TYPO3 Testing Framework <https://github.com/TYPO3/testing-framework>`__,
 and all custom tests should use it by inheriting from its base classes.
 
-The Extension Builder generates a set of unit tests and a dummy functional test
+The Extension Builder generates a set of unit tests
 that easily cover the generated classes of your extension. The generated tests
 should encourage you to write your own tests once you start customizing the
 code.
@@ -250,14 +261,14 @@ For example:
    /**
     * @test
     */
-   public function setNameForStringSetsName() {
-       $this->subject->setName('Conceived at T3CON10');
-
-       self::assertAttributeEquals(
-           'Conceived at T3CON10',
-           'name',
-           $this->subject
-       );
+   public function setTitleForStringSetsTitle()
+   {
+      $this->subject->setTitle('Conceived at T3CON10');
+      self::assertAttributeEquals(
+         'Conceived at T3CON10',
+         'title',
+         $this->subject
+      );
    }
 
 All types of properties are covered, for example integers, strings, file
@@ -291,20 +302,19 @@ For example:
    /**
     * @test
     */
-   public function deleteActionRemovesTheGivenBlogFromBlogRepository() {
-       $blog = new \Vendor\Example\Domain\Model\Blog();
+   public function deleteActionRemovesTheGivenBlogFromBlogRepository()
+   {
+      $blog = new \Ebt\EbtBlog\Domain\Model\Blog();
 
-       $blogRepository = $this->getMock(
-           \Vendor\Example\Domain\Repository\BlogRepository::class,
-           ['remove'],
-           [],
-           '',
-           false
-       );
-       $blogRepository->expects(self::once())->method('remove')->with($blog);
-       $this->inject($this->subject, 'blogRepository', $blogRepository);
+      $blogRepository = $this->getMockBuilder(\Ebt\EbtBlog\Domain\Repository\BlogRepository::class)
+         ->setMethods(['remove'])
+         ->disableOriginalConstructor()
+         ->getMock();
 
-       $this->subject->deleteAction($blog);
+      $blogRepository->expects(self::once())->method('remove')->with($blog);
+      $this->inject($this->subject, 'blogRepository', $blogRepository);
+
+      $this->subject->deleteAction($blog);
    }
 
 .. _running-tests:

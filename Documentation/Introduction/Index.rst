@@ -39,6 +39,9 @@ and further developed:
 
    .
    └── ebt_blog/
+       ├── .editorconfig
+       ├── .gitattributes
+       ├── .gitignore
        ├── composer.json
        ├── ext_emconf.php
        ├── ext_localconf.php
