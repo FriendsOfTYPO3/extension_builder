@@ -795,7 +795,7 @@ class FileGenerator
     public function renderTemplate(string $filePath, array $variables)
     {
         $variables['settings'] = $this->settings;
-        /* @var StandaloneView $standAloneView */
+
         $standAloneView = GeneralUtility::makeInstance(StandaloneView::class);
         $standAloneView->setLayoutRootPaths($this->codeTemplateRootPaths);
         $standAloneView->setPartialRootPaths($this->codeTemplatePartialPaths);
@@ -1466,7 +1466,7 @@ class FileGenerator
 
         $fileExtension = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-        if ($fileExtension == 'php') {
+        if ($fileExtension === 'php') {
             $fileContents = str_replace('?>', '', $fileContents);
             $fileContents .= RoundTrip::SPLIT_TOKEN;
         } else {

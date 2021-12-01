@@ -107,7 +107,7 @@ class ExtensionInstallationStatus
             $statusMessage .= '<p>Your Extension is not installed yet.</p>';
             if ($this->usesComposerPath) {
                 $statusMessage .= sprintf(
-                    '<p>Add <code>"%1$s": "@dev"</code> to the <code>"require"</code> section of your project composer.json<br>Execute <code>composer require %1$s:@dev</code> in terminal',
+                    'Execute <code>composer require %1$s:@dev</code> in terminal',
                     $this->extension->getComposerInfo()['name']
                 );
             }
@@ -127,7 +127,6 @@ class ExtensionInstallationStatus
         if (ExtensionManagementUtility::isLoaded($extensionKey)) {
             $sqlFile = ExtensionManagementUtility::extPath($extensionKey) . 'ext_tables.sql';
             if (@file_exists($sqlFile)) {
-                /** @var SqlSchemaMigrationService $sqlHandler */
                 $sqlHandler = GeneralUtility::makeInstance(SqlSchemaMigrationService::class);
 
                 $sqlContent = GeneralUtility::getUrl($sqlFile);

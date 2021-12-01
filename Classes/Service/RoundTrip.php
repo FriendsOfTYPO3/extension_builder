@@ -480,7 +480,6 @@ class RoundTrip implements SingletonInterface
             $this->classObject->getDescription()
         ));
         if ($oldDomainObject->isAggregateRoot()) {
-
             // should we keep the old properties comments and tags?
             $this->classObject->removeProperty(lcfirst($oldName) . 'Repository');
             $injectMethodName = 'inject' . $oldName . 'Repository';
@@ -919,7 +918,6 @@ class RoundTrip implements SingletonInterface
      * @param string $oldName
      * @param string $newName
      * @param string[] $methodBodyStmts
-     *
      * @return array
      */
     protected function replacePropertyNameInMethodBody(string $oldName, string $newName, $methodBodyStmts)
@@ -1154,7 +1152,7 @@ class RoundTrip implements SingletonInterface
 
     /**
      * @param Extension $extension
-     * @param string $backupDir
+     * @param string|null $backupDir
      *
      * @throws Exception
      */
