@@ -27,8 +27,7 @@ Builder configuration :doc:`/Configuration/Index`.
 The general rule is: All configurations that can be edited in the graphical
 editor should be applied in the graphical editor. For example, if your
 extension depends on another extension, you should add it in the properties form
-of the graphical editor and not directly in the :file:`ext_emconf.php` and
-:file:`composer.json`.
+of the graphical editor and not directly in the :file:`ext_emconf.php`.
 
 Make sure you configure the :ref:`overwrite-settings`.
 

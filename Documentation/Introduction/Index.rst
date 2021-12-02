@@ -7,8 +7,10 @@ Introduction
 ============
 
 The *Extension Builder* helps you to develop a TYPO3 extension based on the
-domain-driven MVC framework :doc:`Extbase <t3extbasebook:0-Introduction/Index>`
-and the templating engine :doc:`Fluid <t3extbasebook:8-Fluid/Index>`.
+domain-driven MVC framework :doc:`Extbase <t3extbasebook-v8:0-Introduction/Index>`
+and the templating engine :doc:`Fluid <t3extbasebook-v8:8-Fluid/Index>`
+(the linked documentations are written for TYPO3 v8, but also applicable to
+TYPO3 v7).
 
 Instead of creating an extension file structure from scratch,
 let the graphical editor of the Extension Builder assist you:
@@ -39,14 +41,15 @@ and further developed:
 
    .
    └── ebt_blog/
-       ├── composer.json
        ├── ext_emconf.php
+       ├── ext_icon.gif
        ├── ext_localconf.php
        ├── ext_tables.php
        ├── ext_tables.sql
        ├── ExtensionBuilder.json
        ├── Classes/..
        ├── Configuration/..
+       ├── Documentation.tmpl/..
        ├── Resources/..
        └── Tests/..
 
@@ -72,7 +75,7 @@ intended for creating your own TYPO3 content elements.
 To create them, you should either use the Extension Builder to create a TYPO3
 extension skeleton (without domain objects, controllers, plugins and modules)
 and add
-:doc:`TYPO3 content elements manually <t3coreapi:ApiOverview/ContentElements/AddingYourOwnContentElements>`,
+:doc:`TYPO3 content elements manually <t3coreapi:ApiOverview/Examples/ContentElementWizard/Index>`,
 or use one of the dedicate extensions like `Mask <https://extensions.typo3.org/extension/mask>`__
 or `Dynamic Content Elements (DCE) <https://extensions.typo3.org/extension/dce>`__
 instead.

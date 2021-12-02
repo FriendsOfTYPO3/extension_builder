@@ -49,26 +49,23 @@ Feel encouraged to save frequently.
 |                      |                                                                                                          |
 |                      |An example is "The EBT Blog".                                                                             |
 +----------------------+----------------------------------------------------------------------------------------------------------+
-|**Vendor name**       |The vendor name must be an UpperCamelCase, alphanumeric string. It is used                                |
-|                      |                                                                                                          |
-|                      |- in the namespace of PHP classes: ``<VendorName>\<ExtensionName>\<Path>\<To>\<ClassName>`` and           |
-|                      |- in the ``name`` property of the :file:`composer.json`: ``<vendorname>/<extension-key>``.                |
+|**Vendor name**       |The vendor name must be an UpperCamelCase, alphanumeric string. It is used in the namespace of PHP        |
+|                      |classes according to the pattern ``<VendorName>\<ExtensionName>\<Path>\<To>\<ClassName>``.                |
 |                      |                                                                                                          |
 |                      |An example is "Ebt".                                                                                      |
 +----------------------+----------------------------------------------------------------------------------------------------------+
 |**Key**               |The extension key must be a lowercase, underscored, alphanumeric string.                                  |
 |                      |It must be unique throughout the TER and is best composed of the vendor name and an extension specific    |
 |                      |name, such as ``<vendorname>_<extension_name>``, where it must not start with "tx\_", "u\_", "user\_",    |
-|                      |"pages\_", "sys\_", and "csh\_". It is used                                                               |
+|                      |"pages\_", "tt\_", "sys\_", "ts\_language\_", and "csh\_". It is used                                     |
 |                      |                                                                                                          |
 |                      |- as extension directory name :file:`<extension_key>/`,                                                   |
-|                      |- in the language files: ``product-name=<extension_key>`` and                                             |
-|                      |- in the :file:`composer.json`: ``name: <vendor-name>/<extension-key>``.                                  |
+|                      |- in the language files: ``product-name=<extension_key>``                                                 |
 |                      |                                                                                                          |
 |                      |An example is "ebt_blog".                                                                                 |
 +----------------------+----------------------------------------------------------------------------------------------------------+
-|**Description**       |The extension description can be any text. It is used as ``description`` property in extension            |
-|                      |configuration files :file:`ext_emconf.php` and :file:`composer.json`.                                     |
+|**Description**       |The extension description can be any text. It is used as ``description`` property in the extension        |
+|                      |configuration file :file:`ext_emconf.php`.                                                                |
 +----------------------+----------------------------------------------------------------------------------------------------------+
 |**Version**           |A good versioning scheme helps to track the changes. We recommend *semantic versioning*.                  |
 |(More options)        |                                                                                                          |
@@ -120,7 +117,7 @@ Edit the general settings of the domain object by opening the
 |                                   |entity property. An example is an address that is identified by its street, house number,    |
 |                                   |city and postal code and would no longer be the same address if any of its values changed.   |
 |                                   |                                                                                             |
-|                                   |**Note**: As of TYPO3 v11, it is recommended to specify any domain object of type "entity"   |
+|                                   |**Note**: As of TYPO3 v7, it is recommended to specify any domain object of type "entity"    |
 |                                   |due to the implementation details of Extbase. However, this might change in upcoming TYPO3   |
 |                                   |versions.                                                                                    |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
@@ -178,7 +175,7 @@ Expand the :guilabel:`properties` subsection to add domain object properties:
 |**Property type**                  |Select the type of the property. This determines the field type in the database table, the   |
 |                                   |TCA type for TYPO3 backend rendering, and the Fluid type for TYPO3 frontend rendering.       |
 |                                   |                                                                                             |
-|                                   |**Note**: As of TYPO3 v11, the types marked with an asterisk (\*) are not fully implemented  |
+|                                   |**Note**: As of TYPO3 v7, the types marked with an asterisk (\*) are not fully implemented   |
 |                                   |for frontend rendering for various reasons. For example, the frontend handling of the types  |
 |                                   |"file" and "image" is not yet implemented, because an implementation in Extbase is missing.  |
 |                                   |For these, many implementation examples can be found on the Internet.                        |
@@ -187,8 +184,7 @@ Expand the :guilabel:`properties` subsection to add domain object properties:
 |(Advanced options)                 |backend as context sensitive help when you click on the property field.                      |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Is required?**                   |Enable this option if this property must be set in TYPO3 frontend. Required properties are   |
-|(Advanced options)                 |provided with a :php:`@TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")` PHPDoc annotation  |
-|                                   |in the domain object class.                                                                  |
+|(Advanced options)                 |provided with a :php:`@validate NotEmpty` PHPDoc annotation in the domain object class.      |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Is exclude field?**              |Enable this option if you want to be able to hide this property from non-administrators      |
 |(Advanced options)                 |in the TYPO3 backend.                                                                        |
@@ -218,8 +214,8 @@ type of relation.
 |                                   |object and that instance has no other relation. An example is a person who has only one      |
 |                                   |account and this account is not used by any other person.                                    |
 |                                   |                                                                                             |
-|                                   |This setting results in a side-by-side selection field with a maximum of 1 selected item in  |
-|                                   |the TYPO3 backend.                                                                           |
+|                                   |This setting results in a inline-relational-record-editing field with a maximum              |
+|                                   |of 1 item in the TYPO3 backend.                                                              |
 |                                   |                                                                                             |
 |                                   |**one-to-many (1:n)**                                                                        |
 |                                   |                                                                                             |
@@ -236,7 +232,7 @@ type of relation.
 |                                   |object, but that instance can have multiple relations. An example is when each person has    |
 |                                   |a specific birthplace, but many people can have the same birthplace.                         |
 |                                   |                                                                                             |
-|                                   |This is represented in the TYPO3 backend as a side-by-side selection field with a maximum    |
+|                                   |This is represented in the TYPO3 backend as a dropdown with a maximum                        |
 |                                   |number of 1 selected item.                                                                   |
 |                                   |                                                                                             |
 |                                   |**many-to-many (m:n)**                                                                       |
@@ -263,17 +259,15 @@ type of relation.
 |                                   |                                                                                             |
 |                                   |**one-to-many (1:n)**                                                                        |
 |                                   |                                                                                             |
-|                                   |This can be rendered either as a                                                             |
-|                                   |:doc:`side-by-side selection box <t3tca:ColumnsConfig/Type/Select/MultipleSideBySide/Index>` |
-|                                   |or as an                                                                                     |
-|                                   |:doc:`inline-relational-record-editing field <t3tca:ColumnsConfig/Type/Inline/Index>`.       |
+|                                   |This is rendered as an                                                                       |
+|                                   |:doc:`inline-relational-record-editing field <t3tca:Reference/Columns/Inline/Index>`.        |
 |                                   |                                                                                             |
 |                                   |**many-to-many (m:n)**                                                                       |
 |                                   |                                                                                             |
 |                                   |This can be represented as either a                                                          |
-|                                   |:doc:`side-by-side selection box <t3tca:ColumnsConfig/Type/Select/MultipleSideBySide/Index>` |
-|                                   |, a :doc:`multi-select checkbox <t3tca:ColumnsConfig/Type/Select/CheckBox/Index>`,           |
-|                                   |or a :doc:`multi-select selection box <t3tca:ColumnsConfig/Type/Select/SingleBox/Index>`.    |
+|                                   |:ref:`side-by-side selection box <t3tca:columns-select-properties-rendertype>`               |
+|                                   |, a :ref:`multi-select checkbox <t3tca:columns-select-properties-rendertype>`,               |
+|                                   |or a :ref:`multi-select selection box <t3tca:columns-select-properties-rendertype>`.         |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Description**                    |The relation description can be any text. It is displayed in the *List* module of the TYPO3  |
 |                                   |backend as context sensitive help when you click on the relation property field.             |
@@ -283,8 +277,7 @@ type of relation.
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Lazy loading**                   |Should the related instances be loaded when an instance of this domain is created            |
 |(Advanced options)                 |(*eager loading*) or on demand (*lazy loading*). Lazy loading relation properties are        |
-|                                   |provided with a :php:`@TYPO3\CMS\Extbase\Annotation\ORM\Lazy` PHPDoc annotation in the       |
-|                                   |domain object class.                                                                         |
+|                                   |provided with a :php:`@lazy` PHPDoc annotation in the domain object class.                   |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 
 .. include:: /Images/ManualScreenshots/Relations.rst.txt
@@ -304,11 +297,8 @@ TYPO3 content element "General Plugin".
 |**Key**                            |The plugin key must be a lowercase, alphanumeric string. It is used to identify the plugin   |
 |                                   |of your extension. An example is "latestarticles".                                           |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
-|**Description**                    |The plugin description can be any text. It is displayed in the list of available plugins in  |
-|                                   |the TYPO3 content element wizard below the plugin name.                                      |
-+-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Controller action combinations** |In each line all actions of a controller supported by this plugin are listed by              |
-|                                   |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
+|(Advanced options)                 |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
 |                                   |default action. Actions are defined in the related aggregate root object, and the controller |
 |                                   |name corresponds to the object name.                                                         |
 |                                   |                                                                                             |
@@ -321,7 +311,7 @@ TYPO3 content element "General Plugin".
 |                                   |                                                                                             |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Non cacheable actions**          |Each line lists all actions of a controller that should not be cached. This list is a subset |
-|                                   |of the *Controller action combinations* property list.                                       |
+|(Advanced options)                 |of the *Controller action combinations* property list.                                       |
 |                                   |                                                                                             |
 |                                   |An example is                                                                                |
 |                                   |                                                                                             |
@@ -354,10 +344,10 @@ backend.
 |**Tab label**                      |The module name in the TYPO3 module menu can be any string.                                  |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Main module**                    |This is the module key of the section in the TYPO3 module menu to which the module is        |
-|                                   |assigned. For example, "web" or "site".                                                      |
+|                                   |assigned. For example, "web" or "tools".                                                     |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Controller action combinations** |In each line all actions of a controller supported by this module are listed by              |
-|                                   |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
+|(Advanced options)                 |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
 |                                   |default action. Actions are defined in the related aggregate root object, and the controller |
 |                                   |name corresponds to the object name.                                                         |
 |                                   |                                                                                             |
@@ -377,52 +367,10 @@ backend.
 
 If your model represents the domain you wanted to implement you can hit the
 :guilabel:`Save` button at the top.
-The Extension Builder generates all required files for you in a location that
-depends on your local setup:
+The Extension Builder generates all required files for you in
+:file:`typo3conf/ext/<extension_key>/`.
 
-6.a. Composer mode
-------------------
-
-If you run TYPO3 in :doc:`Composer mode <t3start:Installation/Install>`, you
-have to specify and configure a `local path repository <https://getcomposer.org/doc/05-repositories.md#path>`_
-before saving your extension. Extension Builder reads the path from the TYPO3
-project :file:`composer.json` and offers it as a target path to save the
-extension. Extension Builder creates a symlink :file:`typo3conf/ext/<extension_key>/`
-to your extension.
-
-The local path repository is normally configured as follows:
-
-.. code-block:: js
-
-   {
-       "repositories": {
-           "packages": {
-               "type": "path",
-               "url": "packages/*"
-           }
-       }
-   }
-
-To install the extension in the TYPO3 instance you have to execute the usual:
-
-.. code-block:: bash
-
-   composer require <extension-package-name>:@dev
-
-, for example:
-
-.. code-block:: bash
-
-   composer require ebt/ebt-blog:@dev
-
-6.b. Legacy mode
-----------------
-
-If you run TYPO3 in :doc:`Legacy mode <t3start:Installation/LegacyInstallation>`
-the extension will be generated directly at :file:`typo3conf/ext/<extension_key>/`.
-
-Once the extension is saved you should be able to install it in the Extension
-Manager.
+Next, install the extension in the Extension Manager.
 
 7. Continue developing
 ======================

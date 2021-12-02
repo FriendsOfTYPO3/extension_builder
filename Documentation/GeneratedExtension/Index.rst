@@ -13,8 +13,8 @@ previous chapter:
 
    .
    └── ebt_blog/
-       ├── composer.json
        ├── ext_emconf.php
+       ├── ext_icon.gif
        ├── ext_localconf.php
        ├── ext_tables.php
        ├── ext_tables.sql
@@ -28,7 +28,7 @@ previous chapter:
            ├── ExtensionBuilder/..
            ├── TCA/..
            └── TypoScript/..
-       ├── Documentation/..
+       ├── Documentation.tmpl/..
        ├── Resources/
            ├── Private/
                ├── Language/..
@@ -38,7 +38,6 @@ previous chapter:
            └── Public/
                └── Icons/..
        └── Tests/
-           ├── Functional/..
            └── Unit/..
 
 It is explained in more detail in the following sections:
@@ -62,23 +61,17 @@ been performed:
 
    .
    └── ebt_blog/
-       ├── composer.json
        ├── ext_emconf.php
+       ├── ext_icon.gif
        ├── ExtensionBuilder.json
        ├── Configuration/
            └── ExtensionBuilder/..
-       ├── Documentation/..
-       └── Resources/
-           └── Public/
-               └── Icons/
-                   └── Extension.svg
+       └── Documentation.tmpl/..
 
-The extension metadata is stored in the :file:`composer.json` and :file:`ext_emconf.php`
-files and is used for installations in Composer mode and Legacy mode
-respectively.
-The extension icon :file:`Extension.svg` is displayed in the list of extensions
+The extension metadata is stored in the :file:`ext_emconf.php` file.
+The extension icon :file:`ext_icon.gif` is displayed in the list of extensions
 of the Extension Manager module.
-The :file:`Documentation/` folder contains a basic set of documentation files.
+The :file:`Documentation.tmpl/` folder contains a basic set of documentation files.
 Read the section ":ref:`documentation`" how to proceed with the documentation.
 
 The Extension Builder stores some internal data in the :file:`ExtensionBuilder.json`
@@ -117,7 +110,6 @@ frontend plugins and backend modules:
            └── Public/
                └── Icons/..
        └── Tests/
-           ├── Functional/..
            └── Unit/..
 
 The frontend plugins are registered in the :file:`ext_localconf.php` file and
@@ -136,8 +128,9 @@ Last but not least, the tests of the classes are located in the folder
 :file:`Tests/`.
 
 For more information on tests, see the section ":ref:`tests`" and for everything
-else, please refer to the :doc:`Extbase & Fluid book <t3extbasebook:Index>` of
-the official TYPO3 documentation.
+else, please refer to the :doc:`Extbase & Fluid book <t3extbasebook-v8:Index>` of
+the official TYPO3 documentation (the book is written for TYPO3 v8, but also
+applicable to TYPO3 v7).
 
 .. _documentation:
 
@@ -145,13 +138,15 @@ Documentation
 =============
 
 The Extension Builder has already created sample documentation for your
-extension if you have :guilabel:`Generate documentation` enabled in
+extension if you have not enabled :guilabel:`Don't generate doc-template` in
 the properties form.
 
 .. _writing-documentation:
 
 Writing documentation
 ---------------------
+
+Now rename the sample folder :file:`Documentation.tmpl/` to :file:`Documentation/`.
 
 The generated documentation is written in the *reStructuredText* (reST)
 markup language with support for *Sphinx directives* and provides a typical
@@ -193,7 +188,9 @@ If you publish the extension to the *TYPO3 Extension Repository* (TER), do not
 put the rendered documentation under version control, as the documentation will
 be registered during the :doc:`publishing process </PublishToTer/Index>` for
 automatic rendering and deployment to
-:samp:`https://docs.typo3.org/typo3cms/extensions/<extension_name>/`.
+:samp:`https://docs.typo3.org/p/<vendor-name>/<extension-name>/<version>/<language>/`
+, for example to
+:samp:`https://docs.typo3.org/p/friendsoftypo3/extension-builder/7.10/en-us/`.
 
 If the extension is for private use, you are free to do anything with the
 rendered documentation - including, of course, putting it under version control.
@@ -207,10 +204,10 @@ The TYPO3 Core is covered by thousands of tests of varying complexity:
 Unit tests (testing part of a class), functional tests (testing multiple classes
 in combination) and acceptance tests (testing the entire website user
 experience). To simplify testing, the general functionality for writing tests is
-bundled in the `TYPO3 Testing Framework <https://github.com/TYPO3/testing-framework>`__,
+bundled in the `TYPO3 Core <https://github.com/TYPO3/typo3/tree/TYPO3_7-6/typo3/sysext/core/Tests>`__,
 and all custom tests should use it by inheriting from its base classes.
 
-The Extension Builder generates a set of unit tests and a dummy functional test
+The Extension Builder generates a set of unit tests
 that easily cover the generated classes of your extension. The generated tests
 should encourage you to write your own tests once you start customizing the
 code.
@@ -250,12 +247,13 @@ For example:
    /**
     * @test
     */
-   public function setNameForStringSetsName() {
-       $this->subject->setName('Conceived at T3CON10');
+   public function setTitleForStringSetsTitle()
+   {
+       $this->subject->setTitle('Conceived at T3CON10');
 
        self::assertAttributeEquals(
            'Conceived at T3CON10',
-           'name',
+           'title',
            $this->subject
        );
    }
@@ -291,16 +289,15 @@ For example:
    /**
     * @test
     */
-   public function deleteActionRemovesTheGivenBlogFromBlogRepository() {
-       $blog = new \Vendor\Example\Domain\Model\Blog();
+   public function deleteActionRemovesTheGivenBlogFromBlogRepository()
+   {
+       $blog = new \Ebt\EbtBlog\Domain\Model\Blog();
 
-       $blogRepository = $this->getMock(
-           \Vendor\Example\Domain\Repository\BlogRepository::class,
-           ['remove'],
-           [],
-           '',
-           false
-       );
+       $blogRepository = $this->getMockBuilder(\Ebt\EbtBlog\Domain\Repository\BlogRepository::class)
+           ->setMethods(['remove'])
+           ->disableOriginalConstructor()
+           ->getMock();
+
        $blogRepository->expects(self::once())->method('remove')->with($blog);
        $this->inject($this->subject, 'blogRepository', $blogRepository);
 
@@ -312,7 +309,5 @@ For example:
 Running tests
 -------------
 
-Unit tests of your extension can be executed in the TYPO3 backend using the
-`phpunit <https://extensions.typo3.org/extension/phpunit>`__ extension or on the
-command line by following the :doc:`testing pages <t3coreapi:Testing/Index>`
-of the official TYPO3 documentation.
+Unit tests of your extension can be executed on the command line by following
+the many examples on the Internet.
