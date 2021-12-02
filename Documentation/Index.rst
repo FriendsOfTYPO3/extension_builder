@@ -8,14 +8,14 @@ Extension Builder
 
 .. only:: html
 
-	:Classification:
-		Extension Builder
+   :Classification:
+      Extension Builder
 
-	:Version:
-		|release|
+   :Version:
+      |release|
 
-	:Language:
-		en
+   :Language:
+      en
 
    :Description:
       The Extension Builder helps you to build TYPO3 extensions based on Extbase
@@ -45,13 +45,13 @@ Extension Builder
       This document is published under the Open Content License
       available from https://www.opencontent.org/openpub/
 
-	:Rendered:
-		|today|
+   :Rendered:
+      |today|
 
    The content of this document is related to TYPO3,
    a GNU/GPL CMS/Framework available from `www.typo3.org <https://www.typo3.org/>`_.
 
-	**Table of Contents**
+   **Table of Contents**
 
 .. toctree::
    :maxdepth: 2

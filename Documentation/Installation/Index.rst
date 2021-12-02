@@ -31,13 +31,9 @@ add a version constraint, for example:
 
 .. code-block:: bash
 
-   composer require friendsoftypo3/extension-builder:"^10.0"
+   composer require friendsoftypo3/extension-builder:"^8.0"
 
-Installing the extension prior to TYPO3 11.4
---------------------------------------------
-
-Before TYPO3 11.4 it was still necessary to manually activate extensions
-installed via Composer using the Extension Manager. Activate it as follows:
+and activate it as follows:
 
 -  Navigate to :guilabel:`Admin Tools > Extensions > Installed Extensions`
 -  Search for `extension_builder`
@@ -66,6 +62,6 @@ and activate it:
 
 .. seealso::
 
-   On pages ":doc:`Managing Extensions <t3start:Extensions/Management>`" and
-   ":doc:`Managing Extensions - Legacy Guide <t3start:Extensions/LegacyManagement>`"
+   On pages ":doc:`Migrate to Composer (Composer mode) <t3install:MigrateToComposer/Index>`"
+   and ":doc:`The Extension Manager (Legacy mode) <t3start:ExtensionManager/Index>`"
    both TYPO3 installation modes are explained in detail.
