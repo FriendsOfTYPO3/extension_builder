@@ -25,12 +25,12 @@ If you have checked all the questions and are still convinced of the benefits of
 publishing your extension, you can secure your extension by reading and applying
 
 * :doc:`/Security/Index`
-* :doc:`TYPO3 Extbase and Fluid Guide <t3extbasebook:Index>`
-* :doc:`TYPO3 Security Guide <t3coreapi:Security/Index>`
+* :doc:`TYPO3 Extbase and Fluid Guide <t3extbasebook-v8:Index>` (written for TYPO3 v8, applicable to TYPO3 v7)
+* :doc:`TYPO3 Security Guide <t3security-v8:Index>` (written for TYPO3 v8, applicable to TYPO3 v7)
 
 and write appropriate documentation following
 
 * :ref:`documentation`
 
 before publishing the extension on TER and Packagist, following the official
-:doc:`publishing guide <t3coreapi:ExtensionArchitecture/PublishExtension/Index>`.
+:doc:`publishing guide <t3coreapi-latest:ExtensionArchitecture/PublishExtension/Index>`.
