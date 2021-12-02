@@ -8,8 +8,7 @@ Configuration
 
 There are two places to configure the Extension Builder:
 
-1. Globally, in the *Extension Configuration* module of the TYPO3
-   backend.
+1. Globally, in the Extension Manager module of the TYPO3 backend.
 
 2. Locally, in the file :file:`Configuration/ExtensionBuilder/settings.yaml`
    of the generated extension.
@@ -25,9 +24,10 @@ There are two places to configure the Extension Builder:
 Global configuration
 ====================
 
-In the TYPO3 backend go to :guilabel:`Settings > Extension Configuration` and
-open the configuration of the Extension Builder. Here are several settings
-configurable:
+In the TYPO3 backend go to :guilabel:`Extensions > Installed Extensions`,
+search for `extension_builder` and open the extension configuration by
+clicking on the :guilabel:`Configure` button in the :guilabel:`Actions`
+column. Here are several settings configurable:
 
 +----------------------------+-------------------------------------------------------------------------------+------------------------------------+
 |**Setting**                 |**Description**                                                                |**Default**                         |
@@ -110,7 +110,7 @@ This is an example of the :file:`settings.yaml` file:
          Language: merge
          #Templates: keep
 
-     Documentation: skip
+     Documentation.tmpl: skip
 
 .. _class-building:
 

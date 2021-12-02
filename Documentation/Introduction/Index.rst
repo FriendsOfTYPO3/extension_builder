@@ -39,6 +39,7 @@ and further developed:
 
    .
    └── ebt_blog/
+       ├── .gitignore
        ├── composer.json
        ├── ext_emconf.php
        ├── ext_localconf.php
@@ -47,6 +48,7 @@ and further developed:
        ├── ExtensionBuilder.json
        ├── Classes/..
        ├── Configuration/..
+       ├── Documentation.tmpl/..
        ├── Resources/..
        └── Tests/..
 
