@@ -26,7 +26,7 @@
   },
   "require-dev": {
     "phpunit/phpunit": "~4.8.0",
-    "mikey179/vfsStream": "1.6.0"
+    "mikey179/vfsstream": "1.6.0"
   },
   "autoload": {
     "psr-4": {
@@ -41,7 +41,6 @@
     }
   },
   "replace": {
-    "extension_builder": "self.version",
     "typo3-ter/extension-builder": "self.version"
   },
   "config": {
