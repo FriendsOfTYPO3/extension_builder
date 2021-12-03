@@ -50,6 +50,7 @@ and further developed:
        ├── ExtensionBuilder.json
        ├── Classes/..
        ├── Configuration/..
+       ├── Documentation.tmpl/..
        ├── Resources/..
        └── Tests/..
 
