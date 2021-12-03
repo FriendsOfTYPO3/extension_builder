@@ -25,8 +25,8 @@ TYPO3 Extension ``extension_builder``
 =====================================
 
 The *Extension Builder* helps you to develop a TYPO3 extension based on the
-domain-driven MVC framework `Extbase <https://docs.typo3.org/m/typo3/book-extbasefluid/main/en-us/0-Introduction/Index.html>`__
-and the templating engine `Fluid <https://docs.typo3.org/m/typo3/book-extbasefluid/main/en-us/8-Fluid/Index.html>`__.
+domain-driven MVC framework `Extbase <https://docs.typo3.org/m/typo3/book-extbasefluid/11.5/en-us/0-Introduction/Index.html>`__
+and the templating engine `Fluid <https://docs.typo3.org/m/typo3/book-extbasefluid/11.5/en-us/8-Fluid/Index.html>`__.
 
 It provides a graphical modeler to define domain objects and their relations
 as well as associated controllers with basic actions.
@@ -37,5 +37,5 @@ Finally, it generates a basic extension that can be installed
 and further developed.
 
 :Repository:  https://github.com/FriendsOfTYPO3/extension_builder
-:Read online: https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/
+:Read online: https://docs.typo3.org/p/friendsoftypo3/extension-builder/11.0/en-us/
 :TER: https://extensions.typo3.org/extension/extension_builder

@@ -58,8 +58,8 @@ Feel encouraged to save frequently.
 +----------------------+----------------------------------------------------------------------------------------------------------+
 |**Key**               |The extension key must be a lowercase, underscored, alphanumeric string.                                  |
 |                      |It must be unique throughout the TER and is best composed of the vendor name and an extension specific    |
-|                      |name, such as ``<vendorname>_<extension_name>``, where it must not start with "tx\_", "u\_", "user\_",    |
-|                      |"pages\_", "sys\_", and "csh\_". It is used                                                               |
+|                      |name, such as ``<vendorname>_<extension_name>``, where it must not start with "tx\_", "pages\_", "sys\_", |
+|                      |"ts\_language\_", and "csh\_". It is used                                                                 |
 |                      |                                                                                                          |
 |                      |- as extension directory name :file:`<extension_key>/`,                                                   |
 |                      |- in the language files: ``product-name=<extension_key>`` and                                             |
@@ -387,8 +387,7 @@ If you run TYPO3 in :doc:`Composer mode <t3start:Installation/Install>`, you
 have to specify and configure a `local path repository <https://getcomposer.org/doc/05-repositories.md#path>`_
 before saving your extension. Extension Builder reads the path from the TYPO3
 project :file:`composer.json` and offers it as a target path to save the
-extension. Extension Builder creates a symlink :file:`typo3conf/ext/<extension_key>/`
-to your extension.
+extension.
 
 The local path repository is normally configured as follows:
 
@@ -414,6 +413,12 @@ To install the extension in the TYPO3 instance you have to execute the usual:
 .. code-block:: bash
 
    composer require ebt/ebt-blog:@dev
+
+which will cause a symlink :file:`typo3conf/ext/<extension_key>/` to your extension
+to be created and the extension to be recognized in the Extension Manager.
+
+Before TYPO3 11.4 you had to install the extension additionally in the Extension
+Manager.
 
 6.b. Legacy mode
 ----------------
