@@ -194,7 +194,7 @@ be registered during the :doc:`publishing process </PublishToTer/Index>` for
 automatic rendering and deployment to
 :samp:`https://docs.typo3.org/p/<vendor-name>/<extension-name>/<version>/<language>/`
 , for example to
-:samp:`https://docs.typo3.org/p/friendsoftypo3/extension-builder/8.7/en-us/`.
+:samp:`https://docs.typo3.org/p/friendsoftypo3/extension-builder/8.10/en-us/`.
 
 If the extension is for private use, you are free to do anything with the
 rendered documentation - including, of course, putting it under version control.
