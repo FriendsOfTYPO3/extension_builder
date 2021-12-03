@@ -58,8 +58,8 @@ Feel encouraged to save frequently.
 +----------------------+----------------------------------------------------------------------------------------------------------+
 |**Key**               |The extension key must be a lowercase, underscored, alphanumeric string.                                  |
 |                      |It must be unique throughout the TER and is best composed of the vendor name and an extension specific    |
-|                      |name, such as ``<vendorname>_<extension_name>``, where it must not start with "tx\_", "u\_", "user\_",    |
-|                      |"pages\_", "tt\_", "sys\_", and "csh\_". It is used                                                       |
+|                      |name, such as ``<vendorname>_<extension_name>``, where it must not start with "tx\_", "pages\_", "tt\_",  |
+|                      |"sys\_", "ts\_language\_",  and "csh\_". It is used                                                       |
 |                      |                                                                                                          |
 |                      |- as extension directory name :file:`<extension_key>/`,                                                   |
 |                      |- in the language files: ``product-name=<extension_key>`` and                                             |
@@ -350,7 +350,7 @@ backend.
 |**Tab label**                      |The module name in the TYPO3 module menu can be any string.                                  |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Main module**                    |This is the module key of the section in the TYPO3 module menu to which the module is        |
-|                                   |assigned. For example, "web" or "site".                                                      |
+|                                   |assigned. For example, "web" or "tools".                                                     |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Controller action combinations** |In each line all actions of a controller supported by this module are listed by              |
 |(Advanced options)                 |``<controllerName> => <action1>,<action2>,...``. The first action of the first line is the   |
@@ -382,7 +382,7 @@ local setup:
 
 If you run TYPO3 in :doc:`Composer mode <t3install:QuickInstall/Composer/Index>`,
 you have to specify and configure a `local path repository <https://getcomposer.org/doc/05-repositories.md#path>`_
-and copy the generated extension to this local path.
+and move the generated extension to this local path.
 
 The local path repository is normally configured as follows:
 
@@ -397,7 +397,7 @@ The local path repository is normally configured as follows:
        }
    }
 
-To install the extension in the TYPO3 instance you have to execute the usual:
+To install the extension in the TYPO3 instance, you first need to run the usual:
 
 .. code-block:: bash
 
@@ -409,8 +409,10 @@ To install the extension in the TYPO3 instance you have to execute the usual:
 
    composer require ebt/ebt-blog:@dev
 
-Composer creates a symlink :file:`typo3conf/ext/<extension_key>/` to your extension
-during installation.
+which will cause a symlink :file:`typo3conf/ext/<extension_key>/` to your extension
+to be created and the extension to be recognized in the Extension Manager.
+
+Now install the extension in the Extension Manager.
 
 6.b. Legacy mode
 ----------------

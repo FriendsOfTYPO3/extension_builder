@@ -33,5 +33,5 @@ Finally, it generates a basic extension that can be installed
 and further developed.
 
 :Repository:  https://github.com/FriendsOfTYPO3/extension_builder
-:Read online: https://docs.typo3.org/p/friendsoftypo3/extension-builder/8.7/en-us/
+:Read online: https://docs.typo3.org/p/friendsoftypo3/extension-builder/8.10/en-us/
 :TER: https://extensions.typo3.org/extension/extension_builder
