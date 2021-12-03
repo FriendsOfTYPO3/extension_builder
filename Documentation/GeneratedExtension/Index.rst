@@ -193,7 +193,9 @@ If you publish the extension to the *TYPO3 Extension Repository* (TER), do not
 put the rendered documentation under version control, as the documentation will
 be registered during the :doc:`publishing process </PublishToTer/Index>` for
 automatic rendering and deployment to
-:samp:`https://docs.typo3.org/typo3cms/extensions/<extension_name>/`.
+:samp:`https://docs.typo3.org/p/<vendor-name>/<extension-name>/<version>/<language>/`
+, for example to
+:samp:`https://docs.typo3.org/p/friendsoftypo3/extension-builder/10.0/en-us/`.
 
 If the extension is for private use, you are free to do anything with the
 rendered documentation - including, of course, putting it under version control.
