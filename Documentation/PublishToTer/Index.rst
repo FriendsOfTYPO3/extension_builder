@@ -33,4 +33,4 @@ and write appropriate documentation following
 * :ref:`documentation`
 
 before publishing the extension on TER and Packagist, following the official
-:doc:`publishing guide <t3coreapi:ExtensionArchitecture/PublishExtension/Index>`.
+:doc:`publishing guide <t3coreapi-latest:ExtensionArchitecture/PublishExtension/Index>`.

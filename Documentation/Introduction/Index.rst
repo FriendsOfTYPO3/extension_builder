@@ -47,6 +47,7 @@ and further developed:
        ├── ExtensionBuilder.json
        ├── Classes/..
        ├── Configuration/..
+       ├── Documentation/..
        ├── Resources/..
        └── Tests/..
 
