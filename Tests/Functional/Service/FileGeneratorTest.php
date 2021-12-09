@@ -184,11 +184,14 @@ class FileGeneratorTest extends BaseFunctionalTest
         $modelName = 'ModelCgt3';
         $relatedModelName = 'RelatedModel';
         $propertyName = 'relName';
+
         $domainObject = $this->buildDomainObject($modelName);
         $relatedDomainObject = $this->buildDomainObject($relatedModelName);
+
         $relation = new Relation\ZeroToOneRelation($propertyName);
         $relation->setForeignModel($relatedDomainObject);
         $domainObject->addProperty($relation);
+
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
         $modelClassDir = 'Classes/Domain/Model/';
         GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
@@ -198,48 +201,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
         GeneralUtility::writeFile($modelClassPath, $classFileContent);
         self::assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
-        $className = $domainObject->getFullQualifiedClassName();
-        if (!class_exists($className)) {
-            include($modelClassPath);
-        }
-        self::assertTrue(class_exists($className), 'Class was not generated:' . $className);
-        include_once($modelClassPath);
 
-        $reflectionClass = new ReflectionClass(new $className());
-        self::assertTrue($reflectionClass->hasMethod('get' . ucfirst($propertyName)), 'Getter was not generated');
-        self::assertTrue($reflectionClass->hasMethod('set' . ucfirst($propertyName)), 'Setter was not generated');
-
-        $setterMethod = $reflectionClass->getMethod('set' . ucfirst($propertyName));
-        $parameters = $setterMethod->getParameters();
-        self::assertCount(1, $parameters, 'Wrong parameter count in setter method');
-        self::assertContains($propertyName, array_keys($parameters), 'Wrong parameter name in setter method');
-    }
-
-    /**
-     * Write a simple model class for a non aggregate root domain object with zero to many relation
-     *
-     * @test
-     */
-    public function writeModelClassWithZeroToManyRelation(): void
-    {
-        $modelName = 'ModelCgt4';
-        $relatedModelName = 'RelatedModel';
-        $propertyName = 'relNames';
-        $domainObject = $this->buildDomainObject($modelName);
-        $relatedDomainObject = $this->buildDomainObject($relatedModelName);
-        $relation = new Relation\ZeroToManyRelation($propertyName);
-        $relation->setForeignModel($relatedDomainObject);
-        $domainObject->addProperty($relation);
-
-        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
-        $modelClassDir = 'Classes/Domain/Model/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
-        $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
-        self::assertDirectoryExists($absModelClassDir, 'Directory ' . $absModelClassDir . ' was not created');
-
-        $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
-        GeneralUtility::writeFile($modelClassPath, $classFileContent);
-        self::assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
         $className = $domainObject->getFullQualifiedClassName();
         if (!class_exists($className)) {
             include($modelClassPath);
@@ -254,7 +216,64 @@ class FileGeneratorTest extends BaseFunctionalTest
         $relatedClassName = $relatedDomainObject->getFullQualifiedClassName();
         if (!class_exists($relatedClassName)) {
             include($relatedModelClassPath);
-            $r = new $relatedClassName();
+        }
+        self::assertTrue(class_exists($relatedClassName), 'Class was not generated:' . $relatedClassName);
+
+        $reflectionService = new ReflectionService();
+        $reflection = $reflectionService->getClassSchema(new $className);
+        self::assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)), 'Getter was not generated');
+        self::assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)), 'Setter was not generated');
+
+        $setterMethod = $reflection->getMethod('set' . ucfirst($propertyName));
+        $parameters = $setterMethod->getParameters();
+        self::assertCount(1, $parameters, 'Wrong parameter count in setter method');
+
+        $firstParameterName = current(array_keys($parameters));
+        self::assertEquals($propertyName, $firstParameterName, 'Wrong parameter name in setter method');
+    }
+
+    /**
+     * Write a simple model class for a non aggregate root domain object with zero to many relation
+     *
+     * @test
+     */
+    public function writeModelClassWithZeroToManyRelation(): void
+    {
+        $modelName = 'ModelCgt4';
+        $relatedModelName = 'RelatedModel';
+        $propertyName = 'relNames';
+
+        $domainObject = $this->buildDomainObject($modelName);
+        $relatedDomainObject = $this->buildDomainObject($relatedModelName);
+
+        $relation = new Relation\ZeroToManyRelation($propertyName);
+        $relation->setForeignModel($relatedDomainObject);
+        $domainObject->addProperty($relation);
+
+        $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
+        $modelClassDir = 'Classes/Domain/Model/';
+        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
+        $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
+        self::assertDirectoryExists($absModelClassDir, 'Directory ' . $absModelClassDir . ' was not created');
+
+        $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
+        GeneralUtility::writeFile($modelClassPath, $classFileContent);
+        self::assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
+
+        $className = $domainObject->getFullQualifiedClassName();
+        if (!class_exists($className)) {
+            include($modelClassPath);
+        }
+        self::assertTrue(class_exists($className), 'Class was not generated:' . $className);
+
+        $relatedClassFileContent = $this->fileGenerator->generateDomainObjectCode($relatedDomainObject);
+
+        $relatedModelClassPath = $absModelClassDir . $relatedDomainObject->getName() . '.php';
+        GeneralUtility::writeFile($relatedModelClassPath, $relatedClassFileContent);
+        self::assertFileExists($relatedModelClassPath, 'File was not generated: ' . $relatedModelClassPath);
+        $relatedClassName = $relatedDomainObject->getFullQualifiedClassName();
+        if (!class_exists($relatedClassName)) {
+            include($relatedModelClassPath);
         }
         self::assertTrue(class_exists($relatedClassName), 'Class was not generated:' . $relatedClassName);
 
