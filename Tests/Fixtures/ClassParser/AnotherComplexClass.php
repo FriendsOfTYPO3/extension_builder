@@ -385,7 +385,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
             while ($classesDirectoryIterator->valid()) {
                 $filename = $classesDirectoryIterator->getFilename();
 
-                if ($filename{0} != '.') {
+                if ($filename[0] != '.') {
                     if (is_dir($currentPath . $filename)) {
                         $classFiles = array_merge($classFiles, $this->buildArrayOfClassFiles($packageKey, $subDirectory . $filename . '/', ($recursionLevel+1)));
                     } else {
