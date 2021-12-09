@@ -849,6 +849,10 @@ class RoundTrip implements SingletonInterface
 
         if (!empty($methodParameters)) {
             $parameterTags = $mergedMethod->getTagValues('param');
+            if (!is_array($parameterTags)) {
+                $parameterTags = [$parameterTags];
+            }
+
             foreach ($methodParameters as $methodParameter) {
                 $oldParameterName = $methodParameter->getName();
                 if ($oldParameterName == ClassBuilder::getParameterName($oldProperty, $methodType)) {
