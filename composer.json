@@ -68,6 +68,7 @@
 	},
 	"extra": {
 		"typo3/cms": {
+			"extension-key": "extension_builder",
 			"cms-package-dir": "{$vendor-dir}/typo3/cms",
 			"app-dir": ".Build",
 			"web-dir": ".Build/public"
