@@ -52,6 +52,10 @@
 		"vendor-dir": ".Build/vendor",
 		"preferred-install": {
 			"*": "dist"
+		},
+		"allow-plugins": {
+			"typo3/class-alias-loader": true,
+			"typo3/cms-composer-installers": true
 		}
 	},
 	"scripts": {
