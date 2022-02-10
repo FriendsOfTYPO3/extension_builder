@@ -37,7 +37,7 @@ class Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the name
      *
-     * @return string $name
+     * @return string
      */
     public function getName()
     {
@@ -58,7 +58,7 @@ class Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the flag
      *
-     * @return bool $flag
+     * @return bool
      */
     public function getFlag()
     {
