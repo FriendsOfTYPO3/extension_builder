@@ -38,7 +38,7 @@ class Child4 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the name
      *
-     * @return string $name
+     * @return string
      */
     public function getName()
     {
@@ -59,7 +59,7 @@ class Child4 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the fileProperty
      *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference $fileProperty
+     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
      */
     public function getFileProperty()
     {
