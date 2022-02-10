@@ -55,7 +55,7 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the name
      *
-     * @return string $name
+     * @return string
      */
     public function getName()
     {
@@ -76,7 +76,7 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the dateProperty1
      *
-     * @return \DateTime $dateProperty1
+     * @return \DateTime
      */
     public function getDateProperty1()
     {
@@ -97,7 +97,7 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the dateProperty2
      *
-     * @return \DateTime $dateProperty2
+     * @return \DateTime
      */
     public function getDateProperty2()
     {
@@ -118,7 +118,7 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the dateProperty3
      *
-     * @return \DateTime $dateProperty3
+     * @return \DateTime
      */
     public function getDateProperty3()
     {
@@ -139,7 +139,7 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the dateProperty4
      *
-     * @return \DateTime $dateProperty4
+     * @return \DateTime
      */
     public function getDateProperty4()
     {

@@ -344,7 +344,7 @@ class ClassBuilder implements SingletonInterface
             $replacements = ['property' => $propertyName];
             $this->updateMethodBody($getterMethod, $replacements);
             $this->updateDocComment($getterMethod, $replacements);
-            $getterMethod->setTag('return', $domainProperty->getTypeForComment() . ' $' . $propertyName);
+            $getterMethod->setTag('return', $domainProperty->getTypeForComment());
         }
         if (!$getterMethod->hasDescription()) {
             $getterMethod->setDescription('Returns the ' . $domainProperty->getName());
