@@ -100,7 +100,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the name
      *
-     * @return string $name
+     * @return string
      */
     public function getName()
     {
@@ -121,7 +121,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the identifier
      *
-     * @return string $identifier
+     * @return string
      */
     public function getIdentifier()
     {
@@ -142,7 +142,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the description
      *
-     * @return string $description
+     * @return string
      */
     public function getDescription()
     {
@@ -163,7 +163,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the myDate
      *
-     * @return \DateTime $myDate
+     * @return \DateTime
      */
     public function getMyDate()
     {
@@ -184,7 +184,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the child1
      *
-     * @return \FIXTURE\TestExtension\Domain\Model\Child1 $child1
+     * @return \FIXTURE\TestExtension\Domain\Model\Child1
      */
     public function getChild1()
     {
@@ -227,7 +227,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the children2
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Child2> $children2
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Child2>
      */
     public function getChildren2()
     {
@@ -248,7 +248,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the child3
      *
-     * @return \FIXTURE\TestExtension\Domain\Model\Child3 $child3
+     * @return \FIXTURE\TestExtension\Domain\Model\Child3
      */
     public function getChild3()
     {
@@ -291,7 +291,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the children4
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Child4> $children4
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Child4>
      */
     public function getChildren4()
     {
