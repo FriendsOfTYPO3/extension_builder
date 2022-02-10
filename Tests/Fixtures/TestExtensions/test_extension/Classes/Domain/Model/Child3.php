@@ -44,7 +44,7 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the name
      *
-     * @return string $name
+     * @return string
      */
     public function getName()
     {
@@ -65,7 +65,7 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the password
      *
-     * @return string $password
+     * @return string
      */
     public function getPassword()
     {
@@ -86,7 +86,7 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the imageProperty
      *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference $imageProperty
+     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
      */
     public function getImageProperty()
     {
