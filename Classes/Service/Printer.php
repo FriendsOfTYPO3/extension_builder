@@ -93,7 +93,7 @@ class Printer extends Standard
             }
         }
         if ($multiline) {
-            return $this->nl . $this->pImplode($nodes, ', ' . $this->nl) . $this->nl;
+            return $this->nl . $this->pImplode($nodes, ',' . $this->nl) . $this->nl;
         }
 
         return $this->pImplode($nodes, ', ');
