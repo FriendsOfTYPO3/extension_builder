@@ -6,7 +6,7 @@
 Contribution
 ============
 
-If you have a question, please visit the channel `#extension_builder` of
+If you have a question, please visit the channel `#extension-builder` of
 our `Slack workspace <https://typo3.slack.com>`__
 or use `Stack Overflow <https://stackoverflow.com/questions/tagged/typo3>`__.
 
