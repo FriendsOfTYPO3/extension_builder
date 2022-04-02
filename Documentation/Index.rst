@@ -17,7 +17,7 @@ Extension Builder
    en
 
 :Author:
-   Nico de Haen & TYPO3 contributors
+   Nico de Haen & contributors
 
 :License:
    This document is published under the
