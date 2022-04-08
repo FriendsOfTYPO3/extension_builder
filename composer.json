@@ -7,7 +7,12 @@
 		"extension",
 		"extension_builder"
 	],
-	"homepage": "https://github.com/FriendsOfTYPO3/extension_builder",
+	"homepage": "https://extensions.typo3.org/extension/extension_builder",
+	"support": {
+		"issues": "https://github.com/FriendsOfTYPO3/extension_builder/issues",
+		"source": "https://github.com/FriendsOfTYPO3/extension_builder",
+		"docs": "https://docs.typo3.org/p/friendsoftypo3/extension-builder/9.10/en-us/"
+	},
 	"license": "GPL-2.0-or-later",
 	"authors": [
 		{
