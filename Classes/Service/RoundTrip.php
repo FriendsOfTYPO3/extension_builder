@@ -1025,7 +1025,7 @@ class RoundTrip implements SingletonInterface
             $path = str_replace($extension->getExtensionDir(), '', $path);
         }
         $pathParts = explode('/', $path);
-        $overWriteSettings = $settings['overwriteSettings'];
+        $overWriteSettings = $settings['overwriteSettings'] ?? [];
 
         foreach ($pathParts as $pathPart) {
             if (isset($overWriteSettings[$pathPart]) && is_array($overWriteSettings[$pathPart])) {
