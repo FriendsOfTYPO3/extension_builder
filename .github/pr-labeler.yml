@@ -1,0 +1,57 @@
+version: v1
+
+labels:
+  - label: 'bug'
+    sync: true
+    matcher:
+      title: '\[BUGFIX\] .+'
+      commits: '\[BUGFIX\] .+'
+      branch: '^bugfix/.+'
+
+  - label: 'documentation'
+    sync: true
+    matcher:
+      title: '\[DOCS\] .+'
+      commits: '\[DOCS\] .+'
+      branch: '^docs/.+'
+
+  - label: 'enhancement'
+    sync: true
+    matcher:
+      title: '\[FEATURE\] .+'
+      commits: '\[FEATURE\] .+'
+      branch: '^feature/.+'
+
+  - label: 'maintenance'
+    sync: true
+    matcher:
+      title: '\[TASK\] .+'
+      commits: '\[TASK\] .+'
+      branch: '^task/.+'
+
+  - label: 'security'
+    sync: true
+    matcher:
+      title: '\[SECURITY\] .+'
+      commits: '\[SECURITY\] .+'
+      branch: '^security/.+'
+
+  - label: 'breaking'
+    sync: true
+    matcher:
+      title: '\[!!!\]\[.+'
+      commits: '\[!!!\]\[.+'
+
+checks:
+  - context: "Semantic Pull Request"
+    url: "https://docs.typo3.org/m/typo3/guide-contributionworkflow/main/en-us/Appendix/CommitMessage.html"
+    description:
+      success: Ready for review & merge.
+      failure: Missing semantic label for merge.
+    labels:
+      any:
+        - bug
+        - documentation
+        - enhancement
+        - maintenance
+        - security
