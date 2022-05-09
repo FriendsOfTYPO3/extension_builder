@@ -616,7 +616,7 @@ class BuilderModuleController extends ActionController
         $messagesPerErrorCode = [];
         foreach ($warnings as $exception) {
             $errorCode = $exception->getCode();
-            if (!is_array($messagesPerErrorCode[$errorCode])) {
+            if (!isset($messagesPerErrorCode[$errorCode])) {
                 $messagesPerErrorCode[$errorCode] = [];
             }
             $messagesPerErrorCode[$errorCode][] = nl2br(htmlspecialchars($exception->getMessage())) . ' (Error ' . $errorCode . ')<br /><br />';
