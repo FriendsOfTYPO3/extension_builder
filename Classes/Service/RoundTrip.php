@@ -139,7 +139,7 @@ class RoundTrip implements SingletonInterface
 
         if (file_exists($this->previousExtensionDirectory . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE)) {
             $extensionSchemaBuilder = GeneralUtility::makeInstance(ExtensionSchemaBuilder::class);
-            $jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey);
+            $jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey, $extension->getStoragePath());
             $this->previousExtension = $extensionSchemaBuilder->build($jsonConfig);
             $previousDomainObjects = $this->previousExtension->getDomainObjects();
             /** @var DomainObject[] $previousDomainObjects */

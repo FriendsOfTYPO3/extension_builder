@@ -507,11 +507,12 @@ class BuilderModuleController extends ActionController
         $publicExtensionDirectory = Environment::getExtensionsPath() . '/' . $extension->getExtensionKey();
         $usesComposerPath = $this->extensionService->isComposerStoragePath($extensionDirectory);
         $extensionExistedBefore = is_dir($extensionDirectory);
+        $isV4ComposerInstaller = $this->extensionService->isV4ComposerInstaller();
 
         if (!$extensionExistedBefore) {
             GeneralUtility::mkdir($extensionDirectory);
         }
-        if ($usesComposerPath && !is_link($publicExtensionDirectory)) {
+        if ($usesComposerPath && !$isV4ComposerInstaller && !is_link($publicExtensionDirectory)) {
             symlink(
                 PathUtility::getRelativePath(dirname($publicExtensionDirectory), $extensionDirectory),
                 $publicExtensionDirectory
