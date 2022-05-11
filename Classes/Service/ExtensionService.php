@@ -97,14 +97,12 @@ class ExtensionService
     }
 
     /**
-     * Returns, if typo3/cms-composer-installers v4 is used by checking, if ext:extension_builder is
-     * installed in /vendor/friendsoftypo3/extension-builder/
-     *
-     * @return bool
+     * Returns, if typo3/cms-composer-installers v4 is used by checking, if /vendor/friendsoftypo3/extension-builder/
+     * is part of the absolute install path of extension_builder
      */
-    public function isV4ComposerInstaller(): bool
+    public function isComposerInstallerV4(): bool
     {
         $extensionPath = GeneralUtility::getFileAbsFileName('EXT:extension_builder/');
-        return strpos($extensionPath, '/vendor/friendsoftypo3/extension-builder/') !== false;
+        return str_contains($extensionPath, '/vendor/friendsoftypo3/extension-builder/');
     }
 }
