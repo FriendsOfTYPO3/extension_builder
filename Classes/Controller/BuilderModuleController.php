@@ -507,7 +507,7 @@ class BuilderModuleController extends ActionController
         $publicExtensionDirectory = Environment::getExtensionsPath() . '/' . $extension->getExtensionKey();
         $usesComposerPath = $this->extensionService->isComposerStoragePath($extensionDirectory);
         $extensionExistedBefore = is_dir($extensionDirectory);
-        $isComposerInstallerV4 = $this->extensionService->isV4ComposerInstaller();
+        $isComposerInstallerV4 = $this->extensionService->isComposerInstallerV4();
 
         if (!$extensionExistedBefore) {
             GeneralUtility::mkdir($extensionDirectory);
