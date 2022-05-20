@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace EBT\ExtensionBuilder\Service;
 
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
 class ExtensionService
@@ -93,5 +94,15 @@ class ExtensionService
     public function isStoragePathConfigured(): bool
     {
         return !Environment::isComposerMode() || count($this->resolveStoragePaths()) > 0;
+    }
+
+    /**
+     * Returns, if typo3/cms-composer-installers v4 is used by checking, if /vendor/friendsoftypo3/extension-builder/
+     * is part of the absolute install path of extension_builder
+     */
+    public function isComposerInstallerV4(): bool
+    {
+        $extensionPath = GeneralUtility::getFileAbsFileName('EXT:extension_builder/');
+        return str_contains($extensionPath, '/vendor/friendsoftypo3/extension-builder/');
     }
 }
