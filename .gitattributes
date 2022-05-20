@@ -2,6 +2,8 @@
 
 /.github export-ignore
 /Documentation export-ignore
+/Resources/Private/CodeTemplates export-ignore
+/Resources/Private/Schema export-ignore
 /Tests export-ignore
 /.* export-ignore
 /crowdin.yaml export-ignore
