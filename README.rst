@@ -24,6 +24,17 @@
 TYPO3 Extension ``extension_builder``
 =====================================
 
+----
+
+****************************************************************************************************************
+!!! The extension builder team is looking for someone who wants to continue developing the extension builder !!!
+****************************************************************************************************************
+
+The main task is keeping it up to date with the upcoming TYPO3 versions and improvements in the UI as well as in the generated code.
+If you feel like the whole UI needs to be rewritten, you are free to do so. The current UI is built upon a really old Yahoo UI framework and definitely needs some love. Please contact us on `Slack <https://typo3.slack.com/archives/C0CEB3BMY>`_ if you want to contribute.
+
+----
+
 The Extension Builder helps you to develop a TYPO3 extension based on the
 domain-driven MVC framework `Extbase`_ and the templating engine `Fluid`_.
 
