@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Tests\Functional\Service;
 
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 use TYPO3\CMS\Core\Core\Environment;
 
@@ -25,8 +26,29 @@ class ExtensionServiceTest extends BaseFunctionalTest
     /**
      * @test
      */
+    public function resolveStoragePathsReturnsOnePathIfSetInExtensionConfiguration(): void
+    {
+        $configurationManager = $this->getAccessibleMock(ExtensionBuilderConfigurationManager::class, ['getExtensionBuilderSettings']);
+        $configurationManager->expects(self::any())
+            ->method('getExtensionBuilderSettings')
+            ->willReturn(['storageDir' => '/var/www/html/packages/']);
+        $this->extensionService->injectExtensionBuilderConfigurationManager($configurationManager);
+        $storagePaths = $this->extensionService->resolveStoragePaths();
+
+        self::assertCount(1, $storagePaths);
+        self::assertEquals('/var/www/html/packages/', $storagePaths[0]);
+    }
+
+    /**
+     * @test
+     */
     public function resolveStoragePathsReturnsNoPathIfComposerJsonIsMissingInComposerMode(): void
     {
+        $configurationManager = $this->getAccessibleMock(ExtensionBuilderConfigurationManager::class, ['getExtensionBuilderSettings']);
+        $configurationManager->expects(self::any())
+            ->method('getExtensionBuilderSettings')
+            ->willReturn(['storageDir' => '']);
+        $this->extensionService->injectExtensionBuilderConfigurationManager($configurationManager);
         $backupEnvironment = $this->getEnvironmentAsArray();
         Environment::initialize(...array_values(array_merge($backupEnvironment, ['composerMode' => true])));
         $storagePaths = $this->extensionService->resolveStoragePaths();
@@ -40,12 +62,18 @@ class ExtensionServiceTest extends BaseFunctionalTest
      */
     public function resolveStoragePathsReturnsOnePathInLegacyMode(): void
     {
+        $configurationManager = $this->getAccessibleMock(ExtensionBuilderConfigurationManager::class, ['getExtensionBuilderSettings']);
+        $configurationManager->expects(self::any())
+            ->method('getExtensionBuilderSettings')
+            ->willReturn(['storageDir' => '']);
+        $this->extensionService->injectExtensionBuilderConfigurationManager($configurationManager);
         $backupEnvironment = $this->getEnvironmentAsArray();
         Environment::initialize(...array_values(array_merge($backupEnvironment, ['composerMode' => false])));
         $storagePaths = $this->extensionService->resolveStoragePaths();
         Environment::initialize(...array_values($backupEnvironment));
 
         self::assertCount(1, $storagePaths);
+        self::assertStringEndsWith('/typo3conf/ext/', $storagePaths[0]);
     }
 
     /**

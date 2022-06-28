@@ -510,7 +510,7 @@ class BuilderModuleController extends ActionController
         $isComposerInstallerV4 = $this->extensionService->isComposerInstallerV4();
 
         if (!$extensionExistedBefore) {
-            GeneralUtility::mkdir($extensionDirectory);
+            GeneralUtility::mkdir_deep($extensionDirectory);
         }
         if ($usesComposerPath && !$isComposerInstallerV4 && !is_link($publicExtensionDirectory)) {
             symlink(

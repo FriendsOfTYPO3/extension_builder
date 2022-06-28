@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Service;
 
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
@@ -32,15 +33,29 @@ class ExtensionService
         href="https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html">
         Documentation</a>';
 
+    protected ExtensionBuilderConfigurationManager $configurationManager;
+    protected array $settings;
+
+    public function injectExtensionBuilderConfigurationManager(
+        ExtensionBuilderConfigurationManager $configurationManager
+    ): void {
+        $this->configurationManager = $configurationManager;
+        $this->settings = $configurationManager->getExtensionBuilderSettings();
+    }
+
     /**
      * @return string[]
      */
     public function resolveStoragePaths(): array
     {
-        if (Environment::isComposerMode()) {
-            $storagePaths = $this->resolveComposerStoragePaths();
+        if ($this->settings['storageDir'] ?? false) {
+            $storagePaths = [$this->settings['storageDir']];
         } else {
-            $storagePaths = [Environment::getExtensionsPath()];
+            if (Environment::isComposerMode()) {
+                $storagePaths = $this->resolveComposerStoragePaths();
+            } else {
+                $storagePaths = [Environment::getExtensionsPath()];
+            }
         }
 
         return array_map(
@@ -56,15 +71,14 @@ class ExtensionService
      */
     public function resolveComposerStoragePaths(): array
     {
-        $storagePaths = [];
-        $projectPath = Environment::getProjectPath();
-
         if (!Environment::isComposerMode()
-            || !file_exists($projectPath . '/composer.json')
+            || !file_exists(Environment::getProjectPath() . '/composer.json')
         ) {
             return [];
         }
 
+        $storagePaths = [];
+        $projectPath = Environment::getProjectPath();
         $composerSettings = json_decode(file_get_contents($projectPath . '/composer.json'), true);
         foreach ($composerSettings['repositories'] ?? [] as $repository) {
             if (empty($repository['url']) || ($repository['type'] ?? null) !== 'path') {
