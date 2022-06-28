@@ -25,6 +25,7 @@ use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Exception\FileNotFoundException;
 use EBT\ExtensionBuilder\Exception\SyntaxError;
 use EBT\ExtensionBuilder\Service\ClassBuilder;
+use EBT\ExtensionBuilder\Service\ExtensionService;
 use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Service\LocalizationService;
 use EBT\ExtensionBuilder\Service\ParserService;
@@ -55,6 +56,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
     protected ClassBuilder $classBuilder;
     protected RoundTrip $roundTripService;
     protected Extension $extension;
+    protected ExtensionService $extensionService;
     protected FileGenerator $fileGenerator;
     protected vfsStreamDirectory $testDir;
 
@@ -145,6 +147,8 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         );
         $this->fileGenerator->_set('enableRoundtrip', true);
         $this->fileGenerator->_set('extension', $this->extension);
+
+        $this->extensionService = GeneralUtility::makeInstance(ExtensionService::class);
     }
 
     /**

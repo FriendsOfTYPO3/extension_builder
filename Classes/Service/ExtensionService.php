@@ -56,12 +56,15 @@ class ExtensionService
      */
     public function resolveComposerStoragePaths(): array
     {
-        if (!Environment::isComposerMode()) {
+        $storagePaths = [];
+        $projectPath = Environment::getProjectPath();
+
+        if (!Environment::isComposerMode()
+            || !file_exists($projectPath . '/composer.json')
+        ) {
             return [];
         }
 
-        $storagePaths = [];
-        $projectPath = Environment::getProjectPath();
         $composerSettings = json_decode(file_get_contents($projectPath . '/composer.json'), true);
         foreach ($composerSettings['repositories'] ?? [] as $repository) {
             if (empty($repository['url']) || ($repository['type'] ?? null) !== 'path') {
