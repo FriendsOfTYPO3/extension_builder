@@ -46,3 +46,6 @@ even if you change the extension in the graphical editor.
 :Repository:  https://github.com/FriendsOfTYPO3/extension_builder
 :Read online: https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/
 :TER: https://extensions.typo3.org/extension/extension_builder
+
+`Sponsor <https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/Sponsoring/Index.html>`__
+us to get things done for your business - in time and quality.

@@ -64,6 +64,7 @@ even if you change the extension in the graphical editor.
    PublishToTer/Index
    InDepth/Index
    Contribution/Index
+   Sponsoring/Index
    Development/Index
 
 .. Meta Menu
