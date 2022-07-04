@@ -211,7 +211,7 @@ class ClassBuilder implements SingletonInterface
                 ));
             }
 
-            if ($domainProperty->getHasDefaultValue() && $this->settings['setDefaultValuesForClassProperties'] !== false) {
+            if ($domainProperty->getHasDefaultValue() && ($this->settings['setDefaultValuesForClassProperties'] ?? false) !== false) {
                 $classProperty->setDefault($domainProperty->getDefaultValue());
             }
             if ($domainProperty->isNullableProperty() === true && $domainProperty->getNullable() === true) {
