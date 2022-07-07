@@ -2,11 +2,7 @@
 	"name": "friendsoftypo3/extension-builder",
 	"type": "typo3-cms-extension",
 	"description": "Tool to kickstart and maintain TYPO3 extensions",
-	"keywords": [
-		"TYPO3",
-		"extension",
-		"extension_builder"
-	],
+	"keywords": ["TYPO3", "extension", "extension_builder"],
 	"homepage": "https://extensions.typo3.org/extension/extension_builder",
 	"support": {
 		"issues": "https://github.com/FriendsOfTYPO3/extension_builder/issues",
@@ -89,7 +85,6 @@
 	"extra": {
 		"typo3/cms": {
 			"extension-key": "extension_builder",
-			"cms-package-dir": "{$vendor-dir}/typo3/cms",
 			"app-dir": ".Build",
 			"ignore-as-root": false,
 			"web-dir": ".Build/public"
