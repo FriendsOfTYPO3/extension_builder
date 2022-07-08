@@ -674,7 +674,6 @@ class Extension
             ],
             'extra' => [
                 'typo3/cms' => [
-                    'cms-package-dir' => '{$vendor-dir}/typo3/cms',
                     'web-dir' => '.Build/public',
                     'extension-key' => $extensionKey,
                 ]
