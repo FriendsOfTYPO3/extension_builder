@@ -554,7 +554,7 @@ class BuilderModuleController extends ActionController
                     throw $e;
                 }
             } else {
-                if (!is_array($extensionSettings['ignoreWarnings'])
+                if (!is_array($extensionSettings['ignoreWarnings'] ?? null)
                     || !in_array(ExtensionValidator::EXTENSION_DIR_EXISTS, $extensionSettings['ignoreWarnings'])
                 ) {
                     $confirmationRequired = $this->handleValidationWarnings([

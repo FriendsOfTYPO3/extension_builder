@@ -190,7 +190,7 @@ class ClassBuilder implements SingletonInterface
             $classProperty = $this->classObject->getProperty($propertyName);
             $classProperty->setTag('var', $domainProperty->getTypeForComment());
             $classProperty->setVarType($domainProperty->getTypeHint());
-            if ($this->settings['setDefaultValuesForClassProperties'] !== false) {
+            if ($this->settings['setDefaultValuesForClassProperties'] ?? true) {
                 $classProperty->setDefault($domainProperty->getDefaultValue());
             }
             if ($domainProperty->isNullableProperty() === true && $domainProperty->getNullable() === true) {
@@ -211,7 +211,7 @@ class ClassBuilder implements SingletonInterface
                 ));
             }
 
-            if ($domainProperty->getHasDefaultValue() && $this->settings['setDefaultValuesForClassProperties'] !== false) {
+            if ($domainProperty->getHasDefaultValue() && ($this->settings['setDefaultValuesForClassProperties'] ?? true)) {
                 $classProperty->setDefault($domainProperty->getDefaultValue());
             }
             if ($domainProperty->isNullableProperty() === true && $domainProperty->getNullable() === true) {

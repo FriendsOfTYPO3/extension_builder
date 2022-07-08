@@ -52,7 +52,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @var string
      */
     const DEFAULT_TEMPLATE_ROOTPATH = 'EXT:extension_builder/Resources/Private/CodeTemplates/Extbase/';
-    private array $inputData = [];
+    protected array $inputData = [];
 
     protected ConfigurationManagerInterface $configurationManager;
 
