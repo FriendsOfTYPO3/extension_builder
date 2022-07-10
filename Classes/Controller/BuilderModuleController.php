@@ -456,35 +456,31 @@ class BuilderModuleController extends ActionController
      */
     protected function rpcActionSave(): array
     {
-        try {
-            $extensionBuildConfiguration = $this->extensionBuilderConfigurationManager->getConfigurationFromModeler();
+        $extensionBuildConfiguration = $this->extensionBuilderConfigurationManager->getConfigurationFromModeler();
 
-            $storagePaths = $this->extensionService->resolveStoragePaths();
-            $storagePath = reset($storagePaths);
-            if ($storagePath === false) {
-                throw new \Exception('The storage path could not be detected.');
-            }
-            $extensionBuildConfiguration['storagePath'] = $storagePath;
-
-            $validationConfigurationResult = $this->extensionValidator->validateConfigurationFormat($extensionBuildConfiguration);
-            if (!empty($validationConfigurationResult['warnings'])) {
-                $confirmationRequired = $this->handleValidationWarnings($validationConfigurationResult['warnings']);
-                if (!empty($confirmationRequired)) {
-                    return $confirmationRequired;
-                }
-            }
-            if (!empty($validationConfigurationResult['errors'])) {
-                $errorMessage = '';
-                foreach ($validationConfigurationResult['errors'] as $exception) {
-                    /** @var \Exception $exception */
-                    $errorMessage .= '<br />' . $exception->getMessage();
-                }
-                throw new \Exception($errorMessage);
-            }
-            $extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
-        } catch (\Exception $e) {
-            throw $e;
+        $storagePaths = $this->extensionService->resolveStoragePaths();
+        $storagePath = reset($storagePaths);
+        if ($storagePath === false) {
+            throw new \Exception('The storage path could not be detected.');
         }
+        $extensionBuildConfiguration['storagePath'] = $storagePath;
+
+        $validationConfigurationResult = $this->extensionValidator->validateConfigurationFormat($extensionBuildConfiguration);
+        if (!empty($validationConfigurationResult['warnings'])) {
+            $confirmationRequired = $this->handleValidationWarnings($validationConfigurationResult['warnings']);
+            if (!empty($confirmationRequired)) {
+                return $confirmationRequired;
+            }
+        }
+        if (!empty($validationConfigurationResult['errors'])) {
+            $errorMessage = '';
+            foreach ($validationConfigurationResult['errors'] as $exception) {
+                /** @var \Exception $exception */
+                $errorMessage .= '<br />' . $exception->getMessage();
+            }
+            throw new \Exception($errorMessage);
+        }
+        $extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
 
         // Validate the extension
         $validationResult = $this->extensionValidator->isValid($extension);
@@ -521,11 +517,7 @@ class BuilderModuleController extends ActionController
 
         if ($extensionExistedBefore) {
             if ($this->extensionBuilderSettings['extConf']['backupExtension'] === '1') {
-                try {
-                    RoundTrip::backupExtension($extension, $this->extensionBuilderSettings['extConf']['backupDir']);
-                } catch (\Exception $e) {
-                    throw $e;
-                }
+                RoundTrip::backupExtension($extension, $this->extensionBuilderSettings['extConf']['backupDir']);
             }
             $extensionSettings = $this->extensionBuilderConfigurationManager->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
             if ($this->extensionBuilderSettings['extConf']['enableRoundtrip'] === '1') {
@@ -548,11 +540,7 @@ class BuilderModuleController extends ActionController
                         )
                     ];
                 }
-                try {
-                    RoundTrip::prepareExtensionForRoundtrip($extension);
-                } catch (\Exception $e) {
-                    throw $e;
-                }
+                RoundTrip::prepareExtensionForRoundtrip($extension);
             } else {
                 if (!is_array($extensionSettings['ignoreWarnings'] ?? null)
                     || !in_array(ExtensionValidator::EXTENSION_DIR_EXISTS, $extensionSettings['ignoreWarnings'])
@@ -569,21 +557,18 @@ class BuilderModuleController extends ActionController
                 }
             }
         }
-        try {
-            $this->fileGenerator->build($extension);
-            $this->extensionInstallationStatus->setExtension($extension);
-            $this->extensionInstallationStatus->setUsesComposerPath($usesComposerPath);
-            $message = sprintf(
-                '<p>The Extension was successfully saved in the directory: "%s"</p>%s',
-                $extensionDirectory,
-                $this->extensionInstallationStatus->getStatusMessage()
-            );
-            $result = ['success' => $message, 'usesComposerPath' => $usesComposerPath];
-            if ($this->extensionInstallationStatus->isDbUpdateNeeded()) {
-                $result['confirmUpdate'] = true;
-            }
-        } catch (\Exception $e) {
-            throw $e;
+
+        $this->fileGenerator->build($extension);
+        $this->extensionInstallationStatus->setExtension($extension);
+        $this->extensionInstallationStatus->setUsesComposerPath($usesComposerPath);
+        $message = sprintf(
+            '<p>The Extension was successfully saved in the directory: "%s"</p>%s',
+            $extensionDirectory,
+            $this->extensionInstallationStatus->getStatusMessage()
+        );
+        $result = ['success' => $message, 'usesComposerPath' => $usesComposerPath];
+        if ($this->extensionInstallationStatus->isDbUpdateNeeded()) {
+            $result['confirmUpdate'] = true;
         }
 
         $this->extensionRepository->saveExtensionConfiguration($extension);
