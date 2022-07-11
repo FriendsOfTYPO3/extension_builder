@@ -1,8 +1,8 @@
 # cat=basic; type=boolean; label=Enable roundtrip mode: If you enable the roundtrip mode, you can modify the generated files and your changes will be preserved even if you customize the extension again in the Extension Builder. If you disable it, all files are regenerated every time you save in the Extension Builder.
 enableRoundtrip = 1
-# cat=basic; type=string; label=Storage directory: The directory where the Extension Builder loads and stores generated extensions - specified as an absolute path or relative to PATH_site. If empty, the path will be detected automatically.
+# cat=basic; type=string; label=Storage directory: The directory where the Extension Builder loads and stores generated extensions - specified as an absolute path or relative to the project root. If empty, the path will be detected automatically.
 storageDir =
 # cat=basic; type=boolean; label=Backup on save: Should the Extension Builder create a backup of the extension every time it is saved?
 backupExtension = 1
-# cat=basic; type=string; label=Backup directory: The directory where the Extension Builder stores the backup - specified as an absolute path or relative to PATH_site.
+# cat=basic; type=string; label=Backup directory: The directory where the Extension Builder stores the backup - specified as an absolute path or relative to the project root.
 backupDir = var/tx_extensionbuilder/backups

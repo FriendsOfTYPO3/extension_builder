@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace EBT\ExtensionBuilder\Service;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use Exception;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
@@ -44,9 +45,28 @@ class ExtensionService
     }
 
     /**
-     * @return string[]
+     * @return string
+     * @throws Exception
+     */
+    public function resolveStoragePath(): string
+    {
+        $storagePaths = $this->resolveStoragePaths();
+        return array_pop($storagePaths);
+    }
+
+    /**
+     * @return array|string[]
+     * @throws Exception
      */
     public function resolveStoragePaths(): array
+    {
+        $storagePaths = $this->getStoragePaths();
+        $this->validateStoragePaths($storagePaths);
+
+        return $storagePaths;
+    }
+
+    protected function getStoragePaths(): array
     {
         if ($this->settings['storageDir'] ?? false) {
             $storagePaths = [$this->settings['storageDir']];
@@ -58,12 +78,38 @@ class ExtensionService
             }
         }
 
-        return array_map(
-            static function (string $storagePath) {
-                return rtrim($storagePath, '/') . '/';
-            },
-            $storagePaths
-        );
+        foreach ($storagePaths as $key => $storagePath) {
+            $storagePath = PathUtility::isAbsolutePath($storagePath) ? $storagePath : Environment::getProjectPath() . '/' . $storagePath;
+            $storagePath = rtrim($storagePath, '/') . '/';
+            $storagePaths[$key] = $storagePath;
+        }
+
+        return $storagePaths;
+    }
+
+    /**
+     * @param array $storagePaths
+     * @return void
+     * @throws Exception
+     */
+    protected function validateStoragePaths(array $storagePaths): void
+    {
+        foreach ($storagePaths as $storagePath) {
+            if (!GeneralUtility::isAllowedAbsPath($storagePath)) {
+                throw new Exception(sprintf(
+                    'The storage path "%s" cannot be accessed. You should set or adjust the storage path ' .
+                    'explicitly in the "storageDir" extension configuration parameter.',
+                    $storagePath
+                ));
+            }
+        }
+
+        if (count($storagePaths) === 0) {
+            throw new Exception(
+                'The storage path could not be detected. You should set the storage path explicitly in the ' .
+                '"storageDir" extension configuration parameter.'
+            );
+        }
     }
 
     /**
@@ -110,7 +156,14 @@ class ExtensionService
 
     public function isStoragePathConfigured(): bool
     {
-        return !Environment::isComposerMode() || count($this->resolveStoragePaths()) > 0;
+        try {
+            $this->resolveStoragePaths();
+        } catch (\Exception $e) {
+            if (Environment::isComposerMode()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

@@ -40,11 +40,15 @@ configurable:
 |                            |If you disable it (*kickstart mode*), all files are regenerated every time you |                                    |
 |                            |save in the Extension Builder.                                                 |                                    |
 +----------------------------+-------------------------------------------------------------------------------+------------------------------------+
+|Storage directory           |The directory where the Extension Builder loads and stores generated           |                                    |
+|                            |extensions - specified as an absolute path or relative to the project root.    |                                    |
+|                            |If empty, the path will be detected automatically.                             |                                    |
++----------------------------+-------------------------------------------------------------------------------+------------------------------------+
 |Backup on save              |The Extension Builder creates a backup of the extension every time it is saved |true                                |
 |                            |if this option is set to true.                                                 |                                    |
 +----------------------------+-------------------------------------------------------------------------------+------------------------------------+
 |Backup directory            |The directory where the Extension Builder stores the backup –                  |var/tx_extensionbuilder/backups     |
-|                            |specified as an absolute path or relative to ``PATH_site``.                    |                                    |
+|                            |specified as an absolute path or relative to the project root.                 |                                    |
 +----------------------------+-------------------------------------------------------------------------------+------------------------------------+
 
 .. _local-configuration:

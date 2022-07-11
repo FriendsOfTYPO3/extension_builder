@@ -46,10 +46,11 @@ class ExtensionRepository implements SingletonInterface
     }
 
     /**
-     * loops through all extensions in typo3conf/ext/
-     * and searches for a JSON file with extension builder configuration
+     * Loops through all extensions in the storage paths (typo3conf/ext/, etc.)
+     * and searches for a JSON file with extension builder configuration.
      *
      * @return array
+     * @throws Exception
      */
     public function findAll(): array
     {

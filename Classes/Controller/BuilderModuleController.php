@@ -27,6 +27,7 @@ use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Template\Components\Buttons\LinkButtonWithId;
 use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
@@ -427,7 +428,7 @@ class BuilderModuleController extends ActionController
             $this->extensionBuilderConfigurationManager->parseRequest();
             $subAction = $this->extensionBuilderConfigurationManager->getSubActionFromRequest();
             if (empty($subAction)) {
-                throw new \Exception('No Sub Action!');
+                throw new Exception('No Sub Action!');
             }
             switch ($subAction) {
                 case 'saveWiring':
@@ -442,7 +443,7 @@ class BuilderModuleController extends ActionController
                 default:
                     $response = ['error' => 'Sub Action not found.'];
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $response = ['error' => $e->getMessage()];
         }
         return $this->jsonResponse(json_encode($response));
@@ -452,18 +453,12 @@ class BuilderModuleController extends ActionController
      * Generate the code files according to the transferred JSON configuration.
      *
      * @return array (status => message)
-     * @throws \Exception
+     * @throws Exception
      */
     protected function rpcActionSave(): array
     {
         $extensionBuildConfiguration = $this->extensionBuilderConfigurationManager->getConfigurationFromModeler();
-
-        $storagePaths = $this->extensionService->resolveStoragePaths();
-        $storagePath = reset($storagePaths);
-        if ($storagePath === false) {
-            throw new \Exception('The storage path could not be detected.');
-        }
-        $extensionBuildConfiguration['storagePath'] = $storagePath;
+        $extensionBuildConfiguration['storagePath'] = $this->extensionService->resolveStoragePath();
 
         $validationConfigurationResult = $this->extensionValidator->validateConfigurationFormat($extensionBuildConfiguration);
         if (!empty($validationConfigurationResult['warnings'])) {
@@ -475,10 +470,10 @@ class BuilderModuleController extends ActionController
         if (!empty($validationConfigurationResult['errors'])) {
             $errorMessage = '';
             foreach ($validationConfigurationResult['errors'] as $exception) {
-                /** @var \Exception $exception */
+                /** @var Exception $exception */
                 $errorMessage .= '<br />' . $exception->getMessage();
             }
-            throw new \Exception($errorMessage);
+            throw new Exception($errorMessage);
         }
         $extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
 
@@ -486,11 +481,11 @@ class BuilderModuleController extends ActionController
         $validationResult = $this->extensionValidator->isValid($extension);
         if (!empty($validationResult['errors'])) {
             $errorMessage = '';
-            /** @var \Exception $exception */
+            /** @var Exception $exception */
             foreach ($validationResult['errors'] as $exception) {
                 $errorMessage .= '<br />' . $exception->getMessage();
             }
-            throw new \Exception($errorMessage);
+            throw new Exception($errorMessage);
         }
         if (!empty($validationResult['warnings'])) {
             $confirmationRequired = $this->handleValidationWarnings($validationResult['warnings']);
@@ -581,6 +576,7 @@ class BuilderModuleController extends ActionController
      * file).
      *
      * @return array
+     * @throws Exception
      */
     protected function rpcActionList(): array
     {
@@ -594,7 +590,7 @@ class BuilderModuleController extends ActionController
     /**
      * This is a hack to handle confirm requests in the GUI.
      *
-     * @param \Exception[] $warnings
+     * @param Exception[] $warnings
      * @return array confirm (Question to confirm), confirmFieldName (is set to true if confirmed)
      */
     protected function handleValidationWarnings(array $warnings): array

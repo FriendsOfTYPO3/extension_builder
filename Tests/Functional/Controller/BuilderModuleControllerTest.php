@@ -219,6 +219,27 @@ class BuilderModuleControllerTest extends BaseFunctionalTest
      * @test
      * @depends rpcActionSaveBackupsExtensionOnSecondSave
      */
+    public function rpcActionSaveFailsIfStoragePathIsInvalid(): void
+    {
+        $subject = $this->createBuilderModuleControllerMockForRpcActionSave(['storageDir' => '/invalid/path']);
+        $fileGenerator = $this->getAccessibleMock(FileGenerator::class, ['build']);
+        $fileGenerator->expects(self::never())->method('build');
+        $subject->injectFileGenerator($fileGenerator);
+
+        /** @var JsonResponse $response */
+        $subject->_call('initializeAction');
+        $response = $subject->_call('dispatchRpcAction');
+        $result = json_decode((string)$response->getBody(), true);
+
+        $this->assertArrayNotHasKey('success', $result);
+        $this->assertArrayHasKey('error', $result);
+        $this->assertStringContainsString('The storage path "/invalid/path/" cannot be accessed.', $result['error']);
+    }
+
+    /**
+     * @test
+     * @depends rpcActionSaveBackupsExtensionOnSecondSave
+     */
     public function rpcActionSaveFailsIfExtensionConfigurationThrowsError(): void
     {
         $requestDataParamsWorking = json_decode($this->getDefaultRequestDataForRpcActionSave()['params']['working'], true);
