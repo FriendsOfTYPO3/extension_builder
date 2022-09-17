@@ -44,8 +44,8 @@ In this mode, the Extension Builder retains the manual changes,
 such as new methods, changed method bodies, comments and annotations,
 even if you change the extension in the graphical editor.
 
-.. _Extbase: https://docs.typo3.org/m/typo3/book-extbasefluid/11.5/en-us/0-Introduction/Index.html
-.. _Fluid: https://docs.typo3.org/m/typo3/book-extbasefluid/11.5/en-us/8-Fluid/Index.html
+.. _Extbase: https://docs.typo3.org/m/typo3/reference-coreapi/11.5/en-us/ExtensionArchitecture/Extbase/Index.html
+.. _Fluid: https://docs.typo3.org/m/typo3/reference-coreapi/11.5/en-us/ApiOverview/Fluid/Introduction.html
 
 ----
 
