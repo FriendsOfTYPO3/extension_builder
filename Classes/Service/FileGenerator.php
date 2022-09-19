@@ -1151,10 +1151,9 @@ class FileGenerator
             if ($variableName === 'domainObject') {
                 $filenameToLookFor .= '_' . $variable->getDatabaseTableName();
             }
-            $existingFile = $filenameToLookFor . '.xlf';
 
-            if (@file_exists($existingFile)) {
-                $existingLabels = $this->localizationService->getLabelArrayFromFile($existingFile, 'default');
+            if (@file_exists($filenameToLookFor)) {
+                $existingLabels = $this->localizationService->getLabelArrayFromFile($filenameToLookFor, 'default');
                 if (is_array($existingLabels)) {
                     ArrayUtility::mergeRecursiveWithOverrule($languageLabels, $existingLabels);
                 }
