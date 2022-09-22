@@ -302,7 +302,7 @@ class BuilderModuleController extends ActionController
     {
         $advancedOptionsButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
             ->setIcon($this->iconFactory->getIcon('content-menu-pages', Icon::SIZE_SMALL))
-            ->setTitle('<span class="simpleMode">Show</span><span class="advancedMode">Hide</span> advanced options.')
+            ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:advancedOptions'))
             ->setId('toggleAdvancedOptions')
             ->setHref('#')
             ->setShowLabelText(true);
