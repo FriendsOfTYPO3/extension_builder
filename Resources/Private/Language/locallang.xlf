@@ -227,7 +227,7 @@
 				<source>More options</source>
 			</trans-unit>
 			<trans-unit id="advancedOptions" resname="advancedOptions">
-				<source>Advanced options</source>
+				<source>advanced options</source>
 			</trans-unit>
 			<trans-unit id="remove" resname="remove">
 				<source>Remove</source>
