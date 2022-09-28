@@ -557,6 +557,9 @@ div {
 		&.zeroToMany .advancedSettings .inputEx-Expanded .dependant.renderType {
 			display: block;
 		}
+		&.zeroToOne .advancedSettings .inputEx-Expanded .dependant.renderType {
+			display: block;
+		}
 	}
 }
 
