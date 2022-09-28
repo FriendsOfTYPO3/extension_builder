@@ -1146,11 +1146,8 @@ class FileGenerator
 
         $languageLabels = $this->getLanguageLabelsForVariable($variableName, $variable, $fileNameSuffix);
 
-        if ($this->fileShouldBeMerged($targetFile . '.xlf')) {
+        if ($this->fileShouldBeMerged($targetFile)) {
             $filenameToLookFor = $this->extensionDirectory . $targetFile;
-            if ($variableName === 'domainObject') {
-                $filenameToLookFor .= '_' . $variable->getDatabaseTableName();
-            }
 
             if (@file_exists($filenameToLookFor)) {
                 $existingLabels = $this->localizationService->getLabelArrayFromFile($filenameToLookFor, 'default');
