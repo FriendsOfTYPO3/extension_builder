@@ -14,11 +14,11 @@ $EM_CONF[$_EXTKEY] = [
     'category' => 'module',
     'author' => 'Extension Builder Team',
     'author_email' => '',
-    'state' => 'stable',
-    'version' => '11.0.9',
+    'state' => 'alpha',
+    'version' => '12.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '11.4.0-11.9.99'
+            'typo3' => '12.0.0-12.9.99'
         ],
         'conflicts' => [],
         'suggests' => []
