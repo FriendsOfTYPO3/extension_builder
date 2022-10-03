@@ -37,8 +37,6 @@ abstract class ViewHelperBaseTestcase extends UnitTestCase
      * array(
      *  'Some\ViewHelper\Class' => array('key1' => 'value1', 'key2' => 'value2')
      * )
-     *
-     * @var array
      */
     protected array $viewHelperVariableContainerData = [];
 

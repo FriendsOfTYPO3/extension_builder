@@ -28,7 +28,7 @@
 		"typo3/cms-core": "^12.0.0 || 12.1.x-dev"
 	},
 	"require-dev": {
-		"friendsofphp/php-cs-fixer": "^2.18",
+		"friendsofphp/php-cs-fixer": "^v3.11.0",
 		"roave/security-advisories": "dev-latest",
 		"sebastian/diff": "^4.0.4",
 		"typo3/cms-frontend": "^12.0.0 || 12.1.x-dev",
@@ -37,6 +37,7 @@
 		"typo3/testing-framework": "dev-main",
 		"ssch/typo3-rector": "^1.0"
 	},
+	"minimum-stability": "dev",
 	"autoload": {
 		"psr-4": {
 			"EBT\\ExtensionBuilder\\": "Classes/"

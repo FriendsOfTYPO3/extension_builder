@@ -34,9 +34,9 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicNameSpacedClass
 {
     protected $names;
 
-    const TEST = "test";
+    final const TEST = "test";
 
-    const TEST2 = 'test';
+    final const TEST2 = 'test';
 
     /**
      * @return array $names
@@ -62,7 +62,6 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicNameSpacedClass
     }
 
     /**
-     * @param array $names
      * @return void
      */
     public function setNames(array $names)

@@ -42,7 +42,6 @@ class RecordTypeViewHelper extends AbstractViewHelper
     /**
      * Helper function to find the parents class recordType
      *
-     * @return string
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
     public function render(): string
@@ -68,7 +67,7 @@ class RecordTypeViewHelper extends AbstractViewHelper
                 }
             }
         }
-        $parts = explode('\\', $domainObject->getParentClass());
+        $parts = explode('\\', (string) $domainObject->getParentClass());
         $this->templateVariableContainer->add('parentModelName', end($parts));
         $this->templateVariableContainer->add('parentRecordType', $parentRecordType);
         $content = $this->renderChildren();

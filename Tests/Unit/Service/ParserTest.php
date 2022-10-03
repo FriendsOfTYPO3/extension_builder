@@ -113,7 +113,7 @@ class ParserTest extends BaseUnitTest
         self::assertCount(6, $parameters);
         self::assertEquals('booleanParam', $parameters[3]->getName());
         self::assertEquals('boolean', $parameters[3]->getVarType());
-        self::assertEquals('\\EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter', $parameters[5]->getTypeHint());
+        self::assertEquals('\\' . \EBT\ExtensionBuilder\Parser\Utility\NodeConverter::class, $parameters[5]->getTypeHint());
     }
 
     /**

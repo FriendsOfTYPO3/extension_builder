@@ -35,8 +35,6 @@ abstract class AnyToManyRelation extends AbstractRelation
     /**
      * Returns the relation table name. It is build by having 'tx_myextension_' followed by the
      * first domain object name followed by the second domain object name followed by '_mm'.
-     *
-     * @return string
      */
     public function getRelationTableName(): string
     {
@@ -49,9 +47,8 @@ abstract class AnyToManyRelation extends AbstractRelation
         if ($this->useExtendedRelationTableName) {
             $relationTableName .= '_' . strtolower($this->getName());
         }
-        $relationTableName .= '_' . strtolower($this->getForeignModelName()) . '_mm';
 
-        return $relationTableName;
+        return $relationTableName . ('_' . strtolower($this->getForeignModelName()) . '_mm');
     }
 
     public function setUseExtendedRelationTableName(bool $useExtendedRelationTableName): void
@@ -62,8 +59,6 @@ abstract class AnyToManyRelation extends AbstractRelation
     /**
      * setter for relation table name
      * if a table name is configured in TCA the table name is ste to the configured name
-     *
-     * @param string $relationTableName
      */
     public function setRelationTableName(string $relationTableName): void
     {
@@ -72,16 +67,10 @@ abstract class AnyToManyRelation extends AbstractRelation
 
     /**
      * Is a MM table needed for this relation?
-     *
-     * @return bool
      */
     public function getUseMMTable(): bool
     {
-        if ($this->getInlineEditing()) {
-            return false;
-        }
-
-        return true;
+        return !$this->getInlineEditing();
     }
 
     public function getMaxItems(): int

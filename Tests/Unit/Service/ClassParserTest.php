@@ -114,7 +114,7 @@ class ClassParserTest extends BaseUnitTest
         $classObject = $this->parseClass($file, 'Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithAlias');
         self::assertEquals(
             [
-                'TYPO3\\CMS\\Core\\Utility\\GeneralUtility',
+                \TYPO3\CMS\Core\Utility\GeneralUtility::class,
                 'TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager as Config'
             ],
             $classObject->getAliasDeclarations()
@@ -137,7 +137,7 @@ class ClassParserTest extends BaseUnitTest
     {
         $this->parseClass(
             Environment::getPublicPath() . '/typo3/sysext/core/Classes/Utility/GeneralUtility.php',
-            '\\TYPO3\\CMS\\Core\\Utility\\GeneralUtility'
+            '\\' . \TYPO3\CMS\Core\Utility\GeneralUtility::class
         );
     }
 
@@ -148,7 +148,6 @@ class ClassParserTest extends BaseUnitTest
      * @param $file
      * @param $className
      *
-     * @return ClassObject
      * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
      * @throws ReflectionException
      */
@@ -169,11 +168,8 @@ class ClassParserTest extends BaseUnitTest
     /**
      * compares the number of methods found by parsing with those
      * retrieved from the reflection class
-     *
-     * @param ClassObject $classObject
-     * @param ClassSchema|ReflectionClass $classReflection
      */
-    private function parserFindsAllConstants(ClassObject $classObject, $classReflection): void
+    private function parserFindsAllConstants(ClassObject $classObject, \TYPO3\CMS\Extbase\Reflection\ClassSchema|\ReflectionClass $classReflection): void
     {
         $reflectionConstantCount = count($classReflection->getConstants());
         $classObjectConstantCount = count($classObject->getConstants());
@@ -187,11 +183,8 @@ class ClassParserTest extends BaseUnitTest
     /**
      * compares the number of methods found by parsing
      * with those retrieved from the reflection class
-     *
-     * @param ClassObject $classObject
-     * @param ClassSchema|ReflectionClass $classReflection
      */
-    private function parserFindsAllMethods(ClassObject $classObject, $classReflection): void
+    private function parserFindsAllMethods(ClassObject $classObject, \TYPO3\CMS\Extbase\Reflection\ClassSchema|\ReflectionClass $classReflection): void
     {
         $reflectionMethodCount = count($classReflection->getMethods());
         $classObjectMethodCount = count($classObject->getMethods());
@@ -205,11 +198,8 @@ class ClassParserTest extends BaseUnitTest
     /**
      * compares the number of properties found by parsing
      * with those retrieved from the reflection class
-     *
-     * @param ClassObject $classObject
-     * @param ClassSchema|ReflectionClass $classReflection
      */
-    private function parserFindsAllProperties(ClassObject $classObject, $classReflection): void
+    private function parserFindsAllProperties(ClassObject $classObject, \TYPO3\CMS\Extbase\Reflection\ClassSchema|\ReflectionClass $classReflection): void
     {
         $reflectionPropertyCount = count($classReflection->getProperties());
         $classObjectPropertyCount = count($classObject->getProperties());

@@ -108,46 +108,28 @@ class Action
 
     /**
      * Is a template required for this action?
-     *
-     * @return bool
      */
     public function getNeedsTemplate(): bool
     {
-        if (in_array($this->getName(), $this->actionNamesWithNoRendering)) {
-            $this->needsTemplate = false;
-        } else {
-            $this->needsTemplate = true;
-        }
+        $this->needsTemplate = !in_array($this->getName(), $this->actionNamesWithNoRendering);
         return $this->needsTemplate;
     }
 
     /**
      * Is a form required to render the actions template?
-     *
-     * @return bool
      */
     public function getNeedsForm(): bool
     {
-        if (in_array($this->getName(), $this->actionNamesWithForm)) {
-            $this->needsForm = true;
-        } else {
-            $this->needsForm = false;
-        }
+        $this->needsForm = in_array($this->getName(), $this->actionNamesWithForm);
         return $this->needsForm;
     }
 
     /**
      * Is a property partial needed to render the actions template?
-     *
-     * @return bool
      */
     public function getNeedsPropertyPartial(): bool
     {
-        if ($this->getName() === 'show') {
-            $this->needsPropertyPartial = true;
-        } else {
-            $this->needsPropertyPartial = false;
-        }
+        $this->needsPropertyPartial = $this->getName() === 'show';
         return $this->needsPropertyPartial;
     }
 

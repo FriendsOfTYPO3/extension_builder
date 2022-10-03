@@ -33,7 +33,7 @@ class Category extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Category>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
-    protected $categories = null;
+    protected $categories;
 
     /**
      * __construct
@@ -71,7 +71,6 @@ class Category extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the name
      *
-     * @param string $name
      * @return void
      */
     public function setName(string $name)
@@ -82,7 +81,6 @@ class Category extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Adds a Category
      *
-     * @param \FIXTURE\TestExtension\Domain\Model\Category $category
      * @return void
      */
     public function addCategory(\FIXTURE\TestExtension\Domain\Model\Category $category)

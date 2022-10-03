@@ -42,7 +42,7 @@ class ManyToManyRelation extends AnyToManyRelation
      */
     public function getTypeHint(): string
     {
-        return '\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage';
+        return '\\' . \TYPO3\CMS\Extbase\Persistence\ObjectStorage::class;
     }
 
     public function isOfTypeObjectStorage(): bool
@@ -52,8 +52,6 @@ class ManyToManyRelation extends AnyToManyRelation
 
     /**
      * Is a MM table needed for this relation?
-     *
-     * @return bool
      */
     public function getUseMMTable(): bool
     {

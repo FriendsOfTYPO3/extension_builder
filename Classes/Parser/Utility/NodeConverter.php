@@ -49,11 +49,11 @@ class NodeConverter
 
     public static function getTypeHintFromVarType($varType)
     {
-        if (in_array(strtolower($varType), ['integer', 'int', 'double', 'float', 'boolean', 'bool', 'string'])) {
+        if (in_array(strtolower((string) $varType), ['integer', 'int', 'double', 'float', 'boolean', 'bool', 'string'])) {
             return '';
         }
 
-        if (preg_match_all('/^[^a-zA-Z]|[^\w_]/', $varType, $matches) === 0) {
+        if (preg_match_all('/^[^a-zA-Z]|[^\w_]/', (string) $varType, $matches) === 0) {
             // has to be an allowed classname or 'array'
             return $varType;
         }
@@ -67,12 +67,12 @@ class NodeConverter
      */
     public static function modifierToNames($modifiers): array
     {
-        $modifierString = ($modifiers & Class_::MODIFIER_PUBLIC ? 'public ' : '') .
-            ($modifiers & Class_::MODIFIER_PROTECTED ? 'protected ' : '') .
-            ($modifiers & Class_::MODIFIER_PRIVATE ? 'private ' : '') .
-            ($modifiers & Class_::MODIFIER_STATIC ? 'static ' : '') .
-            ($modifiers & Class_::MODIFIER_ABSTRACT ? 'abstract ' : '') .
-            ($modifiers & Class_::MODIFIER_FINAL ? 'final ' : '');
+        $modifierString = (($modifiers & Class_::MODIFIER_PUBLIC) !== 0 ? 'public ' : '') .
+            (($modifiers & Class_::MODIFIER_PROTECTED) !== 0 ? 'protected ' : '') .
+            (($modifiers & Class_::MODIFIER_PRIVATE) !== 0 ? 'private ' : '') .
+            (($modifiers & Class_::MODIFIER_STATIC) !== 0 ? 'static ' : '') .
+            (($modifiers & Class_::MODIFIER_ABSTRACT) !== 0 ? 'abstract ' : '') .
+            (($modifiers & Class_::MODIFIER_FINAL) !== 0 ? 'final ' : '');
         return explode(' ', trim($modifierString));
     }
 
@@ -81,10 +81,9 @@ class NodeConverter
      * //TODO: support more node types?
      *
      * @static
-     * @param NodeAbstract|string $node
      * @return array|string|null
      */
-    public static function getValueFromNode($node)
+    public static function getValueFromNode(\PhpParser\NodeAbstract|string $node)
     {
         if (is_string($node) || is_numeric($node)) {
             return $node;
@@ -116,7 +115,7 @@ class NodeConverter
             foreach ($arrayItems as $arrayItemNode) {
                 $itemKey = $arrayItemNode->key;
                 $itemValue = $arrayItemNode->value;
-                if (null === $itemKey) {
+                if (!$itemKey instanceof \PhpParser\Node\Expr) {
                     $value[] = self::normalizeValue($itemValue);
                 } else {
                     $value[self::getValueFromNode($itemKey)] = self::normalizeValue($itemValue);
@@ -152,7 +151,7 @@ class NodeConverter
      *
      * @return Expr The normalized value
      */
-    public static function normalizeValue($value): Node
+    public static function normalizeValue(mixed $value): Node
     {
         if ($value instanceof Node) {
             return $value;
@@ -208,8 +207,6 @@ class NodeConverter
      * \PhpParser\Node\Stmt\Class_Const
      *
      * @static
-     * @param Node $node
-     * @return array
      */
     public static function convertClassConstantNodeToArray(Node $node): array
     {
@@ -230,8 +227,6 @@ class NodeConverter
      * with keys name and alias
      *
      * @static
-     * @param Use_ $node
-     * @return array
      */
     public static function convertUseAliasStatementNodeToArray(Use_ $node): array
     {

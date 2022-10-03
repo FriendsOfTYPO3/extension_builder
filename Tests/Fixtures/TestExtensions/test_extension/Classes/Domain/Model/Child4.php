@@ -33,7 +33,7 @@ class Child4 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
-    protected $fileProperty = null;
+    protected $fileProperty;
 
     /**
      * Returns the name
@@ -48,7 +48,6 @@ class Child4 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the name
      *
-     * @param string $name
      * @return void
      */
     public function setName(string $name)
@@ -69,7 +68,6 @@ class Child4 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the fileProperty
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $fileProperty
      * @return void
      */
     public function setFileProperty(\TYPO3\CMS\Extbase\Domain\Model\FileReference $fileProperty)

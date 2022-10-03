@@ -48,8 +48,6 @@ class ExtensionRepository implements SingletonInterface
     /**
      * loops through all extensions in typo3conf/ext/
      * and searches for a JSON file with extension builder configuration
-     *
-     * @return array
      */
     public function findAll(): array
     {
@@ -74,7 +72,7 @@ class ExtensionRepository implements SingletonInterface
                 $result[$singleExtensionDirectory] = [
                     'name' => $singleExtensionDirectory,
                     'storagePath' => $storagePath,
-                    'working' => json_encode($extensionBuilderConfiguration)
+                    'working' => json_encode($extensionBuilderConfiguration, JSON_THROW_ON_ERROR)
                 ];
             }
         }
@@ -84,7 +82,6 @@ class ExtensionRepository implements SingletonInterface
     }
 
     /**
-     * @param Extension $extension
      *
      * @throws Exception
      * @throws \TYPO3\CMS\Core\Package\Exception

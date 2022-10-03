@@ -29,20 +29,4 @@ namespace EBT\Tests\Fixtures;
 
 class ClassMethodWithManyParameter
 {
-    /**
-     * This is the description
-     *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TOOOL\Projects\Domain\Model\Calculation> $tests
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
-     */
-    private static function testMethod(\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject, \TYPO3\CMS\Extbase\Persistence\ObjectStorage $tests)
-    {
-        $number = 7;
-        if ($number > $tests->count()) {
-            return $domainObject;
-        }
-
-        $domainObject->setName('Foo');
-    }
 }

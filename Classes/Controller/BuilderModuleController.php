@@ -406,7 +406,7 @@ class BuilderModuleController extends ActionController
             'default'
         );
         if (!empty($localizationArray['default']) && is_array($localizationArray['default'])) {
-            foreach ($localizationArray['default'] as $key => $value) {
+            foreach (array_keys($localizationArray['default']) as $key) {
                 $this->pageRenderer->addInlineSetting(
                     'extensionBuilder._LOCAL_LANG',
                     str_replace('.', '_', $key),
@@ -429,23 +429,16 @@ class BuilderModuleController extends ActionController
             if (empty($subAction)) {
                 throw new \Exception('No Sub Action!');
             }
-            switch ($subAction) {
-                case 'saveWiring':
-                    $response = $this->rpcActionSave();
-                    break;
-                case 'listWirings':
-                    $response = $this->rpcActionList();
-                    break;
-                case 'updateDb':
-                    $response = $this->rpcActionPerformDbUpdate();
-                    break;
-                default:
-                    $response = ['error' => 'Sub Action not found.'];
-            }
+            $response = match ($subAction) {
+                'saveWiring' => $this->rpcActionSave(),
+                'listWirings' => $this->rpcActionList(),
+                'updateDb' => $this->rpcActionPerformDbUpdate(),
+                default => ['error' => 'Sub Action not found.'],
+            };
         } catch (\Exception $e) {
             $response = ['error' => $e->getMessage()];
         }
-        return $this->jsonResponse(json_encode($response));
+        return $this->jsonResponse(json_encode($response, JSON_THROW_ON_ERROR));
     }
 
     /**
@@ -456,36 +449,29 @@ class BuilderModuleController extends ActionController
      */
     protected function rpcActionSave(): array
     {
-        try {
-            $extensionBuildConfiguration = $this->extensionBuilderConfigurationManager->getConfigurationFromModeler();
-
-            $storagePaths = $this->extensionService->resolveStoragePaths();
-            $storagePath = reset($storagePaths);
-            if ($storagePath === false) {
-                throw new \Exception('The storage path could not be detected.');
-            }
-            $extensionBuildConfiguration['storagePath'] = $storagePath;
-
-            $validationConfigurationResult = $this->extensionValidator->validateConfigurationFormat($extensionBuildConfiguration);
-            if (!empty($validationConfigurationResult['warnings'])) {
-                $confirmationRequired = $this->handleValidationWarnings($validationConfigurationResult['warnings']);
-                if (!empty($confirmationRequired)) {
-                    return $confirmationRequired;
-                }
-            }
-            if (!empty($validationConfigurationResult['errors'])) {
-                $errorMessage = '';
-                foreach ($validationConfigurationResult['errors'] as $exception) {
-                    /** @var \Exception $exception */
-                    $errorMessage .= '<br />' . $exception->getMessage();
-                }
-                throw new \Exception($errorMessage);
-            }
-            $extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
-        } catch (\Exception $e) {
-            throw $e;
+        $extensionBuildConfiguration = $this->extensionBuilderConfigurationManager->getConfigurationFromModeler();
+        $storagePaths = $this->extensionService->resolveStoragePaths();
+        $storagePath = reset($storagePaths);
+        if ($storagePath === false) {
+            throw new \Exception('The storage path could not be detected.');
         }
-
+        $extensionBuildConfiguration['storagePath'] = $storagePath;
+        $validationConfigurationResult = $this->extensionValidator->validateConfigurationFormat($extensionBuildConfiguration);
+        if (!empty($validationConfigurationResult['warnings'])) {
+            $confirmationRequired = $this->handleValidationWarnings($validationConfigurationResult['warnings']);
+            if (!empty($confirmationRequired)) {
+                return $confirmationRequired;
+            }
+        }
+        if (!empty($validationConfigurationResult['errors'])) {
+            $errorMessage = '';
+            foreach ($validationConfigurationResult['errors'] as $exception) {
+                /** @var \Exception $exception */
+                $errorMessage .= '<br />' . $exception->getMessage();
+            }
+            throw new \Exception($errorMessage);
+        }
+        $extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
         // Validate the extension
         $validationResult = $this->extensionValidator->isValid($extension);
         if (!empty($validationResult['errors'])) {
@@ -521,11 +507,7 @@ class BuilderModuleController extends ActionController
 
         if ($extensionExistedBefore) {
             if ($this->extensionBuilderSettings['extConf']['backupExtension'] === '1') {
-                try {
-                    RoundTrip::backupExtension($extension, $this->extensionBuilderSettings['extConf']['backupDir']);
-                } catch (\Exception $e) {
-                    throw $e;
-                }
+                RoundTrip::backupExtension($extension, $this->extensionBuilderSettings['extConf']['backupDir']);
             }
             $extensionSettings = $this->extensionBuilderConfigurationManager->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
             if ($this->extensionBuilderSettings['extConf']['enableRoundtrip'] === '1') {
@@ -548,42 +530,31 @@ class BuilderModuleController extends ActionController
                         )
                     ];
                 }
-                try {
-                    RoundTrip::prepareExtensionForRoundtrip($extension);
-                } catch (\Exception $e) {
-                    throw $e;
-                }
-            } else {
-                if (!is_array($extensionSettings['ignoreWarnings'])
-                    || !in_array(ExtensionValidator::EXTENSION_DIR_EXISTS, $extensionSettings['ignoreWarnings'])
-                ) {
-                    $confirmationRequired = $this->handleValidationWarnings([
-                        new ExtensionException(
-                            "This action will overwrite previously saved content!\n(Enable the roundtrip feature to avoid this warning).",
-                            ExtensionValidator::EXTENSION_DIR_EXISTS
-                        )
-                    ]);
-                    if (!empty($confirmationRequired)) {
-                        return $confirmationRequired;
-                    }
+                RoundTrip::prepareExtensionForRoundtrip($extension);
+            } elseif (!is_array($extensionSettings['ignoreWarnings'])
+                || !in_array(ExtensionValidator::EXTENSION_DIR_EXISTS, $extensionSettings['ignoreWarnings'])) {
+                $confirmationRequired = $this->handleValidationWarnings([
+                    new ExtensionException(
+                        "This action will overwrite previously saved content!\n(Enable the roundtrip feature to avoid this warning).",
+                        ExtensionValidator::EXTENSION_DIR_EXISTS
+                    )
+                ]);
+                if (!empty($confirmationRequired)) {
+                    return $confirmationRequired;
                 }
             }
         }
-        try {
-            $this->fileGenerator->build($extension);
-            $this->extensionInstallationStatus->setExtension($extension);
-            $this->extensionInstallationStatus->setUsesComposerPath($usesComposerPath);
-            $message = sprintf(
-                '<p>The Extension was successfully saved in the directory: "%s"</p>%s',
-                $extensionDirectory,
-                $this->extensionInstallationStatus->getStatusMessage()
-            );
-            $result = ['success' => $message, 'usesComposerPath' => $usesComposerPath];
-            if ($this->extensionInstallationStatus->isDbUpdateNeeded()) {
-                $result['confirmUpdate'] = true;
-            }
-        } catch (\Exception $e) {
-            throw $e;
+        $this->fileGenerator->build($extension);
+        $this->extensionInstallationStatus->setExtension($extension);
+        $this->extensionInstallationStatus->setUsesComposerPath($usesComposerPath);
+        $message = sprintf(
+            '<p>The Extension was successfully saved in the directory: "%s"</p>%s',
+            $extensionDirectory,
+            $this->extensionInstallationStatus->getStatusMessage()
+        );
+        $result = ['success' => $message, 'usesComposerPath' => $usesComposerPath];
+        if ($this->extensionInstallationStatus->isDbUpdateNeeded()) {
+            $result['confirmUpdate'] = true;
         }
 
         $this->extensionRepository->saveExtensionConfiguration($extension);
@@ -594,8 +565,6 @@ class BuilderModuleController extends ActionController
     /**
      * Shows a list with available extensions (if they have an ExtensionBuilder.json
      * file).
-     *
-     * @return array
      */
     protected function rpcActionList(): array
     {

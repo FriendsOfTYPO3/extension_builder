@@ -20,19 +20,17 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
 class Comment
 {
     /**
-     * the raw comment content
-     */
-    protected string $text = '';
-    protected int $line = -1;
-
-    /**
      * @param string $text Comment text (including comment delimiters like /*)
      * @param int $line Line number the comment started on
      */
-    public function __construct($text, $line = -1)
+    public function __construct(
+        /**
+         * the raw comment content
+         */
+        protected $text,
+        protected $line = -1
+    )
     {
-        $this->text = $text;
-        $this->line = $line;
     }
 
     public function setText(string $text): void

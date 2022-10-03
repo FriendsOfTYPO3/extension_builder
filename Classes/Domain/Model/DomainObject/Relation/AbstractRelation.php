@@ -156,7 +156,7 @@ abstract class AbstractRelation extends AbstractProperty
     public function getSqlDefinition(): string
     {
         // store 1:n relationships as comma separated list in case `select*` renderType is used
-        if ($this instanceof ZeroToManyRelation && strpos($this->renderType, 'select') === 0) {
+        if ($this instanceof ZeroToManyRelation && str_starts_with($this->renderType, 'select')) {
             return $this->getFieldName() . ' text NOT NULL,';
         }
         return $this->getFieldName() . " int(11) unsigned NOT NULL DEFAULT '0',";
@@ -166,8 +166,6 @@ abstract class AbstractRelation extends AbstractProperty
      * is displayable in the auto generated properties template
      *
      * this is only true for files and images
-     *
-     * @return bool
      */
     public function getIsDisplayable(): bool
     {
@@ -176,7 +174,7 @@ abstract class AbstractRelation extends AbstractProperty
 
     public function isFileReference(): bool
     {
-        return $this->foreignClassName === '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference';
+        return $this->foreignClassName === '\\' . \TYPO3\CMS\Extbase\Domain\Model\FileReference::class;
     }
 
     public function getAllowedFileTypes(): string

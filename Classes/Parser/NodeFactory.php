@@ -61,8 +61,8 @@ class NodeFactory implements SingletonInterface
             $classNodeBuilder->extend(self::buildNodeFromName($classObject->getParentClassName()));
         }
         $interfaceNames = $classObject->getInterfaceNames();
-        if (count($interfaceNames) > 0) {
-            call_user_func_array([$classNodeBuilder, 'implement'], $interfaceNames);
+        if ($interfaceNames !== []) {
+            call_user_func_array($classNodeBuilder->implement(...), $interfaceNames);
         }
 
         if (!$skipStatements) {
@@ -71,9 +71,7 @@ class NodeFactory implements SingletonInterface
             $properties = [];
             $methods = [];
 
-            foreach ($classObject->getUseTraitStatement() as $statement) {
-                $stmts[] = $statement;
-            }
+            $stmts = $classObject->getUseTraitStatement();
 
             foreach ($classObject->getProperties() as $property) {
                 $properties[$property->getName()] = $this->buildPropertyNode($property);
@@ -84,10 +82,8 @@ class NodeFactory implements SingletonInterface
             }
 
             $constants = $classObject->getConstants();
-            if (is_array($constants)) {
-                foreach ($constants as $name => $value) {
-                    $stmts[] = self::buildClassConstantNode($name, $value);
-                }
+            foreach ($constants as $name => $value) {
+                $stmts[] = self::buildClassConstantNode($name, $value);
             }
             foreach ($properties as $property) {
                 $stmts[] = $property;
@@ -126,11 +122,7 @@ class NodeFactory implements SingletonInterface
 
     protected function getContainerStatements(Container $container): array
     {
-        $stmts = [];
-        foreach ($container->getPreClassStatements() as $preInclude) {
-            $stmts[] = $preInclude;
-        }
-
+        $stmts = $container->getPreClassStatements();
         foreach ($container->getClasses() as $classObject) {
             $stmts[] = $this->buildClassNode($classObject);
         }
@@ -145,20 +137,14 @@ class NodeFactory implements SingletonInterface
         return $stmts;
     }
 
-    /**
-     * @param Method $methodObject
-     * @return ClassMethod
-     */
     public function buildMethodNode(Method $methodObject): ClassMethod
     {
         $factory = new BuilderFactory();
         $methodNodeBuilder = $factory->method($methodObject->getName());
         $parameters = $methodObject->getParameters();
-        if (count($parameters) > 0) {
-            foreach ($parameters as $parameter) {
-                $parameterNode = $this->buildParameterNode($parameter);
-                $methodNodeBuilder->addParam($parameterNode);
-            }
+        foreach ($parameters as $parameter) {
+            $parameterNode = $this->buildParameterNode($parameter);
+            $methodNodeBuilder->addParam($parameterNode);
         }
         $returnType = $methodObject->getReturnType();
         if ($returnType !== null) {
@@ -199,10 +185,8 @@ class NodeFactory implements SingletonInterface
     {
         $commentAttributes = [];
         $comments = $object->getComments();
-        if (count($comments) > 0) {
-            foreach ($comments as $comment) {
-                $commentAttributes[] = new Comment($comment);
-            }
+        foreach ($comments as $comment) {
+            $commentAttributes[] = new Comment($comment);
         }
         if ($object->hasDescription() || $object->hasTags()) {
             $commentAttributes[] = new Doc($object->getDocComment());
@@ -224,12 +208,10 @@ class NodeFactory implements SingletonInterface
         $propertyNode->flags = $property->getModifiers();
 
         foreach ($propertyNode->props as $subNode) {
-            if ($subNode instanceof PropertyProperty) {
-                if (null !== $property->getDefaultValueNode()) {
-                    $subNode->default = $property->getDefaultValueNode();
-                } else {
-                    $subNode->default = self::buildNodeFromValue($property->getDefault());
-                }
+            if (null !== $property->getDefaultValueNode()) {
+                $subNode->default = $property->getDefaultValueNode();
+            } else {
+                $subNode->default = self::buildNodeFromValue($property->getDefault());
             }
         }
 
@@ -260,7 +242,7 @@ class NodeFactory implements SingletonInterface
      *
      * @return Name The normalized name
      */
-    public static function buildNodeFromName($name): Name
+    public static function buildNodeFromName(\PhpParser\Node\Name|string $name): Name
     {
         if ($name instanceof Name) {
             return $name;
@@ -277,7 +259,7 @@ class NodeFactory implements SingletonInterface
      *
      * @return \PhpParser\Node\Expr The normalized value
      */
-    protected static function buildNodeFromValue($value): Node
+    protected static function buildNodeFromValue(mixed $value): Node
     {
         if ($value instanceof Node) {
             return $value;

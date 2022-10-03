@@ -37,7 +37,7 @@ class ConfigurationManagerTest extends BaseFunctionalTest
     public function getParentClassForValueObject(): void
     {
         $parentClassForValueObject = $this->configurationManager->getParentClassForValueObject($this->extension);
-        self::assertSame('\TYPO3\CMS\Extbase\DomainObject\AbstractValueObject', $parentClassForValueObject);
+        self::assertSame('\\' . \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject::class, $parentClassForValueObject);
     }
 
     /**
@@ -46,6 +46,6 @@ class ConfigurationManagerTest extends BaseFunctionalTest
     public function getParentClassForEntityObject(): void
     {
         $parentClassForValueObject = $this->configurationManager->getParentClassForEntityObject($this->extension);
-        self::assertSame('\TYPO3\CMS\Extbase\DomainObject\AbstractEntity', $parentClassForValueObject);
+        self::assertSame('\\' . \TYPO3\CMS\Extbase\DomainObject\AbstractEntity::class, $parentClassForValueObject);
     }
 }

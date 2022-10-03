@@ -32,5 +32,5 @@ namespace Parser\Test\Model;
  */
 class SimpleNamepaceTest extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
-    protected $foo = null;
+    protected $foo;
 }

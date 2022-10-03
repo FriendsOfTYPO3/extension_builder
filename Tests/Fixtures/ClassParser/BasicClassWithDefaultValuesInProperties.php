@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClassWithDefaultValuesInProperties
 {
-    const FOO = -1;
+    final const FOO = -1;
 
     /**
      * @var array
@@ -13,7 +13,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClassWithDefaultValues
     /**
      * @var \DateTime
      */
-    protected $date = null;
+    protected $date;
 
     /**
      * @var int

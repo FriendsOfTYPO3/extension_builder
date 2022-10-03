@@ -57,7 +57,7 @@ class Inflector
     {
         $string = strtolower(preg_replace('/(?<=\w)([A-Z])/', '_\\1', $string));
         $delimiter = '\\';
-        if (strpos($string, $delimiter) === false) {
+        if (!str_contains($string, $delimiter)) {
             $delimiter = '_';
         }
         $string = str_replace($delimiter, ' ', $string);

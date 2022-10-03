@@ -28,11 +28,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class Extension
 {
-    const STATE_ALPHA = 0;
-    const STATE_BETA = 1;
-    const STATE_STABLE = 2;
-    const STATE_EXPERIMENTAL = 3;
-    const STATE_TEST = 4;
+    final const STATE_ALPHA = 0;
+    final const STATE_BETA = 1;
+    final const STATE_STABLE = 2;
+    final const STATE_EXPERIMENTAL = 3;
+    final const STATE_TEST = 4;
 
     /**
      * the extension key
@@ -97,9 +97,6 @@ class Extension
      * was the extension renamed?
      */
     private bool $renamed = false;
-    /**
-     * @var array
-     */
     private array $dependencies = [];
     /**
      * the lowest required TYPO3 version
@@ -107,7 +104,7 @@ class Extension
     private float $targetVersion = 10.0;
     protected string $previousExtensionDirectory = '';
     protected string $previousExtensionKey = '';
-    protected ?string $storagePath;
+    protected ?string $storagePath = null;
 
     public function getExtensionKey(): string
     {
@@ -231,14 +228,12 @@ class Extension
     /**
      * An array of domain objects for which a controller should be built.
      * Retruns ttrue if there are any actions defined for these domain objects
-     *
-     * @return array
      */
     public function getDomainObjectsForWhichAControllerShouldBeBuilt(): array
     {
         $domainObjects = [];
         foreach ($this->domainObjects as $domainObject) {
-            if (count($domainObject->getActions()) > 0) {
+            if ($domainObject->getActions() !== []) {
                 $domainObjects[] = $domainObject;
             }
         }
@@ -247,7 +242,6 @@ class Extension
 
     /**
      * get all domain objects that are mapped to existing tables
-     * @return array|null
      */
     public function getDomainObjectsThatNeedMappingStatements(): ?array
     {
@@ -281,7 +275,6 @@ class Extension
 
     /**
      * get all domainobjects that are mapped to existing tables
-     * @return array|null
      */
     public function getClassHierarchy(): ?array
     {
@@ -289,7 +282,7 @@ class Extension
         foreach ($this->domainObjects as $domainObject) {
             if ($domainObject->isSubclass()) {
                 $parentClass = $domainObject->getParentClass();
-                if (strpos($parentClass, '\\') === 0) {
+                if (str_starts_with($parentClass, '\\')) {
                     $parentClass = substr($parentClass, 1);
                 }
                 if (!is_array($classHierarchy[$parentClass])) {
@@ -333,7 +326,6 @@ class Extension
     /**
      * Add a domain object to the extension. Creates the reverse link as well.
      *
-     * @param DomainObject $domainObject
      *
      * @throws ExtensionException
      */
@@ -341,7 +333,7 @@ class Extension
     {
         $domainObject->setExtension($this);
         foreach (array_keys($this->domainObjects) as $existingDomainObjectName) {
-            if (strtolower($domainObject->getName()) == strtolower($existingDomainObjectName)) {
+            if (strtolower($domainObject->getName()) === strtolower($existingDomainObjectName)) {
                 throw new ExtensionException(
                     'Duplicate domain object name "' . $domainObject->getName() . '".',
                     ExtensionValidator::ERROR_DOMAINOBJECT_DUPLICATE
@@ -395,8 +387,6 @@ class Extension
 
     /**
      * Adds a Person to the end of the current Set of Persons.
-     *
-     * @param Person $person
      */
     public function addPerson(Person $person): void
     {
@@ -415,7 +405,7 @@ class Extension
 
     public function hasPlugins(): bool
     {
-        return count($this->plugins) > 0;
+        return $this->plugins !== [];
     }
 
     public function addPlugin(Plugin $plugin): void
@@ -440,24 +430,19 @@ class Extension
 
     public function hasBackendModules(): bool
     {
-        return count($this->backendModules) > 0;
+        return $this->backendModules !== [];
     }
 
     public function getReadableState(): string
     {
-        switch ($this->getState()) {
-            case self::STATE_ALPHA:
-                return 'alpha';
-            case self::STATE_BETA:
-                return 'beta';
-            case self::STATE_STABLE:
-                return 'stable';
-            case self::STATE_EXPERIMENTAL:
-                return 'experimental';
-            case self::STATE_TEST:
-                return 'test';
-        }
-        return '';
+        return match ($this->getState()) {
+            self::STATE_ALPHA => 'alpha',
+            self::STATE_BETA => 'beta',
+            self::STATE_STABLE => 'stable',
+            self::STATE_EXPERIMENTAL => 'experimental',
+            self::STATE_TEST => 'test',
+            default => '',
+        };
     }
 
     public function getCssClassName(): string
@@ -467,12 +452,7 @@ class Extension
 
     public function isModified(string $filePath): bool
     {
-        if (isset($this->md5Hashes[$filePath]) && is_file($filePath)) {
-            if (md5_file($filePath) != $this->md5Hashes[$filePath]) {
-                return true;
-            }
-        }
-        return false;
+        return isset($this->md5Hashes[$filePath]) && is_file($filePath) && md5_file($filePath) != $this->md5Hashes[$filePath];
     }
 
     public function setMD5Hashes(array $md5Hashes): void
@@ -493,8 +473,6 @@ class Extension
     /**
      * Get the previous extension directory
      * if the extension was renamed it is different from $this->extensionDir
-     *
-     * @return string
      */
     public function getPreviousExtensionDirectory(): string
     {
@@ -524,7 +502,7 @@ class Extension
     public function isRenamed(): bool
     {
         $originalExtensionKey = $this->getOriginalExtensionKey();
-        if (!empty($originalExtensionKey) && $originalExtensionKey != $this->getExtensionKey()) {
+        if (!empty($originalExtensionKey) && $originalExtensionKey !== $this->getExtensionKey()) {
             $this->renamed = true;
         }
         return $this->renamed;
@@ -533,7 +511,7 @@ class Extension
     public function vendorNameChanged(): bool
     {
         $originalVendorName = $this->getOriginalVendorName();
-        if (!empty($originalVendorName) && $originalVendorName != $this->getVendorName()) {
+        if (!empty($originalVendorName) && $originalVendorName !== $this->getVendorName()) {
             $this->renamed = true;
         }
         return $this->renamed;

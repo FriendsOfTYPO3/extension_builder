@@ -5,8 +5,8 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClass
 {
     protected $names;
 
-    const TEST = 'test';
-    const TEST2 = 'test';
+    final const TEST = 'test';
+    final const TEST2 = 'test';
 
     /**
      * @return array $names
@@ -35,7 +35,6 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_BasicClass
     }
 
     /**
-     * @param array $names
      * @return void
      */
     public function setNames(array $names)

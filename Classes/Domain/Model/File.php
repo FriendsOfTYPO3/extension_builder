@@ -59,7 +59,7 @@ class File extends Container
      */
     public function getClasses(): array
     {
-        if (count($this->namespaces) > 0) {
+        if ($this->namespaces !== []) {
             return reset($this->namespaces)->getClasses();
         }
 
@@ -94,16 +94,15 @@ class File extends Container
     /**
      * get the first namespace of this file
      * (only for convenience, most files only use one namespace)
-     * @return NamespaceObject|false
      */
-    public function getNamespace()
+    public function getNamespace(): \EBT\ExtensionBuilder\Domain\Model\NamespaceObject|false
     {
         return current($this->namespaces);
     }
 
     public function hasNamespaces(): bool
     {
-        return count($this->namespaces) > 0;
+        return $this->namespaces !== [];
     }
 
     public function setFilePathAndName(string $filePathAndName): void

@@ -63,10 +63,7 @@ class Property extends AbstractObject
         return $this->default;
     }
 
-    /**
-     * @param mixed $default
-     */
-    public function setDefault($default): void
+    public function setDefault(mixed $default): void
     {
         $this->default = $default;
     }
@@ -87,10 +84,7 @@ class Property extends AbstractObject
         return $this->value;
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function setValue($value): void
+    public function setValue(mixed $value): void
     {
         $this->value = $value;
     }
@@ -98,23 +92,19 @@ class Property extends AbstractObject
     /**
      * This is a helper function to be called in fluid if conditions it returns true
      * even if the default value is 0 or an empty string or "false".
-     *
-     * @return bool
      */
     public function getHasDefaultValue(): bool
     {
-        return isset($this->default) && $this->default !== null;
+        return $this->default !== null && $this->default !== null;
     }
 
     /**
      * This is a helper function to be called in fluid if conditions it returns true
      * even if the value is 0 or an empty string or "false".
-     *
-     * @return bool
      */
     public function getHasValue(): bool
     {
-        return isset($this->value) && $this->value !== null;
+        return $this->value !== null && $this->value !== null;
     }
 
     public function setDefaultValueNode(NodeAbstract $defaultValueNode): void

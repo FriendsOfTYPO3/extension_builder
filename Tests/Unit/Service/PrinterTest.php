@@ -94,7 +94,7 @@ class PrinterTest extends BaseUnitTest
     {
         $fileName = 'ClassMethodWithMissingParameterTag.php';
         $classFileObject = $this->parseAndWrite($fileName);
-        $reflectedClass = $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
+        $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
         // No way to detect the typeHint with Reflection...
     }
 
@@ -182,7 +182,7 @@ class PrinterTest extends BaseUnitTest
     public function printSimpleNamespacedClassExtendingOtherClass(): void
     {
         $fileName = 'SimpleNamespaceExtendingOtherClass.php';
-        $classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
+        $this->parseAndWrite($fileName, 'Namespaces/');
         //$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
         $this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
     }
@@ -206,8 +206,8 @@ class PrinterTest extends BaseUnitTest
         $fileName = 'MultipleNamespaces.php';
         $classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
-        self::assertTrue(class_exists('Parser\Test\Model\MultipleNamespaces'));
-        self::assertTrue(class_exists('Parser\Test\Model2\MultipleNamespaces'));
+        self::assertTrue(class_exists(\Parser\Test\Model\MultipleNamespaces::class));
+        self::assertTrue(class_exists(\Parser\Test\Model2\MultipleNamespaces::class));
         $this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
     }
 
@@ -219,8 +219,8 @@ class PrinterTest extends BaseUnitTest
         $fileName = 'MultipleBracedNamespaces.php';
         $classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
-        self::assertTrue(class_exists('Parser\Test\Model\MultipleBracedNamespaces'));
-        self::assertTrue(class_exists('Parser\Test\Model2\MultipleBracedNamespaces'));
+        self::assertTrue(class_exists(\Parser\Test\Model\MultipleBracedNamespaces::class));
+        self::assertTrue(class_exists(\Parser\Test\Model2\MultipleBracedNamespaces::class));
     }
 
     /**
@@ -267,7 +267,7 @@ class PrinterTest extends BaseUnitTest
             ]
         );
         self::assertSame(
-            '\EBT\ExtensionBuilder\Domain\Model\DomainObject',
+            '\\' . \EBT\ExtensionBuilder\Domain\Model\DomainObject::class,
             $testMethod->getParameterByPosition(0)->getTypeHint()
         );
         $this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
@@ -309,10 +309,7 @@ class PrinterTest extends BaseUnitTest
      * includes the generated file and compares the reflection class
      * with the class object
      *
-     * @param File $classFileObject
-     * @param string $pathToGeneratedFile
      *
-     * @return ReflectionClass
      * @throws ReflectionException
      */
     protected function compareClasses(File $classFileObject, string $pathToGeneratedFile): ReflectionClass

@@ -32,28 +32,28 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var \DateTime
      */
-    protected $dateProperty1 = null;
+    protected $dateProperty1;
 
     /**
      * DateTime which is stored as Native DateTime
      *
      * @var \DateTime
      */
-    protected $dateProperty2 = null;
+    protected $dateProperty2;
 
     /**
      * A date which is stored as Timestamp
      *
      * @var \DateTime
      */
-    protected $dateProperty3 = null;
+    protected $dateProperty3;
 
     /**
      * DateTime stores as Timestamp
      *
      * @var \DateTime
      */
-    protected $dateProperty4 = null;
+    protected $dateProperty4;
 
     /**
      * Returns the name
@@ -68,7 +68,6 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the name
      *
-     * @param string $name
      * @return void
      */
     public function setName(string $name)
@@ -89,7 +88,6 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the dateProperty1
      *
-     * @param \DateTime $dateProperty1
      * @return void
      */
     public function setDateProperty1(\DateTime $dateProperty1)
@@ -110,7 +108,6 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the dateProperty2
      *
-     * @param \DateTime $dateProperty2
      * @return void
      */
     public function setDateProperty2(\DateTime $dateProperty2)
@@ -131,7 +128,6 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the dateProperty3
      *
-     * @param \DateTime $dateProperty3
      * @return void
      */
     public function setDateProperty3(\DateTime $dateProperty3)
@@ -152,7 +148,6 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the dateProperty4
      *
-     * @param \DateTime $dateProperty4
      * @return void
      */
     public function setDateProperty4(\DateTime $dateProperty4)

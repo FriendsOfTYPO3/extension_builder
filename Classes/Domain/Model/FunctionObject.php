@@ -96,11 +96,8 @@ class FunctionObject extends AbstractObject
     public function getParameterNames(): array
     {
         $parameterNames = [];
-        if (is_array($this->parameters)) {
-            /** @var MethodParameter $parameter */
-            foreach ($this->parameters as $parameter) {
-                $parameterNames[] = $parameter->getName();
-            }
+        foreach ($this->parameters as $parameter) {
+            $parameterNames[] = $parameter->getName();
         }
         return $parameterNames;
     }
@@ -130,8 +127,6 @@ class FunctionObject extends AbstractObject
 
     /**
      * replace a single parameter, depending on position
-     *
-     * @param MethodParameter $parameter
      */
     public function replaceParameter(MethodParameter $parameter): void
     {
@@ -164,13 +159,11 @@ class FunctionObject extends AbstractObject
 
     /**
      * TODO: The sorting of tags/annotations should be controlled
-     *
-     * @return array
      */
     public function getAnnotations(): array
     {
         $annotations = parent::getAnnotations();
-        if (is_array($this->parameters) && count($this->parameters) > 0 && !$this->isTaggedWith('param')) {
+        if (is_array($this->parameters) && $this->parameters !== [] && !$this->isTaggedWith('param')) {
             $paramTags = [];
             /** @var MethodParameter $parameter */
             foreach ($this->parameters as $parameter) {
@@ -215,10 +208,10 @@ class FunctionObject extends AbstractObject
             }
 
             if (isset($existingParamTagValues[$paramPosition])
-                && strpos($existingParamTagValues[$paramPosition], '$' . $parameter->getName()) !== false
+                && str_contains((string) $existingParamTagValues[$paramPosition], '$' . $parameter->getName())
             ) {
                 // param tag for this parameter was found
-                if (!empty($varType) && strpos($existingParamTagValues[$paramPosition], $varType) === false) {
+                if (!empty($varType) && !str_contains((string) $existingParamTagValues[$paramPosition], $varType)) {
                     $updatedParamTags[$position] = $varType . ' $' . $parameter->getName();
                 } else {
                     $updatedParamTags[$position] = $existingParamTagValues[$paramPosition];
@@ -235,14 +228,11 @@ class FunctionObject extends AbstractObject
             $paramPosition++;
         }
 
-        if (count($updatedParamTags) > 0) {
+        if ($updatedParamTags !== []) {
             $this->setTag('param', $updatedParamTags);
         }
     }
 
-    /**
-     * @param int $startLine
-     */
     public function setStartLine(int $startLine): void
     {
         $this->startLine = $startLine;

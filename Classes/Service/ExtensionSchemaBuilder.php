@@ -52,7 +52,6 @@ class ExtensionSchemaBuilder implements SingletonInterface
     }
 
     /**
-     * @param array $extensionBuildConfiguration
      *
      * @return Extension $extension
      * @throws ExtensionException
@@ -101,7 +100,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
                 if ($domainObject->isSubClass() && !$domainObject->isMappedToExistingTable()) {
                     // we try to get the table from Extbase configuration
                     $table = $this->configurationManager->getPersistenceTable($domainObject->getParentClass());
-                    if ($table) {
+                    if ($table !== '' && $table !== '0') {
                         $tableName = $table;
                     } else {
                         // we use the default table name
@@ -133,8 +132,6 @@ class ExtensionSchemaBuilder implements SingletonInterface
     }
 
     /**
-     * @param array $extensionBuildConfiguration
-     * @param Extension $extension
      * @throws Exception
      */
     protected function setExtensionRelations(array $extensionBuildConfiguration, Extension $extension): void
@@ -153,7 +150,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
                 }
             }
             $srcModuleId = $wire['src']['moduleId'];
-            $relationId = substr($wire['src']['terminal'], 13); // strip "relationWire_"
+            $relationId = substr((string) $wire['src']['terminal'], 13); // strip "relationWire_"
             $relationJsonConfiguration = $extensionBuildConfiguration['modules'][$srcModuleId]['value']['relationGroup']['relations'][$relationId];
 
             if (!is_array($relationJsonConfiguration)) {
@@ -176,10 +173,10 @@ class ExtensionSchemaBuilder implements SingletonInterface
             }
             // get unique foreign key names for multiple relations to the same foreign class
             if (in_array($foreignModelName, $existingRelations[$localModelName])) {
-                if (is_a($relation, ZeroToManyRelation::class)) {
-                    $relation->setForeignKeyName(strtolower($localModelName) . count($existingRelations[$localModelName]));
+                if ($relation instanceof \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation) {
+                    $relation->setForeignKeyName(strtolower((string) $localModelName) . count($existingRelations[$localModelName]));
                 }
-                if (is_a($relation, AnyToManyRelation::class)) {
+                if ($relation instanceof \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation) {
                     $relation->setUseExtendedRelationTableName(true);
                 }
             }
@@ -195,10 +192,10 @@ class ExtensionSchemaBuilder implements SingletonInterface
 
     protected function setExtensionProperties(Extension $extension, array $propertyConfiguration): void
     {
-        $extension->setName(trim($propertyConfiguration['name']));
+        $extension->setName(trim((string) $propertyConfiguration['name']));
         $extension->setDescription($propertyConfiguration['description']);
-        $extension->setExtensionKey(trim($propertyConfiguration['extensionKey']));
-        $extension->setVendorName(trim($propertyConfiguration['vendorName']));
+        $extension->setExtensionKey(trim((string) $propertyConfiguration['extensionKey']));
+        $extension->setVendorName(trim((string) $propertyConfiguration['vendorName']));
 
         if (!empty($propertyConfiguration['emConf']['sourceLanguage'])) {
             $extension->setSourceLanguage($propertyConfiguration['emConf']['sourceLanguage']);
@@ -259,7 +256,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
         }
 
         if (!empty($propertyConfiguration['originalExtensionKey'])
-            && $extension->getOriginalExtensionKey() != $extension->getExtensionKey()
+            && $extension->getOriginalExtensionKey() !== $extension->getExtensionKey()
         ) {
             $settings = $this->configurationManager->getExtensionSettings($extension->getOriginalExtensionKey(), $extension->getStoragePath());
             // if an extension was renamed, a new extension dir is created and we
@@ -267,10 +264,8 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $source = $this->configurationManager->getSettingsFile($extension->getOriginalExtensionKey(), $extension->getStoragePath());
             $target = $this->configurationManager->getSettingsFile($extension->getExtensionKey(), $extension->getStoragePath());
             $pathInfo = pathinfo($target);
-            if (!is_dir($pathInfo['dirname'])) {
-                if (!mkdir($concurrentDirectory = $pathInfo['dirname'], 0775, true) && !is_dir($concurrentDirectory)) {
-                    throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
-                }
+            if (!is_dir($pathInfo['dirname']) && (!mkdir($concurrentDirectory = $pathInfo['dirname'], 0775, true) && !is_dir($concurrentDirectory))) {
+                throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
             }
             copy($source, $target);
         } else {
@@ -284,18 +279,13 @@ class ExtensionSchemaBuilder implements SingletonInterface
 
     protected function getStateByName(string $stateKey): int
     {
-        switch ($stateKey) {
-            case 'alpha':
-                return Extension::STATE_ALPHA;
-            case 'beta':
-                return Extension::STATE_BETA;
-            case 'stable':
-                return Extension::STATE_STABLE;
-            case 'experimental':
-                return Extension::STATE_EXPERIMENTAL;
-            case 'test':
-                return Extension::STATE_TEST;
-        }
-        return Extension::STATE_ALPHA;
+        return match ($stateKey) {
+            'alpha' => Extension::STATE_ALPHA,
+            'beta' => Extension::STATE_BETA,
+            'stable' => Extension::STATE_STABLE,
+            'experimental' => Extension::STATE_EXPERIMENTAL,
+            'test' => Extension::STATE_TEST,
+            default => Extension::STATE_ALPHA,
+        };
     }
 }

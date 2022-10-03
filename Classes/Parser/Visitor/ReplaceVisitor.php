@@ -32,7 +32,6 @@ class ReplaceVisitor extends NodeVisitorAbstract
     protected array $replacements = [];
 
     /**
-     * @param Node $node
      * @return Node
      */
     public function leaveNode(Node $node)
@@ -64,7 +63,6 @@ class ReplaceVisitor extends NodeVisitorAbstract
 
     /**
      * @param array $replacements $oldValue => $newValue
-     * @return ReplaceVisitor
      */
     public function setReplacements(array $replacements): self
     {
@@ -74,8 +72,6 @@ class ReplaceVisitor extends NodeVisitorAbstract
 
     /**
      * The property of a node that should be changed (defaults to 'name')
-     * @param string $nodeProperty
-     * @return ReplaceVisitor
      */
     public function setNodeProperty(string $nodeProperty): self
     {
@@ -83,10 +79,6 @@ class ReplaceVisitor extends NodeVisitorAbstract
         return $this;
     }
 
-    /**
-     * @param array|null $nodeTypes
-     * @return ReplaceVisitor
-     */
     public function setNodeTypes(?array $nodeTypes): self
     {
         $this->nodeTypes = $nodeTypes;

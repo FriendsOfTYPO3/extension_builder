@@ -23,7 +23,7 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 
 class ExtensionService
 {
-    public const COMPOSER_PATH_WARNING = 'You are running TYPO3 in composer mode. You have to configure at
+    final public const COMPOSER_PATH_WARNING = 'You are running TYPO3 in composer mode. You have to configure at
         least one local path repository in your composer.json in order to create an extension with
         Extension Builder. The recommended way is to create a "packages" folder where your extension is loaded from and symlinked into typo3conf/ext afterwards.<br /><br />
         Please execute <code>mkdir -p packages && composer config repositories.local path "packages/*"</code> in your terminal in the project root directory.
@@ -44,9 +44,7 @@ class ExtensionService
         }
 
         return array_map(
-            static function (string $storagePath) {
-                return rtrim($storagePath, '/') . '/';
-            },
+            static fn(string $storagePath) => rtrim($storagePath, '/') . '/',
             $storagePaths
         );
     }
@@ -62,7 +60,7 @@ class ExtensionService
 
         $storagePaths = [];
         $projectPath = Environment::getProjectPath();
-        $composerSettings = json_decode(file_get_contents($projectPath . '/composer.json'), true);
+        $composerSettings = json_decode(file_get_contents($projectPath . '/composer.json'), true, 512, JSON_THROW_ON_ERROR);
         foreach ($composerSettings['repositories'] ?? [] as $repository) {
             if (empty($repository['url']) || ($repository['type'] ?? null) !== 'path') {
                 continue;
@@ -84,7 +82,7 @@ class ExtensionService
     public function isComposerStoragePath(string $path): bool
     {
         foreach ($this->resolveComposerStoragePaths() as $composerStoragePath) {
-            if (strpos($path, $composerStoragePath) === 0) {
+            if (str_starts_with($path, $composerStoragePath)) {
                 return true;
             }
         }
@@ -93,7 +91,7 @@ class ExtensionService
 
     public function isStoragePathConfigured(): bool
     {
-        return !Environment::isComposerMode() || count($this->resolveStoragePaths()) > 0;
+        return !Environment::isComposerMode() || $this->resolveStoragePaths() !== [];
     }
 
     /**

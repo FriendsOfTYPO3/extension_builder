@@ -49,10 +49,7 @@ class LocalizationService implements SingletonInterface
     }
 
     /**
-     * @param Extension $extension
-     * @param string $type
      *
-     * @return array
      * @throws InvalidArgumentException
      */
     public function prepareLabelArray(Extension $extension, string $type = 'locallang'): array
@@ -72,7 +69,7 @@ class LocalizationService implements SingletonInterface
                     $labelArray[$tableToMapTo . '.tx_extbase_type.' . $domainObject->getRecordType()] = $extension->getName() . ' ' . $domainObject->getName();
                     $labelArray[$extension->getShortExtensionKey() . '.tx_extbase_type'] = 'Record Type';
                 }
-                if (count($domainObject->getChildObjects()) > 0) {
+                if ($domainObject->getChildObjects() !== []) {
                     $labelArray[$extension->getShortExtensionKey() . '.tx_extbase_type.0'] = 'Default';
                     $labelArray[$domainObject->getLabelNamespace() . '.tx_extbase_type.' . $domainObject->getRecordType()] = $extension->getName() . ' ' . $domainObject->getName();
                 }
@@ -88,9 +85,6 @@ class LocalizationService implements SingletonInterface
     }
 
     /**
-     * @param DomainObject $domainObject
-     *
-     * @return array
      * @throws InvalidArgumentException
      */
     public function prepareLabelArrayForContextHelp(DomainObject $domainObject): array
@@ -116,11 +110,8 @@ class LocalizationService implements SingletonInterface
      *
      * @static
      *
-     * @param array $array
      * @param string $format xml/xlf
-     * @param string $languageKey
      *
-     * @return array
      */
     public function flattenLocallangArray(array $array, string $format, string $languageKey): array
     {

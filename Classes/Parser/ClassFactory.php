@@ -86,11 +86,9 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
         $propertyDefault = null;
 
         foreach ($propertyNode->props as $subNode) {
-            if ($subNode instanceof PropertyProperty) {
-                $propertyName = $subNode->name->name;
-                if ($subNode->default) {
-                    $propertyDefault = $subNode->default;
-                }
+            $propertyName = $subNode->name->name;
+            if ($subNode->default !== null) {
+                $propertyDefault = $subNode->default;
             }
         }
 
@@ -123,7 +121,7 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
         $paramTags = [];
         if ($object->isTaggedWith('param') && is_array($object->getTagValues('param'))) {
             $paramTags = $object->getTagValues('param');
-            if (count($paramTags) === count($node->params)) {
+            if (count($paramTags) === (is_countable($node->params) ? count($node->params) : 0)) {
                 $getVarTypeFromParamTag = true;
             }
         }
@@ -143,7 +141,7 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
             } elseif ($getVarTypeFromParamTag) {
                 // if there is not type hint but a varType in the param tag,
                 // we set the varType of the parameter
-                $paramTag = explode(' ', $paramTags[$position]);
+                $paramTag = explode(' ', (string) $paramTags[$position]);
                 if ($paramTag[0] !== '$' . $param->var->name) {
                     $parameter->setVarType($paramTag[0]);
                     $parameter->setTypeForParamTag($paramTag[0]);

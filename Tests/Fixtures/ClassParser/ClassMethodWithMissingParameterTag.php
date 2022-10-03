@@ -32,7 +32,6 @@ class Tx_PhpParser_Test_ClassMethodWithMissingParameterTag
     /**
      * This is the description
      *
-     * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n
      * @return string
      */
     public function testMethod($string, array $arr, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n)

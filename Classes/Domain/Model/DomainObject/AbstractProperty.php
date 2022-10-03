@@ -55,8 +55,6 @@ abstract class AbstractProperty
 
     /**
      * The domain object this property belongs to.
-     *
-     * @var DomainObject
      */
     protected DomainObject $class;
 
@@ -111,8 +109,6 @@ abstract class AbstractProperty
 
     /**
      * Get the domain object this property belongs to.
-     *
-     * @return DomainObject
      */
     public function getClass(): DomainObject
     {
@@ -141,17 +137,15 @@ abstract class AbstractProperty
 
     /**
      * Set property defaultValue
-     *
-     * @param mixed $defaultValue
      */
-    public function setDefaultValue($defaultValue): void
+    public function setDefaultValue(mixed $defaultValue): void
     {
         $this->defaultValue = $defaultValue;
     }
 
     public function getHasDefaultValue(): bool
     {
-        return isset($this->defaultValue);
+        return $this->defaultValue !== null;
     }
 
     public function getUniqueIdentifier(): string
@@ -247,16 +241,12 @@ abstract class AbstractProperty
      * Template Method which should return the type hinting information
      * being used in PHPDoc Comments.
      * Examples: int, string, Tx_FooBar_Something, \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_FooBar_Something>
-     *
-     * @return string|null
      */
     abstract public function getTypeForComment(): ?string;
 
     /**
      * Template method which should return the PHP type hint
      * Example: \TYPO3\CMS\Extbase\Persistence\ObjectStorage, array, Tx_FooBar_Something
-     *
-     * @return string|null
      */
     abstract public function getTypeHint(): ?string;
 
@@ -312,8 +302,6 @@ abstract class AbstractProperty
 
     /**
      * true if this property  l10n_mode = exclude, false otherwise.
-     *
-     * @return bool
      */
     public function getL10nModeExclude(): bool
     {
@@ -322,8 +310,6 @@ abstract class AbstractProperty
 
     /**
      * Get the validate annotation to be used in the domain model for this property.
-     *
-     * @return string
      */
     public function getValidateAnnotation(): string
     {
@@ -348,7 +334,7 @@ abstract class AbstractProperty
      */
     public function getDataType(): string
     {
-        $shortClassNameParts = explode('\\', get_class($this));
+        $shortClassNameParts = explode('\\', $this::class);
         return end($shortClassNameParts);
     }
 
@@ -374,8 +360,6 @@ abstract class AbstractProperty
 
     /**
      * The string to be used inside object accessors to display this property.
-     *
-     * @return string
      */
     public function getNameToBeDisplayedInFluidTemplate(): string
     {
@@ -384,8 +368,6 @@ abstract class AbstractProperty
 
     /**
      * The locallang key for this property which contains the label.
-     *
-     * @return string
      */
     public function getLabelNamespace(): string
     {
@@ -420,7 +402,7 @@ abstract class AbstractProperty
      */
     public function getMappingStatement(): ?string
     {
-        if ($this->getFieldName() != GeneralUtility::camelCaseToLowerCaseUnderscored($this->name)) {
+        if ($this->getFieldName() !== GeneralUtility::camelCaseToLowerCaseUnderscored($this->name)) {
             return "'" . $this->name . "' => [\n\t'fieldName' => '" . $this->getFieldName() . "'\n],";
         }
 
@@ -452,10 +434,7 @@ abstract class AbstractProperty
         return $type;
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function setValue($value): void
+    public function setValue(mixed $value): void
     {
         $this->value = $value;
     }

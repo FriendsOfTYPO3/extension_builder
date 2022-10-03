@@ -47,7 +47,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var \DateTime
      */
-    protected $myDate = null;
+    protected $myDate;
 
     /**
      * mail
@@ -61,7 +61,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var \FIXTURE\TestExtension\Domain\Model\Child1
      */
-    protected $child1 = null;
+    protected $child1;
 
     /**
      * This is a 1:n relation
@@ -69,21 +69,21 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Child2>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
-    protected $children2 = null;
+    protected $children2;
 
     /**
      * This is a n:1 relation
      *
      * @var \FIXTURE\TestExtension\Domain\Model\Child3
      */
-    protected $child3 = null;
+    protected $child3;
 
     /**
      * This is a m:n relation
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Child4>
      */
-    protected $children4 = null;
+    protected $children4;
 
     /**
      * __construct
@@ -122,7 +122,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the name
      *
-     * @param string $name
      * @return void
      */
     public function setName(string $name)
@@ -143,7 +142,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the identifier
      *
-     * @param string $identifier
      * @return void
      */
     public function setIdentifier(string $identifier)
@@ -164,7 +162,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the description
      *
-     * @param string $description
      * @return void
      */
     public function setDescription(string $description)
@@ -185,7 +182,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the myDate
      *
-     * @param \DateTime $myDate
      * @return void
      */
     public function setMyDate(\DateTime $myDate)
@@ -206,7 +202,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the mail
      *
-     * @param string $mail
      * @return void
      */
     public function setMail(string $mail)
@@ -227,7 +222,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the child1
      *
-     * @param \FIXTURE\TestExtension\Domain\Model\Child1 $child1
      * @return void
      */
     public function setChild1(\FIXTURE\TestExtension\Domain\Model\Child1 $child1)
@@ -238,7 +232,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Adds a Child2
      *
-     * @param \FIXTURE\TestExtension\Domain\Model\Child2 $children2
      * @return void
      */
     public function addChildren2(\FIXTURE\TestExtension\Domain\Model\Child2 $children2)
@@ -291,7 +284,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the child3
      *
-     * @param \FIXTURE\TestExtension\Domain\Model\Child3 $child3
      * @return void
      */
     public function setChild3(\FIXTURE\TestExtension\Domain\Model\Child3 $child3)
@@ -302,7 +294,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Adds a Child4
      *
-     * @param \FIXTURE\TestExtension\Domain\Model\Child4 $children4
      * @return void
      */
     public function addChildren4(\FIXTURE\TestExtension\Domain\Model\Child4 $children4)

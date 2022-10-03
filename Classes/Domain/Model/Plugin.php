@@ -74,8 +74,6 @@ class Plugin
      * Used in fluid templates for localconf.php
      * if controllerActionCombinations are empty we have to
      * return null to enable test in condition
-     *
-     * @return array|null
      */
     public function getControllerActionCombinations(): ?array
     {

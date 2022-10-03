@@ -33,14 +33,13 @@ class ReplaceClassNamesVisitor extends NodeVisitorAbstract
     protected string $newClassPrefix = '';
 
     /**
-     * @param Node $node
      * @return Node
      */
     public function leaveNode(Node $node)
     {
         if (null !== $node->__get('class')) {
             $oldClassName = NodeConverter::getValueFromNode($node->__get('class'));
-            if (strpos($oldClassName, $this->oldClassPrefix) !== false) {
+            if (str_contains($oldClassName, $this->oldClassPrefix)) {
                 $newClassName = str_replace($this->oldClassPrefix, $this->newClassPrefix, $oldClassName);
                 $node->setClass(NodeFactory::buildNodeFromName($newClassName));
                 return $node;

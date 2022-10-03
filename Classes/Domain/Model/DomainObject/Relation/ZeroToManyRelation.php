@@ -38,7 +38,7 @@ class ZeroToManyRelation extends AnyToManyRelation
 
     public function getTypeHint(): string
     {
-        return '\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage';
+        return '\\' . \TYPO3\CMS\Extbase\Persistence\ObjectStorage::class;
     }
 
     public function getForeignKeyName(): string

@@ -47,7 +47,6 @@ class ObjectSchemaBuilder implements SingletonInterface
     }
 
     /**
-     * @param array $jsonDomainObject
      * @return DomainObject $domainObject
      * @throws Exception
      */
@@ -111,7 +110,7 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (isset($jsonDomainObject['actionGroup'])) {
             foreach ($jsonDomainObject['actionGroup'] as $jsonActionName => $actionValue) {
                 if ($actionValue === true) {
-                    $jsonActionName = preg_replace('/^_default[0-9]_*/', '', $jsonActionName);
+                    $jsonActionName = preg_replace('/^_default\d_*/', '', $jsonActionName);
                     if ($jsonActionName === 'edit_update' || $jsonActionName === 'new_create') {
                         $actionNames = explode('_', $jsonActionName);
                     } else {
@@ -140,15 +139,12 @@ class ObjectSchemaBuilder implements SingletonInterface
     }
 
     /**
-     * @param array $relationJsonConfiguration
-     * @param DomainObject $domainObject
-     * @return AbstractRelation
      * @throws Exception
      */
     public function buildRelation(array $relationJsonConfiguration, DomainObject $domainObject): AbstractRelation
     {
         $relationSchemaClassName = 'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Relation\\';
-        $relationSchemaClassName .= ucfirst($relationJsonConfiguration['relationType']) . 'Relation';
+        $relationSchemaClassName .= ucfirst((string) $relationJsonConfiguration['relationType']) . 'Relation';
         if (!class_exists($relationSchemaClassName)) {
             throw new Exception(
                 'Relation of type ' . $relationSchemaClassName . ' not found (configured in "' .
@@ -167,7 +163,7 @@ class ObjectSchemaBuilder implements SingletonInterface
 
         if (!empty($relationJsonConfiguration['foreignRelationClass'])) {
             // relations without wires
-            if (strpos($relationJsonConfiguration['foreignRelationClass'], '\\') > 0) {
+            if (strpos((string) $relationJsonConfiguration['foreignRelationClass'], '\\') > 0) {
                 // add trailing slash if not set
                 $relationJsonConfiguration['foreignRelationClass'] = '\\' . $relationJsonConfiguration['foreignRelationClass'];
             }
@@ -212,8 +208,6 @@ class ObjectSchemaBuilder implements SingletonInterface
     }
 
     /**
-     * @param array $propertyJsonConfiguration
-     * @return AbstractProperty
      * @throws Exception
      */
     public static function buildProperty(array $propertyJsonConfiguration): AbstractProperty

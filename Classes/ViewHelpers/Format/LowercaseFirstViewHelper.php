@@ -43,6 +43,6 @@ class LowercaseFirstViewHelper extends AbstractViewHelper
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
     ) {
-        return lcfirst($renderChildrenClosure());
+        return lcfirst((string) $renderChildrenClosure());
     }
 }

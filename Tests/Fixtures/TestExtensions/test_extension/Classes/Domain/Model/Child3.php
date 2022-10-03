@@ -42,7 +42,7 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
-    protected $imageProperty = null;
+    protected $imageProperty;
 
     /**
      * Returns the name
@@ -57,7 +57,6 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the name
      *
-     * @param string $name
      * @return void
      */
     public function setName(string $name)
@@ -78,7 +77,6 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the password
      *
-     * @param string $password
      * @return void
      */
     public function setPassword(string $password)
@@ -99,7 +97,6 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the imageProperty
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $imageProperty
      * @return void
      */
     public function setImageProperty(\TYPO3\CMS\Extbase\Domain\Model\FileReference $imageProperty)

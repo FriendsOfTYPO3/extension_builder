@@ -79,10 +79,10 @@ class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
     public function leaveNode(Node $node): void
     {
         array_pop($this->contextStack);
-        if (count($this->contextStack) === 0 || $this->isContainerNode(end($this->contextStack))) {
+        if ($this->contextStack === [] || $this->isContainerNode(end($this->contextStack))) {
             // we are on the first level
             if ($node instanceof Class_) {
-                if (count($this->contextStack) > 0) {
+                if ($this->contextStack !== []) {
                     if (end($this->contextStack)->getType() === 'Stmt_Namespace') {
                         $currentNamespaceName = NodeConverter::getValueFromNode(end($this->contextStack));
                         $this->currentClassObject->setNamespaceName($currentNamespaceName);
@@ -106,7 +106,7 @@ class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
             }
 
             if ($node instanceof TraitUse) {
-                if ($this->currentClassObject) {
+                if ($this->currentClassObject !== null) {
                     $this->currentClassObject->addUseTraitStatement($node);
                 }
                 return;

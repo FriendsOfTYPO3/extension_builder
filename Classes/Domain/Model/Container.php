@@ -79,9 +79,6 @@ class Container extends AbstractObject
         return reset($classes);
     }
 
-    /**
-     * @param ClassObject $class
-     */
     public function addClass(ClassObject $class): void
     {
         $this->classes[] = $class;
@@ -118,7 +115,6 @@ class Container extends AbstractObject
     }
 
     /**
-     * @param string $constantName
      * @return mixed
      */
     public function getConstant(string $constantName)
@@ -169,9 +165,6 @@ class Container extends AbstractObject
         $this->functions = $functions;
     }
 
-    /**
-     * @param FunctionObject $function
-     */
     public function addFunction(FunctionObject $function): void
     {
         $this->functions[$function->getName()] = $function;

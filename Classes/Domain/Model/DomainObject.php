@@ -96,7 +96,7 @@ class DomainObject
     public function getQualifiedClassName(): string
     {
         $qualifiedClassName = $this->extension->getNamespaceName() . '\\Domain\\Model\\' . $this->getName();
-        if (strpos($qualifiedClassName, '\\') === 0) {
+        if (str_starts_with($qualifiedClassName, '\\')) {
             $qualifiedClassName = substr($qualifiedClassName, 1);
         }
         return $qualifiedClassName;
@@ -138,7 +138,7 @@ class DomainObject
 
     public function getDescription(): string
     {
-        if ($this->description) {
+        if ($this->description !== '' && $this->description !== '0') {
             return $this->description;
         }
 
@@ -212,7 +212,7 @@ class DomainObject
     public function getPropertyByName(string $propertyName): ?AbstractProperty
     {
         foreach ($this->properties as $property) {
-            if ($property->getName() == $propertyName) {
+            if ($property->getName() === $propertyName) {
                 return $property;
             }
         }
@@ -229,7 +229,7 @@ class DomainObject
     {
         $relationProperties = [];
         foreach ($this->properties as $property) {
-            if (is_a($property, ZeroToManyRelation::class)) {
+            if ($property instanceof \EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation) {
                 $relationProperties[] = $property;
             }
         }
@@ -254,7 +254,7 @@ class DomainObject
 
     public function hasRelations(): bool
     {
-        return count($this->getAnyToManyRelationProperties()) === 0 && count($this->getZeroToManyRelationProperties()) === 0;
+        return $this->getAnyToManyRelationProperties() === [] && $this->getZeroToManyRelationProperties() === [];
     }
 
     public function addAction(Action $action): void
@@ -275,7 +275,7 @@ class DomainObject
 
     public function hasActions(): bool
     {
-        return count($this->actions) > 0;
+        return $this->actions !== [];
     }
 
     /**
@@ -302,17 +302,15 @@ class DomainObject
     public function getBaseClass(): string
     {
         if ($this->entity) {
-            return '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity';
+            return '\\' . \TYPO3\CMS\Extbase\DomainObject\AbstractEntity::class;
         }
 
-        return '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractValueObject';
+        return '\\' . \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject::class;
     }
 
     /**
      * Returns the name of the domain repository class without namespaces, (only if it is an
      * aggregate root).
-     *
-     * @return string
      */
     public function getDomainRepositoryClassName(): string
     {
@@ -326,8 +324,6 @@ class DomainObject
     /**
      * Returns the name of the domain repository class name, if it is an aggregate
      * root.
-     *
-     * @return string
      */
     public function getQualifiedDomainRepositoryClassName(): string
     {
@@ -341,8 +337,6 @@ class DomainObject
     /**
      * Returns the fully qualified name of the domain repository class name, if it
      * is an aggregate root.
-     *
-     * @return string
      */
     public function getFullyQualifiedDomainRepositoryClassName(): string
     {
@@ -367,8 +361,6 @@ class DomainObject
      *
      * TODO: Needs to be configurable. Currently, the first property is the label in
      *       the backend.
-     *
-     * @return string
      */
     public function getListModuleValueLabel(): string
     {
@@ -401,7 +393,7 @@ class DomainObject
 
     public function getHasPropertiesWithMappingStatements(): bool
     {
-        return count($this->getPropertiesThatNeedMappingStatements()) > 0;
+        return $this->getPropertiesThatNeedMappingStatements() !== [];
     }
 
     public function getPropertiesThatNeedMappingStatements(): array
@@ -446,8 +438,6 @@ class DomainObject
 
     /**
      * Is this domain object mapped to a table?
-     *
-     * @return bool
      */
     public function isMappedToExistingTable(): bool
     {
@@ -457,7 +447,7 @@ class DomainObject
     public function getNeedsTableCtrlDefinition(): bool
     {
         // ctrl definitions should already be defined in both cases
-        return !($this->mapToTable || $this->isSubClass());
+        return !$this->mapToTable && !$this->isSubClass();
     }
 
     public function setParentClass(string $parentClass): void
@@ -487,12 +477,11 @@ class DomainObject
 
     public function hasChildren(): bool
     {
-        return count($this->childObjects) > 0;
+        return $this->childObjects !== [];
     }
 
     /**
      * wrapper for fluid
-     * @return bool
      */
     public function getHasChildren(): bool
     {
@@ -562,8 +551,6 @@ class DomainObject
      */
     public function getSearchableProperties(): array
     {
-        return array_filter($this->properties, static function ($property) {
-            return $property->isSearchable();
-        });
+        return array_filter($this->properties, static fn($property) => $property->isSearchable());
     }
 }

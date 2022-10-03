@@ -211,12 +211,10 @@ class ClassBuilderTest extends BaseUnitTest
     /**
      * @test
      * @dataProvider propertyDefaultTypesProviderTypes
-     * @param string $propertyName
-     * @param mixed $propertyDefaultValue
      * @throws FileNotFoundException
      * @throws SyntaxError
      */
-    public function classBuilderGeneratesPropertyDefault(string $propertyName, $propertyDefaultValue): void
+    public function classBuilderGeneratesPropertyDefault(string $propertyName, mixed $propertyDefaultValue): void
     {
         $domainObject = $this->buildDomainObject($this->modelName, true, true);
 

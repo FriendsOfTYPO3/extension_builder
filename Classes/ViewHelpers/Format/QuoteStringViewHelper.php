@@ -44,13 +44,14 @@ class QuoteStringViewHelper extends AbstractViewHelper
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
     ) {
-        return addslashes(self::getValue($arguments, $renderChildrenClosure));
+        return addslashes((string) self::getValue($arguments, $renderChildrenClosure));
     }
 
     private static function getValue(
         array $arguments,
         \Closure $renderChildrenClosure
     ) {
+        $rguments = [];
         if (isset($rguments['value'])) {
             return $arguments['value'];
         }

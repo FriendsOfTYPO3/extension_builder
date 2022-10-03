@@ -30,35 +30,4 @@ declare(strict_types=1);
  */
 class Tx_PhpParser_Test_ClassMethodWithMultilineParameter
 {
-    /**
-     * This is the description
-     *
-     * @param int $number
-     * @param string $stringParam
-     * @param array $arr
-     * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n
-     * @param bool $booleanParam
-     * @param float $float
-     * @return string
-     */
-    private static function testMethod(
-        $number,
-        $stringParam,
-        array $arr,
-        \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n,
-        $booleanParam = false,
-        $float = 0.2
-    )
-    {
-        self::sendForDownload(
-            $arr,
-            'Foo-' . PHP_EOL . '-' . date('Y-m-d-H-i') . $stringParam,
-            'Bar.docx'
-        );
-        if ($number > 3 && $booleanParam) {
-            return 'bar';
-        }
-
-        return 'foo';
-    }
 }

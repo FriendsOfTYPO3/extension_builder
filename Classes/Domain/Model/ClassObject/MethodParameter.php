@@ -75,10 +75,7 @@ class MethodParameter extends AbstractObject
         return $this->defaultValue;
     }
 
-    /**
-     * @param mixed $defaultValue
-     */
-    public function setDefaultValue($defaultValue = null): void
+    public function setDefaultValue(mixed $defaultValue = null): void
     {
         $this->defaultValue = $defaultValue;
     }

@@ -94,10 +94,8 @@ abstract class AbstractObject
 
     /**
      * Getter for name
-     *
-     * @return string|Identifier
      */
-    public function getName()
+    public function getName(): string|\PhpParser\Node\Identifier
     {
         return $this->name;
     }
@@ -131,7 +129,7 @@ abstract class AbstractObject
 
     public function hasTags(): bool
     {
-        return count($this->getTags()) > 0;
+        return $this->getTags() !== [];
     }
 
     /**
@@ -149,12 +147,10 @@ abstract class AbstractObject
     /**
      * sets a tags
      *
-     * @param string $tagName
      * @param mixed $tagValue (optional)
-     * @param bool $override
      * @return $this
      */
-    public function setTag(string $tagName, $tagValue = '', bool $override = true): self
+    public function setTag(string $tagName, mixed $tagValue = '', bool $override = true): self
     {
         if (!$override && isset($this->tags[$tagName])) {
             if (!is_array($this->tags[$tagName])) {
@@ -170,8 +166,6 @@ abstract class AbstractObject
 
     /**
      * unsets a tags
-     *
-     * @param string $tagName
      */
     public function removeTag(string $tagName): void
     {
@@ -181,13 +175,12 @@ abstract class AbstractObject
 
     /**
      * Returns the values of the specified tag
-     * @param string $tagName
      * @return array|string Values of the given tag
      */
-    public function getTagValues(string $tagName)
+    public function getTagValues(string $tagName): array|string
     {
         if (!$this->isTaggedWith($tagName)) {
-            throw new InvalidArgumentException('Tag "' . $tagName . '" does not exist.', 1337645712);
+            throw new InvalidArgumentException('Tag "' . $tagName . '" does not exist.', 1_337_645_712);
         }
         return $this->tags[$tagName];
     }
@@ -195,7 +188,6 @@ abstract class AbstractObject
     /**
      * Returns the value of the specified tag
      *
-     * @param string $tagName
      * @return string Value of the given tag
      */
     public function getTagValue(string $tagName): string
@@ -207,17 +199,12 @@ abstract class AbstractObject
         if (is_string($tagValues)) {
             return $tagValues;
         }
-        if (is_array($tagValues)) {
-            return $tagValues[0];
-        }
-        return '';
+        return $tagValues[0];
     }
 
     /**
      * is called by fluid
      * converts each tags to a single line containing name and value(s)
-     *
-     * @return array
      */
     public function getAnnotations(): array
     {
@@ -304,7 +291,6 @@ abstract class AbstractObject
     /**
      * adds a modifier
      *
-     * @param string $modifierName
      *
      * @return $this (for fluid interface)
      * @throws FileNotFoundException
@@ -324,7 +310,6 @@ abstract class AbstractObject
      * Use this method to set an accessor modifier,
      * it will care for removing existing ones to avoid syntax errors
      *
-     * @param string $modifierName
      *
      * @return $this (for fluid interface)
      * @throws FileNotFoundException
@@ -339,7 +324,7 @@ abstract class AbstractObject
         if (in_array($modifier, NodeConverter::$accessorModifiers)) {
             foreach (NodeConverter::$accessorModifiers as $accessorModifier) {
                 // unset all accessorModifier
-                if ($this->modifiers & $accessorModifier) {
+                if (($this->modifiers & $accessorModifier) !== 0) {
                     $this->modifiers ^= $accessorModifier;
                 }
             }
@@ -375,7 +360,6 @@ abstract class AbstractObject
     /**
      * validate if the modifier can be added to the current modifiers or not
      *
-     * @param int $modifier
      * @throws FileNotFoundException
      * @throws SyntaxError
      */
@@ -395,7 +379,7 @@ abstract class AbstractObject
 
         try {
             Class_::verifyModifier($this->modifiers, $modifier);
-        } catch (Error $e) {
+        } catch (Error) {
             throw new SyntaxError(
                 'Only one access modifier can be applied to one object. Use setModifier to avoid this exception'
             );
@@ -422,7 +406,7 @@ abstract class AbstractObject
             if ($line === '*/') {
                 break;
             }
-            if ($line !== '' && strpos($line, '* @') !== false) {
+            if ($line !== '' && str_contains($line, '* @')) {
                 $this->parseTag(substr($line, strpos($line, '@')));
             } else {
                 $plainLine = preg_replace('/\\s*\\/?[\\\\*]*\\s?(.*)$/', '$1', $line);
@@ -430,7 +414,7 @@ abstract class AbstractObject
                 // no tag yet (tags should be placed below text)
                 // and line is not empty
                 // or line is empty and not first or last line
-                if (count($this->tags) === 0
+                if ($this->tags === []
                     && (!empty($plainLine) || (!empty($this->description) && $index !== count($lines) - 1))
                 ) {
                     $this->description .= $plainLine . PHP_EOL;
@@ -457,7 +441,7 @@ abstract class AbstractObject
         }
         $tag = trim($tagAndValue[0] . $tagAndValue[1], '@');
         if (count($tagAndValue) > 1) {
-            $this->tags[$tag][] = trim($tagAndValue[2], ' "');
+            $this->tags[$tag][] = trim((string) $tagAndValue[2], ' "');
         } else {
             $this->tags[$tag] = [];
         }
@@ -467,29 +451,25 @@ abstract class AbstractObject
      * Getter for docComment
      *
      * render a docComment string, based on description and tags
-     *
-     * @return string
      */
     public function getDocComment(): string
     {
         $docCommentLines = [];
-        if (is_array($this->tags)) {
-            if (isset($this->tags['return'])) {
-                $returnTagValue = $this->tags['return'];
-                // always keep the return tag as last tag
-                unset($this->tags['return']);
-                $this->tags['return'] = $returnTagValue;
-            }
-            foreach ($this->tags as $tagName => $tags) {
-                if (is_array($tags) && !empty($tags)) {
-                    foreach ($tags as $tagValue) {
-                        $docCommentLines[] = '@' . $tagName . ' ' . $tagValue;
-                    }
-                } elseif (is_array($tags) && empty($tags)) {
-                    $docCommentLines[] = '@' . $tagName;
-                } else {
-                    $docCommentLines[] = '@' . $tagName . ' ' . $tags;
+        if (isset($this->tags['return'])) {
+            $returnTagValue = $this->tags['return'];
+            // always keep the return tag as last tag
+            unset($this->tags['return']);
+            $this->tags['return'] = $returnTagValue;
+        }
+        foreach ($this->tags as $tagName => $tags) {
+            if (is_array($tags) && !empty($tags)) {
+                foreach ($tags as $tagValue) {
+                    $docCommentLines[] = '@' . $tagName . ' ' . $tagValue;
                 }
+            } elseif ($tags === []) {
+                $docCommentLines[] = '@' . $tagName;
+            } else {
+                $docCommentLines[] = '@' . $tagName . ' ' . $tags;
             }
         }
         if (!empty($this->description)) {
@@ -520,8 +500,6 @@ abstract class AbstractObject
 
     /**
      * is there a docComment
-     *
-     * @return bool
      */
     public function hasDocComment(): bool
     {

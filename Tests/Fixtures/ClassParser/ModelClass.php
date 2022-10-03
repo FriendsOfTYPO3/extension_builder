@@ -88,7 +88,6 @@ class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Adds a Child
      *
-     * @param \VENDOR\Package\Domain\Model\Child $child
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\Package\Domain\Model\Child> children
      */
     public function addChild(\VENDOR\Package\Domain\Model\Child $child)
@@ -99,7 +98,6 @@ class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Removes a Child
      *
-     * @param \VENDOR\Package\Domain\Model\Child $child
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\Package\Domain\Model\Child> children
      */
     public function removeChild(\VENDOR\Package\Domain\Model\Child $child)

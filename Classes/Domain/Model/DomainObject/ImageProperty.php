@@ -41,12 +41,12 @@ class ImageProperty extends AbstractProperty
 
     public function getTypeForComment(): string
     {
-        return '\TYPO3\CMS\Extbase\Domain\Model\FileReference';
+        return '\\' . \TYPO3\CMS\Extbase\Domain\Model\FileReference::class;
     }
 
     public function getTypeHint(): string
     {
-        return '\TYPO3\CMS\Extbase\Domain\Model\FileReference';
+        return '\\' . \TYPO3\CMS\Extbase\Domain\Model\FileReference::class;
     }
 
     public function getSqlDefinition(): string
@@ -86,8 +86,6 @@ class ImageProperty extends AbstractProperty
 
     /**
      * The string to be used inside object accessors to display this property.
-     *
-     * @return string
      */
     public function getNameToBeDisplayedInFluidTemplate(): string
     {

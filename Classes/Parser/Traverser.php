@@ -32,7 +32,6 @@ class Traverser extends NodeTraverser implements TraverserInterface
 
     /**
      * append visitors
-     * @param NodeVisitor $visitor
      */
     public function appendVisitor(NodeVisitor $visitor): void
     {

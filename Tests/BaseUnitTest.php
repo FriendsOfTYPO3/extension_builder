@@ -73,9 +73,6 @@ abstract class BaseUnitTest extends UnitTestCase
      * Helper function
      *
      * @param $name
-     * @param bool $entity
-     * @param bool $aggregateRoot
-     * @return DomainObject
      */
     protected function buildDomainObject($name, bool $entity = false, bool $aggregateRoot = false): DomainObject
     {

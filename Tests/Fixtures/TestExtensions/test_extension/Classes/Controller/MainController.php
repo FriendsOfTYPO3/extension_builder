@@ -25,11 +25,8 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      *
      * @var \FIXTURE\TestExtension\Domain\Repository\MainRepository
      */
-    protected $mainRepository = null;
+    protected $mainRepository;
 
-    /**
-     * @param \FIXTURE\TestExtension\Domain\Repository\MainRepository $mainRepository
-     */
     public function injectMainRepository(\FIXTURE\TestExtension\Domain\Repository\MainRepository $mainRepository)
     {
         $this->mainRepository = $mainRepository;
@@ -37,8 +34,6 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * action list
-     *
-     * @return \Psr\Http\Message\ResponseInterface
      */
     public function listAction(): \Psr\Http\Message\ResponseInterface
     {
@@ -49,9 +44,6 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * action show
-     *
-     * @param \FIXTURE\TestExtension\Domain\Model\Main $main
-     * @return \Psr\Http\Message\ResponseInterface
      */
     public function showAction(\FIXTURE\TestExtension\Domain\Model\Main $main): \Psr\Http\Message\ResponseInterface
     {
@@ -61,8 +53,6 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * action new
-     *
-     * @return \Psr\Http\Message\ResponseInterface
      */
     public function newAction(): \Psr\Http\Message\ResponseInterface
     {
@@ -71,8 +61,6 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * action create
-     *
-     * @param \FIXTURE\TestExtension\Domain\Model\Main $newMain
      */
     public function createAction(\FIXTURE\TestExtension\Domain\Model\Main $newMain)
     {
@@ -84,9 +72,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * action edit
      *
-     * @param \FIXTURE\TestExtension\Domain\Model\Main $main
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("main")
-     * @return \Psr\Http\Message\ResponseInterface
      */
     public function editAction(\FIXTURE\TestExtension\Domain\Model\Main $main): \Psr\Http\Message\ResponseInterface
     {
@@ -96,8 +82,6 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * action update
-     *
-     * @param \FIXTURE\TestExtension\Domain\Model\Main $main
      */
     public function updateAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
     {
@@ -108,8 +92,6 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * action delete
-     *
-     * @param \FIXTURE\TestExtension\Domain\Model\Main $main
      */
     public function deleteAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
     {
@@ -120,8 +102,6 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * action custom
-     *
-     * @return \Psr\Http\Message\ResponseInterface
      */
     public function customAction(): \Psr\Http\Message\ResponseInterface
     {

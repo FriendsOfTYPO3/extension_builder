@@ -42,8 +42,6 @@ class DocComment extends Comment
      * Parses the given doc comment and saves the result (description and tags) in
      * the parser's object. They can be retrieved by the getTags() getTagValues()
      * and getDescription() methods.
-     *
-     * @param string $docComment
      */
     public function initialize(string $docComment): void
     {
@@ -51,9 +49,9 @@ class DocComment extends Comment
         foreach ($lines as $line) {
             $line = preg_replace('/(\\s*\\*\\/\\s*)?$/', '', $line);
             $line = trim($line);
-            if (strlen($line) > 0 && strpos($line, '* @') !== false) {
+            if (strlen($line) > 0 && str_contains($line, '* @')) {
                 $this->parseTag(substr($line, strpos($line, '@')));
-            } elseif (count($this->tags) === 0) {
+            } elseif ($this->tags === []) {
                 $this->description .= preg_replace('/\\s*\\/?[\\\\*]*\\s?(.*)$/', '$1', $line) . chr(10);
             }
         }
@@ -83,12 +81,7 @@ class DocComment extends Comment
         $this->tags = $tags;
     }
 
-    /**
-     * @param string $tagName
-     * @param mixed $tagValue
-     * @param bool $override
-     */
-    public function setTag(string $tagName, $tagValue = null, bool $override = false): void
+    public function setTag(string $tagName, mixed $tagValue = null, bool $override = false): void
     {
         if (!$override && isset($this->tags[$tagName])) {
             if (!is_array($this->tags[$tagName])) {
@@ -117,7 +110,7 @@ class DocComment extends Comment
     public function getTagValues(string $tagName): array
     {
         if (!$this->isTaggedWith($tagName)) {
-            throw new InvalidArgumentException('Tag "' . $tagName . '" does not exist.', 1337645712);
+            throw new InvalidArgumentException('Tag "' . $tagName . '" does not exist.', 1_337_645_712);
         }
         return $this->tags[$tagName];
     }
@@ -160,7 +153,7 @@ class DocComment extends Comment
         }
         $tag = trim($tagAndValue[0] . $tagAndValue[1], '@');
         if (count($tagAndValue) > 1) {
-            $this->tags[$tag][] = trim($tagAndValue[2], ' "');
+            $this->tags[$tag][] = trim((string) $tagAndValue[2], ' "');
         } else {
             $this->tags[$tag] = [];
         }
@@ -179,30 +172,26 @@ class DocComment extends Comment
     /**
      * Returns a string representation of the ignorable.
      *
-     * @param bool $singleLineCommentAllowed
      * @return string String representation
      */
     public function toString(bool $singleLineCommentAllowed = false): string
     {
         $docCommentLines = [];
-
-        if (is_array($this->tags)) {
-            if (isset($this->tags['return'])) {
-                $returnTagValue = $this->tags['return'];
-                // always keep the return tag as last tag
-                unset($this->tags['return']);
-                $this->tags['return'] = $returnTagValue;
-            }
-            foreach ($this->tags as $tagName => $tags) {
-                if (is_array($tags) && !empty($tags)) {
-                    foreach ($tags as $tagValue) {
-                        $docCommentLines[] = '@' . $tagName . ' ' . $tagValue;
-                    }
-                } elseif (is_array($tags) && empty($tags)) {
-                    $docCommentLines[] = '@' . $tagName;
-                } else {
-                    $docCommentLines[] = '@' . $tagName . ' ' . $tags;
+        if (isset($this->tags['return'])) {
+            $returnTagValue = $this->tags['return'];
+            // always keep the return tag as last tag
+            unset($this->tags['return']);
+            $this->tags['return'] = $returnTagValue;
+        }
+        foreach ($this->tags as $tagName => $tags) {
+            if (is_array($tags) && !empty($tags)) {
+                foreach ($tags as $tagValue) {
+                    $docCommentLines[] = '@' . $tagName . ' ' . $tagValue;
                 }
+            } elseif ($tags === []) {
+                $docCommentLines[] = '@' . $tagName;
+            } else {
+                $docCommentLines[] = '@' . $tagName . ' ' . $tags;
             }
         }
 

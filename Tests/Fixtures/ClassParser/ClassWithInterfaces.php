@@ -5,9 +5,9 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithInterfaces impleme
 {
     protected $names;
 
-    const TEST = 'test';
+    final const TEST = 'test';
 
-    const TEST2 = 'test';
+    final const TEST2 = 'test';
 
     /**
      *
@@ -41,7 +41,6 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ClassWithInterfaces impleme
     }
 
     /**
-     * @param array $names
      * @return void
      */
     public function setNames(array $names)

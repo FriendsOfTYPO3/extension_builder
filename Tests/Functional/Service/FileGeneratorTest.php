@@ -550,7 +550,6 @@ class FileGeneratorTest extends BaseFunctionalTest
     /**
      * @test
      * @dataProvider getDeprecatedTypoScriptExtensionsDataProvider
-     * @param string $deprecatedExtension
      * @throws ExtensionException
      */
     public function writeExtensionFilesOverWritesFilesWithDeprecatedExtensions(string $deprecatedExtension): void

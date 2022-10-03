@@ -43,15 +43,15 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     /**
      * @var string
      */
-    const SETTINGS_DIR = 'Configuration/ExtensionBuilder/';
+    final const SETTINGS_DIR = 'Configuration/ExtensionBuilder/';
     /**
      * @var string
      */
-    const EXTENSION_BUILDER_SETTINGS_FILE = 'ExtensionBuilder.json';
+    final const EXTENSION_BUILDER_SETTINGS_FILE = 'ExtensionBuilder.json';
     /**
      * @var string
      */
-    const DEFAULT_TEMPLATE_ROOTPATH = 'EXT:extension_builder/Resources/Private/CodeTemplates/Extbase/';
+    final const DEFAULT_TEMPLATE_ROOTPATH = 'EXT:extension_builder/Resources/Private/CodeTemplates/Extbase/';
     private array $inputData = [];
 
     protected ConfigurationManagerInterface $configurationManager;
@@ -67,7 +67,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     public function parseRequest(): void
     {
         $jsonString = file_get_contents('php://input');
-        $this->inputData = json_decode($jsonString, true);
+        $this->inputData = json_decode($jsonString, true, 512, JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -81,7 +81,6 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     /**
      * Reads the configuration from this->inputData and returns it as array.
      *
-     * @return array
      * @throws \Exception
      */
     public function getConfigurationFromModeler(): array
@@ -89,7 +88,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         if (empty($this->inputData)) {
             throw new \Exception('No inputData!');
         }
-        $extensionConfigurationJson = json_decode($this->inputData['params']['working'], true);
+        $extensionConfigurationJson = json_decode((string) $this->inputData['params']['working'], true, 512, JSON_THROW_ON_ERROR);
         $extensionConfigurationJson = $this->reArrangeRelations($extensionConfigurationJson);
         $extensionConfigurationJson['modules'] = $this->checkForAbsoluteClassNames($extensionConfigurationJson['modules']);
         return $extensionConfigurationJson;
@@ -108,7 +107,6 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      *
      * @param array|null $typoscript
      *
-     * @return array
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     public function getSettings(?array $typoscript = null): array
@@ -127,7 +125,6 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     /**
      * Get the extension_builder configuration (ext_template_conf).
      *
-     * @return array
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
      */
@@ -147,10 +144,6 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
 
     /**
      * Reads the stored configuration (i.e. the extension model etc.).
-     *
-     * @param string $extensionKey
-     * @param string|null $storagePath
-     * @return array|null
      */
     public function getExtensionBuilderConfiguration(string $extensionKey, ?string $storagePath = null): ?array
     {
@@ -166,10 +159,10 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
 
     public static function getExtensionBuilderJson(string $extensionKey, ?string $storagePath = null)
     {
-        $storagePath = $storagePath ?? Environment::getPublicPath() . '/typo3conf/ext/';
+        $storagePath ??= Environment::getPublicPath() . '/typo3conf/ext/';
         $jsonFile = $storagePath . $extensionKey . '/' . self::EXTENSION_BUILDER_SETTINGS_FILE;
         if (file_exists($jsonFile)) {
-            return json_decode(file_get_contents($jsonFile), true);
+            return json_decode(file_get_contents($jsonFile), true, 512, JSON_THROW_ON_ERROR);
         }
 
         return null;
@@ -177,7 +170,6 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
 
     /**
      * @param $className string
-     * @return string
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
     public function getPersistenceTable(string $className): string
@@ -188,8 +180,6 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     /**
      * Get the file name and path of the settings file.
      *
-     * @param string $extensionKey
-     * @param string $storagePath
      * @return string path
      */
     public function getSettingsFile(string $extensionKey, string $storagePath): string
@@ -198,8 +188,6 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     }
 
     /**
-     * @param Extension $extension
-     * @param array $codeTemplateRootPaths
      *
      * @throws \Exception
      */
@@ -222,9 +210,6 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
 
     /**
      * Replace the EXT:extkey prefix with the appropriate path.
-     *
-     * @param string $encodedTemplateRootPath
-     * @return string
      */
     public static function substituteExtensionPath(string $encodedTemplateRootPath): string
     {
@@ -246,7 +231,6 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     /**
      * Performs various fixes/workarounds for wireit limitations.
      *
-     * @param array $extensionConfigurationJson
      * @return array the modified configuration
      */
     public function fixExtensionBuilderJSON(array $extensionConfigurationJson): array
@@ -278,7 +262,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
             'foreignRelationClass'
         ];
         foreach ($jsonConfig as &$module) {
-            for ($i = 0, $relations = count($module['value']['relationGroup']['relations']); $i < $relations; $i++) {
+            for ($i = 0, $relations = is_countable($module['value']['relationGroup']['relations']) ? count($module['value']['relationGroup']['relations']) : 0; $i < $relations; $i++) {
                 if ($prepareForModeler) {
                     if (empty($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
                         $module['value']['relationGroup']['relations'][$i]['advancedSettings'] = [];
@@ -319,7 +303,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     {
         foreach ($moduleConfig as &$module) {
             if (!empty($module['value']['objectsettings']['parentClass'])
-                && strpos($module['value']['objectsettings']['parentClass'], '\\') !== 0
+                && !str_starts_with((string) $module['value']['objectsettings']['parentClass'], '\\')
             ) {
                 // namespaced classes always need a full qualified class name
                 $module['value']['objectsettings']['parentClass'] = '\\' . $module['value']['objectsettings']['parentClass'];
@@ -330,9 +314,6 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
 
     /**
      * Check if the confirm was send with input data.
-     *
-     * @param string $identifier
-     * @return bool
      */
     public function isConfirmed(string $identifier): bool
     {
@@ -341,9 +322,6 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
 
     /**
      * Just a temporary workaround until the new UI is available.
-     *
-     * @param array $jsonConfig
-     * @return array
      */
     protected function resetOutboundedPositions(array $jsonConfig): array
     {
@@ -362,15 +340,12 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * This is a workaround for the bad design in WireIt. All wire terminals are
      * only identified by a simple index, that does not reflect deleting of models
      * and relations.
-     *
-     * @param array $jsonConfig
-     * @return array
      */
     protected function reArrangeRelations(array $jsonConfig): array
     {
         foreach ($jsonConfig['wires'] as &$wire) {
             // format: relation_1
-            $parts = explode('_', $wire['src']['terminal']);
+            $parts = explode('_', (string) $wire['src']['terminal']);
             $supposedRelationIndex = (int)$parts[1];
 
             // Source
@@ -395,13 +370,6 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         return $jsonConfig;
     }
 
-    /**
-     * @param string $uid
-     * @param array $modules
-     * @param int $supposedModuleIndex
-     * @param int|null $supposedRelationIndex
-     * @return array
-     */
     protected function findModuleIndexByRelationUid(
         string $uid,
         array $modules,
@@ -453,22 +421,20 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     {
         $settings = $this->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
         return $settings['classBuilder']['Model']['AbstractValueObject']['parentClass'] ??
-            '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractValueObject';
+            '\\' . \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject::class;
     }
 
     public function getParentClassForEntityObject(Extension $extension): string
     {
         $settings = $this->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
         return $settings['classBuilder']['Model']['AbstractEntity']['parentClass'] ??
-            '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity';
+            '\\' . \TYPO3\CMS\Extbase\DomainObject\AbstractEntity::class;
     }
 
     /**
      * Ajax callback that reads the smd file and modiefies the target URL to include
      * the module token.
      *
-     * @param ServerRequestInterface $request
-     * @return JsonResponse
      * @throws RouteNotFoundException
      */
     public function getWiringEditorSmd(ServerRequestInterface $request): JsonResponse
@@ -476,7 +442,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         $smdJsonString = file_get_contents(
             ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd'
         );
-        $smdJson = json_decode($smdJsonString);
+        $smdJson = json_decode($smdJsonString, null, 512, JSON_THROW_ON_ERROR);
         $parameters = [
             'tx_extensionbuilder_tools_extensionbuilderextensionbuilder' => [
                 'controller' => 'BuilderModule',
@@ -486,7 +452,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
         try {
             $uri = $uriBuilder->buildUriFromRoute('tools_ExtensionBuilderExtensionbuilder', $parameters);
-        } catch (RouteNotFoundException $e) {
+        } catch (RouteNotFoundException) {
             $uri = $uriBuilder->buildUriFromRoutePath('tools_ExtensionBuilderExtensionbuilder', $parameters);
         }
         $smdJson->target = (string)$uri;

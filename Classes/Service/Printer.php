@@ -38,11 +38,7 @@ class Printer extends Standard
         $this->nodeFactory = $nodeFactory;
     }
 
-    /**
-     * @param mixed $stmts
-     * @return string
-     */
-    public function render($stmts): string
+    public function render(mixed $stmts): string
     {
         if (!is_array($stmts)) {
             $stmts = [$stmts];
@@ -62,9 +58,6 @@ class Printer extends Standard
 
     /**
      * add a new line before each comment
-     *
-     * @param array $comments
-     * @return string
      */
     protected function pComments(array $comments): string
     {
@@ -97,9 +90,6 @@ class Printer extends Standard
 
     /**
      * Overwrites the original function to remove one space after 'declare('
-     *
-     * @param Declare_ $node
-     * @return string
      */
     protected function pStmt_Declare(Declare_ $node): string
     {
