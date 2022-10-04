@@ -489,6 +489,11 @@ div {
 	}
 	&.showAdvancedOptions {
 		fieldset {
+            .inputEx-fieldWrapper.dependant {
+                input {
+                    border: 1px solid grey;
+                }
+            }
 			&.inputEx-Collapsed div.inputEx-fieldWrapper.advancedMode {
 				display: none;
 			}
