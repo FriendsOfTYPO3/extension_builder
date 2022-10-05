@@ -67,11 +67,6 @@
 		"prepare-extension-test-structure": [
 			"TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
 		],
-		"prepare-release": [
-			"rm -rf Resources/Private/Schema",
-			"rm -rf .php-cs-fixer.php",
-			"rm -rf .phpstorm.meta.php"
-		],
 		"unit-tests": "TYPO3_PATH_ROOT=$PWD/.Build/public .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml --stop-on-failure Tests/Unit",
 		"functional-tests": "TYPO3_PATH_ROOT=$PWD/.Build/public typo3DatabaseDriver=pdo_sqlite .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml --stop-on-failure Tests/Functional",
 		"test": [
