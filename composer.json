@@ -68,7 +68,6 @@
 			"TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
 		],
 		"prepare-release": [
-			"rm -rf Resources/Private/CodeTemplates",
 			"rm -rf Resources/Private/Schema",
 			"rm -rf .php-cs-fixer.php",
 			"rm -rf .phpstorm.meta.php"
