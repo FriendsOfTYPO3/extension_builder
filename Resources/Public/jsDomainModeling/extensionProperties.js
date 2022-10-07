@@ -394,7 +394,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields = [
             {
               type: 'text',
               inputParams: {
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
+                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.short_description,
                 name: 'description',
                 required: false,
                 cols: 20,
