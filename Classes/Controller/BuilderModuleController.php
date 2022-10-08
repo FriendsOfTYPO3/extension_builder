@@ -44,31 +44,38 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class BuilderModuleController extends ActionController
 {
-    private FileGenerator $fileGenerator;
+
+    public function __construct(
+        FileGenerator $fileGenerator,
+        IconFactory $iconFactory,
+        PageRenderer $pageRenderer,
+        ExtensionInstallationStatus $extensionInstallationStatus,
+        ExtensionSchemaBuilder $extensionSchemaBuilder,
+        ExtensionService $extensionService,
+        ModuleTemplateFactory $moduleTemplateFactory,
+        ExtensionValidator $extensionValidator,
+        ExtensionRepository $extensionRepository,
+    )
+    {
+        $this->fileGenerator = $fileGenerator;
+        $this->iconFactory = $iconFactory;
+        $this->pageRenderer = $pageRenderer;
+        $this->extensionInstallationStatus = $extensionInstallationStatus;
+        $this->extensionSchemaBuilder = $extensionSchemaBuilder;
+        $this->extensionService = $extensionService;
+        $this->moduleTemplateFactory = $moduleTemplateFactory;
+        $this->extensionValidator = $extensionValidator;
+        $this->extensionRepository = $extensionRepository;
+    }
 
     private ExtensionBuilderConfigurationManager $extensionBuilderConfigurationManager;
-
-    private ExtensionInstallationStatus $extensionInstallationStatus;
-
-    private ExtensionSchemaBuilder $extensionSchemaBuilder;
-
-    private ExtensionService $extensionService;
-
-    private ExtensionValidator $extensionValidator;
-
-    private ExtensionRepository $extensionRepository;
-
-    private ModuleTemplateFactory $moduleTemplateFactory;
-
     private ModuleTemplate $moduleTemplate;
 
-    private PageRenderer $pageRenderer;
-
-    private IconFactory $iconFactory;
 
     /**
      * Settings from various sources:
@@ -78,11 +85,6 @@ class BuilderModuleController extends ActionController
      */
     protected array $extensionBuilderSettings = [];
 
-    public function injectFileGenerator(FileGenerator $fileGenerator): void
-    {
-        $this->fileGenerator = $fileGenerator;
-    }
-
     public function injectExtensionBuilderConfigurationManager(
         ExtensionBuilderConfigurationManager $configurationManager
     ): void {
@@ -90,46 +92,9 @@ class BuilderModuleController extends ActionController
         $this->extensionBuilderSettings = $this->extensionBuilderConfigurationManager->getSettings();
     }
 
-    public function injectExtensionInstallationStatus(ExtensionInstallationStatus $extensionInstallationStatus): void
-    {
-        $this->extensionInstallationStatus = $extensionInstallationStatus;
-    }
-
-    public function injectExtensionSchemaBuilder(ExtensionSchemaBuilder $extensionSchemaBuilder): void
-    {
-        $this->extensionSchemaBuilder = $extensionSchemaBuilder;
-    }
-
-    public function injectExtensionService(ExtensionService $extensionService): void
-    {
-        $this->extensionService = $extensionService;
-    }
-
-    public function injectExtensionValidator(ExtensionValidator $extensionValidator): void
-    {
-        $this->extensionValidator = $extensionValidator;
-    }
-
-    public function injectExtensionRepository(ExtensionRepository $extensionRepository): void
-    {
-        $this->extensionRepository = $extensionRepository;
-    }
-
-    public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory): void
-    {
-        $this->moduleTemplateFactory = $moduleTemplateFactory;
-    }
-
-    public function injectPageRenderer(PageRenderer $pageRenderer): void
-    {
-        $this->pageRenderer = $pageRenderer;
-    }
-
-    public function injectIconFactory(IconFactory $iconFactory): void
-    {
-        $this->iconFactory = $iconFactory;
-    }
-
+    /**
+     * @return void
+     */
     public function initializeAction(): void
     {
         $this->fileGenerator->setSettings($this->extensionBuilderSettings);
