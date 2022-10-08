@@ -392,9 +392,13 @@ extbaseModeling_wiringEditorLanguage.propertiesFields = [
               }
             },
             {
+              type: 'text',
               inputParams: {
                 label: TYPO3.settings.extensionBuilder._LOCAL_LANG.short_description,
-                name: 'description'
+                name: 'description',
+                required: false,
+                cols: 20,
+                rows: 6
               }
             },
             {
@@ -434,6 +438,7 @@ extbaseModeling_wiringEditorLanguage.propertiesFields = [
                     inputParams: {
                       name: 'controllerActionCombinations',
                       label: TYPO3.settings.extensionBuilder._LOCAL_LANG.controller_action_combinations,
+                      placeholder: 'ControllerName => action1,action2',
                       description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_controller_action_combinations,
                       cols: 38,
                       rows: 3
