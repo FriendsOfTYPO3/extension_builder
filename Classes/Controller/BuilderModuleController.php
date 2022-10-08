@@ -134,7 +134,8 @@ class BuilderModuleController extends ActionController
         $this->moduleTemplate->setTitle('Extension Builder');
 
         $this->addMainMenu('domainmodelling');
-        //$this->addStoragePathMenu();
+        $this->addMainMenu('testaction');
+        $this->addCurrentExtensionPath();
 
         $this->addLeftButtons();
         $this->addRightButtons();
@@ -153,7 +154,8 @@ class BuilderModuleController extends ActionController
             $initialWarnings[] = ExtensionService::COMPOSER_PATH_WARNING;
         }
         $this->view->assignMultiple([
-            'initialWarnings' => $initialWarnings
+            'initialWarnings' => $initialWarnings,
+            'currentVersion' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getExtensionVersion($this->request->getControllerExtensionKey())
         ]);
         $this->pageRenderer->addInlineSetting(
             'extensionBuilder.publicResourceWebPath',
@@ -171,12 +173,14 @@ class BuilderModuleController extends ActionController
     {
         $menu = $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
         $menu->setIdentifier('ExtensionBuilderMainModuleMenu');
-        $menu->addMenuItem(
-            $menu->makeMenuItem()
-                ->setTitle('Introduction')
-                ->setHref($this->uriBuilder->uriFor('index'))
-                ->setActive($currentAction === 'index')
-        );
+
+        // Define the select menu
+       // $menu->addMenuItem(
+       //     $menu->makeMenuItem()
+       //         ->setTitle('Introduction')
+       //         ->setHref($this->uriBuilder->uriFor('index'))
+       //         ->setActive($currentAction === 'index')
+       // );
         $menu->addMenuItem(
             $menu->makeMenuItem()
                 ->setTitle('Domain Modelling')
@@ -187,48 +191,39 @@ class BuilderModuleController extends ActionController
     }
 
     /*
-     * This does not work as intended as the dropdown menu will only show a value if there are at least 2 entries
-     * and additionally submit the value when changed which we don't want.
      *
-    //protected function addStoragePathMenu(): void
+     */
+    // TODO: Show the current Extension name beside the buttons in the button bar
+    protected function addCurrentExtensionPath(): void
     {
-        $menu = $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
-        $menu->setIdentifier('storagePath');
-        $menu->setLabel('Storage Path:');
-
-        $storagePaths = $this->extensionService->resolveStoragePaths();
-        foreach ($storagePaths as $storagePath) {
-            $menu->addMenuItem(
-                $menu->makeMenuItem()
-                    ->setTitle($storagePath)
-                    ->setHref($storagePath)
-            );
-        }
-        $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
-    }*/
+        // TODO
+    }
 
     protected function addLeftButtons(): void
     {
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
         $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-            ->setIcon($this->iconFactory->getIcon('actions-system-list-open', Icon::SIZE_SMALL))
+            ->setIcon($this->iconFactory->getIcon('actions-folder', Icon::SIZE_SMALL))
             ->setTitle('Open extension')
-            ->setId('WiringEditor-loadButton-button')
+            ->setShowLabelText(true)
+            ->setId('loadExtension-button')
             ->setHref('#');
         $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
 
         $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-            ->setIcon($this->iconFactory->getIcon('actions-document-new', Icon::SIZE_SMALL))
+            ->setIcon($this->iconFactory->getIcon('actions-template-new', Icon::SIZE_SMALL))
             ->setTitle('New extension')
-            ->setId('WiringEditor-newButton-button')
+            ->setShowLabelText(true)
+            ->setId('newExtension-button')
             ->setHref('#');
         $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
 
         $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-            ->setIcon($this->iconFactory->getIcon('actions-document-save', Icon::SIZE_SMALL))
+            ->setIcon($this->iconFactory->getIcon('actions-save', Icon::SIZE_SMALL))
             ->setTitle('Save extension')
-            ->setId('WiringEditor-saveButton-button')
+            ->setShowLabelText(true)
+            ->setId('saveExtension-button')
             ->setHref('#');
         $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
     }
@@ -237,36 +232,32 @@ class BuilderModuleController extends ActionController
     {
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
-        $this->registerAdvancedOptionsButtonToButtonBar($buttonBar, ButtonBar::BUTTON_POSITION_RIGHT, 2);
-        $this->registerOpenInNewWindowButtonToButtonBar($buttonBar, ButtonBar::BUTTON_POSITION_RIGHT, 3);
+        $this->registerAdvancedOptionsButtonToButtonBar($buttonBar, ButtonBar::BUTTON_POSITION_RIGHT, 1);
+        $this->registerHelpButtonToButtonBar($buttonBar, ButtonBar::BUTTON_POSITION_RIGHT, 2);
     }
 
-    protected function registerOpenInNewWindowButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void
+    protected function registerHelpButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void
     {
-        $requestUri = $this->uriBuilder->uriFor('domainmodelling');
-
-        $openInNewWindowButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+        $helpButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            ->setIcon($this->iconFactory->getIcon('module-help', Icon::SIZE_SMALL))
+            ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:showHelp'))
+            ->setId('showHelp')
             ->setHref('#')
-            ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.openInNewWindow'))
-            ->setIcon($this->iconFactory->getIcon('actions-window-open', Icon::SIZE_SMALL))
+            ->setClasses('t3js-modal-trigger')
             ->setDataAttributes([
-                'dispatch-action' => 'TYPO3.WindowManager.localOpen',
-                'dispatch-args' => GeneralUtility::jsonEncodeForHtmlAttribute([
-                    $requestUri,
-                    true, // switchFocus
-                    'extension_builder', // windowName,
-                    'width=1920,height=1080,status=0,menubar=0,scrollbars=1,resizable=1', // windowFeatures
-                ])
+                'severity' => 'info',
+                'bs-content' => $this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:helpText'),
+                'title' => $this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:help'),
             ])
-            ->setId('opennewwindow');
+            ->setShowLabelText(true);
 
-        $buttonBar->addButton($openInNewWindowButton, $position, $group);
+        $buttonBar->addButton($helpButton, $position, $group);
     }
 
     protected function registerAdvancedOptionsButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void
     {
         $advancedOptionsButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-            ->setIcon($this->iconFactory->getIcon('content-menu-pages', Icon::SIZE_SMALL))
+            ->setIcon($this->iconFactory->getIcon('actions-options', Icon::SIZE_SMALL))
             ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:advancedOptions'))
             ->setId('toggleAdvancedOptions')
             ->setHref('#')

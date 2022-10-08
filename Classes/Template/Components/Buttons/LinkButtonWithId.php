@@ -59,7 +59,8 @@ class LinkButtonWithId extends LinkButton
         ];
         $labelText = '';
         if ($this->showLabelText) {
-            $labelText = ' <span class="simpleMode">Show</span><span class="advancedMode">Hide</span> ' . $this->title . '.';
+            //  $labelText = ' <span class="simpleMode">Show</span><span class="advancedMode">Hide</span> ' . $this->title . '.';
+            $labelText = ' ' . $this->title;
         }
         foreach ($this->dataAttributes as $attributeName => $attributeValue) {
             $attributes['data-' . $attributeName] = $attributeValue;
