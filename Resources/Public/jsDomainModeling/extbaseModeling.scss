@@ -39,7 +39,7 @@ $url_0: url('background_pixel.png');
 
 // The modeling canvas
 #modelingLayer {
-    height: 100%;
+    // height: 100%;
 }
 
 .yui-layout-unit-left {
@@ -1039,3 +1039,12 @@ label.helpAvailable {
 div.WireIt-InputExTerminal div.WireIt-Terminal {
     top: -8px;
 }
+
+
+
+
+// Custom
+@import "Scss/eb_modeller";
+@import "Scss/eb_footer";
+
+

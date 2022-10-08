@@ -1,11 +1,10 @@
 <?php
 
 return [
-    'web_ExtkeyExample' => [
+    'extension_builder' => [
         'parent' => 'tools',
         'position' => [''],
         'access' => 'user,group',
-        'workspaces' => 'live',
         'iconIdentifier' => 'extensionbuilder-module',
         'path' => '/module/tools/extensionBuilder',
         'labels' => 'LLL:EXT:extension_builder/Resources/Private/Language/locallang_mod.xlf',
