@@ -1,7 +1,6 @@
 /.idea*
 /.Build/
 *node_modules*
-*package-lock.json
 /var/
 .DS_Store
 /composer.lock
