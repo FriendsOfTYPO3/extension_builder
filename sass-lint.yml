@@ -57,21 +57,21 @@ rules:
   function-name-format: 0
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/hex-length.md
   hex-length:
-    - 0
+    - 2
     - style: short
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/hex-notation.md
   hex-notation:
-    - 0
+    - 2
     -
       style: uppercase
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/indentation.md
   indentation:
-    - 0
+    - 2
     -
       size: 4
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/leading-zero.md
   leading-zero:
-    - 0
+    - 2
     - include: true
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/max-file-line-count.md
   max-file-line-count:
@@ -79,17 +79,17 @@ rules:
     - length: 300
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/max-line-length.md
   max-line-length:
-    - 0
+    - 1
     - length: 100
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/mixins-before-declarations.md
   mixins-before-declarations:
-    - 0
+    - 1
     -
       exclude:
         - breakpoint
         - mq
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-color-keywords.md
-  no-color-keywords: 0
+  no-color-keywords: 1
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-combinators.md
   no-combinators: 0
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-css-comments.md
@@ -100,11 +100,11 @@ rules:
     - properties:
       - z-index
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-duplicate-properties.md
-  no-duplicate-properties: 0
+  no-duplicate-properties: 2
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-empty-rulesets.md
-  no-empty-rulesets: 0
+  no-empty-rulesets: 2
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-invalid-hex.md
-  no-invalid-hex: 0
+  no-invalid-hex: 2
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-mergeable-selectors.md
   no-mergeable-selectors: 0
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-misspelled-properties.md
