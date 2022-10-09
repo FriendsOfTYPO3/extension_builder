@@ -1,0 +1,174 @@
+#########################
+## Sample Sass Lint File
+#########################
+# Linter Options
+options:
+  # Don't merge default rules
+  merge-default-rules: false
+  # Set the formatter to 'html'
+  formatter: html
+  # Output file instead of logging results
+  output-file: 'sass-lint.html'
+  # Raise an error if more than 100 warnings are generated
+  max-warnings: 100
+# File Options
+files:
+  ignore:
+    - 'Resources/Public/Scss/Bootstrap/*.scss'
+# Rule Configuration
+rules:
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-warn.md
+  no-warn: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-debug.md
+  no-debug: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-ids.md
+  no-ids: 0
+  no-important: 1
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/border-zero.md
+  border-zero:
+    - 1
+    -
+      convention: none
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/brace-style.md
+  brace-style:
+    - 2
+    -
+      style: 1tbs
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/class-name-format.md
+  class-name-format: 0
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/clean-import-paths.md
+  clean-import-paths: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/declarations-before-nesting.md
+  declarations-before-nesting: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/empty-line-between-blocks.md
+  empty-line-between-blocks: 0
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/extends-before-declarations.md
+  extends-before-declarations: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/final-newline.md
+  final-newline: 1
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/force-attribute-nesting.md
+  force-attribute-nesting: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/force-element-nesting.md
+  force-element-nesting: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/force-pseudo-nesting.md
+  force-pseudo-nesting: 0
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/function-name-format.md
+  function-name-format: 0
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/hex-length.md
+  hex-length:
+    - 2
+    - style: short
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/hex-notation.md
+  hex-notation:
+    - 2
+    -
+      style: uppercase
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/indentation.md
+  indentation:
+    - 2
+    -
+      size: 4
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/leading-zero.md
+  leading-zero:
+    - 2
+    - include: true
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/max-file-line-count.md
+  max-file-line-count:
+    - 1
+    - length: 300
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/max-line-length.md
+  max-line-length: 0
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/mixins-before-declarations.md
+  mixins-before-declarations:
+    - 2
+    -
+      exclude:
+        - breakpoint
+        - mq
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-color-keywords.md
+  no-color-keywords: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-combinators.md
+  no-combinators: 1
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-css-comments.md
+  no-css-comments: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-disallowed-properties.md
+  no-disallowed-properties:
+    - 2
+    - properties:
+      - z-index
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-duplicate-properties.md
+  no-duplicate-properties: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-empty-rulesets.md
+  no-empty-rulesets: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-invalid-hex.md
+  no-invalid-hex: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-mergeable-selectors.md
+  no-mergeable-selectors: 1
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-misspelled-properties.md
+  no-misspelled-properties: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-qualifying-elements.md
+  no-qualifying-elements: 0
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-trailing-whitespace.md
+  no-trailing-whitespace: 0
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-trailing-zero.md
+  no-trailing-zero: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-universal-selectors.md
+  no-universal-selectors: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-url-domains.md
+  no-url-domains: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-url-protocols.md
+  no-url-protocols: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-vendor-prefixes.md
+  no-vendor-prefixes: 1
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/one-declaration-per-line.md
+  one-declaration-per-line: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/property-sort-order.md
+  property-sort-order: 0
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/property-units.md
+  property-units: 1
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/pseudo-element.md
+  pseudo-element: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/quotes.md
+  quotes:
+    - 1
+    - style: single
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/shorthand-values.md
+  shorthand-values: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/single-line-per-selector.md
+  single-line-per-selector: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/space-after-bang.md
+  space-after-bang: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/space-after-colon.md
+  space-after-colon: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/space-after-comma.md
+  space-after-comma: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/space-around-operator.md
+  space-around-operator: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/space-before-bang.md
+  space-before-bang: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/space-before-brace.md
+  space-before-brace: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/space-before-colon.md
+  space-before-colon:
+    - 2
+    - include: false
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/space-between-parens.md
+  space-between-parens:
+    - 2
+    - include: false
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/trailing-semicolon.md
+  trailing-semicolon: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/url-quotes.md
+  url-quotes: 2
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/variable-for-property.md
+  variable-for-property:
+    - 1
+    -
+      properties:
+        - content
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/variable-name-format.md
+  variable-name-format: 0
+  # https://github.com/sasstools/sass-lint/blob/master/docs/rules/zero-unit.md
+  zero-unit:
+    - 2
+    - include: false
