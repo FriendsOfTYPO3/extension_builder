@@ -80,12 +80,13 @@ Element.prototype.parents = function (selector) {
   /**
    * @param {Element} parentEl
    */
-  inputEx.Group.prototype.renderFields = function (parentEl) {
+  inputEx.Group.prototype.renderFields = function(parentEl) {
     renderFields.call(this, parentEl);
-    parentEl.querySelectorAll('fieldset select[name="relationType"]').forEach(function (element, i) {
+    var selectElements = parentEl.querySelectorAll('fieldset select[name=relationType]');
+    for (var i = 0; i < selectElements.length; i++) {
       // trigger options rendering & enabling for relationType selectors
-      addFieldsetClass(element);
-    });
+      addFieldsetClass(selectElements.item(i));
+    }
   };
 
   inputEx.SelectField.prototype.onChange = function (evt) {
@@ -96,15 +97,15 @@ Element.prototype.parents = function (selector) {
    * add the selected propertyType as classname to all propertyGroup fieldsets
    */
   WireIt.WiringEditor.prototype.onPipeLoaded = function () {
-    var propertyTypeSelects = document.querySelectorAll('.propertyGroup select');
-    if (propertyTypeSelects.length > 0) {
-      propertyTypeSelects.forEach(function (el, i) {
+    var propertyTypeSelects = $('.propertyGroup select');
+    if (propertyTypeSelects) {
+      propertyTypeSelects.each(function (index, el) {
         addFieldsetClass(el);
       });
     }
-    var relationTypeSelects = document.querySelectorAll('.relationGroup select');
-    if (relationTypeSelects.length > 0) {
-      relationTypeSelects.forEach(function (el, i) {
+    var relationTypeSelects = $('.relationGroup select');
+    if (relationTypeSelects) {
+      relationTypeSelects.each(function (index, el) {
         addFieldsetClass(el);
       });
     }
