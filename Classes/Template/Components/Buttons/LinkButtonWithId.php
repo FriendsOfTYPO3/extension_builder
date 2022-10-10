@@ -22,6 +22,11 @@ use TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton;
 class LinkButtonWithId extends LinkButton
 {
     /**
+     * id attribute of the link
+     */
+    protected string $id = '';
+
+    /**
      * Get type
      * Pretend that we are a link button to make the button valid
      */
@@ -29,11 +34,6 @@ class LinkButtonWithId extends LinkButton
     {
         return LinkButton::class;
     }
-
-    /**
-     * id attribute of the link
-     */
-    protected string $id = '';
 
     public function getId(): string
     {
@@ -75,7 +75,7 @@ class LinkButtonWithId extends LinkButton
         }
 
         return '<a ' . $attributesString . '>'
-            . $this->getIcon()->render() . $labelText // removed htmlspecialchars on purpose!
-            . '</a>';
+            . $this->getIcon()->render() . htmlspecialchars($labelText)
+        . '</a>';
     }
 }

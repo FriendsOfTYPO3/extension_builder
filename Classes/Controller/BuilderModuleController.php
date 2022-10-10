@@ -27,7 +27,9 @@ use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Template\Components\Buttons\LinkButtonWithId;
 use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
+use JsonException;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
@@ -49,7 +51,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class BuilderModuleController extends ActionController
 {
-
     public function __construct(
         FileGenerator $fileGenerator,
         IconFactory $iconFactory,
@@ -130,11 +131,10 @@ class BuilderModuleController extends ActionController
     public function domainmodellingAction(): ResponseInterface
     {
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $this->moduleTemplate->setBodyTag('<body class="yui-skin-sam">');
         $this->moduleTemplate->setTitle('Extension Builder');
 
-        $this->addMainMenu('domainmodelling');
-        $this->addMainMenu('testaction');
+        // $this->addMainMenu('domainmodelling');
+        // $this->addMainMenu('testaction');
         $this->addCurrentExtensionPath();
 
         $this->addLeftButtons();
@@ -169,18 +169,57 @@ class BuilderModuleController extends ActionController
         return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
 
+    /**
+     * @return ResponseInterface
+     * @throws \TYPO3\CMS\Core\Package\Exception
+     * @throws \TYPO3\CMS\Core\Resource\Exception\InvalidFileException
+     */
+    public function helpAction() {
+        $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+        $this->moduleTemplate->setTitle('Extension Builder');
+
+        // $this->addMainMenu('domainmodelling');
+        // $this->addMainMenu('testaction');
+        $this->addCurrentExtensionPath();
+
+        $this->addLeftButtons('help');
+        // $this->addRightButtons();
+
+        $this->addAssets();
+
+        $this->pageRenderer->addInlineSettingArray(
+            'extensionBuilder',
+            ['publicResourcesUrl' => PathUtility::getPublicResourceWebPath('EXT:extension_builder/Resources/Public')]
+        );
+
+        $this->setLocallangSettings();
+
+        $initialWarnings = [];
+        if (!$this->extensionService->isStoragePathConfigured()) {
+            $initialWarnings[] = ExtensionService::COMPOSER_PATH_WARNING;
+        }
+        $this->view->assignMultiple([
+            'initialWarnings' => $initialWarnings,
+            'currentVersion' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getExtensionVersion($this->request->getControllerExtensionKey())
+        ]);
+        $this->pageRenderer->addInlineSetting(
+            'extensionBuilder.publicResourceWebPath',
+            'core',
+            PathUtility::getPublicResourceWebPath('EXT:core/Resources/Public/')
+        );
+        $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', ['firstTime' => 0]);
+
+        $this->moduleTemplate->setContent($this->view->render());
+
+        return $this->htmlResponse($this->moduleTemplate->renderContent());
+    }
+
+
     protected function addMainMenu(string $currentAction): void
     {
         $menu = $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
         $menu->setIdentifier('ExtensionBuilderMainModuleMenu');
 
-        // Define the select menu
-       // $menu->addMenuItem(
-       //     $menu->makeMenuItem()
-       //         ->setTitle('Introduction')
-       //         ->setHref($this->uriBuilder->uriFor('index'))
-       //         ->setActive($currentAction === 'index')
-       // );
         $menu->addMenuItem(
             $menu->makeMenuItem()
                 ->setTitle('Domain Modelling')
@@ -199,70 +238,68 @@ class BuilderModuleController extends ActionController
         // TODO
     }
 
-    protected function addLeftButtons(): void
+    protected function addLeftButtons(string $action = 'domainmodelling'): void
     {
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
-        $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-            ->setIcon($this->iconFactory->getIcon('actions-folder', Icon::SIZE_SMALL))
-            ->setTitle('Open extension')
-            ->setShowLabelText(true)
-            ->setId('loadExtension-button')
-            ->setHref('#');
-        $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
+        if($action == 'domainmodelling') {
+            // Add buttons for default domainmodelling page
+            $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+                ->setIcon($this->iconFactory->getIcon('actions-folder', Icon::SIZE_SMALL))
+                ->setTitle('Open extension')
+                ->setShowLabelText(true)
+                ->setId('loadExtension-button')
+                ->setHref('#');
+            $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
 
-        $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-            ->setIcon($this->iconFactory->getIcon('actions-template-new', Icon::SIZE_SMALL))
-            ->setTitle('New extension')
-            ->setShowLabelText(true)
-            ->setId('newExtension-button')
-            ->setHref('#');
-        $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
+            $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+                ->setIcon($this->iconFactory->getIcon('actions-template-new', Icon::SIZE_SMALL))
+                ->setTitle('New extension')
+                ->setShowLabelText(true)
+                ->setId('newExtension-button')
+                ->setHref('#');
+            $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
 
-        $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-            ->setIcon($this->iconFactory->getIcon('actions-save', Icon::SIZE_SMALL))
-            ->setTitle('Save extension')
-            ->setShowLabelText(true)
-            ->setId('saveExtension-button')
-            ->setHref('#');
-        $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
+            $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+                ->setIcon($this->iconFactory->getIcon('actions-save', Icon::SIZE_SMALL))
+                ->setTitle('Save extension')
+                ->setShowLabelText(true)
+                ->setId('saveExtension-button')
+                ->setHref('#');
+            $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
+        } else if ($action === 'help') {
+            // Add buttons for help page
+            $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+                ->setIcon($this->iconFactory->getIcon('actions-view-go-back', Icon::SIZE_SMALL))
+                ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.goBack'))
+                ->setShowLabelText(true)
+                ->setHref($this->uriBuilder->uriFor('domainmodelling'));
+            $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
+        }
+
     }
 
     protected function addRightButtons(): void
     {
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
-        $this->registerAdvancedOptionsButtonToButtonBar($buttonBar, ButtonBar::BUTTON_POSITION_RIGHT, 1);
-        $this->registerHelpButtonToButtonBar($buttonBar, ButtonBar::BUTTON_POSITION_RIGHT, 2);
-    }
-
-    protected function registerHelpButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void
-    {
-        $helpButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-            ->setIcon($this->iconFactory->getIcon('module-help', Icon::SIZE_SMALL))
-            ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:showHelp'))
-            ->setId('showHelp')
-            ->setHref('#')
-            ->setClasses('t3js-modal-trigger')
-            ->setDataAttributes([
-                'severity' => 'info',
-                'bs-content' => $this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:helpText'),
-                'title' => $this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:help'),
-            ])
-            ->setShowLabelText(true);
-
-        $buttonBar->addButton($helpButton, $position, $group);
-    }
-
-    protected function registerAdvancedOptionsButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void
-    {
         $advancedOptionsButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
             ->setIcon($this->iconFactory->getIcon('actions-options', Icon::SIZE_SMALL))
             ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:advancedOptions'))
             ->setId('toggleAdvancedOptions')
             ->setHref('#')
             ->setShowLabelText(true);
-        $buttonBar->addButton($advancedOptionsButton, $position, $group);
+        $buttonBar->addButton($advancedOptionsButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
+
+        $helpButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            ->setIcon($this->iconFactory->getIcon('module-help', Icon::SIZE_SMALL))
+            ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:showHelp'))
+            ->setId('showHelp')
+            // ->setHref($this->uriBuilder->uriFor('help'))
+            ->setHref('#')
+            ->setShowLabelText(true);
+
+        $buttonBar->addButton($helpButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);
     }
 
     protected function getLanguageService(): LanguageService
@@ -272,76 +309,20 @@ class BuilderModuleController extends ActionController
 
     protected function addAssets(): void
     {
-        // SECTION: JAVASCRIPT FILES
-        // YUI Basis Files
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/utilities/utilities.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/resize/resize-min.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/layout/layout-min.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/container/container-min.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/json/json-min.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/button/button-min.js');
 
-        // YUI-RPC
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui-rpc.js');
+        // Load sources for react js app
+        // $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/Sources/App.js');
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/main.css');
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/extensionbuilder.css');
 
-        // InputEx with wirable options
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/inputex.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Field.js');
+        // Load ReactJS -> not needed at the moment because it is shipped inside the bundled JS
+        // $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/Contrib/react.js');
+        // $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/Contrib/react-dom.js');
 
-        // extended fields for enabling unique ids
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extended/ListField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extended/Group.js');
-
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/inputex/WirableField-beta.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Visus.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/StringField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/Textarea.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/SelectField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/EmailField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/UrlField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/CheckBox.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/InPlaceEdit.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/MenuField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/TypeField.js');
-
-        // WireIt
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/WireIt.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/CanvasElement.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Wire.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Terminal.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/DD.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/DDResize.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Container.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/ImageContainer.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Layer.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/inputex/FormContainer-beta.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/LayerMap.js');
-
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/WiringEditor.js');
-
-        // Extbase Modelling definition
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extbaseModeling.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/layout.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extensionProperties.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/modules/modelObject.js');
-
-        // collapsible forms in relations
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/modules/extendedModelObject.js');
-
-        // SECTION: CSS Files
-        // YUI CSS
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/reset-fonts-grids/reset-fonts-grids.css');
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/assets/skins/sam/skin.css');
-
-        // InputEx CSS
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/css/inputEx.css');
-
-        // WireIt CSS
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/css/WireIt.css');
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/css/WireItEditor.css');
-
-        // Custom CSS
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extbaseModeling.css');
+        // Load custom js
+        $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/main.js');
+        $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/496.chunk.js');
+        $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/extensionbuilder.js');
     }
 
     /**
@@ -376,9 +357,21 @@ class BuilderModuleController extends ActionController
      * Main entry point for the buttons in the Javascript frontend.
      *
      * @return ResponseInterface json encoded array
+     * @throws JsonException
      */
-    public function dispatchRpcAction(): ResponseInterface
+    public function dispatchRpcAction(ServerRequestInterface $request): ResponseInterface
     {
+        $this->fileGenerator->setSettings($this->extensionBuilderSettings);
+
+        $data = $request->getQueryParams()['input'] ?? null;
+        $response = $this->responseFactory->createResponse()
+            ->withHeader('Content-Type', 'application/json; charset=utf-8');
+        $response->getBody()->write(json_encode(['result' => json_encode($data)], JSON_THROW_ON_ERROR));
+        // add status code to response
+        // return $response;
+
+
+
         try {
             $this->extensionBuilderConfigurationManager->parseRequest();
             $subAction = $this->extensionBuilderConfigurationManager->getSubActionFromRequest();
@@ -400,9 +393,38 @@ class BuilderModuleController extends ActionController
             }
         } catch (\Exception $e) {
             $response = ['error' => $e->getMessage()];
+            // $response = $response->withStatus(404);
         }
+
+        // $response = $response->withStatus(200);
         return $this->jsonResponse(json_encode($response));
+
+
+        /*
+
+        if ($input === null) {
+            throw new \InvalidArgumentException('Please provide a number', 1580585107);
+        }
+
+        $result = $input ** 2;
+
+        $response = $this->responseFactory->createResponse()
+            ->withHeader('Content-Type', 'application/json; charset=utf-8');
+        $response->getBody()->write(json_encode(['result' => $result], JSON_THROW_ON_ERROR));
+        // add status code to response
+        $response = $response->withStatus(500);
+        return $response;
+         */
+        // return Response with success message
+        // return $this->jsonResponse(json_encode(['error' => 'Action dispatched.'], 300));
+// our previous computation
+        // $response = $this->responseFactory->createResponse()->withHeader('Content-Type', 'application/json; charset=utf-8');
+        // $response->getBody()->write(json_encode(['result' => 'test'], JSON_THROW_ON_ERROR));
+        // return $response;
+
+
     }
+
 
     /**
      * Generate the code files according to the transferred JSON configuration.
@@ -490,7 +512,7 @@ class BuilderModuleController extends ActionController
                     // this would result in a total overwrite so we create one and give a warning
                     $this->extensionBuilderConfigurationManager->createInitialSettingsFile(
                         $extension,
-                        $this->extensionBuilderSettings['codeTemplateRootPaths.']
+                        $this->extensionBuilderSettings['codeTemplateRootPaths']
                     );
                     $extensionPath = Environment::isComposerMode() ? 'packages/' : 'typo3conf/ext/';
                     return [
@@ -608,4 +630,21 @@ class BuilderModuleController extends ActionController
     {
         return $GLOBALS['BE_USER'];
     }
+
+    // public function ajaxTestingAction(ServerRequestInterface $request): ResponseInterface
+    // {
+    //     $input = $request->getQueryParams()['input'] ?? null;
+    //     if ($input === null) {
+    //         throw new \InvalidArgumentException('Please provide a number', 1580585107);
+    //     }
+//
+    //     $result = $input ** 2;
+//
+    //     $response = $this->responseFactory->createResponse()
+    //         ->withHeader('Content-Type', 'application/json; charset=utf-8');
+    //     $response->getBody()->write(json_encode(['result' => $result], JSON_THROW_ON_ERROR));
+    //     // add status code to response
+    //     $response = $response->withStatus(500);
+    //     return $response;
+    // }
 }

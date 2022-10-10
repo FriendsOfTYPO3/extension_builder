@@ -173,15 +173,6 @@ abstract class AbstractProperty
     }
 
     /**
-     * @return bool true (if property is of type relation any to many)
-     * @deprecated Use `!instanceof ZeroToManyRelation` instead
-     */
-    public function isZeroToManyRelation(): bool
-    {
-        return false;
-    }
-
-    /**
      * @return bool true (if property is of type relation)
      */
     public function isRelation(): bool

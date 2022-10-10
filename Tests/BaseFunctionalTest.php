@@ -125,8 +125,8 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
 
         $this->fileGenerator->setSettings(
             [
-                'codeTemplateRootPaths.' => [Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/'],
-                'codeTemplatePartialPaths.' => [Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials'],
+                'codeTemplateRootPaths' => [Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/'],
+                'codeTemplatePartialPaths' => [Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials'],
                 'extConf' => [
                     'enableRoundtrip' => '1'
                 ]

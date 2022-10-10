@@ -1,0 +1,74 @@
+@import './styles/index';
+
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+#left-column {
+    height: 100vh;
+    z-index: 1;
+    width: 400px;
+    overflow-y: auto;
+    transition: opacity 0.5s ease;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#left-column::-webkit-scrollbar {
+    display: none;
+}
+
+#right-column {
+    // background-color: green;
+    height: 100vh;
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    overflow-y: hidden;
+    transition: left 0.5s ease, width 0.5s ease;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+#btn-sidebar-collapse {
+    z-index: 100;
+    top: 8px;
+    position: fixed;
+    transition: left 0.5s ease;
+    color: $dark;
+    background-color: $super-light;
+    border-color: $super-light;
+}
+
+#btn-sidebar-collapse.collapsed {
+    left: 20px;
+}
+
+#btn-sidebar-collapse.expanded {
+    left: 420px;
+}
+

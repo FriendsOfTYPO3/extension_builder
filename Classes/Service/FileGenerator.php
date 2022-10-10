@@ -131,13 +131,13 @@ class FileGenerator
             $this->roundTripEnabled = true;
             $this->roundTripService->initialize($extension);
         }
-        if (isset($this->settings['codeTemplateRootPaths.'])) {
-            $this->codeTemplateRootPaths = $this->settings['codeTemplateRootPaths.'];
+        if (isset($this->settings['codeTemplateRootPaths'])) {
+            $this->codeTemplateRootPaths = $this->settings['codeTemplateRootPaths'];
         } else {
             throw new Exception('No codeTemplateRootPath configured');
         }
-        if (isset($this->settings['codeTemplatePartialPaths.'])) {
-            $this->codeTemplatePartialPaths = $this->settings['codeTemplatePartialPaths.'];
+        if (isset($this->settings['codeTemplatePartialPaths'])) {
+            $this->codeTemplatePartialPaths = $this->settings['codeTemplatePartialPaths'];
         } else {
             throw new Exception('No codeTemplatePartialPaths configured');
         }
@@ -168,6 +168,8 @@ class FileGenerator
         $this->generatePluginFiles();
 
         $this->generateIconsFile();
+
+        $this->generateModulesFile();
 
         $this->copyStaticFiles();
 
@@ -271,6 +273,29 @@ class FileGenerator
             $this->writeFile($this->extensionDirectory . 'Configuration/Icons.php', $fileContents);
         } catch (Exception $e) {
             throw new Exception('Could not write Configuration/Icons.php. Error: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function generateModulesFile(): void
+    {
+        if (!$this->extension->hasBackendModules()) {
+            return;
+        }
+        try {
+            GeneralUtility::mkdir_deep($this->extensionDirectory . 'Configuration/Backend');
+
+            $fileContents = $this->renderTemplate(
+                'Configuration/Backend/Modules.phpt',
+                [
+                    'extension' => $this->extension
+                ]
+            );
+            $this->writeFile($this->extensionDirectory . 'Configuration/Backend/Modules.php', $fileContents);
+        } catch (Exception $e) {
+            throw new Exception('Could not write Configuration/Backend/Modules.php. Error: ' . $e->getMessage());
         }
     }
 

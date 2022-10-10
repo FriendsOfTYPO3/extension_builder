@@ -1,0 +1,19 @@
+footer {
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+footer ul {
+    margin-bottom: 0;
+}
+
+footer ul li {
+    margin-right: 20px;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+}
+
+footer ul li:last-child {
+    margin-right: 0;
+}
