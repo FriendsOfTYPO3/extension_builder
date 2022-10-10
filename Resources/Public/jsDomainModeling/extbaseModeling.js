@@ -37,21 +37,25 @@ Element.prototype.parents = function (selector) {
     if (YAHOO.util.Dom.get(selectElement).parentNode.classList.contains('isDependant')) {
       return;
     }
-    var fieldset = $(selectElement).parents('fieldset').first();
 
+    var fieldSets = selectElement.parents('fieldset');
+    if (fieldSets.length === 0) {
+      return;
+    }
     if (selectElement.name === 'relationType') {
       // relations
-      var fieldSets = selectElement.parents('fieldset');
-      if (fieldSets.length === 0) {
+      var fieldSet = fieldSets[0];
+      var outerFieldSets = fieldSet.parents('fieldset');
+      if (outerFieldSets.length === 0) {
         return;
       }
-      fieldset = $(fieldset).parents('fieldset').first();
-      var renderTypeSelect = fieldset.find("select[name='renderType']").first();
+      fieldSet = outerFieldSets[0];
+      var renderTypeSelect = fieldSet.querySelectorAll('select[name="renderType"]')[0];
       updateRenderTypeOptions(selectElement.value, renderTypeSelect);
-    }
 
-    fieldset.attr('class', '');
-    fieldset.addClass(selectElement.value);
+      fieldSet.classList.value = '';
+      fieldSet.classList.add(selectElement.value);
+    }
   }
 
   /**
@@ -59,34 +63,35 @@ Element.prototype.parents = function (selector) {
    * @param {Element} renderTypeSelect
    */
   function updateRenderTypeOptions (selectedRelationType, renderTypeSelect) {
-    renderTypeSelect.find("option").hide();
+    renderTypeSelect.querySelectorAll('option').forEach(function (option, i) {
+      option.style.display = 'none';
+    });
     var optionValueMap = {
-      'zeroToOne': ["selectSingle", "selectMultipleSideBySide", "inline"],
-      'manyToOne': ["selectSingle", "selectMultipleSideBySide"],
-      'zeroToMany': ["inline", "selectMultipleSideBySide"],
-      'manyToMany': ["selectMultipleSideBySide", "selectSingleBox", "selectCheckBox"]
+      'zeroToOne': ['selectSingle', 'selectMultipleSideBySide', 'inline'],
+      'manyToOne': ['selectSingle', 'selectMultipleSideBySide'],
+      'zeroToMany': ['inline', 'selectMultipleSideBySide'],
+      'manyToMany': ['selectMultipleSideBySide', 'selectSingleBox', 'selectCheckBox']
     };
     var validOptions = optionValueMap[selectedRelationType];
-
-    $.each(validOptions, function(i, e) {
-      renderTypeSelect.find("option[value='" + e + "']").show();
+    validOptions.forEach(function (e, i) {
+      renderTypeSelect.querySelectorAll('option[value="' + e + '"]').forEach(function (option, i) {
+        option.style.display = 'block';
+      });
     });
-    if (validOptions.indexOf(renderTypeSelect.val()) < 0) {
-      renderTypeSelect.val(validOptions[0]);
+    if (validOptions.indexOf(renderTypeSelect.value) < 0) {
+      renderTypeSelect.value = validOptions[0];
     }
-
   }
 
   /**
    * @param {Element} parentEl
    */
-  inputEx.Group.prototype.renderFields = function(parentEl) {
+  inputEx.Group.prototype.renderFields = function (parentEl) {
     renderFields.call(this, parentEl);
-    var selectElements = parentEl.querySelectorAll('fieldset select[name=relationType]');
-    for (var i = 0; i < selectElements.length; i++) {
+    parentEl.querySelectorAll('fieldset select[name="relationType"]').forEach(function (element, i) {
       // trigger options rendering & enabling for relationType selectors
-      addFieldsetClass(selectElements.item(i));
-    }
+      addFieldsetClass(element);
+    });
   };
 
   inputEx.SelectField.prototype.onChange = function (evt) {
@@ -97,15 +102,15 @@ Element.prototype.parents = function (selector) {
    * add the selected propertyType as classname to all propertyGroup fieldsets
    */
   WireIt.WiringEditor.prototype.onPipeLoaded = function () {
-    var propertyTypeSelects = $('.propertyGroup select');
-    if (propertyTypeSelects) {
-      propertyTypeSelects.each(function (index, el) {
+    var propertyTypeSelects = document.querySelectorAll('.propertyGroup select');
+    if (propertyTypeSelects.length > 0) {
+      propertyTypeSelects.forEach(function (el, i) {
         addFieldsetClass(el);
       });
     }
-    var relationTypeSelects = $('.relationGroup select');
-    if (relationTypeSelects) {
-      relationTypeSelects.each(function (index, el) {
+    var relationTypeSelects = document.querySelectorAll('.relationGroup select');
+    if (relationTypeSelects.length > 0) {
+      relationTypeSelects.forEach(function (el, i) {
         addFieldsetClass(el);
       });
     }
