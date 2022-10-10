@@ -59,24 +59,22 @@ Element.prototype.parents = function (selector) {
    * @param {Element} renderTypeSelect
    */
   function updateRenderTypeOptions (selectedRelationType, renderTypeSelect) {
-    renderTypeSelect.querySelectorAll('option').forEach(function (option, i) {
-      option.style.display = 'none';
-    });
+    renderTypeSelect.find("option").hide();
     var optionValueMap = {
-      'zeroToOne': ['selectSingle', 'selectMultipleSideBySide', 'inline'],
-      'manyToOne': ['selectSingle', 'selectMultipleSideBySide'],
-      'zeroToMany': ['inline', 'selectMultipleSideBySide'],
-      'manyToMany': ['selectMultipleSideBySide', 'selectSingleBox', 'selectCheckBox']
+      'zeroToOne': ["selectSingle", "selectMultipleSideBySide", "inline"],
+      'manyToOne': ["selectSingle", "selectMultipleSideBySide"],
+      'zeroToMany': ["inline", "selectMultipleSideBySide"],
+      'manyToMany': ["selectMultipleSideBySide", "selectSingleBox", "selectCheckBox"]
     };
     var validOptions = optionValueMap[selectedRelationType];
-    validOptions.forEach(function (e, i) {
-      renderTypeSelect.querySelectorAll('option[value="' + e + '"]').forEach(function (option, i) {
-        option.style.display = 'block';
-      });
+
+    $.each(validOptions, function(i, e) {
+      renderTypeSelect.find("option[value='" + e + "']").show();
     });
-    if (validOptions.indexOf(renderTypeSelect.value) < 0) {
-      renderTypeSelect.value = validOptions[0];
+    if (validOptions.indexOf(renderTypeSelect.val()) < 0) {
+      renderTypeSelect.val(validOptions[0]);
     }
+
   }
 
   /**
