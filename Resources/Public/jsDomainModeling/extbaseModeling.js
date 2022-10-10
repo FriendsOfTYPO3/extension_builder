@@ -37,21 +37,25 @@ Element.prototype.parents = function (selector) {
     if (YAHOO.util.Dom.get(selectElement).parentNode.classList.contains('isDependant')) {
       return;
     }
-    var fieldset = $(selectElement).parents('fieldset').first();
 
+    var fieldSets = selectElement.parents('fieldset');
+    if (fieldSets.length === 0) {
+      return;
+    }
     if (selectElement.name === 'relationType') {
       // relations
-      var fieldSets = selectElement.parents('fieldset');
-      if (fieldSets.length === 0) {
+      var fieldSet = fieldSets[0];
+      var outerFieldSets = fieldSet.parents('fieldset');
+      if (outerFieldSets.length === 0) {
         return;
       }
-      fieldset = $(fieldset).parents('fieldset').first();
-      var renderTypeSelect = fieldset.find("select[name='renderType']").first();
+      fieldSet = outerFieldSets[0];
+      var renderTypeSelect = fieldSet.querySelectorAll('select[name="renderType"]')[0];
       updateRenderTypeOptions(selectElement.value, renderTypeSelect);
-    }
 
-    fieldset.attr('class', '');
-    fieldset.addClass(selectElement.value);
+      fieldSet.classList.value = '';
+      fieldSet.classList.add(selectElement.value);
+    }
   }
 
   /**
