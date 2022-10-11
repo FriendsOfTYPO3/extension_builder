@@ -67,7 +67,7 @@ class LocalizationService implements SingletonInterface
             foreach ($domainObject->getProperties() as $property) {
                 $labelArray[$property->getLabelNamespace()] = Inflector::humanize($property->getName());
             }
-            if ($type === 'locallang_db') {
+            if ($type === 'locallang_db.xlf') {
                 $tableToMapTo = $domainObject->getMapToTable();
                 if (!empty($tableToMapTo)) {
                     $labelArray[$tableToMapTo . '.tx_extbase_type.' . $domainObject->getRecordType()] = $extension->getName() . ' ' . $domainObject->getName();
@@ -79,7 +79,7 @@ class LocalizationService implements SingletonInterface
                 }
             }
         }
-        if ($type === 'locallang_db' && $extension->hasPlugins()) {
+        if ($type === 'locallang_db.xlf' && $extension->hasPlugins()) {
             foreach ($extension->getPlugins() as $plugin) {
                 $labelArray['tx_' . $extension->getExtensionKey() . '_' . $plugin->getKey() . '.name'] = $plugin->getName();
                 $labelArray['tx_' . $extension->getExtensionKey() . '_' . $plugin->getKey() . '.description'] = $plugin->getDescription();
