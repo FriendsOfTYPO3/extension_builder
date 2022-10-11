@@ -8,7 +8,7 @@
 		<div id="modeller" class="container-fluid">
 			<div class="row">
 				<div id="modeller-left" class="col-3">
-					<h3 class="mt-3">Extension properties</h3>
+					<h3 class="mt-3 mb-2 fw-bold">Extension properties</h3>
 					<form>
 						<div class="form-group">
 							<label for="extensionName">Extension name</label>
@@ -205,10 +205,8 @@
 								</div>
 							</div>
 						</div>
-
-
 					</form>
-					</div>
+				</div>
 				<div id="modeller-main" class="col-7">
 
 					Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Sed cursus turpis vitae tortor. Vestibulum dapibus nunc ac augue. Donec sodales sagittis magna. Curabitur blandit mollis lacus.
@@ -221,16 +219,117 @@
 
 					Phasellus ullamcorper ipsum rutrum nunc. Aenean vulputate eleifend tellus. Fusce vulputate eleifend sapien. Ut varius tincidunt libero. Nunc nec neque.
 				</div>
-				<div id="modeller-right" class="col-2">
-					Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Sed cursus turpis vitae tortor. Vestibulum dapibus nunc ac augue. Donec sodales sagittis magna. Curabitur blandit mollis lacus.
+				<div id="modeller-right" class="col-2 overflow-auto">
 
-					In auctor lobortis lacus. Fusce commodo aliquam arcu. Cras varius. Pellentesque auctor neque nec urna. Pellentesque commodo eros a enim.
+					<h3 class="mt-3 mb-2 fw-bold">Object settings</h3>
+					<form>
+						<p>Collapse start</p>
+						<div class="form-group">
+							<label for="objectType">Object type</label>
+							<select class="form-select" aria-label="Select one" id="objectType" aria-describedby="objectType" required>
+								<option selected>Please select</option>
+								<option value="plugin">Entity</option>
+								<option value="module">Value object</option>
+							</select>
+						</div>
 
-					Phasellus magna. Curabitur turpis. Fusce vulputate eleifend sapien. Nam pretium turpis et arcu. Aliquam erat volutpat.
+						<div class="form-check">
+							<label class="form-check-label" for="objectDisableVersioning">
+								Disable versioning
+							</label>
+							<input class="form-check-input" type="checkbox" value="" id="objectDisableVersioning">
+						</div>
 
-					Donec id justo. In ut quam vitae odio lacinia tincidunt. Mauris turpis nunc, blandit et, volutpat molestie, porta ut, ligula. Sed in libero ut nibh placerat accumsan. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris.
+						<div class="form-check">
+							<label class="form-check-label" for="objectAggregateRoot">
+								Is aggregate root
+							</label>
+							<input class="form-check-input" type="checkbox" value="" id="objectAggregateRoot">
+						</div>
+						<div class="form-check">
+							<label class="form-check-label" for="objectEnableSorting">
+								Enable sorting?
+							</label>
+							<input class="form-check-input" type="checkbox" value="" id="objectEnableSorting">
+						</div>
+						<div class="form-check">
+							<label class="form-check-label" for="objectAddDeletedField">
+								Add deleted field
+							</label>
+							<input class="form-check-input" type="checkbox" value="" id="objectAddDeletedField">
+						</div>
+						<div class="form-check">
+							<label class="form-check-label" for="objectAddHiddenField">
+								Add hidden field
+							</label>
+							<input class="form-check-input" type="checkbox" value="" id="objectAddHiddenField">
+						</div>
+						<div class="form-check">
+							<label class="form-check-label" for="objectAddStartEndtimeFields">
+								Add start-/endtime fields
+							</label>
+							<input class="form-check-input" type="checkbox" value="" id="objectAddStartEndtimeFields">
+						</div>
+						<div class="form-check">
+							<label class="form-check-label" for="objectEnableCategorization">
+								Enable categorization
+							</label>
+							<input class="form-check-input" type="checkbox" value="" id="objectEnableCategorization">
+						</div>
 
-					Phasellus ullamcorper ipsum rutrum nunc. Aenean vulputate eleifend tellus. Fusce vulputate eleifend sapien. Ut varius tincidunt libero. Nunc nec neque.
+						<div class="form-group">
+							<label for="objectDescription">Description</label>
+							<textarea class="form-control" id="objectDescription" aria-describedby="objectDescription" placeholder="Your description for your entity" rows="5"></textarea>
+						</div>
+
+						<div class="form-group">
+							<label for="objectMapToExistingTable">Map to existing table</label>
+							<input type="input"  class="form-control" id="objectMapToExistingTable" aria-describedby="objectMapToExistingTable" placeholder="tt_content">
+						</div>
+						<div class="form-group">
+							<label for="objectExtendExistingModelClass">Extend existing model class</label>
+							<input type="input"  class="form-control" id="objectExtendExistingModelClass" aria-describedby="objectExtendExistingModelClass" placeholder="\Fully\Qualified\Classname">
+						</div>
+						<p>Collapse END</p>
+
+						<p>Collapse Start</p>
+						<div class="form-check">
+							<label class="form-check-label" for="objectActionIndex">
+								index
+							</label>
+							<input class="form-check-input" type="checkbox" value="" id="objectActionIndex">
+						</div>
+						<div class="form-check">
+							<label class="form-check-label" for="objectActionShow">
+								show
+							</label>
+							<input class="form-check-input" type="checkbox" value="" id="objectActionShow">
+						</div>
+						<div class="form-check">
+							<label class="form-check-label" for="objectNewCreate">
+								new/create
+							</label>
+							<input class="form-check-input" type="checkbox" value="" id="objectNewCreate">
+						</div>
+						<div class="form-check">
+							<label class="form-check-label" for="objectActionEditUpdate">
+								edit/update
+							</label>
+							<input class="form-check-input" type="checkbox" value="" id="objectActionEditUpdate">
+						</div>
+						<div class="form-check">
+							<label class="form-check-label" for="objectActionDelete">
+								delete
+							</label>
+							<input class="form-check-input" type="checkbox" value="" id="objectActionDelete">
+						</div>
+						<h3>Custom actions</h3>
+						<f:link.external uri="https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/Sponsoring/Index.html" class="btn btn-primary btn-sm" target="_blank">
+							<core:icon identifier="actions-extension-add" /> Add action
+						</f:link.external>
+						<p>Collapse END</p>
+
+					</form>
 				</div>
 			</div>
 		</div>

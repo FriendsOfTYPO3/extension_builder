@@ -2,15 +2,17 @@
     height: 100%;
     width: 100%;
 
-    &-right {
-        background-color: lightgray;
+    &-left {
+        text-align: left;
+        background-color: #f1f1f1;
     }
 
     &-main {
         // background-color: lightcoral;
     }
 
-    &-left {
-        // background-color: lightpink;
+    &-right {
+        text-align: left;
+        // background-color: lightgray;
     }
 }
