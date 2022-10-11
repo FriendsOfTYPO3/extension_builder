@@ -29,7 +29,8 @@ $url_0: url(background_pixel.png);
 	&.index {
 		min-height: 900px;
 		a {
-			color: $color_storm_dust_approx;
+			// color: $color_storm_dust_approx;
+            color: #0078e6;
 			font-weight: 700;
 		}
 	}
