@@ -1,11 +1,11 @@
 /.idea*
 /.Build/
 *node_modules*
-*package-lock.json
 /var/
 .DS_Store
 /composer.lock
 /.php_cs.cache
+sass-lint.html
 
 # created by rendering Documentation with Docker
 /Documentation-GENERATED-temp
