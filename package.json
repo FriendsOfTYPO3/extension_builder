@@ -1,0 +1,16 @@
+{
+    "name": "Extension-Builder",
+    "version": "1.0.0",
+    "description": "Extension-Builder",
+    "main": "public/index.php",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "sass-lint": "sass-lint -c sass-lint.yml -q '**/*.scss' --verbose"
+    },
+    "author": "Philipp Kuhlmay",
+    "license": "",
+    "devDependencies": {
+      "sass-lint": "^1.13.1"
+    },
+    "sasslintConfig": "linters/sass-lint.yml"
+  }
