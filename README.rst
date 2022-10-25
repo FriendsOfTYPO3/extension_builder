@@ -24,6 +24,8 @@
 TYPO3 Extension ``extension_builder``
 =====================================
 
+This version 7 is not supported anymore. Neither bugfixes nor securityfixes will be released.
+
 The *Extension Builder* helps you to develop a TYPO3 extension based on the
 domain-driven MVC framework `Extbase`_ and the templating engine `Fluid`_
 (the linked documentations are written for TYPO3 v8, but also applicable to
