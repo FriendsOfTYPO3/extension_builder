@@ -232,12 +232,14 @@ class BuilderModuleController extends ActionController
     {
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
-        $this->registerAdvancedOptionsButtonToButtonBar($buttonBar, ButtonBar::BUTTON_POSITION_RIGHT, 1);
-        $this->registerHelpButtonToButtonBar($buttonBar, ButtonBar::BUTTON_POSITION_RIGHT, 2);
-    }
+        $advancedOptionsButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            ->setIcon($this->iconFactory->getIcon('actions-options', Icon::SIZE_SMALL))
+            ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:advancedOptions'))
+            ->setId('toggleAdvancedOptions')
+            ->setHref('#')
+            ->setShowLabelText(true);
+        $buttonBar->addButton($advancedOptionsButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
 
-    protected function registerHelpButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void
-    {
         $helpButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
             ->setIcon($this->iconFactory->getIcon('module-help', Icon::SIZE_SMALL))
             ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:showHelp'))
@@ -246,24 +248,15 @@ class BuilderModuleController extends ActionController
             ->setClasses('t3js-modal-trigger')
             ->setDataAttributes([
                 'severity' => 'info',
-                'bs-content' => $this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:helpText'),
+//                'bs-content' => $this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:helpText'),
+                'bs-content' => 'Test<br>Test',
                 'title' => $this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:help'),
             ])
             ->setShowLabelText(true);
 
-        $buttonBar->addButton($helpButton, $position, $group);
+        $buttonBar->addButton($helpButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);
     }
 
-    protected function registerAdvancedOptionsButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void
-    {
-        $advancedOptionsButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-            ->setIcon($this->iconFactory->getIcon('actions-options', Icon::SIZE_SMALL))
-            ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:advancedOptions'))
-            ->setId('toggleAdvancedOptions')
-            ->setHref('#')
-            ->setShowLabelText(true);
-        $buttonBar->addButton($advancedOptionsButton, $position, $group);
-    }
 
     protected function getLanguageService(): LanguageService
     {
