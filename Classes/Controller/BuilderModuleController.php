@@ -248,7 +248,13 @@ class BuilderModuleController extends ActionController
                 ->setTitle('Open extension')
                 ->setShowLabelText(true)
                 ->setId('loadExtension-button')
-                ->setHref('#');
+                ->setHref('#')
+                ->setClasses('t3js-modal-trigger')
+                ->setDataAttributes([
+                    'severity' => 'primary',
+                    'bs-content' => 'This is not implemented yet',
+                    'title' => 'Information',
+                ]);
             $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
 
             $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
@@ -256,7 +262,13 @@ class BuilderModuleController extends ActionController
                 ->setTitle('New extension')
                 ->setShowLabelText(true)
                 ->setId('newExtension-button')
-                ->setHref('#');
+                ->setHref('#')
+                ->setClasses('t3js-modal-trigger')
+                ->setDataAttributes([
+                    'severity' => 'primary',
+                    'bs-content' => 'This is not implemented yet',
+                    'title' => 'Information',
+                ]);
             $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
 
             $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
@@ -264,7 +276,13 @@ class BuilderModuleController extends ActionController
                 ->setTitle('Save extension')
                 ->setShowLabelText(true)
                 ->setId('saveExtension-button')
-                ->setHref('#');
+                ->setHref('#')
+                ->setClasses('t3js-modal-trigger')
+                ->setDataAttributes([
+                    'severity' => 'primary',
+                    'bs-content' => 'This is not implemented yet',
+                    'title' => 'Information',
+                ]);
             $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
         } else if ($action === 'help') {
             // Add buttons for help page
@@ -282,11 +300,33 @@ class BuilderModuleController extends ActionController
     {
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
+        /*
+         This shows up a modal
+         $helpButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            ->setIcon($this->iconFactory->getIcon('module-help', Icon::SIZE_SMALL))
+            ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:showHelp'))
+            ->setId('showHelp')
+            ->setHref('#')
+            ->setClasses('t3js-modal-trigger')
+            ->setDataAttributes([
+                'severity' => 'info',
+                'bs-content' => $this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:helpText'),
+                'title' => $this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:help'),
+            ])
+            ->setShowLabelText(true);
+         */
+
         $advancedOptionsButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
             ->setIcon($this->iconFactory->getIcon('actions-options', Icon::SIZE_SMALL))
             ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:advancedOptions'))
             ->setId('toggleAdvancedOptions')
             ->setHref('#')
+            ->setClasses('t3js-modal-trigger')
+            ->setDataAttributes([
+                'severity' => 'primary',
+                'bs-content' => 'This is not implemented yet',
+                'title' => 'Information',
+            ])
             ->setShowLabelText(true);
         $buttonBar->addButton($advancedOptionsButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
 
