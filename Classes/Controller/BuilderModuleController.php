@@ -363,6 +363,9 @@ class BuilderModuleController extends ActionController
         // collapsible forms in relations
         // $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/modules/extendedModelObject.js');
 
+        // Vue JS
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/JavaScript/Contrib/vue.js');
+
         // Custom CSS
         $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/extbaseModeling.css');
     }
