@@ -29,3 +29,8 @@
 #extension-builder-footer ul li:last-child {
     margin-right: 0px
 }
+
+
+.card-footer {
+    background-color: #EEE;
+}

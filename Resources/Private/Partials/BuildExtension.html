@@ -1,0 +1,327 @@
+<div class="row">
+	<div id="modeller-left" class="col-3">
+		<h3 class="mt-3 mb-2 fw-bold">Extension properties</h3>
+		<form>
+			<div class="form-group">
+				<label for="extensionName">Extension name</label>
+				<input type="input" class="form-control" id="extensionName" aria-describedby="extensionName" placeholder="Extension title" />
+			</div>
+			<div class="form-group">
+				<label for="extensionVendorName">Vendor name</label>
+				<button type="button" class="btn btn-sm btn-link d-inline" data-bs-toggle="popover" title="Vendor name" data-bs-content="The vendor name is the first part of the new package identifier"><core:icon identifier="modulegroup-help" /></button>
+				<input type="input" class="form-control" id="extensionVendorName" placeholder="YourVendorName" >
+			</div>
+			<div class="form-group">
+				<label for="extensionKey">Extension key</label>
+				<button type="button" class="btn btn-sm btn-link d-inline" data-bs-toggle="popover" title="Extension key" data-bs-content="The extensionkey should be lowercase and without spaces. It will be the unique identifier for this extension.">
+					<core:icon identifier="modulegroup-help" />
+				</button>
+				<input type="input" class="form-control" id="extensionKey" aria-describedby="extensionKey" placeholder="your_extension_key" />
+			</div>
+			<div class="form-group">
+				<label for="extensionDescription">Description</label>
+				<textarea class="form-control" id="extensionDescription" aria-describedby="extensionDescription" placeholder="Your description for your extension." rows="5"></textarea>
+			</div>
+			<div class="form-group">
+				<label for="extensionCategory">Category</label>
+				<button type="button" class="btn btn-sm btn-link d-inline" data-bs-toggle="popover" title="Extension key" data-bs-content="The category this extension belongs to in the extension manager.">
+					<core:icon identifier="modulegroup-help" />
+				</button>
+				<select class="form-select" aria-label="Default select example" id="extensionCategory" aria-describedby="extensionCategory" required>
+					<option selected>Please select</option>
+					<option value="plugin">Frontend plugins</option>
+					<option value="module">Backend modules</option>
+					<option value="misc">Miscellaneous</option>
+					<option value="be">Backend</option>
+					<option value="fe">Frontend</option>
+					<option value="services">Services</option>
+					<option value="templates">Templates</option>
+					<option value="distribution">Distribution</option>
+					<option value="example">Examples</option>
+					<option value="doc">Documentation</option></select>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="extensionVersion">Version</label>
+				<input type="input"  class="form-control" id="extensionVersion" aria-describedby="extensionVersion" placeholder="1.0.0">
+			</div>
+
+			<div class="form-group">
+				<label for="extensionState">State</label>
+				<button type="button" class="btn btn-sm btn-link d-inline" data-bs-toggle="popover" title="Extension key" data-bs-content="The category this extension belongs to in the extension manager.">
+					<core:icon identifier="modulegroup-help" />
+				</button>
+				<select class="form-select" aria-label="Default select example" id="extensionState" aria-describedby="extensionState" required>
+					<option selected>Please select</option>
+					<option value="plugin">Alpha</option>
+					<option value="plugin">Beta</option>
+					<option value="plugin">Stable</option>
+					<option value="plugin">Experimental</option>
+					<option value="plugin">Test</option>
+				</select>
+			</div>
+			<a class="btn btn-primary" data-bs-toggle="collapse" href="#extensionMoreOptions" role="button" aria-expanded="false" aria-controls="extensionMoreOptions">
+				More options (THIS SHOULD COLLAPSE THE FOLLOWING OPTIONS)
+			</a>
+			<div class="collapse" id="extensionMoreOptions">
+				<div class="">
+					<div class="form-check">
+						<label class="form-check-label" for="extensionVersioning">
+							Disable versioning
+						</label>
+						<input class="form-check-input" type="checkbox" value="" id="extensionVersioning">
+					</div>
+					<div class="form-check">
+						<label class="form-check-label" for="extensionLocalization">
+							Disable localization
+						</label>
+						<input class="form-check-input" type="checkbox" value="" id="extensionLocalization">
+					</div>
+					<div class="form-check">
+						<label class="form-check-label" for="extensionDocumentation">
+							Generate documentation
+						</label>
+						<input class="form-check-input" type="checkbox" value="" id="extensionDocumentation">
+					</div>
+					<div class="form-check">
+						<label class="form-check-label" for="extensionGitRepo">
+							Generate empty git repository
+						</label>
+						<input class="form-check-input" type="checkbox" value="" id="extensionGitRepo">
+					</div>
+					<div class="form-check">
+						<label class="form-check-label" for="extensionEditorconfig">
+							Generate .editorconfig file
+						</label>
+						<input class="form-check-input" type="checkbox" value="" id="extensionEditorconfig">
+					</div>
+					<div class="form-group">
+						<label for="extensionSourceLanguage">Source language for .xliff Files</label>
+						<input type="input"  class="form-control" id="extensionSourceLanguage" aria-describedby="extensionVersion" placeholder="en" value="en">
+					</div>
+					<div class="form-group">
+						<label for="extensionTargetTYPO3Version">Target version</label>
+						<button type="button" class="btn btn-sm btn-link d-inline" data-bs-toggle="popover" title="Extension key" data-bs-content="The category this extension belongs to in the extension manager.">
+							<core:icon identifier="modulegroup-help" />
+						</button>
+						<select class="form-select" aria-label="Default select example" id="extensionTargetTYPO3Version" aria-describedby="extensionState" required>
+							<option selected>Please select</option>
+							<option value="plugin">TYPO3 v10</option>
+							<option value="plugin">TYPO3 v11</option>
+							<option value="plugin">TYPO3 v12</option>
+							<option value="plugin">dev-main</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="extensionDependsOn">Depends on</label>
+						<textarea class="form-control" id="extensionDependsOn" aria-describedby="extensionDependsOn" placeholder="typo3 => 11.5.0-11.5.99" rows="5"></textarea>
+					</div>
+					<p>END COLLAPSE</p>
+				</div>
+				<div class="extensionPluginsTabs">
+					<nav>
+						<div class="nav nav-tabs" id="nav-tab" role="tablist">
+							<button class="w-50 nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Frontend Plugins</button>
+							<button class="w-50 nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Backend Modules</button>
+						</div>
+					</nav>
+					<div class="tab-content pt-3" id="nav-tabContent">
+						<p>Should be generated dynamically after pressing the button</p>
+						<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+							<div class="form-group">
+								<label for="extensionPluginName">Name</label>
+								<input type="input" class="form-control" id="extensionPluginName" aria-describedby="extensionPluginName">
+							</div>
+							<div class="form-group">
+								<label for="extensionPluginKey">Key</label>
+								<input type="input" class="form-control" id="extensionPluginKey" aria-describedby="extensionPluginKey">
+							</div>
+							<div class="form-group">
+								<label for="extensionPluginDescription">Description</label>
+								<textarea class="form-control" id="extensionPluginDescription" aria-describedby="extensionPluginDescription" rows="3"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="extensionPluginCachableActions">Controller actions</label>
+								<textarea class="form-control" id="extensionPluginCachableActions" aria-describedby="extensionPluginCachableActions" rows="3" placeholder="ControllerName => action1, action2"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="extensionPluginNonCachableActions">Non-Cachable actions</label>
+								<textarea class="form-control" id="extensionPluginNonCachableActions" aria-describedby="extensionPluginNonCachableActions" rows="3" placeholder="ControllerName => action1, action2"></textarea>
+							</div>
+							<f:link.external uri="https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/Sponsoring/Index.html" class="btn btn-primary btn-sm" target="_blank">
+								<core:icon identifier="actions-extension-add" /> Add plugin
+							</f:link.external>
+						</div>
+						<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+							<div class="form-group">
+								<label for="extensionModuleName">Name</label>
+								<input type="input" class="form-control" id="extensionModuleName" aria-describedby="extensionModuleName">
+							</div>
+							<div class="form-group">
+								<label for="extensionModuleKey">Key</label>
+								<input type="input" class="form-control" id="extensionModuleKey" aria-describedby="extensionModuleKey">
+							</div>
+							<div class="form-group">
+								<label for="extensionModuleDescription">Description</label>
+								<textarea class="form-control" id="extensionModuleDescription" aria-describedby="extensionModuleDescription" rows="3"></textarea>
+							</div>
+
+							<div class="form-group">
+								<label for="extensionModuleTabLabel">Tab label</label>
+								<input type="input" class="form-control" id="extensionModuleTabLabel" aria-describedby="extensionModuleTabLabel">
+							</div>
+							<div class="form-group">
+								<label for="extensionModuleMainModule">Main module</label>
+								<select class="form-select" aria-label="Default select example" id="extensionModuleMainModule" aria-describedby="extensionModuleMainModule" required>
+									<option selected>Please select</option>
+									<option value="web">web</option>
+									<option value="site">site</option>
+									<option value="file">file</option>
+									<option value="user">user</option>
+									<option value="tools">tools</option>
+									<option value="system">system</option>
+									<option value="help">help</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="extensionPluginCachableActions">Controller actions</label>
+								<textarea class="form-control" id="extensionPluginCachableActions" aria-describedby="extensionPluginCachableActions" rows="3" placeholder="ControllerName => action1, action2"></textarea>
+							</div>
+							<f:link.external uri="https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/Sponsoring/Index.html" class="btn btn-primary btn-sm" target="_blank">
+								<core:icon identifier="actions-extension-add" /> Add Module
+							</f:link.external>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div id="modeller-main" class="col-7">
+
+		Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Sed cursus turpis vitae tortor. Vestibulum dapibus nunc ac augue. Donec sodales sagittis magna. Curabitur blandit mollis lacus.
+
+		In auctor lobortis lacus. Fusce commodo aliquam arcu. Cras varius. Pellentesque auctor neque nec urna. Pellentesque commodo eros a enim.
+
+		Phasellus magna. Curabitur turpis. Fusce vulputate eleifend sapien. Nam pretium turpis et arcu. Aliquam erat volutpat.
+
+		Donec id justo. In ut quam vitae odio lacinia tincidunt. Mauris turpis nunc, blandit et, volutpat molestie, porta ut, ligula. Sed in libero ut nibh placerat accumsan. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris.
+
+		Phasellus ullamcorper ipsum rutrum nunc. Aenean vulputate eleifend tellus. Fusce vulputate eleifend sapien. Ut varius tincidunt libero. Nunc nec neque.
+	</div>
+	<div id="modeller-right" class="col-2 overflow-auto">
+
+		<h3 class="mt-3 mb-2 fw-bold">Object settings</h3>
+		<form>
+			<p>Collapse start</p>
+			<div class="form-group">
+				<label for="objectType">Object type</label>
+				<select class="form-select" aria-label="Select one" id="objectType" aria-describedby="objectType" required>
+					<option selected>Please select</option>
+					<option value="plugin">Entity</option>
+					<option value="module">Value object</option>
+				</select>
+			</div>
+
+			<div class="form-check">
+				<label class="form-check-label" for="objectDisableVersioning">
+					Disable versioning
+				</label>
+				<input class="form-check-input" type="checkbox" value="" id="objectDisableVersioning">
+			</div>
+
+			<div class="form-check">
+				<label class="form-check-label" for="objectAggregateRoot">
+					Is aggregate root
+				</label>
+				<input class="form-check-input" type="checkbox" value="" id="objectAggregateRoot">
+			</div>
+			<div class="form-check">
+				<label class="form-check-label" for="objectEnableSorting">
+					Enable sorting?
+				</label>
+				<input class="form-check-input" type="checkbox" value="" id="objectEnableSorting">
+			</div>
+			<div class="form-check">
+				<label class="form-check-label" for="objectAddDeletedField">
+					Add deleted field
+				</label>
+				<input class="form-check-input" type="checkbox" value="" id="objectAddDeletedField">
+			</div>
+			<div class="form-check">
+				<label class="form-check-label" for="objectAddHiddenField">
+					Add hidden field
+				</label>
+				<input class="form-check-input" type="checkbox" value="" id="objectAddHiddenField">
+			</div>
+			<div class="form-check">
+				<label class="form-check-label" for="objectAddStartEndtimeFields">
+					Add start-/endtime fields
+				</label>
+				<input class="form-check-input" type="checkbox" value="" id="objectAddStartEndtimeFields">
+			</div>
+			<div class="form-check">
+				<label class="form-check-label" for="objectEnableCategorization">
+					Enable categorization
+				</label>
+				<input class="form-check-input" type="checkbox" value="" id="objectEnableCategorization">
+			</div>
+
+			<div class="form-group">
+				<label for="objectDescription">Description</label>
+				<textarea class="form-control" id="objectDescription" aria-describedby="objectDescription" placeholder="Your description for your entity" rows="5"></textarea>
+			</div>
+
+			<div class="form-group">
+				<label for="objectMapToExistingTable">Map to existing table</label>
+				<input type="input"  class="form-control" id="objectMapToExistingTable" aria-describedby="objectMapToExistingTable" placeholder="tt_content">
+			</div>
+			<div class="form-group">
+				<label for="objectExtendExistingModelClass">Extend existing model class</label>
+				<input type="input"  class="form-control" id="objectExtendExistingModelClass" aria-describedby="objectExtendExistingModelClass" placeholder="\Fully\Qualified\Classname">
+			</div>
+			<p>Collapse END</p>
+
+			<p>Collapse Start</p>
+			<div class="form-check">
+				<label class="form-check-label" for="objectActionIndex">
+					index
+				</label>
+				<input class="form-check-input" type="checkbox" value="" id="objectActionIndex">
+			</div>
+			<div class="form-check">
+				<label class="form-check-label" for="objectActionShow">
+					show
+				</label>
+				<input class="form-check-input" type="checkbox" value="" id="objectActionShow">
+			</div>
+			<div class="form-check">
+				<label class="form-check-label" for="objectNewCreate">
+					new/create
+				</label>
+				<input class="form-check-input" type="checkbox" value="" id="objectNewCreate">
+			</div>
+			<div class="form-check">
+				<label class="form-check-label" for="objectActionEditUpdate">
+					edit/update
+				</label>
+				<input class="form-check-input" type="checkbox" value="" id="objectActionEditUpdate">
+			</div>
+			<div class="form-check">
+				<label class="form-check-label" for="objectActionDelete">
+					delete
+				</label>
+				<input class="form-check-input" type="checkbox" value="" id="objectActionDelete">
+			</div>
+			<h3>Custom actions</h3>
+			<f:link.external uri="https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/Sponsoring/Index.html" class="btn btn-primary btn-sm" target="_blank">
+				<core:icon identifier="actions-extension-add" /> Add action
+			</f:link.external>
+			<p>Collapse END</p>
+
+		</form>
+	</div>
+</div>
+

@@ -49,6 +49,23 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class BuilderModuleController extends ActionController
 {
+    /**
+     * Settings from various sources:
+     *
+     * - Settings configured in module.extension_builder typoscript
+     * - Module settings configured in the extension manager
+     */
+    protected array $extensionBuilderSettings = [];
+
+    /**
+     * @var ExtensionBuilderConfigurationManager
+     */
+    private ExtensionBuilderConfigurationManager $extensionBuilderConfigurationManager;
+
+    /**
+     * @var ModuleTemplate
+     */
+    private ModuleTemplate $moduleTemplate;
 
     public function __construct(
         FileGenerator $fileGenerator,
@@ -72,18 +89,6 @@ class BuilderModuleController extends ActionController
         $this->extensionValidator = $extensionValidator;
         $this->extensionRepository = $extensionRepository;
     }
-
-    private ExtensionBuilderConfigurationManager $extensionBuilderConfigurationManager;
-    private ModuleTemplate $moduleTemplate;
-
-
-    /**
-     * Settings from various sources:
-     *
-     * - Settings configured in module.extension_builder typoscript
-     * - Module settings configured in the extension manager
-     */
-    protected array $extensionBuilderSettings = [];
 
     public function injectExtensionBuilderConfigurationManager(
         ExtensionBuilderConfigurationManager $configurationManager
@@ -111,8 +116,6 @@ class BuilderModuleController extends ActionController
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setTitle('Extension Builder');
 
-        $this->addMainMenu('index');
-
         $this->view->assign('currentAction', $this->request->getControllerActionName());
 
         if (!$this->request->hasArgument('action')) {
@@ -132,8 +135,6 @@ class BuilderModuleController extends ActionController
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setTitle('Extension Builder');
 
-        // $this->addMainMenu('domainmodelling');
-        // $this->addMainMenu('testaction');
         $this->addCurrentExtensionPath();
 
         $this->addLeftButtons();
@@ -169,6 +170,7 @@ class BuilderModuleController extends ActionController
     }
 
     /**
+     * Shows the help page
      * @return ResponseInterface
      * @throws \TYPO3\CMS\Core\Package\Exception
      * @throws \TYPO3\CMS\Core\Resource\Exception\InvalidFileException
@@ -211,21 +213,6 @@ class BuilderModuleController extends ActionController
         $this->moduleTemplate->setContent($this->view->render());
 
         return $this->htmlResponse($this->moduleTemplate->renderContent());
-    }
-
-
-    protected function addMainMenu(string $currentAction): void
-    {
-        $menu = $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
-        $menu->setIdentifier('ExtensionBuilderMainModuleMenu');
-
-        $menu->addMenuItem(
-            $menu->makeMenuItem()
-                ->setTitle('Domain Modelling')
-                ->setHref($this->uriBuilder->uriFor('domainmodelling'))
-                ->setActive($currentAction === 'domainmodelling')
-        );
-        $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
     }
 
     /*
@@ -347,24 +334,10 @@ class BuilderModuleController extends ActionController
 
     protected function addAssets(): void
     {
-        // SECTION: JAVASCRIPT FILES
-        // $this->pageRenderer->loadRequireJsModule('TYPO3/CMS/EBT/ExtensionBuilder');
-
-        // extended fields for enabling unique ids
-        // $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extended/ListField.js');
-        // $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extended/Group.js');
-
-        // Extbase Modelling definition
-        // $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extbaseModeling.js');
-        // $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/layout.js');
-        // $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extensionProperties.js');
-        // $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/modules/modelObject.js');
-
-        // collapsible forms in relations
-        // $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/modules/extendedModelObject.js');
-
         // Vue JS
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/JavaScript/Contrib/vue.js');
+        ///$this->pageRenderer->loadRequireJsModule('TYPO3/CMS/Mask/Mask');
+        $this->pageRenderer->loadRequireJsModule('TYPO3/CMS/ExtensionBuilder/Contrib/vue');
+        $this->pageRenderer->loadRequireJsModule('TYPO3/CMS/ExtensionBuilder/extensionbuilder');
 
         // Custom CSS
         $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/extbaseModeling.css');

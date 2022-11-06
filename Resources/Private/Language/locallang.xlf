@@ -233,8 +233,7 @@
 				<source>Show help</source>
 			</trans-unit>
 			<trans-unit id="helpText" resname="helpText">
-				<source><![CDATA[<h1>Extension Builder</h1>\n<br>
-This page is intended to give you some overview about the workflow we suggest.
+				<source><![CDATA[<h1>Extension Builder</h1>\n<br>This page is intended to give you some overview about the workflow we suggest.
 				]]></source>
 			</trans-unit>
 			<trans-unit id="remove" resname="remove">
