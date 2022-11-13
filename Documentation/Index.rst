@@ -65,6 +65,7 @@ even if you change the extension in the graphical editor.
    InDepth/Index
    Contribution/Index
    Development/Index
+   KnownIssues/Index
 
 .. Meta Menu
 
