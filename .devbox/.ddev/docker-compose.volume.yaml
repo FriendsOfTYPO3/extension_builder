@@ -1,0 +1,6 @@
+version: '3.6'
+
+services:
+    web:
+        volumes:
+            - "../../:/var/www/html/packages/extension_builder"

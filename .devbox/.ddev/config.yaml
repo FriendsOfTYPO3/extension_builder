@@ -1,0 +1,29 @@
+name: extensionbuilder-devbox
+type: typo3
+docroot: public
+php_version: "8.0"
+webserver_type: nginx-fpm
+router_http_port: "80"
+router_https_port: "443"
+xdebug_enabled: false
+additional_hostnames: []
+additional_fqdns: []
+mariadb_version: "10.5"
+mysql_version: ""
+nfs_mount_enabled: false
+mutagen_enabled: true
+hooks:
+  post-start:
+  - exec: echo '*/1 * * * * root TYPO3_CONTEXT=Development /usr/bin/php /var/www/html/bin/typo3
+      scheduler:run' | sudo tee -a /etc/cron.d/typo3
+  - exec: sudo chmod 0600 /etc/cron.d/typo3 && sudo service cron start
+  - exec: composer install -d /var/www/html
+  # Import and upgrade Database
+  - exec: /var/www/html/build-files/import-if-empty.sh
+  - exec: /var/www/html/bin/typo3cms database:updateschema
+omit_containers: [dba, ddev-ssh-agent]
+webimage_extra_packages: [cron]
+use_dns_when_possible: true
+timezone: Europe/Berlin
+composer_version: ""
+web_environment: []
