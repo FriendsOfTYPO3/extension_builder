@@ -18,7 +18,6 @@ hooks:
       scheduler:run' | sudo tee -a /etc/cron.d/typo3
   - exec: sudo chmod 0600 /etc/cron.d/typo3 && sudo service cron start
   - exec: composer install -d /var/www/html
-  - exec: /var/www/html/bin/typo3cms install:generatepackagestates
   # Import and upgrade Database
   - exec: /var/www/html/build-files/import-if-empty.sh
   - exec: /var/www/html/bin/typo3cms database:updateschema
