@@ -12,7 +12,7 @@ jobs:
       - name: Check Commit Type
         uses: gsactions/commit-message-checker@v1
         with:
-          pattern: '^(|\[(!!!|WIP|POC|REVERT)\])\[(BUGFIX|DOCS|FEATURE|SECURITY|TASK|RELEASE)\] .+($|\n|\r|\n\r)'
+          pattern: '^(|\[(!!!|WIP|POC|REVERT)\])\[(BUGFIX|DOCS|FEATURE|SECURITY|TASK|RELEASE|DEVBOX)\] .+($|\n|\r|\n\r)'
           flags: ''
           error: 'Your first line has to contain a commit type like "[BUGFIX]" or "[TASK]" or "[FEATURE]" see https://docs.typo3.org/m/typo3/guide-contributionworkflow/master/en-us/Appendix/CommitMessage.html#commitmessage.'
       - name: Check Line Length
