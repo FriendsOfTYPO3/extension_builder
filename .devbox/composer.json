@@ -1,0 +1,45 @@
+{
+    "name": "friendsoftypo3/extension-builder-devbox",
+    "type": "project",
+    "description": "Devbox for Extension Builder",
+    "homepage": "https://github.com/FriendsOfTYPO3/extension_builder",
+    "support": {
+        "issues": "https://github.com/FriendsOfTYPO3/extension_builder/issues"
+    },
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Philipp Kuhlmay",
+            "email": "extensionbuilder@treupo.de",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "typo3/minimal": "^11.5",
+        "typo3/cms-introduction": "~4.0",
+        "typo3/cms-belog": "^10.4 || ^11.5",
+        "bk2k/bootstrap-package": "^12",
+        "helhum/typo3-console": "*",
+        "friendsoftypo3/extension-builder": "*@dev"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./packages"
+        }
+    ],
+    "config": {
+        "vendor-dir": "vendor",
+        "bin-dir": "bin",
+        "allow-plugins": {
+            "typo3/cms-composer-installers": true,
+            "typo3/class-alias-loader": true
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "web-dir": "public"
+        }
+    }
+}
