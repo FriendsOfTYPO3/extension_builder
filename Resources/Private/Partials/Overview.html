@@ -4,34 +4,90 @@
 			<h1>Extension Builder</h1>
 		</div>
 	</div>
-
 	<div class="row row-cols-1 row-cols-md-3 g-4">
-		<div class="col" v-for="item in extension" :key="item">
+		<div class="col">
 			<div class="card h-100">
 				<div class="card-body">
 					<h5 class="card-title">
-						<core:icon identifier="content-extension" />
-						{{ item.title }}
+						<core:icon identifier="content-extension"/>
+						Extbase extension
 					</h5>
-					<p class="card-text">{{ item.bodytext }}</p>
+					<p class="card-text">
+						With this tool you can create a whole extension including viewhelper, widgets and scheduler
+						tasks.
+					</p>
 					<button
 						type="button"
-						class="mt-3"
-						:class="item.buttonstyle"
+						class="mt-3 btn btn-success"
 						disabled
-						v-if="!item.linkenabled"
-					>{{ item.linktext }}
+					>Create extension
 					</button>
-					<a
-						class="mt-3"
-						:class="item.buttonstyle"
-						v-if="item.linkenabled"
-						@click="changeActiveView(item.linkhref)"
-					>{{ item.linktext }}
-					</a>
 				</div>
-				<div class="card-footer text-muted text-center" v-if="item.footertext">
-					{{ item.footertext }}
+			</div>
+		</div>
+		<div class="col">
+			<div class="card h-100">
+				<div class="card-body">
+					<h5 class="card-title">
+						<core:icon identifier="mimetypes-x-tx_scheduler_task_group"/>
+						Schuduler task
+					</h5>
+					<p class="card-text">
+						Sed lectus. Vestibulum suscipit nulla quis orci. Praesent congue erat at massa. Vestibulum suscipit
+					</p>
+					<button
+						type="button"
+						class="mt-3 btn btn-danger"
+						disabled
+					>Create schuduler task
+					</button>
+				</div>
+				<div class="card-footer text-muted text-center">
+					Coming soon
+				</div>
+			</div>
+		</div>
+		<div class="col">
+			<div class="card h-100">
+				<div class="card-body">
+					<h5 class="card-title">
+						<core:icon identifier="content-widget-chart-pie"/>
+						Widgets
+					</h5>
+					<p class="card-text">
+						Sed lectus. Vestibulum suscipit nulla quis orci. Praesent congue erat at massa. Vestibulum suscipit
+					</p>
+					<button
+						type="button"
+						class="mt-3 btn btn-danger"
+						disabled
+					>Create widgets
+					</button>
+				</div>
+				<div class="card-footer text-muted text-center">
+					Coming soon
+				</div>
+			</div>
+		</div>
+		<div class="col">
+			<div class="card h-100">
+				<div class="card-body">
+					<h5 class="card-title">
+						<core:icon identifier="module-viewpage"/>
+						Viewhelper
+					</h5>
+					<p class="card-text">
+						Sed lectus. Vestibulum suscipit nulla quis orci. Praesent congue erat at massa. Vestibulum suscipit
+					</p>
+					<button
+						type="button"
+						class="mt-3 btn btn-danger"
+						disabled
+					>Create viewhelper
+					</button>
+				</div>
+				<div class="card-footer text-muted text-center">
+					Coming soon
 				</div>
 			</div>
 		</div>
