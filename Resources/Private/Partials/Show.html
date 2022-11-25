@@ -10,15 +10,15 @@
 				<div class="collapse show" id="extensionPropertiesContent">
 					<div class="form-group">
 						<label for="extensionName" class="form-label">Extension name</label>
-						<input type="text" class="form-control" id="extensionName" aria-describedby="extensionName">
+						<input type="text" class="form-control" id="extensionName" aria-describedby="extensionName" placeholder="My new extension">
 					</div>
 					<div class="form-group">
 						<label for="vendorName" class="form-label">Vendor name (?)</label>
-						<input type="text" class="form-control" id="vendorName" aria-describedby="vendorName">
+						<input type="text" class="form-control" id="vendorName" aria-describedby="vendorName" placeholder="MyCompany">
 					</div>
 					<div class="form-group">
 						<label for="extensionKey" class="form-label">Extension key (?)</label>
-						<input type="text" class="form-control" id="extensionKey" aria-describedby="extensionKey">
+						<input type="text" class="form-control" id="extensionKey" aria-describedby="extensionKey" placeholder="my_new_extension">
 					</div>
 					<div class="form-group">
 						<label for="extensionDescription" class="form-label">Description</label>
@@ -41,11 +41,11 @@
 					</div>
 					<div class="form-group">
 						<label for="categoryCustom" class="form-label">OR custom</label>
-						<input type="text" class="form-control" id="categoryCustom" aria-describedby="categoryCustom">
+						<input type="text" class="form-control" id="categoryCustom" aria-describedby="categoryCustom" placeholder="Custom category">
 					</div>
 					<div class="form-group">
 						<label for="extensionVersion" class="form-label">Version (?)</label>
-						<input type="text" class="form-control" id="extensionVersion" aria-describedby="extensionVersion">
+						<input type="text" class="form-control" id="extensionVersion" aria-describedby="extensionVersion" placeholder="1.0.0">
 					</div>
 					<div class="form-group">
 						<label for="extensionState" class="form-label">State</label>
@@ -56,6 +56,44 @@
 							<option value="experimental">Experimental</option>
 							<option value="test">Test</option>
 						</select>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="disableVersioning">
+						<label class="form-check-label" for="disableVersioning">
+							Disable versioning
+						</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="disableLocalization">
+						<label class="form-check-label" for="disableLocalization">
+							Disable localization
+						</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="generateDocumentation">
+						<label class="form-check-label" for="generateDocumentation">
+							Generate documentation
+						</label>
+					</div>
+					<div class="form-check">
+						<input checked class="form-check-input" type="checkbox" value="" id="generateEmptyGitRepository">
+						<label class="form-check-label" for="generateEmptyGitRepository">
+							Generate empty git repository
+						</label>
+					</div>
+					<div class="form-check">
+						<input checked class="form-check-input" type="checkbox" value="" id="generateEditorconfigFile">
+						<label class="form-check-label" for="generateEditorconfigFile">
+							Generate editorconfig file
+						</label>
+					</div>
+					<div class="form-group">
+						<label for="xliffSourceLanguage" class="form-label">Source language for xliff files</label>
+						<input type="text" class="form-control" id="xliffSourceLanguage" aria-describedby="xliffSourceLanguage" placeholder="en">
+					</div>
+					<div class="form-group">
+						<label for="dependsOn" class="form-label">Depends on</label>
+						<textarea class="form-control" rows="6" id="dependsOn" aria-describedby="dependsOn">typo3 => 12.0.0-12.4.99</textarea>
 					</div>
 				</div>
 			</div>
@@ -74,7 +112,7 @@
 					</div>
 					<div class="form-group">
 						<label for="authorRole" class="form-label">Role</label>
-						<select class="form-select" aria-label="Default select example">
+						<select class="form-select" id="authorRole" aria-label="Default select example">
 							<option selected>Please choose ...</option>
 							<option value="developer">Developer</option>
 							<option value="productmanager">Product manager</option>
@@ -90,7 +128,7 @@
 						<label for="authorCompany" class="form-label">Company</label>
 						<input type="text" class="form-control" id="authorCompany" aria-describedby="authorCompany">
 					</div>
-					<button class="btn btn-success">Add new author</button>
+					<button class="btn btn-success"><core:icon identifier="actions-add" />Add new author</button>
 				</div>
 			</div>
 			<!-- END Extension authors -->
@@ -103,28 +141,26 @@
 				</a>
 				<div class="collapse" id="frontendPlugins">
 					<div class="form-group">
-						<label for="authorName" class="form-label">Author name</label>
-						<input type="text" class="form-control" id="authorName" aria-describedby="authorName">
+						<label for="pluginName" class="form-label">Name</label>
+						<input type="text" class="form-control" id="pluginName" aria-describedby="pluginName">
 					</div>
 					<div class="form-group">
-						<label for="authorRole" class="form-label">Role</label>
-						<select class="form-select" aria-label="Default select example">
-							<option selected>Please choose ...</option>
-							<option value="developer">Developer</option>
-							<option value="productmanager">Product manager</option>
-							<option value="translator">Translator</option>
-							<option value="engineer">Engineer</option>
-						</select>
+						<label for="pluginKey" class="form-label">Key</label>
+						<input type="text" class="form-control" id="pluginKey" aria-describedby="pluginKey">
 					</div>
 					<div class="form-group">
-						<label for="authorEMail" class="form-label">E-Mail</label>
-						<input type="email" class="form-control" id="authorEMail" aria-describedby="authorEMail">
+						<label for="pluginDescription" class="form-label">Description</label>
+						<textarea class="form-control" rows="6" id="pluginDescription" aria-describedby="pluginDescription"></textarea>
 					</div>
 					<div class="form-group">
-						<label for="authorCompany" class="form-label">Company</label>
-						<input type="text" class="form-control" id="authorCompany" aria-describedby="authorCompany">
+						<label for="pluginControllerActionsCachable" class="form-label">Cachable controller actions</label>
+						<textarea class="form-control" rows="6" id="pluginControllerActionsCachable" aria-describedby="pluginControllerActionsCachable" placeholder="PluginName => list,show"></textarea>
 					</div>
-					<button class="btn btn-success">Add new author</button>
+					<div class="form-group">
+						<label for="pluginControllerActionsNonCachable" class="form-label">Non-Cachable controller actions</label>
+						<textarea class="form-control" rows="6" id="pluginControllerActionsNonCachable" aria-describedby="pluginControllerActionsNonCachable" placeholder="PluginName => edit,delete,update"></textarea>
+					</div>
+					<button class="btn btn-success"><core:icon identifier="actions-add" />Add new plugin</button>
 				</div>
 			</div>
 			<!-- END Frontend plugins -->
@@ -137,28 +173,38 @@
 				</a>
 				<div class="collapse" id="backendModules">
 					<div class="form-group">
-						<label for="authorName" class="form-label">Author name</label>
-						<input type="text" class="form-control" id="authorName" aria-describedby="authorName">
+						<label for="moduleName" class="form-label">Name</label>
+						<input type="text" class="form-control" id="moduleName" aria-describedby="moduleName">
 					</div>
 					<div class="form-group">
-						<label for="authorRole" class="form-label">Role</label>
-						<select class="form-select" aria-label="Default select example">
-							<option selected>Please choose ...</option>
-							<option value="developer">Developer</option>
-							<option value="productmanager">Product manager</option>
-							<option value="translator">Translator</option>
-							<option value="engineer">Engineer</option>
+						<label for="moduleKey" class="form-label">Key</label>
+						<input type="text" class="form-control" id="moduleKey" aria-describedby="moduleKey">
+					</div>
+					<div class="form-group">
+						<label for="moduleDescription" class="form-label">Description</label>
+						<textarea class="form-control" rows="6" id="moduleDescription" aria-describedby="moduleDescription"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="moduleTabLabel" class="form-label">Tab label</label>
+						<input type="text" class="form-control" id="moduleTabLabel" aria-describedby="moduleTabLabel">
+					</div>
+					<div class="form-group">
+						<label for="moduleMainModule" class="form-label">Main module</label>
+						<select class="form-select" id="moduleMainModule" aria-label="Default select example">
+							<option value="web">Web</option>
+							<option value="site">Site</option>
+							<option value="file">File</option>
+							<option value="user">User</option>
+							<option value="tools">Tools</option>
+							<option value="system">System</option>
+							<option value="help">Help</option>
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="authorEMail" class="form-label">E-Mail</label>
-						<input type="email" class="form-control" id="authorEMail" aria-describedby="authorEMail">
+						<label for="pluginControllerActionsCachable" class="form-label">Cachable controller actions</label>
+						<textarea class="form-control" rows="6" id="pluginControllerActionsCachable" aria-describedby="pluginControllerActionsCachable" placeholder="PluginName => list,show"></textarea>
 					</div>
-					<div class="form-group">
-						<label for="authorCompany" class="form-label">Company</label>
-						<input type="text" class="form-control" id="authorCompany" aria-describedby="authorCompany">
-					</div>
-					<button class="btn btn-success">Add new author</button>
+					<button class="btn btn-success"><core:icon identifier="actions-add" />Add new module</button>
 				</div>
 			</div>
 			<!-- END Backend modules -->
