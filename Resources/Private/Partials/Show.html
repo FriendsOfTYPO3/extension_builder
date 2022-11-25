@@ -1,0 +1,173 @@
+<div class="container-fluid  pt-4 pb-4">
+	<div class="row text-start">
+		<div class="col-2">
+			<!-- Extension properties -->
+			<h4 class="mt-0 mb-2">Extension properties</h4>
+			<div class="extensionProperties">
+				<a class="btn btn-primary" data-bs-toggle="collapse" href="#extensionPropertiesContent" role="button" aria-expanded="false" aria-controls="extensionPropertiesContent">
+					Expand/Collapse properties
+				</a>
+				<div class="collapse show" id="extensionPropertiesContent">
+					<div class="form-group">
+						<label for="extensionName" class="form-label">Extension name</label>
+						<input type="text" class="form-control" id="extensionName" aria-describedby="extensionName">
+					</div>
+					<div class="form-group">
+						<label for="vendorName" class="form-label">Vendor name (?)</label>
+						<input type="text" class="form-control" id="vendorName" aria-describedby="vendorName">
+					</div>
+					<div class="form-group">
+						<label for="extensionKey" class="form-label">Extension key (?)</label>
+						<input type="text" class="form-control" id="extensionKey" aria-describedby="extensionKey">
+					</div>
+					<div class="form-group">
+						<label for="extensionDescription" class="form-label">Description</label>
+						<textarea class="form-control" id="extensionDescription" aria-describedby="extensionDescription" ></textarea>
+					</div>
+					<div class="form-group">
+						<label for="extensionCategory" class="form-label">Category</label>
+						<select class="form-select" id="extensionCategory" aria-label="Select a category">
+							<option value="frontendplugins">Frontend plugins</option>
+							<option value="backendmodules">Backend modules</option>
+							<option value="miscellaneous">Miscellaneous</option>
+							<option value="backend">Backend</option>
+							<option value="frontend">Frontend</option>
+							<option value="services">Services</option>
+							<option value="templates">Templates</option>
+							<option value="distribution">Distribution</option>
+							<option value="examples">Examples</option>
+							<option value="documentation">Documentation</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="categoryCustom" class="form-label">OR custom</label>
+						<input type="text" class="form-control" id="categoryCustom" aria-describedby="categoryCustom">
+					</div>
+					<div class="form-group">
+						<label for="extensionVersion" class="form-label">Version (?)</label>
+						<input type="text" class="form-control" id="extensionVersion" aria-describedby="extensionVersion">
+					</div>
+					<div class="form-group">
+						<label for="extensionState" class="form-label">State</label>
+						<select class="form-select" id="extensionState" aria-label="Select a category">
+							<option value="alpha">Alpha</option>
+							<option value="beta">Beta</option>
+							<option value="stable">Stable</option>
+							<option value="experimental">Experimental</option>
+							<option value="test">Test</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<!-- END Extension properties -->
+
+			<!-- Extension authors -->
+			<h4 class="mt-4 mb-2">Extension authors</h4>
+			<div class="extensionAuthors">
+				<a class="btn btn-primary" data-bs-toggle="collapse" href="#extensionAuthorsContent" role="button" aria-expanded="false" aria-controls="extensionAuthorsContent">
+					Expand/Collapse authors
+				</a>
+				<div class="collapse" id="extensionAuthorsContent">
+					<div class="form-group">
+						<label for="authorName" class="form-label">Author name</label>
+						<input type="text" class="form-control" id="authorName" aria-describedby="authorName">
+					</div>
+					<div class="form-group">
+						<label for="authorRole" class="form-label">Role</label>
+						<select class="form-select" aria-label="Default select example">
+							<option selected>Please choose ...</option>
+							<option value="developer">Developer</option>
+							<option value="productmanager">Product manager</option>
+							<option value="translator">Translator</option>
+							<option value="engineer">Engineer</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="authorEMail" class="form-label">E-Mail</label>
+						<input type="email" class="form-control" id="authorEMail" aria-describedby="authorEMail">
+					</div>
+					<div class="form-group">
+						<label for="authorCompany" class="form-label">Company</label>
+						<input type="text" class="form-control" id="authorCompany" aria-describedby="authorCompany">
+					</div>
+					<button class="btn btn-success">Add new author</button>
+				</div>
+			</div>
+			<!-- END Extension authors -->
+
+			<!-- Frontend plugins -->
+			<h4 class="mt-4 mb-2">Frontend plugins</h4>
+			<div class="frontendPlugins">
+				<a class="btn btn-primary" data-bs-toggle="collapse" href="#frontendPlugins" role="button" aria-expanded="false" aria-controls="frontendPlugins">
+					Expand/Collapse plugins
+				</a>
+				<div class="collapse" id="frontendPlugins">
+					<div class="form-group">
+						<label for="authorName" class="form-label">Author name</label>
+						<input type="text" class="form-control" id="authorName" aria-describedby="authorName">
+					</div>
+					<div class="form-group">
+						<label for="authorRole" class="form-label">Role</label>
+						<select class="form-select" aria-label="Default select example">
+							<option selected>Please choose ...</option>
+							<option value="developer">Developer</option>
+							<option value="productmanager">Product manager</option>
+							<option value="translator">Translator</option>
+							<option value="engineer">Engineer</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="authorEMail" class="form-label">E-Mail</label>
+						<input type="email" class="form-control" id="authorEMail" aria-describedby="authorEMail">
+					</div>
+					<div class="form-group">
+						<label for="authorCompany" class="form-label">Company</label>
+						<input type="text" class="form-control" id="authorCompany" aria-describedby="authorCompany">
+					</div>
+					<button class="btn btn-success">Add new author</button>
+				</div>
+			</div>
+			<!-- END Frontend plugins -->
+
+			<!-- Backend modules -->
+			<h4 class="mt-4 mb-2">Backend modules</h4>
+			<div class="backendModules">
+				<a class="btn btn-primary" data-bs-toggle="collapse" href="#backendModules" role="button" aria-expanded="false" aria-controls="backendModules">
+					Expand/Collapse modules
+				</a>
+				<div class="collapse" id="backendModules">
+					<div class="form-group">
+						<label for="authorName" class="form-label">Author name</label>
+						<input type="text" class="form-control" id="authorName" aria-describedby="authorName">
+					</div>
+					<div class="form-group">
+						<label for="authorRole" class="form-label">Role</label>
+						<select class="form-select" aria-label="Default select example">
+							<option selected>Please choose ...</option>
+							<option value="developer">Developer</option>
+							<option value="productmanager">Product manager</option>
+							<option value="translator">Translator</option>
+							<option value="engineer">Engineer</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="authorEMail" class="form-label">E-Mail</label>
+						<input type="email" class="form-control" id="authorEMail" aria-describedby="authorEMail">
+					</div>
+					<div class="form-group">
+						<label for="authorCompany" class="form-label">Company</label>
+						<input type="text" class="form-control" id="authorCompany" aria-describedby="authorCompany">
+					</div>
+					<button class="btn btn-success">Add new author</button>
+				</div>
+			</div>
+			<!-- END Backend modules -->
+		</div>
+		<div class="col-8 bg-danger vh-80">
+			<p>Here comes the sun</p>
+		</div>
+		<div class="col-2 bg-info">
+			<p>Here comes the sun</p>
+		</div>
+	</div>
+</div>

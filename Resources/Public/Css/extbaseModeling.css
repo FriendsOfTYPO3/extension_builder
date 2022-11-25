@@ -1,9 +1,13 @@
+.vh-80 {
+    height: 80vh;
+}
+
 .module-body {
     padding: 0;
 }
 
 #modeller {
-    height: 100%;
+    height: 85vh;
     width: 100%
 }
 
@@ -29,7 +33,6 @@
 #extension-builder-footer ul li:last-child {
     margin-right: 0px
 }
-
 
 .card-footer {
     background-color: #EEE;

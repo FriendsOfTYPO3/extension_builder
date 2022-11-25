@@ -138,7 +138,7 @@ class BuilderModuleController extends ActionController
         $this->addCurrentExtensionPath();
 
         $this->addLeftButtons();
-        $this->addRightButtons();
+        // $this->addRightButtons();
 
         $this->addAssets();
 
@@ -214,6 +214,48 @@ class BuilderModuleController extends ActionController
 
         return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
+    /**
+     * Shows the help page
+     * @return ResponseInterface
+     * @throws \TYPO3\CMS\Core\Package\Exception
+     * @throws \TYPO3\CMS\Core\Resource\Exception\InvalidFileException
+     */
+    public function showAction() {
+        $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+        $this->moduleTemplate->setTitle('Create Extension');
+
+        $this->addCurrentExtensionPath();
+
+        $this->addLeftButtons('show');
+
+        $this->addAssets();
+
+        $this->pageRenderer->addInlineSettingArray(
+            'extensionBuilder',
+            ['publicResourcesUrl' => PathUtility::getPublicResourceWebPath('EXT:extension_builder/Resources/Public')]
+        );
+
+        $this->setLocallangSettings();
+
+        $initialWarnings = [];
+        if (!$this->extensionService->isStoragePathConfigured()) {
+            $initialWarnings[] = ExtensionService::COMPOSER_PATH_WARNING;
+        }
+        $this->view->assignMultiple([
+            'initialWarnings' => $initialWarnings,
+            'currentVersion' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getExtensionVersion($this->request->getControllerExtensionKey())
+        ]);
+        $this->pageRenderer->addInlineSetting(
+            'extensionBuilder.publicResourceWebPath',
+            'core',
+            PathUtility::getPublicResourceWebPath('EXT:core/Resources/Public/')
+        );
+        $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', ['firstTime' => 0]);
+
+        $this->moduleTemplate->setContent($this->view->render());
+
+        return $this->htmlResponse($this->moduleTemplate->renderContent());
+    }
 
     /*
      *
@@ -228,8 +270,16 @@ class BuilderModuleController extends ActionController
     {
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
-        if($action == 'domainmodelling') {
-            // Add buttons for default domainmodelling page
+        if($action == 'show') {
+            // Add back button
+            $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+                ->setIcon($this->iconFactory->getIcon('actions-view-go-back', Icon::SIZE_SMALL))
+                ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.goBack'))
+                ->setShowLabelText(true)
+                ->setHref($this->uriBuilder->uriFor('domainmodelling'));
+            $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
+
+            // Add buttons for default domainmodelling/show page
             $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
                 ->setIcon($this->iconFactory->getIcon('actions-folder', Icon::SIZE_SMALL))
                 ->setTitle('Open extension')
@@ -242,7 +292,7 @@ class BuilderModuleController extends ActionController
                     'bs-content' => 'This is not implemented yet',
                     'title' => 'Information',
                 ]);
-            $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
+            $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
 
             $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
                 ->setIcon($this->iconFactory->getIcon('actions-template-new', Icon::SIZE_SMALL))
@@ -270,7 +320,9 @@ class BuilderModuleController extends ActionController
                     'bs-content' => 'This is not implemented yet',
                     'title' => 'Information',
                 ]);
-            $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
+            $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
+
+            $this->addRightButtons();
         } else if ($action === 'help') {
             // Add buttons for help page
             $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
@@ -279,8 +331,11 @@ class BuilderModuleController extends ActionController
                 ->setShowLabelText(true)
                 ->setHref($this->uriBuilder->uriFor('domainmodelling'));
             $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
-        }
+        } else if($action == 'domainmodelling') {
 
+        } else {
+            DebuggerUtility::var_dump($action);
+        }
     }
 
     protected function addRightButtons(): void
