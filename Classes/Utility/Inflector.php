@@ -19,7 +19,7 @@ namespace EBT\ExtensionBuilder\Utility;
 
 use Sho_Inflect;
 
-require(__DIR__ . '/../../Resources/Private/PHP/Sho_Inflect.php');
+require(__DIR__ . '/Sho_Inflect.php');
 
 /**
  * Inflector utilities for the Extension Builder. This is a basic conversion from PHP
