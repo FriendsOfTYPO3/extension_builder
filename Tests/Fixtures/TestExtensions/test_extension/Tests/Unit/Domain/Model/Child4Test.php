@@ -1,25 +1,35 @@
 <?php
+declare(strict_types=1);
+
 namespace FIXTURE\TestExtension\Tests\Unit\Domain\Model;
 
+use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+
 /**
- * Test case.
+ * Test case
  *
  * @author John Doe <mail@typo3.com>
  */
-class Child4Test extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+class Child4Test extends UnitTestCase
 {
     /**
-     * @var \FIXTURE\TestExtension\Domain\Model\Child4
+     * @var \FIXTURE\TestExtension\Domain\Model\Child4|MockObject|AccessibleObjectInterface
      */
-    protected $subject = null;
+    protected $subject;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
-        $this->subject = new \FIXTURE\TestExtension\Domain\Model\Child4();
+
+        $this->subject = $this->getAccessibleMock(
+            \FIXTURE\TestExtension\Domain\Model\Child4::class,
+            ['dummy']
+        );
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }
@@ -27,7 +37,7 @@ class Child4Test extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     /**
      * @test
      */
-    public function getNameReturnsInitialValueForString()
+    public function getNameReturnsInitialValueForString(): void
     {
         self::assertSame(
             '',
@@ -38,21 +48,17 @@ class Child4Test extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     /**
      * @test
      */
-    public function setNameForStringSetsName()
+    public function setNameForStringSetsName(): void
     {
         $this->subject->setName('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
-            'Conceived at T3CON10',
-            'name',
-            $this->subject
-        );
+        self::assertEquals('Conceived at T3CON10', $this->subject->_get('name'));
     }
 
     /**
      * @test
      */
-    public function getFilePropertyReturnsInitialValueForFileReference()
+    public function getFilePropertyReturnsInitialValueForFileReference(): void
     {
         self::assertEquals(
             null,
@@ -63,15 +69,11 @@ class Child4Test extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     /**
      * @test
      */
-    public function setFilePropertyForFileReferenceSetsFileProperty()
+    public function setFilePropertyForFileReferenceSetsFileProperty(): void
     {
         $fileReferenceFixture = new \TYPO3\CMS\Extbase\Domain\Model\FileReference();
         $this->subject->setFileProperty($fileReferenceFixture);
 
-        self::assertAttributeEquals(
-            $fileReferenceFixture,
-            'fileProperty',
-            $this->subject
-        );
+        self::assertEquals($fileReferenceFixture, $this->subject->_get('fileProperty'));
     }
 }

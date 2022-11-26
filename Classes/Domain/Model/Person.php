@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model;
+
 /**
  * A person participating in the project somehow (i.e. as a developer).
  */
@@ -26,94 +28,60 @@ class Person
      * Extend here and in the locallang (mlang_Tx_ExtensionBuilder_domain_model_person_[rolekey from array]) to add new Roles.
      *
      * @var string[]
-     * @transient
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Transient
      */
-    protected static $ROLES = ['developer', 'product_manager'];
-    /**
-     * @var string
-     */
-    protected $name = '';
+    protected static array $ROLES = ['developer', 'product_manager'];
+    protected string $name = '';
     /**
      * TODO validation?
      *
-     * @var string
      * @see \EBT\ExtensionBuilder\Domain\Model\Person::ROLES
      */
-    protected $role = '';
-    /**
-     * @var string
-     */
-    protected $email = '';
-    /**
-     * @var string
-     */
-    protected $company = '';
+    protected string $role = '';
+    protected string $email = '';
+    protected string $company = '';
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     * @return void
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRole()
+    public function getRole(): string
     {
         return $this->role;
     }
 
-    /**
-     * @param string $role
-     * @return void
-     */
-    public function setRole($role)
+    public function setRole(string $role): self
     {
         $this->role = $role;
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     * @return void
-     */
-    public function setEmail($email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCompany()
+    public function getCompany(): string
     {
         return $this->company;
     }
 
-    /**
-     * @param string $company
-     * @return void
-     */
-    public function setCompany($company)
+    public function setCompany(string $company): self
     {
         $this->company = $company;
+        return $this;
     }
 }

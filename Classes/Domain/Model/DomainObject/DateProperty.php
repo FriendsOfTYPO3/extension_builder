@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,14 +15,19 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+
+use DateTime;
+
 class DateProperty extends AbstractProperty
 {
     /**
      * the property's default value
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $defaultValue;
+    protected static bool $isNullable = true;
 
     public function getTypeForComment(): string
     {
@@ -36,7 +41,9 @@ class DateProperty extends AbstractProperty
 
     public function getSqlDefinition(): string
     {
-        return $this->getFieldName() . ' int(11) DEFAULT \'0\' NOT NULL,';
+        return ($this->nullable)
+            ? $this->getFieldName() . ' int(11) DEFAULT NULL,'
+            : $this->getFieldName() . " int(11) NOT NULL DEFAULT '0',";
     }
 
     public function getNameToBeDisplayedInFluidTemplate(): string

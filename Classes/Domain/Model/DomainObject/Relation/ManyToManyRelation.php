@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
 
 /**
  * Creates a request an dispatches it to the controller which was specified
@@ -43,9 +45,6 @@ class ManyToManyRelation extends AnyToManyRelation
         return '\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage';
     }
 
-    /**
-     * @return bool
-     */
     public function isOfTypeObjectStorage(): bool
     {
         return true;

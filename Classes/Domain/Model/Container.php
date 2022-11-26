@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace EBT\ExtensionBuilder\Domain\Model;
 
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 use PhpParser\Node;
@@ -38,7 +40,7 @@ class Container extends AbstractObject
      */
     protected $postIncludes = [];
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\FunctionObject[]
+     * @var FunctionObject[]
      */
     protected $functions = [];
     /**
@@ -55,10 +57,9 @@ class Container extends AbstractObject
      */
     protected $postClassStatements = [];
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject[]
+     * @var ClassObject[]
      */
     protected $classes = [];
-
     /**
      * array with alias declarations
      *
@@ -70,7 +71,7 @@ class Container extends AbstractObject
     protected $aliasDeclarations = [];
 
     /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+     * @return ClassObject
      */
     public function getFirstClass()
     {
@@ -79,25 +80,23 @@ class Container extends AbstractObject
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $class
-     * @return void
+     * @param ClassObject $class
      */
-    public function addClass(ClassObject $class)
+    public function addClass(ClassObject $class): void
     {
         $this->classes[] = $class;
     }
 
     /**
      * @param array \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject[]
-     * @return void
      */
-    public function setClasses($classes)
+    public function setClasses($classes): void
     {
         $this->classes = $classes;
     }
 
     /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject[]
+     * @return ClassObject[]
      */
     public function getClasses(): array
     {
@@ -107,35 +106,27 @@ class Container extends AbstractObject
     /**
      * @param string $name
      * @param mixed $value
-     * @return void
      */
-    public function setConstant($name, $value)
+    public function setConstant($name, $value): void
     {
         $this->constants[$name] = $value;
     }
 
-    /**
-     * @return array constants
-     */
-    public function getConstants()
+    public function getConstants(): array
     {
         return $this->constants;
     }
 
     /**
-     * @param $constantName
+     * @param string $constantName
      * @return mixed
      */
-    public function getConstant($constantName)
+    public function getConstant(string $constantName)
     {
         return $this->constants[$constantName] ?? null;
     }
 
-    /**
-     * @param string $constantName
-     * @return bool true if successfully removed
-     */
-    public function removeConstant($constantName)
+    public function removeConstant(string $constantName): bool
     {
         if (isset($this->constants[$constantName])) {
             unset($this->constants[$constantName]);
@@ -146,112 +137,86 @@ class Container extends AbstractObject
 
     /**
      * @param $postInclude
-     * @return void
      */
-    public function addPostInclude($postInclude)
+    public function addPostInclude($postInclude): void
     {
         $this->postIncludes[] = $postInclude;
     }
 
-    /**
-     * @return array
-     */
-    public function getPostIncludes()
+    public function getPostIncludes(): array
     {
         return $this->postIncludes;
     }
 
     /**
      * @param $preInclude
-     * @return void
      */
-    public function addPreInclude($preInclude)
+    public function addPreInclude($preInclude): void
     {
         $this->preIncludes[] = $preInclude;
     }
 
-    /**
-     * @return array
-     */
-    public function getPreIncludes()
+    public function getPreIncludes(): array
     {
         return $this->preIncludes;
     }
 
     /**
      * @param array FunctionObject[]
-     * @return void
      */
-    public function setFunctions(array $functions)
+    public function setFunctions(array $functions): void
     {
         $this->functions = $functions;
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\FunctionObject $function
-     * @return void
+     * @param FunctionObject $function
      */
-    public function addFunction(FunctionObject $function)
+    public function addFunction(FunctionObject $function): void
     {
         $this->functions[$function->getName()] = $function;
     }
 
     /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\FunctionObject[]
+     * @return FunctionObject[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return $this->functions;
     }
 
-    /**
-     * @param string $name
-     * @return \EBT\ExtensionBuilder\Domain\Model\FunctionObject
-     */
-    public function getFunction($name)
+    public function getFunction(string $name): ?FunctionObject
     {
         return $this->functions[$name] ?? null;
     }
 
     /**
      * @param Node $postClassStatements
-     * @return void
      */
-    public function addPostClassStatements($postClassStatements)
+    public function addPostClassStatements($postClassStatements): void
     {
         $this->postClassStatements[] = $postClassStatements;
     }
 
-    /**
-     * @return array
-     */
-    public function getPostClassStatements()
+    public function getPostClassStatements(): array
     {
         return $this->postClassStatements;
     }
 
-    /**
-     * @param Node $preClassStatements
-     * @return void
-     */
-    public function addPreClassStatements($preClassStatements)
+    public function addPreClassStatements(Node $preClassStatements): void
     {
         $this->preClassStatements[] = $preClassStatements;
     }
 
-    /**
-     * @return array
-     */
-    public function getPreClassStatements()
+    public function getPreClassStatements(): array
     {
         return $this->preClassStatements;
     }
 
     /**
-     * @param string $aliasDeclaration
-     * @return void
+     * @param array $aliasDeclaration
      */
-    public function addAliasDeclaration($aliasDeclaration)
+    public function addAliasDeclaration($aliasDeclaration): void
     {
         $this->aliasDeclarations[] = $aliasDeclaration;
     }
@@ -259,7 +224,7 @@ class Container extends AbstractObject
     /**
      * @return string[]
      */
-    public function getAliasDeclarations()
+    public function getAliasDeclarations(): array
     {
         return $this->aliasDeclarations;
     }

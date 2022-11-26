@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,9 +15,12 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
 use EBT\ExtensionBuilder\Utility\Inflector;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * Pluralize a word
@@ -30,32 +33,17 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  * Output:
  * foos
- *
  */
 class PluralizeViewHelper extends AbstractViewHelper
 {
-    /**
-     * @var \EBT\ExtensionBuilder\Utility\Inflector
-     */
-    protected $inflector;
+    use CompileWithRenderStatic;
 
-    public function __construct()
-    {
-        $this->inflector = GeneralUtility::makeInstance(Inflector::class);
-    }
-
-    /**
-     * Pluralize a word
-     *
-     * @return string The pluralized string
-     */
-    public function render()
-    {
-        $content = $this->renderChildren();
-        $pluralizedContent = $this->inflector->pluralize($content);
-        if ($pluralizedContent == $content) {
-            $pluralizedContent .= 's';
-        }
-        return $pluralizedContent;
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        $content = $renderChildrenClosure();
+        return Inflector::pluralize($content);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,10 +15,13 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation;
+use EBT\ExtensionBuilder\Service\ClassBuilder;
 use EBT\ExtensionBuilder\Service\ValidationService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -27,31 +30,16 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 abstract class AbstractProperty
 {
-    /**
-     * @var string
-     */
-    protected $uniqueIdentifier = '';
+    protected ?string $uniqueIdentifier = '';
 
-    /**
-     * name of the property
-     *
-     * @var string
-     */
-    protected $name = '';
+    protected string $name = '';
 
-    /**
-     * description of property
-     *
-     * @var string
-     */
-    protected $description = '';
+    protected ?string $description = '';
 
     /**
      * whether the property is required
-     *
-     * @var bool
      */
-    protected $required = false;
+    protected bool $required = false;
 
     /**
      * property's default value
@@ -66,67 +54,45 @@ abstract class AbstractProperty
     protected $value;
 
     /**
-     * Is an upload folder required for this property
-     *
-     * @var bool
-     */
-    protected $needsUploadFolder = false;
-
-    /**
      * The domain object this property belongs to.
      *
-     * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     * @var DomainObject
      */
-    protected $class;
+    protected DomainObject $class;
 
     /**
      * is set to true, if this property was new added
-     *
-     * @var bool
      */
-    protected $new = true;
+    protected bool $new = true;
 
     /**
      * use RTE in Backend
-     *
-     * @var bool
      */
-    protected $useRTE = false;
+    protected bool $useRTE = false;
 
     /**
-     * @var string the property type of this property
+     * @var string|null the data type of this property
      */
-    protected $type = '';
+    protected ?string $type = '';
+
+    protected ?DomainObject $domainObject = null;
+
+    protected bool $nullable = false;
 
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     * @var bool define whether a property is nullable in TCA
      */
-    protected $domainObject;
+    protected static bool $isNullable = false;
 
-    /**
-     * @var bool
-     */
-    protected $excludeField = false;
+    protected bool $excludeField = false;
 
-    /**
-     * @var bool
-     */
-    protected $l10nModeExclude = false;
+    protected bool $l10nModeExclude = false;
 
-    /**
-     * @var bool
-     */
-    protected $cascadeRemove = false;
+    protected bool $cascadeRemove = false;
 
-    /**
-     * @var bool
-     */
-    protected $searchable = false;
+    protected bool $searchable = false;
 
-    /**
-     * @param string $propertyName
-     */
-    public function __construct($propertyName = '')
+    public function __construct(string $propertyName = '')
     {
         if (!empty($propertyName)) {
             $this->name = $propertyName;
@@ -136,7 +102,7 @@ abstract class AbstractProperty
     /**
      * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $class the class this property belongs to
+     * @param ClassObject $class the class this property belongs to
      */
     public function setClass(ClassObject $class): void
     {
@@ -146,28 +112,18 @@ abstract class AbstractProperty
     /**
      * Get the domain object this property belongs to.
      *
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
+     * @return DomainObject
      */
     public function getClass(): DomainObject
     {
         return $this->class;
     }
 
-    /**
-     * Get property name
-     *
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set property name
-     *
-     * @param string $name Property name
-     */
     public function setName(string $name): void
     {
         $this->name = $name;
@@ -193,29 +149,16 @@ abstract class AbstractProperty
         $this->defaultValue = $defaultValue;
     }
 
-    /**
-     * @return bool
-     */
     public function getHasDefaultValue(): bool
     {
         return isset($this->defaultValue);
     }
 
-    /**
-     * Get property uniqueIdentifier
-     *
-     * @return string
-     */
     public function getUniqueIdentifier(): string
     {
         return $this->uniqueIdentifier;
     }
 
-    /**
-     * Set property uniqueIdentifier
-     *
-     * @param string|null $uniqueIdentifier
-     */
     public function setUniqueIdentifier(?string $uniqueIdentifier): void
     {
         $this->uniqueIdentifier = $uniqueIdentifier;
@@ -317,50 +260,41 @@ abstract class AbstractProperty
      */
     abstract public function getTypeHint(): ?string;
 
-    /**
-     * true if this property is required, false otherwise.
-     *
-     * @return bool
-     */
     public function getRequired(): bool
     {
         return $this->required;
     }
 
-    /**
-     * @return bool
-     */
     public function getCascadeRemove(): bool
     {
         return $this->cascadeRemove;
     }
 
-    /**
-     * Set whether this property is required
-     *
-     * @param bool $required
-     */
-    public function setRequired($required): void
+    public function setRequired(bool $required): void
     {
         $this->required = $required;
     }
 
-    /**
-     * Set whether this property is exclude field
-     *
-     * @param bool $excludeField
-     * @return void
-     */
-    public function setExcludeField($excludeField): void
+    public function setNullable(bool $nullable): void
+    {
+        $this->nullable = $nullable;
+    }
+
+    public function getNullable(): bool
+    {
+        return $this->nullable;
+    }
+
+    public function isNullableProperty(): bool
+    {
+        return static::$isNullable;
+    }
+
+    public function setExcludeField(bool $excludeField): void
     {
         $this->excludeField = $excludeField;
     }
 
-    /**
-     * true if this property is an exclude field, false otherwise.
-     *
-     * @return bool
-     */
     public function getExcludeField(): bool
     {
         return $this->excludeField;
@@ -370,7 +304,6 @@ abstract class AbstractProperty
      * Set whether this property is l10n_mode = exclude
      *
      * @param bool $l10nModeExclude
-     * @return void
      */
     public function setL10nModeExclude($l10nModeExclude): void
     {
@@ -395,14 +328,11 @@ abstract class AbstractProperty
     public function getValidateAnnotation(): string
     {
         if ($this->required) {
-            return '@TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")';
+            return '@' . ClassBuilder::VALIDATE_ANNOTATION;
         }
         return '';
     }
 
-    /**
-     * @return string
-     */
     public function getCascadeRemoveAnnotation(): string
     {
         if ($this->cascadeRemove) {
@@ -433,6 +363,16 @@ abstract class AbstractProperty
     }
 
     /**
+     * Is this property persistable in a database?
+     *
+     * @return bool true if this property can be displayed inside a fluid template
+     */
+    public function getIsPersistable(): bool
+    {
+        return true;
+    }
+
+    /**
      * The string to be used inside object accessors to display this property.
      *
      * @return string
@@ -455,16 +395,13 @@ abstract class AbstractProperty
     /**
      * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject the domain object this property belongs to
+     * @param DomainObject $domainObject the domain object this property belongs to
      */
     public function setDomainObject(DomainObject $domainObject): void
     {
         $this->domainObject = $domainObject;
     }
 
-    /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
-     */
     public function getDomainObject(): DomainObject
     {
         return $this->domainObject;
@@ -479,52 +416,28 @@ abstract class AbstractProperty
     public function getMappingStatement(): ?string
     {
         if ($this->getFieldName() != GeneralUtility::camelCaseToLowerCaseUnderscored($this->name)) {
-            return $this->getFieldName() . '.mapOnProperty = ' . $this->name;
+            return "'" . $this->name . "' => [\n\t'fieldName' => '" . $this->getFieldName() . "'\n],";
         }
 
         return null;
     }
 
-    /**
-     * Getter for $needsUploadFolder
-     *
-     * @return bool $needsUploadFolder
-     */
-    public function getNeedsUploadFolder(): bool
-    {
-        return $this->needsUploadFolder;
-    }
-
-    /**
-     * @return bool
-     */
     public function isNew(): bool
     {
         return $this->new;
     }
 
-    /**
-     * @param bool $new
-     */
     public function setNew(bool $new): void
     {
         $this->new = $new;
     }
 
-    /**
-     * Getter for $useRTE
-     *
-     * @return bool $useRTE
-     */
     public function getUseRTE(): bool
     {
         return $this->useRTE;
     }
 
-    /**
-     * @return string
-     */
-    public function getUnqualifiedType()
+    public function getUnqualifiedType(): string
     {
         $type = $this->getTypeForComment();
         if (substr($type, 0, 1) === chr(92)) {
@@ -550,33 +463,21 @@ abstract class AbstractProperty
         return $this->value;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $type
-     */
     public function setType(?string $type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * @return bool
-     */
     public function isFileReference(): bool
     {
         return in_array($this->type, ['Image', 'File']);
     }
 
-    /**
-     * @return bool
-     */
     public function isSearchable(): bool
     {
         return $this->searchable;

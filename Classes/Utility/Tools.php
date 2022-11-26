@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Utility;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,17 +15,15 @@ namespace EBT\ExtensionBuilder\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Utility;
+
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use TYPO3\CMS\Core\SingletonInterface;
 
-/**
- * provides helper methods
- *
- */
 class Tools implements SingletonInterface
 {
-    public static function parseTableNameFromClassName($className)
+    public static function parseTableNameFromClassName($className): string
     {
         if (strpos($className, '\\') !== false) {
             if (strpos($className, '\\') === 0) {
@@ -39,20 +37,19 @@ class Tools implements SingletonInterface
         // could be: TYPO3\CMS\Extbase\Domain\Model\FrontendUser
         // or: VENDOR\Extension\Domain\Model\Foo
         if (count($classNameParts) > 5) {
-            $tableName = strtolower('tx_' . implode('_', array_slice($classNameParts, 2)));
-        } else {
-            $tableName = strtolower('tx_' . implode('_', array_slice($classNameParts, 1)));
+            return strtolower('tx_' . implode('_', array_slice($classNameParts, 2)));
         }
-        return $tableName;
+
+        return strtolower('tx_' . implode('_', array_slice($classNameParts, 1)));
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
+     * @param AbstractProperty $domainProperty
      * @param string $methodType (set,add,remove)
      *
      * @return string method body
      */
-    public static function getParameterName(AbstractProperty $domainProperty, string $methodType)
+    public static function getParameterName(AbstractProperty $domainProperty, string $methodType): ?string
     {
         $propertyName = $domainProperty->getName();
 
@@ -66,40 +63,37 @@ class Tools implements SingletonInterface
             case 'remove':
                 return Inflector::singularize($propertyName) . 'ToRemove';
         }
+        return null;
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty $domainProperty
-     * @param string $methodType
-     * @return string
-     */
-    public static function getParamTag(AbstractProperty $domainProperty, string $methodType)
+    public static function getParamTag(AbstractProperty $domainProperty, string $methodType): ?string
     {
         switch ($methodType) {
             case 'set':
                 return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
 
             case 'add':
-                /** @var $domainProperty AbstractRelation */
+                /** @var AbstractRelation $domainProperty */
                 $paramTag = $domainProperty->getForeignClassName();
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
                 return $paramTag;
 
             case 'remove':
-                /** @var $domainProperty AbstractRelation */
+                /** @var AbstractRelation $domainProperty */
                 $paramTag = $domainProperty->getForeignClassName();
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
                 $paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';
                 return $paramTag;
         }
+        return null;
     }
 
     /**
      * Build record type from TX_Vendor_Package_Modelname
-     * @param $className
+     * @param string $className
      * @return string
      */
-    public static function convertClassNameToRecordType($className)
+    public static function convertClassNameToRecordType(string $className): string
     {
         $classNameParts = explode('\\', $className);
         if (count($classNameParts) > 6) {

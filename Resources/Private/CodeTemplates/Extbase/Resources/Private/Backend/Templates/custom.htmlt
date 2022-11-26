@@ -1,0 +1,30 @@
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:format.raw><k:openingTag>html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true"</k:openingTag>
+
+<k:openingTag>f:layout name="Default" /</k:openingTag>
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Backend:
+        Templates:
+          {domainObject.name}:
+            {action.name -> k:format.uppercaseFirst()}.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<k:openingTag>f:section name="Buttons"</k:openingTag>
+    <k:openingTag>be:moduleLayout.button.linkButton
+        icon="actions-view-go-back"
+        title="<k:curlyBrackets>f:translate(id: 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.goBack')</k:curlyBrackets>"
+        link="<k:curlyBrackets>f:uri.action(controller: '{domainObject.name}', action: 'list')</k:curlyBrackets>"
+    /</k:openingTag>
+<k:openingTag>/f:section</k:openingTag>
+
+<k:openingTag>f:section name="Content"</k:openingTag>
+    <h1>Template for {action.name} action</h1>
+<k:openingTag>/f:section</k:openingTag>
+<k:openingTag>/html</k:openingTag></f:format.raw>

@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+
 class FloatProperty extends AbstractProperty
 {
     /**
@@ -23,19 +25,22 @@ class FloatProperty extends AbstractProperty
      * @var float
      */
     protected $defaultValue = 0.0;
+    protected static bool $isNullable = true;
 
     public function getTypeForComment(): string
     {
-        return 'float';
+        return ($this->nullable) ? 'float|null' : 'float';
     }
 
     public function getTypeHint(): string
     {
-        return '';
+        return ($this->nullable) ? '?float' : 'float';
     }
 
     public function getSqlDefinition(): string
     {
-        return $this->getFieldName() . " double(11,2) DEFAULT '0.00' NOT NULL,";
+        return ($this->nullable)
+            ? $this->getFieldName() . ' double(11,2) DEFAULT NULL,'
+            : $this->getFieldName() . " double(11,2) NOT NULL DEFAULT '0.00',";
     }
 }

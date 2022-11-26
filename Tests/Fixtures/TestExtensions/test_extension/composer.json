@@ -1,19 +1,46 @@
 {
-    "name": "fixture/test-extension",
-    "type": "typo3-cms-extension",
-    "description": "This is just a test extension created by the ExtensionBuilder",
-    "authors": [
-        {
-            "name": "John Doe",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "typo3/cms-core": "^9.5.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "FIXTURE\\TestExtension\\": "Classes"
-        }
-    }
+	"name": "fixture/test-extension",
+	"type": "typo3-cms-extension",
+	"description": "This is just a test extension created by the Extension Builder",
+	"authors": [
+		{
+			"name": "John Doe",
+			"role": "Developer"
+		}
+	],
+	"license": "GPL-2.0-or-later",
+	"require": {
+		"typo3/cms-core": "^11.5"
+	},
+	"require-dev": {
+		"typo3/testing-framework": "^6.9.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"FIXTURE\\TestExtension\\": "Classes"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"FIXTURE\\TestExtension\\Tests\\": "Tests"
+		}
+	},
+	"replace": {
+		"typo3-ter/test-extension": "self.version"
+	},
+	"config": {
+		"vendor-dir": ".Build/vendor",
+		"bin-dir": ".Build/bin"
+	},
+	"scripts": {
+		"post-autoload-dump": [
+			"TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
+		]
+	},
+	"extra": {
+		"typo3/cms": {
+			"web-dir": ".Build/public",
+			"extension-key": "test_extension"
+		}
+	}
 }

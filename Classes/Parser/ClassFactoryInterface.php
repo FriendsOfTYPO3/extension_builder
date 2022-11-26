@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Parser;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Parser;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Parser;
+
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\Method;
 use EBT\ExtensionBuilder\Domain\Model\FunctionObject;
@@ -25,10 +27,6 @@ use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Property;
 
-/**
- * interface for class factory
- *
- */
 interface ClassFactoryInterface
 {
     public function buildClassObject(Class_ $node): ClassObject;

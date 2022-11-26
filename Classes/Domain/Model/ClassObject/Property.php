@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,7 +15,10 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
+
 use EBT\ExtensionBuilder\Domain\Model\AbstractObject;
+use PhpParser\NodeAbstract;
 
 /**
  * property representing a "property" in the context of software development
@@ -24,10 +27,8 @@ class Property extends AbstractObject
 {
     /**
      * PHP var type of this property (read from "@var" annotation in doc comment)
-     *
-     * @var string
      */
-    protected $varType = '';
+    protected string $varType = '';
     /**
      * @var mixed
      */
@@ -39,61 +40,33 @@ class Property extends AbstractObject
     /**
      * In case of properties of type array we need to preserve the parsed statements
      * to be able to reapply the original linebrakes.
-     *
-     * @var \PhpParser\NodeAbstract
      */
-    protected $defaultValueNode;
+    protected ?NodeAbstract $defaultValueNode = null;
 
-    /**
-     * @param string $name
-     * @param string
-     */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @param string $name
-     * @return $this
-     */
-    public function setName(string $name)
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getVarType()
+    public function getVarType(): string
     {
         return $this->varType;
     }
 
-    /**
-     * @param string $varType
-     * @return void
-     */
-    public function setVarType($varType)
+    public function setVarType(string $varType): void
     {
-        $this->setTag('var', [$varType]);
         $this->varType = $varType;
     }
 
-    /**
-     * @return bool
-     */
-    public function isDefault()
+    public function isDefault(): bool
     {
         return $this->default;
     }
 
     /**
      * @param mixed $default
-     * @return void
      */
-    public function setDefault($default)
+    public function setDefault($default): void
     {
         $this->default = $default;
     }
@@ -116,9 +89,8 @@ class Property extends AbstractObject
 
     /**
      * @param mixed $value
-     * @return void
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         $this->value = $value;
     }
@@ -129,7 +101,7 @@ class Property extends AbstractObject
      *
      * @return bool
      */
-    public function getHasDefaultValue()
+    public function getHasDefaultValue(): bool
     {
         return isset($this->default) && $this->default !== null;
     }
@@ -140,24 +112,17 @@ class Property extends AbstractObject
      *
      * @return bool
      */
-    public function getHasValue()
+    public function getHasValue(): bool
     {
         return isset($this->value) && $this->value !== null;
     }
 
-    /**
-     * @param \PhpParser\NodeAbstract $defaultValueNode
-     * @return void
-     */
-    public function setDefaultValueNode($defaultValueNode)
+    public function setDefaultValueNode(NodeAbstract $defaultValueNode): void
     {
         $this->defaultValueNode = $defaultValueNode;
     }
 
-    /**
-     * @return \PhpParser\NodeAbstract
-     */
-    public function getDefaultValueNode()
+    public function getDefaultValueNode(): ?NodeAbstract
     {
         return $this->defaultValueNode;
     }

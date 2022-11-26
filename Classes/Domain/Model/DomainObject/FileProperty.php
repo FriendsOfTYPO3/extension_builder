@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,6 +14,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
 
 /**
  * File property
@@ -31,31 +33,14 @@ class FileProperty extends AbstractProperty
      *
      * @var string (comma separated filetypes)
      */
-    protected $allowedFileTypes = '';
+    protected string $allowedFileTypes = '';
     /**
      * not allowed file types for this property (comma-separated file types)
-     *
-     * @var string
      */
-    protected $disallowedFileTypes = 'php';
-    /**
-     * flag that this property needs an upload folder
-     *
-     * @var bool
-     */
-    protected $needsUploadFolder = true;
-    /**
-     * @var int
-     */
-    protected $maxItems = 1;
-    /**
-     * @var string
-     */
-    protected $type = 'File';
-    /**
-     * @var bool
-     */
-    protected $cascadeRemove = true;
+    protected string $disallowedFileTypes = 'php';
+    protected int $maxItems = 1;
+    protected ?string $type = 'File';
+    protected bool $cascadeRemove = true;
 
     public function getTypeForComment(): string
     {
@@ -69,49 +54,27 @@ class FileProperty extends AbstractProperty
 
     public function getSqlDefinition(): string
     {
-        return $this->getFieldName() . " int(11) unsigned NOT NULL default '0',";
+        return ($this->nullable)
+            ? $this->getFieldName() . ' int(11) unsigned DEFAULT NULL,'
+            : $this->getFieldName() . " int(11) unsigned NOT NULL DEFAULT '0',";
     }
 
-    /**
-     * getter for allowed file types
-     *
-     * @return string
-     */
-    public function getAllowedFileTypes()
+    public function getAllowedFileTypes(): string
     {
         return $this->allowedFileTypes;
     }
 
-    /**
-     * setter for allowed file types
-     *
-     * @param $allowedFileTypes
-     *
-     * @return string
-     */
-    public function setAllowedFileTypes($allowedFileTypes)
+    public function setAllowedFileTypes(string $allowedFileTypes): string
     {
         return $this->allowedFileTypes = $allowedFileTypes;
     }
 
-    /**
-     * getter for disallowed file types
-     *
-     * @return string
-     */
-    public function getDisallowedFileTypes()
+    public function getDisallowedFileTypes(): string
     {
         return $this->disallowedFileTypes;
     }
 
-    /**
-     * setter for disallowed file types
-     *
-     * @param $disallowedFileTypes
-     *
-     * @return string
-     */
-    public function setDisallowedFileTypes($disallowedFileTypes)
+    public function setDisallowedFileTypes(string $disallowedFileTypes): string
     {
         return $this->disallowedFileTypes = $disallowedFileTypes;
     }
@@ -126,18 +89,12 @@ class FileProperty extends AbstractProperty
         return $this->name . '.originalResource.name';
     }
 
-    /**
-     * @return int
-     */
-    public function getMaxItems()
+    public function getMaxItems(): int
     {
         return $this->maxItems;
     }
 
-    /**
-     * @param int $maxItems
-     */
-    public function setMaxItems($maxItems)
+    public function setMaxItems(int $maxItems): void
     {
         $this->maxItems = $maxItems;
     }

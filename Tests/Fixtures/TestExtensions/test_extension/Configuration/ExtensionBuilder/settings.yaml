@@ -56,7 +56,13 @@ overwriteSettings:
         Extension.svg:    keep
     Private:
       #Language: merge
+      #Layouts: keep
+      #Partials: keep
       #Templates: keep
+      Backend:
+        #Layouts: keep
+        #Partials: keep
+        #Templates: keep
 
 #  ext_localconf.php: merge
 

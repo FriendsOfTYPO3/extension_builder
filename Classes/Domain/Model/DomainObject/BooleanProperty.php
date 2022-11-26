@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+
 class BooleanProperty extends AbstractProperty
 {
     /**
@@ -24,27 +26,18 @@ class BooleanProperty extends AbstractProperty
      */
     protected $defaultValue = false;
 
-    /**
-     * @return string
-     */
     public function getTypeForComment(): string
     {
         return 'bool';
     }
 
-    /**
-     * @return string
-     */
     public function getTypeHint(): string
     {
-        return '';
+        return 'bool';
     }
 
-    /**
-     * @return string
-     */
     public function getSqlDefinition(): string
     {
-        return $this->getFieldName() . " smallint(5) unsigned DEFAULT '0' NOT NULL,";
+        return $this->getFieldName() . " smallint(1) unsigned NOT NULL DEFAULT '0',";
     }
 }

@@ -1,36 +1,25 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:be.container>
-	<div class="typo3-fullDoc">
-		<div id="typo3-docheader">
-			<div class="typo3-docheader-functions">
-				<div class="left">
-					<f:be.buttons.csh />
-					<f:be.menus.actionMenu>
-						<f:be.menus.actionMenuItem label="Overview" controller="" action="list" />
-						<f:be.menus.actionMenuItem label="Create new Main" action="new" controller="Main" />
-					</f:be.menus.actionMenu>
-				</div>
-				<div class="right">
-					<f:be.pagePath />
-					<f:be.pageInfo />
-				</div>
-			</div>
-			<div class="typo3-docheader-buttons">
-				<div class="left">
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
 
-				</div>
-				<div class="right">
-					<f:be.buttons.shortcut />
-				</div>
-			</div>
+<be:moduleLayout>
+    <f:be.pageRenderer />
 
-		</div>
-		<div id="typo3-docbody">
-			<div id="typo3-inner-docbody">
-				<f:flashMessages />
-				<f:render section="content" />
-			</div>
-		</div>
-	</div>
-</f:be.container>
+    <be:moduleLayout.menu identifier="ModuleMenu">
+        <be:moduleLayout.menuItem label="Overview" uri="{f:uri.action(controller: 'Main', action: 'list')}" />
+        <be:moduleLayout.menuItem label="Create new Main" uri="{f:uri.action(controller: 'Main', action: 'new')}" />
+        <be:moduleLayout.menuItem label="Overview" uri="{f:uri.action(controller: 'Child1', action: 'list')}" />
+        <be:moduleLayout.menuItem label="Overview" uri="{f:uri.action(controller: 'Child2', action: 'list')}" />
+        <be:moduleLayout.menuItem label="Overview" uri="{f:uri.action(controller: 'Child3', action: 'list')}" />
+        <be:moduleLayout.menuItem label="Overview" uri="{f:uri.action(controller: 'Child4', action: 'list')}" />
+        <be:moduleLayout.menuItem label="Overview" uri="{f:uri.action(controller: 'Category', action: 'list')}" />
+        <be:moduleLayout.menuItem label="Create new Category" uri="{f:uri.action(controller: 'Category', action: 'new')}" />
+    </be:moduleLayout.menu>
+
+    <f:render section="Buttons" />
+    <be:moduleLayout.button.shortcutButton displayName="Shortcut" />
+
+    <f:render section="Content" />
+</be:moduleLayout>
 </html>

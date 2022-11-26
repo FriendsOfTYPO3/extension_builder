@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,35 +15,26 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
-use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Utility\Tools;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-/**
- * Class RecordTypeViewHelper
- */
 class RecordTypeViewHelper extends AbstractViewHelper
 {
-    /**
-     * @var \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager
-     */
-    protected $configurationManager;
+    private DataMapper $dataMapper;
 
-    /**
-     * @param \EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager $configurationManager
-     * @return void
-     */
-    public function injectExtensionBuilderConfigurationManager(
-        ExtensionBuilderConfigurationManager $configurationManager
-    ) {
-        $this->configurationManager = $configurationManager;
+    public function injectDataMapper(DataMapper $dataMapper): void
+    {
+        $this->dataMapper = $dataMapper;
     }
 
     /**
      * Arguments Initialization
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('domainObject', DomainObject::class, 'domainObject', true);
     }
@@ -52,14 +43,17 @@ class RecordTypeViewHelper extends AbstractViewHelper
      * Helper function to find the parents class recordType
      *
      * @return string
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
-    public function render()
+    public function render(): string
     {
         $domainObject = $this->arguments['domainObject'];
-        $classSettings = $this->configurationManager->getExtbaseClassConfiguration($domainObject->getParentClass());
-        if (isset($classSettings['recordType'])) {
-            $parentRecordType = Tools::convertClassNameToRecordType($classSettings['recordType']);
+        $recordType = null;
+        if (!empty($domainObject->getParentClass())) {
+            $recordType = $this->dataMapper->getDataMap($domainObject->getParentClass())->getRecordType();
+        }
+        if ($recordType) {
+            $parentRecordType = Tools::convertClassNameToRecordType($recordType);
         } else {
             $parentRecordType = Tools::convertClassNameToRecordType($domainObject->getParentClass());
             $existingTypes = $GLOBALS['TCA'][$domainObject->getDatabaseTableName()]['types'];
@@ -69,11 +63,13 @@ class RecordTypeViewHelper extends AbstractViewHelper
                     $parentRecordType = 1;
                 } else {
                     //if it not exists get first existing key
-                    $parentRecordType = reset(array_keys($existingTypes));
+                    $keys = array_keys($existingTypes);
+                    $parentRecordType = reset($keys);
                 }
             }
         }
-        $this->templateVariableContainer->add('parentModelName', end(explode('\\', $domainObject->getParentClass())));
+        $parts = explode('\\', $domainObject->getParentClass());
+        $this->templateVariableContainer->add('parentModelName', end($parts));
         $this->templateVariableContainer->add('parentRecordType', $parentRecordType);
         $content = $this->renderChildren();
         $this->templateVariableContainer->remove('parentRecordType');

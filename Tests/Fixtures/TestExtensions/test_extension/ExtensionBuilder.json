@@ -10,12 +10,15 @@
             "name": "New Model Object",
             "value": {
                 "actionGroup": {
-                    "_default0_list": true,
-                    "_default1_show": true,
-                    "_default2_new_create": true,
-                    "_default3_edit_update": true,
-                    "_default4_delete": true,
-                    "customActions": []
+                    "_default0_index": false,
+                    "_default1_list": true,
+                    "_default2_show": true,
+                    "_default3_new_create": true,
+                    "_default4_edit_update": true,
+                    "_default5_delete": true,
+                    "customActions": [
+                        "custom"
+                    ]
                 },
                 "name": "Main",
                 "objectsettings": {
@@ -39,6 +42,7 @@
                             "propertyDescription": "This is not required",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "name",
                             "propertyType": "String",
@@ -50,6 +54,7 @@
                             "propertyDescription": "This is required",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": true,
                             "propertyName": "identifier",
                             "propertyType": "String",
@@ -61,6 +66,7 @@
                             "propertyDescription": "",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "description",
                             "propertyType": "RichText",
@@ -72,6 +78,7 @@
                             "propertyDescription": "Just a date",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "myDate",
                             "propertyType": "NativeDate",
@@ -83,6 +90,7 @@
                             "propertyDescription": "",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "mail",
                             "propertyType": "Email",
@@ -150,11 +158,12 @@
             "name": "New Model Object",
             "value": {
                 "actionGroup": {
-                    "_default0_list": false,
-                    "_default1_show": false,
-                    "_default2_new_create": false,
-                    "_default3_edit_update": false,
-                    "_default4_delete": false,
+                    "_default0_index": false,
+                    "_default1_list": false,
+                    "_default2_show": false,
+                    "_default3_new_create": false,
+                    "_default4_edit_update": false,
+                    "_default5_delete": false,
                     "customActions": []
                 },
                 "name": "Child1",
@@ -179,6 +188,7 @@
                             "propertyDescription": "",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "name",
                             "propertyType": "String",
@@ -190,6 +200,7 @@
                             "propertyDescription": "",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "flag",
                             "propertyType": "Boolean",
@@ -212,11 +223,12 @@
             "name": "New Model Object",
             "value": {
                 "actionGroup": {
-                    "_default0_list": false,
-                    "_default1_show": false,
-                    "_default2_new_create": false,
-                    "_default3_edit_update": false,
-                    "_default4_delete": false,
+                    "_default0_index": false,
+                    "_default1_list": false,
+                    "_default2_show": false,
+                    "_default3_new_create": false,
+                    "_default4_edit_update": false,
+                    "_default5_delete": false,
                     "customActions": []
                 },
                 "name": "Child2",
@@ -241,6 +253,7 @@
                             "propertyDescription": "",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "name",
                             "propertyType": "String",
@@ -252,6 +265,7 @@
                             "propertyDescription": "A date which is stored as Native Date",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "dateProperty1",
                             "propertyType": "NativeDate",
@@ -263,6 +277,7 @@
                             "propertyDescription": "DateTime which is stored as Native DateTime",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "dateProperty2",
                             "propertyType": "NativeDateTime",
@@ -274,6 +289,7 @@
                             "propertyDescription": "A date which is stored as Timestamp",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "dateProperty3",
                             "propertyType": "Date",
@@ -285,6 +301,7 @@
                             "propertyDescription": "DateTime stores as Timestamp",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "dateProperty4",
                             "propertyType": "DateTime",
@@ -307,11 +324,12 @@
             "name": "New Model Object",
             "value": {
                 "actionGroup": {
-                    "_default0_list": false,
-                    "_default1_show": false,
-                    "_default2_new_create": false,
-                    "_default3_edit_update": false,
-                    "_default4_delete": false,
+                    "_default0_index": false,
+                    "_default1_list": false,
+                    "_default2_show": false,
+                    "_default3_new_create": false,
+                    "_default4_edit_update": false,
+                    "_default5_delete": false,
                     "customActions": []
                 },
                 "name": "Child3",
@@ -336,6 +354,7 @@
                             "propertyDescription": "",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": true,
                             "propertyName": "name",
                             "propertyType": "String",
@@ -347,6 +366,7 @@
                             "propertyDescription": "",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "password",
                             "propertyType": "Password",
@@ -358,6 +378,7 @@
                             "propertyDescription": "",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": true,
                             "propertyName": "imageProperty",
                             "propertyType": "Image",
@@ -380,11 +401,12 @@
             "name": "New Model Object",
             "value": {
                 "actionGroup": {
-                    "_default0_list": false,
-                    "_default1_show": false,
-                    "_default2_new_create": false,
-                    "_default3_edit_update": false,
-                    "_default4_delete": false,
+                    "_default0_index": false,
+                    "_default1_list": false,
+                    "_default2_show": false,
+                    "_default3_new_create": false,
+                    "_default4_edit_update": false,
+                    "_default5_delete": false,
                     "customActions": []
                 },
                 "name": "Child4",
@@ -409,6 +431,7 @@
                             "propertyDescription": "",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "name",
                             "propertyType": "String",
@@ -420,6 +443,7 @@
                             "propertyDescription": "",
                             "propertyIsExcludeField": true,
                             "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "fileProperty",
                             "propertyType": "File",
@@ -429,6 +453,71 @@
                 },
                 "relationGroup": {
                     "relations": []
+                }
+            }
+        },
+        {
+            "config": {
+                "position": [
+                    1173,
+                    170
+                ]
+            },
+            "name": "New Model Object",
+            "value": {
+                "actionGroup": {
+                    "_default0_index": false,
+                    "_default1_list": false,
+                    "_default2_show": false,
+                    "_default3_new_create": false,
+                    "_default4_edit_update": false,
+                    "_default5_delete": false,
+                    "customActions": []
+                },
+                "name": "Category",
+                "objectsettings": {
+                    "addDeletedField": true,
+                    "addHiddenField": true,
+                    "addStarttimeEndtimeFields": true,
+                    "aggregateRoot": true,
+                    "categorizable": false,
+                    "description": "A model with a relation to itself",
+                    "mapToTable": "",
+                    "parentClass": "",
+                    "sorting": false,
+                    "type": "Entity",
+                    "uid": "1008606523743"
+                },
+                "propertyGroup": {
+                    "properties": [
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "",
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false,
+                            "propertyIsNullable": false,
+                            "propertyIsRequired": false,
+                            "propertyName": "name",
+                            "propertyType": "String",
+                            "uid": "928662274872"
+                        }
+                    ]
+                },
+                "relationGroup": {
+                    "relations": [
+                        {
+                            "foreignRelationClass": "",
+                            "lazyLoading": false,
+                            "propertyIsExcludeField": true,
+                            "relationDescription": "",
+                            "relationName": "categories",
+                            "relationType": "zeroToMany",
+                            "relationWire": "[wired]",
+                            "renderType": "inline",
+                            "uid": "242406357107"
+                        }
+                    ]
                 }
             }
         }
@@ -446,21 +535,23 @@
                 "tabLabel": "Compatibility test"
             }
         ],
-        "description": "This is just a test extension created by the ExtensionBuilder",
+        "description": "This is just a test extension created by the Extension Builder",
         "emConf": {
             "category": "misc",
             "custom_category": "",
-            "dependsOn": "typo3 => 9.5.0-9.5.99\n",
+            "dependsOn": "typo3 => 11.5.0-11.5.99\n",
             "disableLocalization": false,
             "disableVersioning": false,
-            "skipGenerateDocumentationTemplate": false,
+            "generateDocumentationTemplate": true,
+            "generateEditorConfig": false,
+            "generateEmptyGitRepository": true,
             "sourceLanguage": "en",
             "state": "alpha",
-            "targetVersion": "9.5.0-9.5.99",
-            "version": "0.9"
+            "targetVersion": "11.5.0-11.5.99",
+            "version": "1.0.0"
         },
         "extensionKey": "test_extension",
-        "name": "ExtensionBuilder Test Extension",
+        "name": "Extension Builder Test Extension",
         "originalExtensionKey": "test_extension",
         "originalVendorName": "FIXTURE",
         "persons": [
@@ -475,8 +566,7 @@
             {
                 "actions": {
                     "controllerActionCombinations": "",
-                    "noncacheableActions": "",
-                    "switchableActions": ""
+                    "noncacheableActions": ""
                 },
                 "description": "Just a simple test plugin",
                 "key": "testplugin",
@@ -533,11 +623,24 @@
                 "terminal": "SOURCES",
                 "uid": "1356595175721"
             }
+        },
+        {
+            "src": {
+                "moduleId": 5,
+                "terminal": "relationWire_0",
+                "uid": "242406357107"
+            },
+            "tgt": {
+                "moduleId": 5,
+                "terminal": "SOURCES",
+                "uid": "1008606523743"
+            }
         }
     ],
+    "storagePath": "\/var\/www\/html\/public\/typo3conf\/ext\/",
     "log": {
-        "last_modified": "2019-09-22 06:49",
-        "extension_builder_version": "9.10.0",
+        "last_modified": "2021-07-13 08:13",
+        "extension_builder_version": "10.0.0",
         "be_user": " (2)"
     }
 }

@@ -1,9 +1,30 @@
 /.idea*
 /.Build/
-/node_modules*
+*node_modules*
 /var/
 .DS_Store
 /composer.lock
+/.php_cs.cache
+sass-lint.html
 
 # created by rendering Documentation with Docker
 /Documentation-GENERATED-temp
+
+# Devbox
+.devbox/.ddev/config.local.yaml
+.devbox/bin
+.devbox/var
+.devbox/vendor
+.devbox/public/index.php
+.devbox/public/fileadmin/_processed_
+.devbox/public/fileadmin/_temp_
+.devbox/public/typo3
+.devbox/public/typo3conf/ext
+.devbox/public/typo3conf/PackageStates.php
+.devbox/public/typo3temp
+.devbox/.ddev/.global_commands/
+.devbox/.ddev/.homeadditions/
+.devbox/.ddev/apache/
+.devbox/.ddev/nginx_full/
+.devbox/.ddev/providers/
+.devbox/.ddev/xhprof/

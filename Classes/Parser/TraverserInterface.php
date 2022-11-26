@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Parser;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,12 +15,14 @@ namespace EBT\ExtensionBuilder\Parser;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Parser;
+
 use PhpParser\NodeTraverserInterface;
 use PhpParser\NodeVisitor;
 
 interface TraverserInterface extends NodeTraverserInterface
 {
-    public function resetVisitors();
+    public function resetVisitors(): void;
 
-    public function appendVisitor(NodeVisitor $visitor);
+    public function appendVisitor(NodeVisitor $visitor): void;
 }

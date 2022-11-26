@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
+
 use EBT\ExtensionBuilder\Service\ValidationService;
 
 /**
@@ -25,10 +27,9 @@ use EBT\ExtensionBuilder\Service\ValidationService;
  */
 class ZeroToManyRelation extends AnyToManyRelation
 {
-    /**
-     * @var string
-     */
-    protected $foreignKeyName = '';
+    protected string $foreignKeyName = '';
+
+    protected bool $cascadeRemove = true;
 
     public function getTypeForComment(): string
     {
@@ -40,7 +41,7 @@ class ZeroToManyRelation extends AnyToManyRelation
         return '\\TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage';
     }
 
-    public function getForeignKeyName()
+    public function getForeignKeyName(): string
     {
         if (empty($this->foreignKeyName)) {
             $foreignKeyName = strtolower($this->getDomainObject()->getName());
@@ -58,11 +59,6 @@ class ZeroToManyRelation extends AnyToManyRelation
         $this->foreignKeyName = $foreignKeyName;
     }
 
-    /**
-     * Overwrite parent function
-     *
-     * @return bool
-     */
     public function getUseMMTable(): bool
     {
         return false;

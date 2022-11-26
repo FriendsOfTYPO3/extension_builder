@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Service;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,25 +15,36 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Service;
+
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
-use TYPO3\CMS\Core\Utility\StringUtility;
 
 class ExtensionService
 {
+    public const COMPOSER_PATH_WARNING = 'You are running TYPO3 in composer mode. You have to configure at
+        least one local path repository in your composer.json in order to create an extension with
+        Extension Builder. The recommended way is to create a "packages" folder where your extension is loaded from and symlinked into typo3conf/ext afterwards.<br /><br />
+        Please execute <code>mkdir -p packages && composer config repositories.local path "packages/*"</code> in your terminal in the project root directory.
+        After that reload the Extension Builder.<br /><br />
+        See <a style="text-decoration: underline" target="_blank"
+        href="https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html">
+        Documentation</a>';
+
     /**
      * @return string[]
      */
     public function resolveStoragePaths(): array
     {
-        $storagePaths = array_merge(
-            [Environment::getExtensionsPath()],
-            $this->resolveComposerStoragePaths()
-        );
+        if (Environment::isComposerMode()) {
+            $storagePaths = $this->resolveComposerStoragePaths();
+        } else {
+            $storagePaths = [Environment::getExtensionsPath()];
+        }
 
         return array_map(
-            function (string $storagePath) {
+            static function (string $storagePath) {
                 return rtrim($storagePath, '/') . '/';
             },
             $storagePaths
@@ -45,7 +56,7 @@ class ExtensionService
      */
     public function resolveComposerStoragePaths(): array
     {
-        if (!defined('TYPO3_COMPOSER_MODE') || !TYPO3_COMPOSER_MODE) {
+        if (!Environment::isComposerMode()) {
             return [];
         }
 
@@ -60,7 +71,7 @@ class ExtensionService
             if (($repository['options']['symlink'] ?? null) === false) {
                 continue;
             }
-            if (GeneralUtility::isAbsPath($repository['url'])) {
+            if (PathUtility::isAbsolutePath($repository['url'])) {
                 $storagePaths[] = $repository['url'];
             } else {
                 $repositoryPath = PathUtility::getCanonicalPath($projectPath . '/' . $repository['url']);
@@ -78,5 +89,20 @@ class ExtensionService
             }
         }
         return false;
+    }
+
+    public function isStoragePathConfigured(): bool
+    {
+        return !Environment::isComposerMode() || count($this->resolveStoragePaths()) > 0;
+    }
+
+    /**
+     * Returns, if typo3/cms-composer-installers v4 is used by checking, if /vendor/friendsoftypo3/extension-builder/
+     * is part of the absolute install path of extension_builder
+     */
+    public function isComposerInstallerV4(): bool
+    {
+        $extensionPath = GeneralUtility::getFileAbsFileName('EXT:extension_builder/');
+        return str_contains($extensionPath, '/vendor/friendsoftypo3/extension-builder/');
     }
 }

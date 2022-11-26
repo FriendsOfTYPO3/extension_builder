@@ -10,17 +10,15 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Extension Builder',
-    'description' => 'The Extension Builder helps you build and manage your Extbase based TYPO3 extensions. Consider using the latest version from https://github.com/FriendsOfTYPO3/extension_builder',
+    'description' => 'The Extension Builder helps you to develop a TYPO3 extension based on the domain-driven MVC framework Extbase and the templating engine Fluid.',
     'category' => 'module',
-    'author' => 'Nico de Haen',
-    'author_email' => 'mail@ndh-websolutions.de',
-    'state' => 'beta',
-    'uploadfolder' => true,
-    'createDirs' => 'uploads/tx_extensionbuilder/backups',
-    'version' => '9.10.3',
+    'author' => 'Extension Builder Team',
+    'author_email' => '',
+    'state' => 'stable',
+    'version' => '11.0.8',
     'constraints' => [
         'depends' => [
-            'typo3' => '9.5.0-9.5.99'
+            'typo3' => '11.4.0-11.9.99'
         ],
         'conflicts' => [],
         'suggests' => []

@@ -1,7 +1,10 @@
 <?php
+
+use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+
 return [
     'ExtensionBuilder::wiringEditorSmdEndpoint' => [
         'path' => '/extensionBuilder/wireEditor',
-        'target' => EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager::class . '::getWiringEditorSmd'
+        'target' => ExtensionBuilderConfigurationManager::class . '::getWiringEditorSmd'
     ],
 ];

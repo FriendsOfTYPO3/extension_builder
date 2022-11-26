@@ -1,22 +1,25 @@
 <?php
+
+declare(strict_types=1);
+
 namespace FIXTURE\TestExtension\Domain\Model;
 
-/***
- *
- * This file is part of the "ExtensionBuilder Test Extension" Extension for TYPO3 CMS.
+
+/**
+ * This file is part of the "Extension Builder Test Extension" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
- *
- ***/
+ * (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
+ */
 
 /**
  * An object with various date format properties
  */
 class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
+
     /**
      * name
      *
@@ -55,7 +58,7 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the name
      *
-     * @return string $name
+     * @return string
      */
     public function getName()
     {
@@ -68,7 +71,7 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $name
      * @return void
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -76,7 +79,7 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the dateProperty1
      *
-     * @return \DateTime $dateProperty1
+     * @return \DateTime
      */
     public function getDateProperty1()
     {
@@ -97,7 +100,7 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the dateProperty2
      *
-     * @return \DateTime $dateProperty2
+     * @return \DateTime
      */
     public function getDateProperty2()
     {
@@ -118,7 +121,7 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the dateProperty3
      *
-     * @return \DateTime $dateProperty3
+     * @return \DateTime
      */
     public function getDateProperty3()
     {
@@ -139,7 +142,7 @@ class Child2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the dateProperty4
      *
-     * @return \DateTime $dateProperty4
+     * @return \DateTime
      */
     public function getDateProperty4()
     {

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * multiline comment test
  * @author Nico de Haen
@@ -16,8 +18,6 @@
  *
  * @test testtag
  */
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Fixtures/ClassParser/BasicClass.php');
-
 final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
 {
     protected $name='test;';
@@ -82,7 +82,7 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
     private $anotherProperty = "test456_'\"";
     private $arrayProperty1 = [2,6,'test'];
     private $arrayProperty2 = ['test'=>3,'b' => 'q'];
-    public static $constProperty = testConstant;
+    public static $constProperty = self::testConstant;
 
     /**
      * @static
@@ -104,10 +104,3 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
     // single line comment
     public $testProperty4 = 123;
 }
-
-/**
- *  dfg dfg dfg dfg
- */
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Fixtures/ClassParser/BasicClass.php');   include_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Fixtures/ClassParser/ComplexClass.php'); // test
-
-include_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('extension_builder') . 'Tests/Fixtures/ClassParser/ComplexClass.php'); // test

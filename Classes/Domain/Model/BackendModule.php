@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,30 +15,18 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model;
+
 class BackendModule
 {
-    /**
-     * @var string
-     */
-    protected $name = '';
-    /**
-     * @var string
-     */
-    protected $description = '';
-    /**
-     * @var string
-     */
-    protected $tabLabel = '';
+    protected string $name = '';
+    protected string $description = '';
+    protected string $tabLabel = '';
     /**
      * The mainModule of the module (default is 'web')
-     *
-     * @var string
      */
-    protected $mainModule = 'web';
-    /**
-     * @var string
-     */
-    protected $key = '';
+    protected string $mainModule = 'web';
+    protected string $key = '';
     /**
      * array with configuration arrays
      *
@@ -46,106 +34,64 @@ class BackendModule
      *
      * @var string[]
      */
-    protected $controllerActionCombinations = [];
+    protected array $controllerActionCombinations = [];
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     * @return void
-     */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     * @return void
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @return string
-     */
-    public function getTabLabel()
+    public function getTabLabel(): string
     {
         return $this->tabLabel;
     }
 
-    /**
-     * @param string $tabLabel
-     * @return void
-     */
-    public function setTabLabel($tabLabel)
+    public function setTabLabel(string $tabLabel): void
     {
         $this->tabLabel = $tabLabel;
     }
 
-    /**
-     * @param string $key
-     * @return void
-     */
-    public function setKey($key)
+    public function setKey(string $key): void
     {
         $this->key = strtolower($key);
     }
 
-    /**
-     * @return string key
-     */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * @param $mainModule
-     * @return void
-     */
-    public function setMainModule($mainModule)
+    public function setMainModule(string $mainModule): void
     {
         $this->mainModule = $mainModule;
     }
 
-    /**
-     * @return string
-     */
-    public function getMainModule()
+    public function getMainModule(): string
     {
         return $this->mainModule;
     }
 
-    /**
-     * @param array $controllerActionCombinations
-     * @return void
-     */
-    public function setControllerActionCombinations(array $controllerActionCombinations)
+    public function setControllerActionCombinations(array $controllerActionCombinations): void
     {
         $this->controllerActionCombinations = $controllerActionCombinations;
     }
 
-    /**
-     * @return array
-     */
-    public function getControllerActionCombinations()
+    public function getControllerActionCombinations(): array
     {
         return $this->controllerActionCombinations;
     }

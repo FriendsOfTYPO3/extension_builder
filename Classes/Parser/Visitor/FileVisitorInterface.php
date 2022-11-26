@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Parser\Visitor;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Parser\Visitor;
+
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Parser\ClassFactoryInterface;
 
@@ -22,8 +24,5 @@ interface FileVisitorInterface
 {
     public function getFileObject(): File;
 
-    /**
-     * @param ClassFactoryInterface $classFactory
-     */
     public function setClassFactory(ClassFactoryInterface $classFactory): void;
 }

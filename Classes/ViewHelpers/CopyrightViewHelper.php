@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,14 +15,19 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
- * Format the Copyright notice
- *
+ * Format the copyright holder's name(s)
  */
 class CopyrightViewHelper extends AbstractViewHelper
 {
+    use CompileWithRenderStatic;
+
     protected $escapeOutput = false;
 
     protected $escapeChildren = false;
@@ -30,25 +35,21 @@ class CopyrightViewHelper extends AbstractViewHelper
     /**
      * Arguments Initialization
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('date', 'string', 'Date', true);
         $this->registerArgument('persons', 'array', 'Array with persons', true);
     }
 
-    /**
-     * Format the copyright holder's name(s)
-     *
-     * @param string $date
-     * @param array $persons (\EBT\ExtensionBuilder\Domain\Model\Person )
-     * @return string The copyright ownership
-     */
-    public function render()
-    {
-        $copyright = ' *  (c) ' . $this->arguments['date'] . ' ';
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        $copyright = ' * (c) ' . $arguments['date'] . ' ';
         $offset = strlen($copyright) - 2;
 
-        foreach ($this->arguments['persons'] as $index => $person) {
+        foreach ($arguments['persons'] as $index => $person) {
             $entry = '';
 
             if ($index !== 0) {

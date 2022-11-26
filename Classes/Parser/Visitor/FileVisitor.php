@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Parser\Visitor;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,89 +15,75 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Parser\Visitor;
+
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
+use EBT\ExtensionBuilder\Domain\Model\Container;
 use EBT\ExtensionBuilder\Domain\Model\File;
+use EBT\ExtensionBuilder\Domain\Model\NamespaceObject;
 use EBT\ExtensionBuilder\Parser\ClassFactoryInterface;
 use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 use PhpParser\Node;
+use PhpParser\Node\Name;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassConst;
+use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Declare_;
+use PhpParser\Node\Stmt\Function_;
+use PhpParser\Node\Stmt\Namespace_;
+use PhpParser\Node\Stmt\Property;
+use PhpParser\Node\Stmt\TraitUse;
+use PhpParser\Node\Stmt\Use_;
+use PhpParser\NodeAbstract;
 use PhpParser\NodeVisitorAbstract;
 
 /**
  * provides methods to import a class object and methods and properties
- *
  */
 class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
 {
-    /**
-     * @var array
-     */
-    protected $properties = [];
-    /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
-     */
-    protected $currentClassObject;
-    /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\NamespaceObject
-     */
-    protected $currentNamespace;
-    /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\Container
-     */
-    protected $currentContainer;
-    /**
-     * @var File
-     */
-    protected $fileObject;
-    /**
-     * @var ClassFactoryInterface
-     */
-    protected $classFactory;
-    /**
-     * @var bool
-     */
-    protected $onFirstLevel = true;
+    protected array $properties = [];
+    protected ?ClassObject $currentClassObject = null;
+    protected ?NamespaceObject $currentNamespace = null;
+    protected Container $currentContainer;
+    protected ?File $fileObject = null;
+    protected ?ClassFactoryInterface $classFactory = null;
+    protected bool $onFirstLevel = true;
     /**
      * currently not used, might be useful for filtering etc.
      * it keeps a reference to the current "first level" node
-     *
-     * @var array
      */
-    protected $contextStack = [];
-    /**
-     * @var \PhpParser\Node
-     */
-    protected $lastNode;
+    protected array $contextStack = [];
+    protected ?Node $lastNode = null;
 
     public function getFileObject(): File
     {
         return $this->fileObject;
     }
 
-    /**
-     * @param \PhpParser\Node $node
-     */
-    public function enterNode(Node $node)
+    public function enterNode(Node $node): void
     {
         $this->contextStack[] = $node;
-        if ($node instanceof Node\Stmt\Namespace_) {
+        if ($node instanceof Namespace_) {
             $this->currentNamespace = $this->classFactory->buildNamespaceObject($node);
             $this->currentContainer = $this->currentNamespace;
-        } elseif ($node instanceof Node\Stmt\Class_) {
+            return;
+        }
+
+        if ($node instanceof Class_) {
             $this->currentClassObject = $this->classFactory->buildClassObject($node);
             $this->currentContainer = $this->currentClassObject;
         }
     }
 
-    /**
-     * @param \PhpParser\Node $node
-     */
-    public function leaveNode(Node $node)
+    public function leaveNode(Node $node): void
     {
         array_pop($this->contextStack);
-        if ($this->isContainerNode(end($this->contextStack)) || count($this->contextStack) === 0) {
+        if (count($this->contextStack) === 0 || $this->isContainerNode(end($this->contextStack))) {
             // we are on the first level
-            if ($node instanceof Node\Stmt\Class_) {
+            if ($node instanceof Class_) {
                 if (count($this->contextStack) > 0) {
-                    if (end($this->contextStack)->getType() == 'Stmt_Namespace') {
+                    if (end($this->contextStack)->getType() === 'Stmt_Namespace') {
                         $currentNamespaceName = NodeConverter::getValueFromNode(end($this->contextStack));
                         $this->currentClassObject->setNamespaceName($currentNamespaceName);
                         $this->currentNamespace->addClass($this->currentClassObject);
@@ -107,37 +93,61 @@ class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
                     $this->currentClassObject = null;
                     $this->currentContainer = $this->fileObject;
                 }
-            } elseif ($node instanceof Node\Stmt\Namespace_) {
+                return;
+            }
+
+            if ($node instanceof Namespace_) {
                 if (null !== $this->currentNamespace) {
                     $this->fileObject->addNamespace($this->currentNamespace);
                     $this->currentNamespace = null;
                     $this->currentContainer = $this->fileObject;
                 }
-            } elseif ($node instanceof Node\Stmt\TraitUse) {
+                return;
+            }
+
+            if ($node instanceof TraitUse) {
                 if ($this->currentClassObject) {
                     $this->currentClassObject->addUseTraitStatement($node);
                 }
-            } elseif ($node instanceof Node\Stmt\Use_) {
+                return;
+            }
+
+            if ($node instanceof Use_) {
                 $this->currentContainer->addAliasDeclaration(
                     NodeConverter::convertUseAliasStatementNodeToArray($node)
                 );
-            } elseif ($node instanceof Node\Stmt\ClassConst) {
+                return;
+            }
+
+            if ($node instanceof ClassConst) {
                 $constants = NodeConverter::convertClassConstantNodeToArray($node);
                 foreach ($constants as $constant) {
                     $this->currentContainer->setConstant($constant['name'], $constant['value']);
                 }
-            } elseif ($node instanceof Node\Stmt\ClassMethod) {
+                return;
+            }
+
+            if ($node instanceof ClassMethod) {
                 $this->onFirstLevel = true;
                 $method = $this->classFactory->buildClassMethodObject($node);
                 $this->currentClassObject->addMethod($method);
-            } elseif ($node instanceof Node\Stmt\Property) {
+                return;
+            }
+
+            if ($node instanceof Property) {
                 $property = $this->classFactory->buildPropertyObject($node);
                 $this->currentClassObject->addProperty($property);
-            } elseif ($node instanceof Node\Stmt\Function_) {
+                return;
+            }
+
+            if ($node instanceof Function_) {
                 $this->onFirstLevel = true;
                 $function = $this->classFactory->buildFunctionObject($node);
                 $this->currentContainer->addFunction($function);
-            } elseif (!$node instanceof Node\Name) {
+                return;
+            }
+
+            if (!$node instanceof Name && !$node instanceof Declare_) {
                 // any other nodes (except the name node of the current container node)
                 // go into statements container
                 if ($this->currentContainer->getFirstClass() === false) {
@@ -149,12 +159,9 @@ class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
         }
     }
 
-    /**
-     * @param array $nodes
-     */
-    public function beforeTraverse(array $nodes)
+    public function beforeTraverse(array $nodes): void
     {
-        $this->fileObject = new File;
+        $this->fileObject = new File();
         $this->currentContainer = $this->fileObject;
     }
 
@@ -163,12 +170,12 @@ class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
         $this->classFactory = $classFactory;
     }
 
-    protected function isContainerNode($node): bool
+    protected function isContainerNode(NodeAbstract $node): bool
     {
-        return ($node instanceof Node\Stmt\Namespace_ || $node instanceof Node\Stmt\Class_);
+        return $node instanceof Namespace_ || $node instanceof Class_;
     }
 
-    protected function addLastNode()
+    protected function addLastNode(): void
     {
         if ($this->lastNode === null) {
             return;

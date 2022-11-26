@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+
 class RichTextProperty extends AbstractProperty
 {
     /**
@@ -23,14 +25,8 @@ class RichTextProperty extends AbstractProperty
      * @var string
      */
     protected $defaultValue = '';
-    /**
-     * @var bool
-     */
-    protected $useRTE = true;
-    /**
-     * @var bool
-     */
-    protected $searchable = true;
+    protected bool $useRTE = true;
+    protected bool $searchable = true;
 
     public function getTypeForComment(): string
     {
@@ -39,7 +35,7 @@ class RichTextProperty extends AbstractProperty
 
     public function getTypeHint(): string
     {
-        return '';
+        return 'string';
     }
 
     public function getSqlDefinition(): string

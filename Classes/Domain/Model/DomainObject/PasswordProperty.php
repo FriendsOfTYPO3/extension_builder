@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+
 class PasswordProperty extends AbstractProperty
 {
     /**
@@ -23,19 +25,22 @@ class PasswordProperty extends AbstractProperty
      * @var string
      */
     protected $defaultValue = '';
+    protected static bool $isNullable = true;
 
     public function getTypeForComment(): string
     {
-        return 'string';
+        return ($this->nullable) ? 'string|null' : 'string';
     }
 
     public function getTypeHint(): string
     {
-        return '';
+        return ($this->nullable) ? '?string' : 'string';
     }
 
     public function getSqlDefinition(): string
     {
-        return $this->getFieldName() . " varchar(255) DEFAULT '' NOT NULL,";
+        return ($this->nullable)
+            ? $this->getFieldName() . ' varchar(255) DEFAULT NULL,'
+            : $this->getFieldName() . " varchar(255) NOT NULL DEFAULT '',";
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,7 +15,11 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * View helper to check if one string contains another string
@@ -23,29 +27,30 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  * = Examples =
  * <k:matchString match="this" in="this and that" />
  * {k:matchString(match:'this', in:'this and that')}
- *
  */
 class MatchStringViewHelper extends AbstractViewHelper
 {
+    use CompileWithRenderStatic;
+
     /**
      * Arguments Initialization
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('match', 'string', 'RegEx', true);
         $this->registerArgument('in', 'string', 'the string to compare', true);
         $this->registerArgument('caseSensitive', 'boolean', 'caseSensitive', false);
     }
 
-    /**
-     * @return bool
-     */
-    public function render()
-    {
-        $matchAsRegularExpression = '/' . $this->arguments['match'] . '/';
-        if (!$this->arguments['caseSensitive']) {
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        $matchAsRegularExpression = '/' . $arguments['match'] . '/';
+        if (!$arguments['caseSensitive']) {
             $matchAsRegularExpression .= 'i';
         }
-        return preg_match($matchAsRegularExpression, $this->arguments['in']) !== 0;
+        return preg_match($matchAsRegularExpression, $arguments['in']) !== 0;
     }
 }

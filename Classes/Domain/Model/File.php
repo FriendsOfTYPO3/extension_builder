@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,61 +15,39 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model;
+
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 
 class File extends Container
 {
-    /**
-     * @var string
-     */
-    protected $filePathAndName = '';
+    protected string $filePathAndName = '';
 
     /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\NamespaceObject[]
+     * @var NamespaceObject[]
      */
-    protected $namespaces = [];
+    protected array $namespaces = [];
 
     /**
      * @var array all statements
      */
-    protected $stmts = [];
+    protected array $stmts = [];
 
-    /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\FunctionObject[]
-     */
-    protected $functions = [];
+    protected string $comment = '';
 
-    /**
-     * @var string
-     */
-    protected $comment = '';
-
-    /**
-     */
     public function __clone()
     {
         $clonedClasses = [];
         foreach ($this->classes as $class) {
-            $clonedClasses = clone($class);
+            $clonedClasses = clone $class;
         }
         $this->classes = $clonedClasses;
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject $class
-     */
-    public function addClass(ClassObject\ClassObject $class)
-    {
-        $this->classes[] = $class;
-    }
-
-    /**
-     * @param string $className
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject|null
-     */
-    public function getClassByName($className)
+    public function getClassByName(string $className): ?ClassObject
     {
         foreach ($this->getClasses() as $class) {
-            if ($class->getName() == $className) {
+            if ($class->getName() === $className) {
                 return $class;
             }
         }
@@ -77,7 +55,7 @@ class File extends Container
     }
 
     /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject[]
+     * @return ClassObject[]
      */
     public function getClasses(): array
     {
@@ -89,7 +67,7 @@ class File extends Container
     }
 
     /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject
+     * @return ClassObject
      */
     public function getFirstClass()
     {
@@ -100,18 +78,15 @@ class File extends Container
         return reset($classes);
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\NamespaceObject $namespace
-     */
-    public function addNamespace(NamespaceObject $namespace)
+    public function addNamespace(NamespaceObject $namespace): void
     {
         $this->namespaces[] = $namespace;
     }
 
     /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\NamespaceObject[]
+     * @return NamespaceObject[]
      */
-    public function getNamespaces()
+    public function getNamespaces(): array
     {
         return $this->namespaces;
     }
@@ -119,24 +94,18 @@ class File extends Container
     /**
      * get the first namespace of this file
      * (only for convenience, most files only use one namespace)
-     * @return \EBT\ExtensionBuilder\Domain\Model\NamespaceObject
+     * @return NamespaceObject|false
      */
     public function getNamespace()
     {
         return current($this->namespaces);
     }
 
-    /**
-     * @return bool
-     */
     public function hasNamespaces(): bool
     {
-        return (count($this->namespaces) > 0);
+        return count($this->namespaces) > 0;
     }
 
-    /**
-     * @param string $filePathAndName
-     */
     public function setFilePathAndName(string $filePathAndName): void
     {
         $this->filePathAndName = $filePathAndName;

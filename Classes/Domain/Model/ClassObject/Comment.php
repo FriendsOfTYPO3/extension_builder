@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,18 +15,15 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
+
 class Comment
 {
     /**
      * the raw comment content
-     *
-     * @var string
      */
-    protected $text = '';
-    /**
-     * @var int
-     */
-    protected $line = -1;
+    protected string $text = '';
+    protected int $line = -1;
 
     /**
      * @param string $text Comment text (including comment delimiters like /*)
@@ -38,18 +35,11 @@ class Comment
         $this->line = $line;
     }
 
-    /**
-     * @param string $text
-     * @return void
-     */
-    public function setText(string $text)
+    public function setText(string $text): void
     {
         $this->text = $text;
     }
 
-    /**
-     * @return string
-     */
     public function getText(): string
     {
         return $this->text;

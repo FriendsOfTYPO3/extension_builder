@@ -1,0 +1,1 @@
+f:form.textfield type="color" property="{property.name}" id="{property.name}"

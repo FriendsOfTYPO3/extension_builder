@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model\ClassObject;
+
 use EBT\ExtensionBuilder\Domain\Model\AbstractObject;
 
 /**
@@ -23,54 +25,24 @@ use EBT\ExtensionBuilder\Domain\Model\AbstractObject;
  */
 class MethodParameter extends AbstractObject
 {
-    /**
-     * @var string
-     */
-    protected $varType = '';
-    /**
-     * @var string
-     */
-    protected $typeHint = '';
-    /**
-     * @var string
-     */
-    protected $typeForParamTag = '';
+    protected string $varType = '';
+    protected string $typeHint = '';
+    protected string $typeForParamTag = '';
     /**
      * @var mixed
      */
     protected $defaultValue;
-    /**
-     * @var int
-     */
-    protected $position = 0;
-    /**
-     * @var bool
-     */
-    protected $optional = false;
-    /**
-     * @var int
-     */
-    protected $startLine = -1;
-    /**
-     * @var int
-     */
-    protected $endLine = -1;
-    /**
-     * @var bool
-     */
-    protected $passedByReference = false;
+    protected int $position = 0;
+    protected bool $optional = false;
+    protected int $startLine = -1;
+    protected int $endLine = -1;
+    protected bool $passedByReference = false;
 
-    /**
-     * @param string $name
-     */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
     public function getVarType(): string
     {
         if (empty($this->varType) && !empty($this->typeHint)) {
@@ -79,28 +51,17 @@ class MethodParameter extends AbstractObject
         return $this->varType;
     }
 
-    /**
-     * @param string $varType
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter This method is used in fluent interfaces!
-     */
-    public function setVarType($varType): self
+    public function setVarType(string $varType): self
     {
         $this->varType = $varType;
         return $this;
     }
 
-    /**
-     * @return int $position
-     */
     public function getPosition(): int
     {
         return $this->position;
     }
 
-    /**
-     * @param int $position
-     * @return void
-     */
     public function setPosition(int $position): void
     {
         $this->position = $position;
@@ -116,128 +77,79 @@ class MethodParameter extends AbstractObject
 
     /**
      * @param mixed $defaultValue
-     * @return void
      */
     public function setDefaultValue($defaultValue = null): void
     {
         $this->defaultValue = $defaultValue;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptional(): bool
     {
         return $this->optional;
     }
 
-    /**
-     * @param bool $optional
-     * @return void
-     */
-    public function setOptional($optional): void
+    public function setOptional(bool $optional): void
     {
         $this->optional = $optional;
     }
 
-    /**
-     * @return bool
-     */
     public function isPassedByReference(): bool
     {
         return $this->passedByReference;
     }
 
-    /**
-     * @return bool
-     */
     public function getPassedByReference(): bool
     {
         return $this->passedByReference;
     }
 
-    /**
-     * @param bool $passedByReference
-     * @return void
-     */
     public function setPassedByReference(bool $passedByReference): void
     {
         $this->passedByReference = $passedByReference;
     }
 
-    /**
-     * @return string
-     */
     public function getTypeHint(): string
     {
         return $this->typeHint;
     }
 
-    /**
-     * @param string $typeHint
-     * @return $this This method is used in fluent interfaces!
-     */
     public function setTypeHint(string $typeHint): self
     {
         $this->typeHint = $typeHint;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function hasTypeHint(): bool
     {
         return !empty($this->typeHint);
     }
 
-    /**
-     * @param string $typeForParamTag
-     * @return void
-     */
-    public function setTypeForParamTag($typeForParamTag)
+    public function setTypeForParamTag(string $typeForParamTag): void
     {
         $this->typeForParamTag = $typeForParamTag;
     }
 
-    /**
-     * @return string
-     */
-    public function getTypeForParamTag()
+    public function getTypeForParamTag(): string
     {
         return $this->typeForParamTag;
     }
 
-    /**
-     * @param int $startLine
-     * @return void
-     */
-    public function setStartLine($startLine)
+    public function setStartLine(int $startLine): void
     {
         $this->startLine = $startLine;
     }
 
-    /**
-     * @return int
-     */
-    public function getStartLine()
+    public function getStartLine(): int
     {
         return $this->startLine;
     }
 
-    /**
-     * @param int $endLine
-     * @return void
-     */
-    public function setEndLine($endLine)
+    public function setEndLine(int $endLine): void
     {
         $this->endLine = $endLine;
     }
 
-    /**
-     * @return int
-     */
-    public function getEndLine()
+    public function getEndLine(): int
     {
         return $this->endLine;
     }

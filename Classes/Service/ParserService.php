@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Service;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,9 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Service;
+
+use PhpParser\Parser;
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Parser\ClassFactory;
 use EBT\ExtensionBuilder\Parser\ClassFactoryInterface;
@@ -24,44 +27,24 @@ use EBT\ExtensionBuilder\Parser\Visitor\FileVisitor;
 use EBT\ExtensionBuilder\Parser\Visitor\FileVisitorInterface;
 use EBT\ExtensionBuilder\Parser\Visitor\ReplaceVisitor;
 use PhpParser\NodeVisitor\CloningVisitor;
+use PhpParser\ParserFactory;
 use TYPO3\CMS\Core\Localization\Exception\FileNotFoundException;
 use TYPO3\CMS\Core\SingletonInterface;
-use PhpParser\ParserFactory;
 
 class ParserService implements SingletonInterface
 {
-    /**
-     * @var \EBT\ExtensionBuilder\Parser\Visitor\FileVisitorInterface
-     */
-    protected $fileVisitor;
-
-    /**
-     * @var \EBT\ExtensionBuilder\Parser\TraverserInterface
-     */
-    protected $traverser;
-
-    /**
-     * @var \EBT\ExtensionBuilder\Parser\ClassFactoryInterface
-     */
-    protected $classFactory;
-
-    /**
-     * @var \EBT\ExtensionBuilder\Parser\Visitor\FileVisitorInterface
-     */
-    protected $classFileVisitor;
-
-    protected $parser;
+    protected ?FileVisitor $fileVisitor = null;
+    protected ?TraverserInterface $traverser = null;
+    protected ?ClassFactoryInterface $classFactory = null;
+    protected ?FileVisitorInterface $classFileVisitor = null;
+    protected Parser $parser;
 
     public function __construct()
     {
-        $this->parser = (new ParserFactory)->create(ParserFactory::ONLY_PHP7);
+        $this->parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
     }
 
-    /**
-     * @param string $code
-     * @return File
-     */
-    public function parseCode($code)
+    public function parseCode(string $code): File
     {
         $stmts = $this->parser->parse($code);
 
@@ -70,10 +53,10 @@ class ParserService implements SingletonInterface
             $this->traverser = new Traverser();
         }
         if (null === $this->fileVisitor) {
-            $this->fileVisitor = new FileVisitor;
+            $this->fileVisitor = new FileVisitor();
         }
         if (null === $this->classFactory) {
-            $this->classFactory = new ClassFactory;
+            $this->classFactory = new ClassFactory();
         }
         $this->fileVisitor->setClassFactory($this->classFactory);
         $this->traverser->appendVisitor($this->fileVisitor);
@@ -81,10 +64,6 @@ class ParserService implements SingletonInterface
         return $this->fileVisitor->getFileObject();
     }
 
-    /**
-     * @param string $fileName
-     * @return File
-     */
     public function parseFile(string $fileName): File
     {
         if (!file_exists($fileName)) {
@@ -99,50 +78,37 @@ class ParserService implements SingletonInterface
         return $fileObject;
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Parser\Visitor\FileVisitorInterface $visitor
-     */
-    public function setFileVisitor(FileVisitorInterface $visitor)
+    public function setFileVisitor(FileVisitorInterface $visitor): void
     {
         $this->classFileVisitor = $visitor;
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Parser\TraverserInterface
-     * @return void
-     */
-    public function setTraverser(TraverserInterface $traverser)
+    public function setTraverser(TraverserInterface $traverser): void
     {
         $this->traverser = $traverser;
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Parser\ClassFactoryInterface $classFactory
-     */
-    public function setClassFactory(ClassFactoryInterface $classFactory)
+    public function setClassFactory(ClassFactoryInterface $classFactory): void
     {
         $this->classFactory = $classFactory;
     }
 
-    /**
-     * @param array $stmts
-     * @param array $replacements
-     * @param array $nodeTypes
-     * @param string $nodeProperty
-     * @return array
-     */
-    public function replaceNodeProperty($stmts, $replacements, $nodeTypes = [], $nodeProperty = 'name')
-    {
+    public function replaceNodeProperty(
+        array $stmts,
+        array $replacements,
+        ?array $nodeTypes = [],
+        string $nodeProperty = 'name'
+    ): array {
         if (null === $this->traverser) {
-            $this->traverser = new Traverser;
+            $this->traverser = new Traverser();
         }
         $this->traverser->resetVisitors();
 
-        $visitor = new ReplaceVisitor;
+        $visitor = new ReplaceVisitor();
         $visitor->setNodeTypes($nodeTypes)
             ->setNodeProperty($nodeProperty)
             ->setReplacements($replacements);
-        $this->traverser->addVisitor(new CloningVisitor);
+        $this->traverser->addVisitor(new CloningVisitor());
         $this->traverser->appendVisitor($visitor);
 
         $stmts = $this->traverser->traverse($stmts);
@@ -150,7 +116,7 @@ class ParserService implements SingletonInterface
         return $stmts;
     }
 
-    public function initReduceCallbacks()
+    public function initReduceCallbacks(): void
     {
     }
 }

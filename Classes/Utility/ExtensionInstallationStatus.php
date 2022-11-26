@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Utility;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,66 +15,33 @@ namespace EBT\ExtensionBuilder\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Utility;
+
+use EBT\ExtensionBuilder\Domain\Model\Extension;
+use Exception;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extensionmanager\Utility\InstallUtility;
-use TYPO3\CMS\Install\Service\SqlSchemaMigrationService;
 
 class ExtensionInstallationStatus
 {
-    /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-     */
-    protected $objectManager;
-    /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\Extension
-     */
-    protected $extension;
-    /**
-     * @var InstallUtility
-     */
-    protected $installTool;
-    /**
-     * @var array[]
-     */
-    protected $updateStatements = [];
-    /**
-     * @var bool
-     */
-    protected $dbUpdateNeeded = false;
+    protected ?Extension $extension = null;
+    protected array $updateStatements = [];
+    protected bool $dbUpdateNeeded = false;
+    protected bool $usesComposerPath = false;
 
-    /**
-     * @var bool
-     */
-    protected $usesComposerPath = false;
-
-    public function __construct()
-    {
-        $this->installTool = GeneralUtility::makeInstance(InstallUtility::class);
-    }
-
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\Extension $extension
-     */
-    public function setExtension($extension)
+    public function setExtension(Extension $extension): void
     {
         $this->extension = $extension;
     }
 
-    /**
-     * @param bool $usesComposerPath
-     */
     public function setUsesComposerPath(bool $usesComposerPath): void
     {
         $this->usesComposerPath = $usesComposerPath;
     }
 
     /**
-     * @return string
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getStatusMessage()
+    public function getStatusMessage(): string
     {
         $statusMessage = '';
         // $this->checkForDbUpdate($this->extension->getExtensionKey());
@@ -107,7 +74,7 @@ class ExtensionInstallationStatus
             $statusMessage .= '<p>Your Extension is not installed yet.</p>';
             if ($this->usesComposerPath) {
                 $statusMessage .= sprintf(
-                    '<p>Execute <code>composer require %s</code> in terminal',
+                    'Execute <code>composer require %1$s:@dev</code> in terminal',
                     $this->extension->getComposerInfo()['name']
                 );
             }
@@ -118,19 +85,12 @@ class ExtensionInstallationStatus
         return $statusMessage;
     }
 
-    /**
-     * @param string $extensionKey
-     *
-     * @return void
-     */
-    public function checkForDbUpdate($extensionKey)
+    /*public function checkForDbUpdate(string $extensionKey): void
     {
         $this->dbUpdateNeeded = false;
         if (ExtensionManagementUtility::isLoaded($extensionKey)) {
             $sqlFile = ExtensionManagementUtility::extPath($extensionKey) . 'ext_tables.sql';
             if (@file_exists($sqlFile)) {
-                $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-                /* @var \TYPO3\CMS\Install\Service\SqlSchemaMigrationService $sqlHandler */
                 $sqlHandler = GeneralUtility::makeInstance(SqlSchemaMigrationService::class);
 
                 $sqlContent = GeneralUtility::getUrl($sqlFile);
@@ -150,12 +110,7 @@ class ExtensionInstallationStatus
         }
     }
 
-    /**
-     * @param array $params
-     *
-     * @return array
-     */
-    public function performDbUpdates(array $params)
+    public function performDbUpdates(array $params): array
     {
         $hasErrors = false;
         if (!empty($params['updateStatements']) && !empty($params['extensionKey'])) {
@@ -163,12 +118,13 @@ class ExtensionInstallationStatus
             if ($this->dbUpdateNeeded) {
                 foreach ($this->updateStatements as $type => $statements) {
                     foreach ($statements as $key => $statement) {
-                        if (in_array($type, ['change', 'add', 'create_table']) && in_array($key,
-                                $params['updateStatements'])) {
+                        if (in_array($type, ['change', 'add', 'create_table'])
+                            && in_array($key, $params['updateStatements'])
+                        ) {
                             $res = $this->getDatabaseConnection()->admin_query($statement);
                             if ($res === false) {
                                 $hasErrors = true;
-                            } elseif (is_resource($res) || is_a($res, \mysqli_result::class)) {
+                            } elseif (is_resource($res) || is_a($res, mysqli_result::class)) {
                                 $this->getDatabaseConnection()->sql_free_result($res);
                             }
                         }
@@ -181,29 +137,20 @@ class ExtensionInstallationStatus
         }
 
         return ['success' => 'Database was successfully updated'];
-    }
+    }*/
 
-    /**
-     * @return bool
-     */
-    public function isDbUpdateNeeded()
+    public function isDbUpdateNeeded(): bool
     {
         return $this->dbUpdateNeeded;
     }
 
-    /**
-     * @return array
-     */
-    public function getUpdateStatements()
+    /*public function getUpdateStatements(): array
     {
         return $this->updateStatements;
     }
 
-    /**
-     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
-     */
     protected function getDatabaseConnection()
     {
         return $GLOBALS['TYPO3_DB'];
-    }
+    }*/
 }

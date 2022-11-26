@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Service;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,6 +15,8 @@ namespace EBT\ExtensionBuilder\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Service;
+
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -24,12 +26,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class ValidationService implements SingletonInterface
 {
     /**
-     * TODO: Check this list if it's still up to date
      * Reserved words by MySQL
+     *
+     * @see https://dev.mysql.com/doc/refman/8.0/en/keywords.html
      *
      * @var string[]
      */
-    public static $reservedMYSQLWords = [
+    public static array $reservedMYSQLWords = [
         'ACCESSIBLE',
         'ADD',
         'ALL',
@@ -39,6 +42,7 @@ class ValidationService implements SingletonInterface
         'AS',
         'ASC',
         'ASENSITIVE',
+
         'BEFORE',
         'BETWEEN',
         'BIGINT',
@@ -46,6 +50,7 @@ class ValidationService implements SingletonInterface
         'BLOB',
         'BOTH',
         'BY',
+
         'CALL',
         'CASCADE',
         'CASE',
@@ -61,11 +66,14 @@ class ValidationService implements SingletonInterface
         'CONVERT',
         'CREATE',
         'CROSS',
+        'CUBE',
+        'CUME_DIST',
         'CURRENT_DATE',
         'CURRENT_TIME',
         'CURRENT_TIMESTAMP',
         'CURRENT_USER',
         'CURSOR',
+
         'DATABASE',
         'DATABASES',
         'DAY_HOUR',
@@ -78,6 +86,7 @@ class ValidationService implements SingletonInterface
         'DEFAULT',
         'DELAYED',
         'DELETE',
+        'DENSE_RANK',
         'DESC',
         'DESCRIBE',
         'DETERMINISTIC',
@@ -87,16 +96,21 @@ class ValidationService implements SingletonInterface
         'DOUBLE',
         'DROP',
         'DUAL',
+
         'EACH',
         'ELSE',
         'ELSEIF',
+        'EMPTY',
         'ENCLOSED',
         'ESCAPED',
+        'EXCEPT',
         'EXISTS',
         'EXIT',
         'EXPLAIN',
+
         'FALSE',
         'FETCH',
+        'FIRST_VALUE',
         'FLOAT',
         'FLOAT4',
         'FLOAT8',
@@ -105,18 +119,23 @@ class ValidationService implements SingletonInterface
         'FOREIGN',
         'FROM',
         'FULLTEXT',
-        'GENERAL',
-        'GOTO',
+        'FUNCTION',
+
+        'GENERATED',
+        'GET',
         'GRANT',
         'GROUP',
+        'GROUPING',
+        'GROUPS',
+
         'HAVING',
         'HIGH_PRIORITY',
         'HOUR_MICROSECOND',
         'HOUR_MINUTE',
         'HOUR_SECOND',
+
         'IF',
         'IGNORE',
-        'IGNORE_SERVER_IDS',
         'IN',
         'INDEX',
         'INFILE',
@@ -133,13 +152,22 @@ class ValidationService implements SingletonInterface
         'INTEGER',
         'INTERVAL',
         'INTO',
+        'IO_AFTER_GTIDS',
+        'IO_BEFORE_GTIDS',
         'IS',
         'ITERATE',
+
         'JOIN',
+        'JSON_TABLE',
+
         'KEY',
         'KEYS',
         'KILL',
-        'LABEL',
+
+        'LAG',
+        'LAST_VALUE',
+        'LATERAL',
+        'LEAD',
         'LEADING',
         'LEAVE',
         'LEFT',
@@ -156,7 +184,8 @@ class ValidationService implements SingletonInterface
         'LONGTEXT',
         'LOOP',
         'LOW_PRIORITY',
-        'MASTER_HEARTBEAT_PERIOD',
+
+        'MASTER_BIND',
         'MASTER_SSL_VERIFY_SERVER_CERT',
         'MATCH',
         'MAXVALUE',
@@ -168,13 +197,19 @@ class ValidationService implements SingletonInterface
         'MINUTE_SECOND',
         'MOD',
         'MODIFIES',
+
         'NATURAL',
         'NOT',
         'NO_WRITE_TO_BINLOG',
+        'NTH_VALUE',
+        'NTILE',
         'NULL',
         'NUMERIC',
+
+        'OF',
         'ON',
         'OPTIMIZE',
+        'OPTIMIZER_COSTS',
         'OPTION',
         'OPTIONALLY',
         'OR',
@@ -182,16 +217,22 @@ class ValidationService implements SingletonInterface
         'OUT',
         'OUTER',
         'OUTFILE',
+        'OVER',
+
+        'PARTITION',
+        'PERCENT_RANK',
         'PRECISION',
         'PRIMARY',
         'PROCEDURE',
         'PURGE',
+
         'RANGE',
+        'RANK',
         'READ',
         'READS',
         'READ_WRITE',
-        'READ_ONLY',
         'REAL',
+        'RECURSIVE',
         'REFERENCES',
         'REGEXP',
         'RELEASE',
@@ -205,6 +246,10 @@ class ValidationService implements SingletonInterface
         'REVOKE',
         'RIGHT',
         'RLIKE',
+        'ROW',
+        'ROWS',
+        'ROW_NUMBER',
+
         'SCHEMA',
         'SCHEMAS',
         'SECOND_MICROSECOND',
@@ -214,7 +259,6 @@ class ValidationService implements SingletonInterface
         'SET',
         'SHOW',
         'SIGNAL',
-        'SLOW',
         'SMALLINT',
         'SPATIAL',
         'SPECIFIC',
@@ -227,7 +271,10 @@ class ValidationService implements SingletonInterface
         'SQL_SMALL_RESULT',
         'SSL',
         'STARTING',
+        'STORED',
         'STRAIGHT_JOIN',
+        'SYSTEM',
+
         'TABLE',
         'TERMINATED',
         'THEN',
@@ -238,6 +285,7 @@ class ValidationService implements SingletonInterface
         'TRAILING',
         'TRIGGER',
         'TRUE',
+
         'UNDO',
         'UNION',
         'UNIQUE',
@@ -250,18 +298,25 @@ class ValidationService implements SingletonInterface
         'UTC_DATE',
         'UTC_TIME',
         'UTC_TIMESTAMP',
+
         'VALUES',
         'VARBINARY',
         'VARCHAR',
         'VARCHARACTER',
         'VARYING',
+        'VIRTUAL',
+
         'WHEN',
         'WHERE',
         'WHILE',
+        'WINDOW',
         'WITH',
         'WRITE',
+
         'XOR',
+
         'YEAR_MONTH',
+
         'ZEROFILL'
     ];
     /**
@@ -269,7 +324,7 @@ class ValidationService implements SingletonInterface
      *
      * @var string[]
      */
-    public static $reservedTYPO3ColumnNames = [
+    public static array $reservedTYPO3ColumnNames = [
         'uid',
         'pid',
         'endtime',
@@ -301,7 +356,7 @@ class ValidationService implements SingletonInterface
      *
      * @var string[]
      */
-    public static $reservedExtbaseNames = [
+    public static array $reservedExtbaseNames = [
         'Class',
         'Format',
         'Action',
@@ -350,42 +405,22 @@ class ValidationService implements SingletonInterface
         'RegexIterator',
     ];
 
-    /**
-     * @param string $word
-     *
-     * @return bool
-     */
-    public static function isReservedTYPO3Word($word)
+    public static function isReservedTYPO3Word(string $word): bool
     {
         return in_array(GeneralUtility::camelCaseToLowerCaseUnderscored($word), self::$reservedTYPO3ColumnNames);
     }
 
-    /**
-     * @param string $word
-     *
-     * @return bool
-     */
-    public static function isReservedExtbaseWord($word)
+    public static function isReservedExtbaseWord(string $word): bool
     {
         return in_array($word, self::$reservedExtbaseNames);
     }
 
-    /**
-     * @param string $word
-     *
-     * @return bool
-     */
-    public static function isReservedMYSQLWord($word)
+    public static function isReservedMYSQLWord(string $word): bool
     {
         return in_array(strtoupper($word), self::$reservedMYSQLWords);
     }
 
-    /**
-     * @param string $word
-     *
-     * @return bool
-     */
-    public static function isReservedWord($word)
+    public static function isReservedWord(string $word): bool
     {
         return self::isReservedMYSQLWord($word) || self::isReservedTYPO3Word($word);
     }

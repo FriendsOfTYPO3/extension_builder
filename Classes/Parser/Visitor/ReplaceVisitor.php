@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Parser\Visitor;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,9 +15,11 @@ namespace EBT\ExtensionBuilder\Parser\Visitor;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Parser\Visitor;
+
+use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
-use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 
 /**
  * a generic visitor to replace node properties in statements
@@ -25,28 +27,18 @@ use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
  */
 class ReplaceVisitor extends NodeVisitorAbstract
 {
-    /**
-     * @var array
-     */
-    protected $nodeTypes = [];
-    /**
-     * @var string
-     */
-    protected $nodeProperty = '';
-    /**
-     * @var array
-     */
-    protected $replacements = [];
+    protected ?array $nodeTypes = [];
+    protected string $nodeProperty = '';
+    protected array $replacements = [];
 
     /**
-     * @param \PhpParser\Node $node
-     * @return \PhpParser\Node
+     * @param Node $node
+     * @return Node
      */
     public function leaveNode(Node $node)
     {
         $nodeProperty = $this->nodeProperty;
         $nodeTypeMatch = false;
-        $type = $node->getType();
         if (!empty($this->nodeTypes)) {
             if (in_array($node->getType(), $this->nodeTypes)) {
                 $nodeTypeMatch = true;
@@ -72,9 +64,9 @@ class ReplaceVisitor extends NodeVisitorAbstract
 
     /**
      * @param array $replacements $oldValue => $newValue
-     * @return \EBT\ExtensionBuilder\Parser\Visitor\ReplaceVisitor
+     * @return ReplaceVisitor
      */
-    public function setReplacements(array $replacements)
+    public function setReplacements(array $replacements): self
     {
         $this->replacements = $replacements;
         return $this;
@@ -82,20 +74,20 @@ class ReplaceVisitor extends NodeVisitorAbstract
 
     /**
      * The property of a node that should be changed (defaults to 'name')
-     * @param $nodeProperty
-     * @return \EBT\ExtensionBuilder\Parser\Visitor\ReplaceVisitor
+     * @param string $nodeProperty
+     * @return ReplaceVisitor
      */
-    public function setNodeProperty($nodeProperty)
+    public function setNodeProperty(string $nodeProperty): self
     {
         $this->nodeProperty = $nodeProperty;
         return $this;
     }
 
     /**
-     * @param array $nodeTypes
-     * @return \EBT\ExtensionBuilder\Parser\Visitor\ReplaceVisitor
+     * @param array|null $nodeTypes
+     * @return ReplaceVisitor
      */
-    public function setNodeTypes($nodeTypes)
+    public function setNodeTypes(?array $nodeTypes): self
     {
         $this->nodeTypes = $nodeTypes;
         return $this;

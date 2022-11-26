@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,16 +15,20 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model;
+
 use EBT\ExtensionBuilder\Exception\FileNotFoundException;
 use EBT\ExtensionBuilder\Exception\SyntaxError;
 use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
+use InvalidArgumentException;
+use PhpParser\Error;
+use PhpParser\Node\Identifier;
 use PhpParser\Node\Stmt\Class_;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * abstract object representing a class, method or property in the context of
+ * Abstract object representing a class, method or property in the context of
  * software development
- *
  */
 abstract class AbstractObject
 {
@@ -38,7 +42,7 @@ abstract class AbstractObject
      *
      * @var int[]
      */
-    private $mapModifierNames = [
+    private array $mapModifierNames = [
         'public' => Class_::MODIFIER_PUBLIC,
         'protected' => Class_::MODIFIER_PROTECTED,
         'private' => Class_::MODIFIER_PRIVATE,
@@ -47,60 +51,42 @@ abstract class AbstractObject
         'final' => Class_::MODIFIER_FINAL
     ];
     /**
-     * @var string
+     * @var string|Identifier
      */
     protected $name = '';
 
-    /**
-     * @var string
-     */
-    protected $namespaceName = '';
+    protected string $namespaceName = '';
 
     /**
-     * modifiers  (privat, static abstract etc. not to mix up with "isModified" )
-     * @var int
+     * modifiers (privat, static abstract etc. not to mix up with "isModified" )
      */
-    protected $modifiers;
+    protected ?int $modifiers = null;
+
+    protected string $docComment;
 
     /**
-     * @var string
-     */
-    protected $docComment;
-
-    /**
-     * @var \EBT\ExtensionBuilder\Domain\Model\ClassObject\Comment[]
+     * @var string[]
      */
     protected $comments = [];
 
-    /**
-     * @var string
-     */
-    protected $description = '';
+    protected string $description = '';
 
     /**
      * @var string[]
      */
-    protected $descriptionLines = [];
+    protected array $descriptionLines = [];
 
     /**
-     * @var string[]
+     * @var string[]|array[]
      */
-    protected $tags = [];
+    protected array $tags = [];
 
     /**
      * this flag is set to true if a modification of an object was detected
-     *
-     * @var bool
      */
-    protected $isModified = false;
+    protected bool $isModified = false;
 
-    /**
-     * Setter for name
-     *
-     * @param string $name name
-     * @return $this
-     */
-    public function setName(string $name)
+    public function setName(string $name): self
     {
         $this->name = $name;
         return $this;
@@ -109,9 +95,9 @@ abstract class AbstractObject
     /**
      * Getter for name
      *
-     * @return string name
+     * @return string|Identifier
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -128,9 +114,9 @@ abstract class AbstractObject
      * @param string $tagName : Tag name to check for
      * @return bool true if such a tag has been defined, otherwise false
      */
-    public function isTaggedWith($tagName): bool
+    public function isTaggedWith(string $tagName): bool
     {
-        return (isset($this->tags[$tagName]));
+        return isset($this->tags[$tagName]);
     }
 
     /**
@@ -143,9 +129,6 @@ abstract class AbstractObject
         return $this->tags;
     }
 
-    /**
-     * @return bool
-     */
     public function hasTags(): bool
     {
         return count($this->getTags()) > 0;
@@ -157,7 +140,7 @@ abstract class AbstractObject
      *
      * @return $this;
      */
-    public function setTags($tags)
+    public function setTags(array $tags): self
     {
         $this->tags = $tags;
         return $this;
@@ -171,7 +154,7 @@ abstract class AbstractObject
      * @param bool $override
      * @return $this
      */
-    public function setTag($tagName, $tagValue = '', $override = true): self
+    public function setTag(string $tagName, $tagValue = '', bool $override = true): self
     {
         if (!$override && isset($this->tags[$tagName])) {
             if (!is_array($this->tags[$tagName])) {
@@ -189,7 +172,6 @@ abstract class AbstractObject
      * unsets a tags
      *
      * @param string $tagName
-     * @return void
      */
     public function removeTag(string $tagName): void
     {
@@ -205,7 +187,7 @@ abstract class AbstractObject
     public function getTagValues(string $tagName)
     {
         if (!$this->isTaggedWith($tagName)) {
-            throw new \InvalidArgumentException('Tag "' . $tagName . '" does not exist.', 1337645712);
+            throw new InvalidArgumentException('Tag "' . $tagName . '" does not exist.', 1337645712);
         }
         return $this->tags[$tagName];
     }
@@ -216,11 +198,11 @@ abstract class AbstractObject
      * @param string $tagName
      * @return string Value of the given tag
      */
-    public function getTagValue($tagName): string
+    public function getTagValue(string $tagName): string
     {
         $tagValues = $this->getTagValues($tagName);
         if (is_array($tagValues) && count($tagValues) > 1) {
-            throw new \InvalidArgumentException('Tag "' . $tagName . '" has multiple values.');
+            throw new InvalidArgumentException('Tag "' . $tagName . '" has multiple values.');
         }
         if (is_string($tagValues)) {
             return $tagValues;
@@ -237,7 +219,7 @@ abstract class AbstractObject
      *
      * @return array
      */
-    public function getAnnotations()
+    public function getAnnotations(): array
     {
         $annotations = [];
         $tags = $this->getTags();
@@ -272,7 +254,7 @@ abstract class AbstractObject
      *
      * @return string[] Property description
      */
-    public function getDescriptionLines()
+    public function getDescriptionLines(): array
     {
         return GeneralUtility::trimExplode(PHP_EOL, trim($this->getDescription()));
     }
@@ -281,10 +263,8 @@ abstract class AbstractObject
      * set description lines as array
      * this enables more control for line length and line breaks
      * @param string[] $descriptionLines
-     *
-     * @return void
      */
-    public function setDescriptionLines($descriptionLines): void
+    public function setDescriptionLines(array $descriptionLines): void
     {
         $this->descriptionLines = $descriptionLines;
         $this->description = implode(' ', $descriptionLines);
@@ -303,9 +283,6 @@ abstract class AbstractObject
         return $this;
     }
 
-    /**
-     * @return bool true if the description isn't empty
-     */
     public function hasDescription(): bool
     {
         return !empty($this->description);
@@ -318,7 +295,7 @@ abstract class AbstractObject
      * @param int $modifiers modifiers
      * @return $this (for fluid interface)
      */
-    public function setModifiers($modifiers): self
+    public function setModifiers(int $modifiers): self
     {
         $this->modifiers = $modifiers;
         return $this;
@@ -330,10 +307,10 @@ abstract class AbstractObject
      * @param string $modifierName
      *
      * @return $this (for fluid interface)
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
+     * @throws FileNotFoundException
+     * @throws SyntaxError
      */
-    public function addModifier($modifierName): self
+    public function addModifier(string $modifierName): self
     {
         $modifier = $this->mapModifierNames[$modifierName];
         if (!in_array($modifierName, $this->getModifierNames())) {
@@ -350,10 +327,10 @@ abstract class AbstractObject
      * @param string $modifierName
      *
      * @return $this (for fluid interface)
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
+     * @throws FileNotFoundException
+     * @throws SyntaxError
      */
-    public function setModifier($modifierName): self
+    public function setModifier(string $modifierName): self
     {
         if (in_array($modifierName, $this->getModifierNames())) {
             return $this; // modifier is already present
@@ -372,42 +349,24 @@ abstract class AbstractObject
         return $this;
     }
 
-    /**
-     * @param string $modifierName
-     * @return $this (for fluid interface)
-     */
-    public function removeModifier($modifierName): self
+    public function removeModifier(string $modifierName): self
     {
         $this->modifiers ^= $this->mapModifierNames[$modifierName];
         return $this;
     }
 
-    /**
-     * @return $this (for fluid interface)
-     */
     public function removeAllModifiers(): self
     {
         $this->modifiers = 0;
         return $this;
     }
 
-    /**
-     * Getter for modifiers
-     *
-     * @return int
-     *
-     */
-    public function getModifiers()
+    public function getModifiers(): ?int
     {
         return $this->modifiers;
     }
 
-    /**
-     * getModifierNames
-     *
-     * @return array
-     */
-    public function getModifierNames()
+    public function getModifierNames(): array
     {
         $modifiers = $this->getModifiers();
         return NodeConverter::modifierToNames($modifiers);
@@ -417,26 +376,26 @@ abstract class AbstractObject
      * validate if the modifier can be added to the current modifiers or not
      *
      * @param int $modifier
-     * @throws \EBT\ExtensionBuilder\Exception\FileNotFoundException
-     * @throws \EBT\ExtensionBuilder\Exception\SyntaxError
+     * @throws FileNotFoundException
+     * @throws SyntaxError
      */
-    protected function validateModifier($modifier): void
+    protected function validateModifier(int $modifier): void
     {
-        if ($modifier == Class_::MODIFIER_FINAL && $this->isAbstract()
-            || $modifier == Class_::MODIFIER_ABSTRACT && $this->isFinal()
+        if (($modifier === Class_::MODIFIER_FINAL && $this->isAbstract())
+            || ($modifier === Class_::MODIFIER_ABSTRACT && $this->isFinal())
         ) {
             throw new SyntaxError('Abstract and Final can\'t be applied both to same object');
         }
 
-        if ($modifier == Class_::MODIFIER_STATIC && $this->isAbstract()
-            || $modifier == Class_::MODIFIER_ABSTRACT && $this->isStatic()
+        if (($modifier === Class_::MODIFIER_STATIC && $this->isAbstract())
+            || ($modifier === Class_::MODIFIER_ABSTRACT && $this->isStatic())
         ) {
             throw new FileNotFoundException('Abstract and Static can\'t be applied both to same object');
         }
 
         try {
             Class_::verifyModifier($this->modifiers, $modifier);
-        } catch (\PhpParser\Error $e) {
+        } catch (Error $e) {
             throw new SyntaxError(
                 'Only one access modifier can be applied to one object. Use setModifier to avoid this exception'
             );
@@ -452,12 +411,12 @@ abstract class AbstractObject
      * will render the appropriately modified docComment
      *
      * @param string $docComment A doc comment
-     * @return void
      */
-    public function setDocComment($docComment)
+    public function setDocComment(string $docComment): void
     {
         $lines = explode(chr(10), $docComment);
-        foreach ($lines as $line) {
+        foreach ($lines as $index => $line) {
+            // extract description & tags from comment text
             $line = preg_replace('/(\\s*\\*\\/\\s*)?$/', '', $line);
             $line = trim($line);
             if ($line === '*/') {
@@ -466,13 +425,20 @@ abstract class AbstractObject
             if ($line !== '' && strpos($line, '* @') !== false) {
                 $this->parseTag(substr($line, strpos($line, '@')));
             } else {
-                if (count($this->tags) === 0) {
-                    $this->description .= preg_replace('/\\s*\\/?[\\\\*]*\\s?(.*)$/', '$1', $line) . PHP_EOL;
+                $plainLine = preg_replace('/\\s*\\/?[\\\\*]*\\s?(.*)$/', '$1', $line);
+                // add line to description if:
+                // no tag yet (tags should be placed below text)
+                // and line is not empty
+                // or line is empty and not first or last line
+                if (count($this->tags) === 0
+                    && (!empty($plainLine) || (!empty($this->description) && $index !== count($lines) - 1))
+                ) {
+                    $this->description .= $plainLine . PHP_EOL;
                 }
             }
         }
-        $this->descriptionLines = GeneralUtility::trimExplode(PHP_EOL, $this->description, true);
         $this->description = trim($this->description);
+        $this->descriptionLines = explode(PHP_EOL, $this->description);
     }
 
     /**
@@ -480,9 +446,8 @@ abstract class AbstractObject
      * The result is stored in the internal tags array.
      *
      * @param string $line A line of a doc comment which starts with an @-sign
-     * @return void
      */
-    protected function parseTag($line)
+    protected function parseTag(string $line): void
     {
         $tagAndValue = [];
         if (preg_match('/@([A-Za-z0-9\\\-]+)(\(.*\))? ?(.*)/', $line, $tagAndValue) === 0) {
@@ -505,7 +470,7 @@ abstract class AbstractObject
      *
      * @return string
      */
-    public function getDocComment()
+    public function getDocComment(): string
     {
         $docCommentLines = [];
         if (is_array($this->tags)) {
@@ -538,7 +503,18 @@ abstract class AbstractObject
             }
         }
         $docCommentLines = preg_replace('/\\s+$/', '', $docCommentLines);
-        $docCommentLines = preg_replace('/^/', ' * ', $docCommentLines);
+        $docCommentLines = array_reduce($docCommentLines, static function (array $acc, string $item) {
+            $c = count($acc);
+            if ($c > 1 && empty($item) && empty($acc[$c-1])) {
+                // skip second empty line
+            } else {
+                $acc[] = $item;
+            }
+            return $acc;
+        }, []);
+        array_walk($docCommentLines, static function (&$line): void {
+            $line = empty($line) ? ' *' : ' * ' . $line;
+        });
         return '/**' . PHP_EOL . implode(PHP_EOL, $docCommentLines) . PHP_EOL . ' */';
     }
 
@@ -547,128 +523,83 @@ abstract class AbstractObject
      *
      * @return bool
      */
-    public function hasDocComment()
+    public function hasDocComment(): bool
     {
         return !empty($this->docComment);
     }
 
-    /**
-     * @param string $commentText
-     * @return void
-     */
-    public function addComment($commentText)
+    public function addComment(string $commentText): void
     {
+        // parsed comments have no line at the end
+        // generated comments have
+        $lastChar = substr($commentText, -1);
+        if ($lastChar !== PHP_EOL) {
+            $commentText .= PHP_EOL;
+        }
         $this->comments[] = $commentText;
     }
 
     /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\ClassObject\Comment[] $comments
+     * @return string[]
      */
-    public function setComments($comments)
-    {
-        $this->comments = $comments;
-    }
-
-    /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Comment[]
-     */
-    public function getComments()
+    public function getComments(): array
     {
         return $this->comments;
     }
 
-    /**
-     * Setter for isModified
-     *
-     * @param string $isModified isModified
-     * @return void
-     */
-    public function setIsModified($isModified)
+    public function setIsModified(bool $isModified): void
     {
         $this->isModified = $isModified;
     }
 
-    /**
-     * Getter for isModified
-     *
-     * @return string isModified
-     */
-    public function getIsModified()
+    public function getIsModified(): bool
     {
         return $this->isModified;
     }
 
-    /**
-     * @param string $namespaceName
-     * @return \EBT\ExtensionBuilder\Domain\Model\AbstractObject
-     */
-    public function setNamespaceName($namespaceName)
+    public function setNamespaceName(string $namespaceName): self
     {
         $this->namespaceName = $namespaceName;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getNamespaceName()
+    public function getNamespaceName(): string
     {
         return $this->namespaceName;
     }
 
-    /**
-     * @return bool
-     */
-    public function isNamespaced()
+    public function isNamespaced(): bool
     {
         return !empty($this->namespaceName);
     }
 
-    /**
-     * @return bool
-     */
-    public function isPublic()
+    public function isPublic(): bool
     {
-        return (($this->modifiers & Class_::MODIFIER_PUBLIC) !== 0);
+        return ($this->modifiers & Class_::MODIFIER_PUBLIC) !== 0;
     }
 
-    /**
-     * @return bool
-     */
-    public function isProtected()
+    public function isProtected(): bool
     {
-        return (($this->modifiers & Class_::MODIFIER_PROTECTED) !== 0);
+        return ($this->modifiers & Class_::MODIFIER_PROTECTED) !== 0;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPrivate()
+    public function isPrivate(): bool
     {
-        return (($this->modifiers & Class_::MODIFIER_PRIVATE) !== 0);
+        return ($this->modifiers & Class_::MODIFIER_PRIVATE) !== 0;
     }
 
-    /**
-     * @return bool
-     */
-    public function isStatic()
+    public function isStatic(): bool
     {
-        return (($this->modifiers & Class_::MODIFIER_STATIC) !== 0);
+        return ($this->modifiers & Class_::MODIFIER_STATIC) !== 0;
     }
 
-    /**
-     * @return bool
-     */
-    public function isAbstract()
+    public function isAbstract(): bool
     {
-        return (($this->modifiers & Class_::MODIFIER_ABSTRACT) !== 0);
+        return ($this->modifiers & Class_::MODIFIER_ABSTRACT) !== 0;
     }
 
-    /**
-     * @return bool
-     */
-    public function isFinal()
+    public function isFinal(): bool
     {
-        return (($this->modifiers & Class_::MODIFIER_FINAL) !== 0);
+        return ($this->modifiers & Class_::MODIFIER_FINAL) !== 0;
     }
 }

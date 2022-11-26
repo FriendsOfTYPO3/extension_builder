@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,8 +15,11 @@ namespace EBT\ExtensionBuilder\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model;
+
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
+use Exception;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -33,318 +36,192 @@ class Extension
 
     /**
      * the extension key
-     *
-     * @var string
      */
-    protected $extensionKey = '';
-    /**
-     * @var string
-     */
-    protected $vendorName = '';
-    /**
-     * extension's name
-     *
-     * @var string
-     */
-    protected $name = '';
-    /**
-     * extension directory
-     *
-     * @var string
-     */
-    protected $extensionDir = '';
-    /**
-     * extension's version
-     *
-     * @var string
-     */
-    protected $version = '';
-    /**
-     * @var string
-     */
-    protected $description = '';
+    protected string $extensionKey = '';
+    protected string $vendorName = '';
+    protected string $name = '';
+    protected string $extensionDir = '';
+    protected string $version = '';
+    protected string $description = '';
     /**
      * The original extension key (if an extension was renamed)
-     *
-     * @var string
      */
-    protected $originalExtensionKey = '';
+    protected string $originalExtensionKey = '';
     /**
      * The initial vendorname (if the vendor name was changed)
-     *
-     * @var string
      */
-    protected $originalVendorName = '';
-    /**
-     * @var array
-     */
-    protected $settings = [];
-    /**
-     * @var string
-     */
-    protected $category;
-    /**
-     * @var bool
-     */
-    protected $supportVersioning = true;
-    /**
-     * @var bool
-     */
-    protected $supportLocalization = true;
-    /**
-     * @var bool
-     */
-    protected $generateDocumentationTemplate = true;
-    /**
-     * @var string
-     */
-    protected $sourceLanguage = 'en';
+    protected string $originalVendorName = '';
+    protected array $settings = [];
+    protected ?string $category = null;
+    protected bool $supportVersioning = true;
+    protected bool $supportLocalization = true;
+    protected bool $generateDocumentationTemplate = false;
+    protected bool $generateEmptyGitRepository = false;
+    protected bool $generateEditorConfig = false;
+    protected string $sourceLanguage = 'en';
     /**
      * The extension's state. One of the STATE_* constants.
-     * @var int
      */
-    protected $state = 0;
-    /**
-     * Is an upload folder required for this extension
-     *
-     * @var bool
-     */
-    protected $needsUploadFolder = false;
+    protected int $state = 0;
     /**
      * an array keeping all md5 hashes of all files in the extension to detect modifications
      *
      * @var string[]
      */
-    protected $md5Hashes = [];
+    protected array $md5Hashes = [];
     /**
      * all domain objects
      *
-     * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject[]
+     * @var DomainObject[]
      */
-    protected $domainObjects = [];
+    protected array $domainObjects = [];
     /**
      * the Persons working on the Extension
      *
-     * @var \EBT\ExtensionBuilder\Domain\Model\Person[]
+     * @var Person[]
      */
-    protected $persons = [];
+    protected array $persons = [];
     /**
      * plugins
      *
-     * @var array<\EBT\ExtensionBuilder\Domain\Model\Plugin>
+     * @var array<Plugin>
      */
-    private $plugins = [];
+    private array $plugins = [];
     /**
      * backend modules
      *
-     * @var array<\EBT\ExtensionBuilder\Domain\Model\BackendModule>
+     * @var array<BackendModule>
      */
-    private $backendModules = [];
+    private array $backendModules = [];
     /**
      * was the extension renamed?
-     * @var bool
      */
-    private $renamed = false;
+    private bool $renamed = false;
     /**
      * @var array
      */
-    private $dependencies = [];
+    private array $dependencies = [];
     /**
      * the lowest required TYPO3 version
-     * @var float
      */
-    private $targetVersion = 6.0;
-    /**
-     * @var string
-     */
-    protected $previousExtensionDirectory = '';
-    /**
-     * @var string
-     */
-    protected $previousExtensionKey = '';
+    private float $targetVersion = 10.0;
+    protected string $previousExtensionDirectory = '';
+    protected string $previousExtensionKey = '';
+    protected ?string $storagePath;
 
-    /**
-     * @var string|null
-     */
-    protected $storagePath;
-
-    /**
-     * @return string
-     */
     public function getExtensionKey(): string
     {
         return $this->extensionKey;
     }
 
-    /**
-     * @return string
-     */
     public function getExtensionName(): string
     {
         return GeneralUtility::underscoredToUpperCamelCase($this->extensionKey);
     }
 
-    /**
-     * @param string $extensionKey
-     */
     public function setExtensionKey(string $extensionKey): void
     {
         $this->extensionKey = $extensionKey;
     }
 
-    /**
-     * @return string
-     */
     public function getOriginalExtensionKey(): string
     {
         return $this->originalExtensionKey;
     }
 
-    /**
-     * @param string $extensionKey
-     */
     public function setOriginalExtensionKey(string $extensionKey): void
     {
         $this->originalExtensionKey = $extensionKey;
     }
 
-    /**
-     * @param array $settings
-     */
-    public function setSettings($settings): void
+    public function setSettings(array $settings): void
     {
         $this->settings = $settings;
     }
 
-    /**
-     * @return array
-     */
     public function getSettings(): array
     {
         return $this->settings;
     }
 
-    /**
-     * @return string
-     * @throws \Exception
-     */
     public function getExtensionDir(): string
     {
         if (empty($this->extensionDir)) {
             if (empty($this->extensionKey)) {
-                throw new \Exception('ExtensionDir can only be created if an extensionKey is defined first');
+                throw new Exception('ExtensionDir can only be created if an extensionKey is defined first');
             }
             $this->extensionDir = ($this->storagePath ?? Environment::getPublicPath() . '/typo3conf/ext/') . $this->extensionKey . '/';
         }
         return $this->extensionDir;
     }
 
-    /**
-     * @param string $extensionDir
-     */
     public function setExtensionDir(string $extensionDir): void
     {
         $this->extensionDir = $extensionDir;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @param string $vendorName
-     */
     public function setVendorName(string $vendorName): void
     {
         $this->vendorName = $vendorName;
     }
 
-    /**
-     * @return string
-     */
     public function getVendorName(): string
     {
         return $this->vendorName;
     }
 
-    /**
-     * @return string
-     */
     public function getOriginalVendorName(): string
     {
         return $this->originalVendorName;
     }
 
-    /**
-     * @param string $vendorName
-     */
     public function setOriginalVendorName(string $vendorName): void
     {
         $this->originalVendorName = $vendorName;
     }
 
-    /**
-     * @return string
-     */
     public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @param string $version
-     */
-    public function setVersion($version): void
+    public function setVersion(string $version): void
     {
         $this->version = $version;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
     public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @return int
-     */
     public function getState(): int
     {
         return $this->state;
     }
 
-    /**
-     * @param int $state
-     */
     public function setState(int $state): void
     {
         $this->state = $state;
     }
 
     /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject[]
+     * @return DomainObject[]
      */
     public function getDomainObjects(): array
     {
@@ -369,7 +246,7 @@ class Extension
     }
 
     /**
-     * get all domainobjects that are mapped to existing tables
+     * get all domain objects that are mapped to existing tables
      * @return array|null
      */
     public function getDomainObjectsThatNeedMappingStatements(): ?array
@@ -448,13 +325,7 @@ class Extension
         return $domainObjects;
     }
 
-    /**
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject1
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject2
-     * @param array $classHierarchy
-     * @return bool
-     */
-    protected function isParentOf($domainObject1, $domainObject2, $classHierarchy): bool
+    protected function isParentOf(DomainObject $domainObject1, DomainObject $domainObject2): bool
     {
         return $domainObject2->getParentClass() === $domainObject1->getFullQualifiedClassName();
     }
@@ -462,9 +333,9 @@ class Extension
     /**
      * Add a domain object to the extension. Creates the reverse link as well.
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject
+     * @param DomainObject $domainObject
      *
-     * @throws \EBT\ExtensionBuilder\Domain\Exception\ExtensionException
+     * @throws ExtensionException
      */
     public function addDomainObject(DomainObject $domainObject): void
     {
@@ -477,17 +348,10 @@ class Extension
                 );
             }
         }
-        if ($domainObject->getNeedsUploadFolder()) {
-            $this->needsUploadFolder = true;
-        }
         $this->domainObjects[$domainObject->getName()] = $domainObject;
     }
 
-    /**
-     * @param string $domainObjectName
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
-     */
-    public function getDomainObjectByName($domainObjectName): ?DomainObject
+    public function getDomainObjectByName(string $domainObjectName): ?DomainObject
     {
         return $this->domainObjects[$domainObjectName] ?? null;
     }
@@ -504,7 +368,7 @@ class Extension
      * returns the extension key without underscore
      * (Used in Typoscript module signature)
      */
-    public function getUnprefixedShortExtensionKey()
+    public function getUnprefixedShortExtensionKey(): string
     {
         return str_replace('_', '', $this->getExtensionKey());
     }
@@ -512,7 +376,7 @@ class Extension
     /**
      * Returns the Persons
      *
-     * @return array<\EBT\ExtensionBuilder\Domain\Model\Person>
+     * @return array<Person>
      */
     public function getPersons(): array
     {
@@ -522,8 +386,7 @@ class Extension
     /**
      * Sets the Persons
      *
-     * @param array <\EBT\ExtensionBuilder\Domain\Model\Person> $persons
-     * @return void
+     * @param array<Person> $persons
      */
     public function setPersons(array $persons): void
     {
@@ -533,89 +396,48 @@ class Extension
     /**
      * Adds a Person to the end of the current Set of Persons.
      *
-     * @param \EBT\ExtensionBuilder\Domain\Model\Person $person
-     * @return void
+     * @param Person $person
      */
-    public function addPerson($person): void
+    public function addPerson(Person $person): void
     {
         $this->persons[] = $person;
     }
 
-    /**
-     * Setter for plugin
-     *
-     * @param array<\EBT\ExtensionBuilder\Domain\Model\Plugin> $plugins
-     * @return void
-     */
     public function setPlugins(array $plugins): void
     {
         $this->plugins = $plugins;
     }
 
-    /**
-     * Getter for $plugin
-     *
-     * @return array<\EBT\ExtensionBuilder\Domain\Model\Plugin>
-     */
     public function getPlugins(): array
     {
         return $this->plugins;
     }
 
-    /**
-     * @return bool
-     */
     public function hasPlugins(): bool
     {
         return count($this->plugins) > 0;
     }
 
-    /**
-     * Add $plugin
-     *
-     * @param \EBT\ExtensionBuilder\Domain\Model\Plugin
-     * @return void
-     */
     public function addPlugin(Plugin $plugin): void
     {
         $this->plugins[] = $plugin;
     }
 
-    /**
-     * Setter for backendModule
-     *
-     * @param array<\EBT\ExtensionBuilder\Domain\Model\BackendModule> $backendModules
-     * @return void
-     */
     public function setBackendModules(array $backendModules): void
     {
         $this->backendModules = $backendModules;
     }
 
-    /**
-     * Getter for $backendModule
-     *
-     * @return array<\EBT\ExtensionBuilder\Domain\Model\Plugin>
-     */
     public function getBackendModules(): array
     {
         return $this->backendModules;
     }
 
-    /**
-     * Add $backendModule
-     *
-     * @param \EBT\ExtensionBuilder\Domain\Model\BackendModule
-     * @return void
-     */
     public function addBackendModule(BackendModule $backendModule): void
     {
         $this->backendModules[] = $backendModule;
     }
 
-    /**
-     * @return bool
-     */
     public function hasBackendModules(): bool
     {
         return count($this->backendModules) > 0;
@@ -638,22 +460,14 @@ class Extension
         return '';
     }
 
-    /**
-     * @return string
-     */
     public function getCssClassName(): string
     {
         return 'tx-' . str_replace('_', '-', $this->getExtensionKey());
     }
 
-    /**
-     * @param string $filePath
-     *
-     * @return bool
-     */
-    public function isModified($filePath): bool
+    public function isModified(string $filePath): bool
     {
-        if (is_file($filePath) && isset($this->md5Hashes[$filePath])) {
+        if (isset($this->md5Hashes[$filePath]) && is_file($filePath)) {
             if (md5_file($filePath) != $this->md5Hashes[$filePath]) {
                 return true;
             }
@@ -661,33 +475,17 @@ class Extension
         return false;
     }
 
-    /**
-     * setter for md5 hashes
-     *
-     * @param array $md5Hashes
-     *
-     * @return void
-     */
     public function setMD5Hashes(array $md5Hashes): void
     {
         $this->md5Hashes = $md5Hashes;
     }
 
-    /**
-     * getter for md5 hashes
-     * @return array $md5Hashes
-     */
     public function getMD5Hashes(): array
     {
         return $this->md5Hashes;
     }
 
-    /**
-     * calculates all md5 hashes
-     *
-     * @param string $filePath
-     */
-    public function setMD5Hash($filePath): void
+    public function setMD5Hash(string $filePath): void
     {
         $this->md5Hashes[$filePath] = md5_file($filePath);
     }
@@ -710,17 +508,11 @@ class Extension
         return $this->extensionDir;
     }
 
-    /**
-     * @return string|null
-     */
     public function getStoragePath(): ?string
     {
         return $this->storagePath;
     }
 
-    /**
-     * @param string|null $storagePath
-     */
     public function setStoragePath(?string $storagePath): void
     {
         if ($storagePath !== null) {
@@ -729,9 +521,6 @@ class Extension
         $this->storagePath = $storagePath;
     }
 
-    /**
-     * @return bool
-     */
     public function isRenamed(): bool
     {
         $originalExtensionKey = $this->getOriginalExtensionKey();
@@ -741,9 +530,6 @@ class Extension
         return $this->renamed;
     }
 
-    /**
-     * @return bool
-     */
     public function vendorNameChanged(): bool
     {
         $originalVendorName = $this->getOriginalVendorName();
@@ -753,157 +539,116 @@ class Extension
         return $this->renamed;
     }
 
-    /**
-     * Getter for $needsUploadFolder
-     *
-     * @return bool $needsUploadFolder
-     */
-    public function getNeedsUploadFolder(): bool
-    {
-        return $this->needsUploadFolder;
-    }
-
-    /**
-     * @return string $uploadFolder
-     */
-    public function getUploadFolder(): string
-    {
-        return 'uploads/' . $this->getShortExtensionKey();
-    }
-
-    /**
-     * @return string
-     */
     public function getCategory(): ?string
     {
         return $this->category;
     }
 
-    /**
-     * @param string $category
-     */
     public function setCategory(?string $category): void
     {
         $this->category = $category;
     }
 
-    /**
-     * @param bool $supportVersioning
-     */
-    public function setSupportVersioning($supportVersioning): void
+    public function setSupportVersioning(bool $supportVersioning): void
     {
         $this->supportVersioning = $supportVersioning;
     }
 
-    /**
-     * @return bool
-     */
     public function getSupportVersioning(): bool
     {
         return $this->supportVersioning;
     }
 
-    /**
-     * @param array $dependencies
-     */
-    public function setDependencies($dependencies): void
+    public function setDependencies(array $dependencies): void
     {
         $this->dependencies = $dependencies;
     }
 
-    /**
-     * @return array
-     */
     public function getDependencies(): array
     {
         return $this->dependencies;
     }
 
-    /**
-     * @param float $targetVersion
-     */
-    public function setTargetVersion($targetVersion): void
+    public function setTargetVersion(float $targetVersion): void
     {
         $this->targetVersion = $targetVersion;
     }
 
-    /**
-     * @return float
-     */
     public function getTargetVersion(): float
     {
         return $this->targetVersion;
     }
 
-    /**
-     * @return string
-     */
     public function getNamespaceName(): string
     {
         return $this->getVendorName() . '\\' . $this->getExtensionName();
     }
 
-    /**
-     * @param bool $supportLocalization
-     */
     public function setSupportLocalization(bool $supportLocalization): void
     {
         $this->supportLocalization = $supportLocalization;
     }
 
-    /**
-     * @return bool
-     */
     public function getSupportLocalization(): bool
     {
         return $this->supportLocalization;
     }
 
-    /**
-     * @param bool $generateDocumentationTemplate
-     */
     public function setGenerateDocumentationTemplate(bool $generateDocumentationTemplate): void
     {
         $this->generateDocumentationTemplate = $generateDocumentationTemplate;
     }
 
-    /**
-     * @return bool
-     */
     public function getGenerateDocumentationTemplate(): bool
     {
         return $this->generateDocumentationTemplate;
     }
 
-    /**
-     * @return string
-     */
+    public function setGenerateEmptyGitRepository(bool $generateEmptyGitRepository): void
+    {
+        $this->generateEmptyGitRepository = $generateEmptyGitRepository;
+    }
+
+    public function getGenerateEmptyGitRepository(): bool
+    {
+        return $this->generateEmptyGitRepository;
+    }
+
+    public function getGenerateEditorConfig(): bool
+    {
+        return $this->generateEditorConfig;
+    }
+
+    public function setGenerateEditorConfig(bool $generateEditorConfig): void
+    {
+        $this->generateEditorConfig = $generateEditorConfig;
+    }
+
     public function getSourceLanguage(): string
     {
         return $this->sourceLanguage;
     }
 
-    /**
-     * @param string $sourceLanguage
-     */
     public function setSourceLanguage(string $sourceLanguage): void
     {
         $this->sourceLanguage = $sourceLanguage;
     }
 
-    /**
-     * @return array
-     */
     public function getComposerInfo(): array
     {
-        $composerExtensionKey = strtolower(str_replace('_', '-', $this->extensionKey));
+        $extensionKey = $this->extensionKey;
+        $composerExtensionKey = strtolower(str_replace('_', '-', $extensionKey));
         $info = [
-            'name' => strtolower(str_replace('_', '-', GeneralUtility::camelCaseToLowerCaseUnderscored($this->vendorName))) . '/' . $composerExtensionKey,
+            'name' => strtolower(str_replace('_', '', GeneralUtility::camelCaseToLowerCaseUnderscored($this->vendorName))) . '/' . $composerExtensionKey,
             'type' => 'typo3-cms-extension',
             'description' => $this->description,
             'authors' => [],
+            'license' => 'GPL-2.0-or-later',
             'require' => [
-                'typo3/cms-core' => '^9.5'
+                'typo3/cms-core' => '^11.5'
+            ],
+            'require-dev' => [
+                'typo3/testing-framework' => '^6.9.0'
             ],
             'autoload' => [
                 'psr-4' => [
@@ -917,6 +662,21 @@ class Extension
             ],
             'replace' => [
                 'typo3-ter/' . $composerExtensionKey => 'self.version'
+            ],
+            'config' => [
+                'vendor-dir' => '.Build/vendor',
+                'bin-dir' => '.Build/bin',
+            ],
+            'scripts' => [
+                'post-autoload-dump' => [
+                    'TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare',
+                ]
+            ],
+            'extra' => [
+                'typo3/cms' => [
+                    'web-dir' => '.Build/public',
+                    'extension-key' => $extensionKey,
+                ]
             ]
         ];
         foreach ($this->persons as $person) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,9 +15,12 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
 use EBT\ExtensionBuilder\Utility\Inflector;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * Makes a word in CamelCase or lower_underscore human readable
@@ -30,39 +33,29 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  * Output:
  * Foo Bar
- *
  */
 class HumanizeViewHelper extends AbstractViewHelper
 {
-    /**
-     * @var \EBT\ExtensionBuilder\Utility\Inflector
-     */
-    protected $inflector;
-
-    public function __construct()
-    {
-        $this->inflector = GeneralUtility::makeInstance(Inflector::class);
-    }
+    use CompileWithContentArgumentAndRenderStatic;
 
     /**
      * Arguments Initialization
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
-        $this->registerArgument('string', 'string', 'The string to make human readable', true);
+        $this->registerArgument('string', 'string', 'The string to make human readable', false);
     }
 
-    /**
-     * Make a word human readable
-     *
-     * @return string The human readable string
-     */
-    public function render()
-    {
-        $string = $this->arguments['string'];
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        $string = $renderChildrenClosure();
         if ($string === null) {
-            $string = $this->renderChildren();
+            return '';
         }
-        return $this->inflector->humanize($string);
+
+        return Inflector::humanize($string);
     }
 }

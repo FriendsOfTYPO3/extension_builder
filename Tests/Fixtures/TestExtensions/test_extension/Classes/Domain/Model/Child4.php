@@ -1,22 +1,25 @@
 <?php
+
+declare(strict_types=1);
+
 namespace FIXTURE\TestExtension\Domain\Model;
 
-/***
- *
- * This file is part of the "ExtensionBuilder Test Extension" Extension for TYPO3 CMS.
+
+/**
+ * This file is part of the "Extension Builder Test Extension" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
- *
- ***/
+ * (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
+ */
 
 /**
  * Child4
  */
 class Child4 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
+
     /**
      * name
      *
@@ -35,7 +38,7 @@ class Child4 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the name
      *
-     * @return string $name
+     * @return string
      */
     public function getName()
     {
@@ -48,7 +51,7 @@ class Child4 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $name
      * @return void
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -56,7 +59,7 @@ class Child4 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the fileProperty
      *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference $fileProperty
+     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
      */
     public function getFileProperty()
     {

@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  EBT\ExtensionBuilder\:
+    resource: '../Classes/*'
+
+  EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager:
+    public: true
+
+  EBT\ExtensionBuilder\Service\Printer:
+    public: true

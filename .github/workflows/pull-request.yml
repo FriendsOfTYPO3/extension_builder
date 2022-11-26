@@ -1,0 +1,33 @@
+name: Check Pull Request
+
+on:
+  pull_request_target:
+    types: [opened, edited, reopened, synchronize, ready_for_review, review_requested]
+
+jobs:
+  check_commit_message:
+    name: Check Commit Message
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Commit Type
+        uses: gsactions/commit-message-checker@v1
+        with:
+          pattern: '^(|\[(!!!|WIP|POC|REVERT)\])\[(BUGFIX|DOCS|FEATURE|SECURITY|TASK|RELEASE|DEVBOX)\] .+($|\n|\r|\n\r)'
+          flags: ''
+          error: 'Your first line has to contain a commit type like "[BUGFIX]" or "[TASK]" or "[FEATURE]" see https://docs.typo3.org/m/typo3/guide-contributionworkflow/master/en-us/Appendix/CommitMessage.html#commitmessage.'
+      - name: Check Line Length
+        uses: gsactions/commit-message-checker@v1
+        with:
+          pattern: '^[^#].{1,74}'
+          flags: 'gm'
+          error: 'The maximum line length of 74 characters is exceeded.'
+
+  assign_labels:
+    name: Assign Labels
+    needs: check_commit_message
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign and check labels
+        uses: fuxingloh/multi-labeler@v1
+        with:
+          config-path: .github/pr-labeler.yml

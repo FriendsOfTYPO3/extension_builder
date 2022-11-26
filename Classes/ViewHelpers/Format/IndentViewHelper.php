@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers\Format;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,35 +15,29 @@ namespace EBT\ExtensionBuilder\ViewHelpers\Format;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+namespace EBT\ExtensionBuilder\ViewHelpers\Format;
 
-/**
- * Indentation ViewHelper
- *
- */
+use Closure;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
+
 class IndentViewHelper extends AbstractViewHelper
 {
+    use CompileWithRenderStatic;
+
     protected $escapeOutput = false;
 
-    /**
-     * Arguments Initialization
-     */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
-        $this->registerArgument('indentation', 'integer', 'number of spaces to indent', true);
+        $this->registerArgument('indentation', 'integer', 'number of levels to indent', true);
     }
 
-    /**
-     * @return bool true or false
-     */
-    public function render()
+    public static function renderStatic(array $arguments, Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
-        $outputToIndent = $this->renderChildren();
-        $lineArray = explode(chr(10), $outputToIndent);
-        $indentString = '';
-        for ($i = 0; $i < $this->arguments['indentation']; $i++) {
-            $indentString .= '    ';
-        }
+        $content = $renderChildrenClosure();
+        $lineArray = explode(chr(10), $content);
+        $indentString = str_repeat('    ', $arguments['indentation']);
         return implode(chr(10) . $indentString, $lineArray);
     }
 }

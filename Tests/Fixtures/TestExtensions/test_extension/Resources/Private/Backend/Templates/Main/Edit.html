@@ -1,4 +1,8 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
 <f:layout name="Default" />
 
 This template displays a EDIT form for the current domain object.
@@ -7,21 +11,31 @@ If you modify this template, do not forget to change the overwrite settings
 in /Configuration/ExtensionBuilder/settings.yaml:
   Resources:
     Private:
-      Templates:
-        Edit.html: keep
+      Backend:
+        Templates:
+          Main:
+            Edit.html: keep
 
 Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
-<f:section name="content">
-	<h1>Edit Main</h1>
+<f:section name="Buttons">
+    <be:moduleLayout.button.linkButton
+        icon="actions-view-go-back"
+        title="{f:translate(id: 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.goBack')}"
+        link="{f:uri.action(controller: 'Main', action: 'list')}"
+    />
+</f:section>
 
-	<f:flashMessages />
+<f:section name="Content">
+    <h1>Edit Main</h1>
 
-	<f:render partial="FormErrors" />
+    <f:flashMessages />
 
-	<f:form action="update" name="main" object="{main}" >
-	<f:render partial="Main/FormFields" arguments="{main:main}" />
-		<f:form.submit value="Save" />
-	</f:form>
+    <f:render partial="FormErrors" />
+
+    <f:form action="update" name="main" object="{main}">
+        <f:render partial="Main/FormFields" arguments="{main: main}" />
+        <f:form.submit value="Save" class="btn btn-default" />
+    </f:form>
 </f:section>
 </html>

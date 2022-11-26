@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Parser\Utility;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,26 +15,33 @@ namespace EBT\ExtensionBuilder\Parser\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Parser\Utility;
+
+use LogicException;
 use PhpParser\Node;
+use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
+use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\ConstFetch;
 use PhpParser\Node\Expr\UnaryMinus;
 use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
+use PhpParser\Node\NullableType;
 use PhpParser\Node\Scalar\DNumber;
 use PhpParser\Node\Scalar\LNumber;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
+use PhpParser\NodeAbstract;
 
 class NodeConverter
 {
     /**
      * @var int[]
      */
-    public static $accessorModifiers = [
+    public static array $accessorModifiers = [
         Class_::MODIFIER_PUBLIC,
         Class_::MODIFIER_PROTECTED,
         Class_::MODIFIER_PRIVATE
@@ -58,7 +65,7 @@ class NodeConverter
      * @param int $modifiers
      * @return array with names as strings
      */
-    public static function modifierToNames($modifiers)
+    public static function modifierToNames($modifiers): array
     {
         $modifierString = ($modifiers & Class_::MODIFIER_PUBLIC ? 'public ' : '') .
             ($modifiers & Class_::MODIFIER_PROTECTED ? 'protected ' : '') .
@@ -74,12 +81,12 @@ class NodeConverter
      * //TODO: support more node types?
      *
      * @static
-     * @param $node
-     * @return array|null|string
+     * @param NodeAbstract|string $node
+     * @return array|string|null
      */
     public static function getValueFromNode($node)
     {
-        if (\is_string($node) || \is_numeric($node)) {
+        if (is_string($node) || is_numeric($node)) {
             return $node;
         }
 
@@ -109,13 +116,21 @@ class NodeConverter
             foreach ($arrayItems as $arrayItemNode) {
                 $itemKey = $arrayItemNode->key;
                 $itemValue = $arrayItemNode->value;
-                if (is_null($itemKey)) {
+                if (null === $itemKey) {
                     $value[] = self::normalizeValue($itemValue);
                 } else {
                     $value[self::getValueFromNode($itemKey)] = self::normalizeValue($itemValue);
                 }
             }
             return $value;
+        }
+
+        if ($node instanceof NullableType) {
+            return '?' . self::getValueFromNode($node->type);
+        }
+
+        if ($node instanceof ClassConstFetch) {
+            return $node->name;
         }
 
         if ($node instanceof Node) {
@@ -131,15 +146,15 @@ class NodeConverter
      *
      * @param mixed $value The value to normalize
      *
-     * @return \PhpParser\Node\Expr The normalized value
+     * @return Expr The normalized value
      */
-    public static function normalizeValue($value)
+    public static function normalizeValue($value): Node
     {
         if ($value instanceof Node) {
             return $value;
         }
 
-        if (is_null($value)) {
+        if (null === $value) {
             return new ConstFetch(new Name('null'));
         }
 
@@ -180,7 +195,7 @@ class NodeConverter
             return new Array_($items);
         }
 
-        throw new \LogicException('Invalid value');
+        throw new LogicException('Invalid value');
     }
 
     /**
@@ -189,15 +204,18 @@ class NodeConverter
      * \PhpParser\Node\Stmt\Class_Const
      *
      * @static
-     * @param \PhpParser\Node
+     * @param Node $node
      * @return array
      */
-    public static function convertClassConstantNodeToArray(Node $node)
+    public static function convertClassConstantNodeToArray(Node $node): array
     {
         $constantsArray = [];
-        $consts = $node->consts;
-        foreach ($consts as $const) {
-            $constantsArray[] = ['name' => $const->name, 'value' => self::getValueFromNode($const->value)];
+        $constants = $node->consts;
+        foreach ($constants as $const) {
+            $constantsArray[] = [
+                'name' => $const->name,
+                'value' => self::getValueFromNode($const->value)
+            ];
         }
         return $constantsArray;
     }
@@ -208,10 +226,10 @@ class NodeConverter
      * with keys name and alias
      *
      * @static
-     * @param \PhpParser\Node\Stmt\Use_
+     * @param Use_ $node
      * @return array
      */
-    public static function convertUseAliasStatementNodeToArray(Use_ $node)
+    public static function convertUseAliasStatementNodeToArray(Use_ $node): array
     {
         return [
             'name' => self::getValueFromNode($node->uses[0]->name),
@@ -219,9 +237,9 @@ class NodeConverter
         ];
     }
 
-    public static function getVarTypeFromValue($value)
+    public static function getVarTypeFromValue($value): string
     {
-        if (is_null($value)) {
+        if (null === $value) {
             return '';
         }
 
@@ -232,7 +250,7 @@ class NodeConverter
         return gettype($value);
     }
 
-    public static function getPropertyValueFromNode($node, $property)
+    public static function getPropertyValueFromNode(Node $node, $property)
     {
         if (is_string($node->$property)) {
             return $node->$property;
@@ -240,11 +258,12 @@ class NodeConverter
         if (is_object($node->$property) && property_exists($node->$property, $property)) {
             return $node->$property->$property;
         }
+        return null;
     }
 
-    public static function getNameFromNode($node)
+    public static function getNameFromNode(Node $node)
     {
-        if (is_string($node->name)) {
+        if (property_exists($node, 'name') && is_string($node->name)) {
             return $node->name;
         }
         if (property_exists($node, 'var') && property_exists($node->var, 'name')) {

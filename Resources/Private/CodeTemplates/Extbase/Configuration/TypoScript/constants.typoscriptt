@@ -1,5 +1,4 @@
-<f:for each="{extension.plugins}" as="plugin">
-plugin.{extension.shortExtensionKey}_{plugin.key} {
+<f:for each="{extension.plugins}" as="plugin">plugin.{extension.shortExtensionKey}_{plugin.key} {
     view {
         # cat=plugin.{extension.shortExtensionKey}_{plugin.key}/file; type=string; label=Path to template root (FE)
         templateRootPath = EXT:{extension.extensionKey}/Resources/Private/Templates/

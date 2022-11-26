@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Parser;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,15 +15,20 @@ namespace EBT\ExtensionBuilder\Parser;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Parser;
+
 use EBT\ExtensionBuilder\Domain\Model;
 use EBT\ExtensionBuilder\Domain\Model\AbstractObject;
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\Method;
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter;
 use EBT\ExtensionBuilder\Domain\Model\FunctionObject;
 use EBT\ExtensionBuilder\Domain\Model\NamespaceObject;
 use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 use PhpParser\Comment;
 use PhpParser\Comment\Doc;
+use PhpParser\Node\Name\FullyQualified;
+use PhpParser\Node\Param;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
@@ -40,15 +45,11 @@ use TYPO3\CMS\Core\SingletonInterface;
  */
 class ClassFactory implements ClassFactoryInterface, SingletonInterface
 {
-    /**
-     * @param \PhpParser\Node\Stmt\Class_ $classNode
-     * @return ClassObject
-     */
     public function buildClassObject(Class_ $classNode): ClassObject
     {
-        $classObject = new ClassObject($classNode->name);
+        $classObject = new ClassObject((string)$classNode->name);
         foreach ($classNode->implements as $interfaceNode) {
-            $classObject->addInterfaceName($interfaceNode);
+            $classObject->addInterfaceName((string)$interfaceNode);
         }
         $classObject->setModifiers($classNode->flags);
         if ($classNode->extends !== null) {
@@ -58,23 +59,19 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
         return $classObject;
     }
 
-    /**
-     * @param \PhpParser\Node\Stmt\ClassMethod $methodNode
-     * @return Method
-     */
     public function buildClassMethodObject(ClassMethod $methodNode): Method
     {
         $methodObject = new Method($methodNode->name->name);
         $methodObject->setModifiers($methodNode->flags);
+        $returnType = $methodNode->getReturnType();
+        if ($returnType instanceof FullyQualified) {
+            $methodObject->setReturnType($returnType->toCodeString());
+        }
         $this->addCommentsFromAttributes($methodObject, $methodNode);
         $this->setFunctionProperties($methodNode, $methodObject);
         return $methodObject;
     }
 
-    /**
-     * @param \PhpParser\Node\Stmt\Function_ $functionNode
-     * @return FunctionObject
-     */
     public function buildFunctionObject(Function_ $functionNode): FunctionObject
     {
         $functionObject = new FunctionObject(NodeConverter::getNameFromNode($functionNode->name));
@@ -83,11 +80,7 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
         return $functionObject;
     }
 
-    /**
-     * @param \PhpParser\Node\Stmt\Property $propertyNode
-     * @return \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property
-     */
-    public function buildPropertyObject(Property $propertyNode): \EBT\ExtensionBuilder\Domain\Model\ClassObject\Property
+    public function buildPropertyObject(Property $propertyNode): Model\ClassObject\Property
     {
         $propertyName = '';
         $propertyDefault = null;
@@ -111,10 +104,6 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
         return $propertyObject;
     }
 
-    /**
-     * @param Namespace_ $nameSpaceNode
-     * @return NamespaceObject
-     */
     public function buildNamespaceObject(Namespace_ $nameSpaceNode): NamespaceObject
     {
         $nameSpaceObject = new NamespaceObject(NodeConverter::getValueFromNode($nameSpaceNode));
@@ -122,12 +111,7 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
         return $nameSpaceObject;
     }
 
-    /**
-     * @param Stmt $node
-     * @param FunctionObject $object
-     * @return AbstractObject
-     */
-    protected function setFunctionProperties(Stmt $node, FunctionObject $object)
+    protected function setFunctionProperties(Stmt $node, FunctionObject $object): FunctionObject
     {
         if (property_exists($node, 'flags')) {
             $object->setModifiers($node->flags);
@@ -144,9 +128,9 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
             }
         }
         $position = 0;
-        /** @var \PhpParser\Builder\Param $param */
         foreach ($node->params as $param) {
-            $parameter = new Model\ClassObject\MethodParameter($param->var->name);
+            /** @var Param $param */
+            $parameter = new MethodParameter($param->var->name);
             $parameter->setPosition($position);
             $parameter->setStartLine($param->getAttribute('startLine'));
             $parameter->setEndLine($param->getAttribute('endLine'));
@@ -160,7 +144,7 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
                 // if there is not type hint but a varType in the param tag,
                 // we set the varType of the parameter
                 $paramTag = explode(' ', $paramTags[$position]);
-                if ($paramTag[0] !== '$' . $param->name) {
+                if ($paramTag[0] !== '$' . $param->var->name) {
                     $parameter->setVarType($paramTag[0]);
                     $parameter->setTypeForParamTag($paramTag[0]);
                 }
@@ -175,21 +159,30 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
         return $object;
     }
 
-    /**
-     * @param AbstractObject $object
-     * @param Stmt $node
-     */
-    protected function addCommentsFromAttributes(AbstractObject $object, Stmt $node)
+    protected function addCommentsFromAttributes(AbstractObject $object, Stmt $node): void
     {
         $comments = $node->getAttribute('comments');
+        $docComments = [];
         if (is_array($comments)) {
             foreach ($comments as $comment) {
                 if ($comment instanceof Doc) {
-                    $object->setDocComment($comment->getReformattedText());
+                    $docComments[] = $comment;
                 } elseif ($comment instanceof Comment) {
                     $object->addComment($comment->getText());
                 }
             }
+        }
+        $dc = count($docComments);
+        if ($dc > 1) {
+            foreach ($docComments as $index => $docComment) {
+                if ($index < $dc -1) {
+                    $object->addComment($docComment->getText());
+                } else {
+                    $object->setDocComment($docComment->getText());
+                }
+            }
+        } elseif ($dc === 1) {
+            $object->setDocComment($docComments[0]->getText());
         }
     }
 }

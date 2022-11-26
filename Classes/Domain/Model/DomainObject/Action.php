@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,50 +15,41 @@ namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\Domain\Model\DomainObject;
+
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 
 /**
  * An action defined for a domain object
- *
  */
 class Action
 {
     /**
      * the action's name
-     *
-     * @var string
      */
-    protected $name = '';
+    protected string $name = '';
     /**
      * the domain object this action belongs to
-     *
-     * @var \EBT\ExtensionBuilder\Domain\Model\DomainObject
      */
-    protected $domainObject;
+    protected ?DomainObject $domainObject = null;
     /**
      * Is a template required for this action?
-     *
-     * @var bool
      */
-    protected $needsTemplate = false;
+    protected bool $needsTemplate = false;
     /**
      * Is a form required in the template for this action?
-     *
-     * @var bool
      */
-    protected $needsForm = false;
+    protected bool $needsForm = false;
     /**
      * Is a property partial required in the template for this action?
-     *
-     * @var bool
      */
-    protected $needsPropertyPartial = false;
+    protected bool $needsPropertyPartial = false;
     /**
      * these actions do not need a template since they are never rendered
      *
      * @var string[]
      */
-    protected $actionNamesWithNoRendering = [
+    protected array $actionNamesWithNoRendering = [
         'create',
         'update',
         'delete'
@@ -68,7 +59,7 @@ class Action
      *
      * @var string[]
      */
-    protected $actionNamesWithForm = [
+    protected array $actionNamesWithForm = [
         'new',
         'edit'
     ];
@@ -77,29 +68,25 @@ class Action
      *
      * @var string[]
      */
-    protected $actionNamesThatShouldNotBeCached = [
+    protected array $actionNamesThatShouldNotBeCached = [
         'create',
         'update',
         'delete'
     ];
     /**
      * flag: true if the action is cacheable
-     *
-     * @var bool|null
      */
-    protected $cacheable;
-
+    protected ?bool $cacheable = null;
     /**
-     * @return string
+     * Whether this is a custom action and needs a custom fluid template
      */
+    protected bool $customAction = false;
+
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name): void
     {
         $this->name = $name;
@@ -107,17 +94,14 @@ class Action
 
     /**
      * DO NOT CALL DIRECTLY! This is being called by addAction() automatically.
-     * @param \EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject the domain object this actions belongs to
+     * @param DomainObject $domainObject the domain object this actions belongs to
      */
     public function setDomainObject(DomainObject $domainObject): void
     {
         $this->domainObject = $domainObject;
     }
 
-    /**
-     * @return \EBT\ExtensionBuilder\Domain\Model\DomainObject
-     */
-    public function getDomainObject(): DomainObject
+    public function getDomainObject(): ?DomainObject
     {
         return $this->domainObject;
     }
@@ -167,36 +151,31 @@ class Action
         return $this->needsPropertyPartial;
     }
 
-    /**
-     * setter for cacheable flag
-     *
-     * @param bool $cacheable
-     */
     public function setCacheable(bool $cacheable): void
     {
         $this->cacheable = $cacheable;
     }
 
-    /**
-     * Getter for cacheable
-     *
-     * @return bool|null $cacheable
-     */
-    public function getCacheable(): ?bool
+    public function getCacheable(): bool
     {
         return $this->isCacheable();
     }
 
-    /**
-     * should this action be cacheable
-     *
-     * @return bool
-     */
-    public function isCacheable()
+    public function isCacheable(): bool
     {
         if (!isset($this->cacheable)) {
             $this->cacheable = !in_array($this->getName(), $this->actionNamesThatShouldNotBeCached);
         }
         return $this->cacheable;
+    }
+
+    public function isCustomAction(): bool
+    {
+        return $this->customAction;
+    }
+
+    public function setCustomAction(bool $customAction): void
+    {
+        $this->customAction = $customAction;
     }
 }

@@ -38,70 +38,38 @@ class SpycYAMLParser
     /**
      * Setting this to true will force YAMLDump to enclose any string value in
      * quotes. false by default.
-     *
-     * @var bool
      */
-    public $setting_dump_force_quotes = false;
+    public bool $setting_dump_force_quotes = false;
     /**
      * Setting this to true will force YAMLLoad to use syck_load function when
      * possible. false by default.
-     *
-     * @var bool
      */
-    public $setting_use_syck_is_possible = false;
-    /**
-     * @var int
-     */
-    private $_dumpIndent = 0;
-    /**
-     * @var int
-     */
-    private $_dumpWordWrap = 0;
-    /**
-     * @var bool
-     */
-    private $_containsGroupAnchor = false;
-    /**
-     * @var bool
-     */
-    private $_containsGroupAlias = false;
-    /**
-     * @var array
-     */
-    private $path = [];
-    /**
-     * @var array
-     */
-    private $result = [];
-    /**
-     * @var string
-     */
-    private $LiteralPlaceHolder = '___YAML_Literal_Block___';
-    /**
-     * @var array
-     */
-    private $SavedGroups = [];
-    /**
-     * @var int
-     */
-    private $indent = 0;
+    public bool $setting_use_syck_is_possible = false;
+    private int $_dumpIndent = 0;
+    private int $_dumpWordWrap = 0;
+    private bool $_containsGroupAnchor = false;
+    private bool $_containsGroupAlias = false;
+    private array $path = [];
+    private array $result = [];
+    private string $LiteralPlaceHolder = '___YAML_Literal_Block___';
+    private array $SavedGroups = [];
+    private int $indent = 0;
     /**
      * Path modifier that should be applied after adding current element.
      *
      * @var int[]
      */
-    private $delayedPath = [];
+    private array $delayedPath = [];
     /**
      * @var mixed
      */
-    public $_nodeId = null;
+    public $_nodeId;
 
     /**
      * Load a valid YAML string to Spyc.
      * @param string $input
-     * @return array
      */
-    public function load($input)
+    public function load($input): array
     {
         return $this->__loadString($input);
     }
@@ -109,9 +77,8 @@ class SpycYAMLParser
     /**
      * Load a valid YAML file to Spyc.
      * @param string $file
-     * @return array
      */
-    public function loadFile($file)
+    public function loadFile($file): array
     {
         return $this->__load($file);
     }
@@ -127,13 +94,11 @@ class SpycYAMLParser
      *   $array = Spyc::YAMLLoad('lucky.yaml');
      *   print_r($array);
      *  </code>
-     * @access public
      * @param string $input Path of YAML file or string containing YAML
-     * @return array
      */
-    public static function YAMLLoad($input)
+    public static function YAMLLoad($input): array
     {
-        $Spyc = new SpycYAMLParser;
+        $Spyc = new self();
         return $Spyc->__load($input);
     }
 
@@ -152,13 +117,11 @@ class SpycYAMLParser
      *   $array = Spyc::YAMLLoadString("---\n0: hello world\n");
      *   print_r($array);
      *  </code>
-     * @access public
      * @param string $input String containing YAML
-     * @return array
      */
-    public static function YAMLLoadString($input)
+    public static function YAMLLoadString($input): array
     {
-        $Spyc = new SpycYAMLParser();
+        $Spyc = new self();
         return $Spyc->__loadString($input);
     }
 
@@ -176,18 +139,16 @@ class SpycYAMLParser
      * Indent's default is 2 spaces, wordwrap's default is 40 characters.  And
      * you can turn off wordwrap by passing in 0.
      *
-     * @access public
      * @param array $array PHP array
      * @param int $indent Pass in false to use the default, which is 2
      * @param int $wordwrap Pass in 0 for no wordwrap, false for default (40)
      *
-     * @return string
      *
      * @throws \Exception
      */
-    public static function YAMLDump($array, $indent = false, $wordwrap = false)
+    public static function YAMLDump($array, $indent = false, $wordwrap = false): string
     {
-        $spyc = new SpycYAMLParser;
+        $spyc = new self();
         return $spyc->dump($array, $indent, $wordwrap);
     }
 
@@ -205,16 +166,14 @@ class SpycYAMLParser
      * Indent's default is 2 spaces, wordwrap's default is 40 characters.  And
      * you can turn off wordwrap by passing in 0.
      *
-     * @access public
      * @param array $array PHP array
      * @param int $indent Pass in false to use the default, which is 2
      * @param int $wordwrap Pass in 0 for no wordwrap, false for default (40)
      *
-     * @return string
      *
      * @throws \Exception
      */
-    public function dump($array, $indent = false, $wordwrap = false)
+    public function dump($array, $indent = false, $wordwrap = false): string
     {
         // Dumps to some very clean YAML.  We'll have to add some more features
         // and options soon.  And better support for folding.
@@ -252,16 +211,13 @@ class SpycYAMLParser
     /**
      * Attempts to convert a key / value array item to YAML
      *
-     * @access private
      * @param string $key The name of the key
      * @param mixed $value The value of the item
      * @param int $indent The indent of the current node
      *
-     * @return string
-     *
      * @throws \Exception
      */
-    private function _yamlize($key, $value, $indent, $previous_key = -1, $first_key = 0)
+    private function _yamlize($key, $value, $indent, $previous_key = -1, $first_key = 0): string
     {
         if (is_array($value)) {
             if (empty($value)) {
@@ -287,7 +243,6 @@ class SpycYAMLParser
     /**
      * Attempts to convert an array to YAML
      *
-     * @access private
      * @param array $array The array you want to convert
      * @param int $indent The indent of the current level
      *
@@ -314,24 +269,32 @@ class SpycYAMLParser
     /**
      * Returns YAML from a key and a value
      *
-     * @access private
      * @param string $key The name of the key
      * @param mixed $value The value of the item
      * @param int $indent The indent of the current node
      *
-     * @return string
-     *
      * @throws \Exception
      */
-    private function _dumpNode($key, $value, $indent, $previous_key = -1, $first_key = 0)
+    private function _dumpNode($key, $value, $indent, $previous_key = -1, $first_key = 0): string
     {
         // do some folding here, for blocks
-        if (is_string($value) && ((strpos($value, PHP_EOL) !== false || strpos($value, ': ') !== false || strpos($value,
-                        '- ') !== false ||
-                    strpos($value, '*') !== false || strpos($value, '#') !== false || strpos($value,
-                        '<') !== false || strpos($value, '>') !== false ||
-                    strpos($value, '[') !== false || strpos($value, ']') !== false || strpos($value,
-                        '{') !== false || strpos($value, '}') !== false) || substr($value, -1, 1) == ':')
+        if (is_string($value)
+            && (
+                (
+                    strpos($value, PHP_EOL) !== false
+                    || strpos($value, ': ') !== false
+                    || strpos($value, '- ') !== false
+                    || strpos($value, '*') !== false
+                    || strpos($value, '#') !== false
+                    || strpos($value, '<') !== false
+                    || strpos($value, '>') !== false
+                    || strpos($value, '[') !== false
+                    || strpos($value, ']') !== false
+                    || strpos($value, '{') !== false
+                    || strpos($value, '}') !== false
+                )
+                || substr($value, -1, 1) == ':'
+            )
         ) {
             $value = $this->_doLiteralBlock($value, $indent);
         } else {
@@ -365,12 +328,12 @@ class SpycYAMLParser
 
     /**
      * Creates a literal block for dumping
-     * @access private
+     *
      * @param $value
      * @param $indent int The value of the indent
      * @return string
      */
-    private function _doLiteralBlock($value, $indent)
+    private function _doLiteralBlock($value, $indent): string
     {
         if (strpos($value, PHP_EOL) === false && strpos($value, "'") === false) {
             return sprintf("'%s'", $value);
@@ -390,11 +353,10 @@ class SpycYAMLParser
 
     /**
      * Folds a string of text, if necessary
-     * @access private
+     *
      * @param string $value The string you wish to fold
-     * @return string
      */
-    private function _doFolding($value, $indent)
+    private function _doFolding($value, $indent): string
     {
         // Don't do anything if wordwrap is set to 0
 
@@ -468,7 +430,7 @@ class SpycYAMLParser
             }
 
             while (++$i < $cnt && self::greedilyNeedNextLine($line)) {
-                $line = rtrim($line, ' ' . PHP_EOL . TAB . CR) . ' ' . ltrim($Source[$i], ' ' . TAB);
+                $line = rtrim($line, ' ' . PHP_EOL . "\t" . CR) . ' ' . ltrim($Source[$i], ' ' . "\t");
             }
             $i--;
 
@@ -504,7 +466,7 @@ class SpycYAMLParser
         return $this->loadFromString($input);
     }
 
-    private function loadFromString($input)
+    private function loadFromString($input): array
     {
         $lines = explode(LF, $input);
         foreach ($lines as $k => $_) {
@@ -515,7 +477,6 @@ class SpycYAMLParser
 
     /**
      * Parses YAML code and returns an array for a node
-     * @access private
      * @param string $line A line from the YAML file
      * @return array
      */
@@ -558,7 +519,6 @@ class SpycYAMLParser
 
     /**
      * Finds the type of the passed value, returns the value as the new type.
-     * @access private
      * @param string $value
      * @return mixed
      */
@@ -644,7 +604,7 @@ class SpycYAMLParser
             return null;
         }
 
-        if (intval($first_character) > 0 && preg_match('/^[1-9]+[0-9]*$/', $value)) {
+        if ((int)$first_character > 0 && preg_match('/^[1-9]+[0-9]*$/', $value)) {
             $intvalue = (int)$value;
             if ($intvalue != PHP_INT_MAX) {
                 $value = $intvalue;
@@ -683,10 +643,8 @@ class SpycYAMLParser
 
     /**
      * Used in inlines to check for more inlines or quoted strings
-     * @access private
-     * @return array
      */
-    private function _inlineEscape($inline)
+    private function _inlineEscape($inline): array
     {
         // There's gotta be a cleaner way to do this...
         // While pure sequences seem to be nesting just fine,
@@ -795,7 +753,7 @@ class SpycYAMLParser
         return $explode;
     }
 
-    private function literalBlockContinues($line, $lineIndent)
+    private function literalBlockContinues($line, $lineIndent): bool
     {
         if (!trim($line)) {
             return true;
@@ -824,7 +782,7 @@ class SpycYAMLParser
         return $value;
     }
 
-    private function addArrayInline($array, $indent)
+    private function addArrayInline($array, $indent): bool
     {
         $CommonGroupPath = $this->path;
         if (empty($array)) {
@@ -939,7 +897,7 @@ class SpycYAMLParser
         return $lastChar;
     }
 
-    private static function greedilyNeedNextLine($line)
+    private static function greedilyNeedNextLine($line): bool
     {
         $line = trim($line);
         if (!strlen($line)) {
@@ -957,7 +915,7 @@ class SpycYAMLParser
         return false;
     }
 
-    private function addLiteralLine($literalBlock, $line, $literalBlockStyle)
+    private function addLiteralLine($literalBlock, $line, $literalBlockStyle): string
     {
         $line = self::stripIndent($line);
         $line = rtrim($line, CRLF . TAB) . PHP_EOL;
@@ -988,7 +946,7 @@ class SpycYAMLParser
         return $lineArray;
     }
 
-    private static function stripIndent($line, $indent = -1)
+    private static function stripIndent($line, $indent = -1): string
     {
         if ($indent == -1) {
             $indent = strlen($line) - strlen(ltrim($line));
@@ -1012,7 +970,7 @@ class SpycYAMLParser
         return $linePath;
     }
 
-    private function clearBiggerPathValues($indent)
+    private function clearBiggerPathValues($indent): bool
     {
         if ($indent == 0) {
             $this->path = [];
@@ -1030,7 +988,7 @@ class SpycYAMLParser
         return true;
     }
 
-    private static function isComment($line)
+    private static function isComment($line): bool
     {
         if (!$line) {
             return false;
@@ -1038,18 +996,18 @@ class SpycYAMLParser
         if ($line[0] == '#') {
             return true;
         }
-        if (trim($line, ' ' . CRLF . TAB) == '---') {
+        if (trim($line, ' ' . CRLF . "\t") == '---') {
             return true;
         }
         return false;
     }
 
-    private static function isEmpty($line)
+    private static function isEmpty($line): bool
     {
-        return (trim($line) === '');
+        return trim($line) === '';
     }
 
-    private function isArrayElement($line)
+    private function isArrayElement($line): bool
     {
         if (!$line) {
             return false;
@@ -1071,7 +1029,7 @@ class SpycYAMLParser
         return strpos($line, ':');
     }
 
-    private function isLiteral($line)
+    private function isLiteral($line): bool
     {
         if ($this->isArrayElement($line)) {
             return false;
@@ -1099,12 +1057,12 @@ class SpycYAMLParser
         return $value;
     }
 
-    private function startsMappedSequence($line)
+    private function startsMappedSequence($line): bool
     {
-        return ($line[0] == '-' && substr($line, -1, 1) == ':');
+        return $line[0] == '-' && substr($line, -1, 1) == ':';
     }
 
-    private function returnMappedSequence($line)
+    private function returnMappedSequence($line): array
     {
         $array = [];
         $key = self::unquote(trim(substr($line, 1, -1)));
@@ -1113,7 +1071,7 @@ class SpycYAMLParser
         return [$array];
     }
 
-    private function returnMappedValue($line)
+    private function returnMappedValue($line): array
     {
         $array = [];
         $key = self::unquote(trim(substr($line, 0, -1)));
@@ -1121,14 +1079,14 @@ class SpycYAMLParser
         return $array;
     }
 
-    private function startsMappedValue($line)
+    private function startsMappedValue($line): bool
     {
-        return (substr($line, -1, 1) == ':');
+        return substr($line, -1, 1) == ':';
     }
 
-    private function isPlainArray($line)
+    private function isPlainArray($line): bool
     {
-        return ($line[0] == '[' && substr($line, -1, 1) == ']');
+        return $line[0] == '[' && substr($line, -1, 1) == ']';
     }
 
     private function returnPlainArray($line)
@@ -1136,7 +1094,7 @@ class SpycYAMLParser
         return $this->_toType($line);
     }
 
-    private function returnKeyValuePair($line)
+    private function returnKeyValuePair($line): array
     {
         $array = [];
         $key = '';
@@ -1165,7 +1123,7 @@ class SpycYAMLParser
         return $array;
     }
 
-    private function returnArrayElement($line)
+    private function returnArrayElement($line): array
     {
         if (strlen($line) <= 1) {
             return [[]];
@@ -1201,7 +1159,7 @@ class SpycYAMLParser
         return false;
     }
 
-    private function addGroup($line, $group)
+    private function addGroup($line, $group): void
     {
         if ($group[0] == '&') {
             $this->_containsGroupAnchor = substr($group, 1);
@@ -1211,7 +1169,7 @@ class SpycYAMLParser
         }
     }
 
-    private function stripGroup($line, $group)
+    private function stripGroup($line, $group): string
     {
         $line = trim(str_replace($group, '', $line));
         return $line;

@@ -140,7 +140,7 @@
 		);
 
 		this.showSpinnerPanel.setHeader("Saving, please wait...");
-		this.showSpinnerPanel.setBody('<img src="' + TYPO3.settings.extensionBuilder.baseUrl + 'Resources/Public/jsDomainModeling/wireit/images/loading.gif" />');
+		this.showSpinnerPanel.setBody('<img src="' + TYPO3.settings.extensionBuilder.publicResourcesUrl + '/jsDomainModeling/wireit/images/loading.gif" />');
 		this.showSpinnerPanel.render(document.body);
 
 
@@ -366,15 +366,7 @@
 		 */
 		saveModule: function(login) {
 
-            if (typeof login == 'undefined') {
-				var baseUrl;
-				if (typeof parent.TYPO3.configuration != 'undefined') {
-					baseUrl = parent.TYPO3.configuration.PATH_typo3;
-				}
-				else {
-					baseUrl = window.location.href.split('index.php')[0];
-				}
-
+      if (typeof login == 'undefined') {
 				Connect.asyncRequest(
 						'POST',
 						TYPO3.settings.ajaxUrls['login_timedout']
@@ -406,15 +398,12 @@
 			this.showSpinnerPanel.show();
 			this.dataToSubmit.name = value.name;
 			this.dataToSubmit.working = JSON.stringify(value.working);
-			this.dataToSubmit.storagePath = document.querySelector('#storagePath').value;
 			this.service.saveWiring(this.dataToSubmit, {
 				success: this.saveModuleSuccess,
 				failure: this.saveModuleFailure,
 				scope: this
 			});
-
 		},
-
 
 		validateModels: function(value) {
 			var modelNames = {},
@@ -825,20 +814,13 @@
 
 		// add uids to terminals to identify the connection from relations
 		// to other models
-		getUidForTerminal	:	function(terminal) {
-			var parentId,
-				terminalUid;
-			if (terminal.el.getAttribute('title') == 'SOURCES') {
-				// id of the module
-				terminalUid = $(terminal.el).parents('.WireIt-Container').first().find('input[name="uid"]').val();
-			}
-			else {
-				// id of the wrapper of the first field in the fieldset
-				terminalUid = $(terminal.el).parents('.relationGroup').find('input[name="uid"]').val();
-			}
-			return terminalUid;
-		}
-
+		getUidForTerminal: function(terminal) {
+      if (terminal.el.getAttribute('title') === 'SOURCES') {
+        // id of the module
+        return Dom.get(terminal.el).parents('.WireIt-Container')[0].querySelector('input[name="uid"]').value;
+      }
+      // id of the wrapper of the first field in the fieldset
+      return Dom.get(terminal.el).parents('.relationGroup')[0].querySelector('input[name="uid"]').value;
+    }
 	};
-
 })();

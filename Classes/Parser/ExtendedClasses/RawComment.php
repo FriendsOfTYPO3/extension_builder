@@ -1,6 +1,6 @@
 <?php
 
-namespace ETB\ExtensionBuilder\Parser\ExtendedClasses;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,6 +14,8 @@ namespace ETB\ExtensionBuilder\Parser\ExtendedClasses;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace EBT\ExtensionBuilder\Parser\ExtendedClasses;
 
 use PhpParser\Comment;
 

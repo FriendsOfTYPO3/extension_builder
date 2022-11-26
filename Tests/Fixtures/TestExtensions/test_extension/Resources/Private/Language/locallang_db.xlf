@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="EXT:test_extension/Resources/Private/Language/locallang_db.xlf" date="2019-01-01T01:00:00Z" product-name="test_extension">
+	<file source-language="en" datatype="plaintext" original="EXT:test_extension/Resources/Private/Language/locallang_db.xlf" date="2021-07-13T20:13:32Z" product-name="test_extension">
 		<header/>
 		<body>
 			<trans-unit id="tx_testextension_domain_model_main" resname="tx_testextension_domain_model_main">
@@ -81,11 +81,14 @@
 			<trans-unit id="tx_testextension_domain_model_child4.file_property" resname="tx_testextension_domain_model_child4.file_property">
 				<source>File Property</source>
 			</trans-unit>
-			<trans-unit id="tx_test_extension_testplugin.name" resname="tx_test_extension_testplugin.name">
-				<source>Test plugin</source>
+			<trans-unit id="tx_testextension_domain_model_category" resname="tx_testextension_domain_model_category">
+				<source>Category</source>
 			</trans-unit>
-			<trans-unit id="tx_test_extension_testplugin.description" resname="tx_test_extension_testplugin.description">
-				<source>Just a simple test plugin</source>
+			<trans-unit id="tx_testextension_domain_model_category.name" resname="tx_testextension_domain_model_category.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_testextension_domain_model_category.categories" resname="tx_testextension_domain_model_category.categories">
+				<source>Categories</source>
 			</trans-unit>
 		</body>
 	</file>

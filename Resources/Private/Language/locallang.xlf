@@ -49,7 +49,7 @@
 				<source>The vendor name is the first part of the new package identifier</source>
 			</trans-unit>
 			<trans-unit id="short_description" resname="short_description">
-				<source>Descr.</source>
+				<source>Description</source>
 			</trans-unit>
 			<trans-unit id="description" resname="description">
 				<source>Description</source>
@@ -133,18 +133,30 @@
 					localization related columns in the database
 				</source>
 			</trans-unit>
-			<trans-unit id="skipGenerateDocumentationTemplate" resname="skipGenerateDocumentationTemplate">
-				<source>Don't generate doc-template</source>
+			<trans-unit id="generateDocumentationTemplate" resname="generateDocumentationTemplate">
+				<source>Generate documentation</source>
 			</trans-unit>
-			<trans-unit id="descr_skipGenerateDocumentationTemplate" resname="descr_skipGenerateDocumentationTemplate">
-				<source>Check this if you don't want a documentation-template generated for your extension.</source>
+			<trans-unit id="descr_generateDocumentationTemplate" resname="descr_generateDocumentationTemplate">
+				<source>Check this if you want a documentation generated for your extension.</source>
+			</trans-unit>
+			<trans-unit id="generateEditorConfig" resname="generateEditorConfig">
+				<source>Generate editorconfig file</source>
+			</trans-unit>
+			<trans-unit id="descr_generateEditorConfig" resname="descr_generateEditorConfig">
+				<source>Check this if you want a generated editorconfig file for your extension.</source>
+			</trans-unit>
+			<trans-unit id="generateEmptyGitRepository" resname="generateEmptyGitRepository">
+				<source>Generate empty git repository</source>
+			</trans-unit>
+			<trans-unit id="descr_generateEmptyGitRepository" resname="descr_generateEmptyGitRepository">
+				<source>Check this if you want to generate an empty git repository for your extension and want to publish it later on.</source>
 			</trans-unit>
 			<trans-unit id="sourceLanguage" resname="sourceLanguage">
 				<source>Source language for xliff files</source>
 			</trans-unit>
 			<trans-unit id="descr_sourceLanguage" resname="descr_sourceLanguage">
 				<source>The source language for xliff files is the 2 letter language code in which the "source" of a label is defined.
-					In general it should be "en" for English. This label can later be translated into other languages. 
+					In general it should be "en" for English. This label can later be translated into other languages.
 				</source>
 			</trans-unit>
 			<trans-unit id="dependsOn" resname="dependsOn">
@@ -156,7 +168,7 @@
 				</source>
 			</trans-unit>
 			<trans-unit id="persons" resname="persons">
-				<source>Extension Authors</source>
+				<source>Extension authors</source>
 			</trans-unit>
 			<trans-unit id="role" resname="role">
 				<source>Role</source>
@@ -165,7 +177,7 @@
 				<source>Developer</source>
 			</trans-unit>
 			<trans-unit id="product_manager" resname="product_manager">
-				<source>Product Manager</source>
+				<source>Product manager</source>
 			</trans-unit>
 			<trans-unit id="email" resname="email">
 				<source>Email</source>
@@ -196,16 +208,6 @@
 				<source>Typically create, delete and update actions should not be cached. (Same format as above)
 				</source>
 			</trans-unit>
-			<trans-unit id="switchableActions" resname="switchableActions">
-				<source>Switchable actions</source>
-			</trans-unit>
-			<trans-unit id="descr_switchableActions" resname="descr_switchableActions">
-				<source>Make actions switchable in the plugin's form. One line for the label, one for the list of
-					allowed Controller-&gt;action pairs (semicolon separated). Example: &lt;br /&gt;Display items&lt;br
-					/&gt;Model-&gt;list; Model-&gt;show;&lt;br /&gt;Admin&lt;br /&gt;Model-&gt;new; Model-&gt;create;
-					Model-&gt;edit; Model-&gt;update;
-				</source>
-			</trans-unit>
 			<trans-unit id="backendModules" resname="backendModules">
 				<source>Backend modules</source>
 			</trans-unit>
@@ -225,7 +227,7 @@
 				<source>More options</source>
 			</trans-unit>
 			<trans-unit id="advancedOptions" resname="advancedOptions">
-				<source>Advanced options</source>
+				<source>advanced options</source>
 			</trans-unit>
 			<trans-unit id="remove" resname="remove">
 				<source>Remove</source>
@@ -266,6 +268,12 @@
 			<trans-unit id="select" resname="select">
 				<source>Dropdown</source>
 			</trans-unit>
+			<trans-unit id="isNullable" resname="isNullable">
+				<source>Is nullable?</source>
+			</trans-unit>
+			<trans-unit id="descr_isNullable" resname="descr_isNullable">
+				<source>If set to true, this field can be null</source>
+			</trans-unit>
 			<trans-unit id="isExcludeField" resname="isExcludeField">
 				<source>Is exclude field?</source>
 			</trans-unit>
@@ -300,7 +308,7 @@
 				<source>Is aggregate root?</source>
 			</trans-unit>
 			<trans-unit id="descr_isAggregateRoot" resname="descr_isAggregateRoot">
-				<source>If true, the extension builder will generate a repository for this model</source>
+				<source>If true, the Extension Builder will generate a repository for this model</source>
 			</trans-unit>
 			<trans-unit id="enableSorting" resname="enableSorting">
 				<source>Enable sorting?</source>
@@ -354,13 +362,16 @@
 				<source>Action type</source>
 			</trans-unit>
 			<trans-unit id="descr_actionType" resname="descr_actionType">
-				<source>For each selected action, the extension builder will generate a template and a action method in
+				<source>For each selected action, the Extension Builder will generate a template and a action method in
 					the controller of this model. If the model is an aggregate root the default CRUD actions will be
 					generated per default.
 				</source>
 			</trans-unit>
 			<trans-unit id="show" resname="show">
 				<source>show</source>
+			</trans-unit>
+			<trans-unit id="index" resname="index">
+				<source>index</source>
 			</trans-unit>
 			<trans-unit id="list" resname="list">
 				<source>list</source>
@@ -419,7 +430,13 @@
 			<trans-unit id="nativeDate" resname="nativeDate">
 				<source>Date</source>
 			</trans-unit>
+			<trans-unit id="inputLink" resname="inputLink">
+				<source>Link</source>
+			</trans-unit>
 			<trans-unit id="time" resname="time">
+				<source>Time (timestamp)*</source>
+			</trans-unit>
+			<trans-unit id="nativeTime" resname="time">
 				<source>Time*</source>
 			</trans-unit>
 			<trans-unit id="timeSec" resname="timeSec">
@@ -442,6 +459,18 @@
 			</trans-unit>
 			<trans-unit id="password" resname="password">
 				<source>Password</source>
+			</trans-unit>
+			<trans-unit id="slug" resname="slug">
+				<source>Slug</source>
+			</trans-unit>
+			<trans-unit id="colorPicker" resname="colorPicker">
+				<source>Color Picker</source>
+			</trans-unit>
+			<trans-unit id="passThrough" resname="passThrough">
+				<source>Pass through</source>
+			</trans-unit>
+			<trans-unit id="none" resname="none">
+				<source>None</source>
 			</trans-unit>
 			<trans-unit id="allowedFileTypes" resname="allowedFileTypes">
 				<source>Allowed file types</source>

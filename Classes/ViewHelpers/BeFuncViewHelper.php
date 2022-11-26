@@ -1,6 +1,6 @@
 <?php
 
-namespace EBT\ExtensionBuilder\ViewHelpers;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,32 +15,28 @@ namespace EBT\ExtensionBuilder\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace EBT\ExtensionBuilder\ViewHelpers;
+
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * View helper which return input as it is
  *
  * = Examples =
  *
- * <f:null>{anyString}</f:null>
- *
- *
+ * <k:beFunc>{anyString}</k:beFunc>
  */
 class BeFuncViewHelper extends AbstractViewHelper
 {
-    /**
-     * @var bool
-     */
-    protected $objectAccessorPostProcessorEnabled = false;
+    use CompileWithRenderStatic;
 
-    /**
-     * Render without processing
-     *
-     *
-     * @return string
-     */
-    public function render()
-    {
-        return $this->renderChildren();
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        return $renderChildrenClosure();
     }
 }
