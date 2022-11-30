@@ -24,34 +24,34 @@ plugin.tx_testextension_testplugin {
 # these classes are only used in auto-generated templates
 plugin.tx_testextension._CSS_DEFAULT_STYLE (
     textarea.f3-form-error {
-        background-color:#FF9F9F;
+        background-color: #FF9F9F;
         border: 1px #FF0000 solid;
     }
 
     input.f3-form-error {
-        background-color:#FF9F9F;
+        background-color: #FF9F9F;
         border: 1px #FF0000 solid;
     }
 
     .tx-test-extension table {
-        border-collapse:separate;
-        border-spacing:10px;
+        border-collapse: separate;
+        border-spacing: 10px;
     }
 
     .tx-test-extension table th {
-        font-weight:bold;
+        font-weight: bold;
     }
 
     .tx-test-extension table td {
-        vertical-align:top;
+        vertical-align: top;
     }
 
     .typo3-messages .message-error {
-        color:red;
+        color: red;
     }
 
     .typo3-messages .message-ok {
-        color:green;
+        color: green;
     }
 )
 
