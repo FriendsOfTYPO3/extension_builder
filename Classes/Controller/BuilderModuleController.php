@@ -285,13 +285,7 @@ class BuilderModuleController extends ActionController
                 ->setTitle('Open extension')
                 ->setShowLabelText(true)
                 ->setId('loadExtension-button')
-                ->setHref('#')
-                ->setClasses('t3js-modal-trigger')
-                ->setDataAttributes([
-                    'severity' => 'primary',
-                    'bs-content' => 'This is not implemented yet',
-                    'title' => 'Information',
-                ]);
+                ->setHref('#');
             $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
 
             $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
@@ -299,13 +293,7 @@ class BuilderModuleController extends ActionController
                 ->setTitle('New extension')
                 ->setShowLabelText(true)
                 ->setId('newExtension-button')
-                ->setHref('#')
-                ->setClasses('t3js-modal-trigger')
-                ->setDataAttributes([
-                    'severity' => 'primary',
-                    'bs-content' => 'This is not implemented yet',
-                    'title' => 'Information',
-                ]);
+                ->setHref('#');
             $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
 
             $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
@@ -313,13 +301,7 @@ class BuilderModuleController extends ActionController
                 ->setTitle('Save extension')
                 ->setShowLabelText(true)
                 ->setId('saveExtension-button')
-                ->setHref('#')
-                ->setClasses('t3js-modal-trigger')
-                ->setDataAttributes([
-                    'severity' => 'primary',
-                    'bs-content' => 'This is not implemented yet',
-                    'title' => 'Information',
-                ]);
+                ->setHref('#');
             $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
 
             $this->addRightButtons();
@@ -363,12 +345,6 @@ class BuilderModuleController extends ActionController
             ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:advancedOptions'))
             ->setId('toggleAdvancedOptions')
             ->setHref('#')
-            ->setClasses('t3js-modal-trigger')
-            ->setDataAttributes([
-                'severity' => 'primary',
-                'bs-content' => 'This is not implemented yet',
-                'title' => 'Information',
-            ])
             ->setShowLabelText(true);
         $buttonBar->addButton($advancedOptionsButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
 
@@ -393,6 +369,9 @@ class BuilderModuleController extends ActionController
         ///$this->pageRenderer->loadRequireJsModule('TYPO3/CMS/Mask/Mask');
         $this->pageRenderer->loadRequireJsModule('TYPO3/CMS/ExtensionBuilder/Contrib/vue');
         $this->pageRenderer->loadRequireJsModule('TYPO3/CMS/ExtensionBuilder/extensionbuilder');
+
+        // Custom JS
+
 
         // Custom CSS
         $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/extbaseModeling.css');
