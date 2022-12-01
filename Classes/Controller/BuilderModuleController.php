@@ -121,7 +121,7 @@ class BuilderModuleController extends ActionController
         if (!$this->request->hasArgument('action')) {
             $userSettings = $this->getBackendUserAuthentication()->getModuleData('extensionbuilder');
             if (($userSettings['firstTime'] ?? 1) === 0) {
-                return new ForwardResponse('domainmodelling');
+                return new ForwardResponse('overview');
             }
         }
 
@@ -130,7 +130,7 @@ class BuilderModuleController extends ActionController
         return new HtmlResponse($this->moduleTemplate->renderContent());
     }
 
-    public function domainmodellingAction(): ResponseInterface
+    public function overviewAction(): ResponseInterface
     {
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setTitle('Extension Builder');
@@ -179,7 +179,7 @@ class BuilderModuleController extends ActionController
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setTitle('Extension Builder');
 
-        // $this->addMainMenu('domainmodelling');
+        // $this->addMainMenu('overview');
         // $this->addMainMenu('testaction');
         $this->addCurrentExtensionPath();
 
@@ -266,7 +266,7 @@ class BuilderModuleController extends ActionController
         // TODO
     }
 
-    protected function addLeftButtons(string $action = 'domainmodelling'): void
+    protected function addLeftButtons(string $action = 'extensionmodelling'): void
     {
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
@@ -276,7 +276,7 @@ class BuilderModuleController extends ActionController
                 ->setIcon($this->iconFactory->getIcon('actions-view-go-back', Icon::SIZE_SMALL))
                 ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.goBack'))
                 ->setShowLabelText(true)
-                ->setHref($this->uriBuilder->uriFor('domainmodelling'));
+                ->setHref($this->uriBuilder->uriFor('overview'));
             $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
 
             // Add buttons for default domainmodelling/show page
@@ -306,13 +306,14 @@ class BuilderModuleController extends ActionController
 
             $this->addRightButtons();
         } else if ($action === 'help') {
+
             // Add buttons for help page
-            $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            $backButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
                 ->setIcon($this->iconFactory->getIcon('actions-view-go-back', Icon::SIZE_SMALL))
                 ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.goBack'))
                 ->setShowLabelText(true)
-                ->setHref($this->uriBuilder->uriFor('domainmodelling'));
-            $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
+                ->setHref($this->uriBuilder->uriFor('overview'));
+            $buttonBar->addButton($backButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
         } else if($action == 'domainmodelling') {
 
         } else {

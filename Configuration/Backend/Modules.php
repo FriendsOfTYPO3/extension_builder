@@ -11,7 +11,7 @@ return [
         'extensionName' => 'ExtensionBuilder',
         'controllerActions' => [
             \EBT\ExtensionBuilder\Controller\BuilderModuleController::class => [
-                'domainmodelling',
+                'overview',
                 'show',
                 'help',
                 'dispatchRpc'
