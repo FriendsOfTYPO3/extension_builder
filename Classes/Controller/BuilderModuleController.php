@@ -109,7 +109,7 @@ class BuilderModuleController extends ActionController
      * Index action for this controller.
      *
      * This is the default action, showing some introduction but after the first
-     * loading the user should immediately be redirected to the domainmodellingAction.
+     * loading the user should immediately be redirected to the overviewAction.
      */
     public function indexAction(): ResponseInterface
     {
@@ -220,13 +220,13 @@ class BuilderModuleController extends ActionController
      * @throws \TYPO3\CMS\Core\Package\Exception
      * @throws \TYPO3\CMS\Core\Resource\Exception\InvalidFileException
      */
-    public function showAction() {
+    public function extensionModellingAction() {
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setTitle('Create Extension');
 
         $this->addCurrentExtensionPath();
 
-        $this->addLeftButtons('show');
+        $this->addLeftButtons('extensionModelling');
 
         $this->addAssets();
 
@@ -266,11 +266,11 @@ class BuilderModuleController extends ActionController
         // TODO
     }
 
-    protected function addLeftButtons(string $action = 'extensionmodelling'): void
+    protected function addLeftButtons(string $action = 'overview'): void
     {
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
-        if($action == 'show') {
+        if($action == 'extensionModelling') {
             // Add back button
             $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
                 ->setIcon($this->iconFactory->getIcon('actions-view-go-back', Icon::SIZE_SMALL))
@@ -279,7 +279,7 @@ class BuilderModuleController extends ActionController
                 ->setHref($this->uriBuilder->uriFor('overview'));
             $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
 
-            // Add buttons for default domainmodelling/show page
+            // Add 'open extension' button
             $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
                 ->setIcon($this->iconFactory->getIcon('actions-folder', Icon::SIZE_SMALL))
                 ->setTitle('Open extension')
@@ -288,6 +288,7 @@ class BuilderModuleController extends ActionController
                 ->setHref('#');
             $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
 
+            // Add 'new extension' button
             $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
                 ->setIcon($this->iconFactory->getIcon('actions-template-new', Icon::SIZE_SMALL))
                 ->setTitle('New extension')
@@ -296,6 +297,7 @@ class BuilderModuleController extends ActionController
                 ->setHref('#');
             $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
 
+            // Add 'save extension' button
             $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
                 ->setIcon($this->iconFactory->getIcon('actions-save', Icon::SIZE_SMALL))
                 ->setTitle('Save extension')
@@ -314,7 +316,7 @@ class BuilderModuleController extends ActionController
                 ->setShowLabelText(true)
                 ->setHref($this->uriBuilder->uriFor('overview'));
             $buttonBar->addButton($backButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
-        } else if($action == 'domainmodelling') {
+        } else if($action == 'overview') {
 
         } else {
             DebuggerUtility::var_dump($action);

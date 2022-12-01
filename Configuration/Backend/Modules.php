@@ -12,7 +12,7 @@ return [
         'controllerActions' => [
             \EBT\ExtensionBuilder\Controller\BuilderModuleController::class => [
                 'overview',
-                'show',
+                'extensionModelling',
                 'help',
                 'dispatchRpc'
             ],
