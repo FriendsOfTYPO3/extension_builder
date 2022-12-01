@@ -372,6 +372,7 @@ class BuilderModuleController extends ActionController
         ///$this->pageRenderer->loadRequireJsModule('TYPO3/CMS/Mask/Mask');
         $this->pageRenderer->loadRequireJsModule('TYPO3/CMS/ExtensionBuilder/Contrib/vue');
         $this->pageRenderer->loadRequireJsModule('TYPO3/CMS/ExtensionBuilder/extensionbuilder');
+        $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/ebshow.js');
 
         // Custom JS
 
