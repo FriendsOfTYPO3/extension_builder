@@ -6,6 +6,12 @@
 Change log
 ==========
 
+Version 11.0.9
+--------------
+* [BUGFIX] Generate correct TCA for images and files
+* [TASK] Corrected CSS-Default-Styles
+* [DOCS] Small changes in Documentation
+
 Version 11.0.8
 -------------
 * [BUGFIX] fixes links in extension module
