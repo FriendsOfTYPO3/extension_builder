@@ -351,14 +351,14 @@ class BuilderModuleController extends ActionController
             ->setShowLabelText(true);
         $buttonBar->addButton($advancedOptionsButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
 
-        $helpButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-            ->setIcon($this->iconFactory->getIcon('module-help', Icon::SIZE_SMALL))
-            ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:showHelp'))
-            ->setId('showHelp')
-            ->setHref($this->uriBuilder->uriFor('help'))
-            ->setShowLabelText(true);
-
-        $buttonBar->addButton($helpButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);
+        $extensionSettingsButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            ->setIcon($this->iconFactory->getIcon('actions-cog-alt', Icon::SIZE_SMALL))
+            ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:extensionSettings'))
+            ->setId('extensionSettings')
+            ->setHref('#')
+            ->setShowLabelText(true)
+            ->setDataAttributes(['bs-toggle' => 'modal', 'bs-target' => '#extensionSettingsModal']);
+        $buttonBar->addButton($extensionSettingsButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);
     }
 
     protected function getLanguageService(): LanguageService
@@ -375,7 +375,8 @@ class BuilderModuleController extends ActionController
         $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/ebshow.js');
 
         // Custom JS
-
+        $this->pageRenderer->addJsFooterFile('EXT:extension_builder/Resources/Public/JavaScript/eb.js');
+        // $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/JavaScript/bootstrap.popover.js');
 
         // Custom CSS
         $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/extbaseModeling.css');

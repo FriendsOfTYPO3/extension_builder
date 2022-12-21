@@ -7,7 +7,7 @@
 }
 
 #modeller {
-    height: 85vh;
+    height: 100%;
     width: 100%
 }
 
@@ -36,4 +36,28 @@
 
 .card-footer {
     background-color: #EEE;
+}
+
+/** Modal **/
+@media (min-width: 992px) {
+    .modal-lg, .modal-xl {
+        --bs-modal-width: 800px;
+    }
+}
+/** Modal **/
+@media (min-width: 992px) {
+    .modal-lg, .modal-xl {
+        --bs-modal-width: 800px;
+    }
+}
+
+@media (min-width: 576px) {
+    .modal-sm {
+        --bs-modal-width: 300px;
+    }
+    .modal-dialog {
+        max-width: var(--bs-modal-width);
+        margin-right: auto;
+        margin-left: auto;
+    }
 }

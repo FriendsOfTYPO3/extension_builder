@@ -299,6 +299,9 @@
 			<trans-unit id="domainObjectSettings" resname="domainObjectSettings">
 				<source>Domain object settings</source>
 			</trans-unit>
+			<trans-unit id="extensionSettings" resname="extensionSettings">
+				<source>Extension settings</source>
+			</trans-unit>
 			<trans-unit id="objectType" resname="objectType">
 				<source>Object type</source>
 			</trans-unit>

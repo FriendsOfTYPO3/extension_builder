@@ -2,222 +2,269 @@
 
 <div class="container-fluid  pt-4 pb-4">
 	<div class="row text-start">
+		<div class="col-3">
+			<div class="panel-group" id="accordionExampleSimple">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title" id="authorsPanelHeading">
+							<a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#authorsPanel" aria-expanded="false" aria-controls="authorsPanel">
+								<span class="caret"></span>
+								<strong>Authors</strong>
+							</a>
+						</h3>
+					</div>
+					<div id="authorsPanel" class="collapse" aria-labelledby="authorsPanelHeading">
+						<div class="panel-body">
+							<!-- Button trigger modal -->
+							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newExtensionAuthor">
+								<core:icon identifier="actions-add" />Add new Author
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title" id="pluginsPanelHeading">
+							<a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#pluginsPanel" aria-expanded="false" aria-controls="pluginsPanel">
+								<span class="caret"></span>
+								<strong>Plugins</strong>
+							</a>
+						</h3>
+					</div>
+					<div id="pluginsPanel" class="collapse" aria-labelledby="pluginsPanelHeading">
+						<div class="panel-body">
+							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newExtensionPlugin">
+								<core:icon identifier="actions-add" />Add new plugin
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title" id="modulesPanelHeading">
+							<a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#modulesPanel" aria-expanded="false" aria-controls="modulesPanel">
+								<span class="caret"></span>
+								<strong>Modules</strong>
+							</a>
+						</h3>
+					</div>
+					<div id="modulesPanel" class="collapse" aria-labelledby="modulesPanelHeading">
+						<div class="panel-body">
+							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newExtensionModule">
+								<core:icon identifier="actions-add" />Add new module
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-7 bg-danger vh-80">
+			<p>Here comes the sun, doo-doo-doo-doo</p>
+		</div>
 		<div class="col-2">
-			<!-- Extension properties -->
-			<h4 class="mt-0 mb-2">Extension properties</h4>
-			<div class="extensionProperties">
-				<a class="btn btn-warning" data-bs-toggle="collapse" href="#extensionPropertiesContent" role="button" aria-expanded="false" aria-controls="extensionPropertiesContent">
-					Expand/Collapse properties
-				</a>
-				<div class="collapse show" id="extensionPropertiesContent">
-					<div class="form-group">
-						<label for="extensionName" class="form-label">Extension name</label>
-						<input type="text" class="form-control" id="extensionName" aria-describedby="extensionName" placeholder="My new extension">
-					</div>
-					<div class="form-group">
-						<label for="vendorName" class="form-label">Vendor name (?)</label>
-						<input type="text" class="form-control" id="vendorName" aria-describedby="vendorName" placeholder="MyCompany">
-					</div>
-					<div class="form-group">
-						<label for="extensionKey" class="form-label">Extension key (?)</label>
-						<input type="text" class="form-control" id="extensionKey" aria-describedby="extensionKey" placeholder="my_new_extension">
-					</div>
-					<div class="form-group">
-						<label for="extensionDescription" class="form-label">Description</label>
-						<textarea class="form-control" id="extensionDescription" aria-describedby="extensionDescription" ></textarea>
-					</div>
-					<div class="form-group">
-						<label for="extensionCategory" class="form-label">Category</label>
-						<select class="form-select" id="extensionCategory" aria-label="Select a category">
-							<option value="frontendplugins">Frontend plugins</option>
-							<option value="backendmodules">Backend modules</option>
-							<option value="miscellaneous">Miscellaneous</option>
-							<option value="backend">Backend</option>
-							<option value="frontend">Frontend</option>
-							<option value="services">Services</option>
-							<option value="templates">Templates</option>
-							<option value="distribution">Distribution</option>
-							<option value="examples">Examples</option>
-							<option value="documentation">Documentation</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="categoryCustom" class="form-label">OR custom</label>
-						<input type="text" class="form-control" id="categoryCustom" aria-describedby="categoryCustom" placeholder="Custom category">
-					</div>
-					<div class="form-group">
-						<label for="extensionVersion" class="form-label">Version (?)</label>
-						<input type="text" class="form-control" id="extensionVersion" aria-describedby="extensionVersion" placeholder="1.0.0">
-					</div>
-					<div class="form-group">
-						<label for="extensionState" class="form-label">State</label>
-						<select class="form-select" id="extensionState" aria-label="Select a category">
-							<option value="alpha">Alpha</option>
-							<option value="beta">Beta</option>
-							<option value="stable">Stable</option>
-							<option value="experimental">Experimental</option>
-							<option value="test">Test</option>
-						</select>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value="" id="disableVersioning">
-						<label class="form-check-label" for="disableVersioning">
-							Disable versioning
-						</label>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value="" id="disableLocalization">
-						<label class="form-check-label" for="disableLocalization">
-							Disable localization
-						</label>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value="" id="generateDocumentation">
-						<label class="form-check-label" for="generateDocumentation">
-							Generate documentation
-						</label>
-					</div>
-					<div class="form-check">
-						<input checked class="form-check-input" type="checkbox" value="" id="generateEmptyGitRepository">
-						<label class="form-check-label" for="generateEmptyGitRepository">
-							Generate empty git repository
-						</label>
-					</div>
-					<div class="form-check">
-						<input checked class="form-check-input" type="checkbox" value="" id="generateEditorconfigFile">
-						<label class="form-check-label" for="generateEditorconfigFile">
-							Generate editorconfig file
-						</label>
-					</div>
-					<div class="form-group">
-						<label for="xliffSourceLanguage" class="form-label">Source language for xliff files</label>
-						<input type="text" class="form-control" id="xliffSourceLanguage" aria-describedby="xliffSourceLanguage" placeholder="en">
-					</div>
-					<div class="form-group">
-						<label for="dependsOn" class="form-label">Depends on</label>
-						<textarea class="form-control" rows="6" id="dependsOn" aria-describedby="dependsOn">typo3 => 12.0.0-12.4.99</textarea>
-					</div>
+			<h2 class="mt-0 pt-0">Domain object settings</h2>
+			<div class="domainObjectSettings">
+				<div class="form-group">
+					<label for="objectType" class="form-label">Object type</label>
+					<select class="form-select" id="objectType" aria-label="Default select example">
+						<option value="Entity">Entity</option>
+						<option value="ValueObject">Value object</option>
+					</select>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="isAggregateRoot">
+					<label class="form-check-label" for="isAggregateRoot">
+						Is aggregate root?
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="enableSorting">
+					<label class="form-check-label" for="enableSorting">
+						Enable sorting?
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="addDeletedField">
+					<label class="form-check-label" for="addDeletedField">
+						Add deleted field
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="addHiddenField">
+					<label class="form-check-label" for="addHiddenField">
+						Add hidden field
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="addStarttimeEndtimeFields">
+					<label class="form-check-label" for="addStarttimeEndtimeFields">
+						Add starttime/endtime fields
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="enableCategorization">
+					<label class="form-check-label" for="enableCategorization">
+						Enable categorization
+					</label>
+				</div>
+				<div class="form-group">
+					<label for="modelDescription" class="form-label">Description</label>
+					<textarea class="form-control" id="modelDescription" aria-describedby="modelDescription" ></textarea>
+				</div>
+				<div class="form-group">
+					<label for="mapToExistingTable" class="form-label">Map to existing table</label>
+					<input type="text" class="form-control" id="mapToExistingTable" aria-describedby="mapToExistingTable" placeholder="tt_content">
+				</div>
+				<div class="form-group">
+					<label for="extendExistingModelClass" class="form-label">Extend existing model class</label>
+					<input type="text" class="form-control" id="extendExistingModelClass" aria-describedby="extensionKey" placeholder="\Fully\Qualified\Classname">
 				</div>
 			</div>
-			<!-- END Extension properties -->
-
-			<!-- Extension authors -->
-			<h4 class="mt-4 mb-2">Extension authors</h4>
-			<div class="extensionAuthors">
-				<a class="btn btn-warning" data-bs-toggle="collapse" href="#extensionAuthorsContent" role="button" aria-expanded="false" aria-controls="extensionAuthorsContent">
-					Expand/Collapse authors
-				</a>
-				<div class="collapse" id="extensionAuthorsContent">
-					<div class="form-group">
-						<label for="authorName" class="form-label">Author name</label>
-						<input type="text" class="form-control" id="authorName" aria-describedby="authorName">
-					</div>
-					<div class="form-group">
-						<label for="authorRole" class="form-label">Role</label>
-						<select class="form-select" id="authorRole" aria-label="Default select example">
-							<option selected>Please choose ...</option>
-							<option value="developer">Developer</option>
-							<option value="productmanager">Product manager</option>
-							<option value="translator">Translator</option>
-							<option value="engineer">Engineer</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="authorEMail" class="form-label">E-Mail</label>
-						<input type="email" class="form-control" id="authorEMail" aria-describedby="authorEMail">
-					</div>
-					<div class="form-group">
-						<label for="authorCompany" class="form-label">Company</label>
-						<input type="text" class="form-control" id="authorCompany" aria-describedby="authorCompany">
-					</div>
-					<button class="btn btn-success"><core:icon identifier="actions-add" />Add new author</button>
+			<h2>Default actions</h2>
+			<div class="defaultActions">
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="actionIndex">
+					<label class="form-check-label" for="actionIndex">
+						index
+					</label>
 				</div>
-			</div>
-			<!-- END Extension authors -->
-
-			<!-- Frontend plugins -->
-			<h4 class="mt-4 mb-2">Frontend plugins</h4>
-			<div class="frontendPlugins">
-				<a class="btn btn-warning" data-bs-toggle="collapse" href="#frontendPlugins" role="button" aria-expanded="false" aria-controls="frontendPlugins">
-					Expand/Collapse plugins
-				</a>
-				<div class="collapse" id="frontendPlugins">
-					<div class="form-group">
-						<label for="pluginName" class="form-label">Name</label>
-						<input type="text" class="form-control" id="pluginName" aria-describedby="pluginName">
-					</div>
-					<div class="form-group">
-						<label for="pluginKey" class="form-label">Key</label>
-						<input type="text" class="form-control" id="pluginKey" aria-describedby="pluginKey">
-					</div>
-					<div class="form-group">
-						<label for="pluginDescription" class="form-label">Description</label>
-						<textarea class="form-control" rows="6" id="pluginDescription" aria-describedby="pluginDescription"></textarea>
-					</div>
-					<div class="form-group">
-						<label for="pluginControllerActionsCachable" class="form-label">Cachable controller actions</label>
-						<textarea class="form-control" rows="6" id="pluginControllerActionsCachable" aria-describedby="pluginControllerActionsCachable" placeholder="PluginName => list,show"></textarea>
-					</div>
-					<div class="form-group">
-						<label for="pluginControllerActionsNonCachable" class="form-label">Non-Cachable controller actions</label>
-						<textarea class="form-control" rows="6" id="pluginControllerActionsNonCachable" aria-describedby="pluginControllerActionsNonCachable" placeholder="PluginName => edit,delete,update"></textarea>
-					</div>
-					<button class="btn btn-success"><core:icon identifier="actions-add" />Add new plugin</button>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="actionList">
+					<label class="form-check-label" for="actionList">
+						list
+					</label>
 				</div>
-			</div>
-			<!-- END Frontend plugins -->
-
-			<!-- Backend modules -->
-			<h4 class="mt-4 mb-2">Backend modules</h4>
-			<div class="backendModules">
-				<a class="btn btn-warning" data-bs-toggle="collapse" href="#backendModules" role="button" aria-expanded="false" aria-controls="backendModules">
-					Expand/Collapse modules
-				</a>
-				<div class="collapse" id="backendModules">
-					<div class="form-group">
-						<label for="moduleName" class="form-label">Name</label>
-						<input type="text" class="form-control" id="moduleName" aria-describedby="moduleName">
-					</div>
-					<div class="form-group">
-						<label for="moduleKey" class="form-label">Key</label>
-						<input type="text" class="form-control" id="moduleKey" aria-describedby="moduleKey">
-					</div>
-					<div class="form-group">
-						<label for="moduleDescription" class="form-label">Description</label>
-						<textarea class="form-control" rows="6" id="moduleDescription" aria-describedby="moduleDescription"></textarea>
-					</div>
-					<div class="form-group">
-						<label for="moduleTabLabel" class="form-label">Tab label</label>
-						<input type="text" class="form-control" id="moduleTabLabel" aria-describedby="moduleTabLabel">
-					</div>
-					<div class="form-group">
-						<label for="moduleMainModule" class="form-label">Main module</label>
-						<select class="form-select" id="moduleMainModule" aria-label="Default select example">
-							<option value="web">Web</option>
-							<option value="site">Site</option>
-							<option value="file">File</option>
-							<option value="user">User</option>
-							<option value="tools">Tools</option>
-							<option value="system">System</option>
-							<option value="help">Help</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="pluginControllerActionsCachable" class="form-label">Cachable controller actions</label>
-						<textarea class="form-control" rows="6" id="pluginControllerActionsCachable" aria-describedby="pluginControllerActionsCachable" placeholder="PluginName => list,show"></textarea>
-					</div>
-					<button class="btn btn-success" ><core:icon identifier="actions-add" />Add new module</button>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="actionShow">
+					<label class="form-check-label" for="actionShow">
+						show
+					</label>
 				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="actionNewCreate">
+					<label class="form-check-label" for="actionNewCreate">
+						new/create
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="actionEditUpdate">
+					<label class="form-check-label" for="actionEditUpdate">
+						edit/update
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="actionDelete">
+					<label class="form-check-label" for="actionDelete">
+						delete
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="actionIndex">
+					<label class="form-check-label" for="actionIndex">
+						index
+					</label>
+				</div>
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomAction">
+					<core:icon identifier="actions-add" />Add custom Action
+				</button>
 			</div>
-			<!-- END Backend modules -->
-		</div>
-		<div class="col-8 bg-danger vh-80">
-			<p>Here comes the sun</p>
-		</div>
-		<div class="col-2 bg-info">
-			<p>Here comes the sun</p>
 		</div>
 	</div>
 </div>
+
+<!-- Modal Extension Settings -->
+<div class="modal fade" id="extensionSettingsModal" tabindex="-1" aria-labelledby="extensionSettingsLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="extensionSettingsLabel">Extension settings</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<f:render partial="Components/SettingsForm" arguments="{_all}" />
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END Modal Extension Settings -->
+
+<!-- Modal Extension Author-->
+<div class="modal fade" id="newExtensionAuthor" tabindex="-1" aria-labelledby="newExtensionAuthorLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="newExtensionAuthorLabel">Add new author</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<f:render partial="Components/AuthorsForm" arguments="{_all}" />
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" data-bs-dismiss="modal">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END Modal Extension Author-->
+
+<!-- Modal Extension Plugins-->
+<div class="modal fade" id="newExtensionPlugin" tabindex="-1" aria-labelledby="newExtensionPluginLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="newExtensionPluginLabel">Add new plugin</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<f:render partial="Components/PluginsForm" arguments="{_all}" />
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" data-bs-dismiss="modal">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END Modal Extension Plugins-->
+
+<!-- Modal Extension Modules-->
+<div class="modal fade" id="newExtensionModule" tabindex="-1" aria-labelledby="newExtensionModuleLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="newExtensionModuleLabel">Add new module</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<f:render partial="Components/ModulesForm" arguments="{_all}" />
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" data-bs-dismiss="modal">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END Modal Extension Modules-->
+
+<!-- Modal Add custom Action -->
+<div class="modal fade" id="addCustomAction" tabindex="-1" aria-labelledby="addCustomActionLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="addCustomActionLabel">Add custom Action</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<f:render partial="Components/CustomActionForm" arguments="{_all}" />
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" data-bs-dismiss="modal">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END Modal Add custom Action -->
 
 </html>
