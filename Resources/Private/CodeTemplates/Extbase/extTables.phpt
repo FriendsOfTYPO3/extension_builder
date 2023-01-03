@@ -8,9 +8,10 @@ defined('TYPO3') || die();
         '{backendModule.key}',
         '',
         [<f:if condition="{backendModule.controllerActionCombinations}"><f:then>
-            <f:for each="{backendModule.controllerActionCombinations}" as="actionNames" key="controllerName">\{extension.vendorName}\{extension.extensionName}\Controller\{controllerName}Controller::class => '<f:for each="{actionNames}" as="actionName" iteration="i">{actionName}<f:if condition="{i.isLast} == 0">, </f:if></f:for>',
+            <f:for each="{backendModule.controllerActionCombinations}" as="actionNames" key="controllerName" iteration="j">\{extension.vendorName}\{extension.extensionName}\Controller\{controllerName}Controller::class => '<f:for each="{actionNames}" as="actionName" iteration="i">{actionName}<f:if condition="{i.isLast} == 0">, </f:if></f:for>',
             </f:for></f:then><f:else>
-            <f:for each="{extension.domainObjectsForWhichAControllerShouldBeBuilt}" as="domainObject">\{extension.vendorName}\{extension.extensionName}\Controller\{domainObject.name}Controller::class => '<f:for each="{domainObject.actions}" as="action" iteration="actionIterator">{action.name}<f:if condition="{actionIterator.isLast} == 0">, </f:if></f:for>',</f:for></f:else></f:if>
+            <f:for each="{extension.domainObjectsForWhichAControllerShouldBeBuilt}" as="domainObject" iteration="j">\{extension.vendorName}\{extension.extensionName}\Controller\{domainObject.name}Controller::class => '<f:for each="{domainObject.actions}" as="action" iteration="actionIterator">{action.name}<f:if condition="{actionIterator.isLast} == 0">, </f:if></f:for>',
+            </f:for></f:else></f:if>
         ],
         [
             'access' => 'user,group',
