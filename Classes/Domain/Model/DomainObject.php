@@ -384,6 +384,11 @@ class DomainObject
         return $this->extension->getShortExtensionKey() . '_domain_model_' . strtolower($this->getName());
     }
 
+    public function getDescriptionNamespace(): string
+    {
+        return $this->getLabelNamespace() . '.description';
+    }
+
     public function getHasBooleanProperties(): bool
     {
         foreach ($this->properties as $property) {
