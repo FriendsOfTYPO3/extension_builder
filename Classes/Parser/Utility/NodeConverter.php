@@ -132,6 +132,10 @@ class NodeConverter
         if ($node instanceof ClassConstFetch) {
             return $node->name;
         }
+        
+        if ($node instanceof Node\Identifier) {
+            return $node->name;
+        }
 
         if ($node instanceof Node) {
             return $node->value;
