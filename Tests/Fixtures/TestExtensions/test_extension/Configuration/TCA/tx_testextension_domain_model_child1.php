@@ -97,6 +97,7 @@ return [
         'name' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child1.name',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child1.name.description',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -107,6 +108,7 @@ return [
         'flag' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child1.flag',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child1.flag.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxToggle',
@@ -119,6 +121,6 @@ return [
                 'default' => 0,
             ]
         ],
-    
+
     ],
 ];

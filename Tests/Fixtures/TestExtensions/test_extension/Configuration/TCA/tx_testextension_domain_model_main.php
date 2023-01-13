@@ -98,6 +98,7 @@ return [
         'name' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.name',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.name.description',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -108,6 +109,7 @@ return [
         'identifier' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.identifier',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.identifier.description',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -118,6 +120,7 @@ return [
         'description' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.description',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.description.description',
             'config' => [
                 'type' => 'text',
                 'enableRichtext' => true,
@@ -131,11 +134,12 @@ return [
                 'rows' => 15,
                 'eval' => 'trim',
             ],
-            
+
         ],
         'my_date' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.my_date',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.my_date.description',
             'config' => [
                 'dbType' => 'date',
                 'type' => 'input',
@@ -148,6 +152,7 @@ return [
         'mail' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.mail',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.mail.description',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -158,6 +163,7 @@ return [
         'child1' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.child1',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.child1.description',
             'config' => [
                 'type' => 'inline',
                 'foreign_table' => 'tx_testextension_domain_model_child1',
@@ -176,6 +182,7 @@ return [
         'children2' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.children2',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.children2.description',
             'config' => [
                 'type' => 'inline',
                 'foreign_table' => 'tx_testextension_domain_model_child2',
@@ -194,6 +201,7 @@ return [
         'child3' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.child3',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.child3.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -202,11 +210,12 @@ return [
                 'minitems' => 0,
                 'maxitems' => 1,
             ],
-            
+
         ],
         'children4' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.children4',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_main.children4.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
@@ -228,8 +237,8 @@ return [
                     ],
                 ],
             ],
-            
+
         ],
-    
+
     ],
 ];

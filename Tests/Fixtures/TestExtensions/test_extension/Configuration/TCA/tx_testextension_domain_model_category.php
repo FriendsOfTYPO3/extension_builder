@@ -97,6 +97,7 @@ return [
         'name' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_category.name',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_category.name.description',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -107,6 +108,7 @@ return [
         'categories' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_category.categories',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_category.categories.description',
             'config' => [
                 'type' => 'inline',
                 'foreign_table' => 'tx_testextension_domain_model_category',
