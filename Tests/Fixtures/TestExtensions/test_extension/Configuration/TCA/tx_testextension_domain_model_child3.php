@@ -101,6 +101,7 @@ return [
         'name' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3.name',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3.name.description',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -111,6 +112,7 @@ return [
         'password' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3.password',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3.password.description',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -121,6 +123,7 @@ return [
         'image_property' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3.image_property',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child3.image_property.description',
             'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                 'image_property',
                 [

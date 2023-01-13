@@ -97,6 +97,7 @@ return [
         'name' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child4.name',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child4.name.description',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -107,6 +108,7 @@ return [
         'file_property' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child4.file_property',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child4.file_property.description',
             'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                 'file_property',
                 [
