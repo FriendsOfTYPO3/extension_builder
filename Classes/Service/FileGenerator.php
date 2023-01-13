@@ -18,7 +18,6 @@ declare(strict_types=1);
 namespace EBT\ExtensionBuilder\Service;
 
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
-use EBT\ExtensionBuilder\Domain\Model\BackendModule;
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
@@ -123,7 +122,7 @@ class FileGenerator
     public function build(Extension $extension): void
     {
         $this->extension = $extension;
-        $enableRoundtrip = (bool)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('extension_builder', 'enableRoundtrip');
+        $enableRoundtrip = (bool) GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('extension_builder', 'enableRoundtrip');
 
         if ($enableRoundtrip) {
             $this->roundTripEnabled = true;
@@ -1036,7 +1035,6 @@ class FileGenerator
     }
 
     /**
-     *
      * @throws Exception
      */
     public function generateDomainFormFieldsPartial(string $templateRootFolder, DomainObject $domainObject): ?string
@@ -1048,7 +1046,6 @@ class FileGenerator
     }
 
     /**
-     *
      * @throws Exception
      */
     public function generateDomainPropertiesPartial(string $templateRootFolder, DomainObject $domainObject): ?string
@@ -1084,7 +1081,7 @@ class FileGenerator
      *
      * @throws Exception
      */
-    protected function generateLocallangFileContent(string $fileNameSuffix = '', string $variableName = '', \EBT\ExtensionBuilder\Domain\Model\DomainObject|\EBT\ExtensionBuilder\Domain\Model\BackendModule $variable = null): ?string
+    protected function generateLocallangFileContent(string $fileNameSuffix = '', string $variableName = '', DomainObject|\EBT\ExtensionBuilder\Domain\Model\BackendModule $variable = null): ?string
     {
         $targetFile = 'Resources/Private/Language/locallang' . $fileNameSuffix;
 
@@ -1233,7 +1230,6 @@ class FileGenerator
     }
 
     /**
-     *
      * @throws Exception
      */
     public static function getFolderForClassFile(string $extensionDirectory, string $classType, bool $createDirIfNotExist = true): string

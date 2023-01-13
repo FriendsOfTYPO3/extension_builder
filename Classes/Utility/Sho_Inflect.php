@@ -1,4 +1,5 @@
 <?php
+
 // Inflect class from Sho Kuwamoto released under the MIT license
 // http://kuwamoto.org/2007/12/17/improved-pluralizing-in-php-actionscript-and-ror/
 //
@@ -30,6 +31,7 @@
 //   Added rule for *us -> *uses
 
 namespace EBT\ExtensionBuilder\Utility;
+
 class Sho_Inflect
 {
     public static $plural = [

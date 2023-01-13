@@ -35,14 +35,14 @@ class FormatVisitor extends NodeVisitorAbstract
             return new Array_([
                 new ArrayItem(
                     self::parseArgs($node),
-                    new String_($node->name)
+                    new String_((string) $node->name),
                 )
             ]);
         }
         if (!self::$first && $node instanceof FuncCall) {
             return new ArrayItem(
                 self::parseArgs($node),
-                new String_($node->name)
+                new String_((string) $node->name)
             );
         }
         return $node;

@@ -89,7 +89,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         );
     }
 
-
     /**
      * Write a simple model class for a non aggregate root domain object with one color picker property
      *
@@ -129,7 +128,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             'Setter for color picker property was not generated'
         );
     }
-
 
     /**
      * Write a simple model class for a non aggregate root domain object with one date property
@@ -171,7 +169,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         );
     }
 
-
     /**
      * Write a simple model class for a non aggregate root domain object with one date time property
      *
@@ -211,7 +208,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             'Setter for date property was not generated'
         );
     }
-
 
     /**
      * Write a simple model class for a non aggregate root domain object with one email property
@@ -294,7 +290,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         );
     }
 
-
     /**
      * Write a simple model class for a non aggregate root domain object with one file property
      *
@@ -339,7 +334,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             'Setter for file property was not generated'
         );
     }
-
 
     /**
      * Write a simple model class for a non aggregate root domain object with one float property
@@ -422,7 +416,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         );
     }
 
-
     /**
      * Write a simple model class for a non aggregate root domain object with one image property
      *
@@ -468,7 +461,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         );
     }
 
-
     /**
      * Write a simple model class for a non aggregate root domain object with one link property
      *
@@ -508,7 +500,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             'Setter for link property was not generated'
         );
     }
-
 
     /**
      * Write a simple model class for a non aggregate root domain object with one int property
@@ -591,7 +582,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         );
     }
 
-
     /**
      * Write a simple model class for a non aggregate root domain object with one native date property
      *
@@ -631,7 +621,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             'Setter for native date property was not generated'
         );
     }
-
 
     /**
      * Write a simple model class for a non aggregate root domain object with one native date time property
@@ -673,7 +662,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         );
     }
 
-
     /**
      * Write a simple model class for a non aggregate root domain object with one native time property
      *
@@ -713,7 +701,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             'Setter for native time property was not generated'
         );
     }
-
 
     /**
      * Write a simple model class for a non aggregate root domain object with one none property
@@ -755,7 +742,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         );
     }
 
-
     /**
      * Write a simple model class for a non aggregate root domain object with one pass through property
      *
@@ -795,7 +781,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             'Setter for pass through property was not generated'
         );
     }
-
 
     /**
      * Write a simple model class for a non aggregate root domain object with one password property
@@ -878,7 +863,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         );
     }
 
-
     /**
      * Write a simple model class for a non aggregate root domain object with one rich text property
      *
@@ -918,7 +902,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             'Setter for rich text property was not generated'
         );
     }
-
 
     /**
      * Write a simple model class for a non aggregate root domain object with one select property
@@ -960,7 +943,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         );
     }
 
-
     /**
      * Write a simple model class for a non aggregate root domain object with one slug property
      *
@@ -1000,7 +982,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             'Setter for slug property was not generated'
         );
     }
-
 
     /**
      * Write a simple model class for a non aggregate root domain object with one string property
@@ -1083,7 +1064,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         );
     }
 
-
     /**
      * Write a simple model class for a non aggregate root domain object with one text property
      *
@@ -1165,7 +1145,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         );
     }
 
-
     /**
      * Write a simple model class for a non aggregate root domain object with one time property
      *
@@ -1246,7 +1225,6 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             'Setter for time property was not generated'
         );
     }
-
 
     /**
      * Write a simple model class for a non aggregate root domain object with one time sec property

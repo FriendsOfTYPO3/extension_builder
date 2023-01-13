@@ -45,7 +45,6 @@ use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Namespace_;
-use PhpParser\Node\Stmt\PropertyProperty;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\Stmt\UseUse;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -56,7 +55,7 @@ class NodeFactory implements SingletonInterface
     {
         $factory = new BuilderFactory();
 
-        $classNodeBuilder = $factory->class((string)$classObject->getName());
+        $classNodeBuilder = $factory->class((string) $classObject->getName());
         if ($classObject->getParentClassName()) {
             $classNodeBuilder->extend(self::buildNodeFromName($classObject->getParentClassName()));
         }
@@ -242,7 +241,7 @@ class NodeFactory implements SingletonInterface
      *
      * @return Name The normalized name
      */
-    public static function buildNodeFromName(\PhpParser\Node\Name|string $name): Name
+    public static function buildNodeFromName(Name|string $name): Name
     {
         if ($name instanceof Name) {
             return $name;

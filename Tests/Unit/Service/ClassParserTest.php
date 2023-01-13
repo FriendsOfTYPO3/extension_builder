@@ -24,7 +24,6 @@ use ReflectionClass;
 use ReflectionException;
 use TYPO3\CMS\Core\Cache\Frontend\NullFrontend;
 use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Extbase\Reflection\ClassSchema;
 use TYPO3\CMS\Extbase\Reflection\ReflectionService;
 
 class ClassParserTest extends BaseUnitTest
@@ -169,7 +168,7 @@ class ClassParserTest extends BaseUnitTest
      * compares the number of methods found by parsing with those
      * retrieved from the reflection class
      */
-    private function parserFindsAllConstants(ClassObject $classObject, \TYPO3\CMS\Extbase\Reflection\ClassSchema|\ReflectionClass $classReflection): void
+    private function parserFindsAllConstants(ClassObject $classObject, \TYPO3\CMS\Extbase\Reflection\ClassSchema|ReflectionClass $classReflection): void
     {
         $reflectionConstantCount = count($classReflection->getConstants());
         $classObjectConstantCount = count($classObject->getConstants());
@@ -184,7 +183,7 @@ class ClassParserTest extends BaseUnitTest
      * compares the number of methods found by parsing
      * with those retrieved from the reflection class
      */
-    private function parserFindsAllMethods(ClassObject $classObject, \TYPO3\CMS\Extbase\Reflection\ClassSchema|\ReflectionClass $classReflection): void
+    private function parserFindsAllMethods(ClassObject $classObject, \TYPO3\CMS\Extbase\Reflection\ClassSchema|ReflectionClass $classReflection): void
     {
         $reflectionMethodCount = count($classReflection->getMethods());
         $classObjectMethodCount = count($classObject->getMethods());
@@ -199,7 +198,7 @@ class ClassParserTest extends BaseUnitTest
      * compares the number of properties found by parsing
      * with those retrieved from the reflection class
      */
-    private function parserFindsAllProperties(ClassObject $classObject, \TYPO3\CMS\Extbase\Reflection\ClassSchema|\ReflectionClass $classReflection): void
+    private function parserFindsAllProperties(ClassObject $classObject, \TYPO3\CMS\Extbase\Reflection\ClassSchema|ReflectionClass $classReflection): void
     {
         $reflectionPropertyCount = count($classReflection->getProperties());
         $classObjectPropertyCount = count($classObject->getProperties());

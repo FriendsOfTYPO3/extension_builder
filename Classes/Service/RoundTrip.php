@@ -44,11 +44,11 @@ class RoundTrip implements SingletonInterface
     /**
      * @var string
      */
-    final const SPLIT_TOKEN = '## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder';
+    final public const SPLIT_TOKEN = '## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder';
 
-    final const OVERWRITE_SETTINGS_SKIP = -1;
-    final const OVERWRITE_SETTINGS_MERGE = 1;
-    final const OVERWRITE_SETTINGS_KEEP = 2;
+    final public const OVERWRITE_SETTINGS_SKIP = -1;
+    final public const OVERWRITE_SETTINGS_MERGE = 1;
+    final public const OVERWRITE_SETTINGS_KEEP = 2;
 
     protected ParserService $parserService;
     protected ExtensionBuilderConfigurationManager $configurationManager;
@@ -576,7 +576,7 @@ class RoundTrip implements SingletonInterface
                 $this->classObject = $this->classFileObject->getFirstClass();
                 $this->classObject->setFileName($fileName);
                 $this->classObject->setFileName($fileName);
-                self::log('existing Repository class:' . $fileName, 0, (array)$this->classObject);
+                self::log('existing Repository class:' . $fileName, 0, (array) $this->classObject);
                 return $this->classFileObject;
             }
         }
@@ -1020,7 +1020,7 @@ class RoundTrip implements SingletonInterface
             }
             if (file_exists($extension->getExtensionDir() . 'Configuration/TCA/' . $domainObject->getName() . '.php')) {
                 $extensionConfigurationJson = ExtensionBuilderConfigurationManager::getExtensionBuilderJson($extension->getExtensionKey());
-                if ((float)($extensionConfigurationJson['log']['extension_builder_version']) <= 6.2) {
+                if ((float) ($extensionConfigurationJson['log']['extension_builder_version']) <= 6.2) {
                     self::moveAdditionalTcaToOverrideFile($domainObject);
                 }
             }
@@ -1072,7 +1072,6 @@ class RoundTrip implements SingletonInterface
     }
 
     /**
-     *
      * @throws Exception
      */
     public static function backupExtension(Extension $extension, ?string $backupDir): void

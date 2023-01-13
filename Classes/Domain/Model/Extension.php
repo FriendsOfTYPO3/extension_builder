@@ -28,11 +28,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class Extension
 {
-    final const STATE_ALPHA = 0;
-    final const STATE_BETA = 1;
-    final const STATE_STABLE = 2;
-    final const STATE_EXPERIMENTAL = 3;
-    final const STATE_TEST = 4;
+    final public const STATE_ALPHA = 0;
+    final public const STATE_BETA = 1;
+    final public const STATE_STABLE = 2;
+    final public const STATE_EXPERIMENTAL = 3;
+    final public const STATE_TEST = 4;
 
     /**
      * the extension key

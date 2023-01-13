@@ -19,7 +19,6 @@ namespace EBT\ExtensionBuilder\Tests\Unit\ViewHelpers\Format;
 
 use EBT\ExtensionBuilder\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 use EBT\ExtensionBuilder\ViewHelpers\Format\IndentViewHelper;
-use PHPUnit\Framework\MockObject\MockObject;
 
 class IndentViewHelperTest extends ViewHelperBaseTestcase
 {

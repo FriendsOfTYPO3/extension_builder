@@ -82,7 +82,6 @@ class ExtensionRepository implements SingletonInterface
     }
 
     /**
-     *
      * @throws Exception
      * @throws \TYPO3\CMS\Core\Package\Exception
      */

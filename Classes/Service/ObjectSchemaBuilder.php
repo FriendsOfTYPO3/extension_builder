@@ -154,9 +154,9 @@ class ObjectSchemaBuilder implements SingletonInterface
         /** @var AbstractRelation $relation */
         $relation = new $relationSchemaClassName();
         $relation->setName($relationJsonConfiguration['relationName']);
-        $relation->setLazyLoading((bool)($relationJsonConfiguration['lazyLoading'] ?? false));
-        $relation->setNullable((bool)($relationJsonConfiguration['propertyIsNullable'] ?? false));
-        $relation->setExcludeField((bool)$relationJsonConfiguration['propertyIsExcludeField']);
+        $relation->setLazyLoading((bool) ($relationJsonConfiguration['lazyLoading'] ?? false));
+        $relation->setNullable((bool) ($relationJsonConfiguration['propertyIsNullable'] ?? false));
+        $relation->setExcludeField((bool) $relationJsonConfiguration['propertyIsExcludeField']);
         $relation->setDescription($relationJsonConfiguration['relationDescription'] ?? '');
         $relation->setUniqueIdentifier($relationJsonConfiguration['uid'] ?? '');
         $relation->setType($relationJsonConfiguration['type'] ?? '');
@@ -197,7 +197,7 @@ class ObjectSchemaBuilder implements SingletonInterface
                 $relation->setRenderType('inline');
                 if (!empty($relationJsonConfiguration['maxItems'])) {
                     /** @var FileProperty $relation */
-                    $relation->setMaxItems((int)$relationJsonConfiguration['maxItems']);
+                    $relation->setMaxItems((int) $relationJsonConfiguration['maxItems']);
                     if (!empty($relationJsonConfiguration['allowedFileTypes'])) {
                         $relation->setAllowedFileTypes($relationJsonConfiguration['allowedFileTypes']);
                     }
@@ -242,7 +242,7 @@ class ObjectSchemaBuilder implements SingletonInterface
             $property->setL10nModeExclude($propertyJsonConfiguration['propertyIsL10nModeExclude']);
         }
         if ($property->isFileReference() && !empty($propertyJsonConfiguration['maxItems'])) {
-            $property->setMaxItems((int)$propertyJsonConfiguration['maxItems']);
+            $property->setMaxItems((int) $propertyJsonConfiguration['maxItems']);
         }
         return $property;
     }

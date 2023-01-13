@@ -29,8 +29,7 @@ class Comment
          */
         protected $text,
         protected $line = -1
-    )
-    {
+    ) {
     }
 
     public function setText(string $text): void

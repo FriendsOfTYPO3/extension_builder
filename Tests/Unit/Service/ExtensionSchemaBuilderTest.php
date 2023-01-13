@@ -26,7 +26,6 @@ use EBT\ExtensionBuilder\Domain\Model\Person;
 use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Service\ObjectSchemaBuilder;
 use EBT\ExtensionBuilder\Tests\BaseUnitTest;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ExtensionSchemaBuilderTest extends BaseUnitTest
 {

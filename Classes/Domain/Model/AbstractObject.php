@@ -95,7 +95,7 @@ abstract class AbstractObject
     /**
      * Getter for name
      */
-    public function getName(): string|\PhpParser\Node\Identifier
+    public function getName(): string|Identifier
     {
         return $this->name;
     }

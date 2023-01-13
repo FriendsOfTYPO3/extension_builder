@@ -44,7 +44,7 @@ class ExtensionService
         }
 
         return array_map(
-            static fn(string $storagePath) => rtrim($storagePath, '/') . '/',
+            static fn (string $storagePath) => rtrim($storagePath, '/') . '/',
             $storagePaths
         );
     }

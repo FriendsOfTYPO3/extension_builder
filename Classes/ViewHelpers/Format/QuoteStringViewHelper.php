@@ -17,9 +17,12 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers\Format;
 
+use Closure;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
+
+// TODO: check if this viewhelper is still needed
 
 /**
  * View helper which returns a quoted string
@@ -41,7 +44,7 @@ class QuoteStringViewHelper extends AbstractViewHelper
 
     public static function renderStatic(
         array $arguments,
-        \Closure $renderChildrenClosure,
+        Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
     ) {
         return addslashes((string) self::getValue($arguments, $renderChildrenClosure));
@@ -49,10 +52,9 @@ class QuoteStringViewHelper extends AbstractViewHelper
 
     private static function getValue(
         array $arguments,
-        \Closure $renderChildrenClosure
+        Closure $renderChildrenClosure
     ) {
-        $rguments = [];
-        if (isset($rguments['value'])) {
+        if (isset($arguments['value'])) {
             return $arguments['value'];
         }
         return $renderChildrenClosure();

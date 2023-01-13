@@ -95,7 +95,7 @@ class File extends Container
      * get the first namespace of this file
      * (only for convenience, most files only use one namespace)
      */
-    public function getNamespace(): \EBT\ExtensionBuilder\Domain\Model\NamespaceObject|false
+    public function getNamespace(): NamespaceObject|false
     {
         return current($this->namespaces);
     }

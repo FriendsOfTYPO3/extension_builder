@@ -21,8 +21,6 @@ use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
-use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation;
-use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Factory\BackendModuleFactory;
 use EBT\ExtensionBuilder\Factory\PersonFactory;
@@ -52,7 +50,6 @@ class ExtensionSchemaBuilder implements SingletonInterface
     }
 
     /**
-     *
      * @return Extension $extension
      * @throws ExtensionException
      * @throws Exception
@@ -237,7 +234,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
         }
 
         if (!empty($propertyConfiguration['emConf']['targetVersion'])) {
-            $extension->setTargetVersion((float)$propertyConfiguration['emConf']['targetVersion']);
+            $extension->setTargetVersion((float) $propertyConfiguration['emConf']['targetVersion']);
         }
 
         if (!empty($propertyConfiguration['emConf']['custom_category'])) {

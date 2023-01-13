@@ -39,13 +39,13 @@ use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LocalizationFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use Exception;
 
 class BuilderModuleController extends ActionController
 {
@@ -77,8 +77,7 @@ class BuilderModuleController extends ActionController
         ModuleTemplateFactory $moduleTemplateFactory,
         ExtensionValidator $extensionValidator,
         ExtensionRepository $extensionRepository,
-    )
-    {
+    ) {
         $this->fileGenerator = $fileGenerator;
         $this->iconFactory = $iconFactory;
         $this->pageRenderer = $pageRenderer;
@@ -97,9 +96,6 @@ class BuilderModuleController extends ActionController
         $this->extensionBuilderSettings = $this->extensionBuilderConfigurationManager->getSettings();
     }
 
-    /**
-     * @return void
-     */
     public function initializeAction(): void
     {
         $this->fileGenerator->setSettings($this->extensionBuilderSettings);
@@ -175,7 +171,8 @@ class BuilderModuleController extends ActionController
      * @throws \TYPO3\CMS\Core\Package\Exception
      * @throws \TYPO3\CMS\Core\Resource\Exception\InvalidFileException
      */
-    public function helpAction() {
+    public function helpAction()
+    {
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setTitle('Extension Builder');
 
@@ -220,7 +217,8 @@ class BuilderModuleController extends ActionController
      * @throws \TYPO3\CMS\Core\Package\Exception
      * @throws \TYPO3\CMS\Core\Resource\Exception\InvalidFileException
      */
-    public function extensionModellingAction() {
+    public function extensionModellingAction()
+    {
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setTitle('Create Extension');
 
@@ -270,7 +268,7 @@ class BuilderModuleController extends ActionController
     {
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
-        if($action == 'extensionModelling') {
+        if ($action == 'extensionModelling') {
             // Add back button
             $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
                 ->setIcon($this->iconFactory->getIcon('actions-view-go-back', Icon::SIZE_SMALL))
@@ -307,8 +305,7 @@ class BuilderModuleController extends ActionController
             $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
 
             $this->addRightButtons();
-        } else if ($action === 'help') {
-
+        } elseif ($action === 'help') {
             // Add buttons for help page
             $backButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
                 ->setIcon($this->iconFactory->getIcon('actions-view-go-back', Icon::SIZE_SMALL))
@@ -316,8 +313,7 @@ class BuilderModuleController extends ActionController
                 ->setShowLabelText(true)
                 ->setHref($this->uriBuilder->uriFor('overview'));
             $buttonBar->addButton($backButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
-        } else if($action == 'overview') {
-
+        } elseif ($action == 'overview') {
         } else {
             DebuggerUtility::var_dump($action);
         }
@@ -421,7 +417,7 @@ class BuilderModuleController extends ActionController
             $this->extensionBuilderConfigurationManager->parseRequest();
             $subAction = $this->extensionBuilderConfigurationManager->getSubActionFromRequest();
             if (empty($subAction)) {
-                throw new \Exception('No Sub Action!');
+                throw new Exception('No Sub Action!');
             }
             $response = match ($subAction) {
                 'saveWiring' => $this->rpcActionSave(),
@@ -429,18 +425,17 @@ class BuilderModuleController extends ActionController
                 'updateDb' => $this->rpcActionPerformDbUpdate(),
                 default => ['error' => 'Sub Action not found.'],
             };
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $response = ['error' => $e->getMessage()];
         }
         return $this->jsonResponse(json_encode($response, JSON_THROW_ON_ERROR));
     }
 
-
     /**
      * Generate the code files according to the transferred JSON configuration.
      *
      * @return array (status => message)
-     * @throws \Exception
+     * @throws Exception
      */
     protected function rpcActionSave(): array
     {
@@ -448,7 +443,7 @@ class BuilderModuleController extends ActionController
         $storagePaths = $this->extensionService->resolveStoragePaths();
         $storagePath = reset($storagePaths);
         if ($storagePath === false) {
-            throw new \Exception('The storage path could not be detected.');
+            throw new Exception('The storage path could not be detected.');
         }
         $extensionBuildConfiguration['storagePath'] = $storagePath;
         $validationConfigurationResult = $this->extensionValidator->validateConfigurationFormat($extensionBuildConfiguration);
@@ -461,21 +456,21 @@ class BuilderModuleController extends ActionController
         if (!empty($validationConfigurationResult['errors'])) {
             $errorMessage = '';
             foreach ($validationConfigurationResult['errors'] as $exception) {
-                /** @var \Exception $exception */
+                /** @var Exception $exception */
                 $errorMessage .= '<br />' . $exception->getMessage();
             }
-            throw new \Exception($errorMessage);
+            throw new Exception($errorMessage);
         }
         $extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
         // Validate the extension
         $validationResult = $this->extensionValidator->isValid($extension);
         if (!empty($validationResult['errors'])) {
             $errorMessage = '';
-            /** @var \Exception $exception */
+            /** @var Exception $exception */
             foreach ($validationResult['errors'] as $exception) {
                 $errorMessage .= '<br />' . $exception->getMessage();
             }
-            throw new \Exception($errorMessage);
+            throw new Exception($errorMessage);
         }
         if (!empty($validationResult['warnings'])) {
             $confirmationRequired = $this->handleValidationWarnings($validationResult['warnings']);
@@ -573,7 +568,7 @@ class BuilderModuleController extends ActionController
     /**
      * This is a hack to handle confirm requests in the GUI.
      *
-     * @param \Exception[] $warnings
+     * @param Exception[] $warnings
      * @return array confirm (Question to confirm), confirmFieldName (is set to true if confirmed)
      */
     protected function handleValidationWarnings(array $warnings): array

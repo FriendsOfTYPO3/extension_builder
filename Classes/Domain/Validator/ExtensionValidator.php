@@ -607,7 +607,7 @@ class ExtensionValidator extends AbstractValidator
         if (isset($GLOBALS['TCA'][$tableName]['ctrl']['type'])) {
             $columns = $this->getDatabaseConnection($tableName)->getSchemaManager()->listTableColumns($tableName);
             foreach ($columns as $column) {
-                if ($column->getName() === $GLOBALS['TCA'][$tableName]['ctrl']['type'] && (string)$column->getType() === 'Integer') {
+                if ($column->getName() === $GLOBALS['TCA'][$tableName]['ctrl']['type'] && (string) $column->getType() === 'Integer') {
                     $this->validationResult['warnings'][] = new ExtensionException(
                         'This means the type field can not be used for defining the record type. ' . LF .
                         'You have to configure the mappings yourself if you want to map to this' . LF .

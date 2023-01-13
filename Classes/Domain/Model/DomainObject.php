@@ -551,6 +551,6 @@ class DomainObject
      */
     public function getSearchableProperties(): array
     {
-        return array_filter($this->properties, static fn($property) => $property->isSearchable());
+        return array_filter($this->properties, static fn ($property) => $property->isSearchable());
     }
 }

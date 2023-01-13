@@ -221,7 +221,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         self::assertTrue(class_exists($relatedClassName), 'Class was not generated:' . $relatedClassName);
 
         $reflectionService = new ReflectionService(new NullFrontend('extbase'), 'ClassSchemata');
-        $reflection = $reflectionService->getClassSchema(new $className);
+        $reflection = $reflectionService->getClassSchema(new $className());
         self::assertTrue($reflection->hasMethod('get' . ucfirst($propertyName)), 'Getter was not generated');
         self::assertTrue($reflection->hasMethod('set' . ucfirst($propertyName)), 'Setter was not generated');
 

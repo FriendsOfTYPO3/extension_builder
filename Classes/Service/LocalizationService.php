@@ -49,7 +49,6 @@ class LocalizationService implements SingletonInterface
     }
 
     /**
-     *
      * @throws InvalidArgumentException
      */
     public function prepareLabelArray(Extension $extension, string $type = 'locallang'): array
@@ -111,7 +110,6 @@ class LocalizationService implements SingletonInterface
      * @static
      *
      * @param string $format xml/xlf
-     *
      */
     public function flattenLocallangArray(array $array, string $format, string $languageKey): array
     {

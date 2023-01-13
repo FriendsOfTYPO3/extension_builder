@@ -35,7 +35,6 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Property;
-use PhpParser\Node\Stmt\PropertyProperty;
 use TYPO3\CMS\Core\SingletonInterface;
 
 /**
@@ -47,9 +46,9 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
 {
     public function buildClassObject(Class_ $classNode): ClassObject
     {
-        $classObject = new ClassObject((string)$classNode->name);
+        $classObject = new ClassObject((string) $classNode->name);
         foreach ($classNode->implements as $interfaceNode) {
-            $classObject->addInterfaceName((string)$interfaceNode);
+            $classObject->addInterfaceName((string) $interfaceNode);
         }
         $classObject->setModifiers($classNode->flags);
         if ($classNode->extends !== null) {
