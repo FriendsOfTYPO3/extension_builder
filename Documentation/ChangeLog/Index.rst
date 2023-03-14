@@ -6,6 +6,13 @@
 Change log
 ==========
 
+Version 11.0.10
+---------------
+* [BUGFIX] Allow null for native date and time
+* [TASK] one controller action pair per line
+* [FEATURE] add tca field description
+* [BUGFIX] resolve nullable types correctly
+
 Version 11.0.9
 --------------
 * [BUGFIX] Generate correct TCA for images and files
