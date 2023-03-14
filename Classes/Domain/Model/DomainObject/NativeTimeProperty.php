@@ -30,12 +30,12 @@ class NativeTimeProperty extends AbstractProperty
 
     public function getTypeForComment(): string
     {
-        return '\\DateTime';
+        return '\\DateTime'.(($this->nullable)?'|null':'');
     }
 
     public function getTypeHint(): string
     {
-        return '\\DateTime';
+        return '\\DateTime'.(($this->nullable)?'|null':'');
     }
 
     public function getSqlDefinition(): string
