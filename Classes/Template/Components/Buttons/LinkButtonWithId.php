@@ -73,7 +73,7 @@ class LinkButtonWithId extends LinkButton
         }
         $attributesString = '';
         foreach ($attributes as $key => $value) {
-            $attributesString .= ' ' . htmlspecialchars($key) . '="' . htmlspecialchars($value) . '"';
+            $attributesString .= ' ' . htmlspecialchars($key) . '="' . htmlspecialchars($value ?? '') . '"';
         }
 
         return '<a ' . $attributesString . '>'
