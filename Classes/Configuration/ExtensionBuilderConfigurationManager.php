@@ -116,7 +116,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         if ($typoscript === null) {
             $typoscript = $this->configurationManager->getConfiguration($this->configurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         }
-        $settings = $typoscript['module.']['extension_builder.']['settings.'];
+        $settings = $typoscript['module.']['extension_builder.']['settings.'] ?? [];
         $settings['extConf'] = $this->getExtensionBuilderSettings();
         if (empty($settings['publicResourcesPath'])) {
             $settings['publicResourcesPath'] = ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/';
