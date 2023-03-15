@@ -30,23 +30,4 @@ declare(strict_types=1);
  */
 class Tx_PhpParser_Test_ClassMethodWithManyParameter
 {
-    /**
-     * This is the description
-     *
-     * @param int $number
-     * @param string $stringParam
-     * @param array $arr
-     * @param boolean $booleanParam
-     * @param float $float
-     * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter|null $n
-     * @return string
-     */
-    private static function testMethod($number, $stringParam, array $arr, $booleanParam = false, $float = 0.2, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n = null)
-    {
-        if ($number > 3) {
-            return 'bar';
-        }
-
-        return 'foo';
-    }
 }

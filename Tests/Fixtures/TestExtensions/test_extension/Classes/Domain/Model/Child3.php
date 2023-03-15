@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace FIXTURE\TestExtension\Domain\Model;
 
-
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Annotation\Validate;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Annotation\ORM\Cascade;
 /**
  * This file is part of the "Extension Builder Test Extension" Extension for TYPO3 CMS.
  *
@@ -13,18 +16,17 @@ namespace FIXTURE\TestExtension\Domain\Model;
  *
  * (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
  */
-
 /**
  * Child3
  */
-class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Child3 extends AbstractEntity
 {
 
     /**
      * name
      *
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @Validate("NotEmpty")
      */
     protected $name = '';
 
@@ -38,11 +40,11 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * imageProperty
      *
-     * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
+     * @var FileReference
+     * @Validate("NotEmpty")
+     * @Cascade("remove")
      */
-    protected $imageProperty = null;
+    protected $imageProperty;
 
     /**
      * Returns the name
@@ -57,7 +59,6 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the name
      *
-     * @param string $name
      * @return void
      */
     public function setName(string $name)
@@ -78,7 +79,6 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the password
      *
-     * @param string $password
      * @return void
      */
     public function setPassword(string $password)
@@ -89,7 +89,7 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the imageProperty
      *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
+     * @return FileReference
      */
     public function getImageProperty()
     {
@@ -99,10 +99,9 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the imageProperty
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $imageProperty
      * @return void
      */
-    public function setImageProperty(\TYPO3\CMS\Extbase\Domain\Model\FileReference $imageProperty)
+    public function setImageProperty(FileReference $imageProperty)
     {
         $this->imageProperty = $imageProperty;
     }

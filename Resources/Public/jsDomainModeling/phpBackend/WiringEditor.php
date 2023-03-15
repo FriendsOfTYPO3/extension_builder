@@ -3,14 +3,9 @@
 class WiringEditor
 {
 
-    private $dbData = array(
-        'dbhost' => 'localhost',
-        'dbuser' => 'root',
-        'dbpass' => '',
-        'dbname' => 'wireit'
-    );
+    private array $dbData = ['dbhost' => 'localhost', 'dbuser' => 'root', 'dbpass' => '', 'dbname' => 'wireit'];
 
-    private $link = null;
+    private $link;
 
     private function connect()
     {
@@ -30,7 +25,7 @@ class WiringEditor
     private function queryToArray($sql)
     {
         $res = $this->query($sql);
-        $obj = array();
+        $obj = [];
         while ($line = mysql_fetch_assoc($res)) {
             $obj[]=$line;
         }
@@ -40,7 +35,7 @@ class WiringEditor
     /**
      * variable needs to be in alphabetical order
      */
-    public function saveWiring($language, $name, $working)
+    public function saveWiring($language, $name, $working): bool
     {
         $result = $this->query(
             sprintf("SELECT * from wirings where name='%s' AND language='%s'",
@@ -73,8 +68,7 @@ class WiringEditor
         $query = sprintf("SELECT * from wirings WHERE `language`='%s'",
             mysql_real_escape_string($language)
         );
-        $wirings = $this->queryToArray($query);
-        return $wirings;
+        return $this->queryToArray($query);
     }
 
     public function loadWiring($language, $name)
@@ -88,7 +82,7 @@ class WiringEditor
         return $wirings[0];
     }
 
-    public function deleteWiring($language, $name)
+    public function deleteWiring($language, $name): bool
     {
         $this->query(
             sprintf("DELETE from wirings WHERE name='%s' AND language='%s'",
@@ -104,28 +98,28 @@ class WiringEditor
 class jsonRPCServer
 {
 
-    public static function handle($object)
+    public static function handle($object): bool
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             return false;
         }
 
-        $request = json_decode(file_get_contents('php://input'), true);
+        $request = json_decode(file_get_contents('php://input'), true, 512, JSON_THROW_ON_ERROR);
 
         try {
-            $result = @call_user_func_array(array($object, $request['method']), $request['params']);
+            $result = @call_user_func_array([$object, $request['method']], $request['params']);
             if (!$result) {
-                $response = array('id' => $request['id'], 'result' => $result, 'error' => null);
+                $response = ['id' => $request['id'], 'result' => $result, 'error' => null];
             } else {
-                $response = array('id' => $request['id'], 'result' => null, 'error' => "unknown method '" . $request['method'] . "' or incorrect parameters");
+                $response = ['id' => $request['id'], 'result' => null, 'error' => "unknown method '" . $request['method'] . "' or incorrect parameters"];
             }
         } catch (Exception $e) {
-            $response = array('id' => $request['id'], 'result' => null, 'error' => $e->getMessage());
+            $response = ['id' => $request['id'], 'result' => null, 'error' => $e->getMessage()];
         }
 
         if (!empty($request['id'])) {
             header('content-type: text/javascript');
-            echo json_encode($response);
+            echo json_encode($response, JSON_THROW_ON_ERROR);
         }
 
         return true;
@@ -133,4 +127,4 @@ class jsonRPCServer
 }
 
 $myExample = new WiringEditor();
-jsonRPCServer::handle($myExample) or print 'no request';
+jsonRPCServer::handle($myExample) || (print 'no request');

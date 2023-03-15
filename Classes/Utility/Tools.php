@@ -25,14 +25,14 @@ class Tools implements SingletonInterface
 {
     public static function parseTableNameFromClassName($className): string
     {
-        if (strpos($className, '\\') !== false) {
-            if (strpos($className, '\\') === 0) {
+        if (str_contains((string) $className, '\\')) {
+            if (str_starts_with((string) $className, '\\')) {
                 // remove trailing slash
-                $className = substr($className, 1);
+                $className = substr((string) $className, 1);
             }
-            $classNameParts = explode('\\', $className, 6);
+            $classNameParts = explode('\\', (string) $className, 6);
         } else {
-            $classNameParts = explode('_', $className, 6);
+            $classNameParts = explode('_', (string) $className, 6);
         }
         // could be: TYPO3\CMS\Extbase\Domain\Model\FrontendUser
         // or: VENDOR\Extension\Domain\Model\Foo
@@ -44,26 +44,18 @@ class Tools implements SingletonInterface
     }
 
     /**
-     * @param AbstractProperty $domainProperty
      * @param string $methodType (set,add,remove)
-     *
      * @return string method body
      */
     public static function getParameterName(AbstractProperty $domainProperty, string $methodType): ?string
     {
         $propertyName = $domainProperty->getName();
-
-        switch ($methodType) {
-            case 'set':
-                return $propertyName;
-
-            case 'add':
-                return Inflector::singularize($propertyName);
-
-            case 'remove':
-                return Inflector::singularize($propertyName) . 'ToRemove';
-        }
-        return null;
+        return match ($methodType) {
+            'set' => $propertyName,
+            'add' => Inflector::singularize($propertyName),
+            'remove' => Inflector::singularize($propertyName) . 'ToRemove',
+            default => null,
+        };
     }
 
     public static function getParamTag(AbstractProperty $domainProperty, string $methodType): ?string
@@ -75,23 +67,19 @@ class Tools implements SingletonInterface
             case 'add':
                 /** @var AbstractRelation $domainProperty */
                 $paramTag = $domainProperty->getForeignClassName();
-                $paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
-                return $paramTag;
+                return $paramTag . (' $' . self::getParameterName($domainProperty, 'add'));
 
             case 'remove':
                 /** @var AbstractRelation $domainProperty */
                 $paramTag = $domainProperty->getForeignClassName();
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
-                $paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';
-                return $paramTag;
+                return $paramTag . (' The ' . $domainProperty->getForeignModelName() . ' to be removed');
         }
         return null;
     }
 
     /**
      * Build record type from TX_Vendor_Package_Modelname
-     * @param string $className
-     * @return string
      */
     public static function convertClassNameToRecordType(string $className): string
     {

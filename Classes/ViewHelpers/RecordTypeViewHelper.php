@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
+use TYPO3\CMS\Extbase\Persistence\Generic\Exception;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Utility\Tools;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
@@ -42,8 +43,7 @@ class RecordTypeViewHelper extends AbstractViewHelper
     /**
      * Helper function to find the parents class recordType
      *
-     * @return string
-     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     * @throws Exception
      */
     public function render(): string
     {
@@ -68,7 +68,7 @@ class RecordTypeViewHelper extends AbstractViewHelper
                 }
             }
         }
-        $parts = explode('\\', $domainObject->getParentClass());
+        $parts = explode('\\', (string) $domainObject->getParentClass());
         $this->templateVariableContainer->add('parentModelName', end($parts));
         $this->templateVariableContainer->add('parentRecordType', $parentRecordType);
         $content = $this->renderChildren();

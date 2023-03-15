@@ -33,6 +33,6 @@ class TrimViewHelper extends AbstractViewHelper
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
     ) {
-        return trim($renderChildrenClosure());
+        return trim((string) $renderChildrenClosure());
     }
 }

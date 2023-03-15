@@ -37,7 +37,7 @@ class ListForeignKeyRelationsViewHelper extends AbstractViewHelper
         $extension = $expectedDomainObject->getExtension();
         $results = [];
         foreach ($extension->getDomainObjects() as $domainObject) {
-            if (!count($domainObject->getProperties())) {
+            if ((is_countable($domainObject->getProperties()) ? count($domainObject->getProperties()) : 0) === 0) {
                 continue;
             }
             foreach ($domainObject->getProperties() as $property) {

@@ -43,6 +43,6 @@ class UppercaseFirstViewHelper extends AbstractViewHelper
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
     ) {
-        return ucfirst($renderChildrenClosure());
+        return ucfirst((string) $renderChildrenClosure());
     }
 }

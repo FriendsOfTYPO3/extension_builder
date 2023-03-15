@@ -142,11 +142,11 @@ class ClassBuilderTest extends BaseUnitTest
         )->getFirstClass();
 
         self::assertTrue(
-            $modelClassObject->methodExists('add' . ucfirst(Inflector::singularize($propertyName))),
+            $modelClassObject->methodExists('add' . ucfirst((string) Inflector::singularize($propertyName))),
             'Add method was not generated'
         );
         self::assertTrue(
-            $modelClassObject->methodExists('remove' . ucfirst(Inflector::singularize($propertyName))),
+            $modelClassObject->methodExists('remove' . ucfirst((string) Inflector::singularize($propertyName))),
             'Remove method was not generated'
         );
         self::assertTrue(
@@ -158,7 +158,7 @@ class ClassBuilderTest extends BaseUnitTest
             'Setter was not generated'
         );
 
-        $addMethod = $modelClassObject->getMethod('add' . ucfirst(Inflector::singularize($propertyName)));
+        $addMethod = $modelClassObject->getMethod('add' . ucfirst((string) Inflector::singularize($propertyName)));
         self::assertTrue($addMethod->isTaggedWith('param'), 'No param tag set for setter method');
 
         $paramTagValues = $addMethod->getTagValues('param');
@@ -211,12 +211,10 @@ class ClassBuilderTest extends BaseUnitTest
     /**
      * @test
      * @dataProvider propertyDefaultTypesProviderTypes
-     * @param string $propertyName
-     * @param mixed $propertyDefaultValue
      * @throws FileNotFoundException
      * @throws SyntaxError
      */
-    public function classBuilderGeneratesPropertyDefault(string $propertyName, $propertyDefaultValue): void
+    public function classBuilderGeneratesPropertyDefault(string $propertyName, mixed $propertyDefaultValue): void
     {
         $domainObject = $this->buildDomainObject($this->modelName, true, true);
 

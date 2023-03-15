@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Tests\Unit\Service;
 
+use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Parser\NodeFactory;
@@ -94,7 +95,7 @@ class PrinterTest extends BaseUnitTest
     {
         $fileName = 'ClassMethodWithMissingParameterTag.php';
         $classFileObject = $this->parseAndWrite($fileName);
-        $reflectedClass = $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
+        $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
         // No way to detect the typeHint with Reflection...
     }
 
@@ -182,7 +183,7 @@ class PrinterTest extends BaseUnitTest
     public function printSimpleNamespacedClassExtendingOtherClass(): void
     {
         $fileName = 'SimpleNamespaceExtendingOtherClass.php';
-        $classFileObject = $this->parseAndWrite($fileName, 'Namespaces/');
+        $this->parseAndWrite($fileName, 'Namespaces/');
         //$this->compareClasses($classFileObject, $this->tmpDir . $fileName);
         $this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
     }
@@ -267,7 +268,7 @@ class PrinterTest extends BaseUnitTest
             ]
         );
         self::assertSame(
-            '\EBT\ExtensionBuilder\Domain\Model\DomainObject',
+            '\\' . DomainObject::class,
             $testMethod->getParameterByPosition(0)->getTypeHint()
         );
         $this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
@@ -309,10 +310,7 @@ class PrinterTest extends BaseUnitTest
      * includes the generated file and compares the reflection class
      * with the class object
      *
-     * @param File $classFileObject
-     * @param string $pathToGeneratedFile
      *
-     * @return ReflectionClass
      * @throws ReflectionException
      */
     private function compareClasses(File $classFileObject, string $pathToGeneratedFile): ReflectionClass
