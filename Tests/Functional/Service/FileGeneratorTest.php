@@ -17,6 +17,9 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Tests\Functional\Service;
 
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToOneRelation;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ManyToManyRelation;
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty;
@@ -189,7 +192,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $domainObject = $this->buildDomainObject($modelName);
         $relatedDomainObject = $this->buildDomainObject($relatedModelName);
 
-        $relation = new Relation\ZeroToOneRelation($propertyName);
+        $relation = new ZeroToOneRelation($propertyName);
         $relation->setForeignModel($relatedDomainObject);
         $domainObject->addProperty($relation);
 
@@ -247,7 +250,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $domainObject = $this->buildDomainObject($modelName);
         $relatedDomainObject = $this->buildDomainObject($relatedModelName);
 
-        $relation = new Relation\ZeroToManyRelation($propertyName);
+        $relation = new ZeroToManyRelation($propertyName);
         $relation->setForeignModel($relatedDomainObject);
         $domainObject->addProperty($relation);
 
@@ -333,7 +336,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $domainObject = $this->buildDomainObject($modelName);
         $relatedDomainObject = $this->buildDomainObject($relatedModelName);
 
-        $relation = new Relation\ManyToManyRelation($propertyName);
+        $relation = new ManyToManyRelation($propertyName);
         $relation->setForeignModel($relatedDomainObject);
         $relation->setInlineEditing(false);
         $domainObject->addProperty($relation);
@@ -493,7 +496,7 @@ class FileGeneratorTest extends BaseFunctionalTest
 
         $relatedDomainObject = $this->buildDomainObject($relatedModelName, true);
 
-        $relation = new Relation\ManyToManyRelation($propertyName);
+        $relation = new ManyToManyRelation($propertyName);
         $relation->setForeignModel($relatedDomainObject);
         $relation->setInlineEditing(false);
         $domainObject->addProperty($relation);
@@ -550,7 +553,6 @@ class FileGeneratorTest extends BaseFunctionalTest
     /**
      * @test
      * @dataProvider getDeprecatedTypoScriptExtensionsDataProvider
-     * @param string $deprecatedExtension
      * @throws ExtensionException
      */
     public function writeExtensionFilesOverWritesFilesWithDeprecatedExtensions(string $deprecatedExtension): void

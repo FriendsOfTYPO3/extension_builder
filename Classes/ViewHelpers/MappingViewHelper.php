@@ -25,9 +25,6 @@ class MappingViewHelper extends AbstractConditionViewHelper
 {
     protected ExtensionBuilderConfigurationManager $configurationManager;
 
-    /**
-     * @param ExtensionBuilderConfigurationManager $configurationManager
-     */
     public function injectExtensionBuilderConfigurationManager(
         ExtensionBuilderConfigurationManager $configurationManager
     ): void {
@@ -59,7 +56,7 @@ class MappingViewHelper extends AbstractConditionViewHelper
         // table name is only set, if the model is mapped to a table or if the domain object extends a class
         $tableName = $domainObject->getMapToTable();
 
-        if ($tableName && strpos($tableName, strtolower($extensionPrefix) . '_domain_model_') === false) {
+        if ($tableName && !str_contains($tableName, strtolower($extensionPrefix) . '_domain_model_')) {
             $isMappedToExternalTable = true;
         }
 
@@ -98,7 +95,6 @@ class MappingViewHelper extends AbstractConditionViewHelper
      *
      * @param DomainObject $domainObject
      * @param bool $isMappedToExternalTable
-     * @return bool
      */
     protected function needsTypeField(DomainObject $domainObject, bool $isMappedToExternalTable): bool
     {

@@ -25,9 +25,6 @@ class DomainObjectChecksViewHelper extends AbstractConditionViewHelper
 {
     protected ExtensionBuilderConfigurationManager $configurationManager;
 
-    /**
-     * @param ExtensionBuilderConfigurationManager $configurationManager
-     */
     public function injectExtensionBuilderConfigurationManager(
         ExtensionBuilderConfigurationManager $configurationManager
     ): void {
@@ -59,34 +56,15 @@ class DomainObjectChecksViewHelper extends AbstractConditionViewHelper
         // table name is only set, if the model is mapped to a table or if the domain object extends a class
         $tableName = $domainObject->getMapToTable();
 
-        if ($tableName && strpos($tableName, strtolower($extensionPrefix) . '_domain_model_') === false) {
+        if ($tableName && !str_contains($tableName, strtolower($extensionPrefix) . '_domain_model_')) {
             $isMappedToExternalTable = true;
         }
-
-        switch ($this->arguments['renderCondition']) {
-            case 'isMappedToInternalTable':
-                if (!$isMappedToExternalTable) {
-                    return true;
-                }
-
-                return false;
-
-            case 'isMappedToExternalTable':
-                if ($isMappedToExternalTable) {
-                    return true;
-                }
-
-                return false;
-
-            case 'needsTypeField':
-                if ($this->needsTypeField($domainObject, $isMappedToExternalTable)) {
-                    return true;
-                }
-
-                return false;
-        }
-
-        return '';
+        return match ($this->arguments['renderCondition']) {
+            'isMappedToInternalTable' => !$isMappedToExternalTable,
+            'isMappedToExternalTable' => $isMappedToExternalTable,
+            'needsTypeField' => $this->needsTypeField($domainObject, $isMappedToExternalTable),
+            default => '',
+        };
     }
 
     /**
@@ -98,7 +76,6 @@ class DomainObjectChecksViewHelper extends AbstractConditionViewHelper
      *
      * @param DomainObject $domainObject
      * @param bool $isMappedToExternalTable
-     * @return bool
      */
     protected function needsTypeField(DomainObject $domainObject, bool $isMappedToExternalTable): bool
     {

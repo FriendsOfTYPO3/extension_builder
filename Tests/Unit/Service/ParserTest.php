@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Tests\Unit\Service;
 
+use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Parser\Traverser;
 use EBT\ExtensionBuilder\Service\ParserService;
@@ -113,7 +114,7 @@ class ParserTest extends BaseUnitTest
         self::assertCount(6, $parameters);
         self::assertEquals('booleanParam', $parameters[3]->getName());
         self::assertEquals('boolean', $parameters[3]->getVarType());
-        self::assertEquals('\\EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter', $parameters[5]->getTypeHint());
+        self::assertEquals('\\' . NodeConverter::class, $parameters[5]->getTypeHint());
     }
 
     /**

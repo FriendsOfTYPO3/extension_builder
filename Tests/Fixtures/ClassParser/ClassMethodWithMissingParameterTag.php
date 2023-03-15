@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use EBT\ExtensionBuilder\Parser\Utility\NodeConverter;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -31,11 +33,8 @@ class Tx_PhpParser_Test_ClassMethodWithMissingParameterTag
 {
     /**
      * This is the description
-     *
-     * @param \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n
-     * @return string
      */
-    public function testMethod($string, array $arr, \EBT\ExtensionBuilder\Parser\Utility\NodeConverter $n)
+    public function testMethod($string, array $arr, NodeConverter $n): string
     {
         if ($string > 3) {
             return 'bar';

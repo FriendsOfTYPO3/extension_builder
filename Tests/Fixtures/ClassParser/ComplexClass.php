@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+
 /**
  * multiline comment test
  * @author Nico de Haen
@@ -20,15 +22,15 @@ declare(strict_types=1);
  */
 final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
 {
+    public $names;
     protected $name='test;';
-    private $propertiesInOneLine;
 
-    const testConstant = '123';
-    const testConstant2 = 0.56;
+    public const testConstant = '123';
+    public const testConstant2 = 0.56;
 
     protected $defaultOrderings = [
-        'title' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING,
-        'subtitle' =>  \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING,
+        'title' => QueryInterface::ORDER_ASCENDING,
+        'subtitle' =>  QueryInterface::ORDER_DESCENDING,
         'test' => 'test;',
     ];
 
@@ -43,14 +45,6 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
     public function getNames()
     {
         return $this->names;
-    }
-
-    public function getNames1()
-    {
-    }
-
-    public function getNames2()
-    {
     }
 
     public function getNames3()
@@ -78,10 +72,6 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
          */
         $this->name = $name;
     }
-    private $another_Property = 'test456_";';
-    private $anotherProperty = "test456_'\"";
-    private $arrayProperty1 = [2,6,'test'];
-    private $arrayProperty2 = ['test'=>3,'b' => 'q'];
     public static $constProperty = self::testConstant;
 
     /**
@@ -89,18 +79,12 @@ final class Tx_ExtensionBuilder_Tests_Examples_ClassParser_ComplexClass
      * @param $param1
      * @param $param2
      * @param string $param3
-     * @param array $param4
-     * @return int
      */
-    public static function methodWithVariousParameter($param1, &$param2, $param3= 'default', array $param4 = ['test'=>[1, 2, 3]])
+    public static function methodWithVariousParameter($param1, &$param2, $param3= 'default', array $param4 = ['test'=>[1, 2, 3]]): int
     {
-        /**
-         * test test
-         */
-        $test = 234;
         return 5; // test test
     }
-    const another_Constant = 'r5r_8';
+    public const another_Constant = 'r5r_8';
     // single line comment
     public $testProperty4 = 123;
 }

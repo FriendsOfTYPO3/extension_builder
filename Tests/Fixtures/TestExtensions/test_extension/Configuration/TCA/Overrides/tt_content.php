@@ -1,7 +1,8 @@
 <?php
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 defined('TYPO3') || die();
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+ExtensionUtility::registerPlugin(
     'TestExtension',
     'Testplugin',
     'Test plugin'

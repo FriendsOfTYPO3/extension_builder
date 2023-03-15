@@ -35,5 +35,5 @@ class SimpleNamepaceTest
     /**
      * @var
      */
-    protected $foo = null;
+    protected $foo;
 }

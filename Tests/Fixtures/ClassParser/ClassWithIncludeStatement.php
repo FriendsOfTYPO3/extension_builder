@@ -28,12 +28,8 @@ declare(strict_types=1);
 /**
  * @author Nico de Haen
  */
-require_once 'DummyIncludeFile1.php';
+require_once __DIR__ . '/DummyIncludeFile1.php';
 abstract class Tx_PhpParser_Tests_ClassWithIncludeStatement
 {
-    /**
-     * @var null
-     */
-    private $foo = null;
 }
-include_once 'DummyIncludeFile2.php';
+include_once __DIR__ . '/DummyIncludeFile2.php';

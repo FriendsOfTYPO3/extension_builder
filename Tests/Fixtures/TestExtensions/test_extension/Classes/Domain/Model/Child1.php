@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FIXTURE\TestExtension\Domain\Model;
 
-
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * This file is part of the "Extension Builder Test Extension" Extension for TYPO3 CMS.
  *
@@ -13,11 +13,10 @@ namespace FIXTURE\TestExtension\Domain\Model;
  *
  * (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
  */
-
 /**
  * Child1
  */
-class Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Child1 extends AbstractEntity
 {
 
     /**
@@ -47,7 +46,6 @@ class Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the name
      *
-     * @param string $name
      * @return void
      */
     public function setName(string $name)
@@ -68,7 +66,6 @@ class Child1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the flag
      *
-     * @param bool $flag
      * @return void
      */
     public function setFlag(bool $flag)

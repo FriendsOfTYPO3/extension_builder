@@ -1,5 +1,6 @@
 <?php
 
+use EBT\ExtensionBuilder\Controller\BuilderModuleController;
 return [
     'web_ExtensionBuilder' => [
         'parent' => 'tools',

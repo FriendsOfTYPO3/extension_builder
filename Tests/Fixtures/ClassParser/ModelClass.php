@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace DUMMY\Dummy\Domain\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Annotation\Validate;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /***************************************************************
  *  Copyright notice
  *
@@ -24,27 +27,26 @@ namespace DUMMY\Dummy\Domain\Model;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 /**
  *
  *
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Model extends AbstractEntity
 {
     /**
      * This is the property
      *
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @Validate("NotEmpty")
      */
     protected $property;
 
     /**
      * children
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child>
+     * @var ObjectStorage<Child>
      */
     protected $children;
 
@@ -67,7 +69,7 @@ class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the children
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child> $children
+     * @return ObjectStorage<Child> $children
      */
     public function getChildren()
     {
@@ -77,7 +79,7 @@ class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the children
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child> $children
+     * @param ObjectStorage<Child> $children
      * @return void
      */
     public function setChildren($children)
@@ -88,8 +90,7 @@ class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Adds a Child
      *
-     * @param \VENDOR\Package\Domain\Model\Child $child
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\Package\Domain\Model\Child> children
+     * @return ObjectStorage<\VENDOR\Package\Domain\Model\Child> children
      */
     public function addChild(\VENDOR\Package\Domain\Model\Child $child)
     {
@@ -99,8 +100,7 @@ class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Removes a Child
      *
-     * @param \VENDOR\Package\Domain\Model\Child $child
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\VENDOR\Package\Domain\Model\Child> children
+     * @return ObjectStorage<\VENDOR\Package\Domain\Model\Child> children
      */
     public function removeChild(\VENDOR\Package\Domain\Model\Child $child)
     {

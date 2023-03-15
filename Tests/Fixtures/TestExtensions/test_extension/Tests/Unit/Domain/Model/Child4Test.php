@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace FIXTURE\TestExtension\Tests\Unit\Domain\Model;
 
+use FIXTURE\TestExtension\Domain\Model\Child4;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
@@ -15,23 +17,20 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 class Child4Test extends UnitTestCase
 {
     /**
-     * @var \FIXTURE\TestExtension\Domain\Model\Child4|MockObject|AccessibleObjectInterface
+     * @var Child4|MockObject|AccessibleObjectInterface
      */
     protected $subject;
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->subject = $this->getAccessibleMock(
-            \FIXTURE\TestExtension\Domain\Model\Child4::class,
+            Child4::class,
             ['dummy']
         );
     }
 
     protected function tearDown(): void
     {
-        parent::tearDown();
     }
 
     /**
@@ -71,7 +70,7 @@ class Child4Test extends UnitTestCase
      */
     public function setFilePropertyForFileReferenceSetsFileProperty(): void
     {
-        $fileReferenceFixture = new \TYPO3\CMS\Extbase\Domain\Model\FileReference();
+        $fileReferenceFixture = new FileReference();
         $this->subject->setFileProperty($fileReferenceFixture);
 
         self::assertEquals($fileReferenceFixture, $this->subject->_get('fileProperty'));

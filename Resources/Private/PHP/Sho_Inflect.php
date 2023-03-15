@@ -119,14 +119,14 @@ class Sho_Inflect
             $pattern = '/' . $pattern . '$/i';
 
             if (preg_match($pattern, $string)) {
-                return preg_replace($pattern, $result, $string);
+                return preg_replace($pattern, (string) $result, $string);
             }
         }
 
         // check for matches using regular expressions
         foreach (self::$plural as $pattern => $result) {
             if (preg_match($pattern, $string)) {
-                return preg_replace($pattern, $result, $string);
+                return preg_replace($pattern, (string) $result, $string);
             }
         }
 
@@ -145,14 +145,14 @@ class Sho_Inflect
             $pattern = '/' . $pattern . '$/i';
 
             if (preg_match($pattern, $string)) {
-                return preg_replace($pattern, $result, $string);
+                return preg_replace($pattern, (string) $result, $string);
             }
         }
 
         // check for matches using regular expressions
         foreach (self::$singular as $pattern => $result) {
             if (preg_match($pattern, $string)) {
-                return preg_replace($pattern, $result, $string);
+                return preg_replace($pattern, (string) $result, $string);
             }
         }
 

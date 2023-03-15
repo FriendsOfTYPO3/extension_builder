@@ -42,8 +42,6 @@ abstract class Tx_PhpParser_Tests_ClassWithPreAndPostStatement
 {
 }
 
-if ($bar3 > $foo3) {
-    if ($foo3 == 23) {
-        define('TX_PHPPARSER_TEST_BAR_POST2', 'FOO');
-    }
+if ($bar3 > $foo3 && $foo3 == 23) {
+    define('TX_PHPPARSER_TEST_BAR_POST2', 'FOO');
 }

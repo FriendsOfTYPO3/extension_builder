@@ -43,11 +43,6 @@ abstract class Tx_PhpParser_Tests_ClassWithVariousModifiers
     /**
      * @var string
      */
-    private $privateProperty;
-
-    /**
-     * @var string
-     */
     public static $staticProperty;
 
     /**

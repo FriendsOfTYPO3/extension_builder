@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Parser\Test\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /***************************************************************
  *  Copyright notice
  *
@@ -26,11 +27,10 @@ namespace Parser\Test\Model;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 /**
  * @author Nico de Haen
  */
-class SimpleNamepaceTest extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class SimpleNamepaceTest extends AbstractEntity
 {
-    protected $foo = null;
+    protected $foo;
 }

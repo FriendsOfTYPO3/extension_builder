@@ -17,6 +17,8 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Tests\Functional\Configuration;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -37,7 +39,7 @@ class ConfigurationManagerTest extends BaseFunctionalTest
     public function getParentClassForValueObject(): void
     {
         $parentClassForValueObject = $this->configurationManager->getParentClassForValueObject($this->extension);
-        self::assertSame('\TYPO3\CMS\Extbase\DomainObject\AbstractValueObject', $parentClassForValueObject);
+        self::assertSame('\\' . AbstractValueObject::class, $parentClassForValueObject);
     }
 
     /**
@@ -46,6 +48,6 @@ class ConfigurationManagerTest extends BaseFunctionalTest
     public function getParentClassForEntityObject(): void
     {
         $parentClassForValueObject = $this->configurationManager->getParentClassForEntityObject($this->extension);
-        self::assertSame('\TYPO3\CMS\Extbase\DomainObject\AbstractEntity', $parentClassForValueObject);
+        self::assertSame('\\' . AbstractEntity::class, $parentClassForValueObject);
     }
 }

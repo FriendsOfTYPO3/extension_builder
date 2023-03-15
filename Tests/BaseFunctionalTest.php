@@ -69,8 +69,6 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->fixturesPath = __DIR__ . '/Fixtures/';
 
         $rootDir = vfsStream::setup('root');
@@ -161,9 +159,6 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
      * Helper function
      *
      * @param $name
-     * @param bool $entity
-     * @param bool $aggregateRoot
-     * @return DomainObject
      */
     protected function buildDomainObject($name, bool $entity = false, bool $aggregateRoot = false): DomainObject
     {
