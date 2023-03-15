@@ -5,12 +5,16 @@
     "main": "public/index.php",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
-      "sass-lint": "sass-lint -c sass-lint.yml -q '**/*.scss' --verbose"
+      "sass-lint": "sass-lint -c sass-lint.yml -q '**/*.scss' --verbose",
+			"watch": "node-sass --watch --output-style compressed --include-path scss extbaseModeling.scss extbaseModeling.css",
+			"build-css": "node-sass --output-style compressed --include-path scss ./Resources/Public/Scss/extensionbuilder.scss ./Resources/Public/Css/extensionbuilder.css"
     },
     "author": "Philipp Kuhlmay",
     "license": "",
     "devDependencies": {
-      "sass-lint": "^1.13.1"
+      "sass-lint": "^1.13.1",
+			"node-sass": "^7.0.0",
+			"nodemon": "^2.0.0"
     },
     "sasslintConfig": "linters/sass-lint.yml"
   }
