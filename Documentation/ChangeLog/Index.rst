@@ -5,6 +5,9 @@
 ==========
 Change log
 ==========
+Version 12.0.0
+--------------
+* [TASK] Raise new versions for new TYPO3 12 release
 
 Version 11.0.10
 ---------------
