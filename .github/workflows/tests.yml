@@ -16,40 +16,40 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [7.4, 8.0, 8.1, 8.2, 8.3]
-        typo3: [^11.5]
+        php: [8.1, 8.2]
+        typo3: [^12.2]
 
     name: P${{ matrix.php }} - T${{ matrix.typo3 }}
 
     steps:
-      - name: "Checkout code"
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: "Cache dependencies"
-        uses: actions/cache@v4
+      - name: Cache dependencies
+        uses: actions/cache@v1
         with:
           path: ~/.composer/cache/files
           key: dependencies-typo3-${{ matrix.typo3 }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
-      - name: "Setup PHP"
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, intl
           coverage: none
 
-      - name: "Install dependencies"
+      - name: Install dependencies
         run: composer require "typo3/minimal:${{ matrix.typo3 }}" --prefer-dist --no-progress --no-suggest --no-interaction
 
-      - name: "Check PHP syntax errors"
+      - name: Check PHP syntax errors
         run: find . -name \*.php ! -path "./.Build/*" -print0 | xargs -0 -n1 -P4 php -d display_errors=stderr -n -l > /dev/null
 
-      - name: "Execute unit tests"
+      - name: Execute unit tests
         run: .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/
         env:
           TYPO3_PATH_WEB: $PWD/.Build/public
 
-      - name: "Execute functional tests"
+      - name: Execute functional tests
         run: .Build/bin/phpunit --colors  -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/
         env:
           TYPO3_PATH_WEB: $PWD/.Build/public
