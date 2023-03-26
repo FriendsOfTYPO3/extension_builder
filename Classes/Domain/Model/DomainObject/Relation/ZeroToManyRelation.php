@@ -63,13 +63,4 @@ class ZeroToManyRelation extends AnyToManyRelation
     {
         return false;
     }
-
-    /**
-     * @return bool true (if property is of type relation any to many)
-     * @deprecated Use `instanceof ZeroToManyRelation` instead
-     */
-    public function isZeroToManyRelation(): bool
-    {
-        return true;
-    }
 }
