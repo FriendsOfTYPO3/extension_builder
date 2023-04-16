@@ -39,7 +39,7 @@
 	},
 	"extra": {
 		"typo3/cms": {
-			"web-dir": ".Build/public",
+			"web-dir": ".Build/Web",
 			"extension-key": "test_extension"
 		}
 	}
