@@ -1,0 +1,372 @@
+%!Adobe-FontList 1.19
+%Locale:0x409
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:ArialHebrew
+FamilyName:Arial Hebrew
+StyleName:Regular
+MenuName:Arial Hebrew
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Arial Hebrew
+FamilyNameNative:Arial Hebrew
+StyleNameNative:Regular
+FullNameNative:Arial Hebrew Regular
+WritingScript:Hebrew
+OutlineFileName:\ArialHB.ttc
+TTCOffset:60
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:192088
+FileModTime:1469926460
+NameArray:0,Mac,4,Arial Hebrew
+NameArray:5,Mac,4,Arial Hebrew
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:ArialHebrew-Bold
+FamilyName:Arial Hebrew
+StyleName:Bold
+MenuName:Arial Hebrew
+StyleBits:2
+WeightClass:700
+WidthClass:5
+AngleClass:0
+FullName:Arial Hebrew Bold
+FamilyNameNative:Arial Hebrew
+StyleNameNative:Bold
+FullNameNative:Arial Hebrew Bold
+WritingScript:Hebrew
+OutlineFileName:\ArialHB.ttc
+TTCOffset:408
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:192088
+FileModTime:1469926460
+NameArray:0,Mac,4,Arial Hebrew Bold
+NameArray:5,Mac,4,Arial Hebrew Bold
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:ArialHebrew-Light
+FamilyName:Arial Hebrew
+StyleName:Light
+MenuName:Arial Hebrew
+StyleBits:0
+WeightClass:300
+WidthClass:5
+AngleClass:0
+FullName:Arial Hebrew Light
+FamilyNameNative:Arial Hebrew
+StyleNameNative:Light
+FullNameNative:Arial Hebrew
+WritingScript:Hebrew
+OutlineFileName:\ArialHB.ttc
+TTCOffset:756
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:192088
+FileModTime:1469926460
+NameArray:0,Mac,4,Arial Hebrew Light
+NameArray:5,Mac,4,Arial Hebrew Light
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:.ArialHebrewDeskInterface
+FamilyName:.Arial Hebrew Desk Interface
+StyleName:Regular
+MenuName:.Arial Hebrew Desk Interface
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:.Arial Hebrew Desk Interface
+FamilyNameNative:.Arial Hebrew Desk Interface
+StyleNameNative:Regular
+FullNameNative:.Arial Hebrew Desk Interface Regular
+WritingScript:Hebrew
+OutlineFileName:\ArialHB.ttc
+TTCOffset:1104
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:192088
+FileModTime:1469926460
+NameArray:0,Mac,4,.Arial Hebrew Desk Interface
+NameArray:5,Mac,4,.Arial Hebrew Desk Interface
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:.ArialHebrewDeskInterface-Bold
+FamilyName:.Arial Hebrew Desk Interface
+StyleName:Bold
+MenuName:.Arial Hebrew Desk Interface
+StyleBits:2
+WeightClass:700
+WidthClass:5
+AngleClass:0
+FullName:.Arial Hebrew Desk Interface Bold
+FamilyNameNative:.Arial Hebrew Desk Interface
+StyleNameNative:Bold
+FullNameNative:.Arial Hebrew Desk Interface Bold
+WritingScript:Hebrew
+OutlineFileName:\ArialHB.ttc
+TTCOffset:1452
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:192088
+FileModTime:1469926460
+NameArray:0,Mac,4,.Arial Hebrew Desk Interface Bold
+NameArray:5,Mac,4,.Arial Hebrew Desk Interface Bold
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:.ArialHebrewDeskInterface-Light
+FamilyName:.Arial Hebrew Desk Interface
+StyleName:Light
+MenuName:.Arial Hebrew Desk Interface
+StyleBits:0
+WeightClass:300
+WidthClass:5
+AngleClass:0
+FullName:.Arial Hebrew Desk Interface Light
+FamilyNameNative:.Arial Hebrew Desk Interface
+StyleNameNative:Light
+FullNameNative:.Arial Hebrew Desk Interface
+WritingScript:Hebrew
+OutlineFileName:\ArialHB.ttc
+TTCOffset:1800
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:192088
+FileModTime:1469926460
+NameArray:0,Mac,4,.Arial Hebrew Desk Interface Light
+NameArray:5,Mac,4,.Arial Hebrew Desk Interface Light
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:ArialHebrewScholar
+FamilyName:Arial Hebrew Scholar
+StyleName:Regular
+MenuName:Arial Hebrew Scholar
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Arial Hebrew Scholar
+FamilyNameNative:Arial Hebrew Scholar
+StyleNameNative:Regular
+FullNameNative:Arial Hebrew Scholar Regular
+WritingScript:Hebrew
+OutlineFileName:\ArialHB.ttc
+TTCOffset:2148
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:192088
+FileModTime:1469926460
+NameArray:0,Mac,4,Arial Hebrew Scholar
+NameArray:5,Mac,4,Arial Hebrew Scholar
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:ArialHebrewScholar-Bold
+FamilyName:Arial Hebrew Scholar
+StyleName:Bold
+MenuName:Arial Hebrew Scholar
+StyleBits:2
+WeightClass:700
+WidthClass:5
+AngleClass:0
+FullName:Arial Hebrew Scholar Bold
+FamilyNameNative:Arial Hebrew Scholar
+StyleNameNative:Bold
+FullNameNative:Arial Hebrew Scholar Bold
+WritingScript:Hebrew
+OutlineFileName:\ArialHB.ttc
+TTCOffset:2496
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:192088
+FileModTime:1469926460
+NameArray:0,Mac,4,Arial Hebrew Scholar Bold
+NameArray:5,Mac,4,Arial Hebrew Scholar Bold
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:ArialHebrewScholar-Light
+FamilyName:Arial Hebrew Scholar
+StyleName:Light
+MenuName:Arial Hebrew Scholar
+StyleBits:0
+WeightClass:300
+WidthClass:5
+AngleClass:0
+FullName:Arial Hebrew Scholar Light
+FamilyNameNative:Arial Hebrew Scholar
+StyleNameNative:Light
+FullNameNative:Arial Hebrew Scholar
+WritingScript:Hebrew
+OutlineFileName:\ArialHB.ttc
+TTCOffset:2844
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:192088
+FileModTime:1469926460
+NameArray:0,Mac,4,Arial Hebrew Scholar Light
+NameArray:5,Mac,4,Arial Hebrew Scholar Light
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Share-Bold
+FamilyName:Share
+StyleName:Bold
+MenuName:Share
+StyleBits:2
+WeightClass:700
+WidthClass:5
+AngleClass:0
+FullName:Share Bold
+WritingScript:Roman
+OutlineFileName:\Share-Bold.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:91072
+FileModTime:1328659200
+NameArray:0,Mac,4,Share Bold
+NameArray:0,Win,1,Share
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Share-Regular
+FamilyName:Share
+StyleName:Regular
+MenuName:Share
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Share Regular
+WritingScript:Roman
+OutlineFileName:\Share-Regular.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:92012
+FileModTime:1328659200
+NameArray:0,Mac,4,Share Regular
+NameArray:0,Win,1,Share
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:SourceSansPro-Bold
+FamilyName:Source Sans Pro
+StyleName:Bold
+MenuName:Source Sans Pro
+StyleBits:2
+WeightClass:700
+WidthClass:5
+AngleClass:0
+FullName:Source Sans Pro Bold
+WritingScript:Roman
+OutlineFileName:\SourceSansPro-Bold.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:104684
+FileModTime:1478214145
+DesignSize:100
+NameArray:0,Mac,4,Source Sans Pro Bold
+NameArray:0,Win,1,Source Sans Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:SourceSansPro-Light
+FamilyName:Source Sans Pro
+StyleName:Light
+MenuName:Source Sans Pro Light
+StyleBits:0
+WeightClass:300
+WidthClass:5
+AngleClass:0
+FullName:Source Sans Pro Light
+WritingScript:Roman
+OutlineFileName:\SourceSansPro-Light.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:99628
+FileModTime:1478214145
+DesignSize:100
+NameArray:0,Mac,4,Source Sans Pro Light
+NameArray:0,Win,1,Source Sans Pro Light
+NameArray:0,Win,16,Source Sans Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:SourceSansPro-Semibold
+FamilyName:Source Sans Pro
+StyleName:Semibold
+MenuName:Source Sans Pro Semibold
+StyleBits:0
+WeightClass:600
+WidthClass:5
+AngleClass:0
+FullName:Source Sans Pro Semibold
+WritingScript:Roman
+OutlineFileName:\SourceSansPro-Semibold.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:102460
+FileModTime:1478214145
+DesignSize:100
+NameArray:0,Mac,4,Source Sans Pro Semibold
+NameArray:0,Win,1,Source Sans Pro Semibold
+NameArray:0,Win,16,Source Sans Pro
+%EndFont
+

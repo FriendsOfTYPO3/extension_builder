@@ -1,20 +1,51 @@
 {
-    "name": "Extension-Builder",
+    "name": "extension_builder_12_react",
     "version": "1.0.0",
     "description": "Extension-Builder",
     "main": "public/index.php",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
         "sass-lint": "sass-lint -c sass-lint.yml -q '**/*.scss' --verbose",
         "css-watch": "node-sass --watch --output-style compressed --include-path scss  ./Resources/Public/Scss/extensionbuilder.scss ./Resources/Public/Css/extensionbuilder.css",
-        "css-build": "node-sass --output-style compressed --include-path scss ./Resources/Public/Scss/extensionbuilder.scss ./Resources/Public/Css/extensionbuilder.css"
+        "css-build": "node-sass --output-style compressed --include-path scss ./Resources/Public/Scss/extensionbuilder.scss ./Resources/Public/Css/extensionbuilder.css",
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
     },
     "author": "Philipp Kuhlmay",
     "license": "",
     "devDependencies": {
         "node-sass": "^8.0.0",
-				"gulp-cli": "^2.3.0",
-        "sass-lint": "^1.13.1"
+        "gulp-cli": "^2.3.0",
+        "sass-lint": "^1.13.1",
+        "@fortawesome/fontawesome-svg-core": "^6.4.0",
+        "@fortawesome/free-brands-svg-icons": "^6.4.0",
+        "@fortawesome/free-solid-svg-icons": "^6.4.0",
+        "@fortawesome/react-fontawesome": "^0.2.0",
+        "@testing-library/jest-dom": "^5.16.5",
+        "@testing-library/react": "^14.0.0",
+        "@testing-library/user-event": "^14.0.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-draggable": "^4.4.5",
+        "react-scripts": "5.0.1",
+        "react-transition-group": "^4.4.5",
+        "reactflow": "^11.7.0",
+        "sass": "^1.62.1",
+        "tw-elements": "^1.0.0-beta2",
+        "web-vitals": "^3.0.0"
     },
-    "sasslintConfig": "sass-lint.yml"
+    "sasslintConfig": "sass-lint.yml",
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
 }

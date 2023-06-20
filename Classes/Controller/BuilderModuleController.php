@@ -49,7 +49,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class BuilderModuleController extends ActionController
 {
-
     public function __construct(
         FileGenerator $fileGenerator,
         IconFactory $iconFactory,
@@ -300,7 +299,6 @@ class BuilderModuleController extends ActionController
         $buttonBar->addButton($helpButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);
     }
 
-
     protected function getLanguageService(): LanguageService
     {
         return $GLOBALS['LANG'];
@@ -308,63 +306,27 @@ class BuilderModuleController extends ActionController
 
     protected function addAssets(): void
     {
-        // SECTION: JAVASCRIPT FILES
+        $assetManifest = json_decode(file_get_contents(__DIR__ . '/../../.Build/asset-manifest.json'), true);
+        $files = $assetManifest['files']; // adjust this based on the structure of your manifest file
 
-        // extended fields for enabling unique ids
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extended/ListField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extended/Group.js');
+        foreach ($files as $file) {
+            if (str_ends_with($file, '.css')) {
+                $this->pageRenderer->addCssFile(__DIR__ . '../../../.Build' . $file);
+            }
+            if (str_ends_with($file, '.js')) {
+                $this->pageRenderer->addJsFile(__DIR__ . '../../../.Build' . $file);
+            }
+        }
 
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/inputex/WirableField-beta.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Visus.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/StringField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/Textarea.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/SelectField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/EmailField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/UrlField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/CheckBox.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/InPlaceEdit.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/MenuField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/TypeField.js');
-
-        // WireIt
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/WireIt.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/CanvasElement.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Wire.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Terminal.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/DD.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/DDResize.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Container.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/ImageContainer.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Layer.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/inputex/FormContainer-beta.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/LayerMap.js');
-
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/WiringEditor.js');
-
-        // Extbase Modelling definition
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extbaseModeling.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/layout.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extensionProperties.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/modules/modelObject.js');
-
-        // collapsible forms in relations
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/modules/extendedModelObject.js');
-
-        // SECTION: CSS Files
-        // YUI CSS
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/reset-fonts-grids/reset-fonts-grids.css');
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/assets/skins/sam/skin.css');
-
-        // InputEx CSS
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/css/inputEx.css');
-
-        // WireIt CSS
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/css/WireIt.css');
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/css/WireItEditor.css');
-
-        // Custom CSS
         // $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extbaseModeling.css');
         $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/extensionbuilder.css');
+
+        // Load ReactJS
+        $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/Contrib/react.js');
+        $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/Contrib/react-dom.js');
+
+        // Load custom js
+        $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/extensionbuilder.js');
     }
 
     /**

@@ -15,9 +15,6 @@
 
 return [
     'dependencies' => ['core', 'backend'],
-    'tags' => [
-        'backend.contextmenu',
-    ],
     'imports' => [
         '@friendsoftypo3/extension-builder/' => 'EXT:extension_builder/Resources/Public/JavaScript/',
     ],
