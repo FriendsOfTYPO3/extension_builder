@@ -21,6 +21,7 @@ use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use RectorPrefix202306\Tracy\Debugger;
 use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
@@ -34,6 +35,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Load settings from yaml file and from TYPO3_CONF_VARS extConf
@@ -62,7 +64,9 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     }
 
     /**
-     * Wrapper for file_get_contents('php://input')
+     * Parse the request data from the input stream.
+     *
+     * @return void
      */
     public function parseRequest(): void
     {
@@ -473,24 +477,25 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      */
     public function getWiringEditorSmd(ServerRequestInterface $request): JsonResponse
     {
-        $smdJsonString = file_get_contents(
-            ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd'
-        );
-        $smdJson = json_decode($smdJsonString);
-        $parameters = [
-            'tx_extensionbuilder_tools_extensionbuilderextensionbuilder' => [
-                'controller' => 'BuilderModule',
-                'action' => 'dispatchRpc',
-            ]
-        ];
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        try {
-            $uri = $uriBuilder->buildUriFromRoute('tools_ExtensionBuilderExtensionbuilder', $parameters);
-        } catch (RouteNotFoundException $e) {
-            $uri = $uriBuilder->buildUriFromRoutePath('tools_ExtensionBuilderExtensionbuilder', $parameters);
-        }
-        $smdJson->target = (string)$uri;
+        DebuggerUtility::var_dump("test");
+        // $smdJsonString = file_get_contents(
+        //     ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd'
+        // );
+        // $smdJson = json_decode($smdJsonString);
+        // $parameters = [
+        //     'tx_extensionbuilder_tools_extensionbuilderextensionbuilder' => [
+        //         'controller' => 'BuilderModule',
+        //         'action' => 'dispatchRpc',
+        //     ]
+        // ];
+        // $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        // try {
+        //     $uri = $uriBuilder->buildUriFromRoute('tools_ExtensionBuilderExtensionbuilder', $parameters);
+        // } catch (RouteNotFoundException $e) {
+        //     $uri = $uriBuilder->buildUriFromRoutePath('tools_ExtensionBuilderExtensionbuilder', $parameters);
+        // }
+        // $smdJson->target = (string)$uri;
 
-        return (new JsonResponse())->setPayload((array)$smdJson);
+        return (new JsonResponse())->setPayload('test');
     }
 }

@@ -132,6 +132,7 @@ class FileGenerator
             $this->roundTripService->initialize($extension);
         }
         if (isset($this->settings['codeTemplateRootPaths.'])) {
+            $settings = $this->settings;
             $this->codeTemplateRootPaths = $this->settings['codeTemplateRootPaths.'];
         } else {
             throw new Exception('No codeTemplateRootPath configured');

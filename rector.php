@@ -17,11 +17,21 @@ return static function (RectorConfig $rectorConfig): void {
 
     // define sets of rules
     $rectorConfig->sets([
-        LevelSetList::UP_TO_PHP_81,
         Typo3SetList::TYPO3_12,
         Typo3SetList::TYPOSCRIPT_120,
         Typo3SetList::TYPOSCRIPT_CONDITIONS_104,
+        LevelSetList::UP_TO_PHP_82,
+        Typo3SetList::TCA_120,
+        Typo3SetList::DATABASE_TO_DBAL,
+        Typo3SetList::EXTBASE_COMMAND_CONTROLLERS_TO_SYMFONY_COMMANDS,
+        Typo3SetList::REGISTER_ICONS_TO_ICON,
         SetList::CODE_QUALITY,
-        SetList::DEAD_CODE,
+        // SetList::CODING_STYLE,
+        // SetList::DEAD_CODE,
+        // SetList::EARLY_RETURN,
+        // SetList::NAMING,
+        // SetList::PRIVATIZATION,
+        // SetList::PSR_4,
+        // SetList::TYPE_DECLARATION,
     ]);
 };

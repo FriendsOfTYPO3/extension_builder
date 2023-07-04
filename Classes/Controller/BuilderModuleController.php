@@ -307,26 +307,17 @@ class BuilderModuleController extends ActionController
 
     protected function addAssets(): void
     {
-        $assetManifest = json_decode(file_get_contents(__DIR__ . '/../../.Build/asset-manifest.json'), true);
-        $files = $assetManifest['files']; // adjust this based on the structure of your manifest file
 
-        foreach ($files as $file) {
-            if (str_ends_with($file, '.css')) {
-                $this->pageRenderer->addCssFile(__DIR__ . '../../../.Build' . $file);
-            }
-            if (str_ends_with($file, '.js')) {
-                $this->pageRenderer->addJsFile(__DIR__ . '../../../.Build' . $file);
-            }
-        }
-
-        // $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extbaseModeling.css');
         $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/extensionbuilder.css');
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/main.css');
 
-        // Load ReactJS
-        $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/Contrib/react.js');
-        $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/Contrib/react-dom.js');
+        // Load ReactJS -> not needed at the moment because it is shipped inside the bundled JS
+        // $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/Contrib/react.js');
+        // $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/Contrib/react-dom.js');
 
         // Load custom js
+        $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/main.js');
+        $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/496.chunk.js');
         $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/extensionbuilder.js');
     }
 

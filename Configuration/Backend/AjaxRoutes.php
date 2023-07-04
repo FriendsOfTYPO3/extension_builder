@@ -1,10 +1,15 @@
 <?php
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
+use EBT\ExtensionBuilder\Controller\BuilderModuleController;
 
 return [
-    'ExtensionBuilder::wiringEditorSmdEndpoint' => [
+    'eb_wiringEditorSmdEndpoint' => [
         'path' => '/extensionBuilder/wireEditor',
         'target' => ExtensionBuilderConfigurationManager::class . '::getWiringEditorSmd'
+    ],
+    'eb_dispatchRpcAction' => [
+        'path' => '/extensionBuilder/dispatchRpcAction',
+        'target' => BuilderModuleController::class . '::dispatchRpcAction'
     ],
 ];

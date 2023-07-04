@@ -1,6 +1,8 @@
 <?php
 
 use EBT\ExtensionBuilder\Controller\BuilderModuleController;
+use TYPO3\CMS\Backend\Security\SudoMode\Access\AccessLifetime;
+
 return [
     'web_ExtensionBuilder' => [
         'parent' => 'tools',
@@ -17,6 +19,12 @@ return [
                 'index',
                 'help',
                 'dispatchRpc'
+            ],
+        ],
+        'routeOptions' => [
+            'sudoMode' => [
+                'group' => 'systemMaintainer',
+                'lifetime' => AccessLifetime::veryShort,
             ],
         ],
     ],

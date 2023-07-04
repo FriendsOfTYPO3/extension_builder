@@ -1,6 +1,45 @@
 console.log("Hello from extensionbuilder.js");
 
 import Notification from '@typo3/backend/notification.js';
+import AjaxRequest from "@typo3/core/ajax/ajax-request.js";
+
+const handleSaveButton = () => {
+  console.log("Close button clicked");
+  displayRandomNotification();
+
+  // {"id":4,"method":"saveWiring","params":{"language":"extbaseModeling","name":"test","working":"{\"modules\":[],\"properties\":{\"backendModules\":[],\"description\":\"\",\"emConf\":{\"category\":\"plugin\",\"custom_category\":\"\",\"dependsOn\":\"typo3 => 11.5.0-11.5.99\\n\",\"disableLocalization\":false,\"disableVersioning\":false,\"generateDocumentationTemplate\":false,\"generateEditorConfig\":false,\"generateEmptyGitRepository\":false,\"sourceLanguage\":\"en\",\"state\":\"alpha\",\"targetVersion\":\"11.5.0-11.5.99\",\"version\":\"1.0.0\"},\"extensionKey\":\"asdfasdf\",\"name\":\"test\",\"originalExtensionKey\":\"\",\"originalVendorName\":\"\",\"persons\":[],\"plugins\":[],\"vendorName\":\"Asdfa\"},\"wires\":[]}"},"version":"json-rpc-2.0"}
+  let request = JSON.stringify({key1: 'value1', key2: 'value2'});
+
+  let payload = {
+    "id": 4,
+    "method": "saveWiring",
+    "params": {
+      "language": "extbaseModeling",
+      "name": "test",
+      "working": "{\"modules\":[],\"properties\":{\"backendModules\":[],\"description\":\"\",\"emConf\":{\"category\":\"plugin\",\"custom_category\":\"\",\"dependsOn\":\"typo3 => 11.5.0-11.5.99\\n\",\"disableLocalization\":false,\"disableVersioning\":false,\"generateDocumentationTemplate\":false,\"generateEditorConfig\":false,\"generateEmptyGitRepository\":false,\"sourceLanguage\":\"en\",\"state\":\"alpha\",\"targetVersion\":\"11.5.0-11.5.99\",\"version\":\"1.0.0\"},\"extensionKey\":\"Test111\",\"name\":\"test\",\"originalExtensionKey\":\"\",\"originalVendorName\":\"\",\"persons\":[],\"plugins\":[],\"vendorName\":\"Asdfa\"},\"wires\":[]}"
+    },
+    "version": "json-rpc-2.0"
+  };
+
+  // console.log(TYPO3.settings.ajaxUrls);
+  new AjaxRequest(TYPO3.settings.ajaxUrls.eb_dispatchRpcAction)
+  // new AjaxRequest('https://httpbin.org/json')
+  .post(JSON.stringify(payload))
+  .headers({
+    'Content-Type': 'application/json',
+  })
+  .then(async function (response) {
+    console.log("Response from ajax request:");
+    console.log(response);
+  })
+    .catch(function (error) {
+        console.log("Error from ajax request:");
+        console.log(error);
+    });
+}
+const saveButton = document.querySelector('#eb-btn-save');
+saveButton.addEventListener('click', handleSaveButton);
+
 
 // Array of funny texts
 const funnyTexts = [
