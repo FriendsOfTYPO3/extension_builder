@@ -293,7 +293,8 @@ class BuilderModuleController extends ActionController
             ->setIcon($this->iconFactory->getIcon('module-help', Icon::SIZE_SMALL))
             ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:showHelp'))
             ->setId('showHelp')
-            ->setHref($this->uriBuilder->uriFor('help'))
+            // ->setHref($this->uriBuilder->uriFor('help'))
+            ->setHref('#')
             ->setShowLabelText(true);
 
         $buttonBar->addButton($helpButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);
