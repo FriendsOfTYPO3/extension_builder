@@ -124,6 +124,8 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         $settings['extConf'] = $this->getExtensionBuilderSettings();
         if (empty($settings['publicResourcesPath'])) {
             $settings['publicResourcesPath'] = ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/';
+            $settings['codeTemplateRootPaths'][] = ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Extbase/';
+            $settings['codeTemplatePartialPaths'][] = ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/Partials/';
         }
         return $settings;
     }

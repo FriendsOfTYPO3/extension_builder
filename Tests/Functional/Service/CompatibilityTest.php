@@ -65,10 +65,10 @@ class CompatibilityTest extends BaseFunctionalTest
         }
         $this->extension = $extensionSchemaBuilder->build($extensionConfigurationJSON);
         $this->fileGenerator->setSettings([
-            'codeTemplateRootPaths.' => [
+            'codeTemplateRootPaths' => [
                 Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/'
             ],
-            'codeTemplatePartialPaths.' => [
+            'codeTemplatePartialPaths' => [
                 Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials'
             ],
             'extConf' => [

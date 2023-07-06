@@ -645,10 +645,10 @@ class Extension
             'authors' => [],
             'license' => 'GPL-2.0-or-later',
             'require' => [
-                'typo3/cms-core' => '^11.5'
+                'typo3/cms-core' => '^12.4'
             ],
             'require-dev' => [
-                'typo3/testing-framework' => '^6.9.0'
+                'typo3/testing-framework' => '^8.0'
             ],
             'autoload' => [
                 'psr-4' => [

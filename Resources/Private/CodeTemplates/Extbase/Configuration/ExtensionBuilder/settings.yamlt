@@ -46,37 +46,37 @@ overwriteSettings:
       Repository: merge
 
   Configuration:
-    #TCA merge not possible - use overrides directory
-    #TypoScript: keep
+    # TCA merge not possible - use overrides directory
+    # TypoScript: keep
 
   Resources:
     Private:
-      #Language: merge
-      #Layouts: keep
-      #Partials: keep
-      #Templates: keep
+      # Language: merge
+      # Layouts: keep
+      # Partials: keep
+      # Templates: keep
       Backend:
-        #Layouts: keep
-        #Partials: keep
-        #Templates: keep
+        # Layouts: keep
+        # Partials: keep
+        # Templates: keep
 
   user_extension.svg: keep
-#  ext_localconf.php: merge
-#  ext_tables.php: merge
-#  ext_tables.sql: merge
+  # ext_localconf.php: merge
+  # ext_tables.php: merge
+  # ext_tables.sql: merge
 
 ## add declare strict types in php files
 declareStrictTypes: true
 
 ## use static date attribute in xliff files
-#staticDateInXliffFiles: '{f:format.date(format:'Y-m-d\TH:i:s\Z',date:'now')}'
+# staticDateInXliffFiles: '{f:format.date(format:'Y-m-d\TH:i:s\Z',date:'now')}'
 
 ## skip docComment (license header)
-#skipDocComment: false
+# skipDocComment: false
 
 ## list of error codes for warnings that should be ignored
-#ignoreWarnings:
-  #503
+# ignoreWarnings:
+  # 503
 
 #############  settings for classBuilder  #######################
 #

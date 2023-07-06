@@ -3,43 +3,71 @@ console.log("Hello from extensionbuilder.js");
 import Notification from '@typo3/backend/notification.js';
 import AjaxRequest from "@typo3/core/ajax/ajax-request.js";
 
-const handleSaveButton = () => {
-  console.log("Close button clicked");
-  displayRandomNotification();
+// const handleSaveButton = () => {
+//   let payload = {
+//     "id": 4,
+//     "method": "saveWiring",
+//     "params": {
+//       "language": "extbaseModeling",
+//       "name": "Name",
+//       "working": {
+//         "modules": [],
+//         "properties": {
+//           "backendModules": [],
+//           "description": "Dies ist eine BEschreibung",
+//           "emConf": {
+//             "category": "plugin",
+//             "custom_category": "",
+//             "dependsOn": "typo3 => 11.5.0-11.5.99\n",
+//             "disableLocalization": true,
+//             "disableVersioning": true,
+//             "generateDocumentationTemplate": true,
+//             "generateEditorConfig": true,
+//             "generateEmptyGitRepository": true,
+//             "sourceLanguage": "en",
+//             "state": "stable",
+//             "targetVersion": "12.4.0-12.4.99",
+//             "version": "1.0.0"
+//           },
+//           "extensionKey": "keeeey",
+//           "name": "test",
+//           "originalExtensionKey": "",
+//           "originalVendorName": "",
+//           "persons": [],
+//           "plugins": [],
+//           "vendorName": "Treupo"
+//         },
+//         "wires": []
+//       }
+//     },
+//     "version": "json-rpc-2.0"
+//   };
+//
+//   // "/typo3/ajax/extensionBuilder/dispatchRpcAction?token=2a99be62cb4753527b6ee62238a35ec4de0b991e"
+//   // "/typo3/ajax/extensionBuilder/dispatchRpcAction?token=2a99be62cb4753527b6ee62238a35ec4de0b991e"
+//   console.log(TYPO3.settings.ajaxUrls);
+//
+//   new AjaxRequest(TYPO3.settings.ajaxUrls.eb_dispatchRpcAction)
+//       .post(JSON.stringify(payload), {
+//         headers: {
+//           'Content-Type': 'application/json',
+//           "X-Requested-With": "XMLHttpRequest"
+//         }}
+//       )
+//       .then(async function (response) {
+//         Notification.success("Success", response.resolve().result);
+//       })
+//       .catch(function (error) {
+//         console.log(error);
+//         Notification.error("Error", "Your extension could not be saved.");
+//       });
+// }
 
-  // {"id":4,"method":"saveWiring","params":{"language":"extbaseModeling","name":"test","working":"{\"modules\":[],\"properties\":{\"backendModules\":[],\"description\":\"\",\"emConf\":{\"category\":\"plugin\",\"custom_category\":\"\",\"dependsOn\":\"typo3 => 11.5.0-11.5.99\\n\",\"disableLocalization\":false,\"disableVersioning\":false,\"generateDocumentationTemplate\":false,\"generateEditorConfig\":false,\"generateEmptyGitRepository\":false,\"sourceLanguage\":\"en\",\"state\":\"alpha\",\"targetVersion\":\"11.5.0-11.5.99\",\"version\":\"1.0.0\"},\"extensionKey\":\"asdfasdf\",\"name\":\"test\",\"originalExtensionKey\":\"\",\"originalVendorName\":\"\",\"persons\":[],\"plugins\":[],\"vendorName\":\"Asdfa\"},\"wires\":[]}"},"version":"json-rpc-2.0"}
-  let request = JSON.stringify({key1: 'value1', key2: 'value2'});
+// const saveButton = document.querySelector('#eb-btn-save');
+// saveButton.addEventListener('click', handleSaveButton);
 
-  let payload = {
-    "id": 4,
-    "method": "saveWiring",
-    "params": {
-      "language": "extbaseModeling",
-      "name": "test",
-      "working": "{\"modules\":[],\"properties\":{\"backendModules\":[],\"description\":\"\",\"emConf\":{\"category\":\"plugin\",\"custom_category\":\"\",\"dependsOn\":\"typo3 => 11.5.0-11.5.99\\n\",\"disableLocalization\":false,\"disableVersioning\":false,\"generateDocumentationTemplate\":false,\"generateEditorConfig\":false,\"generateEmptyGitRepository\":false,\"sourceLanguage\":\"en\",\"state\":\"alpha\",\"targetVersion\":\"11.5.0-11.5.99\",\"version\":\"1.0.0\"},\"extensionKey\":\"Test111\",\"name\":\"test\",\"originalExtensionKey\":\"\",\"originalVendorName\":\"\",\"persons\":[],\"plugins\":[],\"vendorName\":\"Asdfa\"},\"wires\":[]}"
-    },
-    "version": "json-rpc-2.0"
-  };
-
-  // console.log(TYPO3.settings.ajaxUrls);
-  new AjaxRequest(TYPO3.settings.ajaxUrls.eb_dispatchRpcAction)
-  // new AjaxRequest('https://httpbin.org/json')
-  .post(JSON.stringify(payload))
-  .headers({
-    'Content-Type': 'application/json',
-  })
-  .then(async function (response) {
-    console.log("Response from ajax request:");
-    console.log(response);
-  })
-    .catch(function (error) {
-        console.log("Error from ajax request:");
-        console.log(error);
-    });
-}
-const saveButton = document.querySelector('#eb-btn-save');
-saveButton.addEventListener('click', handleSaveButton);
-
+// const saveExtensionButton = document.querySelector('#saveExtension-button');
+// saveExtensionButton.addEventListener('click', handleSaveButton);
 
 // Array of funny texts
 const funnyTexts = [
@@ -81,9 +109,6 @@ const displayRandomNotification = () => {
   Notification.warning(randomTitle, randomText);
 };
 
-const saveExtensionButton = document.querySelector('#saveExtension-button');
-saveExtensionButton.addEventListener('click', displayRandomNotification);
-
 const newExtensionButton = document.querySelector('#newExtension-button');
 newExtensionButton.addEventListener('click', displayRandomNotification);
 
@@ -95,4 +120,3 @@ showHelpButton.addEventListener('click', displayRandomNotification);
 
 const toggleAdvancedOptionsButton = document.querySelector('#toggleAdvancedOptions');
 toggleAdvancedOptionsButton.addEventListener('click', displayRandomNotification);
-

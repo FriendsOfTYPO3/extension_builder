@@ -131,14 +131,13 @@ class FileGenerator
             $this->roundTripEnabled = true;
             $this->roundTripService->initialize($extension);
         }
-        if (isset($this->settings['codeTemplateRootPaths.'])) {
-            $settings = $this->settings;
-            $this->codeTemplateRootPaths = $this->settings['codeTemplateRootPaths.'];
+        if (isset($this->settings['codeTemplateRootPaths'])) {
+            $this->codeTemplateRootPaths = $this->settings['codeTemplateRootPaths'];
         } else {
             throw new Exception('No codeTemplateRootPath configured');
         }
-        if (isset($this->settings['codeTemplatePartialPaths.'])) {
-            $this->codeTemplatePartialPaths = $this->settings['codeTemplatePartialPaths.'];
+        if (isset($this->settings['codeTemplatePartialPaths'])) {
+            $this->codeTemplatePartialPaths = $this->settings['codeTemplatePartialPaths'];
         } else {
             throw new Exception('No codeTemplatePartialPaths configured');
         }

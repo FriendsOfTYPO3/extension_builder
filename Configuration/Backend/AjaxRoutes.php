@@ -12,4 +12,8 @@ return [
         'path' => '/extensionBuilder/dispatchRpcAction',
         'target' => BuilderModuleController::class . '::dispatchRpcAction'
     ],
+    'eb_ajaxTesting' => [
+        'path' => '/extensionBuilder/ajaxTesting',
+        'target' => BuilderModuleController::class . '::ajaxTestingAction'
+    ],
 ];

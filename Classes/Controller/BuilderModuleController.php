@@ -27,7 +27,9 @@ use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Template\Components\Buttons\LinkButtonWithId;
 use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
+use JsonException;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
@@ -308,8 +310,10 @@ class BuilderModuleController extends ActionController
     protected function addAssets(): void
     {
 
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/extensionbuilder.css');
+        // Load sources for react js app
+        // $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/Sources/App.js');
         $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/main.css');
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/extensionbuilder.css');
 
         // Load ReactJS -> not needed at the moment because it is shipped inside the bundled JS
         // $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/Contrib/react.js');
@@ -353,9 +357,21 @@ class BuilderModuleController extends ActionController
      * Main entry point for the buttons in the Javascript frontend.
      *
      * @return ResponseInterface json encoded array
+     * @throws JsonException
      */
-    public function dispatchRpcAction(): ResponseInterface
+    public function dispatchRpcAction(ServerRequestInterface $request): ResponseInterface
     {
+        $this->fileGenerator->setSettings($this->extensionBuilderSettings);
+
+        $data = $request->getQueryParams()['input'] ?? null;
+        $response = $this->responseFactory->createResponse()
+            ->withHeader('Content-Type', 'application/json; charset=utf-8');
+        $response->getBody()->write(json_encode(['result' => json_encode($data)], JSON_THROW_ON_ERROR));
+        // add status code to response
+        // return $response;
+
+
+
         try {
             $this->extensionBuilderConfigurationManager->parseRequest();
             $subAction = $this->extensionBuilderConfigurationManager->getSubActionFromRequest();
@@ -377,8 +393,36 @@ class BuilderModuleController extends ActionController
             }
         } catch (\Exception $e) {
             $response = ['error' => $e->getMessage()];
+            // $response = $response->withStatus(404);
         }
+
+        // $response = $response->withStatus(200);
         return $this->jsonResponse(json_encode($response));
+
+
+        /*
+
+        if ($input === null) {
+            throw new \InvalidArgumentException('Please provide a number', 1580585107);
+        }
+
+        $result = $input ** 2;
+
+        $response = $this->responseFactory->createResponse()
+            ->withHeader('Content-Type', 'application/json; charset=utf-8');
+        $response->getBody()->write(json_encode(['result' => $result], JSON_THROW_ON_ERROR));
+        // add status code to response
+        $response = $response->withStatus(500);
+        return $response;
+         */
+        // return Response with success message
+        // return $this->jsonResponse(json_encode(['error' => 'Action dispatched.'], 300));
+// our previous computation
+        // $response = $this->responseFactory->createResponse()->withHeader('Content-Type', 'application/json; charset=utf-8');
+        // $response->getBody()->write(json_encode(['result' => 'test'], JSON_THROW_ON_ERROR));
+        // return $response;
+
+
     }
 
 
@@ -468,7 +512,7 @@ class BuilderModuleController extends ActionController
                     // this would result in a total overwrite so we create one and give a warning
                     $this->extensionBuilderConfigurationManager->createInitialSettingsFile(
                         $extension,
-                        $this->extensionBuilderSettings['codeTemplateRootPaths.']
+                        $this->extensionBuilderSettings['codeTemplateRootPaths']
                     );
                     $extensionPath = Environment::isComposerMode() ? 'packages/' : 'typo3conf/ext/';
                     return [
@@ -586,4 +630,21 @@ class BuilderModuleController extends ActionController
     {
         return $GLOBALS['BE_USER'];
     }
+
+    // public function ajaxTestingAction(ServerRequestInterface $request): ResponseInterface
+    // {
+    //     $input = $request->getQueryParams()['input'] ?? null;
+    //     if ($input === null) {
+    //         throw new \InvalidArgumentException('Please provide a number', 1580585107);
+    //     }
+//
+    //     $result = $input ** 2;
+//
+    //     $response = $this->responseFactory->createResponse()
+    //         ->withHeader('Content-Type', 'application/json; charset=utf-8');
+    //     $response->getBody()->write(json_encode(['result' => $result], JSON_THROW_ON_ERROR));
+    //     // add status code to response
+    //     $response = $response->withStatus(500);
+    //     return $response;
+    // }
 }
