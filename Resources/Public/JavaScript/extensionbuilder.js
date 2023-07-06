@@ -63,8 +63,7 @@ import AjaxRequest from "@typo3/core/ajax/ajax-request.js";
 //       });
 // }
 
-// const saveButton = document.querySelector('#eb-btn-save');
-// saveButton.addEventListener('click', handleSaveButton);
+
 
 // const saveExtensionButton = document.querySelector('#saveExtension-button');
 // saveExtensionButton.addEventListener('click', handleSaveButton);
@@ -109,14 +108,23 @@ const displayRandomNotification = () => {
   Notification.warning(randomTitle, randomText);
 };
 
+const handleTopBarButtons = () => {
+  const title = "Das funktioniert so nicht!"
+  const text = "Bitte nutze die Buttons weiter unten, die funktionieren"
+  Notification.error(title, text);
+};
+
 const newExtensionButton = document.querySelector('#newExtension-button');
-newExtensionButton.addEventListener('click', displayRandomNotification);
+newExtensionButton.addEventListener('click', handleTopBarButtons);
 
 const loadExtensionButton = document.querySelector('#loadExtension-button');
-loadExtensionButton.addEventListener('click', displayRandomNotification);
+loadExtensionButton.addEventListener('click', handleTopBarButtons);
 
 const showHelpButton = document.querySelector('#showHelp');
 showHelpButton.addEventListener('click', displayRandomNotification);
 
 const toggleAdvancedOptionsButton = document.querySelector('#toggleAdvancedOptions');
 toggleAdvancedOptionsButton.addEventListener('click', displayRandomNotification);
+
+const saveButton = document.querySelector('#saveExtension-button');
+saveButton.addEventListener('click', handleTopBarButtons);
