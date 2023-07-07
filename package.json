@@ -11,7 +11,7 @@
         "build": "react-scripts build",
         "build-webpack": "webpack",
         "build-webpack-watch": "webpack --watch",
-        "test": "react-scripts test",
+        "test": "npx jest --watch",
         "eject": "react-scripts eject"
     },
     "author": "Philipp Kuhlmay",
@@ -36,6 +36,7 @@
         "node-sass": "^9.0.0",
         "postcss-loader": "^7.3.0",
         "react": "^18.2.0",
+        "react-app-rewired": "^2.2.1",
         "react-dom": "^18.2.0",
         "react-draggable": "^4.4.5",
         "react-scripts": "5.0.1",

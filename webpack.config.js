@@ -12,8 +12,8 @@ module.exports = {
     },
     externals: {},
     output: {
-        libraryTarget: 'amd',
-        path: __dirname + '/Resources/Public/JavaScript/Webpack/',
+        libraryTarget: 'umd',
+        path: __dirname + '/Resources/Public/JavaScript/',
     },
     optimization: {
         minimizer: [
@@ -28,7 +28,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                        presets: ['@babel/preset-env', ["@babel/preset-react", {"runtime": "automatic"}]],
                     },
                 },
             },
@@ -58,4 +58,8 @@ module.exports = {
     resolve: {
         extensions: ['*', '.js', '.jsx'],
     },
+    watchOptions: {
+        poll: true,
+        ignored: '**/node_modules',
+    }
 };

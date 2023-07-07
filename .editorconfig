@@ -19,7 +19,7 @@ indent_size = 4
 # JSON-Files
 [*.json]
 indent_style = space
-indent_size = 200
+indent_size = 4
 
 # ReST-Files
 [{*.rst,*.rstt}]

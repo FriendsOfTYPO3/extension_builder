@@ -81,6 +81,7 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (isset($jsonDomainObject['propertyGroup']['properties'])) {
             foreach ($jsonDomainObject['propertyGroup']['properties'] as $propertyJsonConfiguration) {
                 $propertyType = $propertyJsonConfiguration['propertyType'];
+                // TODO: Check, if this needs to be extended to other types as well
                 if (in_array($propertyType, ['Image', 'File'])
                     && !empty($propertyJsonConfiguration['maxItems'])
                     && $propertyJsonConfiguration['maxItems'] > 1
@@ -219,7 +220,7 @@ class ObjectSchemaBuilder implements SingletonInterface
     public static function buildProperty(array $propertyJsonConfiguration): AbstractProperty
     {
         $propertyType = $propertyJsonConfiguration['propertyType'];
-        $propertyClassName = 'EBT\\ExtensionBuilder\\Domain\Model\\DomainObject\\' . $propertyType . 'Property';
+        $propertyClassName = 'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\' . $propertyType . 'Property';
         if (!class_exists($propertyClassName)) {
             throw new Exception('Property of type ' . $propertyType . ' not found');
         }
@@ -230,11 +231,9 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (isset($propertyJsonConfiguration['propertyDescription'])) {
             $property->setDescription($propertyJsonConfiguration['propertyDescription']);
         }
-
         if ($propertyType === 'File' && !empty($propertyJsonConfiguration['allowedFileTypes'])) {
             $property->setAllowedFileTypes($propertyJsonConfiguration['allowedFileTypes']);
         }
-
         if (isset($propertyJsonConfiguration['propertyIsRequired'])) {
             $property->setRequired($propertyJsonConfiguration['propertyIsRequired']);
         }
