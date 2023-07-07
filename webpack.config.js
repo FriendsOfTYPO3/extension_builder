@@ -7,22 +7,13 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
     mode: 'production',
     entry: {
-        frontend: './Resources/Private/Scss/frontend/frontend.scss',
-        backend: './Resources/Private/Scss/backend/backend.scss',
-        pagelayout: './Resources/Private/Scss/backend/pagelayout.scss',
-        Datatables: './Resources/Private/JavaScript/backend/Datatables.js',
-        MassUpdate: './Resources/Private/JavaScript/backend/MassUpdate.js',
-        SetupWizard: './Resources/Private/JavaScript/backend/SetupWizard.js',
+        backend: './Build/Sources/styles/index.scss',
+        main: './Build/Sources/index.js',
     },
-    externals: {
-        "jquery": "jquery",
-        "bootstrap": "bootstrap",
-        "TYPO3/CMS/Backend/Modal": "TYPO3/CMS/Backend/Modal",
-        "TYPO3/CMS/Backend/Severity": "TYPO3/CMS/Backend/Severity"
-    },
+    externals: {},
     output: {
         libraryTarget: 'amd',
-        path: __dirname + '/Resources/Public/JavaScript',
+        path: __dirname + '/Resources/Public/JavaScript/Webpack/',
     },
     optimization: {
         minimizer: [
@@ -32,29 +23,39 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                    },
+                },
+            },
+            {
                 test: /\.(css|scss)$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    {
-                        loader: "css-loader",
-                        options: {}
-                    },
-                    {
-                        loader: "postcss-loader",
-                        options: {}
-                    },
-                    {
-                        loader: "sass-loader",
-                        options: {}
-                    }
+                    'css-loader',
+                    'postcss-loader',
+                    'sass-loader'
                 ]
-            }
-        ]
+            },
+            {
+                test: /\.(css|scss)$/,
+                use: [
+                    // ...
+                ],
+            },
+        ],
     },
     plugins: [
         new RemoveEmptyScriptsPlugin(),
         new MiniCssExtractPlugin({
             filename: '../Css/[name].min.css',
         })
-    ]
+    ],
+    resolve: {
+        extensions: ['*', '.js', '.jsx'],
+    },
 };
