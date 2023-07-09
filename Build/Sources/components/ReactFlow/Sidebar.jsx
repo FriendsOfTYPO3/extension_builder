@@ -12,7 +12,7 @@ export default (props) => {
             <div className="dndnode custom-model-node" onDragStart={(event) => onDragStart(event, 'customModel')} draggable>
                 New Model Object
             </div>
-{/*            <div className="debug-output">
+            <div className="debug-output">
                 <h5>Debug output</h5>
                 <pre>
                     {JSON.stringify(props.nodes, null, 2)}
@@ -20,7 +20,7 @@ export default (props) => {
                 <pre>
                     {JSON.stringify(props.edges, null, 2)}
                 </pre>
-            </div>*/}
+            </div>
 
             {/*<div className="dndnode" onDragStart={(event) => onDragStart(event, 'default')} draggable>
                 Default Node

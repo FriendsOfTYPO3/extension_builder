@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown, faTrash } from '@fortawesome/free-solid-svg-icons'
+import React from "react";
 
 export const SingleModuleComponent = (props) => {
 
@@ -110,6 +111,8 @@ export const SingleModuleComponent = (props) => {
                 </div>
                 <div className="d-flex module-actions">
                     <button
+                        role="button"
+                        aria-label="Trash"
                         className="btn btn-danger me-auto"
                         onClick={() => {
                             props.removeModuleHandler(props.module.id);
@@ -118,6 +121,8 @@ export const SingleModuleComponent = (props) => {
                         <FontAwesomeIcon icon={faTrash} />
                     </button>
                     <button
+                        role="button"
+                        aria-label="ArrowUp"
                         className="btn btn-info me-1"
                         onClick={() => props.moveModule(props.index, -1)}
                         disabled={props.index === 0}
@@ -125,6 +130,8 @@ export const SingleModuleComponent = (props) => {
                         <FontAwesomeIcon icon={faArrowUp} />
                     </button>
                     <button
+                        role="button"
+                        aria-label="ArrowDown"
                         className="btn btn-info"
                         onClick={() => props.moveModule(props.index, 1)}
                         disabled={props.index === props.modules.length - 1}

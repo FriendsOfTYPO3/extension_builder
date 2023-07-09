@@ -312,7 +312,8 @@ class BuilderModuleController extends ActionController
 
         // Load sources for react js app
         // $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/Sources/App.js');
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/main.css');
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/main.min.css');
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/backend.min.css');
         $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/extensionbuilder.css');
 
         // Load ReactJS -> not needed at the moment because it is shipped inside the bundled JS
@@ -321,7 +322,7 @@ class BuilderModuleController extends ActionController
 
         // Load custom js
         $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/main.js');
-        $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/496.chunk.js');
+        $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/85.js');
         $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/extensionbuilder.js');
     }
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown, faTrash } from '@fortawesome/free-solid-svg-icons'
+import React from "react";
 
 export const SingleAuthorComponent = (props) => {
 
@@ -92,6 +93,7 @@ export const SingleAuthorComponent = (props) => {
             </div>
             <div className="d-flex author-actions">
                 <button
+                    aria-label="Trash"
                     className="btn btn-danger me-auto"
                     onClick={() => {
                         props.removeAuthorHandler(props.author.id);
@@ -100,6 +102,7 @@ export const SingleAuthorComponent = (props) => {
                    <FontAwesomeIcon icon={faTrash} />
                 </button>
                 <button
+                    aria-label="Arrow Up"
                     className="btn btn-info me-1"
                     onClick={() => props.moveAuthor(props.index, -1)}
                     disabled={props.index === 0}
@@ -107,6 +110,7 @@ export const SingleAuthorComponent = (props) => {
                     <FontAwesomeIcon icon={faArrowUp} />
                 </button>
                 <button
+                    aria-label="Arrow Down"
                     className="btn btn-info"
                     onClick={() => props.moveAuthor(props.index, 1)}
                     disabled={props.index === props.authors.length - 1}

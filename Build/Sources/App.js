@@ -197,7 +197,6 @@ const updateModuleHandler = (moduleId, field, value) => {
         });
     }
 
-
     const movePlugin = (index, direction) => {
         setPlugins(prevPlugins => {
             const newPlugins = [...prevPlugins];
@@ -227,7 +226,6 @@ const updateModuleHandler = (moduleId, field, value) => {
                 newModules[targetIndex] = newModules[index];
                 newModules[index] = temp;
             }
-
             return newModules;
         });
     }
@@ -299,11 +297,11 @@ const updateModuleHandler = (moduleId, field, value) => {
                         />
                     </div>
                 </div>
-               {/* <div style={{left: isLeftColumnVisible ? '400px' : '0', width: isLeftColumnVisible ? 'calc(100vw - 400px)' : '100vw'}} id="right-column" className="no-padding full-height">
+               <div style={{left: isLeftColumnVisible ? '400px' : '0', width: isLeftColumnVisible ? 'calc(100vw - 400px)' : '100vw'}} id="right-column" className="no-padding full-height">
                     <div >
                         <RightContentComponent />
                     </div>
-                </div>*/}
+                </div>
             </div>
         </div>
     );

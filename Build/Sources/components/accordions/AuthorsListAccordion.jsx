@@ -1,7 +1,7 @@
 import {Fragment} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {SingleAuthorComponent} from "../SingleComponents/SingleAuthorComponent";
-
+import React from "react";
 
 export const AuthorsListAccordion = (props) => {
     return (
