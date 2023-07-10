@@ -64,7 +64,7 @@ export const CustomModelNode = (props) => {
         <div className="custom-model-node">
             <div className="drag-handle"></div>
             <div className="custom-model-node__header">
-                <input type="text" name="nodeTitle" placeholder={props.data.label}
+                <input type="text" name="nodeTitle" placeholder="Node title"
                     onChange={(e) => {
                         updateProperty("label", e.target.value);
                     }}

@@ -1,8 +1,9 @@
 import axios from "axios";
-import {useState} from "react";
+import React, {useState} from "react";
 import {Error} from "./errors/Error";
 import {Success} from "./errors/Success";
 import {BootstrapModal} from "./modals/BootstrapModal";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export const ActionButtonsComponent = (props) => {
     const [errors, setErrors] = useState(null);
@@ -92,18 +93,26 @@ export const ActionButtonsComponent = (props) => {
 
 	return (
 		<div className="mb-2">
+            <div className="btn-group w-100" role="group" aria-label="Basic example">
+                <button
+                    type="button"
+                    className="btn btn-success"
+                    id="eb-btn-save"
+                    onClick={handleSave}
+                ><FontAwesomeIcon className="me-1" icon="fa-solid fa-save" />Save</button>
+                <button
+                    type="button"
+                    className="btn btn-light text-dark"
+                    id="eb-btn-save"
+                ><FontAwesomeIcon className="me-1" icon="fa-solid fa-folder" />Open</button>
+            </div>
 {/*            <button
                 type="button"
                 className="btn btn-secondary me-2"
                 id="eb-btn-demo"
                 onClick={handleDemoInput}
             >Demo Input</button>*/}
-            <button
-                type="button"
-                className="btn btn-success me-2"
-                id="eb-btn-save"
-                onClick={handleSave}
-            >Save</button>
+
 {/*            <button
                 type="button"
                 className="btn btn-danger"
