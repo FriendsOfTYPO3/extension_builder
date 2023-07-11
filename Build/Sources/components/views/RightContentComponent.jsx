@@ -1,9 +1,9 @@
 import {ReactFlowComponent} from "../ReactFlow/ReactFlowComponent";
 
-export const RightContentComponent = () => {
+export const RightContentComponent = (props) => {
     return (
         <ReactFlowComponent
-
+            {...props}
        />
     )
 }

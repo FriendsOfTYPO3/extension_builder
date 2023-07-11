@@ -102,7 +102,6 @@ export const ReactFlowComponent = (props) => {
                     actionDelete: false,
                 },
                 customActions: [
-
                 ],
                 properties: [],
                 relations: [],

@@ -9,6 +9,14 @@ const initialNodes = [];
 const initialEdges = [];
 
 function App() {
+    // Nodes for ReactFlow
+    const [nodes, setNodes] = useState([]);
+
+    const onNodesChanged = (nodes) => {
+        // Dont use prev
+        setNodes(nodes);
+    }
+
     // Zustand für das Ein- und Ausklappen der linken Spalte
     const [isLeftColumnVisible, setLeftColumnVisible] = useState(true);
 
@@ -142,22 +150,22 @@ const updatePluginHandler = (pluginId, field, value) => {
     });
 }
 
-const updateModuleHandler = (moduleId, field, value) => {
-    setModules((prevModules) => {
-        return prevModules.map((module) => {
-            if (module.id === moduleId) {
-                if (field.includes('.')) {
-                    const [parentKey, childKey] = field.split('.');
-                    return {...module, [parentKey]: {...module[parentKey], [childKey]: value}};
+    const updateModuleHandler = (moduleId, field, value) => {
+        setModules((prevModules) => {
+            return prevModules.map((module) => {
+                if (module.id === moduleId) {
+                    if (field.includes('.')) {
+                        const [parentKey, childKey] = field.split('.');
+                        return {...module, [parentKey]: {...module[parentKey], [childKey]: value}};
+                    } else {
+                        return {...module, [field]: value};
+                    }
                 } else {
-                    return {...module, [field]: value};
+                    return module;
                 }
-            } else {
-                return module;
-            }
+            });
         });
-    });
-}
+    }
 
     const removeAuthorHandler = (authorId) => {
         // TODO Testen !!!
@@ -280,6 +288,7 @@ const updateModuleHandler = (moduleId, field, value) => {
                             authors={authors}
                             plugins={plugins}
                             modules={modules}
+                            nodes={nodes}
                             addNewAuthorHandler={addNewAuthorHandler}
                             addNewModuleHandler={addNewModuleHandler}
                             addNewPluginHandler={addNewPluginHandler}
@@ -299,7 +308,9 @@ const updateModuleHandler = (moduleId, field, value) => {
                 </div>
                <div style={{left: isLeftColumnVisible ? '400px' : '0', width: isLeftColumnVisible ? 'calc(100vw - 400px)' : '100vw'}} id="right-column" className="no-padding full-height">
                     <div >
-                        <RightContentComponent />
+                        <RightContentComponent
+                            onNodesChanged={onNodesChanged}
+                        />
                     </div>
                 </div>
             </div>

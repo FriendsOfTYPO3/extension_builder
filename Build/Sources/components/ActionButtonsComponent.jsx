@@ -19,8 +19,82 @@ export const ActionButtonsComponent = (props) => {
         console.log(props);
         console.log("----------")
 
+        // modules => nodes from react flow
+        let modules = [];
+
+        // For each props.nodes, create a module object
+        props.nodes.forEach((node) => {
+            console.log("Node");
+            console.log(node);
+            let customActions = [];
+            node.data.customActions.map((action) => {
+                customActions.push(action);
+            });
+            console.log("Custom Actions");
+            console.log(customActions);
+
+            let module = {
+                "config": {
+                    "position": [
+                        node.position.x,
+                        node.position.y
+                    ]
+                },
+                "name": node.data.label,
+                "value": {
+                    "actionGroup": {
+                        "_default0_index": node.data.actions.actionIndex,
+                        "_default1_list": node.data.actions.actionList,
+                        "_default2_show": node.data.actions.actionShow,
+                        "_default3_new_create": node.data.actions.actionNewCreate,
+                        "_default4_edit_update": node.data.actions.actionEditUpdate,
+                        "_default5_delete": node.data.actions.actionDelete,
+                        "customActions": customActions
+                    },
+                    "name": node.data.label,
+                    "objectsettings": {
+                        "addDeletedField": node.data.addDeletedField,
+                        "addHiddenField": node.data.addHiddenField,
+                        "addStarttimeEndtimeFields": node.data.addStarttimeEndtimeFields,
+                        "aggregateRoot": node.data.isAggregateRoot,
+                        "categorizable": node.data.enableCategorization,
+                        "description": node.data.description,
+                        "mapToTable": node.data.mapToExistingTable,
+                        "parentClass": node.data.extendExistingModelClass,
+                        "sorting": node.data.enableSorting,
+                        "type": "Entity",
+                        "uid": "1173301976935"
+                    },
+                    "propertyGroup": {
+                        "properties": [
+                            {
+                                "allowedFileTypes": "",
+                                "maxItems": "1",
+                                "propertyDescription": "",
+                                "propertyIsExcludeField": true,
+                                "propertyIsL10nModeExclude": false,
+                                "propertyIsNullable": false,
+                                "propertyIsRequired": false,
+                                "propertyName": "titel",
+                                "propertyType": "String",
+                                "uid": "1357067104948"
+                            }
+                        ]
+                    },
+                    "relationGroup": {
+                        "relations": []
+                    }
+                }
+            };
+            modules.push(module);
+        });
+
+        console.log("-Nodes-")
+        console.log(props.nodes);
+        console.log("-Nodes END-")
+
         let working = {
-            "modules": [],
+            "modules": modules,
             "properties": {
                 "backendModules": props.modules,
                 "description": props.properties.description || "",
@@ -30,9 +104,9 @@ export const ActionButtonsComponent = (props) => {
                     "dependsOn": props.properties.emConf.dependsOn || "",
                     "disableLocalization": props.properties.emConf.disableLocalization || false,
                     "disableVersioning": props.properties.emConf.disableVersioning || false,
-                    "generateDocumentationTemplate": props.properties.emConf.generateDocumentationTemplate || true,
-                    "generateEditorConfig": props.properties.emConf.generateEditorConfig || true,
-                    "generateEmptyGitRepository": props.properties.emConf.generateEmptyGitRepository || true,
+                    "generateDocumentationTemplate": props.properties.emConf.generateDocumentationTemplate || false,
+                    "generateEditorConfig": props.properties.emConf.generateEditorConfig || false,
+                    "generateEmptyGitRepository": props.properties.emConf.generateEmptyGitRepository || false,
                     "sourceLanguage": props.properties.emConf.sourceLanguage || "en",
                     "state": props.properties.emConf.state || "alpha",
                     "targetVersion": `${props.properties.emConf.targetVersion}.0-${props.properties.emConf.targetVersion}.99` || "12.4.0",
@@ -61,6 +135,7 @@ export const ActionButtonsComponent = (props) => {
         };
         console.log("----------")
         console.log("payload");
+        console.log(payload);
         console.log("----------")
 
         // TYPO3 will be available in the global scope
@@ -74,8 +149,12 @@ export const ActionButtonsComponent = (props) => {
             .then(function (response) {
                 console.log("Successfull saved");
                 console.log(response.data.success);
+                if(response.data.success === null || response.data.success === undefined) {
+                    top.TYPO3.Modal.confirm('Successfull saved but ...', '... Something went wrong on server side');
+                } else {
+                    top.TYPO3.Modal.confirm('Successfull saved', response.data.success);
+                }
                 // eslint-disable-next-line no-restricted-globals,no-undef
-                top.TYPO3.Modal.confirm('Successfull saved', response.data.success);
                 setSuccess(response);
             })
             .catch(function (error) {
@@ -106,18 +185,6 @@ export const ActionButtonsComponent = (props) => {
                     id="eb-btn-save"
                 ><FontAwesomeIcon className="me-1" icon="fa-solid fa-folder" />Open</button>
             </div>
-{/*            <button
-                type="button"
-                className="btn btn-secondary me-2"
-                id="eb-btn-demo"
-                onClick={handleDemoInput}
-            >Demo Input</button>*/}
-
-{/*            <button
-                type="button"
-                className="btn btn-danger"
-                id="eb-btn-close"
-            >Close</button>*/}
         </div>
 	)
 }

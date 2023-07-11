@@ -60,6 +60,11 @@ export const CustomModelNode = (props) => {
         props.data.label = value;
     }
 
+    const updateCustomAction = (index, value) => {
+        props.data.customActions[index] = value;
+        console.log(props.data);
+    }
+
     return (
         <div className="custom-model-node">
             <div className="drag-handle"></div>
@@ -228,10 +233,15 @@ export const CustomModelNode = (props) => {
                         ><FontAwesomeIcon className="font-awesome-icon" icon="fa-solid fa-plus" /></button>
                     </div>
                     {
-                        customActions.map((action) => {
+                        customActions.map((action, index) => {
                             return (
                                 <div className="custom-model-node__action-wrapper">
-                                    <input type="text" name="actionName" placeholder="Action name" />
+                                    <input type="text" name="actionName" placeholder="Action name"
+                                         onChange={(e) => {
+                                             // Store custom Action to props.data.actions.customActions
+                                             updateCustomAction(index, e.target.value);
+                                         }}
+                                    />
                                 </div>
                             )
                         })
