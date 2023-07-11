@@ -292,7 +292,8 @@ class Extension
                 if (strpos($parentClass, '\\') === 0) {
                     $parentClass = substr($parentClass, 1);
                 }
-                if (!is_array($classHierarchy[$parentClass])) {
+                // Check whether the array key exists
+                if (!isset($classHierarchy[$parentClass]) || !is_array($classHierarchy[$parentClass])) {
                     $classHierarchy[$parentClass] = [];
                 }
                 $classHierarchy[$parentClass][] = $domainObject;
