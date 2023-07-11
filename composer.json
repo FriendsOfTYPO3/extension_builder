@@ -67,8 +67,8 @@
 		"prepare-extension-test-structure": [
 			"TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
 		],
-		"unit-tests": "TYPO3_PATH_ROOT=$PWD/.Build/public .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml --stop-on-failure Tests/Unit",
-		"functional-tests": "TYPO3_PATH_ROOT=$PWD/.Build/public typo3DatabaseDriver=pdo_sqlite .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml --stop-on-failure Tests/Functional",
+		"unit-tests": "TYPO3_PATH_ROOT=$PWD/.Build/Web .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml --stop-on-failure Tests/Unit",
+		"functional-tests": "TYPO3_PATH_ROOT=$PWD/.Build/Web typo3DatabaseDriver=pdo_sqlite .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml --stop-on-failure Tests/Functional",
 		"test": [
 			"@test-php-cs-fixer",
 			"@unit-tests",
@@ -81,7 +81,7 @@
 			"extension-key": "extension_builder",
 			"app-dir": ".Build",
 			"ignore-as-root": false,
-			"web-dir": ".Build/public"
+			"web-dir": ".Build/Web"
 		}
 	}
 }
