@@ -1,15 +1,19 @@
-import {Checkbox} from "./input/Checkbox";
-import {InputField} from "./input/InputField";
-import {Textarea} from "./textarea/Textarea";
-import {Select} from "./select/Select";
+import CheckboxComponent from "./input/Checkbox";
+import TextareaComponent from "./textarea/TextareaComponent";
+import SelectComponent from './select/SelectComponent';
+import InputComponent from "./input/InputComponent";
 
 export const FormWrapperComponent = () => {
     return (
         <>
-            <Checkbox />
-            <InputField />
-            <Textarea />
-            <Select />
+            <CheckboxComponent
+                label="Ich akzeptiere die Nutzungsbedingungen"
+                checked={true}
+                onChange={(isChecked) => console.log('Checkbox geändert:', isChecked)}
+            />
+            <InputComponent />
+            <TextareaComponent />
+            <SelectComponent />
         </>
     )
 }

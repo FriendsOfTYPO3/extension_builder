@@ -2,6 +2,9 @@ import { Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown, faTrash } from '@fortawesome/free-solid-svg-icons'
 import React from "react";
+import SelectComponent from "../forms/select/SelectComponent";
+import TextareaComponent from "../forms/textarea/TextareaComponent";
+import InputComponent from "../forms/input/InputComponent";
 
 export const SingleModuleComponent = (props) => {
 
@@ -22,93 +25,62 @@ export const SingleModuleComponent = (props) => {
     return (
         <Fragment>
             <div className="mb-5">
-                <div className="mb-2 input-group">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Module Name"
-                        aria-label="Module Name"
-                        aria-describedby="basic-addon1"
-                        value={props.module.name}
-                        onChange={(e) => {
-                            updateModuleHandler('name', e.target.value);
-                        }}
-                    />
-                    <span className="input-group-text" id="basic-addon1">Name</span>
-                </div>
-                <div className="mb-2 input-group">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Module key"
-                        aria-label="Module key"
-                        aria-describedby="basic-addon1"
-                        value={props.module.key}
-                        onChange={(e) => {
-                            updateModuleHandler('key', e.target.value);
-                        }}
-                    />
-                    <span className="input-group-text" id="basic-addon1">Key</span>
-                </div>
-                <div className="mb-2 input-group">
-                    <textarea
-                        type="text"
-                        className="form-control"
-                        id="exampleFormControlTextarea1"
-                        placeholder="Please enter the description for this module"
-                        value={props.module.description}
-                        onChange={(e) => {
-                            updateModuleHandler('description', e.target.value);
-                        }}
-                        rows="5" />
-                    <span className="input-group-text" id="basic-addon1">Description</span>
-                </div>
-                <div className="mb-2 input-group">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Module tab label"
-                        aria-label="Module tab label"
-                        aria-describedby="basic-addon1"
-                        value={props.module.tabLabel}
-                        onChange={(e) => {
-                            updateModuleHandler('tabLabel', e.target.value);
-                        }}
-                    />
-                    <span className="input-group-text" id="basic-addon1">Label</span>
-                </div>
-                <div className="mb-2 input-group">
-                    <select
-                        className="form-select"
-                        aria-label="Mail module"
-                        onChange={(e) => {
-                            updateModuleHandler('mainModule', e.target.value);
-                        }}
-                    >
-                        <option>Please choose the main module</option>
-                        {
-                            mainModules.map((module, index) => {
-                                return (
-                                    <option key={index} value={module}>{module}</option>
-                                )
-                            })
-                        }
-                    </select>
-                    <span className="input-group-text" id="basic-addon1">Main module</span>
-                </div>
-                <div className="mb-2 input-group">
-                    <textarea
-                        type="text"
-                        className="form-control"
-                        id="exampleFormControlTextarea1"
-                        placeholder="Blog => edit, update, delete"
-                        value={props.module.controllerActionsCachable}
-                        onChange={(e) => {
-                            updateModuleHandler('actions.controllerActionsCachable', e.target.value);
-                        }}
-                        rows="5" />
-                    <span className="input-group-text" id="basic-addon1">Cachable controller actions</span>
-                </div>
+                <InputComponent
+                    label="Name"
+                    type="text"
+                    identifier="name"
+                    validation={{ isRequired: true, minLength: 2 }}
+                    initialValue={props.module.name}
+                    onChange={(value) => {
+                        updateModuleHandler('name', value);
+                    }}
+                />
+                <InputComponent
+                    label="Key"
+                    type="text"
+                    identifier="key"
+                    initialValue={props.module.key}
+                    onChange={(value) => {
+                        updateModuleHandler('key', value);
+                    }}
+                />
+                <TextareaComponent
+                    label="Description"
+                    identifier="description"
+                    initialValue={props.module.description}
+                    onChange={(value) => {
+                        updateModuleHandler('description', value);
+                    }}
+                    placeholder="Description"
+                />
+                <InputComponent
+                    label="Label"
+                    type="text"
+                    identifier="label"
+                    initialValue={props.module.tabLabel}
+                    onChange={(value) => {
+                        updateModuleHandler('tabLabel', value);
+                    }}
+                />
+                <SelectComponent
+                    label="Main module"
+                    initialValue={props.module.mainModule}
+                    identifier="mainModule"
+                    options={mainModules}
+                    defaultValue="Please choose the main module"
+                    onChange={(value) => {
+                        updateModuleHandler('mainModule', value);
+                    }}
+                />
+                <TextareaComponent
+                    placeholder="Blog => edit, update, delete"
+                    label="Cachable controller actions"
+                    identifier="controllerActionsCachable"
+                    initialValue={props.module.controllerActionsCachable}
+                    onChange={(value) => {
+                        updateModuleHandler('actions.controllerActionsCachable', value);
+                    }}
+                />
                 <div className="d-flex module-actions">
                     <button
                         role="button"
@@ -136,7 +108,6 @@ export const SingleModuleComponent = (props) => {
                         onClick={() => props.moveModule(props.index, 1)}
                         disabled={props.index === props.modules.length - 1}
                     >
-
                         <FontAwesomeIcon icon={faArrowDown} />
                     </button>
                 </div>

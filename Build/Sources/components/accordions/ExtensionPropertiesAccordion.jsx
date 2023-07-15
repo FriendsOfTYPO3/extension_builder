@@ -1,22 +1,26 @@
 import {Fragment, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {getExtensionKeyIsValid} from "../../helper";
+import InputComponent from "../forms/input/InputComponent";
+import TextareaComponent from "../forms/textarea/TextareaComponent";
+import SelectComponent from "../forms/select/SelectComponent";
+import CheckboxComponent from "../forms/input/CheckboxComponent";
 
 export const ExtensionPropertiesAccordion = (props) => {
     const [extensionProperties, setExtensionProperties] = useState(props.properties);
     const [isValid, setIsValid] = useState({});
 
     const categoryOptions = [
-        { key: "plugin", value: "Frontend plugins" },
-        { key: "module", value: "Backend modules" },
-        { key: "misc", value: "Miscellaneous" },
-        { key: "be", value: "Backend" },
-        { key: "fe", value: "Frontend" },
-        { key: "services", value: "Service" },
-        { key: "templates", value: "Templates" },
-        { key: "distribution", value: "Distribution" },
-        { key: "example", value: "Examples" },
-        { key: "doc", value: "Documentation" }
+        "plugin",
+        "module",
+        "misc",
+        "be",
+        "fe",
+        "services",
+        "templates",
+        "distribution",
+        "example",
+        "doc"
     ];
 
     const stateOptions = [
@@ -118,233 +122,141 @@ export const ExtensionPropertiesAccordion = (props) => {
                 <div id="panel-properties" className="accordion-collapse collapse show" aria-labelledby="heading-panel-properties"
                      data-bs-parent="#accordion-left-panel">
                     <div className="panel-body">
-                        <div className="mb-2">
-                            <label htmlFor="extensionName"><span className="me-2"><FontAwesomeIcon icon="fa-solid fa-signature" /></span>Extension Name</label>
-                            <input
-                                type="text"
-                                className={`form-control form-control-sm ${isValid['name'] ? 'is-valid' : 'is-invalid'}`}
-                                placeholder="Extension Name"
-                                aria-label="Extension Name"
-                                aria-describedby="basic-addon1"
-                                value={extensionProperties.name}
-                                onChange={(e) => {
-                                    handleValidation('name', e.target.value)
-                                    updateExtensionPropertiesHandler('name', e.target.value);
-                                }}
-                            />
-                            <div id="validationVendorNameFeedback" className="invalid-feedback">
-                                Please select a valid vendor name.
-                            </div>
-                        </div>
-                        <div className="mb-2">
-                            <label htmlFor="extensionVendorName"><span className="me-2"><FontAwesomeIcon icon="fa-solid fa-signature" /></span>Vendor Name</label>
-                            <input
-                                type="text"
-                                className={`form-control form-control-sm ${isValid['vendorName'] ? 'is-valid' : 'is-invalid'}`}
-                                placeholder="Vendor Name"
-                                aria-label="Vendor Name"
-                                aria-describedby="basic-addon1"
-                                value={extensionProperties.emConf.vendorName}
-                                onChange={(e) => {
-                                    handleValidation('vendorName', e.target.value)
-                                    updateExtensionPropertiesHandler('vendorName', e.target.value);
-                                }}
-                            />
-                            <div id="validationVendorNameFeedback" className="invalid-feedback">
-                                Please select a valid vendor name.
-                            </div>
-                        </div>
-                        <div className="mb-2">
-                            <label htmlFor="extensionKey"><span className="me-2"><FontAwesomeIcon icon="fa-solid fa-key" /></span>Extension key</label>
-                            <input
-                                type="text"
-                                className={`form-control form-control-sm ${isValid['extensionKey'] ? 'is-valid' : 'is-invalid'}`}
-                                placeholder="Extension key"
-                                aria-label="Extension key"
-                                aria-describedby="basic-addon1"
-                                value={extensionProperties.extensionKey}
-                                onChange={(e) => {
-                                    handleValidation('extensionKey', e.target.value)
-                                    updateExtensionPropertiesHandler('extensionKey', e.target.value);
-                                }}
-                            />
-                            <div id="validationExtensionKeyFeedback" className="invalid-feedback">
-                                Please select a valid extension key.
-                            </div>
-                        </div>
-                        <div className="mb-2">
-                            <label htmlFor="exampleFormControlTextarea1" className="form-label"><span className="me-2"><FontAwesomeIcon icon="fa-solid fa-question" /></span>Extension Description</label>
-                            <textarea
-                                type="text"
-                                className="form-control form-control-sm"
-                                id="exampleFormControlTextarea1"
-                                placeholder="Please enter the description for this extension"
-                                value={extensionProperties.description}
-                                onChange={(e) => {
-                                    updateExtensionPropertiesHandler('description', e.target.value);
-                                }}
-                                rows="5" />
-                        </div>
-                        <div className="mb-2">
-                            <label htmlFor="extensionCategory">
-                                <span className="me-2">
-                                    <FontAwesomeIcon icon="fa-solid fa-tag" />
-                                </span>Category
-                            </label>
-                            <select
-                                className="form-select"
-                                aria-label="Category"
-                                onChange={(e) => {
-                                    updateExtensionPropertiesHandler('emConf.category', e.target.value);
-                                }}
-                            >
-                                <option>Please choose the category</option>
-                                {
-                                    categoryOptions.map((category, index) => {
-                                        return (
-                                            <option key={index} value={category.key}>{category.value}</option>
-                                        )
-                                    })
-                                }
-                            </select>
-                        </div>
-                        <div className="mb-2">
-                            <label htmlFor="extensionVersion"><span className="me-2"><FontAwesomeIcon icon="fa-solid fa-code-branch" /></span>Extension Version</label>
-                            <input
-                                type="text"
-                                className="form-control form-control-sm"
-                                placeholder="Extension Version"
-                                aria-label="Extension Version"
-                                aria-describedby="basic-addon1"
-                                value={extensionProperties.emConf.version}
-                                onChange={(e) => {
-                                    updateExtensionPropertiesHandler('emConf.version', e.target.value);
-                                }}
-                            />
-                        </div>
-                        <div className="mb-2">
-                            <label htmlFor="extensionState"><span className="me-2"><FontAwesomeIcon icon="fa-solid fa-question" /></span>State</label>
-                            <select
-                                className="form-select"
-                                aria-label="State"
-                                onChange={(e) => {
-                                    updateExtensionPropertiesHandler('emConf.state', e.target.value);
-                                }}
-                            >
-                                <option>Please choose the state</option>
-                                {
-                                    stateOptions.map((state, index) => {
-                                        return (
-                                            <option key={index} value={state}>{state}</option>
-                                        )
-                                    })
-                                }
-                            </select>
-                        </div>
-
-                        <div className="form-check form-switch mb-2">
-                            <label className="form-check-label" htmlFor="extensionDisableVersioning">
-                                Disable versioning
-                            </label>
-                            <input
-                                className="form-check-input"
-                                type="checkbox"
-                                role="switch"
-                                id="extensionDisableVersioning"
-                                checked={props.properties.emConf.disableVersioning}
-                                onChange={(e) => {
-                                    updateExtensionPropertiesHandler('emConf.disableVersioning', e.target.checked);
-                                }}
-                            />
-                        </div>
-                        <div className="form-check form-switch mb-2">
-                            <label className="form-check-label" htmlFor="extensionDisableLocalization">Disable localization</label>
-                            <input className="form-check-input" type="checkbox" role="switch" id="extensionDisableLocalization"
-                                   checked={props.properties.emConf.disableLocalization}
-                                   onChange={(e) => {
-                                       updateExtensionPropertiesHandler('emConf.disableLocalization', e.target.checked);
-                                   }}
-                            />
-                        </div>
-                        <div className="form-check form-switch mb-2">
-                            <label className="form-check-label" htmlFor="extensionGenerateDocumentation">Generate documentation</label>
-                            <input className="form-check-input" type="checkbox" role="switch" id="extensionGenerateDocumentation"
-                                      checked={props.properties.emConf.generateDocumentationTemplate}
-                                   onChange={(e) => {
-                                       updateExtensionPropertiesHandler('emConf.generateDocumentationTemplate', e.target.checked);
-                                   }}
-                            />
-                        </div>
-                        <div className="form-check form-switch mb-2">
-                            <label className="form-check-label" htmlFor="extensionGenerateGitRepository">Generate git repository</label>
-                            <input className="form-check-input" type="checkbox" role="switch" id="extensionGenerateGitRepository"
-                                      checked={props.properties.emConf.generateEmptyGitRepository}
-                                   onChange={(e) => {
-                                       updateExtensionPropertiesHandler('emConf.generateEmptyGitRepository', e.target.checked);
-                                   }}
-                            />
-                        </div>
-                        <div className="form-check form-switch mb-2">
-                            <label className="form-check-label" htmlFor="extensionGenerateEditorconfig">Generate editorconfig</label>
-                            <input className="form-check-input" type="checkbox" role="switch" id="extensionGenerateEditorconfig"
-                                        checked={props.properties.emConf.generateEditorConfig}
-                                   onChange={(e) => {
-                                       updateExtensionPropertiesHandler('emConf.generateEditorConfig', e.target.checked);
-                                   }}
-                            />
-                        </div>
-
-                        <div className="mb-2">
-                            <label htmlFor="extensionSourceLanguageXliffFiles"><span className="me-2"><FontAwesomeIcon icon="fa-solid fa-question" /></span>Source language for xliff files</label>
-                            <input
-                                type="text"
-                                className="form-control form-control-sm"
-                                placeholder="Source language for xliff files"
-                                aria-label="Source language for xliff files"
-                                aria-describedby="basic-addon1"
-                                value={extensionProperties.emConf.sourceLanguage}
-                                onChange={(e) => {
-                                    updateExtensionPropertiesHandler('emConf.sourceLanguage', e.target.value);
-                                }}
-                                disabled
-                            />
-                        </div>
-
-                        <div className="mb-2">
-                            <label htmlFor="extensionTargetTYPO3Versions"><span className="me-2"><FontAwesomeIcon icon="fa-solid fa-question" /></span>Target TYPO3 versions</label>
-                            <select
-                                className="form-select" aria-label="Default select example"
-                                aria-label="Default select example"
-                                onChange={handleTargetTYPO3VersionChange}
-                            >
-                                <option>Please choose the TYPO3 version </option>
-                                {
-                                    targetTYPO3Versions.map((targetTYPO3Version, index) => {
-                                        return (
-                                            <option key={index} value={targetTYPO3Version}>{targetTYPO3Version}</option>
-                                        )
-                                    })
-                                }
-                            </select>
-                        </div>
-                        <div className="mb-2">
-                            <label
-                                htmlFor="exampleFormControlTextarea1"
-                                className="form-label">
-                                <span className="me-2"><FontAwesomeIcon icon="fa-solid fa-question" /></span>
-                                Depends on
-                            </label>
-                            <textarea
-                                type="text"
-                                className="form-control form-control-sm"
-                                id="exampleFormControlTextarea1"
-                                placeholder="typo3 => 12.4.0"
-                                value={extensionProperties.emConf.dependsOn}
-                                onChange={(e) => {
-                                    updateExtensionPropertiesHandler('emConf.dependsOn', e.target.value);
-                                }}
-                                rows="5" />
-                        </div>
+                        <InputComponent
+                            label="Extension name"
+                            initialvalue={extensionProperties.extensionKey}
+                            identifier="extensionName"
+                            validation={{ isRequired: true, minLength: 2 }}
+                            onChange={(value) => {
+                                handleValidation('name', value)
+                                updateExtensionPropertiesHandler('name', value);
+                            }}
+                        />
+                        <InputComponent
+                            label="Vendor Name"
+                            initialvalue={extensionProperties.emConf.vendorName}
+                            identifier="vendorName"
+                            validation={{ isRequired: true, minLength: 2 }}
+                            onChange={(value) => {
+                                handleValidation('vendorName', value)
+                                updateExtensionPropertiesHandler('vendorName', value);
+                            }}
+                        />
+                        <InputComponent
+                            label="Extension key"
+                            initialvalue={extensionProperties.extensionKey}
+                            identifier="extensionKey"
+                            validation={{ isRequired: true, minLength: 5 }}
+                            onChange={(value) => {
+                                handleValidation('extensionKey', value)
+                                updateExtensionPropertiesHandler('extensionKey', value);
+                            }}
+                        />
+                        <TextareaComponent
+                            placeholder={"Please enter the description for this extension"}
+                            label={"Extension Description"}
+                            initialvalue={extensionProperties.description}
+                            identifier={"extensionDescription"}
+                            onChange={(value) => {
+                                updateExtensionPropertiesHandler('description', value);
+                            }}
+                        />
+                        <SelectComponent
+                            label="Category"
+                            initialvalue={extensionProperties.emConf.category}
+                            identifier="extensionCategory"
+                            options={categoryOptions}
+                            defaultValue="Please choose a category"
+                            onChange={(value) => {
+                                updateExtensionPropertiesHandler('emConf.category', value);
+                            }}
+                        />
+                        <InputComponent
+                            label="Extension Version"
+                            initialvalue={extensionProperties.emConf.version}
+                            identifier="extensionVersion"
+                            onChange={(value) => {
+                                updateExtensionPropertiesHandler('emConf.version', value);
+                            }}
+                        />
+                        <SelectComponent
+                            label="State"
+                            initialvalue={extensionProperties.emConf.state}
+                            identifier="extensionState"
+                            options={stateOptions}
+                            defaultValue="Please choose a state"
+                            onChange={(value) => {
+                                updateExtensionPropertiesHandler('emConf.state',value);
+                            }}
+                        />
+                        <CheckboxComponent
+                            label="Disable versioning"
+                            identifier="extensionDisableVersioning"
+                            checked={props.properties.emConf.disableVersioning}
+                            onChange={(value) => {
+                                updateExtensionPropertiesHandler('emConf.disableVersioning', value);
+                            }}
+                        />
+                        <CheckboxComponent
+                            label="Disable localization"
+                            identifier="extensionDisableLocalization"
+                            checked={props.properties.emConf.disableLocalization}
+                            onChange={(value) => {
+                                updateExtensionPropertiesHandler('emConf.disableLocalization', value);
+                            }}
+                        />
+                       <CheckboxComponent
+                            label="Generate documentation"
+                            identifier="extensionGenerateDocumentation"
+                            checked={props.properties.emConf.generateDocumentationTemplate}
+                            onChange={(value) => {
+                                updateExtensionPropertiesHandler('emConf.generateDocumentationTemplate', value);
+                            }}
+                        />
+                        <CheckboxComponent
+                            label="Generate git repository"
+                            identifier="extensionGenerateGitRepository"
+                            checked={props.properties.emConf.generateEmptyGitRepository}
+                            onChange={(value) => {
+                                updateExtensionPropertiesHandler('emConf.generateEmptyGitRepository', value);
+                            }}
+                        />
+                        <CheckboxComponent
+                            label="Generate editorconfig"
+                            identifier="extensionGenerateEditorconfig"
+                            checked={props.properties.emConf.generateEditorConfig}
+                            onChange={(value) => {
+                                updateExtensionPropertiesHandler('emConf.generateEditorConfig', value);
+                            }}
+                        />
+                        <InputComponent
+                            label="Source language for xliff files"
+                            initialvalue={extensionProperties.emConf.sourceLanguage}
+                            identifier="extensionSourceLanguageXliffFiles"
+                            disabled
+                            onChange={(value) => {
+                                updateExtensionPropertiesHandler('emConf.sourceLanguage', value);
+                            }}
+                        />
+                        <SelectComponent
+                            label="Target TYPO3 version"
+                            initialvalue={extensionProperties.emConf.targetVersion}
+                            identifier="extensionTargetTYPO3Version"
+                            options={targetTYPO3Versions}
+                            defaultValue="Please choose a TYPO3 version"
+                            onChange={(value) => {
+                                handleTargetTYPO3VersionChange
+                            }}
+                        />
+                        <TextareaComponent
+                            placeholder={"typo3 => 12.4.0"}
+                            label={"Depends on"}
+                            initialvalue={extensionProperties.emConf.dependsOn}
+                            identifier={"extensionDependsOn"}
+                            onChange={(value) => {
+                                updateExtensionPropertiesHandler('emConf.dependsOn', value);
+                            }}
+                        />
                     </div>
                 </div>
             </div>
