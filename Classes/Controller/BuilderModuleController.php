@@ -371,8 +371,6 @@ class BuilderModuleController extends ActionController
         // add status code to response
         // return $response;
 
-
-
         try {
             $this->extensionBuilderConfigurationManager->parseRequest();
             $subAction = $this->extensionBuilderConfigurationManager->getSubActionFromRequest();
@@ -631,21 +629,4 @@ class BuilderModuleController extends ActionController
     {
         return $GLOBALS['BE_USER'];
     }
-
-    // public function ajaxTestingAction(ServerRequestInterface $request): ResponseInterface
-    // {
-    //     $input = $request->getQueryParams()['input'] ?? null;
-    //     if ($input === null) {
-    //         throw new \InvalidArgumentException('Please provide a number', 1580585107);
-    //     }
-//
-    //     $result = $input ** 2;
-//
-    //     $response = $this->responseFactory->createResponse()
-    //         ->withHeader('Content-Type', 'application/json; charset=utf-8');
-    //     $response->getBody()->write(json_encode(['result' => $result], JSON_THROW_ON_ERROR));
-    //     // add status code to response
-    //     $response = $response->withStatus(500);
-    //     return $response;
-    // }
 }

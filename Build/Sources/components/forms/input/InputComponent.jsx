@@ -12,14 +12,8 @@ const InputComponent = ({ label, identifier, initialValue, onChange, validation 
     };
 
     const validate = (value) => {
-        if (validation) {
-            if (validation.isRequired && value.trim() === '') {
-                return false;
-            }
-            if (validation.minLength && value.length < validation.minLength) {
-                return false;
-            }
-            // Hier können Sie weitere Validierungsregeln hinzufügen
+        if(validation){
+            return !(validation.isRequired && value.trim() === '' || validation.minLength && value.length < validation.minLength);
         }
         return true;
     };
@@ -32,9 +26,7 @@ const InputComponent = ({ label, identifier, initialValue, onChange, validation 
 
     return (
         <div className="mb-2">
-            <label
-                htmlFor={identifier}
-            >
+            <label htmlFor={identifier} className="form-label">
                 {label}
             </label>
             <input

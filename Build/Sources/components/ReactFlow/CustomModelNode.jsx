@@ -2,35 +2,39 @@ import { useEffect, useState} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {TYPO3StyledAccordion} from "../accordions/TYPO3StyledAccordion";
 import {TYPO3StyledAccordionGroup} from "../accordions/TYPO3StyledAccordionGroup";
+import InputComponent from "../forms/input/InputComponent";
+import CheckboxComponent from "../forms/input/CheckboxComponent";
+import TextareaComponent from "../forms/textarea/TextareaComponent";
+import SelectComponent from "../forms/select/SelectComponent";
 
 export const CustomModelNode = (props) => {
     const [properties, setProperties] = useState([]);
     const [customActions, setCustomActions] = useState([]);
 
     const propertyTypes = [
-        { name: "String", value : "string" },
-        { name: "Text", value : "text" },
-        { name: "Rich Text*", value : "richtext" },
-        { name: "Slug", value : "slug" },
-        { name: "Color picker", value : "colorpicker" },
-        { name: "Password", value : "password" },
-        { name: "Email", value : "email" },
-        { name: "Integer", value : "integer" },
-        { name: "Floating point", value : "floatingpoint" },
-        { name: "Boolean", value : "boolean" },
-        { name: "Link", value : "link" },
-        { name: "Date", value : "date" },
-        { name: "DateTime", value : "datetime" },
-        { name: "Date (timestamp)", value : "date_timestamp" },
-        { name: "DateTime (timestamp)", value : "datetime_timestamp" },
-        { name: "Time*", value : "time" },
-        { name: "Time (timestamp)", value : "time_timestamp" },
-        { name: "Time/Sec", value : "timesec" },
-        { name: "Select list", value : "selectlist" },
-        { name: "File*", value : "file" },
-        { name: "Image*", value : "image" },
-        { name: "Pass through", value : "passthrough" },
-        { name: "None", value : "none" },
+        "string",
+        "text",
+        "richtext",
+        "slug",
+        "colorpicker",
+        "password",
+        "email",
+        "integer",
+        "floatingpoint" ,
+        "boolean" ,
+        "link" ,
+        "date" ,
+        "datetime" ,
+        "date_timestamp",
+        "datetime_timestamp" ,
+        "time",
+        "time_timestamp",
+        "timesec",
+        "selectlist" ,
+        "file",
+        "image" ,
+        "passthrough" ,
+        "none"
     ];
 
     const addEmptyProperty = () => {
@@ -43,209 +47,229 @@ export const CustomModelNode = (props) => {
             isExcdeField: false,
             isl10nModeExlude: false,
         }]);
+        props.data.properties.push(
+            {
+                name: '',
+                type: '',
+                description: '',
+                isRequired: false,
+                isNullable: false,
+                isExcdeField: false,
+                isl10nModeExlude: false,
+            }
+        );
     }
 
     const addEmptyAction = () => {
-        setCustomActions([...customActions, {
-            name: ''
-        }]);
+        const newAction = {name: ''};
 
-        // add empty array entry to props.data.customActions
-        props.data.customActions.push({
-            name: ''
-        });
-    }
+        // Updating customActions
+        setCustomActions(prevActions => [...prevActions, newAction]);
 
-    const updateProperty = (property, value) => {
-        props.data.label = value;
+        // Adding a new entry to props.data.customActions
+        props.data.customActions = [...props.data.customActions, newAction];
     }
 
     const updateCustomAction = (index, value) => {
         props.data.customActions[index] = value;
-        console.log(props.data);
+    }
+
+    const updateProperty = (index, property, value) => {
+        properties[index][property] = value;
+        setProperties([...properties]);
+        props.data.properties = properties;
+    }
+
+    const updateNode = (path, value) => {
+        const pathParts = path.split(".");
+        let data = props.data;
+
+        for (let i = 0; i < pathParts.length - 1; i++) {
+            if (!data[pathParts[i]]) {
+                data[pathParts[i]] = {};
+            }
+            data = data[pathParts[i]];
+        }
+        data[pathParts[pathParts.length - 1]] = value;
     }
 
     return (
         <div className="custom-model-node">
             <div className="drag-handle"></div>
             <div className="custom-model-node__header">
-                <input type="text" name="nodeTitle" placeholder="Node title"
-                    onChange={(e) => {
-                        updateProperty("label", e.target.value);
+                <InputComponent
+                    label="Node title"
+                    placeholder="Node title"
+                    identifier="nodeTitle"
+                    validation={{ isRequired: true }}
+                    onChange={(value) => {
+                        updateNode('label', value);
                     }}
                 />
             </div>
             <TYPO3StyledAccordionGroup id="accordionCustomModelNode">
                 <TYPO3StyledAccordion  title="Domain object settings" id="1" parentId="accordionCustomModelNode">
-                    <div className="d-flex justify-content-between">
-                        <label htmlFor="isAggregateRoot">Is aggregate root:</label>
-                        <input
-                            type="checkbox"
+                    <div className="mb-5">
+                        <CheckboxComponent
+                            identifier="isAggregateRoot"
+                            label="Is aggregate root"
                             checked={props.data.isAggregateRoot}
-                            id="isAggregateRoot"
-                            name="isAggregateRoot"
-                            className="nodrag"
-                            onChange={(e) => {
-                                props.data.isAggregateRoot = e.target.checked;
+                            onChange={(value) => {
+                                updateNode('objectsettings.aggregateRoot', value);
                             }}
                         />
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <label htmlFor="enableSorting">Enable sorting</label>
-                        <input
-                            type="checkbox"
+                        <CheckboxComponent
+                            identifier="enableSorting"
+                            label="Enable sorting"
                             checked={props.data.enableSorting}
-                            id="enableSorting"
-                            name="enableSorting"
-                            className="nodrag"
-                            onChange={(e) => {
-                                props.data.enableSorting = e.target.checked;
+                            onChange={(value) => {
+                                updateNode('objectsettings.sorting', value);
                             }}
                         />
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <label htmlFor="addDeletedField">Add deleted field</label>
-                        <input
-                            type="checkbox"
+                        <CheckboxComponent
+                            identifier="addDeletedField"
+                            label="Add deleted field"
                             checked={props.data.addDeletedField}
-                            id="addDeletedField"
-                            name="addDeletedField"
-                            className="nodrag"
-                            onChange={(e) => {
-                                props.data.addDeletedField = e.target.checked;
+                            onChange={(value) => {
+                                updateNode('objectsettings.addDeletedField', value);
                             }}
                         />
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <label htmlFor="addHiddenField">Add hidden field</label>
-                        <input
-                            type="checkbox"
+                        <CheckboxComponent
+                            identifier="addHiddenField"
+                            label="Add hidden field"
                             checked={props.data.addHiddenField}
-                            id="addHiddenField"
-                            name="addHiddenField"
-                            className="nodrag"
-                            onChange={(e) => {
-                                props.data.addHiddenField = e.target.checked;
+                            onChange={(value) => {
+                                updateNode('objectsettings.addHiddenField', value);
                             }}
                         />
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <label htmlFor="addStarttimeEndtimeFields">Add starttime/endtime fields</label>
-                        <input
-                            type="checkbox"
+                        <CheckboxComponent
+                            identifier="addStarttimeEndtimeFields"
+                            label="Add starttime/endtime fields"
                             checked={props.data.addStarttimeEndtimeFields}
-                            id="addStarttimeEndtimeFields"
-                            name="addStarttimeEndtimeFields"
-                            className="nodrag"
-                            onChange={(e) => {
-                                props.data.addStarttimeEndtimeFields = e.target.checked;
+                            onChange={(value) => {
+                                updateNode('objectsettings.addStarttimeEndtimeFields', value);
                             }}
                         />
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <label htmlFor="enableCategorization">Enable categorization</label>
-                        <input
-                            type="checkbox"
+                        <CheckboxComponent
+                            identifier="enableCategorization"
+                            label="Enable categorization"
                             checked={props.data.enableCategorization}
-                            id="enableCategorization"
-                            name="enableCategorization"
-                            className="nodrag"
-                            onChange={(e) => {
-                                props.data.enableCategorization = e.target.checked;
+                            onChange={(value) => {
+                                updateNode('objectsettings.categorizable', value);
                             }}
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="description">Description:</label>
-                        <textarea rows="3" id="description" name="description" className="nodrag" placeholder="Description"
-                                  onChange={(e) => {
-                                      props.data.description = e.target.value;
-                                  }}
+                        <TextareaComponent
+                            placeholder="Description"
+                            identifier="description"
+                            label="Description"
+                            onChange={(value) => {
+                                updateNode('objectsettings.description', value);
+                            }}
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="mapToExistingTable">Map to existing table:</label>
-                        <input type="text" id="mapToExistingTable" name="mapToExistingTable" className="nodrag"
-                               onChange={(e) => {
-                                   props.data.mapToExistingTable = e.target.value;
-                               }}
+                        <InputComponent
+                            label="Map to existing table:"
+                            placeholder="tablename"
+                            identifier="mapToExistingTable"
+                            onChange={(value) => {
+                                updateNode('objectsettings.mapToTable', value);
+                            }}
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="extendExistingModelClass">Extend existing model class:</label>
-                        <input type="text" id="extendExistingModelClass" name="extendExistingModelClass" className="nodrag" placeholder="\Fully\Qualified\Classname"
-                               onChange={(e) => {
-                                   props.data.extendExistingModelClass = e.target.value;
-                               }}
+                        <InputComponent
+                            label="Extend existing model class:"
+                            placeholder="\Fully\Qualified\Classname"
+                            identifier="extendExistingModelClass"
+                            onChange={(value) => {
+                                updateNode('objectsettings.parentClass', value);
+                            }}
                         />
                     </div>
                 </TYPO3StyledAccordion>
                 <TYPO3StyledAccordion  title="Actions" id="2" parentId="accordionCustomModelNode">
-                    <div className="d-flex justify-content-between">
-                        <label htmlFor="actionIndex">index</label>
-                        <input type="checkbox" id="actionIndex" name="actionIndex" className="nodrag"
-                               onChange={(e) => {
-                                   props.data.actions.actionIndex = e.target.checked;
-                               }}
-                        />
+                    <div className="mb-5">
+                        <div className="d-flex justify-content-between">
+                            <CheckboxComponent
+                                identifier="actionIndex"
+                                label="index"
+                                checked={props.data.actions?.actionIndex}
+                                onChange={(value) => {
+                                    updateNode('actions.actionIndex', value);
+                                }}
+                            />
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <CheckboxComponent
+                                identifier="actionList"
+                                label="list"
+                                checked={props.data.actions?.actionList}
+                                onChange={(value) => {
+                                    updateNode('actions.actionList', value);
+                                }}
+                            />
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <CheckboxComponent
+                                identifier="actionShow"
+                                label="show"
+                                checked={props.data.actions?.actionShow}
+                                onChange={(value) => {
+                                    updateNode('actions.actionShow', value);
+                                }}
+                            />
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <CheckboxComponent
+                                identifier="actionNewCreate"
+                                label="new / create"
+                                checked={props.data.actions?.actionNewCreate}
+                                onChange={(value) => {
+                                    updateNode('actions.actionNewCreate', value);
+                                }}
+                            />
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <CheckboxComponent
+                                identifier="actionEditUpdate"
+                                label="edit / update"
+                                checked={props.data.actions?.actionEditUpdate}
+                                onChange={(value) => {
+                                    updateNode('actions.actionEditUpdate', value);
+                                }}
+                            />
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <CheckboxComponent
+                                identifier="actionDelete"
+                                label="delete"
+                                checked={props.data.actions?.actionDelete}
+                                onChange={(value) => {
+                                    updateNode('actions.actionDelete', value);
+                                }}
+                            />
+                        </div>
+                        <div className="d-flex justify-content-between align-items-center mt-2">
+                            <span className="text-primary">Custom actions</span>
+                            <button className="btn btn-outline btn-sm p-0 text-primary"
+                                    title="Add action"
+                                    onClick={addEmptyAction}
+                            ><FontAwesomeIcon className="font-awesome-icon" icon="fa-solid fa-plus" /></button>
+                        </div>
+                        {
+                            customActions.map((action, index) => {
+                                return (
+                                    <div className="custom-model-node__action-wrapper">
+                                        <InputComponent
+                                            label="Action name"
+                                            placeholder="Action name"
+                                            identifier="actionName"
+                                            onChange={(value) => {
+                                                updateCustomAction(index, value);
+                                            }}
+                                        />
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
-                    <div className="d-flex justify-content-between">
-                        <label htmlFor="actionList">list</label>
-                        <input type="checkbox" id="actionList" name="actionList" className="nodrag"
-                               onChange={(e) => {
-                                   props.data.actions.actionList = e.target.checked;
-                               }}
-                        />
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <label htmlFor="actionShow">show</label>
-                        <input type="checkbox" id="actionShow" name="actionShow" className="nodrag"
-                               onChange={
-                                   (e) => {
-                                       props.data.actions.actionShow = e.target.checked;
-                                   }
-                               }
-                        />
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <label htmlFor="actionNewCreate">new / create</label>
-                        <input type="checkbox" id="actionNewCreate" name="actionNewCreate" className="nodrag"
-                               onChange={(e) => {props.data.actions.actionNewCreate = e.target.checked;}}
-                        />
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <label htmlFor="actionEditUpdate">edit / update</label>
-                        <input type="checkbox" id="actionEditUpdate" name="actionEditUpdate" className="nodrag"
-                               onChange={(e) => {props.data.actions.actionEditUpdate = e.target.checked;}}
-                        />
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <label htmlFor="actionDelete">actionDelete</label>
-                        <input type="checkbox" id="isAggregateRoot" name="isAggregateRoot" className="nodrag"
-                               onChange={(e) => {props.data.actions.actionDelete = e.target.checked;}}
-                        />
-                    </div>
-                    <div className="d-flex justify-content-between align-items-center mt-2">
-                        <span className="text-primary">Custom actions</span>
-                        <button className="btn btn-outline btn-sm p-0 text-primary"
-                                title="Add action"
-                                onClick={addEmptyAction}
-                        ><FontAwesomeIcon className="font-awesome-icon" icon="fa-solid fa-plus" /></button>
-                    </div>
-                    {
-                        customActions.map((action, index) => {
-                            return (
-                                <div className="custom-model-node__action-wrapper">
-                                    <input type="text" name="actionName" placeholder="Action name"
-                                         onChange={(e) => {
-                                             // Store custom Action to props.data.actions.customActions
-                                             updateCustomAction(index, e.target.value);
-                                         }}
-                                    />
-                                </div>
-                            )
-                        })
-                    }
                 </TYPO3StyledAccordion>
                 <TYPO3StyledAccordion  title="Properties" id="3" parentId="accordionCustomModelNode">
                     <div className="d-flex justify-content-between align-items-center">
@@ -257,37 +281,66 @@ export const CustomModelNode = (props) => {
                         </button>
                     </div>
                     {
-                        properties.map((property) => {
+                        properties.map((property, index) => {
                             return (
                                 <div className="custom-model-node__property-wrapper">
-                                    <div className="d-flex justify-content-between">
-                                        <input type="text" name="propertyName" placeholder="Property name" />
-                                    </div>
-                                    <select name="propertyType" id="propertyType" className="nodrag" >
-                                        {propertyTypes.map((propertyType, index) => <option key={index} value={propertyType.value}>{propertyType.name}</option>)}
-                                    </select>
-                                    <input type="text" name="propertyDescription" placeholder="Property description" />
-                                    <div className="d-flex justify-content-between">
-                                        <label htmlFor="isRequired">is required?</label>
-                                        <input type="checkbox" id="isRequired" name="isRequired" className="nodrag" />
-                                    </div>
-                                    <div className="d-flex justify-content-between">
-                                        <label htmlFor="isNullable">is nullable?</label>
-                                        <input type="checkbox" id="isNullable" name="isNullable" className="nodrag" />
-                                    </div>
-                                    <div className="d-flex justify-content-between">
-                                        <label htmlFor="isExcdeField">is exclude field?</label>
-                                        <input
-                                            type="checkbox"
-                                            id="isExcdeField"
-                                            name="isExcdeField"
-                                            className="nodrag" />
-                                    </div>
-                                    <div className="d-flex justify-content-between">
-                                        <label htmlFor="isl10nModeExlude">is l10n_mode = exclude</label>
-                                        <input type="checkbox" id="isl10nModeExlude" name="isl10nModeExlude" className="nodrag" />
-                                    </div>
-                                    <hr />
+                                    <InputComponent
+                                        label="Property name"
+                                        placeholder="Property name"
+                                        identifier="propertyName"
+                                        onChange={(value) => {
+                                            updateProperty(index, "name", value);
+                                        }}
+                                    />
+                                    <SelectComponent
+                                        label="Property type"
+                                        identifier="propertyType"
+                                        options={propertyTypes}
+                                        onChange={(value) => {
+                                            updateProperty(index, "type", value);
+                                        }}
+                                    />
+                                    <TextareaComponent
+                                        label="Property description"
+                                        placeholder="Property description"
+                                        identifier="propertyDescription"
+                                        initialValue={property.description}
+                                        onChange={(value) => {
+                                            updateProperty(index, "description", value);
+                                        }}
+                                    />
+                                    <CheckboxComponent
+                                        identifier="isRequired"
+                                        label="is required?"
+                                        initialChecked={false}
+                                        onChange={(value) => {
+                                            updateProperty(index, "isRequired", value);
+                                        }}
+                                    />
+                                    <CheckboxComponent
+                                        identifier="isNullable"
+                                        label="is nullable?"
+                                        initialChecked={false}
+                                        onChange={(value) => {
+                                           updateProperty(index, "isNullable", value);
+                                        }}
+                                    />
+                                    <CheckboxComponent
+                                        identifier="isExcdeField"
+                                        label="is exclude field?"
+                                        initialChecked={false}
+                                        onChange={(value) => {
+                                            updateProperty(index, "isExcdeField", value);
+                                        }}
+                                    />
+                                    <CheckboxComponent
+                                        identifier="isl10nModeExlude"
+                                        label="is l10n_mode = exclude?"
+                                        initialChecked={false}
+                                        onChange={(value) => {
+                                            updateProperty(index, "isl10nModeExlude", value);
+                                        }}
+                                    />
                                 </div>
                             )
                         })
@@ -299,6 +352,17 @@ export const CustomModelNode = (props) => {
                         <button className="btn btn-success mb-2 mt-2 btn-sm" title="Add relation" disabled>
                             <FontAwesomeIcon className="font-awesome-icon" icon="fa-solid fa-plus" />
                         </button>
+                    </div>
+                </TYPO3StyledAccordion>
+                <TYPO3StyledAccordion
+                    title="Debug"
+                    id="debug"
+                    parentId="Test"
+                >
+                    <div className="mb-5">
+                        <pre>
+                            {JSON.stringify(properties, null, 2)}
+                        </pre>
                     </div>
                 </TYPO3StyledAccordion>
             </TYPO3StyledAccordionGroup>

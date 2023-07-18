@@ -1,8 +1,5 @@
 import axios from "axios";
 import React, {useState} from "react";
-import {Error} from "./errors/Error";
-import {Success} from "./errors/Success";
-import {BootstrapModal} from "./modals/BootstrapModal";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export const ActionButtonsComponent = (props) => {

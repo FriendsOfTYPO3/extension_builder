@@ -636,6 +636,8 @@ class Extension
 
     public function getComposerInfo(): array
     {
+        // TODO: consider moving this into the CodeTemplates
+        // TODO: authors are not stored here
         $extensionKey = $this->extensionKey;
         $composerExtensionKey = strtolower(str_replace('_', '-', $extensionKey));
         $info = [

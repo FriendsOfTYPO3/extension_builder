@@ -2,22 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-const TextareaComponent = ({ label, placeholder, identifier, onChange, validation }) => {
+const TextareaComponent = ({label = '', placeholder, identifier = '', onChange = () => {}, validation = null }) => {
     const [value, setValue] = useState('');
     const [isValid, setIsValid] = useState(null);
-
-    const handleChange = (event) => {
-        setValue(event.target.value);
-        onChange(event.target.value);
-    };
-
-    const validate = (value) => {
-        if (validation && validation.isRequired && value.trim() === '') {
-            return false;
-        }
-        // Hier können Sie weitere Validierungsregeln hinzufügen
-        return true;
-    };
 
     useEffect(() => {
         if(validation){
@@ -25,11 +12,24 @@ const TextareaComponent = ({ label, placeholder, identifier, onChange, validatio
         }
     }, [value, validation]);
 
+    const handleChange = (event) => {
+        setValue(event.target.value);
+        onChange(event.target.value);
+    };
+
+    const validate = (value) => {
+        if (validation?.isRequired && value.trim() === '') {
+            return false;
+        }
+        // Hier können Sie weitere Validierungsregeln hinzufügen
+        return true;
+    };
+
     return (
         <div className="mb-2">
-            <label
-                htmlFor={identifier}
-                className="form-label">{label}</label>
+            <label htmlFor={identifier} className="form-label">
+                {label}
+            </label>
             <textarea
                 type="text"
                 className={classNames("form-control form-control-sm", {
@@ -41,7 +41,8 @@ const TextareaComponent = ({ label, placeholder, identifier, onChange, validatio
                 placeholder={placeholder}
                 value={value}
                 onChange={handleChange}
-                rows="5" />
+                rows="5"
+            />
         </div>
     );
 };
@@ -54,13 +55,6 @@ TextareaComponent.propTypes = {
     validation: PropTypes.shape({
         isRequired: PropTypes.bool
     }),
-};
-
-TextareaComponent.defaultProps = {
-    label: '',
-    identifier: '',
-    onChange: () => {},
-    validation: null,
 };
 
 export default TextareaComponent;

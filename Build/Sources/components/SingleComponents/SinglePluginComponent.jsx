@@ -27,7 +27,7 @@ export const SinglePluginComponent = (props) => {
                     label="Plugin Key"
                     type="text"
                     identifier="key"
-                    initialValue={props.key}
+                    initialValue={props.plugin.key}
                     onChange={(value) => {
                         updatePluginHandler('key', value);
                     }}
@@ -36,7 +36,7 @@ export const SinglePluginComponent = (props) => {
                     placeholder="Please insert a description"
                     label="Description"
                     identifier="description"
-                    initialValue={props.description}
+                    initialValue={props.plugin.description}
                     onChange={(value) => {
                         updatePluginHandler('description', value);
                     }}
@@ -45,7 +45,7 @@ export const SinglePluginComponent = (props) => {
                     placeholder="Blog => list, show"
                     label="Cachable controller actions"
                     identifier="controllerActionsCachable"
-                    initialValue={props.controllerActionsCachable}
+                    initialValue={props.plugin.controllerActionsCachable}
                     onChange={(value) => {
                         updatePluginHandler('controllerActionsCachable', value);
                     }}
@@ -54,7 +54,7 @@ export const SinglePluginComponent = (props) => {
                     placeholder="Blog => edit, update, delete"
                     label="Non cachable controller actions"
                     identifier="controllerActionsNonCachable"
-                    initialValue={props.controllerActionsNonCachable}
+                    initialValue={props.plugin.controllerActionsNonCachable}
                     onChange={(value) => {
                         updatePluginHandler('controllerActionsNonCachable', value);
                     }}

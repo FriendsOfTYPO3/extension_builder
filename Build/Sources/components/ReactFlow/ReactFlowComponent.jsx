@@ -45,6 +45,7 @@ export const ReactFlowComponent = (props) => {
 
     useEffect(() => {
         console.log("use effect for nodes in ReactFlowComponent");
+        props.onNodesChanged(nodes);
     }, [nodes]);
 
     const onDragOver = useCallback((event) => {

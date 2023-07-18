@@ -12,7 +12,9 @@ const SelectComponent = ({ label, options, defaultValue, identifier, onChange })
     return (
         <div className="mb-2">
             <label
-                htmlFor={identifier}>
+                htmlFor={identifier}
+                className="form-label"
+            >
                 {label}
             </label>
             <select
@@ -34,12 +36,9 @@ const SelectComponent = ({ label, options, defaultValue, identifier, onChange })
 
 SelectComponent.propTypes = {
     label: PropTypes.string,
-    options: PropTypes.arrayOf(
-        PropTypes.shape({
-            label: PropTypes.string.isRequired,
-            value: PropTypes.string.isRequired,
-        })
-    ),
+    options: PropTypes.arrayOf(PropTypes.string),
+    defaultValue: PropTypes.string,
+    identifier: PropTypes.string,
     onChange: PropTypes.func,
 };
 
