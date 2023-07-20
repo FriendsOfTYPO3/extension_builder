@@ -11,8 +11,6 @@ import 'reactflow/dist/style.css';
 import {CustomModelNode} from "./CustomModelNode";
 import Sidebar from "./Sidebar";
 
-const panOnDrag = [1, 2];
-
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
@@ -132,7 +130,6 @@ export const ReactFlowComponent = (props) => {
                         onEdgesChange={onEdgesChange}
                         onConnect={onConnect}
                         nodeTypes={nodeTypes}
-                        panOnDrag={panOnDrag}
                         selectionMode={SelectionMode.Partial}
                         onInit={setReactFlowInstance}
                         onDrop={onDrop}

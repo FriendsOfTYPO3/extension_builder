@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { v4 as uuidv4 } from 'uuid';
 
 export const ActionButtonsComponent = (props) => {
     const [errors, setErrors] = useState(null);
@@ -29,6 +30,24 @@ export const ActionButtonsComponent = (props) => {
             });
             console.log("Custom Actions");
             console.log(customActions);
+
+            let properties = [];
+            node.data.properties.map((property) => {
+                properties.push(
+                    {
+                        "allowedFileTypes": "",
+                        "maxItems": "1",
+                        "propertyDescription": property.description,
+                        "propertyIsExcludeField": property.isExcludedField,
+                        "propertyIsL10nModeExclude": property.isl10nModeExlude,
+                        "propertyIsNullable": property.isNullable,
+                        "propertyIsRequired": property.isRequired,
+                        "propertyName": property.name,
+                        "propertyType": property.type,
+                        "uid": uuidv4()
+                    }
+                );
+            });
 
             let module = {
                 "config": {
@@ -63,20 +82,7 @@ export const ActionButtonsComponent = (props) => {
                         "uid": "1173301976935"
                     },
                     "propertyGroup": {
-                        "properties": [
-                            {
-                                "allowedFileTypes": "",
-                                "maxItems": "1",
-                                "propertyDescription": "",
-                                "propertyIsExcludeField": true,
-                                "propertyIsL10nModeExclude": false,
-                                "propertyIsNullable": false,
-                                "propertyIsRequired": false,
-                                "propertyName": "titel",
-                                "propertyType": "String",
-                                "uid": "1357067104948"
-                            }
-                        ]
+                        "properties": properties
                     },
                     "relationGroup": {
                         "relations": []

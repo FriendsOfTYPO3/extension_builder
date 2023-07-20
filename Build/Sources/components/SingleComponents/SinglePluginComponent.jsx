@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown, faTrash } from '@fortawesome/free-solid-svg-icons'
 import InputComponent from "../forms/input/InputComponent";
 import TextareaComponent from "../forms/textarea/TextareaComponent";
+import React from "react";
 
 export const SinglePluginComponent = (props) => {
 

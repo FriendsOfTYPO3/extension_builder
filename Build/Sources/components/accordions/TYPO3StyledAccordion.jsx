@@ -11,7 +11,7 @@ export const TYPO3StyledAccordion = (props) => {
                     </a>
                 </h3>
             </div>
-            <div id={`simple-panel${props.id}`} className="collapse" aria-labelledby={`simple-heading-panel${props.id}`}>
+            <div id={`simple-panel${props.id}`} data-bs-parent={`#${props.parentId}`} className="collapse" aria-labelledby={`simple-heading-panel${props.id}`}>
                 <div className="panel-body">
                     {props.children}
                 </div>
