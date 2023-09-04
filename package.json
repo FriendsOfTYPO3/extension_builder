@@ -30,6 +30,7 @@
         "autoprefixer": "^10.4.14",
         "axios": "^1.4.0",
         "babel-loader": "^9.1.2",
+        "classnames": "^2.3.2",
         "css-loader": "^6.8.1",
         "gulp-cli": "^2.3.0",
         "mini-css-extract-plugin": "^2.7.6",
