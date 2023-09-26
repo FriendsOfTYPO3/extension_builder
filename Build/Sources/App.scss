@@ -55,8 +55,8 @@
 }
 
 #btn-sidebar-collapse {
-    z-index: 100;
-    top: 8px;
+    z-index: 999999999;
+    top: 80px;
     position: fixed;
     transition: left 0.5s ease;
     color: #515151;
@@ -69,5 +69,5 @@
 }
 
 #btn-sidebar-collapse.expanded {
-    left: 420px;
+    left: 415px;
 }

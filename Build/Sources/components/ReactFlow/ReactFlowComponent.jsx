@@ -10,6 +10,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import {CustomModelNode} from "./CustomModelNode";
 import Sidebar from "./Sidebar";
+import StrongConnectionLineComponent from "./Connections/StrongConnectionLineComponent";
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
@@ -42,7 +43,6 @@ export const ReactFlowComponent = (props) => {
     );
 
     useEffect(() => {
-        console.log("use effect for nodes in ReactFlowComponent");
         props.onNodesChanged(nodes);
     }, [nodes]);
 
@@ -134,6 +134,7 @@ export const ReactFlowComponent = (props) => {
                         onInit={setReactFlowInstance}
                         onDrop={onDrop}
                         onDragOver={onDragOver}
+                        connectionLineComponent={StrongConnectionLineComponent}
                     >
                         <MiniMap
                             nodeColor={nodeColor}

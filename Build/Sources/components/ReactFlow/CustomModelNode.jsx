@@ -6,9 +6,11 @@ import InputComponent from "../forms/input/InputComponent";
 import CheckboxComponent from "../forms/input/CheckboxComponent";
 import TextareaComponent from "../forms/textarea/TextareaComponent";
 import SelectComponent from "../forms/select/SelectComponent";
+import { Handle, Position } from 'reactflow';
 
 export const CustomModelNode = (props) => {
     const [properties, setProperties] = useState([]);
+    const [relations, setRelations] = useState([]);
     const [customActions, setCustomActions] = useState([]);
 
     const propertyTypes = [
@@ -37,6 +39,13 @@ export const CustomModelNode = (props) => {
         "None"
     ];
 
+    const relationTypes = [
+        'zeroToOne',
+        'zeroToMany',
+        'manyToOne',
+        'manyToMany'
+    ];
+
     const addEmptyProperty = () => {
         setProperties([...properties, {
             name: '',
@@ -60,6 +69,33 @@ export const CustomModelNode = (props) => {
         );
     }
 
+    const addEmptyRelation = () => {
+        setRelations([...relations, {
+            "foreignRelationClass": "",
+            "lazyLoading": true,
+            "propertyIsExcludeField": true,
+            "relationDescription": "",
+            "relationName": "",
+            "relationType": "",
+            "relationWire": "",
+            "renderType": "",
+            "uid": "905857860343"
+        }]);
+        props.data.relations.push(
+            {
+                "foreignRelationClass": "",
+                "lazyLoading": true,
+                "propertyIsExcludeField": true,
+                "relationDescription": "",
+                "relationName": "",
+                "relationType": "",
+                "relationWire": "",
+                "renderType": "",
+                "uid": "905857860343"
+            }
+        );
+    }
+
     const addEmptyAction = () => {
         const newAction = {name: ''};
 
@@ -78,6 +114,12 @@ export const CustomModelNode = (props) => {
         properties[index][property] = value;
         setProperties([...properties]);
         props.data.properties = properties;
+    }
+
+    const updateRelation = (index, property, value) => {
+        relations[index][property] = value;
+        setRelations([...relations]);
+        props.data.relations = relations;
     }
 
     const updateNode = (path, value) => {
@@ -105,6 +147,18 @@ export const CustomModelNode = (props) => {
                     onChange={(value) => {
                         updateNode('label', value);
                     }}
+                />
+                <Handle
+                    type="target"
+                    position={Position.Left}
+                    onConnect={(params) => console.log('handle onConnect', params)}
+                    style={{
+                        background: 'rgb(255 135 0 / 33%)',
+                        border: '3px solid #ff8700',
+                        position: 'relative',
+                        top: '-21px',
+                        left: '-30px'
+                }}
                 />
             </div>
             <TYPO3StyledAccordionGroup id={`accordionCustomModelNode-${props.id}`}>
@@ -318,11 +372,11 @@ export const CustomModelNode = (props) => {
                                             }}
                                         />
                                         <CheckboxComponent
-                                            identifier="isExcludeField"
+                                            identifier="propertyIsExcludeField"
                                             label="is exclude field?"
                                             initialChecked={false}
                                             onChange={(value) => {
-                                                updateProperty(index, "isExcludeField", value);
+                                                updateProperty(index, "propertyIsExcludeField", value);
                                             }}
                                         />
                                         <CheckboxComponent
@@ -343,10 +397,91 @@ export const CustomModelNode = (props) => {
                 <TYPO3StyledAccordion  title="Relations" id={`accordionItemCustomModelNode-relations-${props.id}`} parentId={`accordionCustomModelNode-${props.id}`}>
                     <div className="d-flex justify-content-between align-items-center">
                         <h5 className="text-primary">Relations</h5>
-                        <button className="btn btn-success mb-2 mt-2 btn-sm" title="Add relation" disabled>
+                        <button
+                            className="btn btn-success mb-2 mt-2 btn-sm"
+                            title="Add relation"
+                            onClick={addEmptyRelation}
+                        >
                             <FontAwesomeIcon className="font-awesome-icon" icon="fa-solid fa-plus" />
                         </button>
                     </div>
+                    <TYPO3StyledAccordionGroup
+                        id="accordionCustomModelNodeRelations"
+                    >
+                    {
+                        relations.map((relation, index) => {
+                            return (
+                                <TYPO3StyledAccordion
+                                    title={`${relation.relationName} ${relation.relationType ? `(${relation.relationType})` : ''}`}
+                                    id={`nodeRelation-${props.id}-${index}`}
+                                    parentId="accordionCustomModelNodeRelations"
+                                >
+                                    <div className="custom-model-node__relation-wrapper">
+                                        <InputComponent
+                                            label="Relation name"
+                                            placeholder="Relation name"
+                                            identifier="relationName"
+                                            onChange={(value) => {
+                                                updateRelation(index, "relationName", value);
+                                            }}
+                                        />
+                                        <SelectComponent
+                                            label="Relation type"
+                                            identifier="relationType"
+                                            options={relationTypes}
+                                            onChange={(value) => {
+                                                updateRelation(index, "relationType", value);
+                                            }}
+                                        />
+                                        <TextareaComponent
+                                            placeholder="Description"
+                                            label="Relation description"
+                                            identifier="relationDescription"
+                                            onChange={(value) => {
+                                                updateRelation(index, "relationDescription", value);
+                                            }}
+                                        />
+                                        <CheckboxComponent
+                                            identifier="isExcludeField"
+                                            label="is exclude field?"
+                                            initialChecked={false}
+                                            onChange={(value) => {
+                                                updateRelation(index, "isExcludeField", value);
+                                            }}
+                                        />
+                                        <CheckboxComponent
+                                            identifier="lazyLoading"
+                                            label="is lazy loading?"
+                                            initialChecked={false}
+                                            onChange={(value) => {
+                                                updateRelation(index, "lazyLoading", value);
+                                            }}
+                                        />
+                                        <InputComponent
+                                            label="Relation to external class"
+                                            placeholder="Fully qualified class name"
+                                            identifier="relationToExternalClass"
+                                            onChange={(value) => {
+                                                updateRelation(index, "relationToExternalClass", value);
+                                            }}
+                                        />
+                                        <Handle
+                                            type="source"
+                                            position={Position.Left}
+                                            onConnect={(params) => console.log('handle onConnect', params)}
+                                            style={{
+                                                background: 'rgb(255 135 0 / 33%)',
+                                                border: '3px solid #ff8700',
+                                                position: 'relative',
+                                                top: '-21px',
+                                                left: '-30px'
+                                            }}
+                                        />
+                                    </div>
+                                </TYPO3StyledAccordion>
+                            )})
+                        }
+                    </TYPO3StyledAccordionGroup>
                 </TYPO3StyledAccordion>
                 <TYPO3StyledAccordion  title="Debug" id={`accordionItemCustomModelNode-debug-${props.id}`} parentId={`accordionCustomModelNode-${props.id}`} >
                     <div className="mb-5">

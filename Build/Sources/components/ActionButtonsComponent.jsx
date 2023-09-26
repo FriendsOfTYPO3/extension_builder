@@ -9,7 +9,6 @@ export const ActionButtonsComponent = (props) => {
 
     const handleClose = () => {
         setErrors(null);
-        console.log('Close');
     }
 
     const handleSave = () => {
@@ -44,6 +43,23 @@ export const ActionButtonsComponent = (props) => {
                         "propertyIsRequired": property.isRequired,
                         "propertyName": property.name,
                         "propertyType": property.type,
+                        "uid": uuidv4()
+                    }
+                );
+            });
+
+            let relations = [];
+            node.data.relations.map((relation) => {
+                relations.push(
+                    {
+                        "foreignRelationClass": relation.foreignRelationClass || "",
+                        "lazyLoading": relation.lazyLoading || false,
+                        "propertyIsExcludeField": relation.propertyIsExcludeField || false,
+                        "relationDescription": relation.relationDescription || "",
+                        "relationName": relation.relationName || "",
+                        "relationType": relation.relationType || "oneToMany",
+                        "relationWire": "[wired]",
+                        "renderType": "selectSingle",
                         "uid": uuidv4()
                     }
                 );
@@ -85,7 +101,7 @@ export const ActionButtonsComponent = (props) => {
                         "properties": properties
                     },
                     "relationGroup": {
-                        "relations": []
+                        "relations": relations
                     }
                 }
             };
