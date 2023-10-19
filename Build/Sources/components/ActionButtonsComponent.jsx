@@ -1,34 +1,39 @@
 import axios from "axios";
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { v4 as uuidv4 } from 'uuid';
+import {listAvailableExtensions} from "../helper/api/listAvailableExtensions";
+import { Modal, Button } from 'react-bootstrap';
+import {EdgesContext, NodesContext} from "../App";
 
 export const ActionButtonsComponent = (props) => {
+    const {nodes} = useContext(NodesContext);
+    const {edges} = useContext(EdgesContext);
+
     const [errors, setErrors] = useState(null);
     const [success, setSuccess] = useState(null);
+
+    const [show, setShow] = useState(false);
+    const [modalTitle, setModalTitle] = useState('');
+    const [modalBody, setModalBody] = useState('');
+
+    const [modalBodyHtml, setModalBodyHtml] = useState('');
+    const [modalBodyJsx, setModalBodyJsx] = useState(null)
 
     const handleClose = () => {
         setErrors(null);
     }
 
     const handleSave = () => {
-        console.log("-Props-")
-        console.log(props);
-        console.log("----------")
-
         // modules => nodes from react flow
         let modules = [];
 
-        // For each props.nodes, create a module object
-        props.nodes.forEach((node) => {
-            console.log("Node");
-            console.log(node);
+        // For each nodes, create a module object
+        nodes.forEach((node) => {
             let customActions = [];
             node.data.customActions.map((action) => {
                 customActions.push(action);
             });
-            console.log("Custom Actions");
-            console.log(customActions);
 
             let properties = [];
             node.data.properties.map((property) => {
@@ -57,7 +62,7 @@ export const ActionButtonsComponent = (props) => {
                         "propertyIsExcludeField": relation.propertyIsExcludeField || false,
                         "relationDescription": relation.relationDescription || "",
                         "relationName": relation.relationName || "",
-                        "relationType": relation.relationType || "oneToMany",
+                        "relationType": relation.relationType || "anyToMany",
                         "relationWire": "[wired]",
                         "renderType": "selectSingle",
                         "uid": uuidv4()
@@ -95,7 +100,7 @@ export const ActionButtonsComponent = (props) => {
                         "parentClass": node.data.extendExistingModelClass,
                         "sorting": node.data.enableSorting,
                         "type": "Entity",
-                        "uid": "1173301976935"
+                        "uid": uuidv4()
                     },
                     "propertyGroup": {
                         "properties": properties
@@ -108,9 +113,36 @@ export const ActionButtonsComponent = (props) => {
             modules.push(module);
         });
 
-        console.log("-Nodes-")
-        console.log(props.nodes);
-        console.log("-Nodes END-")
+        let sourceRelationCount = new Map();
+
+        let wires = edges.map((edge, index) => {
+            // Ermittle die Indizes der Nodes
+            let sourceIndex = nodes.findIndex(n => n.id === edge.source);
+            let targetIndex = nodes.findIndex(n => n.id === edge.target);
+
+            // Aktualisiere die Zählung für die Source Node
+            if (!sourceRelationCount.has(sourceIndex)) {
+                sourceRelationCount.set(sourceIndex, 0);
+            }
+            let relationIndex = sourceRelationCount.get(sourceIndex);
+            sourceRelationCount.set(sourceIndex, relationIndex + 1);
+
+            return {
+                "src": {
+                    "moduleId": modules.findIndex(node => node.name === nodes[sourceIndex].data.label),
+                    "moduleName": nodes[sourceIndex].data.label,
+                    "terminal": `relationWire_${relationIndex}`,
+                    "uid": edge.id
+                },
+                "tgt": {
+                    "moduleId": modules.findIndex(node => node.name === nodes[targetIndex].data.label),
+                    "moduleName": nodes[targetIndex].data.label,
+                    "terminal": "SOURCES",
+                    "uid": edge.source
+                }
+            }
+        });
+
 
         let working = {
             "modules": modules,
@@ -118,44 +150,42 @@ export const ActionButtonsComponent = (props) => {
                 "backendModules": props.modules,
                 "description": props.properties.description || "",
                 "emConf": {
-                    "category": props.properties.emConf.category || "backend",
+                    "category": props.properties.emConf.category,
                     "custom_category": "",
                     "dependsOn": props.properties.emConf.dependsOn || "",
                     "disableLocalization": props.properties.emConf.disableLocalization || false,
                     "disableVersioning": props.properties.emConf.disableVersioning || false,
                     "generateDocumentationTemplate": props.properties.emConf.generateDocumentationTemplate || false,
                     "generateEditorConfig": props.properties.emConf.generateEditorConfig || false,
-                    "generateEmptyGitRepository": props.properties.emConf.generateEmptyGitRepository || false,
-                    "sourceLanguage": props.properties.emConf.sourceLanguage || "en",
-                    "state": props.properties.emConf.state || "alpha",
-                    "targetVersion": `${props.properties.emConf.targetVersion}.0-${props.properties.emConf.targetVersion}.99` || "12.4.0",
-                    "version": props.properties.emConf.version || "0.0.1"
+                    "generateEmptyGitRepository": props.properties.emConf.generateEmptyGitRepository || true,
+                    "sourceLanguage": props.properties.emConf.sourceLanguage,
+                    "state": props.properties.emConf.state,
+                    "targetVersion": props.properties.emConf.targetVersion,
+                    "version": props.properties.emConf.version
                 },
-                "extensionKey": props.properties.extensionKey || "my_ext",
-                "name": props.properties.name || "My Ext",
+                "extensionKey": props.properties.extensionKey,
+                "name": props.properties.name,
                 "originalExtensionKey": "",
                 "originalVendorName": "",
                 "persons": props.authors,
                 "plugins": props.plugins,
-                "vendorName": props.properties.vendorName || "MyVendor"
+                "vendorName": props.properties.vendorName
             },
-            "wires": []
+            "wires": wires,
+            "nodes": nodes,
+            "edges": edges
         };
 
         let payload = {
             "id": 4,
             "method": "saveWiring",
-            "name": props.properties.name || "my_ext",
+            "name": props.properties.name,
             "params": {
                 "language": "extbaseModeling",
                 "working": JSON.stringify(working)
             },
             "version": "json-rpc-2.0"
         };
-        console.log("----------")
-        console.log("payload");
-        console.log(payload);
-        console.log("----------")
 
         // TYPO3 will be available in the global scope
         // eslint-disable-next-line no-undef
@@ -169,9 +199,15 @@ export const ActionButtonsComponent = (props) => {
                 console.log("Successfull saved");
                 console.log(response.data.success);
                 if(response.data.success === null || response.data.success === undefined) {
-                    top.TYPO3.Modal.confirm('Successfull saved but ...', '... Something went wrong on server side');
+                    setModalTitle('Successfull saved but ...');
+                    setModalBodyHtml('... Something went wrong on server side<br><br><code>' + JSON.stringify(response.data) + '</code>');
+                    setModalBodyJsx(null)
+                    setShow(true);
                 } else {
-                    top.TYPO3.Modal.confirm('Successfull saved', response.data.success);
+                    setModalTitle('Successfull saved');
+                    setModalBodyHtml(response.data.success)
+                    setModalBodyJsx(null)
+                    setShow(true);
                 }
                 // eslint-disable-next-line no-restricted-globals,no-undef
                 setSuccess(response);
@@ -185,25 +221,87 @@ export const ActionButtonsComponent = (props) => {
             });
     }
 
-    const handleDemoInput = () => {
-        props.handleDemoInput();
+    const handleOpenExtension = async () => {
+        // Lists all available extensions built with the extension builder
+        // Only if they have the extensionbuilder.json file
+        const extensions = await listAvailableExtensions();
+
+        // the extensions are now inside the extensions constant as a json object
+        // the modal now lists the extensions and after clicking on one of them, the modal closes and the extension is loaded
+
+        // extensions json has the following structure:
+        // error = null, if no error occurs
+        // success = true, when the request was successful
+        // result with the array of extensions
+
+        if(extensions.error !== null && extensions.success === false) {
+            console.log("fetching failed");
+            setShow(true);
+            setModalTitle('Fetching failed');
+            setModalBodyHtml('Fetching the extensions failed. Please check, if you have extensions with a valid extensionbuilder.json file.');
+            setModalBodyJsx(null);
+        } else if (extensions.error === null && extensions.success === true) {
+            setShow(true);
+            setModalTitle('Available extensions');
+            setModalBodyJsx(
+                <>
+                    <p>Please select an extension to open</p>
+                    <div className="list-group">
+                        {extensions.result.map((extension) => (
+                            <button
+                                type="button"
+                                className="list-group-item list-group-item-action"
+                                key={extension.name}
+                                onClick={() => handleExtensionClick(extension)}
+                            >
+                                {extension.name}
+                            </button>
+                        ))}
+                    </div>
+                </>
+            );
+            setModalBodyHtml(null);
+        }
     }
 
+    const handleExtensionClick = (extension) => {
+        setShow(false);
+        props.handleOpenExtension(extension);
+    };
+
 	return (
-		<div className="mb-2">
-            <div className="btn-group w-100" role="group" aria-label="Basic example">
-                <button
-                    type="button"
-                    className="btn btn-success"
-                    id="eb-btn-save"
-                    onClick={handleSave}
-                ><FontAwesomeIcon className="me-1" icon="fa-solid fa-save" />Save</button>
-                <button
-                    type="button"
-                    className="btn btn-light text-dark"
-                    id="eb-btn-save"
-                ><FontAwesomeIcon className="me-1" icon="fa-solid fa-folder" />Open</button>
+        <>
+            <Modal show={show} onHide={() => setShow(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{modalTitle}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {modalBodyHtml && <div dangerouslySetInnerHTML={{ __html: modalBodyHtml }} />}
+                    {modalBodyJsx}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShow(false)}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <div className="mb-2">
+                <div className="btn-group w-100" role="group" aria-label="Basic example">
+                    <button
+                        type="button"
+                        className="btn btn-success"
+                        id="eb-btn-save"
+                        onClick={handleSave}
+                    ><FontAwesomeIcon className="me-1" icon="fa-solid fa-save" />Save</button>
+                    <button
+                        type="button"
+                        className="btn btn-light text-dark"
+                        id="eb-btn-prefill"
+                        onClick={handleOpenExtension}
+                    ><FontAwesomeIcon className="me-1" icon="fa-solid fa-file" />Open</button>
+                </div>
             </div>
-        </div>
+        </>
+
 	)
 }

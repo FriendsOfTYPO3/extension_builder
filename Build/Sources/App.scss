@@ -1,53 +1,31 @@
-@import './styles/index';
+@import './styles/index.scss';
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
-}
+$transition-timing: 0.5s ease;
+$btn-background: #f4f4f4;
+$generic-z-index: 1;
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
-}
-
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-}
-
-.App-link {
-    color: #61dafb;
+#left-column, #right-column {
+    height: 100vh;
+    z-index: $generic-z-index;
+    transition: $transition-timing;
 }
 
 #left-column {
-    /*height: 100vh;*/
-    z-index: 1;
     width: 400px;
     overflow-y: auto;
-    transition: opacity 0.5s ease;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
 
-#left-column::-webkit-scrollbar {
-    display: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 #right-column {
-    // background-color: green;
-    height: 100vh;
-    z-index: 1;
     position: absolute;
     left: 0;
     overflow-y: hidden;
-    transition: left 0.5s ease, width 0.5s ease;
 }
 
 .no-padding {
@@ -58,16 +36,16 @@
     z-index: 999999999;
     top: 80px;
     position: fixed;
-    transition: left 0.5s ease;
+    transition: left $transition-timing;
     color: #515151;
-    background-color: #f4f4f4;
-    border-color: #f4f4f4;
-}
+    background-color: $btn-background;
+    border-color: $btn-background;
 
-#btn-sidebar-collapse.collapsed {
-    left: 20px;
-}
+    &.collapsed {
+        left: 20px;
+    }
 
-#btn-sidebar-collapse.expanded {
-    left: 415px;
+    &.expanded {
+        left: 415px;
+    }
 }

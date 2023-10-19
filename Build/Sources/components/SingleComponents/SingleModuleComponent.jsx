@@ -75,10 +75,10 @@ export const SingleModuleComponent = (props) => {
                 <TextareaComponent
                     placeholder="Blog => edit, update, delete"
                     label="Cachable controller actions"
-                    identifier="controllerActionsCachable"
-                    initialValue={props.module.controllerActionsCachable}
+                    identifier="controllerActionCombinations"
+                    initialValue={props.module.controllerActionCombinations}
                     onChange={(value) => {
-                        updateModuleHandler('actions.controllerActionsCachable', value);
+                        updateModuleHandler('controllerActionCombinations', value);
                     }}
                 />
                 <div className="d-flex module-actions">

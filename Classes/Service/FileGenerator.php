@@ -1,5 +1,6 @@
 <?php
 
+
 declare(strict_types=1);
 
 /*
@@ -17,6 +18,7 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Service;
 
+use Symfony\Component\Yaml\Yaml;
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\BackendModule;
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
@@ -32,6 +34,7 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
@@ -171,6 +174,11 @@ class FileGenerator
 
         $this->generateModulesFile();
 
+        // Only execute, if there is one or more domain object
+        if (count($extension->getDomainObjects()) > 0) {
+            $this->generateServicesYamlFile();
+        }
+
         $this->copyStaticFiles();
 
         $this->generateTCAFiles();
@@ -296,6 +304,24 @@ class FileGenerator
             $this->writeFile($this->extensionDirectory . 'Configuration/Backend/Modules.php', $fileContents);
         } catch (Exception $e) {
             throw new Exception('Could not write Configuration/Backend/Modules.php. Error: ' . $e->getMessage());
+        }
+    }
+
+    protected function generateServicesYamlFile(): void
+    {
+        try {
+            GeneralUtility::mkdir_deep($this->extensionDirectory . 'Configuration');
+
+            $fileContents = $this->renderTemplate(
+                'Configuration/Services.yamlt',
+                [
+                    'namespace' => $this->extension->getNamespaceName()
+                ]
+            );
+            // $this->writeFile($this->extensionDirectory . 'Configuration/Services.yaml', $yamlContent);
+            $this->writeFile($this->extensionDirectory . 'Configuration/Services.yaml', $fileContents);
+        } catch (Exception $e) {
+            throw new Exception('Could not write Configuration/Services.yaml. Error: ' . $e->getMessage());
         }
     }
 

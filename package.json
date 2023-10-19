@@ -7,7 +7,7 @@
         "sass-lint": "sass-lint -c sass-lint.yml -q '**/*.scss' --verbose",
         "css-watch": "node-sass --watch --output-style compressed --include-path scss  ./Resources/Public/Scss/extensionbuilder.scss ./Resources/Public/Css/extensionbuilder.css",
         "css-build": "node-sass --output-style compressed --include-path scss ./Resources/Public/Scss/extensionbuilder.scss ./Resources/Public/Css/extensionbuilder.css",
-        "dev": "webpack --config webpack/webpack.dev.config.js",
+        "dev":   "webpack --config webpack/webpack.dev.config.js",
         "build": "webpack --config webpack/webpack.prod.config.js",
         "watch": "webpack --config webpack/webpack.dev.config.js --watch",
         "test": "npx jest --watch",
@@ -31,9 +31,9 @@
         "babel-loader": "^9.1.2",
         "classnames": "^2.3.2",
         "css-loader": "^6.8.1",
+        "dart-sass": "^1.25.0",
         "gulp-cli": "^2.3.0",
         "mini-css-extract-plugin": "^2.7.6",
-        "node-sass": "^9.0.0",
         "postcss-loader": "^7.3.0",
         "react": "^18.2.0",
         "react-app-rewired": "^2.2.1",
@@ -42,9 +42,8 @@
         "react-scripts": "5.0.1",
         "react-transition-group": "^4.4.5",
         "reactflow": "^11.7.0",
-        "sass": "^1.62.1",
         "sass-lint": "^1.13.1",
-        "sass-loader": "^13.3.0",
+        "sass-loader": "*",
         "style-loader": "^3.3.3",
         "terser-webpack-plugin": "^5.3.9",
         "tw-elements": "^1.0.0-beta2",
@@ -68,7 +67,9 @@
         ]
     },
     "dependencies": {
+        "bootstrap": "^5.3.2",
         "classnames": "^2.3.2",
+        "react-bootstrap": "^2.9.1",
         "uuid": "^9.0.0"
     }
 }

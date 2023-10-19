@@ -89,7 +89,7 @@ class ObjectSchemaBuilder implements SingletonInterface
                     $propertyJsonConfiguration['relationType'] = 'zeroToMany';
                     $propertyJsonConfiguration['relationName'] = $propertyJsonConfiguration['propertyName'];
                     $propertyJsonConfiguration['relationDescription'] = $propertyJsonConfiguration['propertyDescription'];
-                    $propertyJsonConfiguration['foreignRelationClass'] = FileReference::class;
+                    $propertyJsonConfiguration['foreignRelationClass'] = FileReference::clss;
                     $propertyJsonConfiguration['type'] = $propertyJsonConfiguration['propertyType'];
 
                     $property = $this->buildRelation($propertyJsonConfiguration, $domainObject);

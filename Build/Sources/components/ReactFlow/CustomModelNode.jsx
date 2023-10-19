@@ -7,44 +7,13 @@ import CheckboxComponent from "../forms/input/CheckboxComponent";
 import TextareaComponent from "../forms/textarea/TextareaComponent";
 import SelectComponent from "../forms/select/SelectComponent";
 import { Handle, Position } from 'reactflow';
+import propertyTypes from "./customModelNode/propertyTypes";
+import relationTypes from "./customModelNode/relationTypes";
 
 export const CustomModelNode = (props) => {
-    const [properties, setProperties] = useState([]);
-    const [relations, setRelations] = useState([]);
+    const [properties, setProperties] = useState(props.data.properties);
+    const [relations, setRelations] = useState(props.data.relations);
     const [customActions, setCustomActions] = useState([]);
-
-    const propertyTypes = [
-        "String",
-        "Text",
-        "RichText",
-        "Slug",
-        "ColorPicker",
-        "Password",
-        "Email",
-        "Integer",
-        "Float" ,
-        "Boolean",
-        "InputLink" ,
-        "Date" ,
-        "DateTime" ,
-        "NativeDate",
-        "NativeDateTime" ,
-        "NativeTime",
-        "Time",
-        "TimeSec",
-        "Select" ,
-        "File",
-        "Image" ,
-        "PassThrough" ,
-        "None"
-    ];
-
-    const relationTypes = [
-        'zeroToOne',
-        'zeroToMany',
-        'manyToOne',
-        'manyToMany'
-    ];
 
     const addEmptyProperty = () => {
         setProperties([...properties, {
@@ -140,6 +109,7 @@ export const CustomModelNode = (props) => {
             <div className="drag-handle"></div>
             <div className="custom-model-node__header">
                 <InputComponent
+                    initialValue={props.data.label}
                     label="Node title"
                     placeholder="Node title"
                     identifier="nodeTitle"
@@ -150,6 +120,7 @@ export const CustomModelNode = (props) => {
                 />
                 <Handle
                     type="target"
+                    id={`customModelNode-${props.id}`}
                     position={Position.Left}
                     onConnect={(params) => console.log('handle onConnect', params)}
                     style={{
@@ -158,7 +129,7 @@ export const CustomModelNode = (props) => {
                         position: 'relative',
                         top: '-21px',
                         left: '-30px'
-                }}
+                    }}
                 />
             </div>
             <TYPO3StyledAccordionGroup id={`accordionCustomModelNode-${props.id}`}>
@@ -168,7 +139,7 @@ export const CustomModelNode = (props) => {
                         label="Is aggregate root"
                         checked={props.data.isAggregateRoot}
                         onChange={(value) => {
-                            updateNode('objectsettings.aggregateRoot', value);
+                            updateNode('isAggregateRoot', value);
                         }}
                     />
                     <CheckboxComponent
@@ -176,7 +147,7 @@ export const CustomModelNode = (props) => {
                         label="Enable sorting"
                         checked={props.data.enableSorting}
                         onChange={(value) => {
-                            updateNode('objectsettings.sorting', value);
+                            updateNode('enableSorting', value);
                         }}
                     />
                     <CheckboxComponent
@@ -184,7 +155,7 @@ export const CustomModelNode = (props) => {
                         label="Add deleted field"
                         checked={props.data.addDeletedField}
                         onChange={(value) => {
-                            updateNode('objectsettings.addDeletedField', value);
+                            updateNode('addDeletedField', value);
                         }}
                     />
                     <CheckboxComponent
@@ -192,7 +163,7 @@ export const CustomModelNode = (props) => {
                         label="Add hidden field"
                         checked={props.data.addHiddenField}
                         onChange={(value) => {
-                            updateNode('objectsettings.addHiddenField', value);
+                            updateNode('addHiddenField', value);
                         }}
                     />
                     <CheckboxComponent
@@ -200,7 +171,7 @@ export const CustomModelNode = (props) => {
                         label="Add starttime/endtime fields"
                         checked={props.data.addStarttimeEndtimeFields}
                         onChange={(value) => {
-                            updateNode('objectsettings.addStarttimeEndtimeFields', value);
+                            updateNode('addStarttimeEndtimeFields', value);
                         }}
                     />
                     <CheckboxComponent
@@ -208,31 +179,34 @@ export const CustomModelNode = (props) => {
                         label="Enable categorization"
                         checked={props.data.enableCategorization}
                         onChange={(value) => {
-                            updateNode('objectsettings.categorizable', value);
+                            updateNode('enableCategorization', value);
                         }}
                     />
                     <TextareaComponent
                         placeholder="Description"
                         identifier="description"
                         label="Description"
+                        initialValue={props.data.description}
                         onChange={(value) => {
-                            updateNode('objectsettings.description', value);
+                            updateNode('description', value);
                         }}
                     />
                     <InputComponent
                         label="Map to existing table:"
                         placeholder="tablename"
                         identifier="mapToExistingTable"
+                        initialValue={props.data.mapToExistingTable}
                         onChange={(value) => {
-                            updateNode('objectsettings.mapToTable', value);
+                            updateNode('mapToExistingTable', value);
                         }}
                     />
                     <InputComponent
                         label="Extend existing model class:"
                         placeholder="\Fully\Qualified\Classname"
                         identifier="extendExistingModelClass"
+                        initialValue={props.data.parentClass}
                         onChange={(value) => {
-                            updateNode('objectsettings.parentClass', value);
+                            updateNode('parentClass', value);
                         }}
                     />
                 </TYPO3StyledAccordion>
@@ -293,20 +267,27 @@ export const CustomModelNode = (props) => {
                         ><FontAwesomeIcon className="font-awesome-icon" icon="fa-solid fa-plus" /></button>
                     </div>
                     {
-                        customActions.map((action, index) => {
-                            return (
-                                <div className="custom-model-node__action-wrapper">
-                                    <InputComponent
-                                        label="Action name"
-                                        placeholder="Action name"
-                                        identifier="actionName"
-                                        onChange={(value) => {
-                                            updateCustomAction(index, value);
+                        props.data.customActions.map((action, index) => (
+                            <div className="d-flex align-items-center justify-content-between custom-model-node__action-wrapper">
+                                <InputComponent
+                                    placeholder="Action name"
+                                    identifier={`actionName${index}`}
+                                    initialValue={action}
+                                    onChange={(value) => {
+                                        updateCustomAction(index, value);
+                                    }}
+                                />
+                                <button className="btn btn-outline btn-sm p-0 text-danger"
+                                        title="Remove action"
+                                        onClick={() => {
+                                            props.data.customActions.splice(index, 1);
+                                            setCustomActions([...props.data.customActions]);
                                         }}
-                                    />
-                                </div>
-                            )
-                        })
+                                >
+                                    <FontAwesomeIcon className="font-awesome-icon text-danger" icon="fa-solid fa-trash" />
+                                </button>
+                             </div>
+                        ))
                     }
                 </TYPO3StyledAccordion>
                 <TYPO3StyledAccordion  title="Properties" id={`accordionItemCustomModelNode-properties-${props.id}`} parentId={`accordionCustomModelNode-${props.id}`}>
@@ -322,7 +303,7 @@ export const CustomModelNode = (props) => {
                         id="accordionCustomModelNodeProperties"
                     >
                     {
-                        properties.map((property, index) => {
+                        props.data.properties.map((property, index) => {
                             return (
                                 <TYPO3StyledAccordion
                                     title={`${property.name} ${property.type ? `(${property.type})` : ''}`}
@@ -334,6 +315,7 @@ export const CustomModelNode = (props) => {
                                             label="Property name"
                                             placeholder="Property name"
                                             identifier="propertyName"
+                                            initialValue={property.name}
                                             onChange={(value) => {
                                                 updateProperty(index, "name", value);
                                             }}
@@ -342,6 +324,7 @@ export const CustomModelNode = (props) => {
                                             label="Property type"
                                             identifier="propertyType"
                                             options={propertyTypes}
+                                            initialValue={property.type}
                                             onChange={(value) => {
                                                 updateProperty(index, "type", value);
                                             }}
@@ -358,7 +341,7 @@ export const CustomModelNode = (props) => {
                                         <CheckboxComponent
                                             identifier="isRequired"
                                             label="is required?"
-                                            initialChecked={false}
+                                            checked={property.isRequired}
                                             onChange={(value) => {
                                                 updateProperty(index, "isRequired", value);
                                             }}
@@ -366,7 +349,7 @@ export const CustomModelNode = (props) => {
                                         <CheckboxComponent
                                             identifier="isNullable"
                                             label="is nullable?"
-                                            initialChecked={false}
+                                            checked={property.isNullable}
                                             onChange={(value) => {
                                                updateProperty(index, "isNullable", value);
                                             }}
@@ -374,7 +357,7 @@ export const CustomModelNode = (props) => {
                                         <CheckboxComponent
                                             identifier="propertyIsExcludeField"
                                             label="is exclude field?"
-                                            initialChecked={false}
+                                            checked={property.propertyIsExcludeField}
                                             onChange={(value) => {
                                                 updateProperty(index, "propertyIsExcludeField", value);
                                             }}
@@ -382,7 +365,7 @@ export const CustomModelNode = (props) => {
                                         <CheckboxComponent
                                             identifier="isl10nModeExlude"
                                             label="is l10n_mode = exclude?"
-                                            initialChecked={false}
+                                            checked={property.isl10nModeExlude}
                                             onChange={(value) => {
                                                 updateProperty(index, "isl10nModeExlude", value);
                                             }}
@@ -394,23 +377,33 @@ export const CustomModelNode = (props) => {
                     }
                     </TYPO3StyledAccordionGroup>
                 </TYPO3StyledAccordion>
-                <TYPO3StyledAccordion  title="Relations" id={`accordionItemCustomModelNode-relations-${props.id}`} parentId={`accordionCustomModelNode-${props.id}`}>
-                    <div className="d-flex justify-content-between align-items-center">
-                        <h5 className="text-primary">Relations</h5>
-                        <button
-                            className="btn btn-success mb-2 mt-2 btn-sm"
-                            title="Add relation"
-                            onClick={addEmptyRelation}
-                        >
-                            <FontAwesomeIcon className="font-awesome-icon" icon="fa-solid fa-plus" />
-                        </button>
-                    </div>
-                    <TYPO3StyledAccordionGroup
-                        id="accordionCustomModelNodeRelations"
+                <div className="d-flex align-items-center justify-content-between">
+                    <h5>Relations</h5>
+                    <button
+                        className="btn btn-success mb-2 mt-2 btn-sm"
+                        title="Add relation"
+                        onClick={addEmptyRelation}
                     >
-                    {
-                        relations.map((relation, index) => {
-                            return (
+                        <FontAwesomeIcon className="font-awesome-icon" icon="fa-solid fa-plus" />
+                    </button>
+                </div>
+                {
+                    props.data.relations.map((relation, index) => {
+                        return (
+                            <div className="relation">
+                                <Handle
+                                    type="source"
+                                    id={`relation-${props.id}-${index}`}
+                                    position={Position.Left}
+                                    onConnect={(params) => console.log('handle onConnect', params)}
+                                    style={{
+                                        background: 'rgb(255 135 0 / 33%)',
+                                        border: '3px solid #ff8700',
+                                        position: 'relative',
+                                        top: '42px',
+                                        zIndex: '1000'
+                                    }}
+                                />
                                 <TYPO3StyledAccordion
                                     title={`${relation.relationName} ${relation.relationType ? `(${relation.relationType})` : ''}`}
                                     id={`nodeRelation-${props.id}-${index}`}
@@ -420,6 +413,7 @@ export const CustomModelNode = (props) => {
                                         <InputComponent
                                             label="Relation name"
                                             placeholder="Relation name"
+                                            initialValue={relation.relationName}
                                             identifier="relationName"
                                             onChange={(value) => {
                                                 updateRelation(index, "relationName", value);
@@ -429,6 +423,7 @@ export const CustomModelNode = (props) => {
                                             label="Relation type"
                                             identifier="relationType"
                                             options={relationTypes}
+                                            showEmptyValue={false}
                                             onChange={(value) => {
                                                 updateRelation(index, "relationType", value);
                                             }}
@@ -436,6 +431,7 @@ export const CustomModelNode = (props) => {
                                         <TextareaComponent
                                             placeholder="Description"
                                             label="Relation description"
+                                            initialValue={relation.relationDescription}
                                             identifier="relationDescription"
                                             onChange={(value) => {
                                                 updateRelation(index, "relationDescription", value);
@@ -444,7 +440,7 @@ export const CustomModelNode = (props) => {
                                         <CheckboxComponent
                                             identifier="isExcludeField"
                                             label="is exclude field?"
-                                            initialChecked={false}
+                                            checked={relation.isExcludeField}
                                             onChange={(value) => {
                                                 updateRelation(index, "isExcludeField", value);
                                             }}
@@ -452,7 +448,7 @@ export const CustomModelNode = (props) => {
                                         <CheckboxComponent
                                             identifier="lazyLoading"
                                             label="is lazy loading?"
-                                            initialChecked={false}
+                                            checked={relation.lazyLoading}
                                             onChange={(value) => {
                                                 updateRelation(index, "lazyLoading", value);
                                             }}
@@ -461,38 +457,16 @@ export const CustomModelNode = (props) => {
                                             label="Relation to external class"
                                             placeholder="Fully qualified class name"
                                             identifier="relationToExternalClass"
+                                            initialValue={relation.relationToExternalClass}
                                             onChange={(value) => {
                                                 updateRelation(index, "relationToExternalClass", value);
                                             }}
                                         />
-                                        <Handle
-                                            type="source"
-                                            position={Position.Left}
-                                            onConnect={(params) => console.log('handle onConnect', params)}
-                                            style={{
-                                                background: 'rgb(255 135 0 / 33%)',
-                                                border: '3px solid #ff8700',
-                                                position: 'relative',
-                                                top: '-21px',
-                                                left: '-30px'
-                                            }}
-                                        />
                                     </div>
                                 </TYPO3StyledAccordion>
-                            )})
-                        }
-                    </TYPO3StyledAccordionGroup>
-                </TYPO3StyledAccordion>
-                <TYPO3StyledAccordion  title="Debug" id={`accordionItemCustomModelNode-debug-${props.id}`} parentId={`accordionCustomModelNode-${props.id}`} >
-                    <div className="mb-5">
-                        <pre>
-                            {JSON.stringify(props, null, 2)}
-                        </pre>>
-                        <pre>
-                            {JSON.stringify(properties, null, 2)}
-                        </pre>
-                    </div>
-                </TYPO3StyledAccordion>
+                            </div>
+                        )})
+                }
             </TYPO3StyledAccordionGroup>
         </div>
     );

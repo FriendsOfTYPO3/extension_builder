@@ -109,19 +109,22 @@ const displayRandomNotification = () => {
 };
 
 const handleTopBarButtons = () => {
-  const title = "Das funktioniert so nicht!"
-  const text = "Bitte nutze die Buttons weiter unten, die funktionieren"
+  const title = "This is not yet working!"
+  const text = "Please use the buttons underneath"
   Notification.error(title, text);
 };
 
-const newExtensionButton = document.querySelector('#newExtension-button');
-newExtensionButton.addEventListener('click', handleTopBarButtons);
+const slackButton = document.querySelector('#slack-button');
+slackButton.addEventListener('click', handleTopBarButtons);
 
-const loadExtensionButton = document.querySelector('#loadExtension-button');
-loadExtensionButton.addEventListener('click', handleTopBarButtons);
+const reportBugButton = document.querySelector('#bug-button');
+reportBugButton.addEventListener('click', handleTopBarButtons);
 
-const showHelpButton = document.querySelector('#showHelp');
-showHelpButton.addEventListener('click', displayRandomNotification);
+const documentationButton = document.querySelector('#documentation-button');
+documentationButton.addEventListener('click', handleTopBarButtons);
+
+const sponsorButton = document.querySelector('#sponsor-button');
+sponsorButton.addEventListener('click', handleTopBarButtons);
 
 const toggleAdvancedOptionsButton = document.querySelector('#toggleAdvancedOptions');
 toggleAdvancedOptionsButton.addEventListener('click', displayRandomNotification);

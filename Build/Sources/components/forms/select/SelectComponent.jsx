@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const SelectComponent = ({ label, options, defaultValue, identifier, onChange }) => {
-    const [value, setValue] = useState('');
+const SelectComponent = ({ label, options, defaultValue, showEmptyValue = true, identifier, initialValue = "", onChange }) => {
+    const [value, setValue] = useState(initialValue);
 
     const handleChange = (event) => {
         setValue(event.target.value);
         onChange(event.target.value);
     };
+
+    useEffect(() => {
+        setValue(initialValue);
+    }, [initialValue]);
 
     return (
         <div className="mb-2">
@@ -18,10 +22,12 @@ const SelectComponent = ({ label, options, defaultValue, identifier, onChange })
                 {label}
             </label>
             <select
-                className="form-select" aria-label={label}
+                className="form-select"
+                aria-label={label}
                 onChange={handleChange}
+                value={value}  // Setzen Sie den aktuellen Wert hier
             >
-                <option>{defaultValue}</option>
+                {showEmptyValue && <option value="">Bitte wählen</option>}
                 {
                     options.map((option, index) => {
                         return (

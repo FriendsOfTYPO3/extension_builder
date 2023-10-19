@@ -1,66 +1,63 @@
-$custom-model-accordion-padding-x: 0.5rem;
-$custom-model-accordion-padding-y: 0.5rem;
+$custom-model-accordion-padding: 0.5rem;
+$gray: #ccc;
+$light-gray: #777;
+$orange: #dfa23a;
+$dark-orange: #ff8700;
+
+@mixin fullWidth {
+    width: 100%;
+}
 
 .custom-model-node {
-    border: 1px solid #ccc;
+    @include fullWidth;
+    border: 1px solid $gray;
     padding: 5px;
     border-radius: 5px;
     background: white;
 
-    .custom-model-node__header {
-        margin-top: 10px;
-        margin-bottom: 15px;
-    }
-
     label {
         display: block;
-        color: #777;
+        color: $light-gray;
         font-size: 12px;
     }
 
     .react-flow__handle {
         width: 20px;
         height: 20px;
-        //bottom: 10px;
         top: -10px;
-        background-color: #dfa23a;
+        background-color: $orange;
         border: 3px solid orange;
     }
 
-    input {
-        &[type="text"] {
-            width: 100%;
-        }
-    }
-
+    input[type="text"],
     textarea {
-        width: 100%;
+        @include fullWidth;
     }
 
     .drag-handle {
-        background-color: #ff8700;
+        @include fullWidth;
+        background-color: $dark-orange;
         position: absolute;
         top: -17px;
-        width: 42%;
         left: 29%;
-        content: "";
         min-width: 20px;
         min-height: 30px;
         border-radius: 4px;
-        border: 2px solid #ff8700;
+        border: 2px solid $dark-orange;
     }
 
     .accordion-header {
         .accordion-button {
-            padding-top: 5px;
-            padding-bottom: 5px;
-            padding-left: $custom-model-accordion-padding-x;
-            padding-right: $custom-model-accordion-padding-x;
+            padding: 5px $custom-model-accordion-padding;
         }
     }
 
     .accordion-body {
-        padding-left: $custom-model-accordion-padding-x;
-        padding-rigth: $custom-model-accordion-padding-x;
+        padding-left: $custom-model-accordion-padding;
+        padding-right: $custom-model-accordion-padding;
+    }
+
+    .relation {
+        margin-top: -20px;
     }
 }

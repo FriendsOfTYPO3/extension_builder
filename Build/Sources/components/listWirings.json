@@ -1,0 +1,192 @@
+[
+    {
+        "name": "test",
+        "storagePath": "/var/www/html/Packages/",
+        "working": {
+            "modules": [
+                {
+                    "config": {
+                        "position": [
+                            450,
+                            136
+                        ]
+                    },
+                    "name": "Bar",
+                    "value": {
+                        "actionGroup": {
+                            "_default0_index": false,
+                            "_default1_list": false,
+                            "_default2_show": false,
+                            "_default3_new_create": false,
+                            "_default4_edit_update": false,
+                            "_default5_delete": false,
+                            "customActions": []
+                        },
+                        "name": "Bar",
+                        "objectsettings": {
+                            "addDeletedField": true,
+                            "addHiddenField": true,
+                            "addStarttimeEndtimeFields": true,
+                            "aggregateRoot": false,
+                            "categorizable": false,
+                            "description": "",
+                            "mapToTable": "",
+                            "parentClass": "",
+                            "sorting": false,
+                            "type": "Entity",
+                            "uid": "1173301976935"
+                        },
+                        "propertyGroup": {
+                            "properties": [
+                                {
+                                    "allowedFileTypes": "",
+                                    "maxItems": "1",
+                                    "propertyDescription": "",
+                                    "propertyIsL10nModeExclude": false,
+                                    "propertyIsNullable": false,
+                                    "propertyIsRequired": false,
+                                    "propertyName": "Bla",
+                                    "propertyType": "RichText",
+                                    "uid": "0a12e0d1-fdf1-451c-8fc2-95db85c36a9e"
+                                }
+                            ]
+                        },
+                        "relationGroup": {
+                            "relations": []
+                        }
+                    }
+                },
+                {
+                    "config": {
+                        "position": [
+                            126,
+                            10
+                        ]
+                    },
+                    "name": "Foo",
+                    "value": {
+                        "actionGroup": {
+                            "_default0_index": false,
+                            "_default1_list": false,
+                            "_default2_show": false,
+                            "_default3_new_create": false,
+                            "_default4_edit_update": false,
+                            "_default5_delete": false,
+                            "customActions": []
+                        },
+                        "name": "Foo",
+                        "objectsettings": {
+                            "addDeletedField": true,
+                            "addHiddenField": true,
+                            "addStarttimeEndtimeFields": true,
+                            "aggregateRoot": false,
+                            "categorizable": false,
+                            "description": "",
+                            "mapToTable": "",
+                            "parentClass": "",
+                            "sorting": false,
+                            "type": "Entity",
+                            "uid": "1173301976935"
+                        },
+                        "propertyGroup": {
+                            "properties": []
+                        },
+                        "relationGroup": {
+                            "relations": [
+                                {
+                                    "foreignRelationClass": "",
+                                    "lazyLoading": true,
+                                    "propertyIsExcludeField": true,
+                                    "relationDescription": "",
+                                    "relationName": "Rel",
+                                    "relationType": "zeroToOne",
+                                    "relationWire": "[wired]",
+                                    "renderType": "selectSingle",
+                                    "uid": "b61beaae-b7fa-445e-9b51-62e3b0e8eedc",
+                                    "advancedSettings": {
+                                        "relationType": "zeroToOne",
+                                        "renderType": "selectSingle",
+                                        "propertyIsExcludeField": true,
+                                        "lazyLoading": true,
+                                        "relationDescription": "",
+                                        "foreignRelationClass": ""
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            "properties": {
+                "backendModules": [],
+                "description": "",
+                "emConf": {
+                    "category": "backend",
+                    "custom_category": "",
+                    "dependsOn": "",
+                    "disableLocalization": false,
+                    "disableVersioning": false,
+                    "generateDocumentationTemplate": false,
+                    "generateEditorConfig": false,
+                    "generateEmptyGitRepository": true,
+                    "sourceLanguage": "en",
+                    "state": "alpha",
+                    "targetVersion": "12.4.0-12.4.99",
+                    "version": "1.0.0"
+                },
+                "extensionKey": "test",
+                "name": "Test",
+                "originalExtensionKey": "test",
+                "originalVendorName": "Test",
+                "persons": [],
+                "plugins": [],
+                "vendorName": "Test"
+            },
+            "wires": [
+                {
+                    "src": {
+                        "moduleId": 1,
+                        "terminal": "relationWire_0",
+                        "uid": "reactflow__edge-dndnode_4-dndnode_3"
+                    },
+                    "tgt": {
+                        "moduleId": 0,
+                        "terminal": "SOURCES",
+                        "uid": "dndnode_4"
+                    }
+                }
+            ],
+            "storagePath": "/var/www/html/Packages/",
+            "log": {
+                "last_modified": "2023-10-19 01:39",
+                "extension_builder_version": "dev-typo3-12-reactjs",
+                "be_user": " (1)"
+            }
+        }
+    },
+    {
+        "name":"demoextensionv11",
+        "storagePath":"/var/www/html/Packages/",
+        "working":"{\"modules\":[{\"config\":{\"position\":[682,140]},\"name\":\"New Model Object\",\"value\":{\"actionGroup\":{\"_default0_index\":true,\"_default1_list\":true,\"_default2_show\":true,\"_default3_new_create\":true,\"_default4_edit_update\":true,\"_default5_delete\":true,\"customActions\":[\"test\",\"foo\",\"bar\"]},\"name\":\"Product\",\"objectsettings\":{\"addDeletedField\":true,\"addHiddenField\":true,\"addStarttimeEndtimeFields\":true,\"aggregateRoot\":true,\"categorizable\":true,\"description\":\"Lorem Ipsum Dolor Sit Amit\",\"mapToTable\":\"\",\"parentClass\":\"\",\"sorting\":true,\"type\":\"Entity\",\"uid\":\"1173301976935\"},\"propertyGroup\":{\"properties\":[{\"allowedFileTypes\":\"\",\"maxItems\":\"1\",\"propertyDescription\":\"\",\"propertyIsExcludeField\":true,\"propertyIsL10nModeExclude\":false,\"propertyIsNullable\":false,\"propertyIsRequired\":false,\"propertyName\":\"titelll\",\"propertyType\":\"String\",\"uid\":\"1357067104948\"},{\"allowedFileTypes\":\"\",\"maxItems\":\"1\",\"propertyDescription\":\"\",\"propertyIsExcludeField\":true,\"propertyIsL10nModeExclude\":false,\"propertyIsNullable\":false,\"propertyIsRequired\":false,\"propertyName\":\"image\",\"propertyType\":\"File\",\"uid\":\"1001056457269\"},{\"allowedFileTypes\":\"\",\"maxItems\":\"1\",\"propertyDescription\":\"\",\"propertyIsExcludeField\":true,\"propertyIsL10nModeExclude\":false,\"propertyIsNullable\":false,\"propertyIsRequired\":false,\"propertyName\":\"pages\",\"propertyType\":\"Integer\",\"uid\":\"1317692161560\"}]},\"relationGroup\":{\"relations\":[{\"foreignRelationClass\":\"\",\"lazyLoading\":false,\"propertyIsExcludeField\":true,\"relationDescription\":\"\",\"relationName\":\"author\",\"relationType\":\"zeroToOne\",\"relationWire\":\"[wired]\",\"renderType\":\"selectSingle\",\"uid\":\"905857860343\",\"advancedSettings\":{\"relationType\":\"zeroToOne\",\"renderType\":\"selectSingle\",\"propertyIsExcludeField\":true,\"lazyLoading\":false,\"relationDescription\":\"\",\"foreignRelationClass\":\"\"}}]}}},{\"config\":{\"position\":[370,514]},\"name\":\"New Model Object\",\"value\":{\"actionGroup\":{\"_default0_index\":false,\"_default1_list\":false,\"_default2_show\":false,\"_default3_new_create\":false,\"_default4_edit_update\":false,\"_default5_delete\":false,\"customActions\":[]},\"name\":\"Author\",\"objectsettings\":{\"addDeletedField\":true,\"addHiddenField\":true,\"addStarttimeEndtimeFields\":true,\"aggregateRoot\":true,\"categorizable\":false,\"description\":\"\",\"mapToTable\":\"\",\"parentClass\":\"\",\"sorting\":false,\"type\":\"Entity\",\"uid\":\"971676471092\"},\"propertyGroup\":{\"properties\":[]},\"relationGroup\":{\"relations\":[]}}},{\"config\":{\"position\":[901,329]},\"name\":\"New Model Object\",\"value\":{\"actionGroup\":{\"_default0_index\":false,\"_default1_list\":false,\"_default2_show\":false,\"_default3_new_create\":false,\"_default4_edit_update\":false,\"_default5_delete\":false,\"customActions\":[]},\"name\":\"Test\",\"objectsettings\":{\"addDeletedField\":true,\"addHiddenField\":true,\"addStarttimeEndtimeFields\":true,\"aggregateRoot\":false,\"categorizable\":false,\"description\":\"\",\"mapToTable\":\"\",\"parentClass\":\"\",\"sorting\":false,\"type\":\"Entity\",\"uid\":\"1533087399859\"},\"propertyGroup\":{\"properties\":[]},\"relationGroup\":{\"relations\":[{\"foreignRelationClass\":\"\",\"lazyLoading\":false,\"propertyIsExcludeField\":true,\"relationDescription\":\"\",\"relationName\":\"author\",\"relationType\":\"zeroToOne\",\"relationWire\":\"[wired]\",\"renderType\":\"selectSingle\",\"uid\":\"966207119111\",\"advancedSettings\":{\"relationType\":\"zeroToOne\",\"renderType\":\"selectSingle\",\"propertyIsExcludeField\":true,\"lazyLoading\":false,\"relationDescription\":\"\",\"foreignRelationClass\":\"\"}}]}}},{\"config\":{\"position\":[82,261]},\"name\":\"New Model Object\",\"value\":{\"actionGroup\":{\"_default0_index\":false,\"_default1_list\":false,\"_default2_show\":false,\"_default3_new_create\":false,\"_default4_edit_update\":false,\"_default5_delete\":false,\"customActions\":[]},\"name\":\"Foo\",\"objectsettings\":{\"addDeletedField\":true,\"addHiddenField\":true,\"addStarttimeEndtimeFields\":true,\"aggregateRoot\":false,\"categorizable\":false,\"description\":\"\",\"mapToTable\":\"\",\"parentClass\":\"\",\"sorting\":false,\"type\":\"Entity\",\"uid\":\"333458384440\"},\"propertyGroup\":{\"properties\":[]},\"relationGroup\":{\"relations\":[{\"foreignRelationClass\":\"\",\"lazyLoading\":false,\"propertyIsExcludeField\":true,\"relationDescription\":\"\",\"relationName\":\"rasd\",\"relationType\":\"zeroToOne\",\"relationWire\":\"[wired]\",\"renderType\":\"selectSingle\",\"uid\":\"1336729212119\",\"advancedSettings\":{\"relationType\":\"zeroToOne\",\"renderType\":\"selectSingle\",\"propertyIsExcludeField\":true,\"lazyLoading\":false,\"relationDescription\":\"\",\"foreignRelationClass\":\"\"}}]}}}],\"properties\":{\"backendModules\":[],\"description\":\"Demo Extension from EB v12\",\"emConf\":{\"category\":\"plugin\",\"custom_category\":\"\",\"dependsOn\":\"typo3 => 11.5.0-11.5.99\\n\",\"disableLocalization\":true,\"disableVersioning\":true,\"generateDocumentationTemplate\":false,\"generateEditorConfig\":true,\"generateEmptyGitRepository\":true,\"sourceLanguage\":\"en\",\"state\":\"alpha\",\"targetVersion\":\"11.5.0-11.5.99\",\"version\":\"1.0.0\"},\"extensionKey\":\"demoextensionv11\",\"name\":\"Demo Extension v11\",\"originalExtensionKey\":\"demoextensionv11\",\"originalVendorName\":\"Treupo\",\"persons\":[],\"plugins\":[],\"vendorName\":\"Treupo\"},\"wires\":[{\"src\":{\"moduleId\":0,\"terminal\":\"relationWire_0\",\"uid\":\"905857860343\"},\"tgt\":{\"moduleId\":1,\"terminal\":\"SOURCES\",\"uid\":\"971676471092\"}},{\"src\":{\"moduleId\":2,\"terminal\":\"relationWire_0\",\"uid\":\"966207119111\"},\"tgt\":{\"moduleId\":1,\"terminal\":\"SOURCES\",\"uid\":\"971676471092\"}},{\"src\":{\"moduleId\":3,\"terminal\":\"relationWire_0\",\"uid\":\"1336729212119\"},\"tgt\":{\"moduleId\":0,\"terminal\":\"SOURCES\",\"uid\":\"1173301976935\"}}],\"storagePath\":\"\\/var\\/www\\/html\\/Packages\\/\",\"log\":{\"last_modified\":\"2023-07-25 07:42\",\"extension_builder_version\":\"dev-typo3-12-reactjs\",\"be_user\":\" (1)\"}}"
+    },
+    {
+        "name":"system_notes",
+        "storagePath":"/var/www/html/Packages/",
+        "working":"{\"modules\":[],\"properties\":{\"backendModules\":[],\"description\":\"\",\"emConf\":{\"category\":\"backend\",\"custom_category\":\"\",\"dependsOn\":\"\",\"disableLocalization\":false,\"disableVersioning\":false,\"generateDocumentationTemplate\":true,\"generateEditorConfig\":true,\"generateEmptyGitRepository\":true,\"sourceLanguage\":\"en\",\"state\":\"alpha\",\"targetVersion\":\"12.4.0-12.4.99\",\"version\":\"1.0.0\"},\"extensionKey\":\"system_notes\",\"name\":\"Test\",\"originalExtensionKey\":\"system_notes\",\"originalVendorName\":\"Treupo\",\"persons\":[],\"plugins\":[],\"vendorName\":\"Treupo\"},\"wires\":[],\"storagePath\":\"\\/var\\/www\\/html\\/Packages\\/\",\"log\":{\"last_modified\":\"2023-07-09 09:28\",\"extension_builder_version\":\"dev-typo3-12-reactjs\",\"be_user\":\" (1)\"}}"
+    },
+    {
+        "name":"Extensionkex",
+        "storagePath":"/var/www/html/Packages/",
+        "working":"{\"modules\":[{\"config\":{\"position\":[254,56]},\"name\":\"Test\",\"value\":{\"actionGroup\":{\"_default0_index\":true,\"_default1_list\":true,\"_default2_show\":true,\"_default3_new_create\":false,\"_default4_edit_update\":false,\"_default5_delete\":false,\"customActions\":[]},\"name\":\"Test\",\"objectsettings\":{\"addDeletedField\":true,\"addHiddenField\":true,\"addStarttimeEndtimeFields\":true,\"aggregateRoot\":false,\"categorizable\":false,\"description\":\"\",\"mapToTable\":\"\",\"parentClass\":\"\",\"sorting\":false,\"type\":\"Entity\",\"uid\":\"1173301976935\"},\"propertyGroup\":{\"properties\":[{\"allowedFileTypes\":\"\",\"maxItems\":\"1\",\"propertyDescription\":\"\",\"propertyIsL10nModeExclude\":false,\"propertyIsNullable\":true,\"propertyIsRequired\":true,\"propertyName\":\"Name\",\"propertyType\":\"RichText\",\"uid\":\"3aef8866-548c-41d2-bb83-b84a41cf8b0c\"}]},\"relationGroup\":{\"relations\":[]}}},{\"config\":{\"position\":[726,129]},\"name\":\"Zwei\",\"value\":{\"actionGroup\":{\"_default0_index\":true,\"_default1_list\":false,\"_default2_show\":false,\"_default3_new_create\":true,\"_default4_edit_update\":false,\"_default5_delete\":false,\"customActions\":[]},\"name\":\"Zwei\",\"objectsettings\":{\"addDeletedField\":true,\"addHiddenField\":true,\"addStarttimeEndtimeFields\":true,\"aggregateRoot\":false,\"categorizable\":false,\"description\":\"\",\"mapToTable\":\"\",\"parentClass\":\"\",\"sorting\":false,\"type\":\"Entity\",\"uid\":\"1173301976935\"},\"propertyGroup\":{\"properties\":[]},\"relationGroup\":{\"relations\":[]}}}],\"properties\":{\"backendModules\":[{\"actions\":{\"controllerActionCombinations\":\"\"},\"description\":\"\",\"key\":\"\",\"mainModule\":\"\",\"name\":\"\",\"tabLabel\":\"\",\"id\":\"0.969830190542815\"}],\"description\":\"\",\"emConf\":{\"category\":\"backend\",\"custom_category\":\"\",\"dependsOn\":\"\",\"disableLocalization\":false,\"disableVersioning\":false,\"generateDocumentationTemplate\":false,\"generateEditorConfig\":true,\"generateEmptyGitRepository\":false,\"sourceLanguage\":\"en\",\"state\":\"alpha\",\"targetVersion\":\"12.4.0-12.4.99\",\"version\":\"1.0.0\"},\"extensionKey\":\"Extensionkex\",\"name\":\"Testextension\",\"originalExtensionKey\":\"Extensionkex\",\"originalVendorName\":\"Treupo\",\"persons\":[],\"plugins\":[],\"vendorName\":\"Treupo\"},\"wires\":[],\"storagePath\":\"\\/var\\/www\\/html\\/Packages\\/\",\"log\":{\"last_modified\":\"2023-10-17 03:08\",\"extension_builder_version\":\"dev-typo3-12-reactjs\",\"be_user\":\" (1)\"}}"
+    },
+    {
+        "name":"demo_extension",
+        "storagePath":"/var/www/html/Packages/",
+        "working":"{\"modules\":[],\"properties\":{\"backendModules\":[],\"description\":\"This is a demo extension\",\"emConf\":{\"category\":\"custom\",\"custom_category\":\"\",\"dependsOn\":\"TYPO3 12\",\"disableLocalization\":true,\"disableVersioning\":true,\"generateDocumentationTemplate\":true,\"generateEditorConfig\":false,\"generateEmptyGitRepository\":true,\"sourceLanguage\":\"en\",\"state\":\"beta\",\"targetVersion\":\"1.0.0.0-1.0.0.99\",\"version\":\"1.0.0\"},\"extensionKey\":\"demo_extension\",\"name\":\"Demo Extension\",\"originalExtensionKey\":\"demo_extension\",\"originalVendorName\":\"Treupo\",\"persons\":[],\"plugins\":[],\"vendorName\":\"Treupo\"},\"wires\":[],\"storagePath\":\"\\/var\\/www\\/html\\/Packages\\/\",\"log\":{\"last_modified\":\"2023-10-20 03:50\",\"extension_builder_version\":\"dev-typo3-12-reactjs\",\"be_user\":\" (1)\"}}"
+    },
+    {
+        "name":"mybooks",
+        "storagePath":"/var/www/html/Packages/",
+        "working":"{\"modules\":[{\"config\":{\"position\":[140,89]},\"name\":\"Book\",\"value\":{\"actionGroup\":{\"_default0_index\":true,\"_default1_list\":true,\"_default2_show\":true,\"_default3_new_create\":true,\"_default4_edit_update\":true,\"_default5_delete\":true,\"customActions\":[]},\"name\":\"Book\",\"objectsettings\":{\"addDeletedField\":true,\"addHiddenField\":true,\"addStarttimeEndtimeFields\":true,\"aggregateRoot\":false,\"categorizable\":false,\"description\":\"\",\"mapToTable\":\"\",\"parentClass\":\"\",\"sorting\":false,\"type\":\"Entity\",\"uid\":\"1173301976935\"},\"propertyGroup\":{\"properties\":[{\"allowedFileTypes\":\"\",\"maxItems\":\"1\",\"propertyDescription\":\"\",\"propertyIsL10nModeExclude\":false,\"propertyIsNullable\":false,\"propertyIsRequired\":false,\"propertyName\":\"title\",\"propertyType\":\"String\",\"uid\":\"2693a021-1401-4bc8-92d8-73f219f8677d\"},{\"allowedFileTypes\":\"\",\"maxItems\":\"1\",\"propertyDescription\":\"\",\"propertyIsL10nModeExclude\":false,\"propertyIsNullable\":false,\"propertyIsRequired\":false,\"propertyName\":\"description\",\"propertyType\":\"RichText\",\"uid\":\"0d156b90-5639-41f4-8222-b70b25ceb27e\"},{\"allowedFileTypes\":\"\",\"maxItems\":\"1\",\"propertyDescription\":\"\",\"propertyIsL10nModeExclude\":false,\"propertyIsNullable\":false,\"propertyIsRequired\":false,\"propertyName\":\"pages\",\"propertyType\":\"Integer\",\"uid\":\"55354482-76c6-426b-98f2-3b649ee94896\"},{\"allowedFileTypes\":\"\",\"maxItems\":\"1\",\"propertyDescription\":\"\",\"propertyIsL10nModeExclude\":false,\"propertyIsNullable\":false,\"propertyIsRequired\":false,\"propertyName\":\"publicationdate\",\"propertyType\":\"Date\",\"uid\":\"f58cde23-1ac2-44c3-9c82-1ef1b5ef24dd\"}]},\"relationGroup\":{\"relations\":[{\"foreignRelationClass\":\"\",\"lazyLoading\":true,\"propertyIsExcludeField\":true,\"relationDescription\":\"\",\"relationName\":\"author\",\"relationType\":\"zeroToMany\",\"relationWire\":\"[wired]\",\"renderType\":\"selectSingle\",\"uid\":\"99b32d71-ea80-4db1-85d0-d1bfe844a488\",\"advancedSettings\":{\"relationType\":\"zeroToMany\",\"renderType\":\"selectSingle\",\"propertyIsExcludeField\":true,\"lazyLoading\":true,\"relationDescription\":\"\",\"foreignRelationClass\":\"\"}}]}}},{\"config\":{\"position\":[745,229]},\"name\":\"Publisher\",\"value\":{\"actionGroup\":{\"_default0_index\":true,\"_default1_list\":true,\"_default2_show\":true,\"_default3_new_create\":true,\"_default4_edit_update\":true,\"_default5_delete\":true,\"customActions\":[]},\"name\":\"Publisher\",\"objectsettings\":{\"addDeletedField\":true,\"addHiddenField\":true,\"addStarttimeEndtimeFields\":true,\"aggregateRoot\":false,\"categorizable\":false,\"description\":\"\",\"mapToTable\":\"\",\"parentClass\":\"\",\"sorting\":false,\"type\":\"Entity\",\"uid\":\"1173301976935\"},\"propertyGroup\":{\"properties\":[{\"allowedFileTypes\":\"\",\"maxItems\":\"1\",\"propertyDescription\":\"\",\"propertyIsL10nModeExclude\":false,\"propertyIsNullable\":false,\"propertyIsRequired\":false,\"propertyName\":\"name\",\"propertyType\":\"String\",\"uid\":\"ee7205e2-6cf5-4712-9693-8d824fbb2375\"},{\"allowedFileTypes\":\"\",\"maxItems\":\"1\",\"propertyDescription\":\"\",\"propertyIsL10nModeExclude\":false,\"propertyIsNullable\":false,\"propertyIsRequired\":false,\"propertyName\":\"logo\",\"propertyType\":\"File\",\"uid\":\"f0b99c29-57a2-46a8-993e-e609fd073d6b\"}]},\"relationGroup\":{\"relations\":[]}}},{\"config\":{\"position\":[461,404]},\"name\":\"Author\",\"value\":{\"actionGroup\":{\"_default0_index\":true,\"_default1_list\":true,\"_default2_show\":true,\"_default3_new_create\":true,\"_default4_edit_update\":true,\"_default5_delete\":true,\"customActions\":[]},\"name\":\"Author\",\"objectsettings\":{\"addDeletedField\":true,\"addHiddenField\":true,\"addStarttimeEndtimeFields\":true,\"aggregateRoot\":false,\"categorizable\":false,\"description\":\"\",\"mapToTable\":\"\",\"parentClass\":\"\",\"sorting\":false,\"type\":\"Entity\",\"uid\":\"1173301976935\"},\"propertyGroup\":{\"properties\":[{\"allowedFileTypes\":\"\",\"maxItems\":\"1\",\"propertyDescription\":\"\",\"propertyIsL10nModeExclude\":false,\"propertyIsNullable\":false,\"propertyIsRequired\":false,\"propertyName\":\"firstname\",\"propertyType\":\"String\",\"uid\":\"511381c8-9f73-417a-a21c-3a9421d5b331\"},{\"allowedFileTypes\":\"\",\"maxItems\":\"1\",\"propertyDescription\":\"\",\"propertyIsL10nModeExclude\":false,\"propertyIsNullable\":false,\"propertyIsRequired\":false,\"propertyName\":\"lastname\",\"propertyType\":\"String\",\"uid\":\"82ad470f-1c18-48c8-8c22-ad8872b2b30c\"},{\"allowedFileTypes\":\"\",\"maxItems\":\"1\",\"propertyDescription\":\"\",\"propertyIsL10nModeExclude\":false,\"propertyIsNullable\":false,\"propertyIsRequired\":false,\"propertyName\":\"city\",\"propertyType\":\"String\",\"uid\":\"de147ff8-925b-480b-b8db-4a6d1d2de249\"}]},\"relationGroup\":{\"relations\":[]}}}],\"properties\":{\"backendModules\":[{\"actions\":{\"controllerActionCombinations\":\"\",\"controllerActionsCachable\":\"Book => list, new, show, create, edit, update, delete\"},\"description\":\"Module for editing the books\",\"key\":\"books\",\"mainModule\":\"web\",\"name\":\"Books\",\"tabLabel\":\"Books\",\"id\":\"0.5633048444289948\"}],\"description\":\"Testextension for testing the extension_builder\",\"emConf\":{\"category\":\"plugin\",\"custom_category\":\"\",\"dependsOn\":\"typo3 => 12.4.0-12.4.99\\nnews => 11.2.0\",\"disableLocalization\":false,\"disableVersioning\":false,\"generateDocumentationTemplate\":true,\"generateEditorConfig\":true,\"generateEmptyGitRepository\":true,\"sourceLanguage\":\"de\",\"state\":\"beta\",\"targetVersion\":\"12.4.0-12.4.99\",\"version\":\"0.0.1\"},\"extensionKey\":\"mybooks\",\"name\":\"MyBooks\",\"originalExtensionKey\":\"mybooks\",\"originalVendorName\":\"Treupo\",\"persons\":[{\"company\":\"Wacon\",\"email\":\"info@treupo.de\",\"name\":\"Philipp Kuhlmay\",\"role\":\"Developer\",\"id\":\"0.41020161805050526\"},{\"company\":\"Cool company\",\"email\":\"info@treupo.de\",\"name\":\"John Doe\",\"role\":\"Developer\",\"id\":\"0.1433716572239263\"}],\"plugins\":[{\"actions\":{\"controllerActionCombinations\":\"\",\"noncacheableActions\":\"\"},\"description\":\"My list of all the books\",\"key\":\"booklist\",\"name\":\"Book list\",\"id\":\"0.19825226043478694\",\"controllerActionsCachable\":\"Book => list, show\",\"controllerActionsNonCachable\":\"Book => new, edit, delete\"}],\"vendorName\":\"Treupo\"},\"wires\":[{\"src\":{\"moduleId\":0,\"terminal\":\"relationWire_0\",\"uid\":\"reactflow__edge-dndnode_0-dndnode_2\"},\"tgt\":{\"moduleId\":2,\"terminal\":\"SOURCES\",\"uid\":\"dndnode_0\"}}],\"storagePath\":\"\\/var\\/www\\/html\\/Packages\\/\",\"log\":{\"last_modified\":\"2023-10-20 02:43\",\"extension_builder_version\":\"dev-typo3-12-reactjs\",\"be_user\":\" (1)\"}}"
+    }
+]

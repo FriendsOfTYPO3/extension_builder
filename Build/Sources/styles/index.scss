@@ -1,12 +1,12 @@
 @import '_reboot.scss';
 @import '_form.scss';
 
-
 /* React Flow */
 @import 'ReactFlow/reactflow.scss';
 @import 'ReactFlow/Nodes/customModel.scss';
-@import 'ReactFlow/sidebar.scss';
+@import 'ReactFlow/_sidebar.scss';
+
 
 /* TYPO3 overrides */
-@import 'typo3-overrides.scss';
+@import '_typo3-overrides.scss';
 @import 'panel.scss';

@@ -1,9 +1,10 @@
-import {Fragment} from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {SingleAuthorComponent} from "../SingleComponents/SingleAuthorComponent";
-
+import {Fragment, useContext} from "react";
+import {EdgesContext, NodesContext} from "../../App";
 
 export const DebugOutputAccordion = (props) => {
+    const {nodes} = useContext(NodesContext);
+    const {edges} = useContext(EdgesContext);
+
     return (
         <Fragment>
             <div className="panel panel-default">
@@ -18,6 +19,15 @@ export const DebugOutputAccordion = (props) => {
                 <div id="panel-debug" className="accordion-collapse collapse" aria-labelledby="heading-panel-debug"
                      data-bs-parent="#accordion-left-panel-debug">
                     <div className="panel-body">
+                        <h4>Nodes</h4>
+                        <pre>
+                            {JSON.stringify(nodes, null, 2)}
+                        </pre>
+                        <h4>Edges</h4>
+                        <pre>
+                            {JSON.stringify(edges, null, 2)}
+                        </pre>
+                        <h4>Props</h4>
                         <pre>
                             {JSON.stringify(props, null, 2)}
                         </pre>

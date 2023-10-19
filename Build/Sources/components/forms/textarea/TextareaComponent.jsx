@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-const TextareaComponent = ({label = '', placeholder, identifier = '', onChange = () => {}, validation = null }) => {
-    const [value, setValue] = useState('');
+const TextareaComponent = ({label = '', placeholder, identifier = '', initialValue = "", onChange = () => {}, validation = null }) => {
+    const [value, setValue] = useState(initialValue);
     const [isValid, setIsValid] = useState(null);
 
     useEffect(() => {
@@ -24,6 +24,10 @@ const TextareaComponent = ({label = '', placeholder, identifier = '', onChange =
         // Hier können Sie weitere Validierungsregeln hinzufügen
         return true;
     };
+
+    useEffect(() => {
+        setValue(initialValue);
+    }, [initialValue]);
 
     return (
         <div className="mb-2">

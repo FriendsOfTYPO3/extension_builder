@@ -3,8 +3,9 @@ import {AuthorsListAccordion} from "../accordions/AuthorsListAccordion";
 import {PluginsListAccordion} from "../accordions/PluginsListAccordion";
 import {ModulesListAccordion} from "../accordions/ModulesListAccordion";
 import {DebugOutputAccordion} from "../accordions/DebugOutputAccordion";
-import {Fragment} from "react";
+import {Fragment, useContext} from "react";
 import {ActionButtonsComponent} from "../ActionButtonsComponent";
+import {EdgesContext} from "../../App";
 
 export const LeftContentComponent = (props) => {
     return (
@@ -41,14 +42,14 @@ export const LeftContentComponent = (props) => {
                     moveModule={props.moveModule}
                 />
             </div>
-            <div className="panel-group" id="accordion-left-panel-debug">
+            {/*<div className="panel-group" id="accordion-left-panel-debug">
                 <DebugOutputAccordion
                     properties={props.properties}
                     authors={props.authors}
                     plugins={props.plugins}
                     modules={props.modules}
                 />
-            </div>
+            </div>*/}
         </Fragment>
     )
 }

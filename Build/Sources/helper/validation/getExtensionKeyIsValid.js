@@ -22,6 +22,11 @@ export function getExtensionKeyIsValid(extensionKey) {
         return false;
     }
 
+    // Überprüft, ob der Schlüssel Großbuchstaben enthält
+    if (/[A-Z]/.test(extensionKey)) {
+        return false;
+    }
+
     // Wenn alle Überprüfungen bestanden sind, ist der Schlüssel gültig
     return true;
 }

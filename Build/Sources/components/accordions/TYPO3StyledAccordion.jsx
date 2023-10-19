@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 export const TYPO3StyledAccordion = (props) => {
 	return (
-        <div className="panel panel-default">
+        <div className="panel panel-default mb-0">
             <div className="panel-heading">
                 <h3 className="panel-title" id={`simple-heading-panel${props.id}`}>
                     <a href="#" className="collapsed" data-bs-toggle="collapse" data-bs-target={`#simple-panel${props.id}`} aria-expanded="false" aria-controls={`simple-panel${props.id}`}>

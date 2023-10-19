@@ -1,41 +1,47 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState, useContext } from 'react';
 import ReactFlow, {
     MiniMap,
     ReactFlowProvider,
     Background,
     addEdge,
     Controls,
-    SelectionMode, applyNodeChanges, applyEdgeChanges
+    SelectionMode,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import {CustomModelNode} from "./CustomModelNode";
-import Sidebar from "./Sidebar";
-import StrongConnectionLineComponent from "./Connections/StrongConnectionLineComponent";
-
-let id = 0;
-const getId = () => `dndnode_${id++}`;
+import { CustomModelNode } from './CustomModelNode';
+import Sidebar from './Sidebar';
+import {NodesContext, EdgesContext, CustomModelNodeIndexContext} from "../../App";
+import ConnectionLine from './Connections/ConnectionLine';
 
 export const ReactFlowComponent = (props) => {
-    const initialNodes = [];
+    const {customModelNodeIndex, setCustomModelNodeIndex} = useContext(CustomModelNodeIndexContext);
 
-    const initialEdges = [];
+    const {localCustomModelNodeIndex, setLocalCustomModelNodeIndex} = useContext(CustomModelNodeIndexContext);
+
+    const getId = () => {
+        let newId;
+        setCustomModelNodeIndex(prevIndex => {
+            newId = `dndnode_${prevIndex}`;
+            return prevIndex + 1;
+        });
+        return newId;
+    }
+
+
+    // Zustand für das Zählen der Rendervorgänge
+    const renderCount = useRef(0);
+
+    useEffect(() => {
+        // Aktualisiere den Zählstand jedes Mal, wenn die Komponente gerendert wird
+        renderCount.current++;
+    });
+
+    const {nodes, setNodes, onNodesChange} = useContext(NodesContext);
+    const {edges, setEdges, onEdgesChange} = useContext(EdgesContext);
 
     const reactFlowWrapper = useRef(null);
     const nodeTypes = useMemo(() => ({ customModel: CustomModelNode }), []);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
-
-    const [nodes, setNodes] = useState(initialNodes);
-    const [edges, setEdges] = useState(initialEdges);
-
-    const onNodesChange = useCallback(
-        (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-        [setNodes]
-    );
-
-    const onEdgesChange = useCallback(
-        (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-        [setEdges]
-    );
 
     const onConnect = useCallback(
         (connection) => setEdges((eds) => addEdge(connection, eds)),
@@ -43,8 +49,8 @@ export const ReactFlowComponent = (props) => {
     );
 
     useEffect(() => {
-        props.onNodesChanged(nodes);
-    }, [nodes]);
+        setReactFlowInstance(props.reactFlowInstance);
+    }, [props.reactFlowInstance]);
 
     const onDragOver = useCallback((event) => {
         event.preventDefault();
@@ -65,21 +71,16 @@ export const ReactFlowComponent = (props) => {
     const onDrop = useCallback(
         (event) => {
             event.preventDefault();
-
             const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
             const type = event.dataTransfer.getData('application/reactflow');
-
-            // check if the dropped element is valid
             if (typeof type === 'undefined' || !type) {
-                console.log("type undefined");
+                console.log('type undefined');
                 return;
             }
-
             const position = reactFlowInstance.project({
                 x: event.clientX - reactFlowBounds.left,
                 y: event.clientY - reactFlowBounds.top,
             });
-
             const data = {
                 label: "",
                 objectType: "",
@@ -113,10 +114,10 @@ export const ReactFlowComponent = (props) => {
                 dragHandle: '.drag-handle',
                 draggable: true,
             };
-
             setNodes((nds) => nds.concat(newNode));
+            // console.log(newNode)
         },
-        [reactFlowInstance]
+        [reactFlowInstance, setNodes]
     );
 
     return (
@@ -134,22 +135,15 @@ export const ReactFlowComponent = (props) => {
                         onInit={setReactFlowInstance}
                         onDrop={onDrop}
                         onDragOver={onDragOver}
-                        connectionLineComponent={StrongConnectionLineComponent}
+                        connectionLineComponent={ConnectionLine}
                     >
-                        <MiniMap
-                            nodeColor={nodeColor}
-                            nodeStrokeWidth={3}
-                            zoomable
-                            pannable
-                        />
+                        <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
                         <Controls showInteractive={false} />
                         <Background variant="cross" />
                     </ReactFlow>
                 </div>
-                <Sidebar
-                    nodes={nodes}
-                />
+                <Sidebar nodes={props.nodes} />
             </ReactFlowProvider>
         </div>
-    )
+    );
 }

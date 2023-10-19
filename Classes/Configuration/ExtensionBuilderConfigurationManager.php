@@ -374,30 +374,31 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      */
     protected function reArrangeRelations(array $jsonConfig): array
     {
-        foreach ($jsonConfig['wires'] as &$wire) {
-            // format: relation_1
-            $parts = explode('_', $wire['src']['terminal']);
-            $supposedRelationIndex = (int)$parts[1];
-
-            // Source
-            $uid = $wire['src']['uid'];
-            $wire['src'] = $this->findModuleIndexByRelationUid(
-                $wire['src']['uid'],
-                $jsonConfig['modules'],
-                $wire['src']['moduleId'],
-                $supposedRelationIndex
-            );
-            $wire['src']['uid'] = $uid;
-
-            // Target
-            $uid = $wire['tgt']['uid'];
-            $wire['tgt'] = $this->findModuleIndexByRelationUid(
-                $wire['tgt']['uid'],
-                $jsonConfig['modules'],
-                $wire['tgt']['moduleId']
-            );
-            $wire['tgt']['uid'] = $uid;
-        }
+        // TODO check this code. This one removes the terminal array key inside the src array, this mustn't happen
+        // foreach ($jsonConfig['wires'] as &$wire) {
+        //     // format: relation_1
+        //     $parts = explode('_', $wire['src']['terminal']);
+        //     $supposedRelationIndex = (int)$parts[1];
+//
+        //     // Source
+        //     $uid = $wire['src']['uid'];
+        //     $wire['src'] = $this->findModuleIndexByRelationUid(
+        //         $wire['src']['uid'],
+        //         $jsonConfig['modules'],
+        //         $wire['src']['moduleId'],
+        //         $supposedRelationIndex
+        //     );
+        //     $wire['src']['uid'] = $uid;
+//
+        //     // Target
+        //     $uid = $wire['tgt']['uid'];
+        //     $wire['tgt'] = $this->findModuleIndexByRelationUid(
+        //         $wire['tgt']['uid'],
+        //         $jsonConfig['modules'],
+        //         $wire['tgt']['moduleId']
+        //     );
+        //     $wire['tgt']['uid'] = $uid;
+        // }
         return $jsonConfig;
     }
 

@@ -1,6 +1,5 @@
-import {Fragment, useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {getExtensionKeyIsValid} from "../../helper";
+import { Fragment, useState } from "react";
+import { getExtensionKeyIsValid } from "../../helper";
 import InputComponent from "../forms/input/InputComponent";
 import TextareaComponent from "../forms/textarea/TextareaComponent";
 import SelectComponent from "../forms/select/SelectComponent";
@@ -8,6 +7,7 @@ import CheckboxComponent from "../forms/input/CheckboxComponent";
 
 export const ExtensionPropertiesAccordion = (props) => {
     const [extensionProperties, setExtensionProperties] = useState(props.properties);
+
     const [isValid, setIsValid] = useState({});
 
     const categoryOptions = [
@@ -36,28 +36,25 @@ export const ExtensionPropertiesAccordion = (props) => {
         "13.0"
     ];
 
-    const updateExtensionPropertiesHandler = (field, value) => {
-        if (field.startsWith('emConf.')) {
-            const emConfField = field.split('.')[1];
-            setExtensionProperties(prevProps => ({
+    const handleValueChange = (field, value) => {
+        updateExtensionPropertiesHandler(field, value);
+
+        // Handle validation in the same method to keep code DRY
+        if (["extensionKey", "vendorName", "name"].includes(field)) {
+            const isValid = field === 'extensionKey' ? getExtensionKeyIsValid(value) : value.length >= 3;
+            setIsValid(prevProps => ({
                 ...prevProps,
-                emConf: {
-                    ...prevProps.emConf,
-                    [emConfField]: value
-                }
-            }));
-        } else {
-            setExtensionProperties(prevProps => ({
-                ...prevProps,
-                [field]: value
+                [field]: isValid
             }));
         }
-        props.updateExtensionPropertiesHandler(field, value);
-    }
 
-    // Change the depends on textarea depending on the target TYPO3 version
-    const handleTargetTYPO3VersionChange = (e) => {
-        const selectedVersion = e.target.value;
+        // If the changed field is 'emConf.targetVersion', also update the 'depends on' value
+        if (field === 'emConf.targetVersion') {
+            handleTargetTYPO3VersionChange(value);
+        }
+    };
+
+    const handleTargetTYPO3VersionChange = (selectedVersion) => {
         const lines = (extensionProperties.emConf.dependsOn.split('\n').length === 1 && extensionProperties.emConf.dependsOn.split('\n')[0] === '') ? [] : extensionProperties.emConf.dependsOn.split('\n');
         let typo3LineFound = false;
 
@@ -79,34 +76,28 @@ export const ExtensionPropertiesAccordion = (props) => {
 
         const updatedDependsOnValue = updatedLines.join('\n');
 
-        updateExtensionPropertiesHandler('emConf.dependsOn', updatedDependsOnValue);
-        updateExtensionPropertiesHandler('emConf.targetVersion', selectedVersion);
+        handleValueChange('emConf.dependsOn', updatedDependsOnValue);
     };
 
-    /* Validatin */
-    const handleValidation = (field, value) => {
-        if (field === 'extensionKey') {
-            const isValidExtensionKey = getExtensionKeyIsValid(value)
-            setIsValid(prevProps => ({
+
+    const updateExtensionPropertiesHandler = (field, value) => {
+        if (field.startsWith('emConf.')) {
+            const emConfField = field.split('.')[1];
+            setExtensionProperties(prevProps => ({
                 ...prevProps,
-                extensionKey: isValidExtensionKey
+                emConf: {
+                    ...prevProps.emConf,
+                    [emConfField]: value
+                }
+            }));
+        } else {
+            setExtensionProperties(prevProps => ({
+                ...prevProps,
+                [field]: value
             }));
         }
-        if(field === 'vendorName') {
-            const isValidVendorName = value.length >= 3;
-            setIsValid(prevProps => ({
-                ...prevProps,
-                vendorName: isValidVendorName
-            }));
-        }
-        if(field === 'name') {
-            const isValidExtensionName = value.length >= 3;
-            setIsValid(prevProps => ({
-                ...prevProps,
-                name: isValidExtensionName
-            }));
-        }
-    };
+        props.updateExtensionPropertiesHandler(field, value);
+    }
 
     return (
         <Fragment>
@@ -124,69 +115,66 @@ export const ExtensionPropertiesAccordion = (props) => {
                     <div className="panel-body">
                         <InputComponent
                             label="Extension name"
-                            initialvalue={extensionProperties.extensionKey}
+                            initialValue={props.properties.name}
                             identifier="extensionName"
                             validation={{ isRequired: true, minLength: 2 }}
                             onChange={(value) => {
-                                handleValidation('name', value)
-                                updateExtensionPropertiesHandler('name', value);
+                                handleValueChange('name', value)
                             }}
                         />
                         <InputComponent
                             label="Vendor Name"
-                            initialvalue={extensionProperties.emConf.vendorName}
+                            initialValue={props.properties.vendorName}
                             identifier="vendorName"
                             validation={{ isRequired: true, minLength: 2 }}
                             onChange={(value) => {
-                                handleValidation('vendorName', value)
-                                updateExtensionPropertiesHandler('vendorName', value);
+                                handleValueChange('vendorName', value)
                             }}
                         />
                         <InputComponent
                             label="Extension key"
-                            initialvalue={extensionProperties.extensionKey}
+                            initialValue={props.properties.extensionKey}
                             identifier="extensionKey"
-                            validation={{ isRequired: true, minLength: 5 }}
+                            validation={{ isRequired: true, minLength: 3, maxLength: 30 }}
                             onChange={(value) => {
-                                handleValidation('extensionKey', value)
-                                updateExtensionPropertiesHandler('extensionKey', value);
+                                handleValueChange('extensionKey', value)
                             }}
                         />
                         <TextareaComponent
                             placeholder={"Please enter the description for this extension"}
                             label={"Extension Description"}
-                            initialvalue={extensionProperties.description}
+                            initialValue={props.properties.description}
                             identifier={"extensionDescription"}
                             onChange={(value) => {
-                                updateExtensionPropertiesHandler('description', value);
+                                handleValueChange('description', value)
                             }}
                         />
                         <SelectComponent
                             label="Category"
-                            initialvalue={extensionProperties.emConf.category}
+                            initialValue={props.properties.emConf.category}
                             identifier="extensionCategory"
                             options={categoryOptions}
                             defaultValue="Please choose a category"
                             onChange={(value) => {
-                                updateExtensionPropertiesHandler('emConf.category', value);
+                                handleValueChange('emConf.category', value)
                             }}
                         />
                         <InputComponent
                             label="Extension Version"
-                            initialvalue={extensionProperties.emConf.version}
+                            initialValue={props.properties.emConf.version}
                             identifier="extensionVersion"
                             onChange={(value) => {
-                                updateExtensionPropertiesHandler('emConf.version', value);
+                                handleValueChange('emConf.version', value)
                             }}
                         />
                         <SelectComponent
                             label="State"
-                            initialvalue={extensionProperties.emConf.state}
+                            initialValue={props.properties.emConf.state}
                             identifier="extensionState"
                             options={stateOptions}
                             defaultValue="Please choose a state"
                             onChange={(value) => {
-                                updateExtensionPropertiesHandler('emConf.state',value);
+                                handleValueChange('emConf.state', value)
                             }}
                         />
                         <CheckboxComponent
@@ -194,7 +182,7 @@ export const ExtensionPropertiesAccordion = (props) => {
                             identifier="extensionDisableVersioning"
                             checked={props.properties.emConf.disableVersioning}
                             onChange={(value) => {
-                                updateExtensionPropertiesHandler('emConf.disableVersioning', value);
+                                handleValueChange('emConf.disableVersioning', value)
                             }}
                         />
                         <CheckboxComponent
@@ -202,7 +190,7 @@ export const ExtensionPropertiesAccordion = (props) => {
                             identifier="extensionDisableLocalization"
                             checked={props.properties.emConf.disableLocalization}
                             onChange={(value) => {
-                                updateExtensionPropertiesHandler('emConf.disableLocalization', value);
+                                handleValueChange('emConf.disableLocalization', value)
                             }}
                         />
                        <CheckboxComponent
@@ -210,7 +198,7 @@ export const ExtensionPropertiesAccordion = (props) => {
                             identifier="extensionGenerateDocumentation"
                             checked={props.properties.emConf.generateDocumentationTemplate}
                             onChange={(value) => {
-                                updateExtensionPropertiesHandler('emConf.generateDocumentationTemplate', value);
+                                handleValueChange('emConf.generateDocumentationTemplate', value)
                             }}
                         />
                         <CheckboxComponent
@@ -218,7 +206,7 @@ export const ExtensionPropertiesAccordion = (props) => {
                             identifier="extensionGenerateGitRepository"
                             checked={props.properties.emConf.generateEmptyGitRepository}
                             onChange={(value) => {
-                                updateExtensionPropertiesHandler('emConf.generateEmptyGitRepository', value);
+                                handleValueChange('emConf.generateEmptyGitRepository', value)
                             }}
                         />
                         <CheckboxComponent
@@ -226,35 +214,36 @@ export const ExtensionPropertiesAccordion = (props) => {
                             identifier="extensionGenerateEditorconfig"
                             checked={props.properties.emConf.generateEditorConfig}
                             onChange={(value) => {
-                                updateExtensionPropertiesHandler('emConf.generateEditorConfig', value);
+                                handleValueChange('emConf.generateEditorConfig', value)
                             }}
                         />
                         <InputComponent
                             label="Source language for xliff files"
-                            initialvalue={extensionProperties.emConf.sourceLanguage}
+                            initialValue={props.properties.emConf.sourceLanguage}
                             identifier="extensionSourceLanguageXliffFiles"
                             disabled
                             onChange={(value) => {
-                                updateExtensionPropertiesHandler('emConf.sourceLanguage', value);
+                                handleValueChange('emConf.sourceLanguage', value)
                             }}
                         />
                         <SelectComponent
                             label="Target TYPO3 version"
-                            initialvalue={extensionProperties.emConf.targetVersion}
+                            initialValue={props.properties.emConf.targetVersion}
                             identifier="extensionTargetTYPO3Version"
                             options={targetTYPO3Versions}
                             defaultValue="Please choose a TYPO3 version"
-                            onChange={(value) => {
-                                handleTargetTYPO3VersionChange
+                            // Hier wird nur der ausgewählte Wert (selectedVersion) übergeben
+                            onChange={(selectedVersion) => {
+                                handleTargetTYPO3VersionChange(selectedVersion);
                             }}
                         />
                         <TextareaComponent
                             placeholder={"typo3 => 12.4.0"}
                             label={"Depends on"}
-                            initialvalue={extensionProperties.emConf.dependsOn}
+                            initialValue={props.properties.emConf.dependsOn}
                             identifier={"extensionDependsOn"}
                             onChange={(value) => {
-                                updateExtensionPropertiesHandler('emConf.dependsOn', value);
+                                handleValueChange('emConf.dependsOn', value)
                             }}
                         />
                     </div>

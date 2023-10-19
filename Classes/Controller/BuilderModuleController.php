@@ -244,37 +244,45 @@ class BuilderModuleController extends ActionController
 
         if($action == 'domainmodelling') {
             // Add buttons for default domainmodelling page
-            $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-                ->setIcon($this->iconFactory->getIcon('actions-folder', Icon::SIZE_SMALL))
-                ->setTitle('Open extension')
+            $slackButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+                ->setIcon($this->iconFactory->getIcon('actions-brand-slack', Icon::SIZE_SMALL))
+                ->setTitle('Get help on Slack')
                 ->setShowLabelText(true)
-                ->setId('loadExtension-button')
+                ->setId('slack-button')
                 ->setHref('#');
-            $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
+            $buttonBar->addButton($slackButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
 
-            $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-                ->setIcon($this->iconFactory->getIcon('actions-template-new', Icon::SIZE_SMALL))
-                ->setTitle('New extension')
+            $bugButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+                ->setIcon($this->iconFactory->getIcon('actions-debug', Icon::SIZE_SMALL))
+                ->setTitle('Report a bug')
                 ->setShowLabelText(true)
-                ->setId('newExtension-button')
+                ->setId('bug-button')
                 ->setHref('#');
-            $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
+            $buttonBar->addButton($bugButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
 
-            $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-                ->setIcon($this->iconFactory->getIcon('actions-save', Icon::SIZE_SMALL))
-                ->setTitle('Save extension')
+            $documentationButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+                ->setIcon($this->iconFactory->getIcon('apps-toolbar-menu-opendocs', Icon::SIZE_SMALL))
+                ->setTitle('Show documentation')
                 ->setShowLabelText(true)
-                ->setId('saveExtension-button')
+                ->setId('documentation-button')
                 ->setHref('#');
-            $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
+            $buttonBar->addButton($documentationButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
+
+            $sponsorButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+                ->setIcon($this->iconFactory->getIcon('actions-link', Icon::SIZE_SMALL))
+                ->setTitle('Sponsor this project')
+                ->setShowLabelText(true)
+                ->setId('sponsor-button')
+                ->setHref('#');
+            $buttonBar->addButton($sponsorButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
         } else if ($action === 'help') {
             // Add buttons for help page
-            $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            $slackButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
                 ->setIcon($this->iconFactory->getIcon('actions-view-go-back', Icon::SIZE_SMALL))
                 ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.goBack'))
                 ->setShowLabelText(true)
                 ->setHref($this->uriBuilder->uriFor('domainmodelling'));
-            $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
+            $buttonBar->addButton($slackButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
         }
 
     }
@@ -291,15 +299,15 @@ class BuilderModuleController extends ActionController
             ->setShowLabelText(true);
         $buttonBar->addButton($advancedOptionsButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
 
-        $helpButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-            ->setIcon($this->iconFactory->getIcon('module-help', Icon::SIZE_SMALL))
-            ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:showHelp'))
-            ->setId('showHelp')
-            // ->setHref($this->uriBuilder->uriFor('help'))
-            ->setHref('#')
-            ->setShowLabelText(true);
+        // $helpButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+        //     ->setIcon($this->iconFactory->getIcon('module-help', Icon::SIZE_SMALL))
+        //     ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:showHelp'))
+        //     ->setId('showHelp')
+        //     // ->setHref($this->uriBuilder->uriFor('help'))
+        //     ->setHref('#')
+        //     ->setShowLabelText(true);
 
-        $buttonBar->addButton($helpButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);
+        // $buttonBar->addButton($helpButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);
     }
 
     protected function getLanguageService(): LanguageService
@@ -309,16 +317,10 @@ class BuilderModuleController extends ActionController
 
     protected function addAssets(): void
     {
-
         // Load sources for react js app
-        // $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/Sources/App.js');
         $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/main.min.css');
         $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/backend.min.css');
         $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/extensionbuilder.css');
-
-        // Load ReactJS -> not needed at the moment because it is shipped inside the bundled JS
-        // $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/Contrib/react.js');
-        // $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/Contrib/react-dom.js');
 
         // Load custom js
         $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/main.js');
@@ -397,33 +399,7 @@ class BuilderModuleController extends ActionController
 
         // $response = $response->withStatus(200);
         return $this->jsonResponse(json_encode($response));
-
-
-        /*
-
-        if ($input === null) {
-            throw new \InvalidArgumentException('Please provide a number', 1580585107);
-        }
-
-        $result = $input ** 2;
-
-        $response = $this->responseFactory->createResponse()
-            ->withHeader('Content-Type', 'application/json; charset=utf-8');
-        $response->getBody()->write(json_encode(['result' => $result], JSON_THROW_ON_ERROR));
-        // add status code to response
-        $response = $response->withStatus(500);
-        return $response;
-         */
-        // return Response with success message
-        // return $this->jsonResponse(json_encode(['error' => 'Action dispatched.'], 300));
-// our previous computation
-        // $response = $this->responseFactory->createResponse()->withHeader('Content-Type', 'application/json; charset=utf-8');
-        // $response->getBody()->write(json_encode(['result' => 'test'], JSON_THROW_ON_ERROR));
-        // return $response;
-
-
     }
-
 
     /**
      * Generate the code files according to the transferred JSON configuration.
@@ -551,7 +527,7 @@ class BuilderModuleController extends ActionController
             $this->extensionInstallationStatus->setExtension($extension);
             $this->extensionInstallationStatus->setUsesComposerPath($usesComposerPath);
             $message = sprintf(
-                '<p>The Extension was successfully saved in the directory: "%s"</p>%s',
+                '<p>The Extension was successfully saved in the directory:<br> <b>"%s"</b></p>%s',
                 $extensionDirectory,
                 $this->extensionInstallationStatus->getStatusMessage()
             );
@@ -578,6 +554,7 @@ class BuilderModuleController extends ActionController
     {
         $extensions = $this->extensionRepository->findAll();
         return [
+            'success' => true,
             'result' => $extensions,
             'error' => null
         ];

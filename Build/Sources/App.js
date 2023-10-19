@@ -1,106 +1,61 @@
 import './App.scss';
-import {useEffect, useState} from "react";
+import {useNodesState, useEdgesState} from 'reactflow';
+import {useEffect, useState, useContext, createContext} from "react";
 import {LeftContentComponent} from "./components/views/LeftContentComponent";
 import {RightContentComponent} from "./components/views/RightContentComponent";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {getDemoExtensionKey} from "./helper";
+import initialProperties from "./initialValues/properties";
+import defaultAuthor from "./initialValues/author";
+import defaultModule from "./initialValues/module";
+import defaultPlugin from "./initialValues/plugin";
 
-const initialNodes = [];
-const initialEdges = [];
+export const NodesContext = createContext([]);
+export const EdgesContext = createContext([]);
+export const CustomModelNodeIndexContext = createContext(0);
 
 function App() {
     // Nodes for ReactFlow
-    const [nodes, setNodes] = useState([]);
+    const [nodes, setNodes, onNodesChange] = useNodesState([]);
+    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+    const [customModelNodeIndex, setCustomModelNodeIndex] = useState(0);
 
-    const onNodesChanged = (nodes) => {
-        // Dont use prev
-        setNodes(nodes);
-    }
+    const [properties, setProperties] = useState(initialProperties);
+    const [authors, setAuthors] = useState([]);
+    const [plugins, setPlugins] = useState([]);
+    const [modules, setModules] = useState([]);
 
     // Zustand für das Ein- und Ausklappen der linken Spalte
     const [isLeftColumnVisible, setLeftColumnVisible] = useState(true);
+
+    const handleNodesChanged = (newNodes) => {
+        setNodes(newNodes);
+    };
+
+    const handleEdgesChanged = (newEdges) => {
+        setEdges(newEdges);
+    };
+
+    useEffect(() => {
+        const leftColumn = document.getElementById('left-column');
+        if (leftColumn) {
+            leftColumn.style.opacity = isLeftColumnVisible ? '1' : '0';
+        }
+    }, [isLeftColumnVisible]);
 
     // Funktion zum Umschalten der Sichtbarkeit der linken Spalte
     const toggleLeftColumn = () => {
         setLeftColumnVisible(!isLeftColumnVisible);
     }
 
-    const [properties, setProperties] = useState(
-        {
-            backendModules: [],
-            description: "",
-            emConf: {
-                "category": "",
-                "custom_category": "",
-                "dependsOn": "",
-                "disableLocalization": false,
-                "disableVersioning": false,
-                "generateDocumentationTemplate": false,
-                "generateEditorConfig": true,
-                "generateEmptyGitRepository": false,
-                "sourceLanguage": "en",
-                "state": "alpha",
-                "targetVersion": "12.4",
-                "version": "1.0.0"
-            },
-            extensionKey: "",
-            name: "",
-            originalExtensionKey: "",
-            originalVendorName: "",
-            persons: [],
-            plugins: [],
-            vendorName: ""
-        }
-    );
-    const [authors, setAuthors] = useState([]);
-    const [plugins, setPlugins] = useState([]);
-    const [modules, setModules] = useState([]);
-
-    const defaultAuthor = {
-        company: '',
-        email: '',
-        name: '',
-        role: '',
-    }
-
-    const defaultModule = {
-        actions : {
-            controllerActionCombinations: ""
-        },
-        description: '',
-        key: '',
-        mainModule: '',
-        name: '',
-        tabLabel: '',
-    }
-
-    const defaultPlugin = {
-        actions: {
-            controllerActionCombinations: "",
-            noncacheableActions: ""
-        },
-        description: '',
-        key: '',
-        name: '',
-    }
-
-    const addNewAuthorHandler = () => {
-        setAuthors((prevAuthors) => {
-            return [...prevAuthors, {...defaultAuthor, id: Math.random().toString()}];
+    const addNewItemHandler = (setter, defaultItem) => () => {
+        setter((prevItems) => {
+            return [...prevItems, {...defaultItem }];
         });
     }
 
-    const addNewModuleHandler = () => {
-        setModules((prevModules) => {
-            return [...prevModules, {...defaultModule, id: Math.random().toString()}];
-        });
-    }
-
-    const addNewPluginHandler = () => {
-        setPlugins((prevPlugins) => {
-            return [...prevPlugins, {...defaultPlugin, id: Math.random().toString()}];
-        });
-    }
+    const addNewAuthorHandler = addNewItemHandler(setAuthors, defaultAuthor);
+    const addNewModuleHandler = addNewItemHandler(setModules, defaultModule);
+    const addNewPluginHandler = addNewItemHandler(setPlugins, defaultPlugin);
 
     const updateExtensionPropertiesHandler = (key, value) => {
         if (key.includes('.')) {
@@ -120,7 +75,6 @@ function App() {
         }
     }
 
-
     const updateAuthorHandler = (authorId, field, value) => {
         setAuthors((prevAuthors) => {
             return prevAuthors.map((author) => {
@@ -133,22 +87,22 @@ function App() {
         });
     };
 
-const updatePluginHandler = (pluginId, field, value) => {
-    setPlugins((prevPlugins) => {
-        return prevPlugins.map((plugin) => {
-            if (plugin.id === pluginId) {
-                if (field.includes('.')) {
-                    const [parentKey, childKey] = field.split('.');
-                    return {...plugin, [parentKey]: {...plugin[parentKey], [childKey]: value}};
+    const updatePluginHandler = (pluginId, field, value) => {
+        setPlugins((prevPlugins) => {
+            return prevPlugins.map((plugin) => {
+                if (plugin.id === pluginId) {
+                    if (field.includes('.')) {
+                        const [parentKey, childKey] = field.split('.');
+                        return {...plugin, [parentKey]: {...plugin[parentKey], [childKey]: value}};
+                    } else {
+                        return {...plugin, [field]: value};
+                    }
                 } else {
-                    return {...plugin, [field]: value};
+                    return plugin;
                 }
-            } else {
-                return plugin;
-            }
+            });
         });
-    });
-}
+    }
 
     const updateModuleHandler = (moduleId, field, value) => {
         setModules((prevModules) => {
@@ -168,99 +122,59 @@ const updatePluginHandler = (pluginId, field, value) => {
     }
 
     const removeAuthorHandler = (authorId) => {
-        // TODO Testen !!!
         setAuthors((prevAuthors) => {
             return prevAuthors.filter((author) => author.id !== authorId);
         });
     }
 
     const removePluginHandler = (pluginId) => {
-        // TODO Testen !!!
         setPlugins((prevPlugins) => {
             return prevPlugins.filter((plugin) => plugin.id !== pluginId);
         });
     }
 
     const removeModuleHandler = (moduleId) => {
-        // TODO Testen !!!
         setModules((prevModules) => {
             return prevModules.filter((module) => module.id !== moduleId);
         });
     }
 
-    const moveAuthor = (index, direction) => {
-        setAuthors(prevAuthors => {
-            const newAuthors = [...prevAuthors];
+    const moveElement = (index, direction, array, setArray) => {
+        setArray(prevArray => {
+            const newArray = [...prevArray];
             const targetIndex = index + direction;
 
-            // Überprüfen, ob der Zielindex innerhalb der gültigen Bereichsgrenzen liegt
-            if (targetIndex >= 0 && targetIndex < newAuthors.length) {
-                // Elemente tauschen
-                const temp = newAuthors[targetIndex];
-                newAuthors[targetIndex] = newAuthors[index];
-                newAuthors[index] = temp;
+            if (targetIndex >= 0 && targetIndex < newArray.length) {
+                const temp = newArray[targetIndex];
+                newArray[targetIndex] = newArray[index];
+                newArray[index] = temp;
             }
 
-            return newAuthors;
+            return newArray;
         });
     }
 
-    const movePlugin = (index, direction) => {
-        setPlugins(prevPlugins => {
-            const newPlugins = [...prevPlugins];
-            const targetIndex = index + direction;
+    const moveAuthor = (index, direction) => moveElement(index, direction, authors, setAuthors);
+    const movePlugin = (index, direction) => moveElement(index, direction, plugins, setPlugins);
+    const moveModule = (index, direction) => moveElement(index, direction, modules, setModules);
 
-            // Überprüfen, ob der Zielindex innerhalb der gültigen Bereichsgrenzen liegt
-            if (targetIndex >= 0 && targetIndex < newPlugins.length) {
-                // Elemente tauschen
-                const temp = newPlugins[targetIndex];
-                newPlugins[targetIndex] = newPlugins[index];
-                newPlugins[index] = temp;
-            }
+    const handleOpenExtension = (extension) => {
+        const working = JSON.parse(extension.working);
 
-            return newPlugins;
-        });
-    }
+        // Sets properties.
+        setProperties(prev => ({...prev, ...working.properties}));
 
-    const moveModule = (index, direction) => {
-        setModules(prevModules => {
-            const newModules = [...prevModules];
-            const targetIndex = index + direction;
+        // Updated authors, plugins and modules with new IDs.
+        setAuthors(working.properties.persons);
+        setPlugins(working.properties.plugins);
+        setModules(working.properties.backendModules);
 
-            // Überprüfen, ob der Zielindex innerhalb der gültigen Bereichsgrenzen liegt
-            if (targetIndex >= 0 && targetIndex < newModules.length) {
-                // Elemente tauschen
-                const temp = newModules[targetIndex];
-                newModules[targetIndex] = newModules[index];
-                newModules[index] = temp;
-            }
-            return newModules;
-        });
-    }
+        // Check if nodes or edges are available, and update them.
+        setNodes(working.nodes ? working.nodes: []);
+        setEdges(working.edges ? working.edges : []);
 
-    useEffect(() => {
-        const leftColumn = document.getElementById('left-column');
-        if (leftColumn) {
-            leftColumn.style.opacity = isLeftColumnVisible ? '1' : '0';
-        }
-    }, [isLeftColumnVisible]);
-
-    const handleDemoInput = () => {
-        updateExtensionPropertiesHandler('description', 'This is a demo extension');
-        updateExtensionPropertiesHandler('emConf.category', 'custom');
-        updateExtensionPropertiesHandler('emConf.dependsOn', 'TYPO3 12');
-        updateExtensionPropertiesHandler('emConf.disableLocalization', false);
-        updateExtensionPropertiesHandler('emConf.disableVersioning', true);
-        updateExtensionPropertiesHandler('emConf.generateDocumentationTemplate', true);
-        updateExtensionPropertiesHandler('emConf.generateEditorConfig', true);
-        updateExtensionPropertiesHandler('emConf.generateEmptyGitRepository', true);
-        updateExtensionPropertiesHandler('emConf.sourceLanguage', 'en');
-        updateExtensionPropertiesHandler('emConf.state', 'beta');
-        updateExtensionPropertiesHandler('emConf.targetVersion', '1.0.0');
-        updateExtensionPropertiesHandler('emConf.version', '1.0.0');
-        updateExtensionPropertiesHandler('extensionKey', getDemoExtensionKey());
-        updateExtensionPropertiesHandler('name', 'Demo Extension');
-        updateExtensionPropertiesHandler('vendorName', 'Treupo');
+        // Set the custom model node index depending on the amount of nodes.
+        setCustomModelNodeIndex(working.nodes ? working.nodes.length : 0);
     }
 
     return (
@@ -283,34 +197,41 @@ const updatePluginHandler = (pluginId, field, value) => {
             <div className="row">
                 <div id="left-column" className="no-padding full-height">
                     <div className="p-1">
-                        <LeftContentComponent
-                            properties={properties}
-                            authors={authors}
-                            plugins={plugins}
-                            modules={modules}
-                            nodes={nodes}
-                            addNewAuthorHandler={addNewAuthorHandler}
-                            addNewModuleHandler={addNewModuleHandler}
-                            addNewPluginHandler={addNewPluginHandler}
-                            updateExtensionPropertiesHandler={updateExtensionPropertiesHandler}
-                            updateAuthorHandler={updateAuthorHandler}
-                            updateModuleHandler={updateModuleHandler}
-                            updatePluginHandler={updatePluginHandler}
-                            removeAuthorHandler={removeAuthorHandler}
-                            removePluginHandler={removePluginHandler}
-                            removeModuleHandler={removeModuleHandler}
-                            moveAuthor={moveAuthor}
-                            movePlugin={movePlugin}
-                            moveModule={moveModule}
-                            handleDemoInput={handleDemoInput}
-                        />
+                        <EdgesContext.Provider value={{edges, setEdges, onEdgesChange}}>
+                            <NodesContext.Provider value={{nodes, setNodes, onNodesChange}}>
+                                <LeftContentComponent
+                                    properties={properties}
+                                    authors={authors}
+                                    plugins={plugins}
+                                    modules={modules}
+                                    addNewAuthorHandler={addNewAuthorHandler}
+                                    addNewModuleHandler={addNewModuleHandler}
+                                    addNewPluginHandler={addNewPluginHandler}
+                                    updateExtensionPropertiesHandler={updateExtensionPropertiesHandler}
+                                    updateAuthorHandler={updateAuthorHandler}
+                                    updateModuleHandler={updateModuleHandler}
+                                    updatePluginHandler={updatePluginHandler}
+                                    removeAuthorHandler={removeAuthorHandler}
+                                    removePluginHandler={removePluginHandler}
+                                    removeModuleHandler={removeModuleHandler}
+                                    moveAuthor={moveAuthor}
+                                    movePlugin={movePlugin}
+                                    moveModule={moveModule}
+                                    handleOpenExtension={handleOpenExtension}
+                                />
+                            </NodesContext.Provider>
+                        </EdgesContext.Provider>
                     </div>
                 </div>
                <div style={{left: isLeftColumnVisible ? '400px' : '0', width: isLeftColumnVisible ? 'calc(100vw - 400px)' : '100vw'}} id="right-column" className="no-padding full-height">
                     <div >
-                        <RightContentComponent
-                            onNodesChanged={onNodesChanged}
-                        />
+                        <CustomModelNodeIndexContext.Provider value={{customModelNodeIndex, setCustomModelNodeIndex}}>
+                            <EdgesContext.Provider value={{edges, setEdges, onEdgesChange}}>
+                                <NodesContext.Provider value={{nodes, setNodes, onNodesChange}}>
+                                    <RightContentComponent />
+                                </NodesContext.Provider>
+                            </EdgesContext.Provider>
+                        </CustomModelNodeIndexContext.Provider>
                     </div>
                 </div>
             </div>

@@ -33,4 +33,11 @@ describe('getExtensionKeyIsValid', () => {
         expect(getExtensionKeyIsValid('valid_key123')).toBe(true);
         expect(getExtensionKeyIsValid('a'.repeat(29) + '_a')).toBe(true);
     });
+
+    it('returns false for keys containing uppercase letters', () => {
+        expect(getExtensionKeyIsValid('InvalidKey')).toBe(false);
+        expect(getExtensionKeyIsValid('inValid')).toBe(false);
+        expect(getExtensionKeyIsValid('INVALid_key')).toBe(false);
+        expect(getExtensionKeyIsValid('valid_key')).toBe(true);
+    });
 });

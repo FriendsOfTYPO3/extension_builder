@@ -17,3 +17,15 @@ footer ul li {
 footer ul li:last-child {
     margin-right: 0;
 }
+
+.modal-dialog {
+    max-width: min(30vw, 50%, 550px);
+}
+
+.custom-model-node .custom-model-node__header {
+    margin-bottom: 0 !important;
+}
+
+.panel-group {
+    margin-bottom: 0 !important;
+}
