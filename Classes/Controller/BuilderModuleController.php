@@ -51,6 +51,16 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class BuilderModuleController extends ActionController
 {
+    private FileGenerator $fileGenerator;
+    private IconFactory $iconFactory;
+    private PageRenderer $pageRenderer;
+    private ExtensionInstallationStatus $extensionInstallationStatus;
+    private ExtensionSchemaBuilder $extensionSchemaBuilder;
+    private ExtensionService $extensionService;
+    private ModuleTemplateFactory $moduleTemplateFactory;
+    private ExtensionValidator $extensionValidator;
+    private ExtensionRepository $extensionRepository;
+
     public function __construct(
         FileGenerator $fileGenerator,
         IconFactory $iconFactory,
