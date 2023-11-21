@@ -7,6 +7,7 @@ Change log
 ==========
 Version 12.0.0
 --------------
+* [TASK] Rework the whole JS GUI of this extension
 * [TASK] Raise new versions for new TYPO3 12 release
 
 Version 11.0.10
