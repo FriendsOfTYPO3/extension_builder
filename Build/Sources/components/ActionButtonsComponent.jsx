@@ -216,7 +216,20 @@ export const ActionButtonsComponent = (props) => {
                 console.log("Error");
                 console.log(error.message);
                 // eslint-disable-next-line no-restricted-globals
-                top.TYPO3.Modal.confirm(error.message, error.response.data);
+                top.TYPO3.Modal.confirm(
+                    error.message,
+                    error.response.data,
+                    0,
+                    [
+                        {
+                            text: 'Close',
+                            trigger: function () {
+                                console.log("this should close the modal");
+                                top.TYPO3.Modal.dismiss();
+                            }
+                        }
+                    ]
+                );
                 setErrors(error);
             });
     }
