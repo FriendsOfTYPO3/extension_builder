@@ -14,11 +14,6 @@ return [<f:for each="{extension.backendModules}" as="backendModule">
                 <f:for each="{controller}" as="action" iteration="actionIterator">'{action}'{f:if(condition: actionIterator.isLast, then: '', else: ',')}</f:for>
             ]{f:if(condition: controllerIterator.isLast, then: '', else: ',')}</f:for>
         ],
-        'routes' => [
-            '_default' => [
-                'target' => 'test',
-            ],
-        ],
     ],
 </f:for>
 ];
