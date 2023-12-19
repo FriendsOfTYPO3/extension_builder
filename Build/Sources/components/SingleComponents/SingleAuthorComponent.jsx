@@ -6,7 +6,6 @@ import InputComponent from "../forms/input/InputComponent";
 import SelectComponent from "../forms/select/SelectComponent";
 
 export const SingleAuthorComponent = (props) => {
-
     const updateAuthorHandler = (field, value) => {
         props.updateAuthorHandler(props.index, field, value);
     };

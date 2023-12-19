@@ -7,7 +7,8 @@ export const ModulesListAccordion = memo((props) => {
         <div className="panel panel-default">
             <div className="panel-heading">
                 <h3 className="panel-title" id="heading-panel-modules">
-                    <a href="#" className="collapsed" data-bs-toggle="collapse" data-bs-target="#panel-modules" aria-expanded="true" aria-controls="panel-modules">
+                    <a href="#" className="collapsed" data-bs-toggle="collapse" data-bs-target="#panel-modules"
+                       aria-expanded="true" aria-controls="panel-modules">
                         <span className="caret"></span>
                         <strong>Backend modules</strong>
                     </a>
@@ -28,11 +29,12 @@ export const ModulesListAccordion = memo((props) => {
                             ))
                         }
                     </ul>
-                    {props.modules.length === 0 && <div className="alert alert-danger" role="alert">No modules yet</div>}
+                    {props.modules.length === 0 &&
+                        <div className="alert alert-danger" role="alert">No modules yet</div>}
                     <button
                         className="btn btn-success w-100"
                         onClick={props.addModulesHandler}>
-                        <FontAwesomeIcon className="me-1" icon={['fas', 'plus']} />
+                        <FontAwesomeIcon className="me-1" icon={['fas', 'plus']}/>
                         Add new module
                     </button>
                 </div>
