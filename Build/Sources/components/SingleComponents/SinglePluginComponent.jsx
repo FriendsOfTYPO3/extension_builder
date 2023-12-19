@@ -8,7 +8,7 @@ import React from "react";
 export const SinglePluginComponent = (props) => {
 
     const updatePluginHandler = (field, value) => {
-       props.updatePluginHandler(props.plugin.id, field, value);
+       props.updatePluginHandler(props.index, field, value);
     };
 
     return (
@@ -46,18 +46,18 @@ export const SinglePluginComponent = (props) => {
                     placeholder="Blog => list, show"
                     label="Cachable controller actions"
                     identifier="controllerActionsCachable"
-                    initialValue={props.plugin.controllerActionsCachable}
+                    initialValue={props.plugin.actions.controllerActionCombinations}
                     onChange={(value) => {
-                        updatePluginHandler('controllerActionsCachable', value);
+                        updatePluginHandler('actions.controllerActionCombinations', value);
                     }}
                 />
                 <TextareaComponent
                     placeholder="Blog => edit, update, delete"
                     label="Non cachable controller actions"
                     identifier="controllerActionsNonCachable"
-                    initialValue={props.plugin.controllerActionsNonCachable}
+                    initialValue={props.plugin.actions.noncacheableActions}
                     onChange={(value) => {
-                        updatePluginHandler('controllerActionsNonCachable', value);
+                        updatePluginHandler('actions.noncacheableActions', value);
                     }}
                 />
                 <div className="d-flex author-actions">

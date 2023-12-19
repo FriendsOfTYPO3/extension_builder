@@ -9,7 +9,7 @@ import InputComponent from "../forms/input/InputComponent";
 export const SingleModuleComponent = (props) => {
 
     const updateModuleHandler = (field, value) => {
-        props.updateModuleHandler(props.module.id, field, value);
+        props.updateModuleHandler(props.index, field, value);
     };
 
     const mainModules = [
@@ -76,9 +76,9 @@ export const SingleModuleComponent = (props) => {
                     placeholder="Blog => edit, update, delete"
                     label="Cachable controller actions"
                     identifier="controllerActionCombinations"
-                    initialValue={props.module.controllerActionCombinations}
+                    initialValue={props.module.actions.controllerActionCombinations}
                     onChange={(value) => {
-                        updateModuleHandler('controllerActionCombinations', value);
+                        updateModuleHandler('actions.controllerActionCombinations', value);
                     }}
                 />
                 <div className="d-flex module-actions">

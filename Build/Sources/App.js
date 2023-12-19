@@ -75,51 +75,113 @@ function App() {
         }
     }
 
-    const updateAuthorHandler = (authorId, field, value) => {
+    const updateAuthorHandler = (authorIndex, field, value) => {
+        if (authorIndex < 0 || authorIndex >= authors.length) {
+            console.error("Invalid author index");
+            return;
+        }
+
         setAuthors((prevAuthors) => {
-            return prevAuthors.map((author) => {
-                if (author.id === authorId) {
+            return prevAuthors.map((author, index) => {
+                if (index === authorIndex) {
                     return {...author, [field]: value};
-                } else {
-                    return author;
                 }
+                return author;
             });
         });
     };
 
-    const updatePluginHandler = (pluginId, field, value) => {
-        setPlugins((prevPlugins) => {
-            return prevPlugins.map((plugin) => {
-                if (plugin.id === pluginId) {
-                    if (field.includes('.')) {
-                        const [parentKey, childKey] = field.split('.');
-                        return {...plugin, [parentKey]: {...plugin[parentKey], [childKey]: value}};
-                    } else {
-                        return {...plugin, [field]: value};
-                    }
-                } else {
-                    return plugin;
-                }
-            });
-        });
-    }
+    const updatePluginHandler = (pluginIndex, fieldPath, value) => {
+        if (pluginIndex < 0 || pluginIndex >= plugins.length) {
+            console.error("Invalid plugin index");
+            return;
+        }
 
-    const updateModuleHandler = (moduleId, field, value) => {
-        setModules((prevModules) => {
-            return prevModules.map((module) => {
-                if (module.id === moduleId) {
-                    if (field.includes('.')) {
-                        const [parentKey, childKey] = field.split('.');
-                        return {...module, [parentKey]: {...module[parentKey], [childKey]: value}};
-                    } else {
-                        return {...module, [field]: value};
+        // Teile den Pfad in seine Bestandteile
+        const pathParts = fieldPath.split('.');
+
+        setPlugins((prevPlugins) => {
+            return prevPlugins.map((plugin, index) => {
+                if (index === pluginIndex) {
+                    // Erstelle eine Kopie des Plugins
+                    let updatedPlugin = {...plugin};
+
+                    // Referenz zum aktuellen Teil des Plugins
+                    let currentPart = updatedPlugin;
+
+                    // Gehe durch alle Teile des Pfads, außer dem letzten
+                    for (let i = 0; i < pathParts.length - 1; i++) {
+                        const part = pathParts[i];
+
+                        // Aktualisiere die Referenz zum nächsten Teil
+                        if (!currentPart[part]) {
+                            currentPart[part] = {}; // Erstelle ein neues Objekt, falls nicht vorhanden
+                        } else {
+                            // Erstelle eine Kopie, um direkte Mutationen zu vermeiden
+                            currentPart[part] = {...currentPart[part]};
+                        }
+
+                        // Bewege die Referenz
+                        currentPart = currentPart[part];
                     }
-                } else {
-                    return module;
+
+                    // Aktualisiere den letzten Teil des Pfads
+                    currentPart[pathParts[pathParts.length - 1]] = value;
+
+                    // Gib das aktualisierte Plugin zurück
+                    return updatedPlugin;
                 }
+                return plugin;
             });
         });
-    }
+    };
+
+
+    const updateModuleHandler = (moduleIndex, fieldPath, value) => {
+        if (moduleIndex < 0 || moduleIndex >= modules.length) {
+            console.error("Invalid module index");
+            return;
+        }
+
+        // Teile den Pfad in seine Bestandteile
+        const pathParts = fieldPath.split('.');
+
+        setModules((prevModules) => {
+            return prevModules.map((module, index) => {
+                if (index === moduleIndex) {
+                    // Erstelle eine Kopie des Moduls
+                    let updatedModule = {...module};
+
+                    // Referenz zum aktuellen Teil des Moduls
+                    let currentPart = updatedModule;
+
+                    // Gehe durch alle Teile des Pfads, außer dem letzten
+                    for (let i = 0; i < pathParts.length - 1; i++) {
+                        const part = pathParts[i];
+
+                        // Aktualisiere die Referenz zum nächsten Teil
+                        if (!currentPart[part]) {
+                            currentPart[part] = {}; // Erstelle ein neues Objekt, falls nicht vorhanden
+                        } else {
+                            // Erstelle eine Kopie, um direkte Mutationen zu vermeiden
+                            currentPart[part] = {...currentPart[part]};
+                        }
+
+                        // Bewege die Referenz
+                        currentPart = currentPart[part];
+                    }
+
+                    // Aktualisiere den letzten Teil des Pfades
+                    currentPart[pathParts[pathParts.length - 1]] = value;
+
+                    // Gib das aktualisierte Modul zurück
+                    return updatedModule;
+                }
+                return module;
+            });
+        });
+    };
+
 
     const removeAuthorHandler = (authorId) => {
         setAuthors((prevAuthors) => {
