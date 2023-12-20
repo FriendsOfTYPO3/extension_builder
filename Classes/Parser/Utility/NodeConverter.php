@@ -134,6 +134,13 @@ class NodeConverter
         }
 
         if ($node instanceof Node) {
+
+            if ( !property_exists($node, "value") ) {
+                return implode('|', array_map(function($type) {
+                    return $type->toString();
+                }, $node->types));
+            }
+            
             return $node->value;
         }
 
