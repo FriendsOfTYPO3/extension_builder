@@ -139,7 +139,7 @@ class RoundTrip implements SingletonInterface
 
         if (file_exists($this->previousExtensionDirectory . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE)) {
             $extensionSchemaBuilder = GeneralUtility::makeInstance(ExtensionSchemaBuilder::class);
-            $jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey);
+            $jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey, $extension->getStoragePath());
             $this->previousExtension = $extensionSchemaBuilder->build($jsonConfig);
             $previousDomainObjects = $this->previousExtension->getDomainObjects();
             /** @var DomainObject[] $previousDomainObjects */
@@ -821,6 +821,10 @@ class RoundTrip implements SingletonInterface
 
         if (!empty($methodParameters)) {
             $parameterTags = $mergedMethod->getTagValues('param');
+            if (!is_array($parameterTags)) {
+                $parameterTags = [$parameterTags];
+            }
+
             foreach ($methodParameters as $methodParameter) {
                 $oldParameterName = $methodParameter->getName();
                 if ($oldParameterName == ClassBuilder::getParameterName($oldProperty, $methodType)) {
@@ -1021,14 +1025,14 @@ class RoundTrip implements SingletonInterface
             $path = str_replace($extension->getExtensionDir(), '', $path);
         }
         $pathParts = explode('/', $path);
-        $overWriteSettings = $settings['overwriteSettings'];
+        $overWriteSettings = $settings['overwriteSettings'] ?? [];
 
         foreach ($pathParts as $pathPart) {
             if (isset($overWriteSettings[$pathPart]) && is_array($overWriteSettings[$pathPart])) {
                 // step one level deeper
                 $overWriteSettings = $overWriteSettings[$pathPart];
             } else {
-                return $map[$overWriteSettings[$pathPart]];
+                return $map[$overWriteSettings[$pathPart] ?? ''] ?? null;
             }
         }
 

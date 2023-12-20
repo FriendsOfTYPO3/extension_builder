@@ -16,8 +16,8 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [7.4]
-        typo3: [^11.4]
+        php: [7.4, 8.0]
+        typo3: [^11.5]
 
     name: P${{ matrix.php }} - T${{ matrix.typo3 }}
 
@@ -47,10 +47,10 @@ jobs:
       - name: Execute unit tests
         run: .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/
         env:
-          TYPO3_PATH_WEB: $PWD/.Build/public
+          TYPO3_PATH_WEB: $PWD/.Build/Web
 
       - name: Execute functional tests
         run: .Build/bin/phpunit --colors  -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/
         env:
-          TYPO3_PATH_WEB: $PWD/.Build/public
+          TYPO3_PATH_WEB: $PWD/.Build/Web
           typo3DatabaseDriver: pdo_sqlite

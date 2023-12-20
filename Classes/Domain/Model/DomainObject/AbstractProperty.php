@@ -392,6 +392,11 @@ abstract class AbstractProperty
         return $this->domainObject->getLabelNamespace() . '.' . $this->getFieldName();
     }
 
+    public function getDescriptionNamespace(): string
+    {
+        return $this->getLabelNamespace() . '.description';
+    }
+
     /**
      * DO NOT CALL DIRECTLY! This is being called by addProperty() automatically.
      *

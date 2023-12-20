@@ -5,3 +5,4 @@
 /Tests export-ignore
 /.* export-ignore
 /crowdin.yaml export-ignore
+/docker-compose.yml export-ignore

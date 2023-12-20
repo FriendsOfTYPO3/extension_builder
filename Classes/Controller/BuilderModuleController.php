@@ -176,10 +176,9 @@ class BuilderModuleController extends ActionController
 
         $this->addAssets();
 
-        $extPath = ExtensionManagementUtility::extPath('extension_builder');
         $this->pageRenderer->addInlineSettingArray(
             'extensionBuilder',
-            ['baseUrl' => '../' . PathUtility::stripPathSitePrefix($extPath)]
+            ['publicResourcesUrl' => PathUtility::getPublicResourceWebPath('EXT:extension_builder/Resources/Public')]
         );
 
         $this->setLocallangSettings();
@@ -303,7 +302,7 @@ class BuilderModuleController extends ActionController
     {
         $advancedOptionsButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
             ->setIcon($this->iconFactory->getIcon('content-menu-pages', Icon::SIZE_SMALL))
-            ->setTitle('<span class="simpleMode">Show</span><span class="advancedMode">Hide</span> advanced options.')
+            ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:advancedOptions'))
             ->setId('toggleAdvancedOptions')
             ->setHref('#')
             ->setShowLabelText(true);
@@ -508,11 +507,12 @@ class BuilderModuleController extends ActionController
         $publicExtensionDirectory = Environment::getExtensionsPath() . '/' . $extension->getExtensionKey();
         $usesComposerPath = $this->extensionService->isComposerStoragePath($extensionDirectory);
         $extensionExistedBefore = is_dir($extensionDirectory);
+        $isComposerInstallerV4 = $this->extensionService->isComposerInstallerV4();
 
         if (!$extensionExistedBefore) {
             GeneralUtility::mkdir($extensionDirectory);
         }
-        if ($usesComposerPath && !is_link($publicExtensionDirectory)) {
+        if ($usesComposerPath && !$isComposerInstallerV4 && !is_link($publicExtensionDirectory)) {
             symlink(
                 PathUtility::getRelativePath(dirname($publicExtensionDirectory), $extensionDirectory),
                 $publicExtensionDirectory
@@ -617,7 +617,7 @@ class BuilderModuleController extends ActionController
         $messagesPerErrorCode = [];
         foreach ($warnings as $exception) {
             $errorCode = $exception->getCode();
-            if (!is_array($messagesPerErrorCode[$errorCode])) {
+            if (!isset($messagesPerErrorCode[$errorCode])) {
                 $messagesPerErrorCode[$errorCode] = [];
             }
             $messagesPerErrorCode[$errorCode][] = nl2br(htmlspecialchars($exception->getMessage())) . ' (Error ' . $errorCode . ')<br /><br />';

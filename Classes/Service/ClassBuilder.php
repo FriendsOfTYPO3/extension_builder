@@ -211,7 +211,7 @@ class ClassBuilder implements SingletonInterface
                 ));
             }
 
-            if ($domainProperty->getHasDefaultValue() && $this->settings['setDefaultValuesForClassProperties'] !== false) {
+            if ($domainProperty->getHasDefaultValue() && ($this->settings['setDefaultValuesForClassProperties'] ?? false) !== false) {
                 $classProperty->setDefault($domainProperty->getDefaultValue());
             }
             if ($domainProperty->isNullableProperty() === true && $domainProperty->getNullable() === true) {
@@ -329,7 +329,7 @@ class ClassBuilder implements SingletonInterface
             $replacements = ['property' => $propertyName];
             $this->updateMethodBody($getterMethod, $replacements);
             $this->updateDocComment($getterMethod, $replacements);
-            $getterMethod->setTag('return', $domainProperty->getTypeForComment() . ' $' . $propertyName);
+            $getterMethod->setTag('return', $domainProperty->getTypeForComment());
         }
         if (!$getterMethod->hasDescription()) {
             $getterMethod->setDescription('Returns the ' . $domainProperty->getName());

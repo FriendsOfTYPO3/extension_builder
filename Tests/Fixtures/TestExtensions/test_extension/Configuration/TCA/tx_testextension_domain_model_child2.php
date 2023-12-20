@@ -97,6 +97,7 @@ return [
         'name' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.name',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.name.description',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -107,6 +108,7 @@ return [
         'date_property1' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property1',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property1.description',
             'config' => [
                 'dbType' => 'date',
                 'type' => 'input',
@@ -119,6 +121,7 @@ return [
         'date_property2' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property2',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property2.description',
             'config' => [
                 'dbType' => 'datetime',
                 'type' => 'input',
@@ -131,6 +134,7 @@ return [
         'date_property3' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property3',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property3.description',
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
@@ -142,6 +146,7 @@ return [
         'date_property4' => [
             'exclude' => true,
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property4',
+            'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child2.date_property4.description',
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',

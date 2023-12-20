@@ -292,7 +292,8 @@ class Extension
                 if (strpos($parentClass, '\\') === 0) {
                     $parentClass = substr($parentClass, 1);
                 }
-                if (!is_array($classHierarchy[$parentClass])) {
+                // Check whether the array key exists
+                if (!isset($classHierarchy[$parentClass]) || !is_array($classHierarchy[$parentClass])) {
                     $classHierarchy[$parentClass] = [];
                 }
                 $classHierarchy[$parentClass][] = $domainObject;
@@ -674,8 +675,7 @@ class Extension
             ],
             'extra' => [
                 'typo3/cms' => [
-                    'cms-package-dir' => '{$vendor-dir}/typo3/cms',
-                    'web-dir' => '.Build/public',
+                    'web-dir' => '.Build/Web',
                     'extension-key' => $extensionKey,
                 ]
             ]

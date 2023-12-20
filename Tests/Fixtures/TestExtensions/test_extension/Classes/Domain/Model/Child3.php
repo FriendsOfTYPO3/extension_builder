@@ -6,7 +6,7 @@ namespace FIXTURE\TestExtension\Domain\Model;
 
 
 /**
- * This file is part of the "ExtensionBuilder Test Extension" Extension for TYPO3 CMS.
+ * This file is part of the "Extension Builder Test Extension" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -47,7 +47,7 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the name
      *
-     * @return string $name
+     * @return string
      */
     public function getName()
     {
@@ -68,7 +68,7 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the password
      *
-     * @return string $password
+     * @return string
      */
     public function getPassword()
     {
@@ -89,7 +89,7 @@ class Child3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the imageProperty
      *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference $imageProperty
+     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
      */
     public function getImageProperty()
     {

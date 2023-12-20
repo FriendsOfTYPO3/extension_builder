@@ -6,12 +6,12 @@ namespace FIXTURE\TestExtension\Domain\Model;
 
 
 /**
- * This file is part of the "ExtensionBuilder Test Extension" Extension for TYPO3 CMS.
+ * This file is part of the "Extension Builder Test Extension" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2021 John Doe <mail@typo3.com>, TYPO3
+ * (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
  */
 
 /**
@@ -61,7 +61,7 @@ class Category extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the name
      *
-     * @return string $name
+     * @return string
      */
     public function getName()
     {
@@ -104,7 +104,7 @@ class Category extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the categories
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Category> $categories
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Category>
      */
     public function getCategories()
     {

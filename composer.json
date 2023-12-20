@@ -2,12 +2,13 @@
 	"name": "friendsoftypo3/extension-builder",
 	"type": "typo3-cms-extension",
 	"description": "Tool to kickstart and maintain TYPO3 extensions",
-	"keywords": [
-		"TYPO3",
-		"extension",
-		"extension_builder"
-	],
-	"homepage": "https://github.com/FriendsOfTYPO3/extension_builder",
+	"keywords": ["TYPO3", "extension", "extension_builder"],
+	"homepage": "https://extensions.typo3.org/extension/extension_builder",
+	"support": {
+		"issues": "https://github.com/FriendsOfTYPO3/extension_builder/issues",
+		"source": "https://github.com/FriendsOfTYPO3/extension_builder",
+		"docs": "https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/"
+	},
 	"license": "GPL-2.0-or-later",
 	"authors": [
 		{
@@ -53,17 +54,31 @@
 		"vendor-dir": ".Build/vendor",
 		"preferred-install": {
 			"*": "dist"
+		},
+		"allow-plugins": {
+			"typo3/class-alias-loader": true,
+			"typo3/cms-composer-installers": true
 		}
 	},
 	"scripts": {
+		"prepare-release": [
+			"rm -rf Resources/Private/Schema",
+			"rm -rf .devbox",
+			"rm -rf .editorconfig",
+			"rm -rf .gitattributes",
+			"rm -rf .gitignore",
+			"rm -rf crowdin.yaml",
+			"rm -rf .php-cs-fixer.php",
+			"rm -rf .phpstorm.meta.php"
+		],
 		"post-autoload-dump": [
 			"@prepare-extension-test-structure"
 		],
 		"prepare-extension-test-structure": [
 			"TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
 		],
-		"unit-tests": "TYPO3_PATH_ROOT=$PWD/.Build/public .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml --stop-on-failure Tests/Unit",
-		"functional-tests": "TYPO3_PATH_ROOT=$PWD/.Build/public typo3DatabaseDriver=pdo_sqlite .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml --stop-on-failure Tests/Functional",
+		"unit-tests": "TYPO3_PATH_ROOT=$PWD/.Build/Web .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml --stop-on-failure Tests/Unit",
+		"functional-tests": "TYPO3_PATH_ROOT=$PWD/.Build/Web typo3DatabaseDriver=pdo_sqlite .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml --stop-on-failure Tests/Functional",
 		"test": [
 			"@test-php-cs-fixer",
 			"@unit-tests",
@@ -74,9 +89,9 @@
 	"extra": {
 		"typo3/cms": {
 			"extension-key": "extension_builder",
-			"cms-package-dir": "{$vendor-dir}/typo3/cms",
 			"app-dir": ".Build",
-			"web-dir": ".Build/public"
+			"ignore-as-root": false,
+			"web-dir": ".Build/Web"
 		}
 	}
 }

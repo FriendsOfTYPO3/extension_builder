@@ -212,8 +212,8 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $extension->setSupportLocalization(false);
         }
 
-        if (empty($propertyConfiguration['emConf']['generateDocumentationTemplate'])) {
-            $extension->setGenerateDocumentationTemplate(false);
+        if (!empty($propertyConfiguration['emConf']['generateDocumentationTemplate'])) {
+            $extension->setGenerateDocumentationTemplate($propertyConfiguration['emConf']['generateDocumentationTemplate']);
         }
 
         if ($propertyConfiguration['emConf']['generateEmptyGitRepository'] ?? false) {
