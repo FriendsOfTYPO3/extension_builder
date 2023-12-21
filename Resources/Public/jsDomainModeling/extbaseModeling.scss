@@ -890,6 +890,8 @@ div.inputEx-Group-collapseImg {
     ol.warnings {
         padding-left: 50px;
         text-align: left;
+        max-height: 75vh;
+        overflow: auto;
 
         li {
             list-style: decimal;
