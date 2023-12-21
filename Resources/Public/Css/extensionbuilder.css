@@ -29,3 +29,8 @@ footer ul li:last-child {
 .panel-group {
     margin-bottom: 0 !important;
 }
+
+#domainModelEditor .footer li {
+    list-style: none;
+    margin-right: 10px;
+}

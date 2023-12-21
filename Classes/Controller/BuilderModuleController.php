@@ -165,7 +165,9 @@ class BuilderModuleController extends ActionController
         }
         $this->view->assignMultiple([
             'initialWarnings' => $initialWarnings,
-            'currentVersion' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getExtensionVersion($this->request->getControllerExtensionKey())
+            'currentVersion' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getExtensionVersion($this->request->getControllerExtensionKey()),
+            'backupDir' => $this->extensionBuilderSettings['extConf']['backupDir'],
+            'outputDir' => $this->extensionBuilderSettings['extConf']['outputDir'],
         ]);
         $this->pageRenderer->addInlineSetting(
             'extensionBuilder.publicResourceWebPath',

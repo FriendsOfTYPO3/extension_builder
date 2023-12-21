@@ -4,3 +4,5 @@ enableRoundtrip = 1
 backupExtension = 1
 # cat=basic; type=string; label=Backup directory: The directory where the Extension Builder stores the backup - specified as an absolute path or relative to PATH_site.
 backupDir = var/tx_extensionbuilder/backups
+# cat=basic; type=string; label=Output directory: The directory where the Extension Builder stores the extensions - specified as an absolute path or relative to PATH_site.
+outputDir = WIP (not yet available)
