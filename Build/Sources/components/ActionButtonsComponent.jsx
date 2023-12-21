@@ -302,13 +302,13 @@ export const ActionButtonsComponent = (props) => {
                 <div className="btn-group w-100" role="group" aria-label="Basic example">
                     <button
                         type="button"
-                        className="btn btn-success"
+                        className="fs-3 btn btn-success"
                         id="eb-btn-save"
                         onClick={handleSave}
                     ><FontAwesomeIcon className="me-1" icon="fa-solid fa-save" />Save</button>
                     <button
                         type="button"
-                        className="btn btn-light text-dark"
+                        className="fs-3 btn btn-light text-dark"
                         id="eb-btn-prefill"
                         onClick={handleOpenExtension}
                     ><FontAwesomeIcon className="me-1" icon="fa-solid fa-file" />Open</button>

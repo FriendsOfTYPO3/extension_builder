@@ -257,7 +257,7 @@ function App() {
                 </div>
             </div>
             <div className="row">
-                <div id="left-column" className="no-padding full-height">
+                <div id="left-column" className="fs-3 no-padding full-height">
                     <div className="p-1">
                         <EdgesContext.Provider value={{edges, setEdges, onEdgesChange}}>
                             <NodesContext.Provider value={{nodes, setNodes, onNodesChange}}>

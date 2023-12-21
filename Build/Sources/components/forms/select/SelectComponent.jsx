@@ -17,12 +17,12 @@ const SelectComponent = ({ label, options, defaultValue, showEmptyValue = true, 
         <div className="mb-2">
             <label
                 htmlFor={identifier}
-                className="form-label"
+                className="fs-3 form-label"
             >
                 {label}
             </label>
             <select
-                className="form-select"
+                className="fs-3 form-select"
                 aria-label={label}
                 onChange={handleChange}
                 value={value}  // Setzen Sie den aktuellen Wert hier

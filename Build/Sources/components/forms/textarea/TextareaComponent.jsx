@@ -31,12 +31,12 @@ const TextareaComponent = ({label = '', placeholder, identifier = '', initialVal
 
     return (
         <div className="mb-2">
-            <label htmlFor={identifier} className="form-label">
+            <label htmlFor={identifier} className="fs-3 form-label">
                 {label}
             </label>
             <textarea
                 type="text"
-                className={classNames("form-control form-control-sm", {
+                className={classNames("fs-3 form-control form-control-sm", {
                     'is-valid': isValid === true,
                     'is-invalid': isValid === false,
                 })}

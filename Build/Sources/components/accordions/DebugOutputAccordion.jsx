@@ -18,7 +18,7 @@ export const DebugOutputAccordion = (props) => {
                 </div>
                 <div id="panel-debug" className="accordion-collapse collapse" aria-labelledby="heading-panel-debug"
                      data-bs-parent="#accordion-left-panel-debug">
-                    <div className="panel-body">
+                    <div className="panel-body py-2">
                         <h4>Nodes</h4>
                         <pre>
                             {JSON.stringify(nodes, null, 2)}

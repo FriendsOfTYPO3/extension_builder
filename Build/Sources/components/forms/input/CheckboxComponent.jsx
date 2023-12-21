@@ -17,7 +17,7 @@ const CheckboxComponent = ({checked, label, identifier, onChange = () => {}}) =>
     return (
         <div className="d-flex justify-content-between form-check ps-0 form-switch mb-2">
             <label
-                className="form-check-label"
+                className="fs-3 form-check-label"
                 htmlFor={identifier}
             >
                 {label}

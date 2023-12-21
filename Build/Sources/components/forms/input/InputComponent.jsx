@@ -39,14 +39,14 @@ const InputComponent = ({ label, identifier, initialValue, onChange, validation 
         <div className="mb-2">
             {
                 label !== '' && (
-                    <label htmlFor={identifier} className="form-label">
+                    <label htmlFor={identifier} className="fs-3 form-label mb-1">
                         {label}
                     </label>
                 )
             }
             <input
                 type="text"
-                className={classNames("form-control form-control-sm", {
+                className={classNames("fs-3 form-control form-control-sm", {
                     'is-valid': isValid === true,
                     'is-invalid': isValid === false,
                 })}

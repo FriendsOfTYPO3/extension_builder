@@ -103,7 +103,7 @@ export const ExtensionPropertiesAccordion = (props) => {
         <Fragment>
             <div className="panel panel-default">
                 <div className="panel-heading">
-                    <h3 className="panel-title" id="heading-panel-properties">
+                    <h3 className="fs-3 panel-title" id="heading-panel-properties">
                         <a href="#" data-bs-toggle="collapse" data-bs-target="#panel-properties" aria-expanded="true" aria-controls="panel-properties">
                             <span className="caret"></span>
                             <strong>Extension Properties</strong>
@@ -112,7 +112,7 @@ export const ExtensionPropertiesAccordion = (props) => {
                 </div>
                 <div id="panel-properties" className="accordion-collapse collapse show" aria-labelledby="heading-panel-properties"
                      data-bs-parent="#accordion-left-panel">
-                    <div className="panel-body">
+                    <div className="panel-body py-2">
                         <InputComponent
                             label="Extension name"
                             initialValue={props.properties.name}
