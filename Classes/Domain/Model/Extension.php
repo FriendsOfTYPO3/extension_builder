@@ -637,14 +637,24 @@ class Extension
     public function getComposerInfo(): array
     {
         // TODO: consider moving this into the CodeTemplates
-        // TODO: authors are not stored here
+        $authors = [];
+        foreach ($this->persons as $person) {
+            $author = [
+                'name' => $person->getName()
+            ];
+            if ($person->getRole() !== '') {
+                $author['role'] = $person->getRole();
+            }
+            $authors[] = $author;
+        }
+
         $extensionKey = $this->extensionKey;
         $composerExtensionKey = strtolower(str_replace('_', '-', $extensionKey));
         $info = [
             'name' => strtolower(str_replace('_', '', GeneralUtility::camelCaseToLowerCaseUnderscored($this->vendorName))) . '/' . $composerExtensionKey,
             'type' => 'typo3-cms-extension',
             'description' => $this->description,
-            'authors' => [],
+            'authors' => $authors,
             'license' => 'GPL-2.0-or-later',
             'require' => [
                 'typo3/cms-core' => '^12.4'
@@ -681,15 +691,6 @@ class Extension
                 ]
             ]
         ];
-        foreach ($this->persons as $person) {
-            $author = [
-                'name' => $person->getName()
-            ];
-            if ($person->getRole() !== '') {
-                $author['role'] = $person->getRole();
-            }
-            $info['authors'][] = $author;
-        }
         return $info;
     }
 }
