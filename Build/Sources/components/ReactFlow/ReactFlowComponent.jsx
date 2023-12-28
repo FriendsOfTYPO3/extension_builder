@@ -121,7 +121,7 @@ export const ReactFlowComponent = (props) => {
     );
 
     return (
-        <div style={{ width: '100%', height: '93vh' }} className="dndflow">
+        <div style={{ width: '100%', height: 'calc(100vh - 45px)' }} className="dndflow">
             <ReactFlowProvider>
                 <div className="reactflow-wrapper" ref={reactFlowWrapper}>
                     <ReactFlow

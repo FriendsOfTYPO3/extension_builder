@@ -549,16 +549,16 @@ This page is intended to give you some overview about the workflow we suggest.
 				<source>Do you really want to clear the current working board and load the selected pipe? Unsaved changes will get lost!</source>
 			</trans-unit>
 			<trans-unit id="helpSlack" resname="helpSlack">
-				<source>Get help on Slack (#extension-builder)</source>
+				<source>Slack (#extension-builder)</source>
 			</trans-unit>
 			<trans-unit id="becomeSponsor" resname="becomeSponsor">
-				<source>Become a sponsor</source>
+				<source>Sponsoring</source>
 			</trans-unit>
 			<trans-unit id="reportBug" resname="reportBug">
 				<source>Report a bug</source>
 			</trans-unit>
 			<trans-unit id="showDocumentation" resname="showDocumentation">
-				<source>Show Documentation</source>
+				<source>Documentation</source>
 			</trans-unit>
 		</body>
 	</file>

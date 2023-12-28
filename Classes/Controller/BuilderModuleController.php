@@ -142,13 +142,14 @@ class BuilderModuleController extends ActionController
     {
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setTitle('Extension Builder');
+        $this->moduleTemplate->getDocHeaderComponent()->disable();
 
         // $this->addMainMenu('domainmodelling');
         // $this->addMainMenu('testaction');
         $this->addCurrentExtensionPath();
 
-        $this->addLeftButtons();
-        $this->addRightButtons();
+        // $this->addLeftButtons();
+        // $this->addRightButtons();
 
         $this->addAssets();
 
@@ -190,12 +191,7 @@ class BuilderModuleController extends ActionController
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setTitle('Extension Builder');
 
-        // $this->addMainMenu('domainmodelling');
-        // $this->addMainMenu('testaction');
         $this->addCurrentExtensionPath();
-
-        $this->addLeftButtons('help');
-        // $this->addRightButtons();
 
         $this->addAssets();
 
@@ -250,53 +246,42 @@ class BuilderModuleController extends ActionController
         // TODO
     }
 
-    protected function addLeftButtons(string $action = 'domainmodelling'): void
+    protected function addLeftButtons(): void
     {
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
-        if($action == 'domainmodelling') {
-            // Add buttons for default domainmodelling page
-            $slackButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-                ->setIcon($this->iconFactory->getIcon('actions-brand-slack', Icon::SIZE_SMALL))
-                ->setTitle('Get help on Slack')
-                ->setShowLabelText(true)
-                ->setId('slack-button')
-                ->setHref('#');
-            $buttonBar->addButton($slackButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
+        // Add buttons for default domainmodelling page
+        $slackButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            ->setIcon($this->iconFactory->getIcon('actions-brand-slack', Icon::SIZE_SMALL))
+            ->setTitle('Get help on Slack')
+            ->setShowLabelText(true)
+            ->setId('slack-button')
+            ->setHref('#');
+        $buttonBar->addButton($slackButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
 
-            $bugButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-                ->setIcon($this->iconFactory->getIcon('actions-debug', Icon::SIZE_SMALL))
-                ->setTitle('Report a bug')
-                ->setShowLabelText(true)
-                ->setId('bug-button')
-                ->setHref('#');
-            $buttonBar->addButton($bugButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
+        $bugButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            ->setIcon($this->iconFactory->getIcon('actions-debug', Icon::SIZE_SMALL))
+            ->setTitle('Report a bug')
+            ->setShowLabelText(true)
+            ->setId('bug-button')
+            ->setHref('#');
+        $buttonBar->addButton($bugButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
 
-            $documentationButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-                ->setIcon($this->iconFactory->getIcon('apps-toolbar-menu-opendocs', Icon::SIZE_SMALL))
-                ->setTitle('Show documentation')
-                ->setShowLabelText(true)
-                ->setId('documentation-button')
-                ->setHref('#');
-            $buttonBar->addButton($documentationButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
+        $documentationButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            ->setIcon($this->iconFactory->getIcon('apps-toolbar-menu-opendocs', Icon::SIZE_SMALL))
+            ->setTitle('Show documentation')
+            ->setShowLabelText(true)
+            ->setId('documentation-button')
+            ->setHref('#');
+        $buttonBar->addButton($documentationButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
 
-            $sponsorButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-                ->setIcon($this->iconFactory->getIcon('actions-link', Icon::SIZE_SMALL))
-                ->setTitle('Sponsor this project')
-                ->setShowLabelText(true)
-                ->setId('sponsor-button')
-                ->setHref('#');
-            $buttonBar->addButton($sponsorButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
-        } else if ($action === 'help') {
-            // Add buttons for help page
-            $slackButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
-                ->setIcon($this->iconFactory->getIcon('actions-view-go-back', Icon::SIZE_SMALL))
-                ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.goBack'))
-                ->setShowLabelText(true)
-                ->setHref($this->uriBuilder->uriFor('domainmodelling'));
-            $buttonBar->addButton($slackButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
-        }
-
+        $sponsorButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+            ->setIcon($this->iconFactory->getIcon('actions-link', Icon::SIZE_SMALL))
+            ->setTitle('Sponsor this project')
+            ->setShowLabelText(true)
+            ->setId('sponsor-button')
+            ->setHref('#');
+        $buttonBar->addButton($sponsorButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
     }
 
     protected function addRightButtons(): void
