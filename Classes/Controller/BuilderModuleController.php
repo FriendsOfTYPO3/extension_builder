@@ -143,13 +143,8 @@ class BuilderModuleController extends ActionController
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setTitle('Extension Builder');
         $this->moduleTemplate->getDocHeaderComponent()->disable();
-
-        // $this->addMainMenu('domainmodelling');
-        // $this->addMainMenu('testaction');
-        $this->addCurrentExtensionPath();
-
-        // $this->addLeftButtons();
-        // $this->addRightButtons();
+        $storagePaths = $this->extensionService->resolveStoragePaths();
+        $storagePath = reset($storagePaths);
 
         $this->addAssets();
 
@@ -168,7 +163,7 @@ class BuilderModuleController extends ActionController
             'initialWarnings' => $initialWarnings,
             'currentVersion' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getExtensionVersion($this->request->getControllerExtensionKey()),
             'backupDir' => $this->extensionBuilderSettings['extConf']['backupDir'],
-            'outputDir' => $this->extensionBuilderSettings['extConf']['outputDir'],
+            'outputDir' => $storagePath,
         ]);
         $this->pageRenderer->addInlineSetting(
             'extensionBuilder.publicResourceWebPath',
@@ -190,8 +185,6 @@ class BuilderModuleController extends ActionController
     public function helpAction() {
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setTitle('Extension Builder');
-
-        $this->addCurrentExtensionPath();
 
         $this->addAssets();
 
@@ -235,15 +228,6 @@ class BuilderModuleController extends ActionController
                 ->setActive($currentAction === 'domainmodelling')
         );
         $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
-    }
-
-    /*
-     *
-     */
-    // TODO: Show the current Extension name beside the buttons in the button bar
-    protected function addCurrentExtensionPath(): void
-    {
-        // TODO
     }
 
     protected function addLeftButtons(): void
