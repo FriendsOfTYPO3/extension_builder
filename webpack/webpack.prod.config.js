@@ -5,6 +5,12 @@ const RemoveEmptyScriptsPlugin = require("webpack-remove-empty-scripts");
 
 module.exports = merge(common, {
     mode: 'production',
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: '../Css/[name].css',
+            chunkFilename: '../Css/[id].css',
+        }),
+    ],
     module: {
         rules: [
             {
@@ -23,6 +29,19 @@ module.exports = merge(common, {
                     'css-loader',
                     'postcss-loader',
                 ]
+            },
+            {
+                test: /\.(sa|sc|c)ss$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: '../',
+                        },
+                    },
+                    'css-loader',
+                    'sass-loader',
+                ],
             },
         ],
     },

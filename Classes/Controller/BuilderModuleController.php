@@ -299,9 +299,8 @@ class BuilderModuleController extends ActionController
     protected function addAssets(): void
     {
         // Load sources for react js app
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/main.min.css');
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/backend.min.css');
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/extensionbuilder.css');
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/main.css');
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/Css/styles.css');
 
         // Load custom js
         $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/main.js');

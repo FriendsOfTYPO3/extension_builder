@@ -8,8 +8,16 @@
             display: inline-block;
 
             &:last-child {
-                margin-right: 0px;
+                margin-right: 0;
             }
+        }
+    }
+}
+
+#domainModelEditor {
+    .footer {
+        li {
+            list-style: none;
         }
     }
 }

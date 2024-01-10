@@ -1,4 +1,3 @@
-import './App.scss';
 import {useNodesState, useEdgesState} from 'reactflow';
 import {useEffect, useState, useContext, createContext} from "react";
 import {LeftContentComponent} from "./components/views/LeftContentComponent";
