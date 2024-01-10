@@ -9,6 +9,8 @@ import SelectComponent from "../forms/select/SelectComponent";
 import { Handle, Position } from 'reactflow';
 import propertyTypes from "./customModelNode/propertyTypes";
 import relationTypes from "./customModelNode/relationTypes";
+import { faArrowUp, faArrowDown, faTrash } from '@fortawesome/free-solid-svg-icons'
+
 
 export const CustomModelNode = (props) => {
     const [properties, setProperties] = useState(props.data.properties);
@@ -82,6 +84,24 @@ export const CustomModelNode = (props) => {
 
     const updateProperty = (index, property, value) => {
         properties[index][property] = value;
+        setProperties([...properties]);
+        props.data.properties = properties;
+    }
+
+    const removeProperty = (propertyIndex) => {
+        properties.splice(propertyIndex, 1);
+        setProperties([...properties]);
+        props.data.properties = properties;
+    }
+
+    const moveProperty = (propertyIndex, direction) => {
+        const newIndex = propertyIndex + direction;
+        if (newIndex < 0 || newIndex >= properties.length) {
+            return;
+        }
+        const property = properties[propertyIndex];
+        properties.splice(propertyIndex, 1);
+        properties.splice(newIndex, 0, property);
         setProperties([...properties]);
         props.data.properties = properties;
     }
@@ -408,7 +428,7 @@ export const CustomModelNode = (props) => {
                                             label="is nullable?"
                                             checked={property.isNullable}
                                             onChange={(value) => {
-                                               updateProperty(index, "isNullable", value);
+                                                updateProperty(index, "isNullable", value);
                                             }}
                                         />
                                         <CheckboxComponent
@@ -427,6 +447,34 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "isl10nModeExlude", value);
                                             }}
                                         />
+                                        <div className="d-flex">
+                                            <button
+                                                className="btn btn-danger me-auto"
+                                                onClick={() => {
+                                                    removeProperty(index);
+                                                }}
+                                            >
+                                                <FontAwesomeIcon icon={faTrash}/>
+                                            </button>
+                                            <button
+                                                className="btn btn-info me-1"
+                                                onClick={
+                                                    () => moveProperty(index, -1)
+                                                }
+                                                disabled={index === 0}
+                                            >
+                                                <FontAwesomeIcon icon={faArrowUp}/>
+                                            </button>
+                                            <button
+                                                className="btn btn-info"
+                                                onClick={
+                                                    () => moveProperty(index, 1)
+                                                }
+                                                disabled={index === properties.length - 1}
+                                            >
+                                                <FontAwesomeIcon icon={faArrowDown}/>
+                                            </button>
+                                        </div>
                                     </div>
                                 </TYPO3StyledAccordion>
                             )
@@ -441,7 +489,7 @@ export const CustomModelNode = (props) => {
                         title="Add relation"
                         onClick={addEmptyRelation}
                     >
-                        <FontAwesomeIcon className="font-awesome-icon" icon="fa-solid fa-plus" />
+                        <FontAwesomeIcon className="font-awesome-icon" icon="fa-solid fa-plus"/>
                     </button>
                 </div>
                 {
