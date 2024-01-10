@@ -92,6 +92,15 @@ abstract class AbstractProperty
 
     protected bool $searchable = false;
 
+    protected int $size = 0;
+    protected int $maxItems = 1;
+    protected int $minItems = 0;
+
+    // Select Box
+    protected array $selectboxValues = [];
+    protected string $foreignTable = '';
+    protected string $renderType = '';
+
     public function __construct(string $propertyName = '')
     {
         if (!empty($propertyName)) {
@@ -477,5 +486,74 @@ abstract class AbstractProperty
     public function isSearchable(): bool
     {
         return $this->searchable;
+    }
+
+    public function getSelectboxValues(): array
+    {
+        return $this->selectboxValues;
+    }
+
+
+    public function setSelectboxValues(string $value): void
+    {
+        $pairs = explode(';', $value);  // Trennt die Paare am Semikolon
+        $assocArray = [];
+
+        foreach ($pairs as $pair) {
+            list($label, $val) = explode('|', $pair);  // Trennt jedes Paar am Pipe-Zeichen
+            $assocArray[$label] = $val;  // Fügt das Paar zum assoziativen Array hinzu
+        }
+
+        $this->selectboxValues = $assocArray;
+    }
+
+    public function getForeignTable(): string
+    {
+        return $this->foreignTable;
+    }
+
+    public function setForeignTable(string $foreignTable): void
+    {
+        $this->foreignTable = $foreignTable;
+    }
+
+    public function getRenderType(): string
+    {
+        return $this->renderType;
+    }
+
+    public function setRenderType(string $renderType): void
+    {
+        $this->renderType = $renderType;
+    }
+
+    public function getSize(): int
+    {
+        return $this->size;
+    }
+
+    public function setSize(int $size): void
+    {
+        $this->size = $size;
+    }
+
+    public function getMaxItems(): int
+    {
+        return $this->maxItems;
+    }
+
+    public function setMaxItems(int $maxItems): void
+    {
+        $this->maxItems = $maxItems;
+    }
+
+    public function getMinItems(): int
+    {
+        return $this->minItems;
+    }
+
+    public function setMinItems(int $minItems): void
+    {
+        $this->minItems = $minItems;
     }
 }

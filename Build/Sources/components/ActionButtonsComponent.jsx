@@ -40,7 +40,6 @@ export const ActionButtonsComponent = (props) => {
                 properties.push(
                     {
                         "allowedFileTypes": "",
-                        "maxItems": "1",
                         "propertyDescription": property.description,
                         "propertyIsExcludeField": property.isExcludedField,
                         "propertyIsL10nModeExclude": property.isl10nModeExlude,
@@ -48,6 +47,12 @@ export const ActionButtonsComponent = (props) => {
                         "propertyIsRequired": property.isRequired,
                         "propertyName": property.name,
                         "propertyType": property.type,
+                        "selectboxValues": property.selectboxValues || "",
+                        "renderType": property.renderType || "selectSingle",
+                        "foreignTable": property.foreignTable || "",
+                        "size": property.size || "",
+                        "minItems": property.minItems || "",
+                        "maxItems": property.maxItems || "",
                         "uid": uuidv4()
                     }
                 );

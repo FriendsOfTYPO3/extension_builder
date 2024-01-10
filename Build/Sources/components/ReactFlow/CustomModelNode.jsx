@@ -329,6 +329,62 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "type", value);
                                             }}
                                         />
+                                        {property.type === 'Select' &&(<TextareaComponent
+                                            label="Values for Select-Box"
+                                            placeholder="label|value;labeltwo|valuetwo"
+                                            identifier="selectboxValues"
+                                            initialValue={property.selectboxValues}
+                                            onChange={(value) => {
+                                                updateProperty(index, "selectboxValues", value);
+                                            }}
+                                        />)}
+                                        {property.type === 'Select' &&(<SelectComponent
+                                            label="Render Type"
+                                            identifier="renderType"
+                                            options={['selectSingle','selectSingleBox','selectCheckBox','selectMultipleSideBySide']}
+                                            initialValue={property.renderType}
+                                            onChange={(value) => {
+                                                updateProperty(index, "renderType", value);
+                                            }}
+                                        />)}
+                                        {property.type === 'Select' &&<InputComponent
+                                            label="Foreign table (will override values)"
+                                            placeholder="Foreign table"
+                                            identifier="foreignTable"
+                                            initialValue={property.foreignTable}
+                                            onChange={(value) => {
+                                                updateProperty(index, "foreignTable", value);
+                                            }}
+                                        />}
+                                        {property.type === 'Select' &&<InputComponent
+                                            label="Size"
+                                            placeholder="5"
+                                            identifier="size"
+                                            initialValue={property.size}
+                                            onChange={(value) => {
+                                                updateProperty(index, "size", value);
+                                            }}
+                                        />}
+                                        {property.type === 'Select' &&(<div className="d-flex">
+                                            <InputComponent
+                                                label="Min items"
+                                                placeholder="2"
+                                                identifier="minItems"
+                                                initialValue={property.minItems}
+                                                onChange={(value) => {
+                                                    updateProperty(index, "minItems", value);
+                                                }}
+                                            />
+                                            <InputComponent
+                                                label="Max items"
+                                                placeholder="20"
+                                                identifier="maxItems"
+                                                initialValue={property.maxItems}
+                                                onChange={(value) => {
+                                                    updateProperty(index, "maxItems", value);
+                                                }}
+                                            />
+                                        </div>)}
                                         <TextareaComponent
                                             label="Property description"
                                             placeholder="Property description"

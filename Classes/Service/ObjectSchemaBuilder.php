@@ -249,6 +249,25 @@ class ObjectSchemaBuilder implements SingletonInterface
         if ($property->isFileReference() && !empty($propertyJsonConfiguration['maxItems'])) {
             $property->setMaxItems((int)$propertyJsonConfiguration['maxItems']);
         }
+        if (isset($propertyJsonConfiguration['selectboxValues'])) {
+            $property->setSelectboxValues($propertyJsonConfiguration['selectboxValues']);
+        }
+        if (isset($propertyJsonConfiguration['foreignTable'])) {
+            $property->setForeignTable($propertyJsonConfiguration['foreignTable']);
+        }
+        if (isset($propertyJsonConfiguration['renderType'])) {
+            $property->setRenderType($propertyJsonConfiguration['renderType']);
+        }
+        if (isset($propertyJsonConfiguration['size'])) {
+            $property->setSize((int)$propertyJsonConfiguration['size']);
+        }
+        if (isset($propertyJsonConfiguration['maxItems'])) {
+            $property->setMaxItems((int)$propertyJsonConfiguration['maxItems']);
+        }
+        if (isset($propertyJsonConfiguration['minItems'])) {
+            $property->setMinItems((int)$propertyJsonConfiguration['minItems']);
+        }
+
         return $property;
     }
 }
