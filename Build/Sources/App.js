@@ -182,22 +182,22 @@ function App() {
         });
     };
 
-
-    const removeAuthorHandler = (authorId) => {
+    const removeAuthorHandler = (authorIndex) => {
+        console.log(authorIndex);
         setAuthors((prevAuthors) => {
-            return prevAuthors.filter((author) => author.id !== authorId);
+            return prevAuthors.filter((author, index) => index !== authorIndex);
         });
     }
 
-    const removePluginHandler = (pluginId) => {
+    const removePluginHandler = (pluginIndex) => {
         setPlugins((prevPlugins) => {
-            return prevPlugins.filter((plugin) => plugin.id !== pluginId);
+            return prevPlugins.filter((plugin, index) => index !== pluginIndex);
         });
     }
 
-    const removeModuleHandler = (moduleId) => {
+    const removeModuleHandler = (moduleIndex) => {
         setModules((prevModules) => {
-            return prevModules.filter((module) => module.id !== moduleId);
+            return prevModules.filter((module, index) => index !== moduleIndex);
         });
     }
 

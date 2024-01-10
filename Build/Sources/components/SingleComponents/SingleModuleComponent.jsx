@@ -87,7 +87,7 @@ export const SingleModuleComponent = (props) => {
                         aria-label="Trash"
                         className="btn btn-danger me-auto"
                         onClick={() => {
-                            props.removeModuleHandler(props.module.id);
+                            props.removeModuleHandler(props.index);
                         }}
                     >
                         <FontAwesomeIcon icon={faTrash} />

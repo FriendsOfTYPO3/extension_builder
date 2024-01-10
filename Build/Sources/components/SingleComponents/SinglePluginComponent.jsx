@@ -64,7 +64,7 @@ export const SinglePluginComponent = (props) => {
                     <button
                         className="btn btn-danger me-auto"
                         onClick={() => {
-                            props.removePluginHandler(props.plugin.id);
+                            props.removePluginHandler(props.index);
                         }}
                     >
                         <FontAwesomeIcon icon={faTrash} />

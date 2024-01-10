@@ -67,7 +67,7 @@ export const SingleAuthorComponent = (props) => {
                     aria-label="Trash"
                     className="btn btn-danger me-auto"
                     onClick={() => {
-                        props.removeAuthorHandler(props.author.id);
+                        props.removeAuthorHandler(props.index);
                     }}
                 >
                    <FontAwesomeIcon icon={faTrash} />
