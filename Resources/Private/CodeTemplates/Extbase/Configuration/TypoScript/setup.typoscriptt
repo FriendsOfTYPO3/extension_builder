@@ -60,7 +60,7 @@ plugin.{extension.shortExtensionKey}._CSS_DEFAULT_STYLE (
 
 <f:for each="{extension.backendModules}" as="backendModule">
 # Module configuration
-module.{extension.shortExtensionKey}_{backendModule.mainModule}_{extension.unprefixedShortExtensionKey}{backendModule.key} {
+module.{extension.shortExtensionKey}_{backendModule.key} {
     persistence {
         storagePid = <k:curlyBrackets>$module.{extension.shortExtensionKey}_{backendModule.key}.persistence.storagePid</k:curlyBrackets>
     }
