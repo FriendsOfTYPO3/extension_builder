@@ -326,13 +326,15 @@ export const ActionButtonsComponent = (props) => {
                         className="fs-3 btn btn-success"
                         id="eb-btn-save"
                         onClick={handleSave}
-                    ><FontAwesomeIcon className="me-1" icon="fa-solid fa-save" />Save</button>
+                    ><FontAwesomeIcon className="me-1" icon="fa-solid fa-save" />Save
+                    </button>
                     <button
                         type="button"
                         className="fs-3 btn btn-light text-dark"
                         id="eb-btn-prefill"
                         onClick={handleOpenExtension}
-                    ><FontAwesomeIcon className="me-1" icon="fa-solid fa-file" />Open</button>
+                    ><FontAwesomeIcon className="me-1" icon="fa-solid fa-file" />Open
+                    </button>
                 </div>
             </div>
         </>

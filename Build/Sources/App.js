@@ -238,6 +238,10 @@ function App() {
         setCustomModelNodeIndex(working.nodes ? working.nodes.length : 0);
     }
 
+    const removeNode = (nodeId) => {
+        setNodes(prevNodes => prevNodes.filter(node => node.id !== nodeId));
+    }
+
     return (
         <div className="App container-fluid">
             <button
@@ -289,7 +293,9 @@ function App() {
                         <CustomModelNodeIndexContext.Provider value={{customModelNodeIndex, setCustomModelNodeIndex}}>
                             <EdgesContext.Provider value={{edges, setEdges, onEdgesChange}}>
                                 <NodesContext.Provider value={{nodes, setNodes, onNodesChange}}>
-                                    <RightContentComponent />
+                                    <RightContentComponent
+                                        removeNode={removeNode}
+                                    />
                                 </NodesContext.Provider>
                             </EdgesContext.Provider>
                         </CustomModelNodeIndexContext.Provider>

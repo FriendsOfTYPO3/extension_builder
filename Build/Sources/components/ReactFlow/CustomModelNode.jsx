@@ -125,6 +125,11 @@ export const CustomModelNode = (props) => {
         data[pathParts[pathParts.length - 1]] = value;
     }
 
+    const removeNode = (id) => {
+        // props.removeNode(id);
+        console.log('removeNode', props);
+    }
+
     return (
         <div className="custom-model-node">
             <div className="drag-handle"></div>
@@ -139,6 +144,12 @@ export const CustomModelNode = (props) => {
                         updateNode('label', value);
                     }}
                 />
+                <button
+                    className="btn btn-danger btn-sm btn-delete-node"
+                    onClick={() => {
+                        removeNode(props.id);
+                    }}
+                ><FontAwesomeIcon className="font-awesome-icon" icon="fa-solid fa-trash" /></button>
                 <Handle
                     type="target"
                     id={`customModelNode-${props.id}`}

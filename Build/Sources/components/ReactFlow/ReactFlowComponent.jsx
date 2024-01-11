@@ -136,6 +136,7 @@ export const ReactFlowComponent = (props) => {
                         onDrop={onDrop}
                         onDragOver={onDragOver}
                         connectionLineComponent={ConnectionLine}
+                        removeNode={props.removeNode}
                     >
                         <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
                         <Controls showInteractive={false} />
