@@ -30,6 +30,7 @@ $generic-z-index: 1;
     padding: 0 !important;
 }
 
+#show-advanced-options,
 #btn-sidebar-collapse {
     z-index: 999999999;
     top: 80px;
@@ -46,4 +47,8 @@ $generic-z-index: 1;
     &.expanded {
         left: 415px;
     }
+}
+
+#show-advanced-options {
+    top: 30px;
 }

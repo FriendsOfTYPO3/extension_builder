@@ -7,13 +7,17 @@ $dark-orange: #ff8700;
 @mixin fullWidth {
     width: 100%;
 }
-
 .custom-model-node {
     @include fullWidth;
+    min-width: 300px;
     border: 1px solid $gray;
     padding: 5px;
     border-radius: 5px;
     background: white;
+
+    .custom-model-node__header {
+        height: 70px;
+    }
 
     label {
         display: block;

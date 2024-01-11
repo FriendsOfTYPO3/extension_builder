@@ -11,6 +11,7 @@ import defaultPlugin from "./initialValues/plugin";
 export const NodesContext = createContext([]);
 export const EdgesContext = createContext([]);
 export const CustomModelNodeIndexContext = createContext(0);
+export const AdvancedOptionsContext = createContext(false);
 
 function App() {
     // Nodes for ReactFlow
@@ -25,6 +26,9 @@ function App() {
 
     // Zustand für das Ein- und Ausklappen der linken Spalte
     const [isLeftColumnVisible, setLeftColumnVisible] = useState(true);
+
+    // Zustand für das Ein- und Ausklappen der erweiterten Optionen
+    const [isAdvancedOptionsVisible, setAdvancedOptionsVisible] = useState(false);
 
     const handleNodesChanged = (newNodes) => {
         setNodes(newNodes);
@@ -44,6 +48,11 @@ function App() {
     // Funktion zum Umschalten der Sichtbarkeit der linken Spalte
     const toggleLeftColumn = () => {
         setLeftColumnVisible(!isLeftColumnVisible);
+    }
+
+    const toggleAdvcancedOptions = () => {
+        console.log("toggle advanced options", isAdvancedOptionsVisible)
+        setAdvancedOptionsVisible(!isAdvancedOptionsVisible);
     }
 
     const addNewItemHandler = (setter, defaultItem) => () => {
@@ -245,6 +254,14 @@ function App() {
     return (
         <div className="App container-fluid">
             <button
+                id="show-advanced-options"
+                type="button"
+                className={`btn btn-primary position-fixed ${isLeftColumnVisible ? 'expanded' : 'collapsed'}`}
+                onClick={toggleAdvcancedOptions}
+            >
+                <FontAwesomeIcon className="p-0 m-0" icon="fa-solid fa-cog" />{!isAdvancedOptionsVisible ? 'Show' : 'Hide'} advanced options
+            </button>
+            <button
                 id="btn-sidebar-collapse"
                 type="button"
                 className={`btn btn-primary position-fixed ${isLeftColumnVisible ? 'expanded' : 'collapsed'}`}
@@ -291,13 +308,15 @@ function App() {
                <div style={{left: isLeftColumnVisible ? '400px' : '0', width: isLeftColumnVisible ? 'calc(100vw - 400px)' : '100vw'}} id="right-column" className="no-padding full-height">
                     <div >
                         <CustomModelNodeIndexContext.Provider value={{customModelNodeIndex, setCustomModelNodeIndex}}>
-                            <EdgesContext.Provider value={{edges, setEdges, onEdgesChange}}>
-                                <NodesContext.Provider value={{nodes, setNodes, onNodesChange}}>
-                                    <RightContentComponent
-                                        removeNode={removeNode}
-                                    />
-                                </NodesContext.Provider>
-                            </EdgesContext.Provider>
+                            <AdvancedOptionsContext.Provider value={{isAdvancedOptionsVisible}}>
+                                <EdgesContext.Provider value={{edges, setEdges, onEdgesChange}}>
+                                    <NodesContext.Provider value={{nodes, setNodes, onNodesChange}}>
+                                        <RightContentComponent
+                                            removeNode={removeNode}
+                                        />
+                                    </NodesContext.Provider>
+                                </EdgesContext.Provider>
+                            </AdvancedOptionsContext.Provider>
                         </CustomModelNodeIndexContext.Provider>
                     </div>
                 </div>

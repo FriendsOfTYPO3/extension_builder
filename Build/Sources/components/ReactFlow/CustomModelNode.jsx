@@ -1,4 +1,4 @@
-import { useEffect, useState} from 'react';
+import { useEffect, useState, useContext} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {TYPO3StyledAccordion} from "../accordions/TYPO3StyledAccordion";
 import {TYPO3StyledAccordionGroup} from "../accordions/TYPO3StyledAccordionGroup";
@@ -11,11 +11,14 @@ import propertyTypes from "./customModelNode/propertyTypes";
 import relationTypes from "./customModelNode/relationTypes";
 import { faArrowUp, faArrowDown, faTrash } from '@fortawesome/free-solid-svg-icons'
 
+import {AdvancedOptionsContext} from "../../App";
 
 export const CustomModelNode = (props) => {
     const [properties, setProperties] = useState(props.data.properties);
     const [relations, setRelations] = useState(props.data.relations);
     const [customActions, setCustomActions] = useState([]);
+
+    const {isAdvancedOptionsVisible} = useContext(AdvancedOptionsContext);
 
     const addEmptyProperty = () => {
         setProperties([...properties, {
@@ -174,46 +177,46 @@ export const CustomModelNode = (props) => {
                             updateNode('isAggregateRoot', value);
                         }}
                     />
-                    <CheckboxComponent
+                    { isAdvancedOptionsVisible && (<CheckboxComponent
                         identifier="enableSorting"
                         label="Enable sorting"
                         checked={props.data.enableSorting}
                         onChange={(value) => {
                             updateNode('enableSorting', value);
                         }}
-                    />
-                    <CheckboxComponent
+                    /> )}
+                    { isAdvancedOptionsVisible && (<CheckboxComponent
                         identifier="addDeletedField"
                         label="Add deleted field"
                         checked={props.data.addDeletedField}
                         onChange={(value) => {
                             updateNode('addDeletedField', value);
                         }}
-                    />
-                    <CheckboxComponent
+                    /> )}
+                    { isAdvancedOptionsVisible && (<CheckboxComponent
                         identifier="addHiddenField"
                         label="Add hidden field"
                         checked={props.data.addHiddenField}
                         onChange={(value) => {
                             updateNode('addHiddenField', value);
                         }}
-                    />
-                    <CheckboxComponent
+                    /> )}
+                    { isAdvancedOptionsVisible && (<CheckboxComponent
                         identifier="addStarttimeEndtimeFields"
                         label="Add starttime/endtime fields"
                         checked={props.data.addStarttimeEndtimeFields}
                         onChange={(value) => {
                             updateNode('addStarttimeEndtimeFields', value);
                         }}
-                    />
-                    <CheckboxComponent
+                    /> )}
+                    { isAdvancedOptionsVisible && (<CheckboxComponent
                         identifier="enableCategorization"
                         label="Enable categorization"
                         checked={props.data.enableCategorization}
                         onChange={(value) => {
                             updateNode('enableCategorization', value);
                         }}
-                    />
+                    /> )}
                     <TextareaComponent
                         placeholder="Description"
                         identifier="description"
@@ -223,7 +226,7 @@ export const CustomModelNode = (props) => {
                             updateNode('description', value);
                         }}
                     />
-                    <InputComponent
+                    { isAdvancedOptionsVisible && (<InputComponent
                         label="Map to existing table:"
                         placeholder="tablename"
                         identifier="mapToExistingTable"
@@ -231,8 +234,8 @@ export const CustomModelNode = (props) => {
                         onChange={(value) => {
                             updateNode('mapToExistingTable', value);
                         }}
-                    />
-                    <InputComponent
+                    /> )}
+                    { isAdvancedOptionsVisible && (<InputComponent
                         label="Extend existing model class:"
                         placeholder="\Fully\Qualified\Classname"
                         identifier="extendExistingModelClass"
@@ -240,7 +243,7 @@ export const CustomModelNode = (props) => {
                         onChange={(value) => {
                             updateNode('parentClass', value);
                         }}
-                    />
+                    /> )}
                 </TYPO3StyledAccordion>
                 <TYPO3StyledAccordion  title="Actions" id={`accordionItemCustomModelNode-actions-${props.id}`} parentId={`accordionCustomModelNode-${props.id}`}>
                     <CheckboxComponent
@@ -323,9 +326,8 @@ export const CustomModelNode = (props) => {
                     }
                 </TYPO3StyledAccordion>
                 <TYPO3StyledAccordion  title="Properties" id={`accordionItemCustomModelNode-properties-${props.id}`} parentId={`accordionCustomModelNode-${props.id}`}>
-                    <div className="d-flex justify-content-between align-items-center">
-                        <h5 className="text-primary">Properties</h5>
-                        <button className="btn btn-success mb-2 mt-2 btn-sm" title="Add property"
+                    <div className="d-flex justify-content-end">
+                        <button className="btn btn-success mb-2 btn-sm" title="Add property"
                                 onClick={addEmptyProperty}
                         >
                             <FontAwesomeIcon className="font-awesome-icon" icon="fa-solid fa-plus" />
@@ -434,30 +436,30 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "isRequired", value);
                                             }}
                                         />
-                                        <CheckboxComponent
+                                        { isAdvancedOptionsVisible && (<CheckboxComponent
                                             identifier="isNullable"
                                             label="is nullable?"
                                             checked={property.isNullable}
                                             onChange={(value) => {
                                                 updateProperty(index, "isNullable", value);
                                             }}
-                                        />
-                                        <CheckboxComponent
+                                        /> )}
+                                        { isAdvancedOptionsVisible && (<CheckboxComponent
                                             identifier="propertyIsExcludeField"
                                             label="is exclude field?"
                                             checked={property.propertyIsExcludeField}
                                             onChange={(value) => {
                                                 updateProperty(index, "propertyIsExcludeField", value);
                                             }}
-                                        />
-                                        <CheckboxComponent
+                                        /> )}
+                                        { isAdvancedOptionsVisible && (<CheckboxComponent
                                             identifier="isl10nModeExlude"
                                             label="is l10n_mode = exclude?"
                                             checked={property.isl10nModeExlude}
                                             onChange={(value) => {
                                                 updateProperty(index, "isl10nModeExlude", value);
                                             }}
-                                        />
+                                        /> )}
                                         <div className="d-flex">
                                             <button
                                                 className="btn btn-danger me-auto"
