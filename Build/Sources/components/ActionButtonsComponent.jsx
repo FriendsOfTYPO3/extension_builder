@@ -24,6 +24,14 @@ export const ActionButtonsComponent = (props) => {
         setErrors(null);
     }
 
+    const handleNew = () => {
+        // eslint-disable-next-line no-restricted-globals
+        if(confirm("Are you sure? All unsaved changes will be lost.")) {
+            // eslint-disable-next-line no-restricted-globals
+            location.reload();
+        }
+    }
+
     const handleSave = () => {
         // modules => nodes from react flow
         let modules = [];
@@ -305,6 +313,14 @@ export const ActionButtonsComponent = (props) => {
             </Modal>
             <div className="mb-2">
                 <div className="btn-group w-100" role="group" aria-label="Basic example">
+                    <button
+                        type="button"
+                        className="fs-3 btn btn-primary"
+                        id="eb-btn-new"
+                        onClick={handleNew}
+                    >
+                        <FontAwesomeIcon className="me-1" icon="fa-solid fa-file" />New
+                    </button>
                     <button
                         type="button"
                         className="fs-3 btn btn-success"
