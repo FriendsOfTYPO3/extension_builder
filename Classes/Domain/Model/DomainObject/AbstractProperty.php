@@ -496,12 +496,12 @@ abstract class AbstractProperty
 
     public function setSelectboxValues(string $value): void
     {
-        $pairs = explode(';', $value);  // Trennt die Paare am Semikolon
+        $pairs = explode("\n", $value);
         $assocArray = [];
 
         foreach ($pairs as $pair) {
-            list($label, $val) = explode('|', $pair);  // Trennt jedes Paar am Pipe-Zeichen
-            $assocArray[$label] = $val;  // Fügt das Paar zum assoziativen Array hinzu
+            list($label, $val) = explode(';', $pair);
+            $assocArray[$label] = $val;
         }
 
         $this->selectboxValues = $assocArray;

@@ -38,6 +38,7 @@ export const CustomModelNode = (props) => {
         );
     }
 
+    // TODO: uuid should not be hard coded ???
     const addEmptyRelation = () => {
         setRelations([...relations, {
             "foreignRelationClass": "",
@@ -331,7 +332,7 @@ export const CustomModelNode = (props) => {
                                         />
                                         {property.type === 'Select' &&(<TextareaComponent
                                             label="Values for Select-Box"
-                                            placeholder="label|value;labeltwo|valuetwo"
+                                            placeholder="label;value separated by new line"
                                             identifier="selectboxValues"
                                             initialValue={property.selectboxValues}
                                             onChange={(value) => {
