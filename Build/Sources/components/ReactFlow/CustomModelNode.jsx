@@ -86,7 +86,17 @@ export const CustomModelNode = (props) => {
     }
 
     const updateProperty = (index, property, value) => {
-        properties[index][property] = value;
+        const pathParts = property.split(".");
+        let currentProperty = properties[index];
+
+        for (let i = 0; i < pathParts.length - 1; i++) {
+            if (!currentProperty[pathParts[i]]) {
+                currentProperty[pathParts[i]] = {};
+            }
+            currentProperty = currentProperty[pathParts[i]];
+        }
+        currentProperty[pathParts[pathParts.length - 1]] = value;
+
         setProperties([...properties]);
         props.data.properties = properties;
     }
@@ -367,27 +377,27 @@ export const CustomModelNode = (props) => {
                                             label="Values for Select-Box"
                                             placeholder="label;value separated by new line"
                                             identifier="selectboxValues"
-                                            initialValue={property.selectboxValues}
+                                            initialValue={property.typeSelect?.selectboxValues}
                                             onChange={(value) => {
-                                                updateProperty(index, "selectboxValues", value);
+                                                updateProperty(index, "typeSelect.selectboxValues", value);
                                             }}
                                         />)}
                                         {property.type === 'Select' &&(<SelectComponent
                                             label="Render Type"
                                             identifier="renderType"
                                             options={['selectSingle','selectSingleBox','selectCheckBox','selectMultipleSideBySide']}
-                                            initialValue={property.renderType}
+                                            initialValue={property.typeSelect?.renderType}
                                             onChange={(value) => {
-                                                updateProperty(index, "renderType", value);
+                                                updateProperty(index, "typeSelect.renderType", value);
                                             }}
                                         />)}
                                         {property.type === 'Select' &&<InputComponent
                                             label="Foreign table (will override values)"
                                             placeholder="Foreign table"
                                             identifier="foreignTable"
-                                            initialValue={property.foreignTable}
+                                            initialValue={property.typeSelect?.foreignTable}
                                             onChange={(value) => {
-                                                updateProperty(index, "foreignTable", value);
+                                                updateProperty(index, "typeSelect.foreignTable", value);
                                             }}
                                         />}
                                         {property.type === 'Select' &&<InputComponent
