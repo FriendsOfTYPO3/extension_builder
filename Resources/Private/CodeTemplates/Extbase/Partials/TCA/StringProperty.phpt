@@ -1,6 +1,5 @@
 [
-    'type' => 'input',<f:if condition="{property.description}">
-    'description' => '{property.description}',</f:if><f:if condition="{property.size} != ''">
+    'type' => 'input',<f:if condition="{property.size} != ''">
     'size' => {property.size},</f:if>
     'eval' => 'trim<f:if condition="{property.nullable}">,null</f:if>',<f:if condition="{property.required}">
     'required' => true,</f:if>
