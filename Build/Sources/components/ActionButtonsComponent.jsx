@@ -70,6 +70,10 @@ export const ActionButtonsComponent = (props) => {
                             "upperRange": property.typeNumber?.upperRange || 255,
                             "lowerRange": property.typeNumber?.lowerRange || 0,
                         },
+                        "typeColor": {
+                            "setValuesColorPicker": property.typeColor?.setValuesColorPicker || false,
+                            "colorPickerValues": property.typeColor?.colorPickerValues || '',
+                        },
                         "size": property.size || "",
                         "minItems": property.minItems || "",
                         "maxItems": property.maxItems || "",

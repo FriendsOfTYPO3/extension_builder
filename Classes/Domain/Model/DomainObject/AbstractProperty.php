@@ -111,6 +111,10 @@ abstract class AbstractProperty
     protected int $upperRange = 100;
     protected int|float $steps = 1;
 
+    // Color
+    protected bool $setValuesColorPicker = false;
+    protected array $colorPickerValues = [];
+
     public function __construct(string $propertyName = '')
     {
         if (!empty($propertyName)) {
@@ -516,6 +520,35 @@ abstract class AbstractProperty
 
         $this->selectboxValues = $assocArray;
     }
+
+    public function isSetValuesColorPicker(): bool
+    {
+        return $this->setValuesColorPicker;
+    }
+
+    public function setSetValuesColorPicker(bool $setValuesColorPicker): void
+    {
+        $this->setValuesColorPicker = $setValuesColorPicker;
+    }
+
+    public function getColorPickerValues(): array
+    {
+        return $this->colorPickerValues;
+    }
+
+    public function setColorPickerValues(string $value): void
+    {
+        $pairs = explode("\n", $value);
+        $assocArray = [];
+
+        foreach ($pairs as $pair) {
+            list($label, $val) = explode(';', $pair);
+            $assocArray[$label] = $val;
+        }
+
+        $this->colorPickerValues = $assocArray;
+    }
+
 
     public function getForeignTable(): string
     {

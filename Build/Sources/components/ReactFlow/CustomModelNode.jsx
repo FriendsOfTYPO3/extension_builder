@@ -416,7 +416,7 @@ export const CustomModelNode = (props) => {
                                                     }}
                                                 />
                                             </div>
-                                        }{((property.type === 'Integer' || property.type === 'Float') && (property.typeNumber.enableSlider && property.typeNumber.setRange)) &&
+                                        }{((property.type === 'Integer' || property.type === 'Float') && (property.typeNumber?.enableSlider && property.typeNumber?.setRange)) &&
                                             <div className="d-flex flex-column">
                                                 <InputComponent
                                                     label="Lower range"
@@ -494,6 +494,23 @@ export const CustomModelNode = (props) => {
                                                 }}
                                             />
                                         </div>)}
+                                        {property.type === 'ColorPicker' &&( <CheckboxComponent
+                                            label="Set values for color picker"
+                                            identifier="setValuesColorPicker"
+                                            initialValue={property.typeColor?.setValuesColorPicker}
+                                            checked={property.typeColor?.setValuesColorPicker}
+                                            onChange={(value) => {
+                                                updateProperty(index, "typeColor.setValuesColorPicker", value);
+                                            }} />)}
+                                        {(property.type === 'ColorPicker' && property.typeColor?.setValuesColorPicker) &&(<TextareaComponent
+                                            label="Values for Color Picker"
+                                            placeholder="label;value separated by new line"
+                                            identifier="colorPickerValues"
+                                            initialValue={property.typeColor?.colorPickerValues}
+                                            onChange={(value) => {
+                                                updateProperty(index, "typeColor.colorPickerValues", value);
+                                            }}
+                                        />)}
                                         <TextareaComponent
                                             label="Property description"
                                             placeholder="Property description"
