@@ -258,6 +258,9 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (isset($propertyJsonConfiguration['typeSelect']['renderType'])) {
             $property->setRenderType($propertyJsonConfiguration['typeSelect']['renderType']);
         }
+        if (isset($propertyJsonConfiguration['typeText']['enableRichtext'])) {
+            $property->setEnableRichtext($propertyJsonConfiguration['typeText']['enableRichtext']);
+        }
         if (isset($propertyJsonConfiguration['size'])) {
             $property->setSize((int)$propertyJsonConfiguration['size']);
         }

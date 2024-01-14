@@ -60,6 +60,9 @@ export const ActionButtonsComponent = (props) => {
                             "renderType": property.typeSelect?.renderType || "selectSingle",
                             "foreignTable": property.typeSelect?.foreignTable || "",
                         },
+                        "typeText": {
+                            "enableRichtext": property.typeText?.enableRichtext || false,
+                        },
                         "size": property.size || "",
                         "minItems": property.minItems || "",
                         "maxItems": property.maxItems || "",

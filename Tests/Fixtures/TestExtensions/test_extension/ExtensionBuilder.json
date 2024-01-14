@@ -69,7 +69,7 @@
                             "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "description",
-                            "propertyType": "RichText",
+                            "propertyType": "Text",
                             "uid": "583743944638"
                         },
                         {

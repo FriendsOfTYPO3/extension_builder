@@ -33,7 +33,6 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\NativeTimeProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\NoneProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\PassThroughProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\PasswordProperty;
-use EBT\ExtensionBuilder\Domain\Model\DomainObject\RichTextProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\SelectProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\SlugProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;

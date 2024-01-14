@@ -101,6 +101,9 @@ abstract class AbstractProperty
     protected string $foreignTable = '';
     protected string $renderType = '';
 
+    // Text and RichText
+    protected bool $enableRichtext = false;
+
     public function __construct(string $propertyName = '')
     {
         if (!empty($propertyName)) {
@@ -555,5 +558,15 @@ abstract class AbstractProperty
     public function setMinItems(int $minItems): void
     {
         $this->minItems = $minItems;
+    }
+
+    public function isEnableRichtext(): bool
+    {
+        return $this->enableRichtext;
+    }
+
+    public function setEnableRichtext(bool $enableRichtext): void
+    {
+        $this->enableRichtext = $enableRichtext;
     }
 }

@@ -373,6 +373,15 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "type", value);
                                             }}
                                         />
+                                        {property.type === 'Text' &&(<CheckboxComponent
+                                            label="Enable RichText editor"
+                                            identifier="enableRichTextEditor"
+                                            initialValue={property.typeText?.enableRichtext}
+                                            checked={property.typeText?.enableRichtext}
+                                            onChange={(value) => {
+                                                updateProperty(index, "typeText.enableRichtext", value);
+                                            }}
+                                        />)}
                                         {property.type === 'Select' &&(<TextareaComponent
                                             label="Values for Select-Box"
                                             placeholder="label;value separated by new line"
