@@ -104,6 +104,13 @@ abstract class AbstractProperty
     // Text and RichText
     protected bool $enableRichtext = false;
 
+    // Number
+    protected bool $enableSlider = false;
+    protected bool $setRange = false;
+    protected int $lowerRange = 0;
+    protected int $upperRange = 100;
+    protected int|float $steps = 1;
+
     public function __construct(string $propertyName = '')
     {
         if (!empty($propertyName)) {
@@ -568,5 +575,55 @@ abstract class AbstractProperty
     public function setEnableRichtext(bool $enableRichtext): void
     {
         $this->enableRichtext = $enableRichtext;
+    }
+
+    public function isEnableSlider(): bool
+    {
+        return $this->enableSlider;
+    }
+
+    public function setEnableSlider(bool $enableSlider): void
+    {
+        $this->enableSlider = $enableSlider;
+    }
+
+    public function isSetRange(): bool
+    {
+        return $this->setRange;
+    }
+
+    public function setSetRange(bool $setRange): void
+    {
+        $this->setRange = $setRange;
+    }
+
+    public function getLowerRange(): int
+    {
+        return $this->lowerRange;
+    }
+
+    public function setLowerRange(int $lowerRange): void
+    {
+        $this->lowerRange = $lowerRange;
+    }
+
+    public function getUpperRange(): int
+    {
+        return $this->upperRange;
+    }
+
+    public function setUpperRange(int $upperRange): void
+    {
+        $this->upperRange = $upperRange;
+    }
+
+    public function getSteps(): float|int
+    {
+        return $this->steps;
+    }
+
+    public function setSteps(float|int $steps): void
+    {
+        $this->steps = $steps;
     }
 }

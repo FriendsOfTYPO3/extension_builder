@@ -382,6 +382,62 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "typeText.enableRichtext", value);
                                             }}
                                         />)}
+                                        {(property.type === 'Integer' || property.type === 'Float') &&(
+                                            <div className="d-flex flex-column">
+                                                <CheckboxComponent
+                                                    label="Enable slider"
+                                                    identifier="enableSlider"
+                                                    initialValue={property.typeNumber?.enableSlider}
+                                                    checked={property.typeNumber?.enableSlider}
+                                                    onChange={(value) => {
+                                                        updateProperty(index, "typeNumber.enableSlider", value);
+                                                    }} />
+                                                {property.typeNumber.enableSlider && (
+                                                    <CheckboxComponent
+                                                        label="Set range"
+                                                        identifier="setRange"
+                                                        initialValue={property.typeNumber?.setRange}
+                                                        checked={property.typeNumber?.setRange}
+                                                        onChange={(value) => {
+                                                            updateProperty(index, "typeNumber.setRange", value);
+                                                        }} />
+                                                )}
+                                            </div>
+                                        )}
+                                        {(property.type === 'Integer' || property.type === 'Float') && (property.typeNumber.enableSlider) &&
+                                            <div className="d-flex">
+                                                <InputComponent
+                                                    label="Step size"
+                                                    placeholder="1"
+                                                    identifier="steps"
+                                                    initialValue={property.typeNumber?.steps}
+                                                    onChange={(value) => {
+                                                        updateProperty(index, "typeNumber.steps", value);
+                                                    }}
+                                                />
+                                            </div>
+                                        }{((property.type === 'Integer' || property.type === 'Float') && (property.typeNumber.enableSlider && property.typeNumber.setRange)) &&
+                                            <div className="d-flex flex-column">
+                                                <InputComponent
+                                                    label="Lower range"
+                                                    placeholder="0"
+                                                    identifier="lowerRange"
+                                                    initialValue={property.typeNumber?.lowerRange}
+                                                    onChange={(value) => {
+                                                        updateProperty(index, "typeNumber.lowerRange", value);
+                                                    }}
+                                                />
+                                                <InputComponent
+                                                    label="Upper range"
+                                                    placeholder="42"
+                                                    identifier="upperRange"
+                                                    initialValue={property.typeNumber?.upperRange}
+                                                    onChange={(value) => {
+                                                        updateProperty(index, "typeNumber.upperRange", value);
+                                                    }}
+                                                />
+                                            </div>
+                                        }
                                         {property.type === 'Select' &&(<TextareaComponent
                                             label="Values for Select-Box"
                                             placeholder="label;value separated by new line"

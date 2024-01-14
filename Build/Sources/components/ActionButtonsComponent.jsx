@@ -63,6 +63,13 @@ export const ActionButtonsComponent = (props) => {
                         "typeText": {
                             "enableRichtext": property.typeText?.enableRichtext || false,
                         },
+                        "typeNumber": {
+                            "enableSlider": property.typeNumber?.enableSlider || false,
+                            "steps": property.typeNumber?.steps || 1,
+                            "setRange": property.typeNumber?.setRange || false,
+                            "upperRange": property.typeNumber?.upperRange || 255,
+                            "lowerRange": property.typeNumber?.lowerRange || 0,
+                        },
                         "size": property.size || "",
                         "minItems": property.minItems || "",
                         "maxItems": property.maxItems || "",

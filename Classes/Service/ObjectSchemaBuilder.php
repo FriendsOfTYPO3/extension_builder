@@ -270,6 +270,21 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (isset($propertyJsonConfiguration['minItems'])) {
             $property->setMinItems((int)$propertyJsonConfiguration['minItems']);
         }
+        if (isset($propertyJsonConfiguration['typeNumber']['enableSlider'])) {
+            $property->setEnableSlider($propertyJsonConfiguration['typeNumber']['enableSlider']);
+        }
+        if (isset($propertyJsonConfiguration['typeNumber']['steps'])) {
+            $property->setSteps((float)$propertyJsonConfiguration['typeNumber']['steps']);
+        }
+        if (isset($propertyJsonConfiguration['typeNumber']['setRange'])) {
+            $property->setSetRange($propertyJsonConfiguration['typeNumber']['setRange']);
+        }
+        if (isset($propertyJsonConfiguration['typeNumber']['upperRange'])) {
+            $property->setUpperRange((int)$propertyJsonConfiguration['typeNumber']['upperRange']);
+        }
+        if (isset($propertyJsonConfiguration['typeNumber']['lowerRange'])) {
+            $property->setLowerRange((int)$propertyJsonConfiguration['typeNumber']['lowerRange']);
+        }
 
         return $property;
     }
