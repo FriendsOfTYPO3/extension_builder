@@ -494,6 +494,15 @@ export const CustomModelNode = (props) => {
                                                 }}
                                             />
                                         </div>)}
+                                        {property.type === 'Password' &&(<CheckboxComponent
+                                            identifier="renderPasswordGenerator"
+                                            label="Render password generator"
+                                            initialValue={property.typePassword?.renderPasswordGenerator}
+                                            checked={property.typePassword?.renderPasswordGenerator}
+                                            onChange={(value) => {
+                                                updateProperty(index, "typePassword.renderPasswordGenerator", value);
+                                            }} />)
+                                        }
                                         {property.type === 'ColorPicker' &&( <CheckboxComponent
                                             label="Set values for color picker"
                                             identifier="setValuesColorPicker"

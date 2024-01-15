@@ -74,6 +74,9 @@ export const ActionButtonsComponent = (props) => {
                             "setValuesColorPicker": property.typeColor?.setValuesColorPicker || false,
                             "colorPickerValues": property.typeColor?.colorPickerValues || '',
                         },
+                        "typePassword": {
+                            "renderPasswordGenerator": property.typePassword?.renderPasswordGenerator || false,
+                        },
                         "size": property.size || "",
                         "minItems": property.minItems || "",
                         "maxItems": property.maxItems || "",

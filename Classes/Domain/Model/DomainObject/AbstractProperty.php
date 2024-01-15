@@ -115,6 +115,9 @@ abstract class AbstractProperty
     protected bool $setValuesColorPicker = false;
     protected array $colorPickerValues = [];
 
+    // Password
+    protected bool $renderPasswordGenerator = false;
+
     public function __construct(string $propertyName = '')
     {
         if (!empty($propertyName)) {
@@ -659,4 +662,16 @@ abstract class AbstractProperty
     {
         $this->steps = $steps;
     }
+
+    public function isRenderPasswordGenerator(): bool
+    {
+        return $this->renderPasswordGenerator;
+    }
+
+    public function setRenderPasswordGenerator(bool $renderPasswordGenerator): void
+    {
+        $this->renderPasswordGenerator = $renderPasswordGenerator;
+    }
+
+
 }
