@@ -494,6 +494,24 @@ export const CustomModelNode = (props) => {
                                                 }}
                                             />
                                         </div>)}
+                                        {property.type === 'Boolean' &&(<SelectComponent
+                                            label="Render Type"
+                                            identifier="renderTypeBoolean"
+                                            options={['default','checkboxToggle']}
+                                            initialValue={property.typeBoolean?.renderType}
+                                            onChange={(value) => {
+                                                updateProperty(index, "typeBoolean.renderType", value);
+                                            }}
+                                        />)}
+                                        {property.type === 'Boolean' && (<TextareaComponent
+                                            label="Items for checkbox"
+                                            placeholder="label;value separated by new line"
+                                            identifier="booleanValues"
+                                            initialValue={property.typeBoolean?.booleanValues}
+                                            onChange={(value) => {
+                                                updateProperty(index, "typeBoolean.booleanValues", value);
+                                            }}
+                                        />)}
                                         {property.type === 'Password' &&(<CheckboxComponent
                                             identifier="renderPasswordGenerator"
                                             label="Render password generator"

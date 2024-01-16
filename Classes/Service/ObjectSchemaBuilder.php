@@ -288,11 +288,17 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (isset($propertyJsonConfiguration['typeColor']['setValuesColorPicker'])) {
             $property->setSetValuesColorPicker((bool)$propertyJsonConfiguration['typeColor']['setValuesColorPicker']);
         }
+        if (isset($propertyJsonConfiguration['typeBoolean']['booleanValues'])) {
+            $property->setBooleanValues($propertyJsonConfiguration['typeBoolean']['booleanValues']);
+        }
         if (isset($propertyJsonConfiguration['typeColor']['colorPickerValues'])) {
             $property->setColorPickerValues($propertyJsonConfiguration['typeColor']['colorPickerValues']);
         }
         if (isset($propertyJsonConfiguration['typePassword']['renderPasswordGenerator'])) {
             $property->setRenderPasswordGenerator((bool)$propertyJsonConfiguration['typePassword']['renderPasswordGenerator']);
+        }
+        if (isset($propertyJsonConfiguration['typeBoolean']['renderType'])) {
+            $property->setRenderTypeBoolean($propertyJsonConfiguration['typeBoolean']['renderType']);
         }
 
         return $property;

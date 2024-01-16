@@ -118,6 +118,11 @@ abstract class AbstractProperty
     // Password
     protected bool $renderPasswordGenerator = false;
 
+    // Boolean
+    protected string $renderTypeBoolean = '';
+    protected array $booleanValues = [];
+
+
     public function __construct(string $propertyName = '')
     {
         if (!empty($propertyName)) {
@@ -517,12 +522,38 @@ abstract class AbstractProperty
         $assocArray = [];
 
         foreach ($pairs as $pair) {
-            list($label, $val) = explode(';', $pair);
-            $assocArray[$label] = $val;
+            $parts = explode(';', $pair);
+            if (count($parts) == 2) {
+                [$label, $val] = $parts;
+                $assocArray[$label] = $val;
+            }
         }
 
         $this->selectboxValues = $assocArray;
     }
+
+    public function getBooleanValues(): array
+    {
+        return $this->booleanValues;
+    }
+
+    public function setBooleanValues(string $value): void
+    {
+        $pairs = explode("\n", $value);
+        // $assocArray = [];
+//
+        // foreach ($pairs as $pair) {
+        //     $parts = explode(';', $pair);
+        //     if (count($parts) == 2) {
+        //         [$label, $val] = $parts;
+        //         $assocArray[$label] = $val;
+        //     }
+        // }
+
+        $this->booleanValues = $pairs;
+    }
+
+
 
     public function isSetValuesColorPicker(): bool
     {
@@ -545,8 +576,11 @@ abstract class AbstractProperty
         $assocArray = [];
 
         foreach ($pairs as $pair) {
-            list($label, $val) = explode(';', $pair);
-            $assocArray[$label] = $val;
+            $parts = explode(';', $pair);
+            if (count($parts) == 2) {
+                [$label, $val] = $parts;
+                $assocArray[$label] = $val;
+            }
         }
 
         $this->colorPickerValues = $assocArray;
@@ -673,5 +707,13 @@ abstract class AbstractProperty
         $this->renderPasswordGenerator = $renderPasswordGenerator;
     }
 
+    public function isRenderTypeBoolean(): string
+    {
+        return $this->renderTypeBoolean;
+    }
 
+    public function setRenderTypeBoolean(string $renderTypeBoolean): void
+    {
+        $this->renderTypeBoolean = $renderTypeBoolean;
+    }
 }
