@@ -492,7 +492,7 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "size", value);
                                             }}
                                         />}
-                                        {property.type === 'Select' &&(<div className="d-flex">
+                                        {(property.type === 'Select' || property.type === 'File') && (<div className="d-flex">
                                             <InputComponent
                                                 label="Min items"
                                                 placeholder="2"
@@ -509,6 +509,17 @@ export const CustomModelNode = (props) => {
                                                 initialValue={property.maxItems}
                                                 onChange={(value) => {
                                                     updateProperty(index, "maxItems", value);
+                                                }}
+                                            />
+                                        </div>)}
+                                        {(property.type === 'File') && (<div className="d-flex">
+                                            <InputComponent
+                                                label="Allowed filetypes"
+                                                placeholder="2"
+                                                identifier="allowedFileTypes"
+                                                initialValue={property.typeFile?.allowedFileTypes}
+                                                onChange={(value) => {
+                                                    updateProperty(index, "typeFile.allowedFileTypes", value);
                                                 }}
                                             />
                                         </div>)}

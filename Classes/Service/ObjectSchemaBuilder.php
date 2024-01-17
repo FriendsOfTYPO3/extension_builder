@@ -89,7 +89,7 @@ class ObjectSchemaBuilder implements SingletonInterface
                     $propertyJsonConfiguration['relationType'] = 'zeroToMany';
                     $propertyJsonConfiguration['relationName'] = $propertyJsonConfiguration['propertyName'];
                     $propertyJsonConfiguration['relationDescription'] = $propertyJsonConfiguration['propertyDescription'];
-                    $propertyJsonConfiguration['foreignRelationClass'] = FileReference::clss;
+                    $propertyJsonConfiguration['foreignRelationClass'] = FileReference::class;
                     $propertyJsonConfiguration['type'] = $propertyJsonConfiguration['propertyType'];
 
                     $property = $this->buildRelation($propertyJsonConfiguration, $domainObject);
@@ -203,9 +203,14 @@ class ObjectSchemaBuilder implements SingletonInterface
                 if (!empty($relationJsonConfiguration['maxItems'])) {
                     /** @var FileProperty $relation */
                     $relation->setMaxItems((int)$relationJsonConfiguration['maxItems']);
-                    if (!empty($relationJsonConfiguration['allowedFileTypes'])) {
-                        $relation->setAllowedFileTypes($relationJsonConfiguration['allowedFileTypes']);
-                    }
+                }
+                if (!empty($relationJsonConfiguration['minItems'])) {
+                    /** @var FileProperty $relation */
+                    $relation->setMinItems((int)$relationJsonConfiguration['minItems']);
+                }
+                if (!empty($relationJsonConfiguration['typeFile']['allowedFileTypes'])) {
+                    /** @var FileProperty $relation */
+                    $relation->setAllowedFileTypes($relationJsonConfiguration['typeFile']['allowedFileTypes']);
                 }
             }
         }

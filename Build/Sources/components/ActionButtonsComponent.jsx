@@ -85,6 +85,9 @@ export const ActionButtonsComponent = (props) => {
                             "dbTypeDateTime": property.typeDateTime?.dbTypeDateTime || "",
                             "formatDateTime": property.typeDateTime?.formatDateTime || "",
                         },
+                        "typeFile": {
+                            "allowedFileTypes": property.typeFile?.allowedFileTypes || "",
+                        },
                         "size": property.size || "",
                         "minItems": property.minItems || "",
                         "maxItems": property.maxItems || "",

@@ -93,7 +93,7 @@ abstract class AbstractProperty
     protected bool $searchable = false;
 
     protected int $size = 0;
-    protected int $maxItems = 1;
+    protected int $maxItems = 0;
     protected int $minItems = 0;
 
     // Select Box
