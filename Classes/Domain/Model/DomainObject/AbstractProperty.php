@@ -122,6 +122,9 @@ abstract class AbstractProperty
     protected string $renderTypeBoolean = '';
     protected array $booleanValues = [];
 
+    // DateTime
+    protected string $dbTypeDateTime = '';
+    protected string $formatDateTime = '';
 
     public function __construct(string $propertyName = '')
     {
@@ -716,4 +719,26 @@ abstract class AbstractProperty
     {
         $this->renderTypeBoolean = $renderTypeBoolean;
     }
+
+    public function getDbTypeDateTime(): string
+    {
+        return $this->dbTypeDateTime;
+    }
+
+    public function setDbTypeDateTime(string $dbTypeDateTime): void
+    {
+        $this->dbTypeDateTime = $dbTypeDateTime;
+    }
+
+    public function getFormatDateTime(): string
+    {
+        return $this->formatDateTime;
+    }
+
+    public function setFormatDateTime(string $formatDateTime): void
+    {
+        $this->formatDateTime = $formatDateTime;
+    }
+
+
 }

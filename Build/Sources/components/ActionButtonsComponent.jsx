@@ -81,6 +81,10 @@ export const ActionButtonsComponent = (props) => {
                         "typePassword": {
                             "renderPasswordGenerator": property.typePassword?.renderPasswordGenerator || false,
                         },
+                        "typeDateTime": {
+                            "dbTypeDateTime": property.typeDateTime?.dbTypeDateTime || "",
+                            "formatDateTime": property.typeDateTime?.formatDateTime || "",
+                        },
                         "size": property.size || "",
                         "minItems": property.minItems || "",
                         "maxItems": property.maxItems || "",

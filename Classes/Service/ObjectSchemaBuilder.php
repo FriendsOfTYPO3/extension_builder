@@ -300,6 +300,12 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (isset($propertyJsonConfiguration['typeBoolean']['renderType'])) {
             $property->setRenderTypeBoolean($propertyJsonConfiguration['typeBoolean']['renderType']);
         }
+        if (isset($propertyJsonConfiguration['typeDateTime']['dbTypeDateTime'])) {
+            $property->setDbTypeDateTime($propertyJsonConfiguration['typeDateTime']['dbTypeDateTime']);
+        }
+        if (isset($propertyJsonConfiguration['typeDateTime']['formatDateTime'])) {
+            $property->setFormatDateTime($propertyJsonConfiguration['typeDateTime']['formatDateTime']);
+        }
 
         return $property;
     }

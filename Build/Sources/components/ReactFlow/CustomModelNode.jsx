@@ -438,6 +438,24 @@ export const CustomModelNode = (props) => {
                                                 />
                                             </div>
                                         }
+                                        {property.type === 'DateTime' &&(<SelectComponent
+                                            label="Format DateTime"
+                                            identifier="formatDateTime"
+                                            options={['date', 'datetime', 'time', 'timesec']}
+                                            initialValue={property.typeDateTime?.formatDateTime}
+                                            onChange={(value) => {
+                                                updateProperty(index, "typeDateTime.formatDateTime", value);
+                                            }}
+                                        />)}
+                                        {/*{property.type === 'DateTime' &&(<SelectComponent
+                                            label="DB-Type DateTime"
+                                            identifier="dbTypeDateTime"
+                                            options={['date', 'time', 'datetime']}
+                                            initialValue={property.typeDateTime?.dbTypeDateTime}
+                                            onChange={(value) => {
+                                                updateProperty(index, "typeDateTime.dbTypeDateTime", value);
+                                            }}
+                                        />)}*/}
                                         {property.type === 'Select' &&(<TextareaComponent
                                             label="Values for Select-Box"
                                             placeholder="label;value separated by new line"
