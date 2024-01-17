@@ -26,7 +26,7 @@ class NoneProperty extends AbstractProperty
      */
     public function getIsPersistable(): bool
     {
-        return false;
+        return true;
     }
 
     public function getTypeForComment(): string
@@ -41,6 +41,6 @@ class NoneProperty extends AbstractProperty
 
     public function getSqlDefinition(): string
     {
-        return '';
+        return $this->getFieldName() . " mediumblob,";
     }
 }
