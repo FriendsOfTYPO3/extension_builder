@@ -104,6 +104,7 @@ abstract class AbstractProperty
 
     // Text and RichText
     protected bool $enableRichtext = false;
+    protected int $rows = 0;
 
     // Number
     protected bool $enableSlider = false;
@@ -659,6 +660,16 @@ abstract class AbstractProperty
     public function setEnableRichtext(bool $enableRichtext): void
     {
         $this->enableRichtext = $enableRichtext;
+    }
+
+    public function getRows(): int
+    {
+        return $this->rows;
+    }
+
+    public function setRows(int $rows): void
+    {
+        $this->rows = $rows;
     }
 
     public function isEnableSlider(): bool

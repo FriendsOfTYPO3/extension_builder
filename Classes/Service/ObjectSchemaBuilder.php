@@ -272,6 +272,9 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (isset($propertyJsonConfiguration['size'])) {
             $property->setSize((int)$propertyJsonConfiguration['size']);
         }
+        if (isset($propertyJsonConfiguration['rows'])) {
+            $property->setRows((int)$propertyJsonConfiguration['rows']);
+        }
         if (isset($propertyJsonConfiguration['maxItems'])) {
             $property->setMaxItems((int)$propertyJsonConfiguration['maxItems']);
         }

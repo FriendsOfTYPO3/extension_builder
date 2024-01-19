@@ -574,6 +574,15 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "size", value);
                                             }}
                                         />}
+                                        {property.type === 'Text' && !property.typeText.enableRichtext && <InputComponent
+                                            label="Rows (not for richtext)"
+                                            placeholder="5"
+                                            identifier="rows"
+                                            initialValue={property.rows}
+                                            onChange={(value) => {
+                                                updateProperty(index, "rows", value);
+                                            }}
+                                        />}
                                         {(property.type === 'Select' || property.type === 'File') && (<div className="d-flex">
                                             <InputComponent
                                                 label="Min items"

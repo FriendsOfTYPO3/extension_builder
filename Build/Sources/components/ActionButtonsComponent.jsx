@@ -90,6 +90,7 @@ export const ActionButtonsComponent = (props) => {
                             "allowedFileTypes": property.typeFile?.allowedFileTypes || "",
                         },
                         "size": property.size || "30",
+                        "rows": property.rows || "10",
                         "minItems": property.minItems || "",
                         "maxItems": property.maxItems || "",
                         "uid": uuidv4()
