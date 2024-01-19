@@ -557,6 +557,15 @@ export const CustomModelNode = (props) => {
                                             }}
                                         />}
                                         {property.type === 'Select' &&<InputComponent
+                                            label="Where (only for foreign table)"
+                                            placeholder="where x = y"
+                                            identifier="whereClause"
+                                            initialValue={property.typeSelect?.whereClause}
+                                            onChange={(value) => {
+                                                updateProperty(index, "typeSelect.whereClause", value);
+                                            }}
+                                        />}
+                                        {property.type === 'Select' &&<InputComponent
                                             label="Size"
                                             placeholder="5"
                                             identifier="size"

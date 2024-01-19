@@ -260,6 +260,9 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (isset($propertyJsonConfiguration['typeSelect']['foreignTable'])) {
             $property->setForeignTable($propertyJsonConfiguration['typeSelect']['foreignTable']);
         }
+        if (isset($propertyJsonConfiguration['typeSelect']['whereClause'])) {
+            $property->setWhereClause($propertyJsonConfiguration['typeSelect']['whereClause']);
+        }
         if (isset($propertyJsonConfiguration['typeSelect']['renderType'])) {
             $property->setRenderType($propertyJsonConfiguration['typeSelect']['renderType']);
         }

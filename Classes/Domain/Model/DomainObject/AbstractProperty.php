@@ -100,6 +100,7 @@ abstract class AbstractProperty
     protected array $selectboxValues = [];
     protected string $foreignTable = '';
     protected string $renderType = '';
+    protected string $whereClause = '';
 
     // Text and RichText
     protected bool $enableRichtext = false;
@@ -608,6 +609,16 @@ abstract class AbstractProperty
     public function setRenderType(string $renderType): void
     {
         $this->renderType = $renderType;
+    }
+
+    public function getWhereClause(): string
+    {
+        return $this->whereClause;
+    }
+
+    public function setWhereClause(string $whereClause): void
+    {
+        $this->whereClause = $whereClause;
     }
 
     public function getSize(): int

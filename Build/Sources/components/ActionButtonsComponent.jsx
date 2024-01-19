@@ -59,6 +59,7 @@ export const ActionButtonsComponent = (props) => {
                             "selectboxValues": property.typeSelect?.selectboxValues || "",
                             "renderType": property.typeSelect?.renderType || "selectSingle",
                             "foreignTable": property.typeSelect?.foreignTable || "",
+                            "whereClause": property.typeSelect?.whereClause || "",
                         },
                         "typeText": {
                             "enableRichtext": property.typeText?.enableRichtext || false,
