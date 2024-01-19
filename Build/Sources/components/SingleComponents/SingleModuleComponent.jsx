@@ -39,6 +39,7 @@ export const SingleModuleComponent = (props) => {
                     label="Key"
                     type="text"
                     identifier="key"
+                    validation={{ isRequired: true, minLength: 2 }}
                     initialValue={props.module.key}
                     onChange={(value) => {
                         updateModuleHandler('key', value);
@@ -47,6 +48,7 @@ export const SingleModuleComponent = (props) => {
                 <TextareaComponent
                     label="Description"
                     identifier="description"
+                    validation={{ isRequired: true, minLength: 2 }}
                     initialValue={props.module.description}
                     onChange={(value) => {
                         updateModuleHandler('description', value);

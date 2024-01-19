@@ -28,6 +28,7 @@ export const SinglePluginComponent = (props) => {
                     label="Plugin Key"
                     type="text"
                     identifier="key"
+                    validation={{ isRequired: true, minLength: 2 }}
                     initialValue={props.plugin.key}
                     onChange={(value) => {
                         updatePluginHandler('key', value);
@@ -37,6 +38,7 @@ export const SinglePluginComponent = (props) => {
                     placeholder="Please insert a description"
                     label="Description"
                     identifier="description"
+                    validation={{ isRequired: true}}
                     initialValue={props.plugin.description}
                     onChange={(value) => {
                         updatePluginHandler('description', value);

@@ -390,7 +390,7 @@ abstract class AbstractProperty
     /**
      * Is this property persistable in a database?
      *
-     * @return bool true if this property can be displayed inside a fluid template
+     * @return bool true if this property can be persisted in a database
      */
     public function getIsPersistable(): bool
     {
@@ -739,6 +739,4 @@ abstract class AbstractProperty
     {
         $this->formatDateTime = $formatDateTime;
     }
-
-
 }

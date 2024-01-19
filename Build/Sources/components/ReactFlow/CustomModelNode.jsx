@@ -20,6 +20,7 @@ export const CustomModelNode = (props) => {
 
     const {isAdvancedOptionsVisible} = useContext(AdvancedOptionsContext);
 
+    // TODO: create a default property inside an empty js file and set it her.
     const addEmptyProperty = () => {
         setProperties([...properties, {
             name: '',
@@ -29,6 +30,42 @@ export const CustomModelNode = (props) => {
             isNullable: false,
             isExcludeField: false,
             isl10nModeExlude: false,
+            typeSelect: {
+                selectboxValues: "",
+                renderType: "selectSingle",
+                foreignTable: "",
+            },
+            typeText: {
+                enableRichtext: false,
+            },
+            typeNumber: {
+                enableSlider: false,
+                steps: 1,
+                setRange: false,
+                upperRange: 255,
+                lowerRange: 0,
+            },
+            typeColor: {
+                setValuesColorPicker: false,
+                colorPickerValues: '',
+            },
+            typeBoolean: {
+                renderType: "default",
+                booleanValues: "",
+            },
+            typePassword: {
+                renderPasswordGenerator: false,
+            },
+            typeDateTime: {
+                dbTypeDateTime: "",
+                formatDateTime: "",
+            },
+            typeFile: {
+                allowedFileTypes: "",
+            },
+            size: "",
+            minItems: "",
+            maxItems: "",
         }]);
         props.data.properties.push(
             {
@@ -37,8 +74,44 @@ export const CustomModelNode = (props) => {
                 description: '',
                 isRequired: false,
                 isNullable: false,
-                isExcludeField: false,
+                excludeField: false,
                 isl10nModeExlude: false,
+                typeSelect: {
+                    selectboxValues: "",
+                    renderType: "selectSingle",
+                    foreignTable: "",
+                },
+                typeText: {
+                    enableRichtext: false,
+                },
+                typeNumber: {
+                    enableSlider: false,
+                    steps: 1,
+                    setRange: false,
+                    upperRange: 255,
+                    lowerRange: 0,
+                },
+                typeColor: {
+                    setValuesColorPicker: false,
+                    colorPickerValues: '',
+                },
+                typeBoolean: {
+                    renderType: "default",
+                    booleanValues: "",
+                },
+                typePassword: {
+                    renderPasswordGenerator: false,
+                },
+                typeDateTime: {
+                    dbTypeDateTime: "",
+                    formatDateTime: "",
+                },
+                typeFile: {
+                    allowedFileTypes: "",
+                },
+                size: "",
+                minItems: "",
+                maxItems: "",
             }
         );
     }
@@ -48,7 +121,7 @@ export const CustomModelNode = (props) => {
         setRelations([...relations, {
             "foreignRelationClass": "",
             "lazyLoading": true,
-            "propertyIsExcludeField": true,
+            "excludeField": true,
             "relationDescription": "",
             "relationName": "",
             "relationType": "",
@@ -60,7 +133,7 @@ export const CustomModelNode = (props) => {
             {
                 "foreignRelationClass": "",
                 "lazyLoading": true,
-                "propertyIsExcludeField": true,
+                "excludeField": true,
                 "relationDescription": "",
                 "relationName": "",
                 "relationType": "",
@@ -392,7 +465,7 @@ export const CustomModelNode = (props) => {
                                                     onChange={(value) => {
                                                         updateProperty(index, "typeNumber.enableSlider", value);
                                                     }} />
-                                                {property.typeNumber.enableSlider && (
+                                                {property.typeNumber?.enableSlider && (
                                                     <CheckboxComponent
                                                         label="Set range"
                                                         identifier="setRange"
@@ -404,7 +477,7 @@ export const CustomModelNode = (props) => {
                                                 )}
                                             </div>
                                         )}
-                                        {(property.type === 'Integer' || property.type === 'Float') && (property.typeNumber.enableSlider) &&
+                                        {(property.type === 'Integer' || property.type === 'Float') && (property.typeNumber?.enableSlider) &&
                                             <div className="d-flex">
                                                 <InputComponent
                                                     label="Step size"
@@ -593,11 +666,11 @@ export const CustomModelNode = (props) => {
                                             }}
                                         /> )}
                                         { isAdvancedOptionsVisible && (<CheckboxComponent
-                                            identifier="propertyIsExcludeField"
+                                            identifier="excludeField"
                                             label="is exclude field?"
-                                            checked={property.propertyIsExcludeField}
+                                            checked={property.excludeField}
                                             onChange={(value) => {
-                                                updateProperty(index, "propertyIsExcludeField", value);
+                                                updateProperty(index, "excludeField", value);
                                             }}
                                         /> )}
                                         { isAdvancedOptionsVisible && (<CheckboxComponent

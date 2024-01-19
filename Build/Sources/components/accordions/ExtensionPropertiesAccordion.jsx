@@ -145,6 +145,7 @@ export const ExtensionPropertiesAccordion = (props) => {
                             label={"Extension Description"}
                             initialValue={props.properties.description}
                             identifier={"extensionDescription"}
+                            validation={{ isRequired: true}}
                             onChange={(value) => {
                                 handleValueChange('description', value)
                             }}

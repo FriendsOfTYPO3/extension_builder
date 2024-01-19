@@ -49,7 +49,7 @@ export const ActionButtonsComponent = (props) => {
                     {
                         "allowedFileTypes": "",
                         "propertyDescription": property.description,
-                        "propertyIsExcludeField": property.isExcludedField,
+                        "excludeField": property.excludeField,
                         "propertyIsL10nModeExclude": property.isl10nModeExlude,
                         "propertyIsNullable": property.isNullable,
                         "propertyIsRequired": property.isRequired,
@@ -88,7 +88,7 @@ export const ActionButtonsComponent = (props) => {
                         "typeFile": {
                             "allowedFileTypes": property.typeFile?.allowedFileTypes || "",
                         },
-                        "size": property.size || "",
+                        "size": property.size || "30",
                         "minItems": property.minItems || "",
                         "maxItems": property.maxItems || "",
                         "uid": uuidv4()

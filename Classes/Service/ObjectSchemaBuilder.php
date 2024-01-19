@@ -161,7 +161,7 @@ class ObjectSchemaBuilder implements SingletonInterface
         $relation->setName($relationJsonConfiguration['relationName']);
         $relation->setLazyLoading((bool)($relationJsonConfiguration['lazyLoading'] ?? false));
         $relation->setNullable((bool)($relationJsonConfiguration['propertyIsNullable'] ?? false));
-        $relation->setExcludeField((bool)$relationJsonConfiguration['propertyIsExcludeField']);
+        $relation->setExcludeField((bool)$relationJsonConfiguration['excludeField']);
         $relation->setDescription($relationJsonConfiguration['relationDescription'] ?? '');
         $relation->setUniqueIdentifier($relationJsonConfiguration['uid'] ?? '');
         $relation->setType($relationJsonConfiguration['type'] ?? '');
@@ -245,8 +245,8 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (isset($propertyJsonConfiguration['propertyIsNullable'])) {
             $property->setNullable($propertyJsonConfiguration['propertyIsNullable']);
         }
-        if (isset($propertyJsonConfiguration['propertyIsExcludeField'])) {
-            $property->setExcludeField($propertyJsonConfiguration['propertyIsExcludeField']);
+        if (isset($propertyJsonConfiguration['excludeField'])) {
+            $property->setExcludeField($propertyJsonConfiguration['excludeField']);
         }
         if (isset($propertyJsonConfiguration['propertyIsL10nModeExclude'])) {
             $property->setL10nModeExclude($propertyJsonConfiguration['propertyIsL10nModeExclude']);
