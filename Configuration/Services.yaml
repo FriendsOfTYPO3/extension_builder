@@ -12,3 +12,10 @@ services:
 
   EBT\ExtensionBuilder\Service\Printer:
     public: true
+
+  EBT\ExtensionBuilder\Command\MigrateExtensionCommand:
+    tags:
+      - name: 'console.command'
+        command: 'extension-builder:migrate-extension'
+        description: 'Reads older extensions and rewrite the ExtensionBuilder.json file to match the current TYPO3 version'
+        schedulable: false

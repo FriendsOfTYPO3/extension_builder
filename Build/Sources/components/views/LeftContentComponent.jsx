@@ -42,14 +42,14 @@ export const LeftContentComponent = (props) => {
                     moveModule={props.moveModule}
                 />
             </div>
-            {/*<div className="panel-group" id="accordion-left-panel-debug">
+            <div className="panel-group" id="accordion-left-panel-debug">
                 <DebugOutputAccordion
                     properties={props.properties}
                     authors={props.authors}
                     plugins={props.plugins}
                     modules={props.modules}
                 />
-            </div>*/}
+            </div>
         </Fragment>
     )
 }

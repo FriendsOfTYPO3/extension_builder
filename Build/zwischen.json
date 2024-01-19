@@ -1,0 +1,24 @@
+[
+    {
+        "source": "dndnode_0",
+        "sourceHandle": "relation-dndnode_0-1",
+        "target": "dndnode_2",
+        "targetHandle": "customModelNode-dndnode_2",
+        "id": "reactflow__edge-dndnode_0relation-dndnode_0-1-dndnode_2customModelNode-dndnode_2"
+    }
+]
+
+
+// Oberes gelöscht
+
+
+// eins neu
+[
+    {
+        "source": "dndnode_0",
+        "sourceHandle": "relation-dndnode_0-1",
+        "target": "dndnode_2",
+        "targetHandle": "customModelNode-dndnode_2",
+        "id": "reactflow__edge-dndnode_0relation-dndnode_0-1-dndnode_2customModelNode-dndnode_2"
+    }
+]

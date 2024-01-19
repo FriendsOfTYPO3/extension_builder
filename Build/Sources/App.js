@@ -13,6 +13,8 @@ export const EdgesContext = createContext([]);
 export const CustomModelNodeIndexContext = createContext(0);
 export const AdvancedOptionsContext = createContext(false);
 
+export const RemoveEdgeContext = createContext(() => {});
+
 function App() {
     // Nodes for ReactFlow
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -251,6 +253,11 @@ function App() {
         setNodes(prevNodes => prevNodes.filter(node => node.id !== nodeId));
     }
 
+    const removeEdge = (handleId) => {
+        // remove edge depending on the handle id
+        setEdges(prevEdges => prevEdges.filter(edge => edge.sourceHandle !== handleId));
+    }
+
     return (
         <div className="App container-fluid">
             <button
@@ -311,9 +318,11 @@ function App() {
                             <AdvancedOptionsContext.Provider value={{isAdvancedOptionsVisible}}>
                                 <EdgesContext.Provider value={{edges, setEdges, onEdgesChange}}>
                                     <NodesContext.Provider value={{nodes, setNodes, onNodesChange}}>
-                                        <RightContentComponent
-                                            removeNode={removeNode}
-                                        />
+                                        <RemoveEdgeContext.Provider value={{removeEdge}}>
+                                            <RightContentComponent
+                                                removeNode={removeNode}
+                                            />
+                                        </RemoveEdgeContext.Provider>
                                     </NodesContext.Provider>
                                 </EdgesContext.Provider>
                             </AdvancedOptionsContext.Provider>

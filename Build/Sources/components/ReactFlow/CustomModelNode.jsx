@@ -11,14 +11,22 @@ import propertyTypes from "./customModelNode/propertyTypes";
 import relationTypes from "./customModelNode/relationTypes";
 import { faArrowUp, faArrowDown, faTrash } from '@fortawesome/free-solid-svg-icons'
 
-import {AdvancedOptionsContext} from "../../App";
+import {AdvancedOptionsContext, RemoveEdgeContext, EdgesContext } from "../../App";
+import { v4 as uuidv4 } from 'uuid';
+import modelProperty from "../../initialValues/modelProperty";
+
 
 export const CustomModelNode = (props) => {
     const [properties, setProperties] = useState(props.data.properties);
     const [relations, setRelations] = useState(props.data.relations);
+
+    const [relationIndex, setRelationIndex] = useState(0);
+
     const [customActions, setCustomActions] = useState([]);
 
     const {isAdvancedOptionsVisible} = useContext(AdvancedOptionsContext);
+    const {removeEdge} = useContext(RemoveEdgeContext);
+    const {edges} = useContext(EdgesContext);
 
     // TODO: create a default property inside an empty js file and set it her.
     const addEmptyProperty = () => {
@@ -116,9 +124,8 @@ export const CustomModelNode = (props) => {
         );
     }
 
-    // TODO: uuid should not be hard coded ???
     const addEmptyRelation = () => {
-        setRelations([...relations, {
+        const newRelation = {
             "foreignRelationClass": "",
             "lazyLoading": true,
             "excludeField": true,
@@ -127,21 +134,19 @@ export const CustomModelNode = (props) => {
             "relationType": "",
             "relationWire": "",
             "renderType": "",
-            "uid": "905857860343"
-        }]);
-        props.data.relations.push(
-            {
-                "foreignRelationClass": "",
-                "lazyLoading": true,
-                "excludeField": true,
-                "relationDescription": "",
-                "relationName": "",
-                "relationType": "",
-                "relationWire": "",
-                "renderType": "",
-                "uid": "905857860343"
-            }
-        );
+            // TODO: muss die uuid hier generiert werden?
+            "uid": uuidv4() // Hier wird die UUID generiert
+        };
+
+        setRelations([...relations, newRelation]);
+        props.data.relations.push(newRelation);
+        setRelationIndex(prevIndex => prevIndex + 1);
+    }
+
+    const getNewRelationIndex = () => {
+        setRelationIndex(relationIndex + 1);
+        console.log('relationIndex', relationIndex);
+        return relationIndex;
     }
 
     const addEmptyAction = () => {
@@ -180,6 +185,14 @@ export const CustomModelNode = (props) => {
         props.data.properties = properties;
     }
 
+    const removeRelation = (relationIndex, handleId) => {
+        removeEdge(handleId);
+
+        relations.splice(relationIndex, 1);
+        setRelations([...relations]);
+        props.data.relations = relations;
+    }
+
     const moveProperty = (propertyIndex, direction) => {
         const newIndex = propertyIndex + direction;
         if (newIndex < 0 || newIndex >= properties.length) {
@@ -190,6 +203,18 @@ export const CustomModelNode = (props) => {
         properties.splice(newIndex, 0, property);
         setProperties([...properties]);
         props.data.properties = properties;
+    }
+
+    const moveRelation = (relationIndex, direction) => {
+        const newIndex = relationIndex + direction;
+        if (newIndex < 0 || newIndex >= relations.length) {
+            return;
+        }
+        const relation = relations[relationIndex];
+        relations.splice(relationIndex, 1);
+        relations.splice(newIndex, 0, relation);
+        setRelations([...relations]);
+        props.data.relations = relations;
     }
 
     const updateRelation = (index, property, value) => {
@@ -216,6 +241,12 @@ export const CustomModelNode = (props) => {
         console.log('removeNode', props);
     }
 
+    const getIsRelationConnected = (relationUid) => {
+        console.log('getIsRelationConnected', relationUid, edges);
+        // check if the relation UID is inside the props.edges
+        return edges.some(edge => edge.sourceHandle === relationUid);
+    };
+
     return (
         <div className="custom-model-node">
             <div className="drag-handle"></div>
@@ -235,10 +266,10 @@ export const CustomModelNode = (props) => {
                     onClick={() => {
                         removeNode(props.id);
                     }}
-                ><FontAwesomeIcon className="font-awesome-icon" icon="fa-solid fa-trash" /></button>
+                ><FontAwesomeIcon className="font-awesome-icon" icon="fa-solid fa-trash"/></button>
                 <Handle
                     type="target"
-                    id={`customModelNode-${props.id}`}
+                    id={`cmn-${props.id}`}
                     position={Position.Left}
                     onConnect={(params) => console.log('handle onConnect', params)}
                     style={{
@@ -249,9 +280,13 @@ export const CustomModelNode = (props) => {
                         left: '-30px'
                     }}
                 />
+{/*                <h4>Props.id</h4>
+                <pre>
+                    {JSON.stringify(props.id, null, 2)}
+                </pre>*/}
             </div>
             <TYPO3StyledAccordionGroup id={`accordionCustomModelNode-${props.id}`}>
-                <TYPO3StyledAccordion  title="Domain object settings" id={`accordionItemCustomModelNode-settings-${props.id}`} parentId={`accordionCustomModelNode-${props.id}`}>
+            <TYPO3StyledAccordion  title="Domain object settings" id={`accordionItemCustomModelNode-settings-${props.id}`} parentId={`accordionCustomModelNode-${props.id}`}>
                     <CheckboxComponent
                         identifier="isAggregateRoot"
                         label="Is aggregate root"
@@ -574,7 +609,7 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "size", value);
                                             }}
                                         />}
-                                        {property.type === 'Text' && !property.typeText.enableRichtext && <InputComponent
+                                        {property.type === 'Text' && !property.typeText?.enableRichtext && <InputComponent
                                             label="Rows (not for richtext)"
                                             placeholder="5"
                                             identifier="rows"
@@ -747,10 +782,18 @@ export const CustomModelNode = (props) => {
                 {
                     props.data.relations.map((relation, index) => {
                         return (
-                            <div className="relation">
+                            <div className="relation" key={relation.uid}>
+{/*                                <pre>
+                                    {JSON.stringify(index, null, 2)}
+                                </pre>
+                                <h4>relation</h4>
+                                <pre>
+                                    {JSON.stringify(relation, null, 2)}
+                                </pre>*/}
                                 <Handle
                                     type="source"
-                                    id={`relation-${props.id}-${index}`}
+                                    /*id={`rel-${props.id}-${index}`}*/
+                                    id={`rel-${props.id}-${relation.uid}`}
                                     position={Position.Left}
                                     onConnect={(params) => console.log('handle onConnect', params)}
                                     style={{
@@ -758,10 +801,12 @@ export const CustomModelNode = (props) => {
                                         border: '3px solid #ff8700',
                                         position: 'relative',
                                         top: '42px',
+                                        left: '4px',
                                         zIndex: '1000'
                                     }}
                                 />
                                 <TYPO3StyledAccordion
+                                    /*title={`uid: ${relation.uid} - id: ${props.id} - index: ${index} - name: ${relation.relationName} type: ${relation.relationType ? `(${relation.relationType})` : ''}`}*/
                                     title={`${relation.relationName} ${relation.relationType ? `(${relation.relationType})` : ''}`}
                                     id={`nodeRelation-${props.id}-${index}`}
                                     parentId="accordionCustomModelNodeRelations"
@@ -819,10 +864,45 @@ export const CustomModelNode = (props) => {
                                                 updateRelation(index, "relationToExternalClass", value);
                                             }}
                                         />
+                                        <div className="d-flex">
+                                                <button
+                                                    disabled={getIsRelationConnected(`rel-${props.id}-${relation.uid}`)}
+                                                    className="btn btn-danger me-auto"
+                                                    onClick={() => {
+                                                        removeRelation(index, `rel-${props.id}-${relation.uid}`);
+                                                    }}
+                                                >
+                                                    <FontAwesomeIcon icon={faTrash}/>
+                                                </button>
+                                                <button
+                                                    className="btn btn-info me-1"
+                                                    onClick={() => {
+                                                        // moveRelation(index, -1)
+                                                        console.log("move relation up", index);
+                                                    }}
+                                                    /*disabled={index === 0}*/
+                                                    disabled
+                                                >
+                                                    <FontAwesomeIcon icon={faArrowUp}/>
+                                                </button>
+                                                <button
+                                                    className="btn btn-info"
+                                                    onClick={() => {
+                                                        // moveRelation(index, 1)
+                                                        console.log("move relation down", index);
+                                                    }}
+                                                    /*disabled={index === relations.length - 1}*/
+                                                    disabled
+                                                >
+                                                    <FontAwesomeIcon icon={faArrowDown}/>
+                                                </button>
+                                        </div>
+
                                     </div>
                                 </TYPO3StyledAccordion>
                             </div>
-                        )})
+                        )
+                    })
                 }
             </TYPO3StyledAccordionGroup>
         </div>

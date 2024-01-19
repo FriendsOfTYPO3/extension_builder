@@ -1,0 +1,16 @@
+[
+    {
+        "source": "dndnode_0",
+        "sourceHandle": "relation-dndnode_0-1",
+        "target": "dndnode_2",
+        "targetHandle": "customModelNode-dndnode_2",
+        "id": "reactflow__edge-dndnode_0relation-dndnode_0-1-dndnode_2customModelNode-dndnode_2"
+    },
+    {
+        "source": "dndnode_0",
+        "sourceHandle": "relation-dndnode_0-0",
+        "target": "dndnode_1",
+        "targetHandle": "customModelNode-dndnode_1",
+        "id": "reactflow__edge-dndnode_0relation-dndnode_0-0-dndnode_1customModelNode-dndnode_1"
+    }
+]
