@@ -16,6 +16,7 @@ export const ActionButtonsComponent = (props) => {
     const [show, setShow] = useState(false);
     const [modalTitle, setModalTitle] = useState('');
     const [modalBody, setModalBody] = useState('');
+    const [modalClassname, setModalClassname] = useState('bg-info text-dark');
 
     const [modalBodyHtml, setModalBodyHtml] = useState('');
     const [modalBodyJsx, setModalBodyJsx] = useState(null)
@@ -245,11 +246,13 @@ export const ActionButtonsComponent = (props) => {
                 console.log(response.data.success);
                 if(response.data.success === null || response.data.success === undefined) {
                     setModalTitle('Successfull saved but ...');
+                    setModalClassname('bg-warning text-dark');
                     setModalBodyHtml('... Something went wrong on server side<br><br><code>' + JSON.stringify(response.data) + '</code>');
                     setModalBodyJsx(null)
                     setShow(true);
                 } else {
                     setModalTitle('Successfull saved');
+                    setModalClassname('bg-success text-white');
                     setModalBodyHtml(response.data.success)
                     setModalBodyJsx(null)
                     setShow(true);
@@ -296,11 +299,13 @@ export const ActionButtonsComponent = (props) => {
             console.log("fetching failed");
             setShow(true);
             setModalTitle('Fetching failed');
+            setModalClassname('bg-danger text-white');
             setModalBodyHtml('Fetching the extensions failed. Please check, if you have extensions with a valid extensionbuilder.json file.');
             setModalBodyJsx(null);
         } else if (extensions.error === null && extensions.success === true) {
             setShow(true);
             setModalTitle('Available extensions');
+            setModalClassname('bg-info text-dark');
             setModalBodyJsx(
                 <>
                     <p>Please select an extension to open</p>
@@ -330,7 +335,7 @@ export const ActionButtonsComponent = (props) => {
 	return (
         <>
             <Modal show={show} onHide={() => setShow(false)}>
-                <Modal.Header closeButton>
+                <Modal.Header closeButton className={`${modalClassname}`}>
                     <Modal.Title>{modalTitle}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -347,7 +352,7 @@ export const ActionButtonsComponent = (props) => {
                 <div className="btn-group w-100" role="group" aria-label="Basic example">
                     <button
                         type="button"
-                        className="fs-3 btn btn-primary"
+                        className="fs-4 btn btn-primary"
                         id="eb-btn-new"
                         onClick={handleNew}
                     >
@@ -355,14 +360,14 @@ export const ActionButtonsComponent = (props) => {
                     </button>
                     <button
                         type="button"
-                        className="fs-3 btn btn-success"
+                        className="fs-4 btn btn-success"
                         id="eb-btn-save"
                         onClick={handleSave}
                     ><FontAwesomeIcon className="me-1" icon="fa-solid fa-save" />Save
                     </button>
                     <button
                         type="button"
-                        className="fs-3 btn btn-light text-dark"
+                        className="fs-4 btn btn-light text-dark"
                         id="eb-btn-prefill"
                         onClick={handleOpenExtension}
                     ><FontAwesomeIcon className="me-1" icon="fa-solid fa-file" />Open
