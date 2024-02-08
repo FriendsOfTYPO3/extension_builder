@@ -88,8 +88,8 @@
   position: fixed;
   transition: left 0.5s ease;
   color: #515151;
-  background-color: #f4f4f4;
-  border-color: #f4f4f4;
+  background-color: #F4F4F4;
+  border-color: #F4F4F4;
 }
 #show-advanced-options.collapsed,
 #btn-sidebar-collapse.collapsed {
@@ -110,13 +110,13 @@
   flex-direction: column;
   display: flex;
   height: 100%;
-  background-color: lightgray;
+  background-color: #D3D3D3;
 }
 .dndflow aside {
-  border-right: 1px solid #eee;
+  border-right: 1px solid #EEE;
   padding: 15px 10px;
   font-size: 12px;
-  background: #fcfcfc;
+  background: #FCFCFC;
 }
 .dndflow aside .debug-output {
   max-height: 100px;
@@ -127,14 +127,14 @@
 .dndflow .dndnode {
   height: 20px;
   padding: 4px;
-  border: 1px solid #1a192b;
+  border: 1px solid #1A192B;
   border-radius: 2px;
   margin-bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: grab;
-  border-color: #0303b3;
+  border-color: #0303B3;
   max-width: 150px;
 }
 .dndflow .reactflow-wrapper {
@@ -148,10 +148,10 @@
 .custom-model-node {
   width: 100%;
   min-width: 300px;
-  border: 1px solid #ccc;
+  border: 1px solid #CCC;
   padding: 5px;
   border-radius: 5px;
-  background: white;
+  background: #FFF;
 }
 .custom-model-node .custom-model-node__header {
   height: 70px;
@@ -165,8 +165,8 @@
   width: 20px;
   height: 20px;
   top: -10px;
-  background-color: #dfa23a;
-  border: 3px solid orange;
+  background-color: #DFA23A;
+  border: 3px solid #DFA23A;
 }
 .custom-model-node input[type=text],
 .custom-model-node textarea {
@@ -175,14 +175,14 @@
 .custom-model-node .drag-handle {
   width: 100%;
   width: 42%;
-  background-color: #ff8700;
+  background-color: #FF8700;
   position: absolute;
   top: -24px;
   left: 29%;
   min-width: 20px;
   min-height: 30px;
   border-radius: 4px;
-  border: 2px solid #ff8700;
+  border: 2px solid #FF8700;
 }
 .custom-model-node .accordion-header .accordion-button {
   padding: 5px 0.5rem;
@@ -202,7 +202,7 @@
 
 .react-flow__sidebar {
   overflow-y: scroll;
-  background-color: #fedcba;
+  background-color: #FEDCBA;
 }
 
 /* TYPO3 overrides */
@@ -221,7 +221,7 @@
 
 .footer {
   box-shadow: 0px -5px 11px 0px rgba(204, 204, 204, 0.7);
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #CCC;
   height: 30px;
 }
 

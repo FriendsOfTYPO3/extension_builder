@@ -1,8 +1,8 @@
 $custom-model-accordion-padding: 0.5rem;
-$gray: #ccc;
+$gray: #CCC;
 $light-gray: #777;
-$orange: #dfa23a;
-$dark-orange: #ff8700;
+$orange: #DFA23A;
+$dark-orange: #FF8700;
 
 @mixin fullWidth {
     width: 100%;
@@ -13,7 +13,7 @@ $dark-orange: #ff8700;
     border: 1px solid $gray;
     padding: 5px;
     border-radius: 5px;
-    background: white;
+    background: #FFF;
 
     .custom-model-node__header {
         height: 70px;
@@ -30,7 +30,7 @@ $dark-orange: #ff8700;
         height: 20px;
         top: -10px;
         background-color: $orange;
-        border: 3px solid orange;
+        border: 3px solid $orange;
     }
 
     input[type="text"],

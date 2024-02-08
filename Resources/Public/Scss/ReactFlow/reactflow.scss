@@ -1,8 +1,8 @@
-$dndflow-border-color: #1a192b;
-$aside-background: #fcfcfc;
-$aside-border-color: #eee;
+$dndflow-border-color: #1A192B;
+$aside-background: #FCFCFC;
+$aside-border-color: #EEE;
 $description-margin: 10px;
-$dndnode-border-color: #0303b3;
+$dndnode-border-color: #0303B3;
 $selectall-margin-top: 10px;
 
 .dndflow {
@@ -10,7 +10,7 @@ $selectall-margin-top: 10px;
     flex-direction: column;
     display: flex;
     height: 100%;
-    background-color: lightgray;
+    background-color: #D3D3D3;
 
     aside {
         border-right: 1px solid $aside-border-color;
