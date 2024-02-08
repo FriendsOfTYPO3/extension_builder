@@ -12,8 +12,8 @@ export const NodesContext = createContext([]);
 export const EdgesContext = createContext([]);
 export const CustomModelNodeIndexContext = createContext(0);
 export const AdvancedOptionsContext = createContext(false);
-
 export const RemoveEdgeContext = createContext(() => {});
+export const ValidationErrorsContext = createContext(null);
 
 function App() {
     // Nodes for ReactFlow
@@ -25,6 +25,7 @@ function App() {
     const [authors, setAuthors] = useState([]);
     const [plugins, setPlugins] = useState([]);
     const [modules, setModules] = useState([]);
+    const [validationErrors, setValidationErrors] = useState(null);
 
     // Zustand für das Ein- und Ausklappen der linken Spalte
     const [isLeftColumnVisible, setLeftColumnVisible] = useState(true);
@@ -249,6 +250,7 @@ function App() {
         setCustomModelNodeIndex(working.nodes ? working.nodes.length : 0);
     }
 
+
     const removeNode = (nodeId) => {
         setNodes(prevNodes => prevNodes.filter(node => node.id !== nodeId));
     }
@@ -288,26 +290,28 @@ function App() {
                     <div className="p-1">
                         <EdgesContext.Provider value={{edges, setEdges, onEdgesChange}}>
                             <NodesContext.Provider value={{nodes, setNodes, onNodesChange}}>
-                                <LeftContentComponent
-                                    properties={properties}
-                                    authors={authors}
-                                    plugins={plugins}
-                                    modules={modules}
-                                    addNewAuthorHandler={addNewAuthorHandler}
-                                    addNewModuleHandler={addNewModuleHandler}
-                                    addNewPluginHandler={addNewPluginHandler}
-                                    updateExtensionPropertiesHandler={updateExtensionPropertiesHandler}
-                                    updateAuthorHandler={updateAuthorHandler}
-                                    updateModuleHandler={updateModuleHandler}
-                                    updatePluginHandler={updatePluginHandler}
-                                    removeAuthorHandler={removeAuthorHandler}
-                                    removePluginHandler={removePluginHandler}
-                                    removeModuleHandler={removeModuleHandler}
-                                    moveAuthor={moveAuthor}
-                                    movePlugin={movePlugin}
-                                    moveModule={moveModule}
-                                    handleOpenExtension={handleOpenExtension}
-                                />
+                                <ValidationErrorsContext.Provider value={{validationErrors, setValidationErrors}}>
+                                    <LeftContentComponent
+                                        properties={properties}
+                                        authors={authors}
+                                        plugins={plugins}
+                                        modules={modules}
+                                        addNewAuthorHandler={addNewAuthorHandler}
+                                        addNewModuleHandler={addNewModuleHandler}
+                                        addNewPluginHandler={addNewPluginHandler}
+                                        updateExtensionPropertiesHandler={updateExtensionPropertiesHandler}
+                                        updateAuthorHandler={updateAuthorHandler}
+                                        updateModuleHandler={updateModuleHandler}
+                                        updatePluginHandler={updatePluginHandler}
+                                        removeAuthorHandler={removeAuthorHandler}
+                                        removePluginHandler={removePluginHandler}
+                                        removeModuleHandler={removeModuleHandler}
+                                        moveAuthor={moveAuthor}
+                                        movePlugin={movePlugin}
+                                        moveModule={moveModule}
+                                        handleOpenExtension={handleOpenExtension}
+                                    />
+                                </ValidationErrorsContext.Provider>
                             </NodesContext.Provider>
                         </EdgesContext.Provider>
                     </div>
@@ -319,9 +323,11 @@ function App() {
                                 <EdgesContext.Provider value={{edges, setEdges, onEdgesChange}}>
                                     <NodesContext.Provider value={{nodes, setNodes, onNodesChange}}>
                                         <RemoveEdgeContext.Provider value={{removeEdge}}>
-                                            <RightContentComponent
-                                                removeNode={removeNode}
-                                            />
+                                            <ValidationErrorsContext.Provider value={{validationErrors, setValidationErrors}}>
+                                                <RightContentComponent
+                                                    removeNode={removeNode}
+                                                />
+                                            </ValidationErrorsContext.Provider>
                                         </RemoveEdgeContext.Provider>
                                     </NodesContext.Provider>
                                 </EdgesContext.Provider>

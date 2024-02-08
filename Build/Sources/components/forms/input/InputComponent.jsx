@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { getExtensionKeyIsValid } from "../../../helper";
+import {ValidationErrorsContext} from "../../../App";
 
 const InputComponent = ({ label, identifier, initialValue, onChange, validation }) => {
     const [value, setValue] = useState(initialValue || "");
     const [isValid, setIsValid] = useState(null);
+    const { setValidationErrors } = useContext(ValidationErrorsContext);
 
     const handleChange = (event) => {
         setValue(event.target.value);
@@ -13,22 +15,32 @@ const InputComponent = ({ label, identifier, initialValue, onChange, validation 
     };
 
     const validate = (value) => {
-        if(validation){
-            return !(
-                validation.isRequired && value.trim() === '' ||
-                validation.minLength && value.length < validation.minLength ||
-                validation.maxLength && value.length > validation.maxLength ||
-                (identifier === 'extensionKey' && !getExtensionKeyIsValid(value))
-            );
+        // Überprüfen, ob der Wert leer ist oder nicht eine Zahl ist
+        if (isNaN(value) && value?.trim() === '') {
+            setValidationErrors(prevState => ({...prevState, [identifier]: true}));
+            return false;
         }
-        return true;
+
+        // Überprüfen, ob die Validierungskriterien erfüllt sind
+        const isValid = !validation || (
+            (!validation.isRequired || value) &&
+            (!validation.minLength || value.length >= validation.minLength) &&
+            (!validation.maxLength || value.length <= validation.maxLength) &&
+            (identifier !== 'extensionKey' || getExtensionKeyIsValid(value))
+        );
+
+        // Aktualisieren des Validierungsstatus basierend auf der Gültigkeit
+        setValidationErrors(prevState => ({...prevState, [identifier]: !isValid}));
+
+        return isValid;
     };
 
     useEffect(() => {
         if(validation){
-            setIsValid(validate(value));
+            const valid = validate(value);
+            setIsValid(valid);
         }
-    }, [value, validation]);
+    }, [value]);
 
     useEffect(() => {
         // console.log("initial value in input component changed:" + initialValue)

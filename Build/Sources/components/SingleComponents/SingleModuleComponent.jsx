@@ -28,7 +28,7 @@ export const SingleModuleComponent = (props) => {
                 <InputComponent
                     label="Name"
                     type="text"
-                    identifier="name"
+                    identifier={`name-${props.index}`}
                     validation={{ isRequired: true, minLength: 2 }}
                     initialValue={props.module.name}
                     onChange={(value) => {
@@ -38,7 +38,7 @@ export const SingleModuleComponent = (props) => {
                 <InputComponent
                     label="Key"
                     type="text"
-                    identifier="key"
+                    identifier={`key-${props.index}`}
                     validation={{ isRequired: true, minLength: 2 }}
                     initialValue={props.module.key}
                     onChange={(value) => {
@@ -47,8 +47,8 @@ export const SingleModuleComponent = (props) => {
                 />
                 <TextareaComponent
                     label="Description"
-                    identifier="description"
-                    validation={{ isRequired: true, minLength: 2 }}
+                    identifier={`description-${props.index}`}
+                    validation={{ isRequired: true, minLength: 5 }}
                     initialValue={props.module.description}
                     onChange={(value) => {
                         updateModuleHandler('description', value);
@@ -58,7 +58,8 @@ export const SingleModuleComponent = (props) => {
                 <InputComponent
                     label="Label"
                     type="text"
-                    identifier="label"
+                    identifier={`tabLabel-${props.index}`}
+                    validation={{ isRequired: true, minLength: 3 }}
                     initialValue={props.module.tabLabel}
                     onChange={(value) => {
                         updateModuleHandler('tabLabel', value);
@@ -67,8 +68,9 @@ export const SingleModuleComponent = (props) => {
                 <SelectComponent
                     label="Main module"
                     initialValue={props.module.mainModule}
-                    identifier="mainModule"
+                    identifier={`mainModule-${props.index}`}
                     options={mainModules}
+                    validation={{ isRequired: true }}
                     defaultValue="Please choose the main module"
                     onChange={(value) => {
                         updateModuleHandler('mainModule', value);
@@ -77,7 +79,7 @@ export const SingleModuleComponent = (props) => {
                 <TextareaComponent
                     placeholder="Blog => edit, update, delete"
                     label="Cachable controller actions"
-                    identifier="controllerActionCombinations"
+                    identifier={`cachableControllerActions-${props.index}`}
                     initialValue={props.module.actions.controllerActionCombinations}
                     onChange={(value) => {
                         updateModuleHandler('actions.controllerActionCombinations', value);

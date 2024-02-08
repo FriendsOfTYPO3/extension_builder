@@ -17,7 +17,7 @@ export const SinglePluginComponent = (props) => {
                 <InputComponent
                     label="Plugin Name"
                     type="text"
-                    identifier="name"
+                    identifier={`name-${props.index}`}
                     validation={{ isRequired: true, minLength: 2 }}
                     initialValue={props.plugin.name}
                     onChange={(value) => {
@@ -27,7 +27,7 @@ export const SinglePluginComponent = (props) => {
                 <InputComponent
                     label="Plugin Key"
                     type="text"
-                    identifier="key"
+                    identifier={`key-${props.index}`}
                     validation={{ isRequired: true, minLength: 2 }}
                     initialValue={props.plugin.key}
                     onChange={(value) => {
@@ -37,7 +37,7 @@ export const SinglePluginComponent = (props) => {
                 <TextareaComponent
                     placeholder="Please insert a description"
                     label="Description"
-                    identifier="description"
+                    identifier={`description-${props.index}`}
                     validation={{ isRequired: true}}
                     initialValue={props.plugin.description}
                     onChange={(value) => {
@@ -47,7 +47,7 @@ export const SinglePluginComponent = (props) => {
                 <TextareaComponent
                     placeholder="Blog => list, show"
                     label="Cachable controller actions"
-                    identifier="controllerActionsCachable"
+                    identifier={`controllerActionCombinations-${props.index}`}
                     initialValue={props.plugin.actions.controllerActionCombinations}
                     onChange={(value) => {
                         updatePluginHandler('actions.controllerActionCombinations', value);
@@ -56,7 +56,7 @@ export const SinglePluginComponent = (props) => {
                 <TextareaComponent
                     placeholder="Blog => edit, update, delete"
                     label="Non cachable controller actions"
-                    identifier="controllerActionsNonCachable"
+                    identifier={`noncacheableActions-${props.index}`}
                     initialValue={props.plugin.actions.noncacheableActions}
                     onChange={(value) => {
                         updatePluginHandler('actions.noncacheableActions', value);

@@ -4,11 +4,12 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { v4 as uuidv4 } from 'uuid';
 import {listAvailableExtensions} from "../helper/api/listAvailableExtensions";
 import { Modal, Button } from 'react-bootstrap';
-import {EdgesContext, NodesContext} from "../App";
+import {EdgesContext, NodesContext, ValidationErrorsContext } from "../App";
 
 export const ActionButtonsComponent = (props) => {
     const {nodes} = useContext(NodesContext);
     const {edges} = useContext(EdgesContext);
+    const {validationErrors} = useContext(ValidationErrorsContext);
 
     const [errors, setErrors] = useState(null);
     const [success, setSuccess] = useState(null);
@@ -332,6 +333,27 @@ export const ActionButtonsComponent = (props) => {
         props.handleOpenExtension(extension);
     };
 
+    const checkValidationErrors = () => {
+        // TODO at the moment the validationErrors are still present when f.e. a node is deleted.
+        // We have to check, if it is deleted and then remove all the validationErrors for this node
+
+        if(validationErrors === null || validationErrors === undefined) {
+            console.log("No errors");
+            return true;
+        }
+
+        const errors = Object.values(validationErrors).some(value => value === true);
+        console.log("errors" + JSON.stringify(validationErrors));
+
+        if(errors) {
+            console.log("true");
+            return true;
+        }
+
+        console.log("false");
+        return false;
+    }
+
 	return (
         <>
             <Modal show={show} onHide={() => setShow(false)}>
@@ -356,25 +378,27 @@ export const ActionButtonsComponent = (props) => {
                         id="eb-btn-new"
                         onClick={handleNew}
                     >
-                        <FontAwesomeIcon className="me-1" icon="fa-solid fa-file" />New
+                        <FontAwesomeIcon className="me-1" icon="fa-solid fa-file"/>New
                     </button>
                     <button
                         type="button"
                         className="fs-4 btn btn-success"
                         id="eb-btn-save"
+                        disabled={checkValidationErrors()}
                         onClick={handleSave}
-                    ><FontAwesomeIcon className="me-1" icon="fa-solid fa-save" />Save
+                    >
+                        <FontAwesomeIcon className="me-1" icon="fa-solid fa-save"/>Save
                     </button>
                     <button
                         type="button"
                         className="fs-4 btn btn-light text-dark"
                         id="eb-btn-prefill"
                         onClick={handleOpenExtension}
-                    ><FontAwesomeIcon className="me-1" icon="fa-solid fa-file" />Open
+                    ><FontAwesomeIcon className="me-1" icon="fa-solid fa-file"/>Open
                     </button>
                 </div>
             </div>
         </>
 
-	)
+    )
 }

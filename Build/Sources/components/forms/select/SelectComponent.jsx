@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
+import classNames from "classnames";
+import {ValidationErrorsContext} from "../../../App";
 
-const SelectComponent = ({ label, options, defaultValue, showEmptyValue = true, identifier, initialValue = "", onChange }) => {
+const SelectComponent = ({ label, options, defaultValue, showEmptyValue = true, identifier, initialValue = "", onChange, validation }) => {
     const [value, setValue] = useState(initialValue);
+    const [isValid, setIsValid] = useState(null);
+    const { setValidationErrors } = useContext(ValidationErrorsContext);
 
     const handleChange = (event) => {
         setValue(event.target.value);
@@ -13,6 +17,23 @@ const SelectComponent = ({ label, options, defaultValue, showEmptyValue = true, 
         setValue(initialValue);
     }, [initialValue]);
 
+    const validate = (value) => {
+        if (validation?.isRequired && value?.trim() === '') {
+            setValidationErrors(prevState => ({...prevState, [identifier]: true}));
+            return false;
+        }
+
+        // Hier können Sie weitere Validierungsregeln hinzufügen
+        setValidationErrors(prevState => ({...prevState, [identifier]: false}));
+        return true;
+    };
+
+    useEffect(() => {
+        if(validation){
+            setIsValid(validate(value));
+        }
+    }, [value]);
+
     return (
         <div className="mb-2">
             <label
@@ -22,7 +43,10 @@ const SelectComponent = ({ label, options, defaultValue, showEmptyValue = true, 
                 {label}
             </label>
             <select
-                className="fs-3 form-select"
+                className={classNames("fs-3 form-select", {
+                    'is-valid': isValid === true,
+                    'is-invalid': isValid === false,
+                })}
                 aria-label={label}
                 onChange={handleChange}
                 value={value}  // Setzen Sie den aktuellen Wert hier
@@ -46,12 +70,17 @@ SelectComponent.propTypes = {
     defaultValue: PropTypes.string,
     identifier: PropTypes.string,
     onChange: PropTypes.func,
+    validation: PropTypes.shape({
+        isRequired: PropTypes.bool,
+    }),
 };
 
 SelectComponent.defaultProps = {
     label: '',
+    identifier: '',
     options: [],
     onChange: () => {},
+    validation: null,
 };
 
 export default SelectComponent;

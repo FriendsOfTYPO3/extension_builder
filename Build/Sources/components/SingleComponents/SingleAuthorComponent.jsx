@@ -27,7 +27,7 @@ export const SingleAuthorComponent = (props) => {
             <InputComponent
                 label="Author"
                 type="text"
-                identifier="author"
+                identifier={`author-${props.index}`}
                 initialValue={props.author.name}
                 validation={{ isRequired: true, minLength: 2 }}
                 onChange={(value) => {
@@ -37,7 +37,7 @@ export const SingleAuthorComponent = (props) => {
             <SelectComponent
                 label="Role"
                 initialValue={props.author.role}
-                identifier="role"
+                identifier={`role-${props.index}`}
                 options={roles}
                 defaultValue="Please choose the role"
                 onChange={(value) => {
@@ -47,7 +47,7 @@ export const SingleAuthorComponent = (props) => {
             <InputComponent
                 label="E-Mail"
                 type="email"
-                identifier="email"
+                identifier={`email-${props.index}`}
                 initialValue={props.author.email}
                 onChange={(value) => {
                     updateAuthorHandler('email', value);
@@ -56,7 +56,7 @@ export const SingleAuthorComponent = (props) => {
             <InputComponent
                 label="Company"
                 type="text"
-                identifier="company"
+                identifier={`company-${props.index}`}
                 initialValue={props.author.company}
                 onChange={(value) => {
                     updateAuthorHandler('company', value);
