@@ -29,7 +29,6 @@ export const SingleAuthorComponent = (props) => {
                 type="text"
                 identifier={`author-${props.index}`}
                 initialValue={props.author.name}
-                validation={{ isRequired: true, minLength: 2 }}
                 onChange={(value) => {
                     updateAuthorHandler('name', value);
                 }}

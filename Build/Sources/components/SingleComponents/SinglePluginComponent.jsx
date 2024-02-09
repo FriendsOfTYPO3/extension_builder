@@ -18,7 +18,6 @@ export const SinglePluginComponent = (props) => {
                     label="Plugin Name"
                     type="text"
                     identifier={`name-${props.index}`}
-                    validation={{ isRequired: true, minLength: 2 }}
                     initialValue={props.plugin.name}
                     onChange={(value) => {
                         updatePluginHandler('name', value);
@@ -28,7 +27,6 @@ export const SinglePluginComponent = (props) => {
                     label="Plugin Key"
                     type="text"
                     identifier={`key-${props.index}`}
-                    validation={{ isRequired: true, minLength: 2 }}
                     initialValue={props.plugin.key}
                     onChange={(value) => {
                         updatePluginHandler('key', value);
@@ -38,7 +36,6 @@ export const SinglePluginComponent = (props) => {
                     placeholder="Please insert a description"
                     label="Description"
                     identifier={`description-${props.index}`}
-                    validation={{ isRequired: true}}
                     initialValue={props.plugin.description}
                     onChange={(value) => {
                         updatePluginHandler('description', value);

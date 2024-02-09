@@ -338,19 +338,15 @@ export const ActionButtonsComponent = (props) => {
         // We have to check, if it is deleted and then remove all the validationErrors for this node
 
         if(validationErrors === null || validationErrors === undefined) {
-            console.log("No errors");
             return true;
         }
 
         const errors = Object.values(validationErrors).some(value => value === true);
-        console.log("errors" + JSON.stringify(validationErrors));
 
         if(errors) {
-            console.log("true");
             return true;
         }
 
-        console.log("false");
         return false;
     }
 

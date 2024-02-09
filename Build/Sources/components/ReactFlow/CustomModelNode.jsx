@@ -242,7 +242,6 @@ export const CustomModelNode = (props) => {
     }
 
     const getIsRelationConnected = (relationUid) => {
-        console.log('getIsRelationConnected', relationUid, edges);
         // check if the relation UID is inside the props.edges
         return edges.some(edge => edge.sourceHandle === relationUid);
     };
@@ -256,7 +255,6 @@ export const CustomModelNode = (props) => {
                     label="Node title"
                     placeholder="Node title"
                     identifier="nodeTitle"
-                    validation={{ isRequired: true }}
                     onChange={(value) => {
                         updateNode('label', value);
                     }}
@@ -468,7 +466,6 @@ export const CustomModelNode = (props) => {
                                             placeholder="Property name"
                                             identifier="propertyName"
                                             initialValue={property.name}
-                                            validation={{ isRequired: true, minLength: 3}}
                                             onChange={(value) => {
                                                 updateProperty(index, "name", value);
                                             }}
@@ -478,7 +475,6 @@ export const CustomModelNode = (props) => {
                                             identifier="propertyType"
                                             options={propertyTypes}
                                             initialValue={property.type}
-                                            validation={{ isRequired: true }}
                                             onChange={(value) => {
                                                 updateProperty(index, "type", value);
                                             }}
@@ -520,7 +516,6 @@ export const CustomModelNode = (props) => {
                                                     label="Step size"
                                                     placeholder="1"
                                                     identifier="steps"
-                                                    validation={{ isRequired: true }}
                                                     initialValue={property.typeNumber?.steps}
                                                     onChange={(value) => {
                                                         updateProperty(index, "typeNumber.steps", value);
@@ -553,7 +548,6 @@ export const CustomModelNode = (props) => {
                                             label="Format DateTime"
                                             identifier="formatDateTime"
                                             options={['date', 'datetime', 'time', 'timesec']}
-                                            validation={{ isRequired: true }}
                                             initialValue={property.typeDateTime?.formatDateTime}
                                             onChange={(value) => {
                                                 updateProperty(index, "typeDateTime.formatDateTime", value);
@@ -582,7 +576,6 @@ export const CustomModelNode = (props) => {
                                             identifier="renderType"
                                             options={['selectSingle','selectSingleBox','selectCheckBox','selectMultipleSideBySide']}
                                             initialValue={property.typeSelect?.renderType}
-                                            validation={{ isRequired: true }}
                                             onChange={(value) => {
                                                 updateProperty(index, "typeSelect.renderType", value);
                                             }}
@@ -658,7 +651,6 @@ export const CustomModelNode = (props) => {
                                             label="Render Type"
                                             identifier="renderTypeBoolean"
                                             options={['default','checkboxToggle']}
-                                            validation={{ isRequired: true }}
                                             initialValue={property.typeBoolean?.renderType}
                                             onChange={(value) => {
                                                 updateProperty(index, "typeBoolean.renderType", value);
@@ -687,7 +679,6 @@ export const CustomModelNode = (props) => {
                                             identifier="setValuesColorPicker"
                                             initialValue={property.typeColor?.setValuesColorPicker}
                                             checked={property.typeColor?.setValuesColorPicker}
-                                            validation={{ isRequired: true }}
                                             onChange={(value) => {
                                                 updateProperty(index, "typeColor.setValuesColorPicker", value);
                                             }} />)}
@@ -824,7 +815,6 @@ export const CustomModelNode = (props) => {
                                             placeholder="Relation name"
                                             initialValue={relation.relationName}
                                             identifier="relationName"
-                                            validation={{ isRequired: true, minLength: 2}}
                                             onChange={(value) => {
                                                 updateRelation(index, "relationName", value);
                                             }}
@@ -834,7 +824,6 @@ export const CustomModelNode = (props) => {
                                             identifier="relationType"
                                             options={relationTypes}
                                             showEmptyValue={true}
-                                            validation={{ isRequired: true }}
                                             onChange={(value) => {
                                                 updateRelation(index, "relationType", value);
                                             }}

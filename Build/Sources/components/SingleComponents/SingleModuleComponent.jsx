@@ -29,7 +29,6 @@ export const SingleModuleComponent = (props) => {
                     label="Name"
                     type="text"
                     identifier={`name-${props.index}`}
-                    validation={{ isRequired: true, minLength: 2 }}
                     initialValue={props.module.name}
                     onChange={(value) => {
                         updateModuleHandler('name', value);
@@ -39,7 +38,6 @@ export const SingleModuleComponent = (props) => {
                     label="Key"
                     type="text"
                     identifier={`key-${props.index}`}
-                    validation={{ isRequired: true, minLength: 2 }}
                     initialValue={props.module.key}
                     onChange={(value) => {
                         updateModuleHandler('key', value);
@@ -48,7 +46,6 @@ export const SingleModuleComponent = (props) => {
                 <TextareaComponent
                     label="Description"
                     identifier={`description-${props.index}`}
-                    validation={{ isRequired: true, minLength: 5 }}
                     initialValue={props.module.description}
                     onChange={(value) => {
                         updateModuleHandler('description', value);
@@ -59,7 +56,6 @@ export const SingleModuleComponent = (props) => {
                     label="Label"
                     type="text"
                     identifier={`tabLabel-${props.index}`}
-                    validation={{ isRequired: true, minLength: 3 }}
                     initialValue={props.module.tabLabel}
                     onChange={(value) => {
                         updateModuleHandler('tabLabel', value);
@@ -70,7 +66,6 @@ export const SingleModuleComponent = (props) => {
                     initialValue={props.module.mainModule}
                     identifier={`mainModule-${props.index}`}
                     options={mainModules}
-                    validation={{ isRequired: true }}
                     defaultValue="Please choose the main module"
                     onChange={(value) => {
                         updateModuleHandler('mainModule', value);
