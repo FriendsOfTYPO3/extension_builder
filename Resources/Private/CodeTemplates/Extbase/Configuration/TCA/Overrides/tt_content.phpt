@@ -8,4 +8,22 @@ defined('TYPO3') || die();
     '{plugin.name -> k:format.quoteString()}',
     '{extension.extensionKey}-plugin-{plugin.key}'
 );
+
+
+if (!is_array($GLOBALS['TCA']['tt_content']['types']['{plugin.key -> k:format.quoteString()}'] ?? false)) {
+    $GLOBALS['TCA']['tt_content']['types']['{plugin.key -> k:format.quoteString()}'] = [];
+}
+
+
+// Add content element to selector list
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
+    'tt_content',
+    'CType',
+    [
+        '{plugin.name -> k:format.quoteString()}',
+        '{plugin.key -> k:format.quoteString()}',
+        '{extension.extensionKey}-plugin-{plugin.key}',
+        '{extension.extensionKey}'
+    ]
+);
 </f:for>
