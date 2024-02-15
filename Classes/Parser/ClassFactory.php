@@ -88,8 +88,8 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
         foreach ($propertyNode->props as $subNode) {
             if ($subNode instanceof PropertyProperty) {
                 $propertyName = $subNode->name->name;
-                if ($subNode->default) {
-                    $propertyDefault = $subNode->default;
+                if ($subNode->getAttribute('default')) {
+                    $propertyDefault = $subNode->getAttribute('default');
                 }
             }
         }
@@ -149,8 +149,8 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
                     $parameter->setTypeForParamTag($paramTag[0]);
                 }
             }
-            if ($param->default !== null) {
-                $parameter->setDefaultValue($param->default);
+            if ($param->getAttribute('default') !== null) {
+                $parameter->setDefaultValue($param->getAttribute('default'));
             }
             $object->setParameter($parameter);
             $position++;
