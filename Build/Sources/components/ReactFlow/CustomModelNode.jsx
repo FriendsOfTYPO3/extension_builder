@@ -256,7 +256,9 @@ export const CustomModelNode = (props) => {
                     placeholder="Node title"
                     identifier="nodeTitle"
                     onChange={(value) => {
-                        updateNode('label', value);
+                        // replace all whitespaces inside the value with an empty string
+                        value = value.replace(/\s/g, '');
+                        updateNode('label', value.charAt(0).toUpperCase() + value.slice(1));
                     }}
                 />
                 <button
