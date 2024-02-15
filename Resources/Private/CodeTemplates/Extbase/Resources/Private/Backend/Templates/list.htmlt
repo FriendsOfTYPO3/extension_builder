@@ -36,7 +36,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
         <k:openingTag>f:for each="{domainObject.name -> k:format.lowercaseFirst() -> k:pluralize() -> k:curlyBrackets()}" as="{domainObject.name -> k:format.lowercaseFirst()}"</k:openingTag>
             <tr>
             <f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
-                <td><k:openingTag>f:link.action action="show" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}: {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>"</k:openingTag><k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets><k:openingTag>/f:link.action</k:openingTag></td>
+                <td><k:openingTag>f:link.action action="show" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}: {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>"</k:openingTag><k:openingTag>f:sanitize.html</k:openingTag><k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets><k:openingTag>/f:sanitize.html</k:openingTag><k:openingTag>/f:link.action</k:openingTag></td>
             </f:if></f:for>
 
                 <td><k:openingTag>f:link.action action="edit" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}: {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>" class="btn btn-default"</k:openingTag>Edit<k:openingTag>/f:link.action</k:openingTag></td>
