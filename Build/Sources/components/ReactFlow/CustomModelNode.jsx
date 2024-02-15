@@ -467,7 +467,7 @@ export const CustomModelNode = (props) => {
                                             identifier="propertyName"
                                             initialValue={property.name}
                                             onChange={(value) => {
-                                                updateProperty(index, "name", value);
+                                                updateProperty(index, "name", value.toLowerCase());
                                             }}
                                         />
                                         <SelectComponent
