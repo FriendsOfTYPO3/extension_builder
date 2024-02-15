@@ -5,6 +5,7 @@ defined('TYPO3') || die();
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
     '{extension.extensionName}',
     '{plugin.key -> k:format.uppercaseFirst()}',
-    '{plugin.name -> k:format.quoteString()}'
+    '{plugin.name -> k:format.quoteString()}',
+    '{extension.extensionKey}-plugin-{plugin.key}'
 );
 </f:for>
