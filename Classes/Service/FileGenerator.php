@@ -623,29 +623,32 @@ class FileGenerator
                     }
 
                     // Generate basic UnitTests
-                    $fileContents = $this->generateDomainModelTests($domainObject);
-                    $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
-                    $this->writeFile($domainModelTestsDirectory . $domainObject->getName() . 'Test.php', $fileContents);
+                    // $fileContents = $this->generateDomainModelTests($domainObject);
+                    // $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
+                    // $this->writeFile($domainModelTestsDirectory . $domainObject->getName() . 'Test.php', $fileContents);
                 }
             } catch (Exception $e) {
                 throw new Exception('Could not generate domain model, error: ' . $e->getMessage());
             }
 
             // Generate Functional Tests
-            try {
-                $this->mkdir_deep($this->extensionDirectory, 'Tests/Functional');
-                $functionalTestsDirectory = $this->extensionDirectory . 'Tests/Functional/';
-
-                // Generate basic FunctionalTests
-                $fileContents = $this->generateFunctionalTests();
-                $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
-                $this->writeFile(
-                    $functionalTestsDirectory . 'BasicTest.php',
-                    $fileContents
-                );
-            } catch (Exception $e) {
-                throw new Exception('Could not generate functional tests, error: ' . $e->getMessage());
-            }
+            // TODO: totally remove the tests, nobody uses them.
+            // see https://github.com/FriendsOfTYPO3/extension_builder/issues/727
+            // try {
+            //     $this->mkdir_deep($this->extensionDirectory, 'Tests/Functional');
+            //     $functionalTestsDirectory = $this->extensionDirectory . 'Tests/Functional/';
+//
+            //     // Generate basic FunctionalTests
+            //
+            //     // $fileContents = $this->generateFunctionalTests();
+            //     $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
+            //     $this->writeFile(
+            //         $functionalTestsDirectory . 'BasicTest.php',
+            //         $fileContents
+            //     );
+            // } catch (Exception $e) {
+            //     throw new Exception('Could not generate functional tests, error: ' . $e->getMessage());
+            // }
 
             // Generate Action Controller
             try {
@@ -659,15 +662,15 @@ class FileGenerator
                     $this->extension->setMD5Hash($this->extensionDirectory . $destinationFile);
 
                     // Generate basic UnitTests
-                    $fileContents = $this->generateControllerTests(
-                        $domainObject->getName() . 'Controller',
-                        $domainObject
-                    );
-                    $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
-                    $this->writeFile(
-                        $crudEnabledControllerTestsDirectory . $domainObject->getName() . 'ControllerTest.php',
-                        $fileContents
-                    );
+                    // $fileContents = $this->generateControllerTests(
+                    //     $domainObject->getName() . 'Controller',
+                    //     $domainObject
+                    // );
+                    // $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
+                    // $this->writeFile(
+                    //     $crudEnabledControllerTestsDirectory . $domainObject->getName() . 'ControllerTest.php',
+                    //     $fileContents
+                    // );
                 }
             } catch (Exception $e) {
                 throw new Exception('Could not generate action controller, error: ' . $e->getMessage());
