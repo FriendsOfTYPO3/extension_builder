@@ -4,15 +4,35 @@ declare(strict_types=1);
 
 namespace VENDOR\Package\Controller;
 
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+
 /**
  * MyController
  */
 class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     /**
+     * @var ModuleTemplate $moduleTemplate
+     */
+    protected ModuleTemplate $moduleTemplate;
+
+    /**
+     * @var ModuleTemplateFactory $moduleTemplateFactory
+     */
+    protected ModuleTemplateFactory $moduleTemplateFactory;
+
+    /**
      * @var \VENDOR\Package\Domain\Repository\DomainObjectRepository
      */
     protected $domainObjectRepository;
+
+    /**
+     * @param ModuleTemplateFactory $moduleTemplateFactory
+     */
+    public function __construct(ModuleTemplateFactory $moduleTemplateFactory) {
+        $this->moduleTemplateFactory = $moduleTemplateFactory;
+    }
 
     /**
      * @param \VENDOR\Package\Domain\Repository\DomainObjectRepository
@@ -20,6 +40,14 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function injectDomainObjectRepository(VENDOR\Package\Domain\Repository\DomainObjectRepository $domainObjectRepository): void
     {
         $this->domainObjectRepository = $domainObjectRepository;
+    }
+
+    /**
+     * @return void
+     */
+    protected function initializeAction()
+    {
+        $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
     }
 
     /**
@@ -31,7 +59,9 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         $domainObjects = $this->domainObjectRepository->findAll();
         $this->view->assign('domainObjects', $domainObjects);
-        return $this->htmlResponse();
+        $this->moduleTemplate->setContent($this->view->render());
+
+        return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
 
     /**
@@ -43,7 +73,9 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function showAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject): \Psr\Http\Message\ResponseInterface
     {
         $this->view->assign('domainObject', $domainObject);
-        return $this->htmlResponse();
+        $this->moduleTemplate->setContent($this->view->render());
+
+        return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
 
     /**
@@ -53,7 +85,9 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function newAction(): \Psr\Http\Message\ResponseInterface
     {
-        return $this->htmlResponse();
+        $this->moduleTemplate->setContent($this->view->render());
+
+        return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
 
     /**
@@ -77,7 +111,9 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function editAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject): \Psr\Http\Message\ResponseInterface
     {
         $this->view->assign('domainObject', $domainObject);
-        return $this->htmlResponse();
+        $this->moduleTemplate->setContent($this->view->render());
+
+        return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
 
     /**
@@ -109,7 +145,8 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function genericAction(): \Psr\Http\Message\ResponseInterface
     {
-        return $this->htmlResponse();
-    }
+        $this->moduleTemplate->setContent($this->view->render());
 
+        return $this->htmlResponse($this->moduleTemplate->renderContent());
+    }
 }

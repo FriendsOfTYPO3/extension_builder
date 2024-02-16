@@ -256,6 +256,7 @@ class ClassBuilder implements SingletonInterface
     protected function addInitStorageObjectCalls(DomainObject $domainObject): void
     {
         $anyToManyRelationProperties = $domainObject->getAnyToManyRelationProperties();
+
         if (count($anyToManyRelationProperties) > 0) {
             if (!$this->classObject->methodExists('__construct')) {
                 $constructorMethod = $this->templateClassObject->getMethod('__construct');
@@ -693,7 +694,28 @@ class ClassBuilder implements SingletonInterface
             $parentClass = $this->settings['Controller']['parentClass'] ?? '\\TYPO3\\CMS\\Extbase\\Mvc\\Controller\\ActionController';
             $this->classObject->setParentClassName($parentClass);
         }
+
         if ($domainObject->isAggregateRoot()) {
+            $moduleTemplateName = 'moduleTemplate';
+            if (!$this->classObject->propertyExists($moduleTemplateName)) {
+                /** @var AbstractProperty $classProperty */
+                $classProperty = $this->templateClassObject->getProperty('moduleTemplate');
+                $classProperty->setName($moduleTemplateName);
+                $classProperty->setDescription($moduleTemplateName);
+                // $classProperty->setTag('var', 'ModuleTemplate $moduleTemplate', true);
+                $this->classObject->setProperty($classProperty);
+            }
+
+            $moduleTemplateFactoryName = 'moduleTemplateFactory';
+            if (!$this->classObject->propertyExists($moduleTemplateFactoryName)) {
+                /** @var AbstractProperty $classProperty */
+                $classProperty = $this->templateClassObject->getProperty('moduleTemplateFactory');
+                $classProperty->setName($moduleTemplateFactoryName);
+                $classProperty->setDescription($moduleTemplateFactoryName);
+                // $classProperty->setTag('var', 'ModuleTemplate $moduleTemplate', true);
+                $this->classObject->setProperty($classProperty);
+            }
+
             $repositoryName = lcfirst($domainObject->getName() . 'Repository');
             // now add the property to class Object (or update an existing class Object property)
             if (!$this->classObject->propertyExists($repositoryName)) {
@@ -704,9 +726,20 @@ class ClassBuilder implements SingletonInterface
                 $classProperty->setTag('var', $domainObject->getFullyQualifiedDomainRepositoryClassName(), true);
                 $this->classObject->setProperty($classProperty);
             }
+
+            if (!$this->classObject->methodExists('__construct')) {
+                $constructorMethod = $this->buildConstructorMethod($domainObject);
+                $this->classObject->addMethod($constructorMethod);
+            }
+
             if (!$this->classObject->methodExists('inject' . ucfirst($repositoryName))) {
                 $injectRepositoryMethod = $this->buildInjectMethod($domainObject);
                 $this->classObject->addMethod($injectRepositoryMethod);
+            }
+
+            if (!$this->classObject->methodExists('initializeAction')) {
+                $initializeActionMethod = $this->buildInitializeActionMethod($domainObject);
+                $this->classObject->addMethod($initializeActionMethod);
             }
         }
         foreach ($domainObject->getActions() as $action) {
@@ -720,6 +753,30 @@ class ClassBuilder implements SingletonInterface
             ->setName($this->extension->getNamespaceName() . '\\Controller')
             ->setClasses([$this->classObject]);
         return $this->classFileObject;
+    }
+
+    protected function buildConstructorMethod(DomainObject $domainObject): Method
+    {
+        $constructorName = '__construct';
+        if ($this->classObject->methodExists($constructorName)) {
+            return $this->classObject->getMethod($constructorName);
+        }
+
+        $constructorMethod = clone $this->templateClassObject->getMethod('__construct')->setName($constructorName);
+
+        return $constructorMethod;
+    }
+
+    protected function buildInitializeActionMethod(DomainObject $domainObject): Method
+    {
+        $initializeActionName = 'initializeAction';
+        if ($this->classObject->methodExists($initializeActionName)) {
+            return $this->classObject->getMethod($initializeActionName);
+        }
+
+        $initializeActionMethod = clone $this->templateClassObject->getMethod('initializeAction')->setName($initializeActionName);
+
+        return $initializeActionMethod;
     }
 
     protected function buildInjectMethod(DomainObject $domainObject): Method
