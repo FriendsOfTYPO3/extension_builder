@@ -469,36 +469,4 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         return $settings['classBuilder']['Model']['AbstractEntity']['parentClass'] ??
             '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity';
     }
-
-    /**
-     * Ajax callback that reads the smd file and modiefies the target URL to include
-     * the module token.
-     *
-     * @param ServerRequestInterface $request
-     * @return JsonResponse
-     * @throws RouteNotFoundException
-     */
-    public function getWiringEditorSmd(ServerRequestInterface $request): JsonResponse
-    {
-        DebuggerUtility::var_dump("test");
-        // $smdJsonString = file_get_contents(
-        //     ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd'
-        // );
-        // $smdJson = json_decode($smdJsonString);
-        // $parameters = [
-        //     'tx_extensionbuilder_tools_extensionbuilderextensionbuilder' => [
-        //         'controller' => 'BuilderModule',
-        //         'action' => 'dispatchRpc',
-        //     ]
-        // ];
-        // $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        // try {
-        //     $uri = $uriBuilder->buildUriFromRoute('tools_ExtensionBuilderExtensionbuilder', $parameters);
-        // } catch (RouteNotFoundException $e) {
-        //     $uri = $uriBuilder->buildUriFromRoutePath('tools_ExtensionBuilderExtensionbuilder', $parameters);
-        // }
-        // $smdJson->target = (string)$uri;
-
-        return (new JsonResponse())->setPayload('test');
-    }
 }
