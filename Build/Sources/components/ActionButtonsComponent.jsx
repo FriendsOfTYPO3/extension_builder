@@ -141,6 +141,7 @@ export const ActionButtonsComponent = (props) => {
                         "addHiddenField": node.data.addHiddenField,
                         "addStarttimeEndtimeFields": node.data.addStarttimeEndtimeFields,
                         "aggregateRoot": node.data.isAggregateRoot,
+                        "controllerScope": node.data.controllerScope,
                         "categorizable": node.data.enableCategorization,
                         "description": node.data.description,
                         "mapToTable": node.data.mapToExistingTable,

@@ -85,6 +85,7 @@ export const ReactFlowComponent = (props) => {
                 label: "",
                 objectType: "",
                 isAggregateRoot: false,
+                controllerScope: "Frontend",
                 enableSorting: false,
                 addDeletedField: true,
                 addHiddenField: true,

@@ -64,6 +64,7 @@ class ObjectSchemaBuilder implements SingletonInterface
             $domainObject->setEntity(false);
         }
         $domainObject->setAggregateRoot($jsonDomainObject['objectsettings']['aggregateRoot'] ?? false);
+        $domainObject->setControllerScope($jsonDomainObject['objectsettings']['controllerScope'] ?? 'Frontend');
         $domainObject->setSorting($jsonDomainObject['objectsettings']['sorting'] ?? false);
         $domainObject->setAddDeletedField($jsonDomainObject['objectsettings']['addDeletedField'] ?? false);
         $domainObject->setAddHiddenField($jsonDomainObject['objectsettings']['addHiddenField'] ?? false);

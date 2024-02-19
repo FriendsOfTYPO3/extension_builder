@@ -34,7 +34,6 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
@@ -182,6 +181,8 @@ class FileGenerator
         $this->copyStaticFiles();
 
         $this->generateTCAFiles();
+
+        $this->generateFlexFormsFiles();
 
         $this->generateExtbaseConfigClass();
 
@@ -371,6 +372,7 @@ class FileGenerator
             );
 
             if ($this->extension->hasPlugins()) {
+                // write tt_content.php
                 $fileContents = $this->generateTCAOverrideTtContent();
                 $this->writeFile(
                     $this->configurationDirectory . 'TCA/Overrides/tt_content.php',
@@ -856,14 +858,17 @@ class FileGenerator
      */
     public function generateActionControllerCode(DomainObject $domainObject): string
     {
-        $controllerTemplateFilePath = $this->getTemplatePath('Classes/Controller/Controller.phpt');
+        $frontendControllerTemplateFilePath = $this->getTemplatePath('Classes/Controller/FrontendController.phpt');
+        $backendControllerTemplateFilePath = $this->getTemplatePath('Classes/Controller/BackendController.phpt');
+
+        $scope = $domainObject->getControllerScope();
         $existingClassFileObject = null;
         if ($this->roundTripEnabled) {
             $existingClassFileObject = $this->roundTripService->getControllerClassFile($domainObject);
         }
         $controllerClassFileObject = $this->classBuilder->generateControllerClassFileObject(
             $domainObject,
-            $controllerTemplateFilePath,
+            $domainObject->getControllerScope() === 'Frontend' ? $frontendControllerTemplateFilePath : $backendControllerTemplateFilePath,
             $existingClassFileObject
         );
         // returns a class object if an existing class was found
@@ -1291,6 +1296,38 @@ class FileGenerator
     }
 
     /**
+     * Generates the content of each FlexForm File
+     *
+     * @return mixed
+     * @throws Exception
+     */
+    public function generateFlexFormsFiles(): void
+    {
+        if($this->extension->hasPlugins()) {
+            $this->mkdir_deep($this->extensionDirectory, 'Configuration/FlexForms');
+        } else {
+            // no plugins, no FlexForms
+            return;
+        }
+
+        foreach ($this->extension->getPlugins() as $plugin) {
+            // check if file already exists
+            if (file_exists($this->extensionDirectory . 'Configuration/FlexForms/flexform_' . $plugin->getKey() . '.xml')) {
+                continue;
+            }
+
+            $fileContents = $this->renderTemplate('Configuration/FlexForms/plugin_flexform.phpt', [
+                'extension' => $this->extension,
+                'plugin' => $plugin
+            ]);
+            $this->writeFile(
+                $this->extensionDirectory . 'Configuration/FlexForms/flexform_' . $plugin->getKey() . '.xml',
+                $fileContents
+            );
+        }
+    }
+
+    /**
      * Add TCA configuration for sys_template
      *
      * @return string|null
@@ -1457,7 +1494,7 @@ class FileGenerator
         if (empty($fileContents)) {
             return;
         }
-        $success = GeneralUtility::writeFile($targetFile, $fileContents);
+        $success = GeneralUtility::writeFile($targetFile, $fileContents, true);
         if (!$success) {
             throw new Exception('File ' . $targetFile . ' could not be created!');
         }

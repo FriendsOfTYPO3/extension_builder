@@ -32,7 +32,7 @@ defined('TYPO3') || die();
                         title = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:tx_{extension.extensionKey}_{plugin.key}.name
                         description = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:tx_{extension.extensionKey}_{plugin.key}.description
                         tt_content_defValues <k:curlyBrackets>
-                            CType = {plugin.key}
+                            CType = {extension.extensionKey}_{plugin.key}
                         </k:curlyBrackets>
                     </k:curlyBrackets></f:for>
                 }

@@ -2,6 +2,7 @@ const nodeData = {
     label: "",
     objectType: "",
     isAggregateRoot: false,
+    controllerScope: "Frontend",
     enableSorting: false,
     addDeletedField: true,
     addHiddenField: true,

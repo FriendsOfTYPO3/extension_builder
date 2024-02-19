@@ -696,24 +696,29 @@ class ClassBuilder implements SingletonInterface
         }
 
         if ($domainObject->isAggregateRoot()) {
-            $moduleTemplateName = 'moduleTemplate';
-            if (!$this->classObject->propertyExists($moduleTemplateName)) {
-                /** @var AbstractProperty $classProperty */
-                $classProperty = $this->templateClassObject->getProperty('moduleTemplate');
-                $classProperty->setName($moduleTemplateName);
-                $classProperty->setDescription($moduleTemplateName);
-                // $classProperty->setTag('var', 'ModuleTemplate $moduleTemplate', true);
-                $this->classObject->setProperty($classProperty);
-            }
 
-            $moduleTemplateFactoryName = 'moduleTemplateFactory';
-            if (!$this->classObject->propertyExists($moduleTemplateFactoryName)) {
-                /** @var AbstractProperty $classProperty */
-                $classProperty = $this->templateClassObject->getProperty('moduleTemplateFactory');
-                $classProperty->setName($moduleTemplateFactoryName);
-                $classProperty->setDescription($moduleTemplateFactoryName);
-                // $classProperty->setTag('var', 'ModuleTemplate $moduleTemplate', true);
-                $this->classObject->setProperty($classProperty);
+
+            if($domainObject->getControllerScope() === "Backend") {
+                $moduleTemplateName = 'moduleTemplate';
+                if (!$this->classObject->propertyExists($moduleTemplateName)) {
+                    /** @var AbstractProperty $classProperty */
+                    $classProperty = $this->templateClassObject->getProperty('moduleTemplate');
+                    $classProperty->setName($moduleTemplateName);
+                    $classProperty->setDescription($moduleTemplateName);
+                    // $classProperty->setTag('var', 'ModuleTemplate $moduleTemplate', true);
+                    $this->classObject->setProperty($classProperty);
+                }
+
+                // Only set moduleTemplateFactory for Scope -> Backend
+                $moduleTemplateFactoryName = 'moduleTemplateFactory';
+                if (!$this->classObject->propertyExists($moduleTemplateFactoryName)) {
+                    /** @var AbstractProperty $classProperty */
+                    $classProperty = $this->templateClassObject->getProperty('moduleTemplateFactory');
+                    $classProperty->setName($moduleTemplateFactoryName);
+                    $classProperty->setDescription($moduleTemplateFactoryName);
+                    // $classProperty->setTag('var', 'ModuleTemplate $moduleTemplate', true);
+                    $this->classObject->setProperty($classProperty);
+                }
             }
 
             $repositoryName = lcfirst($domainObject->getName() . 'Repository');
@@ -737,9 +742,12 @@ class ClassBuilder implements SingletonInterface
                 $this->classObject->addMethod($injectRepositoryMethod);
             }
 
-            if (!$this->classObject->methodExists('initializeAction')) {
-                $initializeActionMethod = $this->buildInitializeActionMethod($domainObject);
-                $this->classObject->addMethod($initializeActionMethod);
+            if($domainObject->getControllerScope() === "Backend") {
+                // Only set initializeAction for Scope -> Backend
+                if (!$this->classObject->methodExists('initializeAction')) {
+                    $initializeActionMethod = $this->buildInitializeActionMethod($domainObject);
+                    $this->classObject->addMethod($initializeActionMethod);
+                }
             }
         }
         foreach ($domainObject->getActions() as $action) {
