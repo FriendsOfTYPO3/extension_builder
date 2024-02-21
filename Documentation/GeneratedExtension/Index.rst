@@ -26,6 +26,7 @@ previous chapter:
                └── Repository/..
        ├── Configuration/
            ├── ExtensionBuilder/..
+           ├── FlexForms/..
            ├── TCA/..
            └── TypoScript/..
        ├── Documentation/..
@@ -37,9 +38,6 @@ previous chapter:
                └── Templates/..
            └── Public/
                └── Icons/..
-       └── Tests/
-           ├── Functional/..
-           └── Unit/..
 
 It is explained in more detail in the following sections:
 
@@ -140,6 +138,23 @@ else, please refer to the :doc:`Extbase & Fluid book <t3extbasebook:Index>` of
 the official TYPO3 documentation.
 
 .. _documentation:
+
+FlexForms for Plugins
+=====================
+The Extension Builder generates a FlexForm for each plugin. The FlexForm is
+configured in the :file:`Configuration/FlexForms/` folder and is used to
+configure the plugin in the TYPO3 backend. The FlexForm is a XML file that
+defines the fields and their properties. The FlexForm is used to configure the
+plugin in the TYPO3 backend.
+
+The FlexForm is only created at the first time the plugin is created. If you
+change the plugin configuration in the Extension Builder, the FlexForm is not
+updated. You have to delete the FlexForm manually and then create the plugin
+again.
+
+.. admonition:: <BlaBlub>
+   The generated FlexForm  only contains one example field. You can add more fields
+   to the FlexForm by editing the XML file.
 
 Documentation
 =============

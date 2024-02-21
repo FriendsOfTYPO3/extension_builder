@@ -15,10 +15,10 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'Extension Builder Team',
     'author_email' => '',
     'state' => 'beta',
-    'version' => '12.0.0-alpha.4',
+    'version' => '12.0.0-beta.1',
     'constraints' => [
         'depends' => [
-            'typo3' => '12.4.0-12.9.99'
+            'typo3' => '12.4.11-12.9.99'
         ],
         'conflicts' => [],
         'suggests' => []

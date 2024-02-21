@@ -9,6 +9,9 @@ Version 12.0.0
 --------------
 * [TASK] Rework the whole JS GUI of this extension
 * [TASK] Raise new versions for new TYPO3 12 release
+* [TASK] Drop support for TYPO3 11, add support for TYPO3 12
+* [TASK] Drop support for PHP 7.x, add support for PHP 8.1 and 8.2
+* [TASK] Register each plugin as its own CType
 
 Version 11.0.10
 ---------------
