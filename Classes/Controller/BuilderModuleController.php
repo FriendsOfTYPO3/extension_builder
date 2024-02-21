@@ -420,6 +420,7 @@ class BuilderModuleController extends ActionController
         }
 
         // Validate the extension
+        // TODO: check, if this is still needed
         $validationResult = $this->extensionValidator->isValid($extension);
         if (!empty($validationResult['errors'])) {
             $errorMessage = '';

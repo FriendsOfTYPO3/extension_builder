@@ -49,9 +49,9 @@ const SelectComponent = ({ label, options, defaultValue, showEmptyValue = true, 
                 })}
                 aria-label={label}
                 onChange={handleChange}
-                value={value}  // Setzen Sie den aktuellen Wert hier
+                value={value}
             >
-                {showEmptyValue && <option value="">Bitte wählen</option>}
+                {showEmptyValue && <option value="">Please choose ...</option>}
                 {
                     options.map((option, index) => {
                         return (

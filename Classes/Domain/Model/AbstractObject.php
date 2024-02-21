@@ -485,7 +485,7 @@ abstract class AbstractObject
                     foreach ($tags as $tagValue) {
                         $docCommentLines[] = '@' . $tagName . ' ' . $tagValue;
                     }
-                } elseif (is_array($tags) && empty($tags)) {
+                } elseif (is_array($tags)) {
                     $docCommentLines[] = '@' . $tagName;
                 } else {
                     $docCommentLines[] = '@' . $tagName . ' ' . $tags;
