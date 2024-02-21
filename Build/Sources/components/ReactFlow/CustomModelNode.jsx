@@ -837,6 +837,7 @@ export const CustomModelNode = (props) => {
                                         <SelectComponent
                                             label="Relation type"
                                             identifier="relationType"
+                                            initialValue={relation.relationType}
                                             options={relationTypes}
                                             showEmptyValue={true}
                                             onChange={(value) => {
