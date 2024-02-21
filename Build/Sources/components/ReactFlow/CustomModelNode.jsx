@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext} from 'react';
+import { useState, useContext} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {TYPO3StyledAccordion} from "../accordions/TYPO3StyledAccordion";
 import {TYPO3StyledAccordionGroup} from "../accordions/TYPO3StyledAccordionGroup";
@@ -13,15 +13,11 @@ import { faArrowUp, faArrowDown, faTrash } from '@fortawesome/free-solid-svg-ico
 
 import {AdvancedOptionsContext, RemoveEdgeContext, EdgesContext } from "../../App";
 import { v4 as uuidv4 } from 'uuid';
-import modelProperty from "../../initialValues/modelProperty";
-
 
 export const CustomModelNode = (props) => {
     const [properties, setProperties] = useState(props.data.properties);
     const [relations, setRelations] = useState(props.data.relations);
-
     const [relationIndex, setRelationIndex] = useState(0);
-
     const [customActions, setCustomActions] = useState([]);
 
     const {isAdvancedOptionsVisible} = useContext(AdvancedOptionsContext);
@@ -141,12 +137,6 @@ export const CustomModelNode = (props) => {
         setRelations([...relations, newRelation]);
         props.data.relations.push(newRelation);
         setRelationIndex(prevIndex => prevIndex + 1);
-    }
-
-    const getNewRelationIndex = () => {
-        setRelationIndex(relationIndex + 1);
-        console.log('relationIndex', relationIndex);
-        return relationIndex;
     }
 
     const addEmptyAction = () => {
@@ -280,10 +270,6 @@ export const CustomModelNode = (props) => {
                         left: '-30px'
                     }}
                 />
-{/*                <h4>Props.id</h4>
-                <pre>
-                    {JSON.stringify(props.id, null, 2)}
-                </pre>*/}
             </div>
             <TYPO3StyledAccordionGroup id={`accordionCustomModelNode-${props.id}`}>
             <TYPO3StyledAccordion  title="Domain object settings" id={`accordionItemCustomModelNode-settings-${props.id}`} parentId={`accordionCustomModelNode-${props.id}`}>
@@ -568,15 +554,6 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "typeDateTime.formatDateTime", value);
                                             }}
                                         />)}
-                                        {/*{property.type === 'DateTime' &&(<SelectComponent
-                                            label="DB-Type DateTime"
-                                            identifier="dbTypeDateTime"
-                                            options={['date', 'time', 'datetime']}
-                                            initialValue={property.typeDateTime?.dbTypeDateTime}
-                                            onChange={(value) => {
-                                                updateProperty(index, "typeDateTime.dbTypeDateTime", value);
-                                            }}
-                                        />)}*/}
                                         {property.type === 'Select' &&(<TextareaComponent
                                             label="Values for Select-Box"
                                             placeholder="label;value separated by new line"

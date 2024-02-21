@@ -15,7 +15,6 @@ import ConnectionLine from './Connections/ConnectionLine';
 
 export const ReactFlowComponent = (props) => {
     const {customModelNodeIndex, setCustomModelNodeIndex} = useContext(CustomModelNodeIndexContext);
-
     const {localCustomModelNodeIndex, setLocalCustomModelNodeIndex} = useContext(CustomModelNodeIndexContext);
 
     const getId = () => {
@@ -26,15 +25,6 @@ export const ReactFlowComponent = (props) => {
         });
         return newId;
     }
-
-
-    // Zustand für das Zählen der Rendervorgänge
-    const renderCount = useRef(0);
-
-    useEffect(() => {
-        // Aktualisiere den Zählstand jedes Mal, wenn die Komponente gerendert wird
-        renderCount.current++;
-    });
 
     const {nodes, setNodes, onNodesChange} = useContext(NodesContext);
     const {edges, setEdges, onEdgesChange} = useContext(EdgesContext);

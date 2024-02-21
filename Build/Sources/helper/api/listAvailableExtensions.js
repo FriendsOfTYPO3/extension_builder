@@ -18,8 +18,6 @@ export async function listAvailableExtensions() {
             }
         });
 
-        console.log(response.data.success); //try to not use console.log for production code
-
         const success = response && response.data && response.data.success;
         const error = response && response.data && response.data.error;
 

@@ -5,22 +5,13 @@ import React from "react";
 import SelectComponent from "../forms/select/SelectComponent";
 import TextareaComponent from "../forms/textarea/TextareaComponent";
 import InputComponent from "../forms/input/InputComponent";
+import {mainModules} from "../../initialValues/module";
 
 export const SingleModuleComponent = (props) => {
 
     const updateModuleHandler = (field, value) => {
         props.updateModuleHandler(props.index, field, value);
     };
-
-    const mainModules = [
-        "web",
-        "site",
-        "file",
-        "user",
-        "tools",
-        "system",
-        "help"
-    ];
 
     return (
         <Fragment>

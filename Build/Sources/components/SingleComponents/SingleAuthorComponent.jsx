@@ -1,26 +1,14 @@
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown, faTrash } from '@fortawesome/free-solid-svg-icons'
 import React from "react";
 import InputComponent from "../forms/input/InputComponent";
 import SelectComponent from "../forms/select/SelectComponent";
+import {roles} from "../../initialValues/author";
 
 export const SingleAuthorComponent = (props) => {
     const updateAuthorHandler = (field, value) => {
         props.updateAuthorHandler(props.index, field, value);
     };
-
-    const roles = [
-        "Developer",
-        "Project Manager",
-        "Designer",
-        "Tester",
-        "Documentation Writer",
-        "Reviewer",
-        "Support",
-        "Translator",
-        "Security",
-    ];
 
     return (
         <div className="mb-5">
