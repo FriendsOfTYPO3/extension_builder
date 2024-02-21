@@ -7,7 +7,7 @@ import {Fragment, useContext} from "react";
 import {ActionButtonsComponent} from "../ActionButtonsComponent";
 import {EdgesContext} from "../../App";
 
-export const LeftContentComponent = (props) => {
+export const SettingsPanelComponent = (props) => {
     return (
         <Fragment>
             <div>

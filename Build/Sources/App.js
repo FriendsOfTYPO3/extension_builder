@@ -1,6 +1,6 @@
 import {useNodesState, useEdgesState} from 'reactflow';
 import {useEffect, useState, useContext, createContext} from "react";
-import {LeftContentComponent} from "./components/views/LeftContentComponent";
+import {SettingsPanelComponent} from "./components/views/SettingsPanelComponent";
 import {RightContentComponent} from "./components/views/RightContentComponent";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import initialProperties from "./initialValues/properties";
@@ -27,8 +27,8 @@ function App() {
     const [modules, setModules] = useState([]);
     const [validationErrors, setValidationErrors] = useState(null);
 
-    // Zustand für das Ein- und Ausklappen der linken Spalte
-    const [isLeftColumnVisible, setLeftColumnVisible] = useState(true);
+    // Zustand für das Ein- und Ausklappen der Settings Spalte
+    const [isSettingsColumnVisible, setIsSettingsColumnVisible] = useState(true);
 
     // Zustand für das Ein- und Ausklappen der erweiterten Optionen
     const [isAdvancedOptionsVisible, setAdvancedOptionsVisible] = useState(false);
@@ -42,15 +42,15 @@ function App() {
     };
 
     useEffect(() => {
-        const leftColumn = document.getElementById('left-column');
-        if (leftColumn) {
-            leftColumn.style.opacity = isLeftColumnVisible ? '1' : '0';
+        const settingsColumn = document.getElementById('settings-column');
+        if (settingsColumn) {
+            settingsColumn.style.opacity = isSettingsColumnVisible ? '1' : '0';
         }
-    }, [isLeftColumnVisible]);
+    }, [isSettingsColumnVisible]);
 
     // Funktion zum Umschalten der Sichtbarkeit der linken Spalte
-    const toggleLeftColumn = () => {
-        setLeftColumnVisible(!isLeftColumnVisible);
+    const toggleSettingsColumn = () => {
+        setIsSettingsColumnVisible(!isSettingsColumnVisible);
     }
 
     const toggleAdvcancedOptions = () => {
@@ -265,7 +265,7 @@ function App() {
             <button
                 id="show-advanced-options"
                 type="button"
-                className={`btn btn-primary position-fixed ${isLeftColumnVisible ? 'expanded' : 'collapsed'}`}
+                className={`btn btn-primary position-fixed ${isSettingsColumnVisible ? 'expanded' : 'collapsed'}`}
                 onClick={toggleAdvcancedOptions}
             >
                 <FontAwesomeIcon className="p-0 m-0" icon="fa-solid fa-cog" />{!isAdvancedOptionsVisible ? 'Show' : 'Hide'} advanced options
@@ -273,11 +273,11 @@ function App() {
             <button
                 id="btn-sidebar-collapse"
                 type="button"
-                className={`btn btn-primary position-fixed ${isLeftColumnVisible ? 'expanded' : 'collapsed'}`}
-                onClick={toggleLeftColumn}
+                className={`btn btn-primary position-fixed ${isSettingsColumnVisible ? 'expanded' : 'collapsed'}`}
+                onClick={toggleSettingsColumn}
             >
-                {isLeftColumnVisible && <FontAwesomeIcon className="p-0 m-0" icon="fa-solid fa-arrow-left" />}
-                {!isLeftColumnVisible && <FontAwesomeIcon className="p-0 m-0" icon="fa-solid fa-arrow-right" />}
+                {isSettingsColumnVisible && <FontAwesomeIcon className="p-0 m-0" icon="fa-solid fa-arrow-left" />}
+                {!isSettingsColumnVisible && <FontAwesomeIcon className="p-0 m-0" icon="fa-solid fa-arrow-right" />}
             </button>
             <div className="collapse" id="collapseExample">
                 <div className="card card-body">
@@ -286,12 +286,12 @@ function App() {
                 </div>
             </div>
             <div className="row">
-                <div id="left-column" className="fs-3 no-padding full-height">
+                <div id="settings-column" className="fs-3 no-padding full-height">
                     <div className="p-1">
                         <EdgesContext.Provider value={{edges, setEdges, onEdgesChange}}>
                             <NodesContext.Provider value={{nodes, setNodes, onNodesChange}}>
                                 <ValidationErrorsContext.Provider value={{validationErrors, setValidationErrors}}>
-                                    <LeftContentComponent
+                                    <SettingsPanelComponent
                                         properties={properties}
                                         authors={authors}
                                         plugins={plugins}
@@ -316,7 +316,7 @@ function App() {
                         </EdgesContext.Provider>
                     </div>
                 </div>
-               <div style={{left: isLeftColumnVisible ? '400px' : '0', width: isLeftColumnVisible ? 'calc(100vw - 400px)' : '100vw'}} id="right-column" className="no-padding full-height">
+               <div style={{left: isSettingsColumnVisible ? '400px' : '0', width: isSettingsColumnVisible ? 'calc(100vw - 400px)' : '100vw'}} id="right-column" className="no-padding full-height">
                     <div >
                         <CustomModelNodeIndexContext.Provider value={{customModelNodeIndex, setCustomModelNodeIndex}}>
                             <AdvancedOptionsContext.Provider value={{isAdvancedOptionsVisible}}>

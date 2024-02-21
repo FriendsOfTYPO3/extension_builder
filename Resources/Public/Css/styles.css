@@ -55,19 +55,19 @@
   text-align: left;
 }
 
-#left-column, #right-column {
+#settings-column, #right-column {
   height: 100vh;
   z-index: 1;
   transition: 0.5s ease;
 }
 
-#left-column {
+#settings-column {
   width: 400px;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-#left-column::-webkit-scrollbar {
+#settings-column::-webkit-scrollbar {
   display: none;
 }
 

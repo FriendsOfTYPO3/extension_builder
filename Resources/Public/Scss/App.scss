@@ -2,13 +2,13 @@ $transition-timing: 0.5s ease;
 $btn-background: #F4F4F4;
 $generic-z-index: 1;
 
-#left-column, #right-column {
+#settings-column, #right-column {
     height: 100vh;
     z-index: $generic-z-index;
     transition: $transition-timing;
 }
 
-#left-column {
+#settings-column {
     width: 400px;
     overflow-y: auto;
 

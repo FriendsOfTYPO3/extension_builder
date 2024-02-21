@@ -1,5 +1,5 @@
-import {resizeLeftSidebar} from "./helper";
+import {resizeSettingsSidebar} from "./helper";
 import {getExtensionKeyIsValid} from "./validation/getExtensionKeyIsValid";
 
-export {resizeLeftSidebar}
+export {resizeSettingsSidebar}
 export {getExtensionKeyIsValid}

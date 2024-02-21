@@ -1,7 +1,7 @@
-export function resizeLeftSidebar(isRightColumnFullWidth) {
+export function resizeSettingsSidebar(isRightColumnFullWidth) {
     if (isRightColumnFullWidth) {
-        document.getElementById('left-column').style.opacity = '0';
+        document.getElementById('settings-column').style.opacity = '0';
     } else {
-        document.getElementById('left-column').style.opacity = '1';
+        document.getElementById('settings-column').style.opacity = '1';
     }
 }
