@@ -113,9 +113,6 @@ frontend plugins and backend modules:
                └── Templates/..
            └── Public/
                └── Icons/..
-       └── Tests/
-           ├── Functional/..
-           └── Unit/..
 
 The frontend plugins are registered in the :file:`ext_localconf.php` file and
 the backend modules are registered in the :file:`ext_tables.php` file.
@@ -219,6 +216,11 @@ rendered documentation - including, of course, putting it under version control.
 Tests
 =====
 
+..  versionchanged:: 12.0.0
+    The extension_builder does not generate tests for the extension anymore.
+
+    Since the tests were a little bit confusing for the users, we decided to remove them from the generated extension. We recommend to write tests for your extension by yourself.
+
 The TYPO3 Core is covered by thousands of tests of varying complexity:
 Unit tests (testing part of a class), functional tests (testing multiple classes
 in combination) and acceptance tests (testing the entire website user
@@ -226,105 +228,8 @@ experience). To simplify testing, the general functionality for writing tests is
 bundled in the `TYPO3 Testing Framework <https://github.com/TYPO3/testing-framework>`__,
 and all custom tests should use it by inheriting from its base classes.
 
-The Extension Builder generates a set of unit tests and a dummy functional test
-that easily cover the generated classes of your extension. The generated tests
-should encourage you to write your own tests once you start customizing the
-code.
-
 If you are new to testing, we recommend that you invest
 some time to learn the benefits of software testing. It will certainly improve
 the quality of your software, but it will also boost your programming skills.
 Moreover, it will allow you to refactor without fear of breaking anything:
 Code that is covered by tests shows less unexpected behavior after refactoring.
-
-.. _covered-classes-and-methods:
-
-Covered classes and methods
----------------------------
-
-The Extension Builder generates unit tests for the public API of
-
-1. domain objects and
-2. default controller actions.
-
-.. _covered-domain-object-methods:
-
-Covered domain object methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The covered methods of domain object classes match the patterns
-
-*  get*()
-*  set*()
-*  add*()
-*  remove*().
-
-For example:
-
-.. code-block:: php
-
-   /**
-    * @test
-    */
-   public function setTitleForStringSetsTitle(): void
-   {
-      $this->subject->setTitle('Conceived at T3CON10');
-
-      self::assertEquals('Conceived at T3CON10', $this->subject->_get('title'));
-   }
-
-All types of properties are covered, for example integers, strings, file
-references or relations to other domain objects.
-
-.. _covered-controller-actions:
-
-Covered controller actions
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The covered controller actions match the names
-
-*  listAction()
-*  showAction()
-*  newAction()
-*  createAction()
-*  editAction()
-*  updateAction()
-*  deleteAction()
-
-and test the following behavior:
-
-*  asserting data in the action is assigned to the view and
-*  asserting the action delegates data modifications to a repository,
-   like adding, updating, removing or fetching objects.
-
-For example:
-
-.. code-block:: php
-
-   /**
-    * @test
-    */
-   public function deleteActionRemovesTheGivenBlogFromBlogRepository(): void
-   {
-       $blog = new \Ebt\EbtBlog\Domain\Model\Blog();
-
-       $blogRepository = $this->getMockBuilder(\Ebt\EbtBlog\Domain\Repository\BlogRepository::class)
-           ->onlyMethods(['remove'])
-           ->disableOriginalConstructor()
-           ->getMock();
-
-       $blogRepository->expects(self::once())->method('remove')->with($blog);
-       $this->subject->_set('blogRepository', $blogRepository);
-
-       $this->subject->deleteAction($blog);
-   }
-
-.. _running-tests:
-
-Running tests
--------------
-
-Unit tests of your extension can be executed in the TYPO3 backend using the
-`phpunit <https://extensions.typo3.org/extension/phpunit>`__ extension or on the
-command line by following the :doc:`testing pages <t3coreapi:Testing/Index>`
-of the official TYPO3 documentation.

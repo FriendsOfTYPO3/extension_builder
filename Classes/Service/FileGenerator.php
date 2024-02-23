@@ -589,12 +589,6 @@ class FileGenerator
                 $domainRepositoryDirectory = 'Classes/Domain/Repository/';
                 $this->mkdir_deep($this->extensionDirectory, $domainRepositoryDirectory);
 
-                $domainModelTestsDirectory = $this->extensionDirectory . 'Tests/Unit/Domain/Model/';
-                $this->mkdir_deep($this->extensionDirectory, 'Tests/Unit/Domain/Model');
-
-                $crudEnabledControllerTestsDirectory = $this->extensionDirectory . 'Tests/Unit/Controller/';
-                $this->mkdir_deep($this->extensionDirectory, 'Tests/Unit/Controller');
-
                 foreach ($this->extension->getDomainObjects() as $domainObject) {
                     $destinationFile = $domainModelDirectory . $domainObject->getName() . '.php';
 
@@ -623,34 +617,10 @@ class FileGenerator
                         $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
                         $this->extension->setMD5Hash($this->extensionDirectory . $destinationFile);
                     }
-
-                    // Generate basic UnitTests
-                    // $fileContents = $this->generateDomainModelTests($domainObject);
-                    // $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
-                    // $this->writeFile($domainModelTestsDirectory . $domainObject->getName() . 'Test.php', $fileContents);
                 }
             } catch (Exception $e) {
                 throw new Exception('Could not generate domain model, error: ' . $e->getMessage());
             }
-
-            // Generate Functional Tests
-            // TODO: totally remove the tests, nobody uses them.
-            // see https://github.com/FriendsOfTYPO3/extension_builder/issues/727
-            // try {
-            //     $this->mkdir_deep($this->extensionDirectory, 'Tests/Functional');
-            //     $functionalTestsDirectory = $this->extensionDirectory . 'Tests/Functional/';
-//
-            //     // Generate basic FunctionalTests
-            //
-            //     // $fileContents = $this->generateFunctionalTests();
-            //     $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
-            //     $this->writeFile(
-            //         $functionalTestsDirectory . 'BasicTest.php',
-            //         $fileContents
-            //     );
-            // } catch (Exception $e) {
-            //     throw new Exception('Could not generate functional tests, error: ' . $e->getMessage());
-            // }
 
             // Generate Action Controller
             try {
@@ -662,17 +632,6 @@ class FileGenerator
                     $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
                     $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
                     $this->extension->setMD5Hash($this->extensionDirectory . $destinationFile);
-
-                    // Generate basic UnitTests
-                    // $fileContents = $this->generateControllerTests(
-                    //     $domainObject->getName() . 'Controller',
-                    //     $domainObject
-                    // );
-                    // $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
-                    // $this->writeFile(
-                    //     $crudEnabledControllerTestsDirectory . $domainObject->getName() . 'ControllerTest.php',
-                    //     $fileContents
-                    // );
                 }
             } catch (Exception $e) {
                 throw new Exception('Could not generate action controller, error: ' . $e->getMessage());
@@ -942,40 +901,6 @@ class FileGenerator
     }
 
     /**
-     * Generate the tests for a model
-     *
-     * @param DomainObject $domainObject
-     *
-     * @return string|null
-     * @throws Exception
-     */
-    public function generateDomainModelTests(DomainObject $domainObject): ?string
-    {
-        return $this->renderTemplate('Tests/Unit/DomainModelTest.phpt', [
-            'extension' => $this->extension,
-            'domainObject' => $domainObject
-        ]);
-    }
-
-    /**
-     * Generate the tests for a CRUD-enabled controller
-     *
-     * @param string $controllerName
-     * @param DomainObject $domainObject
-     *
-     * @return string|null
-     * @throws Exception
-     */
-    public function generateControllerTests(string $controllerName, DomainObject $domainObject): ?string
-    {
-        return $this->renderTemplate('Tests/Unit/ControllerTest.phpt', [
-            'extension' => $this->extension,
-            'controllerName' => $controllerName,
-            'domainObject' => $domainObject
-        ]);
-    }
-
-    /**
      * @throws Exception
      */
     public function generateExtbaseConfigClass(): void
@@ -997,19 +922,6 @@ class FileGenerator
         } catch (Exception $e) {
             throw new Exception('Could not generate Extbase Persistence Class Configuration, error: ' . $e->getMessage());
         }
-    }
-
-    /**
-     * Generate a functional test
-     *
-     * @return string|null
-     * @throws Exception
-     */
-    public function generateFunctionalTests(): ?string
-    {
-        return $this->renderTemplate('Tests/Functional/BasicTest.phpt', [
-            'extension' => $this->extension,
-        ]);
     }
 
     /**

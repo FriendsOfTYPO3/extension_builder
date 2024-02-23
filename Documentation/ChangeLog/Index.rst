@@ -13,6 +13,7 @@ Version 12.0.0
 * [TASK] Drop support for PHP 7.x, add support for PHP 8.1 and 8.2
 * [TASK] Register each plugin as its own CType
 * [DOCS] Update the documentation
+* [TASK] Removed generation of Tests for the extensions
 
 Version 11.0.10
 ---------------

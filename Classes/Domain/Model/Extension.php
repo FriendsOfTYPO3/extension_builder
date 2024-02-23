@@ -659,17 +659,9 @@ class Extension
             'require' => [
                 'typo3/cms-core' => '^12.4'
             ],
-            'require-dev' => [
-                'typo3/testing-framework' => '^8.0'
-            ],
             'autoload' => [
                 'psr-4' => [
                     $this->getNamespaceName() . '\\' => 'Classes'
-                ]
-            ],
-            'autoload-dev' => [
-                'psr-4' => [
-                    $this->getNamespaceName() . '\\Tests\\' => 'Tests'
                 ]
             ],
             'replace' => [
