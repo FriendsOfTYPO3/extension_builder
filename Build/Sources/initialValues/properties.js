@@ -4,7 +4,7 @@ const initialProperties = {
     emConf: {
         "category": "",
         "custom_category": "",
-        "dependsOn": "",
+        "dependsOn": "typo3 => 12.4.0-12.4.99",
         "disableLocalization": false,
         "disableVersioning": false,
         "generateDocumentationTemplate": false,

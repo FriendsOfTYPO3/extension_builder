@@ -281,19 +281,22 @@ export const CustomModelNode = (props) => {
                             updateNode('isAggregateRoot', value);
                         }}
                     />
-                    <SelectComponent
-                        identifier="controllerScope"
-                        label="Controller scope"
-                        options={['Backend', 'Frontend']}
-                        initialValue={props.data.controllerScope}
-                        onChange={(value) => {
-                            updateNode('controllerScope', value);
-                        }} />
-                    <p>This is only used for the templates of the Controller.<br/>
-                        In the frontend, there is no ModuleTemplateFactory <br/>
-                        available. If you want to use Boostrap classes inside <br/>
-                        your Template, you should choose "Backend". <br/>
-                        You can always adjust your controllers for your needs.</p>
+                    { isAdvancedOptionsVisible && (<SelectComponent
+                                identifier="controllerScope"
+                                label="Controller scope"
+                                options={['Backend', 'Frontend']}
+                                initialValue={props.data.controllerScope}
+                                onChange={(value) => {
+                                    updateNode('controllerScope', value);
+                                }} />
+                    )}
+                    { isAdvancedOptionsVisible && (
+                        <p>This is only used for the templates of the Controller.<br/>
+                            In the frontend, there is no ModuleTemplateFactory <br/>
+                            available. If you want to use Boostrap classes inside <br/>
+                            your Template, you should choose "Backend". <br/>
+                            You can always adjust your controllers for your needs.</p>
+                    )}
                     { isAdvancedOptionsVisible && (<CheckboxComponent
                         identifier="enableSorting"
                         label="Enable sorting"

@@ -78,7 +78,6 @@ export const ExtensionPropertiesAccordion = (props) => {
         handleValueChange('emConf.dependsOn', updatedDependsOnValue);
     };
 
-
     const updateExtensionPropertiesHandler = (field, value) => {
         if (field.startsWith('emConf.')) {
             const emConfField = field.split('.')[1];
@@ -116,7 +115,7 @@ export const ExtensionPropertiesAccordion = (props) => {
                             label="Extension name"
                             initialValue={props.properties.name}
                             identifier="extensionName"
-                            validation={{ isRequired: true, minLength: 2 }}
+                            validation={{isRequired: true, minLength: 2}}
                             onChange={(value) => {
                                 handleValueChange('name', value)
                             }}
@@ -125,7 +124,7 @@ export const ExtensionPropertiesAccordion = (props) => {
                             label="Vendor Name"
                             initialValue={props.properties.vendorName}
                             identifier="vendorName"
-                            validation={{ isRequired: true, minLength: 2 }}
+                            validation={{isRequired: true, minLength: 2}}
                             onChange={(value) => {
                                 handleValueChange('vendorName', value)
                             }}
@@ -134,7 +133,7 @@ export const ExtensionPropertiesAccordion = (props) => {
                             label="Extension key"
                             initialValue={props.properties.extensionKey}
                             identifier="extensionKey"
-                            validation={{ isRequired: true, minLength: 3, maxLength: 30 }}
+                            validation={{isRequired: true, minLength: 3, maxLength: 30}}
                             onChange={(value) => {
                                 handleValueChange('extensionKey', value)
                             }}
@@ -144,7 +143,7 @@ export const ExtensionPropertiesAccordion = (props) => {
                             label={"Extension Description"}
                             initialValue={props.properties.description}
                             identifier={"extensionDescription"}
-                            validation={{ isRequired: true, minLength: 5 }}
+                            validation={{isRequired: true, minLength: 5}}
                             onChange={(value) => {
                                 handleValueChange('description', value)
                             }}
@@ -154,7 +153,7 @@ export const ExtensionPropertiesAccordion = (props) => {
                             initialValue={props.properties.emConf.category}
                             identifier="extensionCategory"
                             options={categoryOptions}
-                            validation={{ isRequired: true }}
+                            validation={{isRequired: true}}
                             defaultValue="Please choose a category"
                             onChange={(value) => {
                                 handleValueChange('emConf.category', value)
@@ -164,7 +163,7 @@ export const ExtensionPropertiesAccordion = (props) => {
                             label="Extension Version"
                             initialValue={props.properties.emConf.version}
                             identifier="extensionVersion"
-                            validation={{ isRequired: true}}
+                            validation={{isRequired: true}}
                             onChange={(value) => {
                                 handleValueChange('emConf.version', value)
                             }}
@@ -174,7 +173,7 @@ export const ExtensionPropertiesAccordion = (props) => {
                             initialValue={props.properties.emConf.state}
                             identifier="extensionState"
                             options={stateOptions}
-                            validation={{ isRequired: true}}
+                            validation={{isRequired: true}}
                             defaultValue="Please choose a state"
                             onChange={(value) => {
                                 handleValueChange('emConf.state', value)
@@ -196,7 +195,7 @@ export const ExtensionPropertiesAccordion = (props) => {
                                 handleValueChange('emConf.disableLocalization', value)
                             }}
                         />
-                       <CheckboxComponent
+                        <CheckboxComponent
                             label="Generate documentation"
                             identifier="extensionGenerateDocumentation"
                             checked={props.properties.emConf.generateDocumentationTemplate}
@@ -224,7 +223,7 @@ export const ExtensionPropertiesAccordion = (props) => {
                             label="Source language for xliff files"
                             initialValue={props.properties.emConf.sourceLanguage}
                             identifier="extensionSourceLanguageXliffFiles"
-                            validation={{ isRequired: true}}
+                            validation={{isRequired: true}}
                             disabled
                             onChange={(value) => {
                                 handleValueChange('emConf.sourceLanguage', value)
@@ -232,10 +231,11 @@ export const ExtensionPropertiesAccordion = (props) => {
                         />
                         <SelectComponent
                             label="Target TYPO3 version"
+                            disabled
                             initialValue={props.properties.emConf.targetVersion}
                             identifier="extensionTargetTYPO3Version"
                             options={targetTYPO3Versions}
-                            defaultValue="Please choose a TYPO3 version"
+                            showEmptyValue={false}
                             // Hier wird nur der ausgewählte Wert (selectedVersion) übergeben
                             onChange={(selectedVersion) => {
                                 handleTargetTYPO3VersionChange(selectedVersion);

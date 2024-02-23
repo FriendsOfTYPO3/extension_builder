@@ -11,11 +11,11 @@ const defaultModule = {
 
 export const mainModules = [
     "web",
-    "site",
     "file",
-    "user",
-    "tools",
+    "site",
     "system",
+    "tools",
+    "user",
     "help"
 ];
 
