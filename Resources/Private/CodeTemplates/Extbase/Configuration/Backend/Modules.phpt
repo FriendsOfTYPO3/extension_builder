@@ -4,7 +4,11 @@ return [<f:for each="{extension.backendModules}" as="backendModule">
     '{backendModule.key}' => [
         'parent' => '{backendModule.mainModule}',
         'position' => ['bottom'],
-        'access' => 'user',
+        <f:switch expression="{backendModule.mainModule}">
+             <f:case value="tools">'access' => 'systemMaintainer',</f:case>
+             <f:case value="system">'access' => 'admin',</f:case>
+             <f:defaultCase>'access' => 'user',</f:defaultCase>
+        </f:switch>
         'workspaces' => 'live',
         'path' => '/module/{extension.vendorName}/{backendModule.key}',
         'labels' => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_{backendModule.key}.xlf',
