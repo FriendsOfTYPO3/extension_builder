@@ -17,7 +17,7 @@ Extension Builder
    en
 
 :Author:
-   Nico de Haen & contributors
+   Extension Builder Team
 
 :License:
    This document is published under the
@@ -46,6 +46,116 @@ even if you change the extension in the graphical editor.
 
 .. _Extbase: https://docs.typo3.org/m/typo3/reference-coreapi/11.5/en-us/ExtensionArchitecture/Extbase/Index.html
 .. _Fluid: https://docs.typo3.org/m/typo3/reference-coreapi/11.5/en-us/ApiOverview/Fluid/Introduction.html
+
+.. container:: row m-0 p-0
+
+   .. container:: col-md-6 pl-0 pr-3 py-3 m-0
+
+      .. container:: card px-0 h-100
+
+         .. rst-class:: card-header h3
+
+            .. rubric:: :ref:`Introduction <introduction>`
+
+         .. container:: card-body
+
+            What is a Content Block?
+
+   .. container:: col-md-6 pl-0 pr-3 py-3 m-0
+
+      .. container:: card px-0 h-100
+
+         .. rst-class:: card-header h3
+
+            .. rubric:: :ref:`Installation <installation>`
+
+         .. container:: card-body
+
+            Install the Extension Builder extension.
+
+   .. container:: col-md-6 pl-0 pr-3 py-3 m-0
+
+      .. container:: card px-0 h-100
+
+         .. rst-class:: card-header h3
+
+            .. rubric:: :ref:`Configuration <configuration>`
+
+         .. container:: card-body
+
+            Configuration of the Extension Builder.
+
+   .. container:: col-md-6 pl-0 pr-3 py-3 m-0
+
+      .. container:: card px-0 h-100
+
+         .. rst-class:: card-header h3
+
+            .. rubric:: :ref:`Graphical editor <graphical-editor>`
+
+         .. container:: card-body
+
+            Overview of the graphical editor.
+
+   .. container:: col-md-6 pl-0 pr-3 py-3 m-0
+
+      .. container:: card px-0 h-100
+
+         .. rst-class:: card-header h3
+
+            .. rubric:: :ref:`Generated extension <generated-extension>`
+
+         .. container:: card-body
+
+            What do you get after generating the extension?
+
+   .. container:: col-md-6 pl-0 pr-3 py-3 m-0
+
+      .. container:: card px-0 h-100
+
+         .. rst-class:: card-header h3
+
+            .. rubric:: :ref:`Security <security>`
+
+         .. container:: card-body
+
+            Keep Security in mind.
+
+   .. container:: col-md-6 pl-0 pr-3 py-3 m-0
+
+      .. container:: card px-0 h-100
+
+         .. rst-class:: card-header h3
+
+            .. rubric:: :ref:`Publishing to TER <publishing-to-ter>`
+
+         .. container:: card-body
+
+            How to publish your extension to the TER or Packagist.
+
+   .. container:: col-md-6 pl-0 pr-3 py-3 m-0
+
+      .. container:: card px-0 h-100
+
+         .. rst-class:: card-header h3
+
+            .. rubric:: :ref:`Roundtrip mode <roundtrip-mode>`
+
+         .. container:: card-body
+
+            When do you need the roundtrip mode?
+
+   .. container:: col-md-6 pl-0 pr-3 py-3 m-0
+
+      .. container:: card px-0 h-100
+
+         .. rst-class:: card-header h3
+
+            .. rubric:: :ref:`Contribution mode <contribution>`
+
+         .. container:: card-body
+
+            How you can help with developing the Extension Builder.
 
 ----
 
