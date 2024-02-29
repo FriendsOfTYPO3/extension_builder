@@ -428,7 +428,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
             return $result;
         }
 
-        if ($modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid'] === $uid) {
+        if (isset($modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid']) && $modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid'] === $uid) {
             $result['terminal'] = 'relationWire_' . $supposedRelationIndex;
             return $result;
         }
