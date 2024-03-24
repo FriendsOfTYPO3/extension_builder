@@ -574,7 +574,7 @@ class Extension
 
     public function getStoragePath(): ?string
     {
-        return $this->storagePath;
+        return $this->storagePath ?? Environment::getPublicPath() . '/typo3conf/ext/';
     }
 
     public function setStoragePath(?string $storagePath): void
