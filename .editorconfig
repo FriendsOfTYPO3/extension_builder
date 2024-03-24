@@ -57,3 +57,8 @@ indent_style = tab
 
 [*{.phpt,htmlt}]
 insert_final_newline = false
+
+# Makefile
+[{Makefile,**.mk}]
+# Use tabs for indentation (Makefiles require tabs)
+indent_style = tab
