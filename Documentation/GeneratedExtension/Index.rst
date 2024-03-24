@@ -161,7 +161,6 @@ reStructuredText and Sphinx can be found in the official TYPO3 documentation:
 * :ref:`introduction to reST & Sphinx <h2document:writing-rest-introduction>`
 * :ref:`h2document:rest-cheat-sheet`
 * :ref:`h2document:format-rest-cgl`
-* :ref:`h2document:rest-common-pitfalls`
 
 .. _render-documentation:
 
