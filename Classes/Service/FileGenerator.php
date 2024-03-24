@@ -504,16 +504,6 @@ class FileGenerator
             } catch (Exception $e) {
                 throw new Exception('Could not generate typoscript constants, error: ' . $e->getMessage());
             }
-
-            // Generate Static TypoScript
-            try {
-                if ($this->extension->getDomainObjectsThatNeedMappingStatements()) {
-                    $fileContents = $this->generateStaticTyposcript();
-                    $this->writeFile($this->extensionDirectory . 'ext_typoscript_setup.typoscript', $fileContents);
-                }
-            } catch (Exception $e) {
-                throw new Exception('Could not generate static typoscript, error: ' . $e->getMessage());
-            }
         }
     }
 
@@ -1278,17 +1268,6 @@ class FileGenerator
     public function generateTyposcriptConstants(): ?string
     {
         return $this->renderTemplate('Configuration/TypoScript/constants.typoscriptt', [
-            'extension' => $this->extension
-        ]);
-    }
-
-    /**
-     * @return string|null
-     * @throws Exception
-     */
-    public function generateStaticTyposcript(): ?string
-    {
-        return $this->renderTemplate('ext_typoscript_setup.txtt', [
             'extension' => $this->extension
         ]);
     }
