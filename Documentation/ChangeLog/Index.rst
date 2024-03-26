@@ -6,6 +6,10 @@
 Change log
 ==========
 
+Version 11.0.13
+---------------
+* [DOCS] Adds information about a possible missing storage path when using composer mode
+
 Version 11.0.12
 ---------------
 * [TASK] Switch documentation rendering to PHP (thanks to Sandra Erbel)
