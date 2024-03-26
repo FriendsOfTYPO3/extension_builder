@@ -234,9 +234,7 @@ class NodeFactory implements SingletonInterface
         }
 
         $this->addCommentAttributes($property, $propertyNode);
-        // TODO: consider to remove the next line as I cannot see, where it is used
-        // See https://github.com/FriendsOfTYPO3/extension_builder/issues/662
-        $propertyNode->setAttribute('default', $property->getDefault());
+        $propertyNode->default = $property->getDefault();
         return $propertyNode;
     }
 
