@@ -226,9 +226,9 @@ class NodeFactory implements SingletonInterface
         foreach ($propertyNode->props as $subNode) {
             if ($subNode instanceof PropertyProperty) {
                 if (null !== $property->getDefaultValueNode()) {
-                    $subNode->setAttribute('default', $property->getDefaultValueNode());
+                    $subNode->default = $property->getDefaultValueNode();
                 } else {
-                    $subNode->setAttribute('default', self::buildNodeFromValue($property->getDefault()));
+                    $subNode->default = self::buildNodeFromValue($property->getDefault());
                 }
             }
         }
