@@ -7,10 +7,10 @@ jobs:
     name: documentation
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: "Checkout code"
         uses: actions/checkout@v4
 
-      - name: Test if the documentation will render without warnings
+      - name: "Test if the documentation will render without warnings"
         run: |
           mkdir -p Documentation-GENERATED-temp \
           && docker run --rm --pull always -v $(pwd):/project \
