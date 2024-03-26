@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../.Build/vendor/phpunit/phpunit/phpunit.xsd"
+    bootstrap="bootstrap.php"
+    executionOrder="random"
+>
+    <testsuites>
+        <testsuite name="Unit tests">
+            <directory>Tests/Unit/</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>../Classes/</directory>
+        </include>
+    </source>
+</phpunit>
