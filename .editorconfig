@@ -60,3 +60,4 @@ indent_style = tab
 insert_final_newline = false
 indent_style = space
 indent_size = 4
+# Makefile[{Makefile,**.mk}]# Use tabs for indentation (Makefiles require tabs)indent_style = tab
