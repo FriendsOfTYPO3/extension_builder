@@ -65,6 +65,13 @@ class SpycYAMLParser
      */
     public $_nodeId;
 
+    public function __construct()
+    {
+        define("EBT\ExtensionBuilder\Utility\LF", "\n");
+        define("EBT\ExtensionBuilder\Utility\CR", "\r");
+        define("EBT\ExtensionBuilder\Utility\CRLF", "\r\n");
+    }
+
     /**
      * Load a valid YAML string to Spyc.
      * @param string $input
