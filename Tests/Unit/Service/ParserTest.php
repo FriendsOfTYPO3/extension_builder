@@ -26,7 +26,7 @@ use TYPO3\CMS\Core\Core\Environment;
 
 class ParserTest extends BaseUnitTest
 {
-    protected ParserService $parserService;
+    private ParserService $parserService;
 
     protected function setUp(): void
     {
@@ -185,7 +185,7 @@ class ParserTest extends BaseUnitTest
         self::assertSame(count($fileObject->getNamespace()->getAliasDeclarations()), 2, 'Alias declaration not found!');
     }
 
-    protected function parseFile(string $fileName): File
+    private function parseFile(string $fileName): File
     {
         return $this->parserService->parseFile($this->fixturesPath . $fileName);
     }

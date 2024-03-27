@@ -69,7 +69,17 @@
         }
     },
     "scripts": {
-        "post-autoload-dump": [
+		"prepare-release": [
+			"rm -rf Resources/Private/Schema",
+			"rm -rf .devbox",
+			"rm -rf .editorconfig",
+			"rm -rf .gitattributes",
+			"rm -rf .gitignore",
+			"rm -rf crowdin.yaml",
+			"rm -rf .php-cs-fixer.php",
+			"rm -rf .phpstorm.meta.php"
+		],        
+		"post-autoload-dump": [
             "@prepare-extension-test-structure"
         ],
         "prepare-extension-test-structure": [

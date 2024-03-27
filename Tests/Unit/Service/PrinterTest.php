@@ -295,7 +295,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
-    protected function parseAndWrite(string $fileName, string $subFolder = ''): File
+    private function parseAndWrite(string $fileName, string $subFolder = ''): File
     {
         $classFilePath = $this->fixturesPath . $subFolder . $fileName;
         self::assertFileExists($classFilePath);
@@ -313,7 +313,7 @@ class PrinterTest extends BaseUnitTest
      *
      * @throws ReflectionException
      */
-    protected function compareClasses(File $classFileObject, string $pathToGeneratedFile): ReflectionClass
+    private function compareClasses(File $classFileObject, string $pathToGeneratedFile): ReflectionClass
     {
         self::assertFileExists($pathToGeneratedFile, $pathToGeneratedFile . 'not exists');
         $classObject = $classFileObject->getFirstClass();
@@ -340,12 +340,12 @@ class PrinterTest extends BaseUnitTest
         return $reflectedClass;
     }
 
-    protected function parseFile(string $relativeFilePath): File
+    private function parseFile(string $relativeFilePath): File
     {
         return $this->parserService->parseFile($this->fixturesPath . $relativeFilePath);
     }
 
-    protected function compareGeneratedCodeWithOriginal(string $originalFile, string $pathToGeneratedFile): void
+    private function compareGeneratedCodeWithOriginal(string $originalFile, string $pathToGeneratedFile): void
     {
         $originalLines = GeneralUtility::trimExplode(LF, file_get_contents($this->fixturesPath . $originalFile), true);
         $generatedLines = GeneralUtility::trimExplode(LF, file_get_contents($pathToGeneratedFile), true);

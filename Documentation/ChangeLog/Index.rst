@@ -15,6 +15,21 @@ Version 12.0.0
 * [DOCS] Update the documentation
 * [TASK] Removed generation of Tests for the extensions
 
+Version 11.0.13
+---------------
+* [DOCS] Adds information about a possible missing storage path when using composer mode
+
+Version 11.0.12
+---------------
+* [TASK] Switch documentation rendering to PHP (thanks to Sandra Erbel)
+* [BUGFIX] fix issue with default value for nodefactory
+* [BUGFIX] Enables scroll view of extension save dialog confirmations (thanks to warki)
+
+Version 11.0.11
+---------------
+* [TASK] Use current standard for web-dir (thanks to Sybille Peters)
+* [BUGFIX] - Undefined array key $parentClass
+
 Version 11.0.10
 ---------------
 * [BUGFIX] Allow null for native date and time

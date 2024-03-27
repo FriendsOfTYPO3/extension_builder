@@ -65,6 +65,8 @@ class RenderingContextFixture implements RenderingContextInterface
 
     public bool $cacheDisabled = false;
 
+    public array $attributes = [];
+
     public function __construct()
     {
         $mockBuilder = new Generator();
@@ -292,5 +294,17 @@ class RenderingContextFixture implements RenderingContextInterface
     public function setControllerAction($action): void
     {
         $this->controllerAction = $action;
+    }
+
+    public function getAttribute(string $name): ?object
+    {
+        return $this->attributes[$name] ?? null;
+    }
+
+    public function withAttribute(string $name, object $value): RenderingContextInterface
+    {
+        $clonedObject = clone $this;
+        $clonedObject->attributes[$name] = $value;
+        return $clonedObject;
     }
 }

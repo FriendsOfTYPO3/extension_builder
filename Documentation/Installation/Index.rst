@@ -43,6 +43,19 @@ through:
         }
     ]
 
+.. warning::
+
+   If you are in composer mode, you need to add at least one entry inside "repositories" in your composer.json file. Otherwise the extension_builder will fail to save your extension. The extension_builder will store your generated extension in this folder.
+
+   ..  code-block:: php
+
+    "repositories": [
+        "local": {
+            "type": "path",
+            "url": "Packages/*"
+        }
+    ]
+
 Installing the extension prior to TYPO3 11.4
 --------------------------------------------
 

@@ -153,7 +153,7 @@ class ClassParserTest extends BaseUnitTest
      * @throws FileNotFoundException
      * @throws ReflectionException
      */
-    protected function parseClass($file, $className): ClassObject
+    private function parseClass($file, $className): ClassObject
     {
         $classObject = $this->parserService->parseFile($file)->getFirstClass();
         self::assertInstanceOf(ClassObject::class, $classObject);
