@@ -25,6 +25,7 @@ Edit the general settings of the domain object by opening the
     Checking this option in the Extension Builder means that a controller class is generated for  this object, whose actions can be defined in the following :guilabel:`Default actions` subsection. Additionally, a repository class is generated that allows to retrieve all instances of this domain object from the persistence layer, i.e. in most scenarios from the database.
 
 ..  confval:: Description
+    :name: domain-object-description
 
     The domain object description can be any text. It is used in the PHPDoc comment of its class
 

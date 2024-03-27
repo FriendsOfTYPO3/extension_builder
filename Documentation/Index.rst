@@ -59,7 +59,7 @@ even if you change the extension in the graphical editor.
 
          .. container:: card-body
 
-            What is a Content Block?
+            What is the extension builder?
 
    .. container:: col-md-6 pl-0 pr-3 py-3 m-0
 

@@ -39,6 +39,7 @@ Feel encouraged to save and optionally commit all your changes frequently.
     An example is "ebt_blog".
 
 ..  confval:: Description
+    :name: extension-description
 
     The extension description can be any text. It is used as ``description`` property in extension configuration files :file:`ext_emconf.php` and :file:`composer.json`.
 
