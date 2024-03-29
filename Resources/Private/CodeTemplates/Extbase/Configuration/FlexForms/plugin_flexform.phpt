@@ -6,20 +6,16 @@
     <sheets>
         <sDEF>
             <ROOT>
-                <TCEforms>
-                    <sheetTitle>Plugin Options</sheetTitle>
-                </TCEforms>
+                <sheetTitle>Plugin Options</sheetTitle>
                 <type>array</type>
                 <el>
                     <settings.flexform_{plugin.key}.empty-field>
-                        <TCEforms>
-                            <label>Empty field</label>
-                            <config>
-                                <type>input</type>
-                                <size>50</size>
-                                <eval>trim</eval>
-                            </config>
-                        </TCEforms>
+                        <label>Empty field</label>
+                        <config>
+                            <type>input</type>
+                            <size>50</size>
+                            <eval>trim</eval>
+                        </config>
                     </settings.flexform_{plugin.key}.empty-field>
                 </el>
             </ROOT>
