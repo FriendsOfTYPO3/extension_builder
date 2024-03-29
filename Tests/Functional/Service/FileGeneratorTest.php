@@ -573,6 +573,6 @@ class FileGeneratorTest extends BaseFunctionalTest
         $extensionDir = $this->extension->getExtensionDir();
 
         self::assertFileExists($extensionDir . 'Configuration/TypoScript/setup.' . $deprecatedExtension);
-        self::assertFileNotExists($extensionDir . 'Configuration/TypoScript/setup.typoscript');
+        self::assertFileDoesNotExist($extensionDir . 'Configuration/TypoScript/setup.typoscript');
     }
 }
