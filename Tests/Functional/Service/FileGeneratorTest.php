@@ -62,7 +62,7 @@ class FileGeneratorTest extends BaseFunctionalTest
             'protected boolean property was not generated'
         );
         self::assertMatchesRegularExpression(
-            '/.*\* \@var bool.*/',
+            '/.*\* @var bool.*/',
             $classFileContent,
             'var tag for boolean property was not generated'
         );
