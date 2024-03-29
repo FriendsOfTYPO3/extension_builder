@@ -20,10 +20,10 @@ if (!is_array($GLOBALS['TCA']['tt_content']['types']['{extension.extensionKey}_{
     'tt_content',
     'CType',
     [
-        '{plugin.name -> k:format.quoteString()}',
-        '{extension.extensionKey}_{plugin.key}',
-        '{extension.extensionKey}-plugin-{plugin.key}',
-        '{extension.extensionKey}'
+        'label' => '{plugin.name -> k:format.quoteString()}',
+        'value' => '{extension.extensionKey}_{plugin.key}',
+        'icon'  => '{extension.extensionKey}-plugin-{plugin.key}',
+        'group' => '{extension.extensionKey}'
     ]
 );
 

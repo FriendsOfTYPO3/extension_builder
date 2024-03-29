@@ -333,7 +333,6 @@ class ValidationService implements SingletonInterface
         'fe_group',
         'hidden',
         'deleted',
-        'cruser_id',
         'crdate',
         'tstamp',
         'sys_language',
