@@ -43,7 +43,7 @@ class ParseAndPrintTest extends BaseFunctionalTest
         $this->parseAndPrint('SimpleProperty.php');
     }
 
-    protected function parseAndPrint(string $fileName, string $subFolder = ''): void
+    private function parseAndPrint(string $fileName, string $subFolder = ''): void
     {
         $classFilePath = $this->fixturesPath . $subFolder . $fileName;
         self::assertFileExists($classFilePath, 'File not found: ' . $subFolder . $fileName);

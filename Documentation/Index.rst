@@ -74,4 +74,3 @@ even if you change the extension in the graphical editor.
    :hidden:
 
    Sitemap
-   genindex

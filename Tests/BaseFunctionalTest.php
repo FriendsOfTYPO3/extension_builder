@@ -143,7 +143,6 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
             'codeTemplatePartialPaths',
             [Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials']
         );
-        $this->fileGenerator->_set('enableRoundtrip', true);
         $this->fileGenerator->_set('extension', $this->extension);
     }
 
@@ -219,6 +218,6 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         if (@file_exists($file)) {
             unlink($file);
         }
-        self::assertFileNotExists($file, 'Dummy file could not be removed:' . $file);
+        self::assertFileDoesNotExist($file, 'Dummy file could not be removed:' . $file);
     }
 }

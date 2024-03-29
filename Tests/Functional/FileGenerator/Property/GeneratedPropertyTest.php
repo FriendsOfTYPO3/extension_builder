@@ -60,29 +60,29 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var bool.*/',
             $classFileContent,
             'var tag for boolean property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$active = false;.*/',
             $classFileContent,
             'boolean property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getActive\(\).*/',
             $classFileContent,
             'Getter for boolean property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setActive\(bool \$active\).*/',
             $classFileContent,
             'Setter for boolean property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function isActive\(\).*/',
             $classFileContent,
             'is method for boolean property was not generated'
@@ -106,24 +106,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var string.*/',
             $classFileContent,
             'var tag for color picker property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$color = \'\';.*/',
             $classFileContent,
             'color picker property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getColor\(\).*/',
             $classFileContent,
             'Getter for color picker property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setColor\(string \$color\).*/',
             $classFileContent,
             'Setter for color picker property was not generated'
@@ -147,24 +147,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var \\\\DateTime.*/',
             $classFileContent,
             'var tag for date property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$birthday = null;.*/',
             $classFileContent,
             'string property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getBirthday\(\).*/',
             $classFileContent,
             'Getter for string property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setBirthday\(\\\\DateTime \$birthday\).*/',
             $classFileContent,
             'Setter for string property was not generated'
@@ -188,24 +188,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var \\\\DateTime.*/',
             $classFileContent,
             'var tag for date property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$birthday = null;.*/',
             $classFileContent,
             'date property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getBirthday\(\).*/',
             $classFileContent,
             'Getter for date property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setBirthday\(\\\\DateTime \$birthday\).*/',
             $classFileContent,
             'Setter for date property was not generated'
@@ -229,24 +229,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var string.*/',
             $classFileContent,
             'var tag for email property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$email = \'\';.*/',
             $classFileContent,
             'email property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getEmail\(\).*/',
             $classFileContent,
             'Getter for email property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setEmail\(string \$email\).*/',
             $classFileContent,
             'Setter for email property was not generated'
@@ -270,24 +270,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var string|null.*/',
             $classFileContent,
             'var tag for email property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$email = null;.*/',
             $classFileContent,
             'email property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getEmail\(\).*/',
             $classFileContent,
             'Getter for email property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setEmail\(\?string \$email\).*/',
             $classFileContent,
             'Setter for email property was not generated'
@@ -311,29 +311,29 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var \\\\TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\FileReference.*/',
             $classFileContent,
             'var tag for file property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@TYPO3\\\\CMS\\\\Extbase\\\\Annotation\\\\ORM\\\\Cascade\("remove"\).*/',
             $classFileContent,
             'annotation for file property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$file = null;.*/',
             $classFileContent,
             'file property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getFile\(\).*/',
             $classFileContent,
             'Getter for file property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setFile\(\\\\TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\FileReference \$file\).*/',
             $classFileContent,
             'Setter for file property was not generated'
@@ -357,24 +357,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var float.*/',
             $classFileContent,
             'var tag for float property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$floatingNumber = 0\.0;.*/',
             $classFileContent,
             'float property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getFloatingNumber\(\).*/',
             $classFileContent,
             'Getter for float property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setFloatingNumber\(float \$floatingNumber\).*/',
             $classFileContent,
             'Setter for float property was not generated'
@@ -398,24 +398,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var float|null.*/',
             $classFileContent,
             'var tag for float property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$floatingNumber = null;.*/',
             $classFileContent,
             'float property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getFloatingNumber\(\).*/',
             $classFileContent,
             'Getter for float property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setFloatingNumber\(\?float \$floatingNumber\).*/',
             $classFileContent,
             'Setter for float property was not generated'
@@ -439,29 +439,29 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var \\\\TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\FileReference.*/',
             $classFileContent,
             'var tag for image property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@TYPO3\\\\CMS\\\\Extbase\\\\Annotation\\\\ORM\\\\Cascade\("remove"\).*/',
             $classFileContent,
             'annotation for image property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$image = null;.*/',
             $classFileContent,
             'image property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getImage\(\).*/',
             $classFileContent,
             'Getter for image property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setImage\(\\\\TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\FileReference \$image\).*/',
             $classFileContent,
             'Setter for image property was not generated'
@@ -485,24 +485,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var string.*/',
             $classFileContent,
             'var tag for link property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$link = \'\';.*/',
             $classFileContent,
             'link property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getLink\(\).*/',
             $classFileContent,
             'Getter for link property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setLink\(string \$link\).*/',
             $classFileContent,
             'Setter for link property was not generated'
@@ -526,24 +526,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var int.*/',
             $classFileContent,
             'var tag for int property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$age = 0;.*/',
             $classFileContent,
             'int property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getAge\(\).*/',
             $classFileContent,
             'Getter for int property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setAge\(int \$age\).*/',
             $classFileContent,
             'Setter for int property was not generated'
@@ -567,24 +567,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var int|null.*/',
             $classFileContent,
             'var tag for int property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$age = null;.*/',
             $classFileContent,
             'int property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getAge\(\).*/',
             $classFileContent,
             'Getter for int property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setAge\(\?int \$age\).*/',
             $classFileContent,
             'Setter for int property was not generated'
@@ -608,24 +608,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var \\\\DateTime.*/',
             $classFileContent,
             'var tag for native date property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$birthday = null;.*/',
             $classFileContent,
             'native date property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getBirthday\(\).*/',
             $classFileContent,
             'Getter for native date property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setBirthday\(\\\\DateTime \$birthday\).*/',
             $classFileContent,
             'Setter for native date property was not generated'
@@ -649,24 +649,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var \\\\DateTime.*/',
             $classFileContent,
             'var tag for native date time property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$birthday = null;.*/',
             $classFileContent,
             'native date time property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getBirthday\(\).*/',
             $classFileContent,
             'Getter for native date time property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setBirthday\(\\\\DateTime \$birthday\).*/',
             $classFileContent,
             'Setter for native date time property was not generated'
@@ -690,24 +690,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var \\\\DateTime.*/',
             $classFileContent,
             'var tag for native time property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$time = null;.*/',
             $classFileContent,
             'native time property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getTime\(\).*/',
             $classFileContent,
             'Getter for native time property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setTime\(\\\\DateTime \$time\).*/',
             $classFileContent,
             'Setter for native time property was not generated'
@@ -731,24 +731,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var mixed.*/',
             $classFileContent,
             'var tag for none property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$none = null;.*/',
             $classFileContent,
             'none property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getNone\(\).*/',
             $classFileContent,
             'Getter for none property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setNone\(\$none\).*/',
             $classFileContent,
             'Setter for none property was not generated'
@@ -772,24 +772,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var mixed.*/',
             $classFileContent,
             'var tag for pass through property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$passThrough = null;.*/',
             $classFileContent,
             'pass through property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getPassThrough\(\).*/',
             $classFileContent,
             'Getter for pass through property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setPassThrough\(\$passThrough\).*/',
             $classFileContent,
             'Setter for pass through property was not generated'
@@ -813,24 +813,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var string.*/',
             $classFileContent,
             'var tag for password property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$password = \'\';.*/',
             $classFileContent,
             'password property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getPassword\(\).*/',
             $classFileContent,
             'Getter for password property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setPassword\(string \$password\).*/',
             $classFileContent,
             'Setter for password property was not generated'
@@ -854,24 +854,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var string|null.*/',
             $classFileContent,
             'var tag for password property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$password = null;.*/',
             $classFileContent,
             'password property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getPassword\(\).*/',
             $classFileContent,
             'Getter for password property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setPassword\(\?string \$password\).*/',
             $classFileContent,
             'Setter for password property was not generated'
@@ -895,24 +895,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var string.*/',
             $classFileContent,
             'var tag for rich text property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$content = \'\';.*/',
             $classFileContent,
             'rich text property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getContent\(\).*/',
             $classFileContent,
             'Getter for rich text property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setContent\(string \$content\).*/',
             $classFileContent,
             'Setter for rich text property was not generated'
@@ -936,24 +936,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var int.*/',
             $classFileContent,
             'var tag for select property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$color = 0;.*/',
             $classFileContent,
             'select property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getColor\(\).*/',
             $classFileContent,
             'Getter for select property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setColor\(int \$color\).*/',
             $classFileContent,
             'Setter for select property was not generated'
@@ -977,24 +977,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var string.*/',
             $classFileContent,
             'var tag for slug property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$slug = \'\';.*/',
             $classFileContent,
             'slug property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getSlug\(\).*/',
             $classFileContent,
             'Getter for slug property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setSlug\(string \$slug\).*/',
             $classFileContent,
             'Setter for slug property was not generated'
@@ -1018,24 +1018,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var string.*/',
             $classFileContent,
             'var tag for string property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$title = \'\';.*/',
             $classFileContent,
             'string property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getTitle\(\).*/',
             $classFileContent,
             'Getter for string property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setTitle\(string \$title\).*/',
             $classFileContent,
             'Setter for string property was not generated'
@@ -1059,24 +1059,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var string|null.*/',
             $classFileContent,
             'var tag for string property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$title = null;.*/',
             $classFileContent,
             'string property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getTitle\(\).*/',
             $classFileContent,
             'Getter for string property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setTitle\(\?string \$title\).*/',
             $classFileContent,
             'Setter for string property was not generated'
@@ -1100,24 +1100,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var string.*/',
             $classFileContent,
             'var tag for text property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$text = \'\';.*/',
             $classFileContent,
             'text property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getText\(\).*/',
             $classFileContent,
             'Getter for text property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setText\(string \$text\).*/',
             $classFileContent,
             'Setter for text property was not generated'
@@ -1141,24 +1141,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var string|null.*/',
             $classFileContent,
             'var tag for text property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$text = null;.*/',
             $classFileContent,
             'text property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getText\(\).*/',
             $classFileContent,
             'Getter for text property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setText\(\?string \$text\).*/',
             $classFileContent,
             'Setter for text property was not generated'
@@ -1182,24 +1182,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var int.*/',
             $classFileContent,
             'var tag for time property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$time = 0;.*/',
             $classFileContent,
             'time property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getTime\(\).*/',
             $classFileContent,
             'Getter for time property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setTime\(int \$time\).*/',
             $classFileContent,
             'Setter for time property was not generated'
@@ -1223,24 +1223,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var int|null.*/',
             $classFileContent,
             'var tag for time property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$time = null;.*/',
             $classFileContent,
             'time property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getTime\(\).*/',
             $classFileContent,
             'Getter for time property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setTime\(\?int \$time\).*/',
             $classFileContent,
             'Setter for time property was not generated'
@@ -1264,24 +1264,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var int.*/',
             $classFileContent,
             'var tag for timeSec property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$timeSec = 0;.*/',
             $classFileContent,
             'timeSec property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getTimeSec\(\).*/',
             $classFileContent,
             'Getter for timeSec property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setTimeSec\(int \$timeSec\).*/',
             $classFileContent,
             'Setter for timeSec property was not generated'
@@ -1305,24 +1305,24 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* \@var int|null.*/',
             $classFileContent,
             'var tag for timeSec property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$timeSec = null;.*/',
             $classFileContent,
             'timeSec property was not generated'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getTimeSec\(\).*/',
             $classFileContent,
             'Getter for timeSec property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setTimeSec\(\?int \$timeSec\).*/',
             $classFileContent,
             'Setter for timeSec property was not generated'

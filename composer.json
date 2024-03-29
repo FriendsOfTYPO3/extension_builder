@@ -29,8 +29,8 @@
 	},
 	"require-dev": {
 		"friendsofphp/php-cs-fixer": "^2.18",
+		"phpunit/phpunit": "^9.6",
 		"roave/security-advisories": "dev-latest",
-		"sebastian/diff": "^3.0",
 		"typo3/cms-frontend": "^11.4",
 		"typo3/cms-install": "^11.4",
 		"typo3/coding-standards": "^0.3.0",
@@ -46,15 +46,9 @@
 			"EBT\\ExtensionBuilder\\Tests\\": "Tests/"
 		}
 	},
-	"replace": {
-		"typo3-ter/extension-builder": "self.version"
-	},
 	"config": {
 		"bin-dir": ".Build/bin",
 		"vendor-dir": ".Build/vendor",
-		"preferred-install": {
-			"*": "dist"
-		},
 		"allow-plugins": {
 			"typo3/class-alias-loader": true,
 			"typo3/cms-composer-installers": true
@@ -77,8 +71,8 @@
 		"prepare-extension-test-structure": [
 			"TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
 		],
-		"unit-tests": "TYPO3_PATH_ROOT=$PWD/.Build/Web .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml --stop-on-failure Tests/Unit",
-		"functional-tests": "TYPO3_PATH_ROOT=$PWD/.Build/Web typo3DatabaseDriver=pdo_sqlite .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml --stop-on-failure Tests/Functional",
+		"unit-tests": ".Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml --stop-on-failure Tests/Unit",
+		"functional-tests": "TYPO3_PATH_ROOT=$PWD/.Build/public typo3DatabaseDriver=pdo_sqlite .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml --stop-on-failure Tests/Functional",
 		"test": [
 			"@test-php-cs-fixer",
 			"@unit-tests",
@@ -91,7 +85,7 @@
 			"extension-key": "extension_builder",
 			"app-dir": ".Build",
 			"ignore-as-root": false,
-			"web-dir": ".Build/Web"
+			"web-dir": ".Build/public"
 		}
 	}
 }

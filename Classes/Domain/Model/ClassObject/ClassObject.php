@@ -268,7 +268,7 @@ class ClassObject extends Container
 
     public function propertyExists(string $propertyName): bool
     {
-        return is_array($this->methods) && in_array($propertyName, $this->getPropertyNames(), true);
+        return in_array($propertyName, $this->getPropertyNames(), true);
     }
 
     public function addProperty(Property $classProperty): bool

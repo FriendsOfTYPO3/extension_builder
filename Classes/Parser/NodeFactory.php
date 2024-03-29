@@ -234,7 +234,6 @@ class NodeFactory implements SingletonInterface
         }
 
         $this->addCommentAttributes($property, $propertyNode);
-        $propertyNode->default = $property->getDefault();
         return $propertyNode;
     }
 
