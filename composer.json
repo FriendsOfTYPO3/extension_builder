@@ -46,9 +46,6 @@
 			"EBT\\ExtensionBuilder\\Tests\\": "Tests/"
 		}
 	},
-	"replace": {
-		"typo3-ter/extension-builder": "self.version"
-	},
 	"config": {
 		"bin-dir": ".Build/bin",
 		"vendor-dir": ".Build/vendor",
