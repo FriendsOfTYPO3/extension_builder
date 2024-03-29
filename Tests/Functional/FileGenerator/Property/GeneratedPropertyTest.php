@@ -61,7 +61,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var bool.*/',
+            '/.*\* @var bool.*/',
             $classFileContent,
             'var tag for boolean property was not generated'
         );
@@ -107,7 +107,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var string.*/',
+            '/.*\* @var string.*/',
             $classFileContent,
             'var tag for color picker property was not generated'
         );
@@ -148,7 +148,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var \\\\DateTime.*/',
+            '/.*\* @var \\\\DateTime.*/',
             $classFileContent,
             'var tag for date property was not generated'
         );
@@ -189,7 +189,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var \\\\DateTime.*/',
+            '/.*\* @var \\\\DateTime.*/',
             $classFileContent,
             'var tag for date property was not generated'
         );
@@ -230,7 +230,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var string.*/',
+            '/.*\* @var string.*/',
             $classFileContent,
             'var tag for email property was not generated'
         );
@@ -271,7 +271,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var string|null.*/',
+            '/.*\* @var string|null.*/',
             $classFileContent,
             'var tag for email property was not generated'
         );
@@ -312,12 +312,12 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var \\\\TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\FileReference.*/',
+            '/.*\* @var \\\\TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\FileReference.*/',
             $classFileContent,
             'var tag for file property was not generated'
         );
         self::assertMatchesRegularExpression(
-            '/.*\* \@TYPO3\\\\CMS\\\\Extbase\\\\Annotation\\\\ORM\\\\Cascade\("remove"\).*/',
+            '/.*\* @TYPO3\\\\CMS\\\\Extbase\\\\Annotation\\\\ORM\\\\Cascade\("remove"\).*/',
             $classFileContent,
             'annotation for file property was not generated'
         );
@@ -358,7 +358,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var float.*/',
+            '/.*\* @var float.*/',
             $classFileContent,
             'var tag for float property was not generated'
         );
@@ -399,7 +399,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var float|null.*/',
+            '/.*\* @var float|null.*/',
             $classFileContent,
             'var tag for float property was not generated'
         );
@@ -440,12 +440,12 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var \\\\TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\FileReference.*/',
+            '/.*\* @var \\\\TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\FileReference.*/',
             $classFileContent,
             'var tag for image property was not generated'
         );
         self::assertMatchesRegularExpression(
-            '/.*\* \@TYPO3\\\\CMS\\\\Extbase\\\\Annotation\\\\ORM\\\\Cascade\("remove"\).*/',
+            '/.*\* @TYPO3\\\\CMS\\\\Extbase\\\\Annotation\\\\ORM\\\\Cascade\("remove"\).*/',
             $classFileContent,
             'annotation for image property was not generated'
         );
@@ -486,7 +486,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var string.*/',
+            '/.*\* @var string.*/',
             $classFileContent,
             'var tag for link property was not generated'
         );
@@ -527,7 +527,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var int.*/',
+            '/.*\* @var int.*/',
             $classFileContent,
             'var tag for int property was not generated'
         );
@@ -568,7 +568,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var int|null.*/',
+            '/.*\* @var int|null.*/',
             $classFileContent,
             'var tag for int property was not generated'
         );
@@ -609,7 +609,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var \\\\DateTime.*/',
+            '/.*\* @var \\\\DateTime.*/',
             $classFileContent,
             'var tag for native date property was not generated'
         );
@@ -650,7 +650,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var \\\\DateTime.*/',
+            '/.*\* @var \\\\DateTime.*/',
             $classFileContent,
             'var tag for native date time property was not generated'
         );
@@ -691,7 +691,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var \\\\DateTime.*/',
+            '/.*\* @var \\\\DateTime.*/',
             $classFileContent,
             'var tag for native time property was not generated'
         );
@@ -732,7 +732,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var mixed.*/',
+            '/.*\* @var mixed.*/',
             $classFileContent,
             'var tag for none property was not generated'
         );
@@ -773,7 +773,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var mixed.*/',
+            '/.*\* @var mixed.*/',
             $classFileContent,
             'var tag for pass through property was not generated'
         );
@@ -814,7 +814,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var string.*/',
+            '/.*\* @var string.*/',
             $classFileContent,
             'var tag for password property was not generated'
         );
@@ -855,7 +855,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var string|null.*/',
+            '/.*\* @var string|null.*/',
             $classFileContent,
             'var tag for password property was not generated'
         );
@@ -896,7 +896,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var string.*/',
+            '/.*\* @var string.*/',
             $classFileContent,
             'var tag for rich text property was not generated'
         );
@@ -937,7 +937,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var int.*/',
+            '/.*\* @var int.*/',
             $classFileContent,
             'var tag for select property was not generated'
         );
@@ -978,7 +978,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var string.*/',
+            '/.*\* @var string.*/',
             $classFileContent,
             'var tag for slug property was not generated'
         );
@@ -1019,7 +1019,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var string.*/',
+            '/.*\* @var string.*/',
             $classFileContent,
             'var tag for string property was not generated'
         );
@@ -1060,7 +1060,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var string|null.*/',
+            '/.*\* @var string|null.*/',
             $classFileContent,
             'var tag for string property was not generated'
         );
@@ -1101,7 +1101,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var string.*/',
+            '/.*\* @var string.*/',
             $classFileContent,
             'var tag for text property was not generated'
         );
@@ -1142,7 +1142,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var string|null.*/',
+            '/.*\* @var string|null.*/',
             $classFileContent,
             'var tag for text property was not generated'
         );
@@ -1183,7 +1183,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var int.*/',
+            '/.*\* @var int.*/',
             $classFileContent,
             'var tag for time property was not generated'
         );
@@ -1224,7 +1224,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var int|null.*/',
+            '/.*\* @var int|null.*/',
             $classFileContent,
             'var tag for time property was not generated'
         );
@@ -1265,7 +1265,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var int.*/',
+            '/.*\* @var int.*/',
             $classFileContent,
             'var tag for timeSec property was not generated'
         );
@@ -1306,7 +1306,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* \@var int|null.*/',
+            '/.*\* @var int|null.*/',
             $classFileContent,
             'var tag for timeSec property was not generated'
         );
