@@ -213,6 +213,6 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         if (@file_exists($file)) {
             unlink($file);
         }
-        self::assertFileNotExists($file, 'Dummy file could not be removed:' . $file);
+        self::assertFileDoesNotExist($file, 'Dummy file could not be removed:' . $file);
     }
 }

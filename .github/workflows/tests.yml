@@ -16,17 +16,17 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [8.1, 8.2]
+        php: [8.1, 8.2, 8.3]
         typo3: [^12.2]
 
     name: P${{ matrix.php }} - T${{ matrix.typo3 }}
 
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: "Cache dependencies"
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: ~/.composer/cache/files
           key: dependencies-typo3-${{ matrix.typo3 }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}

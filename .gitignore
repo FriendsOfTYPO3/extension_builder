@@ -29,3 +29,6 @@ sass-lint.html
 .devbox/.ddev/providers/
 .devbox/.ddev/xhprof/
 .devbox/.ddev/composer.lock
+.phpunit.cache
+coverage
+.phpunit.result.cache

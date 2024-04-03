@@ -54,37 +54,37 @@ class FileGeneratorTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*class ModelCgt1.*/',
             $classFileContent,
             'Class declaration was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*protected \\$blue.*/',
             $classFileContent,
             'protected boolean property was not generated'
         );
-        self::assertRegExp(
-            '/.*\* \@var bool.*/',
+        self::assertMatchesRegularExpression(
+            '/.*\* @var bool.*/',
             $classFileContent,
             'var tag for boolean property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*\* @TYPO3\\\CMS\\\Extbase\\\Annotation\\\Validate\("NotEmpty"\).*/',
             $classFileContent,
             'validate tag for required property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function getBlue\(\).*/',
             $classFileContent,
             'Getter for boolean property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function setBlue\(bool \$blue\).*/',
             $classFileContent,
             'Setter for boolean property was not generated'
         );
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '/.*public function isBlue\(\).*/',
             $classFileContent,
             'is method for boolean property was not generated'
@@ -575,6 +575,6 @@ class FileGeneratorTest extends BaseFunctionalTest
         $extensionDir = $this->extension->getExtensionDir();
 
         self::assertFileExists($extensionDir . 'Configuration/TypoScript/setup.' . $deprecatedExtension);
-        self::assertFileNotExists($extensionDir . 'Configuration/TypoScript/setup.typoscript');
+        self::assertFileDoesNotExist($extensionDir . 'Configuration/TypoScript/setup.typoscript');
     }
 }

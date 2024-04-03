@@ -35,13 +35,13 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^v3.37",
         "roave/security-advisories": "dev-latest",
-        "sebastian/diff": "^5.0.3",
         "typo3/cms-frontend": "^12.4.11",
         "typo3/cms-install": "^12.4.11",
         "typo3/coding-standards": "v0.7.1",
-        "typo3/testing-framework": "^8.0.6",
+        "typo3/testing-framework": "^7.0.0",
         "ssch/typo3-rector": "^1.4",
-        "phpstan/phpstan": "^1.10"
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
@@ -78,7 +78,7 @@
 			"rm -rf crowdin.yaml",
 			"rm -rf .php-cs-fixer.php",
 			"rm -rf .phpstorm.meta.php"
-		],        
+		],
 		"post-autoload-dump": [
             "@prepare-extension-test-structure"
         ],
