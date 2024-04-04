@@ -133,9 +133,10 @@ class BuilderModuleController extends ActionController
             }
         }
 
-        $this->moduleTemplate->setContent($this->view->render());
+        // $this->moduleTemplate->setContent($this->view->render());
 
-        return new HtmlResponse($this->moduleTemplate->renderContent());
+        // return new HtmlResponse($this->moduleTemplate->renderContent());
+        return $this->moduleTemplate->renderResponse();
     }
 
     public function domainmodellingAction(): ResponseInterface
@@ -172,9 +173,10 @@ class BuilderModuleController extends ActionController
         );
         $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', ['firstTime' => 0]);
 
-        $this->moduleTemplate->setContent($this->view->render());
+        // $this->moduleTemplate->setContent($this->view->render());
 
-        return $this->htmlResponse($this->moduleTemplate->renderContent());
+        // return $this->htmlResponse($this->moduleTemplate->renderContent());
+        return $this->moduleTemplate->renderResponse();
     }
 
     /**
@@ -210,9 +212,10 @@ class BuilderModuleController extends ActionController
         );
         $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', ['firstTime' => 0]);
 
-        $this->moduleTemplate->setContent($this->view->render());
+        //  $this->moduleTemplate->setContent($this->view->render());
 
-        return $this->htmlResponse($this->moduleTemplate->renderContent());
+        // return $this->htmlResponse($this->moduleTemplate->renderContent());
+        return $this->moduleTemplate->renderResponse();
     }
 
 
