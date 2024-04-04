@@ -471,7 +471,8 @@ export const CustomModelNode = (props) => {
                                             identifier="propertyName"
                                             initialValue={property.name}
                                             onChange={(value) => {
-                                                updateProperty(index, "name", value.toLowerCase());
+                                                value = value.replace(/(^|_)./g, s => s.slice(-1).toUpperCase());
+                                                updateProperty(index, "name", value.charAt(0).toLowerCase() + value.slice(1));
                                             }}
                                         />
                                         <SelectComponent
@@ -811,7 +812,8 @@ export const CustomModelNode = (props) => {
                                             initialValue={relation.relationName}
                                             identifier="relationName"
                                             onChange={(value) => {
-                                                updateRelation(index, "relationName", value);
+                                                value = value.replace(/(^|_)./g, s => s.slice(-1).toUpperCase());
+                                                updateProperty(index, "name", value.charAt(0).toLowerCase() + value.slice(1));
                                             }}
                                         />
                                         <SelectComponent
