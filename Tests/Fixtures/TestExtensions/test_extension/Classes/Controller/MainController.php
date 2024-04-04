@@ -8,7 +8,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use FIXTURE\TestExtension\Domain\Repository\MainRepository;
 use Psr\Http\Message\ResponseInterface;
 use FIXTURE\TestExtension\Domain\Model\Main;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
 /**
  * This file is part of the "Extension Builder Test Extension" Extension for TYPO3 CMS.
@@ -68,7 +68,8 @@ class MainController extends ActionController
      */
     public function createAction(Main $newMain)
     {
-        $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', AbstractMessage::WARNING);
+        $message = 'The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html';
+        $this->addFlashMessage($message, '', ContextualFeedbackSeverity::WARNING);
         $this->mainRepository->add($newMain);
         $this->redirect('list');
     }
@@ -89,7 +90,8 @@ class MainController extends ActionController
      */
     public function updateAction(Main $main)
     {
-        $this->addFlashMessage('The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', AbstractMessage::WARNING);
+        $message = 'The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html';
+        $this->addFlashMessage($message, '', ContextualFeedbackSeverity::WARNING);
         $this->mainRepository->update($main);
         $this->redirect('list');
     }
@@ -99,7 +101,8 @@ class MainController extends ActionController
      */
     public function deleteAction(Main $main)
     {
-        $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', AbstractMessage::WARNING);
+        $message = 'The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html';
+        $this->addFlashMessage($message, '', ContextualFeedbackSeverity::WARNING);
         $this->mainRepository->remove($main);
         $this->redirect('list');
     }

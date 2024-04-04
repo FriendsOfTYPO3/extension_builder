@@ -78,7 +78,7 @@
 			"rm -rf crowdin.yaml",
 			"rm -rf .php-cs-fixer.php",
 			"rm -rf .phpstorm.meta.php"
-		],        
+		],
 		"post-autoload-dump": [
             "@prepare-extension-test-structure"
         ],

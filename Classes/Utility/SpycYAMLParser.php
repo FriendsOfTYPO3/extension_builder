@@ -918,7 +918,7 @@ class SpycYAMLParser
     private function addLiteralLine($literalBlock, $line, $literalBlockStyle): string
     {
         $line = self::stripIndent($line);
-        $line = rtrim($line, CRLF . TAB) . PHP_EOL;
+        $line = rtrim($line, CRLF . "\t") . PHP_EOL;
         if ($literalBlockStyle == '|') {
             return $literalBlock . $line;
         }
