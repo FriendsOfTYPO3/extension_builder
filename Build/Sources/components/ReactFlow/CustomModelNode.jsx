@@ -27,9 +27,9 @@ export const CustomModelNode = (props) => {
     // TODO: create a default property inside an empty js file and set it her.
     const addEmptyProperty = () => {
         setProperties([...properties, {
-            type: '',
             propertyName: '',
-            description: '',
+            propertyType: '',
+            propertyDescription: '',
             isRequired: false,
             isNullable: false,
             isExcludeField: false,
@@ -73,9 +73,9 @@ export const CustomModelNode = (props) => {
         }]);
         props.data.properties.push(
             {
-                type: '',
                 propertyName: '',
-                description: '',
+                propertyType: '',
+                propertyDescription: '',
                 isRequired: false,
                 isNullable: false,
                 excludeField: false,
@@ -460,7 +460,7 @@ export const CustomModelNode = (props) => {
                         props.data.properties.map((property, index) => {
                             return (
                                 <TYPO3StyledAccordion
-                                    title={`${property.propertyName} ${property.type ? `(${property.type})` : ''}`}
+                                    title={`${property.propertyName} ${property.propertyType ? `(${property.propertyType})` : ''}`}
                                     id={`nodeProperty-${props.id}-${index}`}
                                     parentId="accordionCustomModelNodeProperties"
                                 >
@@ -478,9 +478,9 @@ export const CustomModelNode = (props) => {
                                             label="Property type"
                                             identifier="propertyType"
                                             options={propertyTypes}
-                                            initialValue={property.type}
+                                            initialValue={property.propertyType}
                                             onChange={(value) => {
-                                                updateProperty(index, "type", value);
+                                                updateProperty(index, "propertyType", value);
                                             }}
                                         />
                                         {property.type === 'Text' &&(<CheckboxComponent
@@ -690,9 +690,9 @@ export const CustomModelNode = (props) => {
                                             label="Property description"
                                             placeholder="Property description"
                                             identifier="propertyDescription"
-                                            initialValue={property.description}
+                                            initialValue={property.propertyDescription}
                                             onChange={(value) => {
-                                                updateProperty(index, "description", value);
+                                                updateProperty(index, "propertyDescription", value);
                                             }}
                                         />
                                         <CheckboxComponent
