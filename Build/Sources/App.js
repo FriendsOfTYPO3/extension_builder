@@ -7,6 +7,7 @@ import initialProperties from "./initialValues/properties";
 import defaultAuthor from "./initialValues/author";
 import defaultModule from "./initialValues/module";
 import defaultPlugin from "./initialValues/plugin";
+import convertModulesToNodes from "./helper/converter/convertModulesToNodes";
 
 export const NodesContext = createContext([]);
 export const EdgesContext = createContext([]);
@@ -54,7 +55,7 @@ function App() {
     }
 
     const toggleAdvcancedOptions = () => {
-        console.log("toggle advanced options", isAdvancedOptionsVisible)
+        // console.log("toggle advanced options", isAdvancedOptionsVisible)
         setAdvancedOptionsVisible(!isAdvancedOptionsVisible);
     }
 
@@ -194,7 +195,7 @@ function App() {
     };
 
     const removeAuthorHandler = (authorIndex) => {
-        console.log(authorIndex);
+        // console.log(authorIndex);
         setAuthors((prevAuthors) => {
             return prevAuthors.filter((author, index) => index !== authorIndex);
         });
@@ -232,7 +233,13 @@ function App() {
     const moveModule = (index, direction) => moveElement(index, direction, modules, setModules);
 
     const handleOpenExtension = (extension) => {
+        // TODO working.modules is not set here, instead, working.nodes is set and there is no uid for the module. The module uid is only inside working.modules
+        // The nodes has a data property, this has no uid, but needs it. Maybe I need to add the uid to the data property of the nodes.
+        // Instead the modules could be handed into the nodes but needs to be converted to the correct format. This could be a lot of work.
         const working = JSON.parse(extension.working);
+
+        console.log("working inside handleOpenExtension:");
+        console.log(working);
 
         // Sets properties.
         setProperties(prev => ({...prev, ...working.properties}));
@@ -242,8 +249,17 @@ function App() {
         setPlugins(working.properties.plugins);
         setModules(working.properties.backendModules);
 
+        // console.log("working.modules");
+        // console.log(working.modules);
+
+        // console.log("working.nodes");
+        // console.log(working.nodes);
+
+        // First convert the given modules from .json file into nodes which are needed for the react flow component.
+        // let modules = convertModuleToNode(working.modules);
+        let modules = convertModulesToNodes(working.modules);
         // Check if nodes or edges are available, and update them.
-        setNodes(working.nodes ? working.nodes: []);
+        setNodes(modules ? modules: []);
         setEdges(working.edges ? working.edges : []);
 
         // Set the custom model node index depending on the amount of nodes.

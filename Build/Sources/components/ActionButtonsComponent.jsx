@@ -117,6 +117,8 @@ export const ActionButtonsComponent = (props) => {
                 );
             });
 
+            console.log("node actionbuttosncompoentn");
+            console.log(node);
             let module = {
                 "config": {
                     "position": [
@@ -148,7 +150,7 @@ export const ActionButtonsComponent = (props) => {
                         "parentClass": node.data.extendExistingModelClass,
                         "sorting": node.data.enableSorting,
                         "type": "Entity",
-                        "uid": uuidv4()
+                        "uid": node?.uid ?? uuidv4()
                     },
                     "propertyGroup": {
                         "properties": properties
@@ -158,6 +160,8 @@ export const ActionButtonsComponent = (props) => {
                     }
                 }
             };
+            console.log("modul");
+            console.log(module);
             modules.push(module);
         });
 
@@ -220,7 +224,7 @@ export const ActionButtonsComponent = (props) => {
                 "vendorName": props.properties.vendorName
             },
             "wires": wires,
-            "nodes": nodes,
+            /*"nodes": nodes,*/
             "edges": edges
         };
 
@@ -296,6 +300,8 @@ export const ActionButtonsComponent = (props) => {
         // error = null, if no error occurs
         // success = true, when the request was successful
         // result with the array of extensions
+        console.log("available extensions");
+        console.log(extensions);
 
         if(extensions.error !== null && extensions.success === false) {
             console.log("fetching failed");
