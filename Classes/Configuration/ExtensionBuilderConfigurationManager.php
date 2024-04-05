@@ -18,7 +18,6 @@ declare(strict_types=1);
 namespace EBT\ExtensionBuilder\Configuration;
 
 use EBT\ExtensionBuilder\Domain\Model\Extension;
-use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RectorPrefix202306\Tracy\Debugger;
@@ -36,6 +35,7 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Load settings from yaml file and from TYPO3_CONF_VARS extConf
@@ -148,7 +148,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         if (!file_exists($settingsFile)) {
             return [];
         }
-        return SpycYAMLParser::YAMLLoadString(file_get_contents($settingsFile));
+        return Yaml::parseFile($settingsFile);
     }
 
     /**
@@ -436,7 +436,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         }
 
         if (
-            isset($modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid']) 
+            isset($modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid'])
             && $modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid'] === $uid
         ) {
             $result['terminal'] = 'relationWire_' . $supposedRelationIndex;

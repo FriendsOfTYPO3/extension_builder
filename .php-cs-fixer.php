@@ -37,7 +37,6 @@ $config
         'ext_localconf.php',
         'ext_tables.php',
         'ext_emconf.php',
-        'SpycYAMLParser.php',
     ])
     ->depth('> 1')
 ;

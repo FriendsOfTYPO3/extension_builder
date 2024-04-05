@@ -30,7 +30,6 @@ use EBT\ExtensionBuilder\Service\LocalizationService;
 use EBT\ExtensionBuilder\Service\ParserService;
 use EBT\ExtensionBuilder\Service\Printer;
 use EBT\ExtensionBuilder\Service\RoundTrip;
-use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use Exception;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
@@ -38,6 +37,7 @@ use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
+use Symfony\Component\Yaml\Yaml;
 
 abstract class BaseFunctionalTest extends FunctionalTestCase
 {
@@ -80,7 +80,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
 
         vfsStream::copyFromFileSystem($this->fixturesPath, $fixturesDir, 1024 * 1024);
 
-        $settings = SpycYAMLParser::YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
+        $settings = Yaml::parseFile($this->fixturesPath . 'Settings/settings1.yaml');
 
         $this->extension = $this->getMockBuilder(Extension::class)
             ->enableProxyingToOriginalMethods()
