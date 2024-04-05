@@ -6,7 +6,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     entry: {
-        styles: './Resources/Public/Scss/index.scss',
+        styles: './Build/Scss/index.scss',
         main: './Build/Sources/index.js',
     },
     externals: {},
