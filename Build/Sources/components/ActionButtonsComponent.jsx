@@ -308,20 +308,24 @@ export const ActionButtonsComponent = (props) => {
             setShow(true);
             setModalTitle('Available extensions');
             setModalClassname('bg-info text-dark');
+            let message = 'Currently no extensions are found for editing.';
+            if (extensions.result.length > 0) {
+                message = 'Please select an extension to open';
+            }
             setModalBodyJsx(
                 <>
-                    <p>Please select an extension to open</p>
+                    <p>{message}</p>
                     <div className="list-group">
-                        {extensions.result.map((extension) => (
-                            <button
-                                type="button"
-                                className="list-group-item list-group-item-action"
-                                key={extension.name}
-                                onClick={() => handleExtensionClick(extension)}
-                            >
-                                {extension.name}
-                            </button>
-                        ))}
+                    {extensions.result.map((extension) => (
+                        <button
+                        type="button"
+                        className="list-group-item list-group-item-action"
+                        key={extension.name}
+                        onClick={() => handleExtensionClick(extension)}
+                        >
+                        {extension.name}
+                        </button>
+                    ))}
                     </div>
                 </>
             );
