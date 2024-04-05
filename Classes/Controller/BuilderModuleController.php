@@ -520,15 +520,14 @@ class BuilderModuleController extends ActionController
     }
 
     /**
-     * Shows a list with locally available extensions for editing
-     * (if they have a file `ExtensionBuilder.json`).
+     * Shows a list with available extensions (if they have an ExtensionBuilder.json
+     * file).
      *
      * @return array
      */
     protected function rpcActionList(): array
     {
         $extensions = $this->extensionRepository->findAll();
-        sort($extensions);
         return [
             'success' => true,
             'result' => $extensions,
