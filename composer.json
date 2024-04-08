@@ -41,7 +41,8 @@
         "typo3/testing-framework": "^7.0.0",
         "ssch/typo3-rector": "^1.4",
         "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "symfony/yaml": "^7.0"
     },
     "autoload": {
         "psr-4": {
