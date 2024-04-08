@@ -33,3 +33,5 @@ sass-lint.html
 .phpunit.cache
 coverage
 .phpunit.result.cache
+
+*storybook.log
