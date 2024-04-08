@@ -58,7 +58,7 @@ function convertModulesToNodes(modules) {
             y: item.config.position[1]
         },
         data: {
-            label: item.name,
+            label: getModelName(item),
             objectType: "foobar",
             isAggregateRoot: item.value.objectsettings.aggregateRoot,
             enableSorting: item.value.objectsettings.sorting,
@@ -97,6 +97,18 @@ function convertModulesToNodes(modules) {
     console.log(result);
 
     return result;
+}
+
+/**
+ * Workaround for older versions. In version 11 the name was stored inside value.name, not it is stored in name.
+ */
+function getModelName(item) {
+    console.log("item");
+    console.log(item);
+    if(item.name == 'New Model Object') {
+        return item.value.name;
+    }
+    return item.name;
 }
 
 export default convertModulesToNodes;
