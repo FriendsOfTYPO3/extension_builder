@@ -1,0 +1,32 @@
+.. include:: /Includes.rst.txt
+.. _changelog:
+
+==============
+Version 12.0.0
+==============
+
+Because of some important changes it could be necessary to update your :file:`EXT:my_extension/Configuration/ExtensionBuilder/settings.yaml` file manually.
+
+Please remove the dashes, as they could cause some problems while saving the extension.
+
+.. code-block:: yaml
+   :caption: EXT:my_extension/Configuration/ExtensionBuilder/settings.yaml
+   :emphasize-lines: 8
+
+   #
+   # Extension Builder settings for extension my_extension
+   # generated 2024-01-01 12:00:00
+   #
+   # See http://www.yaml.org/spec/1.2/spec.html
+   #
+
+   ---
+
+   #############  Overwrite settings  ###########
+   #
+   # These settings only apply, if the roundtrip feature of the extension builder
+   # is enabled in the extension manager
+
+.. note::
+
+   We haven't implemented an Upgrade wizard for this. This might change in the future. Feel free to open an Pull-Request on `GitHub <https://github.com/FriendsOfTYPO3/extension_builder/pulls>`__ for this.

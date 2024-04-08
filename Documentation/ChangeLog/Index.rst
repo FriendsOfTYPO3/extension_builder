@@ -5,6 +5,16 @@
 Change log
 ==========
 
+Important release notes
+=======================
+
+.. toctree::
+   :maxdepth: 1
+   :titlesonly:
+   :glob:
+
+   12-0-0
+
 Version 12.0.0
 --------------
 * [TASK] Rework the whole JS GUI of this extension
