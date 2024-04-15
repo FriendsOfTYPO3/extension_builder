@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="EXT:extension_builder/Resources/Private/Language/locallang.xlf" date="2012-02-29T20:52:35Z" product-name="extension_builder" target-language="de">
+    <header/>
+    <body>
+      <trans-unit id="error.extension.0" resname="error.extension.0" approved="yes">
+        <source>An extension key must have minimum 3, maximum 30 characters (not counting underscores)</source>
+        <target state="final">Ein Extensionkey muss mindestens 3 und darf maximal 30 Zeichen lang sein (Unterstriche werden nicht berücksichtigt)</target>
+      </trans-unit>
+      <trans-unit id="error.extension.1" resname="error.extension.1" approved="yes">
+        <source>Illegal character(s) in extension key. Allowed characters are: a-z (lowercase), 0-9 and '_'
+					(underscore)
+				</source>
+        <target state="final">Unzulässige(s) Zeichen im Extensionkey. Erlaubte Zeichen sind: a-z (Kleinbuchstaben), 0-9 und '_' (Unterstrich)</target>
+      </trans-unit>
+      <trans-unit id="error.extension.3" resname="error.extension.3" approved="yes">
+        <source>Extension keys cannot start or end with 0-9 and '_' (underscore)</source>
+        <target state="final">Der Extensionkey darf nicht mit 0-9 und '_' (Unterstrich) beginnen oder enden</target>
+      </trans-unit>
+      <trans-unit id="extensionKey" resname="extensionKey" approved="yes">
+        <source>Extension Key</source>
+        <target state="final">Extensionkey</target>
+      </trans-unit>
+      <trans-unit id="descr_extensionKey" resname="descr_extensionKey" approved="yes">
+        <source>The extensionkey should be lowercase and without spaces. It will be the unique identifier for
+					this extension.
+				</source>
+        <target state="final">Der Extensionkey sollte nur Kleinbuchstaben enthalten und ohne Leerzeichen sein. Er wird der eindeutige Bezeichner für diese Erweiterung sein.</target>
+      </trans-unit>
+      <trans-unit id="disableVersioning" resname="disableVersioning" approved="yes">
+        <source>Disable versioning</source>
+        <target state="final">Versionierung deaktivieren</target>
+      </trans-unit>
+      <trans-unit id="descr_disableVersioning" resname="descr_disableVersioning" approved="yes">
+        <source>Check this if your extension needs no support for versioning. This will skip the creation of
+					versioning related columns in the database
+				</source>
+        <target state="final">Aktivieren Sie diese Option, wenn Ihre Erweiterung keine Unterstützung für die Versionierung/Workspaces benötigt. Damit wird die Erstellung von dafür benötigten Spalten in der Datenbank übersprungen.</target>
+      </trans-unit>
+      <trans-unit id="generateEditorConfig" resname="generateEditorConfig" approved="yes">
+        <source>Generate editorconfig file</source>
+        <target state="final">Editorconfig Datei erzeugen</target>
+      </trans-unit>
+      <trans-unit id="descr_generateEditorConfig" resname="descr_generateEditorConfig" approved="yes">
+        <source>Check this if you want a generated editorconfig file for your extension.</source>
+        <target state="final">Aktivieren Sie diese Option, wenn Sie eine generierte Editorkonfigurationsdatei für Ihre Erweiterung wünschen.</target>
+      </trans-unit>
+      <trans-unit id="sourceLanguage" resname="sourceLanguage" approved="yes">
+        <source>Source language for xliff files</source>
+        <target state="final">Quellsprache für xliff Dateien</target>
+      </trans-unit>
+      <trans-unit id="descr_sourceLanguage" resname="descr_sourceLanguage" approved="yes">
+        <source>The source language for xliff files is the 2 letter language code in which the "source" of a label is defined.
+					In general it should be "en" for English. This label can later be translated into other languages.
+				</source>
+        <target state="final">Die Ausgangssprache für xliff Dateien ist der zweistellige Sprachcode, in dem die "Quelle" eines Labels definiert ist.
+Im Allgemeinen sollte es für Englisch „en“ sein. Dieses Label kann später in andere Sprachen übersetzt werden.</target>
+      </trans-unit>
+      <trans-unit id="descr_dependsOn" resname="descr_dependsOn" approved="yes">
+        <source>If the extension is depending on other extensions, enter the extension keys here (one per line
+					followed by a double arrow and the lowest version number).
+				</source>
+        <target state="final">Wenn diese Erweiterung von anderen Erweiterungen abhängig ist, fülle die Erweiterungsschlüssel hier ein (einen pro Zeile gefolgt von einem Doppelpfeil und der niedrigsten Versionsnummer).</target>
+      </trans-unit>
+      <trans-unit id="plugins" resname="plugins" approved="yes">
+        <source>Frontend plugins</source>
+        <target state="final">Frontend Plugins</target>
+      </trans-unit>
+      <trans-unit id="descr_plugins" resname="descr_plugins" approved="yes">
+        <source>The frontend plugins which have to be registered in the extension</source>
+        <target state="final">Die Frontend-Plugins, die in der Erweiterung registriert werden müssen</target>
+      </trans-unit>
+      <trans-unit id="descr_controller_action_combinations" resname="descr_controller_action_combinations" approved="yes">
+        <source>Here you can configure, which controller action combinations this plugin/module should have.
+					Example: &lt;br /&gt;Blog =&gt; list,show &lt;br /&gt;(one controller per line, actions comma
+					separated) &lt;br /&gt;If you leave this empty, all available actions are configured for this
+					plugin.
+				</source>
+        <target state="final">Hier können Sie einstellen, welche Controller-Aktionskombinationen dieses Plugin/Modul haben soll.
+Beispiel: &lt;br /&gt;Blog =&gt; list,show &lt;br /&gt;(ein Controller pro Zeile, Actions kommasepariert) &lt;br /&gt;
+Wenn Sie dieses Feld leer lassen, sind alle verfügbaren Aktionen für dieses Plugin konfiguriert.</target>
+      </trans-unit>
+      <trans-unit id="noncacheable_actions" resname="noncacheable_actions" approved="yes">
+        <source>Non cacheable actions</source>
+        <target state="final">Nicht zwischenspeicherbare Actions</target>
+      </trans-unit>
+      <trans-unit id="renderType" resname="renderType" approved="yes">
+        <source>Render type</source>
+        <target state="final">Rendering-Methode</target>
+      </trans-unit>
+      <trans-unit id="selectSingleBox" resname="selectSingleBox" approved="yes">
+        <source>Dropdown (multiple)</source>
+        <target state="final">Dropdown (Mehrfachauswahl)</target>
+      </trans-unit>
+      <trans-unit id="selectCheckBox" resname="selectCheckBox" approved="yes">
+        <source>Checkboxes</source>
+        <target state="final">Checkboxen</target>
+      </trans-unit>
+      <trans-unit id="select" resname="select" approved="yes">
+        <source>Dropdown</source>
+        <target state="final">Dropdown</target>
+      </trans-unit>
+      <trans-unit id="isNullable" resname="isNullable" approved="yes">
+        <source>Is nullable?</source>
+        <target state="final">Kann NULL sein?</target>
+      </trans-unit>
+      <trans-unit id="descr_isNullable" resname="descr_isNullable" approved="yes">
+        <source>If set to true, this field can be null</source>
+        <target state="final">Wenn auf "true" gesetzt, kann dieses Feld NULL sein</target>
+      </trans-unit>
+      <trans-unit id="descr_isExcludeField" resname="descr_isExcludeField" approved="yes">
+        <source>If set to true, this field will only be visible for admin users per default</source>
+        <target state="final">Wenn auf "true" gesetzt, wird dieses Feld standardmäßig nur für Admin-Benutzer sichtbar sein</target>
+      </trans-unit>
+      <trans-unit id="newModelObject" resname="newModelObject" approved="yes">
+        <source>New model object</source>
+        <target state="final">Neues Modellkobjekt</target>
+      </trans-unit>
+      <trans-unit id="isAggregateRoot" resname="isAggregateRoot" approved="yes">
+        <source>Is aggregate root?</source>
+        <target state="final">Ist Aggregatwurzel?</target>
+      </trans-unit>
+      <trans-unit id="descr_actionType" resname="descr_actionType" approved="yes">
+        <source>For each selected action, the Extension Builder will generate a template and a action method in
+					the controller of this model. If the model is an aggregate root the default CRUD actions will be
+					generated per default.
+				</source>
+        <target state="final">Für jede ausgewählte Aktion generiert der Erweiterungsgenerator eine Vorlage und eine Aktionsmethode in
+dem Controller dieses Modells. Wenn das Modell eine Aggregatwurzel ist, werden die Standard-CRUD-Aktionen
+pro Standard generiert.</target>
+      </trans-unit>
+      <trans-unit id="descr_propertyName" resname="descr_propertyName" approved="yes">
+        <source>The name should be lowerCamelCase and unique in this model</source>
+        <target state="final">Der Name sollte lowerCamelCase sein und in diesem Modell einzigartig sein</target>
+      </trans-unit>
+      <trans-unit id="richText" resname="richText" approved="yes">
+        <source>Rich text*</source>
+        <target state="final">Richt Text*</target>
+      </trans-unit>
+      <trans-unit id="floatingPoint" resname="floatingPoint" approved="yes">
+        <source>Floating point</source>
+        <target state="final">Fließkomma</target>
+      </trans-unit>
+      <trans-unit id="dateTime" resname="dateTime" approved="yes">
+        <source>DateTime (timestamp)</source>
+        <target state="final">Datum mit Uhrzeit (timestamp)</target>
+      </trans-unit>
+      <trans-unit id="date" resname="date" approved="yes">
+        <source>Date (timestamp)</source>
+        <target state="final">Datum (timestamp)</target>
+      </trans-unit>
+      <trans-unit id="slug" resname="slug" approved="yes">
+        <source>Slug</source>
+        <target state="final">URL-Segment</target>
+      </trans-unit>
+      <trans-unit id="descr_allowedFileTypes" resname="descr_allowedFileTypes" approved="yes">
+        <source>Comma separated file endings like: doc,ods</source>
+        <target state="final">Komma getrennte Dateienendungen wie: doc,ods</target>
+      </trans-unit>
+      <trans-unit id="descr_relationName" resname="descr_relationName" approved="yes">
+        <source>The name should be lowerCamelCase and unique in this model</source>
+        <target state="final">Der Name sollte lowerCamelCase sein und in diesem Modell einzigartig sein</target>
+      </trans-unit>
+      <trans-unit id="extensionProperties" resname="extensionProperties" approved="yes">
+        <source>Extension properties</source>
+        <target state="final">Extensioneigenschaften</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
