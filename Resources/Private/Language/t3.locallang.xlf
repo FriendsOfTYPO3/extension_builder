@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="EXT:extension_builder/Resources/Private/Language/locallang.xlf" date="2012-02-29T20:52:35Z" product-name="extension_builder" target-language="t3">
+    <header/>
+    <body>
+      <trans-unit id="error.extension.0" resname="error.extension.0">
+        <source>An extension key must have minimum 3, maximum 30 characters (not counting underscores)</source>
+        <target>crwdns62882:0crwdne62882:0</target>
+      </trans-unit>
+      <trans-unit id="error.extension.1" resname="error.extension.1">
+        <source>Illegal character(s) in extension key. Allowed characters are: a-z (lowercase), 0-9 and '_'
+					(underscore)
+				</source>
+        <target>crwdns62884:0crwdne62884:0</target>
+      </trans-unit>
+      <trans-unit id="error.extension.2" resname="error.extension.2">
+        <source>The key may not begin with one of the following prefixes:
+					tx,u,user_,pages,tt_,sys_,ts_language_,csh_
+				</source>
+        <target>crwdns62886:0crwdne62886:0</target>
+      </trans-unit>
+      <trans-unit id="error.extension.3" resname="error.extension.3">
+        <source>Extension keys cannot start or end with 0-9 and '_' (underscore)</source>
+        <target>crwdns62888:0crwdne62888:0</target>
+      </trans-unit>
+      <trans-unit id="error.extension.500" resname="error.extension.500">
+        <source>There is an existing piBased extension with this extension key. Please choose another extension
+					key or rename the existing extension directory
+				</source>
+        <target>crwdns62890:0crwdne62890:0</target>
+      </trans-unit>
+      <trans-unit id="name" resname="name">
+        <source>Name</source>
+        <target>crwdns62892:0crwdne62892:0</target>
+      </trans-unit>
+      <trans-unit id="key" resname="key">
+        <source>Key</source>
+        <target>crwdns62894:0crwdne62894:0</target>
+      </trans-unit>
+      <trans-unit id="extensionTitle" resname="extensionTitle">
+        <source>Extension title</source>
+        <target>crwdns62896:0crwdne62896:0</target>
+      </trans-unit>
+      <trans-unit id="extensionKey" resname="extensionKey">
+        <source>Extension Key</source>
+        <target>crwdns62898:0crwdne62898:0</target>
+      </trans-unit>
+      <trans-unit id="descr_extensionKey" resname="descr_extensionKey">
+        <source>The extensionkey should be lowercase and without spaces. It will be the unique identifier for
+					this extension.
+				</source>
+        <target>crwdns62900:0crwdne62900:0</target>
+      </trans-unit>
+      <trans-unit id="vendorName" resname="vendorName">
+        <source>Vendor name</source>
+        <target>crwdns62902:0crwdne62902:0</target>
+      </trans-unit>
+      <trans-unit id="descr_vendorName" resname="descr_vendorName">
+        <source>The vendor name is the first part of the new package identifier</source>
+        <target>crwdns62904:0crwdne62904:0</target>
+      </trans-unit>
+      <trans-unit id="short_description" resname="short_description">
+        <source>Description</source>
+        <target>crwdns145863:0crwdne145863:0</target>
+      </trans-unit>
+      <trans-unit id="description" resname="description">
+        <source>Description</source>
+        <target>crwdns62908:0crwdne62908:0</target>
+      </trans-unit>
+      <trans-unit id="version" resname="version">
+        <source>Version</source>
+        <target>crwdns62910:0crwdne62910:0</target>
+      </trans-unit>
+      <trans-unit id="target_version" resname="target_version">
+        <source>Target version</source>
+        <target>crwdns62912:0crwdne62912:0</target>
+      </trans-unit>
+      <trans-unit id="descr_target_version" resname="descr_target_version">
+        <source>Select the TYPO3 version the extension requires.</source>
+        <target>crwdns62914:0crwdne62914:0</target>
+      </trans-unit>
+      <trans-unit id="state" resname="state">
+        <source>State</source>
+        <target>crwdns62916:0crwdne62916:0</target>
+      </trans-unit>
+      <trans-unit id="alpha" resname="alpha">
+        <source>Alpha</source>
+        <target>crwdns62918:0crwdne62918:0</target>
+      </trans-unit>
+      <trans-unit id="beta" resname="beta">
+        <source>Beta</source>
+        <target>crwdns62920:0crwdne62920:0</target>
+      </trans-unit>
+      <trans-unit id="stable" resname="stable">
+        <source>Stable</source>
+        <target>crwdns62922:0crwdne62922:0</target>
+      </trans-unit>
+      <trans-unit id="experimental" resname="experimental">
+        <source>Experimental</source>
+        <target>crwdns62924:0crwdne62924:0</target>
+      </trans-unit>
+      <trans-unit id="test" resname="test">
+        <source>Test</source>
+        <target>crwdns62926:0crwdne62926:0</target>
+      </trans-unit>
+      <trans-unit id="category" resname="category">
+        <source>Category</source>
+        <target>crwdns62928:0crwdne62928:0</target>
+      </trans-unit>
+      <trans-unit id="custom_category" resname="custom_category">
+        <source>OR custom</source>
+        <target>crwdns62930:0crwdne62930:0</target>
+      </trans-unit>
+      <trans-unit id="descr_custom_category" resname="descr_custom_category">
+        <source>You can define an own category here</source>
+        <target>crwdns62932:0crwdne62932:0</target>
+      </trans-unit>
+      <trans-unit id="descr_category" resname="descr_category">
+        <source>The category this extension belongs to in the extension manager.</source>
+        <target>crwdns62934:0crwdne62934:0</target>
+      </trans-unit>
+      <trans-unit id="misc" resname="misc">
+        <source>Miscellaneous</source>
+        <target>crwdns62936:0crwdne62936:0</target>
+      </trans-unit>
+      <trans-unit id="services" resname="services">
+        <source>Services</source>
+        <target>crwdns62938:0crwdne62938:0</target>
+      </trans-unit>
+      <trans-unit id="backend" resname="backend">
+        <source>Backend</source>
+        <target>crwdns62940:0crwdne62940:0</target>
+      </trans-unit>
+      <trans-unit id="frontend" resname="frontend">
+        <source>Frontend</source>
+        <target>crwdns62942:0crwdne62942:0</target>
+      </trans-unit>
+      <trans-unit id="templates" resname="templates">
+        <source>Templates</source>
+        <target>crwdns62944:0crwdne62944:0</target>
+      </trans-unit>
+      <trans-unit id="examples" resname="examples">
+        <source>Examples</source>
+        <target>crwdns62946:0crwdne62946:0</target>
+      </trans-unit>
+      <trans-unit id="distribution" resname="distribution">
+        <source>Distribution</source>
+        <target>crwdns62948:0crwdne62948:0</target>
+      </trans-unit>
+      <trans-unit id="documentation" resname="documentation">
+        <source>Documentation</source>
+        <target>crwdns62950:0crwdne62950:0</target>
+      </trans-unit>
+      <trans-unit id="disableVersioning" resname="disableVersioning">
+        <source>Disable versioning</source>
+        <target>crwdns62952:0crwdne62952:0</target>
+      </trans-unit>
+      <trans-unit id="descr_disableVersioning" resname="descr_disableVersioning">
+        <source>Check this if your extension needs no support for versioning. This will skip the creation of
+					versioning related columns in the database
+				</source>
+        <target>crwdns62954:0crwdne62954:0</target>
+      </trans-unit>
+      <trans-unit id="disableLocalization" resname="disableLocalization">
+        <source>Disable localization</source>
+        <target>crwdns62956:0crwdne62956:0</target>
+      </trans-unit>
+      <trans-unit id="descr_disableLocalization" resname="descr_disableLocalization">
+        <source>Check this if your extension needs no support for localization. This will skip the creation of
+					localization related columns in the database
+				</source>
+        <target>crwdns62958:0crwdne62958:0</target>
+      </trans-unit>
+      <trans-unit id="generateDocumentationTemplate" resname="generateDocumentationTemplate">
+        <source>Generate documentation</source>
+        <target>crwdns143409:0crwdne143409:0</target>
+      </trans-unit>
+      <trans-unit id="descr_generateDocumentationTemplate" resname="descr_generateDocumentationTemplate">
+        <source>Check this if you want a documentation generated for your extension.</source>
+        <target>crwdns143411:0crwdne143411:0</target>
+      </trans-unit>
+      <trans-unit id="generateEditorConfig" resname="generateEditorConfig">
+        <source>Generate editorconfig file</source>
+        <target>crwdns138265:0crwdne138265:0</target>
+      </trans-unit>
+      <trans-unit id="descr_generateEditorConfig" resname="descr_generateEditorConfig">
+        <source>Check this if you want a generated editorconfig file for your extension.</source>
+        <target>crwdns138267:0crwdne138267:0</target>
+      </trans-unit>
+      <trans-unit id="generateEmptyGitRepository" resname="generateEmptyGitRepository">
+        <source>Generate empty git repository</source>
+        <target>crwdns138261:0crwdne138261:0</target>
+      </trans-unit>
+      <trans-unit id="descr_generateEmptyGitRepository" resname="descr_generateEmptyGitRepository">
+        <source>Check this if you want to generate an empty git repository for your extension and want to publish it later on.</source>
+        <target>crwdns138263:0crwdne138263:0</target>
+      </trans-unit>
+      <trans-unit id="sourceLanguage" resname="sourceLanguage">
+        <source>Source language for xliff files</source>
+        <target>crwdns62964:0crwdne62964:0</target>
+      </trans-unit>
+      <trans-unit id="descr_sourceLanguage" resname="descr_sourceLanguage">
+        <source>The source language for xliff files is the 2 letter language code in which the "source" of a label is defined.
+					In general it should be "en" for English. This label can later be translated into other languages.
+				</source>
+        <target>crwdns135770:0crwdne135770:0</target>
+      </trans-unit>
+      <trans-unit id="dependsOn" resname="dependsOn">
+        <source>Depends on</source>
+        <target>crwdns62968:0crwdne62968:0</target>
+      </trans-unit>
+      <trans-unit id="descr_dependsOn" resname="descr_dependsOn">
+        <source>If the extension is depending on other extensions, enter the extension keys here (one per line
+					followed by a double arrow and the lowest version number).
+				</source>
+        <target>crwdns62970:0crwdne62970:0</target>
+      </trans-unit>
+      <trans-unit id="persons" resname="persons">
+        <source>Extension authors</source>
+        <target>crwdns135772:0crwdne135772:0</target>
+      </trans-unit>
+      <trans-unit id="role" resname="role">
+        <source>Role</source>
+        <target>crwdns62974:0crwdne62974:0</target>
+      </trans-unit>
+      <trans-unit id="developer" resname="developer">
+        <source>Developer</source>
+        <target>crwdns62976:0crwdne62976:0</target>
+      </trans-unit>
+      <trans-unit id="product_manager" resname="product_manager">
+        <source>Product manager</source>
+        <target>crwdns135774:0crwdne135774:0</target>
+      </trans-unit>
+      <trans-unit id="email" resname="email">
+        <source>Email</source>
+        <target>crwdns62980:0crwdne62980:0</target>
+      </trans-unit>
+      <trans-unit id="company" resname="company">
+        <source>Company</source>
+        <target>crwdns62982:0crwdne62982:0</target>
+      </trans-unit>
+      <trans-unit id="plugins" resname="plugins">
+        <source>Frontend plugins</source>
+        <target>crwdns62984:0crwdne62984:0</target>
+      </trans-unit>
+      <trans-unit id="descr_plugins" resname="descr_plugins">
+        <source>The frontend plugins which have to be registered in the extension</source>
+        <target>crwdns62986:0crwdne62986:0</target>
+      </trans-unit>
+      <trans-unit id="controller_action_combinations" resname="controller_action_combinations">
+        <source>Controller action combinations</source>
+        <target>crwdns62988:0crwdne62988:0</target>
+      </trans-unit>
+      <trans-unit id="descr_controller_action_combinations" resname="descr_controller_action_combinations">
+        <source>Here you can configure, which controller action combinations this plugin/module should have.
+					Example: &lt;br /&gt;Blog =&gt; list,show &lt;br /&gt;(one controller per line, actions comma
+					separated) &lt;br /&gt;If you leave this empty, all available actions are configured for this
+					plugin.
+				</source>
+        <target>crwdns62990:0crwdne62990:0</target>
+      </trans-unit>
+      <trans-unit id="noncacheable_actions" resname="noncacheable_actions">
+        <source>Non cacheable actions</source>
+        <target>crwdns62992:0crwdne62992:0</target>
+      </trans-unit>
+      <trans-unit id="descr_noncacheable_actions" resname="descr_noncacheable_actions">
+        <source>Typically create, delete and update actions should not be cached. (Same format as above)
+				</source>
+        <target>crwdns62994:0crwdne62994:0</target>
+      </trans-unit>
+      <trans-unit id="backendModules" resname="backendModules">
+        <source>Backend modules</source>
+        <target>crwdns63000:0crwdne63000:0</target>
+      </trans-unit>
+      <trans-unit id="mainModule" resname="mainModule">
+        <source>Main module</source>
+        <target>crwdns63002:0crwdne63002:0</target>
+      </trans-unit>
+      <trans-unit id="uniqueInThisModel" resname="uniqueInThisModel">
+        <source>Should be unique for this model</source>
+        <target>crwdns63004:0crwdne63004:0</target>
+      </trans-unit>
+      <trans-unit id="type" resname="type">
+        <source>Type</source>
+        <target>crwdns63006:0crwdne63006:0</target>
+      </trans-unit>
+      <trans-unit id="more" resname="more">
+        <source>More</source>
+        <target>crwdns63008:0crwdne63008:0</target>
+      </trans-unit>
+      <trans-unit id="moreOptions" resname="moreOptions">
+        <source>More options</source>
+        <target>crwdns63010:0crwdne63010:0</target>
+      </trans-unit>
+      <trans-unit id="advancedOptions" resname="advancedOptions">
+        <source>advanced options</source>
+        <target>crwdns211192:0crwdne211192:0</target>
+      </trans-unit>
+      <trans-unit id="remove" resname="remove">
+        <source>Remove</source>
+        <target>crwdns63014:0crwdne63014:0</target>
+      </trans-unit>
+      <trans-unit id="add" resname="add">
+        <source>Add</source>
+        <target>crwdns63016:0crwdne63016:0</target>
+      </trans-unit>
+      <trans-unit id="zeroToOne" resname="zeroToOne">
+        <source>1:1</source>
+        <target>crwdns63018:0crwdne63018:0</target>
+      </trans-unit>
+      <trans-unit id="manyToOne" resname="manyToOne">
+        <source>n:1</source>
+        <target>crwdns63020:0crwdne63020:0</target>
+      </trans-unit>
+      <trans-unit id="zeroToMany" resname="zeroToMany">
+        <source>1:n</source>
+        <target>crwdns63022:0crwdne63022:0</target>
+      </trans-unit>
+      <trans-unit id="manyToMany" resname="manyToMany">
+        <source>m:n</source>
+        <target>crwdns63024:0crwdne63024:0</target>
+      </trans-unit>
+      <trans-unit id="renderType" resname="renderType">
+        <source>Render type</source>
+        <target>crwdns63026:0crwdne63026:0</target>
+      </trans-unit>
+      <trans-unit id="desc_renderType" resname="desc_renderType">
+        <source>How should the relation be displayed in backend forms?</source>
+        <target>crwdns63028:0crwdne63028:0</target>
+      </trans-unit>
+      <trans-unit id="selectSingleBox" resname="selectSingleBox">
+        <source>Dropdown (multiple)</source>
+        <target>crwdns63030:0crwdne63030:0</target>
+      </trans-unit>
+      <trans-unit id="selectCheckBox" resname="selectCheckBox">
+        <source>Checkboxes</source>
+        <target>crwdns63032:0crwdne63032:0</target>
+      </trans-unit>
+      <trans-unit id="selectMultipleSideBySide" resname="selectMultipleSideBySide">
+        <source>Side by side multi select</source>
+        <target>crwdns63034:0crwdne63034:0</target>
+      </trans-unit>
+      <trans-unit id="inline" resname="inline">
+        <source>Inline (IRRE)</source>
+        <target>crwdns63036:0crwdne63036:0</target>
+      </trans-unit>
+      <trans-unit id="select" resname="select">
+        <source>Dropdown</source>
+        <target>crwdns63038:0crwdne63038:0</target>
+      </trans-unit>
+      <trans-unit id="isNullable" resname="isNullable">
+        <source>Is nullable?</source>
+        <target>crwdns135812:0crwdne135812:0</target>
+      </trans-unit>
+      <trans-unit id="descr_isNullable" resname="descr_isNullable">
+        <source>If set to true, this field can be null</source>
+        <target>crwdns135814:0crwdne135814:0</target>
+      </trans-unit>
+      <trans-unit id="isExcludeField" resname="isExcludeField">
+        <source>Is exclude field?</source>
+        <target>crwdns63040:0crwdne63040:0</target>
+      </trans-unit>
+      <trans-unit id="descr_isExcludeField" resname="descr_isExcludeField">
+        <source>If set to true, this field will only be visible for admin users per default</source>
+        <target>crwdns63042:0crwdne63042:0</target>
+      </trans-unit>
+      <trans-unit id="isL10nModeExclude" resname="isL10nModeExclude">
+        <source>Is l10n_mode = exclude?</source>
+        <target>crwdns63044:0crwdne63044:0</target>
+      </trans-unit>
+      <trans-unit id="descr_isL10nModeExclude" resname="descr_isL10nModeExclude">
+        <source>If set to true, this field will be set to l10n_mode = exclude</source>
+        <target>crwdns63046:0crwdne63046:0</target>
+      </trans-unit>
+      <trans-unit id="newModelObject" resname="newModelObject">
+        <source>New model object</source>
+        <target>crwdns63048:0crwdne63048:0</target>
+      </trans-unit>
+      <trans-unit id="domainObjectSettings" resname="domainObjectSettings">
+        <source>Domain object settings</source>
+        <target>crwdns63050:0crwdne63050:0</target>
+      </trans-unit>
+      <trans-unit id="objectType" resname="objectType">
+        <source>Object type</source>
+        <target>crwdns63052:0crwdne63052:0</target>
+      </trans-unit>
+      <trans-unit id="descr_objectType" resname="descr_objectType">
+        <source>Value objects are simple objects that are defined by their value and have no 'identity'</source>
+        <target>crwdns63054:0crwdne63054:0</target>
+      </trans-unit>
+      <trans-unit id="entity" resname="entity">
+        <source>Entity</source>
+        <target>crwdns63056:0crwdne63056:0</target>
+      </trans-unit>
+      <trans-unit id="valueObject" resname="valueObject">
+        <source>Value object</source>
+        <target>crwdns63058:0crwdne63058:0</target>
+      </trans-unit>
+      <trans-unit id="isAggregateRoot" resname="isAggregateRoot">
+        <source>Is aggregate root?</source>
+        <target>crwdns63060:0crwdne63060:0</target>
+      </trans-unit>
+      <trans-unit id="descr_isAggregateRoot" resname="descr_isAggregateRoot">
+        <source>If true, the Extension Builder will generate a repository for this model</source>
+        <target>crwdns145865:0crwdne145865:0</target>
+      </trans-unit>
+      <trans-unit id="enableSorting" resname="enableSorting">
+        <source>Enable sorting?</source>
+        <target>crwdns63064:0crwdne63064:0</target>
+      </trans-unit>
+      <trans-unit id="descr_enableSorting" resname="descr_enableSorting">
+        <source>If true, sorting in the backend is enabled</source>
+        <target>crwdns63066:0crwdne63066:0</target>
+      </trans-unit>
+      <trans-unit id="addDeletedField" resname="addDeletedField">
+        <source>Add deleted field</source>
+        <target>crwdns63068:0crwdne63068:0</target>
+      </trans-unit>
+      <trans-unit id="descr_addDeletedField" resname="descr_addDeletedField">
+        <source>Deleting a record with "delete" field will not really delete the record, but just set the delete
+					flag to true
+				</source>
+        <target>crwdns63070:0crwdne63070:0</target>
+      </trans-unit>
+      <trans-unit id="addHiddenField" resname="addHiddenField">
+        <source>Add hidden field</source>
+        <target>crwdns63072:0crwdne63072:0</target>
+      </trans-unit>
+      <trans-unit id="descr_addHiddenField" resname="descr_addHiddenField">
+        <source>The hidden field is an "enable" field. Only records which are not hidden will be displayed
+				</source>
+        <target>crwdns63074:0crwdne63074:0</target>
+      </trans-unit>
+      <trans-unit id="addStarttimeEndtimeFields" resname="addStarttimeEndtimeFields">
+        <source>Add starttime/endtime fields</source>
+        <target>crwdns63076:0crwdne63076:0</target>
+      </trans-unit>
+      <trans-unit id="descr_addStarttimeEndtimeFields" resname="descr_addStarttimeEndtimeFields">
+        <source>If set, the related records will have a startime and endtime as "enable" field</source>
+        <target>crwdns63078:0crwdne63078:0</target>
+      </trans-unit>
+      <trans-unit id="enableCategorizable" resname="enableCategorizable">
+        <source>Enable categorization?</source>
+        <target>crwdns63080:0crwdne63080:0</target>
+      </trans-unit>
+      <trans-unit id="descr_enableCategorizable" resname="descr_enableCategorizable">
+        <source>If true, categorization in the backend is enabled for this model</source>
+        <target>crwdns63082:0crwdne63082:0</target>
+      </trans-unit>
+      <trans-unit id="mapToTable" resname="mapToTable">
+        <source>Map to existing table</source>
+        <target>crwdns63084:0crwdne63084:0</target>
+      </trans-unit>
+      <trans-unit id="descr_mapToTable" resname="descr_mapToTable">
+        <source>If the model should extend an existing table, you can configure this here</source>
+        <target>crwdns63086:0crwdne63086:0</target>
+      </trans-unit>
+      <trans-unit id="parentClass" resname="parentClass">
+        <source>Extend existing model class</source>
+        <target>crwdns63088:0crwdne63088:0</target>
+      </trans-unit>
+      <trans-unit id="descr_parentClass" resname="descr_parentClass">
+        <source>If this model should extend an existing other model, name it here</source>
+        <target>crwdns63090:0crwdne63090:0</target>
+      </trans-unit>
+      <trans-unit id="defaultActions" resname="defaultActions">
+        <source>Default actions</source>
+        <target>crwdns63092:0crwdne63092:0</target>
+      </trans-unit>
+      <trans-unit id="actionType" resname="actionType">
+        <source>Action type</source>
+        <target>crwdns63094:0crwdne63094:0</target>
+      </trans-unit>
+      <trans-unit id="descr_actionType" resname="descr_actionType">
+        <source>For each selected action, the Extension Builder will generate a template and a action method in
+					the controller of this model. If the model is an aggregate root the default CRUD actions will be
+					generated per default.
+				</source>
+        <target>crwdns145867:0crwdne145867:0</target>
+      </trans-unit>
+      <trans-unit id="show" resname="show">
+        <source>show</source>
+        <target>crwdns63098:0crwdne63098:0</target>
+      </trans-unit>
+      <trans-unit id="index" resname="index">
+        <source>index</source>
+        <target>crwdns135776:0crwdne135776:0</target>
+      </trans-unit>
+      <trans-unit id="list" resname="list">
+        <source>list</source>
+        <target>crwdns63100:0crwdne63100:0</target>
+      </trans-unit>
+      <trans-unit id="create_new" resname="create_new">
+        <source>new/create</source>
+        <target>crwdns63102:0crwdne63102:0</target>
+      </trans-unit>
+      <trans-unit id="edit_update" resname="edit_update">
+        <source>edit/update</source>
+        <target>crwdns63104:0crwdne63104:0</target>
+      </trans-unit>
+      <trans-unit id="delete" resname="delete">
+        <source>delete</source>
+        <target>crwdns63106:0crwdne63106:0</target>
+      </trans-unit>
+      <trans-unit id="properties" resname="properties">
+        <source>Properties</source>
+        <target>crwdns63108:0crwdne63108:0</target>
+      </trans-unit>
+      <trans-unit id="propertyName" resname="propertyName">
+        <source>Property name</source>
+        <target>crwdns63110:0crwdne63110:0</target>
+      </trans-unit>
+      <trans-unit id="descr_propertyName" resname="descr_propertyName">
+        <source>The name should be lowerCamelCase and unique in this model</source>
+        <target>crwdns63112:0crwdne63112:0</target>
+      </trans-unit>
+      <trans-unit id="propertyType" resname="propertyType">
+        <source>Property type</source>
+        <target>crwdns63114:0crwdne63114:0</target>
+      </trans-unit>
+      <trans-unit id="descr_propertyType" resname="descr_propertyType">
+        <source>All types with * are not yet supported by the frontend form generation/validation</source>
+        <target>crwdns63116:0crwdne63116:0</target>
+      </trans-unit>
+      <trans-unit id="string" resname="string">
+        <source>String</source>
+        <target>crwdns63118:0crwdne63118:0</target>
+      </trans-unit>
+      <trans-unit id="text" resname="text">
+        <source>Text</source>
+        <target>crwdns63120:0crwdne63120:0</target>
+      </trans-unit>
+      <trans-unit id="richText" resname="richText">
+        <source>Rich text*</source>
+        <target>crwdns63122:0crwdne63122:0</target>
+      </trans-unit>
+      <trans-unit id="integer" resname="integer">
+        <source>Integer</source>
+        <target>crwdns63124:0crwdne63124:0</target>
+      </trans-unit>
+      <trans-unit id="floatingPoint" resname="floatingPoint">
+        <source>Floating point</source>
+        <target>crwdns63126:0crwdne63126:0</target>
+      </trans-unit>
+      <trans-unit id="boolean" resname="boolean">
+        <source>Boolean</source>
+        <target>crwdns63128:0crwdne63128:0</target>
+      </trans-unit>
+      <trans-unit id="dateTime" resname="dateTime">
+        <source>DateTime (timestamp)</source>
+        <target>crwdns63130:0crwdne63130:0</target>
+      </trans-unit>
+      <trans-unit id="date" resname="date">
+        <source>Date (timestamp)</source>
+        <target>crwdns63132:0crwdne63132:0</target>
+      </trans-unit>
+      <trans-unit id="nativeDateTime" resname="nativeDateTime">
+        <source>DateTime</source>
+        <target>crwdns63134:0crwdne63134:0</target>
+      </trans-unit>
+      <trans-unit id="nativeDate" resname="nativeDate">
+        <source>Date</source>
+        <target>crwdns63136:0crwdne63136:0</target>
+      </trans-unit>
+      <trans-unit id="inputLink" resname="inputLink">
+        <source>Link</source>
+        <target>crwdns138249:0crwdne138249:0</target>
+      </trans-unit>
+      <trans-unit id="time" resname="time">
+        <source>Time (timestamp)*</source>
+        <target>crwdns135778:0crwdne135778:0</target>
+      </trans-unit>
+      <trans-unit id="nativeTime" resname="time">
+        <source>Time*</source>
+        <target>crwdns135780:0crwdne135780:0</target>
+      </trans-unit>
+      <trans-unit id="timeSec" resname="timeSec">
+        <source>Time/Sec*</source>
+        <target>crwdns63140:0crwdne63140:0</target>
+      </trans-unit>
+      <trans-unit id="selectList" resname="selectList">
+        <source>Select list</source>
+        <target>crwdns63142:0crwdne63142:0</target>
+      </trans-unit>
+      <trans-unit id="file" resname="file">
+        <source>File*</source>
+        <target>crwdns63144:0crwdne63144:0</target>
+      </trans-unit>
+      <trans-unit id="image" resname="image">
+        <source>Image*</source>
+        <target>crwdns63146:0crwdne63146:0</target>
+      </trans-unit>
+      <trans-unit id="fileReference" resname="fileReference">
+        <source>File reference*</source>
+        <target>crwdns63148:0crwdne63148:0</target>
+      </trans-unit>
+      <trans-unit id="folder" resname="folder">
+        <source>Folder*</source>
+        <target>crwdns63150:0crwdne63150:0</target>
+      </trans-unit>
+      <trans-unit id="password" resname="password">
+        <source>Password</source>
+        <target>crwdns63152:0crwdne63152:0</target>
+      </trans-unit>
+      <trans-unit id="slug" resname="slug">
+        <source>Slug</source>
+        <target>crwdns137858:0crwdne137858:0</target>
+      </trans-unit>
+      <trans-unit id="colorPicker" resname="colorPicker">
+        <source>Color Picker</source>
+        <target>crwdns138255:0crwdne138255:0</target>
+      </trans-unit>
+      <trans-unit id="passThrough" resname="passThrough">
+        <source>Pass through</source>
+        <target>crwdns138257:0crwdne138257:0</target>
+      </trans-unit>
+      <trans-unit id="none" resname="none">
+        <source>None</source>
+        <target>crwdns138259:0crwdne138259:0</target>
+      </trans-unit>
+      <trans-unit id="allowedFileTypes" resname="allowedFileTypes">
+        <source>Allowed file types</source>
+        <target>crwdns63154:0crwdne63154:0</target>
+      </trans-unit>
+      <trans-unit id="descr_allowedFileTypes" resname="descr_allowedFileTypes">
+        <source>Comma separated file endings like: doc,ods</source>
+        <target>crwdns63156:0crwdne63156:0</target>
+      </trans-unit>
+      <trans-unit id="maxItems" resname="maxItems">
+        <source>Allowed number of files</source>
+        <target>crwdns63158:0crwdne63158:0</target>
+      </trans-unit>
+      <trans-unit id="isRequired" resname="isRequired">
+        <source>Is required?</source>
+        <target>crwdns63160:0crwdne63160:0</target>
+      </trans-unit>
+      <trans-unit id="relations" resname="relations">
+        <source>Relations</source>
+        <target>crwdns63162:0crwdne63162:0</target>
+      </trans-unit>
+      <trans-unit id="relationName" resname="relationName">
+        <source>Name</source>
+        <target>crwdns63164:0crwdne63164:0</target>
+      </trans-unit>
+      <trans-unit id="descr_relationName" resname="descr_relationName">
+        <source>The name should be lowerCamelCase and unique in this model</source>
+        <target>crwdns63166:0crwdne63166:0</target>
+      </trans-unit>
+      <trans-unit id="extensionProperties" resname="extensionProperties">
+        <source>Extension properties</source>
+        <target>crwdns63168:0crwdne63168:0</target>
+      </trans-unit>
+      <trans-unit id="tab_label" resname="tab_label">
+        <source>Tab label</source>
+        <target>crwdns63170:0crwdne63170:0</target>
+      </trans-unit>
+      <trans-unit id="lazyLoading" resname="lazyLoading">
+        <source>Lazy loading</source>
+        <target>crwdns63172:0crwdne63172:0</target>
+      </trans-unit>
+      <trans-unit id="descr_lazyLoading" resname="descr_lazyLoading">
+        <source>Make this relation lazy loading</source>
+        <target>crwdns63174:0crwdne63174:0</target>
+      </trans-unit>
+      <trans-unit id="foreignRelationClass" resname="foreignRelationClass">
+        <source>Relation to external class</source>
+        <target>crwdns63176:0crwdne63176:0</target>
+      </trans-unit>
+      <trans-unit id="descr_foreignRelationClass" resname="descr_foreignRelationClass">
+        <source>If this is a relation to an external model, enter the (full qualified) class name here. The
+					class must exist and be loadable
+				</source>
+        <target>crwdns63178:0crwdne63178:0</target>
+      </trans-unit>
+      <trans-unit id="modeler_invalidConfigurationTitle" resname="modeler_invalidConfigurationTitle">
+        <source>Invalid configuration!</source>
+        <target>crwdns63180:0crwdne63180:0</target>
+      </trans-unit>
+      <trans-unit id="modeler_invalidExtensionPropertiesTitle" resname="modeler_invalidExtensionPropertiesTitle">
+        <source>Invalid extension properties</source>
+        <target>crwdns63182:0crwdne63182:0</target>
+      </trans-unit>
+      <trans-unit id="modeler_invalidExtensionProperties" resname="modeler_invalidExtensionProperties">
+        <source>Please check the fields in the left panel</source>
+        <target>crwdns63184:0crwdne63184:0</target>
+      </trans-unit>
+      <trans-unit id="modeler_duplicatePropertyNamesTitle" resname="modeler_duplicatePropertyNamesTitle">
+        <source>Duplicate property names</source>
+        <target>crwdns63186:0crwdne63186:0</target>
+      </trans-unit>
+      <trans-unit id="modeler_missingModelName" resname="modeler_missingModelName">
+        <source>Please enter a model name!</source>
+        <target>crwdns63188:0crwdne63188:0</target>
+      </trans-unit>
+      <trans-unit id="modeler_duplicateModelNamesTitle" resname="modeler_duplicateModelNamesTitle">
+        <source>Duplicate model names</source>
+        <target>crwdns63190:0crwdne63190:0</target>
+      </trans-unit>
+      <trans-unit id="modeler_invalidModelConfiguration" resname="modeler_invalidModelConfiguration">
+        <source>Invalid fields in model: </source>
+        <target>crwdns63192:0crwdne63192:0</target>
+      </trans-unit>
+      <trans-unit id="modeler_extensionSaveError" resname="modeler_extensionSaveError">
+        <source>Extension could not be saved:</source>
+        <target>crwdns63194:0crwdne63194:0</target>
+      </trans-unit>
+      <trans-unit id="modeler_loadPipeConfirmMessage" resname="modeler_loadPipeConfirmMessage">
+        <source>Do you really want to clear the current working board and load the selected pipe? Unsaved changes will get lost!</source>
+        <target>crwdns63196:0crwdne63196:0</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
