@@ -1,0 +1,726 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="EXT:extension_builder/Resources/Private/Language/locallang.xlf" date="2012-02-29T20:52:35Z" product-name="extension_builder" target-language="da">
+    <header/>
+    <body>
+      <trans-unit id="error.extension.0" resname="error.extension.0" approved="yes">
+        <source>An extension key must have minimum 3, maximum 30 characters (not counting underscores)</source>
+        <target state="final">En udvidelsesnøgle skal have minimum tre og maksimum 30 karakterer (understreg tæller ikke med)</target>
+      </trans-unit>
+      <trans-unit id="error.extension.1" resname="error.extension.1" approved="yes">
+        <source>Illegal character(s) in extension key. Allowed characters are: a-z (lowercase), 0-9 and '_'
+					(underscore)
+				</source>
+        <target state="final">Illegale karakter(er) i udvidelsesnøgle. Tilladte karakterer er: a-z (små bogstaver), 0-9 og '_' (understreg)</target>
+      </trans-unit>
+      <trans-unit id="error.extension.2" resname="error.extension.2" approved="yes">
+        <source>The key may not begin with one of the following prefixes:
+					tx,u,user_,pages,tt_,sys_,ts_language_,csh_
+				</source>
+        <target state="final">Nøglen må ikke begynde med en af følgende præfiks:
+tx,u,user_,pages,tt_,sys_,ts_language_,csh_</target>
+      </trans-unit>
+      <trans-unit id="error.extension.3" resname="error.extension.3" approved="yes">
+        <source>Extension keys cannot start or end with 0-9 and '_' (underscore)</source>
+        <target state="final">Udvidelsesnøgler kan ikke starte eller slutte med 0-9 og '_' (understreg)</target>
+      </trans-unit>
+      <trans-unit id="error.extension.500" resname="error.extension.500" approved="yes">
+        <source>There is an existing piBased extension with this extension key. Please choose another extension
+					key or rename the existing extension directory
+				</source>
+        <target state="final">Dette er en eksisterende piBaseret udvidelse med denne udvidelsesnøgle. Vælg venligst en anden udvidelses
+nøgle eller omdøb den eksisterende udvidelsesmappe</target>
+      </trans-unit>
+      <trans-unit id="name" resname="name" approved="yes">
+        <source>Name</source>
+        <target state="final">Navn</target>
+      </trans-unit>
+      <trans-unit id="key" resname="key" approved="yes">
+        <source>Key</source>
+        <target state="final">Nøgle</target>
+      </trans-unit>
+      <trans-unit id="extensionTitle" resname="extensionTitle" approved="yes">
+        <source>Extension title</source>
+        <target state="final">Udvidelsestitel</target>
+      </trans-unit>
+      <trans-unit id="extensionKey" resname="extensionKey" approved="yes">
+        <source>Extension Key</source>
+        <target state="final">Udvidelses-nøgle</target>
+      </trans-unit>
+      <trans-unit id="descr_extensionKey" resname="descr_extensionKey" approved="yes">
+        <source>The extensionkey should be lowercase and without spaces. It will be the unique identifier for
+					this extension.
+				</source>
+        <target state="final">Udvidelsesnøglen skal være med små bogstaver og uden mellemrum. Det vil blive det unikke datanavn for denne udvidelse.</target>
+      </trans-unit>
+      <trans-unit id="vendorName" resname="vendorName" approved="yes">
+        <source>Vendor name</source>
+        <target state="final">Vendor-navn</target>
+      </trans-unit>
+      <trans-unit id="descr_vendorName" resname="descr_vendorName" approved="yes">
+        <source>The vendor name is the first part of the new package identifier</source>
+        <target state="final">Vendor-navnet er den første del af datanavnet i den nye pakke</target>
+      </trans-unit>
+      <trans-unit id="short_description" resname="short_description" approved="yes">
+        <source>Description</source>
+        <target state="final">Beskrivelse</target>
+      </trans-unit>
+      <trans-unit id="description" resname="description" approved="yes">
+        <source>Description</source>
+        <target state="final">Beskrivelse</target>
+      </trans-unit>
+      <trans-unit id="version" resname="version" approved="yes">
+        <source>Version</source>
+        <target state="final">Version</target>
+      </trans-unit>
+      <trans-unit id="target_version" resname="target_version" approved="yes">
+        <source>Target version</source>
+        <target state="final">Målversion</target>
+      </trans-unit>
+      <trans-unit id="descr_target_version" resname="descr_target_version" approved="yes">
+        <source>Select the TYPO3 version the extension requires.</source>
+        <target state="final">Vælg den TYPO3-version som kræves af udvidelsen.</target>
+      </trans-unit>
+      <trans-unit id="state" resname="state" approved="yes">
+        <source>State</source>
+        <target state="final">Tilstand</target>
+      </trans-unit>
+      <trans-unit id="alpha" resname="alpha" approved="yes">
+        <source>Alpha</source>
+        <target state="final">Alfa</target>
+      </trans-unit>
+      <trans-unit id="beta" resname="beta" approved="yes">
+        <source>Beta</source>
+        <target state="final">Beta</target>
+      </trans-unit>
+      <trans-unit id="stable" resname="stable" approved="yes">
+        <source>Stable</source>
+        <target state="final">Stabil</target>
+      </trans-unit>
+      <trans-unit id="experimental" resname="experimental" approved="yes">
+        <source>Experimental</source>
+        <target state="final">Eksperimentel</target>
+      </trans-unit>
+      <trans-unit id="test" resname="test" approved="yes">
+        <source>Test</source>
+        <target state="final">Test</target>
+      </trans-unit>
+      <trans-unit id="category" resname="category" approved="yes">
+        <source>Category</source>
+        <target state="final">Kategori</target>
+      </trans-unit>
+      <trans-unit id="custom_category" resname="custom_category" approved="yes">
+        <source>OR custom</source>
+        <target state="final">ELLER tilpasset</target>
+      </trans-unit>
+      <trans-unit id="descr_custom_category" resname="descr_custom_category" approved="yes">
+        <source>You can define an own category here</source>
+        <target state="final">Du kan definere din egen kategori her</target>
+      </trans-unit>
+      <trans-unit id="descr_category" resname="descr_category" approved="yes">
+        <source>The category this extension belongs to in the extension manager.</source>
+        <target state="final">Den kategori som denne udvidelse tilhører i udvidelses-manageren.</target>
+      </trans-unit>
+      <trans-unit id="misc" resname="misc" approved="yes">
+        <source>Miscellaneous</source>
+        <target state="final">Diverse</target>
+      </trans-unit>
+      <trans-unit id="services" resname="services" approved="yes">
+        <source>Services</source>
+        <target state="final">Tjenester</target>
+      </trans-unit>
+      <trans-unit id="backend" resname="backend" approved="yes">
+        <source>Backend</source>
+        <target state="final">Backend</target>
+      </trans-unit>
+      <trans-unit id="frontend" resname="frontend" approved="yes">
+        <source>Frontend</source>
+        <target state="final">Frontend</target>
+      </trans-unit>
+      <trans-unit id="templates" resname="templates" approved="yes">
+        <source>Templates</source>
+        <target state="final">Skabeloner</target>
+      </trans-unit>
+      <trans-unit id="examples" resname="examples" approved="yes">
+        <source>Examples</source>
+        <target state="final">Eksempler</target>
+      </trans-unit>
+      <trans-unit id="distribution" resname="distribution" approved="yes">
+        <source>Distribution</source>
+        <target state="final">Fordeling</target>
+      </trans-unit>
+      <trans-unit id="documentation" resname="documentation" approved="yes">
+        <source>Documentation</source>
+        <target state="final">Dokumentation</target>
+      </trans-unit>
+      <trans-unit id="disableVersioning" resname="disableVersioning" approved="yes">
+        <source>Disable versioning</source>
+        <target state="final">Deaktivér versionering</target>
+      </trans-unit>
+      <trans-unit id="descr_disableVersioning" resname="descr_disableVersioning" approved="yes">
+        <source>Check this if your extension needs no support for versioning. This will skip the creation of
+					versioning related columns in the database
+				</source>
+        <target state="final">Vælg dette hvis din udvidelse ikke behøver versionerings-understøttelse. Det vil droppe oprettelse af den
+versioneringsrelaterede kolonne i databasen</target>
+      </trans-unit>
+      <trans-unit id="disableLocalization" resname="disableLocalization" approved="yes">
+        <source>Disable localization</source>
+        <target state="final">Deaktivér sprogunderstøttelse</target>
+      </trans-unit>
+      <trans-unit id="descr_disableLocalization" resname="descr_disableLocalization" approved="yes">
+        <source>Check this if your extension needs no support for localization. This will skip the creation of
+					localization related columns in the database
+				</source>
+        <target state="final">Vælg dette hvis din udvidelse ikke understøtter sprogversionering. Dette vil droppe oprettelse af den
+relaterede kolonne for sprogunderstøttelse i databasen</target>
+      </trans-unit>
+      <trans-unit id="generateDocumentationTemplate" resname="generateDocumentationTemplate" approved="yes">
+        <source>Generate documentation</source>
+        <target state="final">Generér dokumentation</target>
+      </trans-unit>
+      <trans-unit id="descr_generateDocumentationTemplate" resname="descr_generateDocumentationTemplate" approved="yes">
+        <source>Check this if you want a documentation generated for your extension.</source>
+        <target state="final">Vælg dette hvis du ønsker at der oprettes dokumentation til din udvidelse.</target>
+      </trans-unit>
+      <trans-unit id="generateEditorConfig" resname="generateEditorConfig" approved="yes">
+        <source>Generate editorconfig file</source>
+        <target state="final">Generér editorconfig fil</target>
+      </trans-unit>
+      <trans-unit id="descr_generateEditorConfig" resname="descr_generateEditorConfig" approved="yes">
+        <source>Check this if you want a generated editorconfig file for your extension.</source>
+        <target state="final">Markér dette hvis du ønsker en genereret editorconfig fil til din udvidelse.</target>
+      </trans-unit>
+      <trans-unit id="generateEmptyGitRepository" resname="generateEmptyGitRepository" approved="yes">
+        <source>Generate empty git repository</source>
+        <target state="final">Generér tomt git repository</target>
+      </trans-unit>
+      <trans-unit id="descr_generateEmptyGitRepository" resname="descr_generateEmptyGitRepository" approved="yes">
+        <source>Check this if you want to generate an empty git repository for your extension and want to publish it later on.</source>
+        <target state="final">Markér dette hvis du vil generere et tomt git repository til din udvidelse og ønsker at offentliggøre det senere.</target>
+      </trans-unit>
+      <trans-unit id="sourceLanguage" resname="sourceLanguage" approved="yes">
+        <source>Source language for xliff files</source>
+        <target state="final">Kildesprog for xliff-filer</target>
+      </trans-unit>
+      <trans-unit id="descr_sourceLanguage" resname="descr_sourceLanguage" approved="yes">
+        <source>The source language for xliff files is the 2 letter language code in which the "source" of a label is defined.
+					In general it should be "en" for English. This label can later be translated into other languages.
+				</source>
+        <target state="final">Kildesproget for xliff filer er den to-bogstavs sprogkode, hvor "kilden" til en etiket er defineret.
+Generelt skulle det være "en" for engelsk. Denne etiket kan senere oversættes til andre sprog.</target>
+      </trans-unit>
+      <trans-unit id="dependsOn" resname="dependsOn" approved="yes">
+        <source>Depends on</source>
+        <target state="final">Afhænger af</target>
+      </trans-unit>
+      <trans-unit id="descr_dependsOn" resname="descr_dependsOn" approved="yes">
+        <source>If the extension is depending on other extensions, enter the extension keys here (one per line
+					followed by a double arrow and the lowest version number).
+				</source>
+        <target state="final">Hvis udvidelsen afhænger af andre udvidelser, indtastes udvidelsesnøglen her (en pr. linje
+efterfulgt af dobbelt pil og det laveste versionsnummer).</target>
+      </trans-unit>
+      <trans-unit id="persons" resname="persons" approved="yes">
+        <source>Extension authors</source>
+        <target state="final">Udvidelses-forfattere</target>
+      </trans-unit>
+      <trans-unit id="role" resname="role" approved="yes">
+        <source>Role</source>
+        <target state="final">Rolle</target>
+      </trans-unit>
+      <trans-unit id="developer" resname="developer" approved="yes">
+        <source>Developer</source>
+        <target state="final">Udvikler</target>
+      </trans-unit>
+      <trans-unit id="product_manager" resname="product_manager" approved="yes">
+        <source>Product manager</source>
+        <target state="final">Produktleder</target>
+      </trans-unit>
+      <trans-unit id="email" resname="email" approved="yes">
+        <source>Email</source>
+        <target state="final">E-mail</target>
+      </trans-unit>
+      <trans-unit id="company" resname="company" approved="yes">
+        <source>Company</source>
+        <target state="final">Firma</target>
+      </trans-unit>
+      <trans-unit id="plugins" resname="plugins" approved="yes">
+        <source>Frontend plugins</source>
+        <target state="final">Frontend plugins</target>
+      </trans-unit>
+      <trans-unit id="descr_plugins" resname="descr_plugins" approved="yes">
+        <source>The frontend plugins which have to be registered in the extension</source>
+        <target state="final">Frontend plugins som er nødvendige i denne udvidelse</target>
+      </trans-unit>
+      <trans-unit id="controller_action_combinations" resname="controller_action_combinations" approved="yes">
+        <source>Controller action combinations</source>
+        <target state="final">Controller handling kombinationer</target>
+      </trans-unit>
+      <trans-unit id="descr_controller_action_combinations" resname="descr_controller_action_combinations" approved="yes">
+        <source>Here you can configure, which controller action combinations this plugin/module should have.
+					Example: &lt;br /&gt;Blog =&gt; list,show &lt;br /&gt;(one controller per line, actions comma
+					separated) &lt;br /&gt;If you leave this empty, all available actions are configured for this
+					plugin.
+				</source>
+        <target state="final">Her kan du konfigurere hvilken controller handlings kombinationer som denne plugin/modul skal have.
+Eksempel: &lt;br /&gt;Blog =&gt; liste,vis &lt;br /&gt;(en controller pr linje, handlinger komma
+separeret) &lt;br /&gt;Hvis du efterlader det tomt, vil alle tilgængelige handlinger blive konfigureret for denne
+plugin.</target>
+      </trans-unit>
+      <trans-unit id="noncacheable_actions" resname="noncacheable_actions" approved="yes">
+        <source>Non cacheable actions</source>
+        <target state="final">Ingen mulige cache handlinger</target>
+      </trans-unit>
+      <trans-unit id="descr_noncacheable_actions" resname="descr_noncacheable_actions" approved="yes">
+        <source>Typically create, delete and update actions should not be cached. (Same format as above)
+				</source>
+        <target state="final">Normale opret-, og opdater-handlinger bør ikke blive cached. (Samme format som herover)</target>
+      </trans-unit>
+      <trans-unit id="backendModules" resname="backendModules" approved="yes">
+        <source>Backend modules</source>
+        <target state="final">Backend-moduler</target>
+      </trans-unit>
+      <trans-unit id="mainModule" resname="mainModule" approved="yes">
+        <source>Main module</source>
+        <target state="final">Hovedmodul</target>
+      </trans-unit>
+      <trans-unit id="uniqueInThisModel" resname="uniqueInThisModel" approved="yes">
+        <source>Should be unique for this model</source>
+        <target state="final">Skal være unik for denne model</target>
+      </trans-unit>
+      <trans-unit id="type" resname="type" approved="yes">
+        <source>Type</source>
+        <target state="final">Type</target>
+      </trans-unit>
+      <trans-unit id="more" resname="more" approved="yes">
+        <source>More</source>
+        <target state="final">Mere</target>
+      </trans-unit>
+      <trans-unit id="moreOptions" resname="moreOptions" approved="yes">
+        <source>More options</source>
+        <target state="final">Flere valg</target>
+      </trans-unit>
+      <trans-unit id="advancedOptions" resname="advancedOptions" approved="yes">
+        <source>advanced options</source>
+        <target state="final">avancerede valgmuligheder</target>
+      </trans-unit>
+      <trans-unit id="remove" resname="remove" approved="yes">
+        <source>Remove</source>
+        <target state="final">Fjern</target>
+      </trans-unit>
+      <trans-unit id="add" resname="add" approved="yes">
+        <source>Add</source>
+        <target state="final">Tilføj</target>
+      </trans-unit>
+      <trans-unit id="zeroToOne" resname="zeroToOne" approved="yes">
+        <source>1:1</source>
+        <target state="final">1:1</target>
+      </trans-unit>
+      <trans-unit id="manyToOne" resname="manyToOne" approved="yes">
+        <source>n:1</source>
+        <target state="final">n:1</target>
+      </trans-unit>
+      <trans-unit id="zeroToMany" resname="zeroToMany" approved="yes">
+        <source>1:n</source>
+        <target state="final">1:n</target>
+      </trans-unit>
+      <trans-unit id="manyToMany" resname="manyToMany" approved="yes">
+        <source>m:n</source>
+        <target state="final">m:n</target>
+      </trans-unit>
+      <trans-unit id="renderType" resname="renderType" approved="yes">
+        <source>Render type</source>
+        <target state="final">Renderingstype</target>
+      </trans-unit>
+      <trans-unit id="desc_renderType" resname="desc_renderType" approved="yes">
+        <source>How should the relation be displayed in backend forms?</source>
+        <target state="final">Hvordan skal relationen vises i Backend formularer?</target>
+      </trans-unit>
+      <trans-unit id="selectSingleBox" resname="selectSingleBox" approved="yes">
+        <source>Dropdown (multiple)</source>
+        <target state="final">Dropdown (flere)</target>
+      </trans-unit>
+      <trans-unit id="selectCheckBox" resname="selectCheckBox" approved="yes">
+        <source>Checkboxes</source>
+        <target state="final">Afkrydsningsfelter</target>
+      </trans-unit>
+      <trans-unit id="selectMultipleSideBySide" resname="selectMultipleSideBySide" approved="yes">
+        <source>Side by side multi select</source>
+        <target state="final">Side ved side multivalg</target>
+      </trans-unit>
+      <trans-unit id="inline" resname="inline" approved="yes">
+        <source>Inline (IRRE)</source>
+        <target state="final">Inline (IRRE)</target>
+      </trans-unit>
+      <trans-unit id="select" resname="select" approved="yes">
+        <source>Dropdown</source>
+        <target state="final">Dropdown</target>
+      </trans-unit>
+      <trans-unit id="isNullable" resname="isNullable" approved="yes">
+        <source>Is nullable?</source>
+        <target state="final">Kan være tomt?</target>
+      </trans-unit>
+      <trans-unit id="descr_isNullable" resname="descr_isNullable" approved="yes">
+        <source>If set to true, this field can be null</source>
+        <target state="final">Hvis valgt, kan dette felt være tomt</target>
+      </trans-unit>
+      <trans-unit id="isExcludeField" resname="isExcludeField" approved="yes">
+        <source>Is exclude field?</source>
+        <target state="final">Er ekskluderet felt?</target>
+      </trans-unit>
+      <trans-unit id="descr_isExcludeField" resname="descr_isExcludeField" approved="yes">
+        <source>If set to true, this field will only be visible for admin users per default</source>
+        <target state="final">Hvis sat til sand, vil feltet kun være synligt for admin-brugere som standard</target>
+      </trans-unit>
+      <trans-unit id="isL10nModeExclude" resname="isL10nModeExclude" approved="yes">
+        <source>Is l10n_mode = exclude?</source>
+        <target state="final">Er l10n_mode = ekskludér?</target>
+      </trans-unit>
+      <trans-unit id="descr_isL10nModeExclude" resname="descr_isL10nModeExclude" approved="yes">
+        <source>If set to true, this field will be set to l10n_mode = exclude</source>
+        <target state="final">Hvis sat til sand, vil dette felt blive sat til l10n_mode = ekskludér</target>
+      </trans-unit>
+      <trans-unit id="newModelObject" resname="newModelObject" approved="yes">
+        <source>New model object</source>
+        <target state="final">Nyt modelobjekt</target>
+      </trans-unit>
+      <trans-unit id="domainObjectSettings" resname="domainObjectSettings" approved="yes">
+        <source>Domain object settings</source>
+        <target state="final">Domæneobjekt indstillinger</target>
+      </trans-unit>
+      <trans-unit id="objectType" resname="objectType" approved="yes">
+        <source>Object type</source>
+        <target state="final">Objekttype</target>
+      </trans-unit>
+      <trans-unit id="descr_objectType" resname="descr_objectType" approved="yes">
+        <source>Value objects are simple objects that are defined by their value and have no 'identity'</source>
+        <target state="final">Værdiobjekter er simple objekter som er defineret af deres værdi og har ingen 'identitet'</target>
+      </trans-unit>
+      <trans-unit id="entity" resname="entity" approved="yes">
+        <source>Entity</source>
+        <target state="final">Enhed</target>
+      </trans-unit>
+      <trans-unit id="valueObject" resname="valueObject" approved="yes">
+        <source>Value object</source>
+        <target state="final">Værdiobjekt</target>
+      </trans-unit>
+      <trans-unit id="isAggregateRoot" resname="isAggregateRoot" approved="yes">
+        <source>Is aggregate root?</source>
+        <target state="final">Er aggregat root?</target>
+      </trans-unit>
+      <trans-unit id="descr_isAggregateRoot" resname="descr_isAggregateRoot" approved="yes">
+        <source>If true, the Extension Builder will generate a repository for this model</source>
+        <target state="final">Hvis sand, vil Extension Builder oprette et repository for denne model</target>
+      </trans-unit>
+      <trans-unit id="enableSorting" resname="enableSorting" approved="yes">
+        <source>Enable sorting?</source>
+        <target state="final">Aktivér sortering?</target>
+      </trans-unit>
+      <trans-unit id="descr_enableSorting" resname="descr_enableSorting" approved="yes">
+        <source>If true, sorting in the backend is enabled</source>
+        <target state="final">Hvis sand vil sortering i Backend være aktiveret</target>
+      </trans-unit>
+      <trans-unit id="addDeletedField" resname="addDeletedField" approved="yes">
+        <source>Add deleted field</source>
+        <target state="final">Tilføj slettet felt</target>
+      </trans-unit>
+      <trans-unit id="descr_addDeletedField" resname="descr_addDeletedField" approved="yes">
+        <source>Deleting a record with "delete" field will not really delete the record, but just set the delete
+					flag to true
+				</source>
+        <target state="final">Sletning af element med "slet" felt vil ikke i virkeligheden slette elementet, men blot sætte slet-flaget 
+til sand</target>
+      </trans-unit>
+      <trans-unit id="addHiddenField" resname="addHiddenField" approved="yes">
+        <source>Add hidden field</source>
+        <target state="final">Tilføj skjult felt</target>
+      </trans-unit>
+      <trans-unit id="descr_addHiddenField" resname="descr_addHiddenField" approved="yes">
+        <source>The hidden field is an "enable" field. Only records which are not hidden will be displayed
+				</source>
+        <target state="final">Det skjulte felt er et "aktiver" felt. Kun elementet som ikke er skjult, vil blive vist</target>
+      </trans-unit>
+      <trans-unit id="addStarttimeEndtimeFields" resname="addStarttimeEndtimeFields" approved="yes">
+        <source>Add starttime/endtime fields</source>
+        <target state="final">Tilføj starttid/sluttids felter</target>
+      </trans-unit>
+      <trans-unit id="descr_addStarttimeEndtimeFields" resname="descr_addStarttimeEndtimeFields" approved="yes">
+        <source>If set, the related records will have a startime and endtime as "enable" field</source>
+        <target state="final">Hvis angivet vil relaterede elementer have en starttid og en sluttid som "aktiver" felt</target>
+      </trans-unit>
+      <trans-unit id="enableCategorizable" resname="enableCategorizable" approved="yes">
+        <source>Enable categorization?</source>
+        <target state="final">Aktivér kategorisering?</target>
+      </trans-unit>
+      <trans-unit id="descr_enableCategorizable" resname="descr_enableCategorizable" approved="yes">
+        <source>If true, categorization in the backend is enabled for this model</source>
+        <target state="final">Hvis sand er kategorisering i Backend aktiveret i denne model</target>
+      </trans-unit>
+      <trans-unit id="mapToTable" resname="mapToTable" approved="yes">
+        <source>Map to existing table</source>
+        <target state="final">Knyt til eksisterende tabel</target>
+      </trans-unit>
+      <trans-unit id="descr_mapToTable" resname="descr_mapToTable" approved="yes">
+        <source>If the model should extend an existing table, you can configure this here</source>
+        <target state="final">Hvis modellen skal udvide en eksisterende tabel, kan du konfigurere det her</target>
+      </trans-unit>
+      <trans-unit id="parentClass" resname="parentClass" approved="yes">
+        <source>Extend existing model class</source>
+        <target state="final">Udvid eksisterende modelklasse</target>
+      </trans-unit>
+      <trans-unit id="descr_parentClass" resname="descr_parentClass" approved="yes">
+        <source>If this model should extend an existing other model, name it here</source>
+        <target state="final">Hvis denne model skal udvide en anden eksisterende model, navngiv den her</target>
+      </trans-unit>
+      <trans-unit id="defaultActions" resname="defaultActions" approved="yes">
+        <source>Default actions</source>
+        <target state="final">Standardhandlinger</target>
+      </trans-unit>
+      <trans-unit id="actionType" resname="actionType" approved="yes">
+        <source>Action type</source>
+        <target state="final">Handlingstype</target>
+      </trans-unit>
+      <trans-unit id="descr_actionType" resname="descr_actionType" approved="yes">
+        <source>For each selected action, the Extension Builder will generate a template and a action method in
+					the controller of this model. If the model is an aggregate root the default CRUD actions will be
+					generated per default.
+				</source>
+        <target state="final">For hver valgte handling, opretter Extension Builder en skabelon og en handling i 
+controlleren af modellen. Hvis modellen er en aggregeret root vil standard CRUD-handlinger blive
+oprettet som standard.</target>
+      </trans-unit>
+      <trans-unit id="show" resname="show" approved="yes">
+        <source>show</source>
+        <target state="final">vis</target>
+      </trans-unit>
+      <trans-unit id="index" resname="index" approved="yes">
+        <source>index</source>
+        <target state="final">indeks</target>
+      </trans-unit>
+      <trans-unit id="list" resname="list" approved="yes">
+        <source>list</source>
+        <target state="final">liste</target>
+      </trans-unit>
+      <trans-unit id="create_new" resname="create_new" approved="yes">
+        <source>new/create</source>
+        <target state="final">ny/opret</target>
+      </trans-unit>
+      <trans-unit id="edit_update" resname="edit_update" approved="yes">
+        <source>edit/update</source>
+        <target state="final">rediger/opdater</target>
+      </trans-unit>
+      <trans-unit id="delete" resname="delete" approved="yes">
+        <source>delete</source>
+        <target state="final">slet</target>
+      </trans-unit>
+      <trans-unit id="properties" resname="properties" approved="yes">
+        <source>Properties</source>
+        <target state="final">Egenskaber</target>
+      </trans-unit>
+      <trans-unit id="propertyName" resname="propertyName" approved="yes">
+        <source>Property name</source>
+        <target state="final">Egenskabens navn</target>
+      </trans-unit>
+      <trans-unit id="descr_propertyName" resname="descr_propertyName" approved="yes">
+        <source>The name should be lowerCamelCase and unique in this model</source>
+        <target state="final">Navnet skal være lowerCamelCase og unikt i denne model</target>
+      </trans-unit>
+      <trans-unit id="propertyType" resname="propertyType" approved="yes">
+        <source>Property type</source>
+        <target state="final">Egenskabens type</target>
+      </trans-unit>
+      <trans-unit id="descr_propertyType" resname="descr_propertyType" approved="yes">
+        <source>All types with * are not yet supported by the frontend form generation/validation</source>
+        <target state="final">Alle typer med * understøttes ikke af Frontend formular oprettelse/validering endnu</target>
+      </trans-unit>
+      <trans-unit id="string" resname="string" approved="yes">
+        <source>String</source>
+        <target state="final">Streng</target>
+      </trans-unit>
+      <trans-unit id="text" resname="text" approved="yes">
+        <source>Text</source>
+        <target state="final">Tekst</target>
+      </trans-unit>
+      <trans-unit id="richText" resname="richText" approved="yes">
+        <source>Rich text*</source>
+        <target state="final">Rig tekst*</target>
+      </trans-unit>
+      <trans-unit id="integer" resname="integer" approved="yes">
+        <source>Integer</source>
+        <target state="final">Heltal</target>
+      </trans-unit>
+      <trans-unit id="floatingPoint" resname="floatingPoint" approved="yes">
+        <source>Floating point</source>
+        <target state="final">Flydende tal</target>
+      </trans-unit>
+      <trans-unit id="boolean" resname="boolean" approved="yes">
+        <source>Boolean</source>
+        <target state="final">Boolsk</target>
+      </trans-unit>
+      <trans-unit id="dateTime" resname="dateTime" approved="yes">
+        <source>DateTime (timestamp)</source>
+        <target state="final">Datotid (timestamp)</target>
+      </trans-unit>
+      <trans-unit id="date" resname="date" approved="yes">
+        <source>Date (timestamp)</source>
+        <target state="final">Dato (timestamp)</target>
+      </trans-unit>
+      <trans-unit id="nativeDateTime" resname="nativeDateTime" approved="yes">
+        <source>DateTime</source>
+        <target state="final">Datotid</target>
+      </trans-unit>
+      <trans-unit id="nativeDate" resname="nativeDate" approved="yes">
+        <source>Date</source>
+        <target state="final">Dato</target>
+      </trans-unit>
+      <trans-unit id="inputLink" resname="inputLink" approved="yes">
+        <source>Link</source>
+        <target state="final">Link</target>
+      </trans-unit>
+      <trans-unit id="time" resname="time" approved="yes">
+        <source>Time (timestamp)*</source>
+        <target state="final">Tidspunkt (timestamp)*</target>
+      </trans-unit>
+      <trans-unit id="nativeTime" resname="time" approved="yes">
+        <source>Time*</source>
+        <target state="final">Tid*</target>
+      </trans-unit>
+      <trans-unit id="timeSec" resname="timeSec" approved="yes">
+        <source>Time/Sec*</source>
+        <target state="final">Tid/sek*</target>
+      </trans-unit>
+      <trans-unit id="selectList" resname="selectList" approved="yes">
+        <source>Select list</source>
+        <target state="final">Vælg liste</target>
+      </trans-unit>
+      <trans-unit id="file" resname="file" approved="yes">
+        <source>File*</source>
+        <target state="final">Fil*</target>
+      </trans-unit>
+      <trans-unit id="image" resname="image" approved="yes">
+        <source>Image*</source>
+        <target state="final">Billede*</target>
+      </trans-unit>
+      <trans-unit id="fileReference" resname="fileReference" approved="yes">
+        <source>File reference*</source>
+        <target state="final">Fil reference*</target>
+      </trans-unit>
+      <trans-unit id="folder" resname="folder" approved="yes">
+        <source>Folder*</source>
+        <target state="final">Mappe*</target>
+      </trans-unit>
+      <trans-unit id="password" resname="password" approved="yes">
+        <source>Password</source>
+        <target state="final">Adgangskode</target>
+      </trans-unit>
+      <trans-unit id="slug" resname="slug" approved="yes">
+        <source>Slug</source>
+        <target state="final">URL-segment</target>
+      </trans-unit>
+      <trans-unit id="colorPicker" resname="colorPicker" approved="yes">
+        <source>Color Picker</source>
+        <target state="final">Farvevælger</target>
+      </trans-unit>
+      <trans-unit id="passThrough" resname="passThrough" approved="yes">
+        <source>Pass through</source>
+        <target state="final">Gå igennem</target>
+      </trans-unit>
+      <trans-unit id="none" resname="none" approved="yes">
+        <source>None</source>
+        <target state="final">Ingen</target>
+      </trans-unit>
+      <trans-unit id="allowedFileTypes" resname="allowedFileTypes" approved="yes">
+        <source>Allowed file types</source>
+        <target state="final">Tilladte filtyper</target>
+      </trans-unit>
+      <trans-unit id="descr_allowedFileTypes" resname="descr_allowedFileTypes" approved="yes">
+        <source>Comma separated file endings like: doc,ods</source>
+        <target state="final">Kommaseparerede filendelser som: doc,ods</target>
+      </trans-unit>
+      <trans-unit id="maxItems" resname="maxItems" approved="yes">
+        <source>Allowed number of files</source>
+        <target state="final">Tilladte antal filer</target>
+      </trans-unit>
+      <trans-unit id="isRequired" resname="isRequired" approved="yes">
+        <source>Is required?</source>
+        <target state="final">Er påkrævet?</target>
+      </trans-unit>
+      <trans-unit id="relations" resname="relations" approved="yes">
+        <source>Relations</source>
+        <target state="final">Relationer</target>
+      </trans-unit>
+      <trans-unit id="relationName" resname="relationName" approved="yes">
+        <source>Name</source>
+        <target state="final">Navn</target>
+      </trans-unit>
+      <trans-unit id="descr_relationName" resname="descr_relationName" approved="yes">
+        <source>The name should be lowerCamelCase and unique in this model</source>
+        <target state="final">Navnet skal være lowerCamelCase og unikt i denne model</target>
+      </trans-unit>
+      <trans-unit id="extensionProperties" resname="extensionProperties" approved="yes">
+        <source>Extension properties</source>
+        <target state="final">Udvidelsens egenskaber</target>
+      </trans-unit>
+      <trans-unit id="tab_label" resname="tab_label" approved="yes">
+        <source>Tab label</source>
+        <target state="final">Kolonne-etiket</target>
+      </trans-unit>
+      <trans-unit id="lazyLoading" resname="lazyLoading" approved="yes">
+        <source>Lazy loading</source>
+        <target state="final">Langsom indlæsning</target>
+      </trans-unit>
+      <trans-unit id="descr_lazyLoading" resname="descr_lazyLoading" approved="yes">
+        <source>Make this relation lazy loading</source>
+        <target state="final">Lav langsom indlæsning på denne relation</target>
+      </trans-unit>
+      <trans-unit id="foreignRelationClass" resname="foreignRelationClass" approved="yes">
+        <source>Relation to external class</source>
+        <target state="final">Relation til ekstern klasse</target>
+      </trans-unit>
+      <trans-unit id="descr_foreignRelationClass" resname="descr_foreignRelationClass" approved="yes">
+        <source>If this is a relation to an external model, enter the (full qualified) class name here. The
+					class must exist and be loadable
+				</source>
+        <target state="final">Hvis dette er en relation til en eksternt model indtastes det (hele kvalificerede) class navn her. 
+class skal eksistere og være indlæst</target>
+      </trans-unit>
+      <trans-unit id="modeler_invalidConfigurationTitle" resname="modeler_invalidConfigurationTitle" approved="yes">
+        <source>Invalid configuration!</source>
+        <target state="final">Ugyldig konfiguration!</target>
+      </trans-unit>
+      <trans-unit id="modeler_invalidExtensionPropertiesTitle" resname="modeler_invalidExtensionPropertiesTitle" approved="yes">
+        <source>Invalid extension properties</source>
+        <target state="final">Ugyldig udvidelses-egenskab</target>
+      </trans-unit>
+      <trans-unit id="modeler_invalidExtensionProperties" resname="modeler_invalidExtensionProperties" approved="yes">
+        <source>Please check the fields in the left panel</source>
+        <target state="final">Tjek venligst felterne i venstre panel</target>
+      </trans-unit>
+      <trans-unit id="modeler_duplicatePropertyNamesTitle" resname="modeler_duplicatePropertyNamesTitle" approved="yes">
+        <source>Duplicate property names</source>
+        <target state="final">Dubleret egenskabsnavn</target>
+      </trans-unit>
+      <trans-unit id="modeler_missingModelName" resname="modeler_missingModelName" approved="yes">
+        <source>Please enter a model name!</source>
+        <target state="final">Angiv venligst modelnavn!</target>
+      </trans-unit>
+      <trans-unit id="modeler_duplicateModelNamesTitle" resname="modeler_duplicateModelNamesTitle" approved="yes">
+        <source>Duplicate model names</source>
+        <target state="final">Dubleret modelnavn</target>
+      </trans-unit>
+      <trans-unit id="modeler_invalidModelConfiguration" resname="modeler_invalidModelConfiguration" approved="yes">
+        <source>Invalid fields in model: </source>
+        <target state="final">Ugyldigt felt i model: </target>
+      </trans-unit>
+      <trans-unit id="modeler_extensionSaveError" resname="modeler_extensionSaveError" approved="yes">
+        <source>Extension could not be saved:</source>
+        <target state="final">Udvidelse kunne ikke gemmes:</target>
+      </trans-unit>
+      <trans-unit id="modeler_loadPipeConfirmMessage" resname="modeler_loadPipeConfirmMessage" approved="yes">
+        <source>Do you really want to clear the current working board and load the selected pipe? Unsaved changes will get lost!</source>
+        <target state="final">Vil du virkelige rydde det aktuelle arbejdsbord og indlæse den valgte side? Ændringer der ikke er gemt, vil gå tabt!</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
