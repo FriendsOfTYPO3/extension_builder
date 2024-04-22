@@ -99,7 +99,7 @@ class RoundTripServiceTest extends BaseFunctionalTest
 
         $relationJsonConfiguration = [
             'lazyLoading' => 0,
-            'propertyIsExcludeField' => 1,
+            'excludeField' => 1,
             'relationDescription' => '',
             'relationName' => 'children',
             'relationType' => 'manyToMany',
@@ -170,7 +170,7 @@ class RoundTripServiceTest extends BaseFunctionalTest
 
         $relationJsonConfiguration = [
             'lazyLoading' => 0,
-            'propertyIsExcludeField' => 1,
+            'excludeField' => 1,
             'relationDescription' => '',
             'relationName' => 'children',
             'relationType' => 'manyToMany',

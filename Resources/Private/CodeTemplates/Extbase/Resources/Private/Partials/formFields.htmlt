@@ -3,7 +3,7 @@
 <f:for each="{domainObject.properties}" as="property">
 <f:if condition="{property.isDisplayable}">
 <f:then><div class="mb-3">
-    <label for="{property.name}" class="form-label">
+    <label for="{property.propertyName}" class="form-label">
         <k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag><f:if condition="{property.required}"> <span class="required">(required)</span></f:if>
     </label>
 	<k:openingTag><f:render partial="Form/{property.dataType}.htmlt" arguments="{domainObject:domainObject,property: property,settings:settings}" /> /</k:openingTag>

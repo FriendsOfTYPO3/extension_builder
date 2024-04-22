@@ -30,14 +30,15 @@ export const CustomModelNode = (props) => {
             propertyName: '',
             propertyType: '',
             propertyDescription: '',
-            isRequired: false,
-            isNullable: false,
-            isExcludeField: false,
-            isl10nModeExlude: false,
+            propertyIsRequired: false,
+            propertyIsNullable: false,
+            propertyIsExcludeField: false,
+            propertyIsL10nModeExclude: false,
             typeSelect: {
                 selectboxValues: "",
                 renderType: "selectSingle",
                 foreignTable: "",
+                whereClause: "",
             },
             typeText: {
                 enableRichtext: false,
@@ -76,14 +77,15 @@ export const CustomModelNode = (props) => {
                 propertyName: '',
                 propertyType: '',
                 propertyDescription: '',
-                isRequired: false,
-                isNullable: false,
-                excludeField: false,
-                isl10nModeExlude: false,
+                propertyIsRequired: false,
+                propertyIsNullable: false,
+                propertyIsExcludeField: false,
+                propertyIsL10nModeExclude: false,
                 typeSelect: {
                     selectboxValues: "",
                     renderType: "selectSingle",
                     foreignTable: "",
+                    whereClause: "",
                 },
                 typeText: {
                     enableRichtext: false,
@@ -483,7 +485,7 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "propertyType", value);
                                             }}
                                         />
-                                        {property.type === 'Text' &&(<CheckboxComponent
+                                        {property.propertyType === 'Text' &&(<CheckboxComponent
                                             label="Enable RichText editor"
                                             identifier="enableRichTextEditor"
                                             initialValue={property.typeText?.enableRichtext}
@@ -492,7 +494,7 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "typeText.enableRichtext", value);
                                             }}
                                         />)}
-                                        {(property.type === 'Integer' || property.type === 'Float') &&(
+                                        {(property.propertyType === 'Integer' || property.propertyType === 'Float') &&(
                                             <div className="d-flex flex-column">
                                                 <CheckboxComponent
                                                     label="Enable slider"
@@ -514,7 +516,7 @@ export const CustomModelNode = (props) => {
                                                 )}
                                             </div>
                                         )}
-                                        {(property.type === 'Integer' || property.type === 'Float') && (property.typeNumber?.enableSlider) &&
+                                        {(property.propertyType === 'Integer' || property.propertyType === 'Float') && (property.typeNumber?.enableSlider) &&
                                             <div className="d-flex">
                                                 <InputComponent
                                                     label="Step size"
@@ -526,7 +528,7 @@ export const CustomModelNode = (props) => {
                                                     }}
                                                 />
                                             </div>
-                                        }{((property.type === 'Integer' || property.type === 'Float') && (property.typeNumber?.enableSlider && property.typeNumber?.setRange)) &&
+                                        }{((property.propertyType === 'Integer' || property.propertyType === 'Float') && (property.typeNumber?.enableSlider && property.typeNumber?.setRange)) &&
                                             <div className="d-flex flex-column">
                                                 <InputComponent
                                                     label="Lower range"
@@ -548,7 +550,7 @@ export const CustomModelNode = (props) => {
                                                 />
                                             </div>
                                         }
-                                        {property.type === 'DateTime' &&(<SelectComponent
+                                        {property.propertyType === 'DateTime' &&(<SelectComponent
                                             label="Format DateTime"
                                             identifier="formatDateTime"
                                             options={['date', 'datetime', 'time', 'timesec']}
@@ -557,7 +559,7 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "typeDateTime.formatDateTime", value);
                                             }}
                                         />)}
-                                        {property.type === 'Select' &&(<TextareaComponent
+                                        {property.propertyType === 'Select' &&(<TextareaComponent
                                             label="Values for Select-Box"
                                             placeholder="label;value separated by new line"
                                             identifier="selectboxValues"
@@ -566,7 +568,7 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "typeSelect.selectboxValues", value);
                                             }}
                                         />)}
-                                        {property.type === 'Select' &&(<SelectComponent
+                                        {property.propertyType === 'Select' &&(<SelectComponent
                                             label="Render Type"
                                             identifier="renderType"
                                             options={['selectSingle','selectSingleBox','selectCheckBox','selectMultipleSideBySide']}
@@ -575,7 +577,7 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "typeSelect.renderType", value);
                                             }}
                                         />)}
-                                        {property.type === 'Select' &&<InputComponent
+                                        {property.propertyType === 'Select' &&<InputComponent
                                             label="Foreign table (will override values)"
                                             placeholder="Foreign table"
                                             identifier="foreignTable"
@@ -584,7 +586,7 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "typeSelect.foreignTable", value);
                                             }}
                                         />}
-                                        {property.type === 'Select' &&<InputComponent
+                                        {property.propertyType === 'Select' &&<InputComponent
                                             label="Where (only for foreign table)"
                                             placeholder="where x = y"
                                             identifier="whereClause"
@@ -593,7 +595,7 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "typeSelect.whereClause", value);
                                             }}
                                         />}
-                                        {property.type === 'Select' &&<InputComponent
+                                        {property.propertyType === 'Select' &&<InputComponent
                                             label="Size"
                                             placeholder="5"
                                             identifier="size"
@@ -602,7 +604,7 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "size", value);
                                             }}
                                         />}
-                                        {property.type === 'Text' && !property.typeText?.enableRichtext && <InputComponent
+                                        {property.propertyType === 'Text' && !property.typeText?.enableRichtext && <InputComponent
                                             label="Rows (not for richtext)"
                                             placeholder="5"
                                             identifier="rows"
@@ -611,7 +613,7 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "rows", value);
                                             }}
                                         />}
-                                        {(property.type === 'Select' || property.type === 'File') && (<div className="d-flex">
+                                        {(property.propertyType === 'Select' || property.propertyType === 'File') && (<div className="d-flex">
                                             <InputComponent
                                                 label="Min items"
                                                 placeholder="2"
@@ -631,7 +633,7 @@ export const CustomModelNode = (props) => {
                                                 }}
                                             />
                                         </div>)}
-                                        {(property.type === 'File') && (<div className="d-flex">
+                                        {(property.propertyType === 'File') && (<div className="d-flex">
                                             <InputComponent
                                                 label="Allowed filetypes"
                                                 placeholder="2"
@@ -642,7 +644,7 @@ export const CustomModelNode = (props) => {
                                                 }}
                                             />
                                         </div>)}
-                                        {property.type === 'Boolean' &&(<SelectComponent
+                                        {property.propertyType === 'Boolean' &&(<SelectComponent
                                             label="Render Type"
                                             identifier="renderTypeBoolean"
                                             options={['default','checkboxToggle']}
@@ -651,7 +653,7 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "typeBoolean.renderType", value);
                                             }}
                                         />)}
-                                        {property.type === 'Boolean' && (<TextareaComponent
+                                        {property.propertyType === 'Boolean' && (<TextareaComponent
                                             label="Items for checkbox"
                                             placeholder="label;value separated by new line"
                                             identifier="booleanValues"
@@ -660,7 +662,7 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "typeBoolean.booleanValues", value);
                                             }}
                                         />)}
-                                        {property.type === 'Password' &&(<CheckboxComponent
+                                        {property.propertyType === 'Password' &&(<CheckboxComponent
                                             identifier="renderPasswordGenerator"
                                             label="Render password generator"
                                             initialValue={property.typePassword?.renderPasswordGenerator}
@@ -669,7 +671,7 @@ export const CustomModelNode = (props) => {
                                                 updateProperty(index, "typePassword.renderPasswordGenerator", value);
                                             }} />)
                                         }
-                                        {property.type === 'ColorPicker' &&( <CheckboxComponent
+                                        {property.propertyType === 'ColorPicker' &&( <CheckboxComponent
                                             label="Set values for color picker"
                                             identifier="setValuesColorPicker"
                                             initialValue={property.typeColor?.setValuesColorPicker}
@@ -677,7 +679,7 @@ export const CustomModelNode = (props) => {
                                             onChange={(value) => {
                                                 updateProperty(index, "typeColor.setValuesColorPicker", value);
                                             }} />)}
-                                        {(property.type === 'ColorPicker' && property.typeColor?.setValuesColorPicker) &&(<TextareaComponent
+                                        {(property.propertyType === 'ColorPicker' && property.typeColor?.setValuesColorPicker) &&(<TextareaComponent
                                             label="Values for Color Picker"
                                             placeholder="label;value separated by new line"
                                             identifier="colorPickerValues"
@@ -696,35 +698,35 @@ export const CustomModelNode = (props) => {
                                             }}
                                         />
                                         <CheckboxComponent
-                                            identifier="isRequired"
+                                            identifier="propertyIsRequired"
                                             label="is required?"
-                                            checked={property.isRequired}
+                                            checked={property.propertyIsRequired}
                                             onChange={(value) => {
-                                                updateProperty(index, "isRequired", value);
+                                                updateProperty(index, "propertyIsRequired", value);
                                             }}
                                         />
                                         { isAdvancedOptionsVisible && (<CheckboxComponent
-                                            identifier="isNullable"
+                                            identifier="propertyIsNullable"
                                             label="is nullable?"
-                                            checked={property.isNullable}
+                                            checked={property.propertyIsNullable}
                                             onChange={(value) => {
-                                                updateProperty(index, "isNullable", value);
+                                                updateProperty(index, "propertyIsNullable", value);
                                             }}
                                         /> )}
                                         { isAdvancedOptionsVisible && (<CheckboxComponent
-                                            identifier="excludeField"
+                                            identifier="propertyIsExcludeField"
                                             label="is exclude field?"
-                                            checked={property.excludeField}
+                                            checked={property.propertyIsExcludeField}
                                             onChange={(value) => {
-                                                updateProperty(index, "excludeField", value);
+                                                updateProperty(index, "propertyIsExcludeField", value);
                                             }}
                                         /> )}
                                         { isAdvancedOptionsVisible && (<CheckboxComponent
-                                            identifier="isl10nModeExlude"
+                                            identifier="propertyIsL10nModeExclude"
                                             label="is l10n_mode = exclude?"
-                                            checked={property.isl10nModeExlude}
+                                            checked={property.propertyIsL10nModeExclude}
                                             onChange={(value) => {
-                                                updateProperty(index, "isl10nModeExlude", value);
+                                                updateProperty(index, "propertyIsL10nModeExclude", value);
                                             }}
                                         /> )}
                                         <div className="d-flex">
@@ -834,11 +836,11 @@ export const CustomModelNode = (props) => {
                                             }}
                                         />
                                         <CheckboxComponent
-                                            identifier="isExcludeField"
+                                            identifier="excludeField"
                                             label="is exclude field?"
-                                            checked={relation.isExcludeField}
+                                            checked={relation.excludeField}
                                             onChange={(value) => {
-                                                updateRelation(index, "isExcludeField", value);
+                                                updateRelation(index, "excludeField", value);
                                             }}
                                         />
                                         <CheckboxComponent

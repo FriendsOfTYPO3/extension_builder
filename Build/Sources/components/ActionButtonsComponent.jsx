@@ -50,13 +50,13 @@ export const ActionButtonsComponent = (props) => {
                 properties.push(
                     {
                         "allowedFileTypes": "",
-                        "propertyDescription": property.description,
-                        "excludeField": property.excludeField,
-                        "propertyIsL10nModeExclude": property.isl10nModeExlude,
-                        "propertyIsNullable": property.isNullable,
-                        "propertyIsRequired": property.isRequired,
-                        "propertyType": property.type,
+                        "propertyDescription": property.propertyDescription,
+                        "propertyIsExcludeField": property.propertyIsExcludeField,
+                        "propertyIsL10nModeExclude": property.propertyIsL10nModeExclude,
+                        "propertyIsNullable": property.propertyIsNullable,
+                        "propertyIsRequired": property.propertyIsRequired,
                         "propertyName": property.propertyName,
+                        "propertyType": property.propertyType,
                         "typeSelect": {
                             "selectboxValues": property.typeSelect?.selectboxValues || "",
                             "renderType": property.typeSelect?.renderType || "selectSingle",
@@ -106,7 +106,7 @@ export const ActionButtonsComponent = (props) => {
                     {
                         "foreignRelationClass": relation.foreignRelationClass || "",
                         "lazyLoading": relation.lazyLoading || false,
-                        "propertyIsExcludeField": relation.propertyIsExcludeField || false,
+                        "excludeField": relation.excludeField || false,
                         "relationDescription": relation.relationDescription || "",
                         "relationName": relation.relationName || "",
                         "relationType": relation.relationType || "anyToMany",

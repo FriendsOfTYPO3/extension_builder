@@ -24,11 +24,11 @@ const TextareaComponent = ({label = '', placeholder, identifier = '', initialVal
             return null; // Rückgabewert null, wenn keine Validierung vorhanden ist
         }
 
-        if(!validation?.isRequired) {
+        if(!validation?.propertyIsRequired) {
             return true;
         }
 
-        if (validation?.isRequired && value?.trim() === '') {
+        if (validation?.propertyIsRequired && value?.trim() === '') {
             setValidationErrors(prevState => ({...prevState, [identifier]: true}));
             return false;
         }

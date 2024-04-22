@@ -2,7 +2,7 @@
 {escaping off}
 <f:for each="{domainObject.properties}" as="property">
     '{property.fieldName}' => [
-        'exclude' => <f:if condition="{property.excludeField}"><f:then>true</f:then><f:else>false</f:else></f:if>,<f:if condition="{property.l10nModeExclude}">
+        'exclude' => <f:if condition="{property.propertyIsExcludeField}"><f:then>true</f:then><f:else>false</f:else></f:if>,<f:if condition="{property.propertyIsL10nModeExclude}">
         'l10n_mode' => 'exclude',</f:if>
         'label' => 'LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{property.labelNamespace}',
         'description' => 'LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{property.descriptionNamespace}',

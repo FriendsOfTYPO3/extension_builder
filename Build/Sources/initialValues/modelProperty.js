@@ -1,15 +1,16 @@
 const modelProperty = {
-    name: '',
-    type: '',
-    description: '',
-    isRequired: false,
-    isNullable: false,
-    isExcludeField: false,
-    isl10nModeExlude: false,
+    propertyName: '',
+    propertyType: '',
+    propertyDescription: '',
+    propertyIsRequired: false,
+    propertyIsNullable: false,
+    propertyIsExcludeField: false,
+    propertyIsL10nModeExclude: false,
     typeSelect: {
         selectboxValues: "",
         renderType: "selectSingle",
         foreignTable: "",
+        whereClause: "",
     },
     typeText: {
         enableRichtext: false,

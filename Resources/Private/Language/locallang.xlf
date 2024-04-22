@@ -282,7 +282,7 @@ This page is intended to give you some overview about the workflow we suggest.
 			<trans-unit id="descr_isNullable" resname="descr_isNullable">
 				<source>If set to true, this field can be null</source>
 			</trans-unit>
-			<trans-unit id="isExcludeField" resname="isExcludeField">
+			<trans-unit id="excludeField" resname="excludeField">
 				<source>Is exclude field?</source>
 			</trans-unit>
 			<trans-unit id="descr_isExcludeField" resname="descr_isExcludeField">

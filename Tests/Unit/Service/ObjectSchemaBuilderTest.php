@@ -133,13 +133,13 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
                     0 => [
                         'relationName' => 'relation 1',
                         'relationType' => 'manyToMany',
-                        'propertyIsExcludeField' => false,
+                        'excludeField' => false,
                         'foreignRelationClass' => $className
                     ],
                     1 => [
                         'relationName' => 'relation 2',
                         'relationType' => 'manyToMany',
-                        'propertyIsExcludeField' => false,
+                        'excludeField' => false,
                         'foreignRelationClass' => $className
                     ],
                 ]
@@ -196,7 +196,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
                     0 => [
                         'relationName' => $relationName,
                         'relationType' => 'manyToMany',
-                        'propertyIsExcludeField' => false,
+                        'excludeField' => false,
                         'foreignRelationClass' => $className
                     ],
                 ]
@@ -247,7 +247,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
                     0 => [
                         'relationName' => $relationName,
                         'relationType' => 'zeroToMany',
-                        'propertyIsExcludeField' => false,
+                        'excludeField' => false,
                     ],
                 ]
             ],
@@ -295,7 +295,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
                     0 => [
                         'relationName' => $relationName,
                         'relationType' => 'zeroToMany',
-                        'propertyIsExcludeField' => false,
+                        'excludeField' => false,
                         'foreignRelationClass' => $className
                     ],
                 ]
