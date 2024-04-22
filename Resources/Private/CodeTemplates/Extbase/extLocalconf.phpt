@@ -28,11 +28,11 @@ defined('TYPO3') || die();
                 after = common
                 elements {<f:for each="{extension.plugins}" as="plugin">
                     {plugin.key} <k:curlyBrackets>
-                        iconIdentifier = {extension.extensionKey}-plugin-{plugin.key}
-                        title = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:tx_{extension.extensionKey}_{plugin.key}.name
-                        description = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:tx_{extension.extensionKey}_{plugin.key}.description
+                        iconIdentifier = {extension.shortExtensionKey}_{plugin.key}
+                        title = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{extension.shortExtensionKey}_{plugin.key}.name
+                        description = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{extension.shortExtensionKey}_{plugin.key}.description
                         tt_content_defValues <k:curlyBrackets>
-                            CType = {extension.extensionKey}_{plugin.key}
+                            CType = {extension.unprefixedShortExtensionKey}_{plugin.key}
                         </k:curlyBrackets>
                     </k:curlyBrackets></f:for>
                 }
