@@ -67,7 +67,7 @@ overwriteSettings:
 declareStrictTypes: true
 
 ## use static date attribute in xliff files
-#staticDateInXliffFiles: '{f:format.date(format:'Y-m-d\TH:i:s\Z',date:'now')}'
+staticDateInXliffFiles: '{f:format.date(format:'Y-m-d\TH:i:s\Z',date:'now')}'
 
 ## skip docComment (license header)
 #skipDocComment: false
