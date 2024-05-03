@@ -209,7 +209,7 @@ export const ActionButtonsComponent = (props) => {
                     "disableVersioning": props.properties.emConf.disableVersioning || false,
                     "generateDocumentationTemplate": props.properties.emConf.generateDocumentationTemplate || false,
                     "generateEditorConfig": props.properties.emConf.generateEditorConfig || false,
-                    "generateEmptyGitRepository": props.properties.emConf.generateEmptyGitRepository || true,
+                    "generateEmptyGitRepository": props.properties.emConf.generateEmptyGitRepository || false,
                     "sourceLanguage": props.properties.emConf.sourceLanguage,
                     "state": props.properties.emConf.state,
                     "targetVersion": props.properties.emConf.targetVersion,
