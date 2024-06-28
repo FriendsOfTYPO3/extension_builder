@@ -8,6 +8,7 @@ import defaultAuthor from "./initialValues/author";
 import defaultModule from "./initialValues/module";
 import defaultPlugin from "./initialValues/plugin";
 import convertModulesToNodes from "./helper/converter/convertModulesToNodes";
+import convertRelationsToReactFlowRelations from "./helper/converter/convertRelationsToReactFlowRelations";
 
 export const NodesContext = createContext([]);
 export const EdgesContext = createContext([]);
@@ -259,14 +260,18 @@ function App() {
         // let modules = convertModuleToNode(working.modules);
         let modules = convertModulesToNodes(working.modules);
         // Check if nodes or edges are available, and update them.
-        console.log("modules");
-        console.log(modules);
-        console.log(working.nodes);
+        let edges = convertRelationsToReactFlowRelations(working.wires);
+
+        console.log("41:" + JSON.stringify(working.modules, null, 2));
+        console.log("42:" + JSON.stringify(working.edges, null, 2));
+
         setNodes(modules ? modules: []);
         setEdges(working.edges ? working.edges : []);
 
+        console.log("modulesLength: " + (modules ? modules.length : 0))
+        console.log("edgesLength: " + (working.edges ? working.edges.length : 0))
         // Set the custom model node index depending on the amount of nodes.
-        setCustomModelNodeIndex(working.nodes ? working.nodes.length : 0);
+        setCustomModelNodeIndex(modules ? modules.length : 0);
     }
 
 

@@ -182,13 +182,11 @@ export const ActionButtonsComponent = (props) => {
             return {
                 "src": {
                     "moduleId": modules.findIndex(node => node.name === nodes[sourceIndex].data.label),
-                    "moduleName": nodes[sourceIndex].data.label,
                     "terminal": `relationWire_${relationIndex}`,
                     "uid": edge.id
                 },
                 "tgt": {
                     "moduleId": modules.findIndex(node => node.name === nodes[targetIndex].data.label),
-                    "moduleName": nodes[targetIndex].data.label,
                     "terminal": "SOURCES",
                     "uid": edge.source
                 }
@@ -223,9 +221,9 @@ export const ActionButtonsComponent = (props) => {
                 "plugins": props.plugins,
                 "vendorName": props.properties.vendorName
             },
-            "wires": wires,
+            "wires": wires
             /*"nodes": nodes,*/
-            "edges": edges
+            /*"edges": edges*/
         };
 
         let payload = {

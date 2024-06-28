@@ -5,8 +5,6 @@
 # See http://www.yaml.org/spec/1.2/spec.html
 #
 
----
-
 ###########    Overwrite settings  ###########
 #
 # These settings only apply, if the roundtrip feature of the extension builder
