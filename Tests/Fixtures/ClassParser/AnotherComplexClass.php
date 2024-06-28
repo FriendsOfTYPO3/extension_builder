@@ -105,7 +105,7 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
      * @author adapted for TYPO3v4 by Jochen Rau <jochen.rau@typoplanet.de>
      * @throws \Exception
      */
-    public function getComponent($componentName): object|\Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
+    public function getComponent($componentName): object
     {
         // Avoid component manager creating multiple instances of itself:
         if (static::class == $componentName) {
