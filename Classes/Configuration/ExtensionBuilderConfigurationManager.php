@@ -290,17 +290,17 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
                         $module['value']['relationGroup']['relations'][$i]['advancedSettings'] = [];
                         foreach ($fieldsToMap as $fieldToMap) {
                             $module['value']['relationGroup']['relations'][$i]['advancedSettings'][$fieldToMap] =
-                                $module['value']['relationGroup']['relations'][$i][$fieldToMap];
+                                $module['value']['relationGroup']['relations'][$i][$fieldToMap] ?? '';
                         }
 
                         $module['value']['relationGroup']['relations'][$i]['advancedSettings']['propertyIsExcludeField'] =
-                            $module['value']['relationGroup']['relations'][$i]['propertyIsExcludeField'];
+                            $module['value']['relationGroup']['relations'][$i]['propertyIsExcludeField'] ?? '';
                         $module['value']['relationGroup']['relations'][$i]['advancedSettings']['lazyLoading'] =
-                            $module['value']['relationGroup']['relations'][$i]['lazyLoading'];
+                            $module['value']['relationGroup']['relations'][$i]['lazyLoading'] ?? '';
                         $module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationDescription'] =
-                            $module['value']['relationGroup']['relations'][$i]['relationDescription'];
+                            $module['value']['relationGroup']['relations'][$i]['relationDescription'] ?? '';
                         $module['value']['relationGroup']['relations'][$i]['advancedSettings']['foreignRelationClass'] =
-                            $module['value']['relationGroup']['relations'][$i]['foreignRelationClass'];
+                            $module['value']['relationGroup']['relations'][$i]['foreignRelationClass'] ?? '';
                     }
                 } elseif (isset($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
                     foreach ($fieldsToMap as $fieldToMap) {
