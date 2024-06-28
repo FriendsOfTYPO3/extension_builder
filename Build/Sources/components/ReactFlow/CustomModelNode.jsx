@@ -27,8 +27,8 @@ export const CustomModelNode = (props) => {
     // TODO: create a default property inside an empty js file and set it her.
     const addEmptyProperty = () => {
         setProperties([...properties, {
-            name: '',
             type: '',
+            propertyName: '',
             description: '',
             isRequired: false,
             isNullable: false,
@@ -73,8 +73,8 @@ export const CustomModelNode = (props) => {
         }]);
         props.data.properties.push(
             {
-                name: '',
                 type: '',
+                propertyName: '',
                 description: '',
                 isRequired: false,
                 isNullable: false,
@@ -460,7 +460,7 @@ export const CustomModelNode = (props) => {
                         props.data.properties.map((property, index) => {
                             return (
                                 <TYPO3StyledAccordion
-                                    title={`${property.name} ${property.type ? `(${property.type})` : ''}`}
+                                    title={`${property.propertyName} ${property.type ? `(${property.type})` : ''}`}
                                     id={`nodeProperty-${props.id}-${index}`}
                                     parentId="accordionCustomModelNodeProperties"
                                 >
@@ -469,9 +469,9 @@ export const CustomModelNode = (props) => {
                                             label="Property name"
                                             placeholder="Property name"
                                             identifier="propertyName"
-                                            initialValue={property.name}
+                                            initialValue={property.propertyName}
                                             onChange={(value) => {
-                                                updateProperty(index, "name", value.toLowerCase());
+                                                updateProperty(index, "propertyName", value.toLowerCase());
                                             }}
                                         />
                                         <SelectComponent

@@ -259,6 +259,9 @@ function App() {
         // let modules = convertModuleToNode(working.modules);
         let modules = convertModulesToNodes(working.modules);
         // Check if nodes or edges are available, and update them.
+        console.log("modules");
+        console.log(modules);
+        console.log(working.nodes);
         setNodes(modules ? modules: []);
         setEdges(working.edges ? working.edges : []);
 

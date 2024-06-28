@@ -55,8 +55,8 @@ export const ActionButtonsComponent = (props) => {
                         "propertyIsL10nModeExclude": property.isl10nModeExlude,
                         "propertyIsNullable": property.isNullable,
                         "propertyIsRequired": property.isRequired,
-                        "propertyName": property.name,
                         "propertyType": property.type,
+                        "propertyName": property.propertyName,
                         "typeSelect": {
                             "selectboxValues": property.typeSelect?.selectboxValues || "",
                             "renderType": property.typeSelect?.renderType || "selectSingle",
