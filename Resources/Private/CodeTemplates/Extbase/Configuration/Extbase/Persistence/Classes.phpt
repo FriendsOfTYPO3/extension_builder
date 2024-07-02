@@ -6,7 +6,7 @@ return [<f:for each="{extension.domainObjectsThatNeedMappingStatements}" as="dom
     \{domainObject.qualifiedClassName}::class => [
         <f:if condition="{domainObject.mapToTable}">'tableName' => '{domainObject.databaseTableName}',
         </f:if><f:if condition="{domainObject.hasPropertiesWithMappingStatements}">'properties' => [<f:for each="{domainObject.propertiesThatNeedMappingStatements}" as="property">
-           '{property.name}' => [
+           '{property.propertyName}' => [
                 'fieldName' => '{property.fieldName}'
             ],</f:for>
         ]</f:if>

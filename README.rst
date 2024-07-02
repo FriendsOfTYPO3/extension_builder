@@ -4,9 +4,9 @@
    :alt: Latest Stable Version
 .. _LatestStableVersion: https://packagist.org/packages/friendsoftypo3/extension-builder
 
-.. |TYPO3| image:: https://img.shields.io/badge/TYPO3-11-orange.svg
+.. |TYPO3| image:: https://img.shields.io/badge/TYPO3-12-orange.svg
    :alt: TYPO3
-.. _TYPO3: https://get.typo3.org/version/11
+.. _TYPO3: https://get.typo3.org/version/12
 
 .. |TotalDownloads| image:: https://poser.pugx.org/friendsoftypo3/extension-builder/d/total.svg
    :alt: Total Downloads

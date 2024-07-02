@@ -41,8 +41,6 @@ if (!isset($foo2) && !isset($bar2)) {
     $bar2 = 42;
 }
 
-if ($bar2 > $foo2) {
-    if ($foo2 == 23) {
-        define('TX_PHPPARSER_TEST_BAR_POST', 'FOO');
-    }
+if ($bar2 > $foo2 && $foo2 == 23) {
+    define('TX_PHPPARSER_TEST_BAR_POST', 'FOO');
 }

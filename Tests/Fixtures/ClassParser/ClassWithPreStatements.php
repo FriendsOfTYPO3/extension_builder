@@ -38,10 +38,8 @@ if (!isset($foo) && !isset($bar)) {
     $bar = 42;
 }
 
-if ($bar > $foo) {
-    if ($foo == 23) {
-        define('TX_PHPPARSER_TEST_BAR', 'FOO');
-    }
+if ($bar > $foo && $foo == 23) {
+    define('TX_PHPPARSER_TEST_BAR', 'FOO');
 }
 
 abstract class Tx_PhpParser_Tests_ClassWithPreStatement

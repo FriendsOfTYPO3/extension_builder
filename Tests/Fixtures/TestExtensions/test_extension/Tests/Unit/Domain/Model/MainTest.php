@@ -3,6 +3,12 @@ declare(strict_types=1);
 
 namespace FIXTURE\TestExtension\Tests\Unit\Domain\Model;
 
+use FIXTURE\TestExtension\Domain\Model\Main;
+use FIXTURE\TestExtension\Domain\Model\Child1;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use FIXTURE\TestExtension\Domain\Model\Child2;
+use FIXTURE\TestExtension\Domain\Model\Child3;
+use FIXTURE\TestExtension\Domain\Model\Child4;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
@@ -15,23 +21,20 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 class MainTest extends UnitTestCase
 {
     /**
-     * @var \FIXTURE\TestExtension\Domain\Model\Main|MockObject|AccessibleObjectInterface
+     * @var Main|MockObject|AccessibleObjectInterface
      */
     protected $subject;
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->subject = $this->getAccessibleMock(
-            \FIXTURE\TestExtension\Domain\Model\Main::class,
+            Main::class,
             ['dummy']
         );
     }
 
     protected function tearDown(): void
     {
-        parent::tearDown();
     }
 
     /**
@@ -156,7 +159,7 @@ class MainTest extends UnitTestCase
      */
     public function setChild1ForChild1SetsChild1(): void
     {
-        $child1Fixture = new \FIXTURE\TestExtension\Domain\Model\Child1();
+        $child1Fixture = new Child1();
         $this->subject->setChild1($child1Fixture);
 
         self::assertEquals($child1Fixture, $this->subject->_get('child1'));
@@ -167,7 +170,7 @@ class MainTest extends UnitTestCase
      */
     public function getChildren2ReturnsInitialValueForChild2(): void
     {
-        $newObjectStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $newObjectStorage = new ObjectStorage();
         self::assertEquals(
             $newObjectStorage,
             $this->subject->getChildren2()
@@ -179,8 +182,8 @@ class MainTest extends UnitTestCase
      */
     public function setChildren2ForObjectStorageContainingChild2SetsChildren2(): void
     {
-        $children2 = new \FIXTURE\TestExtension\Domain\Model\Child2();
-        $objectStorageHoldingExactlyOneChildren2 = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $children2 = new Child2();
+        $objectStorageHoldingExactlyOneChildren2 = new ObjectStorage();
         $objectStorageHoldingExactlyOneChildren2->attach($children2);
         $this->subject->setChildren2($objectStorageHoldingExactlyOneChildren2);
 
@@ -192,8 +195,8 @@ class MainTest extends UnitTestCase
      */
     public function addChildren2ToObjectStorageHoldingChildren2(): void
     {
-        $children2 = new \FIXTURE\TestExtension\Domain\Model\Child2();
-        $children2ObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
+        $children2 = new Child2();
+        $children2ObjectStorageMock = $this->getMockBuilder(ObjectStorage::class)
             ->onlyMethods(['attach'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -209,8 +212,8 @@ class MainTest extends UnitTestCase
      */
     public function removeChildren2FromObjectStorageHoldingChildren2(): void
     {
-        $children2 = new \FIXTURE\TestExtension\Domain\Model\Child2();
-        $children2ObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
+        $children2 = new Child2();
+        $children2ObjectStorageMock = $this->getMockBuilder(ObjectStorage::class)
             ->onlyMethods(['detach'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -237,7 +240,7 @@ class MainTest extends UnitTestCase
      */
     public function setChild3ForChild3SetsChild3(): void
     {
-        $child3Fixture = new \FIXTURE\TestExtension\Domain\Model\Child3();
+        $child3Fixture = new Child3();
         $this->subject->setChild3($child3Fixture);
 
         self::assertEquals($child3Fixture, $this->subject->_get('child3'));
@@ -248,7 +251,7 @@ class MainTest extends UnitTestCase
      */
     public function getChildren4ReturnsInitialValueForChild4(): void
     {
-        $newObjectStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $newObjectStorage = new ObjectStorage();
         self::assertEquals(
             $newObjectStorage,
             $this->subject->getChildren4()
@@ -260,8 +263,8 @@ class MainTest extends UnitTestCase
      */
     public function setChildren4ForObjectStorageContainingChild4SetsChildren4(): void
     {
-        $children4 = new \FIXTURE\TestExtension\Domain\Model\Child4();
-        $objectStorageHoldingExactlyOneChildren4 = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $children4 = new Child4();
+        $objectStorageHoldingExactlyOneChildren4 = new ObjectStorage();
         $objectStorageHoldingExactlyOneChildren4->attach($children4);
         $this->subject->setChildren4($objectStorageHoldingExactlyOneChildren4);
 
@@ -273,8 +276,8 @@ class MainTest extends UnitTestCase
      */
     public function addChildren4ToObjectStorageHoldingChildren4(): void
     {
-        $children4 = new \FIXTURE\TestExtension\Domain\Model\Child4();
-        $children4ObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
+        $children4 = new Child4();
+        $children4ObjectStorageMock = $this->getMockBuilder(ObjectStorage::class)
             ->onlyMethods(['attach'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -290,8 +293,8 @@ class MainTest extends UnitTestCase
      */
     public function removeChildren4FromObjectStorageHoldingChildren4(): void
     {
-        $children4 = new \FIXTURE\TestExtension\Domain\Model\Child4();
-        $children4ObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
+        $children4 = new Child4();
+        $children4ObjectStorageMock = $this->getMockBuilder(ObjectStorage::class)
             ->onlyMethods(['detach'])
             ->disableOriginalConstructor()
             ->getMock();

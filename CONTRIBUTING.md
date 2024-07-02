@@ -4,6 +4,8 @@ Feel free to create new pull-requests on GitHub.
 
 #### Devbox
 
+*Note: The devbox is not properly working at the moment.*
+
 If you don't have a setup already, where you can do development, bugfixing etc. for the extension_builder, don't worry.
 
 We have included a [ddev](https://www.ddev.com) devbox to help the development.

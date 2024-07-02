@@ -15,6 +15,7 @@ options:
 files:
   ignore:
     - 'Resources/Public/Scss/Bootstrap/*.scss'
+    - 'node_modules/**/*.scss'
 # Rule Configuration
 rules:
   # https://github.com/sasstools/sass-lint/blob/master/docs/rules/no-warn.md

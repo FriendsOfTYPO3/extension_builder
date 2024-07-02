@@ -36,14 +36,10 @@ abstract class Tx_PhpParser_Tests_SwitchStatement
      */
     public function switchSomething($foo)
     {
-        $bar = 0;
-        switch ($foo) {
-            case 1: $bar = 2;
-                break;
-            case 2: $bar = 3;
-                break;
-            default: $bar = 4;
-        }
-        return $bar;
+        return match ($foo) {
+            1 => 2,
+            2 => 3,
+            default => 4,
+        };
     }
 }

@@ -54,7 +54,7 @@ class CompatibilityTest extends BaseFunctionalTest
 
         if (file_exists($jsonFile)) {
             // compatibility adaptions for configurations from older versions
-            $extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), true);
+            $extensionConfigurationJSON = json_decode(file_get_contents($jsonFile), true, 512, JSON_THROW_ON_ERROR);
             $extensionConfigurationJSON['storagePath'] = $this->fixturesPath . 'TestExtensions/';
             $extensionConfigurationJSON = $configurationManager->fixExtensionBuilderJSON(
                 $extensionConfigurationJSON
@@ -65,10 +65,10 @@ class CompatibilityTest extends BaseFunctionalTest
         }
         $this->extension = $extensionSchemaBuilder->build($extensionConfigurationJSON);
         $this->fileGenerator->setSettings([
-            'codeTemplateRootPaths.' => [
+            'codeTemplateRootPaths' => [
                 Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/'
             ],
-            'codeTemplatePartialPaths.' => [
+            'codeTemplatePartialPaths' => [
                 Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials'
             ],
             'extConf' => [

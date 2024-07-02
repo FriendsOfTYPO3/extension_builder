@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace FIXTURE\TestExtension\Tests\Unit\Controller;
 
+use FIXTURE\TestExtension\Controller\MainController;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use FIXTURE\TestExtension\Domain\Repository\MainRepository;
+use FIXTURE\TestExtension\Domain\Model\Main;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
@@ -16,14 +20,13 @@ use TYPO3Fluid\Fluid\View\ViewInterface;
 class MainControllerTest extends UnitTestCase
 {
     /**
-     * @var \FIXTURE\TestExtension\Controller\MainController|MockObject|AccessibleObjectInterface
+     * @var MainController|MockObject|AccessibleObjectInterface
      */
     protected $subject;
 
     protected function setUp(): void
     {
-        parent::setUp();
-        $this->subject = $this->getMockBuilder($this->buildAccessibleProxy(\FIXTURE\TestExtension\Controller\MainController::class))
+        $this->subject = $this->getMockBuilder($this->buildAccessibleProxy(MainController::class))
             ->onlyMethods(['redirect', 'forward', 'addFlashMessage'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -31,7 +34,6 @@ class MainControllerTest extends UnitTestCase
 
     protected function tearDown(): void
     {
-        parent::tearDown();
     }
 
     /**
@@ -39,11 +41,11 @@ class MainControllerTest extends UnitTestCase
      */
     public function listActionFetchesAllMainsFromRepositoryAndAssignsThemToView(): void
     {
-        $allMains = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
+        $allMains = $this->getMockBuilder(ObjectStorage::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $mainRepository = $this->getMockBuilder(\FIXTURE\TestExtension\Domain\Repository\MainRepository::class)
+        $mainRepository = $this->getMockBuilder(MainRepository::class)
             ->onlyMethods(['findAll'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -62,7 +64,7 @@ class MainControllerTest extends UnitTestCase
      */
     public function showActionAssignsTheGivenMainToView(): void
     {
-        $main = new \FIXTURE\TestExtension\Domain\Model\Main();
+        $main = new Main();
 
         $view = $this->getMockBuilder(ViewInterface::class)->getMock();
         $this->subject->_set('view', $view);
@@ -76,9 +78,9 @@ class MainControllerTest extends UnitTestCase
      */
     public function createActionAddsTheGivenMainToMainRepository(): void
     {
-        $main = new \FIXTURE\TestExtension\Domain\Model\Main();
+        $main = new Main();
 
-        $mainRepository = $this->getMockBuilder(\FIXTURE\TestExtension\Domain\Repository\MainRepository::class)
+        $mainRepository = $this->getMockBuilder(MainRepository::class)
             ->onlyMethods(['add'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -94,7 +96,7 @@ class MainControllerTest extends UnitTestCase
      */
     public function editActionAssignsTheGivenMainToView(): void
     {
-        $main = new \FIXTURE\TestExtension\Domain\Model\Main();
+        $main = new Main();
 
         $view = $this->getMockBuilder(ViewInterface::class)->getMock();
         $this->subject->_set('view', $view);
@@ -108,9 +110,9 @@ class MainControllerTest extends UnitTestCase
      */
     public function updateActionUpdatesTheGivenMainInMainRepository(): void
     {
-        $main = new \FIXTURE\TestExtension\Domain\Model\Main();
+        $main = new Main();
 
-        $mainRepository = $this->getMockBuilder(\FIXTURE\TestExtension\Domain\Repository\MainRepository::class)
+        $mainRepository = $this->getMockBuilder(MainRepository::class)
             ->onlyMethods(['update'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -126,9 +128,9 @@ class MainControllerTest extends UnitTestCase
      */
     public function deleteActionRemovesTheGivenMainFromMainRepository(): void
     {
-        $main = new \FIXTURE\TestExtension\Domain\Model\Main();
+        $main = new Main();
 
-        $mainRepository = $this->getMockBuilder(\FIXTURE\TestExtension\Domain\Repository\MainRepository::class)
+        $mainRepository = $this->getMockBuilder(MainRepository::class)
             ->onlyMethods(['remove'])
             ->disableOriginalConstructor()
             ->getMock();

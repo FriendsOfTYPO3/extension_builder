@@ -69,7 +69,7 @@
                             "propertyIsNullable": false,
                             "propertyIsRequired": false,
                             "propertyName": "description",
-                            "propertyType": "RichText",
+                            "propertyType": "Text",
                             "uid": "583743944638"
                         },
                         {
@@ -103,7 +103,7 @@
                         {
                             "foreignRelationClass": "",
                             "lazyLoading": false,
-                            "propertyIsExcludeField": true,
+                            "excludeField": true,
                             "relationDescription": "This is a 1:1 relation",
                             "relationName": "child1",
                             "relationType": "zeroToOne",
@@ -114,7 +114,7 @@
                         {
                             "foreignRelationClass": "",
                             "lazyLoading": false,
-                            "propertyIsExcludeField": true,
+                            "excludeField": true,
                             "relationDescription": "This is a 1:n relation",
                             "relationName": "children2",
                             "relationType": "zeroToMany",
@@ -125,7 +125,7 @@
                         {
                             "foreignRelationClass": "",
                             "lazyLoading": false,
-                            "propertyIsExcludeField": true,
+                            "excludeField": true,
                             "relationDescription": "This is a n:1 relation",
                             "relationName": "child3",
                             "relationType": "manyToOne",
@@ -136,7 +136,7 @@
                         {
                             "foreignRelationClass": "",
                             "lazyLoading": false,
-                            "propertyIsExcludeField": true,
+                            "excludeField": true,
                             "relationDescription": "This is a m:n relation",
                             "relationName": "children4",
                             "relationType": "manyToMany",
@@ -509,7 +509,7 @@
                         {
                             "foreignRelationClass": "",
                             "lazyLoading": false,
-                            "propertyIsExcludeField": true,
+                            "excludeField": true,
                             "relationDescription": "",
                             "relationName": "categories",
                             "relationType": "zeroToMany",

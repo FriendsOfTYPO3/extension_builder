@@ -5,26 +5,10 @@
 
 <f:section name="Content">
 	<div id="domainModelEditor">
-		<div id="left">
-			<div id="propertiesForm"></div>
+		<div id="root"></div>
+		<div class="footer d-flex justify-content-center position-fixed bottom-0 z-3 py-3 w-100">
+			<f:render partial="Moduler/Footer" arguments="{_all}" />
 		</div>
-		<div id="center">
-			<div id="moduleBar"></div>
-			<div id="modelingLayer"></div>
-		</div>
-		<div id="helpPanel"></div>
 	</div>
-	<script type="text/javascript">
-		// InputEx needs a correct path to this image
-		inputEx.spacerUrl = TYPO3.settings.extensionBuilder.publicResourcesUrl + '/jsDomainModeling/wireit/lib/inputex/images/space.gif';
-
-		YAHOO.util.Event.onDOMReady(function() {
-			const editor = new WireIt.WiringEditor(extbaseModeling_wiringEditorLanguage);
-			const initialWarnings = {initialWarnings -> f:format.json() -> f:format.raw()};
-			if (initialWarnings.length > 0) {
-				editor.alert('Warning', initialWarnings.join('<br />'));
-			}
-		});
-	</script>
 </f:section>
 </html>

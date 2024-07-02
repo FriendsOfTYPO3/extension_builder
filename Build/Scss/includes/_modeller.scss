@@ -1,0 +1,21 @@
+.module-body {
+    padding: 0;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+
+    &-left {
+        text-align: left;
+        background-color: #F1F1F1;
+    }
+
+    &-main {
+        text-align: left;
+    }
+
+    &-right {
+        text-align: left;
+    }
+}

@@ -1,0 +1,84 @@
+// Fonts
+// Font sizes
+$input-field-font-size: 13px;
+
+// Colors
+$primary: #FF8700;
+$primary-light: #FFAB4B;
+$stage-orange-light: #F7A831;
+$secondary: #0080C9;
+$success: #5ABC55;
+$danger: #DD123D;
+$info: #0080FF;
+$warning: #FFC800;
+$dark: #515151;
+$light: #B9B9B9;
+$super-light: #F4F4F4;
+
+$font-family-base: 'TYPO3', sans-serif;
+
+// Buttons
+.btn-info,
+.btn-success {
+    color: #FFF !important;
+}
+
+$border-radius: 0;
+
+// Input Fields
+// $input-btn-padding-y:         0.25rem;
+// $input-btn-padding-x:         0.35rem;
+//
+// $input-btn-font-family:       null;
+// $input-btn-font-size:         $input-field-font-size;
+// // $input-btn-line-height:       $line-height-base;
+//
+// $input-btn-focus-width:         .25rem;
+// $input-btn-focus-color-opacity: .25;
+// // $input-btn-focus-color:         rgba($component-active-bg, $input-btn-focus-color-opacity);
+// $input-btn-focus-blur:          0;
+// // $input-btn-focus-box-shadow:    0 0 $input-btn-focus-blur $input-btn-focus-width $input-btn-focus-color;
+//
+// $input-btn-padding-y-sm:      .25rem;
+// $input-btn-padding-x-sm:      .5rem;
+// // $input-btn-font-size-sm:      $font-size-sm;
+//
+// $input-btn-padding-y-lg:      .5rem;
+// $input-btn-padding-x-lg:      1rem;
+// $input-btn-font-size-lg:      $font-size-lg;
+
+// $input-btn-border-width:      $border-width;
+
+
+// Accordions
+// $accordion-padding-y:                     1rem;
+// $accordion-padding-x:                     1.25rem;
+// $accordion-color:                         $body-color; // Sass variable because of $accordion-button-icon
+// $accordion-bg:                            $body-bg;
+// $accordion-border-width:                  $border-width;
+// $accordion-border-color:                  var(--#{$prefix}border-color);
+// $accordion-border-radius:                 $border-radius;
+// $accordion-inner-border-radius:           subtract($accordion-border-radius, $accordion-border-width);
+//
+// $accordion-body-padding-y:               10px;
+// $accordion-body-padding-x:                5px;
+//
+// $accordion-button-padding-y:              $accordion-padding-y;
+// $accordion-button-padding-x:              $accordion-padding-x;
+// $accordion-button-color:                  $accordion-color;
+// $accordion-button-bg:                     var(--#{$prefix}accordion-bg);
+// $accordion-transition:                    $btn-transition, border-radius .15s ease;
+// $accordion-button-active-bg:              tint-color($component-active-bg, 90%);
+// $accordion-button-active-color:           shade-color($primary, 10%);
+//
+// $accordion-button-focus-border-color:     $input-focus-border-color;
+// $accordion-button-focus-box-shadow:       $btn-focus-box-shadow;
+//
+// $accordion-icon-width:                    1.25rem;
+// $accordion-icon-color:                    $accordion-button-color;
+// $accordion-icon-active-color:             $accordion-button-active-color;
+// $accordion-icon-transition:               transform .2s ease-in-out;
+// $accordion-icon-transform:                rotate(-180deg);
+
+
+

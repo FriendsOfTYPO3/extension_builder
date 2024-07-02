@@ -33,7 +33,7 @@ class RemoveMultipleNewlinesViewHelper extends AbstractViewHelper
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
     ) {
-        $content = trim($renderChildrenClosure());
+        $content = trim((string) $renderChildrenClosure());
 
         // Collapse whitespace lines
         $content = preg_replace('/^\\s+$/m', '', $content);

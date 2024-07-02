@@ -51,6 +51,6 @@ class MatchStringViewHelper extends AbstractViewHelper
         if (!$arguments['caseSensitive']) {
             $matchAsRegularExpression .= 'i';
         }
-        return preg_match($matchAsRegularExpression, $arguments['in']) !== 0;
+        return preg_match($matchAsRegularExpression, (string) $arguments['in']) !== 0;
     }
 }

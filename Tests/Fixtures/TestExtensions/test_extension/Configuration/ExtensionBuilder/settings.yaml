@@ -5,8 +5,6 @@
 # See http://www.yaml.org/spec/1.2/spec.html
 #
 
----
-
 ###########    Overwrite settings  ###########
 #
 # These settings only apply, if the roundtrip feature of the extension builder
@@ -21,7 +19,7 @@
 #   of the existing class will be modified according to the new settings
 #   but not overwritten
 #
-#   for locallang xlf files: Existing keys and labels are always
+#   for locallang.xlf files: Existing keys and labels are always
 #   preserved (renaming a property or DomainObject will result in new keys and new labels)
 #
 #   for other files: You will find a Split token at the end of the file
@@ -34,8 +32,7 @@
 #   files are never overwritten
 #   These settings may break the functionality of the extension builder!
 #   Handle with care!
-#
-#
+
 
 ############  extension settings  ##############
 
@@ -47,13 +44,13 @@ overwriteSettings:
       Repository: merge
 
   Configuration:
-    #TCA merge not possible - use overrides directory
+    # TCA merge not possible - use overrides directory
     #TypoScript: keep
 
   Resources:
     Public:
       Icons:
-        Extension.svg:    keep
+        Extension.svg: keep
     Private:
       #Language: merge
       #Layouts: keep
@@ -64,11 +61,9 @@ overwriteSettings:
         #Partials: keep
         #Templates: keep
 
-#  ext_localconf.php: merge
-
-#  ext_tables.php: merge
-
-#  ext_tables.sql: merge
+#ext_localconf.php: merge
+#ext_tables.php: merge
+#ext_tables.sql: merge
 
 ## use static date attribute in xliff files ##
 #staticDateInXliffFiles: ###YEAR###-01-01T01:00:00Z
@@ -79,8 +74,8 @@ overwriteSettings:
 
 ######### settings for classBuilder #############################
 #
-# here you may define default parent classes for your classes
-# these settings only apply for new generated classes
+# Here you may define default parent classes for your classes,
+# these settings only apply for new generated classes,
 # you may also just change the parent class in the generated class file.
 # It will be kept on next code generation, if the overwrite settings
 # are configured to merge it

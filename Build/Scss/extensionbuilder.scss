@@ -1,0 +1,46 @@
+#domainModelEditor {
+    height: calc(100vh - 45px); /* 45px = top header, 54px = doc header */
+    overflow-y: scroll;
+}
+
+.footer {
+    box-shadow: 0px -5px 11px 0px rgba(204,204,204,0.7);
+    border-top: 1px solid #CCC;
+    height: 30px;
+}
+
+.footer ul {
+    margin-bottom: 0;
+}
+
+.footer ul li {
+    margin-right: 20px;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+}
+
+.footer ul li:last-child {
+    margin-right: 0;
+}
+
+.modal-dialog {
+    max-width: min(30vw, 50%, 550px);
+}
+
+.custom-model-node .custom-model-node__header {
+    margin-bottom: 0 !important;
+}
+
+.panel-group {
+    margin-bottom: 0 !important;
+}
+
+#domainModelEditor .footer li {
+    list-style: none;
+    margin-right: 10px;
+}
+
+.footer ul {
+    margin: 0;
+}

@@ -1,0 +1,18 @@
+@import 'includes/_reboot.scss';
+@import 'includes/_form.scss';
+@import 'includes/_general.scss';
+@import 'includes/_footer.scss';
+@import 'includes/modal.scss';
+@import 'includes/_modeller.scss';
+@import 'App.scss';
+
+/* React Flow */
+@import 'ReactFlow/reactflow.scss';
+@import 'ReactFlow/Nodes/customModel.scss';
+@import 'ReactFlow/_sidebar.scss';
+
+/* TYPO3 overrides */
+@import 'includes/_typo3-overrides.scss';
+@import 'includes/_panel.scss';
+
+@import 'extensionbuilder.scss';

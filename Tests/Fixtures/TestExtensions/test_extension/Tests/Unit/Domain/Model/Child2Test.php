@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace FIXTURE\TestExtension\Tests\Unit\Domain\Model;
 
+use FIXTURE\TestExtension\Domain\Model\Child2;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
@@ -15,23 +16,20 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 class Child2Test extends UnitTestCase
 {
     /**
-     * @var \FIXTURE\TestExtension\Domain\Model\Child2|MockObject|AccessibleObjectInterface
+     * @var Child2|MockObject|AccessibleObjectInterface
      */
     protected $subject;
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->subject = $this->getAccessibleMock(
-            \FIXTURE\TestExtension\Domain\Model\Child2::class,
+            Child2::class,
             ['dummy']
         );
     }
 
     protected function tearDown(): void
     {
-        parent::tearDown();
     }
 
     /**

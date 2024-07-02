@@ -6,6 +6,7 @@
 /composer.lock
 /.php_cs.cache
 sass-lint.html
+*.*~
 
 # created by rendering Documentation with Docker
 /Documentation-GENERATED-temp
@@ -29,3 +30,6 @@ sass-lint.html
 .devbox/.ddev/providers/
 .devbox/.ddev/xhprof/
 .devbox/.ddev/composer.lock
+.phpunit.cache
+coverage
+.phpunit.result.cache

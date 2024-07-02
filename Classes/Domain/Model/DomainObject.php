@@ -34,6 +34,8 @@ class DomainObject
      * If true, this is an aggregate root.
      */
     protected bool $aggregateRoot = false;
+    protected string $controllerScope = "Frontend";
+
     /**
      * If true, the element is sortable in the TYPO3 backend.
      */
@@ -169,6 +171,16 @@ class DomainObject
     public function setAggregateRoot(bool $aggregateRoot): void
     {
         $this->aggregateRoot = $aggregateRoot;
+    }
+
+    public function getControllerScope(): string
+    {
+        return $this->controllerScope;
+    }
+
+    public function setControllerScope(string $controllerScope): void
+    {
+        $this->controllerScope = $controllerScope;
     }
 
     /**

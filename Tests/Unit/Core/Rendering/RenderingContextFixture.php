@@ -88,9 +88,6 @@ class RenderingContextFixture implements RenderingContextInterface
         return $this->errorHandler ?? new StandardErrorHandler();
     }
 
-    /**
-     * @param ErrorHandlerInterface $errorHandler
-     */
     public function setErrorHandler(ErrorHandlerInterface $errorHandler): void
     {
         $this->errorHandler = $errorHandler;
@@ -107,9 +104,6 @@ class RenderingContextFixture implements RenderingContextInterface
         $this->variableProvider = $variableProvider;
     }
 
-    /**
-     * @param ViewHelperVariableContainer $viewHelperVariableContainer
-     */
     public function setViewHelperVariableContainer(ViewHelperVariableContainer $viewHelperVariableContainer): void
     {
         $this->viewHelperVariableContainer = $viewHelperVariableContainer;
@@ -143,9 +137,6 @@ class RenderingContextFixture implements RenderingContextInterface
         return $this->viewHelperResolver;
     }
 
-    /**
-     * @param ViewHelperResolver $viewHelperResolver
-     */
     public function setViewHelperResolver(ViewHelperResolver $viewHelperResolver): void
     {
         $this->viewHelperResolver = $viewHelperResolver;
@@ -159,9 +150,6 @@ class RenderingContextFixture implements RenderingContextInterface
         return $this->viewHelperInvoker;
     }
 
-    /**
-     * @param ViewHelperInvoker $viewHelperInvoker
-     */
     public function setViewHelperInvoker(ViewHelperInvoker $viewHelperInvoker): void
     {
         $this->viewHelperInvoker = $viewHelperInvoker;
@@ -185,9 +173,6 @@ class RenderingContextFixture implements RenderingContextInterface
         return $this->templateParser;
     }
 
-    /**
-     * @param TemplateCompiler $templateCompiler
-     */
     public function setTemplateCompiler(TemplateCompiler $templateCompiler): void
     {
         $this->templateCompiler = $templateCompiler;
@@ -209,9 +194,6 @@ class RenderingContextFixture implements RenderingContextInterface
         return $this->templatePaths;
     }
 
-    /**
-     * @param TemplatePaths $templatePaths
-     */
     public function setTemplatePaths(TemplatePaths $templatePaths): void
     {
         $this->templatePaths = $templatePaths;
@@ -219,8 +201,6 @@ class RenderingContextFixture implements RenderingContextInterface
 
     /**
      * Delegation: Set the cache used by this View's compiler
-     *
-     * @param FluidCacheInterface $cache
      */
     public function setCache(FluidCacheInterface $cache): void
     {
@@ -270,9 +250,6 @@ class RenderingContextFixture implements RenderingContextInterface
         return $this->expressionNodeTypes;
     }
 
-    /**
-     * @param array $expressionNodeTypes
-     */
     public function setExpressionNodeTypes(array $expressionNodeTypes): void
     {
         $this->expressionNodeTypes = $expressionNodeTypes;
@@ -301,7 +278,6 @@ class RenderingContextFixture implements RenderingContextInterface
      */
     public function setControllerName($controllerName): void
     {
-        $this->controllerName;
     }
 
     /**

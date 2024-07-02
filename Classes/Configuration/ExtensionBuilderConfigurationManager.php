@@ -18,9 +18,9 @@ declare(strict_types=1);
 namespace EBT\ExtensionBuilder\Configuration;
 
 use EBT\ExtensionBuilder\Domain\Model\Extension;
-use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use RectorPrefix202306\Tracy\Debugger;
 use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
@@ -34,6 +34,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Load settings from yaml file and from TYPO3_CONF_VARS extConf
@@ -62,7 +64,9 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     }
 
     /**
-     * Wrapper for file_get_contents('php://input')
+     * Parse the request data from the input stream.
+     *
+     * @return void
      */
     public function parseRequest(): void
     {
@@ -116,10 +120,12 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         if ($typoscript === null) {
             $typoscript = $this->configurationManager->getConfiguration($this->configurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         }
-        $settings = $typoscript['module.']['extension_builder.']['settings.'];
+        $settings = $typoscript['module.']['extension_builder.']['settings.'] ?? [];
         $settings['extConf'] = $this->getExtensionBuilderSettings();
         if (empty($settings['publicResourcesPath'])) {
             $settings['publicResourcesPath'] = ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/';
+            $settings['codeTemplateRootPaths'][] = ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Extbase/';
+            $settings['codeTemplatePartialPaths'][] = ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Extbase/Partials/';
         }
         return $settings;
     }
@@ -142,7 +148,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         if (!file_exists($settingsFile)) {
             return [];
         }
-        return SpycYAMLParser::YAMLLoadString(file_get_contents($settingsFile));
+        return Yaml::parseFile($settingsFile);
     }
 
     /**
@@ -164,7 +170,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         return null;
     }
 
-    public static function getExtensionBuilderJson(string $extensionKey, ?string $storagePath = null)
+    public static function getExtensionBuilderJson(string $extensionKey, ?string $storagePath = null): ?array
     {
         $storagePath = $storagePath ?? Environment::getPublicPath() . '/typo3conf/ext/';
         $jsonFile = $storagePath . $extensionKey . '/' . self::EXTENSION_BUILDER_SETTINGS_FILE;
@@ -271,8 +277,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         $fieldsToMap = [
             'relationType',
             'renderType',
-            'propertyIsExcludeField',
-            'propertyIsExcludeField',
+            'excludeField',
             'lazyLoading',
             'relationDescription',
             'foreignRelationClass'
@@ -284,17 +289,17 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
                         $module['value']['relationGroup']['relations'][$i]['advancedSettings'] = [];
                         foreach ($fieldsToMap as $fieldToMap) {
                             $module['value']['relationGroup']['relations'][$i]['advancedSettings'][$fieldToMap] =
-                                $module['value']['relationGroup']['relations'][$i][$fieldToMap];
+                                $module['value']['relationGroup']['relations'][$i][$fieldToMap] ?? '';
                         }
 
                         $module['value']['relationGroup']['relations'][$i]['advancedSettings']['propertyIsExcludeField'] =
-                            $module['value']['relationGroup']['relations'][$i]['propertyIsExcludeField'];
+                            $module['value']['relationGroup']['relations'][$i]['propertyIsExcludeField'] ?? '';
                         $module['value']['relationGroup']['relations'][$i]['advancedSettings']['lazyLoading'] =
-                            $module['value']['relationGroup']['relations'][$i]['lazyLoading'];
+                            $module['value']['relationGroup']['relations'][$i]['lazyLoading'] ?? '';
                         $module['value']['relationGroup']['relations'][$i]['advancedSettings']['relationDescription'] =
-                            $module['value']['relationGroup']['relations'][$i]['relationDescription'];
+                            $module['value']['relationGroup']['relations'][$i]['relationDescription'] ?? '';
                         $module['value']['relationGroup']['relations'][$i]['advancedSettings']['foreignRelationClass'] =
-                            $module['value']['relationGroup']['relations'][$i]['foreignRelationClass'];
+                            $module['value']['relationGroup']['relations'][$i]['foreignRelationClass'] ?? '';
                     }
                 } elseif (isset($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
                     foreach ($fieldsToMap as $fieldToMap) {
@@ -368,30 +373,31 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      */
     protected function reArrangeRelations(array $jsonConfig): array
     {
-        foreach ($jsonConfig['wires'] as &$wire) {
-            // format: relation_1
-            $parts = explode('_', $wire['src']['terminal']);
-            $supposedRelationIndex = (int)$parts[1];
-
-            // Source
-            $uid = $wire['src']['uid'];
-            $wire['src'] = $this->findModuleIndexByRelationUid(
-                $wire['src']['uid'],
-                $jsonConfig['modules'],
-                $wire['src']['moduleId'],
-                $supposedRelationIndex
-            );
-            $wire['src']['uid'] = $uid;
-
-            // Target
-            $uid = $wire['tgt']['uid'];
-            $wire['tgt'] = $this->findModuleIndexByRelationUid(
-                $wire['tgt']['uid'],
-                $jsonConfig['modules'],
-                $wire['tgt']['moduleId']
-            );
-            $wire['tgt']['uid'] = $uid;
-        }
+        // TODO check this code. This one removes the terminal array key inside the src array, this mustn't happen
+        // foreach ($jsonConfig['wires'] as &$wire) {
+        //     // format: relation_1
+        //     $parts = explode('_', $wire['src']['terminal']);
+        //     $supposedRelationIndex = (int)$parts[1];
+//
+        //     // Source
+        //     $uid = $wire['src']['uid'];
+        //     $wire['src'] = $this->findModuleIndexByRelationUid(
+        //         $wire['src']['uid'],
+        //         $jsonConfig['modules'],
+        //         $wire['src']['moduleId'],
+        //         $supposedRelationIndex
+        //     );
+        //     $wire['src']['uid'] = $uid;
+//
+        //     // Target
+        //     $uid = $wire['tgt']['uid'];
+        //     $wire['tgt'] = $this->findModuleIndexByRelationUid(
+        //         $wire['tgt']['uid'],
+        //         $jsonConfig['modules'],
+        //         $wire['tgt']['moduleId']
+        //     );
+        //     $wire['tgt']['uid'] = $uid;
+        // }
         return $jsonConfig;
     }
 
@@ -429,7 +435,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         }
 
         if (
-            isset($modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid']) 
+            isset($modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid'])
             && $modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid'] === $uid
         ) {
             $result['terminal'] = 'relationWire_' . $supposedRelationIndex;
@@ -464,36 +470,5 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         $settings = $this->getExtensionSettings($extension->getExtensionKey(), $extension->getStoragePath());
         return $settings['classBuilder']['Model']['AbstractEntity']['parentClass'] ??
             '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity';
-    }
-
-    /**
-     * Ajax callback that reads the smd file and modiefies the target URL to include
-     * the module token.
-     *
-     * @param ServerRequestInterface $request
-     * @return JsonResponse
-     * @throws RouteNotFoundException
-     */
-    public function getWiringEditorSmd(ServerRequestInterface $request): JsonResponse
-    {
-        $smdJsonString = file_get_contents(
-            ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd'
-        );
-        $smdJson = json_decode($smdJsonString);
-        $parameters = [
-            'tx_extensionbuilder_tools_extensionbuilderextensionbuilder' => [
-                'controller' => 'BuilderModule',
-                'action' => 'dispatchRpc',
-            ]
-        ];
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        try {
-            $uri = $uriBuilder->buildUriFromRoute('tools_ExtensionBuilderExtensionbuilder', $parameters);
-        } catch (RouteNotFoundException $e) {
-            $uri = $uriBuilder->buildUriFromRoutePath('tools_ExtensionBuilderExtensionbuilder', $parameters);
-        }
-        $smdJson->target = (string)$uri;
-
-        return (new JsonResponse())->setPayload((array)$smdJson);
     }
 }

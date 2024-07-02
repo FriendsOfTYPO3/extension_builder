@@ -38,6 +38,6 @@ class SelectProperty extends AbstractProperty
 
     public function getSqlDefinition(): string
     {
-        return $this->getFieldName() . " int(11) DEFAULT '0' NOT NULL,";
+        return $this->getFieldName() . " varchar(255) DEFAULT '' NOT NULL,";
     }
 }

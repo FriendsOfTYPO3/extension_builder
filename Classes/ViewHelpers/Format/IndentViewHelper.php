@@ -36,7 +36,7 @@ class IndentViewHelper extends AbstractViewHelper
     public static function renderStatic(array $arguments, Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
         $content = $renderChildrenClosure();
-        $lineArray = explode(chr(10), $content);
+        $lineArray = explode(chr(10), (string) $content);
         $indentString = str_repeat('    ', $arguments['indentation']);
         return implode(chr(10) . $indentString, $lineArray);
     }

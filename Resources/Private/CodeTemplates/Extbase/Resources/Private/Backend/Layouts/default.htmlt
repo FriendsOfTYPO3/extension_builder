@@ -2,24 +2,5 @@
     xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
     xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
     data-namespace-typo3-fluid="true"</k:openingTag>
-
-<k:openingTag>be:moduleLayout</k:openingTag>
-    <k:openingTag>f:be.pageRenderer /</k:openingTag>
-
-    <k:openingTag>be:moduleLayout.menu identifier="ModuleMenu"</k:openingTag>
-        <k:format.removeMultipleNewlines>
-<f:for each="{extension.domainObjects}" as="domainObject">
-        <k:openingTag>be:moduleLayout.menuItem label="Overview" uri="<k:curlyBrackets>f:uri.action(controller: '{domainObject.name}', action: 'list')</k:curlyBrackets>" /</k:openingTag>
-<f:if condition="{domainObject.aggregateRoot}">
-        <k:openingTag>be:moduleLayout.menuItem label="Create new {domainObject.name}" uri="<k:curlyBrackets>f:uri.action(controller: '{domainObject.name}', action: 'new')</k:curlyBrackets>" /</k:openingTag>
-</f:if>
-</f:for>
-        </k:format.removeMultipleNewlines>
-    <k:openingTag>/be:moduleLayout.menu</k:openingTag>
-
-    <k:openingTag>f:render section="Buttons" /</k:openingTag>
-    <k:openingTag>be:moduleLayout.button.shortcutButton displayName="Shortcut" /</k:openingTag>
-
     <k:openingTag>f:render section="Content" /</k:openingTag>
-<k:openingTag>/be:moduleLayout</k:openingTag>
 <k:openingTag>/html</k:openingTag></f:format.raw>

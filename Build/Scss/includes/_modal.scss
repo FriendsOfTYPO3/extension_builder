@@ -1,0 +1,4 @@
+.modal-dialog {
+    // max width 30vw, 50% or 300px, depending on the minimum value
+    max-width: min(30vw, 50%, 300px);
+}

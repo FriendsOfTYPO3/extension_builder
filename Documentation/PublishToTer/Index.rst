@@ -1,4 +1,5 @@
 .. include:: /Includes.rst.txt
+.. _publishing-to-ter:
 
 ============================
 Publish to TER and Packagist

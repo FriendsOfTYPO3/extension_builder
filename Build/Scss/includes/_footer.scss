@@ -1,0 +1,23 @@
+#extension-builder-footer {
+    padding: 10px 24px;
+    background-color: #EEE;
+    border-top: 1px solid #C3C3C3;
+
+    ul {
+        li {
+            display: inline-block;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+#domainModelEditor {
+    .footer {
+        li {
+            list-style: none;
+        }
+    }
+}

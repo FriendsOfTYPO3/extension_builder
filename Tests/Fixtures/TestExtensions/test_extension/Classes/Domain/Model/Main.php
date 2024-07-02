@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace FIXTURE\TestExtension\Domain\Model;
 
-
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Annotation\Validate;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Extbase\Annotation\ORM\Cascade;
 /**
  * This file is part of the "Extension Builder Test Extension" Extension for TYPO3 CMS.
  *
@@ -13,11 +16,10 @@ namespace FIXTURE\TestExtension\Domain\Model;
  *
  * (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
  */
-
 /**
  * Main
  */
-class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Main extends AbstractEntity
 {
 
     /**
@@ -31,7 +33,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * This is required
      *
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @Validate("NotEmpty")
      */
     protected $identifier = '';
 
@@ -47,7 +49,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var \DateTime
      */
-    protected $myDate = null;
+    protected $myDate;
 
     /**
      * mail
@@ -59,31 +61,31 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * This is a 1:1 relation
      *
-     * @var \FIXTURE\TestExtension\Domain\Model\Child1
+     * @var Child1
      */
-    protected $child1 = null;
+    protected $child1;
 
     /**
      * This is a 1:n relation
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Child2>
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
+     * @var ObjectStorage<Child2>
+     * @Cascade("remove")
      */
-    protected $children2 = null;
+    protected $children2;
 
     /**
      * This is a n:1 relation
      *
-     * @var \FIXTURE\TestExtension\Domain\Model\Child3
+     * @var Child3
      */
-    protected $child3 = null;
+    protected $child3;
 
     /**
      * This is a m:n relation
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Child4>
+     * @var ObjectStorage<Child4>
      */
-    protected $children4 = null;
+    protected $children4;
 
     /**
      * __construct
@@ -105,8 +107,8 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function initializeObject()
     {
-        $this->children2 = $this->children2 ?: new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-        $this->children4 = $this->children4 ?: new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->children2 = $this->children2 ?: new ObjectStorage();
+        $this->children4 = $this->children4 ?: new ObjectStorage();
     }
 
     /**
@@ -122,7 +124,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the name
      *
-     * @param string $name
      * @return void
      */
     public function setName(string $name)
@@ -143,7 +144,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the identifier
      *
-     * @param string $identifier
      * @return void
      */
     public function setIdentifier(string $identifier)
@@ -164,7 +164,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the description
      *
-     * @param string $description
      * @return void
      */
     public function setDescription(string $description)
@@ -185,7 +184,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the myDate
      *
-     * @param \DateTime $myDate
      * @return void
      */
     public function setMyDate(\DateTime $myDate)
@@ -206,7 +204,6 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the mail
      *
-     * @param string $mail
      * @return void
      */
     public function setMail(string $mail)
@@ -217,7 +214,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the child1
      *
-     * @return \FIXTURE\TestExtension\Domain\Model\Child1
+     * @return Child1
      */
     public function getChild1()
     {
@@ -227,10 +224,9 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the child1
      *
-     * @param \FIXTURE\TestExtension\Domain\Model\Child1 $child1
      * @return void
      */
-    public function setChild1(\FIXTURE\TestExtension\Domain\Model\Child1 $child1)
+    public function setChild1(Child1 $child1)
     {
         $this->child1 = $child1;
     }
@@ -238,10 +234,9 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Adds a Child2
      *
-     * @param \FIXTURE\TestExtension\Domain\Model\Child2 $children2
      * @return void
      */
-    public function addChildren2(\FIXTURE\TestExtension\Domain\Model\Child2 $children2)
+    public function addChildren2(Child2 $children2)
     {
         $this->children2->attach($children2);
     }
@@ -249,10 +244,10 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Removes a Child2
      *
-     * @param \FIXTURE\TestExtension\Domain\Model\Child2 $children2ToRemove The Child2 to be removed
+     * @param Child2 $children2ToRemove The Child2 to be removed
      * @return void
      */
-    public function removeChildren2(\FIXTURE\TestExtension\Domain\Model\Child2 $children2ToRemove)
+    public function removeChildren2(Child2 $children2ToRemove)
     {
         $this->children2->detach($children2ToRemove);
     }
@@ -260,7 +255,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the children2
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Child2>
+     * @return ObjectStorage<Child2>
      */
     public function getChildren2()
     {
@@ -270,10 +265,10 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the children2
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Child2> $children2
+     * @param ObjectStorage<Child2> $children2
      * @return void
      */
-    public function setChildren2(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $children2)
+    public function setChildren2(ObjectStorage $children2)
     {
         $this->children2 = $children2;
     }
@@ -281,7 +276,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the child3
      *
-     * @return \FIXTURE\TestExtension\Domain\Model\Child3
+     * @return Child3
      */
     public function getChild3()
     {
@@ -291,10 +286,9 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the child3
      *
-     * @param \FIXTURE\TestExtension\Domain\Model\Child3 $child3
      * @return void
      */
-    public function setChild3(\FIXTURE\TestExtension\Domain\Model\Child3 $child3)
+    public function setChild3(Child3 $child3)
     {
         $this->child3 = $child3;
     }
@@ -302,10 +296,9 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Adds a Child4
      *
-     * @param \FIXTURE\TestExtension\Domain\Model\Child4 $children4
      * @return void
      */
-    public function addChildren4(\FIXTURE\TestExtension\Domain\Model\Child4 $children4)
+    public function addChildren4(Child4 $children4)
     {
         $this->children4->attach($children4);
     }
@@ -313,10 +306,10 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Removes a Child4
      *
-     * @param \FIXTURE\TestExtension\Domain\Model\Child4 $children4ToRemove The Child4 to be removed
+     * @param Child4 $children4ToRemove The Child4 to be removed
      * @return void
      */
-    public function removeChildren4(\FIXTURE\TestExtension\Domain\Model\Child4 $children4ToRemove)
+    public function removeChildren4(Child4 $children4ToRemove)
     {
         $this->children4->detach($children4ToRemove);
     }
@@ -324,7 +317,7 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the children4
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Child4>
+     * @return ObjectStorage<Child4>
      */
     public function getChildren4()
     {
@@ -334,10 +327,10 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the children4
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Child4> $children4
+     * @param ObjectStorage<Child4> $children4
      * @return void
      */
-    public function setChildren4(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $children4)
+    public function setChildren4(ObjectStorage $children4)
     {
         $this->children4 = $children4;
     }

@@ -105,8 +105,8 @@ class LocalizationService implements SingletonInterface
     public function prepareLabelArrayForBackendModule(BackendModule $backendModule): array
     {
         return [
-            'mlang_labels_tabdescr' => htmlspecialchars($backendModule->getDescription()),
             'mlang_tabs_tab' => htmlspecialchars($backendModule->getTabLabel()),
+            'mlang_labels_tablabel' => htmlspecialchars($backendModule->getDescription()),
         ];
     }
 

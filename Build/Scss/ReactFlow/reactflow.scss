@@ -1,0 +1,52 @@
+$dndflow-border-color: #1A192B;
+$aside-background: #FCFCFC;
+$aside-border-color: #EEE;
+$description-margin: 10px;
+$dndnode-border-color: #0303B3;
+$selectall-margin-top: 10px;
+
+.dndflow {
+    flex: 1;
+    flex-direction: column;
+    display: flex;
+    height: 100%;
+    background-color: #D3D3D3;
+
+    aside {
+        border-right: 1px solid $aside-border-color;
+        padding: 15px 10px;
+        font-size: 12px;
+        background: $aside-background;
+
+        .debug-output {
+            max-height: 100px;
+        }
+    }
+
+    aside .description {
+        margin-bottom: $description-margin;
+    }
+
+    .dndnode {
+        height: 20px;
+        padding: 4px;
+        border: 1px solid $dndflow-border-color;
+        border-radius: 2px;
+        margin-bottom: $description-margin;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: grab;
+        border-color: $dndnode-border-color;
+        max-width: 150px;
+    }
+
+    .reactflow-wrapper {
+        flex: 1;
+        height: 100%;
+    }
+
+    .selectall {
+        margin-top: $selectall-margin-top;
+    }
+}

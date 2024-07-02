@@ -1,1 +1,1 @@
-f:form.textfield type="color" property="{property.name}" id="{property.name}"
+f:form.textfield type="color" property="{property.propertyName}" id="{property.propertyName}" class="form-control"

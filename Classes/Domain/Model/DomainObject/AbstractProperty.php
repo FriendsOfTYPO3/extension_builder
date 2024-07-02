@@ -92,6 +92,42 @@ abstract class AbstractProperty
 
     protected bool $searchable = false;
 
+    protected int $size = 0;
+    protected int $maxItems = 0;
+    protected int $minItems = 0;
+
+    // Select Box
+    protected array $selectboxValues = [];
+    protected string $foreignTable = '';
+    protected string $renderType = '';
+    protected string $whereClause = '';
+
+    // Text and RichText
+    protected bool $enableRichtext = false;
+    protected int $rows = 0;
+
+    // Number
+    protected bool $enableSlider = false;
+    protected bool $setRange = false;
+    protected int $lowerRange = 0;
+    protected int $upperRange = 100;
+    protected int|float $steps = 1;
+
+    // Color
+    protected bool $setValuesColorPicker = false;
+    protected array $colorPickerValues = [];
+
+    // Password
+    protected bool $renderPasswordGenerator = false;
+
+    // Boolean
+    protected string $renderTypeBoolean = '';
+    protected array $booleanValues = [];
+
+    // DateTime
+    protected string $dbTypeDateTime = '';
+    protected string $formatDateTime = '';
+
     public function __construct(string $propertyName = '')
     {
         if (!empty($propertyName)) {
@@ -170,15 +206,6 @@ abstract class AbstractProperty
     public function isAnyToManyRelation(): bool
     {
         return is_subclass_of($this, AnyToManyRelation::class);
-    }
-
-    /**
-     * @return bool true (if property is of type relation any to many)
-     * @deprecated Use `!instanceof ZeroToManyRelation` instead
-     */
-    public function isZeroToManyRelation(): bool
-    {
-        return false;
     }
 
     /**
@@ -365,7 +392,7 @@ abstract class AbstractProperty
     /**
      * Is this property persistable in a database?
      *
-     * @return bool true if this property can be displayed inside a fluid template
+     * @return bool true if this property can be persisted in a database
      */
     public function getIsPersistable(): bool
     {
@@ -486,5 +513,252 @@ abstract class AbstractProperty
     public function isSearchable(): bool
     {
         return $this->searchable;
+    }
+
+    public function getSelectboxValues(): array
+    {
+        return $this->selectboxValues;
+    }
+
+
+    public function setSelectboxValues(string $value): void
+    {
+        $pairs = explode("\n", $value);
+        $assocArray = [];
+
+        foreach ($pairs as $pair) {
+            $parts = explode(';', $pair);
+            if (count($parts) == 2) {
+                [$label, $val] = $parts;
+                $assocArray[$label] = $val;
+            }
+        }
+
+        $this->selectboxValues = $assocArray;
+    }
+
+    public function getBooleanValues(): array
+    {
+        return $this->booleanValues;
+    }
+
+    public function setBooleanValues(string $value): void
+    {
+        $pairs = explode("\n", $value);
+        // $assocArray = [];
+//
+        // foreach ($pairs as $pair) {
+        //     $parts = explode(';', $pair);
+        //     if (count($parts) == 2) {
+        //         [$label, $val] = $parts;
+        //         $assocArray[$label] = $val;
+        //     }
+        // }
+
+        $this->booleanValues = $pairs;
+    }
+
+
+
+    public function isSetValuesColorPicker(): bool
+    {
+        return $this->setValuesColorPicker;
+    }
+
+    public function setSetValuesColorPicker(bool $setValuesColorPicker): void
+    {
+        $this->setValuesColorPicker = $setValuesColorPicker;
+    }
+
+    public function getColorPickerValues(): array
+    {
+        return $this->colorPickerValues;
+    }
+
+    public function setColorPickerValues(string $value): void
+    {
+        $pairs = explode("\n", $value);
+        $assocArray = [];
+
+        foreach ($pairs as $pair) {
+            $parts = explode(';', $pair);
+            if (count($parts) == 2) {
+                [$label, $val] = $parts;
+                $assocArray[$label] = $val;
+            }
+        }
+
+        $this->colorPickerValues = $assocArray;
+    }
+
+
+    public function getForeignTable(): string
+    {
+        return $this->foreignTable;
+    }
+
+    public function setForeignTable(string $foreignTable): void
+    {
+        $this->foreignTable = $foreignTable;
+    }
+
+    public function getRenderType(): string
+    {
+        return $this->renderType;
+    }
+
+    public function setRenderType(string $renderType): void
+    {
+        $this->renderType = $renderType;
+    }
+
+    public function getWhereClause(): string
+    {
+        return $this->whereClause;
+    }
+
+    public function setWhereClause(string $whereClause): void
+    {
+        $this->whereClause = $whereClause;
+    }
+
+    public function getSize(): int
+    {
+        return $this->size;
+    }
+
+    public function setSize(int $size): void
+    {
+        $this->size = $size;
+    }
+
+    public function getMaxItems(): int
+    {
+        return $this->maxItems;
+    }
+
+    public function setMaxItems(int $maxItems): void
+    {
+        $this->maxItems = $maxItems;
+    }
+
+    public function getMinItems(): int
+    {
+        return $this->minItems;
+    }
+
+    public function setMinItems(int $minItems): void
+    {
+        $this->minItems = $minItems;
+    }
+
+    public function isEnableRichtext(): bool
+    {
+        return $this->enableRichtext;
+    }
+
+    public function setEnableRichtext(bool $enableRichtext): void
+    {
+        $this->enableRichtext = $enableRichtext;
+    }
+
+    public function getRows(): int
+    {
+        return $this->rows;
+    }
+
+    public function setRows(int $rows): void
+    {
+        $this->rows = $rows;
+    }
+
+    public function isEnableSlider(): bool
+    {
+        return $this->enableSlider;
+    }
+
+    public function setEnableSlider(bool $enableSlider): void
+    {
+        $this->enableSlider = $enableSlider;
+    }
+
+    public function isSetRange(): bool
+    {
+        return $this->setRange;
+    }
+
+    public function setSetRange(bool $setRange): void
+    {
+        $this->setRange = $setRange;
+    }
+
+    public function getLowerRange(): int
+    {
+        return $this->lowerRange;
+    }
+
+    public function setLowerRange(int $lowerRange): void
+    {
+        $this->lowerRange = $lowerRange;
+    }
+
+    public function getUpperRange(): int
+    {
+        return $this->upperRange;
+    }
+
+    public function setUpperRange(int $upperRange): void
+    {
+        $this->upperRange = $upperRange;
+    }
+
+    public function getSteps(): float|int
+    {
+        return $this->steps;
+    }
+
+    public function setSteps(float|int $steps): void
+    {
+        $this->steps = $steps;
+    }
+
+    public function isRenderPasswordGenerator(): bool
+    {
+        return $this->renderPasswordGenerator;
+    }
+
+    public function setRenderPasswordGenerator(bool $renderPasswordGenerator): void
+    {
+        $this->renderPasswordGenerator = $renderPasswordGenerator;
+    }
+
+    public function isRenderTypeBoolean(): string
+    {
+        return $this->renderTypeBoolean;
+    }
+
+    public function setRenderTypeBoolean(string $renderTypeBoolean): void
+    {
+        $this->renderTypeBoolean = $renderTypeBoolean;
+    }
+
+    public function getDbTypeDateTime(): string
+    {
+        return $this->dbTypeDateTime;
+    }
+
+    public function setDbTypeDateTime(string $dbTypeDateTime): void
+    {
+        $this->dbTypeDateTime = $dbTypeDateTime;
+    }
+
+    public function getFormatDateTime(): string
+    {
+        return $this->formatDateTime;
+    }
+
+    public function setFormatDateTime(string $formatDateTime): void
+    {
+        $this->formatDateTime = $formatDateTime;
     }
 }

@@ -20,10 +20,10 @@ namespace EBT\ExtensionBuilder\Tests;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
-use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use Symfony\Component\Yaml\Yaml;
 
 abstract class BaseUnitTest extends UnitTestCase
 {
@@ -40,11 +40,9 @@ abstract class BaseUnitTest extends UnitTestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->fixturesPath = __DIR__ . '/Fixtures/';
 
-        $settings = SpycYAMLParser::YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
+        $settings = Yaml::parseFile($this->fixturesPath . 'Settings/settings1.yaml');
 
         $this->extension = $this->getMockBuilder(Extension::class)
             ->enableProxyingToOriginalMethods()
@@ -65,17 +63,12 @@ abstract class BaseUnitTest extends UnitTestCase
         if (!empty($this->extension) && $this->extension->getExtensionKey() != null) {
             GeneralUtility::rmdir($this->extension->getExtensionDir(), true);
         }
-
-        parent::tearDown();
     }
 
     /**
      * Helper function
      *
      * @param $name
-     * @param bool $entity
-     * @param bool $aggregateRoot
-     * @return DomainObject
      */
     protected function buildDomainObject($name, bool $entity = false, bool $aggregateRoot = false): DomainObject
     {

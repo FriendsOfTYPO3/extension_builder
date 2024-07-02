@@ -1,10 +1,29 @@
 .. include:: /Includes.rst.txt
-
 .. _changelog:
 
 ==========
 Change log
 ==========
+
+Important release notes
+=======================
+
+.. toctree::
+   :maxdepth: 1
+   :titlesonly:
+   :glob:
+
+   12-0-0
+
+Version 12.0.0
+--------------
+* [TASK] Rework the whole JS GUI of this extension
+* [TASK] Raise new versions for new TYPO3 12 release
+* [TASK] Drop support for TYPO3 11, add support for TYPO3 12
+* [TASK] Drop support for PHP 7.x, add support for PHP 8.1 and 8.2
+* [TASK] Register each plugin as its own CType
+* [DOCS] Update the documentation
+* [TASK] Removed generation of Tests for the extensions
 
 Version 11.0.13
 ---------------
@@ -40,6 +59,18 @@ Version 11.0.8
 * [TASK] Set the description field of backend module to textarea
 * [BUGFIX] Fix issue in JS - "Relations"
 
+Version 11.0.7
+--------------
+* Fix release number inside ext_emconf.php
+
+Version 11.0.6
+--------------
+* [BUGFIX] Revert deletion inside composer.json
+
+Version 11.0.5
+--------------
+* [BUGFIX] revert deletion of code templates
+
 Version 11.0.4
 --------------
 * [BUGFIX] Fix warning if setDefaultValuesForClassProperties does not exist
@@ -67,3 +98,12 @@ Version 11.0.2
 * [TASK] Align with new TYPO3 documentation standards
 * [TASK] Align with new TYPO3 documentation standards (follow-up)
 * [BUGFIX] Fix PHP8 warning because overwriteSettings not found in empty settings
+
+Version 11.0.1
+--------------
+* Small bugfixes
+* Several improvements inside documentation
+* [TASK] Switch extension stability from "beta" to "stable"
+* [TASK] Remove suffix from generated folder Documentation.tmpl
+* [TASK] Remove plugin type
+* [TASK] Adapt public resources url for acceptance tests

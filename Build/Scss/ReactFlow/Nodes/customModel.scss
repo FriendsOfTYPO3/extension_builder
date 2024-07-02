@@ -1,0 +1,74 @@
+$custom-model-accordion-padding: 0.5rem;
+$gray: #CCC;
+$light-gray: #777;
+$orange: #DFA23A;
+$dark-orange: #FF8700;
+
+@mixin fullWidth {
+    width: 100%;
+}
+.custom-model-node {
+    @include fullWidth;
+    min-width: 300px;
+    border: 1px solid $gray;
+    padding: 5px;
+    border-radius: 5px;
+    background: #FFF;
+
+    .custom-model-node__header {
+        height: 70px;
+    }
+
+    label {
+        display: block;
+        color: $light-gray;
+        font-size: 12px;
+    }
+
+    .react-flow__handle {
+        width: 20px;
+        height: 20px;
+        top: -10px;
+        background-color: $orange;
+        border: 3px solid $orange;
+    }
+
+    input[type="text"],
+    textarea {
+        @include fullWidth;
+    }
+
+    .drag-handle {
+        @include fullWidth;
+        width:42%;
+        background-color: $dark-orange;
+        position: absolute;
+        top: -24px;
+        left: 29%;
+        min-width: 20px;
+        min-height: 30px;
+        border-radius: 4px;
+        border: 2px solid $dark-orange;
+    }
+
+    .accordion-header {
+        .accordion-button {
+            padding: 5px $custom-model-accordion-padding;
+        }
+    }
+
+    .accordion-body {
+        padding-left: $custom-model-accordion-padding;
+        padding-right: $custom-model-accordion-padding;
+    }
+
+    .relation {
+        margin-top: -20px;
+    }
+
+    .btn-delete-node {
+        position: absolute;
+        top: -7px;
+        right: -7px;
+    }
+}

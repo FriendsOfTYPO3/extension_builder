@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace FIXTURE\TestExtension\Domain\Repository;
 
-
+use TYPO3\CMS\Extbase\Persistence\Repository;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 /**
  * This file is part of the "Extension Builder Test Extension" Extension for TYPO3 CMS.
  *
@@ -13,15 +14,14 @@ namespace FIXTURE\TestExtension\Domain\Repository;
  *
  * (c) ###YEAR### John Doe <mail@typo3.com>, TYPO3
  */
-
 /**
  * The repository for Mains
  */
-class MainRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class MainRepository extends Repository
 {
 
     /**
      * @var array
      */
-    protected $defaultOrderings = ['sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING];
+    protected $defaultOrderings = ['sorting' => QueryInterface::ORDER_ASCENDING];
 }

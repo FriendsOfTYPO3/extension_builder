@@ -18,14 +18,6 @@ in /Configuration/ExtensionBuilder/settings.yaml:
 
 Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
-<k:openingTag>f:section name="Buttons"</k:openingTag>
-    <k:openingTag>be:moduleLayout.button.linkButton
-        icon="actions-view-go-back"
-        title="<k:curlyBrackets>f:translate(id: 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.goBack')</k:curlyBrackets>"
-        link="<k:curlyBrackets>f:uri.action(controller: '{domainObject.name}', action: 'list')</k:curlyBrackets>"
-    /</k:openingTag>
-<k:openingTag>/f:section</k:openingTag>
-
 <k:openingTag>f:section name="Content"</k:openingTag>
     <h1>New {domainObject.name}</h1>
 
@@ -36,7 +28,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
     <k:format.removeMultipleNewlines>
     <k:openingTag>f:form action="create" name="new{domainObject.name}" object="<k:curlyBrackets>new{domainObject.name}</k:curlyBrackets>"</k:openingTag>
         <k:openingTag>f:render partial="{domainObject.name}/FormFields" /</k:openingTag>
-        <k:openingTag>f:form.submit value="Create new" class="btn btn-default"/</k:openingTag>
+        <k:openingTag>f:form.submit value="Create new" class="btn btn-success"/</k:openingTag>
     <k:openingTag>/f:form</k:openingTag>
     </k:format.removeMultipleNewlines>
 <k:openingTag>/f:section</k:openingTag>

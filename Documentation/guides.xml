@@ -10,7 +10,7 @@
                project-issues="https://github.com/FriendsOfTYPO3/extension_builder/issues"
                edit-on-github-branch="master"
                edit-on-github="FriendsOfTYPO3/extension_builder"
-               typo3-core-preferred="11.5"
+               typo3-core-preferred="12.4"
                interlink-shortcode="friendsoftypo3/extension-builder"
     />
     <project title="Extension Builder"

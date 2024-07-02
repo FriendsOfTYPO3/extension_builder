@@ -14,11 +14,12 @@ trim_trailing_whitespace = true
 
 # TS/JS-Files
 [*.{ts,js}]
-indent_size = 2
+indent_size = 4
 
 # JSON-Files
 [*.json]
-indent_style = tab
+indent_style = space
+indent_size = 4
 
 # ReST-Files
 [{*.rst,*.rstt}]
@@ -55,8 +56,10 @@ indent_size = 2
 [{_.htaccess,.htaccess,htaccess.t}]
 indent_style = tab
 
-[*{.phpt,htmlt}]
+[*{.phpt,htmlt,.php}]
 insert_final_newline = false
+indent_style = space
+indent_size = 4
 
 # Makefile
 [{Makefile,**.mk}]

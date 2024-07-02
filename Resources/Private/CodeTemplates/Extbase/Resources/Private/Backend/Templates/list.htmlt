@@ -18,25 +18,16 @@ in /Configuration/ExtensionBuilder/settings.yaml:
 
 Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
-<k:openingTag>f:section name="Buttons"</k:openingTag>
-    <k:openingTag>be:moduleLayout.button.linkButton
-        icon="actions-add"
-        title="<k:curlyBrackets>f:translate(id: 'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:newRecordGeneral')</k:curlyBrackets>"
-        link="<k:curlyBrackets>f:uri.action(controller: '{domainObject.name}', action: 'new')</k:curlyBrackets>"
-    /</k:openingTag>
-<k:openingTag>/f:section</k:openingTag>
-
 <k:openingTag>f:section name="Content"</k:openingTag>
     <h1>Listing for {domainObject.name}</h1>
 
     <k:openingTag>f:flashMessages /</k:openingTag>
 
-    <table class="{extension.shortExtensionKey}">
+    <table class="table table-hover {extension.shortExtensionKey}">
         <k:format.removeMultipleNewlines><tr>
             <f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
             <th><k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag></th>
             </f:if></f:for>
-            <th></th>
             <th></th>
         </tr>
         </k:format.removeMultipleNewlines>
@@ -44,11 +35,10 @@ Otherwise your changes will be overwritten the next time you save the extension 
         <k:openingTag>f:for each="{domainObject.name -> k:format.lowercaseFirst() -> k:pluralize() -> k:curlyBrackets()}" as="{domainObject.name -> k:format.lowercaseFirst()}"</k:openingTag>
             <tr>
             <f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
-                <td><k:openingTag>f:link.action action="show" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}: {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>"</k:openingTag><k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets><k:openingTag>/f:link.action</k:openingTag></td>
+                <td><k:openingTag>f:link.action action="show" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}: {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>"</k:openingTag><k:openingTag>f:sanitize.html</k:openingTag><k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets><k:openingTag>/f:sanitize.html</k:openingTag><k:openingTag>/f:link.action</k:openingTag></td>
             </f:if></f:for>
 
-                <td><k:openingTag>f:link.action action="edit" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}: {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>" class="btn btn-default"</k:openingTag>Edit<k:openingTag>/f:link.action</k:openingTag></td>
-                <td><k:openingTag>f:link.action action="delete" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}: {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>" class="btn btn-danger"</k:openingTag>Delete<k:openingTag>/f:link.action</k:openingTag></td>
+                <td class="text-end"><k:openingTag>f:link.action action="edit" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}: {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>" class="btn btn-warning me-2"</k:openingTag>Edit<k:openingTag>/f:link.action</k:openingTag><k:openingTag>f:link.action action="delete" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}: {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>" class="btn btn-danger"</k:openingTag>Delete<k:openingTag>/f:link.action</k:openingTag></td>
             </tr>
         <k:openingTag>/f:for</k:openingTag>
         </k:format.removeMultipleNewlines>

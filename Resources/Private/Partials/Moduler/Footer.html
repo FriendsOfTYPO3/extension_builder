@@ -1,0 +1,34 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"
+	  xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers">
+<ul class="d-flex">
+	<li>
+		<f:link.external uri="https://typo3.org/community/meet/chat-slack/" class="btn btn-primary btn-sm" target="_blank">
+			<core:icon identifier="actions-brand-slack" /> <f:translate key="helpSlack" extensionName="extension_builder"/>
+		</f:link.external>
+	</li>
+	<li>
+		<f:link.external uri="https://github.com/FriendsOfTYPO3/extension_builder/issues" class="btn btn-primary btn-sm" target="_blank">
+			<core:icon identifier="actions-debug" /> <f:translate key="reportBug" extensionName="extension_builder"/>
+		</f:link.external>
+	</li>
+	<li>
+		<f:link.external uri="https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/" class="btn btn-primary btn-sm" target="_blank">
+			<core:icon identifier="actions-notebook-typoscript" /> <f:translate key="showDocumentation" extensionName="extension_builder"/>
+		</f:link.external>
+	</li>
+	<li>
+		<f:link.external uri="https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/Sponsoring/Index.html" class="btn btn-primary btn-sm" target="_blank">
+			<core:icon identifier="actions-credit-card" /> <f:translate key="becomeSponsor" extensionName="extension_builder"/>
+		</f:link.external>
+	</li>
+	<li>
+		<span class="currentVersion text-danger"><core:icon identifier="actions-extension" /> {currentVersion}</span>
+	</li>
+	<li>
+		<span class="backupDir text-info"><core:icon identifier="actions-history" /> Backup: {backupDir}</span>
+	</li>
+	<li>
+		<span class="outputDir text-info"><core:icon identifier="apps-pagetree-folder-contains" /> Output: {outputDir}</span>
+	</li>
+</ul>
+</html>

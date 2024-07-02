@@ -172,7 +172,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                                 0 => [
                                     'relationName' => 'posts',
                                     'relationType' => 'zeroToMany',
-                                    'propertyIsExcludeField' => 1
+                                    'excludeField' => 1
                                 ]
                             ]
                         ]
@@ -196,7 +196,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                                 0 => [
                                     'relationName' => 'comments',
                                     'relationType' => 'zeroToMany',
-                                    'propertyIsExcludeField' => 1
+                                    'excludeField' => 1
                                 ]
                             ]
                         ]

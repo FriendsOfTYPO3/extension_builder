@@ -1,5 +1,4 @@
 .. include:: /Includes.rst.txt
-
 .. _introduction:
 
 ============
@@ -32,8 +31,8 @@ and actions:
 
 .. include:: /Images/AutomaticScreenshots/GraphicalEditorBlogExampleWindow.rst.txt
 
-Finally, it generates a basic extension with that can be installed
-and further developed:
+Finally, it generates a basic extension which can be installed
+and developed further:
 
 .. code-block:: none
 
@@ -48,15 +47,14 @@ and further developed:
        ├── Classes/..
        ├── Configuration/..
        ├── Documentation/..
-       ├── Resources/..
-       └── Tests/..
+       └── Resources/..
 
-In addition to the *kickstart mode*, the Extension Builder also provides a
-*roundtrip mode* that allows you to use the graphical editor
+In addition to the *kickstart mode*, the Extension Builder also provides a :ref:`roundtrip mode <roundtrip-mode>`
+that allows you to use the :ref:`graphical editor <graphical-editor>`
 even after you have started making manual changes to the files.
 In this mode, the Extension Builder retains the manual changes,
 such as new methods, changed method bodies, comments and annotations,
-even if you change the extension in the graphical editor.
+even if you change the extension in the :ref:`graphical editor <graphical-editor>`.
 
 .. _what-does-it-not-do:
 
@@ -74,9 +72,10 @@ To create them, you should either use the Extension Builder to create a TYPO3
 extension skeleton (without domain objects, controllers, plugins and modules)
 and add
 :doc:`TYPO3 content elements manually <t3coreapi:ApiOverview/ContentElements/AddingYourOwnContentElements>`,
-or use one of the dedicate extensions like `Mask <https://extensions.typo3.org/extension/mask>`__
-or `Dynamic Content Elements (DCE) <https://extensions.typo3.org/extension/dce>`__
-instead.
+use the extension `Mask <https://extensions.typo3.org/extension/mask>`__
+or the new system extension `content blocks <https://extensions.typo3.org/extension/content_blocks>`__
+which is already available for TYPO3 12 as a 3rd party extension and will be
+included in the TYPO3 core in version 13.
 
 Compatibility of existing extension with newer TYPO3
 ----------------------------------------------------
@@ -85,3 +84,11 @@ To make an existing TYPO3 extension compatible with a newer TYPO3 version,
 we recommend using `TYPO3 Rector <https://github.com/sabbelasichon/typo3-rector>`__
 instead of trying to load and save the extension in the Extension Builder of
 the newer TYPO3 version.
+
+.. admonition:: What about upgrading from 11 to 12?
+
+   As for now, it is not possible to load an extension from an older TYPO3 into
+   the extension_builder. This is, because the whole UI was remade vor version 12
+   and there would be some important missing informations in older extensions.
+
+   If you want to :ref:`contribute <contribution>` on this feature, please let us know via `slack #extension-builder <https://typo3.slack.com/archives/C0CEB3BMY>`__ or `github <https://github.com/FriendsOfTYPO3/extension_builder/issues>`__.

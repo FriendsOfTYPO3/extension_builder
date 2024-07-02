@@ -64,6 +64,7 @@ class ObjectSchemaBuilder implements SingletonInterface
             $domainObject->setEntity(false);
         }
         $domainObject->setAggregateRoot($jsonDomainObject['objectsettings']['aggregateRoot'] ?? false);
+        $domainObject->setControllerScope($jsonDomainObject['objectsettings']['controllerScope'] ?? 'Frontend');
         $domainObject->setSorting($jsonDomainObject['objectsettings']['sorting'] ?? false);
         $domainObject->setAddDeletedField($jsonDomainObject['objectsettings']['addDeletedField'] ?? false);
         $domainObject->setAddHiddenField($jsonDomainObject['objectsettings']['addHiddenField'] ?? false);
@@ -81,6 +82,7 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (isset($jsonDomainObject['propertyGroup']['properties'])) {
             foreach ($jsonDomainObject['propertyGroup']['properties'] as $propertyJsonConfiguration) {
                 $propertyType = $propertyJsonConfiguration['propertyType'];
+                // TODO: Check, if this needs to be extended to other types as well
                 if (in_array($propertyType, ['Image', 'File'])
                     && !empty($propertyJsonConfiguration['maxItems'])
                     && $propertyJsonConfiguration['maxItems'] > 1
@@ -157,10 +159,10 @@ class ObjectSchemaBuilder implements SingletonInterface
         }
         /** @var AbstractRelation $relation */
         $relation = new $relationSchemaClassName();
-        $relation->setName($relationJsonConfiguration['relationName']);
+        $relation->setName($relationJsonConfiguration['relationName'] ?? '');
         $relation->setLazyLoading((bool)($relationJsonConfiguration['lazyLoading'] ?? false));
         $relation->setNullable((bool)($relationJsonConfiguration['propertyIsNullable'] ?? false));
-        $relation->setExcludeField((bool)$relationJsonConfiguration['propertyIsExcludeField']);
+        $relation->setExcludeField((bool)($relationJsonConfiguration['excludeField'] ?? false));
         $relation->setDescription($relationJsonConfiguration['relationDescription'] ?? '');
         $relation->setUniqueIdentifier($relationJsonConfiguration['uid'] ?? '');
         $relation->setType($relationJsonConfiguration['type'] ?? '');
@@ -202,9 +204,14 @@ class ObjectSchemaBuilder implements SingletonInterface
                 if (!empty($relationJsonConfiguration['maxItems'])) {
                     /** @var FileProperty $relation */
                     $relation->setMaxItems((int)$relationJsonConfiguration['maxItems']);
-                    if (!empty($relationJsonConfiguration['allowedFileTypes'])) {
-                        $relation->setAllowedFileTypes($relationJsonConfiguration['allowedFileTypes']);
-                    }
+                }
+                if (!empty($relationJsonConfiguration['minItems'])) {
+                    /** @var FileProperty $relation */
+                    $relation->setMinItems((int)$relationJsonConfiguration['minItems']);
+                }
+                if (!empty($relationJsonConfiguration['typeFile']['allowedFileTypes'])) {
+                    /** @var FileProperty $relation */
+                    $relation->setAllowedFileTypes($relationJsonConfiguration['typeFile']['allowedFileTypes']);
                 }
             }
         }
@@ -219,7 +226,7 @@ class ObjectSchemaBuilder implements SingletonInterface
     public static function buildProperty(array $propertyJsonConfiguration): AbstractProperty
     {
         $propertyType = $propertyJsonConfiguration['propertyType'];
-        $propertyClassName = 'EBT\\ExtensionBuilder\\Domain\Model\\DomainObject\\' . $propertyType . 'Property';
+        $propertyClassName = 'EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\' . $propertyType . 'Property';
         if (!class_exists($propertyClassName)) {
             throw new Exception('Property of type ' . $propertyType . ' not found');
         }
@@ -230,19 +237,17 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (isset($propertyJsonConfiguration['propertyDescription'])) {
             $property->setDescription($propertyJsonConfiguration['propertyDescription']);
         }
-
         if ($propertyType === 'File' && !empty($propertyJsonConfiguration['allowedFileTypes'])) {
             $property->setAllowedFileTypes($propertyJsonConfiguration['allowedFileTypes']);
         }
-
         if (isset($propertyJsonConfiguration['propertyIsRequired'])) {
             $property->setRequired($propertyJsonConfiguration['propertyIsRequired']);
         }
         if (isset($propertyJsonConfiguration['propertyIsNullable'])) {
             $property->setNullable($propertyJsonConfiguration['propertyIsNullable']);
         }
-        if (isset($propertyJsonConfiguration['propertyIsExcludeField'])) {
-            $property->setExcludeField($propertyJsonConfiguration['propertyIsExcludeField']);
+        if (isset($propertyJsonConfiguration['excludeField'])) {
+            $property->setExcludeField($propertyJsonConfiguration['excludeField']);
         }
         if (isset($propertyJsonConfiguration['propertyIsL10nModeExclude'])) {
             $property->setL10nModeExclude($propertyJsonConfiguration['propertyIsL10nModeExclude']);
@@ -250,6 +255,70 @@ class ObjectSchemaBuilder implements SingletonInterface
         if ($property->isFileReference() && !empty($propertyJsonConfiguration['maxItems'])) {
             $property->setMaxItems((int)$propertyJsonConfiguration['maxItems']);
         }
+        if (isset($propertyJsonConfiguration['typeSelect']['selectboxValues'])) {
+            $property->setSelectboxValues($propertyJsonConfiguration['typeSelect']['selectboxValues']);
+        }
+        if (isset($propertyJsonConfiguration['typeSelect']['foreignTable'])) {
+            $property->setForeignTable($propertyJsonConfiguration['typeSelect']['foreignTable']);
+        }
+        if (isset($propertyJsonConfiguration['typeSelect']['whereClause'])) {
+            $property->setWhereClause($propertyJsonConfiguration['typeSelect']['whereClause']);
+        }
+        if (isset($propertyJsonConfiguration['typeSelect']['renderType'])) {
+            $property->setRenderType($propertyJsonConfiguration['typeSelect']['renderType']);
+        }
+        if (isset($propertyJsonConfiguration['typeText']['enableRichtext'])) {
+            $property->setEnableRichtext($propertyJsonConfiguration['typeText']['enableRichtext']);
+        }
+        if (isset($propertyJsonConfiguration['size'])) {
+            $property->setSize((int)$propertyJsonConfiguration['size']);
+        }
+        if (isset($propertyJsonConfiguration['rows'])) {
+            $property->setRows((int)$propertyJsonConfiguration['rows']);
+        }
+        if (isset($propertyJsonConfiguration['maxItems'])) {
+            $property->setMaxItems((int)$propertyJsonConfiguration['maxItems']);
+        }
+        if (isset($propertyJsonConfiguration['minItems'])) {
+            $property->setMinItems((int)$propertyJsonConfiguration['minItems']);
+        }
+        if (isset($propertyJsonConfiguration['typeNumber']['enableSlider'])) {
+            $property->setEnableSlider($propertyJsonConfiguration['typeNumber']['enableSlider']);
+        }
+        if (isset($propertyJsonConfiguration['typeNumber']['steps'])) {
+            $property->setSteps((float)$propertyJsonConfiguration['typeNumber']['steps']);
+        }
+        if (isset($propertyJsonConfiguration['typeNumber']['setRange'])) {
+            $property->setSetRange($propertyJsonConfiguration['typeNumber']['setRange']);
+        }
+        if (isset($propertyJsonConfiguration['typeNumber']['upperRange'])) {
+            $property->setUpperRange((int)$propertyJsonConfiguration['typeNumber']['upperRange']);
+        }
+        if (isset($propertyJsonConfiguration['typeNumber']['lowerRange'])) {
+            $property->setLowerRange((int)$propertyJsonConfiguration['typeNumber']['lowerRange']);
+        }
+        if (isset($propertyJsonConfiguration['typeColor']['setValuesColorPicker'])) {
+            $property->setSetValuesColorPicker((bool)$propertyJsonConfiguration['typeColor']['setValuesColorPicker']);
+        }
+        if (isset($propertyJsonConfiguration['typeBoolean']['booleanValues'])) {
+            $property->setBooleanValues($propertyJsonConfiguration['typeBoolean']['booleanValues']);
+        }
+        if (isset($propertyJsonConfiguration['typeColor']['colorPickerValues'])) {
+            $property->setColorPickerValues($propertyJsonConfiguration['typeColor']['colorPickerValues']);
+        }
+        if (isset($propertyJsonConfiguration['typePassword']['renderPasswordGenerator'])) {
+            $property->setRenderPasswordGenerator((bool)$propertyJsonConfiguration['typePassword']['renderPasswordGenerator']);
+        }
+        if (isset($propertyJsonConfiguration['typeBoolean']['renderType'])) {
+            $property->setRenderTypeBoolean($propertyJsonConfiguration['typeBoolean']['renderType']);
+        }
+        if (isset($propertyJsonConfiguration['typeDateTime']['dbTypeDateTime'])) {
+            $property->setDbTypeDateTime($propertyJsonConfiguration['typeDateTime']['dbTypeDateTime']);
+        }
+        if (isset($propertyJsonConfiguration['typeDateTime']['formatDateTime'])) {
+            $property->setFormatDateTime($propertyJsonConfiguration['typeDateTime']['formatDateTime']);
+        }
+
         return $property;
     }
 }

@@ -53,6 +53,6 @@ class PregReplaceViewHelper extends AbstractViewHelper
             return '';
         }
 
-        return preg_replace($arguments['match'], $arguments['replace'], $subject);
+        return preg_replace($arguments['match'], (string) $arguments['replace'], (string) $subject);
     }
 }

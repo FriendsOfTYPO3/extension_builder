@@ -18,6 +18,10 @@ declare(strict_types=1);
 namespace EBT\ExtensionBuilder\Service;
 
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
@@ -78,7 +82,28 @@ class ExtensionService
                 $storagePaths[] = preg_replace('#/[*?/]+$#', '', $repositoryPath);
             }
         }
+
+        // Check whether $storagePaths is empty and add a notification if so
+        if (empty($storagePaths)) {
+            $this->setNotification('No storage Path detected!', 'There was no storage path detected. Please refer to the documentation (section "Installation") to get more infos on how to solve this issue.', ContextualFeedbackSeverity::ERROR);
+        }
+
         return $storagePaths;
+    }
+
+    private function setNotification($title = '', $message = '', $severity = ContextualFeedbackSeverity::INFO)
+    {
+        $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
+        $notificationQueue = $flashMessageService->getMessageQueueByIdentifier(
+            FlashMessageQueue::NOTIFICATION_QUEUE
+        );
+        $flashMessage = GeneralUtility::makeInstance(
+            FlashMessage::class,
+            $message,
+            $title,
+            $severity
+        );
+        $notificationQueue->enqueue($flashMessage);
     }
 
     public function isComposerStoragePath(string $path): bool

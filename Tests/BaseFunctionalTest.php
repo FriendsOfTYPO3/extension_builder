@@ -30,7 +30,6 @@ use EBT\ExtensionBuilder\Service\LocalizationService;
 use EBT\ExtensionBuilder\Service\ParserService;
 use EBT\ExtensionBuilder\Service\Printer;
 use EBT\ExtensionBuilder\Service\RoundTrip;
-use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use Exception;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
@@ -38,6 +37,7 @@ use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
+use Symfony\Component\Yaml\Yaml;
 
 abstract class BaseFunctionalTest extends FunctionalTestCase
 {
@@ -69,8 +69,6 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->fixturesPath = __DIR__ . '/Fixtures/';
 
         $rootDir = vfsStream::setup('root');
@@ -82,7 +80,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
 
         vfsStream::copyFromFileSystem($this->fixturesPath, $fixturesDir, 1024 * 1024);
 
-        $settings = SpycYAMLParser::YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
+        $settings = Yaml::parseFile($this->fixturesPath . 'Settings/settings1.yaml');
 
         $this->extension = $this->getMockBuilder(Extension::class)
             ->enableProxyingToOriginalMethods()
@@ -127,8 +125,8 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
 
         $this->fileGenerator->setSettings(
             [
-                'codeTemplateRootPaths.' => [Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/'],
-                'codeTemplatePartialPaths.' => [Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials'],
+                'codeTemplateRootPaths' => [Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/'],
+                'codeTemplatePartialPaths' => [Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials'],
                 'extConf' => [
                     'enableRoundtrip' => '1'
                 ]
@@ -160,9 +158,6 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
      * Helper function
      *
      * @param $name
-     * @param bool $entity
-     * @param bool $aggregateRoot
-     * @return DomainObject
      */
     protected function buildDomainObject($name, bool $entity = false, bool $aggregateRoot = false): DomainObject
     {

@@ -22,6 +22,11 @@ use TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton;
 class LinkButtonWithId extends LinkButton
 {
     /**
+     * id attribute of the link
+     */
+    protected string $id = '';
+
+    /**
      * Get type
      * Pretend that we are a link button to make the button valid
      */
@@ -29,11 +34,6 @@ class LinkButtonWithId extends LinkButton
     {
         return LinkButton::class;
     }
-
-    /**
-     * id attribute of the link
-     */
-    protected string $id = '';
 
     public function getId(): string
     {
@@ -59,13 +59,11 @@ class LinkButtonWithId extends LinkButton
         ];
         $labelText = '';
         if ($this->showLabelText) {
-            $labelText = ' <span class="simpleMode">Show</span><span class="advancedMode">Hide</span> ' . $this->title . '.';
+            //  $labelText = ' <span class="simpleMode">Show</span><span class="advancedMode">Hide</span> ' . $this->title . '.';
+            $labelText = ' ' . $this->title;
         }
         foreach ($this->dataAttributes as $attributeName => $attributeValue) {
             $attributes['data-' . $attributeName] = $attributeValue;
-        }
-        if ($this->onClick !== '') {
-            $attributes['onclick'] = $this->onClick;
         }
         if ($this->isDisabled()) {
             $attributes['disabled'] = 'disabled';
@@ -73,11 +71,11 @@ class LinkButtonWithId extends LinkButton
         }
         $attributesString = '';
         foreach ($attributes as $key => $value) {
-            $attributesString .= ' ' . htmlspecialchars($key) . '="' . htmlspecialchars($value) . '"';
+            $attributesString .= ' ' . htmlspecialchars($key) . '="' . htmlspecialchars($value ?? '') . '"';
         }
 
         return '<a ' . $attributesString . '>'
-            . $this->getIcon()->render() . $labelText // removed htmlspecialchars on purpose!
-            . '</a>';
+            . $this->getIcon()->render() . htmlspecialchars($labelText)
+        . '</a>';
     }
 }

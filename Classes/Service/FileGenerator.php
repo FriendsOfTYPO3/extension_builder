@@ -1,5 +1,6 @@
 <?php
 
+
 declare(strict_types=1);
 
 /*
@@ -17,6 +18,7 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Service;
 
+use Symfony\Component\Yaml\Yaml;
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\BackendModule;
 use EBT\ExtensionBuilder\Domain\Model\ClassObject\ClassObject;
@@ -131,13 +133,13 @@ class FileGenerator
             $this->roundTripEnabled = true;
             $this->roundTripService->initialize($extension);
         }
-        if (isset($this->settings['codeTemplateRootPaths.'])) {
-            $this->codeTemplateRootPaths = $this->settings['codeTemplateRootPaths.'];
+        if (isset($this->settings['codeTemplateRootPaths'])) {
+            $this->codeTemplateRootPaths = $this->settings['codeTemplateRootPaths'];
         } else {
             throw new Exception('No codeTemplateRootPath configured');
         }
-        if (isset($this->settings['codeTemplatePartialPaths.'])) {
-            $this->codeTemplatePartialPaths = $this->settings['codeTemplatePartialPaths.'];
+        if (isset($this->settings['codeTemplatePartialPaths'])) {
+            $this->codeTemplatePartialPaths = $this->settings['codeTemplatePartialPaths'];
         } else {
             throw new Exception('No codeTemplatePartialPaths configured');
         }
@@ -169,9 +171,18 @@ class FileGenerator
 
         $this->generateIconsFile();
 
+        $this->generateModulesFile();
+
+        // Only execute, if there is one or more domain object
+        if (count($extension->getDomainObjects()) > 0) {
+            $this->generateServicesYamlFile();
+        }
+
         $this->copyStaticFiles();
 
         $this->generateTCAFiles();
+
+        $this->generateFlexFormsFiles();
 
         $this->generateExtbaseConfigClass();
 
@@ -277,6 +288,47 @@ class FileGenerator
     /**
      * @throws Exception
      */
+    protected function generateModulesFile(): void
+    {
+        if (!$this->extension->hasBackendModules()) {
+            return;
+        }
+        try {
+            GeneralUtility::mkdir_deep($this->extensionDirectory . 'Configuration/Backend');
+
+            $fileContents = $this->renderTemplate(
+                'Configuration/Backend/Modules.phpt',
+                [
+                    'extension' => $this->extension
+                ]
+            );
+            $this->writeFile($this->extensionDirectory . 'Configuration/Backend/Modules.php', $fileContents);
+        } catch (Exception $e) {
+            throw new Exception('Could not write Configuration/Backend/Modules.php. Error: ' . $e->getMessage());
+        }
+    }
+
+    protected function generateServicesYamlFile(): void
+    {
+        try {
+            GeneralUtility::mkdir_deep($this->extensionDirectory . 'Configuration');
+
+            $fileContents = $this->renderTemplate(
+                'Configuration/Services.yamlt',
+                [
+                    'namespace' => $this->extension->getNamespaceName()
+                ]
+            );
+            // $this->writeFile($this->extensionDirectory . 'Configuration/Services.yaml', $yamlContent);
+            $this->writeFile($this->extensionDirectory . 'Configuration/Services.yaml', $fileContents);
+        } catch (Exception $e) {
+            throw new Exception('Could not write Configuration/Services.yaml. Error: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
     protected function generateTCAFiles(): void
     {
         try {
@@ -320,6 +372,7 @@ class FileGenerator
             );
 
             if ($this->extension->hasPlugins()) {
+                // write tt_content.php
                 $fileContents = $this->generateTCAOverrideTtContent();
                 $this->writeFile(
                     $this->configurationDirectory . 'TCA/Overrides/tt_content.php',
@@ -536,12 +589,6 @@ class FileGenerator
                 $domainRepositoryDirectory = 'Classes/Domain/Repository/';
                 $this->mkdir_deep($this->extensionDirectory, $domainRepositoryDirectory);
 
-                $domainModelTestsDirectory = $this->extensionDirectory . 'Tests/Unit/Domain/Model/';
-                $this->mkdir_deep($this->extensionDirectory, 'Tests/Unit/Domain/Model');
-
-                $crudEnabledControllerTestsDirectory = $this->extensionDirectory . 'Tests/Unit/Controller/';
-                $this->mkdir_deep($this->extensionDirectory, 'Tests/Unit/Controller');
-
                 foreach ($this->extension->getDomainObjects() as $domainObject) {
                     $destinationFile = $domainModelDirectory . $domainObject->getName() . '.php';
 
@@ -570,30 +617,9 @@ class FileGenerator
                         $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
                         $this->extension->setMD5Hash($this->extensionDirectory . $destinationFile);
                     }
-
-                    // Generate basic UnitTests
-                    $fileContents = $this->generateDomainModelTests($domainObject);
-                    $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
-                    $this->writeFile($domainModelTestsDirectory . $domainObject->getName() . 'Test.php', $fileContents);
                 }
             } catch (Exception $e) {
                 throw new Exception('Could not generate domain model, error: ' . $e->getMessage());
-            }
-
-            // Generate Functional Tests
-            try {
-                $this->mkdir_deep($this->extensionDirectory, 'Tests/Functional');
-                $functionalTestsDirectory = $this->extensionDirectory . 'Tests/Functional/';
-
-                // Generate basic FunctionalTests
-                $fileContents = $this->generateFunctionalTests();
-                $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
-                $this->writeFile(
-                    $functionalTestsDirectory . 'BasicTest.php',
-                    $fileContents
-                );
-            } catch (Exception $e) {
-                throw new Exception('Could not generate functional tests, error: ' . $e->getMessage());
             }
 
             // Generate Action Controller
@@ -606,17 +632,6 @@ class FileGenerator
                     $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
                     $this->writeFile($this->extensionDirectory . $destinationFile, $fileContents);
                     $this->extension->setMD5Hash($this->extensionDirectory . $destinationFile);
-
-                    // Generate basic UnitTests
-                    $fileContents = $this->generateControllerTests(
-                        $domainObject->getName() . 'Controller',
-                        $domainObject
-                    );
-                    $fileContents = preg_replace('#^[ \t]+$#m', '', $fileContents);
-                    $this->writeFile(
-                        $crudEnabledControllerTestsDirectory . $domainObject->getName() . 'ControllerTest.php',
-                        $fileContents
-                    );
                 }
             } catch (Exception $e) {
                 throw new Exception('Could not generate action controller, error: ' . $e->getMessage());
@@ -802,14 +817,17 @@ class FileGenerator
      */
     public function generateActionControllerCode(DomainObject $domainObject): string
     {
-        $controllerTemplateFilePath = $this->getTemplatePath('Classes/Controller/Controller.phpt');
+        $frontendControllerTemplateFilePath = $this->getTemplatePath('Classes/Controller/FrontendController.phpt');
+        $backendControllerTemplateFilePath = $this->getTemplatePath('Classes/Controller/BackendController.phpt');
+
+        $scope = $domainObject->getControllerScope();
         $existingClassFileObject = null;
         if ($this->roundTripEnabled) {
             $existingClassFileObject = $this->roundTripService->getControllerClassFile($domainObject);
         }
         $controllerClassFileObject = $this->classBuilder->generateControllerClassFileObject(
             $domainObject,
-            $controllerTemplateFilePath,
+            $domainObject->getControllerScope() === 'Frontend' ? $frontendControllerTemplateFilePath : $backendControllerTemplateFilePath,
             $existingClassFileObject
         );
         // returns a class object if an existing class was found
@@ -883,40 +901,6 @@ class FileGenerator
     }
 
     /**
-     * Generate the tests for a model
-     *
-     * @param DomainObject $domainObject
-     *
-     * @return string|null
-     * @throws Exception
-     */
-    public function generateDomainModelTests(DomainObject $domainObject): ?string
-    {
-        return $this->renderTemplate('Tests/Unit/DomainModelTest.phpt', [
-            'extension' => $this->extension,
-            'domainObject' => $domainObject
-        ]);
-    }
-
-    /**
-     * Generate the tests for a CRUD-enabled controller
-     *
-     * @param string $controllerName
-     * @param DomainObject $domainObject
-     *
-     * @return string|null
-     * @throws Exception
-     */
-    public function generateControllerTests(string $controllerName, DomainObject $domainObject): ?string
-    {
-        return $this->renderTemplate('Tests/Unit/ControllerTest.phpt', [
-            'extension' => $this->extension,
-            'controllerName' => $controllerName,
-            'domainObject' => $domainObject
-        ]);
-    }
-
-    /**
      * @throws Exception
      */
     public function generateExtbaseConfigClass(): void
@@ -938,19 +922,6 @@ class FileGenerator
         } catch (Exception $e) {
             throw new Exception('Could not generate Extbase Persistence Class Configuration, error: ' . $e->getMessage());
         }
-    }
-
-    /**
-     * Generate a functional test
-     *
-     * @return string|null
-     * @throws Exception
-     */
-    public function generateFunctionalTests(): ?string
-    {
-        return $this->renderTemplate('Tests/Functional/BasicTest.phpt', [
-            'extension' => $this->extension,
-        ]);
     }
 
     /**
@@ -1237,6 +1208,38 @@ class FileGenerator
     }
 
     /**
+     * Generates the content of each FlexForm File
+     *
+     * @return mixed
+     * @throws Exception
+     */
+    public function generateFlexFormsFiles(): void
+    {
+        if($this->extension->hasPlugins()) {
+            $this->mkdir_deep($this->extensionDirectory, 'Configuration/FlexForms');
+        } else {
+            // no plugins, no FlexForms
+            return;
+        }
+
+        foreach ($this->extension->getPlugins() as $plugin) {
+            // check if file already exists
+            if (file_exists($this->extensionDirectory . 'Configuration/FlexForms/flexform_' . $plugin->getKey() . '.xml')) {
+                continue;
+            }
+
+            $fileContents = $this->renderTemplate('Configuration/FlexForms/plugin_flexform.phpt', [
+                'extension' => $this->extension,
+                'plugin' => $plugin
+            ]);
+            $this->writeFile(
+                $this->extensionDirectory . 'Configuration/FlexForms/flexform_' . $plugin->getKey() . '.xml',
+                $fileContents
+            );
+        }
+    }
+
+    /**
      * Add TCA configuration for sys_template
      *
      * @return string|null
@@ -1403,7 +1406,7 @@ class FileGenerator
         if (empty($fileContents)) {
             return;
         }
-        $success = GeneralUtility::writeFile($targetFile, $fileContents);
+        $success = GeneralUtility::writeFile($targetFile, $fileContents, true);
         if (!$success) {
             throw new Exception('File ' . $targetFile . ' could not be created!');
         }

@@ -1,5 +1,4 @@
 .. include:: /Includes.rst.txt
-
 .. _installation:
 
 ============
@@ -26,12 +25,23 @@ through:
 
    composer require friendsoftypo3/extension-builder
 
-If you are not using the latest version of the Extension Builder, you need to
-add a version constraint, for example:
+.. tip::
 
-.. code-block:: bash
+   Although it will still be possible to install extensions in legacy mode,
+   composer mode is still recommended.
 
-   composer require friendsoftypo3/extension-builder:"^10.0"
+.. warning::
+
+   If you are in composer mode, you need to add at least one entry inside "repositories" in your composer.json file. Otherwise the extension_builder will fail to save your extension. The extension_builder will store your generated extension in this folder.
+
+   ..  code-block:: php
+
+    "repositories": [
+        "local": {
+            "type": "path",
+            "url": "Packages/*"
+        }
+    ]
 
 .. warning::
 
@@ -63,7 +73,7 @@ Legacy mode
 ===========
 
 If you are working with a TYPO3 installation that does not use Composer, install
-the extension in the Extension Manager:
+the extension in the Extension Manager as follows:
 
 -  Navigate to :guilabel:`Admin Tools > Extensions > Get Extensions`.
 -  Click on :guilabel:`Update now`

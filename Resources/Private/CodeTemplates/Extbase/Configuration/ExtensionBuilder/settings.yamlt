@@ -5,8 +5,6 @@
 # See http://www.yaml.org/spec/1.2/spec.html
 #
 
----
-
 #############  Overwrite settings  ###########
 #
 # These settings only apply, if the roundtrip feature of the extension builder
@@ -17,11 +15,11 @@
 # a setting applies to a file or recursive to all files and subfolders
 #
 # merge:
-#   means for classes: All properties ,methods and method bodies
+#   means for classes: All properties, methods and method bodies
 #   of the existing class will be modified according to the new settings
 #   but not overwritten
 #
-#   for locallang xlf files: Existing keys and labels are always
+#   for locallang.xlf files: Existing keys and labels are always
 #   preserved (renaming a property or DomainObject will result in new keys and new labels)
 #
 #   for other files: You will find a Split token at the end of the file
@@ -34,7 +32,7 @@
 #   files are never overwritten
 #   These settings may break the functionality of the extension builder!
 #   Handle with care!
-#
+
 
 #############  Extension settings  ###########
 
@@ -46,7 +44,7 @@ overwriteSettings:
       Repository: merge
 
   Configuration:
-    #TCA merge not possible - use overrides directory
+    # TCA merge not possible - use overrides directory
     #TypoScript: keep
 
   Resources:
@@ -61,15 +59,15 @@ overwriteSettings:
         #Templates: keep
 
   user_extension.svg: keep
-#  ext_localconf.php: merge
-#  ext_tables.php: merge
-#  ext_tables.sql: merge
+  #ext_localconf.php: merge
+  #ext_tables.php: merge
+  #ext_tables.sql: merge
 
 ## add declare strict types in php files
 declareStrictTypes: true
 
 ## use static date attribute in xliff files
-#staticDateInXliffFiles: '{f:format.date(format:'Y-m-d\TH:i:s\Z',date:'now')}'
+staticDateInXliffFiles: '{f:format.date(format:'Y-m-d\TH:i:s\Z',date:'now')}'
 
 ## skip docComment (license header)
 #skipDocComment: false

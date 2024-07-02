@@ -1,6 +1,6 @@
-<f:if condition="{property.type}">
+<f:if condition="{property.propertyType}">
     <f:then><f:comment>For files or images</f:comment>
-<f:render partial="TCA/{property.type}Property.phpt" arguments="{property: property,extension:domainObject.extension,settings:settings}" />
+<f:render partial="TCA/{property.propertyType}Property.phpt" arguments="{property: property,extension:domainObject.extension,settings:settings}" />
     </f:then><f:else><f:switch expression="{property.renderType}"><f:case value="selectMultipleSideBySide">[
     'type' => 'select',
     'renderType' => '{property.renderType}',

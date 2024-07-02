@@ -227,7 +227,15 @@
 				<source>More options</source>
 			</trans-unit>
 			<trans-unit id="advancedOptions" resname="advancedOptions">
-				<source>advanced options</source>
+				<source>Toggle advanced options</source>
+			</trans-unit>
+			<trans-unit id="showHelp" resname="showHelp">
+				<source>Show help</source>
+			</trans-unit>
+			<trans-unit id="helpText" resname="helpText">
+				<source><![CDATA[<h1>Extension Builder</h1>\n<br>
+This page is intended to give you some overview about the workflow we suggest.
+				]]></source>
 			</trans-unit>
 			<trans-unit id="remove" resname="remove">
 				<source>Remove</source>
@@ -274,7 +282,7 @@
 			<trans-unit id="descr_isNullable" resname="descr_isNullable">
 				<source>If set to true, this field can be null</source>
 			</trans-unit>
-			<trans-unit id="isExcludeField" resname="isExcludeField">
+			<trans-unit id="excludeField" resname="excludeField">
 				<source>Is exclude field?</source>
 			</trans-unit>
 			<trans-unit id="descr_isExcludeField" resname="descr_isExcludeField">
@@ -539,6 +547,18 @@
 			</trans-unit>
 			<trans-unit id="modeler_loadPipeConfirmMessage" resname="modeler_loadPipeConfirmMessage">
 				<source>Do you really want to clear the current working board and load the selected pipe? Unsaved changes will get lost!</source>
+			</trans-unit>
+			<trans-unit id="helpSlack" resname="helpSlack">
+				<source>Slack (#extension-builder)</source>
+			</trans-unit>
+			<trans-unit id="becomeSponsor" resname="becomeSponsor">
+				<source>Sponsoring</source>
+			</trans-unit>
+			<trans-unit id="reportBug" resname="reportBug">
+				<source>Report a bug</source>
+			</trans-unit>
+			<trans-unit id="showDocumentation" resname="showDocumentation">
+				<source>Documentation</source>
 			</trans-unit>
 		</body>
 	</file>

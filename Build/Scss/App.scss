@@ -1,0 +1,54 @@
+$transition-timing: 0.5s ease;
+$btn-background: #F4F4F4;
+$generic-z-index: 1;
+
+#settings-column, #right-column {
+    height: 100vh;
+    z-index: $generic-z-index;
+    transition: $transition-timing;
+}
+
+#settings-column {
+    width: 400px;
+    overflow-y: auto;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+#right-column {
+    position: absolute;
+    left: 0;
+    overflow-y: hidden;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+#show-advanced-options,
+#btn-sidebar-collapse {
+    z-index: 999999999;
+    top: 80px;
+    position: fixed;
+    transition: left $transition-timing;
+    color: #515151;
+    background-color: $btn-background;
+    border-color: $btn-background;
+
+    &.collapsed {
+        left: 20px;
+    }
+
+    &.expanded {
+        left: 415px;
+    }
+}
+
+#show-advanced-options {
+    top: 30px;
+}

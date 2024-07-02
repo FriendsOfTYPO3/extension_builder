@@ -4,8 +4,7 @@ return [
         'title' => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.databaseTableName}',
         'label' => '{domainObject.listModuleValueLabel}',
         'tstamp' => 'tstamp',
-        'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',<f:if condition="{domainObject.sorting}">
+        'crdate' => 'crdate',<f:if condition="{domainObject.sorting}">
         'sortby' => 'sorting',</f:if><f:if condition="{extension.supportVersioning}">
         'versioningWS' => true,</f:if><f:if condition="{extension.supportLocalization}">
         'languageField' => 'sys_language_uid',
@@ -18,7 +17,10 @@ return [
             'endtime' => 'endtime',</f:if>
         ],
         'searchFields' => '<f:for each="{domainObject.searchableProperties}" as="property" iteration="it">{property.fieldName}{f:if(condition: it.isLast, else: ',')}</f:for>',
-        'iconfile' => 'EXT:{domainObject.extension.extensionKey}/Resources/Public/Icons/{domainObject.databaseTableName}.gif'
+        'iconfile' => 'EXT:{domainObject.extension.extensionKey}/Resources/Public/Icons/{domainObject.databaseTableName}.gif',<f:if condition="{domainObject.mappedToExistingTable}"><f:else>
+        'security' => [
+            'ignorePageTypeRestriction' => true,
+        ],</f:else></f:if>
     ],
     'types' => [
         <f:if condition="{domainObject.hasChildren}"><f:then>'{domainObject.recordType}'</f:then><f:else>'1'</f:else></f:if> => ['showitem' => '<f:for each="{domainObject.properties}" as="property" iteration="i">{property.fieldName}{f:if(condition: i.isLast, else: ', ')}</f:for><f:if condition="{extension.supportLocalization}">, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language, sys_language_uid, l10n_parent, l10n_diffsource</f:if><f:if condition="{domainObject.addStarttimeEndtimeFields} || {domainObject.addHiddenField}">, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, </f:if><f:if condition="{domainObject.addHiddenField}">hidden, </f:if><f:if condition="{domainObject.addStarttimeEndtimeFields}">starttime, endtime</f:if>'],
@@ -39,7 +41,7 @@ return [
                 'renderType' => 'selectSingle',
                 'default' => 0,
                 'items' => [
-                    ['', 0],
+                    ['label' => '', 'value' => 0],
                 ],
                 'foreign_table' => '{domainObject.databaseTableName}',
                 'foreign_table_where' => 'AND <k:curlyBrackets>#{domainObject.databaseTableName}</k:curlyBrackets>.<k:curlyBrackets>#pid</k:curlyBrackets>=###CURRENT_PID### AND <k:curlyBrackets>#{domainObject.databaseTableName}</k:curlyBrackets>.<k:curlyBrackets>#sys_language_uid</k:curlyBrackets> IN (-1,0)',
@@ -58,8 +60,7 @@ return [
                 'renderType' => 'checkboxToggle',
                 'items' => [
                     [
-                        0 => '',
-                        1 => '',
+                        'label' => '',
                         'invertStateDisplay' => true
                     ]
                 ],
@@ -69,9 +70,8 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'datetime,int',
+                'type' => 'datetime',
+                'format' => 'datetime',
                 'default' => 0,
                 'behaviour' => [
                     'allowLanguageSynchronization' => true
@@ -82,9 +82,8 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'datetime,int',
+                'type' => 'datetime',
+                'format' => 'datetime',
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038)

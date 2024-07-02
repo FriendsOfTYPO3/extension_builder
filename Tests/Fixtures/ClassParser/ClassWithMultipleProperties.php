@@ -30,20 +30,12 @@ declare(strict_types=1);
  */
 abstract class Tx_PhpParser_Tests_ClassWithMultipleProperties
 {
-    private $test = [
-        'test' => 123,
-        'test5' => 456,
-        'arr' => [
-            'sieben' => 7
-        ]
-    ];
-
     protected $testBoolean = false;
 
-    const TEST = 'MyConstant';
-    const TEST4 = 'MyConstant2';
+    final public const TEST = 'MyConstant';
+    final public const TEST4 = 'MyConstant2';
     // just a single line comment
-    const TEST2 = 890;
+    final public const TEST2 = 890;
 
     /**
      * @var string

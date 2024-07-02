@@ -1,4 +1,5 @@
 .. include:: /Includes.rst.txt
+.. _extending-domain-objects:
 
 =========================================================
 Extending domain objects or map to existing tables
