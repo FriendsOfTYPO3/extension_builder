@@ -1,53 +1,13 @@
 function convertModulesToNodes(modules) {
-    // needed for the node
-    /*
-    {
-        id,
-        type,
-        position: {
-            x,
-            y
-        },
-        data: {
-            label,
-            objectType,
-            isAggregateRoot,
-            enableSorting,
-            addDeletedField,
-            addHiddenField,
-            addStarttimeEndtimeFields,
-            enableCategorization,
-            description,
-            mapToExistingTable,
-            extendExistingModelClass,
-            actions: {
-                actionIndex,
-                actionList,
-                actionShow,
-                actionNewCreate,
-                actionEditUpdate,
-                actionDelete
-            },
-            customActions -> Array,
-            properties -> Array,
-            relations -> Array
-        },
-        positionAbsolute: {
-            x,
-            y
-        }
-    }
-     */
-
     for (let i = 0; i < modules.length; i++) {
-        console.log(`Element ${i}:`, modules[i]);
+        // console.log(`Element ${i}:`, modules[i]);
         // Hier kannst du auf einzelne Eigenschaften des aktuellen Objekts zugreifen, z.B.:
-        console.log(`Name: ${modules[i].name}`);
+        // console.log(`Name: ${modules[i].name}`);
         // Und weitere Verarbeitungen für jedes Objekt im Array durchführen...
     }
 
-    console.log('convertModuleToNodes');
-    console.log(modules);
+    // console.log('convertModuleToNodes');
+    // console.log(modules);
 
     let result = modules.map((item, index) => ({
         id: `dndnode_${index}`,
@@ -93,8 +53,8 @@ function convertModulesToNodes(modules) {
         dragging: false
     }));
 
-    console.log('result');
-    console.log(result);
+    // console.log('result');
+    // console.log(result);
 
     return result;
 }
@@ -112,48 +72,3 @@ function getModelName(item) {
 }
 
 export default convertModulesToNodes;
-
-/*
-{
-    "id": "dndnode_0",
-    "type": "customModel",
-    "position": {
-        "x": 550,
-        "y": 131
-    },
-    "data": {
-        "label": "Testmodule",
-        "objectType": "",
-        "isAggregateRoot": true,
-        "enableSorting": false,
-        "addDeletedField": true,
-        "addHiddenField": true,
-        "addStarttimeEndtimeFields": true,
-        "enableCategorization": false,
-        "description": "",
-        "mapToExistingTable": "",
-        "extendExistingModelClass": "",
-        "actions": {
-            "actionIndex": true,
-            "actionList": true,
-            "actionShow": false,
-            "actionNewCreate": false,
-            "actionEditUpdate": false,
-            "actionDelete": false
-        },
-        "customActions": [],
-        "properties": [],
-        "relations": []
-    },
-    "dragHandle": ".drag-handle",
-    "draggable": true,
-    "width": 300,
-    "height": 257,
-    "selected": true,
-    "positionAbsolute": {
-        "x": 550,
-        "y": 131
-    },
-    "dragging": false
-}
- */

@@ -18,7 +18,7 @@ const SelectComponent = ({ label, options, defaultValue, showEmptyValue = true, 
     }, [initialValue]);
 
     const validate = (value) => {
-        if (validation?.isRequired && value?.trim() === '') {
+        if (validation?.propertyIsRequired && value?.trim() === '') {
             setValidationErrors(prevState => ({...prevState, [identifier]: true}));
             return false;
         }

@@ -50,13 +50,13 @@ export const ActionButtonsComponent = (props) => {
                 properties.push(
                     {
                         "allowedFileTypes": "",
-                        "propertyDescription": property.description,
-                        "excludeField": property.excludeField,
-                        "propertyIsL10nModeExclude": property.isl10nModeExlude,
-                        "propertyIsNullable": property.isNullable,
-                        "propertyIsRequired": property.isRequired,
-                        "propertyType": property.type,
+                        "propertyDescription": property.propertyDescription,
+                        "propertyIsExcludeField": property.propertyIsExcludeField,
+                        "propertyIsL10nModeExclude": property.propertyIsL10nModeExclude,
+                        "propertyIsNullable": property.propertyIsNullable,
+                        "propertyIsRequired": property.propertyIsRequired,
                         "propertyName": property.propertyName,
+                        "propertyType": property.propertyType,
                         "typeSelect": {
                             "selectboxValues": property.typeSelect?.selectboxValues || "",
                             "renderType": property.typeSelect?.renderType || "selectSingle",
@@ -106,7 +106,7 @@ export const ActionButtonsComponent = (props) => {
                     {
                         "foreignRelationClass": relation.foreignRelationClass || "",
                         "lazyLoading": relation.lazyLoading || false,
-                        "propertyIsExcludeField": relation.propertyIsExcludeField || false,
+                        "excludeField": relation.excludeField || false,
                         "relationDescription": relation.relationDescription || "",
                         "relationName": relation.relationName || "",
                         "relationType": relation.relationType || "anyToMany",
@@ -182,13 +182,11 @@ export const ActionButtonsComponent = (props) => {
             return {
                 "src": {
                     "moduleId": modules.findIndex(node => node.name === nodes[sourceIndex].data.label),
-                    "moduleName": nodes[sourceIndex].data.label,
                     "terminal": `relationWire_${relationIndex}`,
                     "uid": edge.id
                 },
                 "tgt": {
                     "moduleId": modules.findIndex(node => node.name === nodes[targetIndex].data.label),
-                    "moduleName": nodes[targetIndex].data.label,
                     "terminal": "SOURCES",
                     "uid": edge.source
                 }
@@ -223,9 +221,9 @@ export const ActionButtonsComponent = (props) => {
                 "plugins": props.plugins,
                 "vendorName": props.properties.vendorName
             },
-            "wires": wires,
+            "wires": wires
             /*"nodes": nodes,*/
-            "edges": edges
+            /*"edges": edges*/
         };
 
         let payload = {
@@ -300,8 +298,8 @@ export const ActionButtonsComponent = (props) => {
         // error = null, if no error occurs
         // success = true, when the request was successful
         // result with the array of extensions
-        console.log("available extensions");
-        console.log(extensions);
+        // console.log("available extensions");
+        // console.log(extensions);
 
         if(extensions.error !== null && extensions.success === false) {
             console.log("fetching failed");

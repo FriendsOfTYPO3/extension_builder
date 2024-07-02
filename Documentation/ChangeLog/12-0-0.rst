@@ -5,6 +5,9 @@
 Version 12.0.0
 ==============
 
+Superfluous dashes in the settings.yaml
+^^^^^^^^^^
+
 Because of some important changes it could be necessary to update your :file:`EXT:my_extension/Configuration/ExtensionBuilder/settings.yaml` file manually.
 
 Please remove the dashes, as they could cause some problems while saving the extension.
@@ -30,3 +33,55 @@ Please remove the dashes, as they could cause some problems while saving the ext
 .. note::
 
    We haven't implemented an Upgrade wizard for this. This might change in the future. Feel free to open an Pull-Request on `GitHub <https://github.com/FriendsOfTYPO3/extension_builder/pulls>`__ for this.
+
+..  versionchanged:: v12.0.0-beta.3
+
+   Converting propertyIsExcludeField to excludeField
+   ^^^^^^^^^^
+
+   If you used a version prior to v12.0.0-beta.3, you might need to change the property `propertyIsExcludeField` to `excludeField` in your TCA ExtensionBuilder.json file manually.
+
+Converting propertyIsExcludeField to excludeField
+^^^^^^^^^^
+
+If you used a version prior to `v12.0.0-beta.3`, you might need to change the property `propertyIsExcludeField` for relations to `excludeField` in your TCA ExtensionBuilder.json file manually.
+
+Example:
+
+..  code-block:: json
+   :caption: EXT:your_ext/Configuration/ExtensionBuilder/settings.yaml
+
+..  code-block:: json
+   :caption: from:
+
+   {
+      "nodes": [
+         {
+            "data": {
+               "relations": [
+                  {
+                     "propertyIsExcludeField": true
+                  }
+               ]
+            }
+         }
+      ]
+   }
+
+..  code-block:: json
+   :caption: to:
+
+   {
+      "nodes": [
+         {
+            "data": {
+               "relations": [
+                  {
+                     "excludeField": true
+                  }
+               ]
+            }
+         }
+      ]
+   }
+

@@ -277,8 +277,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         $fieldsToMap = [
             'relationType',
             'renderType',
-            'propertyIsExcludeField',
-            'propertyIsExcludeField',
+            'excludeField',
             'lazyLoading',
             'relationDescription',
             'foreignRelationClass'

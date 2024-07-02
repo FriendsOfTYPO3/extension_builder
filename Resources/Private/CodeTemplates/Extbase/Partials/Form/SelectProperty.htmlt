@@ -1,1 +1,1 @@
-f:form.textfield property="{property.name}" id="{property.name}" class="form-select"
+f:form.textfield property="{property.propertyName}" id="{property.propertyName}" class="form-select"
