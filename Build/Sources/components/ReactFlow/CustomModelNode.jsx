@@ -778,7 +778,7 @@ export const CustomModelNode = (props) => {
                     props.data.relations.map((relation, index) => {
                         return (
                             <div className="relation" key={relation.uid}>
-{/*                                <pre>
+                                {/*                                <pre>
                                     {JSON.stringify(index, null, 2)}
                                 </pre>
                                 <h4>relation</h4>

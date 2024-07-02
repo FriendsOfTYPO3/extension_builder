@@ -298,8 +298,8 @@ export const ActionButtonsComponent = (props) => {
         // error = null, if no error occurs
         // success = true, when the request was successful
         // result with the array of extensions
-        console.log("available extensions");
-        console.log(extensions);
+        // console.log("available extensions");
+        // console.log(extensions);
 
         if(extensions.error !== null && extensions.success === false) {
             console.log("fetching failed");
