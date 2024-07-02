@@ -9,6 +9,7 @@ Change log
 Version 11.0.13
 ---------------
 * [DOCS] Adds information about a possible missing storage path when using composer mode
+* Bugfixes
 
 Version 11.0.12
 ---------------
