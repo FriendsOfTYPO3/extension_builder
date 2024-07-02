@@ -8,7 +8,7 @@ const defaultAuthor = {
 export const roles = [
     "Developer",
     "testing master",
-    "Project Manager",
+    "Product Manager",
     "Designer",
     "Tester",
     "Documentation Writer",
