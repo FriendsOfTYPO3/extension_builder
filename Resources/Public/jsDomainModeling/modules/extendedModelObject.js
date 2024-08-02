@@ -94,7 +94,7 @@ var advancedFields = {
   }
 };
 
-var relationFieldSet = extbaseModeling_wiringEditorLanguage.modules[0].container.fields[4].inputParams.fields[0].inputParams.elementType.inputParams.fields;
+var relationFieldSet = extbaseModeling_wiringEditorLanguage.modules[0].container.fields[4].inputParams.fields[0].inputParams.elementType.inputParams.fields ?? [];
 relationFieldSet[5] = advancedFields;
 Array.prototype.remove = function (from, to) {
   this.splice(from,

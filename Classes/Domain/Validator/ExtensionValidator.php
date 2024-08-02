@@ -196,7 +196,7 @@ class ExtensionValidator extends AbstractValidator
      * @return array[]
      * @throws Exception
      */
-    public function isValid($extension): array
+    public function isValid($extension): void
     {
         $extensionSettings = $extension->getSettings();
         if (isset($extensionSettings['ignoreWarnings'])) {
@@ -222,7 +222,8 @@ class ExtensionValidator extends AbstractValidator
             $this->validationResult['warnings'] = $warningsToKeep;
         }
 
-        return $this->validationResult;
+        // TODO void must not return anything
+        // return $this->validationResult;
     }
 
     /**

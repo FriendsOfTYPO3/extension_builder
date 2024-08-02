@@ -86,17 +86,31 @@ Element.prototype.parents = function (selector) {
   /**
    * @param {Element} parentEl
    */
-  inputEx.Group.prototype.renderFields = function (parentEl) {
-    renderFields.call(this, parentEl);
-    parentEl.querySelectorAll('fieldset select[name="relationType"]').forEach(function (element, i) {
-      // trigger options rendering & enabling for relationType selectors
-      addFieldsetClass(element);
-    });
-  };
 
-  inputEx.SelectField.prototype.onChange = function (evt) {
-    addFieldsetClass(evt.target);
-  };
+  // console.log("hier");
+  // console.log("prototype", inputEx.Group.prototype.renderFields);
+
+  if(typeof inputEx.Group.prototype.renderFields === 'undefined') {
+    console.log("inputEx.Group.prototype.renderFields ist undefined");
+  } else {
+    inputEx.Group.prototype.renderFields = function (parentEl) {
+      renderFields.call(this, parentEl);
+      parentEl.querySelectorAll('fieldset select[name="relationType"]').forEach(function (element, i) {
+        // trigger options rendering & enabling for relationType selectors
+        addFieldsetClass(element);
+      });
+    };
+  }
+
+  if(typeof inputEx.SelectField === 'undefined' || typeof inputEx.SelectField.prototype.onChange === 'undefined') {
+    console.log("inputEx.SelectField.prototype.onChange ist undefined");
+  } else {
+    inputEx.SelectField.prototype.onChange = function (evt) {
+      addFieldsetClass(evt.target);
+    };
+  }
+
+  // console.log("Hier ende");
 
   /**
    * add the selected propertyType as classname to all propertyGroup fieldsets
