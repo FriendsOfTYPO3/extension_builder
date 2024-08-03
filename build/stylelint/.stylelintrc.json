@@ -1,0 +1,31 @@
+{
+	"$schema": "https://json.schemastore.org/stylelintrc.json",
+	"plugins": [
+		"stylelint-order",
+		"stylelint-prettier"
+	],
+	"extends": [
+		"stylelint-config-recommended",
+		"stylelint-config-standard",
+		"stylelint-config-recommended-scss",
+		"stylelint-config-standard-scss",
+		"stylelint-prettier/recommended"
+	],
+	"rules": {
+		"prettier/prettier": true,
+		"selector-id-pattern": [
+			"(?:(?:[a-z]+(?:-[a-z]+)*)|(?:[a-z]+(?:[A-Z][a-z]*)*)|(?:__.*__)|(?:--.*--))",
+			{
+				"message": "Selector should be written in kebab-case - But until we can enfore this rule we use this"
+			}
+		],
+		"selector-class-pattern": [
+			"(?:(?:[a-z]+(?:-[a-z]+)*)|(?:[a-z]+(?:[A-Z][a-z]*)*)|(?:__.*__)|(?:--.*--))",
+			{
+				"message": "Selector should be written in kebab-case - But until we can enfore this rule we use this"
+			}
+		],
+		"no-descending-specificity": null,
+		"scss/dollar-variable-pattern": null
+	}
+}
