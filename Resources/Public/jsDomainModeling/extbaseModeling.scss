@@ -1,20 +1,20 @@
 //colors
 $color_storm_dust_approx: #666;
 $color_mountain_mist_approx: #999;
-$white: #FFF;
-$color_celeste_approx: #CCC;
-$color_silver_chalice_approx: #AAA;
+$white: #fff;
+$color_celeste_approx: #ccc;
+$color_silver_chalice_approx: #aaa;
 $color_mine_shaft_approx: #333;
-$color_buttercup_approx: #F1A21B;
-$color_milano_red_approx: #C00E0C;
-$red: #F00;
-$color_gallery_approx: #EEE;
-$web_orange: #FFA500;
+$color_buttercup_approx: #f1a21b;
+$color_milano_red_approx: #c00e0c;
+$red: #f00;
+$color_gallery_approx: #eee;
+$web_orange: #ffa500;
 $color_chicago_approx: #585858;
-$color_pink_swan_approx: #BBB;
+$color_pink_swan_approx: #bbb;
 
 //urls
-$url_0: url('background_pixel.png');
+$url_0: url("background_pixel.png");
 
 // @extend-elements
 // original selectors
@@ -184,7 +184,7 @@ div {
 
         textarea {
             @extend %extend_1;
-            border: 1px solid #DDD;
+            border: 1px solid #ddd;
             width: 100%;
 
             &:focus {
@@ -192,7 +192,7 @@ div {
             }
         }
 
-        input[type=text] {
+        input[type="text"] {
             @extend %extend_1;
             width: 100%;
             font-weight: 700;
@@ -217,7 +217,7 @@ div {
                 font-weight: 400;
             }
 
-            input[type=text] {
+            input[type="text"] {
                 border: 1px solid $color_milano_red_approx;
                 font-weight: 400;
             }
@@ -260,7 +260,7 @@ div {
             font-weight: 400;
         }
 
-        .textfieldWrapper.small input[type=text] {
+        .textfieldWrapper.small input[type="text"] {
             width: 40px;
         }
     }
@@ -316,7 +316,7 @@ div {
                 margin-right: 5px;
             }
 
-            input[type=text] {
+            input[type="text"] {
                 margin-left: 0;
                 width: 100%;
             }
@@ -342,10 +342,10 @@ div {
             @extend %extend_1;
 
             width: 100%;
-            border: 1px solid #DDD;
+            border: 1px solid #ddd;
         }
 
-        input[type=text] {
+        input[type="text"] {
             @extend %extend_1;
             margin-left: 30px;
             width: 120px;
@@ -362,7 +362,7 @@ div {
                 font-weight: 400;
             }
 
-            input[type=text] {
+            input[type="text"] {
                 border: 1px solid $color_milano_red_approx;
                 font-weight: 400;
             }
@@ -400,7 +400,7 @@ div {
         }
 
         .textfieldWrapper {
-            input[type=text] {
+            input[type="text"] {
                 width: 90%;
             }
 
@@ -608,7 +608,8 @@ div {
                 display: block;
             }
 
-            &.Password .inputEx-fieldWrapper.dependant.passwordOnly.advancedMode {
+            &.Password
+                .inputEx-fieldWrapper.dependant.passwordOnly.advancedMode {
                 display: block;
             }
 
@@ -628,11 +629,13 @@ div {
                 display: block;
             }
 
-            &.DateTime .inputEx-fieldWrapper.dependant.dateTimeOnly.advancedMode {
+            &.DateTime
+                .inputEx-fieldWrapper.dependant.dateTimeOnly.advancedMode {
                 display: block;
             }
 
-            &.DateTimeStamp .inputEx-fieldWrapper.dependant.dateTimeStampOnly.advancedMode {
+            &.DateTimeStamp
+                .inputEx-fieldWrapper.dependant.dateTimeStampOnly.advancedMode {
                 display: block;
             }
 
@@ -640,7 +643,8 @@ div {
                 display: block;
             }
 
-            &.TimeTimeStamp .inputEx-fieldWrapper.dependant.timeTimeStampOnly.advancedMode {
+            &.TimeTimeStamp
+                .inputEx-fieldWrapper.dependant.timeTimeStampOnly.advancedMode {
                 display: block;
             }
 
@@ -720,7 +724,7 @@ div {
 }
 
 .inputEx-InPlaceEdit-editor {
-    input[type='text'] {
+    input[type="text"] {
         width: 150px;
     }
 
@@ -807,7 +811,7 @@ div.inputEx-Group-collapseImg {
 }
 
 .inputEx-StringField-wrapper {
-    input[type=text] {
+    input[type="text"] {
         font-size: 9pt;
     }
 
@@ -823,11 +827,11 @@ div.inputEx-Group-collapseImg {
                 font-weight: 400;
             }
 
-            input[type=text] {
+            input[type="text"] {
                 font-weight: 400;
             }
 
-            input[type=text][name=relationName] {
+            input[type="text"][name="relationName"] {
                 border: 1px solid $white;
                 font-weight: 700;
             }
@@ -838,7 +842,7 @@ div.inputEx-Group-collapseImg {
                 font-weight: 400;
             }
 
-            input[type=text] {
+            input[type="text"] {
                 font-weight: 400;
             }
 
@@ -973,7 +977,7 @@ label.helpAvailable {
 
 #propertiesForm div.inputEx-Group {
     // They can't be full width because of the up and down arrows and the scrollbar
-    input[type=text] {
+    input[type="text"] {
         padding: 3px;
         width: 200px;
     }
