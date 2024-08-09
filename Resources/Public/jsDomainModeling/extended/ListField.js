@@ -4,6 +4,11 @@
  *    (see line
  **************************************************/
 (function () {
+  var inputEx = YAHOO.inputEx,
+    lang = YAHOO.lang,
+    Event = YAHOO.util.Event,
+    Dom = YAHOO.util.Dom;
+
   /**
    * @class Meta field to create a list of other fields
    * @extends inputEx.Field
@@ -21,11 +26,6 @@
 
   YAHOO.util.Event.onDOMReady(function () {
     if (YAHOO.inputEx) {
-      let inputEx = YAHOO.inputEx;
-      let lang = YAHOO.lang;
-      let Event = YAHOO.util.Event;
-      let Dom = YAHOO.util.Dom;
-
       inputEx.ListField = function (options) {
         /**
          * List of all the subField instances
@@ -563,6 +563,8 @@
 
       inputEx.messages.listAddLink = "add";
       inputEx.messages.listRemoveLink = "remove";
+
+      console.log("inputE2X", inputEx);
     } else {
       console.log("InputEx ist nicht geladen");
     }

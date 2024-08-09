@@ -291,7 +291,7 @@ class BuilderModuleController extends ActionController
 
         // YUI Basis Files
         $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/utilities/utilities.js');
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/extended/ListField.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extended/ListField.js');
         $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/resize/resize-min.js');
         $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/layout/layout-min.js');
         $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/container/container-min.js');
@@ -299,26 +299,26 @@ class BuilderModuleController extends ActionController
         $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/button/button-min.js');
 
         // YUI-RPC
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/wireit/lib/yui-rpc.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui-rpc.js');
 
         // InputEx with wirable options
         $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/inputex.js');
         $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Field.js');
 
         // extended fields for enabling unique ids
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/extended/Group.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extended/Group.js');
 
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/wireit/js/util/inputex/WirableField-beta.js');
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/wireit/lib/inputex/js/Visus.js');
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/wireit/lib/inputex/js/fields/StringField.js');
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/wireit/lib/inputex/js/fields/Textarea.js');
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/wireit/lib/inputex/js/fields/SelectField.js');
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/wireit/lib/inputex/js/fields/EmailField.js');
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/wireit/lib/inputex/js/fields/UrlField.js');
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/wireit/lib/inputex/js/fields/CheckBox.js');
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/wireit/lib/inputex/js/fields/InPlaceEdit.js');
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/wireit/lib/inputex/js/fields/MenuField.js');
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/wireit/lib/inputex/js/fields/TypeField.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/inputex/WirableField-beta.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Visus.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/StringField.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/Textarea.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/SelectField.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/EmailField.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/UrlField.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/CheckBox.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/InPlaceEdit.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/MenuField.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/TypeField.js');
 
         // WireIt
         $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/WireIt.js');
@@ -336,15 +336,14 @@ class BuilderModuleController extends ActionController
 
 
         // Extbase Modelling definition
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/extbaseModeling.js');
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/layout.js');
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/extensionProperties.js');
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/modules/modelObject.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extbaseModeling.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/layout.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extensionProperties.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/modules/modelObject.js');
 
         // collapsible forms in relations
-        $this->pageRenderer->loadJavaScriptModule('@WireIt/js-domain-modeling/modules/extendedModelObject.js');
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/modules/extendedModelObject.js');
 
-        $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/example.js');
         $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/extensionbuilder.js');
 
         // SECTION: CSS Files
