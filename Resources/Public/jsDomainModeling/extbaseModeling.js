@@ -27,129 +27,137 @@ Element.prototype.parents = function (selector) {
 };
 
 (function () {
-  var inputEx = YAHOO.inputEx;
-  var renderFields = inputEx.Group.prototype.renderFields;
+  YAHOO.util.Event.onDOMReady(function () {
+    if (YAHOO.inputEx) {
+      var inputEx = YAHOO.inputEx;
+      var renderFields = inputEx.Group.prototype.renderFields;
 
-  /**
-   * @param {Element} selectElement
-   */
-  function addFieldsetClass(selectElement) {
-    if (
-      YAHOO.util.Dom.get(selectElement).parentNode.classList.contains(
-        "isDependant",
-      )
-    ) {
-      return;
-    }
+      /**
+       * @param {Element} selectElement
+       */
+      function addFieldsetClass(selectElement) {
+        if (
+          YAHOO.util.Dom.get(selectElement).parentNode.classList.contains(
+            "isDependant",
+          )
+        ) {
+          return;
+        }
 
-    var fieldSets = selectElement.parents("fieldset");
-    if (fieldSets.length === 0) {
-      return;
-    }
-    if (selectElement.name === "relationType") {
-      // relations
-      var fieldSet = fieldSets[0];
-      var outerFieldSets = fieldSet.parents("fieldset");
-      if (outerFieldSets.length === 0) {
-        return;
+        var fieldSets = selectElement.parents("fieldset");
+        if (fieldSets.length === 0) {
+          return;
+        }
+        if (selectElement.name === "relationType") {
+          // relations
+          var fieldSet = fieldSets[0];
+          var outerFieldSets = fieldSet.parents("fieldset");
+          if (outerFieldSets.length === 0) {
+            return;
+          }
+          fieldSet = outerFieldSets[0];
+          var renderTypeSelect = fieldSet.querySelectorAll(
+            'select[name="renderType"]',
+          )[0];
+          updateRenderTypeOptions(selectElement.value, renderTypeSelect);
+
+          fieldSet.classList.value = "";
+          fieldSet.classList.add(selectElement.value);
+        }
       }
-      fieldSet = outerFieldSets[0];
-      var renderTypeSelect = fieldSet.querySelectorAll(
-        'select[name="renderType"]',
-      )[0];
-      updateRenderTypeOptions(selectElement.value, renderTypeSelect);
 
-      fieldSet.classList.value = "";
-      fieldSet.classList.add(selectElement.value);
-    }
-  }
-
-  /**
-   * @param {String} selectedRelationType
-   * @param {Element} renderTypeSelect
-   */
-  function updateRenderTypeOptions(selectedRelationType, renderTypeSelect) {
-    renderTypeSelect.querySelectorAll("option").forEach(function (option, i) {
-      option.style.display = "none";
-    });
-    var optionValueMap = {
-      zeroToOne: ["selectSingle", "selectMultipleSideBySide", "inline"],
-      manyToOne: ["selectSingle", "selectMultipleSideBySide"],
-      zeroToMany: ["inline", "selectMultipleSideBySide"],
-      manyToMany: [
-        "selectMultipleSideBySide",
-        "selectSingleBox",
-        "selectCheckBox",
-      ],
-    };
-    var validOptions = optionValueMap[selectedRelationType];
-    validOptions.forEach(function (e, i) {
-      renderTypeSelect
-        .querySelectorAll('option[value="' + e + '"]')
-        .forEach(function (option, i) {
-          option.style.display = "block";
+      /**
+       * @param {String} selectedRelationType
+       * @param {Element} renderTypeSelect
+       */
+      function updateRenderTypeOptions(selectedRelationType, renderTypeSelect) {
+        renderTypeSelect
+          .querySelectorAll("option")
+          .forEach(function (option, i) {
+            option.style.display = "none";
+          });
+        var optionValueMap = {
+          zeroToOne: ["selectSingle", "selectMultipleSideBySide", "inline"],
+          manyToOne: ["selectSingle", "selectMultipleSideBySide"],
+          zeroToMany: ["inline", "selectMultipleSideBySide"],
+          manyToMany: [
+            "selectMultipleSideBySide",
+            "selectSingleBox",
+            "selectCheckBox",
+          ],
+        };
+        var validOptions = optionValueMap[selectedRelationType];
+        validOptions.forEach(function (e, i) {
+          renderTypeSelect
+            .querySelectorAll('option[value="' + e + '"]')
+            .forEach(function (option, i) {
+              option.style.display = "block";
+            });
         });
-    });
-    if (validOptions.indexOf(renderTypeSelect.value) < 0) {
-      renderTypeSelect.value = validOptions[0];
+        if (validOptions.indexOf(renderTypeSelect.value) < 0) {
+          renderTypeSelect.value = validOptions[0];
+        }
+      }
+
+      /**
+       * @param {Element} parentEl
+       */
+
+      // console.log("hier");
+      // console.log("prototype", inputEx.Group.prototype.renderFields);
+
+      if (typeof inputEx.Group.prototype.renderFields === "undefined") {
+        console.log("inputEx.Group.prototype.renderFields ist undefined");
+      } else {
+        inputEx.Group.prototype.renderFields = function (parentEl) {
+          renderFields.call(this, parentEl);
+          parentEl
+            .querySelectorAll('fieldset select[name="relationType"]')
+            .forEach(function (element, i) {
+              // trigger options rendering & enabling for relationType selectors
+              addFieldsetClass(element);
+            });
+        };
+      }
+
+      if (
+        typeof inputEx.SelectField === "undefined" ||
+        typeof inputEx.SelectField.prototype.onChange === "undefined"
+      ) {
+        console.log("inputEx.SelectField.prototype.onChange ist undefined");
+      } else {
+        inputEx.SelectField.prototype.onChange = function (evt) {
+          addFieldsetClass(evt.target);
+        };
+      }
+
+      // console.log("Hier ende");
+
+      /**
+       * add the selected propertyType as classname to all propertyGroup fieldsets
+       */
+      WireIt.WiringEditor.prototype.onPipeLoaded = function () {
+        var propertyTypeSelects = document.querySelectorAll(
+          ".propertyGroup select",
+        );
+        if (propertyTypeSelects.length > 0) {
+          propertyTypeSelects.forEach(function (el, i) {
+            addFieldsetClass(el);
+          });
+        }
+        var relationTypeSelects = document.querySelectorAll(
+          ".relationGroup select",
+        );
+        if (relationTypeSelects.length > 0) {
+          relationTypeSelects.forEach(function (el, i) {
+            addFieldsetClass(el);
+          });
+        }
+      };
+    } else {
+      console.log("InputEx ist nicht geladen");
     }
-  }
-
-  /**
-   * @param {Element} parentEl
-   */
-
-  // console.log("hier");
-  // console.log("prototype", inputEx.Group.prototype.renderFields);
-
-  if (typeof inputEx.Group.prototype.renderFields === "undefined") {
-    console.log("inputEx.Group.prototype.renderFields ist undefined");
-  } else {
-    inputEx.Group.prototype.renderFields = function (parentEl) {
-      renderFields.call(this, parentEl);
-      parentEl
-        .querySelectorAll('fieldset select[name="relationType"]')
-        .forEach(function (element, i) {
-          // trigger options rendering & enabling for relationType selectors
-          addFieldsetClass(element);
-        });
-    };
-  }
-
-  if (
-    typeof inputEx.SelectField === "undefined" ||
-    typeof inputEx.SelectField.prototype.onChange === "undefined"
-  ) {
-    console.log("inputEx.SelectField.prototype.onChange ist undefined");
-  } else {
-    inputEx.SelectField.prototype.onChange = function (evt) {
-      addFieldsetClass(evt.target);
-    };
-  }
-
-  // console.log("Hier ende");
-
-  /**
-   * add the selected propertyType as classname to all propertyGroup fieldsets
-   */
-  WireIt.WiringEditor.prototype.onPipeLoaded = function () {
-    var propertyTypeSelects = document.querySelectorAll(
-      ".propertyGroup select",
-    );
-    if (propertyTypeSelects.length > 0) {
-      propertyTypeSelects.forEach(function (el, i) {
-        addFieldsetClass(el);
-      });
-    }
-    var relationTypeSelects = document.querySelectorAll(
-      ".relationGroup select",
-    );
-    if (relationTypeSelects.length > 0) {
-      relationTypeSelects.forEach(function (el, i) {
-        addFieldsetClass(el);
-      });
-    }
-  };
+  });
 })();
 
 YAHOO.util.Event.onAvailable("extensionDependencies-field", function () {
