@@ -10,23 +10,17 @@ var advancedFields = {
       {
         type: "select",
         inputParams: {
-          label: TYPO3.settings.extensionBuilder._LOCAL_LANG.type,
+          label: "type",
           name: "relationType",
           selectValues: ["zeroToOne", "zeroToMany", "manyToOne", "manyToMany"],
-          selectOptions: [
-            TYPO3.settings.extensionBuilder._LOCAL_LANG.zeroToOne,
-            TYPO3.settings.extensionBuilder._LOCAL_LANG.zeroToMany,
-            TYPO3.settings.extensionBuilder._LOCAL_LANG.manyToOne,
-            TYPO3.settings.extensionBuilder._LOCAL_LANG.manyToMany,
-          ],
+          selectOptions: ["zeroToOne", "zeroToMany", "manyToOne", "manyToMany"],
         },
       },
       {
         type: "select",
         inputParams: {
-          label: TYPO3.settings.extensionBuilder._LOCAL_LANG.renderType,
-          description:
-            TYPO3.settings.extensionBuilder._LOCAL_LANG.desc_renderType,
+          label: "renderType",
+          description: "desc_renderType",
           wrapperClassName: "inputEx-fieldWrapper dependant renderType",
           className: "inputEx-Field isDependant",
           name: "renderType",
@@ -39,19 +33,18 @@ var advancedFields = {
             "selectSingle",
           ],
           selectOptions: [
-            TYPO3.settings.extensionBuilder._LOCAL_LANG.selectSingleBox,
-            TYPO3.settings.extensionBuilder._LOCAL_LANG.selectCheckBox,
-            TYPO3.settings.extensionBuilder._LOCAL_LANG
-              .selectMultipleSideBySide,
-            TYPO3.settings.extensionBuilder._LOCAL_LANG.inline,
-            TYPO3.settings.extensionBuilder._LOCAL_LANG.select,
+            "selectSingleBox",
+            "selectCheckBox",
+            "selectMultipleSideBySide",
+            "inline",
+            "select",
           ],
         },
       },
       {
         type: "text",
         inputParams: {
-          placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
+          placeholder: "description",
           name: "relationDescription",
           cols: 20,
           rows: 2,
@@ -60,36 +53,31 @@ var advancedFields = {
       {
         type: "boolean",
         inputParams: {
-          label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isExcludeField,
+          label: "isExcludeField",
           name: "propertyIsExcludeField",
           advancedMode: true,
           value: true,
-          description:
-            TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_isExcludeField,
+          description: "descr_isExcludeField",
         },
       },
       {
         type: "boolean",
         inputParams: {
-          label: TYPO3.settings.extensionBuilder._LOCAL_LANG.lazyLoading,
+          label: "lazyLoading",
           name: "lazyLoading",
           advancedMode: true,
-          description:
-            TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_lazyLoading,
+          description: "descr_lazyLoading",
           value: false,
         },
       },
       {
         type: "string",
         inputParams: {
-          label:
-            TYPO3.settings.extensionBuilder._LOCAL_LANG.foreignRelationClass,
+          label: "foreignRelationClass",
           name: "foreignRelationClass",
           placeholder: "\\Fully\\Qualified\\Classname",
           advancedMode: true,
-          description:
-            TYPO3.settings.extensionBuilder._LOCAL_LANG
-              .descr_foreignRelationClass,
+          description: "descr_foreignRelationClass",
         },
       },
     ],

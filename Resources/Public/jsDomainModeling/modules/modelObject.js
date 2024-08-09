@@ -1,503 +1,500 @@
 extbaseModeling_wiringEditorLanguage.modules.push({
-  name: 'New Model Object',
-  container: {	// Configuration according to WireIt.Container.options
-    xtype: 'WireIt.FormContainer',
-    title: 'Title',	// this will be overriden in WiteIt.WiringEditor.addModule() with the module name, so it could also be left empty here
+  name: "New Model Object",
+  container: {
+    // Configuration according to WireIt.Container.options
+    xtype: "WireIt.FormContainer",
+    title: "Title", // this will be overriden in WiteIt.WiringEditor.addModule() with the module name, so it could also be left empty here
     preventSelfWiring: false,
     fields: [
       {
-        type: 'inplaceedit',
+        type: "inplaceedit",
         inputParams: {
-          name: 'name',
-          className: 'inputEx-Field extbase-modelTitleEditor',
+          name: "name",
+          className: "inputEx-Field extbase-modelTitleEditor",
           editorField: {
-            type: 'string',
+            type: "string",
             inputParams: {
               required: true,
-              firstCharNonNumeric: true
-            }
+              firstCharNonNumeric: true,
+            },
           },
-          animColors: {from: '#cccccc', to: '#cccccc'}
-        }
+          animColors: { from: "#cccccc", to: "#cccccc" },
+        },
       },
       {
-        type: 'group',
+        type: "group",
         inputParams: {
           collapsible: true,
           collapsed: true,
-          legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.domainObjectSettings,
-          className: 'objectSettings',
-          name: 'objectsettings',
+          legend: "domainObjectSettings",
+          className: "objectSettings",
+          name: "objectsettings",
           fields: [
             {
               inputParams: {
-                name: 'uid',
-                className: 'hiddenField'
-              }
+                name: "uid",
+                className: "hiddenField",
+              },
             },
             {
-              type: 'select',
+              type: "select",
               inputParams: {
-                name: 'type',
+                name: "type",
                 advancedMode: true,
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.objectType,
-                description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_objectType,
-                selectValues: [
-                  'Entity',
-                  'ValueObject'
-                ],
-                selectOptions: [
-                  TYPO3.settings.extensionBuilder._LOCAL_LANG.entity,
-                  TYPO3.settings.extensionBuilder._LOCAL_LANG.valueObject
-                ]
-              }
+                label: "objectType",
+                description: "descr_objectType",
+                selectValues: ["Entity", "ValueObject"],
+                selectOptions: ["entity", "valueObject"],
+              },
             },
             {
-              type: 'boolean',
+              type: "boolean",
               inputParams: {
-                name: 'aggregateRoot',
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isAggregateRoot,
-                description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_isAggregateRoot,
-                value: false
-              }
+                name: "aggregateRoot",
+                label: "isAggregateRoot",
+                description: "descr_isAggregateRoot",
+                value: false,
+              },
             },
             {
-              type: 'boolean',
+              type: "boolean",
               inputParams: {
-                name: 'sorting',
+                name: "sorting",
                 advancedMode: true,
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.enableSorting,
-                description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_enableSorting,
-                value: false
-              }
+                label: "enableSorting",
+                description: "descr_enableSorting",
+                value: false,
+              },
             },
             {
-              type: 'boolean',
+              type: "boolean",
               inputParams: {
-                name: 'addDeletedField',
+                name: "addDeletedField",
                 advancedMode: true,
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.addDeletedField,
-                description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_addDeletedField,
-                value: true
-              }
+                label: "addDeletedField",
+                description: "descr_addDeletedField",
+                value: true,
+              },
             },
             {
-              type: 'boolean',
+              type: "boolean",
               inputParams: {
-                name: 'addHiddenField',
+                name: "addHiddenField",
                 advancedMode: true,
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.addHiddenField,
-                description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_addHiddenField,
-                value: true
-              }
+                label: "addHiddenField",
+                description: "descr_addHiddenField",
+                value: true,
+              },
             },
             {
-              type: 'boolean',
+              type: "boolean",
               inputParams: {
-                name: 'addStarttimeEndtimeFields',
+                name: "addStarttimeEndtimeFields",
                 advancedMode: true,
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.addStarttimeEndtimeFields,
-                description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_addStarttimeEndtimeFields,
-                value: true
-              }
+                label: "addStarttimeEndtimeFields",
+                description: "descr_addStarttimeEndtimeFields",
+                value: true,
+              },
             },
             {
-              type: 'boolean',
+              type: "boolean",
               inputParams: {
-                name: 'categorizable',
+                name: "categorizable",
                 advancedMode: true,
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.enableCategorizable,
-                description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_enableCategorizable,
-                value: false
-              }
+                label: "enableCategorizable",
+                description: "descr_enableCategorizable",
+                value: false,
+              },
             },
             {
-              type: 'text',
+              type: "text",
               inputParams: {
-                name: 'description',
-                className: 'bottomBorder',
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
-                placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
+                name: "description",
+                className: "bottomBorder",
+                label: "description",
+                placeholder: "description",
                 required: false,
                 cols: 20,
-                rows: 2
-              }
+                rows: 2,
+              },
             },
             {
-              type: 'string',
+              type: "string",
               inputParams: {
-                name: 'mapToTable',
+                name: "mapToTable",
                 advancedMode: true,
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.mapToTable,
-                description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_mapToTable,
-                required: false
-              }
+                label: "mapToTable",
+                description: "descr_mapToTable",
+                required: false,
+              },
             },
             {
-              type: 'string',
+              type: "string",
               inputParams: {
-                name: 'parentClass',
+                name: "parentClass",
                 advancedMode: true,
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.parentClass,
-                placeholder: '\\Fully\\Qualified\\Classname',
-                description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_parentClass,
-                required: false
-              }
-            }
-          ]
-        }
+                label: "parentClass",
+                placeholder: "\\Fully\\Qualified\\Classname",
+                description: "descr_parentClass",
+                required: false,
+              },
+            },
+          ],
+        },
       },
       {
-        type: 'group',
+        type: "group",
         inputParams: {
           collapsible: true,
           collapsed: true,
-          legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.defaultActions,
-          name: 'actionGroup',
-          className: 'actionGroup',
+          legend: "defaultActions",
+          name: "actionGroup",
+          className: "actionGroup",
           fields: [
             {
-              type: 'boolean',
+              type: "boolean",
               inputParams: {
-                name: '_default0_index',
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.index,
-                value: false
-              }
+                name: "_default0_index",
+                label: "index",
+                value: false,
+              },
             },
             {
-              type: 'boolean',
+              type: "boolean",
               inputParams: {
-                name: '_default1_list',
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.list,
-                value: false
-              }
+                name: "_default1_list",
+                label: "list",
+                value: false,
+              },
             },
             {
-              type: 'boolean',
+              type: "boolean",
               inputParams: {
-                name: '_default2_show',
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.show,
-                value: false
-              }
+                name: "_default2_show",
+                label: "show",
+                value: false,
+              },
             },
             {
-              type: 'boolean',
+              type: "boolean",
               inputParams: {
-                name: '_default3_new_create',
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.create_new,
-                value: false
-              }
+                name: "_default3_new_create",
+                label: "create_new",
+                value: false,
+              },
             },
             {
-              type: 'boolean',
+              type: "boolean",
               inputParams: {
-                name: '_default4_edit_update',
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.edit_update,
-                value: false
-              }
+                name: "_default4_edit_update",
+                label: "edit_update",
+                value: false,
+              },
             },
             {
-              type: 'boolean',
+              type: "boolean",
               inputParams: {
-                name: '_default5_delete',
-                label: TYPO3.settings.extensionBuilder._LOCAL_LANG.delete,
-                value: false
-              }
+                name: "_default5_delete",
+                label: "delete",
+                value: false,
+              },
             },
             {
-              type: 'list',
+              type: "list",
               inputParams: {
-                label: 'Custom actions',
-                name: 'customActions',
+                label: "Custom actions",
+                name: "customActions",
                 sortable: true,
                 elementType: {
-                  type: 'input',
+                  type: "input",
                   inputParams: {
-                    name: 'customAction',
-                    label: TYPO3.settings.extensionBuilder._LOCAL_LANG.customAction,
+                    name: "customAction",
+                    label: "customAction",
                     forceAlphaNumeric: true,
                     firstCharNonNumeric: true,
-                    lcFirst: true
-                  }
-                }
-              }
-            }
-          ]
-        }
+                    lcFirst: true,
+                  },
+                },
+              },
+            },
+          ],
+        },
       },
       {
-        type: 'group',
+        type: "group",
         inputParams: {
           collapsible: true,
           collapsed: true,
-          className: 'properties',
-          legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.properties,
-          name: 'propertyGroup',
+          className: "properties",
+          legend: "properties",
+          name: "propertyGroup",
           fields: [
             {
-              type: 'list',
+              type: "list",
               inputParams: {
-                label: '',
-                name: 'properties',
+                label: "",
+                name: "properties",
                 wirable: false,
                 sortable: true,
                 elementType: {
-                  type: 'group',
+                  type: "group",
                   inputParams: {
-                    name: 'property',
-                    className: 'propertyGroup',
+                    name: "property",
+                    className: "propertyGroup",
                     fields: [
                       {
-                        type: 'hidden',
+                        type: "hidden",
                         inputParams: {
-                          name: 'uid',
-                          className: 'hiddenField'
-                        }
+                          name: "uid",
+                          className: "hiddenField",
+                        },
                       },
                       {
-                        type: 'string',
+                        type: "string",
                         inputParams: {
-                          name: 'propertyName',
+                          name: "propertyName",
                           forceAlphaNumeric: true,
                           lcFirst: true,
                           firstCharNonNumeric: true,
-                          placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.propertyName,
-                          description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_propertyName,
-                          required: true
-                        }
+                          placeholder: "propertyName",
+                          description: "descr_propertyName",
+                          required: true,
+                        },
                       },
                       {
-                        type: 'select',
+                        type: "select",
                         inputParams: {
-                          name: 'propertyType',
-                          //label: TYPO3.settings.extensionBuilder._LOCAL_LANG.propertyType,
-                          description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_propertyType,
+                          name: "propertyType",
+                          //label: propertyType,
+                          description: "descr_propertyType",
                           selectValues: [
-                            'String',
-                            'Text',
-                            'RichText',
-                            'Slug',
-                            'ColorPicker',
-                            'Password',
-                            'Email',
-                            'Integer',
-                            'Float',
-                            'Boolean',
-                            'InputLink',
-                            'NativeDate',
-                            'NativeDateTime',
-                            'Date',
-                            'DateTime',
-                            'NativeTime',
-                            'Time',
-                            'TimeSec',
-                            'Select',
-                            'File',
-                            'Image',
-                            'PassThrough',
-                            'None',
+                            "String",
+                            "Text",
+                            "RichText",
+                            "Slug",
+                            "ColorPicker",
+                            "Password",
+                            "Email",
+                            "Integer",
+                            "Float",
+                            "Boolean",
+                            "InputLink",
+                            "NativeDate",
+                            "NativeDateTime",
+                            "Date",
+                            "DateTime",
+                            "NativeTime",
+                            "Time",
+                            "TimeSec",
+                            "Select",
+                            "File",
+                            "Image",
+                            "PassThrough",
+                            "None",
                           ],
                           selectOptions: [
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.string,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.text,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.richText,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.slug,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.colorPicker,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.password,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.email,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.integer,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.floatingPoint,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.boolean,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.inputLink,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.nativeDate,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.nativeDateTime,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.date,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.dateTime,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.nativeTime,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.time,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.timeSec,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.selectList,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.file,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.image,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.passThrough,
-                            TYPO3.settings.extensionBuilder._LOCAL_LANG.none,
-                          ]
-                        }
+                            "string",
+                            "text",
+                            "richText",
+                            "slug",
+                            "colorPicker",
+                            "password",
+                            "email",
+                            "integer",
+                            "floatingPoint",
+                            "boolean",
+                            "inputLink",
+                            "nativeDate",
+                            "nativeDateTime",
+                            "date",
+                            "dateTime",
+                            "nativeTime",
+                            "time",
+                            "timeSec",
+                            "selectList",
+                            "file",
+                            "image",
+                            "passThrough",
+                            "none",
+                          ],
+                        },
                       },
                       {
-                        type: 'text',
+                        type: "text",
                         inputParams: {
                           advancedMode: true,
-                          name: 'propertyDescription',
-                          placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
+                          name: "propertyDescription",
+                          placeholder: "description",
                           cols: 23,
-                          rows: 2
-                        }
+                          rows: 2,
+                        },
                       },
                       {
-                        type: 'string',
+                        type: "string",
                         inputParams: {
-                          classname: 'textfieldWrapper dependant fileOnly',
-                          label: TYPO3.settings.extensionBuilder._LOCAL_LANG.allowedFileTypes,
-                          description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_allowedFileTypes,
+                          classname: "textfieldWrapper dependant fileOnly",
+                          label: "allowedFileTypes",
+                          description: "descr_allowedFileTypes",
                           advancedMode: true,
-                          name: 'allowedFileTypes'
-                        }
+                          name: "allowedFileTypes",
+                        },
                       },
                       {
-                        type: 'string',
+                        type: "string",
                         inputParams: {
-                          classname: 'textfieldWrapper dependant fileOnly imageOnly small',
-                          label: TYPO3.settings.extensionBuilder._LOCAL_LANG.maxItems,
+                          classname:
+                            "textfieldWrapper dependant fileOnly imageOnly small",
+                          label: "maxItems",
                           advancedMode: true,
-                          name: 'maxItems',
-                          value: 1
-                        }
+                          name: "maxItems",
+                          value: 1,
+                        },
                       },
                       {
-                        type: 'boolean',
+                        type: "boolean",
                         inputParams: {
-                          label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isRequired,
+                          label: "isRequired",
                           advancedMode: true,
-                          name: 'propertyIsRequired',
-                          value: false
-                        }
+                          name: "propertyIsRequired",
+                          value: false,
+                        },
                       },
                       {
-                        type: 'boolean',
+                        type: "boolean",
                         inputParams: {
-                          classname: 'dependant stringOnly textOnly passwordOnly emailOnly integerOnly floatOnly dateOnly dateTimeOnly dateTimeStampOnly timeOnly timeTimeStampOnly timeSecOnly',
-                          label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isNullable,
+                          classname:
+                            "dependant stringOnly textOnly passwordOnly emailOnly integerOnly floatOnly dateOnly dateTimeOnly dateTimeStampOnly timeOnly timeTimeStampOnly timeSecOnly",
+                          label: "isNullable",
                           advancedMode: true,
-                          name: 'propertyIsNullable',
-                          value: false
-                        }
+                          name: "propertyIsNullable",
+                          value: false,
+                        },
                       },
                       {
-                        type: 'boolean',
+                        type: "boolean",
                         inputParams: {
-                          label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isExcludeField,
+                          label: "isExcludeField",
                           advancedMode: true,
-                          name: 'propertyIsExcludeField',
-                          description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_isExcludeField,
-                          value: true
-                        }
+                          name: "propertyIsExcludeField",
+                          description: "descr_isExcludeField",
+                          value: true,
+                        },
                       },
                       {
-                        type: 'boolean',
+                        type: "boolean",
                         inputParams: {
-                          label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isL10nModeExclude,
+                          label: "isL10nModeExclude",
                           advancedMode: true,
-                          name: 'propertyIsL10nModeExclude',
-                          description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_isL10nModeExclude,
-                          value: false
-                        }
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          ]
-        }
+                          name: "propertyIsL10nModeExclude",
+                          description: "descr_isL10nModeExclude",
+                          value: false,
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          ],
+        },
       },
       {
-        type: 'group',
+        type: "group",
         inputParams: {
           collapsible: false,
           collapsed: false,
-          legend: TYPO3.settings.extensionBuilder._LOCAL_LANG.relations,
-          name: 'relationGroup',
+          legend: "relations",
+          name: "relationGroup",
           fields: [
             {
-              type: 'list',
+              type: "list",
               inputParams: {
-                name: 'relations',
-                className: 'relations',
+                name: "relations",
+                className: "relations",
                 wirable: false,
                 sortable: true,
                 elementType: {
-                  type: 'group',
+                  type: "group",
                   inputParams: {
-                    name: 'relation',
-                    className: 'relationGroup',
+                    name: "relation",
+                    className: "relationGroup",
                     fields: [
                       {
-                        type: 'hidden',
+                        type: "hidden",
                         inputParams: {
-                          name: 'uid',
-                          className: 'hiddenField'
-                        }
+                          name: "uid",
+                          className: "hiddenField",
+                        },
                       },
                       {
-                        type: 'string',
+                        type: "string",
                         inputParams: {
-                          placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.relationName,
-                          name: 'relationName',
+                          placeholder: "relationName",
+                          name: "relationName",
                           forceAlphaNumeric: true,
                           firstCharNonNumeric: true,
                           lcFirst: true,
-                          description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_relationName,
-                          required: true
-                        }
+                          description: "descr_relationName",
+                          required: true,
+                        },
                       },
                       {
-                        type: 'boolean',
+                        type: "boolean",
                         inputParams: {
-                          name: 'propertyIsExcludeField',
+                          name: "propertyIsExcludeField",
                           advancedMode: true,
-                          label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isExcludeField,
-                          description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_isExcludeField,
-                          value: true
-                        }
+                          label: "isExcludeField",
+                          description: "descr_isExcludeField",
+                          value: true,
+                        },
                       },
                       {
-                        type: 'text',
+                        type: "text",
                         inputParams: {
-                          name: 'relationDescription',
-                          label: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
-                          placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
+                          name: "relationDescription",
+                          label: "description",
+                          placeholder: "description",
                           required: false,
                           cols: 20,
-                          rows: 3
-                        }
+                          rows: 3,
+                        },
                       },
                       {
-                        type: 'string',
+                        type: "string",
                         inputParams: {
-                          label: '',
-                          name: 'relationWire',
+                          label: "",
+                          name: "relationWire",
                           required: false,
                           wirable: true,
-                          className: 'terminalFieldWrap',
+                          className: "terminalFieldWrap",
                           ddConfig: {
-                            type: 'input',
-                            allowedTypes: ['output']
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
+                            type: "input",
+                            allowedTypes: ["output"],
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          ],
+        },
+      },
     ],
     terminals: [
       {
-        name: 'SOURCES',
+        name: "SOURCES",
         direction: [0, -1],
         offsetPosition: {
           left: 5,
-          top: -2
+          top: -2,
         },
         ddConfig: {
-          type: 'output',
-          allowedTypes: ['input']
-        }
-      }
-    ]
-  }
+          type: "output",
+          allowedTypes: ["input"],
+        },
+      },
+    ],
+  },
 });

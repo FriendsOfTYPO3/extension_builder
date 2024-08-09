@@ -2,22 +2,22 @@
 extbaseModeling_wiringEditorLanguage.layoutOptions = {
   units: [
     {
-      position: 'left',
+      position: "left",
       width: 280,
       resize: true,
-      body: 'left',
-      gutter: '5px',
+      body: "left",
+      gutter: "5px",
       collapse: true,
       collapseSize: 20,
-      header: TYPO3.settings.extensionBuilder._LOCAL_LANG.extensionProperties,
+      header: "Extension properties",
       scroll: true,
-      animate: false
+      animate: false,
     },
     {
-      position: 'center',
-      body: 'center',
-      gutter: '5px',
-      scroll: false
-    }
-  ]
+      position: "center",
+      body: "center",
+      gutter: "5px",
+      scroll: false,
+    },
+  ],
 };
