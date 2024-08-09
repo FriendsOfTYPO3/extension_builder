@@ -18,13 +18,10 @@
 		// InputEx needs a correct path to this image
 		inputEx.spacerUrl = "/_assets/705f31da96f0870eac9db412ee92df1f/jsDomainModeling/wireit/lib/inputex/images/space.gif";
 
-		// YAHOO.util.Event.onDOMReady(function() {
+		YAHOO.util.Event.onDOMReady(function() {
+			console.log("On don ready");
 			const editor = new WireIt.WiringEditor(extbaseModeling_wiringEditorLanguage);
-			const initialWarnings = initialWarnings;
-			if (initialWarnings.length > 0) {
-				editor.alert('Warning', initialWarnings.join('<br />'));
-			}
-		// });
+		});
 	</script>
 </f:section>
 </html>
