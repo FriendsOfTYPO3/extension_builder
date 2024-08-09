@@ -29,8 +29,8 @@ YAHOO.extend(WireIt.util.DD, YAHOO.util.DD, {
    * @method onDrag
    */
   onDrag: function (e) {
-    var leftPanel = $(".yui-layout-unit-left");
-    var leftWidth = leftPanel.width() + 10;
+    var leftPanel = document.querySelector(".yui-layout-unit-left");
+    var leftWidth = leftPanel.offsetWidth + 10;
 
     // Make sure terminalList is an array
     var terminalList = YAHOO.lang.isArray(this._WireItTerminals)

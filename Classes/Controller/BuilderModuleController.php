@@ -285,7 +285,9 @@ class BuilderModuleController extends ActionController
 
         // Initializing
         $this->pageRenderer->loadJavaScriptModule('@friendsoftypo3/extension-builder/init.js');
-        // $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/JavaScript/init.js');        // Yahoo Min Base
+
+        // jQuery
+        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/JavaScript/jquery.js');
 
         // YUI Basis Files
         $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/utilities/utilities.js');
