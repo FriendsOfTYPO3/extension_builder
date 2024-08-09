@@ -1,6 +1,9 @@
-**/node_modules/**
+# **/node_modules/**
+#
+# # Ignore lib files
+# "**/libs/*.{css,scss,sass}"
+# "**/lib/*.{css,scss,sass}"
 
-# Ignore lib files
-"**/libs/*.{css,scss,sass}"
+Resources/Public/jsDomainModeling/wireit/*
 
-**/Resources/Public/jsDomainModeling/*{.js,.ts}
+Documentation-GENERATED-temp/*
