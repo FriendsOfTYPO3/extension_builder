@@ -1,5 +1,8 @@
 (function () {
-  var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Dom = YAHOO.util.Dom, Event = YAHOO.util.Event;
+  var inputEx = YAHOO.inputEx,
+    lang = YAHOO.lang,
+    Dom = YAHOO.util.Dom,
+    Event = YAHOO.util.Event;
 
   /**
    * @class Handle a group of fields
@@ -23,32 +26,39 @@
       }
     }
   };
-  lang.extend(inputEx.Group, inputEx.Field,
+  lang.extend(
+    inputEx.Group,
+    inputEx.Field,
     /**
      * @scope inputEx.Group.prototype
      */
     {
-
       /**
        * Adds some options: legend, collapsible, fields...
        * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
        */
       setOptions: function (options) {
         this.options = {};
-        this.options.className = options.className || 'inputEx-Group';
+        this.options.className = options.className || "inputEx-Group";
         this.options.fields = options.fields;
         this.options.id = options.id;
         this.options.name = options.name;
         this.options.value = options.value;
         this.options.flatten = options.flatten;
-        this.options.legend = options.legend || '';
+        this.options.legend = options.legend || "";
 
         // leave this for compatibility reasons
         this.inputConfigs = options.fields;
 
-        this.options.collapsible = lang.isUndefined(options.collapsible) ? false : options.collapsible;
-        this.options.collapsed = lang.isUndefined(options.collapsed) ? false : options.collapsed;
-        this.options.disabled = lang.isUndefined(options.disabled) ? false : options.disabled;
+        this.options.collapsible = lang.isUndefined(options.collapsible)
+          ? false
+          : options.collapsible;
+        this.options.collapsed = lang.isUndefined(options.collapsed)
+          ? false
+          : options.collapsed;
+        this.options.disabled = lang.isUndefined(options.disabled)
+          ? false
+          : options.disabled;
 
         // Array containing the list of the field instances
         this.inputs = [];
@@ -63,10 +73,10 @@
       render: function () {
         var className = this.options.className;
         if (this.options.collapsible) {
-          className += ' expanded';
+          className += " expanded";
         }
         // Create the div wrapper for this group
-        this.divEl = inputEx.cn('div', {className: className});
+        this.divEl = inputEx.cn("div", { className: className });
         if (this.options.id) {
           this.divEl.id = this.options.id;
         }
@@ -83,23 +93,37 @@
        * We use the parentEl so that inputEx.Form can append them to the FORM tag
        */
       renderFields: function (parentEl) {
-
-        this.fieldset = inputEx.cn('fieldset');
-        this.legend = inputEx.cn('legend', {className: 'inputEx-Group-legend'});
+        this.fieldset = inputEx.cn("fieldset");
+        this.legend = inputEx.cn("legend", {
+          className: "inputEx-Group-legend",
+        });
 
         // Option Collapsible
         //TODO: <MF> should it be renamed to 'collapsed'?
         if (this.options.collapsible) {
-          var collapseImg = inputEx.cn('div', {className: 'inputEx-Group-collapseImg'}, null, ' ');
+          var collapseImg = inputEx.cn(
+            "div",
+            { className: "inputEx-Group-collapseImg" },
+            null,
+            " ",
+          );
           this.legend.appendChild(collapseImg);
-          inputEx.sn(this.fieldset, {className: 'inputEx-Expanded'});
+          inputEx.sn(this.fieldset, { className: "inputEx-Expanded" });
         }
 
-        if (!lang.isUndefined(this.options.legend) && this.options.legend !== '') {
-          this.legend.appendChild(document.createTextNode(' ' + this.options.legend));
+        if (
+          !lang.isUndefined(this.options.legend) &&
+          this.options.legend !== ""
+        ) {
+          this.legend.appendChild(
+            document.createTextNode(" " + this.options.legend),
+          );
         }
 
-        if (this.options.collapsible || (!lang.isUndefined(this.options.legend) && this.options.legend !== '')) {
+        if (
+          this.options.collapsible ||
+          (!lang.isUndefined(this.options.legend) && this.options.legend !== "")
+        ) {
           this.fieldset.appendChild(this.legend);
         }
 
@@ -110,8 +134,11 @@
           // Render the field
           // input = this.createUniqueIdForUidField(input);
 
-          if (input.inputParams.name == 'uid' && typeof input.inputParams.value == 'undefined') {
-            var d = new Date,
+          if (
+            input.inputParams.name == "uid" &&
+            typeof input.inputParams.value == "undefined"
+          ) {
+            var d = new Date(),
               uniqueUid = parseInt(d.getTime() * Math.random());
             input.inputParams.value = uniqueUid;
           }
@@ -135,7 +162,6 @@
        * @param {Object} fieldOptions The field properties as required bu inputEx.buildField
        */
       renderField: function (fieldOptions) {
-
         // Instanciate the field
         var fieldInstance = inputEx.buildField(fieldOptions);
 
@@ -162,7 +188,13 @@
        */
       initEvents: function () {
         if (this.options.collapsible) {
-          Event.addListener(this.legend, 'click', this.toggleCollapse, this, true);
+          Event.addListener(
+            this.legend,
+            "click",
+            this.toggleCollapse,
+            this,
+            true,
+          );
         }
       },
 
@@ -172,29 +204,31 @@
       toggleCollapse: function () {
         var fieldset = Dom.get(this.fieldset),
           divElement = Dom.get(this.divEl);
-        if (Dom.hasClass(fieldset, 'inputEx-Expanded')) {
-          Dom.removeClass(fieldset, 'inputEx-Expanded')
-          Dom.addClass(fieldset, 'inputEx-Collapsed');
-          Dom.removeClass(divElement, 'expanded');
-          Dom.addClass(divElement, 'collapsed');
+        if (Dom.hasClass(fieldset, "inputEx-Expanded")) {
+          Dom.removeClass(fieldset, "inputEx-Expanded");
+          Dom.addClass(fieldset, "inputEx-Collapsed");
+          Dom.removeClass(divElement, "expanded");
+          Dom.addClass(divElement, "collapsed");
         } else {
-          var containers = divElement.parents('.WireIt-Container');
+          var containers = divElement.parents(".WireIt-Container");
           if (containers.length > 0) {
             /** @type {HTMLElement} */
             var container = containers[0];
-            container.querySelectorAll('.inputEx-Expanded, .fieldset').forEach(function (el, i) {
-              Dom.removeClass(el, 'inputEx-Expanded');
-              Dom.addClass(el, 'inputEx-Collapsed');
-            });
-            document.querySelectorAll('.expanded').forEach(function (el, i) {
-              Dom.removeClass(el, 'expanded');
-              Dom.addClass(el, 'collapsed');
+            container
+              .querySelectorAll(".inputEx-Expanded, .fieldset")
+              .forEach(function (el, i) {
+                Dom.removeClass(el, "inputEx-Expanded");
+                Dom.addClass(el, "inputEx-Collapsed");
+              });
+            document.querySelectorAll(".expanded").forEach(function (el, i) {
+              Dom.removeClass(el, "expanded");
+              Dom.addClass(el, "collapsed");
             });
           }
-          Dom.removeClass(fieldset, 'inputEx-Collapsed');
-          Dom.addClass(fieldset, 'inputEx-Expanded');
-          Dom.removeClass(divElement, 'collapsed');
-          Dom.addClass(divElement, 'expanded');
+          Dom.removeClass(fieldset, "inputEx-Collapsed");
+          Dom.addClass(fieldset, "inputEx-Expanded");
+          Dom.removeClass(divElement, "collapsed");
+          Dom.addClass(divElement, "expanded");
         }
       },
 
@@ -308,14 +342,12 @@
         return this.inputsNames[fieldName];
       },
 
-
       /**
        * Called when one of the group subfields is updated.
        * @param {String} eventName Event name
        * @param {Array} args Array of [fieldValue, fieldInstance]
        */
       onChange: function (eventName, args) {
-
         // Run interactions
         var fieldValue = args[0];
         var fieldInstance = args[1];
@@ -338,7 +370,12 @@
         } else if (YAHOO.lang.isFunction(action.action)) {
           action.action.call(field, triggerValue);
         } else {
-          throw new Error('action ' + action.action + ' is not a valid action for field ' + action.name);
+          throw new Error(
+            "action " +
+              action.action +
+              " is not a valid action for field " +
+              action.name,
+          );
         }
       },
 
@@ -378,11 +415,12 @@
           // fire update event
           this.fireUpdatedEvt();
         }
-      }
-    });
+      },
+    },
+  );
 
   /**
    * Register this class as "group" type
    */
-  inputEx.registerType('group', inputEx.Group);
+  inputEx.registerType("group", inputEx.Group);
 })();

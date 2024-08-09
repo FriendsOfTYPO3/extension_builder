@@ -5,40 +5,30 @@ http://developer.yahoo.net/yui/license.txt
 version: 2.7.0
 */
 .yui-button {
-
-	display: -moz-inline-box; /* Gecko */
-	display: inline-block; /* IE, Opera and Safari */
-	vertical-align: text-bottom;
-
+    display: -moz-inline-box; /* Gecko */
+    display: inline-block; /* IE, Opera and Safari */
+    vertical-align: text-bottom;
 }
 
 .yui-button .first-child {
-
-	display: block;
-	*display: inline-block; /* IE */
-
+    display: block;
+    *display: inline-block; /* IE */
 }
 
 .yui-button button,
 .yui-button a {
-
-	display: block;
-	*display: inline-block; /* IE */
-	border: none;
-	margin: 0;
-
+    display: block;
+    *display: inline-block; /* IE */
+    border: none;
+    margin: 0;
 }
 
 .yui-button button {
-
-	background-color: transparent;
-	*overflow: visible; /* Remove superfluous padding for IE */
-	cursor: pointer;
-
+    background-color: transparent;
+    *overflow: visible; /* Remove superfluous padding for IE */
+    cursor: pointer;
 }
 
 .yui-button a {
-
-	text-decoration: none;
-
+    text-decoration: none;
 }

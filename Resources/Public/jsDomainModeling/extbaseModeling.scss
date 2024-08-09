@@ -32,7 +32,6 @@ $url_0: url("background_pixel.png");
 
     .module-body {
         flex: 1;
-
         padding: 0 !important;
     }
 }
@@ -79,6 +78,7 @@ $url_0: url("background_pixel.png");
         background-color: $white;
         border: 1px solid $color_celeste_approx;
         border-top: none;
+
         // Instead of the line below you could use @include box-shadow
         // ($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6,
         // $shadow-7, $shadow-8, $shadow-9, $shadow-10)
@@ -184,6 +184,7 @@ div {
 
         textarea {
             @extend %extend_1;
+
             border: 1px solid #ddd;
             width: 100%;
 
@@ -194,6 +195,7 @@ div {
 
         input[type="text"] {
             @extend %extend_1;
+
             width: 100%;
             font-weight: 700;
 
@@ -204,6 +206,7 @@ div {
 
         select {
             @extend %extend_1;
+
             width: 100%;
 
             &:focus {
@@ -347,6 +350,7 @@ div {
 
         input[type="text"] {
             @extend %extend_1;
+
             margin-left: 30px;
             width: 120px;
             font-weight: 700;
@@ -431,6 +435,7 @@ div {
     &.inputEx-description {
         background-color: $color_gallery_approx;
         border: 1px solid $web_orange;
+
         // Instead of the line below you could use @include box-shadow
         // ($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6,
         // $shadow-7, $shadow-8, $shadow-9, $shadow-10)

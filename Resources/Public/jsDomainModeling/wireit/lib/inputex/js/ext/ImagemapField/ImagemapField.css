@@ -2,38 +2,38 @@
  * ImagemapField
  */
 div.inputEx-ImagemapField {
-	height: 16px;
-	width: 150px;
-	border: 1px solid #B5B8C8;
-	margin-left: 0px;
-	cursor: pointer;
+    height: 16px;
+    width: 150px;
+    border: 1px solid #b5b8c8;
+    margin-left: 0;
+    cursor: pointer;
 }
 
 .inputEx-ImagemapField-popup {
-	z-index: 999;
-	position: absolute;
-	border: 1px solid #B5B8C8;
-	padding: 5px;
-	margin: 10px;
-	background: #ffffff;
+    z-index: 999;
+    position: absolute;
+    border: 1px solid #b5b8c8;
+    padding: 5px;
+    margin: 10px;
+    background: #fff;
 }
 
 .inputEx-ImagemapField-popup .hd {
-	padding: 5px;
+    padding: 5px;
 }
 
 .inputEx-ImagemapField-popup .bd {
-	padding: 5px;
+    padding: 5px;
 }
 
 .inputEx-ImagemapField-popup .ft {
-	padding: 5px;
+    padding: 5px;
 }
 
 area.inputEx-ImagemapField {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 img.inputEx-ImagemapField {
-	cursor: pointer;
+    cursor: pointer;
 }

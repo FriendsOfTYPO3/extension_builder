@@ -4,7 +4,10 @@
  *    (see line
  **************************************************/
 (function () {
-  var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
+  var inputEx = YAHOO.inputEx,
+    lang = YAHOO.lang,
+    Event = YAHOO.util.Event,
+    Dom = YAHOO.util.Dom;
 
   /**
    * @class Meta field to create a list of other fields
@@ -28,7 +31,9 @@
 
     inputEx.ListField.superclass.constructor.call(this, options);
   };
-  lang.extend(inputEx.ListField, inputEx.Field,
+  lang.extend(
+    inputEx.ListField,
+    inputEx.Field,
     /**
      * @scope inputEx.ListField.prototype
      */
@@ -42,13 +47,23 @@
       setOptions: function (options) {
         inputEx.ListField.superclass.setOptions.call(this, options);
 
-        this.options.className = options.className ? options.className : 'inputEx-Field inputEx-ListField';
-        this.options.sortable = lang.isUndefined(options.sortable) ? false : options.sortable;
-        this.options.elementType = options.elementType || {type: 'string'};
-        this.options.useButtons = lang.isUndefined(options.useButtons) ? false : options.useButtons;
-        this.options.unique = lang.isUndefined(options.unique) ? false : options.unique;
-        this.options.listAddLabel = options.listAddLabel || inputEx.messages.listAddLink;
-        this.options.listRemoveLabel = options.listRemoveLabel || inputEx.messages.listRemoveLink;
+        this.options.className = options.className
+          ? options.className
+          : "inputEx-Field inputEx-ListField";
+        this.options.sortable = lang.isUndefined(options.sortable)
+          ? false
+          : options.sortable;
+        this.options.elementType = options.elementType || { type: "string" };
+        this.options.useButtons = lang.isUndefined(options.useButtons)
+          ? false
+          : options.useButtons;
+        this.options.unique = lang.isUndefined(options.unique)
+          ? false
+          : options.unique;
+        this.options.listAddLabel =
+          options.listAddLabel || inputEx.messages.listAddLink;
+        this.options.listRemoveLabel =
+          options.listRemoveLabel || inputEx.messages.listRemoveLink;
       },
 
       /**
@@ -57,20 +72,37 @@
       renderComponent: function () {
         // Add element button
         if (this.options.useButtons) {
-          this.addButton = inputEx.cn('img', {src: inputEx.spacerUrl, className: 'inputEx-ListField-addButton'});
+          this.addButton = inputEx.cn("img", {
+            src: inputEx.spacerUrl,
+            className: "inputEx-ListField-addButton",
+          });
           this.fieldContainer.appendChild(this.addButton);
         }
 
         // List label
-        this.fieldContainer.appendChild(inputEx.cn('span', null, {marginLeft: '4px'}, this.options.listLabel));
+        this.fieldContainer.appendChild(
+          inputEx.cn(
+            "span",
+            null,
+            { marginLeft: "4px" },
+            this.options.listLabel,
+          ),
+        );
 
         // Div element to contain the children
-        this.childContainer = inputEx.cn('div', {className: 'inputEx-ListField-childContainer'});
+        this.childContainer = inputEx.cn("div", {
+          className: "inputEx-ListField-childContainer",
+        });
         this.fieldContainer.appendChild(this.childContainer);
 
         // Add link
         if (!this.options.useButtons) {
-          this.addButton = inputEx.cn('a', {className: 'inputEx-List-link'}, null, this.options.listAddLabel);
+          this.addButton = inputEx.cn(
+            "a",
+            { className: "inputEx-List-link" },
+            null,
+            this.options.listAddLabel,
+          );
           this.fieldContainer.appendChild(this.addButton);
         }
       },
@@ -79,7 +111,13 @@
        * Handle the click event on the add button
        */
       initEvents: function () {
-        Event.addListener(this.addButton, 'click', this.onAddButton, this, true);
+        Event.addListener(
+          this.addButton,
+          "click",
+          this.onAddButton,
+          this,
+          true,
+        );
       },
 
       /**
@@ -102,7 +140,7 @@
             var hash = lang.dump(input.getValue());
             //logDebug('listfied index ',i, 'hash', hash);
             if (uniques[hash]) {
-              response = false;    // not unique
+              response = false; // not unique
             } else {
               uniques[hash] = true;
             }
@@ -179,22 +217,31 @@
         var subFieldEl = this.addElement(),
           fieldset,
           copiedFieldSet = this.lastCopiedFieldSet;
-        if (typeof copiedFieldSet['inputs'] != 'undefined') {
-          for (i = 0; i < copiedFieldSet['inputs'].length; i++) {
-            fieldName = copiedFieldSet['inputs'][i]['options']['name'];
-            if (fieldName == 'relationName' || fieldName == 'propertyName' || fieldName == 'propertyDescription') {
-              copiedFieldSet['inputs'][i].setValue('');
-            } else if (fieldName == 'uid') {
-              copiedFieldSet['inputs'][i].setValue(parseInt(new Date().getTime() * Math.random(), 10));
-            } else if (fieldName == 'propertyType') {
+        if (typeof copiedFieldSet["inputs"] != "undefined") {
+          for (i = 0; i < copiedFieldSet["inputs"].length; i++) {
+            fieldName = copiedFieldSet["inputs"][i]["options"]["name"];
+            if (
+              fieldName == "relationName" ||
+              fieldName == "propertyName" ||
+              fieldName == "propertyDescription"
+            ) {
+              copiedFieldSet["inputs"][i].setValue("");
+            } else if (fieldName == "uid") {
+              copiedFieldSet["inputs"][i].setValue(
+                parseInt(new Date().getTime() * Math.random(), 10),
+              );
+            } else if (fieldName == "propertyType") {
               fieldset = copiedFieldSet.fieldset;
-              fieldset.removeAttribute('class');
-              Dom.addClass(fieldset, copiedFieldSet['inputs'][i].getValue());
-            } else if (fieldName == 'advancedSettings') {
+              fieldset.removeAttribute("class");
+              Dom.addClass(fieldset, copiedFieldSet["inputs"][i].getValue());
+            } else if (fieldName == "advancedSettings") {
               if (copiedFieldSet.options.value) {
                 fieldset = copiedFieldSet.fieldset;
-                fieldset.removeAttribute('class');
-                Dom.addClass(fieldset, copiedFieldSet.options.value.relationType);
+                fieldset.removeAttribute("class");
+                Dom.addClass(
+                  fieldset,
+                  copiedFieldSet.options.value.relationType,
+                );
               }
             }
           }
@@ -213,12 +260,15 @@
        */
       renderSubField: function (value) {
         // Div that wraps the deleteButton + the subField
-        var newDiv = inputEx.cn('div');
+        var newDiv = inputEx.cn("div");
 
         // Delete button
         if (this.options.useButtons) {
-          var delButton = inputEx.cn('img', {src: inputEx.spacerUrl, className: 'inputEx-ListField-delButton'});
-          Event.addListener(delButton, 'click', this.onDelete, this, true);
+          var delButton = inputEx.cn("img", {
+            src: inputEx.spacerUrl,
+            className: "inputEx-ListField-delButton",
+          });
+          Event.addListener(delButton, "click", this.onDelete, this, true);
           newDiv.appendChild(delButton);
         }
 
@@ -240,8 +290,8 @@
         this.lastCopiedFieldSet = el;
         var subFieldEl = el.getEl();
 
-        Dom.setStyle(subFieldEl, 'margin-left', '4px');
-        Dom.setStyle(subFieldEl, 'float', 'left');
+        Dom.setStyle(subFieldEl, "margin-left", "4px");
+        Dom.setStyle(subFieldEl, "float", "left");
         newDiv.appendChild(subFieldEl);
 
         // Subscribe the onChange event to resend it
@@ -249,39 +299,62 @@
 
         // Arrows to order:
         if (this.options.sortable) {
-          var arrowUp = inputEx.cn('div', {className: 'inputEx-ListField-Arrow inputEx-ListField-ArrowUp t3js-icon icon icon-size-small '});
-          arrowUp.innerHTML = '<span class="t3js-icon icon icon-size-small icon-state-default">' +
+          var arrowUp = inputEx.cn("div", {
+            className:
+              "inputEx-ListField-Arrow inputEx-ListField-ArrowUp t3js-icon icon icon-size-small ",
+          });
+          arrowUp.innerHTML =
+            '<span class="t3js-icon icon icon-size-small icon-state-default">' +
             '<span class="icon-markup">' +
-            '<svg class="icon-color"><use xlink:href="' + TYPO3.settings.extensionBuilder.publicResourceWebPath.core + 'Icons/T3Icons/sprites/actions.svg#actions-caret-up"></use></svg>' +
-            '</span>' +
-            '</span>';
-          Event.addListener(arrowUp, 'click', this.onArrowUp, this, true);
+            '<svg class="icon-color"><use xlink:href="' +
+            TYPO3.settings.extensionBuilder.publicResourceWebPath.core +
+            'Icons/T3Icons/sprites/actions.svg#actions-caret-up"></use></svg>' +
+            "</span>" +
+            "</span>";
+          Event.addListener(arrowUp, "click", this.onArrowUp, this, true);
           newDiv.appendChild(arrowUp);
 
-          var arrowDown = inputEx.cn('div', {className: 'inputEx-ListField-Arrow inputEx-ListField-ArrowDown t3js-icon icon icon-size-small '});
-          arrowDown.innerHTML = '<span class="t3js-icon icon icon-size-small icon-state-default">' +
+          var arrowDown = inputEx.cn("div", {
+            className:
+              "inputEx-ListField-Arrow inputEx-ListField-ArrowDown t3js-icon icon icon-size-small ",
+          });
+          arrowDown.innerHTML =
+            '<span class="t3js-icon icon icon-size-small icon-state-default">' +
             '<span class="icon-markup">' +
-            '<svg class="icon-color"><use xlink:href="' + TYPO3.settings.extensionBuilder.publicResourceWebPath.core + 'Icons/T3Icons/sprites/actions.svg#actions-caret-down"></use></svg>' +
-            '</span>' +
-            '</span>';
-          Event.addListener(arrowDown, 'click', this.onArrowDown, this, true);
+            '<svg class="icon-color"><use xlink:href="' +
+            TYPO3.settings.extensionBuilder.publicResourceWebPath.core +
+            'Icons/T3Icons/sprites/actions.svg#actions-caret-down"></use></svg>' +
+            "</span>" +
+            "</span>";
+          Event.addListener(arrowDown, "click", this.onArrowDown, this, true);
           newDiv.appendChild(arrowDown);
         }
 
         // Delete link
         if (!this.options.useButtons) {
-          var delButton = inputEx.cn('div', {className: 'inputEx-List-link t3js-icon icon icon-size-small icon-state-default t3-icon-edit-delete deleteButton icon-actions-edit-delete'}, null, this.options.listRemoveLabel);
-          delButton.innerHTML = '<span class="t3js-icon icon icon-size-small icon-state-default" style="display: inline-block; width:16px; height: 16px;">' +
+          var delButton = inputEx.cn(
+            "div",
+            {
+              className:
+                "inputEx-List-link t3js-icon icon icon-size-small icon-state-default t3-icon-edit-delete deleteButton icon-actions-edit-delete",
+            },
+            null,
+            this.options.listRemoveLabel,
+          );
+          delButton.innerHTML =
+            '<span class="t3js-icon icon icon-size-small icon-state-default" style="display: inline-block; width:16px; height: 16px;">' +
             '<span class="icon-markup">' +
-            '<svg class="icon-color"><use xlink:href="' + TYPO3.settings.extensionBuilder.publicResourceWebPath.core + 'Icons/T3Icons/sprites/actions.svg#actions-delete"></use></svg>' +
-            '</span>' +
-            '</span>';
-          Event.addListener(delButton, 'click', this.onDelete, this, true);
+            '<svg class="icon-color"><use xlink:href="' +
+            TYPO3.settings.extensionBuilder.publicResourceWebPath.core +
+            'Icons/T3Icons/sprites/actions.svg#actions-delete"></use></svg>' +
+            "</span>" +
+            "</span>";
+          Event.addListener(delButton, "click", this.onDelete, this, true);
           newDiv.appendChild(delButton);
         }
 
         // Line breaker
-        newDiv.appendChild(inputEx.cn('div', null, {clear: 'both'}));
+        newDiv.appendChild(inputEx.cn("div", null, { clear: "both" }));
 
         this.childContainer.appendChild(newDiv);
 
@@ -294,7 +367,9 @@
        * @param {Event} e Original click event
        */
       onArrowUp: function (e) {
-        var childElement = Event.getTarget(e).parentNode.parentNode.parentNode.parentNode.parentNode;
+        var childElement =
+          Event.getTarget(e).parentNode.parentNode.parentNode.parentNode
+            .parentNode;
 
         var previousChildNode = null;
         var nodeIndex = -1;
@@ -312,7 +387,10 @@
           var removedEl = this.childContainer.removeChild(childElement);
 
           // Adds it before the previousChildNode
-          var insertedEl = this.childContainer.insertBefore(removedEl, previousChildNode);
+          var insertedEl = this.childContainer.insertBefore(
+            removedEl,
+            previousChildNode,
+          );
 
           // Swap this.subFields elements (i,i-1)
           var temp = this.subFields[nodeIndex];
@@ -323,14 +401,18 @@
           if (this.arrowAnim) {
             this.arrowAnim.stop(true);
           }
-          this.arrowAnim = new YAHOO.util.ColorAnim(insertedEl, {
-            backgroundColor: {
-              from: '#eeee33',
-              to: '#eeeeee'
-            }
-          }, 0.4);
+          this.arrowAnim = new YAHOO.util.ColorAnim(
+            insertedEl,
+            {
+              backgroundColor: {
+                from: "#eeee33",
+                to: "#eeeeee",
+              },
+            },
+            0.4,
+          );
           this.arrowAnim.onComplete.subscribe(function () {
-            Dom.setStyle(insertedEl, 'background-color', '');
+            Dom.setStyle(insertedEl, "background-color", "");
           });
           this.arrowAnim.animate();
 
@@ -344,7 +426,9 @@
        * @param {Event} e Original click event
        */
       onArrowDown: function (e) {
-        var childElement = Event.getTarget(e).parentNode.parentNode.parentNode.parentNode.parentNode;
+        var childElement =
+          Event.getTarget(e).parentNode.parentNode.parentNode.parentNode
+            .parentNode;
 
         var nodeIndex = -1;
         var nextChildNode = null;
@@ -372,9 +456,13 @@
           if (this.arrowAnim) {
             this.arrowAnim.stop(true);
           }
-          this.arrowAnim = new YAHOO.util.ColorAnim(insertedEl, {backgroundColor: {from: '#eeee33', to: '#eeeeee'}}, 1);
+          this.arrowAnim = new YAHOO.util.ColorAnim(
+            insertedEl,
+            { backgroundColor: { from: "#eeee33", to: "#eeeeee" } },
+            1,
+          );
           this.arrowAnim.onComplete.subscribe(function () {
-            Dom.setStyle(insertedEl, 'background-color', '');
+            Dom.setStyle(insertedEl, "background-color", "");
           });
           this.arrowAnim.animate();
 
@@ -387,11 +475,12 @@
        * @param {Event} e The original click event
        */
       onDelete: function (e) {
-
         Event.stopEvent(e);
 
         // Get the wrapping div element
-        var elementDiv = Event.getTarget(e).parentNode.parentNode.parentNode.parentNode.parentNode;
+        var elementDiv =
+          Event.getTarget(e).parentNode.parentNode.parentNode.parentNode
+            .parentNode;
 
         // Get the index of the subField
         var index = -1;
@@ -433,15 +522,17 @@
 
         // Remove the element
         elementDiv.parentNode.removeChild(elementDiv);
-      }
-
-    });
+      },
+    },
+  );
 
   /**
    * Register this class as "list" type
    */
-  inputEx.registerType('list', inputEx.ListField);
+  inputEx.registerType("list", inputEx.ListField);
 
-  inputEx.messages.listAddLink = TYPO3.settings.extensionBuilder._LOCAL_LANG.add;
-  inputEx.messages.listRemoveLink = TYPO3.settings.extensionBuilder._LOCAL_LANG.remove;
+  inputEx.messages.listAddLink =
+    TYPO3.settings.extensionBuilder._LOCAL_LANG.add;
+  inputEx.messages.listRemoveLink =
+    TYPO3.settings.extensionBuilder._LOCAL_LANG.remove;
 })();

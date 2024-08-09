@@ -1,105 +1,113 @@
-(function() {
+(function () {
+  var inputEx = YAHOO.inputEx;
 
-	var inputEx = YAHOO.inputEx;
+  /**
+   * @class Create a multi autocomplete field
+   * @extends inputEx.AutoComplete
+   * @constructor
+   * @param {Object} options Added options:
+   * <ul>
+   * </ul>
+   */
+  inputEx.MultiAutoComplete = function (options) {
+    inputEx.MultiAutoComplete.superclass.constructor.call(this, options);
+  };
+  YAHOO.lang.extend(
+    inputEx.MultiAutoComplete,
+    inputEx.AutoComplete,
+    /**
+     * @scope inputEx.MultiAutoComplete.prototype
+     */
+    {
+      /**
+       * Build the DDList
+       */
+      renderComponent: function () {
+        inputEx.MultiAutoComplete.superclass.renderComponent.call(this);
 
-	/**
-	 * @class Create a multi autocomplete field
-	 * @extends inputEx.AutoComplete
-	 * @constructor
-	 * @param {Object} options Added options:
-	 * <ul>
-	 * </ul>
-	 */
-	inputEx.MultiAutoComplete = function(options) {
-		inputEx.MultiAutoComplete.superclass.constructor.call(this, options);
-	};
-	YAHOO.lang.extend(inputEx.MultiAutoComplete, inputEx.AutoComplete,
-			/**
-			 * @scope inputEx.MultiAutoComplete.prototype
-			 */
-					  {
+        this.ddlist = new inputEx.widget.DDList({
+          parentEl: this.fieldContainer,
+        });
+        this.ddlist.itemRemovedEvt.subscribe(
+          function () {
+            this.setClassFromState();
+            this.fireUpdatedEvt();
+          },
+          this,
+          true,
+        );
+        this.ddlist.listReorderedEvt.subscribe(this.fireUpdatedEvt, this, true);
+      },
 
-						  /**
-						   * Build the DDList
-						   */
-						  renderComponent: function() {
-							  inputEx.MultiAutoComplete.superclass.renderComponent.call(this);
+      itemSelectHandler: function (sType, aArgs) {
+        var aData = aArgs[2];
+        this.ddlist.addItem(
+          this.options.returnValue ? this.options.returnValue(aData) : aData[0],
+        );
+        this.el.value = "";
+        this.fireUpdatedEvt();
+      },
 
-							  this.ddlist = new inputEx.widget.DDList({parentEl: this.fieldContainer});
-							  this.ddlist.itemRemovedEvt.subscribe(function() {
-								  this.setClassFromState();
-								  this.fireUpdatedEvt();
-							  }, this, true);
-							  this.ddlist.listReorderedEvt.subscribe(this.fireUpdatedEvt, this, true);
-						  },
+      /**
+       * Set the value
+       * @param {String} value The value to set
+       * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
+       */
+      setValue: function (value, sendUpdatedEvt) {
+        this.ddlist.setValue(value);
 
-						  itemSelectHandler: function(sType, aArgs) {
-							  var aData = aArgs[2];
-							  this.ddlist.addItem(this.options.returnValue ? this.options.returnValue(aData) : aData[0]);
-							  this.el.value = "";
-							  this.fireUpdatedEvt();
-						  },
+        // set corresponding style
+        this.setClassFromState();
 
-						  /**
-						   * Set the value
-						   * @param {String} value The value to set
-						   * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
-						   */
-						  setValue: function(value, sendUpdatedEvt) {
-							  this.ddlist.setValue(value);
+        if (sendUpdatedEvt !== false) {
+          // fire update event
+          this.fireUpdatedEvt();
+        }
+      },
 
-							  // set corresponding style
-							  this.setClassFromState();
+      /**
+       * Return the value
+       * @return {Any} the selected value from the selectValues array
+       */
+      getValue: function () {
+        return this.ddlist.getValue();
+      },
 
-							  if (sendUpdatedEvt !== false) {
-								  // fire update event
-								  this.fireUpdatedEvt();
-							  }
-						  },
+      /**
+       * Return (stateEmpty|stateRequired) if the value equals the typeInvite attribute
+       */
+      getState: function () {
+        var val = this.getValue();
 
-						  /**
-						   * Return the value
-						   * @return {Any} the selected value from the selectValues array
-						   */
-						  getValue: function() {
-							  return this.ddlist.getValue();
-						  },
+        // if nothing in the list
+        if (val.length === 0) {
+          return this.options.required
+            ? inputEx.stateRequired
+            : inputEx.stateEmpty;
+        }
 
-						  /**
-						   * Return (stateEmpty|stateRequired) if the value equals the typeInvite attribute
-						   */
-						  getState: function() {
-							  var val = this.getValue();
+        return this.validate() ? inputEx.stateValid : inputEx.stateInvalid;
+      },
 
-							  // if nothing in the list
-							  if (val.length === 0) {
-								  return this.options.required ? inputEx.stateRequired : inputEx.stateEmpty;
-							  }
+      /**
+       * TODO : how to validate ?
+       */
+      validate: function () {
+        return true;
+      },
 
-							  return this.validate() ? inputEx.stateValid : inputEx.stateInvalid;
-						  },
+      /**
+       * onChange event handler
+       * @param {Event} e The original 'change' event
+       */
+      onChange: function (e) {
+        // erase inherited version, so don't trash previous value if input is empty
+      },
+    },
+  );
 
-						  /**
-						   * TODO : how to validate ?
-						   */
-						  validate: function() {
-							  return true;
-						  },
-
-						  /**
-						   * onChange event handler
-						   * @param {Event} e The original 'change' event
-						   */
-						  onChange: function(e) {
-							  // erase inherited version, so don't trash previous value if input is empty
-						  }
-
-
-					  });
-
-	/**
-	 * Register this class as "multiautocomplete" type
-	 */
-	inputEx.registerType("multiautocomplete", inputEx.MultiAutoComplete);
-
+  /**
+   * Register this class as "multiautocomplete" type
+   */
+  inputEx.registerType("multiautocomplete", inputEx.MultiAutoComplete);
 })();

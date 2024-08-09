@@ -1,105 +1,114 @@
 var advancedFields = {
-  type: 'group',
+  type: "group",
   inputParams: {
     collapsible: true,
     flatten: true,
     collapsed: true,
-    className: 'advancedSettings',
-    name: 'advancedSettings',
+    className: "advancedSettings",
+    name: "advancedSettings",
     fields: [
       {
-        type: 'select',
+        type: "select",
         inputParams: {
           label: TYPO3.settings.extensionBuilder._LOCAL_LANG.type,
-          name: 'relationType',
-          selectValues: [
-            'zeroToOne',
-            'zeroToMany',
-            'manyToOne',
-            'manyToMany'
-          ],
+          name: "relationType",
+          selectValues: ["zeroToOne", "zeroToMany", "manyToOne", "manyToMany"],
           selectOptions: [
             TYPO3.settings.extensionBuilder._LOCAL_LANG.zeroToOne,
             TYPO3.settings.extensionBuilder._LOCAL_LANG.zeroToMany,
             TYPO3.settings.extensionBuilder._LOCAL_LANG.manyToOne,
-            TYPO3.settings.extensionBuilder._LOCAL_LANG.manyToMany
-          ]
-        }
+            TYPO3.settings.extensionBuilder._LOCAL_LANG.manyToMany,
+          ],
+        },
       },
       {
-        type: 'select',
+        type: "select",
         inputParams: {
           label: TYPO3.settings.extensionBuilder._LOCAL_LANG.renderType,
-          description: TYPO3.settings.extensionBuilder._LOCAL_LANG.desc_renderType,
-          wrapperClassName: 'inputEx-fieldWrapper dependant renderType',
-          className: 'inputEx-Field isDependant',
-          name: 'renderType',
+          description:
+            TYPO3.settings.extensionBuilder._LOCAL_LANG.desc_renderType,
+          wrapperClassName: "inputEx-fieldWrapper dependant renderType",
+          className: "inputEx-Field isDependant",
+          name: "renderType",
           //advancedMode: true,
           selectValues: [
-            'selectSingleBox',
-            'selectCheckBox',
-            'selectMultipleSideBySide',
-            'inline',
-            'selectSingle'
+            "selectSingleBox",
+            "selectCheckBox",
+            "selectMultipleSideBySide",
+            "inline",
+            "selectSingle",
           ],
           selectOptions: [
             TYPO3.settings.extensionBuilder._LOCAL_LANG.selectSingleBox,
             TYPO3.settings.extensionBuilder._LOCAL_LANG.selectCheckBox,
-            TYPO3.settings.extensionBuilder._LOCAL_LANG.selectMultipleSideBySide,
+            TYPO3.settings.extensionBuilder._LOCAL_LANG
+              .selectMultipleSideBySide,
             TYPO3.settings.extensionBuilder._LOCAL_LANG.inline,
-            TYPO3.settings.extensionBuilder._LOCAL_LANG.select
-          ]
-        }
+            TYPO3.settings.extensionBuilder._LOCAL_LANG.select,
+          ],
+        },
       },
       {
-        type: 'text',
+        type: "text",
         inputParams: {
           placeholder: TYPO3.settings.extensionBuilder._LOCAL_LANG.description,
-          name: 'relationDescription',
+          name: "relationDescription",
           cols: 20,
-          rows: 2
-        }
+          rows: 2,
+        },
       },
       {
-        type: 'boolean',
+        type: "boolean",
         inputParams: {
           label: TYPO3.settings.extensionBuilder._LOCAL_LANG.isExcludeField,
-          name: 'propertyIsExcludeField',
+          name: "propertyIsExcludeField",
           advancedMode: true,
           value: true,
-          description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_isExcludeField
-        }
+          description:
+            TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_isExcludeField,
+        },
       },
       {
-        type: 'boolean',
+        type: "boolean",
         inputParams: {
           label: TYPO3.settings.extensionBuilder._LOCAL_LANG.lazyLoading,
-          name: 'lazyLoading',
+          name: "lazyLoading",
           advancedMode: true,
-          description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_lazyLoading,
-          value: false
-        }
+          description:
+            TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_lazyLoading,
+          value: false,
+        },
       },
       {
-        type: 'string',
+        type: "string",
         inputParams: {
-          label: TYPO3.settings.extensionBuilder._LOCAL_LANG.foreignRelationClass,
-          name: 'foreignRelationClass',
-          placeholder: '\\Fully\\Qualified\\Classname',
+          label:
+            TYPO3.settings.extensionBuilder._LOCAL_LANG.foreignRelationClass,
+          name: "foreignRelationClass",
+          placeholder: "\\Fully\\Qualified\\Classname",
           advancedMode: true,
-          description: TYPO3.settings.extensionBuilder._LOCAL_LANG.descr_foreignRelationClass
-        }
-      }
-    ]
-  }
+          description:
+            TYPO3.settings.extensionBuilder._LOCAL_LANG
+              .descr_foreignRelationClass,
+        },
+      },
+    ],
+  },
 };
 
-var relationFieldSet = extbaseModeling_wiringEditorLanguage.modules[0].container.fields[4].inputParams.fields[0].inputParams.elementType.inputParams.fields ?? [];
+var relationFieldSet =
+  extbaseModeling_wiringEditorLanguage.modules[0].container.fields[4]
+    .inputParams.fields[0].inputParams.elementType.inputParams.fields ?? [];
 relationFieldSet[5] = advancedFields;
 Array.prototype.remove = function (from, to) {
-  this.splice(from,
+  this.splice(
+    from,
     !to ||
-    1 + to - from + (!(to < 0 ^ from >= 0) && (to < 0 || -1) * this.length));
+      1 +
+        to -
+        from +
+        (!((to < 0) ^ (from >= 0)) && (to < 0 || -1) * this.length),
+  );
   return this.length;
 };
 // remove excludeField in first level form

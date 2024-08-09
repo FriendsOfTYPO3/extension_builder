@@ -1,154 +1,209 @@
-(function() {
+(function () {
+  var inputEx = YAHOO.inputEx,
+    lang = YAHOO.lang,
+    Event = YAHOO.util.Event;
 
-	var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event;
+  /**
+   * @class inputEx.DateSplitField
+   * @extends inputEx.CombineField
+   */
+  inputEx.DateSplitField = function (options) {
+    if (!options.dateFormat) {
+      options.dateFormat = inputEx.messages.defaultDateFormat;
+    }
 
-	/**
-	 * @class inputEx.DateSplitField
-	 * @extends inputEx.CombineField
-	 */
-	inputEx.DateSplitField = function(options) {
+    var formatSplit = options.dateFormat.split("/");
+    this.yearIndex = inputEx.indexOf("Y", formatSplit);
+    this.monthIndex = inputEx.indexOf("m", formatSplit);
+    this.dayIndex = inputEx.indexOf("d", formatSplit);
 
-		if (!options.dateFormat) {
-			options.dateFormat = inputEx.messages.defaultDateFormat;
-		}
+    options.fields = [];
+    for (var i = 0; i < 3; i++) {
+      if (i == this.dayIndex) {
+        options.fields.push({
+          type: "integer",
+          inputParams: { typeInvite: inputEx.messages.dayTypeInvite, size: 2 },
+        });
+      } else if (i == this.yearIndex) {
+        options.fields.push({
+          type: "integer",
+          inputParams: { typeInvite: inputEx.messages.yearTypeInvite, size: 4 },
+        });
+      } else {
+        options.fields.push({
+          type: "integer",
+          inputParams: {
+            typeInvite: inputEx.messages.monthTypeInvite,
+            size: 2,
+          },
+        });
+      }
+    }
 
-		var formatSplit = options.dateFormat.split("/");
-		this.yearIndex = inputEx.indexOf('Y', formatSplit);
-		this.monthIndex = inputEx.indexOf('m', formatSplit);
-		this.dayIndex = inputEx.indexOf('d', formatSplit);
+    options.separators = options.separators || [
+      false,
+      "&nbsp;",
+      "&nbsp;",
+      false,
+    ];
 
-		options.fields = [];
-		for (var i = 0; i < 3; i++) {
-			if (i == this.dayIndex) {
-				options.fields.push({type: 'integer', inputParams: { typeInvite: inputEx.messages.dayTypeInvite, size: 2} });
-			}
-			else if (i == this.yearIndex) {
-				options.fields.push({type: 'integer', inputParams: { typeInvite: inputEx.messages.yearTypeInvite, size: 4} });
-			}
-			else {
-				options.fields.push({type: 'integer', inputParams: {typeInvite: inputEx.messages.monthTypeInvite, size: 2} });
-			}
-		}
+    inputEx.DateSplitField.superclass.constructor.call(this, options);
 
-		options.separators = options.separators || [false,"&nbsp;","&nbsp;",false];
+    this.initAutoTab();
+  };
 
-		inputEx.DateSplitField.superclass.constructor.call(this, options);
+  lang.extend(inputEx.DateSplitField, inputEx.CombineField, {
+    /**
+     * Set the value. Format the date according to options.dateFormat
+     * @param {Date} val Date to set
+     * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
+     */
+    setValue: function (value, sendUpdatedEvt) {
+      var values = [];
 
-		this.initAutoTab();
-	};
+      // !value catches "" (empty field), and invalid dates
+      if (
+        !value ||
+        !lang.isFunction(value.getTime) ||
+        !lang.isNumber(value.getTime())
+      ) {
+        values[this.monthIndex] = "";
+        values[this.yearIndex] = "";
+        values[this.dayIndex] = "";
+      } else {
+        for (var i = 0; i < 3; i++) {
+          values.push(
+            i == this.dayIndex
+              ? value.getDate()
+              : i == this.yearIndex
+                ? value.getFullYear()
+                : value.getMonth() + 1,
+          );
+        }
+      }
+      inputEx.DateSplitField.superclass.setValue.call(
+        this,
+        values,
+        sendUpdatedEvt,
+      );
+    },
 
-	lang.extend(inputEx.DateSplitField, inputEx.CombineField, {
+    getValue: function () {
+      if (this.isEmpty()) return "";
 
-		/**
-		 * Set the value. Format the date according to options.dateFormat
-		 * @param {Date} val Date to set
-		 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
-		 */
-		setValue: function(value, sendUpdatedEvt) {
-			var values = [];
+      var values = inputEx.DateSplitField.superclass.getValue.call(this);
 
-			// !value catches "" (empty field), and invalid dates
-			if (!value || !lang.isFunction(value.getTime) || !lang.isNumber(value.getTime())) {
-				values[this.monthIndex] = "";
-				values[this.yearIndex] = "";
-				values[this.dayIndex] = "";
-			} else {
-				for (var i = 0; i < 3; i++) {
-					values.push(i == this.dayIndex ? value.getDate() : (i == this.yearIndex ? value.getFullYear() : value.getMonth() + 1 ));
-				}
-			}
-			inputEx.DateSplitField.superclass.setValue.call(this, values, sendUpdatedEvt);
-		},
+      return new Date(
+        values[this.yearIndex],
+        values[this.monthIndex] - 1,
+        values[this.dayIndex],
+      );
+    },
 
-		getValue: function() {
-			if (this.isEmpty()) return "";
+    validate: function () {
+      var subFieldsValidation =
+        inputEx.DateSplitField.superclass.validate.call(this);
+      if (!subFieldsValidation) return false;
 
-			var values = inputEx.DateSplitField.superclass.getValue.call(this);
+      var values = inputEx.DateSplitField.superclass.getValue.call(this);
+      var day = values[this.dayIndex];
+      var month = values[this.monthIndex];
+      var year = values[this.yearIndex];
 
-			return new Date(values[this.yearIndex], values[this.monthIndex] - 1, values[this.dayIndex]);
-		},
+      var val = this.getValue();
+      //console.log("datesplit value = ",val);
 
-		validate: function() {
-			var subFieldsValidation = inputEx.DateSplitField.superclass.validate.call(this);
-			if (!subFieldsValidation) return false;
+      // 3 empty fields
+      if (val == "") return true;
 
-			var values = inputEx.DateSplitField.superclass.getValue.call(this);
-			var day = values[this.dayIndex];
-			var month = values[this.monthIndex];
-			var year = values[this.yearIndex];
+      // if a field is empty, it will be set by default (day : 31, month:12, year: 1899/1900)
+      //   -> val == "" MUST be checked first !
+      if (day == "" || month == "" || year == "") return false;
 
-			var val = this.getValue();
-			//console.log("datesplit value = ",val);
+      if (
+        year < 0 ||
+        year > 9999 ||
+        day < 1 ||
+        day > 31 ||
+        month < 1 ||
+        month > 12
+      )
+        return false;
 
-			// 3 empty fields
-			if (val == "") return true;
+      // val == any date -> true
+      // val == "Invalid Date" -> false
+      return val != "Invalid Date";
+    },
 
-			// if a field is empty, it will be set by default (day : 31, month:12, year: 1899/1900)
-			//   -> val == "" MUST be checked first !
-			if (day == "" || month == "" || year == "") return false;
+    isEmpty: function () {
+      var values = inputEx.DateSplitField.superclass.getValue.call(this);
+      return (
+        values[this.monthIndex] == "" &&
+        values[this.yearIndex] == "" &&
+        values[this.dayIndex] == ""
+      );
+    },
 
-			if (year < 0 || year > 9999 || day < 1 || day > 31 || month < 1 || month > 12) return false;
+    initAutoTab: function () {
+      // "keypress" event codes for numeric keys (keyboard & numpad)
+      //  (warning : "keydown" codes are different with numpad)
+      var numKeyCodes = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57];
 
-			// val == any date -> true
-			// val == "Invalid Date" -> false
-			return (val != "Invalid Date");
-		},
+      // verify charCode (don't auto tab when pressing "tab", "arrow", etc...)
+      var checkNumKey = function (charCode) {
+        for (var i = 0, length = numKeyCodes.length; i < length; i++) {
+          if (charCode == numKeyCodes[i]) return true;
+        }
+        return false;
+      };
 
-		isEmpty: function() {
-			var values = inputEx.DateSplitField.superclass.getValue.call(this);
-			return (values[this.monthIndex] == "" && values[this.yearIndex] == "" && values[this.dayIndex] == "");
-		},
+      // Function that checks charCode and execute tab action
+      var that = this;
+      var autoTab = function (inputIndex) {
+        // later to let input update its value
+        lang.later(0, that, function () {
+          var input = that.inputs[inputIndex];
 
-		initAutoTab: function() {
-			// "keypress" event codes for numeric keys (keyboard & numpad)
-			//  (warning : "keydown" codes are different with numpad)
-			var numKeyCodes = [48,49,50,51,52,53,54,55,56,57];
+          // check input.el.value (string) because getValue doesn't work
+          // example : if input.el.value == "06", getValue() == 6 (length == 1 instead of 2)
+          if (input.el.value.length == input.options.size) {
+            that.inputs[inputIndex + 1].focus();
+          }
+        });
+      };
 
-			// verify charCode (don't auto tab when pressing "tab", "arrow", etc...)
-			var checkNumKey = function(charCode) {
-				for (var i = 0, length = numKeyCodes.length; i < length; i++) {
-					if (charCode == numKeyCodes[i]) return true;
-				}
-				return false;
-			};
+      // add listeners on inputs
+      Event.addListener(
+        this.inputs[0].el,
+        "keypress",
+        function (e) {
+          if (checkNumKey(Event.getCharCode(e))) {
+            autoTab(0);
+          }
+        },
+        this,
+        true,
+      );
+      Event.addListener(
+        this.inputs[1].el,
+        "keypress",
+        function (e) {
+          if (checkNumKey(Event.getCharCode(e))) {
+            autoTab(1);
+          }
+        },
+        this,
+        true,
+      );
+    },
+  });
 
-			// Function that checks charCode and execute tab action
-			var that = this;
-			var autoTab = function(inputIndex) {
-				// later to let input update its value
-				lang.later(0, that, function() {
-					var input = that.inputs[inputIndex];
+  inputEx.messages.monthTypeInvite = "Month";
+  inputEx.messages.dayTypeInvite = "Day";
+  inputEx.messages.yearTypeInvite = "Year";
 
-					// check input.el.value (string) because getValue doesn't work
-					// example : if input.el.value == "06", getValue() == 6 (length == 1 instead of 2)
-					if (input.el.value.length == input.options.size) {
-						that.inputs[inputIndex + 1].focus();
-					}
-				});
-			};
-
-			// add listeners on inputs
-			Event.addListener(this.inputs[0].el, "keypress", function(e) {
-				if (checkNumKey(Event.getCharCode(e))) {
-					autoTab(0);
-				}
-			}, this, true);
-			Event.addListener(this.inputs[1].el, "keypress", function(e) {
-				if (checkNumKey(Event.getCharCode(e))) {
-					autoTab(1);
-				}
-			}, this, true);
-		}
-
-	});
-
-	inputEx.messages.monthTypeInvite = "Month";
-	inputEx.messages.dayTypeInvite = "Day";
-	inputEx.messages.yearTypeInvite = "Year";
-
-	/**
-	 * Register this class as "birthdate" type
-	 */
-	inputEx.registerType("datesplit", inputEx.DateSplitField);
-
+  /**
+   * Register this class as "birthdate" type
+   */
+  inputEx.registerType("datesplit", inputEx.DateSplitField);
 })();

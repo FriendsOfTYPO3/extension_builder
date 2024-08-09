@@ -27,7 +27,7 @@ class WiringEditor
         $res = $this->query($sql);
         $obj = [];
         while ($line = mysql_fetch_assoc($res)) {
-            $obj[]=$line;
+            $obj[] = $line;
         }
         return $obj;
     }
