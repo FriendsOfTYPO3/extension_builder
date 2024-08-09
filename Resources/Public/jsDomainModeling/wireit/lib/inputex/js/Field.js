@@ -146,9 +146,7 @@
           linkEl.innerHTML =
             '<span class="t3js-icon icon icon-size-small icon-state-default" style="margin-left: 10px; margin-bottom:2px">' +
             '<span class="icon-markup">' +
-            '<svg class="icon-color" style="width:12px; height:12px;"><use xlink:href="' +
-            TYPO3.settings.extensionBuilder.publicResourceWebPath.core +
-            'Icons/T3Icons/sprites/apps.svg#apps-toolbar-menu-help"></use></svg>' +
+            '<svg class="icon-color" style="width:12px; height:12px;"><use xlink:href="/_assets/1ee1d3e909b58d32e30dcea666dd3224/Icons/T3Icons/sprites/apps.svg#apps-toolbar-menu-help"></use></svg>' +
             "</span>" +
             "</span>";
           this.labelDiv.appendChild(linkEl);
