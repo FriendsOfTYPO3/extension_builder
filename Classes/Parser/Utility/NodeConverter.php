@@ -138,6 +138,18 @@ class NodeConverter
         }
 
         if ($node instanceof Node) {
+
+            if ( !property_exists($node, "value") ) {
+                return implode('|', array_map(function($type) {
+                    $backslash = in_array(
+                        $type->toString(),
+                        ['null', 'int', 'float', 'bool', 'string', 'array', 'callable', 'object', 'mixed']
+                    ) ? '' : '\\';
+
+                    return $backslash . $type->toString();
+                }, $node->types));
+            }
+
             return $node->value;
         }
 
