@@ -328,6 +328,16 @@ class RenderingContextFixture implements RenderingContextInterface
         return $this->attributes[$name];
     }
 
+    public function setAttribute(string $className, object $value): void
+    {
+        $this->attributes[$className] = $value;
+    }
+
+    public function hasAttribute(string $className): bool
+    {
+        return isset($this->attributes[$className]);
+    }
+
     public function withAttribute(string $name, object $value): RenderingContextInterface
     {
         $clonedObject = clone $this;
