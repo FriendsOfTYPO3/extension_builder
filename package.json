@@ -1,16 +1,21 @@
 {
-    "name": "Extension-Builder",
+    "name": "extension-builder",
     "version": "1.0.0",
     "description": "Extension-Builder",
     "main": "public/index.php",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "sass-lint": "sass-lint -c sass-lint.yml -q '**/*.scss' --verbose"
+        "lint:js": "eslint Resources/Public/jsDomainModeling/**/*.js",
+        "lint:scss": "stylelint 'Resources/Public/jsDomainModeling/**/*.scss'",
+        "lint:format": "prettier --check 'Resources/Public/jsDomainModeling/**/*.{js,scss}'",
+        "format": "prettier --write 'Resources/Public/jsDomainModeling/**/*.{js,scss}'",
+        "lint": "npm run lint:js && npm run lint:scss && npm run lint:format"
     },
     "author": "Philipp Kuhlmay",
-    "license": "",
+    "license": "GPL-2.0-or-later",
     "devDependencies": {
-      "sass-lint": "^1.13.1"
-    },
-    "sasslintConfig": "linters/sass-lint.yml"
-  }
+        "eslint": "^8.57.0",
+        "prettier": "^3.3.3",
+        "stylelint": "^16.9.0",
+        "stylelint-config-standard-scss": "^13.1.0"
+    }
+}

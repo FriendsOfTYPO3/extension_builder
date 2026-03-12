@@ -1,0 +1,29 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "globals": {
+        "YAHOO": "readonly",
+        "TYPO3": "readonly",
+        "extbaseModeling_wiringEditorLanguage": "readonly"
+    },
+    "extends": ["eslint:recommended"],
+    "parserOptions": {
+        "ecmaVersion": 2020
+    },
+    "rules": {
+        "indent": ["error", 4],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
+        "no-unused-vars": ["warn"],
+        "no-console": ["warn"],
+        "eqeqeq": ["error", "always"],
+        "curly": ["error", "all"]
+    },
+    "ignorePatterns": [
+        ".Build/",
+        "node_modules/",
+        "Resources/Public/jsDomainModeling/wireit/"
+    ]
+}
