@@ -224,6 +224,7 @@
 
 			this.options.languageName = options.languageName || 'anonymousLanguage';
 
+			this.options.smd = options.smd || null;
 			this.options.smdUrl = options.smdUrl || 'WiringEditor.smd';
 
 			this.options.propertiesFields = options.propertiesFields;
@@ -322,7 +323,9 @@
 		 * @method loadSMD
 		 */
 			loadSMD: function() {
-			this.service = new YAHOO.rpc.Service(this.options.smdUrl, {
+			// Prefer inline SMD object (synchronous) over URL fetch (async, prone to timing issues)
+			var smdSource = this.options.smd || this.options.smdUrl;
+			this.service = new YAHOO.rpc.Service(smdSource, {
 				success: this.onSMDsuccess,
 				failure: this.onSMDfailure,
 				scope: this
