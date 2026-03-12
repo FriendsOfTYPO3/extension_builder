@@ -31,6 +31,11 @@ class LinkButtonWithId extends LinkButton
     }
 
     /**
+     * onClick attribute (removed from parent in TYPO3 v12)
+     */
+    protected string $onClick = '';
+
+    /**
      * id attribute of the link
      */
     protected string $id = '';
