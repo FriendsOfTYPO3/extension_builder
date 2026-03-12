@@ -29,14 +29,14 @@
 	},
 	"require-dev": {
 		"friendsofphp/php-cs-fixer": "^3.0",
+		"mikey179/vfsstream": "^1.6",
 		"phpunit/phpunit": "^10.5",
 		"rector/rector": "^1.0",
 		"ssch/typo3-rector": "^2.0",
 		"typo3/cms-frontend": "^12.4",
 		"typo3/cms-install": "^12.4",
 		"typo3/coding-standards": "^0.7.0",
-		"typo3/testing-framework": "^7.0",
-		"mikey179/vfsstream": "^1.6"
+		"typo3/testing-framework": "^7.0"
 	},
 	"autoload": {
 		"psr-4": {

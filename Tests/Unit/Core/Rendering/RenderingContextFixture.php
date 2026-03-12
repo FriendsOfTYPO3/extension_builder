@@ -335,7 +335,7 @@ class RenderingContextFixture implements RenderingContextInterface
      */
     public function setControllerName($controllerName): void
     {
-        $this->controllerName;
+        $this->controllerName = $controllerName;
     }
 
     /**
