@@ -40,6 +40,7 @@ use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LocalizationFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
@@ -187,10 +188,13 @@ class BuilderModuleController extends ActionController
         if (!$this->extensionService->isStoragePathConfigured()) {
             $initialWarnings[] = ExtensionService::COMPOSER_PATH_WARNING;
         }
+        $uriBuilder = GeneralUtility::makeInstance(BackendUriBuilder::class);
+        $dispatchRpcUrl = (string)$uriBuilder->buildUriFromRoute('tools_extensionbuilder.BuilderModule_dispatchRpc');
         $this->view->assignMultiple([
             'initialWarnings' => $initialWarnings,
             'publicResourcesUrl' => PathUtility::getPublicResourceWebPath('EXT:extension_builder/Resources/Public'),
             'corePublicResourceWebPath' => PathUtility::getPublicResourceWebPath('EXT:core/Resources/Public/'),
+            'dispatchRpcUrl' => $dispatchRpcUrl,
         ]);
         $this->pageRenderer->addInlineSetting(
             'extensionBuilder.publicResourceWebPath',
