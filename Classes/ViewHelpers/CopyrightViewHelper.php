@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
+use Closure;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
@@ -43,7 +44,7 @@ class CopyrightViewHelper extends AbstractViewHelper
 
     public static function renderStatic(
         array $arguments,
-        \Closure $renderChildrenClosure,
+        Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
     ) {
         $copyright = ' * (c) ' . $arguments['date'] . ' ';

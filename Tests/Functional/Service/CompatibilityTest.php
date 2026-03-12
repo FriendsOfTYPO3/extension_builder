@@ -66,14 +66,14 @@ class CompatibilityTest extends BaseFunctionalTest
         $this->extension = $extensionSchemaBuilder->build($extensionConfigurationJSON);
         $this->fileGenerator->setSettings([
             'codeTemplateRootPaths.' => [
-                Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/'
+                Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/',
             ],
             'codeTemplatePartialPaths.' => [
-                Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials'
+                Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/Partials',
             ],
             'extConf' => [
-                'enableRoundtrip' => '0'
-            ]
+                'enableRoundtrip' => '0',
+            ],
         ]);
 
         $this->extension->setExtensionDir('test_extension/');

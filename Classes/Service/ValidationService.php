@@ -317,7 +317,7 @@ class ValidationService implements SingletonInterface
 
         'YEAR_MONTH',
 
-        'ZEROFILL'
+        'ZEROFILL',
     ];
     /**
      * column names used by TYPO3
@@ -349,7 +349,7 @@ class ValidationService implements SingletonInterface
         't3_origuid',
         'sys_language_uid',
         'l18n_parent',
-        'l18n_diffsource'
+        'l18n_diffsource',
     ];
     /**
      * all these words may not be used as class or domain object names

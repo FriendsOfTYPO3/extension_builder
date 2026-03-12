@@ -51,7 +51,7 @@ class ExtensionInstallationStatus
             $typeInfo = [
                 'add' => 'Add fields',
                 'change' => 'Change fields',
-                'create_table' => 'Create tables'
+                'create_table' => 'Create tables',
             ];
             $statusMessage .= '<div id="dbUpdateStatementsWrapper"><table>';
             foreach ($this->updateStatements as $type => $statements) {

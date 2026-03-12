@@ -28,11 +28,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class Extension
 {
-    const STATE_ALPHA = 0;
-    const STATE_BETA = 1;
-    const STATE_STABLE = 2;
-    const STATE_EXPERIMENTAL = 3;
-    const STATE_TEST = 4;
+    public const STATE_ALPHA = 0;
+    public const STATE_BETA = 1;
+    public const STATE_STABLE = 2;
+    public const STATE_EXPERIMENTAL = 3;
+    public const STATE_TEST = 4;
 
     /**
      * the extension key
@@ -289,7 +289,7 @@ class Extension
         foreach ($this->domainObjects as $domainObject) {
             if ($domainObject->isSubclass()) {
                 $parentClass = $domainObject->getParentClass();
-                if (strpos($parentClass, '\\') === 0) {
+                if (str_starts_with($parentClass, '\\')) {
                     $parentClass = substr($parentClass, 1);
                 }
                 // Check whether the array key exists
@@ -646,23 +646,23 @@ class Extension
             'authors' => [],
             'license' => 'GPL-2.0-or-later',
             'require' => [
-                'typo3/cms-core' => '^11.5'
+                'typo3/cms-core' => '^11.5',
             ],
             'require-dev' => [
-                'typo3/testing-framework' => '^6.9.0'
+                'typo3/testing-framework' => '^6.9.0',
             ],
             'autoload' => [
                 'psr-4' => [
-                    $this->getNamespaceName() . '\\' => 'Classes'
-                ]
+                    $this->getNamespaceName() . '\\' => 'Classes',
+                ],
             ],
             'autoload-dev' => [
                 'psr-4' => [
-                    $this->getNamespaceName() . '\\Tests\\' => 'Tests'
-                ]
+                    $this->getNamespaceName() . '\\Tests\\' => 'Tests',
+                ],
             ],
             'replace' => [
-                'typo3-ter/' . $composerExtensionKey => 'self.version'
+                'typo3-ter/' . $composerExtensionKey => 'self.version',
             ],
             'config' => [
                 'vendor-dir' => '.Build/vendor',
@@ -671,18 +671,18 @@ class Extension
             'scripts' => [
                 'post-autoload-dump' => [
                     'TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare',
-                ]
+                ],
             ],
             'extra' => [
                 'typo3/cms' => [
                     'web-dir' => '.Build/public',
                     'extension-key' => $extensionKey,
-                ]
-            ]
+                ],
+            ],
         ];
         foreach ($this->persons as $person) {
             $author = [
-                'name' => $person->getName()
+                'name' => $person->getName(),
             ];
             if ($person->getRole() !== '') {
                 $author['role'] = $person->getRole();

@@ -186,7 +186,7 @@ class NodeFactory implements SingletonInterface
             $paramNodeBuilder->makeByRef();
         }
 
-        if (null !== $parameter->getDefaultValue()) {
+        if ($parameter->getDefaultValue() !== null) {
             $paramNodeBuilder->setDefault($parameter->getDefaultValue());
         }
         $parameterNode = $paramNodeBuilder->getNode();
@@ -225,7 +225,7 @@ class NodeFactory implements SingletonInterface
 
         foreach ($propertyNode->props as $subNode) {
             if ($subNode instanceof PropertyProperty) {
-                if (null !== $property->getDefaultValueNode()) {
+                if ($property->getDefaultValueNode() !== null) {
                     $subNode->default = $property->getDefaultValueNode();
                 } else {
                     $subNode->default = self::buildNodeFromValue($property->getDefault());
@@ -274,7 +274,7 @@ class NodeFactory implements SingletonInterface
      *
      * @param mixed $value The value to normalize
      *
-     * @return \PhpParser\Node\Expr The normalized value
+     * @return Node\Expr The normalized value
      */
     protected static function buildNodeFromValue($value): Node
     {
@@ -307,7 +307,7 @@ class NodeFactory implements SingletonInterface
             $lastKey = -1;
             foreach ($value as $itemKey => $itemValue) {
                 // for consecutive, numeric keys don't generate keys
-                if (null !== $lastKey && ++$lastKey === $itemKey) {
+                if ($lastKey !== null && ++$lastKey === $itemKey) {
                     $items[] = new ArrayItem(
                         self::buildNodeFromValue($itemValue)
                     );

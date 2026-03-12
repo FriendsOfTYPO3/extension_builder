@@ -35,7 +35,7 @@ class Person
     /**
      * TODO validation?
      *
-     * @see \EBT\ExtensionBuilder\Domain\Model\Person::ROLES
+     * @see Person::ROLES
      */
     protected string $role = '';
     protected string $email = '';

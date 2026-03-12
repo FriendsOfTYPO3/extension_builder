@@ -237,8 +237,8 @@ class ExtensionValidator extends AbstractValidator
     protected function checkExistingExtensions(Extension $extension): void
     {
         if (is_dir($extension->getExtensionDir())) {
-            $settingsFile = $extension->getExtensionDir() .
-                ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
+            $settingsFile = $extension->getExtensionDir()
+                . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE;
             if (!file_exists($settingsFile) || $extension->isRenamed()) {
                 $this->validationResult['warnings'][] = new ExtensionException(
                     'Extension directory exists',
@@ -257,8 +257,8 @@ class ExtensionValidator extends AbstractValidator
         foreach ($extension->getPlugins() as $plugin) {
             if (self::validatePluginKey($plugin->getKey()) === false) {
                 $this->validationResult['errors'][] = new Exception(
-                    'Invalid plugin key in plugin ' . $plugin->getName() . ': "' . $plugin->getKey() . '".' . LF .
-                    'Only alphanumeric character without spaces are allowed',
+                    'Invalid plugin key in plugin ' . $plugin->getName() . ': "' . $plugin->getKey() . '".' . LF
+                    . 'Only alphanumeric character without spaces are allowed',
                     self::ERROR_PLUGIN_INVALID_KEY
                 );
             }
@@ -323,16 +323,16 @@ class ExtensionValidator extends AbstractValidator
 
     private function validateDependentActions(array $actionNames, string $name): void
     {
-        if ((in_array('new', $actionNames) && !in_array('create', $actionNames)) ||
-            (in_array('create', $actionNames) && !in_array('new', $actionNames))
+        if ((in_array('new', $actionNames) && !in_array('create', $actionNames))
+            || (in_array('create', $actionNames) && !in_array('new', $actionNames))
         ) {
             $this->validationResult['warnings'][] = new ExtensionException(
                 'Potential misconfiguration in ' . $name . ':' . LF . 'Actions new and create usually depend on each other',
                 self::ERROR_ACTION_MISCONFIGURATION
             );
         }
-        if ((in_array('edit', $actionNames) && !in_array('update', $actionNames)) ||
-            (in_array('update', $actionNames) && !in_array('edit', $actionNames))
+        if ((in_array('edit', $actionNames) && !in_array('update', $actionNames))
+            || (in_array('update', $actionNames) && !in_array('edit', $actionNames))
         ) {
             $this->validationResult['warnings'][] = new ExtensionException(
                 'Potential misconfiguration in ' . $name . ':' . LF . 'Actions edit and update usually depend on each other',
@@ -361,8 +361,8 @@ class ExtensionValidator extends AbstractValidator
             $defaultAction = reset($actionNames);
             if (in_array($defaultAction, ['show', 'edit'])) {
                 $this->validationResult['warnings'][] = new ExtensionException(
-                    'Potential misconfiguration in ' . $label . ':' . LF .
-                    'Default action ' . $controllerName . '->' . $defaultAction . '  can not be called without a domain object parameter',
+                    'Potential misconfiguration in ' . $label . ':' . LF
+                    . 'Default action ' . $controllerName . '->' . $defaultAction . '  can not be called without a domain object parameter',
                     self::ERROR_ACTION_MISCONFIGURATION
                 );
             }
@@ -577,15 +577,15 @@ class ExtensionValidator extends AbstractValidator
                 $tableName = $this->configurationManager->getPersistenceTable($parentClass);
                 if (!$tableName) {
                     $this->validationResult['errors'][] = new ExtensionException(
-                        'Mapping configuration error in domain object ' . $domainObject->getName() . ': ' . LF .
-                        'The mapping table could not be detected from Extbase Configuration. Please enter a table name',
+                        'Mapping configuration error in domain object ' . $domainObject->getName() . ': ' . LF
+                        . 'The mapping table could not be detected from Extbase Configuration. Please enter a table name',
                         self::ERROR_MAPPING_NO_TABLE
                     );
                 }
             } else {
                 $this->validationResult['errors'][] = new ExtensionException(
-                    'Mapping configuration error in domain object ' . $domainObject->getName() . ': the parent class ' . LF .
-                    $parentClass . ' seems not to exist',
+                    'Mapping configuration error in domain object ' . $domainObject->getName() . ': the parent class ' . LF
+                    . $parentClass . ' seems not to exist',
                     self::ERROR_MAPPING_NO_PARENT_CLASS
                 );
             }
@@ -596,26 +596,26 @@ class ExtensionValidator extends AbstractValidator
                 $tableName
             )) {
                 $this->validationResult['warnings'][] = new ExtensionException(
-                    'The configuration for table "' . $tableName . '" is not compatible' . LF .
-                    ' with extbase. You have to configure it yourself if you want to map' . LF .
-                    ' to this table',
+                    'The configuration for table "' . $tableName . '" is not compatible' . LF
+                    . ' with extbase. You have to configure it yourself if you want to map' . LF
+                    . ' to this table',
                     self::ERROR_MAPPING_TO_INCOMPATIBLE_TABLE
                 );
             }
-            if (strpos($extensionPrefix, $tableName) !== false) {
+            if (str_contains($extensionPrefix, $tableName)) {
                 // the domainObject extends a class of the same extension
                 if (!$parentClass) {
                     $this->validationResult['errors'][] = new ExtensionException(
-                        'Mapping configuration error in domain object ' . $domainObject->getName() . ': you have to define' . LF .
-                        'a parent class if you map to a table of another domain object of the same extension ',
+                        'Mapping configuration error in domain object ' . $domainObject->getName() . ': you have to define' . LF
+                        . 'a parent class if you map to a table of another domain object of the same extension ',
                         self::ERROR_MAPPING_NO_PARENT_CLASS
                     );
                 }
             }
             if (!isset($GLOBALS['TCA'][$tableName])) {
                 $this->validationResult['errors'][] = new ExtensionException(
-                    'There is no entry for table "' . $tableName . '" of ' . $domainObject->getName() . ' in TCA. ' . LF .
-                    'For technical reasons you can only extend tables with TCA configuration.',
+                    'There is no entry for table "' . $tableName . '" of ' . $domainObject->getName() . ' in TCA. ' . LF
+                    . 'For technical reasons you can only extend tables with TCA configuration.',
                     self::ERROR_MAPPING_NO_TCA
                 );
             }
@@ -626,9 +626,9 @@ class ExtensionValidator extends AbstractValidator
                 if ($column->getName() === $GLOBALS['TCA'][$tableName]['ctrl']['type']) {
                     if ((string)$column->getType() === 'Integer') {
                         $this->validationResult['warnings'][] = new ExtensionException(
-                            'This means the type field can not be used for defining the record type. ' . LF .
-                            'You have to configure the mappings yourself if you want to map to this' . LF .
-                            'table or extend the correlated class',
+                            'This means the type field can not be used for defining the record type. ' . LF
+                            . 'You have to configure the mappings yourself if you want to map to this' . LF
+                            . 'table or extend the correlated class',
                             self::ERROR_MAPPING_WRONG_TYPE_FIELD_CONFIGURATION
                         );
                     }
@@ -648,8 +648,8 @@ class ExtensionValidator extends AbstractValidator
         foreach ($actions as $action) {
             if (in_array($action->getName(), $actionNames, true)) {
                 $this->validationResult['errors'][] = new ExtensionException(
-                    'Duplicate action name "' . $action->getName() . '" of ' . $domainObject->getName() . LF .
-                    '; action names have to be unique for each model',
+                    'Duplicate action name "' . $action->getName() . '" of ' . $domainObject->getName() . LF
+                    . '; action names have to be unique for each model',
                     self::ERROR_ACTIONNAME_DUPLICATE
                 );
             }
@@ -659,8 +659,8 @@ class ExtensionValidator extends AbstractValidator
              */
             if (!preg_match('/^[a-zA-Z0-9]*$/', $action->getName())) {
                 $this->validationResult['errors'][] = new ExtensionException(
-                    'Illegal action name "' . $action->getName() . '" of ' . $domainObject->getName() . '.' . LF .
-                    'Please use lowerCamelCase, no spaces or underscores.',
+                    'Illegal action name "' . $action->getName() . '" of ' . $domainObject->getName() . '.' . LF
+                    . 'Please use lowerCamelCase, no spaces or underscores.',
                     self::ERROR_ACTIONNAME_ILLEGAL_CHARACTER
                 );
             }
@@ -671,8 +671,8 @@ class ExtensionValidator extends AbstractValidator
         $firstAction = reset($actionNames);
         if ($firstAction === 'show' || $firstAction === 'edit' || $firstAction === 'delete') {
             $this->validationResult['warnings'][] = new ExtensionException(
-                'Potential misconfiguration in Domain object ' . $domainObject->getName() . ':' . LF .
-                'First action could not be default action since "' . $firstAction . '" action needs a parameter',
+                'Potential misconfiguration in Domain object ' . $domainObject->getName() . ':' . LF
+                . 'First action could not be default action since "' . $firstAction . '" action needs a parameter',
                 self::ERROR_ACTION_MISCONFIGURATION
             );
         }
@@ -696,8 +696,8 @@ class ExtensionValidator extends AbstractValidator
              */
             if (!preg_match('/^[a-zA-Z0-9]*$/', $propertyName)) {
                 $this->validationResult['errors'][] = new ExtensionException(
-                    'Illegal property name "' . $propertyName . '" of ' . $domainObject->getName() . '.' . LF .
-                    'Please use lowerCamelCase, no spaces or underscores.',
+                    'Illegal property name "' . $propertyName . '" of ' . $domainObject->getName() . '.' . LF
+                    . 'Please use lowerCamelCase, no spaces or underscores.',
                     self::ERROR_PROPERTY_ILLEGAL_CHARACTER
                 );
             }
@@ -705,19 +705,19 @@ class ExtensionValidator extends AbstractValidator
             $firstChar = $propertyName[0];
             if (strtoupper($firstChar) == $firstChar) {
                 $this->validationResult['errors'][] = new ExtensionException(
-                    'Illegal first character of property name "' . $property->getName() . '" of domain object "' .
-                    $domainObject->getName() . '".' . LF .
-                    'Please use lowerCamelCase.',
+                    'Illegal first character of property name "' . $property->getName() . '" of domain object "'
+                    . $domainObject->getName() . '".' . LF
+                    . 'Please use lowerCamelCase.',
                     self::ERROR_PROPERTY_UPPER_FIRST_CHARACTER
                 );
             }
 
             if (ValidationService::isReservedTYPO3Word($propertyName)) {
                 $this->validationResult['warnings'][] = new ExtensionException(
-                    'The name of property "' . $propertyName . '" in Model "' . $domainObject->getName() .
-                    '" will result in a TYPO3 specific column name.' . LF .
-                    ' This might result in unexpected behaviour. If you didn\'t choose that name by purpose' . LF .
-                    ' it is recommended to use another name',
+                    'The name of property "' . $propertyName . '" in Model "' . $domainObject->getName()
+                    . '" will result in a TYPO3 specific column name.' . LF
+                    . ' This might result in unexpected behaviour. If you didn\'t choose that name by purpose' . LF
+                    . ' it is recommended to use another name',
                     self::ERROR_PROPERTY_RESERVED_WORD
                 );
             }
@@ -751,8 +751,8 @@ class ExtensionValidator extends AbstractValidator
                 if ($foreignModel instanceof DomainObject) {
                     if ($foreignModel->getFullQualifiedClassName() != $property->getForeignClassName()) {
                         $this->validationResult['errors'][] = new ExtensionException(
-                            'Relation "' . $property->getName() . '" in model "' . $domainObject->getName() .
-                            '" has an external class relation and a wire to ' . $foreignModel->getName(),
+                            'Relation "' . $property->getName() . '" in model "' . $domainObject->getName()
+                            . '" has an external class relation and a wire to ' . $foreignModel->getName(),
                             self::ERROR_MAPPING_WIRE_AND_FOREIGN_CLASS
                         );
                     }
@@ -763,8 +763,8 @@ class ExtensionValidator extends AbstractValidator
                                 && $property->getName() === $foreignProperty->getName()
                             ) {
                                 $this->validationResult['errors'][] = new ExtensionException(
-                                    'Relation "' . $property->getName() . '" in model "' . $domainObject->getName() .
-                                    '" has an external class relation to ' . $foreignModel->getName() . ' which has a property with the same name',
+                                    'Relation "' . $property->getName() . '" in model "' . $domainObject->getName()
+                                    . '" has an external class relation to ' . $foreignModel->getName() . ' which has a property with the same name',
                                     self::ERROR_PROPERTY_DUPLICATE_IN_RELATION
                                 );
                             }

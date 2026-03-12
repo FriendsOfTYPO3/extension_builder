@@ -55,7 +55,7 @@ class LinkButtonWithId extends LinkButton
             'href' => $this->getHref(),
             'class' => 'btn btn-default btn-sm ' . $this->getClasses(),
             'id' => $this->getId(),
-            'title' => $this->getTitle()
+            'title' => $this->getTitle(),
         ];
         $labelText = '';
         if ($this->showLabelText) {

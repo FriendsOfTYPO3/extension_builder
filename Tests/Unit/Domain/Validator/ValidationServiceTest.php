@@ -44,31 +44,31 @@ class ValidationServiceTest extends BaseUnitTest
                         'propertyGroup' => [
                             'properties' => [
                                 [
-                                    'propertyName' => 'bar'
-                                ]
-                            ]
+                                    'propertyName' => 'bar',
+                                ],
+                            ],
                         ],
                         'relationGroup' => [
                             'relations' => [
                                 [
-                                    'relationName' => 'bar'
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
+                                    'relationName' => 'bar',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ],
             'properties' => [
                 'plugins' => [],
-                'backendModules' => []
-            ]
+                'backendModules' => [],
+            ],
         ];
         $extensionValidator = new ExtensionValidator();
 
         $result = $extensionValidator->validateConfigurationFormat($fixture);
         $expected = [
             'errors' => [],
-            'warnings' => []
+            'warnings' => [],
         ];
         $expected['errors'][] = new ExtensionException(
             'Property "bar" of Model "Foo" exists twice.',

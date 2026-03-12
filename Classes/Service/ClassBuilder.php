@@ -311,7 +311,7 @@ class ClassBuilder implements SingletonInterface
         $setMethod = $this->buildSetterMethod($domainProperty);
         $this->classObject->setMethod($getMethod);
         $this->classObject->setMethod($setMethod);
-        if (strpos($domainProperty->getTypeForComment(), 'bool') === 0) {
+        if (str_starts_with($domainProperty->getTypeForComment(), 'bool')) {
             $isMethod = $this->buildIsMethod($domainProperty);
             $this->classObject->setMethod($isMethod);
         }
@@ -394,7 +394,7 @@ class ClassBuilder implements SingletonInterface
                 [
                     'child' => Inflector::singularize($propertyName),
                     'children' => $propertyName,
-                    'Child' => $domainProperty->getForeignModelName()
+                    'Child' => $domainProperty->getForeignModelName(),
                 ]
             );
             $this->updateDocComment(
@@ -402,7 +402,7 @@ class ClassBuilder implements SingletonInterface
                 [
                     '\bchild\b' => Inflector::singularize($propertyName),
                     '\bchildren\b' => $propertyName,
-                    '\bChild\b' => $domainProperty->getForeignModelName()
+                    '\bChild\b' => $domainProperty->getForeignModelName(),
                 ]
             );
 
@@ -459,14 +459,14 @@ class ClassBuilder implements SingletonInterface
                     'childToRemove' => $parameterName,
                     'child' => $domainProperty->getForeignModelName(),
                     'children' => $propertyName,
-                    'Child' => $domainProperty->getForeignModelName()
+                    'Child' => $domainProperty->getForeignModelName(),
                 ]
             );
             $this->updateDocComment(
                 $removeMethod,
                 [
                     '\bchildToRemove\b' => $parameterName,
-                    '\bChild\b' => $domainProperty->getForeignModelName()
+                    '\bChild\b' => $domainProperty->getForeignModelName(),
                 ]
             );
         }
@@ -554,7 +554,7 @@ class ClassBuilder implements SingletonInterface
             'domainObjectRepository' => lcfirst($domainObject->getName()) . 'Repository',
             'domainObject' => lcfirst($domainObject->getName()),
             'domainObjects' => lcfirst(Inflector::pluralize($domainObject->getName())),
-            'newDomainObject' => 'new' . $domainObject->getName()
+            'newDomainObject' => 'new' . $domainObject->getName(),
         ];
         $this->updateMethodBody($actionMethod, $replacements);
         $this->updateDocComment($actionMethod, $replacements);
@@ -733,7 +733,7 @@ class ClassBuilder implements SingletonInterface
         $injectMethod = clone $this->templateClassObject->getMethod('injectDomainObjectRepository')->setName($injectMethodName);
         $replacements = [
             preg_quote('\\VENDOR\\Package\\Domain\\Repository\\DomainObjectRepository', '/') => $domainObject->getFullyQualifiedDomainRepositoryClassName(),
-            'domainObjectRepository' => lcfirst($repositoryName)
+            'domainObjectRepository' => lcfirst($repositoryName),
         ];
         $this->updateMethodBody($injectMethod, $replacements);
         $injectMethod->getParameterByPosition(0)
@@ -787,7 +787,7 @@ class ClassBuilder implements SingletonInterface
             $parentClass = $this->settings['Repository']['parentClass'] ?? '\\TYPO3\\CMS\\Extbase\\Persistence\\Repository';
             $this->classObject->setParentClassName($parentClass);
         }
-        if ($domainObject->getSorting() && null === $this->classObject->getProperty('defaultOrderings')) {
+        if ($domainObject->getSorting() && $this->classObject->getProperty('defaultOrderings') === null) {
             $defaultOrderings = $this->templateClassObject->getProperty('defaultOrderings');
             $this->classObject->addProperty($defaultOrderings);
         }

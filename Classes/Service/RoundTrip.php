@@ -44,11 +44,11 @@ class RoundTrip implements SingletonInterface
     /**
      * @var string
      */
-    const SPLIT_TOKEN = '## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder';
+    public const SPLIT_TOKEN = '## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder';
 
-    const OVERWRITE_SETTINGS_SKIP = -1;
-    const OVERWRITE_SETTINGS_MERGE = 1;
-    const OVERWRITE_SETTINGS_KEEP = 2;
+    public const OVERWRITE_SETTINGS_SKIP = -1;
+    public const OVERWRITE_SETTINGS_MERGE = 1;
+    public const OVERWRITE_SETTINGS_KEEP = 2;
 
     protected ParserService $parserService;
     protected ExtensionBuilderConfigurationManager $configurationManager;
@@ -744,7 +744,7 @@ class RoundTrip implements SingletonInterface
             return $stringToParse;
         }
         $separatorToken = '\\\\';
-        if (strpos($stringToParse, $separatorToken) === false) {
+        if (!str_contains($stringToParse, $separatorToken)) {
             $separatorToken = '_';
         }
         return str_replace(
@@ -1021,7 +1021,7 @@ class RoundTrip implements SingletonInterface
         if (!is_array($settings)) {
             throw new Exception('overWrite settings could not be parsed');
         }
-        if (strpos($path, $extension->getExtensionDir()) === 0) {
+        if (str_starts_with($path, $extension->getExtensionDir())) {
             $path = str_replace($extension->getExtensionDir(), '', $path);
         }
         $pathParts = explode('/', $path);

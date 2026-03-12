@@ -52,7 +52,7 @@ class Action
     protected array $actionNamesWithNoRendering = [
         'create',
         'update',
-        'delete'
+        'delete',
     ];
     /**
      * these actions need a form
@@ -61,7 +61,7 @@ class Action
      */
     protected array $actionNamesWithForm = [
         'new',
-        'edit'
+        'edit',
     ];
     /**
      * these actions should not be cached
@@ -71,7 +71,7 @@ class Action
     protected array $actionNamesThatShouldNotBeCached = [
         'create',
         'update',
-        'delete'
+        'delete',
     ];
     /**
      * flag: true if the action is cacheable

@@ -263,7 +263,7 @@ class PrinterTest extends BaseUnitTest
             $tags,
             [
                 0 => '\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject',
-                1 => '\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TOOOL\Projects\Domain\Model\Calculation> $tests'
+                1 => '\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TOOOL\Projects\Domain\Model\Calculation> $tests',
             ]
         );
         self::assertSame(

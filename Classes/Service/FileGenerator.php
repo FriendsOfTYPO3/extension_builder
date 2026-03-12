@@ -62,7 +62,7 @@ class FileGenerator
         'listAction',
         'newAction',
         'showAction',
-        'updateAction'
+        'updateAction',
     ];
     /**
      * all file types where a split token makes sense
@@ -216,7 +216,7 @@ class FileGenerator
                 $fileContents = $this->renderTemplate(
                     GeneralUtility::underscoredToLowerCamelCase($extensionFile) . 't',
                     [
-                        'extension' => $this->extension
+                        'extension' => $this->extension,
                     ]
                 );
                 if ($extensionFile === 'ext_tables.sql') {
@@ -242,7 +242,7 @@ class FileGenerator
             $fileContents = $this->renderTemplate(
                 GeneralUtility::underscoredToLowerCamelCase('ext_localconf.phpt'),
                 [
-                    'extension' => $this->extension
+                    'extension' => $this->extension,
                 ]
             );
             $this->writeFile($this->extensionDirectory . 'ext_localconf.php', $fileContents);
@@ -265,7 +265,7 @@ class FileGenerator
             $fileContents = $this->renderTemplate(
                 'Configuration/Icons.phpt',
                 [
-                    'extension' => $this->extension
+                    'extension' => $this->extension,
                 ]
             );
             $this->writeFile($this->extensionDirectory . 'Configuration/Icons.php', $fileContents);
@@ -734,7 +734,7 @@ class FileGenerator
                     $this->extensionDirectory,
                     'Documentation/' . str_replace($this->getTemplatePath('Documentation/'), '', $docFile)
                 );
-            } elseif (strpos($docFile, '.rstt') === false && strpos($docFile, '.ymlt') === false) {
+            } elseif (!str_contains($docFile, '.rstt')   && !str_contains($docFile, '.ymlt')) {
                 $this->upload_copy_move(
                     $docFile,
                     str_replace(
@@ -894,7 +894,7 @@ class FileGenerator
     {
         return $this->renderTemplate('Tests/Unit/DomainModelTest.phpt', [
             'extension' => $this->extension,
-            'domainObject' => $domainObject
+            'domainObject' => $domainObject,
         ]);
     }
 
@@ -912,7 +912,7 @@ class FileGenerator
         return $this->renderTemplate('Tests/Unit/ControllerTest.phpt', [
             'extension' => $this->extension,
             'controllerName' => $controllerName,
-            'domainObject' => $domainObject
+            'domainObject' => $domainObject,
         ]);
     }
 
@@ -926,13 +926,13 @@ class FileGenerator
                 if (!is_dir($this->configurationDirectory . 'Extbase/Persistence/')) {
                     if (!mkdir($concurrentDirectory = $this->configurationDirectory . 'Extbase/Persistence/', 0775, true)
                        && !is_dir($concurrentDirectory)
-                   ) {
+                    ) {
                         throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
                     }
                 }
                 $fileContents = $this->renderTemplate('Configuration/Extbase/Persistence/Classes.phpt', [
-                   'extension' => $this->extension
-               ]);
+                    'extension' => $this->extension,
+                ]);
                 $this->writeFile($this->configurationDirectory . 'Extbase/Persistence/Classes.php', $fileContents);
             }
         } catch (Exception $e) {
@@ -1030,17 +1030,17 @@ class FileGenerator
         $comments = $classObject->getComments();
         $needsLicenseHeader = true;
         foreach ($comments as $comment) {
-            if (strpos($comment, 'license') !== false) {
+            if (str_contains($comment, 'license')) {
                 $needsLicenseHeader = false;
             }
         }
-        if (strpos($classObject->getDescription(), 'license') !== false) {
+        if (str_contains($classObject->getDescription(), 'license')) {
             $needsLicenseHeader = false;
         }
         $extensionSettings = $this->extension->getSettings();
         if ($needsLicenseHeader && empty($extensionSettings['skipDocComment'])) {
             $licenseHeader = $this->renderTemplate('Partials/Classes/licenseHeader.phpt', [
-                'extension' => $this->extension
+                'extension' => $this->extension,
             ]);
             $classObject->addComment($licenseHeader);
         }
@@ -1064,7 +1064,7 @@ class FileGenerator
         return $this->renderTemplate($templateRootFolder . $fileName . '.htmlt', [
             'domainObject' => $domainObject,
             'action' => $action,
-            'extension' => $this->extension
+            'extension' => $this->extension,
         ]);
     }
 
@@ -1079,7 +1079,7 @@ class FileGenerator
     {
         return $this->renderTemplate($templateRootFolder . 'formFields.htmlt', [
             'extension' => $this->extension,
-            'domainObject' => $domainObject
+            'domainObject' => $domainObject,
         ]);
     }
 
@@ -1094,7 +1094,7 @@ class FileGenerator
     {
         return $this->renderTemplate($templateRootFolder . 'properties.htmlt', [
             'extension' => $this->extension,
-            'domainObject' => $domainObject
+            'domainObject' => $domainObject,
         ]);
     }
 
@@ -1107,7 +1107,7 @@ class FileGenerator
     public function generateFormErrorsPartial(string $templateRootFolder): ?string
     {
         return $this->renderTemplate($templateRootFolder . 'formErrors.htmlt', [
-            'extension' => $this->extension
+            'extension' => $this->extension,
         ]);
     }
 
@@ -1120,7 +1120,7 @@ class FileGenerator
     public function generateLayout(string $templateRootFolder): ?string
     {
         return $this->renderTemplate($templateRootFolder . 'default.htmlt', [
-            'extension' => $this->extension
+            'extension' => $this->extension,
         ]);
     }
 
@@ -1200,7 +1200,7 @@ class FileGenerator
     {
         return $this->renderTemplate('Configuration/TCA/tableName.phpt', [
             'extension' => $this->extension,
-            'domainObject' => $domainObject
+            'domainObject' => $domainObject,
         ]);
     }
 
@@ -1219,7 +1219,7 @@ class FileGenerator
             'extension' => $this->extension,
             'rootDomainObject' => reset($domainObjects),
             'domainObjects' => $domainObjects,
-            'addRecordTypeField' => $addRecordTypeField
+            'addRecordTypeField' => $addRecordTypeField,
         ]);
     }
 
@@ -1256,7 +1256,7 @@ class FileGenerator
     public function generateYamlSettings(): ?string
     {
         return $this->renderTemplate('Configuration/ExtensionBuilder/settings.yamlt', [
-            'extension' => $this->extension
+            'extension' => $this->extension,
         ]);
     }
 
@@ -1267,7 +1267,7 @@ class FileGenerator
     public function generateTyposcriptSetup(): ?string
     {
         return $this->renderTemplate('Configuration/TypoScript/setup.typoscriptt', [
-            'extension' => $this->extension
+            'extension' => $this->extension,
         ]);
     }
 
@@ -1278,7 +1278,7 @@ class FileGenerator
     public function generateTyposcriptConstants(): ?string
     {
         return $this->renderTemplate('Configuration/TypoScript/constants.typoscriptt', [
-            'extension' => $this->extension
+            'extension' => $this->extension,
         ]);
     }
 
@@ -1289,7 +1289,7 @@ class FileGenerator
     public function generateStaticTyposcript(): ?string
     {
         return $this->renderTemplate('ext_typoscript_setup.txtt', [
-            'extension' => $this->extension
+            'extension' => $this->extension,
         ]);
     }
 
@@ -1384,7 +1384,7 @@ class FileGenerator
                 }
             }
 
-            if ($overWriteMode == RoundTrip::OVERWRITE_SETTINGS_MERGE && strpos($targetFile, 'Classes') === false) {
+            if ($overWriteMode == RoundTrip::OVERWRITE_SETTINGS_MERGE && !str_contains($targetFile, 'Classes')) {
                 // classes are merged by the class builder
                 if ($fileExtension == 'html') {
                     //TODO: We need some kind of protocol to be displayed after code generation

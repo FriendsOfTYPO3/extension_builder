@@ -19,6 +19,4 @@ namespace EBT\ExtensionBuilder\Domain\Exception;
 
 use EBT\ExtensionBuilder\Exception;
 
-class ExtensionException extends Exception
-{
-}
+class ExtensionException extends Exception {}

@@ -57,7 +57,7 @@ return [
                 'items' => [
                     [
                         'label' => '',
-                        1 => '',
+                        'invertedLabel' => '',
                         'invertStateDisplay' => true
                     ]
                 ],
@@ -110,7 +110,7 @@ return [
                 'items' => [
                     [
                         'label' => '',
-                        1 => '',
+                        'invertedLabel' => '',
                     ]
                 ],
                 'default' => 0,
