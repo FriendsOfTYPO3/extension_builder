@@ -24,8 +24,8 @@ class OpeningTagViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderWithChildren(string $template, string $expected): void
     {
-        $viewHelper = $this->getAccessibleMock(OpeningTagViewHelper::class, ['renderChildren']);
-        $viewHelper->expects(self::once())->method('renderChildren')->willReturn($template);
+        $viewHelper = new OpeningTagViewHelper();
+        $viewHelper->setRenderChildrenClosure(function () use ($template) { return $template; });
 
         $this->injectDependenciesIntoViewHelper($viewHelper);
 

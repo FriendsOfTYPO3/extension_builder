@@ -44,8 +44,8 @@ class PregReplaceViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderWithChildren(string $match, string $replace, string $subject, string $expected): void
     {
-        $viewHelper = $this->getAccessibleMock(PregReplaceViewHelper::class, ['renderChildren']);
-        $viewHelper->expects(self::once())->method('renderChildren')->willReturn($subject);
+        $viewHelper = new PregReplaceViewHelper();
+        $viewHelper->setRenderChildrenClosure(function () use ($subject) { return $subject; });
 
         $this->arguments = [
             'match' => $match,

@@ -48,8 +48,8 @@ class HumanizeViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderWithChildren(string $string, string $expected): void
     {
-        $viewHelper = $this->getAccessibleMock(HumanizeViewHelper::class, ['renderChildren']);
-        $viewHelper->expects(self::once())->method('renderChildren')->willReturn($string);
+        $viewHelper = new HumanizeViewHelper();
+        $viewHelper->setRenderChildrenClosure(function () use ($string) { return $string; });
 
         $this->injectDependenciesIntoViewHelper($viewHelper);
 

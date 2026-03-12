@@ -32,8 +32,8 @@ class SingularizeViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderWithChildren(string $singular, string $expected): void
     {
-        $viewHelper = $this->getAccessibleMock(SingularizeViewHelper::class, ['renderChildren']);
-        $viewHelper->expects(self::once())->method('renderChildren')->willReturn($singular);
+        $viewHelper = new SingularizeViewHelper();
+        $viewHelper->setRenderChildrenClosure(function () use ($singular) { return $singular; });
 
         $this->injectDependenciesIntoViewHelper($viewHelper);
 
