@@ -41,11 +41,6 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 abstract class BaseFunctionalTest extends FunctionalTestCase
 {
-    /**
-     * @var bool
-     */
-    protected $backupGlobals = false;
-
     protected string $modelClassDir = 'Classes/Domain/Model/';
     protected string $codeTemplateRootPath = '';
     protected string $modelClassTemplatePath = '';
@@ -58,8 +53,8 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
     protected FileGenerator $fileGenerator;
     protected vfsStreamDirectory $testDir;
 
-    protected $testExtensionsToLoad = [
-        'typo3conf/ext/extension_builder'
+    protected array $testExtensionsToLoad = [
+        'friendsoftypo3/extension-builder'
     ];
 
     /**
@@ -110,12 +105,12 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         $this->classBuilder = GeneralUtility::makeInstance(ClassBuilder::class);
         $this->classBuilder->initialize($this->extension);
 
-        $this->roundTripService = $this->getAccessibleMock(RoundTrip::class, ['dummy']);
+        $this->roundTripService = $this->getAccessibleMock(RoundTrip::class, null);
         $this->roundTripService->_set('configurationManager', $configurationManager);
         $this->roundTripService->_set('parserService', $this->parserService);
         $this->roundTripService->initialize($this->extension);
 
-        $this->fileGenerator = $this->getAccessibleMock(FileGenerator::class, ['dummy']);
+        $this->fileGenerator = $this->getAccessibleMock(FileGenerator::class, null);
         $this->fileGenerator->_set('printerService', $this->printerService);
         $this->fileGenerator->_set('localizationService', $localizationService);
         $this->fileGenerator->_set('classBuilder', $this->classBuilder);
@@ -154,6 +149,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         if (!empty($this->extension) && $this->extension->getExtensionKey() !== null) {
             GeneralUtility::rmdir($this->extension->getExtensionDir(), true);
         }
+        parent::tearDown();
     }
 
     /**
@@ -166,7 +162,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
      */
     protected function buildDomainObject($name, bool $entity = false, bool $aggregateRoot = false): DomainObject
     {
-        $domainObject = $this->getAccessibleMock(DomainObject::class, ['dummy']);
+        $domainObject = $this->getAccessibleMock(DomainObject::class, null);
         $domainObject->setExtension($this->extension);
         $domainObject->setName($name);
         $domainObject->setEntity($entity);

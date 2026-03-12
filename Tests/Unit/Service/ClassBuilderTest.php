@@ -40,10 +40,10 @@ class ClassBuilderTest extends BaseUnitTest
     {
         parent::setUp();
 
-        $this->classBuilder = $this->getAccessibleMock(ClassBuilder::class, ['dummy']);
+        $this->classBuilder = $this->getAccessibleMock(ClassBuilder::class, null);
 
         $parserService = new ParserService();
-        $printerService = $this->getAccessibleMock(Printer::class, ['dummy']);
+        $printerService = $this->getAccessibleMock(Printer::class, null);
 
         $nodeFactory = new NodeFactory();
         $printerService->_set('nodeFactory', $nodeFactory);

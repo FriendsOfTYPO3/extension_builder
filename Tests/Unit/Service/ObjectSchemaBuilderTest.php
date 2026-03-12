@@ -37,7 +37,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
     {
         parent::setUp();
 
-        $this->objectSchemaBuilder = $this->getAccessibleMock(ObjectSchemaBuilder::class, ['dummy']);
+        $this->objectSchemaBuilder = $this->getAccessibleMock(ObjectSchemaBuilder::class, null);
 
         $this->configurationManager = $this->getAccessibleMock(
             ExtensionBuilderConfigurationManager::class,
