@@ -21,7 +21,6 @@ use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
@@ -472,7 +471,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      *
      * @param ServerRequestInterface $request
      * @return JsonResponse
-     * @throws RouteNotFoundException
+
      */
     public function getWiringEditorSmd(ServerRequestInterface $request): JsonResponse
     {
@@ -481,17 +480,13 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         );
         $smdJson = json_decode($smdJsonString);
         $parameters = [
-            'tx_extensionbuilder_tools_extensionbuilderextensionbuilder' => [
+            'tx_extensionbuilder_tools_extensionbuilder' => [
                 'controller' => 'BuilderModule',
                 'action' => 'dispatchRpc',
             ]
         ];
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        try {
-            $uri = $uriBuilder->buildUriFromRoute('tools_ExtensionBuilderExtensionbuilder', $parameters);
-        } catch (RouteNotFoundException $e) {
-            $uri = $uriBuilder->buildUriFromRoutePath('tools_ExtensionBuilderExtensionbuilder', $parameters);
-        }
+        $uri = $uriBuilder->buildUriFromRoute('tools_extensionbuilder', $parameters);
         $smdJson->target = (string)$uri;
 
         return (new JsonResponse())->setPayload((array)$smdJson);
