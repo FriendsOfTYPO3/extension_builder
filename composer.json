@@ -24,15 +24,15 @@
 		"php": "^7.4 || ^8.0",
 		"ext-json": "*",
 		"nikic/php-parser": "^4.10.4",
-		"typo3/cms-backend": "^11.4",
-		"typo3/cms-core": "^11.4"
+		"typo3/cms-backend": "^11.5",
+		"typo3/cms-core": "^11.5"
 	},
 	"require-dev": {
 		"friendsofphp/php-cs-fixer": "^2.18",
 		"phpunit/phpunit": "^9.6",
 		"roave/security-advisories": "dev-latest",
-		"typo3/cms-frontend": "^11.4",
-		"typo3/cms-install": "^11.4",
+		"typo3/cms-frontend": "^11.5",
+		"typo3/cms-install": "^11.5",
 		"typo3/coding-standards": "^0.3.0",
 		"typo3/testing-framework": "^6.11"
 	},
