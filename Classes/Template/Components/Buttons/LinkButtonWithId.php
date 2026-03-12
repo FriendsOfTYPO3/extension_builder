@@ -52,17 +52,17 @@ class LinkButtonWithId extends LinkButton
     public function render(): string
     {
         $attributes = [
-            'href' => $this->getHref(),
+            'href' => $this->getHref() ?? '',
             'class' => 'btn btn-default btn-sm ' . $this->getClasses(),
             'id' => $this->getId(),
-            'title' => $this->getTitle(),
+            'title' => $this->getTitle() ?? '',
         ];
         $labelText = '';
         if ($this->showLabelText) {
             $labelText = ' <span class="simpleMode">Show</span><span class="advancedMode">Hide</span> ' . $this->title . '.';
         }
         foreach ($this->dataAttributes as $attributeName => $attributeValue) {
-            $attributes['data-' . $attributeName] = $attributeValue;
+            $attributes['data-' . $attributeName] = $attributeValue ?? '';
         }
         if ($this->onClick !== '') {
             $attributes['onclick'] = $this->onClick;
@@ -73,7 +73,7 @@ class LinkButtonWithId extends LinkButton
         }
         $attributesString = '';
         foreach ($attributes as $key => $value) {
-            $attributesString .= ' ' . htmlspecialchars($key) . '="' . htmlspecialchars($value) . '"';
+            $attributesString .= ' ' . htmlspecialchars($key) . '="' . htmlspecialchars((string)($value ?? '')) . '"';
         }
 
         return '<a ' . $attributesString . '>'
