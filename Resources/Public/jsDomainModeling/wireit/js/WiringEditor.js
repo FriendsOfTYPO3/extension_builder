@@ -347,7 +347,7 @@
 		},
 
 		loginCheck: function(o) {
-			eval('var result = ' + o.responseText + ';');
+			var result = JSON.parse(o.responseText);
 			if (result.login.timed_out || result.login.will_time_out) {
 				if (typeof parent.TYPO3.loginRefresh != 'undefined') {
 					parent.TYPO3.loginRefresh.showLoginPopup();
