@@ -83,19 +83,46 @@ class RenderingContextFixture implements RenderingContextInterface
             $this->templatePaths = $mockFactory(TemplatePaths::class);
             $this->cache = $mockFactory(FluidCacheInterface::class);
         } else {
-            $this->variableProvider = new class implements VariableProviderInterface {
-                public function getScopeCopy($variables): static { return clone $this; }
+            $this->variableProvider = new class () implements VariableProviderInterface {
+                public function getScopeCopy($variables): static
+                {
+                    return clone $this;
+                }
                 public function setSource($source): void {}
-                public function getSource() { return []; }
-                public function getAll(): array { return []; }
+                public function getSource()
+                {
+                    return [];
+                }
+                public function getAll(): array
+                {
+                    return [];
+                }
                 public function add(string $identifier, $value): void {}
                 public function remove(string $identifier): void {}
-                public function get(string $identifier) { return null; }
-                public function getByPath(string $path, array $accessors = []) { return null; }
-                public function getAllIdentifiers(): array { return []; }
-                public function exists(string $identifier): bool { return false; }
-                public function offsetExists($offset): bool { return false; }
-                public function offsetGet($offset): mixed { return null; }
+                public function get(string $identifier)
+                {
+                    return null;
+                }
+                public function getByPath(string $path, array $accessors = [])
+                {
+                    return null;
+                }
+                public function getAllIdentifiers(): array
+                {
+                    return [];
+                }
+                public function exists(string $identifier): bool
+                {
+                    return false;
+                }
+                public function offsetExists($offset): bool
+                {
+                    return false;
+                }
+                public function offsetGet($offset): mixed
+                {
+                    return null;
+                }
                 public function offsetSet($offset, $value): void {}
                 public function offsetUnset($offset): void {}
             };
@@ -105,11 +132,17 @@ class RenderingContextFixture implements RenderingContextInterface
             $this->templateParser = new TemplateParser();
             $this->templateCompiler = new TemplateCompiler();
             $this->templatePaths = new TemplatePaths();
-            $this->cache = new class implements FluidCacheInterface {
-                public function get($name) { return null; }
+            $this->cache = new class () implements FluidCacheInterface {
+                public function get($name)
+                {
+                    return null;
+                }
                 public function set($name, $value): void {}
                 public function flush($name = null): void {}
-                public function getCacheWarmer() { return null; }
+                public function getCacheWarmer()
+                {
+                    return null;
+                }
             };
         }
     }
