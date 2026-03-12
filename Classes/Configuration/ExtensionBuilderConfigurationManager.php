@@ -479,14 +479,8 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
             ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd'
         );
         $smdJson = json_decode($smdJsonString);
-        $parameters = [
-            'tx_extensionbuilder_tools_extensionbuilder' => [
-                'controller' => 'BuilderModule',
-                'action' => 'dispatchRpc',
-            ]
-        ];
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        $uri = $uriBuilder->buildUriFromRoute('tools_extensionbuilder', $parameters);
+        $uri = $uriBuilder->buildUriFromRoute('tools_extensionbuilder.BuilderModule_dispatchRpc');
         $smdJson->target = (string)$uri;
 
         return (new JsonResponse())->setPayload((array)$smdJson);
