@@ -28,8 +28,8 @@ class Person
      * Extend here and in the locallang (mlang_Tx_ExtensionBuilder_domain_model_person_[rolekey from array]) to add new Roles.
      *
      * @var string[]
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Transient
      */
+    #[\TYPO3\CMS\Extbase\Annotation\ORM\Transient]
     protected static array $ROLES = ['developer', 'product_manager'];
     protected string $name = '';
     /**

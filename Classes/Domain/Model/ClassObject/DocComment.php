@@ -88,7 +88,7 @@ class DocComment extends Comment
      * @param mixed $tagValue
      * @param bool $override
      */
-    public function setTag(string $tagName, $tagValue = null, bool $override = false): void
+    public function setTag(string $tagName, mixed $tagValue = null, bool $override = false): void
     {
         if (!$override && isset($this->tags[$tagName])) {
             if (!is_array($this->tags[$tagName])) {

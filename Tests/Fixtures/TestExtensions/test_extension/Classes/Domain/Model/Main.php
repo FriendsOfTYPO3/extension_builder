@@ -31,8 +31,8 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * This is required
      *
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
+    #[\TYPO3\CMS\Extbase\Annotation\Validate(['validator' => 'NotEmpty'])]
     protected $identifier = '';
 
     /**
@@ -67,8 +67,8 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * This is a 1:n relation
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Child2>
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
+    #[\TYPO3\CMS\Extbase\Annotation\ORM\Cascade(['value' => 'remove'])]
     protected $children2 = null;
 
     /**

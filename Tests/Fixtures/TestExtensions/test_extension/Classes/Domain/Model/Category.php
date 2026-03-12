@@ -31,8 +31,8 @@ class Category extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * categories
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FIXTURE\TestExtension\Domain\Model\Category>
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
+    #[\TYPO3\CMS\Extbase\Annotation\ORM\Cascade(['value' => 'remove'])]
     protected $categories = null;
 
     /**
