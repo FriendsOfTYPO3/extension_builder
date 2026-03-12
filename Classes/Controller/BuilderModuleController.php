@@ -189,6 +189,8 @@ class BuilderModuleController extends ActionController
         }
         $this->view->assignMultiple([
             'initialWarnings' => $initialWarnings,
+            'publicResourcesUrl' => PathUtility::getPublicResourceWebPath('EXT:extension_builder/Resources/Public'),
+            'corePublicResourceWebPath' => PathUtility::getPublicResourceWebPath('EXT:core/Resources/Public/'),
         ]);
         $this->pageRenderer->addInlineSetting(
             'extensionBuilder.publicResourceWebPath',
