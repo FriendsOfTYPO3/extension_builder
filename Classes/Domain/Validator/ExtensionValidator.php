@@ -188,6 +188,11 @@ class ExtensionValidator extends AbstractValidator
      */
     protected array $validationResult = ['errors' => [], 'warnings' => []];
 
+    public function isValid(mixed $value): void
+    {
+        $this->validateExtension($value);
+    }
+
     /**
      * Validate the given extension
      *
@@ -196,7 +201,7 @@ class ExtensionValidator extends AbstractValidator
      * @return array[]
      * @throws Exception
      */
-    public function isValid($extension): array
+    public function validateExtension($extension): array
     {
         $extensionSettings = $extension->getSettings();
         if (isset($extensionSettings['ignoreWarnings'])) {
