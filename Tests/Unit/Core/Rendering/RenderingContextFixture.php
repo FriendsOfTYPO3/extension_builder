@@ -320,9 +320,12 @@ class RenderingContextFixture implements RenderingContextInterface
         $this->controllerAction = $action;
     }
 
-    public function getAttribute(string $name): ?object
+    public function getAttribute(string $name): object
     {
-        return $this->attributes[$name] ?? null;
+        if (!isset($this->attributes[$name])) {
+            throw new \RuntimeException('An attribute of type ' . $name . ' has not been set', 1719394231);
+        }
+        return $this->attributes[$name];
     }
 
     public function withAttribute(string $name, object $value): RenderingContextInterface
