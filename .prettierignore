@@ -1,0 +1,5 @@
+.Build/
+node_modules/
+package-lock.json
+Resources/Public/jsDomainModeling/wireit/
+vendor/
