@@ -19,7 +19,6 @@ namespace EBT\ExtensionBuilder\Tests\Unit\ViewHelpers\Format;
 
 use EBT\ExtensionBuilder\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 use EBT\ExtensionBuilder\ViewHelpers\Format\IndentViewHelper;
-use PHPUnit\Framework\MockObject\MockObject;
 
 class IndentViewHelperTest extends ViewHelperBaseTestcase
 {
@@ -50,8 +49,8 @@ class IndentViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderWithChildren(string $template, int $level, string $expected): void
     {
-        $viewHelper = $this->getAccessibleMock(IndentViewHelper::class, ['renderChildren']);
-        $viewHelper->expects(self::once())->method('renderChildren')->willReturn($template);
+        $viewHelper = new IndentViewHelper();
+        $viewHelper->setRenderChildrenClosure(function () use ($template) { return $template; });
 
         $this->arguments = [
             'indentation' => $level

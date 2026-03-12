@@ -28,8 +28,8 @@ class CurlyBracketsViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderWithChildren(string $template, string $expected): void
     {
-        $viewHelper = $this->getAccessibleMock(CurlyBracketsViewHelper::class, ['renderChildren']);
-        $viewHelper->expects(self::once())->method('renderChildren')->willReturn($template);
+        $viewHelper = new CurlyBracketsViewHelper();
+        $viewHelper->setRenderChildrenClosure(function () use ($template) { return $template; });
 
         $this->injectDependenciesIntoViewHelper($viewHelper);
 

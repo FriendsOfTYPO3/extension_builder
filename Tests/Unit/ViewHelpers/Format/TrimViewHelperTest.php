@@ -25,8 +25,8 @@ class TrimViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderWithChildren(string $template, string $expected): void
     {
-        $viewHelper = $this->getAccessibleMock(TrimViewHelper::class, ['renderChildren']);
-        $viewHelper->expects(self::once())->method('renderChildren')->willReturn($template);
+        $viewHelper = new TrimViewHelper();
+        $viewHelper->setRenderChildrenClosure(function () use ($template) { return $template; });
 
         $this->injectDependenciesIntoViewHelper($viewHelper);
 
