@@ -46,7 +46,7 @@ class CompatibilityTest extends BaseFunctionalTest
      */
     public function generateExtensionFromVersion3Configuration(): void
     {
-        $configurationManager = $this->getAccessibleMock(ExtensionBuilderConfigurationManager::class, ['dummy']);
+        $configurationManager = $this->getAccessibleMock(ExtensionBuilderConfigurationManager::class, null);
         $extensionSchemaBuilder = GeneralUtility::makeInstance(ExtensionSchemaBuilder::class);
 
         $testExtensionDir = $this->fixturesPath . 'TestExtensions/test_extension/';

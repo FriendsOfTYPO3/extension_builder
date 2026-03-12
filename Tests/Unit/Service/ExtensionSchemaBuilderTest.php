@@ -38,10 +38,10 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
 
         $this->extension = $this->createMock(Extension::class);
 
-        $this->extensionSchemaBuilder = $this->getAccessibleMock(ExtensionSchemaBuilder::class, ['dummy']);
+        $this->extensionSchemaBuilder = $this->getAccessibleMock(ExtensionSchemaBuilder::class, null);
         $this->extensionSchemaBuilder->injectConfigurationManager(new ExtensionBuilderConfigurationManager());
 
-        $objectSchemaBuilder = $this->getAccessibleMock(ObjectSchemaBuilder::class, ['dummy']);
+        $objectSchemaBuilder = $this->getAccessibleMock(ObjectSchemaBuilder::class, null);
         $objectSchemaBuilder->injectConfigurationManager(new ExtensionBuilderConfigurationManager());
 
         $this->extensionSchemaBuilder->injectObjectSchemaBuilder($objectSchemaBuilder);

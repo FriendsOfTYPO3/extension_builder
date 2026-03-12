@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Tests\Unit\Core\Rendering;
 
-use PHPUnit\Framework\MockObject\Generator;
 use RuntimeException;
 use TYPO3Fluid\Fluid\Core\Cache\FluidCacheInterface;
 use TYPO3Fluid\Fluid\Core\Compiler\TemplateCompiler;
@@ -68,17 +67,51 @@ class RenderingContextFixture implements RenderingContextInterface
 
     public array $attributes = [];
 
-    public function __construct()
+    /**
+     * @param callable|null $mockFactory A callable that takes a class/interface name and returns a mock object.
+     *                                   When null, real instances are created for concrete classes.
+     */
+    public function __construct(?callable $mockFactory = null)
     {
-        $mockBuilder = new Generator();
-        $this->variableProvider = $mockBuilder->getMock(VariableProviderInterface::class);
-        $this->viewHelperVariableContainer = $mockBuilder->getMock(ViewHelperVariableContainer::class, ['dummy']);
-        $this->viewHelperResolver = $mockBuilder->getMock(ViewHelperResolver::class, ['dummy']);
-        $this->viewHelperInvoker = $mockBuilder->getMock(ViewHelperInvoker::class, ['dummy']);
-        $this->templateParser = $mockBuilder->getMock(TemplateParser::class, ['dummy']);
-        $this->templateCompiler = $mockBuilder->getMock(TemplateCompiler::class, ['dummy']);
-        $this->templatePaths = $mockBuilder->getMock(TemplatePaths::class, ['dummy']);
-        $this->cache = $mockBuilder->getMock(FluidCacheInterface::class);
+        if ($mockFactory !== null) {
+            $this->variableProvider = $mockFactory(VariableProviderInterface::class);
+            $this->viewHelperVariableContainer = $mockFactory(ViewHelperVariableContainer::class);
+            $this->viewHelperResolver = $mockFactory(ViewHelperResolver::class);
+            $this->viewHelperInvoker = $mockFactory(ViewHelperInvoker::class);
+            $this->templateParser = $mockFactory(TemplateParser::class);
+            $this->templateCompiler = $mockFactory(TemplateCompiler::class);
+            $this->templatePaths = $mockFactory(TemplatePaths::class);
+            $this->cache = $mockFactory(FluidCacheInterface::class);
+        } else {
+            $this->variableProvider = new class implements VariableProviderInterface {
+                public function getScopeCopy($variables): static { return clone $this; }
+                public function setSource($source): void {}
+                public function getSource() { return []; }
+                public function getAll(): array { return []; }
+                public function add(string $identifier, $value): void {}
+                public function remove(string $identifier): void {}
+                public function get(string $identifier) { return null; }
+                public function getByPath(string $path, array $accessors = []) { return null; }
+                public function getAllIdentifiers(): array { return []; }
+                public function exists(string $identifier): bool { return false; }
+                public function offsetExists($offset): bool { return false; }
+                public function offsetGet($offset): mixed { return null; }
+                public function offsetSet($offset, $value): void {}
+                public function offsetUnset($offset): void {}
+            };
+            $this->viewHelperVariableContainer = new ViewHelperVariableContainer();
+            $this->viewHelperResolver = new ViewHelperResolver();
+            $this->viewHelperInvoker = new ViewHelperInvoker();
+            $this->templateParser = new TemplateParser();
+            $this->templateCompiler = new TemplateCompiler();
+            $this->templatePaths = new TemplatePaths();
+            $this->cache = new class implements FluidCacheInterface {
+                public function get($name) { return null; }
+                public function set($name, $value): void {}
+                public function flush($name = null): void {}
+                public function getCacheWarmer() { return null; }
+            };
+        }
     }
 
     /**

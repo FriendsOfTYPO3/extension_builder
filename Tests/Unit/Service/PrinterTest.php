@@ -44,7 +44,7 @@ class PrinterTest extends BaseUnitTest
         vfsStream::setup('tmpDir');
 
         $this->tmpDir = vfsStream::url('tmpDir') . '/';
-        $this->printerService = $this->getAccessibleMock(Printer::class, ['dummy']);
+        $this->printerService = $this->getAccessibleMock(Printer::class, null);
 
         $nodeFactory = new NodeFactory();
         $this->printerService->_set('nodeFactory', $nodeFactory);

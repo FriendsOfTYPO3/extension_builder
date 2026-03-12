@@ -31,8 +31,8 @@ class Child4 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * fileProperty
      *
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
-    #[\TYPO3\CMS\Extbase\Annotation\ORM\Cascade(['value' => 'remove'])]
     protected $fileProperty = null;
 
     /**

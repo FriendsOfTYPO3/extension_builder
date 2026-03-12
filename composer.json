@@ -35,7 +35,8 @@
 		"typo3/cms-frontend": "^12.4",
 		"typo3/cms-install": "^12.4",
 		"typo3/coding-standards": "^0.7.0",
-		"typo3/testing-framework": "^7.0"
+		"typo3/testing-framework": "^7.0",
+		"mikey179/vfsstream": "^1.6"
 	},
 	"autoload": {
 		"psr-4": {
