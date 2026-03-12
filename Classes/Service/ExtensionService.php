@@ -84,7 +84,7 @@ class ExtensionService
     public function isComposerStoragePath(string $path): bool
     {
         foreach ($this->resolveComposerStoragePaths() as $composerStoragePath) {
-            if (strpos($path, $composerStoragePath) === 0) {
+            if (str_starts_with($path, $composerStoragePath)) {
                 return true;
             }
         }

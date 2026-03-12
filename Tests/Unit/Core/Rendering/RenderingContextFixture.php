@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace EBT\ExtensionBuilder\Tests\Unit\Core\Rendering;
 
 use PHPUnit\Framework\MockObject\Generator;
+use RuntimeException;
 use TYPO3Fluid\Fluid\Core\Cache\FluidCacheInterface;
 use TYPO3Fluid\Fluid\Core\Compiler\TemplateCompiler;
 use TYPO3Fluid\Fluid\Core\ErrorHandler\ErrorHandlerInterface;
@@ -323,7 +324,7 @@ class RenderingContextFixture implements RenderingContextInterface
     public function getAttribute(string $name): object
     {
         if (!isset($this->attributes[$name])) {
-            throw new \RuntimeException('An attribute of type ' . $name . ' has not been set', 1719394231);
+            throw new RuntimeException('An attribute of type ' . $name . ' has not been set', 1719394231);
         }
         return $this->attributes[$name];
     }

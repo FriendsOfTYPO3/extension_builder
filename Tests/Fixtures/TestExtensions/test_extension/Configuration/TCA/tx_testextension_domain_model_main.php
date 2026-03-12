@@ -58,7 +58,7 @@ return [
                 'items' => [
                     [
                         'label' => '',
-                        1 => '',
+                        'invertedLabel' => '',
                         'invertStateDisplay' => true
                     ]
                 ],
@@ -151,7 +151,6 @@ return [
             'config' => [
                 'type' => 'email',
                 'size' => 30,
-                'eval' => 'nospace',
                 'default' => ''
             ]
         ],

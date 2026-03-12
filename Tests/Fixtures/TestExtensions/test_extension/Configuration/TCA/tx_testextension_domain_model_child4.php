@@ -57,7 +57,7 @@ return [
                 'items' => [
                     [
                         'label' => '',
-                        1 => '',
+                        'invertedLabel' => '',
                         'invertStateDisplay' => true
                     ]
                 ],
@@ -105,7 +105,6 @@ return [
             'label' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child4.file_property',
             'description' => 'LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_testextension_domain_model_child4.file_property.description',
             'config' => [
-                ### !!! Watch out for fieldName different from columnName
                 'type' => 'file',
                 'appearance' => [
                     'createNewRelationLinkTitle' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:media.addFileReference'

@@ -50,10 +50,12 @@ class IndentViewHelperTest extends ViewHelperBaseTestcase
     public function renderWithChildren(string $template, int $level, string $expected): void
     {
         $viewHelper = new IndentViewHelper();
-        $viewHelper->setRenderChildrenClosure(function () use ($template) { return $template; });
+        $viewHelper->setRenderChildrenClosure(function () use ($template) {
+            return $template;
+        });
 
         $this->arguments = [
-            'indentation' => $level
+            'indentation' => $level,
         ];
         $this->injectDependenciesIntoViewHelper($viewHelper);
 

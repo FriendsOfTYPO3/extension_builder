@@ -27,6 +27,7 @@ use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Template\Components\Buttons\LinkButtonWithId;
 use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
@@ -39,7 +40,6 @@ use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LocalizationFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
@@ -188,7 +188,7 @@ class BuilderModuleController extends ActionController
             $initialWarnings[] = ExtensionService::COMPOSER_PATH_WARNING;
         }
         $this->view->assignMultiple([
-            'initialWarnings' => $initialWarnings
+            'initialWarnings' => $initialWarnings,
         ]);
         $this->pageRenderer->addInlineSetting(
             'extensionBuilder.publicResourceWebPath',
@@ -291,7 +291,7 @@ class BuilderModuleController extends ActionController
                     true, // switchFocus
                     'extension_builder', // windowName,
                     'width=1920,height=1080,status=0,menubar=0,scrollbars=1,resizable=1', // windowFeatures
-                ])
+                ]),
             ])
             ->setId('opennewwindow');
 
@@ -427,7 +427,7 @@ class BuilderModuleController extends ActionController
             $this->extensionBuilderConfigurationManager->parseRequest();
             $subAction = $this->extensionBuilderConfigurationManager->getSubActionFromRequest();
             if (empty($subAction)) {
-                throw new \Exception('No Sub Action!');
+                throw new Exception('No Sub Action!');
             }
             switch ($subAction) {
                 case 'saveWiring':
@@ -442,7 +442,7 @@ class BuilderModuleController extends ActionController
                 default:
                     $response = ['error' => 'Sub Action not found.'];
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $response = ['error' => $e->getMessage()];
         }
         return $this->jsonResponse(json_encode($response));
@@ -452,7 +452,7 @@ class BuilderModuleController extends ActionController
      * Generate the code files according to the transferred JSON configuration.
      *
      * @return array (status => message)
-     * @throws \Exception
+     * @throws Exception
      */
     protected function rpcActionSave(): array
     {
@@ -462,7 +462,7 @@ class BuilderModuleController extends ActionController
             $storagePaths = $this->extensionService->resolveStoragePaths();
             $storagePath = reset($storagePaths);
             if ($storagePath === false) {
-                throw new \Exception('The storage path could not be detected.');
+                throw new Exception('The storage path could not be detected.');
             }
             $extensionBuildConfiguration['storagePath'] = $storagePath;
 
@@ -476,13 +476,13 @@ class BuilderModuleController extends ActionController
             if (!empty($validationConfigurationResult['errors'])) {
                 $errorMessage = '';
                 foreach ($validationConfigurationResult['errors'] as $exception) {
-                    /** @var \Exception $exception */
+                    /** @var Exception $exception */
                     $errorMessage .= '<br />' . $exception->getMessage();
                 }
-                throw new \Exception($errorMessage);
+                throw new Exception($errorMessage);
             }
             $extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
 
@@ -490,11 +490,11 @@ class BuilderModuleController extends ActionController
         $validationResult = $this->extensionValidator->validateExtension($extension);
         if (!empty($validationResult['errors'])) {
             $errorMessage = '';
-            /** @var \Exception $exception */
+            /** @var Exception $exception */
             foreach ($validationResult['errors'] as $exception) {
                 $errorMessage .= '<br />' . $exception->getMessage();
             }
-            throw new \Exception($errorMessage);
+            throw new Exception($errorMessage);
         }
         if (!empty($validationResult['warnings'])) {
             $confirmationRequired = $this->handleValidationWarnings($validationResult['warnings']);
@@ -523,7 +523,7 @@ class BuilderModuleController extends ActionController
             if ($this->extensionBuilderSettings['extConf']['backupExtension'] === '1') {
                 try {
                     RoundTrip::backupExtension($extension, $this->extensionBuilderSettings['extConf']['backupDir']);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     throw $e;
                 }
             }
@@ -545,12 +545,12 @@ class BuilderModuleController extends ActionController
                             . '<b>%s/Configuration/ExtensionBuilder/settings.yaml.</b><br />'
                             . 'Configure the overwrite settings, then save again.',
                             $extensionPath . $extension->getExtensionKey()
-                        )
+                        ),
                     ];
                 }
                 try {
                     RoundTrip::prepareExtensionForRoundtrip($extension);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     throw $e;
                 }
             } else {
@@ -561,7 +561,7 @@ class BuilderModuleController extends ActionController
                         new ExtensionException(
                             "This action will overwrite previously saved content!\n(Enable the roundtrip feature to avoid this warning).",
                             ExtensionValidator::EXTENSION_DIR_EXISTS
-                        )
+                        ),
                     ]);
                     if (!empty($confirmationRequired)) {
                         return $confirmationRequired;
@@ -582,7 +582,7 @@ class BuilderModuleController extends ActionController
             if ($this->extensionInstallationStatus->isDbUpdateNeeded()) {
                 $result['confirmUpdate'] = true;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
 
@@ -602,14 +602,14 @@ class BuilderModuleController extends ActionController
         $extensions = $this->extensionRepository->findAll();
         return [
             'result' => $extensions,
-            'error' => null
+            'error' => null,
         ];
     }
 
     /**
      * This is a hack to handle confirm requests in the GUI.
      *
-     * @param \Exception[] $warnings
+     * @param Exception[] $warnings
      * @return array confirm (Question to confirm), confirmFieldName (is set to true if confirmed)
      */
     protected function handleValidationWarnings(array $warnings): array
@@ -625,17 +625,17 @@ class BuilderModuleController extends ActionController
         foreach ($messagesPerErrorCode as $errorCode => $messages) {
             if (!$this->extensionBuilderConfigurationManager->isConfirmed('allow' . $errorCode)) {
                 if ($errorCode == ExtensionValidator::ERROR_PROPERTY_RESERVED_SQL_WORD) {
-                    $confirmMessage = 'SQL reserved names were found for these properties:<br />' .
-                        '<ol class="warnings"><li>' . implode('</li><li>', $messages) . '</li></ol>' .
-                        'This will result in a different column name in the database.<br />' .
-                        '<strong>Are you sure, you want to use them?</strong>';
+                    $confirmMessage = 'SQL reserved names were found for these properties:<br />'
+                        . '<ol class="warnings"><li>' . implode('</li><li>', $messages) . '</li></ol>'
+                        . 'This will result in a different column name in the database.<br />'
+                        . '<strong>Are you sure, you want to use them?</strong>';
                 } else {
-                    $confirmMessage = '<ol class="warnings"><li>' . implode('</li><li>', $messages) . '</li></ol>' .
-                        '<strong>Do you want to save anyway?</strong><br /><br />';
+                    $confirmMessage = '<ol class="warnings"><li>' . implode('</li><li>', $messages) . '</li></ol>'
+                        . '<strong>Do you want to save anyway?</strong><br /><br />';
                 }
                 return [
                     'confirm' => '<span style="color:red">Warning!</span></br>' . $confirmMessage,
-                    'confirmFieldName' => 'allow' . $errorCode
+                    'confirmFieldName' => 'allow' . $errorCode,
                 ];
             }
         }

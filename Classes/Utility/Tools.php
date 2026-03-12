@@ -25,8 +25,8 @@ class Tools implements SingletonInterface
 {
     public static function parseTableNameFromClassName($className): string
     {
-        if (strpos($className, '\\') !== false) {
-            if (strpos($className, '\\') === 0) {
+        if (str_contains($className, '\\')) {
+            if (str_starts_with($className, '\\')) {
                 // remove trailing slash
                 $className = substr($className, 1);
             }

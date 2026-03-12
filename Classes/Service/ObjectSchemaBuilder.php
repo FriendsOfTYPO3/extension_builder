@@ -17,9 +17,9 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Service;
 
-use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\FileProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
@@ -151,8 +151,8 @@ class ObjectSchemaBuilder implements SingletonInterface
         $relationSchemaClassName .= ucfirst($relationJsonConfiguration['relationType']) . 'Relation';
         if (!class_exists($relationSchemaClassName)) {
             throw new Exception(
-                'Relation of type ' . $relationSchemaClassName . ' not found (configured in "' .
-                $relationJsonConfiguration['relationName'] . '")'
+                'Relation of type ' . $relationSchemaClassName . ' not found (configured in "'
+                . $relationJsonConfiguration['relationName'] . '")'
             );
         }
         /** @var AbstractRelation $relation */
@@ -223,7 +223,7 @@ class ObjectSchemaBuilder implements SingletonInterface
         if (!class_exists($propertyClassName)) {
             throw new Exception('Property of type ' . $propertyType . ' not found');
         }
-        /** @var DomainObject\AbstractProperty $property */
+        /** @var AbstractProperty $property */
         $property = GeneralUtility::makeInstance($propertyClassName);
         $property->setUniqueIdentifier($propertyJsonConfiguration['uid'] ?? '');
         $property->setName($propertyJsonConfiguration['propertyName']);

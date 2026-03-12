@@ -104,7 +104,7 @@ class Printer extends Standard
     protected function pStmt_Declare(Declare_ $node): string
     {
         return 'declare(' . $this->pCommaSeparated($node->declares) . ')'
-               . (null !== $node->stmts ? ' {' . $this->pStmts($node->stmts) . $this->nl . '}' : ';');
+               . ($node->stmts !== null ? ' {' . $this->pStmts($node->stmts) . $this->nl . '}' : ';');
     }
 
     protected function pStmt_ClassMethod(ClassMethod $node): string
@@ -113,8 +113,8 @@ class Printer extends Standard
             . $this->pModifiers($node->flags)
             . 'function ' . ($node->byRef ? '&' : '') . $node->name
             . '(' . $this->pMaybeMultiline($node->params) . ')'
-            . (null !== $node->returnType ? ': ' . $this->p($node->returnType) : '') // Removed extra space
-            . (null !== $node->stmts
+            . ($node->returnType !== null ? ': ' . $this->p($node->returnType) : '') // Removed extra space
+            . ($node->stmts !== null
                 ? $this->nl . '{' . $this->pStmts($node->stmts) . $this->nl . '}'
                 : ';');
     }

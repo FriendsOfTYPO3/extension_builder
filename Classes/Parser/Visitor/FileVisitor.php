@@ -97,7 +97,7 @@ class FileVisitor extends NodeVisitorAbstract implements FileVisitorInterface
             }
 
             if ($node instanceof Namespace_) {
-                if (null !== $this->currentNamespace) {
+                if ($this->currentNamespace !== null) {
                     $this->fileObject->addNamespace($this->currentNamespace);
                     $this->currentNamespace = null;
                     $this->currentContainer = $this->fileObject;

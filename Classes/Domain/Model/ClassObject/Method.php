@@ -22,6 +22,4 @@ use EBT\ExtensionBuilder\Domain\Model\FunctionObject;
 /**
  * method representing a "method" in the context of software development
  */
-class Method extends FunctionObject
-{
-}
+class Method extends FunctionObject {}

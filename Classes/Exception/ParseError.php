@@ -22,6 +22,4 @@ use TYPO3\CMS\Extbase\Exception;
 /**
  * An exception thrown if an error occurred during parsing a php file
  */
-class ParseError extends Exception
-{
-}
+class ParseError extends Exception {}

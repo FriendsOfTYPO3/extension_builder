@@ -348,7 +348,7 @@ abstract class AbstractProperty
      */
     public function getDataType(): string
     {
-        $shortClassNameParts = explode('\\', get_class($this));
+        $shortClassNameParts = explode('\\', static::class);
         return end($shortClassNameParts);
     }
 

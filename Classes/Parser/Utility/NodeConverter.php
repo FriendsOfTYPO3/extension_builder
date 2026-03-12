@@ -44,7 +44,7 @@ class NodeConverter
     public static array $accessorModifiers = [
         Class_::MODIFIER_PUBLIC,
         Class_::MODIFIER_PROTECTED,
-        Class_::MODIFIER_PRIVATE
+        Class_::MODIFIER_PRIVATE,
     ];
 
     public static function getTypeHintFromVarType($varType)
@@ -67,12 +67,12 @@ class NodeConverter
      */
     public static function modifierToNames($modifiers): array
     {
-        $modifierString = ($modifiers & Class_::MODIFIER_PUBLIC ? 'public ' : '') .
-            ($modifiers & Class_::MODIFIER_PROTECTED ? 'protected ' : '') .
-            ($modifiers & Class_::MODIFIER_PRIVATE ? 'private ' : '') .
-            ($modifiers & Class_::MODIFIER_STATIC ? 'static ' : '') .
-            ($modifiers & Class_::MODIFIER_ABSTRACT ? 'abstract ' : '') .
-            ($modifiers & Class_::MODIFIER_FINAL ? 'final ' : '');
+        $modifierString = ($modifiers & Class_::MODIFIER_PUBLIC ? 'public ' : '')
+            . ($modifiers & Class_::MODIFIER_PROTECTED ? 'protected ' : '')
+            . ($modifiers & Class_::MODIFIER_PRIVATE ? 'private ' : '')
+            . ($modifiers & Class_::MODIFIER_STATIC ? 'static ' : '')
+            . ($modifiers & Class_::MODIFIER_ABSTRACT ? 'abstract ' : '')
+            . ($modifiers & Class_::MODIFIER_FINAL ? 'final ' : '');
         return explode(' ', trim($modifierString));
     }
 
@@ -116,7 +116,7 @@ class NodeConverter
             foreach ($arrayItems as $arrayItemNode) {
                 $itemKey = $arrayItemNode->key;
                 $itemValue = $arrayItemNode->value;
-                if (null === $itemKey) {
+                if ($itemKey === null) {
                     $value[] = self::normalizeValue($itemValue);
                 } else {
                     $value[self::getValueFromNode($itemKey)] = self::normalizeValue($itemValue);
@@ -132,7 +132,7 @@ class NodeConverter
         if ($node instanceof ClassConstFetch) {
             return $node->name;
         }
-        
+
         if ($node instanceof Node\Identifier) {
             return $node->name;
         }
@@ -158,7 +158,7 @@ class NodeConverter
             return $value;
         }
 
-        if (null === $value) {
+        if ($value === null) {
             return new ConstFetch(new Name('null'));
         }
 
@@ -183,7 +183,7 @@ class NodeConverter
             $lastKey = -1;
             foreach ($value as $itemKey => $itemValue) {
                 // for consecutive, numeric keys don't generate keys
-                if (null !== $lastKey && ++$lastKey === $itemKey) {
+                if ($lastKey !== null && ++$lastKey === $itemKey) {
                     $items[] = new ArrayItem(
                         self::normalizeValue($itemValue)
                     );
@@ -218,7 +218,7 @@ class NodeConverter
         foreach ($constants as $const) {
             $constantsArray[] = [
                 'name' => $const->name,
-                'value' => self::getValueFromNode($const->value)
+                'value' => self::getValueFromNode($const->value),
             ];
         }
         return $constantsArray;
@@ -237,13 +237,13 @@ class NodeConverter
     {
         return [
             'name' => self::getValueFromNode($node->uses[0]->name),
-            'alias' => self::getValueFromNode($node->uses[0]->alias)
+            'alias' => self::getValueFromNode($node->uses[0]->alias),
         ];
     }
 
     public static function getVarTypeFromValue($value): string
     {
-        if (null === $value) {
+        if ($value === null) {
             return '';
         }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'web_TestExtensionTestmodule1' => [
         'parent' => 'web',

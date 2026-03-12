@@ -74,7 +74,7 @@ class ExtensionRepository implements SingletonInterface
                 $result[$singleExtensionDirectory] = [
                     'name' => $singleExtensionDirectory,
                     'storagePath' => $storagePath,
-                    'working' => json_encode($extensionBuilderConfiguration)
+                    'working' => json_encode($extensionBuilderConfiguration),
                 ];
             }
         }
@@ -96,7 +96,7 @@ class ExtensionRepository implements SingletonInterface
         $extensionBuildConfiguration['log'] = [
             'last_modified' => date('Y-m-d h:i'),
             'extension_builder_version' => ExtensionManagementUtility::getExtensionVersion('extension_builder'),
-            'be_user' => $this->getBackendUserAuthentication()->user['realName'] . ' (' . $this->getBackendUserAuthentication()->user['uid'] . ')'
+            'be_user' => $this->getBackendUserAuthentication()->user['realName'] . ' (' . $this->getBackendUserAuthentication()->user['uid'] . ')',
         ];
         $encodeOptions = 0;
         // option JSON_PRETTY_PRINT is available since PHP 5.4.0
