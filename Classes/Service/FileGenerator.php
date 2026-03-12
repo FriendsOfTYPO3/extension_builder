@@ -1132,7 +1132,7 @@ class FileGenerator
      * @return string|null
      * @throws Exception
      */
-    protected function generateLocallangFileContent(string $fileNameSuffix = '', string $variableName = '', $variable = null): ?string
+    protected function generateLocallangFileContent(string $fileNameSuffix = '', string $variableName = '', mixed $variable = null): ?string
     {
         $targetFile = 'Resources/Private/Language/locallang' . $fileNameSuffix;
 

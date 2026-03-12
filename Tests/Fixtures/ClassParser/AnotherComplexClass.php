@@ -282,10 +282,10 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
         if (($componentNameParts[0] !== self::PACKAGE_PREFIX) || !isset($componentNameParts[1])) {
             throw new Exception('Invalid component name. Component name "' . $componentName . '" must be prefixed by "' . self::PACKAGE_PREFIX . '_".');
         }
-        if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . $componentNameParts[1] . '.']['components.'][$componentName . '.'])) {
-            $componentConfiguration = $GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . $componentNameParts[1] . '.']['components.'][$componentName . '.'];
-        } elseif (isset($GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . ucfirst(self::THIS_PACKAGE_KEY) . '.']['components.'][$componentName . '.'])) {
-            $componentConfiguration = $GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . ucfirst(self::THIS_PACKAGE_KEY) . '.']['components.'][$componentName . '.'];
+        if (isset($GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.typoscript')->getSetupArray()['plugin.'][self::PACKAGE_PREFIX . '_' . $componentNameParts[1] . '.']['components.'][$componentName . '.'])) {
+            $componentConfiguration = $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.typoscript')->getSetupArray()['plugin.'][self::PACKAGE_PREFIX . '_' . $componentNameParts[1] . '.']['components.'][$componentName . '.'];
+        } elseif (isset($GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.typoscript')->getSetupArray()['plugin.'][self::PACKAGE_PREFIX . '_' . ucfirst(self::THIS_PACKAGE_KEY) . '.']['components.'][$componentName . '.'])) {
+            $componentConfiguration = $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.typoscript')->getSetupArray()['plugin.'][self::PACKAGE_PREFIX . '_' . ucfirst(self::THIS_PACKAGE_KEY) . '.']['components.'][$componentName . '.'];
         } else {
             $componentConfiguration = null;
         }
