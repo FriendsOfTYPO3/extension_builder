@@ -10,6 +10,8 @@ YAHOO.namespace("rpc");
 (function() {
 
 	var rpc = YAHOO.rpc, lang = YAHOO.lang, util = YAHOO.util;
+	// Use native JSON instead of YAHOO.lang.JSON (which uses eval, blocked by CSP unsafe-eval)
+	lang.JSON = { parse: JSON.parse.bind(JSON), stringify: JSON.stringify.bind(JSON) };
 
 	/**
 	 * Take a string as a url to retrieve an smd or an object that is an smd or partial smd to use
