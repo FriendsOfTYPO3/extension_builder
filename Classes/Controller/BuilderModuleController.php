@@ -190,17 +190,40 @@ class BuilderModuleController extends ActionController
         }
         $uriBuilder = GeneralUtility::makeInstance(BackendUriBuilder::class);
         $dispatchRpcUrl = (string)$uriBuilder->buildUriFromRoute('tools_extensionbuilder.BuilderModule_dispatchRpc');
-        $this->view->assignMultiple([
-            'initialWarnings' => $initialWarnings,
-            'publicResourcesUrl' => PathUtility::getPublicResourceWebPath('EXT:extension_builder/Resources/Public'),
-            'corePublicResourceWebPath' => PathUtility::getPublicResourceWebPath('EXT:core/Resources/Public/'),
-            'dispatchRpcUrl' => $dispatchRpcUrl,
+        $publicResourcesUrl = PathUtility::getPublicResourceWebPath('EXT:extension_builder/Resources/Public');
+        $corePublicResourceWebPath = PathUtility::getPublicResourceWebPath('EXT:core/Resources/Public/');
+        $initialWarningsJson = json_encode($initialWarnings);
+        $smdJson = json_encode([
+            'SMDVersion' => '2.0',
+            'description' => 'JSON-RPC interface for the WiringEditor',
+            'envelope' => 'JSON-RPC-2.0',
+            'transport' => 'POST',
+            'target' => $dispatchRpcUrl,
+            'services' => [
+                'saveWiring' => ['description' => 'Save the module', 'parameters' => [['name' => 'name', 'type' => 'string'], ['name' => 'working', 'type' => 'text'], ['name' => 'language', 'type' => 'text']]],
+                'listWirings' => ['description' => 'Get the list of modules', 'parameters' => [['name' => 'language', 'type' => 'text']]],
+                'loadWiring' => ['description' => 'Load the module', 'parameters' => [['name' => 'name', 'type' => 'string'], ['name' => 'language', 'type' => 'text']]],
+                'updateDb' => ['description' => 'Perform DB updates', 'parameters' => [['name' => 'name', 'type' => 'string'], ['name' => 'language', 'type' => 'text']]],
+            ],
         ]);
-        $this->pageRenderer->addInlineSetting(
-            'extensionBuilder.publicResourceWebPath',
-            'core',
-            PathUtility::getPublicResourceWebPath('EXT:core/Resources/Public/')
+        $this->pageRenderer->addJsInlineCode(
+            'extensionBuilderInit',
+            "extbaseModeling_wiringEditorLanguage.smd = {$smdJson};" . LF
+            . "window.TYPO3 = window.TYPO3 || {};" . LF
+            . "window.TYPO3.settings = window.TYPO3.settings || {};" . LF
+            . "window.TYPO3.settings.extensionBuilder = window.TYPO3.settings.extensionBuilder || {};" . LF
+            . "window.TYPO3.settings.extensionBuilder.publicResourceWebPath = { core: " . json_encode($corePublicResourceWebPath) . " };" . LF
+            . "inputEx.spacerUrl = " . json_encode($publicResourcesUrl . '/jsDomainModeling/wireit/lib/inputex/images/space.gif') . ";" . LF
+            . "YAHOO.util.Event.onDOMReady(function() {" . LF
+            . "    const editor = new WireIt.WiringEditor(extbaseModeling_wiringEditorLanguage);" . LF
+            . "    const initialWarnings = {$initialWarningsJson};" . LF
+            . "    if (initialWarnings.length > 0) { editor.alert('Warning', initialWarnings.join('<br />')); }" . LF
+            . "});",
+            false,
+            false,
+            true
         );
+        $this->view->assign('initialWarnings', $initialWarnings);
         $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', ['firstTime' => 0]);
 
         $this->moduleTemplate->setContent($this->view->render());
