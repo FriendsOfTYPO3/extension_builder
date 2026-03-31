@@ -27,7 +27,6 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
 use EBT\ExtensionBuilder\Utility\Tools;
 use Exception;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
@@ -224,7 +223,7 @@ class ObjectSchemaBuilder implements SingletonInterface
             throw new Exception('Property of type ' . $propertyType . ' not found');
         }
         /** @var AbstractProperty $property */
-        $property = GeneralUtility::makeInstance($propertyClassName);
+        $property = new $propertyClassName();
         $property->setUniqueIdentifier($propertyJsonConfiguration['uid'] ?? '');
         $property->setName($propertyJsonConfiguration['propertyName']);
         if (isset($propertyJsonConfiguration['propertyDescription'])) {

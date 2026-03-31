@@ -54,10 +54,28 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     private array $inputData = [];
 
     protected ConfigurationManagerInterface $configurationManager;
+    private ExtensionConfiguration $extensionConfiguration;
+    private DataMapper $dataMapper;
+    private UriBuilder $uriBuilder;
 
     public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager): void
     {
         $this->configurationManager = $configurationManager;
+    }
+
+    public function injectExtensionConfiguration(ExtensionConfiguration $extensionConfiguration): void
+    {
+        $this->extensionConfiguration = $extensionConfiguration;
+    }
+
+    public function injectDataMapper(DataMapper $dataMapper): void
+    {
+        $this->dataMapper = $dataMapper;
+    }
+
+    public function injectUriBuilder(UriBuilder $uriBuilder): void
+    {
+        $this->uriBuilder = $uriBuilder;
     }
 
     /**
@@ -132,7 +150,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      */
     public function getExtensionBuilderSettings(): array
     {
-        return GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('extension_builder');
+        return $this->extensionConfiguration->get('extension_builder');
     }
 
     public function getExtensionSettings(string $extensionKey, string $extensionStoragePath): array
@@ -181,7 +199,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      */
     public function getPersistenceTable(string $className): string
     {
-        return GeneralUtility::makeInstance(DataMapper::class)->getDataMap($className)->getTableName();
+        return $this->dataMapper->getDataMap($className)->getTableName();
     }
 
     /**
@@ -479,8 +497,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
             ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd'
         );
         $smdJson = json_decode($smdJsonString);
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        $uri = $uriBuilder->buildUriFromRoute('tools_extensionbuilder.BuilderModule_dispatchRpc');
+        $uri = $this->uriBuilder->buildUriFromRoute('tools_extensionbuilder.BuilderModule_dispatchRpc');
         $smdJson->target = (string)$uri;
 
         return (new JsonResponse())->setPayload((array)$smdJson);

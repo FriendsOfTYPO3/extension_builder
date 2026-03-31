@@ -170,6 +170,7 @@ class ExtensionValidator extends AbstractValidator
     public const ERROR_MAPPING_TO_INCOMPATIBLE_TABLE = 606;
 
     protected ExtensionBuilderConfigurationManager $configurationManager;
+    private ConnectionPool $connectionPool;
     /**
      * can be set in settings.yaml
      */
@@ -179,6 +180,11 @@ class ExtensionValidator extends AbstractValidator
         ExtensionBuilderConfigurationManager $configurationManager
     ): void {
         $this->configurationManager = $configurationManager;
+    }
+
+    public function injectConnectionPool(ConnectionPool $connectionPool): void
+    {
+        $this->connectionPool = $connectionPool;
     }
 
     /**
@@ -855,6 +861,6 @@ class ExtensionValidator extends AbstractValidator
 
     protected function getDatabaseConnection(string $tableName): Connection
     {
-        return GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($tableName);
+        return $this->connectionPool->getConnectionForTable($tableName);
     }
 }
