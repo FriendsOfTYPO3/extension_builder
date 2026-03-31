@@ -2,7 +2,7 @@
     'type' => 'select',
     'renderType' => 'selectSingle',
     'items' => [
-        ['-- Label --', 0],
+        ['label' => '-- Label --', 'value' => 0],
     ],
     'size' => 1,
     'maxitems' => 1,

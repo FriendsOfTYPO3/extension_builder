@@ -3,8 +3,8 @@
     'renderType' => 'checkboxToggle',
     'items' => [
         [
-            0 => '',
-            1 => '',
+            'label' => '',
+            'value' => '',
         ]
     ],
     'default' => 0,

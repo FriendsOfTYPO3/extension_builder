@@ -10,8 +10,8 @@ if (!isset($GLOBALS['TCA']['{databaseTableName}']['ctrl']['type'])) {
             'type' => 'select',
             'renderType' => 'selectSingle',
             'items' => [
-                ['', ''],
-                ['{domainObject.name}', '{domainObject.recordType}']
+                ['label' => '', 'value' => ''],
+                ['label' => '{domainObject.name}', 'value' => '{domainObject.recordType}']
             ],
             'default' => '{domainObject.recordType}',
             'size' => 1,
