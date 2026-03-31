@@ -113,7 +113,7 @@ YAHOO.lang.JSON = (function() {
 	},parse:function(s, reviver) {
 		s = _prepare(s);
 		if (_isValid(s)) {
-			return _revive(eval("(" + s + ")"), reviver);
+			return _revive(JSON.parse(s), reviver);
 		}
 		throw new SyntaxError("parseJSON");
 	},stringify:function(o, w, d) {
