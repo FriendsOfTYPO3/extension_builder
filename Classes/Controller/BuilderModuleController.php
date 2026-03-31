@@ -38,6 +38,7 @@ use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Localization\LocalizationFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
@@ -70,6 +71,8 @@ class BuilderModuleController extends ActionController
     private PageRenderer $pageRenderer;
 
     private IconFactory $iconFactory;
+
+    private LanguageServiceFactory $languageServiceFactory;
 
     /**
      * Settings from various sources:
@@ -129,6 +132,11 @@ class BuilderModuleController extends ActionController
     public function injectIconFactory(IconFactory $iconFactory): void
     {
         $this->iconFactory = $iconFactory;
+    }
+
+    public function injectLanguageServiceFactory(LanguageServiceFactory $languageServiceFactory): void
+    {
+        $this->languageServiceFactory = $languageServiceFactory;
     }
 
     public function initializeAction(): void
@@ -340,7 +348,7 @@ class BuilderModuleController extends ActionController
 
     protected function getLanguageService(): LanguageService
     {
-        return $GLOBALS['LANG'];
+        return $this->languageServiceFactory->createFromUserPreferences($GLOBALS['BE_USER']);
     }
 
     protected function addAssets(): void
