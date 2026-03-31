@@ -326,7 +326,7 @@
 		addTerminal: function(terminalConfig) {
 
 			// Terminal type
-			var type = eval(terminalConfig.xtype || "WireIt.Terminal");
+			var type = (terminalConfig.xtype || "WireIt.Terminal").split('.').reduce(function(o, k) { return o && o[k]; }, window);
 
 			// Instanciate the terminal
 			var term = new type(this.el, terminalConfig, this);

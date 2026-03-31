@@ -32,7 +32,7 @@ $url_0: url('background_pixel.png');
 
     .module-body {
         flex: 1;
-
+        overflow: hidden;
         padding: 0 !important;
     }
 }
@@ -40,6 +40,7 @@ $url_0: url('background_pixel.png');
 // The modeling canvas
 #modelingLayer {
     height: 100%;
+    position: relative;
 }
 
 .yui-layout-unit-left {
@@ -128,6 +129,12 @@ div {
 
     &.WireIt-Layer {
         background-image: $url_0;
+        bottom: 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
     }
 
     &.WireIt-Container-ddhandle {
