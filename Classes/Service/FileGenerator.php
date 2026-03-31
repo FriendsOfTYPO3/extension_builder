@@ -40,10 +40,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class FileGenerator
 {
-    protected ClassBuilder $classBuilder;
-    protected RoundTrip $roundTripService;
-    protected Printer $printerService;
-    protected LocalizationService $localizationService;
     protected array $codeTemplateRootPaths = [];
     protected array $codeTemplatePartialPaths = [];
     protected ?Extension $extension = null;
@@ -85,38 +81,15 @@ class FileGenerator
         'typoscript' => ['ts', 'txt'],
     ];
     protected array $settings = [];
-    protected RenderingContextFactory $renderingContextFactory;
-    private ExtensionConfiguration $extensionConfiguration;
 
-    public function injectClassBuilder(ClassBuilder $classBuilder): void
-    {
-        $this->classBuilder = $classBuilder;
-    }
-
-    public function injectRoundTripService(RoundTrip $roundTripService): void
-    {
-        $this->roundTripService = $roundTripService;
-    }
-
-    public function injectPrinterService(Printer $printerService): void
-    {
-        $this->printerService = $printerService;
-    }
-
-    public function injectLocalizationService(LocalizationService $localizationService): void
-    {
-        $this->localizationService = $localizationService;
-    }
-
-    public function injectRenderingContextFactory(RenderingContextFactory $renderingContextFactory): void
-    {
-        $this->renderingContextFactory = $renderingContextFactory;
-    }
-
-    public function injectExtensionConfiguration(ExtensionConfiguration $extensionConfiguration): void
-    {
-        $this->extensionConfiguration = $extensionConfiguration;
-    }
+    public function __construct(
+        private readonly ClassBuilder $classBuilder,
+        private readonly RoundTrip $roundTripService,
+        private readonly Printer $printerService,
+        private readonly LocalizationService $localizationService,
+        private readonly RenderingContextFactory $renderingContextFactory,
+        private readonly ExtensionConfiguration $extensionConfiguration,
+    ) {}
 
     /**
      * called by controller

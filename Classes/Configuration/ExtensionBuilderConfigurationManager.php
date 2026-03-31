@@ -53,30 +53,12 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     const DEFAULT_TEMPLATE_ROOTPATH = 'EXT:extension_builder/Resources/Private/CodeTemplates/Extbase/';
     private array $inputData = [];
 
-    protected ConfigurationManagerInterface $configurationManager;
-    private ExtensionConfiguration $extensionConfiguration;
-    private DataMapper $dataMapper;
-    private UriBuilder $uriBuilder;
-
-    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager): void
-    {
-        $this->configurationManager = $configurationManager;
-    }
-
-    public function injectExtensionConfiguration(ExtensionConfiguration $extensionConfiguration): void
-    {
-        $this->extensionConfiguration = $extensionConfiguration;
-    }
-
-    public function injectDataMapper(DataMapper $dataMapper): void
-    {
-        $this->dataMapper = $dataMapper;
-    }
-
-    public function injectUriBuilder(UriBuilder $uriBuilder): void
-    {
-        $this->uriBuilder = $uriBuilder;
-    }
+    public function __construct(
+        private readonly ConfigurationManagerInterface $configurationManager,
+        private readonly ExtensionConfiguration $extensionConfiguration,
+        private readonly DataMapper $dataMapper,
+        private readonly UriBuilder $uriBuilder,
+    ) {}
 
     /**
      * Wrapper for file_get_contents('php://input')

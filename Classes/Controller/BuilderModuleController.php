@@ -49,31 +49,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class BuilderModuleController extends ActionController
 {
-    private FileGenerator $fileGenerator;
-
-    private ExtensionBuilderConfigurationManager $extensionBuilderConfigurationManager;
-
-    private ExtensionInstallationStatus $extensionInstallationStatus;
-
-    private ExtensionSchemaBuilder $extensionSchemaBuilder;
-
-    private ExtensionService $extensionService;
-
-    private ExtensionValidator $extensionValidator;
-
-    private ExtensionRepository $extensionRepository;
-
-    private ModuleTemplateFactory $moduleTemplateFactory;
-
     private ModuleTemplate $moduleTemplate;
-
-    private PageRenderer $pageRenderer;
-
-    private IconFactory $iconFactory;
-
-    private LanguageServiceFactory $languageServiceFactory;
-    private BackendUriBuilder $backendUriBuilder;
-    private LocalizationFactory $localizationFactory;
 
     /**
      * Settings from various sources:
@@ -83,71 +59,22 @@ class BuilderModuleController extends ActionController
      */
     protected array $extensionBuilderSettings = [];
 
-    public function injectFileGenerator(FileGenerator $fileGenerator): void
-    {
-        $this->fileGenerator = $fileGenerator;
-    }
-
-    public function injectExtensionBuilderConfigurationManager(
-        ExtensionBuilderConfigurationManager $configurationManager
-    ): void {
-        $this->extensionBuilderConfigurationManager = $configurationManager;
-        $this->extensionBuilderSettings = $this->extensionBuilderConfigurationManager->getSettings();
-    }
-
-    public function injectExtensionInstallationStatus(ExtensionInstallationStatus $extensionInstallationStatus): void
-    {
-        $this->extensionInstallationStatus = $extensionInstallationStatus;
-    }
-
-    public function injectExtensionSchemaBuilder(ExtensionSchemaBuilder $extensionSchemaBuilder): void
-    {
-        $this->extensionSchemaBuilder = $extensionSchemaBuilder;
-    }
-
-    public function injectExtensionService(ExtensionService $extensionService): void
-    {
-        $this->extensionService = $extensionService;
-    }
-
-    public function injectExtensionValidator(ExtensionValidator $extensionValidator): void
-    {
-        $this->extensionValidator = $extensionValidator;
-    }
-
-    public function injectExtensionRepository(ExtensionRepository $extensionRepository): void
-    {
-        $this->extensionRepository = $extensionRepository;
-    }
-
-    public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory): void
-    {
-        $this->moduleTemplateFactory = $moduleTemplateFactory;
-    }
-
-    public function injectPageRenderer(PageRenderer $pageRenderer): void
-    {
-        $this->pageRenderer = $pageRenderer;
-    }
-
-    public function injectIconFactory(IconFactory $iconFactory): void
-    {
-        $this->iconFactory = $iconFactory;
-    }
-
-    public function injectLanguageServiceFactory(LanguageServiceFactory $languageServiceFactory): void
-    {
-        $this->languageServiceFactory = $languageServiceFactory;
-    }
-
-    public function injectBackendUriBuilder(BackendUriBuilder $backendUriBuilder): void
-    {
-        $this->backendUriBuilder = $backendUriBuilder;
-    }
-
-    public function injectLocalizationFactory(LocalizationFactory $localizationFactory): void
-    {
-        $this->localizationFactory = $localizationFactory;
+    public function __construct(
+        private readonly FileGenerator $fileGenerator,
+        private readonly ExtensionBuilderConfigurationManager $extensionBuilderConfigurationManager,
+        private readonly ExtensionInstallationStatus $extensionInstallationStatus,
+        private readonly ExtensionSchemaBuilder $extensionSchemaBuilder,
+        private readonly ExtensionService $extensionService,
+        private readonly ExtensionValidator $extensionValidator,
+        private readonly ExtensionRepository $extensionRepository,
+        private readonly ModuleTemplateFactory $moduleTemplateFactory,
+        private readonly PageRenderer $pageRenderer,
+        private readonly IconFactory $iconFactory,
+        private readonly LanguageServiceFactory $languageServiceFactory,
+        private readonly BackendUriBuilder $backendUriBuilder,
+        private readonly LocalizationFactory $localizationFactory,
+    ) {
+        $this->extensionBuilderSettings = $extensionBuilderConfigurationManager->getSettings();
     }
 
     public function initializeAction(): void

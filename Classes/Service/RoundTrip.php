@@ -47,9 +47,6 @@ class RoundTrip implements SingletonInterface
     public const OVERWRITE_SETTINGS_MERGE = 1;
     public const OVERWRITE_SETTINGS_KEEP = 2;
 
-    protected ParserService $parserService;
-    protected ExtensionBuilderConfigurationManager $configurationManager;
-    protected ExtensionSchemaBuilder $extensionSchemaBuilder;
     protected ?Extension $previousExtension = null;
     protected ?Extension $extension = null;
     /**
@@ -86,21 +83,11 @@ class RoundTrip implements SingletonInterface
     protected ?File $classFileObject = null;
     protected array $settings = [];
 
-    public function injectParserService(ParserService $parserService): void
-    {
-        $this->parserService = $parserService;
-    }
-
-    public function injectExtensionBuilderConfigurationManager(
-        ExtensionBuilderConfigurationManager $configurationManager
-    ): void {
-        $this->configurationManager = $configurationManager;
-    }
-
-    public function injectExtensionSchemaBuilder(ExtensionSchemaBuilder $extensionSchemaBuilder): void
-    {
-        $this->extensionSchemaBuilder = $extensionSchemaBuilder;
-    }
+    public function __construct(
+        private readonly ParserService $parserService,
+        private readonly ExtensionBuilderConfigurationManager $configurationManager,
+        private readonly ExtensionSchemaBuilder $extensionSchemaBuilder,
+    ) {}
 
     /**
      * If a JSON file is found in the extensions directory the previous version
