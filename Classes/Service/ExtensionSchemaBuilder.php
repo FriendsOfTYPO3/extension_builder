@@ -60,7 +60,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
      */
     public function build(array $extensionBuildConfiguration): Extension
     {
-        $extension = GeneralUtility::makeInstance(Extension::class);
+        $extension = new Extension();
         $globalProperties = $extensionBuildConfiguration['properties'];
         if (!is_array($globalProperties)) {
             throw new Exception('Extension properties not submitted!');

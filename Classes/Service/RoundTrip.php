@@ -26,9 +26,6 @@ use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Utility\Inflector;
 use Exception;
-use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
-use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -52,6 +49,7 @@ class RoundTrip implements SingletonInterface
 
     protected ParserService $parserService;
     protected ExtensionBuilderConfigurationManager $configurationManager;
+    protected ExtensionSchemaBuilder $extensionSchemaBuilder;
     protected ?Extension $previousExtension = null;
     protected ?Extension $extension = null;
     /**
@@ -99,6 +97,11 @@ class RoundTrip implements SingletonInterface
         $this->configurationManager = $configurationManager;
     }
 
+    public function injectExtensionSchemaBuilder(ExtensionSchemaBuilder $extensionSchemaBuilder): void
+    {
+        $this->extensionSchemaBuilder = $extensionSchemaBuilder;
+    }
+
     /**
      * If a JSON file is found in the extensions directory the previous version
      * of the extension is build to compare it with the new configuration coming
@@ -115,9 +118,6 @@ class RoundTrip implements SingletonInterface
         $this->extension = $extension;
         $this->extensionDirectory = $this->extension->getExtensionDir();
 
-        if (!$this->parserService instanceof ParserService) {
-            $this->parserService = GeneralUtility::makeInstance(ParserService::class);
-        }
         $this->settings = $this->configurationManager->getExtensionBuilderSettings();
         // defaults
         $this->previousExtensionDirectory = $this->extensionDirectory;
@@ -138,9 +138,8 @@ class RoundTrip implements SingletonInterface
         }
 
         if (file_exists($this->previousExtensionDirectory . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE)) {
-            $extensionSchemaBuilder = GeneralUtility::makeInstance(ExtensionSchemaBuilder::class);
             $jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey, $extension->getStoragePath());
-            $this->previousExtension = $extensionSchemaBuilder->build($jsonConfig);
+            $this->previousExtension = $this->extensionSchemaBuilder->build($jsonConfig);
             $previousDomainObjects = $this->previousExtension->getDomainObjects();
             /** @var DomainObject[] $previousDomainObjects */
             foreach ($previousDomainObjects as $oldDomainObject) {
@@ -983,16 +982,6 @@ class RoundTrip implements SingletonInterface
             return;
         }
         unlink($path . $fileName);
-    }
-
-    /**
-     * @return array
-     * @throws ExtensionConfigurationExtensionNotConfiguredException
-     * @throws ExtensionConfigurationPathDoesNotExistException
-     */
-    public static function getExtConfiguration(): array
-    {
-        return GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('extension_builder');
     }
 
     /**

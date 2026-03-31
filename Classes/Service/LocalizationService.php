@@ -24,20 +24,21 @@ use EBT\ExtensionBuilder\Utility\Inflector;
 use InvalidArgumentException;
 use TYPO3\CMS\Core\Localization\Parser\XliffParser;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Helper for localization related stuff
  */
 class LocalizationService implements SingletonInterface
 {
-    protected ?XliffParser $xliffParser = null;
+    protected XliffParser $xliffParser;
+
+    public function injectXliffParser(XliffParser $xliffParser): void
+    {
+        $this->xliffParser = $xliffParser;
+    }
 
     protected function getXliffParser(): XliffParser
     {
-        if ($this->xliffParser === null) {
-            $this->xliffParser = GeneralUtility::makeInstance(XliffParser::class);
-        }
         return $this->xliffParser;
     }
 

@@ -86,6 +86,7 @@ class FileGenerator
     ];
     protected array $settings = [];
     protected RenderingContextFactory $renderingContextFactory;
+    private ExtensionConfiguration $extensionConfiguration;
 
     public function injectClassBuilder(ClassBuilder $classBuilder): void
     {
@@ -112,6 +113,11 @@ class FileGenerator
         $this->renderingContextFactory = $renderingContextFactory;
     }
 
+    public function injectExtensionConfiguration(ExtensionConfiguration $extensionConfiguration): void
+    {
+        $this->extensionConfiguration = $extensionConfiguration;
+    }
+
     /**
      * called by controller
      * @param array $settings
@@ -132,7 +138,7 @@ class FileGenerator
     public function build(Extension $extension): void
     {
         $this->extension = $extension;
-        $enableRoundtrip = (bool)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('extension_builder', 'enableRoundtrip');
+        $enableRoundtrip = (bool)$this->extensionConfiguration->get('extension_builder', 'enableRoundtrip');
 
         if ($enableRoundtrip === true) {
             $this->roundTripEnabled = true;

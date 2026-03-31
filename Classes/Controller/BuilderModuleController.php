@@ -72,6 +72,8 @@ class BuilderModuleController extends ActionController
     private IconFactory $iconFactory;
 
     private LanguageServiceFactory $languageServiceFactory;
+    private BackendUriBuilder $backendUriBuilder;
+    private LocalizationFactory $localizationFactory;
 
     /**
      * Settings from various sources:
@@ -138,6 +140,16 @@ class BuilderModuleController extends ActionController
         $this->languageServiceFactory = $languageServiceFactory;
     }
 
+    public function injectBackendUriBuilder(BackendUriBuilder $backendUriBuilder): void
+    {
+        $this->backendUriBuilder = $backendUriBuilder;
+    }
+
+    public function injectLocalizationFactory(LocalizationFactory $localizationFactory): void
+    {
+        $this->localizationFactory = $localizationFactory;
+    }
+
     public function initializeAction(): void
     {
         $this->fileGenerator->setSettings($this->extensionBuilderSettings);
@@ -195,8 +207,7 @@ class BuilderModuleController extends ActionController
         if (!$this->extensionService->isStoragePathConfigured()) {
             $initialWarnings[] = ExtensionService::COMPOSER_PATH_WARNING;
         }
-        $uriBuilder = GeneralUtility::makeInstance(BackendUriBuilder::class);
-        $dispatchRpcUrl = (string)$uriBuilder->buildUriFromRoute('tools_extensionbuilder.BuilderModule_dispatchRpc');
+        $dispatchRpcUrl = (string)$this->backendUriBuilder->buildUriFromRoute('tools_extensionbuilder.BuilderModule_dispatchRpc');
         $publicResourcesUrl = PathUtility::getPublicResourceWebPath('EXT:extension_builder/Resources/Public');
         $corePublicResourceWebPath = PathUtility::getPublicResourceWebPath('EXT:core/Resources/Public/');
         $initialWarningsJson = json_encode($initialWarnings);
@@ -282,21 +293,21 @@ class BuilderModuleController extends ActionController
     {
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
-        $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+        $loadButton = (new LinkButtonWithId())
             ->setIcon($this->iconFactory->getIcon('actions-system-list-open', Icon::SIZE_SMALL))
             ->setTitle('Open extension')
             ->setId('WiringEditor-loadButton-button')
             ->setHref('#');
         $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
 
-        $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+        $loadButton = (new LinkButtonWithId())
             ->setIcon($this->iconFactory->getIcon('actions-document-new', Icon::SIZE_SMALL))
             ->setTitle('New extension')
             ->setId('WiringEditor-newButton-button')
             ->setHref('#');
         $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
 
-        $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+        $loadButton = (new LinkButtonWithId())
             ->setIcon($this->iconFactory->getIcon('actions-document-save', Icon::SIZE_SMALL))
             ->setTitle('Save extension')
             ->setId('WiringEditor-saveButton-button')
@@ -316,7 +327,7 @@ class BuilderModuleController extends ActionController
     {
         $requestUri = $this->uriBuilder->uriFor('domainmodelling');
 
-        $openInNewWindowButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+        $openInNewWindowButton = (new LinkButtonWithId())
             ->setHref('#')
             ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.openInNewWindow'))
             ->setIcon($this->iconFactory->getIcon('actions-window-open', Icon::SIZE_SMALL))
@@ -336,7 +347,7 @@ class BuilderModuleController extends ActionController
 
     protected function registerAdvancedOptionsButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void
     {
-        $advancedOptionsButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+        $advancedOptionsButton = (new LinkButtonWithId())
             ->setIcon($this->iconFactory->getIcon('content-menu-pages', Icon::SIZE_SMALL))
             ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:advancedOptions'))
             ->setId('toggleAdvancedOptions')
@@ -436,8 +447,7 @@ class BuilderModuleController extends ActionController
      */
     protected function setLocallangSettings(): void
     {
-        $languageFactory = GeneralUtility::makeInstance(LocalizationFactory::class);
-        $localizationArray = $languageFactory->getParsedData(
+        $localizationArray = $this->localizationFactory->getParsedData(
             'EXT:extension_builder/Resources/Private/Language/locallang.xlf',
             'default'
         );
