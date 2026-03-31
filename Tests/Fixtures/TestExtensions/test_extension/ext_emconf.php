@@ -7,7 +7,6 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'John Doe',
     'author_email' => 'mail@typo3.com',
     'state' => 'alpha',
-    'clearCacheOnLoad' => 0,
     'version' => '1.0.0',
     'constraints' => [
         'depends' => [
