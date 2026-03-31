@@ -222,6 +222,7 @@ class BuilderModuleController extends ActionController
             . "window.TYPO3.settings.extensionBuilder.publicResourceWebPath = { core: " . json_encode($corePublicResourceWebPath) . " };" . LF
             . "inputEx.spacerUrl = " . json_encode($publicResourcesUrl . '/jsDomainModeling/wireit/lib/inputex/images/space.gif') . ";" . LF
             . "YAHOO.util.Event.onDOMReady(function() {" . LF
+            . "    document.body.classList.add('yui-skin-sam');" . LF
             . "    const editor = new WireIt.WiringEditor(extbaseModeling_wiringEditorLanguage);" . LF
             . "    const initialWarnings = {$initialWarningsJson};" . LF
             . "    if (initialWarnings.length > 0) { editor.alert('Warning', initialWarnings.join('<br />')); }" . LF

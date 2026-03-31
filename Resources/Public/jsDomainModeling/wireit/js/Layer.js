@@ -158,7 +158,7 @@ WireIt.Layer.prototype = {
 	 * @return {WireIt.Wire} Wire instance build from the xtype
 	 */
 	addWire: function(wireConfig) {
-		var type = eval(wireConfig.xtype || "WireIt.Wire");
+		var type = (wireConfig.xtype || "WireIt.Wire").split('.').reduce(function(o, k) { return o && o[k]; }, window);
 
 		var src = wireConfig.src;
 		var tgt = wireConfig.tgt;
@@ -179,7 +179,7 @@ WireIt.Layer.prototype = {
 	 */
 	addContainer: function(containerConfig) {
 
-		var type = eval('(' + (containerConfig.xtype || "WireIt.Container") + ')');
+		var type = (containerConfig.xtype || "WireIt.Container").split('.').reduce(function(o, k) { return o && o[k]; }, window);
 		if (!YAHOO.lang.isFunction(type)) {
 			throw new Error("WireIt layer unable to add container: xtype '" + containerConfig.xtype + "' not found");
 		}
