@@ -36,6 +36,7 @@ use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextFactory;
 use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -114,8 +115,9 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         $this->fileGenerator->_set('printerService', $this->printerService);
         $this->fileGenerator->_set('localizationService', $localizationService);
         $this->fileGenerator->_set('classBuilder', $this->classBuilder);
-
         $this->fileGenerator->_set('roundTripService', $this->roundTripService);
+        $renderingContextFactory = GeneralUtility::makeInstance(RenderingContextFactory::class);
+        $this->fileGenerator->_set('renderingContextFactory', $renderingContextFactory);
 
         $this->codeTemplateRootPath = Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
         $this->modelClassTemplatePath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
