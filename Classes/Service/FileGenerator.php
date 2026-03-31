@@ -29,10 +29,11 @@ use EBT\ExtensionBuilder\Exception\SyntaxError;
 use Exception;
 use RuntimeException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextFactory;
+use TYPO3Fluid\Fluid\View\TemplateView;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
  * Creates (or updates) all the required files for an extension
@@ -84,6 +85,7 @@ class FileGenerator
         'typoscript' => ['ts', 'txt'],
     ];
     protected array $settings = [];
+    protected RenderingContextFactory $renderingContextFactory;
 
     public function injectClassBuilder(ClassBuilder $classBuilder): void
     {
@@ -103,6 +105,11 @@ class FileGenerator
     public function injectLocalizationService(LocalizationService $localizationService): void
     {
         $this->localizationService = $localizationService;
+    }
+
+    public function injectRenderingContextFactory(RenderingContextFactory $renderingContextFactory): void
+    {
+        $this->renderingContextFactory = $renderingContextFactory;
     }
 
     /**
@@ -779,13 +786,16 @@ class FileGenerator
     {
         $variables['settings'] = $this->settings;
 
-        $standAloneView = GeneralUtility::makeInstance(StandaloneView::class);
-        $standAloneView->setLayoutRootPaths($this->codeTemplateRootPaths);
-        $standAloneView->setPartialRootPaths($this->codeTemplatePartialPaths);
-        $standAloneView->setFormat('txt');
-        $standAloneView->setTemplatePathAndFilename($this->getTemplatePath($filePath));
-        $standAloneView->assignMultiple($variables);
-        $renderedContent = $standAloneView->render();
+        $renderingContext = $this->renderingContextFactory->create([
+            'templateRootPaths' => $this->codeTemplateRootPaths,
+            'layoutRootPaths' => $this->codeTemplateRootPaths,
+            'partialRootPaths' => $this->codeTemplatePartialPaths,
+        ]);
+        $renderingContext->getTemplatePaths()->setFormat('txt');
+        $renderingContext->getTemplatePaths()->setTemplatePathAndFilename($this->getTemplatePath($filePath));
+        $view = new TemplateView($renderingContext);
+        $view->assignMultiple($variables);
+        $renderedContent = $view->render();
         // remove all double empty lines (coming from fluid)
         return preg_replace('/^\\s*\\n[\\t ]*$/m', '', $renderedContent);
     }
