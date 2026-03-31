@@ -1104,7 +1104,8 @@ YAHOO.register("get", YAHOO.util.Get, {version:"2.7.0",build:"1799"});
 					var v = this.varName || "YAHOO";
 					var t = "(function() {\n";
 					var b = "\nreturn " + v + ";\n})();";
-					var ref = eval(t + this._scriptText.join("\n") + b);
+					// CSP: dynamic YUI loading via XHR disabled (unsafe-eval not permitted)
+					var ref = null;
 					this._pushEvents(ref);
 					if (ref) {
 						this.onSuccess.call(this.scope, {reference:ref,data:this.data});
