@@ -37,13 +37,11 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
     {
         parent::setUp();
 
-        $this->objectSchemaBuilder = $this->getAccessibleMock(ObjectSchemaBuilder::class, null);
-
-        $this->configurationManager = $this->getAccessibleMock(
-            ExtensionBuilderConfigurationManager::class,
-            ['getPersistenceTable']
-        );
-        $this->objectSchemaBuilder->injectConfigurationManager($this->configurationManager);
+        $this->configurationManager = $this->getMockBuilder(ExtensionBuilderConfigurationManager::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getPersistenceTable'])
+            ->getMock();
+        $this->objectSchemaBuilder = new ObjectSchemaBuilder($this->configurationManager);
     }
 
     /**

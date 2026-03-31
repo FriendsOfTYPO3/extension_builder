@@ -23,16 +23,9 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
 class DomainObjectChecksViewHelper extends AbstractConditionViewHelper
 {
-    protected ExtensionBuilderConfigurationManager $configurationManager;
-
-    /**
-     * @param ExtensionBuilderConfigurationManager $configurationManager
-     */
-    public function injectExtensionBuilderConfigurationManager(
-        ExtensionBuilderConfigurationManager $configurationManager
-    ): void {
-        $this->configurationManager = $configurationManager;
-    }
+    public function __construct(
+        private readonly ExtensionBuilderConfigurationManager $configurationManager,
+    ) {}
 
     public function initializeArguments(): void
     {

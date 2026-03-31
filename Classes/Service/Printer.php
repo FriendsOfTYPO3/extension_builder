@@ -29,13 +29,12 @@ use PhpParser\PrettyPrinter\Standard;
  */
 class Printer extends Standard
 {
-    protected ?NodeFactory $nodeFactory = null;
     /** @var bool Whether semicolon namespaces can be used (i.e. no global namespace is used) */
     protected $canUseSemicolonNamespaces = true;
 
-    public function injectNodeFactory(NodeFactory $nodeFactory): void
+    public function __construct(private readonly NodeFactory $nodeFactory)
     {
-        $this->nodeFactory = $nodeFactory;
+        parent::__construct();
     }
 
     /**

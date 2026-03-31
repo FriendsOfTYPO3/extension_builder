@@ -34,16 +34,14 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
  */
 class ObjectSchemaBuilder implements SingletonInterface
 {
-    protected ExtensionBuilderConfigurationManager $configurationManager;
     /**
      * @var string[]
      */
     protected array $relatedForeignTables = [];
 
-    public function injectConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager): void
-    {
-        $this->configurationManager = $configurationManager;
-    }
+    public function __construct(
+        private readonly ExtensionBuilderConfigurationManager $configurationManager,
+    ) {}
 
     /**
      * @param array $jsonDomainObject
