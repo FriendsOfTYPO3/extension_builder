@@ -8,11 +8,15 @@
         "lint:scss": "stylelint 'Resources/Public/jsDomainModeling/**/*.scss'",
         "lint:format": "prettier --check 'Resources/Public/jsDomainModeling/**/*.{js,scss}'",
         "format": "prettier --write 'Resources/Public/jsDomainModeling/**/*.{js,scss}'",
-        "lint": "npm run lint:js && npm run lint:scss && npm run lint:format"
+        "lint": "npm run lint:js && npm run lint:scss && npm run lint:format",
+        "test:e2e": "playwright test",
+        "test:e2e:ui": "playwright test --ui",
+        "test:e2e:headed": "playwright test --headed"
     },
     "author": "Philipp Kuhlmay",
     "license": "GPL-2.0-or-later",
     "devDependencies": {
+        "@playwright/test": "^1.58.2",
         "eslint": "^8.57.0",
         "prettier": "^3.3.3",
         "stylelint": "^16.9.0",
