@@ -89,14 +89,14 @@ class ExtensionRepository implements SingletonInterface
      * @throws Exception
      * @throws \TYPO3\CMS\Core\Package\Exception
      */
-    public function saveExtensionConfiguration(Extension $extension): void
+    public function saveExtensionConfiguration(Extension $extension, BackendUserAuthentication $backendUser): void
     {
         $extensionBuildConfiguration = $this->configurationManager->getConfigurationFromModeler();
         $extensionBuildConfiguration['storagePath'] = $extension->getStoragePath();
         $extensionBuildConfiguration['log'] = [
             'last_modified' => date('Y-m-d h:i'),
             'extension_builder_version' => ExtensionManagementUtility::getExtensionVersion('extension_builder'),
-            'be_user' => $this->getBackendUserAuthentication()->user['realName'] . ' (' . $this->getBackendUserAuthentication()->user['uid'] . ')',
+            'be_user' => $backendUser->user['realName'] . ' (' . $backendUser->user['uid'] . ')',
         ];
         $encodeOptions = 0;
         // option JSON_PRETTY_PRINT is available since PHP 5.4.0
@@ -109,8 +109,4 @@ class ExtensionRepository implements SingletonInterface
         );
     }
 
-    protected function getBackendUserAuthentication(): BackendUserAuthentication
-    {
-        return $GLOBALS['BE_USER'];
-    }
 }

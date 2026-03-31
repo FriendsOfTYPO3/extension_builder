@@ -32,7 +32,6 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
-use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Imaging\Icon;
@@ -160,7 +159,7 @@ class BuilderModuleController extends ActionController
         $this->view->assign('currentAction', $this->request->getControllerActionName());
 
         if (!$this->request->hasArgument('action')) {
-            $userSettings = $this->getBackendUserAuthentication()->getModuleData('extensionbuilder');
+            $userSettings = $GLOBALS['BE_USER']->getModuleData('extensionbuilder');
             if (($userSettings['firstTime'] ?? 1) === 0) {
                 return new ForwardResponse('domainmodelling');
             }
@@ -232,7 +231,7 @@ class BuilderModuleController extends ActionController
             true
         );
         $this->view->assign('initialWarnings', $initialWarnings);
-        $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', ['firstTime' => 0]);
+        $GLOBALS['BE_USER']->pushModuleData('extensionbuilder', ['firstTime' => 0]);
 
         $this->moduleTemplate->setContent($this->view->render());
 
@@ -623,7 +622,7 @@ class BuilderModuleController extends ActionController
             throw $e;
         }
 
-        $this->extensionRepository->saveExtensionConfiguration($extension);
+        $this->extensionRepository->saveExtensionConfiguration($extension, $GLOBALS['BE_USER']);
 
         return $result;
     }
@@ -683,10 +682,5 @@ class BuilderModuleController extends ActionController
     {
         $params = $this->extensionBuilderConfigurationManager->getParamsFromRequest();
         return $this->extensionInstallationStatus->performDbUpdates($params);
-    }
-
-    protected function getBackendUserAuthentication(): BackendUserAuthentication
-    {
-        return $GLOBALS['BE_USER'];
     }
 }
