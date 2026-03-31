@@ -22,12 +22,7 @@
 		// Append to parentNode
 		parentNode.appendChild(this.element);
 
-		// excanvas.js for dynamic canvas tags
-		if (typeof (G_vmlCanvasManager) != "undefined") {
-			this.element = G_vmlCanvasManager.initElement(this.element);
-		}
-
-	};
+};
 
 	WireIt.CanvasElement.prototype = {
 
