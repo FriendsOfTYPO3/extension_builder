@@ -30,16 +30,7 @@
             {"name":"name","type":"string"},
             {"name":"language","type":"text"}
          ]
-      },
-
-      "updateDb" : {
-         "description": "Perform DB updates",
-         "parameters": [
-            {"name":"name","type":"string"},
-            {"name":"language","type":"text"}
-         ]
       }
-
 
    }
 }

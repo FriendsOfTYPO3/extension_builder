@@ -210,7 +210,6 @@ class BuilderModuleController extends ActionController
                 'saveWiring' => ['description' => 'Save the module', 'parameters' => [['name' => 'name', 'type' => 'string'], ['name' => 'working', 'type' => 'text'], ['name' => 'language', 'type' => 'text']]],
                 'listWirings' => ['description' => 'Get the list of modules', 'parameters' => [['name' => 'language', 'type' => 'text']]],
                 'loadWiring' => ['description' => 'Load the module', 'parameters' => [['name' => 'name', 'type' => 'string'], ['name' => 'language', 'type' => 'text']]],
-                'updateDb' => ['description' => 'Perform DB updates', 'parameters' => [['name' => 'name', 'type' => 'string'], ['name' => 'language', 'type' => 'text']]],
             ],
         ]);
         $this->pageRenderer->addJsInlineCode(
@@ -473,9 +472,6 @@ class BuilderModuleController extends ActionController
                 case 'listWirings':
                     $response = $this->rpcActionList();
                     break;
-                case 'updateDb':
-                    $response = $this->rpcActionPerformDbUpdate();
-                    break;
                 default:
                     $response = ['error' => 'Sub Action not found.'];
             }
@@ -616,9 +612,6 @@ class BuilderModuleController extends ActionController
                 $this->extensionInstallationStatus->getStatusMessage()
             );
             $result = ['success' => $message, 'usesComposerPath' => $usesComposerPath];
-            if ($this->extensionInstallationStatus->isDbUpdateNeeded()) {
-                $result['confirmUpdate'] = true;
-            }
         } catch (Exception $e) {
             throw $e;
         }
@@ -679,9 +672,4 @@ class BuilderModuleController extends ActionController
         return [];
     }
 
-    protected function rpcActionPerformDbUpdate(): array
-    {
-        $params = $this->extensionBuilderConfigurationManager->getParamsFromRequest();
-        return $this->extensionInstallationStatus->performDbUpdates($params);
-    }
 }
