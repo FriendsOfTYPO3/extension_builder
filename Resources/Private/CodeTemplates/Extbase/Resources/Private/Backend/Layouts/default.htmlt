@@ -4,7 +4,6 @@
     data-namespace-typo3-fluid="true"</k:openingTag>
 
 <k:openingTag>be:moduleLayout</k:openingTag>
-    <k:openingTag>f:be.pageRenderer /</k:openingTag>
 
     <k:openingTag>be:moduleLayout.menu identifier="ModuleMenu"</k:openingTag>
         <k:format.removeMultipleNewlines>
