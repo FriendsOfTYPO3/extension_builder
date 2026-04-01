@@ -4,6 +4,7 @@
     "description": "Extension-Builder",
     "main": "public/index.php",
     "scripts": {
+        "build": "vite build",
         "lint:js": "eslint Resources/Public/jsDomainModeling/**/*.js",
         "lint:scss": "stylelint 'Resources/Public/jsDomainModeling/**/*.scss'",
         "lint:format": "prettier --check 'Resources/Public/jsDomainModeling/**/*.{js,scss}'",
@@ -13,6 +14,9 @@
         "test:e2e:ui": "playwright test --ui",
         "test:e2e:headed": "playwright test --headed"
     },
+    "dependencies": {
+        "lit": "^3.2.0"
+    },
     "author": "Philipp Kuhlmay",
     "license": "GPL-2.0-or-later",
     "devDependencies": {
@@ -20,6 +24,7 @@
         "eslint": "^8.57.0",
         "prettier": "^3.3.3",
         "stylelint": "^16.9.0",
-        "stylelint-config-standard-scss": "^13.1.0"
+        "stylelint-config-standard-scss": "^13.1.0",
+        "vite": "^5.4.0"
     }
 }

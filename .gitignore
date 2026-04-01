@@ -1,6 +1,8 @@
 /.idea*
 /.Build/
 *node_modules*
+/dist/
+/Resources/Public/JavaScript/
 /var/
 .DS_Store
 /composer.lock
