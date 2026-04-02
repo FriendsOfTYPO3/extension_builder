@@ -1,5 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import './eb-terminal.js';
+import { renderFields } from './render-fields.js';
+import { modelObjectModule } from './config/modelObject.js';
 
 export class EbContainer extends LitElement {
     static properties = {
@@ -7,6 +9,7 @@ export class EbContainer extends LitElement {
         posX: { type: Number, attribute: 'pos-x' },
         posY: { type: Number, attribute: 'pos-y' },
         moduleData: { type: Object },
+        _name: { state: true },
     };
 
     static styles = css`
@@ -44,6 +47,7 @@ export class EbContainer extends LitElement {
         this.posX = 10;
         this.posY = 10;
         this.moduleData = {};
+        this._name = '';
         this._dragging = false;
         this._dragOffsetX = 0;
         this._dragOffsetY = 0;
@@ -52,6 +56,10 @@ export class EbContainer extends LitElement {
     updated(changed) {
         if (changed.has('posX') || changed.has('posY')) {
             this.style.transform = `translate(${this.posX}px, ${this.posY}px)`;
+        }
+        if (changed.has('moduleData')) {
+            this._name = this.moduleData?.value?.name ?? '';
+            this._populateFromValue();
         }
     }
 
@@ -65,6 +73,7 @@ export class EbContainer extends LitElement {
 
     _onPointerDown(e) {
         if (e.target.tagName === 'EB-TERMINAL') return;
+        if (e.target.tagName === 'EB-INPLACE-EDIT') return;
         e.preventDefault();
         this._dragging = true;
         this._dragOffsetX = e.clientX - this.posX;
@@ -90,14 +99,44 @@ export class EbContainer extends LitElement {
         this.releasePointerCapture(e.pointerId);
     }
 
-    get modelName() {
-        return this.moduleData?.value?.name ?? 'New Model Object';
+    _onNameChange(e) {
+        this._name = e.detail.value;
+    }
+
+    get _fields() {
+        return modelObjectModule.container.fields;
+    }
+
+    _populateFromValue() {
+        const value = this.moduleData?.value ?? {};
+        const body = this.shadowRoot?.querySelector('.body');
+        if (!body) return;
+        Array.from(body.children).forEach(el => {
+            const name = el.getAttribute('name');
+            if (name !== null && value[name] !== undefined && typeof el.setValue === 'function') {
+                el.setValue(value[name]);
+            }
+        });
+    }
+
+    _collectValues() {
+        const value = { name: this._name ?? '' };
+        const body = this.shadowRoot?.querySelector('.body');
+        if (body) {
+            Array.from(body.children).forEach(el => {
+                const name = el.getAttribute('name');
+                if (name !== null && typeof el.getValue === 'function') {
+                    value[name] = el.getValue();
+                }
+            });
+        }
+        return value;
     }
 
     serialize() {
         return {
             config: { position: [this.posX, this.posY] },
-            value: this.moduleData?.value ?? {},
+            value: this._collectValues(),
         };
     }
 
@@ -109,10 +148,14 @@ export class EbContainer extends LitElement {
                     terminal-id="SOURCES"
                     uid="${this.moduleData?.value?.objectsettings?.uid ?? ''}">
                 </eb-terminal>
-                ${this.modelName}
+                <eb-inplace-edit
+                    name="name"
+                    .value="${this._name || 'New Model Object'}"
+                    @inplace-change="${this._onNameChange}">
+                </eb-inplace-edit>
             </div>
             <div class="body">
-                <slot></slot>
+                ${renderFields(this._fields.slice(1))}
             </div>
         `;
     }
