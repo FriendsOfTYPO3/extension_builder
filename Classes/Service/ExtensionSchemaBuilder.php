@@ -242,7 +242,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
         }
 
         $extension->setCategory($category);
-        $extension->setState($this->getStateByName($propertyConfiguration['emConf']['state']));
+        $extension->setState($this->getStateByName($propertyConfiguration['emConf']['state'] ?? 'alpha'));
 
         if (!empty($propertyConfiguration['originalExtensionKey'])) {
             // handle renaming of extensions
