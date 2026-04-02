@@ -21,8 +21,8 @@ test.describe('Extension Generation', () => {
     await expect(frame.locator('#WiringEditor-newButton-button')).toBeVisible();
   });
 
-  // TODO: The following tests require the properties panel (extensionPropertiesFields)
-  // to be rendered inside eb-wiring-editor — tracked as a follow-up ticket.
+  // TODO: The following tests require shadow DOM access to extension properties fields
+  // inside eb-wiring-editor — tracked as a follow-up ticket for v13.
   test.skip('"New extension" opens the form', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
     const extBuilder = new ExtensionBuilderPage(frame);
@@ -57,5 +57,35 @@ test.describe('Extension Generation', () => {
     const msg = extBuilder.getSuccessMessage();
     await expect(msg).toBeVisible({ timeout: 15000 });
     await expect(msg).toContainText(/(success|generated|created|saved)/i);
+  });
+});
+
+test.describe('Wiring Editor Toolbar', () => {
+  test.beforeEach(async ({ page }) => {
+    const backend = new BackendPage(page);
+    await backend.navigateToModule('Extension Builder');
+    const extBuilder = new ExtensionBuilderPage(backend.getContentFrame());
+    await extBuilder.waitForLoaded();
+    await extBuilder.goToDomainModeller();
+  });
+
+  test('save button is visible in docheader', async ({ page }) => {
+    const frame = new BackendPage(page).getContentFrame();
+    await expect(frame.locator('#WiringEditor-saveButton-button')).toBeVisible();
+  });
+
+  test('load button is visible in docheader', async ({ page }) => {
+    const frame = new BackendPage(page).getContentFrame();
+    await expect(frame.locator('#WiringEditor-loadButton-button')).toBeVisible();
+  });
+
+  test('advanced options toggle is visible in docheader', async ({ page }) => {
+    const frame = new BackendPage(page).getContentFrame();
+    await expect(frame.locator('#toggleAdvancedOptions')).toBeVisible();
+  });
+
+  test('"+ Model Object" button is visible in editor', async ({ page }) => {
+    const frame = new BackendPage(page).getContentFrame();
+    await expect(frame.getByRole('button', { name: '+ Model Object' })).toBeVisible();
   });
 });
