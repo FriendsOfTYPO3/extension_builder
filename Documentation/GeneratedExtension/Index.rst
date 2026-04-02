@@ -25,6 +25,8 @@ previous chapter:
                ├── Model/..
                └── Repository/..
        ├── Configuration/
+           ├── Backend/
+               └── Modules.php
            ├── ExtensionBuilder/..
            ├── TCA/..
            └── TypoScript/..
@@ -106,6 +108,8 @@ frontend plugins and backend modules:
                ├── Model/..
                └── Repository/..
        ├── Configuration/
+           ├── Backend/
+               └── Modules.php
            ├── TCA/..
            └── TypoScript/..
        ├── Resources/
@@ -121,7 +125,8 @@ frontend plugins and backend modules:
            └── Unit/..
 
 The frontend plugins are registered in the :file:`ext_localconf.php` file and
-the backend modules are registered in the :file:`ext_tables.php` file.
+the backend modules are registered in the :file:`Configuration/Backend/Modules.php`
+file.
 The associated views are configured in the :file:`Configuration/TypoScript/`
 folder and the Fluid view templates are bundled in the :file:`Resources/Private/`
 folder.
@@ -134,6 +139,19 @@ folder :file:`Classes/Domain/` and their representation in the TYPO3 backend
 is configured in the folder :file:`Configuration/TCA/`.
 Last but not least, the tests of the classes are located in the folder
 :file:`Tests/`.
+
+.. note::
+
+   **TYPO3 v12 TCA field types:**
+   Integer properties use ``type = 'number'`` (previously ``type = 'input'`` with
+   ``eval = 'int'``). Link properties use ``type = 'link'`` (previously
+   ``renderType = 'inputLink'``). TCA items arrays use associative format with
+   ``label`` and ``value`` keys.
+
+   **Dependency Injection:**
+   Controllers and services use constructor injection. Dependencies are declared
+   in :file:`Configuration/Services.yaml` and injected automatically by the
+   TYPO3 DI container.
 
 For more information on tests, see the section ":ref:`tests`" and for everything
 else, please refer to the :doc:`Extbase & Fluid book <t3extbasebook:Index>` of
@@ -194,7 +212,7 @@ be registered during the :doc:`publishing process </PublishToTer/Index>` for
 automatic rendering and deployment to
 :samp:`https://docs.typo3.org/p/<vendor-name>/<extension-name>/<version>/<language>/`
 , for example to
-:samp:`https://docs.typo3.org/p/friendsoftypo3/extension-builder/11.0/en-us/`.
+:samp:`https://docs.typo3.org/p/friendsoftypo3/extension-builder/12.0/en-us/`.
 
 If the extension is for private use, you are free to do anything with the
 rendered documentation - including, of course, putting it under version control.
@@ -309,7 +327,7 @@ For example:
 Running tests
 -------------
 
-Unit tests of your extension can be executed in the TYPO3 backend using the
-`phpunit <https://extensions.typo3.org/extension/phpunit>`__ extension or on the
-command line by following the :doc:`testing pages <t3coreapi:Testing/Index>`
-of the official TYPO3 documentation.
+Unit tests of your extension can be executed on the command line by following
+the :doc:`testing pages <t3coreapi:Testing/Index>` of the official TYPO3
+documentation. The generated tests use PHPUnit 10 and
+`TYPO3 Testing Framework <https://github.com/TYPO3/testing-framework>`__ ^7.
