@@ -12,16 +12,19 @@ export class EbLayer extends LitElement {
 
     static styles = css`
         :host {
-            display: block;
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 0;
             width: 100%;
-            height: 100%;
             overflow: hidden;
         }
         #canvas {
             position: relative;
+            flex: 1;
             width: 100%;
-            height: 100%;
+            overflow: hidden;
+
         }
         #wire-overlay {
             position: absolute;

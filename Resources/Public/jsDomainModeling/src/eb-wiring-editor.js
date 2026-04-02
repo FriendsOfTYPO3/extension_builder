@@ -29,6 +29,7 @@ export class EbWiringEditor extends LitElement {
             width: 100%;
             height: 100%;
             font-family: sans-serif;
+
         }
         .toolbar {
             display: flex;
@@ -46,7 +47,9 @@ export class EbWiringEditor extends LitElement {
             display: flex;
             flex-direction: row;
             flex: 1;
+            min-height: 0;
             overflow: hidden;
+
         }
         .left-panel {
             width: 280px;
@@ -73,12 +76,16 @@ export class EbWiringEditor extends LitElement {
         }
         .center-panel {
             flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
             position: relative;
         }
         eb-layer {
+            flex: 1;
+            min-height: 0;
             width: 100%;
-            height: 100%;
         }
         .error {
             color: red;

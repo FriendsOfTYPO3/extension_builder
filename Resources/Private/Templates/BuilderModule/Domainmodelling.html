@@ -3,10 +3,13 @@
 <f:layout name="Default" />
 
 <f:section name="Content">
-	<eb-wiring-editor
+	<style>
+		.module-body { padding: 0 !important; }
+	</style>
+<eb-wiring-editor
 		smd-url="{dispatchRpcUrl}"
 		initial-warnings="{f:format.json(value: initialWarnings)}"
-		style="display:block;height:calc(100vh - var(--module-docheader-height, 67px) - 2 * var(--module-body-padding-y, 24px))">
+		style="width:100%;height:calc(100vh - var(--module-docheader-height, 67px))">
 	</eb-wiring-editor>
 </f:section>
 </html>
