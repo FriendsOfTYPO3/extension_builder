@@ -10,7 +10,7 @@ export class EbGroup extends LitElement {
 
     static styles = css`
         :host { display: block; }
-        fieldset { border: 1px solid #ccc; padding: 8px; margin: 0; }
+        fieldset { border: 1px solid var(--eb-border-color, #ccc); padding: 8px; margin: 0; }
         legend {
             padding: 0 4px;
             font-weight: bold;

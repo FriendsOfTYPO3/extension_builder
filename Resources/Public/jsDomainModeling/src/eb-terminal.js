@@ -13,21 +13,21 @@ export class EbTerminal extends LitElement {
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: #4a90d9;
-            border: 2px solid #2c5f8a;
+            background: var(--eb-terminal-default, #4a90d9);
+            border: 2px solid var(--eb-terminal-default-border, #2c5f8a);
             cursor: crosshair;
             position: absolute;
         }
         :host([type="input"]) {
-            background: #5cb85c;
-            border-color: #3d7a3d;
+            background: var(--eb-terminal-input, #5cb85c);
+            border-color: var(--eb-terminal-input-border, #3d7a3d);
             top: -8px;
             left: 50%;
             transform: translateX(-50%);
         }
         :host([type="output"]) {
-            background: #d9534f;
-            border-color: #8a2c2c;
+            background: var(--eb-terminal-output, #d9534f);
+            border-color: var(--eb-terminal-output-border, #8a2c2c);
         }
         :host(:hover) {
             transform: translateX(-50%) scale(1.3);

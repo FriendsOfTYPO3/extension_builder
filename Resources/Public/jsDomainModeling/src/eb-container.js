@@ -14,8 +14,8 @@ export class EbContainer extends LitElement {
             display: block;
             position: absolute;
             min-width: 160px;
-            background: #fff;
-            border: 1px solid #aaa;
+            background: var(--eb-container-bg, #fff);
+            border: 1px solid var(--eb-border-color-dark, #aaa);
             border-radius: 4px;
             box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
             user-select: none;
@@ -25,8 +25,8 @@ export class EbContainer extends LitElement {
             cursor: grabbing;
         }
         .header {
-            background: #3a6ea5;
-            color: #fff;
+            background: var(--eb-container-header-bg, #3a6ea5);
+            color: var(--eb-container-header-text, #fff);
             padding: 6px 10px;
             font-weight: bold;
             font-size: 13px;

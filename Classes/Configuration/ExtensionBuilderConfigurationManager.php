@@ -19,14 +19,10 @@ namespace EBT\ExtensionBuilder\Configuration;
 
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -57,7 +53,6 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         private readonly ConfigurationManagerInterface $configurationManager,
         private readonly ExtensionConfiguration $extensionConfiguration,
         private readonly DataMapper $dataMapper,
-        private readonly UriBuilder $uriBuilder,
     ) {}
 
     /**
@@ -465,23 +460,4 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
             '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity';
     }
 
-    /**
-     * Ajax callback that reads the smd file and modiefies the target URL to include
-     * the module token.
-     *
-     * @param ServerRequestInterface $request
-     * @return JsonResponse
-
-     */
-    public function getWiringEditorSmd(ServerRequestInterface $request): JsonResponse
-    {
-        $smdJsonString = file_get_contents(
-            ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd'
-        );
-        $smdJson = json_decode($smdJsonString);
-        $uri = $this->uriBuilder->buildUriFromRoute('tools_extensionbuilder.BuilderModule_dispatchRpc');
-        $smdJson->target = (string)$uri;
-
-        return (new JsonResponse())->setPayload((array)$smdJson);
-    }
 }

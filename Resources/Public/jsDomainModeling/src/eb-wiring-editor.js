@@ -36,8 +36,8 @@ export class EbWiringEditor extends LitElement {
             align-items: center;
             gap: 8px;
             padding: 6px 10px;
-            background: #f0f0f0;
-            border-bottom: 1px solid #ccc;
+            background: var(--eb-toolbar-bg, #f0f0f0);
+            border-bottom: 1px solid var(--eb-border-color, #ccc);
         }
         button {
             padding: 4px 12px;
@@ -56,7 +56,7 @@ export class EbWiringEditor extends LitElement {
             min-width: 120px;
             max-width: 600px;
             overflow-y: auto;
-            border-right: 1px solid #ccc;
+            border-right: 1px solid var(--eb-border-color, #ccc);
             padding: 8px;
             resize: horizontal;
         }
@@ -93,7 +93,7 @@ export class EbWiringEditor extends LitElement {
         }
         .loading {
             padding: 20px;
-            color: #666;
+            color: var(--eb-text-muted, #666);
         }
         .advanced-mode ::slotted([advanced]),
         .advanced-mode [advanced] {
@@ -103,7 +103,7 @@ export class EbWiringEditor extends LitElement {
 
     constructor() {
         super();
-        this.smdUrl = '/typo3/ajax/extensionBuilder/wireEditor';
+        this.smdUrl = '';
         this.extensionName = '';
         this.initialWarnings = [];
         this._loading = false;
