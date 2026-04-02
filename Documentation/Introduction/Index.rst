@@ -46,7 +46,10 @@ and further developed:
        ├── ext_tables.sql
        ├── ExtensionBuilder.json
        ├── Classes/..
-       ├── Configuration/..
+       ├── Configuration/
+           ├── Backend/
+               └── Modules.php
+           └── ..
        ├── Documentation/..
        ├── Resources/..
        └── Tests/..
