@@ -38,7 +38,7 @@ return [
                 'renderType' => 'selectSingle',
                 'default' => 0,
                 'items' => [
-                    ['', 0],
+                    ['label' => '', 'value' => 0],
                 ],
                 'foreign_table' => 'tx_testextension_domain_model_child1',
                 'foreign_table_where' => 'AND {#tx_testextension_domain_model_child1}.{#pid}=###CURRENT_PID### AND {#tx_testextension_domain_model_child1}.{#sys_language_uid} IN (-1,0)',
@@ -57,8 +57,8 @@ return [
                 'renderType' => 'checkboxToggle',
                 'items' => [
                     [
-                         0 => '',
-                         1 => '',
+                         'label' => '',
+                         'value' => '',
                         'invertStateDisplay' => true
                     ]
                 ],
@@ -114,8 +114,8 @@ return [
                 'renderType' => 'checkboxToggle',
                 'items' => [
                     [
-                         0 => '',
-                         1 => '',
+                         'label' => '',
+                         'value' => '',
                     ]
                 ],
                 'default' => 0,

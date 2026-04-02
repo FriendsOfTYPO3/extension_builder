@@ -25,6 +25,7 @@ use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Exception\FileNotFoundException;
 use EBT\ExtensionBuilder\Exception\SyntaxError;
 use EBT\ExtensionBuilder\Service\ClassBuilder;
+use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Service\LocalizationService;
 use EBT\ExtensionBuilder\Service\ParserService;
@@ -34,6 +35,7 @@ use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
 use Exception;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextFactory;
@@ -106,18 +108,21 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         $this->classBuilder = GeneralUtility::makeInstance(ClassBuilder::class);
         $this->classBuilder->initialize($this->extension);
 
-        $this->roundTripService = $this->getAccessibleMock(RoundTrip::class, null);
-        $this->roundTripService->_set('configurationManager', $configurationManager);
-        $this->roundTripService->_set('parserService', $this->parserService);
+        $extensionSchemaBuilder = GeneralUtility::makeInstance(ExtensionSchemaBuilder::class);
+        $this->roundTripService = $this->getAccessibleMock(
+            RoundTrip::class,
+            null,
+            [$this->parserService, $configurationManager, $extensionSchemaBuilder]
+        );
         $this->roundTripService->initialize($this->extension);
 
-        $this->fileGenerator = $this->getAccessibleMock(FileGenerator::class, null);
-        $this->fileGenerator->_set('printerService', $this->printerService);
-        $this->fileGenerator->_set('localizationService', $localizationService);
-        $this->fileGenerator->_set('classBuilder', $this->classBuilder);
-        $this->fileGenerator->_set('roundTripService', $this->roundTripService);
         $renderingContextFactory = GeneralUtility::makeInstance(RenderingContextFactory::class);
-        $this->fileGenerator->_set('renderingContextFactory', $renderingContextFactory);
+        $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class);
+        $this->fileGenerator = $this->getAccessibleMock(
+            FileGenerator::class,
+            null,
+            [$this->classBuilder, $this->roundTripService, $this->printerService, $localizationService, $renderingContextFactory, $extensionConfiguration]
+        );
 
         $this->codeTemplateRootPath = Environment::getPublicPath() . '/typo3conf/ext/extension_builder/Resources/Private/CodeTemplates/Extbase/';
         $this->modelClassTemplatePath = $this->codeTemplateRootPath . 'Classes/Domain/Model/Model.phpt';
