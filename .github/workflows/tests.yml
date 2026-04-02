@@ -16,8 +16,8 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [7.4, 8.0, 8.1, 8.2, 8.3]
-        typo3: [^11.5]
+        php: [8.3]
+        typo3: [^12.4]
 
     name: P${{ matrix.php }} - T${{ matrix.typo3 }}
 
@@ -39,7 +39,7 @@ jobs:
           coverage: none
 
       - name: "Install dependencies"
-        run: composer require "typo3/minimal:${{ matrix.typo3 }}" --prefer-dist --no-progress --no-suggest --no-interaction
+        run: composer require "typo3/minimal:${{ matrix.typo3 }}" --prefer-dist --no-progress --no-interaction
 
       - name: "Check PHP syntax errors"
         run: find . -name \*.php ! -path "./.Build/*" -print0 | xargs -0 -n1 -P4 php -d display_errors=stderr -n -l > /dev/null
