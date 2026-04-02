@@ -32,8 +32,8 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextFactory;
-use TYPO3Fluid\Fluid\View\TemplateView;
+use TYPO3\CMS\Core\View\ViewFactoryData;
+use TYPO3\CMS\Core\View\ViewFactoryInterface;
 
 /**
  * Creates (or updates) all the required files for an extension
@@ -87,7 +87,7 @@ class FileGenerator
         private readonly RoundTrip $roundTripService,
         private readonly Printer $printerService,
         private readonly LocalizationService $localizationService,
-        private readonly RenderingContextFactory $renderingContextFactory,
+        private readonly ViewFactoryInterface $viewFactory,
         private readonly ExtensionConfiguration $extensionConfiguration,
     ) {}
 
@@ -765,14 +765,13 @@ class FileGenerator
     {
         $variables['settings'] = $this->settings;
 
-        $renderingContext = $this->renderingContextFactory->create([
-            'templateRootPaths' => $this->codeTemplateRootPaths,
-            'layoutRootPaths' => $this->codeTemplateRootPaths,
-            'partialRootPaths' => $this->codeTemplatePartialPaths,
-        ]);
-        $renderingContext->getTemplatePaths()->setFormat('txt');
-        $renderingContext->getTemplatePaths()->setTemplatePathAndFilename($this->getTemplatePath($filePath));
-        $view = new TemplateView($renderingContext);
+        $view = $this->viewFactory->create(new ViewFactoryData(
+            templateRootPaths: $this->codeTemplateRootPaths,
+            layoutRootPaths: $this->codeTemplateRootPaths,
+            partialRootPaths: $this->codeTemplatePartialPaths,
+            templatePathAndFilename: $this->getTemplatePath($filePath),
+            format: 'txt',
+        ));
         $view->assignMultiple($variables);
         $renderedContent = $view->render();
         // remove all double empty lines (coming from fluid)
