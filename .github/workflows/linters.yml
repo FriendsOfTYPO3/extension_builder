@@ -46,4 +46,4 @@ jobs:
         run: npm ci
 
       - name: "Run npm sass-linter"
-        run: npm run sass-lint
+        run: npm run lint:scss
