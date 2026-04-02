@@ -21,7 +21,7 @@
   --eb-container-bg: var(--bs-body-bg, #fff);
   --eb-container-header-bg: #3a6ea5;
   --eb-container-header-text: var(--bs-white, #fff);
-  --eb-container-shadow: rgba(0, 0, 0, 0.2);
+  --eb-container-shadow: rgb(0 0 0 / 20%);
   --eb-container-handle-bg: var(--bs-border-color, #ccc);
 
   /* Terminal/connection point colors — no TYPO3 equivalents, kept as-is */
