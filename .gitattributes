@@ -6,3 +6,4 @@
 /.* export-ignore
 /crowdin.yaml export-ignore
 /docker-compose.yml export-ignore
+/rector.php export-ignore

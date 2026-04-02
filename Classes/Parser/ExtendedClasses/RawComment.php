@@ -19,6 +19,4 @@ namespace EBT\ExtensionBuilder\Parser\ExtendedClasses;
 
 use PhpParser\Comment;
 
-class RawComment extends Comment
-{
-}
+class RawComment extends Comment {}

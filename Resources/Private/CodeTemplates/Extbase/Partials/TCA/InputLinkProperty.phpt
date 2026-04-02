@@ -1,4 +1,3 @@
 [
-    'type' => 'input',
-    'renderType' => 'inputLink',
+    'type' => 'link',
 ]

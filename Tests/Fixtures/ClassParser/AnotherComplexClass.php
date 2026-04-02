@@ -87,20 +87,11 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
     /**
      * Loads the TypoScript config/setup for the formhandler on the current page.
      */
-    private function loadTypoScriptConfig()
+    private function loadTypoScriptConfig(): void
     {
-        $sysPageObj = GeneralUtility::makeInstance('t3lib_pageSelect');
-        if (!$GLOBALS['TSFE']->sys_page) {
-            $GLOBALS['TSFE']->sys_page = $sysPageObj;
-        }
-        $rootLine = $sysPageObj->getRootLine($GLOBALS['TSFE']->id);
-        $TSObj = GeneralUtility::makeInstance('t3lib_tsparser_ext');
-        $TSObj->tt_track = 0;
-        $TSObj->init();
-        $TSObj->runThroughTemplates($rootLine);
-        $TSObj->generateConfig();
-        $conf = $TSObj->setup['plugin.']['Tx_Formhandler.']['settings.'];
-        $this->tsConf = $conf;
+        $request = $GLOBALS['TYPO3_REQUEST'];
+        $frontendTypoScript = $request->getAttribute('frontend.typoscript');
+        $this->tsConf = $frontendTypoScript?->getSetupArray()['plugin.']['Tx_Formhandler.']['settings.'] ?? [];
     }
 
     /**
@@ -282,13 +273,11 @@ class Tx_ExtensionBuilder_Tests_Examples_ClassParser_AnotherComplexClass
         if (($componentNameParts[0] !== self::PACKAGE_PREFIX) || !isset($componentNameParts[1])) {
             throw new Exception('Invalid component name. Component name "' . $componentName . '" must be prefixed by "' . self::PACKAGE_PREFIX . '_".');
         }
-        if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . $componentNameParts[1] . '.']['components.'][$componentName . '.'])) {
-            $componentConfiguration = $GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . $componentNameParts[1] . '.']['components.'][$componentName . '.'];
-        } elseif (isset($GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . ucfirst(self::THIS_PACKAGE_KEY) . '.']['components.'][$componentName . '.'])) {
-            $componentConfiguration = $GLOBALS['TSFE']->tmpl->setup['plugin.'][self::PACKAGE_PREFIX . '_' . ucfirst(self::THIS_PACKAGE_KEY) . '.']['components.'][$componentName . '.'];
-        } else {
-            $componentConfiguration = null;
-        }
+        $typoscriptSetup = ($GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.typoscript'))?->getSetupArray() ?? [];
+        $pluginConfig = $typoscriptSetup['plugin.'] ?? [];
+        $componentConfiguration = $pluginConfig[self::PACKAGE_PREFIX . '_' . $componentNameParts[1] . '.']['components.'][$componentName . '.']
+            ?? $pluginConfig[self::PACKAGE_PREFIX . '_' . ucfirst(self::THIS_PACKAGE_KEY) . '.']['components.'][$componentName . '.']
+            ?? null;
         return $componentConfiguration;
     }
 

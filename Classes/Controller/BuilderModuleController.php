@@ -27,19 +27,20 @@ use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Template\Components\Buttons\LinkButtonWithId;
 use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
-use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Localization\LocalizationFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
@@ -48,27 +49,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class BuilderModuleController extends ActionController
 {
-    private FileGenerator $fileGenerator;
-
-    private ExtensionBuilderConfigurationManager $extensionBuilderConfigurationManager;
-
-    private ExtensionInstallationStatus $extensionInstallationStatus;
-
-    private ExtensionSchemaBuilder $extensionSchemaBuilder;
-
-    private ExtensionService $extensionService;
-
-    private ExtensionValidator $extensionValidator;
-
-    private ExtensionRepository $extensionRepository;
-
-    private ModuleTemplateFactory $moduleTemplateFactory;
-
     private ModuleTemplate $moduleTemplate;
-
-    private PageRenderer $pageRenderer;
-
-    private IconFactory $iconFactory;
 
     /**
      * Settings from various sources:
@@ -78,56 +59,22 @@ class BuilderModuleController extends ActionController
      */
     protected array $extensionBuilderSettings = [];
 
-    public function injectFileGenerator(FileGenerator $fileGenerator): void
-    {
-        $this->fileGenerator = $fileGenerator;
-    }
-
-    public function injectExtensionBuilderConfigurationManager(
-        ExtensionBuilderConfigurationManager $configurationManager
-    ): void {
-        $this->extensionBuilderConfigurationManager = $configurationManager;
-        $this->extensionBuilderSettings = $this->extensionBuilderConfigurationManager->getSettings();
-    }
-
-    public function injectExtensionInstallationStatus(ExtensionInstallationStatus $extensionInstallationStatus): void
-    {
-        $this->extensionInstallationStatus = $extensionInstallationStatus;
-    }
-
-    public function injectExtensionSchemaBuilder(ExtensionSchemaBuilder $extensionSchemaBuilder): void
-    {
-        $this->extensionSchemaBuilder = $extensionSchemaBuilder;
-    }
-
-    public function injectExtensionService(ExtensionService $extensionService): void
-    {
-        $this->extensionService = $extensionService;
-    }
-
-    public function injectExtensionValidator(ExtensionValidator $extensionValidator): void
-    {
-        $this->extensionValidator = $extensionValidator;
-    }
-
-    public function injectExtensionRepository(ExtensionRepository $extensionRepository): void
-    {
-        $this->extensionRepository = $extensionRepository;
-    }
-
-    public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory): void
-    {
-        $this->moduleTemplateFactory = $moduleTemplateFactory;
-    }
-
-    public function injectPageRenderer(PageRenderer $pageRenderer): void
-    {
-        $this->pageRenderer = $pageRenderer;
-    }
-
-    public function injectIconFactory(IconFactory $iconFactory): void
-    {
-        $this->iconFactory = $iconFactory;
+    public function __construct(
+        private readonly FileGenerator $fileGenerator,
+        private readonly ExtensionBuilderConfigurationManager $extensionBuilderConfigurationManager,
+        private readonly ExtensionInstallationStatus $extensionInstallationStatus,
+        private readonly ExtensionSchemaBuilder $extensionSchemaBuilder,
+        private readonly ExtensionService $extensionService,
+        private readonly ExtensionValidator $extensionValidator,
+        private readonly ExtensionRepository $extensionRepository,
+        private readonly ModuleTemplateFactory $moduleTemplateFactory,
+        private readonly PageRenderer $pageRenderer,
+        private readonly IconFactory $iconFactory,
+        private readonly LanguageServiceFactory $languageServiceFactory,
+        private readonly BackendUriBuilder $backendUriBuilder,
+        private readonly LocalizationFactory $localizationFactory,
+    ) {
+        $this->extensionBuilderSettings = $extensionBuilderConfigurationManager->getSettings();
     }
 
     public function initializeAction(): void
@@ -151,7 +98,7 @@ class BuilderModuleController extends ActionController
         $this->view->assign('currentAction', $this->request->getControllerActionName());
 
         if (!$this->request->hasArgument('action')) {
-            $userSettings = $this->getBackendUserAuthentication()->getModuleData('extensionbuilder');
+            $userSettings = $GLOBALS['BE_USER']->getModuleData('extensionbuilder');
             if (($userSettings['firstTime'] ?? 1) === 0) {
                 return new ForwardResponse('domainmodelling');
             }
@@ -165,7 +112,6 @@ class BuilderModuleController extends ActionController
     public function domainmodellingAction(): ResponseInterface
     {
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $this->moduleTemplate->setBodyTag('<body class="yui-skin-sam">');
         $this->moduleTemplate->setTitle('Extension Builder');
 
         $this->addMainMenu('domainmodelling');
@@ -174,12 +120,8 @@ class BuilderModuleController extends ActionController
         $this->addLeftButtons();
         $this->addRightButtons();
 
-        $this->addAssets();
-
-        $this->pageRenderer->addInlineSettingArray(
-            'extensionBuilder',
-            ['publicResourcesUrl' => PathUtility::getPublicResourceWebPath('EXT:extension_builder/Resources/Public')]
-        );
+        $this->pageRenderer->loadJavaScriptModule('@ebt/extension-builder/domain-modeling.js');
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/JavaScript/domain-modeling.css');
 
         $this->setLocallangSettings();
 
@@ -187,15 +129,11 @@ class BuilderModuleController extends ActionController
         if (!$this->extensionService->isStoragePathConfigured()) {
             $initialWarnings[] = ExtensionService::COMPOSER_PATH_WARNING;
         }
-        $this->view->assignMultiple([
-            'initialWarnings' => $initialWarnings
-        ]);
-        $this->pageRenderer->addInlineSetting(
-            'extensionBuilder.publicResourceWebPath',
-            'core',
-            PathUtility::getPublicResourceWebPath('EXT:core/Resources/Public/')
-        );
-        $this->getBackendUserAuthentication()->pushModuleData('extensionbuilder', ['firstTime' => 0]);
+        $dispatchRpcUrl = (string)$this->backendUriBuilder->buildUriFromRoute('tools_extensionbuilder.BuilderModule_dispatchRpc');
+
+        $this->view->assign('dispatchRpcUrl', $dispatchRpcUrl);
+        $this->view->assign('initialWarnings', $initialWarnings);
+        $GLOBALS['BE_USER']->pushModuleData('extensionbuilder', ['firstTime' => 0]);
 
         $this->moduleTemplate->setContent($this->view->render());
 
@@ -246,26 +184,29 @@ class BuilderModuleController extends ActionController
     {
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
-        $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+        $openButton = (new LinkButtonWithId())
             ->setIcon($this->iconFactory->getIcon('actions-system-list-open', Icon::SIZE_SMALL))
             ->setTitle('Open extension')
+            ->setShowLabelText(true)
             ->setId('WiringEditor-loadButton-button')
             ->setHref('#');
-        $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
+        $buttonBar->addButton($openButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
 
-        $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+        $newButton = (new LinkButtonWithId())
             ->setIcon($this->iconFactory->getIcon('actions-document-new', Icon::SIZE_SMALL))
             ->setTitle('New extension')
+            ->setShowLabelText(true)
             ->setId('WiringEditor-newButton-button')
             ->setHref('#');
-        $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
+        $buttonBar->addButton($newButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
 
-        $loadButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+        $saveButton = (new LinkButtonWithId())
             ->setIcon($this->iconFactory->getIcon('actions-document-save', Icon::SIZE_SMALL))
             ->setTitle('Save extension')
+            ->setShowLabelText(true)
             ->setId('WiringEditor-saveButton-button')
             ->setHref('#');
-        $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
+        $buttonBar->addButton($saveButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
     }
 
     protected function addRightButtons(): void
@@ -280,7 +221,7 @@ class BuilderModuleController extends ActionController
     {
         $requestUri = $this->uriBuilder->uriFor('domainmodelling');
 
-        $openInNewWindowButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+        $openInNewWindowButton = (new LinkButtonWithId())
             ->setHref('#')
             ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.openInNewWindow'))
             ->setIcon($this->iconFactory->getIcon('actions-window-open', Icon::SIZE_SMALL))
@@ -291,7 +232,7 @@ class BuilderModuleController extends ActionController
                     true, // switchFocus
                     'extension_builder', // windowName,
                     'width=1920,height=1080,status=0,menubar=0,scrollbars=1,resizable=1', // windowFeatures
-                ])
+                ]),
             ])
             ->setId('opennewwindow');
 
@@ -300,7 +241,7 @@ class BuilderModuleController extends ActionController
 
     protected function registerAdvancedOptionsButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void
     {
-        $advancedOptionsButton = GeneralUtility::makeInstance(LinkButtonWithId::class)
+        $advancedOptionsButton = (new LinkButtonWithId())
             ->setIcon($this->iconFactory->getIcon('content-menu-pages', Icon::SIZE_SMALL))
             ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:advancedOptions'))
             ->setId('toggleAdvancedOptions')
@@ -311,81 +252,7 @@ class BuilderModuleController extends ActionController
 
     protected function getLanguageService(): LanguageService
     {
-        return $GLOBALS['LANG'];
-    }
-
-    protected function addAssets(): void
-    {
-        // SECTION: JAVASCRIPT FILES
-        // YUI Basis Files
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/utilities/utilities.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/resize/resize-min.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/layout/layout-min.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/container/container-min.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/json/json-min.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/button/button-min.js');
-
-        // YUI-RPC
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui-rpc.js');
-
-        // InputEx with wirable options
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/inputex.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Field.js');
-
-        // extended fields for enabling unique ids
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extended/ListField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extended/Group.js');
-
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/inputex/WirableField-beta.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Visus.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/StringField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/Textarea.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/SelectField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/EmailField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/UrlField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/CheckBox.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/InPlaceEdit.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/MenuField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/TypeField.js');
-
-        // WireIt
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/WireIt.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/CanvasElement.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Wire.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Terminal.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/DD.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/DDResize.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Container.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/ImageContainer.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Layer.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/inputex/FormContainer-beta.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/LayerMap.js');
-
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/WiringEditor.js');
-
-        // Extbase Modelling definition
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extbaseModeling.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/layout.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extensionProperties.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/modules/modelObject.js');
-
-        // collapsible forms in relations
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/modules/extendedModelObject.js');
-
-        // SECTION: CSS Files
-        // YUI CSS
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/reset-fonts-grids/reset-fonts-grids.css');
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/assets/skins/sam/skin.css');
-
-        // InputEx CSS
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/css/inputEx.css');
-
-        // WireIt CSS
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/css/WireIt.css');
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/css/WireItEditor.css');
-
-        // Custom CSS
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extbaseModeling.css');
+        return $this->languageServiceFactory->createFromUserPreferences($GLOBALS['BE_USER']);
     }
 
     /**
@@ -400,8 +267,7 @@ class BuilderModuleController extends ActionController
      */
     protected function setLocallangSettings(): void
     {
-        $languageFactory = GeneralUtility::makeInstance(LocalizationFactory::class);
-        $localizationArray = $languageFactory->getParsedData(
+        $localizationArray = $this->localizationFactory->getParsedData(
             'EXT:extension_builder/Resources/Private/Language/locallang.xlf',
             'default'
         );
@@ -427,7 +293,7 @@ class BuilderModuleController extends ActionController
             $this->extensionBuilderConfigurationManager->parseRequest();
             $subAction = $this->extensionBuilderConfigurationManager->getSubActionFromRequest();
             if (empty($subAction)) {
-                throw new \Exception('No Sub Action!');
+                throw new Exception('No Sub Action!');
             }
             switch ($subAction) {
                 case 'saveWiring':
@@ -436,13 +302,10 @@ class BuilderModuleController extends ActionController
                 case 'listWirings':
                     $response = $this->rpcActionList();
                     break;
-                case 'updateDb':
-                    $response = $this->rpcActionPerformDbUpdate();
-                    break;
                 default:
                     $response = ['error' => 'Sub Action not found.'];
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $response = ['error' => $e->getMessage()];
         }
         return $this->jsonResponse(json_encode($response));
@@ -452,7 +315,7 @@ class BuilderModuleController extends ActionController
      * Generate the code files according to the transferred JSON configuration.
      *
      * @return array (status => message)
-     * @throws \Exception
+     * @throws Exception
      */
     protected function rpcActionSave(): array
     {
@@ -462,7 +325,7 @@ class BuilderModuleController extends ActionController
             $storagePaths = $this->extensionService->resolveStoragePaths();
             $storagePath = reset($storagePaths);
             if ($storagePath === false) {
-                throw new \Exception('The storage path could not be detected.');
+                throw new Exception('The storage path could not be detected.');
             }
             $extensionBuildConfiguration['storagePath'] = $storagePath;
 
@@ -474,27 +337,17 @@ class BuilderModuleController extends ActionController
                 }
             }
             if (!empty($validationConfigurationResult['errors'])) {
-                $errorMessage = '';
-                foreach ($validationConfigurationResult['errors'] as $exception) {
-                    /** @var \Exception $exception */
-                    $errorMessage .= '<br />' . $exception->getMessage();
-                }
-                throw new \Exception($errorMessage);
+                return ['errors' => array_map(fn($e) => $e->getMessage(), $validationConfigurationResult['errors'])];
             }
             $extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
 
         // Validate the extension
-        $validationResult = $this->extensionValidator->isValid($extension);
+        $validationResult = $this->extensionValidator->validateExtension($extension);
         if (!empty($validationResult['errors'])) {
-            $errorMessage = '';
-            /** @var \Exception $exception */
-            foreach ($validationResult['errors'] as $exception) {
-                $errorMessage .= '<br />' . $exception->getMessage();
-            }
-            throw new \Exception($errorMessage);
+            return ['errors' => array_map(fn($e) => $e->getMessage(), $validationResult['errors'])];
         }
         if (!empty($validationResult['warnings'])) {
             $confirmationRequired = $this->handleValidationWarnings($validationResult['warnings']);
@@ -523,7 +376,7 @@ class BuilderModuleController extends ActionController
             if ($this->extensionBuilderSettings['extConf']['backupExtension'] === '1') {
                 try {
                     RoundTrip::backupExtension($extension, $this->extensionBuilderSettings['extConf']['backupDir']);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     throw $e;
                 }
             }
@@ -538,19 +391,19 @@ class BuilderModuleController extends ActionController
                     );
                     $extensionPath = Environment::isComposerMode() ? 'packages/' : 'typo3conf/ext/';
                     return [
-                        'warning' => sprintf(
-                            '<span class="error">Roundtrip is enabled but no configuration file was found.</span><br />'
-                            . 'This might happen if you use the extension builder the first time for this extension.<br />'
-                            . 'A settings file was generated in<br />'
-                            . '<b>%s/Configuration/ExtensionBuilder/settings.yaml.</b><br />'
-                            . 'Configure the overwrite settings, then save again.',
+                        'warning' => LocalizationUtility::translate(
+                            'notification.roundtrip_warning',
+                            'ExtensionBuilder',
+                            [$extensionPath . $extension->getExtensionKey()]
+                        ) ?? sprintf(
+                            'Roundtrip is enabled but no configuration file was found. A settings file was generated in %s/Configuration/ExtensionBuilder/settings.yaml. Configure the overwrite settings, then save again.',
                             $extensionPath . $extension->getExtensionKey()
-                        )
+                        ),
                     ];
                 }
                 try {
                     RoundTrip::prepareExtensionForRoundtrip($extension);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     throw $e;
                 }
             } else {
@@ -561,7 +414,7 @@ class BuilderModuleController extends ActionController
                         new ExtensionException(
                             "This action will overwrite previously saved content!\n(Enable the roundtrip feature to avoid this warning).",
                             ExtensionValidator::EXTENSION_DIR_EXISTS
-                        )
+                        ),
                     ]);
                     if (!empty($confirmationRequired)) {
                         return $confirmationRequired;
@@ -573,20 +426,16 @@ class BuilderModuleController extends ActionController
             $this->fileGenerator->build($extension);
             $this->extensionInstallationStatus->setExtension($extension);
             $this->extensionInstallationStatus->setUsesComposerPath($usesComposerPath);
-            $message = sprintf(
-                '<p>The Extension was successfully saved in the directory: "%s"</p>%s',
-                $extensionDirectory,
-                $this->extensionInstallationStatus->getStatusMessage()
-            );
-            $result = ['success' => $message, 'usesComposerPath' => $usesComposerPath];
-            if ($this->extensionInstallationStatus->isDbUpdateNeeded()) {
-                $result['confirmUpdate'] = true;
-            }
-        } catch (\Exception $e) {
+            $result = [
+                'success' => LocalizationUtility::translate('notification.saved', 'ExtensionBuilder', [$extensionDirectory])
+                    ?? sprintf('Extension saved in: %s', $extensionDirectory),
+                'installationHints' => $this->extensionInstallationStatus->getStatusMessages(),
+            ];
+        } catch (Exception $e) {
             throw $e;
         }
 
-        $this->extensionRepository->saveExtensionConfiguration($extension);
+        $this->extensionRepository->saveExtensionConfiguration($extension, $GLOBALS['BE_USER']);
 
         return $result;
     }
@@ -602,14 +451,14 @@ class BuilderModuleController extends ActionController
         $extensions = $this->extensionRepository->findAll();
         return [
             'result' => $extensions,
-            'error' => null
+            'error' => null,
         ];
     }
 
     /**
      * This is a hack to handle confirm requests in the GUI.
      *
-     * @param \Exception[] $warnings
+     * @param Exception[] $warnings
      * @return array confirm (Question to confirm), confirmFieldName (is set to true if confirmed)
      */
     protected function handleValidationWarnings(array $warnings): array
@@ -620,36 +469,26 @@ class BuilderModuleController extends ActionController
             if (!isset($messagesPerErrorCode[$errorCode])) {
                 $messagesPerErrorCode[$errorCode] = [];
             }
-            $messagesPerErrorCode[$errorCode][] = nl2br(htmlspecialchars($exception->getMessage())) . ' (Error ' . $errorCode . ')<br /><br />';
+            $messagesPerErrorCode[$errorCode][] = $exception->getMessage() . ' (Error ' . $errorCode . ')';
         }
         foreach ($messagesPerErrorCode as $errorCode => $messages) {
             if (!$this->extensionBuilderConfigurationManager->isConfirmed('allow' . $errorCode)) {
                 if ($errorCode == ExtensionValidator::ERROR_PROPERTY_RESERVED_SQL_WORD) {
-                    $confirmMessage = 'SQL reserved names were found for these properties:<br />' .
-                        '<ol class="warnings"><li>' . implode('</li><li>', $messages) . '</li></ol>' .
-                        'This will result in a different column name in the database.<br />' .
-                        '<strong>Are you sure, you want to use them?</strong>';
+                    $confirmMessage = (LocalizationUtility::translate('notification.confirm_sql_word', 'ExtensionBuilder')
+                        ?? 'SQL reserved names were found. This will result in a different column name. Are you sure?')
+                        . "\n" . implode("\n", $messages);
                 } else {
-                    $confirmMessage = '<ol class="warnings"><li>' . implode('</li><li>', $messages) . '</li></ol>' .
-                        '<strong>Do you want to save anyway?</strong><br /><br />';
+                    $confirmMessage = implode("\n", $messages) . "\n"
+                        . (LocalizationUtility::translate('notification.confirm_overwrite', 'ExtensionBuilder')
+                            ?? 'Do you want to save anyway?');
                 }
                 return [
-                    'confirm' => '<span style="color:red">Warning!</span></br>' . $confirmMessage,
-                    'confirmFieldName' => 'allow' . $errorCode
+                    'confirm' => $confirmMessage,
+                    'confirmFieldName' => 'allow' . $errorCode,
                 ];
             }
         }
         return [];
     }
 
-    protected function rpcActionPerformDbUpdate(): array
-    {
-        $params = $this->extensionBuilderConfigurationManager->getParamsFromRequest();
-        return $this->extensionInstallationStatus->performDbUpdates($params);
-    }
-
-    protected function getBackendUserAuthentication(): BackendUserAuthentication
-    {
-        return $GLOBALS['BE_USER'];
-    }
 }

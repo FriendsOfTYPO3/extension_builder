@@ -1,0 +1,14 @@
+{
+    "extends": ["stylelint-config-standard"],
+    "rules": {
+        "color-hex-length": "short",
+        "selector-class-pattern": null,
+        "selector-id-pattern": null,
+        "no-descending-specificity": null,
+        "declaration-empty-line-before": null
+    },
+    "ignoreFiles": [
+        ".Build/**",
+        "node_modules/**"
+    ]
+}

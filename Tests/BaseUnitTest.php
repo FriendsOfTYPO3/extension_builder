@@ -27,11 +27,6 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 abstract class BaseUnitTest extends UnitTestCase
 {
-    /**
-     * @var bool
-     */
-    protected $backupGlobals = false;
-
     protected string $modelClassDir = 'Classes/Domain/Model/';
     protected string $codeTemplateRootPath = '';
     protected string $modelClassTemplatePath = '';
@@ -79,7 +74,7 @@ abstract class BaseUnitTest extends UnitTestCase
      */
     protected function buildDomainObject($name, bool $entity = false, bool $aggregateRoot = false): DomainObject
     {
-        $domainObject = $this->getAccessibleMock(DomainObject::class, ['dummy']);
+        $domainObject = $this->getAccessibleMock(DomainObject::class, null);
         $domainObject->setExtension($this->extension);
         $domainObject->setName($name);
         $domainObject->setEntity($entity);

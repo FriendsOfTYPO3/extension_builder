@@ -31,7 +31,7 @@ add a version constraint, for example:
 
 .. code-block:: bash
 
-   composer require friendsoftypo3/extension-builder:"^10.0"
+   composer require friendsoftypo3/extension-builder:"^12.0"
 
 .. warning::
 
@@ -45,17 +45,6 @@ add a version constraint, for example:
             "url": "Packages/*"
         }
     ]
-
-Installing the extension prior to TYPO3 11.4
---------------------------------------------
-
-Before TYPO3 11.4 it was still necessary to manually activate extensions
-installed via Composer using the Extension Manager. Activate it as follows:
-
--  Navigate to :guilabel:`Admin Tools > Extensions > Installed Extensions`
--  Search for `extension_builder`
--  Activate the extension by clicking on the :guilabel:`Activate` button in the
-   :guilabel:`A/D` column
 
 .. _installation_legacy:
 

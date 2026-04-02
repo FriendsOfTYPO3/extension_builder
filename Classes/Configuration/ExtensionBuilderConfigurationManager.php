@@ -19,15 +19,10 @@ namespace EBT\ExtensionBuilder\Configuration;
 
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
-use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -54,12 +49,11 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     const DEFAULT_TEMPLATE_ROOTPATH = 'EXT:extension_builder/Resources/Private/CodeTemplates/Extbase/';
     private array $inputData = [];
 
-    protected ConfigurationManagerInterface $configurationManager;
-
-    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager): void
-    {
-        $this->configurationManager = $configurationManager;
-    }
+    public function __construct(
+        private readonly ConfigurationManagerInterface $configurationManager,
+        private readonly ExtensionConfiguration $extensionConfiguration,
+        private readonly DataMapper $dataMapper,
+    ) {}
 
     /**
      * Wrapper for file_get_contents('php://input')
@@ -133,7 +127,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      */
     public function getExtensionBuilderSettings(): array
     {
-        return GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('extension_builder');
+        return $this->extensionConfiguration->get('extension_builder');
     }
 
     public function getExtensionSettings(string $extensionKey, string $extensionStoragePath): array
@@ -182,7 +176,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      */
     public function getPersistenceTable(string $className): string
     {
-        return GeneralUtility::makeInstance(DataMapper::class)->getDataMap($className)->getTableName();
+        return $this->dataMapper->getDataMap($className)->getTableName();
     }
 
     /**
@@ -466,34 +460,4 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
             '\\TYPO3\\CMS\\Extbase\\DomainObject\\AbstractEntity';
     }
 
-    /**
-     * Ajax callback that reads the smd file and modiefies the target URL to include
-     * the module token.
-     *
-     * @param ServerRequestInterface $request
-     * @return JsonResponse
-     * @throws RouteNotFoundException
-     */
-    public function getWiringEditorSmd(ServerRequestInterface $request): JsonResponse
-    {
-        $smdJsonString = file_get_contents(
-            ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Public/jsDomainModeling/phpBackend/WiringEditor.smd'
-        );
-        $smdJson = json_decode($smdJsonString);
-        $parameters = [
-            'tx_extensionbuilder_tools_extensionbuilderextensionbuilder' => [
-                'controller' => 'BuilderModule',
-                'action' => 'dispatchRpc',
-            ]
-        ];
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        try {
-            $uri = $uriBuilder->buildUriFromRoute('tools_ExtensionBuilderExtensionbuilder', $parameters);
-        } catch (RouteNotFoundException $e) {
-            $uri = $uriBuilder->buildUriFromRoutePath('tools_ExtensionBuilderExtensionbuilder', $parameters);
-        }
-        $smdJson->target = (string)$uri;
-
-        return (new JsonResponse())->setPayload((array)$smdJson);
-    }
 }

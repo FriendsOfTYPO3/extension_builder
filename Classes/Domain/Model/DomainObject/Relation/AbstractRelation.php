@@ -156,7 +156,7 @@ abstract class AbstractRelation extends AbstractProperty
     public function getSqlDefinition(): string
     {
         // store 1:n relationships as comma separated list in case `select*` renderType is used
-        if ($this instanceof ZeroToManyRelation && strpos($this->renderType, 'select') === 0) {
+        if ($this instanceof ZeroToManyRelation && str_starts_with($this->renderType, 'select')) {
             return $this->getFieldName() . ' text NOT NULL,';
         }
         return $this->getFieldName() . " int(11) unsigned NOT NULL DEFAULT '0',";

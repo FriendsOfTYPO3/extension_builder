@@ -37,8 +37,8 @@ class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * This is the property
      *
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
+    #[\TYPO3\CMS\Extbase\Annotation\Validate(['validator' => 'NotEmpty'])]
     protected $property;
 
     /**

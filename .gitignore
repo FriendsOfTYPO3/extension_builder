@@ -1,6 +1,8 @@
 /.idea*
 /.Build/
 *node_modules*
+/dist/
+/Resources/Public/JavaScript/
 /var/
 .DS_Store
 /composer.lock
@@ -29,3 +31,13 @@ sass-lint.html
 .devbox/.ddev/providers/
 .devbox/.ddev/xhprof/
 .devbox/.ddev/composer.lock
+.claude
+.firecrawl
+tickets
+
+.env
+
+# Playwright E2E
+Tests/E2E/.auth/
+playwright-report/
+test-results/

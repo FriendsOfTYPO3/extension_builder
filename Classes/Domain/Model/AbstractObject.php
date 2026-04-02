@@ -48,7 +48,7 @@ abstract class AbstractObject
         'private' => Class_::MODIFIER_PRIVATE,
         'static' => Class_::MODIFIER_STATIC,
         'abstract' => Class_::MODIFIER_ABSTRACT,
-        'final' => Class_::MODIFIER_FINAL
+        'final' => Class_::MODIFIER_FINAL,
     ];
     /**
      * @var string|Identifier
@@ -422,7 +422,7 @@ abstract class AbstractObject
             if ($line === '*/') {
                 break;
             }
-            if ($line !== '' && strpos($line, '* @') !== false) {
+            if ($line !== '' && str_contains($line, '* @')) {
                 $this->parseTag(substr($line, strpos($line, '@')));
             } else {
                 $plainLine = preg_replace('/\\s*\\/?[\\\\*]*\\s?(.*)$/', '$1', $line);
@@ -505,7 +505,7 @@ abstract class AbstractObject
         $docCommentLines = preg_replace('/\\s+$/', '', $docCommentLines);
         $docCommentLines = array_reduce($docCommentLines, static function (array $acc, string $item) {
             $c = count($acc);
-            if ($c > 1 && empty($item) && empty($acc[$c-1])) {
+            if ($c > 1 && empty($item) && empty($acc[$c - 1])) {
                 // skip second empty line
             } else {
                 $acc[] = $item;

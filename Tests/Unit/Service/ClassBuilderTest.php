@@ -26,6 +26,7 @@ use EBT\ExtensionBuilder\Exception\FileNotFoundException;
 use EBT\ExtensionBuilder\Exception\SyntaxError;
 use EBT\ExtensionBuilder\Parser\NodeFactory;
 use EBT\ExtensionBuilder\Service\ClassBuilder;
+use EBT\ExtensionBuilder\Parser\ClassFactory;
 use EBT\ExtensionBuilder\Service\ParserService;
 use EBT\ExtensionBuilder\Service\Printer;
 use EBT\ExtensionBuilder\Tests\BaseUnitTest;
@@ -40,18 +41,14 @@ class ClassBuilderTest extends BaseUnitTest
     {
         parent::setUp();
 
-        $this->classBuilder = $this->getAccessibleMock(ClassBuilder::class, ['dummy']);
-
-        $parserService = new ParserService();
-        $printerService = $this->getAccessibleMock(Printer::class, ['dummy']);
-
         $nodeFactory = new NodeFactory();
-        $printerService->_set('nodeFactory', $nodeFactory);
-
-        $configurationManager = new ExtensionBuilderConfigurationManager();
-        $this->classBuilder->_set('parserService', $parserService);
-        $this->classBuilder->_set('printerService', $printerService);
-        $this->classBuilder->_set('configurationManager', $configurationManager);
+        $printerService = new Printer($nodeFactory);
+        $parserService = new ParserService();
+        $configMgr = $this->getMockBuilder(ExtensionBuilderConfigurationManager::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $classFactory = new ClassFactory();
+        $this->classBuilder = new ClassBuilder($configMgr, $parserService, $printerService, $classFactory);
         $this->classBuilder->initialize($this->extension);
     }
 

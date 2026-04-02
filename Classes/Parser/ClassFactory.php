@@ -96,7 +96,7 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
 
         $propertyObject = new Model\ClassObject\Property($propertyName);
         $propertyObject->setModifiers($propertyNode->flags);
-        if (null !== $propertyDefault) {
+        if ($propertyDefault !== null) {
             $propertyObject->setValue(NodeConverter::getValueFromNode($propertyDefault));
             $propertyObject->setDefaultValueNode($propertyDefault);
         }
@@ -175,7 +175,7 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
         $dc = count($docComments);
         if ($dc > 1) {
             foreach ($docComments as $index => $docComment) {
-                if ($index < $dc -1) {
+                if ($index < $dc - 1) {
                     $object->addComment($docComment->getText());
                 } else {
                     $object->setDocComment($docComment->getText());
