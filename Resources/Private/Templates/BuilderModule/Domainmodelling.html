@@ -6,7 +6,7 @@
 	<eb-wiring-editor
 		smd-url="{dispatchRpcUrl}"
 		initial-warnings="{f:format.json(value: initialWarnings)}"
-		style="display:block;height:calc(100vh - 45px)">
+		style="display:block;height:calc(100vh - var(--module-docheader-height, 67px) - 2 * var(--module-body-padding-y, 24px))">
 	</eb-wiring-editor>
 </f:section>
 </html>
