@@ -17,15 +17,10 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers\Format;
 
-use Closure;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 class IndentViewHelper extends AbstractViewHelper
 {
-    use CompileWithRenderStatic;
-
     protected $escapeOutput = false;
 
     public function initializeArguments(): void
@@ -33,11 +28,11 @@ class IndentViewHelper extends AbstractViewHelper
         $this->registerArgument('indentation', 'integer', 'number of levels to indent', true);
     }
 
-    public static function renderStatic(array $arguments, Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
+    public function render()
     {
-        $content = $renderChildrenClosure();
+        $content = $this->renderChildren();
         $lineArray = explode(chr(10), $content);
-        $indentString = str_repeat('    ', $arguments['indentation']);
+        $indentString = str_repeat('    ', $this->arguments['indentation']);
         return implode(chr(10) . $indentString, $lineArray);
     }
 }

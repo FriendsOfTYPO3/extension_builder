@@ -17,10 +17,7 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
-use Closure;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * View helper for preg_replace
@@ -32,8 +29,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderS
  */
 class PregReplaceViewHelper extends AbstractViewHelper
 {
-    use CompileWithContentArgumentAndRenderStatic;
-
     /**
      * Arguments Initialization
      */
@@ -44,16 +39,13 @@ class PregReplaceViewHelper extends AbstractViewHelper
         $this->registerArgument('subject', 'string', 'subject', false);
     }
 
-    public static function renderStatic(
-        array $arguments,
-        Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ) {
-        $subject = $renderChildrenClosure();
+    public function render(): ?string
+    {
+        $subject = $this->arguments['subject'] ?? $this->renderChildren();
         if ($subject === null) {
             return '';
         }
 
-        return preg_replace($arguments['match'], $arguments['replace'], $subject);
+        return preg_replace($this->arguments['match'], $this->arguments['replace'], $subject);
     }
 }

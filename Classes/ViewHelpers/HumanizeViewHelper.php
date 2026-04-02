@@ -17,11 +17,8 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
-use Closure;
 use EBT\ExtensionBuilder\Utility\Inflector;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * Makes a word in CamelCase or lower_underscore human readable
@@ -37,8 +34,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderS
  */
 class HumanizeViewHelper extends AbstractViewHelper
 {
-    use CompileWithContentArgumentAndRenderStatic;
-
     /**
      * Arguments Initialization
      */
@@ -47,12 +42,9 @@ class HumanizeViewHelper extends AbstractViewHelper
         $this->registerArgument('string', 'string', 'The string to make human readable', false);
     }
 
-    public static function renderStatic(
-        array $arguments,
-        Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ) {
-        $string = $renderChildrenClosure();
+    public function render(): string
+    {
+        $string = $this->arguments['string'] ?? $this->renderChildren();
         if ($string === null) {
             return '';
         }

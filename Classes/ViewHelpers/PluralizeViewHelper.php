@@ -17,11 +17,8 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
-use Closure;
 use EBT\ExtensionBuilder\Utility\Inflector;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * Pluralize a word
@@ -37,14 +34,9 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  */
 class PluralizeViewHelper extends AbstractViewHelper
 {
-    use CompileWithRenderStatic;
-
-    public static function renderStatic(
-        array $arguments,
-        Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ) {
-        $content = $renderChildrenClosure();
+    public function render()
+    {
+        $content = $this->renderChildren();
         return Inflector::pluralize($content);
     }
 }

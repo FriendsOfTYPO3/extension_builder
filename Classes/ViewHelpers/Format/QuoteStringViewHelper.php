@@ -17,10 +17,7 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers\Format;
 
-use Closure;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * View helper which returns a quoted string
@@ -33,28 +30,14 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderS
  */
 class QuoteStringViewHelper extends AbstractViewHelper
 {
-    use CompileWithContentArgumentAndRenderStatic;
-
     public function initializeArguments(): void
     {
         $this->registerArgument('value', 'string', 'The string to add slashes', false);
     }
 
-    public static function renderStatic(
-        array $arguments,
-        Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ) {
-        return addslashes(self::getValue($arguments, $renderChildrenClosure));
-    }
-
-    private static function getValue(
-        array $arguments,
-        Closure $renderChildrenClosure
-    ) {
-        if (isset($rguments['value'])) {
-            return $arguments['value'];
-        }
-        return $renderChildrenClosure();
+    public function render(): string
+    {
+        $value = $this->arguments['value'] ?? $this->renderChildren();
+        return addslashes($value);
     }
 }
