@@ -1,7 +1,7 @@
 [
-    'type' => 'input',
-    'renderType' => 'inputDateTime',
-    'size' => 6,
-    'eval' => 'timesec<f:if condition="{property.required}">,required</f:if><f:if condition="{property.nullable}">,null</f:if>',
+    'type' => 'datetime',
+    'format' => 'timesec',<f:if condition="{property.required}">
+    'required' => true,</f:if><f:if condition="{property.nullable}">
+    'nullable' => true,</f:if>
     'default' => <f:if condition="{property.nullable}"><f:then>null</f:then><f:else>time()</f:else></f:if>
 ]

@@ -1,8 +1,8 @@
 [
-    'dbType' => 'datetime',
-    'type' => 'input',
-    'renderType' => 'inputDateTime',
-    'size' => 12,
-    'eval' => 'datetime<f:if condition="{property.required}">,required</f:if><f:if condition="{property.nullable}">,null</f:if>',
+    'type' => 'datetime',
+    'format' => 'datetime',
+    'dbType' => 'datetime',<f:if condition="{property.required}">
+    'required' => true,</f:if><f:if condition="{property.nullable}">
+    'nullable' => true,</f:if>
     'default' => null,
 ],
