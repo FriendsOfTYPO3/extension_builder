@@ -301,7 +301,7 @@ class BuilderModuleController extends ActionController
                 default:
                     $response = ['error' => 'Sub Action not found.'];
             }
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             $response = ['error' => $e->getMessage()];
         }
         return $this->jsonResponse(json_encode($response));
