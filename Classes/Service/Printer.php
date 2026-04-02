@@ -29,8 +29,7 @@ use PhpParser\PrettyPrinter\Standard;
  */
 class Printer extends Standard
 {
-    /** @var bool Whether semicolon namespaces can be used (i.e. no global namespace is used) */
-    protected $canUseSemicolonNamespaces = true;
+    protected bool $canUseSemicolonNamespaces = true;
 
     public function __construct(private readonly NodeFactory $nodeFactory)
     {

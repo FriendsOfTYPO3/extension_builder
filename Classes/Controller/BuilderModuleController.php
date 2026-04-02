@@ -185,7 +185,7 @@ class BuilderModuleController extends ActionController
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
         $openButton = (new LinkButtonWithId())
-            ->setIcon($this->iconFactory->getIcon('actions-system-list-open', Icon::SIZE_SMALL))
+            ->setIcon($this->iconFactory->getIcon('actions-system-list-open', \TYPO3\CMS\Core\Imaging\IconSize::SMALL))
             ->setTitle('Open extension')
             ->setShowLabelText(true)
             ->setId('WiringEditor-loadButton-button')
@@ -193,7 +193,7 @@ class BuilderModuleController extends ActionController
         $buttonBar->addButton($openButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
 
         $newButton = (new LinkButtonWithId())
-            ->setIcon($this->iconFactory->getIcon('actions-document-new', Icon::SIZE_SMALL))
+            ->setIcon($this->iconFactory->getIcon('actions-document-new', \TYPO3\CMS\Core\Imaging\IconSize::SMALL))
             ->setTitle('New extension')
             ->setShowLabelText(true)
             ->setId('WiringEditor-newButton-button')
@@ -201,7 +201,7 @@ class BuilderModuleController extends ActionController
         $buttonBar->addButton($newButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
 
         $saveButton = (new LinkButtonWithId())
-            ->setIcon($this->iconFactory->getIcon('actions-document-save', Icon::SIZE_SMALL))
+            ->setIcon($this->iconFactory->getIcon('actions-document-save', \TYPO3\CMS\Core\Imaging\IconSize::SMALL))
             ->setTitle('Save extension')
             ->setShowLabelText(true)
             ->setId('WiringEditor-saveButton-button')
@@ -224,7 +224,7 @@ class BuilderModuleController extends ActionController
         $openInNewWindowButton = (new LinkButtonWithId())
             ->setHref('#')
             ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.openInNewWindow'))
-            ->setIcon($this->iconFactory->getIcon('actions-window-open', Icon::SIZE_SMALL))
+            ->setIcon($this->iconFactory->getIcon('actions-window-open', \TYPO3\CMS\Core\Imaging\IconSize::SMALL))
             ->setDataAttributes([
                 'dispatch-action' => 'TYPO3.WindowManager.localOpen',
                 'dispatch-args' => GeneralUtility::jsonEncodeForHtmlAttribute([
@@ -242,7 +242,7 @@ class BuilderModuleController extends ActionController
     protected function registerAdvancedOptionsButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void
     {
         $advancedOptionsButton = (new LinkButtonWithId())
-            ->setIcon($this->iconFactory->getIcon('content-menu-pages', Icon::SIZE_SMALL))
+            ->setIcon($this->iconFactory->getIcon('content-menu-pages', \TYPO3\CMS\Core\Imaging\IconSize::SMALL))
             ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:advancedOptions'))
             ->setId('toggleAdvancedOptions')
             ->setHref('#')
