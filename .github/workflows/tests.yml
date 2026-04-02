@@ -41,6 +41,9 @@ jobs:
       - name: "Install dependencies"
         run: composer require "typo3/minimal:${{ matrix.typo3 }}" --prefer-dist --no-progress --no-interaction
 
+      - name: "Create extension symlink"
+        run: mkdir -p .Build/public/typo3conf/ext/ && ln -s $PWD .Build/public/typo3conf/ext/extension_builder
+
       - name: "Check PHP syntax errors"
         run: find . -name \*.php ! -path "./.Build/*" -print0 | xargs -0 -n1 -P4 php -d display_errors=stderr -n -l > /dev/null
 
