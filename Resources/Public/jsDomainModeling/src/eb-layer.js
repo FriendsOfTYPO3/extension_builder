@@ -126,6 +126,16 @@ export class EbLayer extends LitElement {
         };
     }
 
+    addContainer(moduleData) {
+        const nextId = this._containers.length;
+        this._containers = [...this._containers, {
+            moduleId: nextId,
+            posX: 20 + nextId * 20,
+            posY: 20 + nextId * 20,
+            moduleData,
+        }];
+    }
+
     addContainers(modules) {
         this._containers = modules.map((mod, index) => ({
             moduleId: index,

@@ -1,5 +1,12 @@
 import { LitElement, html, css } from 'lit';
 import './eb-layer.js';
+import './eb-string-field.js';
+import './eb-textarea-field.js';
+import './eb-select-field.js';
+import './eb-boolean-field.js';
+import './eb-hidden-field.js';
+import './eb-group.js';
+import './eb-list-field.js';
 import { extensionPropertiesFields } from './config/extensionProperties.js';
 import { modelObjectModule } from './config/modelObject.js';
 
@@ -142,18 +149,31 @@ export class EbWiringEditor extends LitElement {
             const response = await fetch(this.smdUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ method: 'listWirings', params: { name: this.extensionName } }),
+                body: JSON.stringify({ method: 'listWirings', params: {} }),
             });
             const data = await response.json();
             if (data.error) throw new Error(data.error);
-            this._extensionData = data.result ?? data;
+            const allExtensions = data.result ?? [];
+            const found = allExtensions.find(e => e.name === this.extensionName);
+            if (!found) throw new Error(`Extension "${this.extensionName}" not found`);
+            this._extensionData = JSON.parse(found.working);
             await this.updateComplete;
             this._populateLayer();
+            this._populateProperties();
         } catch (e) {
             this._error = e.message;
         } finally {
             this._loading = false;
         }
+    }
+
+    _populateProperties() {
+        const props = this._extensionData?.properties ?? {};
+        this.shadowRoot.querySelectorAll('[name]').forEach(field => {
+            if (props[field.name] !== undefined && typeof field.setValue === 'function') {
+                field.setValue(props[field.name]);
+            }
+        });
     }
 
     _populateLayer() {
@@ -167,6 +187,16 @@ export class EbWiringEditor extends LitElement {
         }
     }
 
+    _collectProperties() {
+        const props = {};
+        this.shadowRoot.querySelectorAll('[name]').forEach(field => {
+            if (typeof field.getValue === 'function') {
+                props[field.name] = field.getValue();
+            }
+        });
+        return props;
+    }
+
     async save() {
         const layer = this.shadowRoot.querySelector('eb-layer');
         if (!layer) return;
@@ -175,7 +205,7 @@ export class EbWiringEditor extends LitElement {
         const working = JSON.stringify({
             modules,
             wires,
-            properties: this._extensionData?.properties ?? {},
+            properties: this._collectProperties(),
         });
 
         try {
@@ -194,12 +224,96 @@ export class EbWiringEditor extends LitElement {
         }
     }
 
+    reset() {
+        this.extensionName = '';
+        this._extensionData = null;
+        this._error = null;
+        const layer = this.shadowRoot.querySelector('eb-layer');
+        if (layer) {
+            layer._containers = [];
+            layer._wires = [];
+        }
+        this.shadowRoot.querySelectorAll('[name]').forEach(field => {
+            field.setValue?.('');
+        });
+    }
+
+    addModelObject() {
+        const layer = this.shadowRoot.querySelector('eb-layer');
+        if (layer) layer.addContainer(modelObjectModule.container);
+    }
+
+    _renderFieldDef(fieldDef) {
+        const p = fieldDef.inputParams ?? {};
+        const type = fieldDef.type;
+
+        if (!type || p.className?.includes('hiddenField')) {
+            return html`<eb-hidden-field name="${p.name}"></eb-hidden-field>`;
+        }
+
+        switch (type) {
+            case 'string':
+                return html`<eb-string-field
+                    name="${p.name}"
+                    label="${p.label ?? ''}"
+                    ?required="${p.required}"
+                    type-invite="${p.typeInvite ?? ''}"
+                ></eb-string-field>`;
+
+            case 'text':
+                return html`<eb-textarea-field
+                    name="${p.name}"
+                    label="${p.label ?? ''}"
+                ></eb-textarea-field>`;
+
+            case 'select':
+                return html`<eb-select-field
+                    name="${p.name}"
+                    label="${p.label ?? ''}"
+                    .selectValues="${p.selectValues ?? []}"
+                    .selectOptions="${p.selectOptions ?? []}"
+                ></eb-select-field>`;
+
+            case 'boolean':
+                return html`<eb-boolean-field
+                    name="${p.name}"
+                    label="${p.label ?? ''}"
+                ></eb-boolean-field>`;
+
+            case 'group':
+                return html`<eb-group
+                    name="${p.name ?? ''}"
+                    legend="${p.legend ?? ''}"
+                    ?collapsible="${p.collapsible}"
+                    ?collapsed="${p.collapsed}"
+                >${this._renderFields(p.fields ?? [])}</eb-group>`;
+
+            case 'list':
+                return html`<eb-list-field
+                    name="${p.name}"
+                    ?sortable="${p.sortable}"
+                    element-type="${JSON.stringify(p.elementType ?? {})}"
+                ></eb-list-field>`;
+
+            default:
+                return html`<eb-string-field
+                    name="${p.name}"
+                    label="${p.label ?? ''}"
+                ></eb-string-field>`;
+        }
+    }
+
+    _renderFields(fields) {
+        return fields.map(f => this._renderFieldDef(f));
+    }
+
     render() {
         return html`
             <div class="toolbar">
                 <button @click="${this.save}">Save</button>
                 <button @click="${this.load}">Reload</button>
                 <button @click="${this._toggleAdvancedMode}">Advanced</button>
+                <button @click="${this.addModelObject}">+ Model Object</button>
                 ${this._error ? html`<span class="error">${this._error}</span>` : ''}
             </div>
             <div class="content ${this._advancedMode ? 'advanced-mode' : ''}">
@@ -207,7 +321,7 @@ export class EbWiringEditor extends LitElement {
                     <div class="left-panel-header">
                         <button @click="${this._toggleLeftPanel}">☰</button>
                     </div>
-                    <slot name="properties"></slot>
+                    ${this._renderFields(extensionPropertiesFields)}
                 </div>
                 <div class="center-panel">
                     ${this._loading
