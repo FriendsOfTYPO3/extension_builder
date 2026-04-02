@@ -1,7 +1,5 @@
 [
-    'type' => 'input',
-    'size' => 10,
-    'renderType' => 'colorpicker',
-    'eval' => '<f:if condition="{property.required}">required</f:if>',
+    'type' => 'color',<f:if condition="{property.required}">
+    'required' => true,</f:if>
     'default' => ''
 ]
