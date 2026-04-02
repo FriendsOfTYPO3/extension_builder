@@ -105,12 +105,12 @@ class FileGeneratorTest extends BaseFunctionalTest
         $domainObject->addProperty($property);
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
         $modelClassDir = 'Classes/Domain/Model/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
+        mkdir($this->extension->getExtensionDir() . $modelClassDir, 0777, true);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertDirectoryExists($absModelClassDir, 'Directory ' . $absModelClassDir . ' was not created');
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
-        GeneralUtility::writeFile($modelClassPath, $classFileContent);
+        file_put_contents($modelClassPath, $classFileContent);
         self::assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
 
         $className = $domainObject->getFullQualifiedClassName();
@@ -147,12 +147,12 @@ class FileGeneratorTest extends BaseFunctionalTest
         $domainObject->addProperty($property);
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
         $modelClassDir = 'Classes/Domain/Model/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
+        mkdir($this->extension->getExtensionDir() . $modelClassDir, 0777, true);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertDirectoryExists($absModelClassDir, 'Directory ' . $absModelClassDir . ' was not created');
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
-        GeneralUtility::writeFile($modelClassPath, $classFileContent);
+        file_put_contents($modelClassPath, $classFileContent);
         self::assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
 
         $className = $domainObject->getFullQualifiedClassName();
@@ -195,12 +195,12 @@ class FileGeneratorTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
         $modelClassDir = 'Classes/Domain/Model/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
+        mkdir($this->extension->getExtensionDir() . $modelClassDir, 0777, true);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertTrue(is_dir($absModelClassDir), 'Directory ' . $absModelClassDir . ' was not created');
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
-        GeneralUtility::writeFile($modelClassPath, $classFileContent);
+        file_put_contents($modelClassPath, $classFileContent);
         self::assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
 
         $className = $domainObject->getFullQualifiedClassName();
@@ -212,7 +212,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $relatedClassFileContent = $this->fileGenerator->generateDomainObjectCode($relatedDomainObject);
 
         $relatedModelClassPath = $absModelClassDir . $relatedDomainObject->getName() . '.php';
-        GeneralUtility::writeFile($relatedModelClassPath, $relatedClassFileContent);
+        file_put_contents($relatedModelClassPath, $relatedClassFileContent);
         self::assertFileExists($relatedModelClassPath, 'File was not generated: ' . $relatedModelClassPath);
         $relatedClassName = $relatedDomainObject->getFullQualifiedClassName();
         if (!class_exists($relatedClassName)) {
@@ -253,12 +253,12 @@ class FileGeneratorTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
         $modelClassDir = 'Classes/Domain/Model/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
+        mkdir($this->extension->getExtensionDir() . $modelClassDir, 0777, true);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertDirectoryExists($absModelClassDir, 'Directory ' . $absModelClassDir . ' was not created');
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
-        GeneralUtility::writeFile($modelClassPath, $classFileContent);
+        file_put_contents($modelClassPath, $classFileContent);
         self::assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
 
         $className = $domainObject->getFullQualifiedClassName();
@@ -270,7 +270,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         $relatedClassFileContent = $this->fileGenerator->generateDomainObjectCode($relatedDomainObject);
 
         $relatedModelClassPath = $absModelClassDir . $relatedDomainObject->getName() . '.php';
-        GeneralUtility::writeFile($relatedModelClassPath, $relatedClassFileContent);
+        file_put_contents($relatedModelClassPath, $relatedClassFileContent);
         self::assertFileExists($relatedModelClassPath, 'File was not generated: ' . $relatedModelClassPath);
         $relatedClassName = $relatedDomainObject->getFullQualifiedClassName();
         if (!class_exists($relatedClassName)) {
@@ -340,12 +340,12 @@ class FileGeneratorTest extends BaseFunctionalTest
 
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
         $modelClassDir = 'Classes/Domain/Model/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
+        mkdir($this->extension->getExtensionDir() . $modelClassDir, 0777, true);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertDirectoryExists($absModelClassDir, 'Directory ' . $absModelClassDir . ' was not created');
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
-        GeneralUtility::writeFile($modelClassPath, $classFileContent);
+        file_put_contents($modelClassPath, $classFileContent);
         self::assertFileExists($modelClassPath, 'File was not generated: ' . $modelClassPath);
 
         $className = $domainObject->getFullQualifiedClassName();
@@ -411,12 +411,12 @@ class FileGeneratorTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateActionControllerCode($domainObject);
 
         $controllerClassDir = 'Classes/Controller/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $controllerClassDir);
+        mkdir($this->extension->getExtensionDir() . $controllerClassDir, 0777, true);
         $absControllerClassDir = $this->extension->getExtensionDir() . $controllerClassDir;
         self::assertDirectoryExists($absControllerClassDir, 'Directory ' . $absControllerClassDir . ' was not created');
 
         $controllerClassPath = $absControllerClassDir . $domainObject->getName() . 'Controller.php';
-        GeneralUtility::writeFile($controllerClassPath, $classFileContent);
+        file_put_contents($controllerClassPath, $classFileContent);
         self::assertFileExists($controllerClassPath, 'File was not generated: ' . $controllerClassPath);
 
         $className = $domainObject->getControllerClassName();
@@ -437,12 +437,12 @@ class FileGeneratorTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainRepositoryCode($domainObject);
 
         $repositoryClassDir = 'Classes/Domain/Repository/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $repositoryClassDir);
+        mkdir($this->extension->getExtensionDir() . $repositoryClassDir, 0777, true);
         $absRepositoryClassDir = $this->extension->getExtensionDir() . $repositoryClassDir;
         self::assertDirectoryExists($absRepositoryClassDir, 'Directory ' . $absRepositoryClassDir . ' was not created');
 
         $repositoryClassPath = $absRepositoryClassDir . $domainObject->getName() . 'Repository.php';
-        GeneralUtility::writeFile($repositoryClassPath, $classFileContent);
+        file_put_contents($repositoryClassPath, $classFileContent);
         self::assertFileExists($repositoryClassPath, 'File was not generated: ' . $repositoryClassPath);
 
         $className = $domainObject->getFullyQualifiedDomainRepositoryClassName();
@@ -565,8 +565,8 @@ class FileGeneratorTest extends BaseFunctionalTest
             [$this->extension->getExtensionDir(), 'Configuration', 'TypoScript', 'setup.' . $deprecatedExtension]
         );
 
-        GeneralUtility::mkdir_deep(dirname($setupFile));
-        GeneralUtility::writeFile($setupFile, '# some sample content');
+        mkdir(dirname($setupFile), 0777, true);
+        file_put_contents($setupFile, '# some sample content');
 
         $this->fileGenerator->build($this->extension);
 

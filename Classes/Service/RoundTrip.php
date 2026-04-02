@@ -1082,7 +1082,7 @@ class RoundTrip implements SingletonInterface
                 if (!empty($customFileContent)) {
                     $overrideDir = $tcaDir . 'Overrides/';
                     if (!is_dir($overrideDir)) {
-                        GeneralUtility::mkdir_deep($tcaDir . 'Overrides');
+                        mkdir($tcaDir . 'Overrides', 0777, true);
                     }
                     $success = GeneralUtility::writeFile(
                         $overrideDir . $domainObject->getDatabaseTableName() . '.php',
@@ -1126,7 +1126,7 @@ class RoundTrip implements SingletonInterface
             $backupDir .= '/';
         }
         if (!is_dir($backupDir)) {
-            GeneralUtility::mkdir_deep($backupDir);
+            mkdir($backupDir, 0777, true);
         }
 
         if (!is_writable($backupDir)) {
@@ -1136,7 +1136,7 @@ class RoundTrip implements SingletonInterface
         $backupDir .= $extension->getExtensionKey();
         // create a subdirectory for this extension
         if (!is_dir($backupDir)) {
-            GeneralUtility::mkdir($backupDir);
+            mkdir($backupDir);
         }
         // Add trailing slash
         if (strrpos($backupDir, '/') < strlen($backupDir) - 1) {
@@ -1144,7 +1144,7 @@ class RoundTrip implements SingletonInterface
         }
         $backupDir .= date('Y-m-d-') . time();
         if (!is_dir($backupDir)) {
-            GeneralUtility::mkdir($backupDir);
+            mkdir($backupDir);
         }
         // Remove trailing slash
         $extensionDir = substr($extension->getExtensionDir(), 0, -1);
@@ -1170,7 +1170,7 @@ class RoundTrip implements SingletonInterface
     public static function recurse_copy(string $src, string $dst): void
     {
         $dir = opendir($src);
-        GeneralUtility::mkdir($dst);
+        mkdir($dst);
         while (false !== ($file = readdir($dir))) {
             if ($file !== '.' && $file !== '..') {
                 if (is_dir($src . '/' . $file)) {

@@ -200,7 +200,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      */
     public function createInitialSettingsFile(Extension $extension, array $codeTemplateRootPaths): void
     {
-        GeneralUtility::mkdir_deep($extension->getExtensionDir() . self::SETTINGS_DIR);
+        mkdir($extension->getExtensionDir() . self::SETTINGS_DIR, 0777, true);
         $substitutedExtensionPath = self::substituteExtensionPath($codeTemplateRootPaths[0]);
         $settings = file_get_contents($substitutedExtensionPath . self::SETTINGS_DIR . 'settings.yamlt');
         $settings = str_replace('{extension.extensionKey}', $extension->getExtensionKey(), $settings);

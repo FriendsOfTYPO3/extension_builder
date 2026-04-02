@@ -130,7 +130,7 @@ class FileGenerator
         // Base directory already exists at this point
         $this->extensionDirectory = $this->extension->getExtensionDir();
         if (!is_dir($this->extensionDirectory)) {
-            GeneralUtility::mkdir($this->extensionDirectory);
+            mkdir($this->extensionDirectory);
         }
 
         if ($extension->getGenerateEditorConfig()) {
@@ -139,11 +139,11 @@ class FileGenerator
 
         $this->generateComposerJson();
 
-        GeneralUtility::mkdir_deep($this->extensionDirectory . 'Configuration');
+        mkdir($this->extensionDirectory . 'Configuration', 0777, true);
 
         $this->configurationDirectory = $this->extensionDirectory . 'Configuration/';
 
-        GeneralUtility::mkdir_deep($this->extensionDirectory . 'Resources/Private');
+        mkdir($this->extensionDirectory . 'Resources/Private', 0777, true);
 
         $this->privateResourcesDirectory = $this->extensionDirectory . 'Resources/Private/';
 
@@ -183,7 +183,7 @@ class FileGenerator
     protected function generateYamlSettingsFile(): void
     {
         if (!file_exists($this->configurationDirectory . 'ExtensionBuilder/settings.yaml')) {
-            GeneralUtility::mkdir($this->configurationDirectory . 'ExtensionBuilder');
+            mkdir($this->configurationDirectory . 'ExtensionBuilder');
             $fileContents = $this->generateYamlSettings();
             $targetFile = $this->configurationDirectory . 'ExtensionBuilder/settings.yaml';
             GeneralUtility::writeFile($targetFile, $fileContents);
@@ -246,7 +246,7 @@ class FileGenerator
             return;
         }
         try {
-            GeneralUtility::mkdir_deep($this->extensionDirectory . 'Configuration');
+            mkdir($this->extensionDirectory . 'Configuration', 0777, true);
 
             $fileContents = $this->renderTemplate(
                 'Configuration/Icons.phpt',
@@ -1457,7 +1457,7 @@ class FileGenerator
             return;
         }
         if (!file_exists($targetFile) || ($this->roundTripEnabled && $overWriteMode < 2)) {
-            GeneralUtility::upload_copy_move($sourceFile, $targetFile);
+            copy($sourceFile, $targetFile);
         }
     }
 
@@ -1473,7 +1473,7 @@ class FileGenerator
     protected function mkdir_deep(string $directory, string $deepDirectory): void
     {
         if (!$this->roundTripEnabled) {
-            GeneralUtility::mkdir_deep($directory . $deepDirectory);
+            mkdir($directory . $deepDirectory, 0777, true);
             return;
         }
 
@@ -1490,7 +1490,7 @@ class FileGenerator
                 return;
             }
             if (!is_dir($deepDirectory) || ($this->roundTripEnabled && $overWriteMode < 2)) {
-                GeneralUtility::mkdir_deep($tmpBasePath . $subDirectory);
+                mkdir($tmpBasePath . $subDirectory, 0777, true);
             }
             $tmpBasePath .= $subDirectory . '/';
         }

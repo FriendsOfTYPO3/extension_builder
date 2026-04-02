@@ -92,7 +92,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
             ->method('getExtensionDir')
             ->willReturn($dummyExtensionDir);
         if (is_dir($dummyExtensionDir)) {
-            GeneralUtility::mkdir($dummyExtensionDir);
+            mkdir($dummyExtensionDir);
         }
 
         $this->extension->setSettings($settings);
@@ -204,12 +204,12 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         $domainObject = $this->buildDomainObject($modelName);
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
         $modelClassDir = 'Classes/Domain/Model/';
-        GeneralUtility::mkdir_deep($this->extension->getExtensionDir() . $modelClassDir);
+        mkdir($this->extension->getExtensionDir() . $modelClassDir, 0777, true);
         $absModelClassDir = $this->extension->getExtensionDir() . $modelClassDir;
         self::assertDirectoryExists($absModelClassDir, 'Directory ' . $absModelClassDir . ' was not created');
 
         $modelClassPath = $absModelClassDir . $domainObject->getName() . '.php';
-        GeneralUtility::writeFile($modelClassPath, $classFileContent);
+        file_put_contents($modelClassPath, $classFileContent);
     }
 
     /**

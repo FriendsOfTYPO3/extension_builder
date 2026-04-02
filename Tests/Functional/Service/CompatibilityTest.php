@@ -23,6 +23,7 @@ use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 use SebastianBergmann\Diff\Differ;
 use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
+use Symfony\Component\Finder\Finder;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -83,8 +84,12 @@ class CompatibilityTest extends BaseFunctionalTest
         $diffOutput = new UnifiedDiffOutputBuilder('', true);
         $differ = new Differ($diffOutput);
 
-        $referenceFiles = GeneralUtility::getAllFilesAndFoldersInPath([], $testExtensionDir, 'php,sql,html,typoscript,json');
-        foreach ($referenceFiles as $referenceFile) {
+        $finder = (new Finder())
+            ->files()
+            ->in($testExtensionDir)
+            ->name('/\.(php|sql|html|typoscript|json)$/');
+        foreach ($finder as $file) {
+            $referenceFile = $file->getPathname();
             $createdFile = str_replace($testExtensionDir, $this->extension->getExtensionDir(), $referenceFile);
             if (basename($createdFile) === 'ExtensionBuilder.json') {
                 continue;
