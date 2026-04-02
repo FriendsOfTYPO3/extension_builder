@@ -1,18 +1,12 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"
-      xmlns:eb="http://typo3.org/ns/EBT/ExtensionBuilder/ViewHelpers">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
 <f:layout name="Default" />
 
 <f:section name="Content">
-	<div id="domainModelEditor">
-		<div id="left">
-			<div id="propertiesForm"></div>
-		</div>
-		<div id="center">
-			<div id="moduleBar"></div>
-			<div id="modelingLayer"></div>
-		</div>
-		<div id="helpPanel"></div>
-	</div>
+	<eb-wiring-editor
+		smd-url="{dispatchRpcUrl}"
+		initial-warnings="{f:format.json(value: initialWarnings)}"
+		style="display:block;height:calc(100vh - 45px)">
+	</eb-wiring-editor>
 </f:section>
 </html>

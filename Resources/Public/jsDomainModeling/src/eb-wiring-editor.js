@@ -7,6 +7,7 @@ export class EbWiringEditor extends LitElement {
     static properties = {
         smdUrl: { type: String, attribute: 'smd-url' },
         extensionName: { type: String, attribute: 'extension-name' },
+        initialWarnings: { type: Array, attribute: 'initial-warnings' },
         _loading: { state: true },
         _error: { state: true },
         _extensionData: { state: true },
@@ -90,6 +91,7 @@ export class EbWiringEditor extends LitElement {
         super();
         this.smdUrl = '/typo3/ajax/extensionBuilder/wireEditor';
         this.extensionName = '';
+        this.initialWarnings = [];
         this._loading = false;
         this._error = null;
         this._extensionData = null;
@@ -99,6 +101,9 @@ export class EbWiringEditor extends LitElement {
 
     async connectedCallback() {
         super.connectedCallback();
+        if (this.initialWarnings?.length > 0) {
+            this._error = this.initialWarnings.join('<br>');
+        }
         this.addEventListener('field-updated', this._onFieldUpdated);
         if (this.extensionName) {
             await this.load();

@@ -112,7 +112,6 @@ class BuilderModuleController extends ActionController
     public function domainmodellingAction(): ResponseInterface
     {
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $this->moduleTemplate->setBodyTag('<body class="yui-skin-sam">');
         $this->moduleTemplate->setTitle('Extension Builder');
 
         $this->addMainMenu('domainmodelling');
@@ -121,12 +120,7 @@ class BuilderModuleController extends ActionController
         $this->addLeftButtons();
         $this->addRightButtons();
 
-        $this->addAssets();
-
-        $this->pageRenderer->addInlineSettingArray(
-            'extensionBuilder',
-            ['publicResourcesUrl' => PathUtility::getPublicResourceWebPath('EXT:extension_builder/Resources/Public')]
-        );
+        $this->pageRenderer->loadJavaScriptModule('@ebt/extension-builder/domain-modeling.js');
 
         $this->setLocallangSettings();
 
@@ -135,39 +129,8 @@ class BuilderModuleController extends ActionController
             $initialWarnings[] = ExtensionService::COMPOSER_PATH_WARNING;
         }
         $dispatchRpcUrl = (string)$this->backendUriBuilder->buildUriFromRoute('tools_extensionbuilder.BuilderModule_dispatchRpc');
-        $publicResourcesUrl = PathUtility::getPublicResourceWebPath('EXT:extension_builder/Resources/Public');
-        $corePublicResourceWebPath = PathUtility::getPublicResourceWebPath('EXT:core/Resources/Public/');
-        $initialWarningsJson = json_encode($initialWarnings);
-        $smdJson = json_encode([
-            'SMDVersion' => '2.0',
-            'description' => 'JSON-RPC interface for the WiringEditor',
-            'envelope' => 'JSON-RPC-2.0',
-            'transport' => 'POST',
-            'target' => $dispatchRpcUrl,
-            'services' => [
-                'saveWiring' => ['description' => 'Save the module', 'parameters' => [['name' => 'name', 'type' => 'string'], ['name' => 'working', 'type' => 'text'], ['name' => 'language', 'type' => 'text']]],
-                'listWirings' => ['description' => 'Get the list of modules', 'parameters' => [['name' => 'language', 'type' => 'text']]],
-                'loadWiring' => ['description' => 'Load the module', 'parameters' => [['name' => 'name', 'type' => 'string'], ['name' => 'language', 'type' => 'text']]],
-            ],
-        ]);
-        $this->pageRenderer->addJsInlineCode(
-            'extensionBuilderInit',
-            "extbaseModeling_wiringEditorLanguage.smd = {$smdJson};" . LF
-            . "window.TYPO3 = window.TYPO3 || {};" . LF
-            . "window.TYPO3.settings = window.TYPO3.settings || {};" . LF
-            . "window.TYPO3.settings.extensionBuilder = window.TYPO3.settings.extensionBuilder || {};" . LF
-            . "window.TYPO3.settings.extensionBuilder.publicResourceWebPath = { core: " . json_encode($corePublicResourceWebPath) . " };" . LF
-            . "inputEx.spacerUrl = " . json_encode($publicResourcesUrl . '/jsDomainModeling/wireit/lib/inputex/images/space.gif') . ";" . LF
-            . "YAHOO.util.Event.onDOMReady(function() {" . LF
-            . "    document.body.classList.add('yui-skin-sam');" . LF
-            . "    const editor = new WireIt.WiringEditor(extbaseModeling_wiringEditorLanguage);" . LF
-            . "    const initialWarnings = {$initialWarningsJson};" . LF
-            . "    if (initialWarnings.length > 0) { editor.alert('Warning', initialWarnings.join('<br />')); }" . LF
-            . "});",
-            false,
-            false,
-            true
-        );
+
+        $this->view->assign('dispatchRpcUrl', $dispatchRpcUrl);
         $this->view->assign('initialWarnings', $initialWarnings);
         $GLOBALS['BE_USER']->pushModuleData('extensionbuilder', ['firstTime' => 0]);
 
@@ -286,80 +249,6 @@ class BuilderModuleController extends ActionController
     protected function getLanguageService(): LanguageService
     {
         return $this->languageServiceFactory->createFromUserPreferences($GLOBALS['BE_USER']);
-    }
-
-    protected function addAssets(): void
-    {
-        // SECTION: JAVASCRIPT FILES
-        // YUI Basis Files
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/utilities/utilities.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/resize/resize-min.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/layout/layout-min.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/container/container-min.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/json/json-min.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/button/button-min.js');
-
-        // YUI-RPC
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui-rpc.js');
-
-        // InputEx with wirable options
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/inputex.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Field.js');
-
-        // extended fields for enabling unique ids
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extended/ListField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extended/Group.js');
-
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/inputex/WirableField-beta.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/Visus.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/StringField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/Textarea.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/SelectField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/EmailField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/UrlField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/CheckBox.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/InPlaceEdit.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/MenuField.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/js/fields/TypeField.js');
-
-        // WireIt
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/WireIt.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/CanvasElement.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Wire.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Terminal.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/DD.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/DDResize.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Container.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/ImageContainer.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/Layer.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/util/inputex/FormContainer-beta.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/LayerMap.js');
-
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/js/WiringEditor.js');
-
-        // Extbase Modelling definition
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extbaseModeling.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/layout.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extensionProperties.js');
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/modules/modelObject.js');
-
-        // collapsible forms in relations
-        $this->pageRenderer->addJsFile('EXT:extension_builder/Resources/Public/jsDomainModeling/modules/extendedModelObject.js');
-
-        // SECTION: CSS Files
-        // YUI CSS
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/reset-fonts-grids/reset-fonts-grids.css');
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/yui/assets/skins/sam/skin.css');
-
-        // InputEx CSS
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/lib/inputex/css/inputEx.css');
-
-        // WireIt CSS
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/css/WireIt.css');
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/wireit/css/WireItEditor.css');
-
-        // Custom CSS
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/jsDomainModeling/extbaseModeling.css');
     }
 
     /**
