@@ -11,6 +11,7 @@ export default defineConfig({
         outDir: 'Resources/Public/JavaScript',
         emptyOutDir: true,
         rollupOptions: {
+            external: [/@typo3\/.*/],
             output: {
                 assetFileNames: (assetInfo) => assetInfo.name === 'style.css' ? 'domain-modeling.css' : assetInfo.name,
             },

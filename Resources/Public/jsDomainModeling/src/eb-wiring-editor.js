@@ -150,6 +150,7 @@ export class EbWiringEditor extends LitElement {
     }
 
     async load() {
+        if (!this.extensionName) return;
         this._loading = true;
         this._error = null;
         try {
@@ -321,9 +322,6 @@ export class EbWiringEditor extends LitElement {
     render() {
         return html`
             <div class="toolbar">
-                <button @click="${this.save}">Save</button>
-                <button @click="${this.load}">Reload</button>
-                <button @click="${this._toggleAdvancedMode}">Advanced</button>
                 <button @click="${this.addModelObject}">+ Model Object</button>
                 ${this._error ? html`<span class="error">${this._error}</span>` : ''}
             </div>

@@ -184,26 +184,29 @@ class BuilderModuleController extends ActionController
     {
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
-        $loadButton = (new LinkButtonWithId())
+        $openButton = (new LinkButtonWithId())
             ->setIcon($this->iconFactory->getIcon('actions-system-list-open', Icon::SIZE_SMALL))
             ->setTitle('Open extension')
+            ->setShowLabelText(true)
             ->setId('WiringEditor-loadButton-button')
             ->setHref('#');
-        $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
+        $buttonBar->addButton($openButton, ButtonBar::BUTTON_POSITION_LEFT, 1);
 
-        $loadButton = (new LinkButtonWithId())
+        $newButton = (new LinkButtonWithId())
             ->setIcon($this->iconFactory->getIcon('actions-document-new', Icon::SIZE_SMALL))
             ->setTitle('New extension')
+            ->setShowLabelText(true)
             ->setId('WiringEditor-newButton-button')
             ->setHref('#');
-        $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
+        $buttonBar->addButton($newButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
 
-        $loadButton = (new LinkButtonWithId())
+        $saveButton = (new LinkButtonWithId())
             ->setIcon($this->iconFactory->getIcon('actions-document-save', Icon::SIZE_SMALL))
             ->setTitle('Save extension')
+            ->setShowLabelText(true)
             ->setId('WiringEditor-saveButton-button')
             ->setHref('#');
-        $buttonBar->addButton($loadButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
+        $buttonBar->addButton($saveButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
     }
 
     protected function addRightButtons(): void

@@ -1,3 +1,4 @@
+import Notification from '@typo3/backend/notification.js';
 import './styles/editor.css';
 import './eb-terminal.js';
 import './eb-wire.js';
@@ -14,26 +15,27 @@ import './eb-inplace-edit.js';
 import './eb-group.js';
 import './eb-list-field.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+function initEditor() {
     const editor = document.querySelector('eb-wiring-editor');
     if (!editor) return;
 
     // Save
     document.getElementById('WiringEditor-saveButton-button')
-        ?.addEventListener('click', e => { e.preventDefault(); editor.save(); });
+        ?.addEventListener('click', e => { e.preventDefault(); Notification.info('Debug', 'Save clicked', 2); editor.save(); });
 
     // New
     document.getElementById('WiringEditor-newButton-button')
-        ?.addEventListener('click', e => { e.preventDefault(); editor.reset(); });
+        ?.addEventListener('click', e => { e.preventDefault(); Notification.info('Debug', 'New clicked', 2); editor.reset(); });
 
     // Advanced toggle
     document.getElementById('toggleAdvancedOptions')
-        ?.addEventListener('click', e => { e.preventDefault(); editor._toggleAdvancedMode(); });
+        ?.addEventListener('click', e => { e.preventDefault(); Notification.info('Debug', 'Advanced clicked', 2); editor._toggleAdvancedMode(); });
 
     // Open → Liste laden → nativer Dialog → Extension auswählen
     document.getElementById('WiringEditor-loadButton-button')
         ?.addEventListener('click', async e => {
             e.preventDefault();
+            Notification.info('Debug', 'Open clicked', 2);
             const smdUrl = editor.getAttribute('smd-url');
             const resp = await fetch(smdUrl, {
                 method: 'POST',
@@ -79,4 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 dialog.remove();
             });
         });
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initEditor);
+} else {
+    initEditor();
+}
