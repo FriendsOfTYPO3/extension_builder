@@ -337,12 +337,7 @@ class BuilderModuleController extends ActionController
                 }
             }
             if (!empty($validationConfigurationResult['errors'])) {
-                $errorMessage = '';
-                foreach ($validationConfigurationResult['errors'] as $exception) {
-                    /** @var Exception $exception */
-                    $errorMessage .= '<br />' . $exception->getMessage();
-                }
-                throw new Exception($errorMessage);
+                return ['errors' => array_map(fn($e) => $e->getMessage(), $validationConfigurationResult['errors'])];
             }
             $extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
         } catch (Exception $e) {
@@ -352,12 +347,7 @@ class BuilderModuleController extends ActionController
         // Validate the extension
         $validationResult = $this->extensionValidator->validateExtension($extension);
         if (!empty($validationResult['errors'])) {
-            $errorMessage = '';
-            /** @var Exception $exception */
-            foreach ($validationResult['errors'] as $exception) {
-                $errorMessage .= '<br />' . $exception->getMessage();
-            }
-            throw new Exception($errorMessage);
+            return ['errors' => array_map(fn($e) => $e->getMessage(), $validationResult['errors'])];
         }
         if (!empty($validationResult['warnings'])) {
             $confirmationRequired = $this->handleValidationWarnings($validationResult['warnings']);
@@ -401,12 +391,12 @@ class BuilderModuleController extends ActionController
                     );
                     $extensionPath = Environment::isComposerMode() ? 'packages/' : 'typo3conf/ext/';
                     return [
-                        'warning' => sprintf(
-                            '<span class="error">Roundtrip is enabled but no configuration file was found.</span><br />'
-                            . 'This might happen if you use the extension builder the first time for this extension.<br />'
-                            . 'A settings file was generated in<br />'
-                            . '<b>%s/Configuration/ExtensionBuilder/settings.yaml.</b><br />'
-                            . 'Configure the overwrite settings, then save again.',
+                        'warning' => LocalizationUtility::translate(
+                            'notification.roundtrip_warning',
+                            'ExtensionBuilder',
+                            [$extensionPath . $extension->getExtensionKey()]
+                        ) ?? sprintf(
+                            'Roundtrip is enabled but no configuration file was found. A settings file was generated in %s/Configuration/ExtensionBuilder/settings.yaml. Configure the overwrite settings, then save again.',
                             $extensionPath . $extension->getExtensionKey()
                         ),
                     ];
@@ -436,12 +426,11 @@ class BuilderModuleController extends ActionController
             $this->fileGenerator->build($extension);
             $this->extensionInstallationStatus->setExtension($extension);
             $this->extensionInstallationStatus->setUsesComposerPath($usesComposerPath);
-            $message = sprintf(
-                '<p>The Extension was successfully saved in the directory: "%s"</p>%s',
-                $extensionDirectory,
-                $this->extensionInstallationStatus->getStatusMessage()
-            );
-            $result = ['success' => $message, 'usesComposerPath' => $usesComposerPath];
+            $result = [
+                'success' => LocalizationUtility::translate('notification.saved', 'ExtensionBuilder', [$extensionDirectory])
+                    ?? sprintf('Extension saved in: %s', $extensionDirectory),
+                'installationHints' => $this->extensionInstallationStatus->getStatusMessages(),
+            ];
         } catch (Exception $e) {
             throw $e;
         }
@@ -480,21 +469,21 @@ class BuilderModuleController extends ActionController
             if (!isset($messagesPerErrorCode[$errorCode])) {
                 $messagesPerErrorCode[$errorCode] = [];
             }
-            $messagesPerErrorCode[$errorCode][] = nl2br(htmlspecialchars($exception->getMessage())) . ' (Error ' . $errorCode . ')<br /><br />';
+            $messagesPerErrorCode[$errorCode][] = $exception->getMessage() . ' (Error ' . $errorCode . ')';
         }
         foreach ($messagesPerErrorCode as $errorCode => $messages) {
             if (!$this->extensionBuilderConfigurationManager->isConfirmed('allow' . $errorCode)) {
                 if ($errorCode == ExtensionValidator::ERROR_PROPERTY_RESERVED_SQL_WORD) {
-                    $confirmMessage = 'SQL reserved names were found for these properties:<br />'
-                        . '<ol class="warnings"><li>' . implode('</li><li>', $messages) . '</li></ol>'
-                        . 'This will result in a different column name in the database.<br />'
-                        . '<strong>Are you sure, you want to use them?</strong>';
+                    $confirmMessage = (LocalizationUtility::translate('notification.confirm_sql_word', 'ExtensionBuilder')
+                        ?? 'SQL reserved names were found. This will result in a different column name. Are you sure?')
+                        . "\n" . implode("\n", $messages);
                 } else {
-                    $confirmMessage = '<ol class="warnings"><li>' . implode('</li><li>', $messages) . '</li></ol>'
-                        . '<strong>Do you want to save anyway?</strong><br /><br />';
+                    $confirmMessage = implode("\n", $messages) . "\n"
+                        . (LocalizationUtility::translate('notification.confirm_overwrite', 'ExtensionBuilder')
+                            ?? 'Do you want to save anyway?');
                 }
                 return [
-                    'confirm' => '<span style="color:red">Warning!</span></br>' . $confirmMessage,
+                    'confirm' => $confirmMessage,
                     'confirmFieldName' => 'allow' . $errorCode,
                 ];
             }
