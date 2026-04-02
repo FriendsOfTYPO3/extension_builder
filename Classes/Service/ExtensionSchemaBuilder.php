@@ -217,7 +217,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
         }
 
         // various extension properties
-        $extension->setVersion($propertyConfiguration['emConf']['version']);
+        $extension->setVersion($propertyConfiguration['emConf']['version'] ?? '1.0.0');
 
         if (!empty($propertyConfiguration['emConf']['dependsOn'])) {
             $dependencies = [];

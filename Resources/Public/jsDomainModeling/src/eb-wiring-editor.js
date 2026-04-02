@@ -258,12 +258,14 @@ export class EbWiringEditor extends LitElement {
                     label="${p.label ?? ''}"
                     ?required="${p.required}"
                     type-invite="${p.typeInvite ?? ''}"
+                    .value="${p.value ?? ''}"
                 ></eb-string-field>`;
 
             case 'text':
                 return html`<eb-textarea-field
                     name="${p.name}"
                     label="${p.label ?? ''}"
+                    .value="${p.value ?? ''}"
                 ></eb-textarea-field>`;
 
             case 'select':
@@ -272,12 +274,14 @@ export class EbWiringEditor extends LitElement {
                     label="${p.label ?? ''}"
                     .selectValues="${p.selectValues ?? []}"
                     .selectOptions="${p.selectOptions ?? []}"
+                    .value="${p.value ?? (p.selectValues?.[0] ?? '')}"
                 ></eb-select-field>`;
 
             case 'boolean':
                 return html`<eb-boolean-field
                     name="${p.name}"
                     label="${p.label ?? ''}"
+                    .value="${p.value ?? false}"
                 ></eb-boolean-field>`;
 
             case 'group':
