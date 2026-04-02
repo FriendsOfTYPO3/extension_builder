@@ -21,7 +21,7 @@ use EBT\ExtensionBuilder\ViewHelpers\MatchStringViewHelper;
 
 class MatchStringViewHelperTest extends ViewHelperBaseTestcase
 {
-    public function renderDataProvider(): array
+    public static function renderDataProvider(): array
     {
         return [
             'case insensitive with equal case' => [

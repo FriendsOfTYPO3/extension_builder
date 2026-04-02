@@ -21,7 +21,7 @@ use EBT\ExtensionBuilder\ViewHelpers\OpeningTagViewHelper;
 
 class OpeningTagViewHelperTest extends ViewHelperBaseTestcase
 {
-    public function renderDataProvider(): array
+    public static function renderDataProvider(): array
     {
         return [
             [

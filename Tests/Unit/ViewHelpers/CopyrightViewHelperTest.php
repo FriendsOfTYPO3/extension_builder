@@ -22,7 +22,7 @@ use EBT\ExtensionBuilder\ViewHelpers\CopyrightViewHelper;
 
 class CopyrightViewHelperTest extends ViewHelperBaseTestcase
 {
-    public function renderDataProvider(): array
+    public static function renderDataProvider(): array
     {
         return [
             'minimalCopyRight' => [

@@ -29,18 +29,18 @@ use EBT\ExtensionBuilder\Template\Components\Buttons\LinkButtonWithId;
 use EBT\ExtensionBuilder\Utility\ExtensionInstallationStatus;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
+use Throwable;
+use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
+
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Core\Environment;
-
-use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Localization\LocalizationFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
@@ -301,7 +301,7 @@ class BuilderModuleController extends ActionController
                 default:
                     $response = ['error' => 'Sub Action not found.'];
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $response = ['error' => $e->getMessage()];
         }
         return $this->jsonResponse(json_encode($response));

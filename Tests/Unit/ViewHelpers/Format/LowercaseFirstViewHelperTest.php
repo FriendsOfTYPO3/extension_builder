@@ -22,7 +22,7 @@ use EBT\ExtensionBuilder\ViewHelpers\Format\LowercaseFirstViewHelper;
 
 class LowercaseFirstViewHelperTest extends ViewHelperBaseTestcase
 {
-    public function renderDataProvider(): array
+    public static function renderDataProvider(): array
     {
         return [
             'lowercaseFirstLetter' => [

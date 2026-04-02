@@ -21,7 +21,7 @@ use EBT\ExtensionBuilder\ViewHelpers\HumanizeViewHelper;
 
 class HumanizeViewHelperTest extends ViewHelperBaseTestcase
 {
-    public function renderDataProvider(): array
+    public static function renderDataProvider(): array
     {
         return [
             'make camel case word human readable' => [

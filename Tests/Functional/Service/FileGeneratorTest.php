@@ -542,7 +542,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         }
     }
 
-    public function getDeprecatedTypoScriptExtensionsDataProvider(): array
+    public static function getDeprecatedTypoScriptExtensionsDataProvider(): array
     {
         return [['ts'], ['txt']];
     }

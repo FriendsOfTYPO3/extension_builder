@@ -53,7 +53,11 @@ class ReplaceVisitor extends NodeVisitorAbstract
                     $nodePropertyValue = NodeConverter::getPropertyValueFromNode($node, $nodeProperty);
                     //$nodePropertyValue = $node->$nodeProperty;
                     if ($nodePropertyValue == $oldValue) {
-                        $node->$nodeProperty = $newValue;
+                        if (is_object($node->$nodeProperty) && property_exists($node->$nodeProperty, 'name')) {
+                            $node->$nodeProperty->name = $newValue;
+                        } else {
+                            $node->$nodeProperty = $newValue;
+                        }
                     }
                 }
             }

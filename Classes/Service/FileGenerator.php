@@ -29,11 +29,11 @@ use EBT\ExtensionBuilder\Exception\SyntaxError;
 use Exception;
 use RuntimeException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextFactory;
-use TYPO3Fluid\Fluid\View\TemplateView;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextFactory;
+use TYPO3Fluid\Fluid\View\TemplateView;
 
 /**
  * Creates (or updates) all the required files for an extension

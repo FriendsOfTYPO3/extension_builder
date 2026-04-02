@@ -20,6 +20,4 @@ namespace EBT\ExtensionBuilder;
 /**
  * Schema for a whole extension
  */
-class Exception extends \TYPO3\CMS\Extbase\Exception
-{
-}
+class Exception extends \TYPO3\CMS\Extbase\Exception {}

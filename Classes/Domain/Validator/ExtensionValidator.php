@@ -194,7 +194,7 @@ class ExtensionValidator extends AbstractValidator
      */
     protected array $validationResult = ['errors' => [], 'warnings' => []];
 
-    public function isValid(mixed $value): void
+    protected function isValid(mixed $value): void
     {
         $this->validateExtension($value);
     }

@@ -21,7 +21,7 @@ use EBT\ExtensionBuilder\ViewHelpers\PluralizeViewHelper;
 
 class PluralizeViewHelperTest extends ViewHelperBaseTestcase
 {
-    public function renderDataProvider(): array
+    public static function renderDataProvider(): array
     {
         return [
             [

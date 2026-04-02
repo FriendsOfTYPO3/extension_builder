@@ -21,7 +21,7 @@ use EBT\ExtensionBuilder\ViewHelpers\CurlyBracketsViewHelper;
 
 class CurlyBracketsViewHelperTest extends ViewHelperBaseTestcase
 {
-    public function renderDataProvider(): array
+    public static function renderDataProvider(): array
     {
         return [
             'add curly brackets' => [

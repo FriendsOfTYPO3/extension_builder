@@ -91,15 +91,15 @@ class NodeConverter
         }
 
         if ($node instanceof Namespace_) {
-            return implode('\\', $node->name->parts);
+            return $node->name?->toString();
         }
 
         if ($node instanceof FullyQualified) {
-            return '\\' . implode('\\', $node->parts);
+            return '\\' . $node->toString();
         }
 
         if ($node instanceof Name) {
-            return implode('\\', $node->parts);
+            return $node->toString();
         }
 
         if ($node instanceof ConstFetch) {
@@ -267,6 +267,9 @@ class NodeConverter
 
     public static function getNameFromNode(Node $node)
     {
+        if ($node instanceof FullyQualified) {
+            return '\\' . $node->name;
+        }
         if (property_exists($node, 'name') && is_string($node->name)) {
             return $node->name;
         }

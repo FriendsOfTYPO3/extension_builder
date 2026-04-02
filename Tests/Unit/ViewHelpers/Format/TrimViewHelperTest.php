@@ -22,7 +22,7 @@ use EBT\ExtensionBuilder\ViewHelpers\Format\TrimViewHelper;
 
 class TrimViewHelperTest extends ViewHelperBaseTestcase
 {
-    public function renderDataProvider(): array
+    public static function renderDataProvider(): array
     {
         return [
             'trim' => [

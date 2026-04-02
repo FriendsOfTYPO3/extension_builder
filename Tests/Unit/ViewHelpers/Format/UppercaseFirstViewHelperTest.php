@@ -22,7 +22,7 @@ use EBT\ExtensionBuilder\ViewHelpers\Format\UppercaseFirstViewHelper;
 
 class UppercaseFirstViewHelperTest extends ViewHelperBaseTestcase
 {
-    public function renderDataProvider(): array
+    public static function renderDataProvider(): array
     {
         return [
             'uppercaseFirstLetter' => [

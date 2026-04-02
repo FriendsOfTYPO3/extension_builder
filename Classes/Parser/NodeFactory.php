@@ -180,7 +180,7 @@ class NodeFactory implements SingletonInterface
         $factory = new BuilderFactory();
         $paramNodeBuilder = $factory->param($parameter->getName());
         if ($parameter->hasTypeHint()) {
-            $paramNodeBuilder->setTypeHint($parameter->getTypeHint());
+            $paramNodeBuilder->setType($parameter->getTypeHint());
         }
         if ($parameter->isPassedByReference()) {
             $paramNodeBuilder->makeByRef();

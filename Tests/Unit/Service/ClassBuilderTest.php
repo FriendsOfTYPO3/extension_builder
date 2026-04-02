@@ -181,7 +181,7 @@ class ClassBuilderTest extends BaseUnitTest
         );
     }
 
-    public function propertyDefaultTypesProviderTypes(): array
+    public static function propertyDefaultTypesProviderTypes(): array
     {
         return [
             'boolean' => ['boolean', false],

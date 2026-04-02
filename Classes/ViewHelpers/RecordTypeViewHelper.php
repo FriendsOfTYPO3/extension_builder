@@ -24,8 +24,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 class RecordTypeViewHelper extends AbstractViewHelper
 {
-    public function __construct(private readonly DataMapper $dataMapper)
-    {}
+    public function __construct(private readonly DataMapper $dataMapper) {}
 
     /**
      * Arguments Initialization

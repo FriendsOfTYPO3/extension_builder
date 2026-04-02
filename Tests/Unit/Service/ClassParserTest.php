@@ -160,9 +160,10 @@ class ClassParserTest extends BaseUnitTest
 
         $classReflectionService = new ReflectionService(new NullFrontend('extbase'), 'ClassSchemata');
         $classSchema = $classReflectionService->getClassSchema($className);
-        $this->parserFindsAllConstants($classObject, new ReflectionClass($className));
-        $this->parserFindsAllMethods($classObject, $classSchema);
-        $this->parserFindsAllProperties($classObject, $classSchema);
+        $reflectionClass = new ReflectionClass($className);
+        $this->parserFindsAllConstants($classObject, $reflectionClass);
+        $this->parserFindsAllMethods($classObject, $reflectionClass);
+        $this->parserFindsAllProperties($classObject, $reflectionClass);
         return $classObject;
     }
 

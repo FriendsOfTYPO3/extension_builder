@@ -19,6 +19,7 @@ namespace EBT\ExtensionBuilder\Configuration;
 
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Utility\SpycYAMLParser;
+use Exception;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
@@ -38,15 +39,15 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     /**
      * @var string
      */
-    const SETTINGS_DIR = 'Configuration/ExtensionBuilder/';
+    public const SETTINGS_DIR = 'Configuration/ExtensionBuilder/';
     /**
      * @var string
      */
-    const EXTENSION_BUILDER_SETTINGS_FILE = 'ExtensionBuilder.json';
+    public const EXTENSION_BUILDER_SETTINGS_FILE = 'ExtensionBuilder.json';
     /**
      * @var string
      */
-    const DEFAULT_TEMPLATE_ROOTPATH = 'EXT:extension_builder/Resources/Private/CodeTemplates/Extbase/';
+    public const DEFAULT_TEMPLATE_ROOTPATH = 'EXT:extension_builder/Resources/Private/CodeTemplates/Extbase/';
     private array $inputData = [];
 
     public function __construct(
@@ -76,12 +77,12 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * Reads the configuration from this->inputData and returns it as array.
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function getConfigurationFromModeler(): array
     {
         if (empty($this->inputData)) {
-            throw new \Exception('No inputData!');
+            throw new Exception('No inputData!');
         }
         $extensionConfigurationJson = json_decode($this->inputData['params']['working'], true);
         $extensionConfigurationJson = $this->reArrangeRelations($extensionConfigurationJson);
@@ -195,7 +196,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
      * @param Extension $extension
      * @param array $codeTemplateRootPaths
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function createInitialSettingsFile(Extension $extension, array $codeTemplateRootPaths): void
     {
@@ -269,7 +270,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
             'propertyIsExcludeField',
             'lazyLoading',
             'relationDescription',
-            'foreignRelationClass'
+            'foreignRelationClass',
         ];
         foreach ($jsonConfig as &$module) {
             for ($i = 0, $relations = count($module['value']['relationGroup']['relations']); $i < $relations; $i++) {
@@ -313,7 +314,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
     {
         foreach ($moduleConfig as &$module) {
             if (!empty($module['value']['objectsettings']['parentClass'])
-                && strpos($module['value']['objectsettings']['parentClass'], '\\') !== 0
+                && !str_starts_with($module['value']['objectsettings']['parentClass'], '\\')
             ) {
                 // namespaced classes always need a full qualified class name
                 $module['value']['objectsettings']['parentClass'] = '\\' . $module['value']['objectsettings']['parentClass'];
@@ -403,7 +404,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         ?int $supposedRelationIndex = null
     ): array {
         $result = [
-            'moduleId' => $supposedModuleIndex
+            'moduleId' => $supposedModuleIndex,
         ];
         if ($supposedRelationIndex === null) {
             $result['terminal'] = 'SOURCES';
@@ -423,7 +424,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         }
 
         if (
-            isset($modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid']) 
+            isset($modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid'])
             && $modules[$supposedModuleIndex]['value']['relationGroup']['relations'][$supposedRelationIndex]['uid'] === $uid
         ) {
             $result['terminal'] = 'relationWire_' . $supposedRelationIndex;

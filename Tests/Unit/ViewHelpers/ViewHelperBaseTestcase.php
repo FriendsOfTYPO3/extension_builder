@@ -46,6 +46,7 @@ abstract class ViewHelperBaseTestcase extends UnitTestCase
 
     public function setUp(): void
     {
+        parent::setUp();
         $this->viewHelperVariableContainer = new ViewHelperVariableContainer();
         $this->templateVariableContainer = new StandardVariableProvider();
         $this->renderingContext = new RenderingContextFixture(fn(string $class) => $this->createMock($class));

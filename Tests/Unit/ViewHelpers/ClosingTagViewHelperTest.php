@@ -21,7 +21,7 @@ use EBT\ExtensionBuilder\ViewHelpers\ClosingTagViewHelper;
 
 class ClosingTagViewHelperTest extends ViewHelperBaseTestcase
 {
-    public function renderDataProvider(): array
+    public static function renderDataProvider(): array
     {
         return [
             [

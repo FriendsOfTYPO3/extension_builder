@@ -21,7 +21,7 @@ use EBT\ExtensionBuilder\ViewHelpers\PregReplaceViewHelper;
 
 class PregReplaceViewHelperTest extends ViewHelperBaseTestcase
 {
-    public function renderDataProvider(): array
+    public static function renderDataProvider(): array
     {
         return [
             'add curly brackets' => [
