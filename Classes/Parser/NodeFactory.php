@@ -32,13 +32,13 @@ use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\Const_;
 use PhpParser\Node\Expr\Array_;
-use PhpParser\Node\Expr\ArrayItem;
+use PhpParser\Node\ArrayItem;
 use PhpParser\Node\Expr\ConstFetch;
 use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Param;
-use PhpParser\Node\Scalar\DNumber;
-use PhpParser\Node\Scalar\LNumber;
+use PhpParser\Node\Scalar\Float_;
+use PhpParser\Node\Scalar\Int_;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;
@@ -291,11 +291,11 @@ class NodeFactory implements SingletonInterface
         }
 
         if (is_int($value)) {
-            return new LNumber($value);
+            return new Int_($value);
         }
 
         if (is_float($value)) {
-            return new DNumber($value);
+            return new Float_($value);
         }
 
         if (is_string($value)) {
