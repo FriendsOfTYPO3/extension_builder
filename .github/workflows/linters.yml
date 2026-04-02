@@ -15,17 +15,23 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   rectortest:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: "Checkout code"
+        uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: "Run a one-line script"
-        run: echo This should run the rector test. This is not implemented yet
+      - name: "Setup PHP"
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          coverage: none
+
+      - name: "Install dependencies"
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: "Run Rector (dry-run)"
+        run: .Build/bin/rector process --dry-run
 
   sass-linter:
     # The type of runner that the job will run on
