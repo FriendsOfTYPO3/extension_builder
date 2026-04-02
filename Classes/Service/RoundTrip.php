@@ -26,9 +26,6 @@ use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Utility\Inflector;
 use Exception;
-use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
-use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -44,14 +41,12 @@ class RoundTrip implements SingletonInterface
     /**
      * @var string
      */
-    const SPLIT_TOKEN = '## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder';
+    public const SPLIT_TOKEN = '## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder';
 
-    const OVERWRITE_SETTINGS_SKIP = -1;
-    const OVERWRITE_SETTINGS_MERGE = 1;
-    const OVERWRITE_SETTINGS_KEEP = 2;
+    public const OVERWRITE_SETTINGS_SKIP = -1;
+    public const OVERWRITE_SETTINGS_MERGE = 1;
+    public const OVERWRITE_SETTINGS_KEEP = 2;
 
-    protected ParserService $parserService;
-    protected ExtensionBuilderConfigurationManager $configurationManager;
     protected ?Extension $previousExtension = null;
     protected ?Extension $extension = null;
     /**
@@ -88,16 +83,11 @@ class RoundTrip implements SingletonInterface
     protected ?File $classFileObject = null;
     protected array $settings = [];
 
-    public function injectParserService(ParserService $parserService): void
-    {
-        $this->parserService = $parserService;
-    }
-
-    public function injectExtensionBuilderConfigurationManager(
-        ExtensionBuilderConfigurationManager $configurationManager
-    ): void {
-        $this->configurationManager = $configurationManager;
-    }
+    public function __construct(
+        private readonly ParserService $parserService,
+        private readonly ExtensionBuilderConfigurationManager $configurationManager,
+        private readonly ExtensionSchemaBuilder $extensionSchemaBuilder,
+    ) {}
 
     /**
      * If a JSON file is found in the extensions directory the previous version
@@ -115,9 +105,6 @@ class RoundTrip implements SingletonInterface
         $this->extension = $extension;
         $this->extensionDirectory = $this->extension->getExtensionDir();
 
-        if (!$this->parserService instanceof ParserService) {
-            $this->parserService = GeneralUtility::makeInstance(ParserService::class);
-        }
         $this->settings = $this->configurationManager->getExtensionBuilderSettings();
         // defaults
         $this->previousExtensionDirectory = $this->extensionDirectory;
@@ -138,9 +125,8 @@ class RoundTrip implements SingletonInterface
         }
 
         if (file_exists($this->previousExtensionDirectory . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE)) {
-            $extensionSchemaBuilder = GeneralUtility::makeInstance(ExtensionSchemaBuilder::class);
             $jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey, $extension->getStoragePath());
-            $this->previousExtension = $extensionSchemaBuilder->build($jsonConfig);
+            $this->previousExtension = $this->extensionSchemaBuilder->build($jsonConfig);
             $previousDomainObjects = $this->previousExtension->getDomainObjects();
             /** @var DomainObject[] $previousDomainObjects */
             foreach ($previousDomainObjects as $oldDomainObject) {
@@ -744,7 +730,7 @@ class RoundTrip implements SingletonInterface
             return $stringToParse;
         }
         $separatorToken = '\\\\';
-        if (strpos($stringToParse, $separatorToken) === false) {
+        if (!str_contains($stringToParse, $separatorToken)) {
             $separatorToken = '_';
         }
         return str_replace(
@@ -986,16 +972,6 @@ class RoundTrip implements SingletonInterface
     }
 
     /**
-     * @return array
-     * @throws ExtensionConfigurationExtensionNotConfiguredException
-     * @throws ExtensionConfigurationPathDoesNotExistException
-     */
-    public static function getExtConfiguration(): array
-    {
-        return GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('extension_builder');
-    }
-
-    /**
      * finds a related overwrite setting to a path
      * and returns the overWrite setting
      * -1 for do not create at all
@@ -1021,7 +997,7 @@ class RoundTrip implements SingletonInterface
         if (!is_array($settings)) {
             throw new Exception('overWrite settings could not be parsed');
         }
-        if (strpos($path, $extension->getExtensionDir()) === 0) {
+        if (str_starts_with($path, $extension->getExtensionDir())) {
             $path = str_replace($extension->getExtensionDir(), '', $path);
         }
         $pathParts = explode('/', $path);

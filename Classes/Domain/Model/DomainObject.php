@@ -96,7 +96,7 @@ class DomainObject
     public function getQualifiedClassName(): string
     {
         $qualifiedClassName = $this->extension->getNamespaceName() . '\\Domain\\Model\\' . $this->getName();
-        if (strpos($qualifiedClassName, '\\') === 0) {
+        if (str_starts_with($qualifiedClassName, '\\')) {
             $qualifiedClassName = substr($qualifiedClassName, 1);
         }
         return $qualifiedClassName;
@@ -114,10 +114,10 @@ class DomainObject
 
     public function getDatabaseTableName(): string
     {
-        $result = 'tx_' .
-            strtolower($this->extension->getExtensionName()) .
-            '_domain_model_' .
-            strtolower($this->getName());
+        $result = 'tx_'
+            . strtolower($this->extension->getExtensionName())
+            . '_domain_model_'
+            . strtolower($this->getName());
 
         if (!empty($this->mapToTable)) {
             $result = $this->mapToTable;

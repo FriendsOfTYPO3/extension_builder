@@ -37,13 +37,11 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
     {
         parent::setUp();
 
-        $this->objectSchemaBuilder = $this->getAccessibleMock(ObjectSchemaBuilder::class, ['dummy']);
-
-        $this->configurationManager = $this->getAccessibleMock(
-            ExtensionBuilderConfigurationManager::class,
-            ['getPersistenceTable']
-        );
-        $this->objectSchemaBuilder->injectConfigurationManager($this->configurationManager);
+        $this->configurationManager = $this->getMockBuilder(ExtensionBuilderConfigurationManager::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getPersistenceTable'])
+            ->getMock();
+        $this->objectSchemaBuilder = new ObjectSchemaBuilder($this->configurationManager);
     }
 
     /**
@@ -59,28 +57,28 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
             'objectsettings' => [
                 'description' => $description,
                 'aggregateRoot' => true,
-                'type' => 'Entity'
+                'type' => 'Entity',
             ],
             'propertyGroup' => [
                 'properties' => [
                     0 => [
                         'propertyName' => 'name',
                         'propertyType' => 'String',
-                        'propertyIsRequired' => true
+                        'propertyIsRequired' => true,
                     ],
                     1 => [
                         'propertyName' => 'type',
-                        'propertyType' => 'Integer'
-                    ]
-                ]
+                        'propertyType' => 'Integer',
+                    ],
+                ],
             ],
             'actionGroup' => [
                 'customActions' => [
-                    'test'
+                    'test',
                 ],
                 'list' => true,
             ],
-            'relationGroup' => []
+            'relationGroup' => [],
         ];
 
         $expected = new DomainObject();
@@ -114,9 +112,9 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
      */
     public function domainObjectHasExpectedRelations(): void
     {
-//        $this->markTestSkipped(
-//          'TODO: find a replacement for ConfigurationManager->getClassConfiguration'
-//        );
+        //        $this->markTestSkipped(
+        //          'TODO: find a replacement for ConfigurationManager->getClassConfiguration'
+        //        );
         $name = 'MyDomainObject';
         $description = 'My long domain object description';
         $className = '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser';
@@ -126,7 +124,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
             'objectsettings' => [
                 'description' => $description,
                 'aggregateRoot' => true,
-                'type' => 'Entity'
+                'type' => 'Entity',
             ],
             'relationGroup' => [
                 'relations' => [
@@ -134,15 +132,15 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
                         'relationName' => 'relation 1',
                         'relationType' => 'manyToMany',
                         'propertyIsExcludeField' => false,
-                        'foreignRelationClass' => $className
+                        'foreignRelationClass' => $className,
                     ],
                     1 => [
                         'relationName' => 'relation 2',
                         'relationType' => 'manyToMany',
                         'propertyIsExcludeField' => false,
-                        'foreignRelationClass' => $className
+                        'foreignRelationClass' => $className,
                     ],
-                ]
+                ],
             ],
         ];
 
@@ -189,7 +187,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
             'objectsettings' => [
                 'description' => $description,
                 'aggregateRoot' => true,
-                'type' => 'Entity'
+                'type' => 'Entity',
             ],
             'relationGroup' => [
                 'relations' => [
@@ -197,9 +195,9 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
                         'relationName' => $relationName,
                         'relationType' => 'manyToMany',
                         'propertyIsExcludeField' => false,
-                        'foreignRelationClass' => $className
+                        'foreignRelationClass' => $className,
                     ],
-                ]
+                ],
             ],
         ];
 
@@ -240,7 +238,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
             'objectsettings' => [
                 'description' => $description,
                 'aggregateRoot' => true,
-                'type' => 'Entity'
+                'type' => 'Entity',
             ],
             'relationGroup' => [
                 'relations' => [
@@ -249,7 +247,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
                         'relationType' => 'zeroToMany',
                         'propertyIsExcludeField' => false,
                     ],
-                ]
+                ],
             ],
         ];
 
@@ -288,7 +286,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
             'objectsettings' => [
                 'description' => $description,
                 'aggregateRoot' => true,
-                'type' => 'Entity'
+                'type' => 'Entity',
             ],
             'relationGroup' => [
                 'relations' => [
@@ -296,9 +294,9 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
                         'relationName' => $relationName,
                         'relationType' => 'zeroToMany',
                         'propertyIsExcludeField' => false,
-                        'foreignRelationClass' => $className
+                        'foreignRelationClass' => $className,
                     ],
-                ]
+                ],
             ],
         ];
 

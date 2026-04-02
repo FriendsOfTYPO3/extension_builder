@@ -11,10 +11,10 @@ Introduction
    New to reStructuredText and Sphinx?
 
    Get an introduction:
-   https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us/WritingReST/Index.html
+   https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingReST/Index.html
 
    Use this cheat sheet as reference:
-   https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us/WritingReST/CheatSheet.html
+   https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingReST/CheatSheet.html
 
 .. _what-it-does:
 

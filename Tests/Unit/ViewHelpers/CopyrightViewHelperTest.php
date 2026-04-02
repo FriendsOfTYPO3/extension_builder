@@ -2,6 +2,19 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+
 namespace EBT\ExtensionBuilder\Tests\Unit\ViewHelpers;
 
 use EBT\ExtensionBuilder\Domain\Model\Person;
@@ -47,9 +60,9 @@ class CopyrightViewHelperTest extends ViewHelperBaseTestcase
                     (new Person())->setName('Richard Roe')->setEmail('richard@roe.com')->setCompany('Roe AG'),
                     (new Person())->setName('Taylor Shaw')->setEmail('taylor@shaw.org')->setCompany('Shaw Ltd.'),
                 ],
-                ' * (c) 2021 John Doe <john@doe.com>, Doe GmbH' . "\n" .
-                ' *          Richard Roe <richard@roe.com>, Roe AG' . "\n" .
-                ' *          Taylor Shaw <taylor@shaw.org>, Shaw Ltd.',
+                ' * (c) 2021 John Doe <john@doe.com>, Doe GmbH' . "\n"
+                . ' *          Richard Roe <richard@roe.com>, Roe AG' . "\n"
+                . ' *          Taylor Shaw <taylor@shaw.org>, Shaw Ltd.',
             ],
         ];
     }

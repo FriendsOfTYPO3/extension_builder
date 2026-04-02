@@ -51,7 +51,7 @@ class DocComment extends Comment
         foreach ($lines as $line) {
             $line = preg_replace('/(\\s*\\*\\/\\s*)?$/', '', $line);
             $line = trim($line);
-            if (strlen($line) > 0 && strpos($line, '* @') !== false) {
+            if (strlen($line) > 0 && str_contains($line, '* @')) {
                 $this->parseTag(substr($line, strpos($line, '@')));
             } elseif (count($this->tags) === 0) {
                 $this->description .= preg_replace('/\\s*\\/?[\\\\*]*\\s?(.*)$/', '$1', $line) . chr(10);
@@ -88,7 +88,7 @@ class DocComment extends Comment
      * @param mixed $tagValue
      * @param bool $override
      */
-    public function setTag(string $tagName, $tagValue = null, bool $override = false): void
+    public function setTag(string $tagName, mixed $tagValue = null, bool $override = false): void
     {
         if (!$override && isset($this->tags[$tagName])) {
             if (!is_array($this->tags[$tagName])) {

@@ -14,7 +14,7 @@ trim_trailing_whitespace = true
 
 # TS/JS-Files
 [*.{ts,js}]
-indent_size = 2
+indent_size = 4
 
 # JSON-Files
 [*.json]

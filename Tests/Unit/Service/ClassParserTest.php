@@ -99,7 +99,7 @@ class ClassParserTest extends BaseUnitTest
             [
                 'PHPUnit_Framework_IncompleteTest',
                 'PHPUnit_Framework_MockObject_Stub',
-                'PHPUnit_Framework_SelfDescribing'
+                'PHPUnit_Framework_SelfDescribing',
             ],
             $classObject->getInterfaceNames()
         );
@@ -115,7 +115,7 @@ class ClassParserTest extends BaseUnitTest
         self::assertEquals(
             [
                 'TYPO3\\CMS\\Core\\Utility\\GeneralUtility',
-                'TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager as Config'
+                'TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager as Config',
             ],
             $classObject->getAliasDeclarations()
         );

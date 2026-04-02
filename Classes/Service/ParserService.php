@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Service;
 
-use PhpParser\Parser;
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Parser\ClassFactory;
 use EBT\ExtensionBuilder\Parser\ClassFactoryInterface;
@@ -27,6 +26,7 @@ use EBT\ExtensionBuilder\Parser\Visitor\FileVisitor;
 use EBT\ExtensionBuilder\Parser\Visitor\FileVisitorInterface;
 use EBT\ExtensionBuilder\Parser\Visitor\ReplaceVisitor;
 use PhpParser\NodeVisitor\CloningVisitor;
+use PhpParser\Parser;
 use PhpParser\ParserFactory;
 use TYPO3\CMS\Core\Localization\Exception\FileNotFoundException;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -49,13 +49,13 @@ class ParserService implements SingletonInterface
         $stmts = $this->parser->parse($code);
 
         // set defaults
-        if (null === $this->traverser) {
+        if ($this->traverser === null) {
             $this->traverser = new Traverser();
         }
-        if (null === $this->fileVisitor) {
+        if ($this->fileVisitor === null) {
             $this->fileVisitor = new FileVisitor();
         }
-        if (null === $this->classFactory) {
+        if ($this->classFactory === null) {
             $this->classFactory = new ClassFactory();
         }
         $this->fileVisitor->setClassFactory($this->classFactory);
@@ -99,7 +99,7 @@ class ParserService implements SingletonInterface
         ?array $nodeTypes = [],
         string $nodeProperty = 'name'
     ): array {
-        if (null === $this->traverser) {
+        if ($this->traverser === null) {
             $this->traverser = new Traverser();
         }
         $this->traverser->resetVisitors();
@@ -116,7 +116,5 @@ class ParserService implements SingletonInterface
         return $stmts;
     }
 
-    public function initReduceCallbacks(): void
-    {
-    }
+    public function initReduceCallbacks(): void {}
 }

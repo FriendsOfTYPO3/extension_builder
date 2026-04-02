@@ -180,7 +180,7 @@ class ClassObject extends Container
         $getterMethods = [];
         foreach ($this->getMethods() as $method) {
             $methodName = $method->getName();
-            if (strpos($methodName, 'get') === 0) {
+            if (str_starts_with($methodName, 'get')) {
                 $propertyName = strtolower(substr($methodName, 3));
                 if ($this->propertyExists($propertyName)) {
                     $getterMethods[$propertyName] = $method;
@@ -201,7 +201,7 @@ class ClassObject extends Container
         $setterMethods = [];
         foreach ($this->getMethods() as $method) {
             $methodName = $method->getName();
-            if (strpos($methodName, 'set') === 0) {
+            if (str_starts_with($methodName, 'set')) {
                 $propertyName = strtolower(substr($methodName, 3));
                 if ($this->propertyExists($propertyName)) {
                     $setterMethods[$propertyName] = $method;
@@ -332,7 +332,7 @@ class ClassObject extends Container
         $methodArray = [];
         foreach ($this->getMethods() as $method) {
             $methodArray[$method->getName()] = [
-                'parameter' => $method->getParameters()
+                'parameter' => $method->getParameters(),
             ];
         }
         $infoArray['Methods'] = $methodArray;

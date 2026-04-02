@@ -1,30 +1,15 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"
-      xmlns:eb="http://typo3.org/ns/EBT/ExtensionBuilder/ViewHelpers">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
 <f:layout name="Default" />
 
 <f:section name="Content">
-	<div id="domainModelEditor">
-		<div id="left">
-			<div id="propertiesForm"></div>
-		</div>
-		<div id="center">
-			<div id="moduleBar"></div>
-			<div id="modelingLayer"></div>
-		</div>
-		<div id="helpPanel"></div>
-	</div>
-	<script type="text/javascript">
-		// InputEx needs a correct path to this image
-		inputEx.spacerUrl = TYPO3.settings.extensionBuilder.publicResourcesUrl + '/jsDomainModeling/wireit/lib/inputex/images/space.gif';
-
-		YAHOO.util.Event.onDOMReady(function() {
-			const editor = new WireIt.WiringEditor(extbaseModeling_wiringEditorLanguage);
-			const initialWarnings = {initialWarnings -> f:format.json() -> f:format.raw()};
-			if (initialWarnings.length > 0) {
-				editor.alert('Warning', initialWarnings.join('<br />'));
-			}
-		});
-	</script>
+	<style>
+		.module-body { padding: 0 !important; }
+	</style>
+<eb-wiring-editor
+		smd-url="{dispatchRpcUrl}"
+		initial-warnings="{f:format.json(value: initialWarnings)}"
+		style="width:100%;height:calc(100vh - var(--module-docheader-height, 67px))">
+	</eb-wiring-editor>
 </f:section>
 </html>

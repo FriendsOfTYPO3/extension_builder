@@ -26,7 +26,6 @@ use EBT\ExtensionBuilder\Domain\Model\Person;
 use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
 use EBT\ExtensionBuilder\Service\ObjectSchemaBuilder;
 use EBT\ExtensionBuilder\Tests\BaseUnitTest;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ExtensionSchemaBuilderTest extends BaseUnitTest
 {
@@ -39,13 +38,11 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
 
         $this->extension = $this->createMock(Extension::class);
 
-        $this->extensionSchemaBuilder = $this->getAccessibleMock(ExtensionSchemaBuilder::class, ['dummy']);
-        $this->extensionSchemaBuilder->injectConfigurationManager(new ExtensionBuilderConfigurationManager());
-
-        $objectSchemaBuilder = $this->getAccessibleMock(ObjectSchemaBuilder::class, ['dummy']);
-        $objectSchemaBuilder->injectConfigurationManager(new ExtensionBuilderConfigurationManager());
-
-        $this->extensionSchemaBuilder->injectObjectSchemaBuilder($objectSchemaBuilder);
+        $configMgr = $this->getMockBuilder(ExtensionBuilderConfigurationManager::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $objectSchemaBuilder = new ObjectSchemaBuilder($configMgr);
+        $this->extensionSchemaBuilder = new ExtensionSchemaBuilder($configMgr, $objectSchemaBuilder);
         $this->extensionKey = 'dummy';
     }
 
@@ -68,10 +65,10 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                 'vendorName' => $vendor,
                 'emConf' => [
                     'state' => 'alpha',
-                    'version' => $version
-                ]
+                    'version' => $version,
+                ],
             ],
-            'storagePath' => 'tmp'
+            'storagePath' => 'tmp',
         ];
 
         $extension = new Extension();
@@ -114,25 +111,25 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                 'vendorName' => 'Vendor',
                 'emConf' => [
                     'state' => 'beta',
-                    'version' => ''
+                    'version' => '',
                 ],
                 'persons' => [
                     [
                         'company' => 'company0',
                         'email' => 'email0',
                         'name' => 'name0',
-                        'role' => 'role0'
+                        'role' => 'role0',
                     ],
                     [
                         'company' => 'company1',
                         'email' => 'email1',
                         'name' => 'name1',
-                        'role' => 'role1'
+                        'role' => 'role1',
                     ],
                 ],
-                'state' => 'beta'
+                'state' => 'beta',
             ],
-            'storagePath' => 'tmp'
+            'storagePath' => 'tmp',
         ];
         $extension = $this->extensionSchemaBuilder->build($input);
         self::assertEquals($persons, $extension->getPersons(), 'Persons set wrong in ObjectBuilder.');
@@ -153,30 +150,30 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                         'objectsettings' => [
                             'description' => 'A blog object',
                             'aggregateRoot' => false,
-                            'type' => 'Entity'
+                            'type' => 'Entity',
                         ],
                         'propertyGroup' => [
                             'properties' => [
                                 0 => [
                                     'propertyName' => 'name',
-                                    'propertyType' => 'String'
+                                    'propertyType' => 'String',
                                 ],
                                 1 => [
                                     'propertyName' => 'description',
-                                    'propertyType' => 'String'
-                                ]
-                            ]
+                                    'propertyType' => 'String',
+                                ],
+                            ],
                         ],
                         'relationGroup' => [
                             'relations' => [
                                 0 => [
                                     'relationName' => 'posts',
                                     'relationType' => 'zeroToMany',
-                                    'propertyIsExcludeField' => 1
-                                ]
-                            ]
-                        ]
-                    ]
+                                    'propertyIsExcludeField' => 1,
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
                 1 => [
                     // config
@@ -186,21 +183,21 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                         'objectsettings' => [
                             'description' => 'A blog post',
                             'aggregateRoot' => false,
-                            'type' => 'Entity'
+                            'type' => 'Entity',
                         ],
                         'propertyGroup' => [
-                            'properties' => []
+                            'properties' => [],
                         ],
                         'relationGroup' => [
                             'relations' => [
                                 0 => [
                                     'relationName' => 'comments',
                                     'relationType' => 'zeroToMany',
-                                    'propertyIsExcludeField' => 1
-                                ]
-                            ]
-                        ]
-                    ]
+                                    'propertyIsExcludeField' => 1,
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
                 2 => [
                     // config
@@ -210,15 +207,15 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                         'objectsettings' => [
                             'description' => '',
                             'aggregateRoot' => false,
-                            'type' => 'Entity'
+                            'type' => 'Entity',
                         ],
                         'propertyGroup' => [
-                            'properties' => []
+                            'properties' => [],
                         ],
                         'relationGroup' => [
-                            'relations' => []
-                        ]
-                    ]
+                            'relations' => [],
+                        ],
+                    ],
                 ],
             ],
             'properties' => [
@@ -229,31 +226,31 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
                 'emConf' => [
                     'state' => 'beta',
                     'version' => '1.0.0',
-                ]
+                ],
             ],
             'wires' => [
                 0 => [
                     'tgt' => [
                         'moduleId' => 1,
-                        'terminal' => 'SOURCES'
+                        'terminal' => 'SOURCES',
                     ],
                     'src' => [
                         'moduleId' => 0, // hier stand leerstring drin
-                        'terminal' => 'relationWire_0'
-                    ]
+                        'terminal' => 'relationWire_0',
+                    ],
                 ],
                 1 => [
                     'tgt' => [
                         'moduleId' => 2,
-                        'terminal' => 'SOURCES'
+                        'terminal' => 'SOURCES',
                     ],
                     'src' => [
                         'moduleId' => 1,
-                        'terminal' => 'relationWire_0'
-                    ]
-                ]
+                        'terminal' => 'relationWire_0',
+                    ],
+                ],
             ],
-            'storagePath' => 'tmp'
+            'storagePath' => 'tmp',
         ];
 
         $extension = new Extension();

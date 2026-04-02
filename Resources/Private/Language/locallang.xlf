@@ -540,6 +540,30 @@
 			<trans-unit id="modeler_loadPipeConfirmMessage" resname="modeler_loadPipeConfirmMessage">
 				<source>Do you really want to clear the current working board and load the selected pipe? Unsaved changes will get lost!</source>
 			</trans-unit>
+			<trans-unit id="notification.composer_warning" resname="notification.composer_warning">
+				<source>You are running TYPO3 in composer mode. You have to configure at least one local path repository in your composer.json in order to create an extension with Extension Builder. The recommended way is to create a "packages" folder where your extension is loaded from and symlinked into typo3conf/ext afterwards. Please execute: mkdir -p packages &amp;&amp; composer config repositories.local path "packages/*" in your terminal in the project root directory. After that reload the Extension Builder. See: https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html</source>
+			</trans-unit>
+			<trans-unit id="notification.saved" resname="notification.saved">
+				<source>Extension saved in: %s</source>
+			</trans-unit>
+			<trans-unit id="notification.not_installed" resname="notification.not_installed">
+				<source>Your Extension is not installed yet.</source>
+			</trans-unit>
+			<trans-unit id="notification.composer_require" resname="notification.composer_require">
+				<source>Execute: composer require %s:@dev in terminal</source>
+			</trans-unit>
+			<trans-unit id="notification.db_update" resname="notification.db_update">
+				<source>Please check the Install Tool for possible database updates!</source>
+			</trans-unit>
+			<trans-unit id="notification.roundtrip_warning" resname="notification.roundtrip_warning">
+				<source>Roundtrip is enabled but no configuration file was found. A settings file was generated in %s/Configuration/ExtensionBuilder/settings.yaml. Configure the overwrite settings, then save again.</source>
+			</trans-unit>
+			<trans-unit id="notification.confirm_overwrite" resname="notification.confirm_overwrite">
+				<source>Do you want to save anyway?</source>
+			</trans-unit>
+			<trans-unit id="notification.confirm_sql_word" resname="notification.confirm_sql_word">
+				<source>SQL reserved names were found. This will result in a different column name. Are you sure?</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

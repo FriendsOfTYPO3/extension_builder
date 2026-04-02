@@ -24,4 +24,7 @@
     <inventory id="t3extbasebook"
                url="https://docs.typo3.org/m/typo3/book-extbasefluid/10.4/en-us/"
     />
+    <inventory id="h2document"
+               url="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/"
+    />
 </guides>

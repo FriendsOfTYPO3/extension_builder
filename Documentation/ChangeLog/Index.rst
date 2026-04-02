@@ -6,6 +6,22 @@
 Change log
 ==========
 
+Version 12.0.0
+--------------
+
+**Breaking changes and migrations (v11 → v12):**
+
+* [TASK] Update dependencies to TYPO3 ^12.4, PHP ^8.3, PHPUnit ^10, testing-framework ^7, add Rector
+* [TASK] Migrate backend module registration from ``ext_tables.php`` to ``Configuration/Backend/Modules.php``
+* [TASK] Rename TypoScript setup file extension from ``.txt`` to ``.typoscript``
+* [TASK] Replace ``GeneralUtility::makeInstance()`` with Dependency Injection throughout
+* [TASK] Migrate setter injection to constructor injection in all controller and service classes
+* [TASK] Replace YUI/WireIt/InputEx with Lit Web Components and TYPO3 v12 CSS variables
+* [TASK] Replace yarn/SCSS build pipeline with Vite and ESM module bundling (npm)
+* [TASK] Add Playwright E2E test infrastructure
+* [TASK] Migrate TCA: ``type=number`` (was ``type=input``/``eval=int``), ``type=link`` (was ``renderType=inputLink``)
+* [TASK] Migrate TCA items arrays to associative format (``label``/``value`` keys)
+
 Version 11.0.13
 ---------------
 * [DOCS] Adds information about a possible missing storage path when using composer mode

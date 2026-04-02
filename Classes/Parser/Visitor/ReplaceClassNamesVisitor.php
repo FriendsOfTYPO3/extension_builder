@@ -38,9 +38,9 @@ class ReplaceClassNamesVisitor extends NodeVisitorAbstract
      */
     public function leaveNode(Node $node)
     {
-        if (null !== $node->__get('class')) {
+        if ($node->__get('class') !== null) {
             $oldClassName = NodeConverter::getValueFromNode($node->__get('class'));
-            if (strpos($oldClassName, $this->oldClassPrefix) !== false) {
+            if (str_contains($oldClassName, $this->oldClassPrefix)) {
                 $newClassName = str_replace($this->oldClassPrefix, $this->newClassPrefix, $oldClassName);
                 $node->setClass(NodeFactory::buildNodeFromName($newClassName));
                 return $node;
@@ -49,17 +49,11 @@ class ReplaceClassNamesVisitor extends NodeVisitorAbstract
         return $node;
     }
 
-    public function beforeTraverse(array $nodes): void
-    {
-    }
+    public function beforeTraverse(array $nodes): void {}
 
-    public function enterNode(Node $node): void
-    {
-    }
+    public function enterNode(Node $node): void {}
 
-    public function afterTraverse(array $nodes): void
-    {
-    }
+    public function afterTraverse(array $nodes): void {}
 
     public function setNewClassPrefix($newClassPrefix): void
     {

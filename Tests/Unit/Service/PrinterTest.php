@@ -44,10 +44,8 @@ class PrinterTest extends BaseUnitTest
         vfsStream::setup('tmpDir');
 
         $this->tmpDir = vfsStream::url('tmpDir') . '/';
-        $this->printerService = $this->getAccessibleMock(Printer::class, ['dummy']);
-
         $nodeFactory = new NodeFactory();
-        $this->printerService->_set('nodeFactory', $nodeFactory);
+        $this->printerService = new Printer($nodeFactory);
         $this->parserService = new ParserService();
     }
 
@@ -263,7 +261,7 @@ class PrinterTest extends BaseUnitTest
             $tags,
             [
                 0 => '\EBT\ExtensionBuilder\Domain\Model\DomainObject $domainObject',
-                1 => '\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TOOOL\Projects\Domain\Model\Calculation> $tests'
+                1 => '\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TOOOL\Projects\Domain\Model\Calculation> $tests',
             ]
         );
         self::assertSame(

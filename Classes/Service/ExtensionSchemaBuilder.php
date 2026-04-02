@@ -38,18 +38,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ExtensionSchemaBuilder implements SingletonInterface
 {
-    protected ExtensionBuilderConfigurationManager $configurationManager;
-    protected ObjectSchemaBuilder $objectSchemaBuilder;
-
-    public function injectConfigurationManager(ExtensionBuilderConfigurationManager $configurationManager): void
-    {
-        $this->configurationManager = $configurationManager;
-    }
-
-    public function injectObjectSchemaBuilder(ObjectSchemaBuilder $objectSchemaBuilder): void
-    {
-        $this->objectSchemaBuilder = $objectSchemaBuilder;
-    }
+    public function __construct(
+        private readonly ExtensionBuilderConfigurationManager $configurationManager,
+        private readonly ObjectSchemaBuilder $objectSchemaBuilder,
+    ) {}
 
     /**
      * @param array $extensionBuildConfiguration
@@ -60,7 +52,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
      */
     public function build(array $extensionBuildConfiguration): Extension
     {
-        $extension = GeneralUtility::makeInstance(Extension::class);
+        $extension = new Extension();
         $globalProperties = $extensionBuildConfiguration['properties'];
         if (!is_array($globalProperties)) {
             throw new Exception('Extension properties not submitted!');
@@ -225,7 +217,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
         }
 
         // various extension properties
-        $extension->setVersion($propertyConfiguration['emConf']['version']);
+        $extension->setVersion($propertyConfiguration['emConf']['version'] ?? '1.0.0');
 
         if (!empty($propertyConfiguration['emConf']['dependsOn'])) {
             $dependencies = [];
@@ -250,7 +242,7 @@ class ExtensionSchemaBuilder implements SingletonInterface
         }
 
         $extension->setCategory($category);
-        $extension->setState($this->getStateByName($propertyConfiguration['emConf']['state']));
+        $extension->setState($this->getStateByName($propertyConfiguration['emConf']['state'] ?? 'alpha'));
 
         if (!empty($propertyConfiguration['originalExtensionKey'])) {
             // handle renaming of extensions

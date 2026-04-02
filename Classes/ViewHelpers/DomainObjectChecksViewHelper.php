@@ -23,16 +23,9 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
 class DomainObjectChecksViewHelper extends AbstractConditionViewHelper
 {
-    protected ExtensionBuilderConfigurationManager $configurationManager;
-
-    /**
-     * @param ExtensionBuilderConfigurationManager $configurationManager
-     */
-    public function injectExtensionBuilderConfigurationManager(
-        ExtensionBuilderConfigurationManager $configurationManager
-    ): void {
-        $this->configurationManager = $configurationManager;
-    }
+    public function __construct(
+        private readonly ExtensionBuilderConfigurationManager $configurationManager,
+    ) {}
 
     public function initializeArguments(): void
     {
@@ -59,7 +52,7 @@ class DomainObjectChecksViewHelper extends AbstractConditionViewHelper
         // table name is only set, if the model is mapped to a table or if the domain object extends a class
         $tableName = $domainObject->getMapToTable();
 
-        if ($tableName && strpos($tableName, strtolower($extensionPrefix) . '_domain_model_') === false) {
+        if ($tableName && !str_contains($tableName, strtolower($extensionPrefix) . '_domain_model_')) {
             $isMappedToExternalTable = true;
         }
 

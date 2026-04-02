@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\ViewHelpers;
 
+use Closure;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
@@ -45,7 +46,7 @@ class PregReplaceViewHelper extends AbstractViewHelper
 
     public static function renderStatic(
         array $arguments,
-        \Closure $renderChildrenClosure,
+        Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
     ) {
         $subject = $renderChildrenClosure();

@@ -215,10 +215,10 @@ class FunctionObject extends AbstractObject
             }
 
             if (isset($existingParamTagValues[$paramPosition])
-                && strpos($existingParamTagValues[$paramPosition], '$' . $parameter->getName()) !== false
+                && str_contains($existingParamTagValues[$paramPosition], '$' . $parameter->getName())
             ) {
                 // param tag for this parameter was found
-                if (!empty($varType) && strpos($existingParamTagValues[$paramPosition], $varType) === false) {
+                if (!empty($varType) && !str_contains($existingParamTagValues[$paramPosition], $varType)) {
                     $updatedParamTags[$position] = $varType . ' $' . $parameter->getName();
                 } else {
                     $updatedParamTags[$position] = $existingParamTagValues[$paramPosition];
