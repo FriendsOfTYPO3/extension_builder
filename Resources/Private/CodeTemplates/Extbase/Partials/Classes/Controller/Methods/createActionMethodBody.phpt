@@ -1,4 +1,4 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}
 $this->{domainObject.name -> k:format.lowercaseFirst()}Repository->add($new{domainObject.name});
-$this->flashMessageContainer->add('Your new {domainObject.name} was created.');
+$this->addFlashMessage('Your new {domainObject.name} was created.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
 $this->redirect('list');
