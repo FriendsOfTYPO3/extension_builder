@@ -7,6 +7,7 @@ export class EbSelectField extends EbField {
         ...EbField.properties,
         selectValues: { type: Array, attribute: 'select-values' },
         selectOptions: { type: Array, attribute: 'select-options' },
+        allowedValues: { type: Array },
     };
 
     static styles = css`
@@ -16,8 +17,24 @@ export class EbSelectField extends EbField {
     `;
 
     _getOptions() {
-        const opts = this.selectValues || this.selectOptions || [];
-        return opts.map(o => typeof o === 'string' ? { value: o, label: o } : o);
+        const values = this.selectValues ?? [];
+        const labels = this.selectOptions ?? values;
+        return values.map((v, i) => ({ value: v, label: labels[i] ?? v }));
+    }
+
+    _visibleOptions() {
+        const all = this._getOptions();
+        return this.allowedValues ? all.filter(o => this.allowedValues.includes(o.value)) : all;
+    }
+
+    updated(changedProps) {
+        if (changedProps.has('allowedValues') && this.allowedValues) {
+            const visible = this._visibleOptions();
+            if (visible.length > 0 && !visible.some(o => o.value === this.value)) {
+                this.value = visible[0].value;
+                this._fireUpdated();
+            }
+        }
     }
 
     _onChange(e) {
@@ -35,7 +52,7 @@ export class EbSelectField extends EbField {
     }
 
     render() {
-        const options = this._getOptions();
+        const options = this._visibleOptions();
         return html`
             ${this.label ? html`<label>${this.label}</label>` : ''}
             <select @change="${this._onChange}">

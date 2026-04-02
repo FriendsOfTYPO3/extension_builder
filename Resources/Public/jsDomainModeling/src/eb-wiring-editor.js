@@ -1,5 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import './eb-layer.js';
+import { extensionPropertiesFields } from './config/extensionProperties.js';
+import { modelObjectModule } from './config/modelObject.js';
 
 export class EbWiringEditor extends LitElement {
     static properties = {
@@ -8,6 +10,8 @@ export class EbWiringEditor extends LitElement {
         _loading: { state: true },
         _error: { state: true },
         _extensionData: { state: true },
+        _advancedMode: { state: true },
+        _leftCollapsed: { state: true },
     };
 
     static styles = css`
@@ -30,8 +34,43 @@ export class EbWiringEditor extends LitElement {
             padding: 4px 12px;
             cursor: pointer;
         }
-        eb-layer {
+        .content {
+            display: flex;
+            flex-direction: row;
             flex: 1;
+            overflow: hidden;
+        }
+        .left-panel {
+            width: 280px;
+            min-width: 120px;
+            max-width: 600px;
+            overflow-y: auto;
+            border-right: 1px solid #ccc;
+            padding: 8px;
+            resize: horizontal;
+        }
+        .left-panel.collapsed {
+            width: 20px;
+            min-width: 20px;
+            overflow: hidden;
+            padding: 4px;
+            resize: none;
+        }
+        .left-panel-header {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .left-panel-header button {
+            padding: 2px 6px;
+        }
+        .center-panel {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+        eb-layer {
+            width: 100%;
+            height: 100%;
         }
         .error {
             color: red;
@@ -40,6 +79,10 @@ export class EbWiringEditor extends LitElement {
         .loading {
             padding: 20px;
             color: #666;
+        }
+        .advanced-mode ::slotted([advanced]),
+        .advanced-mode [advanced] {
+            display: block;
         }
     `;
 
@@ -50,13 +93,41 @@ export class EbWiringEditor extends LitElement {
         this._loading = false;
         this._error = null;
         this._extensionData = null;
+        this._advancedMode = false;
+        this._leftCollapsed = false;
     }
 
     async connectedCallback() {
         super.connectedCallback();
+        this.addEventListener('field-updated', this._onFieldUpdated);
         if (this.extensionName) {
             await this.load();
         }
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        this.removeEventListener('field-updated', this._onFieldUpdated);
+    }
+
+    _onFieldUpdated(e) {
+        if (e.detail?.name !== 'targetVersion') return;
+        const dependsOnField = this.querySelector('[name=dependsOn]');
+        if (!dependsOnField) return;
+        const current = dependsOnField.getValue?.() ?? dependsOnField.value ?? '';
+        const updated = current
+            .split('\n')
+            .map(line => line.includes('typo3') ? `typo3 => ${e.detail.value}` : line)
+            .join('\n');
+        dependsOnField.setValue?.(updated);
+    }
+
+    _toggleAdvancedMode() {
+        this._advancedMode = !this._advancedMode;
+    }
+
+    _toggleLeftPanel() {
+        this._leftCollapsed = !this._leftCollapsed;
     }
 
     async load() {
@@ -123,12 +194,23 @@ export class EbWiringEditor extends LitElement {
             <div class="toolbar">
                 <button @click="${this.save}">Save</button>
                 <button @click="${this.load}">Reload</button>
+                <button @click="${this._toggleAdvancedMode}">Advanced</button>
                 ${this._error ? html`<span class="error">${this._error}</span>` : ''}
             </div>
-            ${this._loading
-                ? html`<div class="loading">Loading...</div>`
-                : html`<eb-layer></eb-layer>`
-            }
+            <div class="content ${this._advancedMode ? 'advanced-mode' : ''}">
+                <div class="left-panel ${this._leftCollapsed ? 'collapsed' : ''}">
+                    <div class="left-panel-header">
+                        <button @click="${this._toggleLeftPanel}">☰</button>
+                    </div>
+                    <slot name="properties"></slot>
+                </div>
+                <div class="center-panel">
+                    ${this._loading
+                        ? html`<div class="loading">Loading...</div>`
+                        : html`<eb-layer></eb-layer>`
+                    }
+                </div>
+            </div>
         `;
     }
 }

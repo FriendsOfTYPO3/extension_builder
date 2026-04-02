@@ -36,6 +36,45 @@ export class EbGroup extends LitElement {
         }
     `;
 
+    connectedCallback() {
+        super.connectedCallback();
+        this.addEventListener('field-updated', this._onFieldUpdated);
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        this.removeEventListener('field-updated', this._onFieldUpdated);
+    }
+
+    _onFieldUpdated(e) {
+        if (e.detail?.name !== 'relationType') return;
+        const renderTypeField = this.querySelector('[name=renderType]');
+        if (!renderTypeField) return;
+        const optionMap = {
+            zeroToOne:  ['selectSingle', 'selectMultipleSideBySide', 'inline'],
+            manyToOne:  ['selectSingle', 'selectMultipleSideBySide'],
+            zeroToMany: ['inline', 'selectMultipleSideBySide'],
+            manyToMany: ['selectMultipleSideBySide', 'selectSingleBox', 'selectCheckBox'],
+        };
+        renderTypeField.allowedValues = optionMap[e.detail.value] ?? null;
+    }
+
+    _initRelationTypes() {
+        this.querySelectorAll('[name=relationType]').forEach(field => {
+            const value = field.value ?? field.getValue?.();
+            if (!value) return;
+            const renderTypeField = this.querySelector('[name=renderType]');
+            if (!renderTypeField) return;
+            const optionMap = {
+                zeroToOne:  ['selectSingle', 'selectMultipleSideBySide', 'inline'],
+                manyToOne:  ['selectSingle', 'selectMultipleSideBySide'],
+                zeroToMany: ['inline', 'selectMultipleSideBySide'],
+                manyToMany: ['selectMultipleSideBySide', 'selectSingleBox', 'selectCheckBox'],
+            };
+            renderTypeField.allowedValues = optionMap[value] ?? null;
+        });
+    }
+
     _toggleCollapse() {
         if (this.collapsible) {
             this.collapsed = !this.collapsed;
@@ -44,6 +83,7 @@ export class EbGroup extends LitElement {
 
     _onSlotChange() {
         this.requestUpdate();
+        this._initRelationTypes();
     }
 
     getValue() {
