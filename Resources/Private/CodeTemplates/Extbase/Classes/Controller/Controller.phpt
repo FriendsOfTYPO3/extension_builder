@@ -64,7 +64,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function createAction(\VENDOR\Package\Domain\Model\DomainObject $newDomainObject): \Psr\Http\Message\ResponseInterface
     {
-        $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/User/Index.html', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         $this->domainObjectRepository->add($newDomainObject);
         return $this->redirect('list');
     }
@@ -89,7 +89,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function updateAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject): \Psr\Http\Message\ResponseInterface
     {
-        $this->addFlashMessage('The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        $this->addFlashMessage('The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/User/Index.html', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         $this->domainObjectRepository->update($domainObject);
         return $this->redirect('list');
     }
@@ -102,7 +102,7 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function deleteAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject): \Psr\Http\Message\ResponseInterface
     {
-        $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/User/Index.html', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         $this->domainObjectRepository->remove($domainObject);
         return $this->redirect('list');
     }

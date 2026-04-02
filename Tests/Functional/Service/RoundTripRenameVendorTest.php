@@ -39,10 +39,7 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
     {
         parent::setUp();
 
-        $configurationManager = $this->getAccessibleMock(
-            ExtensionBuilderConfigurationManager::class,
-            null
-        );
+        $configurationManager = GeneralUtility::makeInstance(ExtensionBuilderConfigurationManager::class);
         $extensionSchemaBuilder = GeneralUtility::makeInstance(ExtensionSchemaBuilder::class);
 
         $testExtensionDir = $this->fixturesPath . 'TestExtensions/test_extension/';
