@@ -153,6 +153,8 @@ class FileGenerator
 
         $this->generatePluginFiles();
 
+        $this->generateBackendModuleFiles();
+
         $this->generateIconsFile();
 
         $this->copyStaticFiles();
@@ -234,6 +236,26 @@ class FileGenerator
             $this->writeFile($this->extensionDirectory . 'ext_localconf.php', $fileContents);
         } catch (Exception $e) {
             throw new Exception('Could not write ext_localconf.php. Error: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function generateBackendModuleFiles(): void
+    {
+        if (!$this->extension->hasBackendModules()) {
+            return;
+        }
+        try {
+            GeneralUtility::mkdir_deep($this->configurationDirectory . 'Backend');
+            $fileContents = $this->renderTemplate(
+                'Configuration/Backend/Modules.phpt',
+                ['extension' => $this->extension]
+            );
+            $this->writeFile($this->configurationDirectory . 'Backend/Modules.php', $fileContents);
+        } catch (Exception $e) {
+            throw new Exception('Could not write Configuration/Backend/Modules.php. Error: ' . $e->getMessage());
         }
     }
 
