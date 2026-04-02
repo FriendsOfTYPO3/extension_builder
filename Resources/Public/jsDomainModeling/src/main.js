@@ -21,21 +21,20 @@ function initEditor() {
 
     // Save
     document.getElementById('WiringEditor-saveButton-button')
-        ?.addEventListener('click', e => { e.preventDefault(); Notification.info('Debug', 'Save clicked', 2); editor.save(); });
+        ?.addEventListener('click', e => { e.preventDefault(); editor.save(); });
 
     // New
     document.getElementById('WiringEditor-newButton-button')
-        ?.addEventListener('click', e => { e.preventDefault(); Notification.info('Debug', 'New clicked', 2); editor.reset(); });
+        ?.addEventListener('click', e => { e.preventDefault(); editor.reset(); });
 
     // Advanced toggle
     document.getElementById('toggleAdvancedOptions')
-        ?.addEventListener('click', e => { e.preventDefault(); Notification.info('Debug', 'Advanced clicked', 2); editor._toggleAdvancedMode(); });
+        ?.addEventListener('click', e => { e.preventDefault(); editor._toggleAdvancedMode(); });
 
     // Open → Liste laden → nativer Dialog → Extension auswählen
     document.getElementById('WiringEditor-loadButton-button')
         ?.addEventListener('click', async e => {
             e.preventDefault();
-            Notification.info('Debug', 'Open clicked', 2);
             const smdUrl = editor.getAttribute('smd-url');
             const resp = await fetch(smdUrl, {
                 method: 'POST',
@@ -44,7 +43,7 @@ function initEditor() {
             });
             const data = await resp.json();
             const extensions = data.result ?? [];
-            if (extensions.length === 0) { alert('No extensions found.'); return; }
+            if (extensions.length === 0) { Notification.info('Open Extension', 'No extensions found.'); return; }
 
             // Dialog mit sicheren DOM-Methoden (kein innerHTML mit Nutzerdaten)
             const dialog = document.createElement('dialog');

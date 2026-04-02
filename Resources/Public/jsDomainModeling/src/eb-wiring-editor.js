@@ -1,4 +1,7 @@
 import { LitElement, html, css } from 'lit';
+import Notification from '@typo3/backend/notification.js';
+import Modal from '@typo3/backend/modal.js';
+import Severity from '@typo3/backend/severity.js';
 import './eb-layer.js';
 import './eb-string-field.js';
 import './eb-textarea-field.js';
@@ -16,7 +19,6 @@ export class EbWiringEditor extends LitElement {
         extensionName: { type: String, attribute: 'extension-name' },
         initialWarnings: { type: Array, attribute: 'initial-warnings' },
         _loading: { state: true },
-        _error: { state: true },
         _extensionData: { state: true },
         _advancedMode: { state: true },
         _leftCollapsed: { state: true },
@@ -87,10 +89,6 @@ export class EbWiringEditor extends LitElement {
             min-height: 0;
             width: 100%;
         }
-        .error {
-            color: red;
-            padding: 8px;
-        }
         .loading {
             padding: 20px;
             color: var(--eb-text-muted, #666);
@@ -107,7 +105,6 @@ export class EbWiringEditor extends LitElement {
         this.extensionName = '';
         this.initialWarnings = [];
         this._loading = false;
-        this._error = null;
         this._extensionData = null;
         this._advancedMode = false;
         this._leftCollapsed = false;
@@ -116,7 +113,7 @@ export class EbWiringEditor extends LitElement {
     async connectedCallback() {
         super.connectedCallback();
         if (this.initialWarnings?.length > 0) {
-            this._error = this.initialWarnings.join('<br>');
+            this.initialWarnings.forEach(msg => Notification.warning('Configuration', msg));
         }
         this.addEventListener('field-updated', this._onFieldUpdated);
         if (this.extensionName) {
@@ -152,7 +149,6 @@ export class EbWiringEditor extends LitElement {
     async load() {
         if (!this.extensionName) return;
         this._loading = true;
-        this._error = null;
         try {
             const response = await fetch(this.smdUrl, {
                 method: 'POST',
@@ -169,7 +165,7 @@ export class EbWiringEditor extends LitElement {
             this._populateLayer();
             this._populateProperties();
         } catch (e) {
-            this._error = e.message;
+            Notification.error('Load failed', e.message);
         } finally {
             this._loading = false;
         }
@@ -205,7 +201,7 @@ export class EbWiringEditor extends LitElement {
         return props;
     }
 
-    async save() {
+    async save(extraParams = {}) {
         const layer = this.shadowRoot.querySelector('eb-layer');
         if (!layer) return;
 
@@ -216,26 +212,59 @@ export class EbWiringEditor extends LitElement {
             properties: this._collectProperties(),
         });
 
-        try {
-            const response = await fetch(this.smdUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    method: 'saveWiring',
-                    params: { name: this.extensionName, working },
-                }),
-            });
-            const data = await response.json();
-            if (data.error) throw new Error(data.error);
-        } catch (e) {
-            this._error = e.message;
+        const response = await fetch(this.smdUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                method: 'saveWiring',
+                params: { name: this.extensionName, working, ...extraParams },
+            }),
+        });
+        const data = await response.json();
+
+        if (data.errors?.length) {
+            data.errors.forEach(msg => Notification.error('Validation error', msg));
+            return;
         }
+        if (data.error) {
+            Notification.error('Error', data.error);
+            return;
+        }
+        if (data.confirm) {
+            Modal.confirm(
+                'Warning',
+                data.confirm,
+                Severity.warning,
+                [
+                    { text: 'Cancel', btnClass: 'btn-default', trigger: () => Modal.dismiss() },
+                    {
+                        text: 'Save anyway',
+                        btnClass: 'btn-warning',
+                        trigger: () => {
+                            Modal.dismiss();
+                            this._saveWithConfirmation(data.confirmFieldName);
+                        },
+                    },
+                ]
+            );
+            return;
+        }
+        if (data.warning) {
+            Notification.warning('Warning', data.warning);
+        }
+        if (data.success) {
+            Notification.success('Saved', data.success);
+            (data.installationHints ?? []).forEach(hint => Notification.info('Next steps', hint));
+        }
+    }
+
+    _saveWithConfirmation(fieldName) {
+        this.save({ [fieldName]: true });
     }
 
     reset() {
         this.extensionName = '';
         this._extensionData = null;
-        this._error = null;
         const layer = this.shadowRoot.querySelector('eb-layer');
         if (layer) {
             layer._containers = [];
@@ -323,7 +352,6 @@ export class EbWiringEditor extends LitElement {
         return html`
             <div class="toolbar">
                 <button @click="${this.addModelObject}">+ Model Object</button>
-                ${this._error ? html`<span class="error">${this._error}</span>` : ''}
             </div>
             <div class="content ${this._advancedMode ? 'advanced-mode' : ''}">
                 <div class="left-panel ${this._leftCollapsed ? 'collapsed' : ''}">

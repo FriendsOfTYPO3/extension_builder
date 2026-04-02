@@ -19,6 +19,7 @@ namespace EBT\ExtensionBuilder\Utility;
 
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class ExtensionInstallationStatus
 {
@@ -35,22 +36,28 @@ class ExtensionInstallationStatus
         $this->usesComposerPath = $usesComposerPath;
     }
 
-    public function getStatusMessage(): string
+    /**
+     * @return string[]
+     */
+    public function getStatusMessages(): array
     {
-        $statusMessage = '';
+        $messages = [];
 
         if (!ExtensionManagementUtility::isLoaded($this->extension->getExtensionKey())) {
-            $statusMessage .= '<p>Your Extension is not installed yet.</p>';
+            $messages[] = LocalizationUtility::translate('notification.not_installed', 'ExtensionBuilder')
+                ?? 'Your Extension is not installed yet.';
             if ($this->usesComposerPath) {
-                $statusMessage .= sprintf(
-                    'Execute <code>composer require %1$s:@dev</code> in terminal',
-                    $this->extension->getComposerInfo()['name']
-                );
+                $messages[] = LocalizationUtility::translate(
+                    'notification.composer_require',
+                    'ExtensionBuilder',
+                    [$this->extension->getComposerInfo()['name']]
+                ) ?? sprintf('Execute: composer require %s:@dev in terminal', $this->extension->getComposerInfo()['name']);
             }
         } else {
-            $statusMessage .= '<br /><p>Please check the Install Tool for possible database updates!</p>';
+            $messages[] = LocalizationUtility::translate('notification.db_update', 'ExtensionBuilder')
+                ?? 'Please check the Install Tool for possible database updates!';
         }
 
-        return $statusMessage;
+        return $messages;
     }
 }
