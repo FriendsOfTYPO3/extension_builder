@@ -15,7 +15,7 @@ export class EbInplaceEdit extends LitElement {
             display: inline-block;
         }
         span:hover { opacity: 0.7; }
-        input { font: inherit; border: 1px solid #999; padding: 1px 3px; }
+        input { font: inherit; border: 1px solid var(--eb-input-border, #999); padding: 1px 3px; }
     `;
 
     constructor() {

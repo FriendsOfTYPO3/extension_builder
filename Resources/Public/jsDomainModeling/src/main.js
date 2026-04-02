@@ -1,3 +1,4 @@
+import './styles/editor.css';
 import './eb-terminal.js';
 import './eb-wire.js';
 import './eb-container.js';

@@ -35,12 +35,12 @@ export class EbListField extends LitElement {
         .item-content { flex: 1; }
         button {
             background: none;
-            border: 1px solid #ccc;
+            border: 1px solid var(--eb-border-color, #ccc);
             cursor: pointer;
             padding: 2px 4px;
             line-height: 1;
         }
-        button:hover { background: #eee; }
+        button:hover { background: var(--eb-button-hover-bg, #eee); }
         .add-btn { margin-top: 4px; }
     `;
 

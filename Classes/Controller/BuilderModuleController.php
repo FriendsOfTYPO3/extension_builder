@@ -121,6 +121,7 @@ class BuilderModuleController extends ActionController
         $this->addRightButtons();
 
         $this->pageRenderer->loadJavaScriptModule('@ebt/extension-builder/domain-modeling.js');
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/JavaScript/domain-modeling.css');
 
         $this->setLocallangSettings();
 
