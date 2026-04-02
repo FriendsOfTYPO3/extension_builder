@@ -33,7 +33,7 @@ use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Http\HtmlResponse;
+
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Localization\LanguageService;
@@ -95,7 +95,7 @@ class BuilderModuleController extends ActionController
 
         $this->addMainMenu('index');
 
-        $this->view->assign('currentAction', $this->request->getControllerActionName());
+        $this->moduleTemplate->assign('currentAction', $this->request->getControllerActionName());
 
         if (!$this->request->hasArgument('action')) {
             $userSettings = $GLOBALS['BE_USER']->getModuleData('extensionbuilder');
@@ -104,9 +104,7 @@ class BuilderModuleController extends ActionController
             }
         }
 
-        $this->moduleTemplate->setContent($this->view->render());
-
-        return new HtmlResponse($this->moduleTemplate->renderContent());
+        return $this->moduleTemplate->renderResponse('Index');
     }
 
     public function domainmodellingAction(): ResponseInterface
@@ -131,13 +129,11 @@ class BuilderModuleController extends ActionController
         }
         $dispatchRpcUrl = (string)$this->backendUriBuilder->buildUriFromRoute('tools_extensionbuilder.BuilderModule_dispatchRpc');
 
-        $this->view->assign('dispatchRpcUrl', $dispatchRpcUrl);
-        $this->view->assign('initialWarnings', $initialWarnings);
+        $this->moduleTemplate->assign('dispatchRpcUrl', $dispatchRpcUrl);
+        $this->moduleTemplate->assign('initialWarnings', $initialWarnings);
         $GLOBALS['BE_USER']->pushModuleData('extensionbuilder', ['firstTime' => 0]);
 
-        $this->moduleTemplate->setContent($this->view->render());
-
-        return $this->htmlResponse($this->moduleTemplate->renderContent());
+        return $this->moduleTemplate->renderResponse('Domainmodelling');
     }
 
     protected function addMainMenu(string $currentAction): void

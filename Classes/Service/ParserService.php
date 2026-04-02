@@ -41,7 +41,7 @@ class ParserService implements SingletonInterface
 
     public function __construct()
     {
-        $this->parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
+        $this->parser = (new ParserFactory())->createForHostVersion();
     }
 
     public function parseCode(string $code): File
