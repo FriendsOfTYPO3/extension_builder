@@ -105,6 +105,16 @@ class FileGenerator
         return $this->roundTripService->getParseWarnings();
     }
 
+    public function previewChanges(Extension $extension): array
+    {
+        $enableRoundtrip = (bool)$this->extensionConfiguration->get('extension_builder', 'enableRoundtrip');
+        if (!$enableRoundtrip || !is_dir($extension->getExtensionDir())) {
+            return ['hasChanges' => false, 'modifiedFiles' => [], 'deletedFiles' => []];
+        }
+        $this->roundTripService->initialize($extension);
+        return $this->roundTripService->previewChanges($extension);
+    }
+
     /**
      * The entry point to the class
      *

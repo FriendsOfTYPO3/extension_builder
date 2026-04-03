@@ -206,16 +206,74 @@ export class EbWiringEditor extends LitElement {
         return props;
     }
 
-    async save(extraParams = {}) {
+    _serializeWorking() {
         const layer = this.shadowRoot.querySelector('eb-layer');
-        if (!layer) return;
-
+        if (!layer) return null;
         const { modules, wires } = layer.serialize();
-        const working = JSON.stringify({
-            modules,
-            wires,
-            properties: this._collectProperties(),
-        });
+        return JSON.stringify({ modules, wires, properties: this._collectProperties() });
+    }
+
+    async _fetchPreviewChanges(working) {
+        try {
+            const response = await fetch(this.smdUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ method: 'previewChanges', params: { name: this.extensionName, working } }),
+            });
+            return await response.json();
+        } catch {
+            return null;
+        }
+    }
+
+    _buildPreviewContent(preview) {
+        const lines = [];
+        if (preview.modifiedFiles?.length) {
+            lines.push('Files that will be modified:\n');
+            for (const file of preview.modifiedFiles) {
+                let fileLine = '  • ' + file.path;
+                if (file.renamedTo) fileLine += '  →  ' + file.renamedTo;
+                lines.push(fileLine + '\n');
+                for (const c of (file.changes ?? [])) {
+                    if (c.type === 'renamed') lines.push('      ↻ ' + c.from + ' → ' + c.to + '\n');
+                    else if (c.type === 'removed') lines.push('      − ' + c.method + ' (removed)\n');
+                    else if (c.type === 'added') lines.push('      + ' + c.method + ' (added)\n');
+                }
+            }
+        }
+        if (preview.deletedFiles?.length) {
+            lines.push('\nFiles that will be deleted:\n');
+            for (const f of preview.deletedFiles) lines.push('  • ' + f + '\n');
+        }
+        const pre = document.createElement('pre');
+        pre.style.cssText = 'font-size:0.9em;max-height:60vh;overflow:auto;white-space:pre-wrap;';
+        pre.textContent = lines.join('');
+        return pre;
+    }
+
+    async save(extraParams = {}) {
+        const working = this._serializeWorking();
+        if (!working) return;
+
+        if (!extraParams._previewDone) {
+            const preview = await this._fetchPreviewChanges(working);
+            if (preview?.hasChanges) {
+                Modal.confirm(
+                    'Review changes before generating',
+                    this._buildPreviewContent(preview),
+                    Severity.warning,
+                    [
+                        { text: 'Cancel', btnClass: 'btn-default', trigger: () => Modal.dismiss() },
+                        {
+                            text: 'Generate',
+                            btnClass: 'btn-warning',
+                            trigger: () => { Modal.dismiss(); this.save({ ...extraParams, _previewDone: true }); },
+                        },
+                    ]
+                );
+                return;
+            }
+        }
 
         const response = await fetch(this.smdUrl, {
             method: 'POST',

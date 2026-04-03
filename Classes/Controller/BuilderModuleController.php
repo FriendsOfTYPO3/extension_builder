@@ -299,6 +299,9 @@ class BuilderModuleController extends ActionController
                 case 'listWirings':
                     $response = $this->rpcActionList();
                     break;
+                case 'previewChanges':
+                    $response = $this->rpcActionPreviewChanges();
+                    break;
                 default:
                     $response = ['error' => 'Sub Action not found.'];
             }
@@ -451,6 +454,19 @@ class BuilderModuleController extends ActionController
             'result' => $extensions,
             'error' => null,
         ];
+    }
+
+    protected function rpcActionPreviewChanges(): array
+    {
+        $extensionBuildConfiguration = $this->extensionBuilderConfigurationManager->getConfigurationFromModeler();
+        $storagePaths = $this->extensionService->resolveStoragePaths();
+        $storagePath = reset($storagePaths);
+        if ($storagePath === false) {
+            return ['hasChanges' => false, 'modifiedFiles' => [], 'deletedFiles' => []];
+        }
+        $extensionBuildConfiguration['storagePath'] = $storagePath;
+        $extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
+        return $this->fileGenerator->previewChanges($extension);
     }
 
     /**

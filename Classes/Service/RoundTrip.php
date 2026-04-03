@@ -102,6 +102,146 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
     }
 
     /**
+     * Returns a structured list of changes the roundtrip would apply, without modifying any files.
+     * Must be called after initialize().
+     *
+     * @param Extension $current
+     * @return array{hasChanges: bool, modifiedFiles: array, deletedFiles: array}
+     */
+    public function previewChanges(Extension $current): array
+    {
+        $result = ['hasChanges' => false, 'modifiedFiles' => [], 'deletedFiles' => []];
+
+        $currentByUid = [];
+        foreach ($current->getDomainObjects() as $obj) {
+            $currentByUid[$obj->getUniqueIdentifier()] = $obj;
+        }
+
+        foreach ($currentByUid as $uid => $currentObj) {
+            if (!isset($this->previousDomainObjects[$uid])) {
+                continue;
+            }
+            $entries = $this->computeObjectFileChanges($this->previousDomainObjects[$uid], $currentObj);
+            if (!empty($entries)) {
+                $result['modifiedFiles'] = array_merge($result['modifiedFiles'], $entries);
+                $result['hasChanges'] = true;
+            }
+        }
+
+        foreach ($this->previousDomainObjects as $uid => $oldObj) {
+            if (isset($currentByUid[$uid])) {
+                continue;
+            }
+            $dir = $this->previousExtensionDirectory;
+            $modelFile = FileGenerator::getFolderForClassFile($dir, 'Model', false) . $oldObj->getName() . '.php';
+            if (file_exists($modelFile)) {
+                $result['deletedFiles'][] = str_replace($dir, '', $modelFile);
+                $result['hasChanges'] = true;
+            }
+            if ($oldObj->isAggregateRoot()) {
+                $controllerFile = FileGenerator::getFolderForClassFile($dir, 'Controller', false) . $oldObj->getName() . 'Controller.php';
+                if (file_exists($controllerFile)) {
+                    $result['deletedFiles'][] = str_replace($dir, '', $controllerFile);
+                }
+                $repoFile = FileGenerator::getFolderForClassFile($dir, 'Repository', false) . $oldObj->getName() . 'Repository.php';
+                if (file_exists($repoFile)) {
+                    $result['deletedFiles'][] = str_replace($dir, '', $repoFile);
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    private function computeObjectFileChanges(DomainObject $old, DomainObject $current): array
+    {
+        $result = [];
+        $dir = $this->previousExtensionDirectory;
+        $renamed = $old->getName() !== $current->getName();
+        $methodChanges = $this->computePropertyMethodChanges($old, $current);
+
+        $modelFile = FileGenerator::getFolderForClassFile($dir, 'Model', false) . $old->getName() . '.php';
+        if (file_exists($modelFile) && (!empty($methodChanges) || $renamed)) {
+            $entry = ['path' => str_replace($dir, '', $modelFile), 'changes' => $methodChanges];
+            if ($renamed) {
+                $entry['renamedTo'] = $current->getName() . '.php';
+            }
+            $result[] = $entry;
+        }
+
+        if ($renamed) {
+            $controllerFile = FileGenerator::getFolderForClassFile($dir, 'Controller', false) . $old->getName() . 'Controller.php';
+            if (file_exists($controllerFile)) {
+                $result[] = ['path' => str_replace($dir, '', $controllerFile), 'renamedTo' => $current->getName() . 'Controller.php', 'changes' => []];
+            }
+            $repoFile = FileGenerator::getFolderForClassFile($dir, 'Repository', false) . $old->getName() . 'Repository.php';
+            if (file_exists($repoFile)) {
+                $result[] = ['path' => str_replace($dir, '', $repoFile), 'renamedTo' => $current->getName() . 'Repository.php', 'changes' => []];
+            }
+        }
+
+        return $result;
+    }
+
+    private function computePropertyMethodChanges(DomainObject $old, DomainObject $current): array
+    {
+        $changes = [];
+        $oldByUid = [];
+        foreach ($old->getProperties() as $p) {
+            $oldByUid[$p->getUniqueIdentifier()] = $p;
+        }
+        $newByUid = [];
+        foreach ($current->getProperties() as $p) {
+            $newByUid[$p->getUniqueIdentifier()] = $p;
+        }
+
+        foreach ($oldByUid as $uid => $oldProp) {
+            if (!isset($newByUid[$uid])) {
+                foreach ($this->methodNamesForProperty($oldProp) as $method) {
+                    $changes[] = ['type' => 'removed', 'method' => $method];
+                }
+            } elseif ($oldProp->getName() !== $newByUid[$uid]->getName()) {
+                $newProp = $newByUid[$uid];
+                $oldMethods = $this->methodNamesForProperty($oldProp);
+                $newMethods = $this->methodNamesForProperty($newProp);
+                foreach ($oldMethods as $key => $oldMethod) {
+                    $newMethod = $newMethods[$key] ?? null;
+                    if ($newMethod !== null && $oldMethod !== $newMethod) {
+                        $changes[] = ['type' => 'renamed', 'from' => $oldMethod, 'to' => $newMethod];
+                    }
+                }
+            }
+        }
+
+        foreach ($newByUid as $uid => $newProp) {
+            if (!isset($oldByUid[$uid])) {
+                foreach ($this->methodNamesForProperty($newProp) as $method) {
+                    $changes[] = ['type' => 'added', 'method' => $method];
+                }
+            }
+        }
+
+        return $changes;
+    }
+
+    private function methodNamesForProperty(AbstractProperty $property): array
+    {
+        $name = $property->getName();
+        $methods = [
+            'get' => 'get' . ucfirst($name),
+            'set' => 'set' . ucfirst($name),
+        ];
+        if ($property->isAnyToManyRelation()) {
+            $methods['add'] = 'add' . ucfirst(Inflector::singularize($name));
+            $methods['remove'] = 'remove' . ucfirst(Inflector::singularize($name));
+        }
+        if ($property->isBoolean()) {
+            $methods['is'] = 'is' . ucfirst($name);
+        }
+        return $methods;
+    }
+
+    /**
      * If a JSON file is found in the extensions directory the previous version
      * of the extension is build to compare it with the new configuration coming
      * from the extension builder input
