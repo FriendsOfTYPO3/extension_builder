@@ -1,13 +1,16 @@
-import { FrameLocator, Locator } from '@playwright/test';
+import { FrameLocator, Locator, Page } from '@playwright/test';
 
 export class ExtensionBuilderPage {
-  constructor(private readonly frame: FrameLocator) {}
+  constructor(
+    private readonly frame: FrameLocator,
+    private readonly page?: Page
+  ) {}
 
   async goToDomainModeller(): Promise<void> {
     const btn = this.frame.getByRole('link', { name: /go to (the )?domain modell/i });
     if (await btn.isVisible()) {
       await btn.click();
-      // Link navigates the parent page; wait for the new page's iframe to load YUI
+      // Link navigates the parent page; wait for the new page's iframe to load
       await this.frame.locator('#WiringEditor-saveButton-button').waitFor({ state: 'visible', timeout: 15000 });
     }
   }
@@ -25,9 +28,19 @@ export class ExtensionBuilderPage {
   }
 
   async fillExtensionProperties(name: string, key: string, vendor: string): Promise<void> {
-    await this.frame.locator('[name="name"]').fill(name);
-    await this.frame.locator('[name="extensionKey"]').fill(key);
-    await this.frame.locator('[name="vendorName"]').fill(vendor);
+    // Fields live inside eb-wiring-editor's shadow DOM — standard locators cannot pierce it.
+    // Use evaluate() to reach shadow root fields and call their setValue() API.
+    await this.frame.locator('eb-wiring-editor').evaluate(
+      (el: any, args: { name: string; key: string; vendor: string }) => {
+        el.extensionName = args.key;
+        el.shadowRoot?.querySelectorAll('[name]').forEach((field: any) => {
+          if (field.name === 'name') field.setValue?.(args.name);
+          if (field.name === 'extensionKey') field.setValue?.(args.key);
+          if (field.name === 'vendorName') field.setValue?.(args.vendor);
+        });
+      },
+      { name, key, vendor }
+    );
   }
 
   async generateExtension(): Promise<void> {
@@ -35,7 +48,11 @@ export class ExtensionBuilderPage {
   }
 
   getSuccessMessage(): Locator {
-    // YUI message box shown after save
-    return this.frame.locator('#wireEditorMessageBox, .typo3-message-ok, .alert-success').first();
+    // TYPO3 v13 notification.js uses top.TYPO3.Notification when available,
+    // rendering the #alert-container in the outer backend page, not the iframe.
+    if (this.page) {
+      return this.page.locator('#alert-container .alert-success').first();
+    }
+    return this.frame.locator('#alert-container .alert-success').first();
   }
 }

@@ -21,27 +21,33 @@ test.describe('Extension Generation', () => {
     await expect(frame.locator('#WiringEditor-newButton-button')).toBeVisible();
   });
 
-  // TODO: The following tests require shadow DOM access to extension properties fields
-  // inside eb-wiring-editor — tracked as a follow-up ticket for v13.
-  test.skip('"New extension" opens the form', async ({ page }) => {
+  test('"New extension" opens the form', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
-    const extBuilder = new ExtensionBuilderPage(frame);
-    await extBuilder.openNewExtension();
-    await expect(frame.locator('[name="name"]')).toBeVisible();
+    await frame.locator('#WiringEditor-newButton-button').click();
+    // Fields live inside eb-wiring-editor's shadow DOM — verify via evaluate()
+    const hasNameField = await frame.locator('eb-wiring-editor').evaluate(
+      (el: Element) => !!el.shadowRoot?.querySelector('[name="name"]')
+    );
+    expect(hasNameField).toBe(true);
   });
 
-  test.skip('extension name and vendor can be filled', async ({ page }) => {
+  test('extension name and vendor can be filled', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
     const extBuilder = new ExtensionBuilderPage(frame);
     await extBuilder.openNewExtension();
     await extBuilder.fillExtensionProperties('My Test Extension', 'my_test_ext', 'Vendor');
-    await expect(frame.locator('[name="name"]')).toHaveValue('My Test Extension');
-    await expect(frame.locator('[name="extensionKey"]')).toHaveValue('my_test_ext');
+    const values = await frame.locator('eb-wiring-editor').evaluate((el: any) => ({
+      name: el.shadowRoot?.querySelector('[name="name"]')?.getValue?.() ?? '',
+      extensionKey: el.shadowRoot?.querySelector('[name="extensionKey"]')?.getValue?.() ?? '',
+    }));
+    expect(values.name).toBe('My Test Extension');
+    expect(values.extensionKey).toBe('my_test_ext');
   });
 
+  // TODO EBUILDER-36: full generation cycle — requires shadow DOM fill + success notification
   test.skip('"Save and generate" triggers generation', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
-    const extBuilder = new ExtensionBuilderPage(frame);
+    const extBuilder = new ExtensionBuilderPage(frame, page);
     await extBuilder.openNewExtension();
     await extBuilder.fillExtensionProperties('Playwright Test Ext', 'playwright_test', 'TestVendor');
     await extBuilder.generateExtension();
@@ -50,7 +56,7 @@ test.describe('Extension Generation', () => {
 
   test.skip('success message appears after generation', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
-    const extBuilder = new ExtensionBuilderPage(frame);
+    const extBuilder = new ExtensionBuilderPage(frame, page);
     await extBuilder.openNewExtension();
     await extBuilder.fillExtensionProperties('Playwright Success Ext', 'playwright_success', 'TestVendor');
     await extBuilder.generateExtension();
