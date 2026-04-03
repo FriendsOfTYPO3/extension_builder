@@ -1,6 +1,11 @@
 import { test, expect } from '@playwright/test';
+import * as fs from 'fs';
+import * as path from 'path';
 import { BackendPage } from '../pages/BackendPage';
 import { ExtensionBuilderPage } from '../pages/ExtensionBuilderPage';
+
+// Path to the Composer path-repository root where Extension Builder writes new extensions
+const PACKAGES_DIR = path.resolve(__dirname, '../../../../packages');
 
 test.describe('Extension Generation', () => {
   test.beforeEach(async ({ page }) => {
@@ -44,8 +49,7 @@ test.describe('Extension Generation', () => {
     expect(values.extensionKey).toBe('my_test_ext');
   });
 
-  // TODO EBUILDER-36: full generation cycle — requires shadow DOM fill + success notification
-  test.skip('"Save and generate" triggers generation', async ({ page }) => {
+  test('"Save and generate" triggers generation', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
     const extBuilder = new ExtensionBuilderPage(frame, page);
     await extBuilder.openNewExtension();
@@ -54,7 +58,7 @@ test.describe('Extension Generation', () => {
     await expect(extBuilder.getSuccessMessage()).toBeVisible({ timeout: 15000 });
   });
 
-  test.skip('success message appears after generation', async ({ page }) => {
+  test('success message appears after generation', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
     const extBuilder = new ExtensionBuilderPage(frame, page);
     await extBuilder.openNewExtension();
@@ -63,6 +67,12 @@ test.describe('Extension Generation', () => {
     const msg = extBuilder.getSuccessMessage();
     await expect(msg).toBeVisible({ timeout: 15000 });
     await expect(msg).toContainText(/(success|generated|created|saved)/i);
+  });
+
+  test.afterAll(() => {
+    for (const extKey of ['playwright_test', 'playwright_success', 'my_test_ext']) {
+      fs.rmSync(path.join(PACKAGES_DIR, extKey), { recursive: true, force: true });
+    }
   });
 });
 
