@@ -41,26 +41,26 @@ test.describe('Load Extension via Open Dialog', () => {
   test('load dialog appears when clicking Open', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
     await frame.locator('#WiringEditor-loadButton-button').click();
-    const dialog = frame.locator('dialog');
-    await expect(dialog).toBeVisible();
-    await expect(dialog.locator('h3')).toHaveText('Open Extension');
+    const modal = page.locator('.t3js-modal');
+    await expect(modal).toBeVisible();
+    await expect(modal.locator('.t3js-modal-title')).toHaveText('Open Extension');
   });
 
   test('load dialog lists the test extension', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
     await frame.locator('#WiringEditor-loadButton-button').click();
-    const dialog = frame.locator('dialog');
-    await expect(dialog).toBeVisible();
-    await expect(dialog.locator('select option', { hasText: TEST_EXT_KEY })).toBeVisible();
+    const modal = page.locator('.t3js-modal');
+    await expect(modal).toBeVisible();
+    await expect(modal.locator('select option', { hasText: TEST_EXT_KEY })).toBeVisible();
   });
 
   test('selecting an extension loads it into the editor', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
     await frame.locator('#WiringEditor-loadButton-button').click();
-    const dialog = frame.locator('dialog');
-    await expect(dialog).toBeVisible();
-    await dialog.locator('select').selectOption(TEST_EXT_KEY);
-    await dialog.locator('button[type="submit"]').click();
+    const modal = page.locator('.t3js-modal');
+    await expect(modal).toBeVisible();
+    await modal.locator('select').selectOption(TEST_EXT_KEY);
+    await modal.locator('.t3js-modal-footer .btn-primary').click();
 
     // Wait for the editor to load the extension
     await frame.locator('eb-wiring-editor').waitFor({ state: 'visible' });

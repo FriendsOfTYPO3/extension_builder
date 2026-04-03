@@ -31,12 +31,12 @@ async function openDomainModeller(page: any): Promise<{ backend: BackendPage; fr
 }
 
 /** Load an existing extension in the editor by key. */
-async function loadExtension(frame: any, extKey: string): Promise<void> {
+async function loadExtension(frame: any, page: any, extKey: string): Promise<void> {
   await frame.locator('#WiringEditor-loadButton-button').click();
-  const dialog = frame.locator('dialog');
-  await expect(dialog).toBeVisible({ timeout: 10000 });
-  await dialog.locator('select').selectOption(extKey);
-  await dialog.locator('button[type="submit"]').click();
+  const modal = page.locator('.t3js-modal');
+  await expect(modal).toBeVisible({ timeout: 10000 });
+  await modal.locator('select').selectOption(extKey);
+  await modal.locator('.t3js-modal-footer .btn-primary').click();
   await frame.locator('eb-wiring-editor').evaluate(async (el: any) => {
     if (el._loading) {
       await new Promise<void>(resolve => {
@@ -97,7 +97,7 @@ test.describe('Backup-Restore UI (EBUILDER-120)', () => {
 
       // Navigate back and load the extension
       const { frame } = await openDomainModeller(page);
-      await loadExtension(frame, extKey);
+      await loadExtension(frame, page, extKey);
 
       // Remove any backups that the second save may have created
       fs.rmSync(path.join(BACKUP_BASE, extKey), { recursive: true, force: true });
@@ -133,15 +133,15 @@ test.describe('Backup-Restore UI (EBUILDER-120)', () => {
       fs.writeFileSync(path.join(backupPath, 'ext_emconf.php'), '<?php // backup');
 
       const { frame } = await openDomainModeller(page);
-      await loadExtension(frame, extKey);
+      await loadExtension(frame, page, extKey);
       await frame.locator('#WiringEditor-backupsButton-button').click();
 
-      // Backup selection dialog should appear
-      const dialog = frame.locator('dialog');
-      await expect(dialog).toBeVisible({ timeout: 10000 });
-      await expect(dialog.locator('h3')).toContainText('Restore backup');
-      await expect(dialog.locator('select option')).toHaveCount(1);
-      await expect(dialog.locator('select option').first()).toHaveAttribute('value', backupEntry);
+      // Backup selection modal should appear
+      const modal = page.locator('.t3js-modal');
+      await expect(modal).toBeVisible({ timeout: 10000 });
+      await expect(modal.locator('.t3js-modal-title')).toContainText('Restore backup');
+      await expect(modal.locator('select option')).toHaveCount(1);
+      await expect(modal.locator('select option').first()).toHaveAttribute('value', backupEntry);
     } finally {
       await context.close();
       fs.rmSync(path.join(PACKAGES_DIR, extKey), { recursive: true, force: true });
@@ -173,16 +173,16 @@ test.describe('Backup-Restore UI (EBUILDER-120)', () => {
       fs.writeFileSync(path.join(backupPath, 'ext_emconf.php'), markerContent);
 
       const { frame } = await openDomainModeller(page);
-      await loadExtension(frame, extKey);
+      await loadExtension(frame, page, extKey);
 
       // Click "Restore backup"
       await frame.locator('#WiringEditor-backupsButton-button').click();
 
-      // Backup dialog: select entry and click Restore
-      const backupDialog = frame.locator('dialog');
-      await expect(backupDialog).toBeVisible({ timeout: 10000 });
-      await backupDialog.locator('select').selectOption(backupEntry);
-      await backupDialog.locator('button[type="submit"]').click();
+      // Backup modal: select entry and click Restore
+      const backupModal = page.locator('.t3js-modal');
+      await expect(backupModal).toBeVisible({ timeout: 10000 });
+      await backupModal.locator('select').selectOption(backupEntry);
+      await backupModal.locator('.t3js-modal-footer .btn-danger').click();
 
       // TYPO3 confirmation Modal renders in the outer page
       const confirmBtn = page.locator('.modal-footer button.btn-danger');

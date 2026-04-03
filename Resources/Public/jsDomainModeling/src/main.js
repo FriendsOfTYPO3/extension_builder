@@ -1,6 +1,7 @@
 import Notification from '@typo3/backend/notification.js';
 import Modal from '@typo3/backend/modal.js';
 import Severity from '@typo3/backend/severity.js';
+import { html } from 'lit';
 import './styles/editor.css';
 import './eb-terminal.js';
 import './eb-wire.js';
@@ -33,7 +34,7 @@ function initEditor() {
     document.getElementById('toggleAdvancedOptions')
         ?.addEventListener('click', e => { e.preventDefault(); editor._toggleAdvancedMode(); });
 
-    // Open → Liste laden → nativer Dialog → Extension auswählen
+    // Open → Liste laden → TYPO3 Modal → Extension auswählen
     document.getElementById('WiringEditor-loadButton-button')
         ?.addEventListener('click', async e => {
             e.preventDefault();
@@ -47,12 +48,7 @@ function initEditor() {
             const extensions = data.result ?? [];
             if (extensions.length === 0) { Notification.info('Open Extension', 'No extensions found.'); return; }
 
-            // Dialog mit sicheren DOM-Methoden (kein innerHTML mit Nutzerdaten)
-            const dialog = document.createElement('dialog');
-            const heading = dialog.appendChild(document.createElement('h3'));
-            heading.textContent = 'Open Extension';
-
-            const select = dialog.appendChild(document.createElement('select'));
+            const select = document.createElement('select');
             select.size = 8;
             select.style.minWidth = '240px';
             extensions.forEach(ext => {
@@ -62,31 +58,44 @@ function initEditor() {
                 select.appendChild(option);
             });
 
-            const form = dialog.appendChild(document.createElement('form'));
-            form.method = 'dialog';
-            const openBtn = form.appendChild(document.createElement('button'));
-            openBtn.type = 'submit';
-            openBtn.className = 'btn btn-primary';
-            openBtn.textContent = 'Open';
-            const cancelBtn = form.appendChild(document.createElement('button'));
-            cancelBtn.type = 'button';
-            cancelBtn.className = 'btn btn-default';
-            cancelBtn.textContent = 'Cancel';
-            cancelBtn.addEventListener('click', () => dialog.close('cancel'));
-
-            document.body.appendChild(dialog);
-            dialog.showModal();
-            dialog.addEventListener('close', () => {
-                if (dialog.returnValue !== 'cancel') {
-                    editor.extensionName = select.value;
-                    editor.load();
-                }
-                dialog.remove();
+            const modal = Modal.advanced({
+                title: 'Open Extension',
+                content: html``,
+                severity: Severity.info,
+                size: 'small',
+                staticBackdrop: false,
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        btnClass: 'btn-default',
+                        trigger: () => Modal.dismiss(),
+                    },
+                    {
+                        text: 'Open',
+                        btnClass: 'btn-primary',
+                        active: true,
+                        trigger: () => {
+                            const name = modal.querySelector('.t3js-modal-body select')?.value;
+                            Modal.dismiss();
+                            if (name) {
+                                editor.extensionName = name;
+                                editor.load();
+                            }
+                        },
+                    },
+                ],
+                callback: (modalEl) => {
+                    const body = modalEl.querySelector('.t3js-modal-body');
+                    if (body) {
+                        body.replaceChildren(select);
+                        select.focus();
+                    }
+                },
             });
         });
 
 
-    // Backups → nativer Dialog → Backup auswählen → Restore
+    // Backups → TYPO3 Modal → Backup auswählen → Restore
     document.getElementById('WiringEditor-backupsButton-button')
         ?.addEventListener('click', async e => {
             e.preventDefault();
@@ -108,72 +117,75 @@ function initEditor() {
                 return;
             }
 
-            const dialog = document.createElement('dialog');
-            const heading = dialog.appendChild(document.createElement('h3'));
-            heading.textContent = 'Restore backup';
-            const note = dialog.appendChild(document.createElement('p'));
-            note.textContent = 'Restoring a backup will overwrite all current extension files. The current state will be backed up first.';
-            note.style.color = '#c00';
-
-            const select = dialog.appendChild(document.createElement('select'));
+            const select = document.createElement('select');
             select.size = Math.min(backups.length, 8);
             select.style.cssText = 'min-width:320px;display:block;margin-bottom:8px;';
             backups.forEach(b => {
                 const option = document.createElement('option');
                 option.value = b.directory;
-                const label = document.createTextNode(b.label + '  (' + b.fileCount + ' files)');
-                option.appendChild(label);
+                option.textContent = b.label + '  (' + b.fileCount + ' files)';
                 select.appendChild(option);
             });
 
-            const form = dialog.appendChild(document.createElement('form'));
-            form.method = 'dialog';
-            const restoreBtn = form.appendChild(document.createElement('button'));
-            restoreBtn.type = 'submit';
-            restoreBtn.className = 'btn btn-danger';
-            restoreBtn.style.marginRight = '8px';
-            restoreBtn.textContent = 'Restore';
-            const cancelBtn = form.appendChild(document.createElement('button'));
-            cancelBtn.type = 'button';
-            cancelBtn.className = 'btn btn-default';
-            cancelBtn.textContent = 'Cancel';
-            cancelBtn.addEventListener('click', () => dialog.close('cancel'));
-
-            document.body.appendChild(dialog);
-            dialog.showModal();
-            dialog.addEventListener('close', async () => {
-                dialog.remove();
-                if (dialog.returnValue === 'cancel') return;
-                const backupDirectory = select.value;
-                Modal.confirm(
-                    'Confirm restore',
-                    'Restore backup from ' + backupDirectory + '? The current extension will be overwritten.',
-                    Severity.warning,
-                    [
-                        { text: 'Cancel', btnClass: 'btn-default', trigger: () => Modal.dismiss() },
-                        {
-                            text: 'Restore',
-                            btnClass: 'btn-danger',
-                            trigger: async () => {
-                                Modal.dismiss();
-                                const restoreResp = await fetch(smdUrl, {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'application/json' },
-                                    body: JSON.stringify({
-                                        method: 'restoreBackup',
-                                        params: { name: editor.extensionName, working, backupDirectory },
-                                    }),
-                                });
-                                const result = await restoreResp.json();
-                                if (result.error) {
-                                    Notification.error('Restore failed', result.error);
-                                } else {
-                                    Notification.success('Backup restored', result.success ?? 'Extension restored.');
-                                }
-                            },
+            const backupModal = Modal.advanced({
+                title: 'Restore backup',
+                content: html``,
+                severity: Severity.warning,
+                staticBackdrop: false,
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        btnClass: 'btn-default',
+                        trigger: () => Modal.dismiss(),
+                    },
+                    {
+                        text: 'Restore',
+                        btnClass: 'btn-danger',
+                        trigger: async () => {
+                            const backupDirectory = backupModal.querySelector('.t3js-modal-body select')?.value;
+                            Modal.dismiss();
+                            if (!backupDirectory) return;
+                            Modal.confirm(
+                                'Confirm restore',
+                                'Restore backup from ' + backupDirectory + '? The current extension will be overwritten.',
+                                Severity.warning,
+                                [
+                                    { text: 'Cancel', btnClass: 'btn-default', trigger: () => Modal.dismiss() },
+                                    {
+                                        text: 'Restore',
+                                        btnClass: 'btn-danger',
+                                        trigger: async () => {
+                                            Modal.dismiss();
+                                            const restoreResp = await fetch(smdUrl, {
+                                                method: 'POST',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify({
+                                                    method: 'restoreBackup',
+                                                    params: { name: editor.extensionName, working, backupDirectory },
+                                                }),
+                                            });
+                                            const result = await restoreResp.json();
+                                            if (result.error) {
+                                                Notification.error('Restore failed', result.error);
+                                            } else {
+                                                Notification.success('Backup restored', result.success ?? 'Extension restored.');
+                                            }
+                                        },
+                                    },
+                                ]
+                            );
                         },
-                    ]
-                );
+                    },
+                ],
+                callback: (modalEl) => {
+                    const body = modalEl.querySelector('.t3js-modal-body');
+                    if (body) {
+                        const note = document.createElement('p');
+                        note.textContent = 'Restoring a backup will overwrite all current extension files. The current state will be backed up first.';
+                        note.className = 'text-danger';
+                        body.replaceChildren(note, select);
+                    }
+                },
             });
         });
 }
