@@ -246,6 +246,13 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
                         FileGenerator::getFolderForClassFile($extensionDir, 'Controller'),
                         $oldDomainObject->getName() . 'Controller.php'
                     );
+                    // remove the repository when transitioning from AggregateRoot to non-AggregateRoot
+                    if ($oldDomainObject->isAggregateRoot()) {
+                        $this->cleanUp(
+                            FileGenerator::getFolderForClassFile($extensionDir, 'Repository'),
+                            $oldDomainObject->getName() . 'Repository.php'
+                        );
+                    }
                 }
 
                 // the parent class settings configuration
@@ -281,6 +288,7 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
                 if ($this->extension->vendorNameChanged()) {
                     $this->updateVendorName();
                 }
+                $this->updateExtensionKeyNamespaceSegment();
                 return $this->classFileObject;
             }
         } else {
@@ -366,6 +374,7 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
                 if ($this->extension->vendorNameChanged()) {
                     $this->updateVendorName();
                 }
+                $this->updateExtensionKeyNamespaceSegment();
                 $this->classFileObject->setClasses([$this->classObject]);
 
                 return $this->classFileObject;
@@ -390,6 +399,7 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
             if ($this->extension->vendorNameChanged()) {
                 $this->updateVendorName();
             }
+            $this->updateExtensionKeyNamespaceSegment();
             $this->classFileObject->setClasses([$this->classObject]);
 
             return $this->classFileObject;
@@ -465,6 +475,73 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
             $result = $new . substr($result, strlen($original));
         }
         return $result;
+    }
+
+    /**
+     * Update the extension key segment in a namespace or type string when the extension is renamed.
+     * Replaces the CamelCase form of the old extension key with the new one.
+     */
+    protected function renameExtensionKey(string $string): string
+    {
+        $oldExtName = GeneralUtility::underscoredToUpperCamelCase($this->previousExtensionKey);
+        $newExtName = GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey());
+        if ($oldExtName === $newExtName) {
+            return $string;
+        }
+        $result = str_replace('\\' . $oldExtName . '\\', '\\' . $newExtName . '\\', $string);
+        if (str_starts_with($result, $oldExtName . '\\')) {
+            $result = $newExtName . substr($result, strlen($oldExtName));
+        }
+        return $result;
+    }
+
+    /**
+     * Update all namespace references when only the extension key (not vendor) changed.
+     */
+    protected function updateExtensionKeyNamespaceSegment(): void
+    {
+        if (!$this->extensionRenamed) {
+            return;
+        }
+        $oldExtName = GeneralUtility::underscoredToUpperCamelCase($this->previousExtensionKey);
+        $newExtName = GeneralUtility::underscoredToUpperCamelCase($this->extension->getExtensionKey());
+        if ($oldExtName === $newExtName) {
+            return;
+        }
+
+        $this->classObject->setNamespaceName($this->renameExtensionKey($this->classObject->getNamespaceName()));
+
+        foreach ($this->classFileObject->getNamespaces() as $namespace) {
+            $updatedAliases = [];
+            foreach ($namespace->getAliasDeclarations() as $aliasDeclaration) {
+                $aliasDeclaration['name'] = $this->renameExtensionKey($aliasDeclaration['name']);
+                $updatedAliases[] = $aliasDeclaration;
+            }
+            $namespace->setAliasDeclarations($updatedAliases);
+        }
+
+        foreach ($this->classObject->getProperties() as $property) {
+            foreach ($property->getTags() as $tagName => $tagValue) {
+                if (is_array($tagValue)) {
+                    $tagValue = $tagValue[0];
+                }
+                if (!empty($tagValue)) {
+                    $property->setTag($tagName, $this->renameExtensionKey((string)$tagValue), true);
+                }
+            }
+        }
+        foreach ($this->classObject->getMethods() as $method) {
+            $returnType = $method->getReturnType();
+            if (!empty($returnType)) {
+                $method->setReturnType($this->renameExtensionKey($returnType));
+            }
+            foreach ($method->getParameters() as $parameter) {
+                $typeHint = $parameter->getTypeHint();
+                if (!empty($typeHint)) {
+                    $parameter->setTypeHint($this->renameExtensionKey($typeHint));
+                }
+            }
+        }
     }
 
     /**
@@ -553,7 +630,9 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
 
                         $tags = $actionMethod->getTags();
                         foreach ($tags as $tagName => $tagValue) {
-                            $tags[$tagName] = $this->replaceUpperAndLowerCase($oldName, $newName, $tagValue);
+                            if (is_string($tagValue)) {
+                                $tags[$tagName] = $this->replaceUpperAndLowerCase($oldName, $newName, $tagValue);
+                            }
                         }
                         $actionMethod->setTags($tags);
 
@@ -621,6 +700,10 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
                         $oldDomainObject->getName() . 'Repository.php'
                     );
                 }
+                if ($this->extension->vendorNameChanged()) {
+                    $this->updateVendorName();
+                }
+                $this->updateExtensionKeyNamespaceSegment();
                 return $this->classFileObject;
             }
         } else {
@@ -1022,7 +1105,7 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
             return;
         }
         if (!is_file($path . $fileName)) {
-            self::log('cleanUp File not found: ' . $path . $fileName, 'extension_builder', 1);
+            self::log('cleanUp File not found: ' . $path . $fileName, 'extension_builder');
             return;
         }
         unlink($path . $fileName);

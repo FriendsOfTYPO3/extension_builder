@@ -1443,6 +1443,13 @@ class FileGenerator
                 if (in_array($fileExtension, $this->filesSupportingSplitToken)) {
                     $fileContents = $this->insertSplitToken($targetFile, $fileContents);
                 }
+            } elseif ($overWriteMode == RoundTrip::OVERWRITE_SETTINGS_MERGE && str_contains($targetFile, 'Classes') && file_exists($targetFile)) {
+                // class files are merged by the class builder; additionally preserve any custom code below the split token
+                $existingContent = file_get_contents($targetFile);
+                $fileParts = explode(RoundTrip::SPLIT_TOKEN, $existingContent);
+                if (count($fileParts) === 2) {
+                    $fileContents = rtrim(str_replace('?>', '', $fileContents)) . RoundTrip::SPLIT_TOKEN . $fileParts[1];
+                }
             } elseif (file_exists($targetFile) && $overWriteMode == RoundTrip::OVERWRITE_SETTINGS_KEEP) {
                 // keep the existing file
                 return;
