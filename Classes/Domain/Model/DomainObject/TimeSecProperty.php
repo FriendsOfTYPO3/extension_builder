@@ -39,8 +39,6 @@ class TimeSecProperty extends AbstractProperty
 
     public function getSqlDefinition(): string
     {
-        return ($this->nullable)
-            ? $this->getFieldName() . ' int(11) DEFAULT NULL,'
-            : $this->getFieldName() . " int(11) NOT NULL DEFAULT '0',";
+        return '';
     }
 }

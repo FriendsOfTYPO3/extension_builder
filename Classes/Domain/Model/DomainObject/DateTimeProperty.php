@@ -41,7 +41,7 @@ class DateTimeProperty extends AbstractProperty
 
     public function getSqlDefinition(): string
     {
-        return $this->getFieldName() . " int(11) NOT NULL DEFAULT '0',";
+        return '';
     }
 
     public function getNameToBeDisplayedInFluidTemplate(): string
