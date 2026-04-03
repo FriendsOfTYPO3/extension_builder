@@ -4,60 +4,106 @@
 <f:layout name="Module" />
 
 <f:section name="Content">
-	<h1>Extension Builder</h1>
-	<p class="bodytext">This page is intended to give you some overview about the workflow we suggest.</p>
+<div class="module-body">
 
-	<h2>Requirements</h2>
-	<ul>
-		<li>TYPO3 CMS 12.4 or higher</li>
-		<li>PHP 8.1 or higher</li>
-		<li>Composer-based TYPO3 installation</li>
-	</ul>
+	<div class="card mb-4">
+		<div class="card-header">
+			<h1 class="card-title h4 mb-0">Extension Builder</h1>
+		</div>
+		<div class="card-body">
+			<p class="bodytext">This page is intended to give you some overview about the workflow we suggest.</p>
+		</div>
+	</div>
 
-	<h2>What is this extension builder about?</h2>
-	<ul>
-		<li>This extension builder helps you to build and manage applications based on <b>Extbase</b> and <b>Fluid</b>.</li>
-		<li>We also want to provide a learning tool for <b>Domain-Driven Design</b></li>
-	</ul>
+	<div class="card mb-3">
+		<div class="card-header">
+			<h2 class="card-title h5 mb-0">Requirements</h2>
+		</div>
+		<div class="card-body">
+			<ul>
+				<li>TYPO3 CMS 12.4 or higher</li>
+				<li>PHP 8.1 or higher</li>
+				<li>Composer-based TYPO3 installation</li>
+			</ul>
+		</div>
+	</div>
 
-	<h2>Quick Start</h2>
-	<ol>
-		<li><b>Model your extension</b> — Go to <f:link.action action="domainmodelling" class="text-primary">Domain Modeller</f:link.action> and design your domain model using the graphical editor.</li>
-		<li><b>Save your model</b> — The Extension Builder generates the extension skeleton, classes, TCA, and plugin configuration.</li>
-		<li><b>Adjust generated code</b> — Extend the generated classes with your business logic.</li>
-		<li><b>Configure roundtrip</b> — Set up <code>Configuration/ExtensionBuilder/settings.yaml</code> in your extension to control which files are overwritten, kept, or merged on subsequent saves.</li>
-	</ol>
+	<div class="card mb-3">
+		<div class="card-header">
+			<h2 class="card-title h5 mb-0">What is this extension builder about?</h2>
+		</div>
+		<div class="card-body">
+			<ul>
+				<li>This extension builder helps you to build and manage applications based on <b>Extbase</b> and <b>Fluid</b>.</li>
+				<li>We also want to provide a learning tool for <b>Domain-Driven Design</b></li>
+			</ul>
+		</div>
+	</div>
 
-	<h2>Domain Driven Design</h2>
-	<p>The Extension Builder is built around the concepts of <b>Domain-Driven Design (DDD)</b>. Understanding DDD helps you create well-structured, maintainable TYPO3 extensions.</p>
-	<p>Watch <a class="text-primary" href="https://www.infoq.com/presentations/model-to-work-evans/" target="_blank">Putting the Model to Work and Strategic Design</a> by Eric Evans for an introduction to Domain-Driven Design.</p>
+	<div class="card mb-3">
+		<div class="card-header">
+			<h2 class="card-title h5 mb-0">Quick Start</h2>
+		</div>
+		<div class="card-body">
+			<ol>
+				<li><b>Model your extension</b> — Go to <f:link.action action="domainmodelling" class="btn btn-primary btn-sm">Domain Modeller</f:link.action> and design your domain model using the graphical editor.</li>
+				<li><b>Save your model</b> — The Extension Builder generates the extension skeleton, classes, TCA, and plugin configuration.</li>
+				<li><b>Adjust generated code</b> — Extend the generated classes with your business logic.</li>
+				<li><b>Configure roundtrip</b> — Set up <code>Configuration/ExtensionBuilder/settings.yaml</code> in your extension to control which files are overwritten, kept, or merged on subsequent saves.</li>
+			</ol>
+		</div>
+	</div>
 
-	<h2>Domain Modelling</h2>
-	At first, you will start creating your <b>Domain Model</b> with a graphical editor. This editor will do the following for you:
-	<ul>
-		<li><b>Extension Skeleton</b>: will create the extension directory structure needed</li>
-		<li><b>Domain Model</b>: Will create basic classes for the Domain Model, residing under Domain/Model/</li>
-		<li><b>Database Tables and TCA</b>: Will create Database Tables and TCA definitions which fit to the domain model.</li>
-		<li><b>Translation Files (XLF)</b>: Will create skeleton translation files</li>
-		<li><b>Plugin Configuration</b>: Will create a plugin configuration, so it will work out-of-the-box.</li>
-		<li><b>Dynamic Scaffolding</b>: Automatically create all CRUD actions (Create, Read, Update, Delete) for Aggregate Roots.</li>
-	</ul>
-	Have a look at the Documentation <a class="text-primary" href="https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/Index.html" target="_blank">Using the Extension Builder</a> for more details.
-	<br /><br />
-	<p><b><f:link.action action="domainmodelling" class="text-primary">Go to the Domain Modeller</f:link.action></b></p>
+	<div class="card mb-3">
+		<div class="card-header">
+			<h2 class="card-title h5 mb-0">Domain Driven Design</h2>
+		</div>
+		<div class="card-body">
+			<p>The Extension Builder is built around the concepts of <b>Domain-Driven Design (DDD)</b>. Understanding DDD helps you create well-structured, maintainable TYPO3 extensions.</p>
+			<p>Watch <a class="btn btn-default btn-sm" href="https://www.infoq.com/presentations/model-to-work-evans/" target="_blank">Putting the Model to Work and Strategic Design</a> by Eric Evans for an introduction to Domain-Driven Design.</p>
+		</div>
+	</div>
 
-	<h2>Iterative model refinement</h2>
-	The first version of the model will usually not be the one you'll use later on. That's why you should take your time, and improve your model.<br />
-	Useful things to know:
-	<ul>
-		<li><b>Dynamic Scaffolding</b>: The Scaffolding will automatically adjust the templates needed to render CRUD-functionality for your domain models.
-			That is, if you modify your domain model by adding or removing fields, the standard CRUD actions display the new fields as well.</li>
-	</ul>
-	When you start to modify the generated files, but still want to use the graphical modeler to extend your model, you can configure the roundtrip behavior
-	in <code>Configuration/ExtensionBuilder/settings.yaml</code> inside your extension.<br />
-	There you can configure which files should be overwritten, kept or merged if you save your model.<br />
-	A good practice would be, to let the Extension Builder generate the Partials for form fields and properties for you and include them in your templates.
-	<br /><br />
-	<p><b>Please have a look at the <a class="text-primary" href="https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/Security/Index.html" target="_blank">Security section</a> to avoid insecure extensions!</b></p>
+	<div class="card mb-3">
+		<div class="card-header">
+			<h2 class="card-title h5 mb-0">Domain Modelling</h2>
+		</div>
+		<div class="card-body">
+			<p>At first, you will start creating your <b>Domain Model</b> with a graphical editor. This editor will do the following for you:</p>
+			<ul>
+				<li><b>Extension Skeleton</b>: will create the extension directory structure needed</li>
+				<li><b>Domain Model</b>: Will create basic classes for the Domain Model, residing under Domain/Model/</li>
+				<li><b>Database Tables and TCA</b>: Will create Database Tables and TCA definitions which fit to the domain model.</li>
+				<li><b>Translation Files (XLF)</b>: Will create skeleton translation files</li>
+				<li><b>Plugin Configuration</b>: Will create a plugin configuration, so it will work out-of-the-box.</li>
+				<li><b>Dynamic Scaffolding</b>: Automatically create all CRUD actions (Create, Read, Update, Delete) for Aggregate Roots.</li>
+			</ul>
+			<p>Have a look at the Documentation <a href="https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/Index.html" target="_blank">Using the Extension Builder</a> for more details.</p>
+			<p><f:link.action action="domainmodelling" class="btn btn-primary"><b>Go to the Domain Modeller</b></f:link.action></p>
+		</div>
+	</div>
+
+	<div class="card mb-3">
+		<div class="card-header">
+			<h2 class="card-title h5 mb-0">Iterative model refinement</h2>
+		</div>
+		<div class="card-body">
+			<p>The first version of the model will usually not be the one you'll use later on. That's why you should take your time, and improve your model.</p>
+			<p>Useful things to know:</p>
+			<ul>
+				<li><b>Dynamic Scaffolding</b>: The Scaffolding will automatically adjust the templates needed to render CRUD-functionality for your domain models.
+					That is, if you modify your domain model by adding or removing fields, the standard CRUD actions display the new fields as well.</li>
+			</ul>
+			<p>When you start to modify the generated files, but still want to use the graphical modeler to extend your model, you can configure the roundtrip behavior
+			in <code>Configuration/ExtensionBuilder/settings.yaml</code> inside your extension.</p>
+			<p>There you can configure which files should be overwritten, kept or merged if you save your model.</p>
+			<p>A good practice would be, to let the Extension Builder generate the Partials for form fields and properties for you and include them in your templates.</p>
+			<div class="alert alert-warning">
+				<b>Please have a look at the <a href="https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/Security/Index.html" target="_blank">Security section</a> to avoid insecure extensions!</b>
+			</div>
+		</div>
+	</div>
+
+</div>
 </f:section>
 </html>

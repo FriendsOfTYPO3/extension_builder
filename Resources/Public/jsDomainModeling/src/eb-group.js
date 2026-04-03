@@ -10,30 +10,27 @@ export class EbGroup extends LitElement {
 
     static styles = css`
         :host { display: block; }
-        fieldset { border: 1px solid var(--eb-border-color, #ccc); padding: 8px; margin: 0; }
-        legend {
-            padding: 0 4px;
+        .card {
+            border: var(--bs-card-border-width, 1px) solid var(--bs-card-border-color, #dee2e6);
+            border-radius: var(--bs-card-border-radius, 0.375rem);
+            margin-bottom: 0.5rem;
+        }
+        .card-header {
+            padding: var(--bs-card-cap-padding-y, 0.5rem) var(--bs-card-cap-padding-x, 1rem);
+            background-color: var(--bs-card-cap-bg, transparent);
+            border-bottom: var(--bs-card-border-width, 1px) solid var(--bs-card-border-color, #dee2e6);
             font-weight: bold;
         }
-        :host([collapsible]) legend {
+        :host([collapsible]) .card-header {
             cursor: pointer;
             user-select: none;
         }
-        :host([collapsible]) legend::before {
-            content: '▼ ';
-        }
-        :host([collapsible][collapsed]) legend::before {
-            content: '▶ ';
-        }
-        :host([collapsed]) .content {
-            display: none;
-        }
-        ::slotted([advanced]) {
-            display: none;
-        }
-        :host([advanced-mode]) ::slotted([advanced]) {
-            display: block;
-        }
+        .card-header::before { content: '▼ '; }
+        :host([collapsed]) .card-header::before { content: '▶ '; }
+        .card-body { padding: var(--bs-card-spacer-y, 1rem) var(--bs-card-spacer-x, 1rem); }
+        :host([collapsed]) .card-body { display: none; }
+        ::slotted([advanced]) { display: none; }
+        :host([advanced-mode]) ::slotted([advanced]) { display: block; }
     `;
 
     connectedCallback() {
@@ -107,14 +104,14 @@ export class EbGroup extends LitElement {
 
     render() {
         return html`
-            <fieldset>
+            <div class="card">
                 ${this.legend ? html`
-                    <legend @click="${this._toggleCollapse}">${this.legend}</legend>
+                    <div class="card-header" @click="${this._toggleCollapse}">${this.legend}</div>
                 ` : ''}
-                <div class="content">
+                <div class="card-body">
                     <slot @slotchange="${this._onSlotChange}"></slot>
                 </div>
-            </fieldset>
+            </div>
         `;
     }
 }

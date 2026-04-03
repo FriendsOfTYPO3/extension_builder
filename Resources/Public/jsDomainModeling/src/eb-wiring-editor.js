@@ -39,9 +39,9 @@ export class EbWiringEditor extends LitElement {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 6px 10px;
-            background: var(--eb-toolbar-bg, #f0f0f0);
-            border-bottom: 1px solid var(--eb-border-color, #ccc);
+            padding: var(--module-docheader-padding-y, 5px) var(--module-docheader-padding-x, 24px);
+            background: var(--module-docheader-bg, #eee);
+            border-bottom: 1px solid var(--module-docheader-border, #c3c3c3);
         }
         .content {
             display: flex;
@@ -56,8 +56,9 @@ export class EbWiringEditor extends LitElement {
             min-width: 120px;
             max-width: 600px;
             overflow-y: auto;
-            border-right: 1px solid var(--eb-border-color, #ccc);
-            padding: 8px;
+            border-right: 1px solid var(--bs-border-color, #dee2e6);
+            background: var(--bs-secondary-bg, #f8f9fa);
+            padding: var(--bs-card-spacer-y, 1rem) var(--bs-card-spacer-x, 1rem);
             resize: horizontal;
         }
         .left-panel.collapsed {

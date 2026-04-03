@@ -17,27 +17,27 @@ export class EbContainer extends LitElement {
             display: block;
             position: absolute;
             min-width: 160px;
-            background: var(--eb-container-bg, #fff);
-            border: 1px solid var(--eb-border-color-dark, #aaa);
-            border-radius: 4px;
-            box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+            background: var(--bs-card-bg, #fff);
+            border: var(--bs-card-border-width, 1px) solid var(--bs-card-border-color, #dee2e6);
+            border-radius: var(--bs-card-border-radius, 0.375rem);
+            box-shadow: var(--bs-box-shadow-sm, 2px 2px 6px rgba(0,0,0,0.15));
             user-select: none;
             cursor: grab;
         }
         :host(:active) {
             cursor: grabbing;
         }
-        .header {
-            background: var(--eb-container-header-bg, #3a6ea5);
-            color: var(--eb-container-header-text, #fff);
-            padding: 6px 10px;
+        .card-header {
+            background-color: var(--bs-primary, #0d6efd);
+            color: #fff;
+            padding: var(--bs-card-cap-padding-y, 0.5rem) var(--bs-card-cap-padding-x, 1rem);
             font-weight: bold;
             font-size: 13px;
-            border-radius: 3px 3px 0 0;
+            border-radius: calc(var(--bs-card-inner-border-radius, 0.25rem)) calc(var(--bs-card-inner-border-radius, 0.25rem)) 0 0;
             position: relative;
         }
-        .body {
-            padding: 8px 10px;
+        .card-body {
+            padding: var(--bs-card-spacer-y, 1rem) var(--bs-card-spacer-x, 1rem);
             font-size: 12px;
         }
     `;
@@ -109,7 +109,7 @@ export class EbContainer extends LitElement {
 
     _populateFromValue() {
         const value = this.moduleData?.value ?? {};
-        const body = this.shadowRoot?.querySelector('.body');
+        const body = this.shadowRoot?.querySelector('.card-body');
         if (!body) return;
         Array.from(body.children).forEach(el => {
             const name = el.getAttribute('name');
@@ -121,7 +121,7 @@ export class EbContainer extends LitElement {
 
     _collectValues() {
         const value = { name: this._name ?? '' };
-        const body = this.shadowRoot?.querySelector('.body');
+        const body = this.shadowRoot?.querySelector('.card-body');
         if (body) {
             Array.from(body.children).forEach(el => {
                 const name = el.getAttribute('name');
@@ -142,7 +142,7 @@ export class EbContainer extends LitElement {
 
     render() {
         return html`
-            <div class="header">
+            <div class="card-header">
                 <eb-terminal
                     type="input"
                     terminal-id="SOURCES"
@@ -154,7 +154,7 @@ export class EbContainer extends LitElement {
                     @inplace-change="${this._onNameChange}">
                 </eb-inplace-edit>
             </div>
-            <div class="body">
+            <div class="card-body">
                 ${renderFields(this._fields.slice(1))}
             </div>
         `;
