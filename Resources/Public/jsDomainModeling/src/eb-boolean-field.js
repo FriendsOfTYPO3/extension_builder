@@ -1,4 +1,4 @@
-import { html, css } from 'lit';
+import { html } from 'lit';
 import { EbField } from './eb-field.js';
 
 export class EbBooleanField extends EbField {
@@ -6,10 +6,7 @@ export class EbBooleanField extends EbField {
         ...EbField.properties,
     };
 
-    static styles = css`
-        :host { display: block; }
-        label { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
-    `;
+    createRenderRoot() { return this; }
 
     _onChange(e) {
         this.value = e.target.checked;
@@ -27,10 +24,18 @@ export class EbBooleanField extends EbField {
 
     render() {
         return html`
-            <label>
-                <input type="checkbox" .checked="${Boolean(this.value)}" @change="${this._onChange}">
-                ${this.label || ''}
-            </label>
+            <div class="form-check form-check-type-toggle">
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    .checked="${Boolean(this.value)}"
+                    @change="${this._onChange}"
+                    id="eb-bool-${this.name}"
+                >
+                <label class="form-check-label" for="eb-bool-${this.name}">
+                    ${this.label || ''}
+                </label>
+            </div>
         `;
     }
 }

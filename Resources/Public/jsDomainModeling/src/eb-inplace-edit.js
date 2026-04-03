@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html } from 'lit';
 
 export class EbInplaceEdit extends LitElement {
     static properties = {
@@ -6,27 +6,17 @@ export class EbInplaceEdit extends LitElement {
         _editing: { type: Boolean, state: true },
     };
 
-    static styles = css`
-        :host { display: inline-block; }
-        span {
-            cursor: pointer;
-            border-bottom: 1px dashed currentColor;
-            min-width: 1em;
-            display: inline-block;
-        }
-        span:hover { opacity: 0.7; }
-        input { font: inherit; border: 1px solid var(--eb-input-border, #999); padding: 1px 3px; }
-    `;
-
     constructor() {
         super();
         this._editing = false;
     }
 
+    createRenderRoot() { return this; }
+
     _startEdit() {
         this._editing = true;
         this.updateComplete.then(() => {
-            this.shadowRoot.querySelector('input')?.focus();
+            this.querySelector('input')?.focus();
         });
     }
 
@@ -68,13 +58,19 @@ export class EbInplaceEdit extends LitElement {
         if (this._editing) {
             return html`
                 <input
+                    class="form-control form-control-sm"
                     .value="${this.value ?? ''}"
                     @blur="${this._confirm}"
                     @keydown="${this._onKey}"
                 >
             `;
         }
-        return html`<span @click="${this._startEdit}">${this.value ?? ''}</span>`;
+        return html`
+            <span
+                style="cursor:pointer;border-bottom:1px dashed currentColor;min-width:1em;display:inline-block;"
+                @click="${this._startEdit}"
+            >${this.value ?? ''}</span>
+        `;
     }
 }
 

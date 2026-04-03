@@ -1,4 +1,4 @@
-import { html, css } from 'lit';
+import { html } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
 import { EbField } from './eb-field.js';
 
@@ -10,11 +10,7 @@ export class EbSelectField extends EbField {
         allowedValues: { type: Array },
     };
 
-    static styles = css`
-        :host { display: block; }
-        label { display: block; margin-bottom: 2px; }
-        select { width: 100%; box-sizing: border-box; }
-    `;
+    createRenderRoot() { return this; }
 
     _getOptions() {
         const values = this.selectValues ?? [];
@@ -54,12 +50,14 @@ export class EbSelectField extends EbField {
     render() {
         const options = this._visibleOptions();
         return html`
-            ${this.label ? html`<label>${this.label}</label>` : ''}
-            <select @change="${this._onChange}">
-                ${repeat(options, o => o.value, o => html`
-                    <option value="${o.value}" ?selected="${this.value === o.value}">${o.label}</option>
-                `)}
-            </select>
+            <div class="form-group">
+                ${this.label ? html`<label class="form-label">${this.label}</label>` : ''}
+                <select class="form-select" @change="${this._onChange}">
+                    ${repeat(options, o => o.value, o => html`
+                        <option value="${o.value}" ?selected="${this.value === o.value}">${o.label}</option>
+                    `)}
+                </select>
+            </div>
         `;
     }
 }
