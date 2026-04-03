@@ -30,6 +30,7 @@ use PhpParser\Error as PhpParserError;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
@@ -1195,7 +1196,12 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
 
     protected static function log($message, $severity = 0, $data = []): void
     {
-        // TODO implement logging
+        $logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(self::class);
+        match ((int)$severity) {
+            2 => $logger->warning($message, $data),
+            1 => $logger->info($message, $data),
+            default => $logger->debug($message, $data),
+        };
     }
 
     /**
