@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { buttonStyles } from './styles/button-styles.js';
 import Notification from '@typo3/backend/notification.js';
 import Modal from '@typo3/backend/modal.js';
 import Severity from '@typo3/backend/severity.js';
@@ -25,7 +26,7 @@ export class EbWiringEditor extends LitElement {
         _leftCollapsed: { state: true },
     };
 
-    static styles = css`
+    static styles = [buttonStyles, css`
         :host {
             display: flex;
             flex-direction: column;
@@ -41,10 +42,6 @@ export class EbWiringEditor extends LitElement {
             padding: 6px 10px;
             background: var(--eb-toolbar-bg, #f0f0f0);
             border-bottom: 1px solid var(--eb-border-color, #ccc);
-        }
-        button {
-            padding: 4px 12px;
-            cursor: pointer;
         }
         .content {
             display: flex;
@@ -74,9 +71,6 @@ export class EbWiringEditor extends LitElement {
             display: flex;
             justify-content: flex-end;
         }
-        .left-panel-header button {
-            padding: 2px 6px;
-        }
         .center-panel {
             flex: 1;
             min-height: 0;
@@ -98,7 +92,7 @@ export class EbWiringEditor extends LitElement {
         .advanced-mode [advanced] {
             display: block;
         }
-    `;
+    `];
 
     constructor() {
         super();
@@ -347,12 +341,12 @@ export class EbWiringEditor extends LitElement {
     render() {
         return html`
             <div class="toolbar">
-                <button @click="${this.addModelObject}">+ Model Object</button>
+                <button class="btn btn-primary btn-sm" @click="${this.addModelObject}">+ Model Object</button>
             </div>
             <div class="content ${this._advancedMode ? 'advanced-mode' : ''}">
                 <div class="left-panel ${this._leftCollapsed ? 'collapsed' : ''}">
                     <div class="left-panel-header">
-                        <button @click="${this._toggleLeftPanel}">☰</button>
+                        <button class="btn btn-default btn-sm" @click="${this._toggleLeftPanel}" title="Toggle panel">☰</button>
                     </div>
                     ${renderFields(extensionPropertiesFields)}
                 </div>

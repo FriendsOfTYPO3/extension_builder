@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
+import { buttonStyles } from './styles/button-styles.js';
 
 function _iconUrl(name) {
     const base = window.TYPO3?.settings?.extensionBuilder?.publicResourceWebPath?.core ?? '';
@@ -25,7 +26,7 @@ export class EbListField extends LitElement {
         _items: { state: true },
     };
 
-    static styles = css`
+    static styles = [buttonStyles, css`
         :host { display: block; }
         .item-row {
             display: flex;
@@ -34,16 +35,8 @@ export class EbListField extends LitElement {
             margin-bottom: 4px;
         }
         .item-content { flex: 1; }
-        button {
-            background: none;
-            border: 1px solid var(--eb-border-color, #ccc);
-            cursor: pointer;
-            padding: 2px 4px;
-            line-height: 1;
-        }
-        button:hover { background: var(--eb-button-hover-bg, #eee); }
         .add-btn { margin-top: 4px; }
-    `;
+    `];
 
     constructor() {
         super();
@@ -104,19 +97,19 @@ export class EbListField extends LitElement {
                         <slot name="item-${item.uid}"></slot>
                     </div>
                     ${this.sortable ? html`
-                        <button @click="${() => this._moveUp(index)}" title="Move up">
+                        <button class="btn btn-default btn-sm" @click="${() => this._moveUp(index)}" title="Move up">
                             ${_svgIcon('actions-caret-up')}
                         </button>
-                        <button @click="${() => this._moveDown(index)}" title="Move down">
+                        <button class="btn btn-default btn-sm" @click="${() => this._moveDown(index)}" title="Move down">
                             ${_svgIcon('actions-caret-down')}
                         </button>
                     ` : ''}
-                    <button @click="${() => this._removeItem(index)}" title="Remove">
+                    <button class="btn btn-default btn-sm" @click="${() => this._removeItem(index)}" title="Remove">
                         ${_svgIcon('actions-delete')}
                     </button>
                 </div>
             `)}
-            <button class="add-btn" @click="${this._addItem}">${this.addLabel}</button>
+            <button class="btn btn-default btn-sm add-btn" @click="${this._addItem}">${this.addLabel}</button>
         `;
     }
 }

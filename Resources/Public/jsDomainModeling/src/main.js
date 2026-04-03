@@ -66,9 +66,11 @@ function initEditor() {
             form.method = 'dialog';
             const openBtn = form.appendChild(document.createElement('button'));
             openBtn.type = 'submit';
+            openBtn.className = 'btn btn-primary';
             openBtn.textContent = 'Open';
             const cancelBtn = form.appendChild(document.createElement('button'));
             cancelBtn.type = 'button';
+            cancelBtn.className = 'btn btn-default';
             cancelBtn.textContent = 'Cancel';
             cancelBtn.addEventListener('click', () => dialog.close('cancel'));
 
@@ -128,10 +130,12 @@ function initEditor() {
             form.method = 'dialog';
             const restoreBtn = form.appendChild(document.createElement('button'));
             restoreBtn.type = 'submit';
-            restoreBtn.textContent = 'Restore';
+            restoreBtn.className = 'btn btn-danger';
             restoreBtn.style.marginRight = '8px';
+            restoreBtn.textContent = 'Restore';
             const cancelBtn = form.appendChild(document.createElement('button'));
             cancelBtn.type = 'button';
+            cancelBtn.className = 'btn btn-default';
             cancelBtn.textContent = 'Cancel';
             cancelBtn.addEventListener('click', () => dialog.close('cancel'));
 
