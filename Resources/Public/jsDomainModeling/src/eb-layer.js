@@ -35,6 +35,12 @@ export class EbLayer extends LitElement {
             height: 100%;
             pointer-events: none;
         }
+        .wire-path {
+            stroke: var(--eb-wire-color, #4a90d9);
+        }
+        .wire-temp-path {
+            stroke: var(--eb-wire-temp-color, #aaa);
+        }
     `;
 
     constructor() {
@@ -195,8 +201,8 @@ export class EbLayer extends LitElement {
                 <svg id="wire-overlay">
                     ${this._wires.map(w => svg`
                         <path
+                            class="wire-path"
                             d="M ${w.x1} ${w.y1} C ${w.x1} ${w.y1 + 80}, ${w.x2} ${w.y2 - 80}, ${w.x2} ${w.y2}"
-                            stroke="#4a90d9"
                             stroke-width="2"
                             fill="none"
                             stroke-linecap="round"
@@ -204,8 +210,8 @@ export class EbLayer extends LitElement {
                     `)}
                     ${this._tempWire ? svg`
                         <path
+                            class="wire-temp-path"
                             d="M ${this._tempWire.x1} ${this._tempWire.y1} L ${this._tempWire.x2} ${this._tempWire.y2}"
-                            stroke="#aaa"
                             stroke-width="1.5"
                             stroke-dasharray="4 4"
                             fill="none"

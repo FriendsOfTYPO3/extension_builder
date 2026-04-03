@@ -18,6 +18,9 @@ export class EbWire extends LitElement {
         :host {
             display: contents;
         }
+        path {
+            stroke: var(--eb-wire-color, #4a90d9);
+        }
     `;
 
     getPath() {
@@ -38,7 +41,6 @@ export class EbWire extends LitElement {
         return svg`
             <path
                 d="${this.getPath()}"
-                stroke="#4a90d9"
                 stroke-width="2"
                 fill="none"
                 stroke-linecap="round"

@@ -6,16 +6,16 @@
  */
 
 :root {
-  /* Terminal/connection point colors — no TYPO3 equivalents, kept as-is */
-  --eb-terminal-default: #4a90d9;
+  /* Terminal/connection point colors */
+  --eb-terminal-default: var(--bs-primary, #4a90d9);
   --eb-terminal-default-border: #2c5f8a;
-  --eb-terminal-input: #5cb85c;
+  --eb-terminal-input: var(--bs-success, #5cb85c);
   --eb-terminal-input-border: #3d7a3d;
-  --eb-terminal-output: #d9534f;
+  --eb-terminal-output: var(--bs-danger, #d9534f);
   --eb-terminal-output-border: #8a2c2c;
 
   /* Wire/connection line colors */
-  --eb-wire-color: #4a90d9;
+  --eb-wire-color: var(--bs-primary, #4a90d9);
   --eb-wire-temp-color: var(--bs-secondary-color, #aaa);
 
   /* Form elements */
