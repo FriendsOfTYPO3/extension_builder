@@ -90,6 +90,7 @@ function initEditor() {
             e.preventDefault();
             const smdUrl = editor.getAttribute('smd-url');
 
+            if (!editor.extensionName) { Notification.info('Restore backup', 'Please load an extension first.'); return; }
             const working = editor._serializeWorking();
             if (!working) { Notification.info('Restore backup', 'No extension loaded.'); return; }
 
