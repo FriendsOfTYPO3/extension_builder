@@ -1401,6 +1401,83 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
     }
 
     /**
+     * Returns a list of available backups for an extension, newest first.
+     *
+     * @return array<array{directory: string, label: string, fileCount: int}>
+     */
+    public static function listBackups(string $extensionKey, ?string $backupDir): array
+    {
+        if (empty($backupDir) || !GeneralUtility::validPathStr($backupDir)) {
+            return [];
+        }
+        if (!PathUtility::isAbsolutePath($backupDir)) {
+            $backupDir = Environment::getProjectPath() . '/' . $backupDir;
+        }
+        $extensionBackupDir = rtrim($backupDir, '/') . '/' . $extensionKey . '/';
+        if (!is_dir($extensionBackupDir)) {
+            return [];
+        }
+        $backups = [];
+        $entries = scandir($extensionBackupDir, SCANDIR_SORT_DESCENDING);
+        if ($entries === false) {
+            return [];
+        }
+        foreach ($entries as $entry) {
+            if ($entry === '.' || $entry === '..') {
+                continue;
+            }
+            $fullPath = $extensionBackupDir . $entry;
+            if (!is_dir($fullPath)) {
+                continue;
+            }
+            $fileCount = iterator_count(
+                new \RecursiveIteratorIterator(
+                    new \RecursiveDirectoryIterator($fullPath, \RecursiveDirectoryIterator::SKIP_DOTS)
+                )
+            );
+            $parts = explode('-', $entry);
+            $timestamp = end($parts);
+            $label = is_numeric($timestamp)
+                ? date('Y-m-d H:i:s', (int)$timestamp)
+                : $entry;
+            $backups[] = ['directory' => $entry, 'label' => $label, 'fileCount' => $fileCount];
+        }
+        return $backups;
+    }
+
+    /**
+     * Restores an extension from a backup directory.
+     * Creates a nested backup of the current state before restoring.
+     *
+     * @throws Exception
+     */
+    public static function restoreBackup(Extension $extension, string $backupDirectory, ?string $backupDir): void
+    {
+        if (!preg_match('/^[\w\-]+$/', $backupDirectory)) {
+            throw new Exception('Invalid backup directory name: ' . $backupDirectory);
+        }
+        if (empty($backupDir) || !GeneralUtility::validPathStr($backupDir)) {
+            throw new Exception('Backup directory is not configured.');
+        }
+        if (!PathUtility::isAbsolutePath($backupDir)) {
+            $backupDir = Environment::getProjectPath() . '/' . $backupDir;
+        }
+        $backupSourceDir = rtrim($backupDir, '/') . '/' . $extension->getExtensionKey() . '/' . $backupDirectory;
+        if (!is_dir($backupSourceDir)) {
+            throw new Exception('Backup not found: ' . $backupDirectory);
+        }
+
+        // Safety: back up current state before overwriting
+        self::backupExtension($extension, $backupDir);
+
+        // Remove current extension dir and restore from backup
+        $extensionDir = rtrim($extension->getExtensionDir(), '/');
+        GeneralUtility::rmdir($extensionDir, true);
+        self::recurse_copy($backupSourceDir, $extensionDir);
+        self::log('Extension restored from backup: ' . $backupDirectory);
+    }
+
+    /**
      * @param Extension $extension
      * @param string|null $backupDir
      *

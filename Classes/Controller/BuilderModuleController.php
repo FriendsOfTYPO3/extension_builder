@@ -204,6 +204,14 @@ class BuilderModuleController extends ActionController
             ->setId('WiringEditor-saveButton-button')
             ->setHref('#');
         $buttonBar->addButton($saveButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
+
+        $backupsButton = (new LinkButtonWithId())
+            ->setIcon($this->iconFactory->getIcon('actions-history', IconSize::SMALL))
+            ->setTitle('Restore backup')
+            ->setShowLabelText(true)
+            ->setId('WiringEditor-backupsButton-button')
+            ->setHref('#');
+        $buttonBar->addButton($backupsButton, ButtonBar::BUTTON_POSITION_LEFT, 4);
     }
 
     protected function addRightButtons(): void
@@ -301,6 +309,12 @@ class BuilderModuleController extends ActionController
                     break;
                 case 'previewChanges':
                     $response = $this->rpcActionPreviewChanges();
+                    break;
+                case 'listBackups':
+                    $response = $this->rpcActionListBackups();
+                    break;
+                case 'restoreBackup':
+                    $response = $this->rpcActionRestoreBackup();
                     break;
                 default:
                     $response = ['error' => 'Sub Action not found.'];
@@ -467,6 +481,40 @@ class BuilderModuleController extends ActionController
         $extensionBuildConfiguration['storagePath'] = $storagePath;
         $extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
         return $this->fileGenerator->previewChanges($extension);
+    }
+
+    protected function rpcActionListBackups(): array
+    {
+        $extensionBuildConfiguration = $this->extensionBuilderConfigurationManager->getConfigurationFromModeler();
+        $storagePaths = $this->extensionService->resolveStoragePaths();
+        $storagePath = reset($storagePaths);
+        if ($storagePath === false) {
+            return ['result' => []];
+        }
+        $extensionBuildConfiguration['storagePath'] = $storagePath;
+        $extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
+        $backupDir = $this->extensionBuilderSettings['extConf']['backupDir'] ?? '';
+        return ['result' => RoundTrip::listBackups($extension->getExtensionKey(), $backupDir)];
+    }
+
+    protected function rpcActionRestoreBackup(): array
+    {
+        $params = $this->extensionBuilderConfigurationManager->getParamsFromRequest();
+        $backupDirectory = $params['backupDirectory'] ?? '';
+        if (empty($backupDirectory)) {
+            return ['error' => 'No backup directory specified.'];
+        }
+        $extensionBuildConfiguration = $this->extensionBuilderConfigurationManager->getConfigurationFromModeler();
+        $storagePaths = $this->extensionService->resolveStoragePaths();
+        $storagePath = reset($storagePaths);
+        if ($storagePath === false) {
+            return ['error' => 'Storage path not found.'];
+        }
+        $extensionBuildConfiguration['storagePath'] = $storagePath;
+        $extension = $this->extensionSchemaBuilder->build($extensionBuildConfiguration);
+        $backupDir = $this->extensionBuilderSettings['extConf']['backupDir'] ?? '';
+        RoundTrip::restoreBackup($extension, $backupDirectory, $backupDir);
+        return ['success' => 'Extension restored from backup: ' . $backupDirectory];
     }
 
     /**
