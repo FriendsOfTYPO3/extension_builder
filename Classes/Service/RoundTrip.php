@@ -405,6 +405,17 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
     protected function updateVendorName(): void
     {
         $this->classObject->setNamespaceName($this->renameVendor($this->classObject->getNamespaceName()));
+
+        // Update use/import statements in the file's namespaces
+        foreach ($this->classFileObject->getNamespaces() as $namespace) {
+            $updatedAliases = [];
+            foreach ($namespace->getAliasDeclarations() as $aliasDeclaration) {
+                $aliasDeclaration['name'] = $this->renameVendor($aliasDeclaration['name']);
+                $updatedAliases[] = $aliasDeclaration;
+            }
+            $namespace->setAliasDeclarations($updatedAliases);
+        }
+
         foreach ($this->classObject->getProperties() as $property) {
             foreach ($property->getTags() as $tagName => $tagValue) {
                 if (is_array($tagValue)) {
@@ -417,6 +428,10 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
             }
         }
         foreach ($this->classObject->getMethods() as $method) {
+            $returnType = $method->getReturnType();
+            if (!empty($returnType)) {
+                $method->setReturnType($this->renameVendor($returnType));
+            }
             foreach ($method->getTags() as $tagName => $tagValue) {
                 if (is_array($tagValue)) {
                     $tagValue = $tagValue[0];
@@ -439,13 +454,17 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
         }
     }
 
-    protected function renameVendor($string)
+    protected function renameVendor(string $string): string
     {
-        return str_replace(
-            '\\' . $this->extension->getOriginalVendorName() . '\\',
-            '\\' . $this->extension->getVendorName() . '\\',
-            $string
-        );
+        $original = $this->extension->getOriginalVendorName();
+        $new = $this->extension->getVendorName();
+        // Replace fully-qualified form (\OldVendor\)
+        $result = str_replace('\\' . $original . '\\', '\\' . $new . '\\', $string);
+        // Replace unqualified import form (OldVendor\ at the start of the string, e.g. use statements)
+        if (str_starts_with($result, $original . '\\')) {
+            $result = $new . substr($result, strlen($original));
+        }
+        return $result;
     }
 
     /**

@@ -48,7 +48,15 @@ Consequences of various actions:
 *  your code should be adapted to the new names (not just overridden with the
    default code)
 
-**Changing the vendor name is not yet supported.**
+**If you change the vendor name:**
+
+*  namespaces in all class files are updated
+
+*  use/import statements referencing the old vendor namespace are updated
+
+*  type hints, var types, and return types in methods and parameters are updated
+
+*  TypoScript files are regenerated with the new vendor name automatically
 
 **If you rename a property:**
 

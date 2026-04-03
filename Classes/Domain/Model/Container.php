@@ -222,6 +222,14 @@ class Container extends AbstractObject
     }
 
     /**
+     * @param array $aliasDeclarations
+     */
+    public function setAliasDeclarations(array $aliasDeclarations): void
+    {
+        $this->aliasDeclarations = $aliasDeclarations;
+    }
+
+    /**
      * @return string[]
      */
     public function getAliasDeclarations(): array
