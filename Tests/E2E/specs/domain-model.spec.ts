@@ -35,6 +35,33 @@ test.describe('Domain Model Canvas', () => {
     expect(containersAfter).toBe(1);
   });
 
+  // EBUILDER-39: Add domain property to a model object
+  test('adding a property to a model object increases the property list', async ({ page }) => {
+    const frame = new BackendPage(page).getContentFrame();
+    await frame.getByRole('button', { name: '+ Model Object' }).click();
+
+    const itemCount = await frame.locator('eb-wiring-editor').evaluate(
+      async (el: any) => {
+        const layer = el.shadowRoot?.querySelector('eb-layer');
+        await layer?.updateComplete;
+        const container = layer?.shadowRoot?.querySelector('eb-container');
+        if (!container) return -1;
+        await container.updateComplete;
+
+        // Reach the properties list field inside the container's shadow DOM.
+        // eb-list-field[name="properties"] is a light-DOM child of eb-group,
+        // which is itself in eb-container's shadow root — querySelectorAll traverses this.
+        const listField = container.shadowRoot?.querySelector('[name="properties"]') as any;
+        if (!listField) return -2;
+
+        listField._addItem();
+        await listField.updateComplete;
+        return listField.getValue().length;
+      }
+    );
+    expect(itemCount).toBe(1);
+  });
+
   test('added model object container is visible in canvas', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
     await frame.getByRole('button', { name: '+ Model Object' }).click();
