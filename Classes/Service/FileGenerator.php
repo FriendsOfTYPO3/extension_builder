@@ -198,7 +198,7 @@ class FileGenerator
     protected function generateExtensionFiles(): void
     {
         // Generate ext_emconf.php, ext_tables.* and TCA definition
-        $extensionFiles = ['ext_emconf.php', 'ext_tables.php', 'ext_tables.sql'];
+        $extensionFiles = ['ext_emconf.php', 'ext_tables.sql'];
         foreach ($extensionFiles as $extensionFile) {
             try {
                 $fileContents = $this->renderTemplate(
