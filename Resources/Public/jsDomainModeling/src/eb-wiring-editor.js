@@ -33,7 +33,8 @@ export class EbWiringEditor extends LitElement {
             width: 100%;
             height: 100%;
             font-family: sans-serif;
-
+            background: var(--bs-body-bg, #fff);
+            color: var(--bs-body-color, #000);
         }
         .toolbar {
             display: flex;

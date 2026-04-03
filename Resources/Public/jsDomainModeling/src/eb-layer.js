@@ -18,6 +18,7 @@ export class EbLayer extends LitElement {
             min-height: 0;
             width: 100%;
             overflow: hidden;
+            background: var(--bs-body-bg, #fff);
         }
         #canvas {
             position: relative;
