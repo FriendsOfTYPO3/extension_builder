@@ -257,6 +257,7 @@ export class EbWiringEditor extends LitElement {
         if (data.warning) {
             Notification.warning('Warning', data.warning);
         }
+        (data.warnings ?? []).forEach(msg => Notification.warning('Roundtrip warning', msg));
         if (data.success) {
             Notification.success('Saved', data.success);
             (data.installationHints ?? []).forEach(hint => Notification.info('Next steps', hint));

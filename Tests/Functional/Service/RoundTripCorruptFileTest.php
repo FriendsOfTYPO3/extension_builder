@@ -90,6 +90,31 @@ class RoundTripCorruptFileTest extends BaseFunctionalTest
     /**
      * @test
      */
+    public function corruptModelFileAddsParseWarning(): void
+    {
+        $modelName = 'CorruptModelWarn';
+        $modelClassDir = $this->extension->getExtensionDir() . 'Classes/Domain/Model/';
+        mkdir($modelClassDir, 0777, true);
+
+        $filePath = $modelClassDir . $modelName . '.php';
+        file_put_contents($filePath, '<?php this is not valid php {{{');
+
+        $domainObject = $this->buildDomainObject($modelName);
+        $uid = md5('corrupt-model-warn');
+        $domainObject->setUniqueIdentifier($uid);
+        $this->roundTripService->_set('previousDomainObjects', [$uid => $domainObject]);
+        $this->roundTripService->_set('previousExtensionDirectory', $this->extension->getExtensionDir());
+
+        $this->roundTripService->getDomainModelClassFile($domainObject);
+
+        $warnings = $this->roundTripService->getParseWarnings();
+        self::assertNotEmpty($warnings, 'Expected a parse warning to be recorded');
+        self::assertStringContainsString($modelName . '.php', $warnings[0]);
+    }
+
+    /**
+     * @test
+     */
     public function getDomainModelClassFileContinuesForOtherObjectsAfterCorruptFile(): void
     {
         $corruptName = 'CorruptModelA';

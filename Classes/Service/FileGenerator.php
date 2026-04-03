@@ -100,6 +100,11 @@ class FileGenerator
         $this->settings = $settings;
     }
 
+    public function getParseWarnings(): array
+    {
+        return $this->roundTripService->getParseWarnings();
+    }
+
     /**
      * The entry point to the class
      *

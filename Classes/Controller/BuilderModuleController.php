@@ -427,6 +427,7 @@ class BuilderModuleController extends ActionController
                 'success' => LocalizationUtility::translate('notification.saved', 'ExtensionBuilder', [$extensionDirectory])
                     ?? sprintf('Extension saved in: %s', $extensionDirectory),
                 'installationHints' => $this->extensionInstallationStatus->getStatusMessages(),
+                'warnings' => $this->fileGenerator->getParseWarnings(),
             ];
         } catch (Exception $e) {
             throw $e;

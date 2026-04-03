@@ -88,11 +88,18 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
     protected ?File $classFileObject = null;
     protected array $settings = [];
 
+    private array $parseWarnings = [];
+
     public function __construct(
         private readonly ParserService $parserService,
         private readonly ExtensionBuilderConfigurationManager $configurationManager,
         private readonly ExtensionSchemaBuilder $extensionSchemaBuilder,
     ) {}
+
+    public function getParseWarnings(): array
+    {
+        return $this->parseWarnings;
+    }
 
     /**
      * If a JSON file is found in the extensions directory the previous version
@@ -207,6 +214,9 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
                     $this->classFileObject = $this->parserService->parseFile($fileName);
                 } catch (PhpParserError | Exception $e) {
                     $this->logger?->warning('Cannot parse ' . $fileName . ': ' . $e->getMessage());
+                    $this->parseWarnings[] = 'Could not read ' . $fileName
+                        . ' — the file may have a syntax error. Roundtrip was skipped for this class;'
+                        . ' your custom code may not be preserved. Please check the file manually.';
                     return null;
                 }
                 $this->classObject = $this->classFileObject->getFirstClass();
@@ -305,6 +315,9 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
                     $this->classFileObject = $this->parserService->parseFile($fileName);
                 } catch (PhpParserError | Exception $e) {
                     $this->logger?->warning('Cannot parse ' . $fileName . ': ' . $e->getMessage());
+                    $this->parseWarnings[] = 'Could not read ' . $fileName
+                        . ' — the file may have a syntax error. Roundtrip was skipped for this class;'
+                        . ' your custom code may not be preserved. Please check the file manually.';
                     return null;
                 }
                 $this->classObject = $this->classFileObject->getFirstClass();
@@ -340,6 +353,9 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
                     $this->classFileObject = $this->parserService->parseFile($fileName);
                 } catch (PhpParserError | Exception $e) {
                     $this->logger?->warning('Cannot parse ' . $fileName . ': ' . $e->getMessage());
+                    $this->parseWarnings[] = 'Could not read ' . $fileName
+                        . ' — the file may have a syntax error. Roundtrip was skipped for this class;'
+                        . ' your custom code may not be preserved. Please check the file manually.';
                     return null;
                 }
                 $this->classObject = $this->classFileObject->getFirstClass();
@@ -688,6 +704,9 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
                     $this->classFileObject = $this->parserService->parseFile($fileName);
                 } catch (PhpParserError | Exception $e) {
                     $this->logger?->warning('Cannot parse ' . $fileName . ': ' . $e->getMessage());
+                    $this->parseWarnings[] = 'Could not read ' . $fileName
+                        . ' — the file may have a syntax error. Roundtrip was skipped for this class;'
+                        . ' your custom code may not be preserved. Please check the file manually.';
                     return null;
                 }
                 $this->classObject = $this->classFileObject->getFirstClass();
@@ -714,6 +733,9 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
                     $this->classFileObject = $this->parserService->parseFile($fileName);
                 } catch (PhpParserError | Exception $e) {
                     $this->logger?->warning('Cannot parse ' . $fileName . ': ' . $e->getMessage());
+                    $this->parseWarnings[] = 'Could not read ' . $fileName
+                        . ' — the file may have a syntax error. Roundtrip was skipped for this class;'
+                        . ' your custom code may not be preserved. Please check the file manually.';
                     return null;
                 }
                 $this->classObject = $this->classFileObject->getFirstClass();
