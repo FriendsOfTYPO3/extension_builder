@@ -934,6 +934,12 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
                         1
                     );
                 } else {
+                    if ($oldProperty->getName() !== $newProperty->getName()) {
+                        $oldColumn = $oldDomainObject->getDatabaseTableName() . '.' . $oldProperty->getName();
+                        $newColumn = $newDomainObject->getDatabaseTableName() . '.' . $newProperty->getName();
+                        $this->parseWarnings[] = 'Property renamed: database column must be renamed manually '
+                            . 'from "' . $oldColumn . '" to "' . $newColumn . '".';
+                    }
                     $this->updateProperty($oldProperty, $newProperty);
                     $newDomainObject->getPropertyByName($newProperty->getName())->setNew(false);
                 }
