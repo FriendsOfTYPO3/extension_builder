@@ -17,9 +17,10 @@ export class EbContainer extends LitElement {
             display: block;
             position: absolute;
             min-width: 160px;
-            background: var(--bs-card-bg, #fff);
-            border: var(--bs-card-border-width, 1px) solid var(--bs-card-border-color, #dee2e6);
-            border-radius: var(--bs-card-border-radius, 0.375rem);
+            background: var(--bs-body-bg, #fff);
+            color: var(--bs-body-color, #000);
+            border: 1px solid var(--bs-border-color, #dee2e6);
+            border-radius: var(--bs-border-radius, 0.25rem);
             box-shadow: var(--bs-box-shadow-sm, 2px 2px 6px rgba(0,0,0,0.15));
             user-select: none;
             cursor: grab;
@@ -28,16 +29,16 @@ export class EbContainer extends LitElement {
             cursor: grabbing;
         }
         .card-header {
-            background-color: var(--bs-primary, #0d6efd);
+            background-color: var(--bs-primary, #0078e6);
             color: #fff;
-            padding: var(--bs-card-cap-padding-y, 0.5rem) var(--bs-card-cap-padding-x, 1rem);
+            padding: 0.5rem 0.75rem;
             font-weight: bold;
             font-size: 13px;
-            border-radius: calc(var(--bs-card-inner-border-radius, 0.25rem)) calc(var(--bs-card-inner-border-radius, 0.25rem)) 0 0;
+            border-radius: calc(var(--bs-border-radius, 0.25rem) - 1px) calc(var(--bs-border-radius, 0.25rem) - 1px) 0 0;
             position: relative;
         }
         .card-body {
-            padding: var(--bs-card-spacer-y, 1rem) var(--bs-card-spacer-x, 1rem);
+            padding: 0.5rem 0.75rem;
             font-size: 12px;
         }
     `;

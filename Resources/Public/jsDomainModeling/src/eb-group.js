@@ -11,14 +11,16 @@ export class EbGroup extends LitElement {
     static styles = css`
         :host { display: block; }
         .card {
-            border: var(--bs-card-border-width, 1px) solid var(--bs-card-border-color, #dee2e6);
-            border-radius: var(--bs-card-border-radius, 0.375rem);
+            border: 1px solid var(--bs-border-color, #dee2e6);
+            border-radius: var(--bs-border-radius, 0.25rem);
+            background-color: var(--bs-body-bg, #fff);
+            color: var(--bs-body-color, #000);
             margin-bottom: 0.5rem;
         }
         .card-header {
-            padding: var(--bs-card-cap-padding-y, 0.5rem) var(--bs-card-cap-padding-x, 1rem);
-            background-color: var(--bs-card-cap-bg, transparent);
-            border-bottom: var(--bs-card-border-width, 1px) solid var(--bs-card-border-color, #dee2e6);
+            padding: 0.4rem 0.6rem;
+            background-color: var(--bs-secondary-bg, transparent);
+            border-bottom: 1px solid var(--bs-border-color, #dee2e6);
             font-weight: bold;
         }
         :host([collapsible]) .card-header {
@@ -27,7 +29,7 @@ export class EbGroup extends LitElement {
         }
         .card-header::before { content: '▼ '; }
         :host([collapsed]) .card-header::before { content: '▶ '; }
-        .card-body { padding: var(--bs-card-spacer-y, 1rem) var(--bs-card-spacer-x, 1rem); }
+        .card-body { padding: 0.4rem 0.6rem; }
         :host([collapsed]) .card-body { display: none; }
         ::slotted([advanced]) { display: none; }
         :host([advanced-mode]) ::slotted([advanced]) { display: block; }
