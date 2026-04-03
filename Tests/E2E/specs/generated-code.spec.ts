@@ -198,6 +198,28 @@ test.describe('Generated Code Quality', () => {
   });
 
   /**
+   * EBUILDER-97: Assert generated plugin registration uses CType, not list_type.
+   */
+  test.describe('Plugin registration', () => {
+    test('ext_localconf.php contains configurePlugin() call', () => {
+      const content = fs.readFileSync(path.join(EXT_BASE, 'ext_localconf.php'), 'utf8');
+      expect(content).toContain('ExtensionUtility::configurePlugin(');
+    });
+
+    test('no deprecated list_type in any generated file', () => {
+      const extLocalconf = fs.readFileSync(path.join(EXT_BASE, 'ext_localconf.php'), 'utf8');
+      expect(extLocalconf).not.toContain('list_type');
+
+      const typoScriptSetup = fs.readFileSync(
+        path.join(EXT_BASE, 'Configuration/TypoScript/setup.typoscript'),
+        'utf8'
+      );
+      expect(typoScriptSetup).not.toContain('list_type');
+      expect(typoScriptSetup).not.toContain('tt_content.list.20.');
+    });
+  });
+
+  /**
    * EBUILDER-95: PHP syntax check on every generated .php file.
    * Runs `ddev exec php -l <path>` for each file and asserts exit code 0.
    */
