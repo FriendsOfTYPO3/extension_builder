@@ -1,8 +1,12 @@
 import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
+import { spawnSync } from 'child_process';
 import { BackendPage } from '../pages/BackendPage';
 import { ExtensionBuilderPage } from '../pages/ExtensionBuilderPage';
+
+// Project root on the host — maps to /var/www/html/ inside the ddev container
+const PROJECT_ROOT = path.resolve(__dirname, '../../../../../');
 
 // Path to the Composer path-repository root where Extension Builder writes new extensions
 const PACKAGES_DIR = path.resolve(__dirname, '../../../../');
@@ -156,6 +160,47 @@ test.describe('Generated Code Quality', () => {
     });
     test('locallang.xlf exists', () => {
       expect(fs.existsSync(file('Resources/Private/Language/locallang.xlf'))).toBe(true);
+    });
+  });
+
+  /**
+   * EBUILDER-95: PHP syntax check on every generated .php file.
+   * Runs `ddev exec php -l <path>` for each file and asserts exit code 0.
+   */
+  test.describe('PHP syntax', () => {
+    function collectPhpFiles(dir: string): string[] {
+      const entries = fs.readdirSync(dir, { withFileTypes: true });
+      const files: string[] = [];
+      for (const entry of entries) {
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+          files.push(...collectPhpFiles(fullPath));
+        } else if (entry.name.endsWith('.php')) {
+          files.push(fullPath);
+        }
+      }
+      return files;
+    }
+
+    test('all generated PHP files have valid syntax', () => {
+      const phpFiles = collectPhpFiles(EXT_BASE);
+      expect(phpFiles.length).toBeGreaterThan(0);
+
+      const errors: string[] = [];
+      for (const hostPath of phpFiles) {
+        const containerPath = '/var/www/html/' + path.relative(PROJECT_ROOT, hostPath);
+        const result = spawnSync('ddev', ['exec', 'php', '-l', containerPath], {
+          cwd: PROJECT_ROOT,
+          encoding: 'utf8',
+        });
+        if (result.status !== 0) {
+          errors.push(`${path.relative(EXT_BASE, hostPath)}: ${result.stderr?.trim() ?? result.stdout?.trim()}`);
+        }
+      }
+
+      if (errors.length > 0) {
+        throw new Error(`PHP syntax errors in generated files:\n${errors.join('\n')}`);
+      }
     });
   });
 
