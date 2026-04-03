@@ -367,6 +367,11 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
                             . $currentDomainObject->getName(),
                             'extension_builder'
                         );
+                        $oldTable = $oldDomainObject->getDatabaseTableName();
+                        $newTable = $currentDomainObject->getDatabaseTableName();
+                        $this->parseWarnings[] = 'Domain object renamed: database table must be renamed manually from '
+                            . '"' . $oldTable . '" to "' . $newTable . '". '
+                            . 'TCA will be regenerated with the new table name.';
                     }
                     $newClassName = $currentDomainObject->getName();
                     $this->classObject->setName($newClassName);
