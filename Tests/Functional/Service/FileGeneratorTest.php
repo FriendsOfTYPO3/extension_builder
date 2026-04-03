@@ -523,7 +523,6 @@ class FileGeneratorTest extends BaseFunctionalTest
             '.gitignore',
             'ext_emconf.php',
             'ext_localconf.php',
-            'ext_tables.php',
             'ext_tables.sql',
             'Configuration/ExtensionBuilder/settings.yaml',
             'Configuration/TCA/Overrides/sys_template.php',
