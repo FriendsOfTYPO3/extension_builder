@@ -235,6 +235,19 @@ test.describe('Generated Code Quality', () => {
   });
 
   /**
+   * EBUILDER-99: Assert no deprecated Extbase TypoScript persistence mapping.
+   */
+  test.describe('TypoScript persistence mapping', () => {
+    test('no deprecated config.tx_extbase.persistence.classes in generated TypoScript', () => {
+      const tsDir = path.join(EXT_BASE, 'Configuration/TypoScript');
+      const files = fs.readdirSync(tsDir).filter(f => f.endsWith('.typoscript'));
+      const content = files.map(f => fs.readFileSync(path.join(tsDir, f), 'utf8')).join('\n');
+      expect(content).not.toContain('config.tx_extbase.persistence.classes');
+      expect(content).not.toMatch(/plugin\.tx_\w+\.persistence\.classes/);
+    });
+  });
+
+  /**
    * EBUILDER-95: PHP syntax check on every generated .php file.
    * Runs `ddev exec php -l <path>` for each file and asserts exit code 0.
    */
