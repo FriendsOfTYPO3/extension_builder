@@ -153,6 +153,8 @@ class FileGenerator
 
         $this->generatePluginFiles();
 
+        $this->generatePageTsConfig();
+
         $this->generateBackendModuleFiles();
 
         $this->generateIconsFile();
@@ -236,6 +238,25 @@ class FileGenerator
             $this->writeFile($this->extensionDirectory . 'ext_localconf.php', $fileContents);
         } catch (Exception $e) {
             throw new Exception('Could not write ext_localconf.php. Error: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function generatePageTsConfig(): void
+    {
+        if (!$this->extension->hasPlugins()) {
+            return;
+        }
+        try {
+            $fileContents = $this->renderTemplate(
+                'Configuration/page.tsconfigt',
+                ['extension' => $this->extension]
+            );
+            $this->writeFile($this->configurationDirectory . 'page.tsconfig', $fileContents);
+        } catch (Exception $e) {
+            throw new Exception('Could not write Configuration/page.tsconfig. Error: ' . $e->getMessage());
         }
     }
 

@@ -20,22 +20,4 @@ defined('TYPO3') || die();
         ]
     );
 </f:for>
-    // wizards
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-        'mod <k:curlyBrackets>
-            wizards.newContentElement.wizardItems.plugins <k:curlyBrackets>
-                elements {<f:for each="{extension.plugins}" as="plugin">
-                    {plugin.key} <k:curlyBrackets>
-                        iconIdentifier = {extension.extensionKey}-plugin-{plugin.key}
-                        title = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:tx_{extension.extensionKey}_{plugin.key}.name
-                        description = LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:tx_{extension.extensionKey}_{plugin.key}.description
-                        tt_content_defValues <k:curlyBrackets>
-                            CType = {extension.unprefixedShortExtensionKey}_{plugin.key}
-                        </k:curlyBrackets>
-                    </k:curlyBrackets></f:for>
-                }
-                show = *
-            </k:curlyBrackets>
-       </k:curlyBrackets>'
-    );
 })();
