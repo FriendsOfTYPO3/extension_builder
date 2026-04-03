@@ -164,6 +164,40 @@ test.describe('Generated Code Quality', () => {
   });
 
   /**
+   * EBUILDER-96: Assert generated TCA uses v13-compatible field types.
+   */
+  test.describe('TCA compliance', () => {
+    const tcaDir = path.join(EXT_BASE, 'Configuration/TCA');
+
+    function readTcaFiles(): string {
+      const files = fs.readdirSync(tcaDir).filter(f => f.endsWith('.php'));
+      return files.map(f => fs.readFileSync(path.join(tcaDir, f), 'utf8')).join('\n');
+    }
+
+    test('image property uses type=file (not deprecated getFileFieldTCAConfig)', () => {
+      const content = readTcaFiles();
+      expect(content).toContain("'type' => 'file'");
+      expect(content).not.toMatch(/getFileFieldTCAConfig\(/);
+    });
+
+    test('date property uses type=datetime (not deprecated eval=date)', () => {
+      const content = readTcaFiles();
+      expect(content).toContain("'type' => 'datetime'");
+      expect(content).not.toMatch(/'eval'\s*=>\s*'[^']*\bdate\b/);
+    });
+
+    test('boolean property uses type=check (not deprecated type=input with eval)', () => {
+      const content = readTcaFiles();
+      expect(content).toContain("'type' => 'check'");
+    });
+
+    test('no deprecated eval=datetime in TCA', () => {
+      const content = readTcaFiles();
+      expect(content).not.toMatch(/'eval'\s*=>\s*'[^']*\bdatetime\b/);
+    });
+  });
+
+  /**
    * EBUILDER-95: PHP syntax check on every generated .php file.
    * Runs `ddev exec php -l <path>` for each file and asserts exit code 0.
    */
