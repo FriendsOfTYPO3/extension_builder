@@ -220,6 +220,21 @@ test.describe('Generated Code Quality', () => {
   });
 
   /**
+   * EBUILDER-98: Assert generated controller uses current FlashMessage API.
+   */
+  test.describe('FlashMessage API', () => {
+    test('controller uses $this->addFlashMessage() (not deprecated flashMessageContainer)', () => {
+      const content = fs.readFileSync(
+        path.join(EXT_BASE, 'Classes/Controller/ArticleController.php'),
+        'utf8'
+      );
+      expect(content).toContain('$this->addFlashMessage(');
+      expect(content).not.toContain('$this->flashMessageContainer');
+      expect(content).not.toContain('new \\TYPO3\\CMS\\Core\\Messaging\\FlashMessage(');
+    });
+  });
+
+  /**
    * EBUILDER-95: PHP syntax check on every generated .php file.
    * Runs `ddev exec php -l <path>` for each file and asserts exit code 0.
    */
