@@ -1,4 +1,4 @@
-import { html, css } from 'lit';
+import { html } from 'lit';
 import { EbField } from './eb-field.js';
 
 export class EbStringField extends EbField {
@@ -14,11 +14,9 @@ export class EbStringField extends EbField {
         maxLength: { type: Number, attribute: 'max-length' },
     };
 
-    static styles = css`
-        :host { display: block; }
-        label { display: block; margin-bottom: 2px; }
-        input { width: 100%; box-sizing: border-box; }
-    `;
+    // PoC: Light DOM so TYPO3 Bootstrap CSS classes (form-control, form-label, etc.) apply directly.
+    // Pattern from TYPO3 core: typo3-backend-alert, typo3-backend-pagination use the same approach.
+    createRenderRoot() { return this; }
 
     _onInput(e) {
         let v = e.target.value;
@@ -59,8 +57,9 @@ export class EbStringField extends EbField {
     render() {
         const placeholder = this.placeholder || this.typeInvite || '';
         return html`
-            ${this.label ? html`<label>${this.label}</label>` : ''}
+            ${this.label ? html`<label class="form-label">${this.label}</label>` : ''}
             <input
+                class="form-control"
                 type="text"
                 .value="${this.value ?? ''}"
                 placeholder="${placeholder}"
