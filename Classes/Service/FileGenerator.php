@@ -155,6 +155,8 @@ class FileGenerator
 
         $this->generatePageTsConfig();
 
+        $this->generateServicesYaml();
+
         $this->generateBackendModuleFiles();
 
         $this->generateIconsFile();
@@ -238,6 +240,22 @@ class FileGenerator
             $this->writeFile($this->extensionDirectory . 'ext_localconf.php', $fileContents);
         } catch (Exception $e) {
             throw new Exception('Could not write ext_localconf.php. Error: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function generateServicesYaml(): void
+    {
+        try {
+            $fileContents = $this->renderTemplate(
+                'Configuration/Services.yamlt',
+                ['extension' => $this->extension]
+            );
+            $this->writeFile($this->configurationDirectory . 'Services.yaml', $fileContents);
+        } catch (Exception $e) {
+            throw new Exception('Could not write Configuration/Services.yaml. Error: ' . $e->getMessage());
         }
     }
 
