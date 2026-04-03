@@ -22,6 +22,7 @@ use EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ManyToManyRelation;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Utility\Inflector;
@@ -922,6 +923,15 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
 
                 // relation type changed
                 if ($oldProperty->isAnyToManyRelation() != $newProperty->isAnyToManyRelation()) {
+                    if ($oldProperty instanceof ManyToManyRelation) {
+                        $this->parseWarnings[] = 'Relation type changed from manyToMany: MM table '
+                            . '"' . $oldProperty->getRelationTableName() . '" data will not be migrated '
+                            . 'automatically and may be lost.';
+                    } elseif ($newProperty instanceof ManyToManyRelation) {
+                        $this->parseWarnings[] = 'Relation type changed to manyToMany: a new MM table '
+                            . '"' . $newProperty->getRelationTableName() . '" will be created. '
+                            . 'Existing single-value relation data will not be migrated.';
+                    }
                     // remove old methods since we won't convert getter and setter methods
                     //to add/remove methods
                     if ($oldProperty->isAnyToManyRelation()) {
