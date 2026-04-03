@@ -159,12 +159,16 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
         return null;
     }
 
-    public static function getExtensionBuilderJson(string $extensionKey, ?string $storagePath = null)
+    public static function getExtensionBuilderJson(string $extensionKey, ?string $storagePath = null): ?array
     {
         $storagePath = $storagePath ?? Environment::getPublicPath() . '/typo3conf/ext/';
         $jsonFile = $storagePath . $extensionKey . '/' . self::EXTENSION_BUILDER_SETTINGS_FILE;
         if (file_exists($jsonFile)) {
-            return json_decode(file_get_contents($jsonFile), true);
+            $decoded = json_decode(file_get_contents($jsonFile), true);
+            if (!is_array($decoded)) {
+                return null;
+            }
+            return $decoded;
         }
 
         return null;

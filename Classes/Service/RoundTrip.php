@@ -26,6 +26,8 @@ use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Utility\Inflector;
 use Exception;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -36,8 +38,9 @@ use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
  * Performs all changes that are required to adapt the
  * existing classes and methods to the changes in the configurations
  */
-class RoundTrip implements SingletonInterface
+class RoundTrip implements SingletonInterface, LoggerAwareInterface
 {
+    use LoggerAwareTrait;
     /**
      * @var string
      */
@@ -126,6 +129,13 @@ class RoundTrip implements SingletonInterface
 
         if (file_exists($this->previousExtensionDirectory . ExtensionBuilderConfigurationManager::EXTENSION_BUILDER_SETTINGS_FILE)) {
             $jsonConfig = $this->configurationManager->getExtensionBuilderConfiguration($this->previousExtensionKey, $extension->getStoragePath());
+            if ($jsonConfig === null) {
+                $this->logger?->warning(
+                    'ExtensionBuilder.json exists but could not be parsed for extension "' . $this->previousExtensionKey . '"',
+                    ['extensionKey' => $this->previousExtensionKey, 'storagePath' => $extension->getStoragePath()]
+                );
+                return;
+            }
             $this->previousExtension = $this->extensionSchemaBuilder->build($jsonConfig);
             $previousDomainObjects = $this->previousExtension->getDomainObjects();
             /** @var DomainObject[] $previousDomainObjects */
