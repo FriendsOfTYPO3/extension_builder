@@ -79,4 +79,78 @@ test.describe('Domain Model Canvas', () => {
     );
     expect(isVisible).toBe(true);
   });
+
+  // EBUILDER-40: Connect two model objects via wire
+  test('two model objects can be connected with a wire', async ({ page }) => {
+    const frame = new BackendPage(page).getContentFrame();
+    const addBtn = frame.getByRole('button', { name: '+ Model Object' });
+    await addBtn.click();
+    await addBtn.click();
+
+    const wireCount = await frame.locator('eb-wiring-editor').evaluate(
+      async (el: any) => {
+        const layer = el.shadowRoot?.querySelector('eb-layer');
+        await layer?.updateComplete;
+        const containers = Array.from(layer?.shadowRoot?.querySelectorAll('eb-container') ?? []) as any[];
+        if (containers.length < 2) return -1;
+
+        await containers[0].updateComplete;
+        await containers[1].updateComplete;
+
+        const term0 = containers[0].shadowRoot?.querySelector('eb-terminal');
+        const term1 = containers[1].shadowRoot?.querySelector('eb-terminal');
+        if (!term0 || !term1) return -2;
+
+        // Dispatch terminal-connect events directly on eb-layer (which listens on itself).
+        // This replicates clicking both terminals without requiring drag through nested shadow DOMs.
+        layer.dispatchEvent(new CustomEvent('terminal-connect', {
+          detail: { terminalId: 'SOURCES', uid: '', sourceEl: term0 },
+        }));
+        layer.dispatchEvent(new CustomEvent('terminal-connect', {
+          detail: { terminalId: 'SOURCES', uid: '', sourceEl: term1 },
+        }));
+
+        return layer._wires.length;
+      }
+    );
+    expect(wireCount).toBe(1);
+  });
+
+  test('connected wire appears in serialized layer data', async ({ page }) => {
+    const frame = new BackendPage(page).getContentFrame();
+    const addBtn = frame.getByRole('button', { name: '+ Model Object' });
+    await addBtn.click();
+    await addBtn.click();
+
+    const serializedWires = await frame.locator('eb-wiring-editor').evaluate(
+      async (el: any) => {
+        const layer = el.shadowRoot?.querySelector('eb-layer');
+        await layer?.updateComplete;
+        const containers = Array.from(layer?.shadowRoot?.querySelectorAll('eb-container') ?? []) as any[];
+        if (containers.length < 2) return [];
+
+        await containers[0].updateComplete;
+        await containers[1].updateComplete;
+
+        const term0 = containers[0].shadowRoot?.querySelector('eb-terminal');
+        const term1 = containers[1].shadowRoot?.querySelector('eb-terminal');
+        if (!term0 || !term1) return [];
+
+        layer.dispatchEvent(new CustomEvent('terminal-connect', {
+          detail: { terminalId: 'SOURCES', uid: '', sourceEl: term0 },
+        }));
+        layer.dispatchEvent(new CustomEvent('terminal-connect', {
+          detail: { terminalId: 'SOURCES', uid: '', sourceEl: term1 },
+        }));
+
+        return layer.serialize().wires;
+      }
+    );
+
+    expect(serializedWires).toHaveLength(1);
+    expect(serializedWires[0]).toMatchObject({
+      src: { moduleId: expect.any(Number) },
+      tgt: { moduleId: expect.any(Number) },
+    });
+  });
 });
