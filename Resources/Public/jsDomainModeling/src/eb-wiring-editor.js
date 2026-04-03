@@ -162,13 +162,17 @@ export class EbWiringEditor extends LitElement {
             const found = allExtensions.find(e => e.name === this.extensionName);
             if (!found) throw new Error(`Extension "${this.extensionName}" not found`);
             this._extensionData = JSON.parse(found.working);
-            await this.updateComplete;
-            this._populateLayer();
-            this._populateProperties();
         } catch (e) {
             Notification.error('Load failed', e.message);
         } finally {
             this._loading = false;
+        }
+        // _loading is now false, so eb-layer is re-rendered into the DOM.
+        // Wait for that render to complete before populating it.
+        if (this._extensionData) {
+            await this.updateComplete;
+            this._populateLayer();
+            this._populateProperties();
         }
     }
 
