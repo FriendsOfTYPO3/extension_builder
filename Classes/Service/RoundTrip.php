@@ -26,6 +26,7 @@ use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Domain\Model\File;
 use EBT\ExtensionBuilder\Utility\Inflector;
 use Exception;
+use PhpParser\Error as PhpParserError;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Core\Environment;
@@ -201,7 +202,12 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
             ) . $oldDomainObject->getName() . '.php';
             if (file_exists($fileName)) {
                 // import the classObject from the existing file
-                $this->classFileObject = $this->parserService->parseFile($fileName);
+                try {
+                    $this->classFileObject = $this->parserService->parseFile($fileName);
+                } catch (PhpParserError | Exception $e) {
+                    $this->logger?->warning('Cannot parse ' . $fileName . ': ' . $e->getMessage());
+                    return null;
+                }
                 $this->classObject = $this->classFileObject->getFirstClass();
                 if ($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed) {
                     if (!$this->extensionRenamed) {
@@ -286,7 +292,12 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
             $fileName .= $currentDomainObject->getName() . '.php';
             if (file_exists($fileName)) {
                 // import the classObject from the existing file
-                $this->classFileObject = $this->parserService->parseFile($fileName);
+                try {
+                    $this->classFileObject = $this->parserService->parseFile($fileName);
+                } catch (PhpParserError | Exception $e) {
+                    $this->logger?->warning('Cannot parse ' . $fileName . ': ' . $e->getMessage());
+                    return null;
+                }
                 $this->classObject = $this->classFileObject->getFirstClass();
                 $this->classObject->setFileName($fileName);
                 $this->classObject->setName($currentDomainObject->getName());
@@ -316,7 +327,12 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
             $fileName = FileGenerator::getFolderForClassFile($extensionDir, 'Controller', false);
             $fileName .= $oldDomainObject->getName() . 'Controller.php';
             if (file_exists($fileName)) {
-                $this->classFileObject = $this->parserService->parseFile($fileName);
+                try {
+                    $this->classFileObject = $this->parserService->parseFile($fileName);
+                } catch (PhpParserError | Exception $e) {
+                    $this->logger?->warning('Cannot parse ' . $fileName . ': ' . $e->getMessage());
+                    return null;
+                }
                 $this->classObject = $this->classFileObject->getFirstClass();
                 $this->classObject->setName($currentDomainObject->getName() . 'Controller');
                 if ($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed) {
@@ -360,7 +376,12 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
         $fileName = FileGenerator::getFolderForClassFile($extensionDir, 'Controller', false);
         $fileName .= $currentDomainObject->getName() . 'Controller.php';
         if (file_exists($fileName)) {
-            $this->classFileObject = $this->parserService->parseFile($fileName);
+            try {
+                $this->classFileObject = $this->parserService->parseFile($fileName);
+            } catch (PhpParserError | Exception $e) {
+                $this->logger?->warning('Cannot parse ' . $fileName . ': ' . $e->getMessage());
+                return null;
+            }
             $this->classObject = $this->classFileObject->getFirstClass();
             $this->classObject->setFileName($fileName);
             $className = $currentDomainObject->getControllerClassName();
@@ -564,7 +585,12 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
             $fileName = FileGenerator::getFolderForClassFile($extensionDir, 'Repository', false);
             $fileName .= $oldDomainObject->getName() . 'Repository.php';
             if (file_exists($fileName)) {
-                $this->classFileObject = $this->parserService->parseFile($fileName);
+                try {
+                    $this->classFileObject = $this->parserService->parseFile($fileName);
+                } catch (PhpParserError | Exception $e) {
+                    $this->logger?->warning('Cannot parse ' . $fileName . ': ' . $e->getMessage());
+                    return null;
+                }
                 $this->classObject = $this->classFileObject->getFirstClass();
                 $this->classObject->setName($currentDomainObject->getName() . 'Repository');
                 if ($oldDomainObject->getName() != $currentDomainObject->getName() || $this->extensionRenamed) {
@@ -581,7 +607,12 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
             $fileName = FileGenerator::getFolderForClassFile($extensionDir, 'Repository', false);
             $fileName .= $currentDomainObject->getName() . 'Repository.php';
             if (file_exists($fileName)) {
-                $this->classFileObject = $this->parserService->parseFile($fileName);
+                try {
+                    $this->classFileObject = $this->parserService->parseFile($fileName);
+                } catch (PhpParserError | Exception $e) {
+                    $this->logger?->warning('Cannot parse ' . $fileName . ': ' . $e->getMessage());
+                    return null;
+                }
                 $this->classObject = $this->classFileObject->getFirstClass();
                 $this->classObject->setFileName($fileName);
                 $this->classObject->setFileName($fileName);
