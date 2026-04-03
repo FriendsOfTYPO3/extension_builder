@@ -16,31 +16,27 @@ CREATE TABLE tx_testextension_domain_model_child1 (
 );
 
 CREATE TABLE tx_testextension_domain_model_child2 (
-	main int(11) unsigned DEFAULT '0' NOT NULL,
+	main int unsigned DEFAULT '0' NOT NULL,
 	name varchar(255) NOT NULL DEFAULT '',
 	date_property1 date DEFAULT NULL,
-	date_property2 datetime DEFAULT NULL,
-	date_property3 int(11) NOT NULL DEFAULT '0',
-	date_property4 int(11) NOT NULL DEFAULT '0'
+	date_property2 datetime DEFAULT NULL
 );
 
 CREATE TABLE tx_testextension_domain_model_child3 (
 	name varchar(255) NOT NULL DEFAULT '',
-	password varchar(255) NOT NULL DEFAULT '',
-	image_property int(11) unsigned NOT NULL DEFAULT '0'
+	password varchar(255) NOT NULL DEFAULT ''
 );
 
 CREATE TABLE tx_testextension_domain_model_child4 (
-	name varchar(255) NOT NULL DEFAULT '',
-	file_property int(11) unsigned NOT NULL DEFAULT '0'
+	name varchar(255) NOT NULL DEFAULT ''
 );
 
 CREATE TABLE tx_testextension_domain_model_category (
-	category int(11) unsigned DEFAULT '0' NOT NULL,
+	category int unsigned DEFAULT '0' NOT NULL,
 	name varchar(255) NOT NULL DEFAULT '',
 	categories int(11) unsigned NOT NULL DEFAULT '0'
 );
 
 CREATE TABLE tx_testextension_domain_model_child3 (
-	categories int(11) unsigned DEFAULT '0' NOT NULL
+	categories int unsigned DEFAULT '0' NOT NULL
 );

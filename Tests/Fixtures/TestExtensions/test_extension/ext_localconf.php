@@ -13,24 +13,4 @@ defined('TYPO3') || die();
             \FIXTURE\TestExtension\Controller\MainController::class => 'create, update, delete, '
         ]
     );
-
-    // wizards
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-        'mod {
-            wizards.newContentElement.wizardItems.plugins {
-                elements {
-                    testplugin {
-                        iconIdentifier = test_extension-plugin-testplugin
-                        title = LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_test_extension_testplugin.name
-                        description = LLL:EXT:test_extension/Resources/Private/Language/locallang_db.xlf:tx_test_extension_testplugin.description
-                        tt_content_defValues {
-                            CType = list
-                            list_type = testextension_testplugin
-                        }
-                    }
-                }
-                show = *
-            }
-       }'
-    );
 })();
