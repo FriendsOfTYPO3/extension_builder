@@ -273,7 +273,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
             'foreignRelationClass',
         ];
         foreach ($jsonConfig as &$module) {
-            for ($i = 0, $relations = count($module['value']['relationGroup']['relations']); $i < $relations; $i++) {
+            for ($i = 0, $relations = count($module['value']['relationGroup']['relations'] ?? []); $i < $relations; $i++) {
                 if ($prepareForModeler) {
                     if (empty($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
                         $module['value']['relationGroup']['relations'][$i]['advancedSettings'] = [];

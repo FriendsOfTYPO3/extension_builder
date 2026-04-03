@@ -5,7 +5,7 @@ import { BackendPage } from '../pages/BackendPage';
 import { ExtensionBuilderPage } from '../pages/ExtensionBuilderPage';
 
 // Path to the Composer path-repository root where Extension Builder writes new extensions
-const PACKAGES_DIR = path.resolve(__dirname, '../../../../packages');
+const PACKAGES_DIR = path.resolve(__dirname, '../../../../');
 
 test.describe('Extension Generation', () => {
   test.beforeEach(async ({ page }) => {
