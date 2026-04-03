@@ -446,11 +446,9 @@ class RoundTrip implements SingletonInterface
                 // update the initializeAction method body
                 $initializeMethod = $this->classObject->getMethod('initializeAction');
                 if ($initializeMethod != null) {
-                    $initializeMethodBodyStmts = $initializeMethod->getBodyStmts();
-                    $initializeMethodBodyStmts = str_replace(
-                        lcfirst($oldName) . 'Repository',
-                        lcfirst($newName) . 'Repository',
-                        $initializeMethodBodyStmts
+                    $initializeMethodBodyStmts = $this->parserService->replaceNodeProperty(
+                        $initializeMethod->getBodyStmts(),
+                        [lcfirst($oldName) . 'Repository' => lcfirst($newName) . 'Repository']
                     );
                     $initializeMethod->setBodyStmts($initializeMethodBodyStmts);
                     $this->classObject->setMethod($initializeMethod);
@@ -459,10 +457,9 @@ class RoundTrip implements SingletonInterface
                 $injectMethod = $this->classObject->getMethod($injectMethodName);
                 if ($injectMethod != null) {
                     $this->classObject->removeMethod($injectMethodName);
-                    $initializeMethodBodyStmts = str_replace(
-                        lcfirst($oldName),
-                        lcfirst($newName),
-                        $injectMethod->getBodyStmts()
+                    $initializeMethodBodyStmts = $this->parserService->replaceNodeProperty(
+                        $injectMethod->getBodyStmts(),
+                        [lcfirst($oldName) => lcfirst($newName)]
                     );
                     $injectMethod->setBodyStmts($initializeMethodBodyStmts);
                     $injectMethod->setTag(
@@ -481,11 +478,9 @@ class RoundTrip implements SingletonInterface
                     // here we have to update all the occurences of domain object names in action methods
                     $actionMethod = $this->classObject->getMethod($action->getName() . 'Action');
                     if ($actionMethod != null) {
-                        $actionMethodBody = $actionMethod->getBodyStmts();
-                        $newActionMethodBody = str_replace(
-                            lcfirst($oldName) . 'Repository',
-                            lcfirst($newName) . 'Repository',
-                            $actionMethodBody
+                        $newActionMethodBody = $this->parserService->replaceNodeProperty(
+                            $actionMethod->getBodyStmts(),
+                            [lcfirst($oldName) . 'Repository' => lcfirst($newName) . 'Repository']
                         );
                         $actionMethod->setBodyStmts($newActionMethodBody);
                         $actionMethod->setTag('param', $currentDomainObject->getQualifiedClassName());
@@ -519,12 +514,13 @@ class RoundTrip implements SingletonInterface
                             )
                         );
 
-                        //TODO: this is not safe. Could rename unwanted variables
                         $actionMethod->setBodyStmts(
-                            $this->replaceUpperAndLowerCase(
-                                $oldName,
-                                $newName,
-                                $actionMethod->getBodyStmts()
+                            $this->parserService->replaceNodeProperty(
+                                $actionMethod->getBodyStmts(),
+                                [
+                                    ucfirst($oldName) => ucfirst($newName),
+                                    lcfirst($oldName) => lcfirst($newName),
+                                ]
                             )
                         );
                         $this->classObject->setMethod($actionMethod);
