@@ -18,6 +18,7 @@ function _svgIcon(name) {
 
 export class EbListField extends LitElement {
     static properties = {
+        name: { type: String },
         sortable: { type: Boolean },
         addLabel: { type: String, attribute: 'add-label' },
         elementType: { type: String, attribute: 'element-type' },

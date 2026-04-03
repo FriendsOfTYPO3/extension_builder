@@ -103,14 +103,60 @@ test.describe('Generated Code Quality', () => {
     await extBuilder.generateExtension();
     await expect(extBuilder.getSuccessMessage()).toBeVisible({ timeout: 15000 });
 
-    // Allow ddev volume mount to sync the generated files to the host filesystem
-    await page.waitForTimeout(3000);
+    // Poll until ext_emconf.php appears on the host filesystem (ddev volume mount sync)
+    const emconfPath = path.join(EXT_BASE, 'ext_emconf.php');
+    const deadline = Date.now() + 15000;
+    while (!fs.existsSync(emconfPath) && Date.now() < deadline) {
+      await page.waitForTimeout(500);
+    }
 
     await context.close();
   });
 
   test('reference extension directory exists after generation', () => {
     expect(fs.existsSync(EXT_BASE)).toBe(true);
+  });
+
+
+  test.describe('File structure', () => {
+    const file = (relative: string) => path.join(EXT_BASE, relative);
+
+    test('composer.json exists', () => {
+      expect(fs.existsSync(file('composer.json'))).toBe(true);
+    });
+    test('ext_emconf.php exists', () => {
+      expect(fs.existsSync(file('ext_emconf.php'))).toBe(true);
+    });
+    test('ext_localconf.php exists', () => {
+      expect(fs.existsSync(file('ext_localconf.php'))).toBe(true);
+    });
+    test('Article model class exists', () => {
+      expect(fs.existsSync(file('Classes/Domain/Model/Article.php'))).toBe(true);
+    });
+    test('ArticleRepository class exists', () => {
+      expect(fs.existsSync(file('Classes/Domain/Repository/ArticleRepository.php'))).toBe(true);
+    });
+    test('ArticleController class exists', () => {
+      expect(fs.existsSync(file('Classes/Controller/ArticleController.php'))).toBe(true);
+    });
+    test('TCA definition for Article table exists', () => {
+      expect(fs.existsSync(file('Configuration/TCA/tx_ebtestgenerated_domain_model_article.php'))).toBe(true);
+    });
+    test('TypoScript setup exists', () => {
+      expect(fs.existsSync(file('Configuration/TypoScript/setup.typoscript'))).toBe(true);
+    });
+    test('TypoScript constants exists', () => {
+      expect(fs.existsSync(file('Configuration/TypoScript/constants.typoscript'))).toBe(true);
+    });
+    test('Article List template exists', () => {
+      expect(fs.existsSync(file('Resources/Private/Templates/Article/List.html'))).toBe(true);
+    });
+    test('Article Show template exists', () => {
+      expect(fs.existsSync(file('Resources/Private/Templates/Article/Show.html'))).toBe(true);
+    });
+    test('locallang.xlf exists', () => {
+      expect(fs.existsSync(file('Resources/Private/Language/locallang.xlf'))).toBe(true);
+    });
   });
 
   test.afterAll(() => {
