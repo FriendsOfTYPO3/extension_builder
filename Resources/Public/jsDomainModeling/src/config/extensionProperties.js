@@ -281,6 +281,7 @@ export const extensionPropertiesFields = [
           name: "property",
           fields: [
             {
+              type: "string",
               inputParams: {
                 name: "name",
                 label: "name",
@@ -288,6 +289,7 @@ export const extensionPropertiesFields = [
               },
             },
             {
+              type: "string",
               inputParams: {
                 name: "key",
                 label: "key",

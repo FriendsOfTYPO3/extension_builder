@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
 import { buttonStyles } from './styles/button-styles.js';
+import { formStyles } from './styles/form-styles.js';
 import { renderFieldDef } from './render-fields.js';
 
 function _iconUrl(name) {
@@ -33,7 +34,7 @@ export class EbListField extends LitElement {
         _items: { state: true },
     };
 
-    static styles = [buttonStyles, css`
+    static styles = [buttonStyles, formStyles, css`
         :host { display: block; }
         .item-row {
             display: flex;
