@@ -43,7 +43,7 @@ export class EbStringField extends EbField {
     _onInput(e) {
         let v = e.target.value;
         if (this.forceAlphaNumericUnderscore) {
-            v = v.replace(/[^a-zA-Z0-9_]/g, '');
+            v = v.replace(/\s/g, '_').replace(/[^a-zA-Z0-9_]/g, '');
         } else if (this.forceAlphaNumeric) {
             v = v.replace(/[^a-zA-Z0-9]/g, '');
         } else if (this.noSpaces) {
