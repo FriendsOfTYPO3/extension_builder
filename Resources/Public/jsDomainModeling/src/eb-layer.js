@@ -64,54 +64,60 @@ export class EbLayer extends LitElement {
         super.connectedCallback();
         this.addEventListener('terminal-connect', this._onTerminalConnect.bind(this));
         this.addEventListener('container-moved', this._onContainerMoved.bind(this));
+        this._boundPointerMove = this._onPointerMove.bind(this);
+        this._boundPointerUp = this._onPointerUp.bind(this);
+        window.addEventListener('pointermove', this._boundPointerMove);
+        window.addEventListener('pointerup', this._boundPointerUp);
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        window.removeEventListener('pointermove', this._boundPointerMove);
+        window.removeEventListener('pointerup', this._boundPointerUp);
     }
 
     _onTerminalConnect(e) {
         const { terminalId, uid, sourceEl } = e.detail;
 
-        if (!this._drawingWire) {
-            this._drawingWire = { terminalId, uid, sourceEl };
-            return;
-        }
+        // Get the position of the terminal in layer-canvas space
+        const layerRect = this.getBoundingClientRect();
+        const termRect = sourceEl.getBoundingClientRect();
+        const startX = termRect.left - layerRect.left + termRect.width / 2;
+        const startY = termRect.top - layerRect.top + termRect.height / 2;
 
-        const src = this._drawingWire;
-        const tgt = { terminalId, uid, sourceEl };
+        // Find the container this terminal belongs to
+        const container = sourceEl.getRootNode()?.host;
+        const moduleId = parseInt(container?.getAttribute('module-id') ?? '-1');
 
-        // Determine source (output/relation) and target (input/SOURCES)
-        const isTargetSources = tgt.terminalId === 'SOURCES';
-        const srcInfo = isTargetSources ? src : tgt;
-        const tgtInfo = isTargetSources ? tgt : src;
-
-        const srcContainer = srcInfo.sourceEl.closest('eb-container') ?? srcInfo.sourceEl.getRootNode()?.host;
-        const tgtContainer = tgtInfo.sourceEl.closest('eb-container') ?? tgtInfo.sourceEl.getRootNode()?.host;
-
-        if (!srcContainer || !tgtContainer || srcContainer === tgtContainer) {
-            this._drawingWire = null;
-            this._tempWire = null;
-            return;
-        }
-
-        const srcModuleId = parseInt(srcContainer.getAttribute('module-id') ?? '0');
-        const tgtModuleId = parseInt(tgtContainer.getAttribute('module-id') ?? '0');
-
-        const pos = this._getWirePositions(srcInfo.sourceEl, tgtInfo.sourceEl);
-        this._wires = [...this._wires, {
-            id: `wire-${Date.now()}`,
-            srcTerminal: srcInfo.terminalId,
-            tgtTerminal: tgtInfo.terminalId,
-            srcUid: srcInfo.uid,
-            tgtUid: tgtInfo.uid,
-            srcModuleId,
-            tgtModuleId,
-            ...pos,
-        }];
-
-        this._drawingWire = null;
-        this._tempWire = null;
+        this._drawingWire = {
+            terminalId,
+            uid,
+            sourceEl,
+            moduleId,
+            startX,
+            startY,
+            mouseX: startX,
+            mouseY: startY,
+        };
     }
 
     _onContainerMoved(e) {
         this._updateWirePositions();
+    }
+
+    _onPointerMove(e) {
+        if (!this._drawingWire) return;
+        const layerRect = this.getBoundingClientRect();
+        this._drawingWire = {
+            ...this._drawingWire,
+            mouseX: e.clientX - layerRect.left,
+            mouseY: e.clientY - layerRect.top,
+        };
+    }
+
+    _onPointerUp(e) {
+        if (!this._drawingWire) return;
+        this._drawingWire = null;
     }
 
     _updateWirePositions() {
