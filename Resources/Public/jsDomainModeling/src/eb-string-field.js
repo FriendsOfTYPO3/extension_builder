@@ -2,6 +2,15 @@ import { html } from 'lit';
 import { EbField } from './eb-field.js';
 import { formStyles } from './styles/form-styles.js';
 
+/**
+ * Single-line text input with built-in string transformation and validation.
+ *
+ * Supports alphanumeric enforcement, case conversion, length constraints, and
+ * forbidden prefix checks. Reports errors inline below the input.
+ *
+ * @element eb-string-field
+ * @fires field-updated - When the value changes after input processing
+ */
 export class EbStringField extends EbField {
     static properties = {
         ...EbField.properties,
@@ -80,16 +89,22 @@ export class EbStringField extends EbField {
 
     render() {
         const placeholder = this.placeholder || this.typeInvite || '';
+        const inputId = `eb-str-${this.name}`;
+        const errorId = `${inputId}-error`;
         return html`
-            ${this.label ? html`<label class="form-label">${this.label}</label>` : ''}
+            ${this.label ? html`<label class="form-label" for="${inputId}">${this.label}</label>` : ''}
             <input
+                id="${inputId}"
                 class="form-control${this._error ? ' is-invalid' : ''}"
                 type="text"
                 .value="${this.value ?? ''}"
                 placeholder="${placeholder}"
+                ?aria-required="${this.required}"
+                aria-invalid="${this._error ? 'true' : 'false'}"
+                aria-describedby="${this._error ? errorId : ''}"
                 @input="${this._onInput}"
             >
-            ${this._error ? html`<div class="invalid-feedback">${this._error}</div>` : ''}
+            ${this._error ? html`<div id="${errorId}" class="invalid-feedback" role="alert">${this._error}</div>` : ''}
         `;
     }
 }

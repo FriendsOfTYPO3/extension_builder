@@ -4,6 +4,17 @@ import { renderFields } from './render-fields.js';
 import { modelObjectModule } from './config/modelObject.js';
 import { formStyles } from './styles/form-styles.js';
 
+/**
+ * Draggable domain model object card in the wiring canvas.
+ *
+ * Renders a card with a colour-coded header (containing an `eb-terminal`
+ * and an inline-editable name) and a body of auto-generated form fields.
+ * Drag is handled via Pointer Events with capture. Fires `container-moved`
+ * on every pointer-move while dragging.
+ *
+ * @element eb-container
+ * @fires container-moved - During drag with `{ moduleId, x, y }` detail
+ */
 export class EbContainer extends LitElement {
     static properties = {
         moduleId: { type: Number, attribute: 'module-id' },

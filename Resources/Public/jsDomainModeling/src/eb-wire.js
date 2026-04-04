@@ -1,5 +1,13 @@
 import { LitElement, html, svg, css } from 'lit';
 
+/**
+ * SVG cubic Bézier curve connecting two terminals.
+ *
+ * Coordinates are in the `eb-layer` canvas space. Serializes to a compact
+ * `{ src, tgt }` object for persistence.
+ *
+ * @element eb-wire
+ */
 export class EbWire extends LitElement {
     static properties = {
         x1: { type: Number },
@@ -44,6 +52,7 @@ export class EbWire extends LitElement {
                 stroke-width="2"
                 fill="none"
                 stroke-linecap="round"
+                aria-hidden="true"
             />
         `;
     }

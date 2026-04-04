@@ -2,9 +2,16 @@ import { html } from 'lit';
 import { EbField } from './eb-field.js';
 import { formStyles } from './styles/form-styles.js';
 
+/**
+ * Multi-line textarea field.
+ *
+ * @element eb-textarea-field
+ * @fires field-updated - When the value changes
+ */
 export class EbTextareaField extends EbField {
     static properties = {
         ...EbField.properties,
+        /** Number of visible text rows. Defaults to 4. */
         rows: { type: Number },
     };
 
@@ -30,12 +37,15 @@ export class EbTextareaField extends EbField {
     }
 
     render() {
+        const inputId = `eb-ta-${this.name}`;
         return html`
             <div class="form-group">
-                ${this.label ? html`<label class="form-label">${this.label}</label>` : ''}
+                ${this.label ? html`<label class="form-label" for="${inputId}">${this.label}</label>` : ''}
                 <textarea
+                    id="${inputId}"
                     class="form-control"
                     rows="${this.rows}"
+                    ?aria-required="${this.required}"
                     @input="${this._onInput}"
                 >${this.value ?? ''}</textarea>
             </div>

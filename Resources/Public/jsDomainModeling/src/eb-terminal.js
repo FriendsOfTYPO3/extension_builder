@@ -1,5 +1,15 @@
 import { LitElement, html, css } from 'lit';
 
+/**
+ * Visual connection point (port) on a domain model container.
+ *
+ * Renders as a small coloured circle. When clicked, fires `terminal-connect`
+ * so `EbLayer` can draw a wire between two terminals. The `type` attribute
+ * controls colour and position: `input` (green, top) or `output` (red).
+ *
+ * @element eb-terminal
+ * @fires terminal-connect - On pointerdown with `{ terminalId, uid, sourceEl }` detail
+ */
 export class EbTerminal extends LitElement {
     static properties = {
         type: { type: String },

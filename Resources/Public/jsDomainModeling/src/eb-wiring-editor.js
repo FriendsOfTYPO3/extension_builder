@@ -16,6 +16,15 @@ import { extensionPropertiesFields } from './config/extensionProperties.js';
 import { modelObjectModule } from './config/modelObject.js';
 import { renderFieldDef, renderFields } from './render-fields.js';
 
+/**
+ * Top-level wiring editor component.
+ *
+ * Orchestrates loading, saving, and resetting extension data via the SMD
+ * JSON-RPC endpoint. Renders the toolbar, a collapsible left panel with
+ * extension properties, and the central `eb-layer` canvas.
+ *
+ * @element eb-wiring-editor
+ */
 export class EbWiringEditor extends LitElement {
     static properties = {
         smdUrl: { type: String, attribute: 'smd-url' },

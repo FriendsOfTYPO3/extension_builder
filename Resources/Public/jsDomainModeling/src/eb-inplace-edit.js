@@ -1,6 +1,15 @@
 import { LitElement, html } from 'lit';
 import { formStyles } from './styles/form-styles.js';
 
+/**
+ * Click-to-edit inline text field.
+ *
+ * Renders as a styled span in display mode. On click it switches to a text
+ * input; on blur or Enter the new value is confirmed. Escape cancels.
+ *
+ * @element eb-inplace-edit
+ * @fires inplace-change - When the value is confirmed with `{ value: string }` detail
+ */
 export class EbInplaceEdit extends LitElement {
     static properties = {
         value: { type: String },
@@ -69,7 +78,11 @@ export class EbInplaceEdit extends LitElement {
         return html`
             <span
                 style="cursor:pointer;border-bottom:1px dashed currentColor;min-width:1em;display:inline-block;"
+                role="button"
+                tabindex="0"
+                aria-label="Edit: ${this.value ?? ''}"
                 @click="${this._startEdit}"
+                @keydown="${(e) => e.key === 'Enter' && this._startEdit()}"
             >${this.value ?? ''}</span>
         `;
     }

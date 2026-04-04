@@ -2,6 +2,12 @@ import { html } from 'lit';
 import { EbField } from './eb-field.js';
 import { formStyles } from './styles/form-styles.js';
 
+/**
+ * Checkbox field for boolean values.
+ *
+ * @element eb-boolean-field
+ * @fires field-updated - When the checkbox state changes
+ */
 export class EbBooleanField extends EbField {
     static properties = {
         ...EbField.properties,

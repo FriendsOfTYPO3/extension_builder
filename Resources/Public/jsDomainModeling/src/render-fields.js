@@ -1,6 +1,15 @@
 import { html } from 'lit';
 import { translate } from './translate.js';
 
+/**
+ * Renders a single field definition as the appropriate custom element.
+ *
+ * Maps the `type` property of a field definition object to one of the
+ * `eb-*-field` components, passing all relevant `inputParams` as attributes.
+ *
+ * @param {Object} fieldDef - Field definition with `type` and `inputParams`
+ * @returns {import('lit').TemplateResult} Lit template result
+ */
 export function renderFieldDef(fieldDef) {
     const p = fieldDef.inputParams ?? {};
     const type = fieldDef.type;
@@ -88,6 +97,12 @@ export function renderFieldDef(fieldDef) {
     }
 }
 
+/**
+ * Renders an array of field definitions.
+ *
+ * @param {Object[]} fields - Array of field definition objects
+ * @returns {import('lit').TemplateResult[]} Array of Lit template results
+ */
 export function renderFields(fields) {
     return fields.map(f => renderFieldDef(f));
 }

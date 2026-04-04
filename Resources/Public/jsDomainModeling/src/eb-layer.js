@@ -2,6 +2,15 @@ import { LitElement, html, css, svg } from 'lit';
 import './eb-container.js';
 import './eb-wire.js';
 
+/**
+ * Canvas layer that hosts draggable containers and SVG wire overlays.
+ *
+ * Manages the full list of `eb-container` instances and `eb-wire` paths.
+ * Listens for `terminal-connect` events to create wires and
+ * `container-moved` events to update wire endpoint positions.
+ *
+ * @element eb-layer
+ */
 export class EbLayer extends LitElement {
     static properties = {
         _wires: { state: true },

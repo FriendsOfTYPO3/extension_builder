@@ -1,5 +1,15 @@
 import { LitElement, html, css, nothing } from 'lit';
 
+/**
+ * Collapsible card-style group container for related fields.
+ *
+ * Renders child elements in a slotted Bootstrap-style card. When
+ * `collapsible` is true the header acts as a toggle button with proper
+ * ARIA attributes. Also intercepts `relationType` field changes to
+ * constrain the `renderType` select options automatically.
+ *
+ * @element eb-group
+ */
 export class EbGroup extends LitElement {
     static properties = {
         legend: { type: String },
