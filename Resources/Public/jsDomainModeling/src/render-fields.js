@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { translate } from './translate.js';
 
 export function renderFieldDef(fieldDef) {
     const p = fieldDef.inputParams ?? {};
@@ -12,23 +13,25 @@ export function renderFieldDef(fieldDef) {
         case 'string':
             return html`<eb-string-field
                 name="${p.name}"
-                label="${p.label ?? ''}"
+                label="${translate(p.label ?? '')}"
                 ?required="${p.required}"
                 type-invite="${p.typeInvite ?? ''}"
+                placeholder="${p.placeholder ?? ''}"
                 .value="${p.value ?? ''}"
             ></eb-string-field>`;
 
         case 'text':
             return html`<eb-textarea-field
                 name="${p.name}"
-                label="${p.label ?? ''}"
+                label="${translate(p.label ?? '')}"
+                placeholder="${p.placeholder ?? ''}"
                 .value="${p.value ?? ''}"
             ></eb-textarea-field>`;
 
         case 'select':
             return html`<eb-select-field
                 name="${p.name}"
-                label="${p.label ?? ''}"
+                label="${translate(p.label ?? '')}"
                 .selectValues="${p.selectValues ?? []}"
                 .selectOptions="${p.selectOptions ?? []}"
                 .value="${p.value ?? (p.selectValues?.[0] ?? '')}"
@@ -37,14 +40,14 @@ export function renderFieldDef(fieldDef) {
         case 'boolean':
             return html`<eb-boolean-field
                 name="${p.name}"
-                label="${p.label ?? ''}"
+                label="${translate(p.label ?? '')}"
                 .value="${p.value ?? false}"
             ></eb-boolean-field>`;
 
         case 'group':
             return html`<eb-group
                 name="${p.name ?? ''}"
-                legend="${p.legend ?? ''}"
+                legend="${translate(p.legend ?? '')}"
                 ?collapsible="${p.collapsible}"
                 ?collapsed="${p.collapsed}"
             >${renderFields(p.fields ?? [])}</eb-group>`;
@@ -53,6 +56,7 @@ export function renderFieldDef(fieldDef) {
             return html`<eb-list-field
                 name="${p.name}"
                 ?sortable="${p.sortable}"
+                add-label="${translate('add')}"
                 element-type="${JSON.stringify(p.elementType ?? {})}"
             ></eb-list-field>`;
 
@@ -65,7 +69,7 @@ export function renderFieldDef(fieldDef) {
         default:
             return html`<eb-string-field
                 name="${p.name}"
-                label="${p.label ?? ''}"
+                label="${translate(p.label ?? '')}"
             ></eb-string-field>`;
     }
 }
