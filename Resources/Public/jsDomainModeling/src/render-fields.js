@@ -25,6 +25,9 @@ export function renderFieldDef(fieldDef) {
                 ?uc-first="${p.ucFirst}"
                 ?lc-first="${p.lcFirst}"
                 ?first-char-non-numeric="${p.firstCharNonNumeric}"
+                ?no-leading-underscore="${p.noLeadingUnderscore}"
+                ?no-trailing-underscore="${p.noTrailingUnderscore}"
+                forbidden-prefixes="${p.forbiddenPrefixes ?? ''}"
                 min-length="${p.minLength ?? ''}"
                 max-length="${p.maxLength ?? ''}"
             ></eb-string-field>`;
