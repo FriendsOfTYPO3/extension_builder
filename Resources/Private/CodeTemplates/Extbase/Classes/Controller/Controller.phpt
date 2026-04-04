@@ -4,30 +4,23 @@ declare(strict_types=1);
 
 namespace VENDOR\Package\Controller;
 
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use VENDOR\Package\Domain\Repository\DomainObjectRepository;
+use Psr\Http\Message\ResponseInterface;
+
 /**
  * MyController
  */
-class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class MyController extends ActionController
 {
-    /**
-     * @var \VENDOR\Package\Domain\Repository\DomainObjectRepository
-     */
-    protected $domainObjectRepository;
-
-    /**
-     * @param \VENDOR\Package\Domain\Repository\DomainObjectRepository
-     */
-    public function injectDomainObjectRepository(VENDOR\Package\Domain\Repository\DomainObjectRepository $domainObjectRepository): void
-    {
-        $this->domainObjectRepository = $domainObjectRepository;
-    }
+    public function __construct(
+        private readonly DomainObjectRepository $domainObjectRepository,
+    ) {}
 
     /**
      * action list
-     *
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function listAction(): \Psr\Http\Message\ResponseInterface
+    public function listAction(): ResponseInterface
     {
         $domainObjects = $this->domainObjectRepository->findAll();
         $this->view->assign('domainObjects', $domainObjects);
@@ -36,11 +29,8 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * action show
-     *
-     * @param \VENDOR\Package\Domain\Model\DomainObject $domainObject
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function showAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject): \Psr\Http\Message\ResponseInterface
+    public function showAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject): ResponseInterface
     {
         $this->view->assign('domainObject', $domainObject);
         return $this->htmlResponse();
@@ -48,21 +38,16 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * action new
-     *
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function newAction(): \Psr\Http\Message\ResponseInterface
+    public function newAction(): ResponseInterface
     {
         return $this->htmlResponse();
     }
 
     /**
      * action create
-     *
-     * @param \VENDOR\Package\Domain\Model\DomainObject $newDomainObject
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function createAction(\VENDOR\Package\Domain\Model\DomainObject $newDomainObject): \Psr\Http\Message\ResponseInterface
+    public function createAction(\VENDOR\Package\Domain\Model\DomainObject $newDomainObject): ResponseInterface
     {
         $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/User/Index.html', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         $this->domainObjectRepository->add($newDomainObject);
@@ -71,11 +56,8 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * action edit
-     *
-     * @param \VENDOR\Package\Domain\Model\DomainObject $domainObject
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function editAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject): \Psr\Http\Message\ResponseInterface
+    public function editAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject): ResponseInterface
     {
         $this->view->assign('domainObject', $domainObject);
         return $this->htmlResponse();
@@ -83,11 +65,8 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * action update
-     *
-     * @param \VENDOR\Package\Domain\Model\DomainObject $domainObject
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function updateAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject): \Psr\Http\Message\ResponseInterface
+    public function updateAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject): ResponseInterface
     {
         $this->addFlashMessage('The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/User/Index.html', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         $this->domainObjectRepository->update($domainObject);
@@ -96,11 +75,8 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * action delete
-     *
-     * @param \VENDOR\Package\Domain\Model\DomainObject $domainObject
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function deleteAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject): \Psr\Http\Message\ResponseInterface
+    public function deleteAction(\VENDOR\Package\Domain\Model\DomainObject $domainObject): ResponseInterface
     {
         $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/User/Index.html', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         $this->domainObjectRepository->remove($domainObject);
@@ -108,9 +84,8 @@ class MyController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function genericAction(): \Psr\Http\Message\ResponseInterface
+    public function genericAction(): ResponseInterface
     {
         return $this->htmlResponse();
     }

@@ -4,22 +4,17 @@ declare(strict_types=1);
 
 namespace VENDOR\Package\Domain\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
 /**
  * Class Model
  */
-class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Model extends AbstractEntity
 {
-    /**
-     * property
-     *
-     * @var string
-     */
-    protected $property;
+    protected string $property = '';
 
-    /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child> $children
-     */
-    protected $children;
+    protected ObjectStorage $children;
 
     public function __construct()
     {
@@ -32,12 +27,10 @@ class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Do not modify this method!
      * It will be rewritten on each save in the extension builder
      * You may modify the constructor of this class instead
-     *
-     * @return void
      */
     public function initializeObject(): void
     {
-        $this->children = $this->children ?: new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->children ??= new ObjectStorage();
     }
 
     /**
@@ -70,21 +63,16 @@ class Model extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the children
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child> $children
      */
-    public function getChildren(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    public function getChildren(): ObjectStorage
     {
         return $this->children;
     }
 
     /**
      * Sets the children
-     *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Child> $children
-     * @return void
      */
-    public function setChildren(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $children): void
+    public function setChildren(ObjectStorage $children): void
     {
         $this->children = $children;
     }
