@@ -80,6 +80,34 @@ test.describe('Domain Model Canvas', () => {
     expect(isVisible).toBe(true);
   });
 
+  // Helper to simulate a wire drag from SOURCES of srcContainer to a relation
+  // terminal of tgtContainer. tgtContainer must have at least one relation added.
+  async function connectViaWire(layer: any, srcContainer: any, tgtContainer: any) {
+    const term0 = srcContainer.shadowRoot?.querySelector('eb-terminal[terminal-id="SOURCES"]');
+    if (!term0) return false;
+
+    // Add a relation to the target container so a droppable terminal exists
+    const relListField = tgtContainer.shadowRoot?.querySelector('[name="relations"]') as any;
+    if (!relListField) return false;
+    relListField._addItem();
+    await relListField.updateComplete;
+
+    const relTerminal = relListField.shadowRoot?.querySelector('eb-terminal[droppable]');
+    if (!relTerminal) return false;
+
+    // Start wire drawing from source
+    layer.dispatchEvent(new CustomEvent('terminal-connect', {
+      detail: { terminalId: 'SOURCES', uid: '', sourceEl: term0 },
+    }));
+    await layer.updateComplete;
+
+    // Drop on the relation terminal — composed: true crosses shadow DOM boundaries,
+    // so the window pointerup listener in eb-layer sees the terminal in composedPath().
+    relTerminal.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, composed: true }));
+    await layer.updateComplete;
+    return true;
+  }
+
   // EBUILDER-40: Connect two model objects via wire
   test('two model objects can be connected with a wire', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
@@ -93,22 +121,25 @@ test.describe('Domain Model Canvas', () => {
         await layer?.updateComplete;
         const containers = Array.from(layer?.shadowRoot?.querySelectorAll('eb-container') ?? []) as any[];
         if (containers.length < 2) return -1;
-
         await containers[0].updateComplete;
         await containers[1].updateComplete;
 
-        const term0 = containers[0].shadowRoot?.querySelector('eb-terminal');
-        const term1 = containers[1].shadowRoot?.querySelector('eb-terminal');
-        if (!term0 || !term1) return -2;
+        // connectViaWire is defined in outer scope — inline the logic here
+        const term0 = containers[0].shadowRoot?.querySelector('eb-terminal[terminal-id="SOURCES"]');
+        if (!term0) return -2;
+        const relListField = containers[1].shadowRoot?.querySelector('[name="relations"]') as any;
+        if (!relListField) return -3;
+        relListField._addItem();
+        await relListField.updateComplete;
+        const relTerminal = relListField.shadowRoot?.querySelector('eb-terminal[droppable]');
+        if (!relTerminal) return -4;
 
-        // Dispatch terminal-connect events directly on eb-layer (which listens on itself).
-        // This replicates clicking both terminals without requiring drag through nested shadow DOMs.
         layer.dispatchEvent(new CustomEvent('terminal-connect', {
           detail: { terminalId: 'SOURCES', uid: '', sourceEl: term0 },
         }));
-        layer.dispatchEvent(new CustomEvent('terminal-connect', {
-          detail: { terminalId: 'SOURCES', uid: '', sourceEl: term1 },
-        }));
+        await layer.updateComplete;
+        relTerminal.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, composed: true }));
+        await layer.updateComplete;
 
         return layer._wires.length;
       }
@@ -128,20 +159,24 @@ test.describe('Domain Model Canvas', () => {
         await layer?.updateComplete;
         const containers = Array.from(layer?.shadowRoot?.querySelectorAll('eb-container') ?? []) as any[];
         if (containers.length < 2) return [];
-
         await containers[0].updateComplete;
         await containers[1].updateComplete;
 
-        const term0 = containers[0].shadowRoot?.querySelector('eb-terminal');
-        const term1 = containers[1].shadowRoot?.querySelector('eb-terminal');
-        if (!term0 || !term1) return [];
+        const term0 = containers[0].shadowRoot?.querySelector('eb-terminal[terminal-id="SOURCES"]');
+        if (!term0) return [];
+        const relListField = containers[1].shadowRoot?.querySelector('[name="relations"]') as any;
+        if (!relListField) return [];
+        relListField._addItem();
+        await relListField.updateComplete;
+        const relTerminal = relListField.shadowRoot?.querySelector('eb-terminal[droppable]');
+        if (!relTerminal) return [];
 
         layer.dispatchEvent(new CustomEvent('terminal-connect', {
           detail: { terminalId: 'SOURCES', uid: '', sourceEl: term0 },
         }));
-        layer.dispatchEvent(new CustomEvent('terminal-connect', {
-          detail: { terminalId: 'SOURCES', uid: '', sourceEl: term1 },
-        }));
+        await layer.updateComplete;
+        relTerminal.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, composed: true }));
+        await layer.updateComplete;
 
         return layer.serialize().wires;
       }
@@ -149,8 +184,8 @@ test.describe('Domain Model Canvas', () => {
 
     expect(serializedWires).toHaveLength(1);
     expect(serializedWires[0]).toMatchObject({
-      src: { moduleId: expect.any(Number) },
-      tgt: { moduleId: expect.any(Number) },
+      src: { moduleId: expect.any(Number), terminal: 'SOURCES' },
+      tgt: { moduleId: expect.any(Number), terminal: 'REL_0' },
     });
   });
 });
