@@ -24,9 +24,9 @@ class DateTimeProperty extends AbstractProperty
     /**
      * the property's default value
      *
-     * @var DateTime
+     * @var DateTime|null
      */
-    protected $defaultValue;
+    protected $defaultValue = null;
     protected static bool $isNullable = true;
 
     public function getTypeForComment(): string

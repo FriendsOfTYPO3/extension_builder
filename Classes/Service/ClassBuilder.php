@@ -176,10 +176,12 @@ class ClassBuilder implements SingletonInterface
                 $classProperty->setVarType($domainProperty->getTypeHint());
             }
             if ($this->settings['setDefaultValuesForClassProperties'] !== false) {
-                $classProperty->setDefault($domainProperty->getDefaultValue());
-            }
-            if ($domainProperty->isNullableProperty() === true && $domainProperty->getNullable() === true) {
-                $classProperty->setDefault(null);
+                if ($domainProperty->isNullableProperty() === true && $domainProperty->getNullable() === true) {
+                    $classProperty->setDefault(null);
+                } else {
+                    $classProperty->setDefault($domainProperty->getDefaultValue());
+                }
+                $classProperty->setDefaultValueNode(null);
             }
         } else {
             $classProperty = clone $this->templateClassObject->getProperty('property');
@@ -198,11 +200,13 @@ class ClassBuilder implements SingletonInterface
                 ));
             }
 
-            if ($domainProperty->getHasDefaultValue() && ($this->settings['setDefaultValuesForClassProperties'] ?? false) !== false) {
-                $classProperty->setDefault($domainProperty->getDefaultValue());
-            }
-            if ($domainProperty->isNullableProperty() === true && $domainProperty->getNullable() === true) {
-                $classProperty->setDefault(null);
+            if (($this->settings['setDefaultValuesForClassProperties'] ?? false) !== false) {
+                if ($domainProperty->isNullableProperty() === true && $domainProperty->getNullable() === true) {
+                    $classProperty->setDefault(null);
+                } else {
+                    $classProperty->setDefault($domainProperty->getDefaultValue());
+                }
+                $classProperty->setDefaultValueNode(null);
             }
 
             if ($domainProperty instanceof ZeroToManyRelation && ($domainProperty->getRenderType() ?: 'inline') === 'inline') {

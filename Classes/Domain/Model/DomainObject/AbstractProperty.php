@@ -46,7 +46,7 @@ abstract class AbstractProperty
      *
      * @var mixed
      */
-    protected $defaultValue;
+    protected $defaultValue = null;
 
     /**
      * @var mixed

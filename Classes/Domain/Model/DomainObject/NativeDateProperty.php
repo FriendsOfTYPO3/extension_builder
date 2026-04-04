@@ -24,9 +24,9 @@ class NativeDateProperty extends AbstractProperty
     /**
      * the property's default value
      *
-     * @var DateTime
+     * @var DateTime|null
      */
-    protected $defaultValue;
+    protected $defaultValue = null;
 
     public function getTypeForComment(): string
     {

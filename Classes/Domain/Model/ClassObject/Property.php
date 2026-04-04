@@ -117,7 +117,7 @@ class Property extends AbstractObject
         return isset($this->value) && $this->value !== null;
     }
 
-    public function setDefaultValueNode(NodeAbstract $defaultValueNode): void
+    public function setDefaultValueNode(?NodeAbstract $defaultValueNode): void
     {
         $this->defaultValueNode = $defaultValueNode;
     }
