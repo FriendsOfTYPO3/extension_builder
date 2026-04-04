@@ -8,9 +8,15 @@ function _iconUrl(name) {
     return base ? `${base}Icons/T3Icons/sprites/actions.svg#${name}` : '';
 }
 
+const _iconFallbacks = {
+    'actions-caret-up': '↑',
+    'actions-caret-down': '↓',
+    'actions-delete': '✕',
+};
+
 function _svgIcon(name) {
     const url = _iconUrl(name);
-    if (!url) return html`<span>${name}</span>`;
+    if (!url) return html`<span aria-hidden="true">${_iconFallbacks[name] ?? name}</span>`;
     return html`
         <svg width="16" height="16" aria-hidden="true">
             <use href="${url}"></use>

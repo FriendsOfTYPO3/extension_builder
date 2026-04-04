@@ -227,6 +227,7 @@ export const extensionPropertiesFields = [
           name: "property",
           fields: [
             {
+              type: "string",
               inputParams: {
                 label: "name",
                 name: "name",
@@ -243,6 +244,7 @@ export const extensionPropertiesFields = [
               },
             },
             {
+              type: "string",
               inputParams: {
                 name: "email",
                 label: "email",
@@ -250,6 +252,7 @@ export const extensionPropertiesFields = [
               },
             },
             {
+              type: "string",
               inputParams: {
                 name: "company",
                 label: "company",
@@ -354,6 +357,7 @@ export const extensionPropertiesFields = [
           name: "properties",
           fields: [
             {
+              type: "string",
               inputParams: {
                 label: "name",
                 name: "name",
@@ -361,6 +365,7 @@ export const extensionPropertiesFields = [
               },
             },
             {
+              type: "string",
               inputParams: {
                 label: "key",
                 name: "key",
@@ -382,6 +387,7 @@ export const extensionPropertiesFields = [
               },
             },
             {
+              type: "string",
               inputParams: {
                 label: "tab_label",
                 name: "tabLabel",

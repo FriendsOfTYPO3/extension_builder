@@ -7,6 +7,9 @@ export class EbStringField extends EbField {
         placeholder: { type: String },
         typeInvite: { type: String, attribute: 'type-invite' },
         forceAlphaNumeric: { type: Boolean, attribute: 'force-alpha-numeric' },
+        forceAlphaNumericUnderscore: { type: Boolean, attribute: 'force-alpha-numeric-underscore' },
+        forceLowerCase: { type: Boolean, attribute: 'force-lower-case' },
+        noSpaces: { type: Boolean, attribute: 'no-spaces' },
         lcFirst: { type: Boolean, attribute: 'lc-first' },
         ucFirst: { type: Boolean, attribute: 'uc-first' },
         firstCharNonNumeric: { type: Boolean, attribute: 'first-char-non-numeric' },
@@ -20,8 +23,15 @@ export class EbStringField extends EbField {
 
     _onInput(e) {
         let v = e.target.value;
-        if (this.forceAlphaNumeric) {
+        if (this.forceAlphaNumericUnderscore) {
+            v = v.replace(/[^a-zA-Z0-9_]/g, '');
+        } else if (this.forceAlphaNumeric) {
             v = v.replace(/[^a-zA-Z0-9]/g, '');
+        } else if (this.noSpaces) {
+            v = v.replace(/\s/g, '');
+        }
+        if (this.forceLowerCase) {
+            v = v.toLowerCase();
         }
         if (this.lcFirst && v.length > 0) {
             v = v.charAt(0).toLowerCase() + v.slice(1);

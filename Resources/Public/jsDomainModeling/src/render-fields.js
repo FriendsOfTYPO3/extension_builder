@@ -18,6 +18,15 @@ export function renderFieldDef(fieldDef) {
                 type-invite="${p.typeInvite ?? ''}"
                 placeholder="${p.placeholder ?? ''}"
                 .value="${p.value ?? ''}"
+                ?force-alpha-numeric="${p.forceAlphaNumeric}"
+                ?force-alpha-numeric-underscore="${p.forceAlphaNumericUnderscore}"
+                ?force-lower-case="${p.forceLowerCase}"
+                ?no-spaces="${p.noSpaces}"
+                ?uc-first="${p.ucFirst}"
+                ?lc-first="${p.lcFirst}"
+                ?first-char-non-numeric="${p.firstCharNonNumeric}"
+                min-length="${p.minLength ?? ''}"
+                max-length="${p.maxLength ?? ''}"
             ></eb-string-field>`;
 
         case 'text':
@@ -53,12 +62,14 @@ export function renderFieldDef(fieldDef) {
             >${renderFields(p.fields ?? [])}</eb-group>`;
 
         case 'list':
-            return html`<eb-list-field
-                name="${p.name}"
-                ?sortable="${p.sortable}"
-                add-label="${translate('add')}"
-                element-type="${JSON.stringify(p.elementType ?? {})}"
-            ></eb-list-field>`;
+            return html`
+                ${p.label ? html`<label class="form-label" style="display:block;font-weight:600;margin-top:0.5rem">${translate(p.label)}</label>` : ''}
+                <eb-list-field
+                    name="${p.name}"
+                    ?sortable="${p.sortable}"
+                    add-label="${translate('add')}"
+                    element-type="${JSON.stringify(p.elementType ?? {})}"
+                ></eb-list-field>`;
 
         case 'inplaceedit':
             return html`<eb-inplace-edit
