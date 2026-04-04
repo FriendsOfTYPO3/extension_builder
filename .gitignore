@@ -37,6 +37,11 @@ tickets
 
 .env
 
+# Screenshots (created during development/testing, not part of source)
+/*.png
+/*.jpg
+/*.jpeg
+
 # Playwright E2E
 Tests/E2E/.auth/
 playwright-report/
