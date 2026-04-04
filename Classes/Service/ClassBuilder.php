@@ -682,18 +682,50 @@ class ClassBuilder implements SingletonInterface
         }
         if ($domainObject->isAggregateRoot()) {
             $repositoryName = lcfirst($domainObject->getName() . 'Repository');
-            // now add the property to class Object (or update an existing class Object property)
-            if (!$this->classObject->propertyExists($repositoryName)) {
-                /** @var AbstractProperty $classProperty */
-                $classProperty = $this->templateClassObject->getProperty('domainObjectRepository');
-                $classProperty->setName($repositoryName);
-                $classProperty->setDescription($repositoryName);
-                $classProperty->setTag('var', $domainObject->getFullyQualifiedDomainRepositoryClassName(), true);
-                $this->classObject->setProperty($classProperty);
+            $repositoryClass = $domainObject->getFullyQualifiedDomainRepositoryClassName();
+            // Modern constructor injection pattern (TYPO3 v12+)
+            // After resetAll(), __construct is gone — fall back to template's constructor
+            $constructor = $this->classObject->getMethod('__construct')
+                ?? $this->templateClassObject->getMethod('__construct');
+            if ($constructor !== null && $constructor->getParameterByPosition(0) !== null) {
+                $constructor->getParameterByPosition(0)
+                    ->setName($repositoryName)
+                    ->setVarType($repositoryClass)
+                    ->setTypeHint($repositoryClass);
+                $this->classObject->addMethod($constructor);
+            } elseif ($this->templateClassObject->getProperty('domainObjectRepository') !== null) {
+                // Legacy property injection pattern
+                if (!$this->classObject->propertyExists($repositoryName)) {
+                    /** @var AbstractProperty $classProperty */
+                    $classProperty = $this->templateClassObject->getProperty('domainObjectRepository');
+                    $classProperty->setName($repositoryName);
+                    $classProperty->setDescription($repositoryName);
+                    $classProperty->setTag('var', $repositoryClass, true);
+                    $this->classObject->setProperty($classProperty);
+                }
+                if (!$this->classObject->methodExists('inject' . ucfirst($repositoryName))) {
+                    $injectRepositoryMethod = $this->buildInjectMethod($domainObject);
+                    $this->classObject->addMethod($injectRepositoryMethod);
+                }
             }
-            if (!$this->classObject->methodExists('inject' . ucfirst($repositoryName))) {
-                $injectRepositoryMethod = $this->buildInjectMethod($domainObject);
-                $this->classObject->addMethod($injectRepositoryMethod);
+            // Update the use statement for the repository class in the namespace
+            $namespace = $this->classFileObject->getNamespace();
+            if ($namespace !== false) {
+                $actualClass = ltrim($repositoryClass, '\\');
+                $declarations = $namespace->getAliasDeclarations();
+                $found = false;
+                foreach ($declarations as &$decl) {
+                    if (isset($decl['name']) && str_ends_with($decl['name'], 'DomainObjectRepository')) {
+                        $decl['name'] = $actualClass;
+                        $found = true;
+                        break;
+                    }
+                }
+                unset($decl);
+                if (!$found) {
+                    $declarations[] = ['name' => $actualClass, 'alias' => null];
+                }
+                $namespace->setAliasDeclarations($declarations);
             }
         }
         foreach ($domainObject->getActions() as $action) {

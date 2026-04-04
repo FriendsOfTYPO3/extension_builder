@@ -93,10 +93,10 @@ async function reloadAndSaveExtension(page: any, extKey: string): Promise<void> 
   const frame = backend.getContentFrame();
 
   await frame.locator('#WiringEditor-loadButton-button').click();
-  const dialog = frame.locator('dialog');
-  await expect(dialog).toBeVisible({ timeout: 10000 });
-  await dialog.locator('select').selectOption(extKey);
-  await dialog.locator('button[type="submit"]').click();
+  const modal = page.locator('.t3js-modal');
+  await expect(modal).toBeVisible({ timeout: 10000 });
+  await modal.locator('select').selectOption(extKey);
+  await modal.locator('.btn-primary').click();
 
   await frame.locator('eb-wiring-editor').evaluate(async (el: any) => {
     if (el._loading) {
@@ -204,10 +204,10 @@ test.describe('Roundtrip Mode: basic scenarios', () => {
       const frame = backend.getContentFrame();
 
       await frame.locator('#WiringEditor-loadButton-button').click();
-      const dialog = frame.locator('dialog');
-      await expect(dialog).toBeVisible({ timeout: 10000 });
-      await dialog.locator('select').selectOption(EXT_KEY);
-      await dialog.locator('button[type="submit"]').click();
+      const modal = page.locator('.t3js-modal');
+      await expect(modal).toBeVisible({ timeout: 10000 });
+      await modal.locator('select').selectOption(EXT_KEY);
+      await modal.locator('.btn-primary').click();
 
       // Wait for load to complete
       await frame.locator('eb-wiring-editor').evaluate(async (el: any) => {
@@ -226,15 +226,18 @@ test.describe('Roundtrip Mode: basic scenarios', () => {
         if (!layer) { return; }
         const containers = Array.from(layer.shadowRoot?.querySelectorAll('eb-container') ?? []) as any[];
         for (const container of containers) {
-          const nameField = container.shadowRoot?.querySelector('[name="name"]');
-          if (nameField && nameField.value === 'Foo') {
-            nameField.setValue('Bar');
+          if (container._name === 'Foo') {
+            container._name = 'Bar';
             await container.updateComplete;
           }
         }
       });
 
+      // Click save — with roundtrip + rename, a preview modal appears first
       await extBuilder.generateExtension();
+      const previewModal = page.locator('.t3js-modal');
+      await expect(previewModal).toBeVisible({ timeout: 10000 });
+      await previewModal.getByRole('button', { name: 'Generate' }).click();
       await expect(extBuilder.getSuccessMessage()).toBeVisible({ timeout: 15000 });
       await page.waitForTimeout(2000);
 
@@ -280,7 +283,34 @@ test.describe('Roundtrip Mode: basic scenarios', () => {
 
       try {
         // Step 4: Re-generate via UI
-        await reloadAndSaveExtension(page, EXT_KEY);
+        // With roundtrip disabled + existing extension, the backend returns a
+        // confirm response (Error 500 = EXTENSION_DIR_EXISTS), so after clicking
+        // Save we must also click the "Save anyway" button in the modal.
+        const { backend, extBuilder } = await openDomainModeller(page);
+        const frame = backend.getContentFrame();
+
+        await frame.locator('#WiringEditor-loadButton-button').click();
+        const loadModal = page.locator('.t3js-modal');
+        await expect(loadModal).toBeVisible({ timeout: 10000 });
+        await loadModal.locator('select').selectOption(EXT_KEY);
+        await loadModal.locator('.btn-primary').click();
+
+        await frame.locator('eb-wiring-editor').evaluate(async (el: any) => {
+          if (el._loading) {
+            await new Promise<void>(resolve => {
+              const check = setInterval(() => {
+                if (!el._loading) { clearInterval(check); resolve(); }
+              }, 100);
+            });
+          }
+        });
+
+        await extBuilder.generateExtension();
+        // The confirmation modal ("Save anyway") appears because roundtrip is off
+        const saveModal = page.locator('.t3js-modal');
+        await expect(saveModal).toBeVisible({ timeout: 10000 });
+        await saveModal.getByRole('button', { name: 'Save anyway' }).click();
+        await expect(extBuilder.getSuccessMessage()).toBeVisible({ timeout: 15000 });
         await page.waitForTimeout(2000);
 
         // Step 5: Custom code must NOT be preserved

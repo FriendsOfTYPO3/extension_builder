@@ -184,8 +184,8 @@ test.describe('Backup-Restore UI (EBUILDER-120)', () => {
       await backupModal.locator('select').selectOption(backupEntry);
       await backupModal.locator('.t3js-modal-footer .btn-danger').click();
 
-      // TYPO3 confirmation Modal renders in the outer page
-      const confirmBtn = page.locator('.modal-footer button.btn-danger');
+      // TYPO3 stacks a second confirmation modal on top; target the last btn-danger
+      const confirmBtn = page.locator('.modal-footer button.btn-danger').last();
       await expect(confirmBtn).toBeVisible({ timeout: 10000 });
       await confirmBtn.click();
 

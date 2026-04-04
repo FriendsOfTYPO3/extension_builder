@@ -248,10 +248,10 @@ test.describe('Complex Extension Stress Test', () => {
 
     const frame = backend.getContentFrame();
     await frame.locator('#WiringEditor-loadButton-button').click();
-    const dialog = frame.locator('dialog');
-    await expect(dialog).toBeVisible();
-    await dialog.locator('select').selectOption(EXT_KEY);
-    await dialog.locator('button[type="submit"]').click();
+    const modal = page.locator('.t3js-modal');
+    await expect(modal).toBeVisible();
+    await modal.locator('select').selectOption(EXT_KEY);
+    await modal.locator('.btn-primary').click();
 
     const result = await frame.locator('eb-wiring-editor').evaluate(async (el: any) => {
       // Give the async load a moment to start, then wait for _loading to clear
@@ -301,10 +301,10 @@ test.describe('Complex Extension Stress Test', () => {
     // Load the extension
     const frame = backend.getContentFrame();
     await frame.locator('#WiringEditor-loadButton-button').click();
-    const dialog = frame.locator('dialog');
-    await expect(dialog).toBeVisible();
-    await dialog.locator('select').selectOption(EXT_KEY);
-    await dialog.locator('button[type="submit"]').click();
+    const modal = page.locator('.t3js-modal');
+    await expect(modal).toBeVisible();
+    await modal.locator('select').selectOption(EXT_KEY);
+    await modal.locator('.btn-primary').click();
 
     // Wait for load to complete and containers to render
     await frame.locator('eb-wiring-editor').evaluate(async (el: any) => {

@@ -2,13 +2,8 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Extension Builder Intro Page', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/typo3/module/tools/extensionbuilder');
-        await page.waitForLoadState('networkidle');
-        // Navigate via the main menu to force action=index in the URL.
-        // This bypasses the firstTime redirect that would otherwise send
-        // returning users directly to domain modelling.
-        const frame = page.frameLocator('#typo3-contentIframe');
-        await frame.getByRole('link', { name: 'Introduction' }).click();
+        // Navigate directly to the intro page action
+        await page.goto('/typo3/module/tools/extensionbuilder/BuilderModule/index');
         await page.waitForLoadState('networkidle');
     });
 
