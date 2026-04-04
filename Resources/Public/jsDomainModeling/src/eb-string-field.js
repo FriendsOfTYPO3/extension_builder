@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import { EbField } from './eb-field.js';
+import { formStyles } from './styles/form-styles.js';
 
 export class EbStringField extends EbField {
     static properties = {
@@ -21,9 +22,7 @@ export class EbStringField extends EbField {
         _error: { state: true },
     };
 
-    // PoC: Light DOM so TYPO3 Bootstrap CSS classes (form-control, form-label, etc.) apply directly.
-    // Pattern from TYPO3 core: typo3-backend-alert, typo3-backend-pagination use the same approach.
-    createRenderRoot() { return this; }
+    static styles = [formStyles];
 
     _getValidationError(v) {
         if (this.required && !v) return 'Required';

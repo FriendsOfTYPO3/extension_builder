@@ -1,12 +1,13 @@
 import { html } from 'lit';
 import { EbField } from './eb-field.js';
+import { formStyles } from './styles/form-styles.js';
 
 export class EbBooleanField extends EbField {
     static properties = {
         ...EbField.properties,
     };
 
-    createRenderRoot() { return this; }
+    static styles = [formStyles];
 
     _onChange(e) {
         this.value = e.target.checked;

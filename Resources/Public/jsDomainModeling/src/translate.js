@@ -6,13 +6,20 @@
  * Dots in keys are replaced with underscores by the PHP loader.
  * Falls back to converting camelCase/snake_case to Title Case when
  * no translation entry exists.
+ *
+ * @param {string} key - Translation key (e.g., 'label.extensionName')
+ * @returns {string} Translated string or generated fallback
  */
 export function translate(key) {
     if (!key) return '';
     const k = key.replace(/\./g, '_');
+
+    // Primary: Try language settings from PHP backend
     const lang = window.TYPO3?.settings?.extensionBuilder?._LOCAL_LANG;
     if (lang?.[k]) return lang[k];
-    // Convert camelCase and snake_case to Title Case as readable fallback
+
+    // Fallback: Convert camelCase and snake_case to Title Case
+    // This is safe because it's only used as UI label when translation is missing
     return key
         .replace(/_/g, ' ')
         .replace(/([A-Z])/g, ' $1')

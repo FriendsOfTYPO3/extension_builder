@@ -1,4 +1,5 @@
 import { LitElement, html } from 'lit';
+import { formStyles } from './styles/form-styles.js';
 
 export class EbInplaceEdit extends LitElement {
     static properties = {
@@ -6,12 +7,12 @@ export class EbInplaceEdit extends LitElement {
         _editing: { type: Boolean, state: true },
     };
 
+    static styles = [formStyles];
+
     constructor() {
         super();
         this._editing = false;
     }
-
-    createRenderRoot() { return this; }
 
     _startEdit() {
         this._editing = true;

@@ -1,6 +1,7 @@
 import { html } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
 import { EbField } from './eb-field.js';
+import { formStyles } from './styles/form-styles.js';
 
 export class EbSelectField extends EbField {
     static properties = {
@@ -10,7 +11,7 @@ export class EbSelectField extends EbField {
         allowedValues: { type: Array },
     };
 
-    createRenderRoot() { return this; }
+    static styles = [formStyles];
 
     _getOptions() {
         const values = this.selectValues ?? [];

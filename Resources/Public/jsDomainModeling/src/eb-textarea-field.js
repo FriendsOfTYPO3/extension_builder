@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import { EbField } from './eb-field.js';
+import { formStyles } from './styles/form-styles.js';
 
 export class EbTextareaField extends EbField {
     static properties = {
@@ -7,12 +8,12 @@ export class EbTextareaField extends EbField {
         rows: { type: Number },
     };
 
+    static styles = [formStyles];
+
     constructor() {
         super();
         this.rows = 4;
     }
-
-    createRenderRoot() { return this; }
 
     _onInput(e) {
         this.value = e.target.value;

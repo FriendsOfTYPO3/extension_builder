@@ -29,7 +29,7 @@ export const formStyles = css`
         margin-bottom: 0.25rem;
         font-size: var(--bs-body-font-size, 0.875rem);
         font-weight: 600;
-        color: var(--bs-body-color, #333);
+        color: var(--bs-body-color, #495057);
     }
 
     .form-control {
@@ -134,7 +134,7 @@ export const formStyles = css`
     .form-check-label {
         cursor: pointer;
         font-size: var(--bs-body-font-size, 0.875rem);
-        color: var(--bs-body-color, #333);
+        color: var(--bs-body-color, #495057);
     }
 
     .form-control.is-invalid {
