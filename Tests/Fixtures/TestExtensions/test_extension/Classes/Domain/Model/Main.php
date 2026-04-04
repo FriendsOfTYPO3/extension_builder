@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace FIXTURE\TestExtension\Domain\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * This file is part of the "Extension Builder Test Extension" Extension for TYPO3 CMS.
@@ -100,13 +102,11 @@ class Main extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Do not modify this method!
      * It will be rewritten on each save in the extension builder
      * You may modify the constructor of this class instead
-     *
-     * @return void
      */
     public function initializeObject()
     {
-        $this->children2 = $this->children2 ?: new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-        $this->children4 = $this->children4 ?: new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->children2 ??= new ObjectStorage();
+        $this->children4 ??= new ObjectStorage();
     }
 
     /**

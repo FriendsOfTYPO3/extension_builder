@@ -8,7 +8,6 @@
         ],
     ],
     'cols' => 40,
-    'rows' => 15,
-    'eval' => 'trim',<f:if condition="{property.required}">
+    'rows' => 15,<f:if condition="{property.required}">
     'required' => true,</f:if>
 ],

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace FIXTURE\TestExtension\Controller;
 
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use FIXTURE\TestExtension\Domain\Repository\MainRepository;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * This file is part of the "Extension Builder Test Extension" Extension for TYPO3 CMS.
@@ -21,26 +24,16 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
     /**
-     * mainRepository
-     *
-     * @var \FIXTURE\TestExtension\Domain\Repository\MainRepository
+     * @param DomainObjectRepository $domainObjectRepository
      */
-    protected $mainRepository = null;
-
-    /**
-     * @param \FIXTURE\TestExtension\Domain\Repository\MainRepository $mainRepository
-     */
-    public function injectMainRepository(\FIXTURE\TestExtension\Domain\Repository\MainRepository $mainRepository)
+    public function __construct(\FIXTURE\TestExtension\Domain\Repository\MainRepository $mainRepository)
     {
-        $this->mainRepository = $mainRepository;
     }
 
     /**
      * action list
-     *
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function listAction(): \Psr\Http\Message\ResponseInterface
+    public function listAction()
     {
         $mains = $this->mainRepository->findAll();
         $this->view->assign('mains', $mains);
@@ -51,9 +44,8 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action show
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function showAction(\FIXTURE\TestExtension\Domain\Model\Main $main): \Psr\Http\Message\ResponseInterface
+    public function showAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
     {
         $this->view->assign('main', $main);
         return $this->htmlResponse();
@@ -61,10 +53,8 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * action new
-     *
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function newAction(): \Psr\Http\Message\ResponseInterface
+    public function newAction()
     {
         return $this->htmlResponse();
     }
@@ -73,9 +63,8 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action create
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $newMain
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function createAction(\FIXTURE\TestExtension\Domain\Model\Main $newMain): \Psr\Http\Message\ResponseInterface
+    public function createAction(\FIXTURE\TestExtension\Domain\Model\Main $newMain)
     {
         $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/User/Index.html', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         $this->mainRepository->add($newMain);
@@ -87,9 +76,8 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("main")
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function editAction(\FIXTURE\TestExtension\Domain\Model\Main $main): \Psr\Http\Message\ResponseInterface
+    public function editAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
     {
         $this->view->assign('main', $main);
         return $this->htmlResponse();
@@ -99,9 +87,8 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action update
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function updateAction(\FIXTURE\TestExtension\Domain\Model\Main $main): \Psr\Http\Message\ResponseInterface
+    public function updateAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
     {
         $this->addFlashMessage('The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/User/Index.html', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         $this->mainRepository->update($main);
@@ -112,9 +99,8 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action delete
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function deleteAction(\FIXTURE\TestExtension\Domain\Model\Main $main): \Psr\Http\Message\ResponseInterface
+    public function deleteAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
     {
         $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/User/Index.html', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         $this->mainRepository->remove($main);
@@ -123,10 +109,8 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * action custom
-     *
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function customAction(): \Psr\Http\Message\ResponseInterface
+    public function customAction()
     {
         return $this->htmlResponse();
     }

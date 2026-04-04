@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace FIXTURE\TestExtension\Domain\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * This file is part of the "Extension Builder Test Extension" Extension for TYPO3 CMS.
@@ -50,12 +52,10 @@ class Category extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Do not modify this method!
      * It will be rewritten on each save in the extension builder
      * You may modify the constructor of this class instead
-     *
-     * @return void
      */
     public function initializeObject()
     {
-        $this->categories = $this->categories ?: new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->categories ??= new ObjectStorage();
     }
 
     /**
