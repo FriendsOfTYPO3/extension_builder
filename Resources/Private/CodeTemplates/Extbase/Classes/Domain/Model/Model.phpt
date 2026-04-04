@@ -56,9 +56,9 @@ class Model extends AbstractEntity
     /**
      * @return bool
      */
-    public function isProperty()
+    public function isProperty(): bool
     {
-        return $this->property;
+        return (bool) $this->property;
     }
 
     /**

@@ -124,7 +124,7 @@ export class EbGroup extends LitElement {
 
     render() {
         return html`
-            <div class="card">
+            <div class="card" role="group" aria-label="${this.legend || this.name || 'Group'}">
                 ${this.legend ? html`
                     <div class="card-header"
                      @click="${this._toggleCollapse}"

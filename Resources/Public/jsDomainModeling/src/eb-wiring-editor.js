@@ -367,7 +367,7 @@ export class EbWiringEditor extends LitElement {
                     </div>
                     ${renderFields(extensionPropertiesFields)}
                 </div>
-                <div class="center-panel">
+                <div class="center-panel" role="main">
                     ${this._loading
                         ? html`<div class="loading">Loading...</div>`
                         : html`<eb-layer></eb-layer>`

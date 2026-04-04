@@ -26,7 +26,7 @@ export class EbInplaceEdit extends LitElement {
     _startEdit() {
         this._editing = true;
         this.updateComplete.then(() => {
-            this.querySelector('input')?.focus();
+            this.shadowRoot.querySelector('input')?.focus();
         });
     }
 
@@ -67,23 +67,27 @@ export class EbInplaceEdit extends LitElement {
     render() {
         if (this._editing) {
             return html`
-                <input
-                    class="form-control form-control-sm"
-                    .value="${this.value ?? ''}"
-                    @blur="${this._confirm}"
-                    @keydown="${this._onKey}"
-                >
+                <div aria-live="polite">
+                    <input
+                        class="form-control form-control-sm"
+                        .value="${this.value ?? ''}"
+                        @blur="${this._confirm}"
+                        @keydown="${this._onKey}"
+                    >
+                </div>
             `;
         }
         return html`
-            <span
-                style="cursor:pointer;border-bottom:1px dashed currentColor;min-width:1em;display:inline-block;"
-                role="button"
-                tabindex="0"
-                aria-label="Edit: ${this.value ?? ''}"
-                @click="${this._startEdit}"
-                @keydown="${(e) => e.key === 'Enter' && this._startEdit()}"
-            >${this.value ?? ''}</span>
+            <div aria-live="polite">
+                <span
+                    style="cursor:pointer;border-bottom:1px dashed currentColor;min-width:1em;display:inline-block;"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Edit: ${this.value ?? ''}"
+                    @click="${this._startEdit}"
+                    @keydown="${(e) => e.key === 'Enter' && this._startEdit()}"
+                >${this.value ?? ''}</span>
+            </div>
         `;
     }
 }

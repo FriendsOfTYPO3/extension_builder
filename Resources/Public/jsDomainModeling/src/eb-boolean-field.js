@@ -36,6 +36,7 @@ export class EbBooleanField extends EbField {
                     class="form-check-input"
                     type="checkbox"
                     .checked="${Boolean(this.value)}"
+                    aria-checked="${Boolean(this.value)}"
                     @change="${this._onChange}"
                     id="eb-bool-${this.name}"
                 >

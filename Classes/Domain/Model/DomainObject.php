@@ -21,6 +21,7 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AnyToManyRelation;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
 
 /**
  * Schema for a Domain Object
@@ -217,6 +218,20 @@ class DomainObject
             }
         }
         return null;
+    }
+
+    /**
+     * Returns the field name of the first string property, falling back to 'title'.
+     * Used by slug TCA templates to auto-detect a suitable source field.
+     */
+    public function getFirstStringPropertyFieldName(): string
+    {
+        foreach ($this->properties as $property) {
+            if ($property instanceof StringProperty) {
+                return $property->getFieldName();
+            }
+        }
+        return 'title';
     }
 
     /**
