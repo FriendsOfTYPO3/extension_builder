@@ -6,17 +6,20 @@
  */
 
 :root {
-  /* Terminal/connection point colors */
-  --eb-terminal-default: var(--bs-primary, #4a90d9);
-  --eb-terminal-default-border: #2c5f8a;
-  --eb-terminal-input: var(--bs-success, #5cb85c);
-  --eb-terminal-input-border: #3d7a3d;
-  --eb-terminal-output: var(--bs-danger, #d9534f);
-  --eb-terminal-output-border: #8a2c2c;
+  /* Terminal/connection point colors — TYPO3 relation color (#0080c9) */
+  --eb-terminal-default: #0080c9;
+  --eb-terminal-default-border: #005f96;
+  --eb-terminal-input: #0080c9;
+  --eb-terminal-input-border: #005f96;
+  --eb-terminal-output: #0080c9;
+  --eb-terminal-output-border: #005f96;
 
-  /* Wire/connection line colors */
-  --eb-wire-color: var(--bs-primary, #4a90d9);
+  /* Wire/connection line colors — TYPO3 relation color */
+  --eb-wire-color: #0080c9;
   --eb-wire-temp-color: var(--bs-secondary-color, #aaa);
+
+  /* TYPO3 brand color — used for model object headers and primary buttons */
+  --eb-brand-color: #FF8700;
 
   /* Form elements */
   --eb-input-border: var(--bs-border-color, #999);

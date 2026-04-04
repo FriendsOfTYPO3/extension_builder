@@ -38,17 +38,17 @@ export const buttonStyles = css`
         border-radius: var(--bs-border-radius-sm, 0.2rem);
     }
 
-    /* Primary — blue */
+    /* Primary — TYPO3 orange */
     .btn-primary {
         color: #fff;
-        background-color: var(--bs-primary, #0d6efd);
-        border-color: var(--bs-primary, #0d6efd);
+        background-color: var(--eb-brand-color, #FF8700);
+        border-color: var(--eb-brand-color, #FF8700);
     }
 
     .btn-primary:hover {
         color: #fff;
-        background-color: color-mix(in srgb, var(--bs-primary, #0d6efd) 85%, #000);
-        border-color: color-mix(in srgb, var(--bs-primary, #0d6efd) 80%, #000);
+        background-color: color-mix(in srgb, var(--eb-brand-color, #FF8700) 85%, #000);
+        border-color: color-mix(in srgb, var(--eb-brand-color, #FF8700) 80%, #000);
     }
 
     /* Default — light gray with border (TYPO3-specific, not in vanilla Bootstrap 5) */

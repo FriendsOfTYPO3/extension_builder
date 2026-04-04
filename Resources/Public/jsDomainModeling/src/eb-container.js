@@ -30,7 +30,7 @@ export class EbContainer extends LitElement {
             cursor: grabbing;
         }
         .card-header {
-            background-color: var(--bs-primary, #0078e6);
+            background-color: var(--eb-brand-color, #FF8700);
             color: #fff;
             padding: 0.5rem 0.75rem;
             font-weight: bold;
@@ -74,8 +74,14 @@ export class EbContainer extends LitElement {
     }
 
     _onPointerDown(e) {
-        if (e.target.tagName === 'EB-TERMINAL') return;
-        if (e.target.tagName === 'EB-INPLACE-EDIT') return;
+        const interactive = e.composedPath().some(el => {
+            if (!(el instanceof Element)) return false;
+            const tag = el.tagName.toUpperCase();
+            if (['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'A', 'EB-TERMINAL', 'EB-INPLACE-EDIT'].includes(tag)) return true;
+            if (el.getAttribute?.('role') === 'button') return true;
+            return false;
+        });
+        if (interactive) return;
         e.preventDefault();
         this._dragging = true;
         this._dragOffsetX = e.clientX - this.posX;
