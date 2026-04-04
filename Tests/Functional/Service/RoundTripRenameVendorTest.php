@@ -102,11 +102,25 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
 
         $controllerClassFile = $this->roundTripService->getControllerClassFile($this->fixtureExtension->getDomainObjectByName('Main'));
         $controllerClassObject = $controllerClassFile->getFirstClass();
-        $repositoryProperty = current($controllerClassObject->getProperties());
-        self::assertEquals(
-            '\VENDOR\TestExtension\Domain\Repository\MainRepository',
-            $repositoryProperty->getTagValues('var')
-        );
+
+        // Check constructor parameter type hint (modern style with constructor injection)
+        $methods = $controllerClassObject->getMethods();
+        $constructorMethod = null;
+        foreach ($methods as $method) {
+            if ($method->getName() === '__construct') {
+                $constructorMethod = $method;
+                break;
+            }
+        }
+
+        self::assertNotNull($constructorMethod, 'Constructor should be defined');
+        $parameters = $constructorMethod->getParameters();
+        self::assertNotEmpty($parameters, 'Constructor should have parameters');
+
+        // Check first parameter type hint for repository
+        $firstParam = current($parameters);
+        $typeHint = $firstParam->getTypeHint();
+        self::assertEquals('\VENDOR\TestExtension\Domain\Repository\MainRepository', $typeHint);
     }
 
     /**
