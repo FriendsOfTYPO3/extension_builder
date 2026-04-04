@@ -6,10 +6,20 @@
 Migrating to TYPO3 13 / PHP 8.3
 =====================================
 
-This page documents the breaking changes and recommended patterns when
-upgrading an extension that was generated with an older version of the
-Extension Builder to TYPO3 13 (or when using the Extension Builder on
-a TYPO3 13 installation).
+.. note::
+
+   **This guide is for existing extensions only.**
+
+   If you are creating a new extension with Extension Builder 13.x, the
+   generated code already follows all patterns described here — nothing
+   to do.
+
+   This guide is relevant if you have an extension that was originally
+   generated with an older version of the Extension Builder (TYPO3 11 or
+   earlier) and you are now running it on TYPO3 13. The Extension Builder
+   **preserves existing code** during round-trips and does not automatically
+   update old patterns. The items below describe what needs to be checked
+   and updated manually.
 
 .. _migration-requirements:
 
