@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import './eb-terminal.js';
 import { renderFields } from './render-fields.js';
 import { modelObjectModule } from './config/modelObject.js';
+import { formStyles } from './styles/form-styles.js';
 
 export class EbContainer extends LitElement {
     static properties = {
@@ -12,7 +13,7 @@ export class EbContainer extends LitElement {
         _name: { state: true },
     };
 
-    static styles = css`
+    static styles = [formStyles, css`
         :host {
             display: block;
             position: absolute;
@@ -41,7 +42,7 @@ export class EbContainer extends LitElement {
             padding: 0.5rem 0.75rem;
             font-size: 12px;
         }
-    `;
+    `];
 
     constructor() {
         super();

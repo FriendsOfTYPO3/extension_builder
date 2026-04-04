@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { buttonStyles } from './styles/button-styles.js';
+import { formStyles } from './styles/form-styles.js';
 import Notification from '@typo3/backend/notification.js';
 import Modal from '@typo3/backend/modal.js';
 import Severity from '@typo3/backend/severity.js';
@@ -26,7 +27,7 @@ export class EbWiringEditor extends LitElement {
         _leftCollapsed: { state: true },
     };
 
-    static styles = [buttonStyles, css`
+    static styles = [buttonStyles, formStyles, css`
         :host {
             display: flex;
             flex-direction: column;
