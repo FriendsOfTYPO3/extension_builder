@@ -136,4 +136,21 @@ export const formStyles = css`
         font-size: var(--bs-body-font-size, 0.875rem);
         color: var(--bs-body-color, #333);
     }
+
+    .form-control.is-invalid {
+        border-color: var(--bs-danger, #dc3545);
+    }
+
+    .form-control.is-invalid:focus {
+        border-color: var(--bs-danger, #dc3545);
+        box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--bs-danger, #dc3545) 25%, transparent);
+    }
+
+    .invalid-feedback {
+        display: block;
+        width: 100%;
+        margin-top: 0.25rem;
+        font-size: 0.875em;
+        color: var(--bs-danger, #dc3545);
+    }
 `;
