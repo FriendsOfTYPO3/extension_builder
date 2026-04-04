@@ -15,6 +15,7 @@ export class EbTerminal extends LitElement {
         type: { type: String },
         terminalId: { type: String, attribute: 'terminal-id' },
         uid: { type: String },
+        droppable: { type: Boolean },
     };
 
     static styles = css`
@@ -35,12 +36,24 @@ export class EbTerminal extends LitElement {
             left: 50%;
             transform: translateX(-50%);
         }
+        :host([type="input"]:hover) {
+            transform: translateX(-50%) scale(1.3);
+        }
         :host([type="output"]) {
             background: var(--eb-terminal-output, #d9534f);
             border-color: var(--eb-terminal-output-border, #8a2c2c);
         }
-        :host(:hover) {
-            transform: translateX(-50%) scale(1.3);
+        :host([droppable]) {
+            position: relative;
+            flex-shrink: 0;
+            align-self: center;
+            background: var(--eb-terminal-relation, #6ea8fe);
+            border-color: var(--eb-terminal-relation-border, #3d7bd4);
+            transform: none;
+        }
+        :host([droppable]:hover) {
+            transform: scale(1.3);
+            box-shadow: 0 0 0 3px rgba(110, 168, 254, 0.35);
         }
     `;
 
@@ -58,6 +71,7 @@ export class EbTerminal extends LitElement {
     }
 
     _onPointerDown(e) {
+        if (this.droppable) return;
         e.stopPropagation();
         this.dispatchEvent(new CustomEvent('terminal-connect', {
             bubbles: true,

@@ -3,6 +3,7 @@ import { repeat } from 'lit/directives/repeat.js';
 import { buttonStyles } from './styles/button-styles.js';
 import { formStyles } from './styles/form-styles.js';
 import { renderFieldDef } from './render-fields.js';
+import './eb-terminal.js';
 
 function _iconUrl(name) {
     const base = window.TYPO3?.settings?.extensionBuilder?.publicResourceWebPath?.core ?? '';
@@ -50,6 +51,11 @@ export class EbListField extends LitElement {
             padding-top: 2px;
         }
         .add-btn { margin-top: 4px; }
+        .item-terminal {
+            display: flex;
+            align-items: center;
+            padding-top: 4px;
+        }
     `];
 
     constructor() {
@@ -62,6 +68,11 @@ export class EbListField extends LitElement {
     get _elementTypeDef() {
         try { return JSON.parse(this.elementType || 'null'); }
         catch { return null; }
+    }
+
+    get _isWirable() {
+        const fields = this._elementTypeDef?.inputParams?.fields ?? [];
+        return fields.some(f => f.inputParams?.wirable);
     }
 
     _addItem() {
@@ -128,9 +139,18 @@ export class EbListField extends LitElement {
 
     render() {
         const def = this._elementTypeDef;
+        const wirable = this._isWirable;
         return html`
             ${repeat(this._items, item => item.uid, (item, index) => html`
                 <div class="item-row">
+                    ${wirable ? html`
+                        <div class="item-terminal">
+                            <eb-terminal
+                                droppable
+                                terminal-id="REL_${index}"
+                            ></eb-terminal>
+                        </div>
+                    ` : nothing}
                     <div class="item-content">
                         ${def ? renderFieldDef(def) : nothing}
                     </div>

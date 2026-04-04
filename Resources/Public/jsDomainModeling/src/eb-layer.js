@@ -154,20 +154,31 @@ export class EbLayer extends LitElement {
         this._drawingWire = null;
         this._tempWire = null;
 
-        const targetContainer = e.composedPath().find(
-            el => el.tagName === 'EB-CONTAINER' && parseInt(el.getAttribute('module-id')) !== src.moduleId
+        // Find a droppable eb-terminal in the event path (relation terminals only)
+        const tgtTerminalEl = e.composedPath().find(
+            el => el.tagName === 'EB-TERMINAL' && el.hasAttribute('droppable')
         );
-        if (!targetContainer) return;
-
-        const tgtModuleId = parseInt(targetContainer.getAttribute('module-id'));
-        const tgtTerminalEl = targetContainer.shadowRoot?.querySelector('eb-terminal');
         if (!tgtTerminalEl) return;
 
-        const tgtTerminalId = tgtTerminalEl.getAttribute('terminal-id') ?? 'SOURCES';
+        const tgtTerminalId = tgtTerminalEl.getAttribute('terminal-id');
         const tgtUid = tgtTerminalEl.uid ?? tgtTerminalEl.getAttribute('uid') ?? '';
 
+        // Traverse shadow DOM host chain to find the parent eb-container
+        let tgtModuleId = null;
+        let node = tgtTerminalEl.getRootNode()?.host;
+        while (node) {
+            if (node.tagName === 'EB-CONTAINER') {
+                tgtModuleId = parseInt(node.getAttribute('module-id'));
+                break;
+            }
+            node = node.getRootNode()?.host;
+        }
+        if (tgtModuleId === null || tgtModuleId === src.moduleId) return;
+
         const duplicate = this._wires.some(
-            w => w.srcModuleId === src.moduleId && w.tgtModuleId === tgtModuleId
+            w => w.srcModuleId === src.moduleId
+                && w.tgtModuleId === tgtModuleId
+                && w.tgtTerminal === tgtTerminalId
         );
         if (duplicate) return;
 
@@ -178,7 +189,7 @@ export class EbLayer extends LitElement {
             : { x1: 0, y1: 0, x2: 0, y2: 0 };
 
         this._wires = [...this._wires, {
-            id: `wire-${src.moduleId}-${src.terminalId}-${tgtModuleId}`,
+            id: `wire-${src.moduleId}-${src.terminalId}-${tgtModuleId}-${tgtTerminalId}`,
             srcTerminal: src.terminalId,
             tgtTerminal: tgtTerminalId,
             srcUid: src.uid,
@@ -208,7 +219,21 @@ export class EbLayer extends LitElement {
     _findTerminalEl(terminalId, moduleId) {
         const container = this.shadowRoot.querySelector(`eb-container[module-id="${moduleId}"]`);
         if (!container) return null;
-        return container.shadowRoot?.querySelector(`eb-terminal[terminal-id="${terminalId}"]`) ?? null;
+        return this._deepQuerySelector(container, `eb-terminal[terminal-id="${terminalId}"]`);
+    }
+
+    _deepQuerySelector(element, selector) {
+        const root = element.shadowRoot;
+        if (!root) return null;
+        const direct = root.querySelector(selector);
+        if (direct) return direct;
+        for (const child of root.querySelectorAll('*')) {
+            if (child.shadowRoot) {
+                const found = child.shadowRoot.querySelector(selector);
+                if (found) return found;
+            }
+        }
+        return null;
     }
 
     _getWirePositions(srcEl, tgtEl) {
