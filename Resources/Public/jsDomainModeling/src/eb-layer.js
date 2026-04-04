@@ -6,8 +6,10 @@ import './eb-wire.js';
  * Canvas layer that hosts draggable containers and SVG wire overlays.
  *
  * Manages the full list of `eb-container` instances and `eb-wire` paths.
- * Listens for `terminal-connect` events to create wires and
+ * Listens for `terminal-connect` events to start wire drawing and
  * `container-moved` events to update wire endpoint positions.
+ * Dropping on a target `eb-container` creates a wire; hovering a wire
+ * reveals a trash icon that deletes it.
  *
  * @element eb-layer
  */
@@ -17,6 +19,7 @@ export class EbLayer extends LitElement {
         _containers: { state: true },
         _drawingWire: { state: true },
         _tempWire: { state: true },
+        _hoveredWireId: { state: true },
     };
 
     static styles = css`
@@ -34,7 +37,6 @@ export class EbLayer extends LitElement {
             flex: 1;
             width: 100%;
             overflow: hidden;
-
         }
         #wire-overlay {
             position: absolute;
@@ -44,11 +46,39 @@ export class EbLayer extends LitElement {
             height: 100%;
             pointer-events: none;
         }
+        .wire-group {
+            pointer-events: none;
+        }
         .wire-path {
             stroke: var(--eb-wire-color, #4a90d9);
         }
+        .wire-hit-area {
+            stroke: transparent;
+            pointer-events: stroke;
+            cursor: pointer;
+        }
         .wire-temp-path {
             stroke: var(--eb-wire-temp-color, #aaa);
+        }
+        .wire-delete-btn {
+            opacity: 0;
+            pointer-events: all;
+            cursor: pointer;
+            transition: opacity 0.15s;
+        }
+        .wire-delete-btn circle {
+            fill: var(--eb-wire-delete-bg, #dc3545);
+        }
+        .wire-delete-btn text {
+            fill: #fff;
+            font-size: 12px;
+            font-family: sans-serif;
+            dominant-baseline: central;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+        .wire-group:hover .wire-delete-btn {
+            opacity: 1;
         }
     `;
 
@@ -58,6 +88,7 @@ export class EbLayer extends LitElement {
         this._containers = [];
         this._drawingWire = null;
         this._tempWire = null;
+        this._hoveredWireId = null;
     }
 
     connectedCallback() {
@@ -79,13 +110,11 @@ export class EbLayer extends LitElement {
     _onTerminalConnect(e) {
         const { terminalId, uid, sourceEl } = e.detail;
 
-        // Get the position of the terminal in layer-canvas space
         const layerRect = this.getBoundingClientRect();
         const termRect = sourceEl.getBoundingClientRect();
         const startX = termRect.left - layerRect.left + termRect.width / 2;
         const startY = termRect.top - layerRect.top + termRect.height / 2;
 
-        // Find the container this terminal belongs to
         const container = sourceEl.getRootNode()?.host;
         const moduleId = parseInt(container?.getAttribute('module-id') ?? '-1');
 
@@ -108,20 +137,63 @@ export class EbLayer extends LitElement {
     _onPointerMove(e) {
         if (!this._drawingWire) return;
         const layerRect = this.getBoundingClientRect();
-        this._drawingWire = {
-            ...this._drawingWire,
-            mouseX: e.clientX - layerRect.left,
-            mouseY: e.clientY - layerRect.top,
+        const mouseX = e.clientX - layerRect.left;
+        const mouseY = e.clientY - layerRect.top;
+        this._drawingWire = { ...this._drawingWire, mouseX, mouseY };
+        this._tempWire = {
+            x1: this._drawingWire.startX,
+            y1: this._drawingWire.startY,
+            x2: mouseX,
+            y2: mouseY,
         };
     }
 
     _onPointerUp(e) {
         if (!this._drawingWire) return;
+        const src = this._drawingWire;
         this._drawingWire = null;
+        this._tempWire = null;
+
+        const targetContainer = e.composedPath().find(
+            el => el.tagName === 'EB-CONTAINER' && parseInt(el.getAttribute('module-id')) !== src.moduleId
+        );
+        if (!targetContainer) return;
+
+        const tgtModuleId = parseInt(targetContainer.getAttribute('module-id'));
+        const tgtTerminalEl = targetContainer.shadowRoot?.querySelector('eb-terminal');
+        if (!tgtTerminalEl) return;
+
+        const tgtTerminalId = tgtTerminalEl.getAttribute('terminal-id') ?? 'SOURCES';
+        const tgtUid = tgtTerminalEl.uid ?? tgtTerminalEl.getAttribute('uid') ?? '';
+
+        const duplicate = this._wires.some(
+            w => w.srcModuleId === src.moduleId && w.tgtModuleId === tgtModuleId
+        );
+        if (duplicate) return;
+
+        const srcEl = this._findTerminalEl(src.terminalId, src.moduleId);
+        const tgtEl = this._findTerminalEl(tgtTerminalId, tgtModuleId);
+        const pos = srcEl && tgtEl
+            ? this._getWirePositions(srcEl, tgtEl)
+            : { x1: 0, y1: 0, x2: 0, y2: 0 };
+
+        this._wires = [...this._wires, {
+            id: `wire-${src.moduleId}-${src.terminalId}-${tgtModuleId}`,
+            srcTerminal: src.terminalId,
+            tgtTerminal: tgtTerminalId,
+            srcUid: src.uid,
+            tgtUid,
+            srcModuleId: src.moduleId,
+            tgtModuleId,
+            ...pos,
+        }];
+    }
+
+    _deleteWire(wireId) {
+        this._wires = this._wires.filter(w => w.id !== wireId);
     }
 
     _updateWirePositions() {
-        // Re-read terminal positions after container move
         this.updateComplete.then(() => {
             const updatedWires = this._wires.map(wire => {
                 const srcEl = this._findTerminalEl(wire.srcTerminal, wire.srcModuleId);
@@ -177,7 +249,7 @@ export class EbLayer extends LitElement {
                 const tgtEl = this._findTerminalEl(wire.tgt.terminal, wire.tgt.moduleId);
                 const pos = srcEl && tgtEl ? this._getWirePositions(srcEl, tgtEl) : { x1: 0, y1: 0, x2: 0, y2: 0 };
                 return {
-                    id: `wire-${wire.src.moduleId}-${wire.src.terminal}`,
+                    id: `wire-${wire.src.moduleId}-${wire.src.terminal}-${wire.tgt.moduleId}`,
                     srcTerminal: wire.src.terminal,
                     tgtTerminal: wire.tgt.terminal,
                     srcUid: wire.src.uid,
@@ -202,6 +274,14 @@ export class EbLayer extends LitElement {
         return { modules, wires };
     }
 
+    _wireMidpoint(w) {
+        return { x: (w.x1 + w.x2) / 2, y: (w.y1 + w.y2) / 2 };
+    }
+
+    _wirePath(w) {
+        return `M ${w.x1} ${w.y1} C ${w.x1} ${w.y1 + 80}, ${w.x2} ${w.y2 - 80}, ${w.x2} ${w.y2}`;
+    }
+
     render() {
         return html`
             <div id="canvas">
@@ -214,15 +294,37 @@ export class EbLayer extends LitElement {
                     </eb-container>
                 `)}
                 <svg id="wire-overlay">
-                    ${this._wires.map(w => svg`
-                        <path
-                            class="wire-path"
-                            d="M ${w.x1} ${w.y1} C ${w.x1} ${w.y1 + 80}, ${w.x2} ${w.y2 - 80}, ${w.x2} ${w.y2}"
-                            stroke-width="2"
-                            fill="none"
-                            stroke-linecap="round"
-                        />
-                    `)}
+                    ${this._wires.map(w => {
+                        const mid = this._wireMidpoint(w);
+                        const d = this._wirePath(w);
+                        return svg`
+                            <g class="wire-group">
+                                <path
+                                    class="wire-hit-area"
+                                    d="${d}"
+                                    stroke-width="12"
+                                    fill="none"
+                                />
+                                <path
+                                    class="wire-path"
+                                    d="${d}"
+                                    stroke-width="2"
+                                    fill="none"
+                                    stroke-linecap="round"
+                                    pointer-events="none"
+                                />
+                                <g
+                                    class="wire-delete-btn"
+                                    @click="${() => this._deleteWire(w.id)}"
+                                    aria-label="Delete wire"
+                                    role="button"
+                                >
+                                    <circle cx="${mid.x}" cy="${mid.y}" r="9" />
+                                    <text x="${mid.x}" y="${mid.y}">×</text>
+                                </g>
+                            </g>
+                        `;
+                    })}
                     ${this._tempWire ? svg`
                         <path
                             class="wire-temp-path"
