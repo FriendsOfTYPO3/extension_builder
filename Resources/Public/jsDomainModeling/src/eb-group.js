@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 
 export class EbGroup extends LitElement {
     static properties = {
@@ -80,6 +80,13 @@ export class EbGroup extends LitElement {
         }
     }
 
+    _onHeaderKeyDown(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this._toggleCollapse();
+        }
+    }
+
     _onSlotChange() {
         this.requestUpdate();
         this._initRelationTypes();
@@ -108,7 +115,14 @@ export class EbGroup extends LitElement {
         return html`
             <div class="card">
                 ${this.legend ? html`
-                    <div class="card-header" @click="${this._toggleCollapse}">${this.legend}</div>
+                    <div class="card-header"
+                     @click="${this._toggleCollapse}"
+                     @keydown="${this._onHeaderKeyDown}"
+                     role="${this.collapsible ? 'button' : nothing}"
+                     tabindex="${this.collapsible ? '0' : nothing}"
+                     aria-expanded="${this.collapsible ? String(!this.collapsed) : nothing}">
+                    ${this.legend}
+                </div>
                 ` : ''}
                 <div class="card-body">
                     <slot @slotchange="${this._onSlotChange}"></slot>

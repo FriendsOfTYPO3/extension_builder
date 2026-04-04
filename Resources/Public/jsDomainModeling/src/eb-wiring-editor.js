@@ -348,7 +348,12 @@ export class EbWiringEditor extends LitElement {
             <div class="content ${this._advancedMode ? 'advanced-mode' : ''}">
                 <div class="left-panel ${this._leftCollapsed ? 'collapsed' : ''}">
                     <div class="left-panel-header">
-                        <button class="btn btn-default btn-sm" @click="${this._toggleLeftPanel}" title="Toggle panel">☰</button>
+                        <button class="btn btn-default btn-sm"
+                                @click="${this._toggleLeftPanel}"
+                                aria-label="${this._leftCollapsed ? 'Expand properties panel' : 'Collapse properties panel'}"
+                                aria-expanded="${!this._leftCollapsed}">
+                            <span aria-hidden="true">☰</span>
+                        </button>
                     </div>
                     ${renderFields(extensionPropertiesFields)}
                 </div>

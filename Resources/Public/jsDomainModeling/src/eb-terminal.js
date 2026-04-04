@@ -39,6 +39,14 @@ export class EbTerminal extends LitElement {
         this.addEventListener('pointerdown', this._onPointerDown.bind(this));
     }
 
+    updated(changed) {
+        if (changed.has('type')) {
+            const labels = { input: 'Input terminal', output: 'Output terminal' };
+            this.setAttribute('aria-label', labels[this.type] ?? 'Terminal');
+            this.setAttribute('role', 'img');
+        }
+    }
+
     _onPointerDown(e) {
         e.stopPropagation();
         this.dispatchEvent(new CustomEvent('terminal-connect', {
