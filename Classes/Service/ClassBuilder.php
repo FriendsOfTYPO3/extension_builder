@@ -172,7 +172,9 @@ class ClassBuilder implements SingletonInterface
         if ($this->classObject->propertyExists($propertyName)) {
             $classProperty = $this->classObject->getProperty($propertyName);
             $classProperty->setTag('var', $domainProperty->getTypeForComment());
-            $classProperty->setVarType($domainProperty->getTypeHint());
+            if ($domainProperty->getTypeHint() !== null) {
+                $classProperty->setVarType($domainProperty->getTypeHint());
+            }
             if ($this->settings['setDefaultValuesForClassProperties'] !== false) {
                 $classProperty->setDefault($domainProperty->getDefaultValue());
             }
@@ -183,7 +185,9 @@ class ClassBuilder implements SingletonInterface
             $classProperty = clone $this->templateClassObject->getProperty('property');
             $classProperty->setName($propertyName);
             $classProperty->setTag('var', $domainProperty->getTypeForComment());
-            $classProperty->setVarType($domainProperty->getTypeHint());
+            if ($domainProperty->getTypeHint() !== null) {
+                $classProperty->setVarType($domainProperty->getTypeHint());
+            }
             if ($domainProperty->getDescription()) {
                 $classProperty->setDescription($domainProperty->getDescription());
             } else {
@@ -336,7 +340,7 @@ class ClassBuilder implements SingletonInterface
             $setterMethod->setTag('return', 'void');
             $setterMethod->getParameterByPosition(0)
                 ->setName($propertyName)
-                ->setTypeHint($domainProperty->getTypeHint())
+                ->setTypeHint($domainProperty->getTypeHint() ?? '')
                 ->setTypeForParamTag($domainProperty->getTypeForComment());
         }
         if (!$setterMethod->hasDescription()) {
@@ -347,7 +351,7 @@ class ClassBuilder implements SingletonInterface
             $setterParameter = new MethodParameter($propertyName);
             $setterParameter->setVarType($domainProperty->getTypeForComment());
             if (is_subclass_of($domainProperty, 'Model\\DomainObject\\Relation\\AbstractRelation')) {
-                $setterParameter->setTypeHint($domainProperty->getTypeHint());
+                $setterParameter->setTypeHint($domainProperty->getTypeHint() ?? '');
             }
             $setterMethod->setParameter($setterParameter);
         }
@@ -392,8 +396,8 @@ class ClassBuilder implements SingletonInterface
             $addMethod->setTag('param', Tools::getParamTag($domainProperty, 'add'));
             $addMethod->getParameterByPosition(0)
                 ->setName(Inflector::singularize($propertyName))
-                ->setVarType($domainProperty->getForeignClassName())
-                ->setTypeHint($domainProperty->getForeignClassName());
+                ->setVarType($domainProperty->getForeignClassName() ?? '')
+                ->setTypeHint($domainProperty->getForeignClassName() ?? '');
             $addMethod->setTag('return', 'void');
             $addMethod->addModifier('public');
         }
@@ -401,7 +405,7 @@ class ClassBuilder implements SingletonInterface
 
         if (!in_array(Inflector::singularize($propertyName), $addParameters)) {
             $addParameter = new MethodParameter(Tools::getParameterName($domainProperty, 'add'));
-            $addParameter->setVarType($domainProperty->getForeignClassName());
+            $addParameter->setVarType($domainProperty->getForeignClassName() ?? '');
             $addMethod->setParameter($addParameter);
         }
         if (!$addMethod->hasDescription()) {
@@ -433,8 +437,8 @@ class ClassBuilder implements SingletonInterface
             $removeMethod->addModifier('public');
             $removeMethod->getParameterByPosition(0)
                 ->setName($parameterName)
-                ->setVarType($domainProperty->getForeignClassName())
-                ->setTypeHint($domainProperty->getForeignClassName());
+                ->setVarType($domainProperty->getForeignClassName() ?? '')
+                ->setTypeHint($domainProperty->getForeignClassName() ?? '');
             $removeMethod->updateParamTags();
             $this->updateMethodBody(
                 $removeMethod,
@@ -458,8 +462,8 @@ class ClassBuilder implements SingletonInterface
         if (!in_array(Tools::getParameterName($domainProperty, 'remove'), $removeParameters)) {
             $removeParameter = new MethodParameter(Tools::getParameterName($domainProperty, 'remove'));
             $removeParameter->setName(Tools::getParameterName($domainProperty, 'remove'))
-                ->setVarType($domainProperty->getForeignClassName())
-                ->setTypeHint($domainProperty->getForeignClassName())
+                ->setVarType($domainProperty->getForeignClassName() ?? '')
+                ->setTypeHint($domainProperty->getForeignClassName() ?? '')
                 ->setTypeForParamTag($domainProperty->getTypeForComment());
             $removeMethod->setParameter($removeParameter);
         }
@@ -623,12 +627,12 @@ class ClassBuilder implements SingletonInterface
                 return $domainProperty->getTypeForComment() . ' $' . $domainProperty->getName();
             case 'add':
                 /** @var AbstractRelation $domainProperty */
-                $paramTag = $domainProperty->getForeignClassName();
+                $paramTag = $domainProperty->getForeignClassName() ?? '';
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'add');
                 return $paramTag;
             case 'remove':
                 /** @var AbstractRelation $domainProperty */
-                $paramTag = $domainProperty->getForeignClassName();
+                $paramTag = $domainProperty->getForeignClassName() ?? '';
                 $paramTag .= ' $' . self::getParameterName($domainProperty, 'remove');
                 $paramTag .= ' The ' . $domainProperty->getForeignModelName() . ' to be removed';
                 return $paramTag;

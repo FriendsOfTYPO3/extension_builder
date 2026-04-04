@@ -12,6 +12,7 @@ import { LitElement, html, css, nothing } from 'lit';
  */
 export class EbGroup extends LitElement {
     static properties = {
+        name: { type: String },
         legend: { type: String },
         collapsible: { type: Boolean },
         collapsed: { type: Boolean, reflect: true },

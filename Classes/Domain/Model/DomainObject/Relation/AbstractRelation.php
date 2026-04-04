@@ -105,8 +105,11 @@ abstract class AbstractRelation extends AbstractProperty
         if (is_object($this->foreignModel)) {
             return $this->foreignModel->getName();
         }
+        if (empty($this->foreignClassName)) {
+            return '';
+        }
         $parts = explode('\\Domain\\Model\\', $this->foreignClassName);
-        return $parts[1];
+        return $parts[1] ?? '';
     }
 
     /**
