@@ -135,7 +135,9 @@ export class EbLayer extends LitElement {
     }
 
     _onPointerMove(e) {
-        if (!this._drawingWire) return;
+        if (!this._drawingWire) {
+            return;
+        }
         const layerRect = this.getBoundingClientRect();
         const mouseX = e.clientX - layerRect.left;
         const mouseY = e.clientY - layerRect.top;
@@ -149,16 +151,20 @@ export class EbLayer extends LitElement {
     }
 
     _onPointerUp(e) {
-        if (!this._drawingWire) return;
+        if (!this._drawingWire) {
+            return;
+        }
         const src = this._drawingWire;
         this._drawingWire = null;
         this._tempWire = null;
 
         // Find a droppable eb-terminal in the event path (relation terminals only)
-        const tgtTerminalEl = e.composedPath().find(
-            el => el.tagName === 'EB-TERMINAL' && el.hasAttribute('droppable')
-        );
-        if (!tgtTerminalEl) return;
+        const tgtTerminalEl = e
+            .composedPath()
+            .find((el) => el.tagName === 'EB-TERMINAL' && el.hasAttribute('droppable'));
+        if (!tgtTerminalEl) {
+            return;
+        }
 
         const tgtTerminalId = tgtTerminalEl.getAttribute('terminal-id');
         const tgtUid = tgtTerminalEl.uid ?? tgtTerminalEl.getAttribute('uid') ?? '';
@@ -173,43 +179,48 @@ export class EbLayer extends LitElement {
             }
             node = node.getRootNode()?.host;
         }
-        if (tgtModuleId === null || tgtModuleId === src.moduleId) return;
+        if (tgtModuleId === null || tgtModuleId === src.moduleId) {
+            return;
+        }
 
         const duplicate = this._wires.some(
-            w => w.srcModuleId === src.moduleId
-                && w.tgtModuleId === tgtModuleId
-                && w.tgtTerminal === tgtTerminalId
+            (w) => w.srcModuleId === src.moduleId && w.tgtModuleId === tgtModuleId && w.tgtTerminal === tgtTerminalId
         );
-        if (duplicate) return;
+        if (duplicate) {
+            return;
+        }
 
         const srcEl = this._findTerminalEl(src.terminalId, src.moduleId);
         const tgtEl = this._findTerminalEl(tgtTerminalId, tgtModuleId);
-        const pos = srcEl && tgtEl
-            ? this._getWirePositions(srcEl, tgtEl)
-            : { x1: 0, y1: 0, x2: 0, y2: 0 };
+        const pos = srcEl && tgtEl ? this._getWirePositions(srcEl, tgtEl) : { x1: 0, y1: 0, x2: 0, y2: 0 };
 
-        this._wires = [...this._wires, {
-            id: `wire-${src.moduleId}-${src.terminalId}-${tgtModuleId}-${tgtTerminalId}`,
-            srcTerminal: src.terminalId,
-            tgtTerminal: tgtTerminalId,
-            srcUid: src.uid,
-            tgtUid,
-            srcModuleId: src.moduleId,
-            tgtModuleId,
-            ...pos,
-        }];
+        this._wires = [
+            ...this._wires,
+            {
+                id: `wire-${src.moduleId}-${src.terminalId}-${tgtModuleId}-${tgtTerminalId}`,
+                srcTerminal: src.terminalId,
+                tgtTerminal: tgtTerminalId,
+                srcUid: src.uid,
+                tgtUid,
+                srcModuleId: src.moduleId,
+                tgtModuleId,
+                ...pos,
+            },
+        ];
     }
 
     _deleteWire(wireId) {
-        this._wires = this._wires.filter(w => w.id !== wireId);
+        this._wires = this._wires.filter((w) => w.id !== wireId);
     }
 
     _updateWirePositions() {
         this.updateComplete.then(() => {
-            const updatedWires = this._wires.map(wire => {
+            const updatedWires = this._wires.map((wire) => {
                 const srcEl = this._findTerminalEl(wire.srcTerminal, wire.srcModuleId);
                 const tgtEl = this._findTerminalEl(wire.tgtTerminal, wire.tgtModuleId);
-                if (!srcEl || !tgtEl) return wire;
+                if (!srcEl || !tgtEl) {
+                    return wire;
+                }
                 return { ...wire, ...this._getWirePositions(srcEl, tgtEl) };
             });
             this._wires = updatedWires;
@@ -218,19 +229,27 @@ export class EbLayer extends LitElement {
 
     _findTerminalEl(terminalId, moduleId) {
         const container = this.shadowRoot.querySelector(`eb-container[module-id="${moduleId}"]`);
-        if (!container) return null;
+        if (!container) {
+            return null;
+        }
         return this._deepQuerySelector(container, `eb-terminal[terminal-id="${terminalId}"]`);
     }
 
     _deepQuerySelector(element, selector) {
         const root = element.shadowRoot;
-        if (!root) return null;
+        if (!root) {
+            return null;
+        }
         const direct = root.querySelector(selector);
-        if (direct) return direct;
+        if (direct) {
+            return direct;
+        }
         for (const child of root.querySelectorAll('*')) {
             if (child.shadowRoot) {
                 const found = child.shadowRoot.querySelector(selector);
-                if (found) return found;
+                if (found) {
+                    return found;
+                }
             }
         }
         return null;
@@ -250,12 +269,15 @@ export class EbLayer extends LitElement {
 
     addContainer(moduleData) {
         const nextId = this._containers.length;
-        this._containers = [...this._containers, {
-            moduleId: nextId,
-            posX: 20 + nextId * 20,
-            posY: 20 + nextId * 20,
-            moduleData,
-        }];
+        this._containers = [
+            ...this._containers,
+            {
+                moduleId: nextId,
+                posX: 20 + nextId * 20,
+                posY: 20 + nextId * 20,
+                moduleData,
+            },
+        ];
     }
 
     addContainers(modules) {
@@ -269,7 +291,7 @@ export class EbLayer extends LitElement {
 
     addWires(wires, modules) {
         this.updateComplete.then(() => {
-            this._wires = wires.map(wire => {
+            this._wires = wires.map((wire) => {
                 const srcEl = this._findTerminalEl(wire.src.terminal, wire.src.moduleId);
                 const tgtEl = this._findTerminalEl(wire.tgt.terminal, wire.tgt.moduleId);
                 const pos = srcEl && tgtEl ? this._getWirePositions(srcEl, tgtEl) : { x1: 0, y1: 0, x2: 0, y2: 0 };
@@ -288,11 +310,9 @@ export class EbLayer extends LitElement {
     }
 
     serialize() {
-        const containers = Array.from(
-            this.shadowRoot.querySelectorAll('eb-container')
-        );
-        const modules = containers.map(c => c.serialize());
-        const wires = this._wires.map(w => ({
+        const containers = Array.from(this.shadowRoot.querySelectorAll('eb-container'));
+        const modules = containers.map((c) => c.serialize());
+        const wires = this._wires.map((w) => ({
             src: { moduleId: w.srcModuleId, terminal: w.srcTerminal, uid: w.srcUid },
             tgt: { moduleId: w.tgtModuleId, terminal: w.tgtTerminal, uid: w.tgtUid },
         }));
@@ -310,16 +330,19 @@ export class EbLayer extends LitElement {
     render() {
         return html`
             <div id="canvas">
-                ${this._containers.map(c => html`
-                    <eb-container
-                        module-id="${c.moduleId}"
-                        pos-x="${c.posX}"
-                        pos-y="${c.posY}"
-                        .moduleData="${c.moduleData}">
-                    </eb-container>
-                `)}
+                ${this._containers.map(
+                    (c) => html`
+                        <eb-container
+                            module-id="${c.moduleId}"
+                            pos-x="${c.posX}"
+                            pos-y="${c.posY}"
+                            .moduleData="${c.moduleData}"
+                        >
+                        </eb-container>
+                    `
+                )}
                 <svg id="wire-overlay">
-                    ${this._wires.map(w => {
+                    ${this._wires.map((w) => {
                         const mid = this._wireMidpoint(w);
                         const d = this._wirePath(w);
                         return svg`
@@ -350,7 +373,8 @@ export class EbLayer extends LitElement {
                             </g>
                         `;
                     })}
-                    ${this._tempWire ? svg`
+                    ${this._tempWire
+                        ? svg`
                         <path
                             class="wire-temp-path"
                             d="M ${this._tempWire.x1} ${this._tempWire.y1} L ${this._tempWire.x2} ${this._tempWire.y2}"
@@ -358,7 +382,8 @@ export class EbLayer extends LitElement {
                             stroke-dasharray="4 4"
                             fill="none"
                         />
-                    ` : ''}
+                    `
+                        : ''}
                 </svg>
             </div>
         `;

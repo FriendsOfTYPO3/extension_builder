@@ -34,16 +34,35 @@ export class EbStringField extends EbField {
     static styles = [formStyles];
 
     _getValidationError(v) {
-        if (this.required && !v) return 'Required';
-        if (!v) return null;
-        if (this.minLength && v.length < this.minLength) return `Minimum ${this.minLength} characters`;
-        if (this.maxLength && v.length > this.maxLength) return `Maximum ${this.maxLength} characters`;
-        if (this.firstCharNonNumeric && /^[0-9]/.test(v)) return 'Must not start with a number';
-        if (this.noLeadingUnderscore && v.startsWith('_')) return 'Must not start with an underscore';
-        if (this.noTrailingUnderscore && v.endsWith('_')) return 'Must not end with an underscore';
+        if (this.required && !v) {
+            return 'Required';
+        }
+        if (!v) {
+            return null;
+        }
+        if (this.minLength && v.length < this.minLength) {
+            return `Minimum ${this.minLength} characters`;
+        }
+        if (this.maxLength && v.length > this.maxLength) {
+            return `Maximum ${this.maxLength} characters`;
+        }
+        if (this.firstCharNonNumeric && /^[0-9]/.test(v)) {
+            return 'Must not start with a number';
+        }
+        if (this.noLeadingUnderscore && v.startsWith('_')) {
+            return 'Must not start with an underscore';
+        }
+        if (this.noTrailingUnderscore && v.endsWith('_')) {
+            return 'Must not end with an underscore';
+        }
         if (this.forbiddenPrefixes) {
-            const match = this.forbiddenPrefixes.split(' ').filter(Boolean).find(p => v.startsWith(p));
-            if (match) return `Must not start with "${match}"`;
+            const match = this.forbiddenPrefixes
+                .split(' ')
+                .filter(Boolean)
+                .find((p) => v.startsWith(p));
+            if (match) {
+                return `Must not start with "${match}"`;
+            }
         }
         return null;
     }
@@ -103,7 +122,7 @@ export class EbStringField extends EbField {
                 aria-invalid="${this._error ? 'true' : 'false'}"
                 aria-describedby="${this._error ? errorId : ''}"
                 @input="${this._onInput}"
-            >
+            />
             ${this._error ? html`<div id="${errorId}" class="invalid-feedback" role="alert">${this._error}</div>` : ''}
         `;
     }

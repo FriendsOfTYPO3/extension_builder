@@ -22,8 +22,11 @@ export const buttonStyles = css`
         font-size: var(--bs-body-font-size, 0.875rem);
         line-height: 1.5;
         border-radius: var(--bs-border-radius, 0.25rem);
-        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-            border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        transition:
+            color 0.15s ease-in-out,
+            background-color 0.15s ease-in-out,
+            border-color 0.15s ease-in-out,
+            box-shadow 0.15s ease-in-out;
         text-decoration: none;
     }
 
@@ -41,14 +44,14 @@ export const buttonStyles = css`
     /* Primary — TYPO3 orange */
     .btn-primary {
         color: #fff;
-        background-color: var(--eb-brand-color, #FF8700);
-        border-color: var(--eb-brand-color, #FF8700);
+        background-color: var(--eb-brand-color, #ff8700);
+        border-color: var(--eb-brand-color, #ff8700);
     }
 
     .btn-primary:hover {
         color: #fff;
-        background-color: color-mix(in srgb, var(--eb-brand-color, #FF8700) 85%, #000);
-        border-color: color-mix(in srgb, var(--eb-brand-color, #FF8700) 80%, #000);
+        background-color: color-mix(in srgb, var(--eb-brand-color, #ff8700) 85%, #000);
+        border-color: color-mix(in srgb, var(--eb-brand-color, #ff8700) 80%, #000);
     }
 
     /* Default — light gray with border (TYPO3-specific, not in vanilla Bootstrap 5) */

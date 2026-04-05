@@ -35,11 +35,13 @@ export class EbInplaceEdit extends LitElement {
         this._editing = false;
         if (val !== this.value) {
             this.value = val;
-            this.dispatchEvent(new CustomEvent('inplace-change', {
-                bubbles: true,
-                composed: true,
-                detail: { value: val },
-            }));
+            this.dispatchEvent(
+                new CustomEvent('inplace-change', {
+                    bubbles: true,
+                    composed: true,
+                    detail: { value: val },
+                })
+            );
         }
     }
 
@@ -73,7 +75,7 @@ export class EbInplaceEdit extends LitElement {
                         .value="${this.value ?? ''}"
                         @blur="${this._confirm}"
                         @keydown="${this._onKey}"
-                    >
+                    />
                 </div>
             `;
         }
@@ -86,7 +88,8 @@ export class EbInplaceEdit extends LitElement {
                     aria-label="Edit: ${this.value ?? ''}"
                     @click="${this._startEdit}"
                     @keydown="${(e) => e.key === 'Enter' && this._startEdit()}"
-                >${this.value ?? ''}</span>
+                    >${this.value ?? ''}</span
+                >
             </div>
         `;
     }

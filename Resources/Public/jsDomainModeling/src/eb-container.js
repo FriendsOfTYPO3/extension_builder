@@ -24,36 +24,40 @@ export class EbContainer extends LitElement {
         _name: { state: true },
     };
 
-    static styles = [formStyles, css`
-        :host {
-            display: block;
-            position: absolute;
-            min-width: 160px;
-            background: var(--bs-body-bg, #fff);
-            color: var(--bs-body-color, #000);
-            border: 1px solid var(--bs-border-color, #dee2e6);
-            border-radius: var(--bs-border-radius, 0.25rem);
-            box-shadow: var(--bs-box-shadow-sm, 2px 2px 6px rgba(0,0,0,0.15));
-            user-select: none;
-            cursor: grab;
-        }
-        :host(:active) {
-            cursor: grabbing;
-        }
-        .card-header {
-            background-color: var(--eb-brand-color, #FF8700);
-            color: #fff;
-            padding: 0.5rem 0.75rem;
-            font-weight: bold;
-            font-size: 13px;
-            border-radius: calc(var(--bs-border-radius, 0.25rem) - 1px) calc(var(--bs-border-radius, 0.25rem) - 1px) 0 0;
-            position: relative;
-        }
-        .card-body {
-            padding: 0.5rem 0.75rem;
-            font-size: 12px;
-        }
-    `];
+    static styles = [
+        formStyles,
+        css`
+            :host {
+                display: block;
+                position: absolute;
+                min-width: 160px;
+                background: var(--bs-body-bg, #fff);
+                color: var(--bs-body-color, #000);
+                border: 1px solid var(--bs-border-color, #dee2e6);
+                border-radius: var(--bs-border-radius, 0.25rem);
+                box-shadow: var(--bs-box-shadow-sm, 2px 2px 6px rgba(0, 0, 0, 0.15));
+                user-select: none;
+                cursor: grab;
+            }
+            :host(:active) {
+                cursor: grabbing;
+            }
+            .card-header {
+                background-color: var(--eb-brand-color, #ff8700);
+                color: #fff;
+                padding: 0.5rem 0.75rem;
+                font-weight: bold;
+                font-size: 13px;
+                border-radius: calc(var(--bs-border-radius, 0.25rem) - 1px) calc(var(--bs-border-radius, 0.25rem) - 1px)
+                    0 0;
+                position: relative;
+            }
+            .card-body {
+                padding: 0.5rem 0.75rem;
+                font-size: 12px;
+            }
+        `,
+    ];
 
     constructor() {
         super();
@@ -85,14 +89,22 @@ export class EbContainer extends LitElement {
     }
 
     _onPointerDown(e) {
-        const interactive = e.composedPath().some(el => {
-            if (!(el instanceof Element)) return false;
+        const interactive = e.composedPath().some((el) => {
+            if (!(el instanceof Element)) {
+                return false;
+            }
             const tag = el.tagName.toUpperCase();
-            if (['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'A', 'EB-TERMINAL', 'EB-INPLACE-EDIT'].includes(tag)) return true;
-            if (el.getAttribute?.('role') === 'button') return true;
+            if (['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'A', 'EB-TERMINAL', 'EB-INPLACE-EDIT'].includes(tag)) {
+                return true;
+            }
+            if (el.getAttribute?.('role') === 'button') {
+                return true;
+            }
             return false;
         });
-        if (interactive) return;
+        if (interactive) {
+            return;
+        }
         e.preventDefault();
         this._dragging = true;
         this._dragOffsetX = e.clientX - this.posX;
@@ -101,19 +113,25 @@ export class EbContainer extends LitElement {
     }
 
     _onPointerMove(e) {
-        if (!this._dragging) return;
+        if (!this._dragging) {
+            return;
+        }
         this.posX = e.clientX - this._dragOffsetX;
         this.posY = e.clientY - this._dragOffsetY;
         this.style.transform = `translate(${this.posX}px, ${this.posY}px)`;
-        this.dispatchEvent(new CustomEvent('container-moved', {
-            bubbles: true,
-            composed: true,
-            detail: { moduleId: this.moduleId, x: this.posX, y: this.posY },
-        }));
+        this.dispatchEvent(
+            new CustomEvent('container-moved', {
+                bubbles: true,
+                composed: true,
+                detail: { moduleId: this.moduleId, x: this.posX, y: this.posY },
+            })
+        );
     }
 
     _onPointerUp(e) {
-        if (!this._dragging) return;
+        if (!this._dragging) {
+            return;
+        }
         this._dragging = false;
         this.releasePointerCapture(e.pointerId);
     }
@@ -129,8 +147,10 @@ export class EbContainer extends LitElement {
     _populateFromValue() {
         const value = this.moduleData?.value ?? {};
         const body = this.shadowRoot?.querySelector('.card-body');
-        if (!body) return;
-        Array.from(body.children).forEach(el => {
+        if (!body) {
+            return;
+        }
+        Array.from(body.children).forEach((el) => {
             const name = el.getAttribute('name');
             if (name !== null && value[name] !== undefined && typeof el.setValue === 'function') {
                 el.setValue(value[name]);
@@ -142,7 +162,7 @@ export class EbContainer extends LitElement {
         const value = { name: this._name ?? '' };
         const body = this.shadowRoot?.querySelector('.card-body');
         if (body) {
-            Array.from(body.children).forEach(el => {
+            Array.from(body.children).forEach((el) => {
                 const name = el.getAttribute('name');
                 if (name !== null && typeof el.getValue === 'function') {
                     value[name] = el.getValue();
@@ -165,17 +185,17 @@ export class EbContainer extends LitElement {
                 <eb-terminal
                     type="input"
                     terminal-id="SOURCES"
-                    uid="${this.moduleData?.value?.objectsettings?.uid ?? ''}">
+                    uid="${this.moduleData?.value?.objectsettings?.uid ?? ''}"
+                >
                 </eb-terminal>
                 <eb-inplace-edit
                     name="name"
                     .value="${this._name || 'New Model Object'}"
-                    @inplace-change="${this._onNameChange}">
+                    @inplace-change="${this._onNameChange}"
+                >
                 </eb-inplace-edit>
             </div>
-            <div class="card-body">
-                ${renderFields(this._fields.slice(1))}
-            </div>
+            <div class="card-body">${renderFields(this._fields.slice(1))}</div>
         `;
     }
 }

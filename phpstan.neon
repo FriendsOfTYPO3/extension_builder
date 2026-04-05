@@ -1,0 +1,10 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 5
+    paths:
+        - Classes
+    excludePaths:
+        - .Build
+        - Tests/Fixtures

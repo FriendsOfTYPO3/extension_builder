@@ -11,12 +11,16 @@
  * @returns {string} Translated string or generated fallback
  */
 export function translate(key) {
-    if (!key) return '';
+    if (!key) {
+        return '';
+    }
     const k = key.replace(/\./g, '_');
 
     // Primary: Try language settings from PHP backend
     const lang = window.TYPO3?.settings?.extensionBuilder?._LOCAL_LANG;
-    if (lang?.[k]) return lang[k];
+    if (lang?.[k]) {
+        return lang[k];
+    }
 
     // Fallback: Convert camelCase and snake_case to Title Case
     // This is safe because it's only used as UI label when translation is missing
@@ -24,5 +28,5 @@ export function translate(key) {
         .replace(/_/g, ' ')
         .replace(/([A-Z])/g, ' $1')
         .trim()
-        .replace(/\b\w/g, c => c.toUpperCase());
+        .replace(/\b\w/g, (c) => c.toUpperCase());
 }

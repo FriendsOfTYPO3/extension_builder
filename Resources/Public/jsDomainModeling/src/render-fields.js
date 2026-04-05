@@ -55,7 +55,7 @@ export function renderFieldDef(fieldDef) {
                 label="${translate(p.label ?? '')}"
                 .selectValues="${p.selectValues ?? []}"
                 .selectOptions="${p.selectOptions ?? []}"
-                .value="${p.value ?? (p.selectValues?.[0] ?? '')}"
+                .value="${p.value ?? p.selectValues?.[0] ?? ''}"
             ></eb-select-field>`;
 
         case 'boolean':
@@ -71,11 +71,15 @@ export function renderFieldDef(fieldDef) {
                 legend="${translate(p.legend ?? '')}"
                 ?collapsible="${p.collapsible}"
                 ?collapsed="${p.collapsed}"
-            >${renderFields(p.fields ?? [])}</eb-group>`;
+                >${renderFields(p.fields ?? [])}</eb-group
+            >`;
 
         case 'list':
-            return html`
-                ${p.label ? html`<label class="form-label" style="display:block;font-weight:600;margin-top:0.5rem">${translate(p.label)}</label>` : ''}
+            return html` ${p.label
+                    ? html`<label class="form-label" style="display:block;font-weight:600;margin-top:0.5rem"
+                          >${translate(p.label)}</label
+                      >`
+                    : ''}
                 <eb-list-field
                     name="${p.name}"
                     ?sortable="${p.sortable}"
@@ -84,16 +88,10 @@ export function renderFieldDef(fieldDef) {
                 ></eb-list-field>`;
 
         case 'inplaceedit':
-            return html`<eb-inplace-edit
-                name="${p.name ?? ''}"
-                .value="${p.value ?? ''}"
-            ></eb-inplace-edit>`;
+            return html`<eb-inplace-edit name="${p.name ?? ''}" .value="${p.value ?? ''}"></eb-inplace-edit>`;
 
         default:
-            return html`<eb-string-field
-                name="${p.name}"
-                label="${translate(p.label ?? '')}"
-            ></eb-string-field>`;
+            return html`<eb-string-field name="${p.name}" label="${translate(p.label ?? '')}"></eb-string-field>`;
     }
 }
 
@@ -104,5 +102,5 @@ export function renderFieldDef(fieldDef) {
  * @returns {import('lit').TemplateResult[]} Array of Lit template results
  */
 export function renderFields(fields) {
-    return fields.map(f => renderFieldDef(f));
+    return fields.map((f) => renderFieldDef(f));
 }

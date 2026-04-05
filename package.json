@@ -9,7 +9,8 @@
         "lint:scss": "stylelint 'Resources/Public/jsDomainModeling/**/*.css'",
         "lint:format": "prettier --check 'Resources/Public/jsDomainModeling/**/*.{js,css}'",
         "format": "prettier --write 'Resources/Public/jsDomainModeling/**/*.{js,css}'",
-        "lint": "npm run lint:js && npm run lint:scss && npm run lint:format",
+        "lint": "pnpm run lint:js && pnpm run lint:scss && pnpm run lint:format",
+        "lint:fix": "prettier --write 'Resources/Public/jsDomainModeling/**/*.{js,css}' && eslint Resources/Public/jsDomainModeling/**/*.js --fix",
         "test:e2e": "playwright test",
         "test:e2e:ui": "playwright test --ui",
         "test:e2e:headed": "playwright test --headed"

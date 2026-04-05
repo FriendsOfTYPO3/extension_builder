@@ -29,17 +29,17 @@ export class EbTerminal extends LitElement {
             cursor: crosshair;
             position: absolute;
         }
-        :host([type="input"]) {
+        :host([type='input']) {
             background: var(--eb-terminal-input, #5cb85c);
             border-color: var(--eb-terminal-input-border, #3d7a3d);
             top: -8px;
             left: 50%;
             transform: translateX(-50%);
         }
-        :host([type="input"]:hover) {
+        :host([type='input']:hover) {
             transform: translateX(-50%) scale(1.3);
         }
-        :host([type="output"]) {
+        :host([type='output']) {
             background: var(--eb-terminal-output, #d9534f);
             border-color: var(--eb-terminal-output-border, #8a2c2c);
         }
@@ -71,17 +71,21 @@ export class EbTerminal extends LitElement {
     }
 
     _onPointerDown(e) {
-        if (this.droppable) return;
+        if (this.droppable) {
+            return;
+        }
         e.stopPropagation();
-        this.dispatchEvent(new CustomEvent('terminal-connect', {
-            bubbles: true,
-            composed: true,
-            detail: {
-                terminalId: this.terminalId,
-                uid: this.uid,
-                sourceEl: this,
-            },
-        }));
+        this.dispatchEvent(
+            new CustomEvent('terminal-connect', {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    terminalId: this.terminalId,
+                    uid: this.uid,
+                    sourceEl: this,
+                },
+            })
+        );
     }
 
     getCenter() {

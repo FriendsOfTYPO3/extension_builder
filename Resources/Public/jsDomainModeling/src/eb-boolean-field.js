@@ -39,10 +39,8 @@ export class EbBooleanField extends EbField {
                     aria-checked="${Boolean(this.value)}"
                     @change="${this._onChange}"
                     id="eb-bool-${this.name}"
-                >
-                <label class="form-check-label" for="eb-bool-${this.name}">
-                    ${this.label || ''}
-                </label>
+                />
+                <label class="form-check-label" for="eb-bool-${this.name}"> ${this.label || ''} </label>
             </div>
         `;
     }

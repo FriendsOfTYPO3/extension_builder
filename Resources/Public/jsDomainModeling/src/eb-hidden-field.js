@@ -13,7 +13,9 @@ export class EbHiddenField extends EbField {
     };
 
     static styles = css`
-        :host { display: none; }
+        :host {
+            display: none;
+        }
     `;
 
     getValue() {
@@ -25,7 +27,7 @@ export class EbHiddenField extends EbField {
     }
 
     render() {
-        return html`<input type="hidden" .value="${this.value ?? ''}">`;
+        return html`<input type="hidden" .value="${this.value ?? ''}" />`;
     }
 }
 

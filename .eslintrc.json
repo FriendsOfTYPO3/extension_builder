@@ -10,12 +10,10 @@
     },
     "extends": ["eslint:recommended"],
     "parserOptions": {
-        "ecmaVersion": 2020
+        "ecmaVersion": 2022,
+        "sourceType": "module"
     },
     "rules": {
-        "indent": ["error", 4],
-        "quotes": ["error", "single"],
-        "semi": ["error", "always"],
         "no-unused-vars": ["warn"],
         "no-console": ["warn"],
         "eqeqeq": ["error", "always"],

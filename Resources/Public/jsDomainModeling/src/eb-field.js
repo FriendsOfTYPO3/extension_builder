@@ -28,11 +28,13 @@ export class EbField extends LitElement {
      * boundaries so parent components can collect updated values.
      */
     _fireUpdated() {
-        this.dispatchEvent(new CustomEvent('field-updated', {
-            bubbles: true,
-            composed: true,
-            detail: { name: this.name, value: this.getValue() },
-        }));
+        this.dispatchEvent(
+            new CustomEvent('field-updated', {
+                bubbles: true,
+                composed: true,
+                detail: { name: this.name, value: this.getValue() },
+            })
+        );
     }
 
     /**

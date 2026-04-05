@@ -20,7 +20,9 @@ export class EbGroup extends LitElement {
     };
 
     static styles = css`
-        :host { display: block; }
+        :host {
+            display: block;
+        }
         .card {
             border: 1px solid var(--bs-border-color, #dee2e6);
             border-radius: var(--bs-border-radius, 0.25rem);
@@ -38,12 +40,24 @@ export class EbGroup extends LitElement {
             cursor: pointer;
             user-select: none;
         }
-        .card-header::before { content: '▼ '; }
-        :host([collapsed]) .card-header::before { content: '▶ '; }
-        .card-body { padding: 0.4rem 0.6rem; }
-        :host([collapsed]) .card-body { display: none; }
-        ::slotted([advanced]) { display: none; }
-        :host([advanced-mode]) ::slotted([advanced]) { display: block; }
+        .card-header::before {
+            content: '▼ ';
+        }
+        :host([collapsed]) .card-header::before {
+            content: '▶ ';
+        }
+        .card-body {
+            padding: 0.4rem 0.6rem;
+        }
+        :host([collapsed]) .card-body {
+            display: none;
+        }
+        ::slotted([advanced]) {
+            display: none;
+        }
+        :host([advanced-mode]) ::slotted([advanced]) {
+            display: block;
+        }
     `;
 
     connectedCallback() {
@@ -57,12 +71,16 @@ export class EbGroup extends LitElement {
     }
 
     _onFieldUpdated(e) {
-        if (e.detail?.name !== 'relationType') return;
+        if (e.detail?.name !== 'relationType') {
+            return;
+        }
         const renderTypeField = this.querySelector('[name=renderType]');
-        if (!renderTypeField) return;
+        if (!renderTypeField) {
+            return;
+        }
         const optionMap = {
-            zeroToOne:  ['selectSingle', 'selectMultipleSideBySide', 'inline'],
-            manyToOne:  ['selectSingle', 'selectMultipleSideBySide'],
+            zeroToOne: ['selectSingle', 'selectMultipleSideBySide', 'inline'],
+            manyToOne: ['selectSingle', 'selectMultipleSideBySide'],
             zeroToMany: ['inline', 'selectMultipleSideBySide'],
             manyToMany: ['selectMultipleSideBySide', 'selectSingleBox', 'selectCheckBox'],
         };
@@ -70,14 +88,18 @@ export class EbGroup extends LitElement {
     }
 
     _initRelationTypes() {
-        this.querySelectorAll('[name=relationType]').forEach(field => {
+        this.querySelectorAll('[name=relationType]').forEach((field) => {
             const value = field.value ?? field.getValue?.();
-            if (!value) return;
+            if (!value) {
+                return;
+            }
             const renderTypeField = this.querySelector('[name=renderType]');
-            if (!renderTypeField) return;
+            if (!renderTypeField) {
+                return;
+            }
             const optionMap = {
-                zeroToOne:  ['selectSingle', 'selectMultipleSideBySide', 'inline'],
-                manyToOne:  ['selectSingle', 'selectMultipleSideBySide'],
+                zeroToOne: ['selectSingle', 'selectMultipleSideBySide', 'inline'],
+                manyToOne: ['selectSingle', 'selectMultipleSideBySide'],
                 zeroToMany: ['inline', 'selectMultipleSideBySide'],
                 manyToMany: ['selectMultipleSideBySide', 'selectSingleBox', 'selectCheckBox'],
             };
@@ -105,7 +127,7 @@ export class EbGroup extends LitElement {
 
     getValue() {
         const result = {};
-        this.querySelectorAll('[name]').forEach(field => {
+        this.querySelectorAll('[name]').forEach((field) => {
             if (typeof field.getValue === 'function') {
                 result[field.name] = field.getValue();
             }
@@ -114,8 +136,10 @@ export class EbGroup extends LitElement {
     }
 
     setValue(obj) {
-        if (!obj) return;
-        this.querySelectorAll('[name]').forEach(field => {
+        if (!obj) {
+            return;
+        }
+        this.querySelectorAll('[name]').forEach((field) => {
             if (typeof field.setValue === 'function' && obj[field.name] !== undefined) {
                 field.setValue(obj[field.name]);
             }
@@ -125,16 +149,20 @@ export class EbGroup extends LitElement {
     render() {
         return html`
             <div class="card" role="group" aria-label="${this.legend || this.name || 'Group'}">
-                ${this.legend ? html`
-                    <div class="card-header"
-                     @click="${this._toggleCollapse}"
-                     @keydown="${this._onHeaderKeyDown}"
-                     role="${this.collapsible ? 'button' : nothing}"
-                     tabindex="${this.collapsible ? '0' : nothing}"
-                     aria-expanded="${this.collapsible ? String(!this.collapsed) : nothing}">
-                    ${this.legend}
-                </div>
-                ` : ''}
+                ${this.legend
+                    ? html`
+                          <div
+                              class="card-header"
+                              @click="${this._toggleCollapse}"
+                              @keydown="${this._onHeaderKeyDown}"
+                              role="${this.collapsible ? 'button' : nothing}"
+                              tabindex="${this.collapsible ? '0' : nothing}"
+                              aria-expanded="${this.collapsible ? String(!this.collapsed) : nothing}"
+                          >
+                              ${this.legend}
+                          </div>
+                      `
+                    : ''}
                 <div class="card-body">
                     <slot @slotchange="${this._onSlotChange}"></slot>
                 </div>

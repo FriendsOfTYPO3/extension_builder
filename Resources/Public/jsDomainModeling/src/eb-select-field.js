@@ -34,13 +34,13 @@ export class EbSelectField extends EbField {
 
     _visibleOptions() {
         const all = this._getOptions();
-        return this.allowedValues ? all.filter(o => this.allowedValues.includes(o.value)) : all;
+        return this.allowedValues ? all.filter((o) => this.allowedValues.includes(o.value)) : all;
     }
 
     updated(changedProps) {
         if (changedProps.has('allowedValues') && this.allowedValues) {
             const visible = this._visibleOptions();
-            if (visible.length > 0 && !visible.some(o => o.value === this.value)) {
+            if (visible.length > 0 && !visible.some((o) => o.value === this.value)) {
                 this.value = visible[0].value;
                 this._fireUpdated();
             }
@@ -67,10 +67,19 @@ export class EbSelectField extends EbField {
         return html`
             <div class="form-group">
                 ${this.label ? html`<label class="form-label" for="${inputId}">${this.label}</label>` : ''}
-                <select id="${inputId}" class="form-select" aria-label="${this.label || this.name}" @change="${this._onChange}">
-                    ${repeat(options, o => o.value, o => html`
-                        <option value="${o.value}" ?selected="${this.value === o.value}">${o.label}</option>
-                    `)}
+                <select
+                    id="${inputId}"
+                    class="form-select"
+                    aria-label="${this.label || this.name}"
+                    @change="${this._onChange}"
+                >
+                    ${repeat(
+                        options,
+                        (o) => o.value,
+                        (o) => html`
+                            <option value="${o.value}" ?selected="${this.value === o.value}">${o.label}</option>
+                        `
+                    )}
                 </select>
             </div>
         `;

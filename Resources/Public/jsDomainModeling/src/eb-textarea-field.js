@@ -47,7 +47,9 @@ export class EbTextareaField extends EbField {
                     rows="${this.rows}"
                     ?aria-required="${this.required}"
                     @input="${this._onInput}"
-                >${this.value ?? ''}</textarea>
+                >
+${this.value ?? ''}</textarea
+                >
             </div>
         `;
     }

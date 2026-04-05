@@ -45,7 +45,9 @@ export const formStyles = css`
         border: 1px solid var(--bs-border-color, #ced4da);
         border-radius: var(--bs-border-radius, 0.25rem);
         box-sizing: border-box;
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        transition:
+            border-color 0.15s ease-in-out,
+            box-shadow 0.15s ease-in-out;
         appearance: none;
         -webkit-appearance: none;
     }
@@ -115,7 +117,7 @@ export const formStyles = css`
         float: left;
     }
 
-    .form-check-input[type="checkbox"] {
+    .form-check-input[type='checkbox'] {
         border-radius: 0.25em;
     }
 

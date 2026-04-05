@@ -1,0 +1,799 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^PHPDoc tag @throws with type TYPO3\\CMS\\Extbase\\Configuration\\Exception\\InvalidConfigurationTypeException is not subtype of Throwable$#'
+			identifier: throws.notThrowable
+			count: 1
+			path: Classes/Configuration/ExtensionBuilderConfigurationManager.php
+
+		-
+			message: '#^Call to an undefined method TYPO3\\CMS\\Backend\\Template\\Components\\Buttons\\LinkButton\:\:setId\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Classes/Controller/BuilderModuleController.php
+
+		-
+			message: '#^Right side of && is always true\.$#'
+			identifier: booleanAnd.rightAlwaysTrue
+			count: 1
+			path: Classes/Controller/BuilderModuleController.php
+
+		-
+			message: '#^Call to an undefined static method PhpParser\\Node\\Stmt\\Class_\:\:verifyModifier\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: Classes/Domain/Model/AbstractObject.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Classes/Domain/Model/AbstractObject.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<array\|string\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Classes/Domain/Model/AbstractObject.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(string\[\] tags\)\: Unexpected token "tags", expected variable at offset 57 on line 3$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: Classes/Domain/Model/AbstractObject.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(\$this;\)\: Unexpected token ";", expected TOKEN_HORIZONTAL_WS at offset 89 on line 5$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: Classes/Domain/Model/AbstractObject.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: Classes/Domain/Model/AbstractObject.php
+
+		-
+			message: '#^Variable \$tags in empty\(\) always exists and is always falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: Classes/Domain/Model/AbstractObject.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<EBT\\ExtensionBuilder\\Domain\\Model\\ClassObject\\Method\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Classes/Domain/Model/ClassObject/ClassObject.php
+
+		-
+			message: '#^Call to function is_array\(\) with list\<\(int\|string\)\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Classes/Domain/Model/ClassObject/ClassObject.php
+
+		-
+			message: '#^Instanceof between string and PhpParser\\Node will always evaluate to false\.$#'
+			identifier: instanceof.alwaysFalse
+			count: 1
+			path: Classes/Domain/Model/ClassObject/ClassObject.php
+
+		-
+			message: '#^Parameter \#1 \$alias \(string\) of method EBT\\ExtensionBuilder\\Domain\\Model\\ClassObject\\ClassObject\:\:addAliasDeclaration\(\) should be compatible with parameter \$aliasDeclaration \(array\) of method EBT\\ExtensionBuilder\\Domain\\Model\\Container\:\:addAliasDeclaration\(\)$#'
+			identifier: method.childParameterType
+			count: 1
+			path: Classes/Domain/Model/ClassObject/ClassObject.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Classes/Domain/Model/ClassObject/DocComment.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array FunctionObject\[\]\)\: Unexpected token "FunctionObject", expected variable at offset 24 on line 2$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: Classes/Domain/Model/Container.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array \\EBT\\ExtensionBuilder\\Domain\\Model\\ClassObject\\ClassObject\[\]\)\: Unexpected token "\\\\EBT\\\\ExtensionBuilder\\\\Domain\\\\Model\\\\ClassObject\\\\ClassObject", expected variable at offset 24 on line 2$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: Classes/Domain/Model/Container.php
+
+		-
+			message: '#^PHPDoc tag @return with type array\|bool is not subtype of native type bool\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: Classes/Domain/Model/DomainObject.php
+
+		-
+			message: '#^Property EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\AbstractProperty\:\:\$class \(EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\) does not accept EBT\\ExtensionBuilder\\Domain\\Model\\ClassObject\\ClassObject\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: Classes/Domain/Model/DomainObject/AbstractProperty.php
+
+		-
+			message: '#^Method EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\ImageProperty\:\:getAllowedFileTypes\(\) should return bool but returns string\.$#'
+			identifier: return.type
+			count: 1
+			path: Classes/Domain/Model/DomainObject/ImageProperty.php
+
+		-
+			message: '#^Negated boolean expression is always false\.$#'
+			identifier: booleanNot.alwaysFalse
+			count: 1
+			path: Classes/Domain/Model/Extension.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Classes/Domain/Model/FunctionObject.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<EBT\\ExtensionBuilder\\Domain\\Model\\ClassObject\\MethodParameter\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 2
+			path: Classes/Domain/Model/FunctionObject.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Classes/Domain/Validator/ExtensionValidator.php
+
+		-
+			message: '#^Constant LF not found\.$#'
+			identifier: constant.notFound
+			count: 26
+			path: Classes/Domain/Validator/ExtensionValidator.php
+
+		-
+			message: '#^PHPDoc tag @throws with type TYPO3\\CMS\\Extbase\\Configuration\\Exception\\InvalidConfigurationTypeException is not subtype of Throwable$#'
+			identifier: throws.notThrowable
+			count: 2
+			path: Classes/Domain/Validator/ExtensionValidator.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between bool and 0 will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: Classes/Domain/Validator/ExtensionValidator.php
+
+		-
+			message: '#^Constant LF not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: Classes/Factory/BackendModuleFactory.php
+
+		-
+			message: '#^Constant LF not found\.$#'
+			identifier: constant.notFound
+			count: 2
+			path: Classes/Factory/PluginFactory.php
+
+		-
+			message: '#^Access to an undefined property PhpParser\\Node\\Stmt\:\:\$params\.$#'
+			identifier: property.notFound
+			count: 2
+			path: Classes/Parser/ClassFactory.php
+
+		-
+			message: '#^Access to an undefined property PhpParser\\Node\\Stmt\:\:\$stmts\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Classes/Parser/ClassFactory.php
+
+		-
+			message: '#^Instanceof between PhpParser\\Node\\PropertyItem and PhpParser\\Node\\PropertyItem will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: Classes/Parser/ClassFactory.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Classes/Parser/NodeFactory.php
+
+		-
+			message: '#^Instanceof between PhpParser\\Node\\PropertyItem and PhpParser\\Node\\PropertyItem will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: Classes/Parser/NodeFactory.php
+
+		-
+			message: '#^Method EBT\\ExtensionBuilder\\Parser\\NodeFactory\:\:buildNodeFromValue\(\) should return PhpParser\\Node\\Expr but returns PhpParser\\Node\.$#'
+			identifier: return.type
+			count: 1
+			path: Classes/Parser/NodeFactory.php
+
+		-
+			message: '#^Offset ''alias'' does not exist on string\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: Classes/Parser/NodeFactory.php
+
+		-
+			message: '#^Offset ''name'' does not exist on string\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: Classes/Parser/NodeFactory.php
+
+		-
+			message: '#^Property PhpParser\\Node\\PropertyItem\:\:\$default \(PhpParser\\Node\\Expr\|null\) does not accept PhpParser\\NodeAbstract\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: Classes/Parser/NodeFactory.php
+
+		-
+			message: '#^Access to an undefined property PhpParser\\Node\:\:\$consts\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Classes/Parser/Utility/NodeConverter.php
+
+		-
+			message: '#^Access to an undefined property PhpParser\\NodeAbstract\:\:\$value\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Classes/Parser/Utility/NodeConverter.php
+
+		-
+			message: '#^Call to function is_numeric\(\) with PhpParser\\NodeAbstract will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: Classes/Parser/Utility/NodeConverter.php
+
+		-
+			message: '#^Instanceof between PhpParser\\NodeAbstract and PhpParser\\Node will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: Classes/Parser/Utility/NodeConverter.php
+
+		-
+			message: '#^Method EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter\:\:getValueFromNode\(\) should return array\|string\|null but returns PhpParser\\Node\\Expr\|PhpParser\\Node\\Identifier\.$#'
+			identifier: return.type
+			count: 1
+			path: Classes/Parser/Utility/NodeConverter.php
+
+		-
+			message: '#^Method EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter\:\:normalizeValue\(\) should return PhpParser\\Node\\Expr but returns PhpParser\\Node\.$#'
+			identifier: return.type
+			count: 1
+			path: Classes/Parser/Utility/NodeConverter.php
+
+		-
+			message: '#^Parameter \#1 \$node of static method EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter\:\:getValueFromNode\(\) expects PhpParser\\NodeAbstract\|string, PhpParser\\Node given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Parser/Utility/NodeConverter.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: Classes/Parser/Utility/NodeConverter.php
+
+		-
+			message: '#^Return type \(void\) of method EBT\\ExtensionBuilder\\Parser\\Visitor\\FileVisitor\:\:beforeTraverse\(\) should be compatible with return type \(array\<PhpParser\\Node\>\|null\) of method PhpParser\\NodeVisitor\:\:beforeTraverse\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: Classes/Parser/Visitor/FileVisitor.php
+
+		-
+			message: '#^Return type \(void\) of method EBT\\ExtensionBuilder\\Parser\\Visitor\\FileVisitor\:\:beforeTraverse\(\) should be compatible with return type \(array\<PhpParser\\Node\>\|null\) of method PhpParser\\NodeVisitorAbstract\:\:beforeTraverse\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: Classes/Parser/Visitor/FileVisitor.php
+
+		-
+			message: '#^Return type \(void\) of method EBT\\ExtensionBuilder\\Parser\\Visitor\\FileVisitor\:\:enterNode\(\) should be compatible with return type \(array\<PhpParser\\Node\>\|int\|PhpParser\\Node\|null\) of method PhpParser\\NodeVisitor\:\:enterNode\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: Classes/Parser/Visitor/FileVisitor.php
+
+		-
+			message: '#^Return type \(void\) of method EBT\\ExtensionBuilder\\Parser\\Visitor\\FileVisitor\:\:enterNode\(\) should be compatible with return type \(array\<PhpParser\\Node\>\|int\|PhpParser\\Node\|null\) of method PhpParser\\NodeVisitorAbstract\:\:enterNode\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: Classes/Parser/Visitor/FileVisitor.php
+
+		-
+			message: '#^Return type \(void\) of method EBT\\ExtensionBuilder\\Parser\\Visitor\\FileVisitor\:\:leaveNode\(\) should be compatible with return type \(array\<PhpParser\\Node\>\|int\|PhpParser\\Node\|null\) of method PhpParser\\NodeVisitor\:\:leaveNode\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: Classes/Parser/Visitor/FileVisitor.php
+
+		-
+			message: '#^Return type \(void\) of method EBT\\ExtensionBuilder\\Parser\\Visitor\\FileVisitor\:\:leaveNode\(\) should be compatible with return type \(array\<PhpParser\\Node\>\|int\|PhpParser\\Node\|null\) of method PhpParser\\NodeVisitorAbstract\:\:leaveNode\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: Classes/Parser/Visitor/FileVisitor.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between EBT\\ExtensionBuilder\\Domain\\Model\\ClassObject\\ClassObject and false will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 2
+			path: Classes/Parser/Visitor/FileVisitor.php
+
+		-
+			message: '#^Call to an undefined method PhpParser\\Node\:\:__get\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: Classes/Parser/Visitor/ReplaceClassNamesVisitor.php
+
+		-
+			message: '#^Call to an undefined method PhpParser\\Node\:\:setClass\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Classes/Parser/Visitor/ReplaceClassNamesVisitor.php
+
+		-
+			message: '#^Return type \(void\) of method EBT\\ExtensionBuilder\\Parser\\Visitor\\ReplaceClassNamesVisitor\:\:afterTraverse\(\) should be compatible with return type \(array\<PhpParser\\Node\>\|null\) of method PhpParser\\NodeVisitor\:\:afterTraverse\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: Classes/Parser/Visitor/ReplaceClassNamesVisitor.php
+
+		-
+			message: '#^Return type \(void\) of method EBT\\ExtensionBuilder\\Parser\\Visitor\\ReplaceClassNamesVisitor\:\:afterTraverse\(\) should be compatible with return type \(array\<PhpParser\\Node\>\|null\) of method PhpParser\\NodeVisitorAbstract\:\:afterTraverse\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: Classes/Parser/Visitor/ReplaceClassNamesVisitor.php
+
+		-
+			message: '#^Return type \(void\) of method EBT\\ExtensionBuilder\\Parser\\Visitor\\ReplaceClassNamesVisitor\:\:beforeTraverse\(\) should be compatible with return type \(array\<PhpParser\\Node\>\|null\) of method PhpParser\\NodeVisitor\:\:beforeTraverse\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: Classes/Parser/Visitor/ReplaceClassNamesVisitor.php
+
+		-
+			message: '#^Return type \(void\) of method EBT\\ExtensionBuilder\\Parser\\Visitor\\ReplaceClassNamesVisitor\:\:beforeTraverse\(\) should be compatible with return type \(array\<PhpParser\\Node\>\|null\) of method PhpParser\\NodeVisitorAbstract\:\:beforeTraverse\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: Classes/Parser/Visitor/ReplaceClassNamesVisitor.php
+
+		-
+			message: '#^Return type \(void\) of method EBT\\ExtensionBuilder\\Parser\\Visitor\\ReplaceClassNamesVisitor\:\:enterNode\(\) should be compatible with return type \(array\<PhpParser\\Node\>\|int\|PhpParser\\Node\|null\) of method PhpParser\\NodeVisitor\:\:enterNode\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: Classes/Parser/Visitor/ReplaceClassNamesVisitor.php
+
+		-
+			message: '#^Return type \(void\) of method EBT\\ExtensionBuilder\\Parser\\Visitor\\ReplaceClassNamesVisitor\:\:enterNode\(\) should be compatible with return type \(array\<PhpParser\\Node\>\|int\|PhpParser\\Node\|null\) of method PhpParser\\NodeVisitorAbstract\:\:enterNode\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: Classes/Parser/Visitor/ReplaceClassNamesVisitor.php
+
+		-
+			message: '#^Call to an undefined method EBT\\ExtensionBuilder\\Domain\\Model\\AbstractObject\:\:getParameterByPosition\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Call to an undefined method EBT\\ExtensionBuilder\\Domain\\Model\\AbstractObject\:\:setClasses\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Call to an undefined method EBT\\ExtensionBuilder\\Domain\\Model\\AbstractObject\:\:setTypeHint\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Call to an undefined method EBT\\ExtensionBuilder\\Domain\\Model\\AbstractObject\:\:setVarType\(\)\.$#'
+			identifier: method.notFound
+			count: 5
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Call to an undefined method EBT\\ExtensionBuilder\\Domain\\Model\\AbstractObject\:\:updateParamTags\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Call to an undefined method EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\AbstractProperty\:\:setTag\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Call to method getTypeHint\(\) on an unknown class Model\\DomainObject\\Relation\\AbstractRelation\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^If condition is always false\.$#'
+			identifier: if.alwaysFalse
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Method EBT\\ExtensionBuilder\\Service\\ClassBuilder\:\:buildGetterMethod\(\) should return EBT\\ExtensionBuilder\\Domain\\Model\\ClassObject\\Method but returns EBT\\ExtensionBuilder\\Domain\\Model\\AbstractObject\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Method EBT\\ExtensionBuilder\\Service\\ClassBuilder\:\:buildInjectMethod\(\) should return EBT\\ExtensionBuilder\\Domain\\Model\\ClassObject\\Method but returns EBT\\ExtensionBuilder\\Domain\\Model\\AbstractObject\.$#'
+			identifier: return.type
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Negated boolean expression is always true\.$#'
+			identifier: booleanNot.alwaysTrue
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Offset ''name'' on string in isset\(\) does not exist\.$#'
+			identifier: isset.offset
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Parameter \#1 \$classProperty of method EBT\\ExtensionBuilder\\Domain\\Model\\ClassObject\\ClassObject\:\:setProperty\(\) expects EBT\\ExtensionBuilder\\Domain\\Model\\ClassObject\\Property, EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\AbstractProperty given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Parameter \#1 \$domainProperty of method EBT\\ExtensionBuilder\\Service\\ClassBuilder\:\:buildAddMethod\(\) expects EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Relation\\AbstractRelation, EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\AbstractProperty given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Parameter \#1 \$domainProperty of method EBT\\ExtensionBuilder\\Service\\ClassBuilder\:\:buildRemoveMethod\(\) expects EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Relation\\AbstractRelation, EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\AbstractProperty given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Parameter \#1 \$method of method EBT\\ExtensionBuilder\\Service\\ClassBuilder\:\:updateMethodBody\(\) expects EBT\\ExtensionBuilder\\Domain\\Model\\ClassObject\\Method, EBT\\ExtensionBuilder\\Domain\\Model\\AbstractObject given\.$#'
+			identifier: argument.type
+			count: 2
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Property EBT\\ExtensionBuilder\\Service\\ClassBuilder\:\:\$classFactory is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Result of && is always false\.$#'
+			identifier: booleanAnd.alwaysFalse
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between null and null will always evaluate to true\.$#'
+			identifier: identical.alwaysTrue
+			count: 1
+			path: Classes/Service/ClassBuilder.php
+
+		-
+			message: '#^Call to an undefined method EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\AbstractProperty\:\:setForeignModel\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Classes/Service/ExtensionSchemaBuilder.php
+
+		-
+			message: '#^Call to an undefined method EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\AbstractProperty\:\:setRenderType\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Classes/Service/ExtensionSchemaBuilder.php
+
+		-
+			message: '#^Constant LF not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: Classes/Service/ExtensionSchemaBuilder.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Classes/Service/FileGenerator.php
+
+		-
+			message: '#^Constant LF not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: Classes/Service/FileGenerator.php
+
+		-
+			message: '#^If condition is always true\.$#'
+			identifier: if.alwaysTrue
+			count: 2
+			path: Classes/Service/FileGenerator.php
+
+		-
+			message: '#^Left side of && is always true\.$#'
+			identifier: booleanAnd.leftAlwaysTrue
+			count: 1
+			path: Classes/Service/FileGenerator.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(void;\)\: Unexpected token ";", expected TOKEN_HORIZONTAL_WS at offset 157 on line 6$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: Classes/Service/FileGenerator.php
+
+		-
+			message: '#^PHPDoc tag @return with type mixed is not subtype of native type string\|null\.$#'
+			identifier: return.phpDocType
+			count: 2
+			path: Classes/Service/FileGenerator.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 3
+			path: Classes/Service/FileGenerator.php
+
+		-
+			message: '#^Call to an undefined method EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\AbstractProperty\:\:setAllowedFileTypes\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Classes/Service/ObjectSchemaBuilder.php
+
+		-
+			message: '#^Call to an undefined method EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\AbstractProperty\:\:setMaxItems\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Classes/Service/ObjectSchemaBuilder.php
+
+		-
+			message: '#^Variable \$tableName on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.variable
+			count: 1
+			path: Classes/Service/ObjectSchemaBuilder.php
+
+		-
+			message: '#^Constant LF not found\.$#'
+			identifier: constant.notFound
+			count: 5
+			path: Classes/Service/Printer.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Classes/Service/RoundTrip.php
+
+		-
+			message: '#^Cannot assign offset ''name'' to string\.$#'
+			identifier: offsetAssign.dimType
+			count: 2
+			path: Classes/Service/RoundTrip.php
+
+		-
+			message: '#^Constant LF not found\.$#'
+			identifier: constant.notFound
+			count: 2
+			path: Classes/Service/RoundTrip.php
+
+		-
+			message: '#^Offset ''name'' does not exist on string\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: Classes/Service/RoundTrip.php
+
+		-
+			message: '#^PHPDoc tag @throws with type Exception\|TYPO3\\CMS\\Extbase\\Configuration\\Exception\\InvalidConfigurationTypeException is not subtype of Throwable$#'
+			identifier: throws.notThrowable
+			count: 1
+			path: Classes/Service/RoundTrip.php
+
+		-
+			message: '#^Parameter \#1 \$relation of method EBT\\ExtensionBuilder\\Service\\RoundTrip\:\:getForeignClassName\(\) expects EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Relation\\AbstractRelation, EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\AbstractProperty given\.$#'
+			identifier: argument.type
+			count: 3
+			path: Classes/Service/RoundTrip.php
+
+		-
+			message: '#^Variable \$customFileContent in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: Classes/Service/RoundTrip.php
+
+		-
+			message: '#^Expression on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.expr
+			count: 2
+			path: Classes/Template/Components/Buttons/LinkButtonWithId.php
+
+		-
+			message: '#^Call to static method pluralize\(\) on an unknown class Sho_Inflect\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Classes/Utility/Inflector.php
+
+		-
+			message: '#^Call to static method singularize\(\) on an unknown class Sho_Inflect\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Classes/Utility/Inflector.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Call to function is_array\(\) with mixed will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Call to function is_bool\(\) with string will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Call to function is_int\(\) with string will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Call to function is_numeric\(\) with int will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 2
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 2
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Constant CR not found\.$#'
+			identifier: constant.notFound
+			count: 2
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Constant LF not found\.$#'
+			identifier: constant.notFound
+			count: 3
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Constant TAB not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Default value of the parameter \#2 \$indent \(false\) of method EBT\\ExtensionBuilder\\Utility\\SpycYAMLParser\:\:YAMLDump\(\) is incompatible with type int\.$#'
+			identifier: parameter.defaultValue
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Default value of the parameter \#2 \$indent \(false\) of method EBT\\ExtensionBuilder\\Utility\\SpycYAMLParser\:\:dump\(\) is incompatible with type int\.$#'
+			identifier: parameter.defaultValue
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Default value of the parameter \#3 \$wordwrap \(false\) of method EBT\\ExtensionBuilder\\Utility\\SpycYAMLParser\:\:YAMLDump\(\) is incompatible with type int\.$#'
+			identifier: parameter.defaultValue
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Default value of the parameter \#3 \$wordwrap \(false\) of method EBT\\ExtensionBuilder\\Utility\\SpycYAMLParser\:\:dump\(\) is incompatible with type int\.$#'
+			identifier: parameter.defaultValue
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^If condition is always false\.$#'
+			identifier: if.alwaysFalse
+			count: 2
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Loose comparison using \=\= between int\<1, max\> and 0 will always evaluate to false\.$#'
+			identifier: equal.alwaysFalse
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Method EBT\\ExtensionBuilder\\Utility\\SpycYAMLParser\:\:clearBiggerPathValues\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Method EBT\\ExtensionBuilder\\Utility\\SpycYAMLParser\:\:isLiteral\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Parameter \#2 \$characters of function trim expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Property EBT\\ExtensionBuilder\\Utility\\SpycYAMLParser\:\:\$_containsGroupAlias \(bool\) does not accept string\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Property EBT\\ExtensionBuilder\\Utility\\SpycYAMLParser\:\:\$_containsGroupAnchor \(bool\) does not accept string\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Result of && is always false\.$#'
+			identifier: booleanAnd.alwaysFalse
+			count: 2
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Result of or is always false\.$#'
+			identifier: logicalOr.alwaysFalse
+			count: 2
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between int and false will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 2
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between string and array\{\} will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: Classes/Utility/SpycYAMLParser.php
+
+		-
+			message: '#^Method EBT\\ExtensionBuilder\\ViewHelpers\\DomainObjectChecksViewHelper\:\:render\(\) should return string but returns false\.$#'
+			identifier: return.type
+			count: 3
+			path: Classes/ViewHelpers/DomainObjectChecksViewHelper.php
+
+		-
+			message: '#^Method EBT\\ExtensionBuilder\\ViewHelpers\\DomainObjectChecksViewHelper\:\:render\(\) should return string but returns true\.$#'
+			identifier: return.type
+			count: 3
+			path: Classes/ViewHelpers/DomainObjectChecksViewHelper.php
+
+		-
+			message: '#^Property EBT\\ExtensionBuilder\\ViewHelpers\\DomainObjectChecksViewHelper\:\:\$configurationManager is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: Classes/ViewHelpers/DomainObjectChecksViewHelper.php
+
+		-
+			message: '#^Property EBT\\ExtensionBuilder\\ViewHelpers\\MappingViewHelper\:\:\$configurationManager is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: Classes/ViewHelpers/MappingViewHelper.php
