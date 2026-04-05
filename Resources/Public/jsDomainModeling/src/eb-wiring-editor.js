@@ -71,19 +71,39 @@ export class EbWiringEditor extends LitElement {
                 overflow-y: auto;
                 border-right: 1px solid var(--bs-border-color, #dee2e6);
                 background: var(--bs-secondary-bg, #f8f9fa);
-                padding: var(--bs-card-spacer-y, 1rem) var(--bs-card-spacer-x, 1rem);
+                padding: 0;
                 resize: horizontal;
             }
             .left-panel.collapsed {
-                width: 20px;
-                min-width: 20px;
+                width: auto;
+                min-width: 0;
                 overflow: hidden;
-                padding: 4px;
                 resize: none;
+            }
+            .left-panel.collapsed .left-panel-content {
+                display: none;
             }
             .left-panel-header {
                 display: flex;
                 justify-content: flex-end;
+                padding: 4px;
+            }
+            .left-panel-content {
+                padding: var(--bs-card-spacer-y, 1rem) var(--bs-card-spacer-x, 1rem);
+                padding-top: 0;
+            }
+            .btn-toggle-panel {
+                background: #515151;
+                border: none;
+                border-radius: 3px;
+                padding: 4px 6px;
+                cursor: pointer;
+                color: #f4f4f4;
+                font-size: 1rem;
+                line-height: 1;
+            }
+            .btn-toggle-panel:hover {
+                background: #3a3a3a;
             }
             .center-panel {
                 flex: 1;
@@ -386,7 +406,7 @@ export class EbWiringEditor extends LitElement {
                 <div class="left-panel ${this._leftCollapsed ? 'collapsed' : ''}">
                     <div class="left-panel-header">
                         <button
-                            class="btn btn-default btn-sm"
+                            class="btn-toggle-panel"
                             @click="${this._toggleLeftPanel}"
                             aria-label="${this._leftCollapsed
                                 ? 'Expand properties panel'
@@ -396,7 +416,9 @@ export class EbWiringEditor extends LitElement {
                             <span aria-hidden="true">☰</span>
                         </button>
                     </div>
-                    ${renderFields(extensionPropertiesFields)}
+                    <div class="left-panel-content">
+                        ${renderFields(extensionPropertiesFields)}
+                    </div>
                 </div>
                 <div class="center-panel" role="main">
                     ${this._loading ? html`<div class="loading">Loading...</div>` : html`<eb-layer></eb-layer>`}
