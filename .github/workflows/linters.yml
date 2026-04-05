@@ -33,6 +33,25 @@ jobs:
       - name: "Run Rector (dry-run)"
         run: .Build/bin/rector process --dry-run
 
+  php-cs-fixer:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v4
+
+      - name: "Setup PHP"
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          coverage: none
+
+      - name: "Install dependencies"
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: "Run PHP CS Fixer (dry-run)"
+        run: .Build/bin/php-cs-fixer fix --config=.php-cs-fixer.php -v --dry-run --stop-on-violation --using-cache=no
+
   sass-linter:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
