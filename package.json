@@ -21,6 +21,7 @@
     "license": "GPL-2.0-or-later",
     "devDependencies": {
         "@playwright/test": "^1.58.2",
+        "@types/node": "^20.19.39",
         "eslint": "^8.57.0",
         "prettier": "^3.3.3",
         "stylelint": "^16.9.0",
