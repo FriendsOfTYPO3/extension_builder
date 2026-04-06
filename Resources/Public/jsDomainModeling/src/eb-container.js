@@ -59,6 +59,8 @@ export class EbContainer extends LitElement {
             .card-body {
                 padding: 0.5rem 0.75rem;
                 font-size: 12px;
+                max-height: 60vh;
+                overflow-y: auto;
             }
             .delete-btn {
                 position: absolute;
