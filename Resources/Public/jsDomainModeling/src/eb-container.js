@@ -15,6 +15,7 @@ import { formStyles } from './styles/form-styles.js';
  * @element eb-container
  * @fires container-moved - During drag with `{ moduleId, x, y }` detail
  * @fires container-removed - When the delete button is clicked with `{ moduleId }` detail
+ * @fires container-resized - During resize with `{ moduleId, width, height }` detail
  */
 export class EbContainer extends LitElement {
     static properties = {
@@ -23,6 +24,8 @@ export class EbContainer extends LitElement {
         posY: { type: Number, attribute: 'pos-y' },
         moduleData: { type: Object },
         _name: { state: true },
+        _resizeWidth: { state: true },
+        _resizeHeight: { state: true },
     };
 
     static styles = [
@@ -72,6 +75,21 @@ export class EbContainer extends LitElement {
             .delete-btn:hover {
                 color: #fff;
             }
+            .resize-handle {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 12px;
+                height: 12px;
+                cursor: nwse-resize;
+                background: linear-gradient(
+                    135deg,
+                    transparent 40%,
+                    var(--bs-border-color, #dee2e6) 40%,
+                    var(--bs-border-color, #dee2e6) 60%,
+                    transparent 60%
+                );
+            }
         `,
     ];
 
@@ -84,11 +102,26 @@ export class EbContainer extends LitElement {
         this._dragging = false;
         this._dragOffsetX = 0;
         this._dragOffsetY = 0;
+        this._resizeWidth = null;
+        this._resizeHeight = null;
+        this._resizing = false;
+        this._resizeStartX = 0;
+        this._resizeStartY = 0;
+        this._resizeStartW = 0;
+        this._resizeStartH = 0;
     }
 
     updated(changed) {
         if (changed.has('posX') || changed.has('posY')) {
             this.style.transform = `translate(${this.posX}px, ${this.posY}px)`;
+        }
+        if (changed.has('_resizeWidth') || changed.has('_resizeHeight')) {
+            if (this._resizeWidth !== null) {
+                this.style.width = `${this._resizeWidth}px`;
+            }
+            if (this._resizeHeight !== null) {
+                this.style.minHeight = `${this._resizeHeight}px`;
+            }
         }
         if (changed.has('moduleData')) {
             this._name = this.moduleData?.value?.name ?? '';
@@ -167,6 +200,42 @@ export class EbContainer extends LitElement {
         );
     }
 
+    _onResizePointerDown(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        this._resizing = true;
+        this._resizeStartX = e.clientX;
+        this._resizeStartY = e.clientY;
+        this._resizeStartW = this.offsetWidth;
+        this._resizeStartH = this.offsetHeight;
+        e.currentTarget.setPointerCapture(e.pointerId);
+    }
+
+    _onResizePointerMove(e) {
+        if (!this._resizing) {
+            return;
+        }
+        const newW = Math.max(160, this._resizeStartW + (e.clientX - this._resizeStartX));
+        const newH = Math.max(80, this._resizeStartH + (e.clientY - this._resizeStartY));
+        this._resizeWidth = newW;
+        this._resizeHeight = newH;
+        this.dispatchEvent(
+            new CustomEvent('container-resized', {
+                bubbles: true,
+                composed: true,
+                detail: { moduleId: this.moduleId, width: newW, height: newH },
+            })
+        );
+    }
+
+    _onResizePointerUp(e) {
+        if (!this._resizing) {
+            return;
+        }
+        this._resizing = false;
+        e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+
     get _fields() {
         return modelObjectModule.container.fields;
     }
@@ -224,6 +293,12 @@ export class EbContainer extends LitElement {
                 <button class="delete-btn" @click="${this._onDeleteClick}" title="Remove model object">×</button>
             </div>
             <div class="card-body">${renderFields(this._fields.slice(1))}</div>
+            <div
+                class="resize-handle"
+                @pointerdown="${this._onResizePointerDown}"
+                @pointermove="${this._onResizePointerMove}"
+                @pointerup="${this._onResizePointerUp}"
+            ></div>
         `;
     }
 }
