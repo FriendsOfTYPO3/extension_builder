@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:eb_astrophotography/Resources/Private/Language/locallang_csh_tx_ebastrophotography_domain_model_observingsite.xlf" date="2026-04-06T21:53:09Z" product-name="eb_astrophotography">
+		<header/>
+		<body>
+			<trans-unit id="name.description" resname="name.description">
+				<source>name</source>
+			</trans-unit>
+			<trans-unit id="description.description" resname="description.description">
+				<source>description</source>
+			</trans-unit>
+			<trans-unit id="latitude.description" resname="latitude.description">
+				<source>latitude</source>
+			</trans-unit>
+			<trans-unit id="longitude.description" resname="longitude.description">
+				<source>longitude</source>
+			</trans-unit>
+			<trans-unit id="altitude.description" resname="altitude.description">
+				<source>altitude</source>
+			</trans-unit>
+			<trans-unit id="bortle_class.description" resname="bortle_class.description">
+				<source>bortleClass</source>
+			</trans-unit>
+			<trans-unit id="website.description" resname="website.description">
+				<source>website</source>
+			</trans-unit>
+			<trans-unit id="contact_email.description" resname="contact_email.description">
+				<source>contactEmail</source>
+			</trans-unit>
+			<trans-unit id="active.description" resname="active.description">
+				<source>active</source>
+			</trans-unit>
+			<trans-unit id="image.description" resname="image.description">
+				<source>image</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -1,0 +1,54 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+This template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        ImagingSession:
+          List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="content">
+    <h1>Listing for ImagingSession</h1>
+
+    <f:flashMessages />
+
+    <table class="tx_ebastrophotography">
+        <tr>
+            <th><f:translate key="tx_ebastrophotography_domain_model_imagingsession.session_date" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_imagingsession.start_time" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_imagingsession.end_time" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_imagingsession.frame_exposure" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_imagingsession.temperature" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_imagingsession.humidity" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_imagingsession.seeing_conditions" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_imagingsession.transparency" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_imagingsession.moon_phase" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_imagingsession.total_frames" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_imagingsession.usable_frames" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_imagingsession.notes" /></th>
+        </tr>
+        <f:for each="{imagingSessions}" as="imagingSession">
+            <tr>
+                <td><f:link.action action="show" arguments="{imagingSession : imagingSession}">{imagingSession.sessionDate -> f:format.date()}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{imagingSession : imagingSession}">{imagingSession.startTime -> f:format.date(format:'H:i')}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{imagingSession : imagingSession}">{imagingSession.endTime}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{imagingSession : imagingSession}">{imagingSession.frameExposure}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{imagingSession : imagingSession}">{imagingSession.temperature}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{imagingSession : imagingSession}">{imagingSession.humidity}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{imagingSession : imagingSession}">{imagingSession.seeingConditions}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{imagingSession : imagingSession}">{imagingSession.transparency}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{imagingSession : imagingSession}">{imagingSession.moonPhase}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{imagingSession : imagingSession}">{imagingSession.totalFrames}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{imagingSession : imagingSession}">{imagingSession.usableFrames}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{imagingSession : imagingSession}">{imagingSession.notes}</f:link.action></td>
+            </tr>
+        </f:for>
+    </table>
+</f:section>
+</html>

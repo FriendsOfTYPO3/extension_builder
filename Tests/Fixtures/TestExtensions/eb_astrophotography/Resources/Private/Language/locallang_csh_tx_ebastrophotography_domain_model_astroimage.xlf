@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:eb_astrophotography/Resources/Private/Language/locallang_csh_tx_ebastrophotography_domain_model_astroimage.xlf" date="2026-04-06T21:53:09Z" product-name="eb_astrophotography">
+		<header/>
+		<body>
+			<trans-unit id="title.description" resname="title.description">
+				<source>title</source>
+			</trans-unit>
+			<trans-unit id="slug.description" resname="slug.description">
+				<source>slug</source>
+			</trans-unit>
+			<trans-unit id="description.description" resname="description.description">
+				<source>description</source>
+			</trans-unit>
+			<trans-unit id="image.description" resname="image.description">
+				<source>image</source>
+			</trans-unit>
+			<trans-unit id="capture_date_time.description" resname="capture_date_time.description">
+				<source>captureDateTime</source>
+			</trans-unit>
+			<trans-unit id="publish_date.description" resname="publish_date.description">
+				<source>publishDate</source>
+			</trans-unit>
+			<trans-unit id="featured.description" resname="featured.description">
+				<source>featured</source>
+			</trans-unit>
+			<trans-unit id="stack_count.description" resname="stack_count.description">
+				<source>stackCount</source>
+			</trans-unit>
+			<trans-unit id="celestial_objects.description" resname="celestial_objects.description">
+				<source>celestialObjects</source>
+			</trans-unit>
+			<trans-unit id="imaging_sessions.description" resname="imaging_sessions.description">
+				<source>imagingSessions</source>
+			</trans-unit>
+			<trans-unit id="processing_recipes.description" resname="processing_recipes.description">
+				<source>processingRecipes</source>
+			</trans-unit>
+			<trans-unit id="awards.description" resname="awards.description">
+				<source>awards</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

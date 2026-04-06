@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:eb_astrophotography/Resources/Private/Language/locallang_csh_tx_ebastrophotography_domain_model_award.xlf" date="2026-04-06T21:53:09Z" product-name="eb_astrophotography">
+		<header/>
+		<body>
+			<trans-unit id="title.description" resname="title.description">
+				<source>title</source>
+			</trans-unit>
+			<trans-unit id="organization.description" resname="organization.description">
+				<source>organization</source>
+			</trans-unit>
+			<trans-unit id="award_date.description" resname="award_date.description">
+				<source>awardDate</source>
+			</trans-unit>
+			<trans-unit id="description.description" resname="description.description">
+				<source>description</source>
+			</trans-unit>
+			<trans-unit id="certificate_file.description" resname="certificate_file.description">
+				<source>certificateFile</source>
+			</trans-unit>
+			<trans-unit id="source_url.description" resname="source_url.description">
+				<source>sourceUrl</source>
+			</trans-unit>
+			<trans-unit id="active.description" resname="active.description">
+				<source>active</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

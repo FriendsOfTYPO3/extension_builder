@@ -1,0 +1,34 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+<be:moduleLayout>
+
+    <be:moduleLayout.menu identifier="ModuleMenu">
+        <be:moduleLayout.menuItem label="Overview" uri="{f:uri.action(controller: 'AstroImage', action: 'list')}" />
+        <be:moduleLayout.menuItem label="Create new AstroImage" uri="{f:uri.action(controller: 'AstroImage', action: 'new')}" />
+        <be:moduleLayout.menuItem label="Overview" uri="{f:uri.action(controller: 'CelestialObject', action: 'list')}" />
+        <be:moduleLayout.menuItem label="Create new CelestialObject" uri="{f:uri.action(controller: 'CelestialObject', action: 'new')}" />
+        <be:moduleLayout.menuItem label="Overview" uri="{f:uri.action(controller: 'Telescope', action: 'list')}" />
+        <be:moduleLayout.menuItem label="Create new Telescope" uri="{f:uri.action(controller: 'Telescope', action: 'new')}" />
+        <be:moduleLayout.menuItem label="Overview" uri="{f:uri.action(controller: 'Camera', action: 'list')}" />
+        <be:moduleLayout.menuItem label="Create new Camera" uri="{f:uri.action(controller: 'Camera', action: 'new')}" />
+        <be:moduleLayout.menuItem label="Overview" uri="{f:uri.action(controller: 'AstroFilter', action: 'list')}" />
+        <be:moduleLayout.menuItem label="Create new AstroFilter" uri="{f:uri.action(controller: 'AstroFilter', action: 'new')}" />
+        <be:moduleLayout.menuItem label="Overview" uri="{f:uri.action(controller: 'ObservingSite', action: 'list')}" />
+        <be:moduleLayout.menuItem label="Create new ObservingSite" uri="{f:uri.action(controller: 'ObservingSite', action: 'new')}" />
+        <be:moduleLayout.menuItem label="Overview" uri="{f:uri.action(controller: 'ImagingSession', action: 'list')}" />
+        <be:moduleLayout.menuItem label="Create new ImagingSession" uri="{f:uri.action(controller: 'ImagingSession', action: 'new')}" />
+        <be:moduleLayout.menuItem label="Overview" uri="{f:uri.action(controller: 'ProcessingRecipe', action: 'list')}" />
+        <be:moduleLayout.menuItem label="Create new ProcessingRecipe" uri="{f:uri.action(controller: 'ProcessingRecipe', action: 'new')}" />
+        <be:moduleLayout.menuItem label="Overview" uri="{f:uri.action(controller: 'Award', action: 'list')}" />
+        <be:moduleLayout.menuItem label="Create new Award" uri="{f:uri.action(controller: 'Award', action: 'new')}" />
+    </be:moduleLayout.menu>
+
+    <f:render section="Buttons" />
+    <be:moduleLayout.button.shortcutButton displayName="Shortcut" />
+
+    <f:render section="Content" />
+</be:moduleLayout>
+</html>

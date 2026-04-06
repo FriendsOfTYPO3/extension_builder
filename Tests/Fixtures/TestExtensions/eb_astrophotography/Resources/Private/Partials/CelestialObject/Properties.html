@@ -1,0 +1,50 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<table class="tx-eb-astrophotography">
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_celestialobject.name" /></td>
+		<td>{celestialObject.name}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_celestialobject.catalog_id" /></td>
+		<td>{celestialObject.catalogId}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_celestialobject.object_type" /></td>
+		<td>{celestialObject.objectType}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_celestialobject.constellation" /></td>
+		<td>{celestialObject.constellation}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_celestialobject.right_ascension" /></td>
+		<td>{celestialObject.rightAscension}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_celestialobject.declination" /></td>
+		<td>{celestialObject.declination}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_celestialobject.magnitude" /></td>
+		<td>{celestialObject.magnitude}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_celestialobject.distance_lightyears" /></td>
+		<td>{celestialObject.distanceLightyears}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_celestialobject.description" /></td>
+		<td>{celestialObject.description}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_celestialobject.preview_image" /></td>
+		<td>
+				<f:image src="{celestialObject.previewImage.originalResource.publicUrl}" width="200"/>
+            </td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_celestialobject.active" /></td>
+		<td>{celestialObject.active}</td>
+	</tr>
+</table>
+</html>

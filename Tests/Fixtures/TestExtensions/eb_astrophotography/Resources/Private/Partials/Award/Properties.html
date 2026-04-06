@@ -1,0 +1,36 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<table class="tx-eb-astrophotography">
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_award.title" /></td>
+		<td>{award.title}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_award.organization" /></td>
+		<td>{award.organization}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_award.award_date" /></td>
+		<td>{award.awardDate -> f:format.date()}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_award.description" /></td>
+		<td>{award.description}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_award.certificate_file" /></td>
+		<td>
+				<a href="{award.certificateFile.originalResource.publicUrl}">
+					{award.certificateFile.originalResource.name}
+				</a>
+			</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_award.source_url" /></td>
+		<td>{award.sourceUrl}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_award.active" /></td>
+		<td>{award.active}</td>
+	</tr>
+</table>
+</html>

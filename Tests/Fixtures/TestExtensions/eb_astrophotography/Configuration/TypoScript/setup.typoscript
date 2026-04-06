@@ -1,0 +1,93 @@
+plugin.tx_ebastrophotography_imagegallery {
+    view {
+        templateRootPaths.0 = EXT:eb_astrophotography/Resources/Private/Templates/
+        templateRootPaths.1 = {$plugin.tx_ebastrophotography_imagegallery.view.templateRootPath}
+        partialRootPaths.0 = EXT:eb_astrophotography/Resources/Private/Partials/
+        partialRootPaths.1 = {$plugin.tx_ebastrophotography_imagegallery.view.partialRootPath}
+        layoutRootPaths.0 = EXT:eb_astrophotography/Resources/Private/Layouts/
+        layoutRootPaths.1 = {$plugin.tx_ebastrophotography_imagegallery.view.layoutRootPath}
+    }
+    persistence {
+        storagePid = {$plugin.tx_ebastrophotography_imagegallery.persistence.storagePid}
+        #recursive = 1
+    }
+    features {
+        #skipDefaultArguments = 1
+        # if set to 1, the enable fields are ignored in BE context
+        ignoreAllEnableFieldsInBe = 0
+    }
+    mvc {
+        #callDefaultActionIfActionCantBeResolved = 1
+    }
+}
+plugin.tx_ebastrophotography_skyatlas {
+    view {
+        templateRootPaths.0 = EXT:eb_astrophotography/Resources/Private/Templates/
+        templateRootPaths.1 = {$plugin.tx_ebastrophotography_skyatlas.view.templateRootPath}
+        partialRootPaths.0 = EXT:eb_astrophotography/Resources/Private/Partials/
+        partialRootPaths.1 = {$plugin.tx_ebastrophotography_skyatlas.view.partialRootPath}
+        layoutRootPaths.0 = EXT:eb_astrophotography/Resources/Private/Layouts/
+        layoutRootPaths.1 = {$plugin.tx_ebastrophotography_skyatlas.view.layoutRootPath}
+    }
+    persistence {
+        storagePid = {$plugin.tx_ebastrophotography_skyatlas.persistence.storagePid}
+        #recursive = 1
+    }
+    features {
+        #skipDefaultArguments = 1
+        # if set to 1, the enable fields are ignored in BE context
+        ignoreAllEnableFieldsInBe = 0
+    }
+    mvc {
+        #callDefaultActionIfActionCantBeResolved = 1
+    }
+}
+
+# these classes are only used in auto-generated templates
+plugin.tx_ebastrophotography._CSS_DEFAULT_STYLE (
+    textarea.f3-form-error {
+        background-color: #FF9F9F;
+        border: 1px #FF0000 solid;
+    }
+
+    input.f3-form-error {
+        background-color: #FF9F9F;
+        border: 1px #FF0000 solid;
+    }
+
+    .tx-eb-astrophotography table {
+        border-collapse: separate;
+        border-spacing: 10px;
+    }
+
+    .tx-eb-astrophotography table th {
+        font-weight: bold;
+    }
+
+    .tx-eb-astrophotography table td {
+        vertical-align: top;
+    }
+
+    .typo3-messages .message-error {
+        color: red;
+    }
+
+    .typo3-messages .message-ok {
+        color: green;
+    }
+)
+
+# Module configuration
+module.tx_ebastrophotography_web_ebastrophotographyastromanager {
+    persistence {
+        storagePid = {$module.tx_ebastrophotography_astromanager.persistence.storagePid}
+    }
+    view {
+        templateRootPaths.0 = EXT:eb_astrophotography/Resources/Private/Backend/Templates/
+        templateRootPaths.1 = {$module.tx_ebastrophotography_astromanager.view.templateRootPath}
+        partialRootPaths.0 = EXT:eb_astrophotography/Resources/Private/Backend/Partials/
+        partialRootPaths.1 = {$module.tx_ebastrophotography_astromanager.view.partialRootPath}
+        layoutRootPaths.0 = EXT:eb_astrophotography/Resources/Private/Backend/Layouts/
+        layoutRootPaths.1 = {$module.tx_ebastrophotography_astromanager.view.layoutRootPath}
+    }
+}

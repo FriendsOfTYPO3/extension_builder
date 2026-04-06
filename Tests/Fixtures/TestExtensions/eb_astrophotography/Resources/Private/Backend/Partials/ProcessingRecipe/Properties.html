@@ -1,0 +1,40 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<table class="tx-eb-astrophotography" >
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_processingrecipe.title" /></td>
+		<td>{processingRecipe.title}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_processingrecipe.software" /></td>
+		<td>{processingRecipe.software}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_processingrecipe.description" /></td>
+		<td>{processingRecipe.description}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_processingrecipe.stacking_method" /></td>
+		<td>{processingRecipe.stackingMethod}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_processingrecipe.total_integration_time" /></td>
+		<td>{processingRecipe.totalIntegrationTime}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_processingrecipe.processing_date" /></td>
+		<td>{processingRecipe.processingDate -> f:format.date()}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_processingrecipe.recipe_file" /></td>
+		<td>{processingRecipe.recipeFile.originalResource.name}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_processingrecipe.active" /></td>
+		<td>{processingRecipe.active}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_processingrecipe.notes" /></td>
+		<td>{processingRecipe.notes}</td>
+	</tr>
+</table>
+</html>

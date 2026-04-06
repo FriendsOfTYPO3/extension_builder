@@ -1,0 +1,65 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+This template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Backend:
+        Templates:
+          AstroImage:
+            List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="Buttons">
+    <be:moduleLayout.button.linkButton
+        icon="actions-add"
+        title="{f:translate(id: 'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:newRecordGeneral')}"
+        link="{f:uri.action(controller: 'AstroImage', action: 'new')}"
+    />
+</f:section>
+
+<f:section name="Content">
+    <h1>Listing for AstroImage</h1>
+
+    <f:flashMessages />
+
+    <table class="tx_ebastrophotography">
+        <tr>
+            <th><f:translate key="tx_ebastrophotography_domain_model_astroimage.title" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_astroimage.slug" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_astroimage.description" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_astroimage.image" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_astroimage.capture_date_time" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_astroimage.publish_date" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_astroimage.featured" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_astroimage.stack_count" /></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <f:for each="{astroImages}" as="astroImage">
+            <tr>
+                <td><f:link.action action="show" arguments="{astroImage: astroImage}">{astroImage.title}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{astroImage: astroImage}">{astroImage.slug}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{astroImage: astroImage}">{astroImage.description}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{astroImage: astroImage}">{astroImage.image.originalResource.name}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{astroImage: astroImage}">{astroImage.captureDateTime -> f:format.date()}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{astroImage: astroImage}">{astroImage.publishDate -> f:format.date()}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{astroImage: astroImage}">{astroImage.featured}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{astroImage: astroImage}">{astroImage.stackCount}</f:link.action></td>
+                <td><f:link.action action="edit" arguments="{astroImage: astroImage}" class="btn btn-default">Edit</f:link.action></td>
+                <td><f:link.action action="delete" arguments="{astroImage: astroImage}" class="btn btn-danger">Delete</f:link.action></td>
+            </tr>
+        </f:for>
+    </table>
+
+    <f:link.action action="new" class="btn btn-default">New AstroImage</f:link.action>
+</f:section>
+</html>

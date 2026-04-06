@@ -1,0 +1,1662 @@
+{
+    "modules": [
+        {
+            "config": {
+                "position": [
+                    20,
+                    20
+                ]
+            },
+            "value": {
+                "name": "AstroImage",
+                "objectsettings": {
+                    "uid": "",
+                    "type": "Entity",
+                    "aggregateRoot": true,
+                    "sorting": false,
+                    "addDeletedField": true,
+                    "addHiddenField": true,
+                    "addStarttimeEndtimeFields": true,
+                    "categorizable": false,
+                    "description": "",
+                    "mapToTable": "",
+                    "parentClass": ""
+                },
+                "actionGroup": {
+                    "_default0_index": false,
+                    "_default1_list": true,
+                    "_default2_show": true,
+                    "_default3_new_create": false,
+                    "_default4_edit_update": false,
+                    "_default5_delete": false,
+                    "customActions": []
+                },
+                "propertyGroup": {
+                    "properties": [
+                        {
+                            "uid": "",
+                            "propertyName": "title",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "slug",
+                            "propertyType": "Slug",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "description",
+                            "propertyType": "RichText",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "image",
+                            "propertyType": "Image",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "captureDateTime",
+                            "propertyType": "DateTime",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "publishDate",
+                            "propertyType": "Date",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "featured",
+                            "propertyType": "Boolean",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "stackCount",
+                            "propertyType": "Integer",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        }
+                    ]
+                },
+                "relationGroup": {
+                    "relations": [
+                        {
+                            "uid": "",
+                            "relationName": "celestialObjects",
+                            "relationType": "zeroToMany",
+                            "renderType": "selectMultipleSideBySide",
+                            "relationDescription": "",
+                            "propertyIsExcludeField": true,
+                            "lazyLoading": false,
+                            "foreignRelationClass": ""
+                        },
+                        {
+                            "uid": "",
+                            "relationName": "imagingSessions",
+                            "relationType": "zeroToMany",
+                            "renderType": "selectMultipleSideBySide",
+                            "relationDescription": "",
+                            "propertyIsExcludeField": true,
+                            "lazyLoading": false,
+                            "foreignRelationClass": ""
+                        },
+                        {
+                            "uid": "",
+                            "relationName": "processingRecipes",
+                            "relationType": "zeroToMany",
+                            "renderType": "selectMultipleSideBySide",
+                            "relationDescription": "",
+                            "propertyIsExcludeField": true,
+                            "lazyLoading": false,
+                            "foreignRelationClass": ""
+                        },
+                        {
+                            "uid": "",
+                            "relationName": "awards",
+                            "relationType": "zeroToMany",
+                            "renderType": "selectMultipleSideBySide",
+                            "relationDescription": "",
+                            "propertyIsExcludeField": true,
+                            "lazyLoading": false,
+                            "foreignRelationClass": ""
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "config": {
+                "position": [
+                    370,
+                    20
+                ]
+            },
+            "value": {
+                "name": "CelestialObject",
+                "objectsettings": {
+                    "uid": "",
+                    "type": "Entity",
+                    "aggregateRoot": true,
+                    "sorting": false,
+                    "addDeletedField": true,
+                    "addHiddenField": true,
+                    "addStarttimeEndtimeFields": true,
+                    "categorizable": false,
+                    "description": "",
+                    "mapToTable": "",
+                    "parentClass": ""
+                },
+                "actionGroup": {
+                    "_default0_index": false,
+                    "_default1_list": true,
+                    "_default2_show": true,
+                    "_default3_new_create": true,
+                    "_default4_edit_update": false,
+                    "_default5_delete": false,
+                    "customActions": []
+                },
+                "propertyGroup": {
+                    "properties": [
+                        {
+                            "uid": "",
+                            "propertyName": "name",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "catalogId",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "objectType",
+                            "propertyType": "Select",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "constellation",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "rightAscension",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "declination",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "magnitude",
+                            "propertyType": "Float",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "distanceLightyears",
+                            "propertyType": "Float",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "description",
+                            "propertyType": "RichText",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "previewImage",
+                            "propertyType": "Image",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "active",
+                            "propertyType": "Boolean",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        }
+                    ]
+                },
+                "relationGroup": {
+                    "relations": []
+                }
+            }
+        },
+        {
+            "config": {
+                "position": [
+                    720,
+                    20
+                ]
+            },
+            "value": {
+                "name": "Telescope",
+                "objectsettings": {
+                    "uid": "",
+                    "type": "Entity",
+                    "aggregateRoot": true,
+                    "sorting": false,
+                    "addDeletedField": true,
+                    "addHiddenField": true,
+                    "addStarttimeEndtimeFields": true,
+                    "categorizable": false,
+                    "description": "",
+                    "mapToTable": "",
+                    "parentClass": ""
+                },
+                "actionGroup": {
+                    "_default0_index": false,
+                    "_default1_list": true,
+                    "_default2_show": true,
+                    "_default3_new_create": false,
+                    "_default4_edit_update": false,
+                    "_default5_delete": false,
+                    "customActions": []
+                },
+                "propertyGroup": {
+                    "properties": [
+                        {
+                            "uid": "",
+                            "propertyName": "name",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "brand",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "telescopeType",
+                            "propertyType": "Select",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "focalLength",
+                            "propertyType": "Integer",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "aperture",
+                            "propertyType": "Integer",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "focalRatio",
+                            "propertyType": "Float",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "purchaseDate",
+                            "propertyType": "NativeDate",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "active",
+                            "propertyType": "Boolean",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "notes",
+                            "propertyType": "Text",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "image",
+                            "propertyType": "Image",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        }
+                    ]
+                },
+                "relationGroup": {
+                    "relations": []
+                }
+            }
+        },
+        {
+            "config": {
+                "position": [
+                    20,
+                    270
+                ]
+            },
+            "value": {
+                "name": "Camera",
+                "objectsettings": {
+                    "uid": "",
+                    "type": "Entity",
+                    "aggregateRoot": true,
+                    "sorting": false,
+                    "addDeletedField": true,
+                    "addHiddenField": true,
+                    "addStarttimeEndtimeFields": true,
+                    "categorizable": false,
+                    "description": "",
+                    "mapToTable": "",
+                    "parentClass": ""
+                },
+                "actionGroup": {
+                    "_default0_index": false,
+                    "_default1_list": true,
+                    "_default2_show": true,
+                    "_default3_new_create": false,
+                    "_default4_edit_update": false,
+                    "_default5_delete": false,
+                    "customActions": []
+                },
+                "propertyGroup": {
+                    "properties": [
+                        {
+                            "uid": "",
+                            "propertyName": "name",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "brand",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "sensorType",
+                            "propertyType": "Select",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "sensorWidth",
+                            "propertyType": "Float",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "sensorHeight",
+                            "propertyType": "Float",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "pixelSize",
+                            "propertyType": "Float",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "megapixels",
+                            "propertyType": "Float",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "cooled",
+                            "propertyType": "Boolean",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "purchaseDate",
+                            "propertyType": "NativeDate",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "active",
+                            "propertyType": "Boolean",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        }
+                    ]
+                },
+                "relationGroup": {
+                    "relations": []
+                }
+            }
+        },
+        {
+            "config": {
+                "position": [
+                    487.03125,
+                    342.67578125
+                ]
+            },
+            "value": {
+                "name": "AstroFilter",
+                "objectsettings": {
+                    "uid": "",
+                    "type": "Entity",
+                    "aggregateRoot": true,
+                    "sorting": false,
+                    "addDeletedField": true,
+                    "addHiddenField": true,
+                    "addStarttimeEndtimeFields": true,
+                    "categorizable": false,
+                    "description": "",
+                    "mapToTable": "",
+                    "parentClass": ""
+                },
+                "actionGroup": {
+                    "_default0_index": false,
+                    "_default1_list": true,
+                    "_default2_show": true,
+                    "_default3_new_create": false,
+                    "_default4_edit_update": false,
+                    "_default5_delete": false,
+                    "customActions": []
+                },
+                "propertyGroup": {
+                    "properties": [
+                        {
+                            "uid": "",
+                            "propertyName": "name",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "filterType",
+                            "propertyType": "Select",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "centralWavelength",
+                            "propertyType": "Integer",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "bandwidth",
+                            "propertyType": "Float",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "color",
+                            "propertyType": "ColorPicker",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "manufacturer",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "diameter",
+                            "propertyType": "Float",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "active",
+                            "propertyType": "Boolean",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        }
+                    ]
+                },
+                "relationGroup": {
+                    "relations": []
+                }
+            }
+        },
+        {
+            "config": {
+                "position": [
+                    1088.625,
+                    348.23828125
+                ]
+            },
+            "value": {
+                "name": "ObservingSite",
+                "objectsettings": {
+                    "uid": "",
+                    "type": "Entity",
+                    "aggregateRoot": true,
+                    "sorting": false,
+                    "addDeletedField": true,
+                    "addHiddenField": true,
+                    "addStarttimeEndtimeFields": true,
+                    "categorizable": false,
+                    "description": "",
+                    "mapToTable": "",
+                    "parentClass": ""
+                },
+                "actionGroup": {
+                    "_default0_index": false,
+                    "_default1_list": true,
+                    "_default2_show": true,
+                    "_default3_new_create": false,
+                    "_default4_edit_update": false,
+                    "_default5_delete": false,
+                    "customActions": []
+                },
+                "propertyGroup": {
+                    "properties": [
+                        {
+                            "uid": "",
+                            "propertyName": "name",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "description",
+                            "propertyType": "Text",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "latitude",
+                            "propertyType": "Float",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "longitude",
+                            "propertyType": "Float",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "altitude",
+                            "propertyType": "Integer",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "bortleClass",
+                            "propertyType": "Integer",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "website",
+                            "propertyType": "InputLink",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "contactEmail",
+                            "propertyType": "Email",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "active",
+                            "propertyType": "Boolean",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "image",
+                            "propertyType": "Image",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        }
+                    ]
+                },
+                "relationGroup": {
+                    "relations": []
+                }
+            }
+        },
+        {
+            "config": {
+                "position": [
+                    20,
+                    520
+                ]
+            },
+            "value": {
+                "name": "ImagingSession",
+                "objectsettings": {
+                    "uid": "",
+                    "type": "Entity",
+                    "aggregateRoot": true,
+                    "sorting": false,
+                    "addDeletedField": true,
+                    "addHiddenField": true,
+                    "addStarttimeEndtimeFields": true,
+                    "categorizable": false,
+                    "description": "",
+                    "mapToTable": "",
+                    "parentClass": ""
+                },
+                "actionGroup": {
+                    "_default0_index": false,
+                    "_default1_list": true,
+                    "_default2_show": true,
+                    "_default3_new_create": false,
+                    "_default4_edit_update": false,
+                    "_default5_delete": false,
+                    "customActions": []
+                },
+                "propertyGroup": {
+                    "properties": [
+                        {
+                            "uid": "",
+                            "propertyName": "sessionDate",
+                            "propertyType": "NativeDate",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "startTime",
+                            "propertyType": "NativeTime",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "endTime",
+                            "propertyType": "Time",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "frameExposure",
+                            "propertyType": "TimeSec",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "temperature",
+                            "propertyType": "Float",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "humidity",
+                            "propertyType": "Integer",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "seeingConditions",
+                            "propertyType": "Integer",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "transparency",
+                            "propertyType": "Integer",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "moonPhase",
+                            "propertyType": "Integer",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "totalFrames",
+                            "propertyType": "Integer",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "usableFrames",
+                            "propertyType": "Integer",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "notes",
+                            "propertyType": "Text",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        }
+                    ]
+                },
+                "relationGroup": {
+                    "relations": [
+                        {
+                            "uid": "",
+                            "relationName": "observingSites",
+                            "relationType": "zeroToMany",
+                            "renderType": "selectMultipleSideBySide",
+                            "relationDescription": "",
+                            "propertyIsExcludeField": true,
+                            "lazyLoading": false,
+                            "foreignRelationClass": ""
+                        },
+                        {
+                            "uid": "",
+                            "relationName": "telescopes",
+                            "relationType": "zeroToMany",
+                            "renderType": "selectMultipleSideBySide",
+                            "relationDescription": "",
+                            "propertyIsExcludeField": true,
+                            "lazyLoading": false,
+                            "foreignRelationClass": ""
+                        },
+                        {
+                            "uid": "",
+                            "relationName": "cameras",
+                            "relationType": "zeroToMany",
+                            "renderType": "selectMultipleSideBySide",
+                            "relationDescription": "",
+                            "propertyIsExcludeField": true,
+                            "lazyLoading": false,
+                            "foreignRelationClass": ""
+                        },
+                        {
+                            "uid": "",
+                            "relationName": "astroFilters",
+                            "relationType": "zeroToMany",
+                            "renderType": "selectMultipleSideBySide",
+                            "relationDescription": "",
+                            "propertyIsExcludeField": true,
+                            "lazyLoading": false,
+                            "foreignRelationClass": ""
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "config": {
+                "position": [
+                    370,
+                    520
+                ]
+            },
+            "value": {
+                "name": "ProcessingRecipe",
+                "objectsettings": {
+                    "uid": "",
+                    "type": "Entity",
+                    "aggregateRoot": true,
+                    "sorting": false,
+                    "addDeletedField": true,
+                    "addHiddenField": true,
+                    "addStarttimeEndtimeFields": true,
+                    "categorizable": false,
+                    "description": "",
+                    "mapToTable": "",
+                    "parentClass": ""
+                },
+                "actionGroup": {
+                    "_default0_index": false,
+                    "_default1_list": true,
+                    "_default2_show": true,
+                    "_default3_new_create": false,
+                    "_default4_edit_update": false,
+                    "_default5_delete": false,
+                    "customActions": []
+                },
+                "propertyGroup": {
+                    "properties": [
+                        {
+                            "uid": "",
+                            "propertyName": "title",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "software",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "description",
+                            "propertyType": "RichText",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "stackingMethod",
+                            "propertyType": "Select",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "totalIntegrationTime",
+                            "propertyType": "Float",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "processingDate",
+                            "propertyType": "NativeDateTime",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "recipeFile",
+                            "propertyType": "File",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "active",
+                            "propertyType": "Boolean",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "notes",
+                            "propertyType": "Text",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        }
+                    ]
+                },
+                "relationGroup": {
+                    "relations": [
+                        {
+                            "uid": "",
+                            "relationName": "cameras",
+                            "relationType": "zeroToMany",
+                            "renderType": "selectMultipleSideBySide",
+                            "relationDescription": "",
+                            "propertyIsExcludeField": true,
+                            "lazyLoading": false,
+                            "foreignRelationClass": ""
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "config": {
+                "position": [
+                    720,
+                    520
+                ]
+            },
+            "value": {
+                "name": "Award",
+                "objectsettings": {
+                    "uid": "",
+                    "type": "Entity",
+                    "aggregateRoot": true,
+                    "sorting": false,
+                    "addDeletedField": true,
+                    "addHiddenField": true,
+                    "addStarttimeEndtimeFields": true,
+                    "categorizable": false,
+                    "description": "",
+                    "mapToTable": "",
+                    "parentClass": ""
+                },
+                "actionGroup": {
+                    "_default0_index": false,
+                    "_default1_list": true,
+                    "_default2_show": true,
+                    "_default3_new_create": false,
+                    "_default4_edit_update": false,
+                    "_default5_delete": false,
+                    "customActions": []
+                },
+                "propertyGroup": {
+                    "properties": [
+                        {
+                            "uid": "",
+                            "propertyName": "title",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "organization",
+                            "propertyType": "String",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "awardDate",
+                            "propertyType": "NativeDate",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "description",
+                            "propertyType": "Text",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "certificateFile",
+                            "propertyType": "File",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "sourceUrl",
+                            "propertyType": "InputLink",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        },
+                        {
+                            "uid": "",
+                            "propertyName": "active",
+                            "propertyType": "Boolean",
+                            "propertyDescription": "",
+                            "allowedFileTypes": "",
+                            "maxItems": 1,
+                            "propertyIsRequired": false,
+                            "propertyIsNullable": false,
+                            "propertyIsExcludeField": true,
+                            "propertyIsL10nModeExclude": false
+                        }
+                    ]
+                },
+                "relationGroup": {
+                    "relations": []
+                }
+            }
+        }
+    ],
+    "wires": [
+        {
+            "src": {
+                "moduleId": 0,
+                "terminal": "relationWire_0",
+                "uid": ""
+            },
+            "tgt": {
+                "moduleId": 1,
+                "terminal": "SOURCES",
+                "uid": ""
+            }
+        },
+        {
+            "src": {
+                "moduleId": 0,
+                "terminal": "relationWire_1",
+                "uid": ""
+            },
+            "tgt": {
+                "moduleId": 6,
+                "terminal": "SOURCES",
+                "uid": ""
+            }
+        },
+        {
+            "src": {
+                "moduleId": 0,
+                "terminal": "relationWire_2",
+                "uid": ""
+            },
+            "tgt": {
+                "moduleId": 7,
+                "terminal": "SOURCES",
+                "uid": ""
+            }
+        },
+        {
+            "src": {
+                "moduleId": 0,
+                "terminal": "relationWire_3",
+                "uid": ""
+            },
+            "tgt": {
+                "moduleId": 8,
+                "terminal": "SOURCES",
+                "uid": ""
+            }
+        },
+        {
+            "src": {
+                "moduleId": 6,
+                "terminal": "relationWire_0",
+                "uid": ""
+            },
+            "tgt": {
+                "moduleId": 5,
+                "terminal": "SOURCES",
+                "uid": ""
+            }
+        },
+        {
+            "src": {
+                "moduleId": 6,
+                "terminal": "relationWire_1",
+                "uid": ""
+            },
+            "tgt": {
+                "moduleId": 2,
+                "terminal": "SOURCES",
+                "uid": ""
+            }
+        },
+        {
+            "src": {
+                "moduleId": 6,
+                "terminal": "relationWire_2",
+                "uid": ""
+            },
+            "tgt": {
+                "moduleId": 3,
+                "terminal": "SOURCES",
+                "uid": ""
+            }
+        },
+        {
+            "src": {
+                "moduleId": 6,
+                "terminal": "relationWire_3",
+                "uid": ""
+            },
+            "tgt": {
+                "moduleId": 4,
+                "terminal": "SOURCES",
+                "uid": ""
+            }
+        },
+        {
+            "src": {
+                "moduleId": 7,
+                "terminal": "relationWire_0",
+                "uid": ""
+            },
+            "tgt": {
+                "moduleId": 3,
+                "terminal": "SOURCES",
+                "uid": ""
+            }
+        }
+    ],
+    "properties": {
+        "name": "EB Astrophotography",
+        "vendorName": "AcmeCorp",
+        "extensionKey": "eb_astrophotography",
+        "originalExtensionKey": "eb_astrophotography",
+        "originalVendorName": "AcmeCorp",
+        "description": "",
+        "emConf": {
+            "category": "",
+            "custom_category": "",
+            "version": "",
+            "state": "",
+            "disableVersioning": false,
+            "disableLocalization": false,
+            "generateDocumentationTemplate": false,
+            "generateEmptyGitRepository": true,
+            "generateEditorConfig": false,
+            "generateSiteSet": true,
+            "sourceLanguage": "",
+            "targetVersion": "",
+            "dependsOn": ""
+        },
+        "category": "",
+        "custom_category": "",
+        "version": "",
+        "state": "",
+        "disableVersioning": false,
+        "disableLocalization": false,
+        "generateDocumentationTemplate": false,
+        "generateEmptyGitRepository": true,
+        "generateEditorConfig": false,
+        "generateSiteSet": true,
+        "sourceLanguage": "",
+        "targetVersion": "",
+        "dependsOn": "",
+        "persons": [],
+        "plugins": [
+            {
+                "name": "Image Gallery",
+                "key": "imageGallery",
+                "description": "",
+                "actions": {
+                    "controllerActionCombinations": "AstroImage => list,show",
+                    "noncacheableActions": ""
+                }
+            },
+            {
+                "name": "Sky Atlas",
+                "key": "skyAtlas",
+                "description": "",
+                "actions": {
+                    "controllerActionCombinations": "CelestialObject => list,show",
+                    "noncacheableActions": ""
+                }
+            }
+        ],
+        "backendModules": [
+            {
+                "name": "Astro Manager",
+                "key": "astroManager",
+                "description": "",
+                "tabLabel": "Astro Manager",
+                "mainModule": "web",
+                "actions": {
+                    "controllerActionCombinations": "AstroImage => list,show"
+                }
+            }
+        ]
+    },
+    "storagePath": "\/var\/www\/html\/packages\/",
+    "log": {
+        "last_modified": "2026-04-06 09:53",
+        "extension_builder_version": "13.x-dev",
+        "be_user": " (4)"
+    }
+}

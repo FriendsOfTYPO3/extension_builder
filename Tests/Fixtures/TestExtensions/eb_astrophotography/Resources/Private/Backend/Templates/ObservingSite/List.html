@@ -1,0 +1,69 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+This template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Backend:
+        Templates:
+          ObservingSite:
+            List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="Buttons">
+    <be:moduleLayout.button.linkButton
+        icon="actions-add"
+        title="{f:translate(id: 'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:newRecordGeneral')}"
+        link="{f:uri.action(controller: 'ObservingSite', action: 'new')}"
+    />
+</f:section>
+
+<f:section name="Content">
+    <h1>Listing for ObservingSite</h1>
+
+    <f:flashMessages />
+
+    <table class="tx_ebastrophotography">
+        <tr>
+            <th><f:translate key="tx_ebastrophotography_domain_model_observingsite.name" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_observingsite.description" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_observingsite.latitude" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_observingsite.longitude" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_observingsite.altitude" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_observingsite.bortle_class" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_observingsite.website" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_observingsite.contact_email" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_observingsite.active" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_observingsite.image" /></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <f:for each="{observingSites}" as="observingSite">
+            <tr>
+                <td><f:link.action action="show" arguments="{observingSite: observingSite}">{observingSite.name}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{observingSite: observingSite}">{observingSite.description}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{observingSite: observingSite}">{observingSite.latitude}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{observingSite: observingSite}">{observingSite.longitude}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{observingSite: observingSite}">{observingSite.altitude}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{observingSite: observingSite}">{observingSite.bortleClass}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{observingSite: observingSite}">{observingSite.website}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{observingSite: observingSite}">{observingSite.contactEmail}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{observingSite: observingSite}">{observingSite.active}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{observingSite: observingSite}">{observingSite.image.originalResource.name}</f:link.action></td>
+                <td><f:link.action action="edit" arguments="{observingSite: observingSite}" class="btn btn-default">Edit</f:link.action></td>
+                <td><f:link.action action="delete" arguments="{observingSite: observingSite}" class="btn btn-danger">Delete</f:link.action></td>
+            </tr>
+        </f:for>
+    </table>
+
+    <f:link.action action="new" class="btn btn-default">New ObservingSite</f:link.action>
+</f:section>
+</html>

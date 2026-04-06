@@ -1,0 +1,23 @@
+mod {
+    wizards.newContentElement.wizardItems.plugins {
+        elements {
+            imagegallery {
+                iconIdentifier = eb_astrophotography-plugin-imagegallery
+                title = LLL:EXT:eb_astrophotography/Resources/Private/Language/locallang_db.xlf:tx_eb_astrophotography_imagegallery.name
+                description = LLL:EXT:eb_astrophotography/Resources/Private/Language/locallang_db.xlf:tx_eb_astrophotography_imagegallery.description
+                tt_content_defValues {
+                    CType = ebastrophotography_imagegallery
+                }
+            }
+            skyatlas {
+                iconIdentifier = eb_astrophotography-plugin-skyatlas
+                title = LLL:EXT:eb_astrophotography/Resources/Private/Language/locallang_db.xlf:tx_eb_astrophotography_skyatlas.name
+                description = LLL:EXT:eb_astrophotography/Resources/Private/Language/locallang_db.xlf:tx_eb_astrophotography_skyatlas.description
+                tt_content_defValues {
+                    CType = ebastrophotography_skyatlas
+                }
+            }
+        }
+        show = *
+    }
+}

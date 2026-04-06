@@ -1,0 +1,44 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+This template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        Award:
+          List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="content">
+    <h1>Listing for Award</h1>
+
+    <f:flashMessages />
+
+    <table class="tx_ebastrophotography">
+        <tr>
+            <th><f:translate key="tx_ebastrophotography_domain_model_award.title" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_award.organization" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_award.award_date" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_award.description" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_award.certificate_file" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_award.source_url" /></th>
+            <th><f:translate key="tx_ebastrophotography_domain_model_award.active" /></th>
+        </tr>
+        <f:for each="{awards}" as="award">
+            <tr>
+                <td><f:link.action action="show" arguments="{award : award}">{award.title}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{award : award}">{award.organization}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{award : award}">{award.awardDate -> f:format.date()}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{award : award}">{award.description}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{award : award}">{award.certificateFile.originalResource.name}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{award : award}">{award.sourceUrl}</f:link.action></td>
+                <td><f:link.action action="show" arguments="{award : award}">{award.active}</f:link.action></td>
+            </tr>
+        </f:for>
+    </table>
+</f:section>
+</html>

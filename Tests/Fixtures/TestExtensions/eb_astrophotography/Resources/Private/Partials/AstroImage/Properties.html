@@ -1,0 +1,38 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<table class="tx-eb-astrophotography">
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_astroimage.title" /></td>
+		<td>{astroImage.title}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_astroimage.slug" /></td>
+		<td>{astroImage.slug}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_astroimage.description" /></td>
+		<td>{astroImage.description}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_astroimage.image" /></td>
+		<td>
+				<f:image src="{astroImage.image.originalResource.publicUrl}" width="200"/>
+            </td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_astroimage.capture_date_time" /></td>
+		<td>{astroImage.captureDateTime -> f:format.date()}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_astroimage.publish_date" /></td>
+		<td>{astroImage.publishDate -> f:format.date()}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_astroimage.featured" /></td>
+		<td>{astroImage.featured}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_astroimage.stack_count" /></td>
+		<td>{astroImage.stackCount}</td>
+	</tr>
+</table>
+</html>

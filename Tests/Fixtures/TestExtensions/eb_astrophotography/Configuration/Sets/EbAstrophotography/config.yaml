@@ -1,0 +1,4 @@
+name: eb_astrophotography/eb_astrophotography
+label: EB Astrophotography
+dependencies:
+  - typo3/fluid-styled-content

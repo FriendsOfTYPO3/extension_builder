@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:eb_astrophotography/Resources/Private/Language/locallang_mod" date="2026-04-06T21:53:09Z" product-name="eb_astrophotography">
+		<header/>
+		<body>
+			<trans-unit id="mlang_labels_tabdescr" resname="mlang_labels_tabdescr">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="mlang_tabs_tab" resname="mlang_tabs_tab">
+				<source>Astro Manager</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

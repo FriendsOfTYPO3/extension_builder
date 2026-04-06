@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:eb_astrophotography/Resources/Private/Language/locallang_csh_tx_ebastrophotography_domain_model_processingrecipe.xlf" date="2026-04-06T21:53:09Z" product-name="eb_astrophotography">
+		<header/>
+		<body>
+			<trans-unit id="title.description" resname="title.description">
+				<source>title</source>
+			</trans-unit>
+			<trans-unit id="software.description" resname="software.description">
+				<source>software</source>
+			</trans-unit>
+			<trans-unit id="description.description" resname="description.description">
+				<source>description</source>
+			</trans-unit>
+			<trans-unit id="stacking_method.description" resname="stacking_method.description">
+				<source>stackingMethod</source>
+			</trans-unit>
+			<trans-unit id="total_integration_time.description" resname="total_integration_time.description">
+				<source>totalIntegrationTime</source>
+			</trans-unit>
+			<trans-unit id="processing_date.description" resname="processing_date.description">
+				<source>processingDate</source>
+			</trans-unit>
+			<trans-unit id="recipe_file.description" resname="recipe_file.description">
+				<source>recipeFile</source>
+			</trans-unit>
+			<trans-unit id="active.description" resname="active.description">
+				<source>active</source>
+			</trans-unit>
+			<trans-unit id="notes.description" resname="notes.description">
+				<source>notes</source>
+			</trans-unit>
+			<trans-unit id="cameras.description" resname="cameras.description">
+				<source>cameras</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

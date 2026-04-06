@@ -1,0 +1,52 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<table class="tx-eb-astrophotography">
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_imagingsession.session_date" /></td>
+		<td>{imagingSession.sessionDate -> f:format.date()}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_imagingsession.start_time" /></td>
+		<td>{imagingSession.startTime -> f:format.date(format:'H:i')}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_imagingsession.end_time" /></td>
+		<td>{imagingSession.endTime}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_imagingsession.frame_exposure" /></td>
+		<td>{imagingSession.frameExposure}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_imagingsession.temperature" /></td>
+		<td>{imagingSession.temperature}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_imagingsession.humidity" /></td>
+		<td>{imagingSession.humidity}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_imagingsession.seeing_conditions" /></td>
+		<td>{imagingSession.seeingConditions}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_imagingsession.transparency" /></td>
+		<td>{imagingSession.transparency}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_imagingsession.moon_phase" /></td>
+		<td>{imagingSession.moonPhase}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_imagingsession.total_frames" /></td>
+		<td>{imagingSession.totalFrames}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_imagingsession.usable_frames" /></td>
+		<td>{imagingSession.usableFrames}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_imagingsession.notes" /></td>
+		<td>{imagingSession.notes}</td>
+	</tr>
+</table>
+</html>

@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:eb_astrophotography/Resources/Private/Language/locallang_db.xlf" date="2026-04-06T21:53:09Z" product-name="eb_astrophotography">
+		<header/>
+		<body>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage" resname="tx_ebastrophotography_domain_model_astroimage">
+				<source>Astro Image</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.description" resname="tx_ebastrophotography_domain_model_astroimage.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.title" resname="tx_ebastrophotography_domain_model_astroimage.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.title.description" resname="tx_ebastrophotography_domain_model_astroimage.title.description">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.slug" resname="tx_ebastrophotography_domain_model_astroimage.slug">
+				<source>Slug</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.slug.description" resname="tx_ebastrophotography_domain_model_astroimage.slug.description">
+				<source>Slug</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.description.description" resname="tx_ebastrophotography_domain_model_astroimage.description.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.image" resname="tx_ebastrophotography_domain_model_astroimage.image">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.image.description" resname="tx_ebastrophotography_domain_model_astroimage.image.description">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.capture_date_time" resname="tx_ebastrophotography_domain_model_astroimage.capture_date_time">
+				<source>Capture Date Time</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.capture_date_time.description" resname="tx_ebastrophotography_domain_model_astroimage.capture_date_time.description">
+				<source>Capture Date Time</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.publish_date" resname="tx_ebastrophotography_domain_model_astroimage.publish_date">
+				<source>Publish Date</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.publish_date.description" resname="tx_ebastrophotography_domain_model_astroimage.publish_date.description">
+				<source>Publish Date</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.featured" resname="tx_ebastrophotography_domain_model_astroimage.featured">
+				<source>Featured</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.featured.description" resname="tx_ebastrophotography_domain_model_astroimage.featured.description">
+				<source>Featured</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.stack_count" resname="tx_ebastrophotography_domain_model_astroimage.stack_count">
+				<source>Stack Count</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.stack_count.description" resname="tx_ebastrophotography_domain_model_astroimage.stack_count.description">
+				<source>Stack Count</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.celestial_objects" resname="tx_ebastrophotography_domain_model_astroimage.celestial_objects">
+				<source>Celestial Objects</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.celestial_objects.description" resname="tx_ebastrophotography_domain_model_astroimage.celestial_objects.description">
+				<source>Celestial Objects</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.imaging_sessions" resname="tx_ebastrophotography_domain_model_astroimage.imaging_sessions">
+				<source>Imaging Sessions</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.imaging_sessions.description" resname="tx_ebastrophotography_domain_model_astroimage.imaging_sessions.description">
+				<source>Imaging Sessions</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.processing_recipes" resname="tx_ebastrophotography_domain_model_astroimage.processing_recipes">
+				<source>Processing Recipes</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.processing_recipes.description" resname="tx_ebastrophotography_domain_model_astroimage.processing_recipes.description">
+				<source>Processing Recipes</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.awards" resname="tx_ebastrophotography_domain_model_astroimage.awards">
+				<source>Awards</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astroimage.awards.description" resname="tx_ebastrophotography_domain_model_astroimage.awards.description">
+				<source>Awards</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject" resname="tx_ebastrophotography_domain_model_celestialobject">
+				<source>Celestial Object</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.description" resname="tx_ebastrophotography_domain_model_celestialobject.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.name" resname="tx_ebastrophotography_domain_model_celestialobject.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.name.description" resname="tx_ebastrophotography_domain_model_celestialobject.name.description">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.catalog_id" resname="tx_ebastrophotography_domain_model_celestialobject.catalog_id">
+				<source>Catalog Id</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.catalog_id.description" resname="tx_ebastrophotography_domain_model_celestialobject.catalog_id.description">
+				<source>Catalog Id</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.object_type" resname="tx_ebastrophotography_domain_model_celestialobject.object_type">
+				<source>Object Type</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.object_type.description" resname="tx_ebastrophotography_domain_model_celestialobject.object_type.description">
+				<source>Object Type</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.constellation" resname="tx_ebastrophotography_domain_model_celestialobject.constellation">
+				<source>Constellation</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.constellation.description" resname="tx_ebastrophotography_domain_model_celestialobject.constellation.description">
+				<source>Constellation</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.right_ascension" resname="tx_ebastrophotography_domain_model_celestialobject.right_ascension">
+				<source>Right Ascension</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.right_ascension.description" resname="tx_ebastrophotography_domain_model_celestialobject.right_ascension.description">
+				<source>Right Ascension</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.declination" resname="tx_ebastrophotography_domain_model_celestialobject.declination">
+				<source>Declination</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.declination.description" resname="tx_ebastrophotography_domain_model_celestialobject.declination.description">
+				<source>Declination</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.magnitude" resname="tx_ebastrophotography_domain_model_celestialobject.magnitude">
+				<source>Magnitude</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.magnitude.description" resname="tx_ebastrophotography_domain_model_celestialobject.magnitude.description">
+				<source>Magnitude</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.distance_lightyears" resname="tx_ebastrophotography_domain_model_celestialobject.distance_lightyears">
+				<source>Distance Lightyears</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.distance_lightyears.description" resname="tx_ebastrophotography_domain_model_celestialobject.distance_lightyears.description">
+				<source>Distance Lightyears</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.description.description" resname="tx_ebastrophotography_domain_model_celestialobject.description.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.preview_image" resname="tx_ebastrophotography_domain_model_celestialobject.preview_image">
+				<source>Preview Image</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.preview_image.description" resname="tx_ebastrophotography_domain_model_celestialobject.preview_image.description">
+				<source>Preview Image</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.active" resname="tx_ebastrophotography_domain_model_celestialobject.active">
+				<source>Active</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_celestialobject.active.description" resname="tx_ebastrophotography_domain_model_celestialobject.active.description">
+				<source>Active</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope" resname="tx_ebastrophotography_domain_model_telescope">
+				<source>Telescope</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.description" resname="tx_ebastrophotography_domain_model_telescope.description">
+				<source>Telescope</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.name" resname="tx_ebastrophotography_domain_model_telescope.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.name.description" resname="tx_ebastrophotography_domain_model_telescope.name.description">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.brand" resname="tx_ebastrophotography_domain_model_telescope.brand">
+				<source>Brand</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.brand.description" resname="tx_ebastrophotography_domain_model_telescope.brand.description">
+				<source>Brand</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.telescope_type" resname="tx_ebastrophotography_domain_model_telescope.telescope_type">
+				<source>Telescope Type</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.telescope_type.description" resname="tx_ebastrophotography_domain_model_telescope.telescope_type.description">
+				<source>Telescope Type</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.focal_length" resname="tx_ebastrophotography_domain_model_telescope.focal_length">
+				<source>Focal Length</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.focal_length.description" resname="tx_ebastrophotography_domain_model_telescope.focal_length.description">
+				<source>Focal Length</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.aperture" resname="tx_ebastrophotography_domain_model_telescope.aperture">
+				<source>Aperture</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.aperture.description" resname="tx_ebastrophotography_domain_model_telescope.aperture.description">
+				<source>Aperture</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.focal_ratio" resname="tx_ebastrophotography_domain_model_telescope.focal_ratio">
+				<source>Focal Ratio</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.focal_ratio.description" resname="tx_ebastrophotography_domain_model_telescope.focal_ratio.description">
+				<source>Focal Ratio</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.purchase_date" resname="tx_ebastrophotography_domain_model_telescope.purchase_date">
+				<source>Purchase Date</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.purchase_date.description" resname="tx_ebastrophotography_domain_model_telescope.purchase_date.description">
+				<source>Purchase Date</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.active" resname="tx_ebastrophotography_domain_model_telescope.active">
+				<source>Active</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.active.description" resname="tx_ebastrophotography_domain_model_telescope.active.description">
+				<source>Active</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.notes" resname="tx_ebastrophotography_domain_model_telescope.notes">
+				<source>Notes</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.notes.description" resname="tx_ebastrophotography_domain_model_telescope.notes.description">
+				<source>Notes</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.image" resname="tx_ebastrophotography_domain_model_telescope.image">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_telescope.image.description" resname="tx_ebastrophotography_domain_model_telescope.image.description">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera" resname="tx_ebastrophotography_domain_model_camera">
+				<source>Camera</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.description" resname="tx_ebastrophotography_domain_model_camera.description">
+				<source>Camera</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.name" resname="tx_ebastrophotography_domain_model_camera.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.name.description" resname="tx_ebastrophotography_domain_model_camera.name.description">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.brand" resname="tx_ebastrophotography_domain_model_camera.brand">
+				<source>Brand</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.brand.description" resname="tx_ebastrophotography_domain_model_camera.brand.description">
+				<source>Brand</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.sensor_type" resname="tx_ebastrophotography_domain_model_camera.sensor_type">
+				<source>Sensor Type</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.sensor_type.description" resname="tx_ebastrophotography_domain_model_camera.sensor_type.description">
+				<source>Sensor Type</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.sensor_width" resname="tx_ebastrophotography_domain_model_camera.sensor_width">
+				<source>Sensor Width</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.sensor_width.description" resname="tx_ebastrophotography_domain_model_camera.sensor_width.description">
+				<source>Sensor Width</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.sensor_height" resname="tx_ebastrophotography_domain_model_camera.sensor_height">
+				<source>Sensor Height</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.sensor_height.description" resname="tx_ebastrophotography_domain_model_camera.sensor_height.description">
+				<source>Sensor Height</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.pixel_size" resname="tx_ebastrophotography_domain_model_camera.pixel_size">
+				<source>Pixel Size</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.pixel_size.description" resname="tx_ebastrophotography_domain_model_camera.pixel_size.description">
+				<source>Pixel Size</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.megapixels" resname="tx_ebastrophotography_domain_model_camera.megapixels">
+				<source>Megapixels</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.megapixels.description" resname="tx_ebastrophotography_domain_model_camera.megapixels.description">
+				<source>Megapixels</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.cooled" resname="tx_ebastrophotography_domain_model_camera.cooled">
+				<source>Cooled</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.cooled.description" resname="tx_ebastrophotography_domain_model_camera.cooled.description">
+				<source>Cooled</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.purchase_date" resname="tx_ebastrophotography_domain_model_camera.purchase_date">
+				<source>Purchase Date</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.purchase_date.description" resname="tx_ebastrophotography_domain_model_camera.purchase_date.description">
+				<source>Purchase Date</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.active" resname="tx_ebastrophotography_domain_model_camera.active">
+				<source>Active</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_camera.active.description" resname="tx_ebastrophotography_domain_model_camera.active.description">
+				<source>Active</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter" resname="tx_ebastrophotography_domain_model_astrofilter">
+				<source>Astro Filter</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.description" resname="tx_ebastrophotography_domain_model_astrofilter.description">
+				<source>Astro Filter</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.name" resname="tx_ebastrophotography_domain_model_astrofilter.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.name.description" resname="tx_ebastrophotography_domain_model_astrofilter.name.description">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.filter_type" resname="tx_ebastrophotography_domain_model_astrofilter.filter_type">
+				<source>Filter Type</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.filter_type.description" resname="tx_ebastrophotography_domain_model_astrofilter.filter_type.description">
+				<source>Filter Type</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.central_wavelength" resname="tx_ebastrophotography_domain_model_astrofilter.central_wavelength">
+				<source>Central Wavelength</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.central_wavelength.description" resname="tx_ebastrophotography_domain_model_astrofilter.central_wavelength.description">
+				<source>Central Wavelength</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.bandwidth" resname="tx_ebastrophotography_domain_model_astrofilter.bandwidth">
+				<source>Bandwidth</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.bandwidth.description" resname="tx_ebastrophotography_domain_model_astrofilter.bandwidth.description">
+				<source>Bandwidth</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.color" resname="tx_ebastrophotography_domain_model_astrofilter.color">
+				<source>Color</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.color.description" resname="tx_ebastrophotography_domain_model_astrofilter.color.description">
+				<source>Color</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.manufacturer" resname="tx_ebastrophotography_domain_model_astrofilter.manufacturer">
+				<source>Manufacturer</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.manufacturer.description" resname="tx_ebastrophotography_domain_model_astrofilter.manufacturer.description">
+				<source>Manufacturer</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.diameter" resname="tx_ebastrophotography_domain_model_astrofilter.diameter">
+				<source>Diameter</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.diameter.description" resname="tx_ebastrophotography_domain_model_astrofilter.diameter.description">
+				<source>Diameter</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.active" resname="tx_ebastrophotography_domain_model_astrofilter.active">
+				<source>Active</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_astrofilter.active.description" resname="tx_ebastrophotography_domain_model_astrofilter.active.description">
+				<source>Active</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite" resname="tx_ebastrophotography_domain_model_observingsite">
+				<source>Observing Site</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.description" resname="tx_ebastrophotography_domain_model_observingsite.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.name" resname="tx_ebastrophotography_domain_model_observingsite.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.name.description" resname="tx_ebastrophotography_domain_model_observingsite.name.description">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.description.description" resname="tx_ebastrophotography_domain_model_observingsite.description.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.latitude" resname="tx_ebastrophotography_domain_model_observingsite.latitude">
+				<source>Latitude</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.latitude.description" resname="tx_ebastrophotography_domain_model_observingsite.latitude.description">
+				<source>Latitude</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.longitude" resname="tx_ebastrophotography_domain_model_observingsite.longitude">
+				<source>Longitude</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.longitude.description" resname="tx_ebastrophotography_domain_model_observingsite.longitude.description">
+				<source>Longitude</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.altitude" resname="tx_ebastrophotography_domain_model_observingsite.altitude">
+				<source>Altitude</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.altitude.description" resname="tx_ebastrophotography_domain_model_observingsite.altitude.description">
+				<source>Altitude</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.bortle_class" resname="tx_ebastrophotography_domain_model_observingsite.bortle_class">
+				<source>Bortle Class</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.bortle_class.description" resname="tx_ebastrophotography_domain_model_observingsite.bortle_class.description">
+				<source>Bortle Class</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.website" resname="tx_ebastrophotography_domain_model_observingsite.website">
+				<source>Website</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.website.description" resname="tx_ebastrophotography_domain_model_observingsite.website.description">
+				<source>Website</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.contact_email" resname="tx_ebastrophotography_domain_model_observingsite.contact_email">
+				<source>Contact Email</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.contact_email.description" resname="tx_ebastrophotography_domain_model_observingsite.contact_email.description">
+				<source>Contact Email</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.active" resname="tx_ebastrophotography_domain_model_observingsite.active">
+				<source>Active</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.active.description" resname="tx_ebastrophotography_domain_model_observingsite.active.description">
+				<source>Active</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.image" resname="tx_ebastrophotography_domain_model_observingsite.image">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_observingsite.image.description" resname="tx_ebastrophotography_domain_model_observingsite.image.description">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession" resname="tx_ebastrophotography_domain_model_imagingsession">
+				<source>Imaging Session</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.description" resname="tx_ebastrophotography_domain_model_imagingsession.description">
+				<source>Imaging Session</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.session_date" resname="tx_ebastrophotography_domain_model_imagingsession.session_date">
+				<source>Session Date</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.session_date.description" resname="tx_ebastrophotography_domain_model_imagingsession.session_date.description">
+				<source>Session Date</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.start_time" resname="tx_ebastrophotography_domain_model_imagingsession.start_time">
+				<source>Start Time</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.start_time.description" resname="tx_ebastrophotography_domain_model_imagingsession.start_time.description">
+				<source>Start Time</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.end_time" resname="tx_ebastrophotography_domain_model_imagingsession.end_time">
+				<source>End Time</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.end_time.description" resname="tx_ebastrophotography_domain_model_imagingsession.end_time.description">
+				<source>End Time</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.frame_exposure" resname="tx_ebastrophotography_domain_model_imagingsession.frame_exposure">
+				<source>Frame Exposure</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.frame_exposure.description" resname="tx_ebastrophotography_domain_model_imagingsession.frame_exposure.description">
+				<source>Frame Exposure</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.temperature" resname="tx_ebastrophotography_domain_model_imagingsession.temperature">
+				<source>Temperature</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.temperature.description" resname="tx_ebastrophotography_domain_model_imagingsession.temperature.description">
+				<source>Temperature</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.humidity" resname="tx_ebastrophotography_domain_model_imagingsession.humidity">
+				<source>Humidity</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.humidity.description" resname="tx_ebastrophotography_domain_model_imagingsession.humidity.description">
+				<source>Humidity</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.seeing_conditions" resname="tx_ebastrophotography_domain_model_imagingsession.seeing_conditions">
+				<source>Seeing Conditions</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.seeing_conditions.description" resname="tx_ebastrophotography_domain_model_imagingsession.seeing_conditions.description">
+				<source>Seeing Conditions</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.transparency" resname="tx_ebastrophotography_domain_model_imagingsession.transparency">
+				<source>Transparency</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.transparency.description" resname="tx_ebastrophotography_domain_model_imagingsession.transparency.description">
+				<source>Transparency</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.moon_phase" resname="tx_ebastrophotography_domain_model_imagingsession.moon_phase">
+				<source>Moon Phase</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.moon_phase.description" resname="tx_ebastrophotography_domain_model_imagingsession.moon_phase.description">
+				<source>Moon Phase</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.total_frames" resname="tx_ebastrophotography_domain_model_imagingsession.total_frames">
+				<source>Total Frames</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.total_frames.description" resname="tx_ebastrophotography_domain_model_imagingsession.total_frames.description">
+				<source>Total Frames</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.usable_frames" resname="tx_ebastrophotography_domain_model_imagingsession.usable_frames">
+				<source>Usable Frames</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.usable_frames.description" resname="tx_ebastrophotography_domain_model_imagingsession.usable_frames.description">
+				<source>Usable Frames</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.notes" resname="tx_ebastrophotography_domain_model_imagingsession.notes">
+				<source>Notes</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.notes.description" resname="tx_ebastrophotography_domain_model_imagingsession.notes.description">
+				<source>Notes</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.observing_sites" resname="tx_ebastrophotography_domain_model_imagingsession.observing_sites">
+				<source>Observing Sites</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.observing_sites.description" resname="tx_ebastrophotography_domain_model_imagingsession.observing_sites.description">
+				<source>Observing Sites</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.telescopes" resname="tx_ebastrophotography_domain_model_imagingsession.telescopes">
+				<source>Telescopes</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.telescopes.description" resname="tx_ebastrophotography_domain_model_imagingsession.telescopes.description">
+				<source>Telescopes</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.cameras" resname="tx_ebastrophotography_domain_model_imagingsession.cameras">
+				<source>Cameras</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.cameras.description" resname="tx_ebastrophotography_domain_model_imagingsession.cameras.description">
+				<source>Cameras</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.astro_filters" resname="tx_ebastrophotography_domain_model_imagingsession.astro_filters">
+				<source>Astro Filters</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_imagingsession.astro_filters.description" resname="tx_ebastrophotography_domain_model_imagingsession.astro_filters.description">
+				<source>Astro Filters</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe" resname="tx_ebastrophotography_domain_model_processingrecipe">
+				<source>Processing Recipe</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.description" resname="tx_ebastrophotography_domain_model_processingrecipe.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.title" resname="tx_ebastrophotography_domain_model_processingrecipe.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.title.description" resname="tx_ebastrophotography_domain_model_processingrecipe.title.description">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.software" resname="tx_ebastrophotography_domain_model_processingrecipe.software">
+				<source>Software</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.software.description" resname="tx_ebastrophotography_domain_model_processingrecipe.software.description">
+				<source>Software</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.description.description" resname="tx_ebastrophotography_domain_model_processingrecipe.description.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.stacking_method" resname="tx_ebastrophotography_domain_model_processingrecipe.stacking_method">
+				<source>Stacking Method</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.stacking_method.description" resname="tx_ebastrophotography_domain_model_processingrecipe.stacking_method.description">
+				<source>Stacking Method</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.total_integration_time" resname="tx_ebastrophotography_domain_model_processingrecipe.total_integration_time">
+				<source>Total Integration Time</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.total_integration_time.description" resname="tx_ebastrophotography_domain_model_processingrecipe.total_integration_time.description">
+				<source>Total Integration Time</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.processing_date" resname="tx_ebastrophotography_domain_model_processingrecipe.processing_date">
+				<source>Processing Date</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.processing_date.description" resname="tx_ebastrophotography_domain_model_processingrecipe.processing_date.description">
+				<source>Processing Date</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.recipe_file" resname="tx_ebastrophotography_domain_model_processingrecipe.recipe_file">
+				<source>Recipe File</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.recipe_file.description" resname="tx_ebastrophotography_domain_model_processingrecipe.recipe_file.description">
+				<source>Recipe File</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.active" resname="tx_ebastrophotography_domain_model_processingrecipe.active">
+				<source>Active</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.active.description" resname="tx_ebastrophotography_domain_model_processingrecipe.active.description">
+				<source>Active</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.notes" resname="tx_ebastrophotography_domain_model_processingrecipe.notes">
+				<source>Notes</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.notes.description" resname="tx_ebastrophotography_domain_model_processingrecipe.notes.description">
+				<source>Notes</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.cameras" resname="tx_ebastrophotography_domain_model_processingrecipe.cameras">
+				<source>Cameras</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_processingrecipe.cameras.description" resname="tx_ebastrophotography_domain_model_processingrecipe.cameras.description">
+				<source>Cameras</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_award" resname="tx_ebastrophotography_domain_model_award">
+				<source>Award</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_award.description" resname="tx_ebastrophotography_domain_model_award.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_award.title" resname="tx_ebastrophotography_domain_model_award.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_award.title.description" resname="tx_ebastrophotography_domain_model_award.title.description">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_award.organization" resname="tx_ebastrophotography_domain_model_award.organization">
+				<source>Organization</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_award.organization.description" resname="tx_ebastrophotography_domain_model_award.organization.description">
+				<source>Organization</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_award.award_date" resname="tx_ebastrophotography_domain_model_award.award_date">
+				<source>Award Date</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_award.award_date.description" resname="tx_ebastrophotography_domain_model_award.award_date.description">
+				<source>Award Date</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_award.description.description" resname="tx_ebastrophotography_domain_model_award.description.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_award.certificate_file" resname="tx_ebastrophotography_domain_model_award.certificate_file">
+				<source>Certificate File</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_award.certificate_file.description" resname="tx_ebastrophotography_domain_model_award.certificate_file.description">
+				<source>Certificate File</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_award.source_url" resname="tx_ebastrophotography_domain_model_award.source_url">
+				<source>Source Url</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_award.source_url.description" resname="tx_ebastrophotography_domain_model_award.source_url.description">
+				<source>Source Url</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_award.active" resname="tx_ebastrophotography_domain_model_award.active">
+				<source>Active</source>
+			</trans-unit>
+			<trans-unit id="tx_ebastrophotography_domain_model_award.active.description" resname="tx_ebastrophotography_domain_model_award.active.description">
+				<source>Active</source>
+			</trans-unit>
+			<trans-unit id="tx_eb_astrophotography_imagegallery.name" resname="tx_eb_astrophotography_imagegallery.name">
+				<source>Image Gallery</source>
+			</trans-unit>
+			<trans-unit id="tx_eb_astrophotography_imagegallery.description" resname="tx_eb_astrophotography_imagegallery.description">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="tx_eb_astrophotography_skyatlas.name" resname="tx_eb_astrophotography_skyatlas.name">
+				<source>Sky Atlas</source>
+			</trans-unit>
+			<trans-unit id="tx_eb_astrophotography_skyatlas.description" resname="tx_eb_astrophotography_skyatlas.description">
+				<source></source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

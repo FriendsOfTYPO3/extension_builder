@@ -1,0 +1,46 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<table class="tx-eb-astrophotography">
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_telescope.name" /></td>
+		<td>{telescope.name}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_telescope.brand" /></td>
+		<td>{telescope.brand}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_telescope.telescope_type" /></td>
+		<td>{telescope.telescopeType}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_telescope.focal_length" /></td>
+		<td>{telescope.focalLength}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_telescope.aperture" /></td>
+		<td>{telescope.aperture}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_telescope.focal_ratio" /></td>
+		<td>{telescope.focalRatio}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_telescope.purchase_date" /></td>
+		<td>{telescope.purchaseDate -> f:format.date()}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_telescope.active" /></td>
+		<td>{telescope.active}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_telescope.notes" /></td>
+		<td>{telescope.notes}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_ebastrophotography_domain_model_telescope.image" /></td>
+		<td>
+				<f:image src="{telescope.image.originalResource.publicUrl}" width="200"/>
+            </td>
+	</tr>
+</table>
+</html>

@@ -1,0 +1,43 @@
+plugin.tx_ebastrophotography_imagegallery {
+    view {
+        # cat=plugin.tx_ebastrophotography_imagegallery/file; type=string; label=Path to template root (FE)
+        templateRootPath = EXT:eb_astrophotography/Resources/Private/Templates/
+        # cat=plugin.tx_ebastrophotography_imagegallery/file; type=string; label=Path to template partials (FE)
+        partialRootPath = EXT:eb_astrophotography/Resources/Private/Partials/
+        # cat=plugin.tx_ebastrophotography_imagegallery/file; type=string; label=Path to template layouts (FE)
+        layoutRootPath = EXT:eb_astrophotography/Resources/Private/Layouts/
+    }
+    persistence {
+        # cat=plugin.tx_ebastrophotography_imagegallery//a; type=string; label=Default storage PID
+        storagePid =
+    }
+}
+plugin.tx_ebastrophotography_skyatlas {
+    view {
+        # cat=plugin.tx_ebastrophotography_skyatlas/file; type=string; label=Path to template root (FE)
+        templateRootPath = EXT:eb_astrophotography/Resources/Private/Templates/
+        # cat=plugin.tx_ebastrophotography_skyatlas/file; type=string; label=Path to template partials (FE)
+        partialRootPath = EXT:eb_astrophotography/Resources/Private/Partials/
+        # cat=plugin.tx_ebastrophotography_skyatlas/file; type=string; label=Path to template layouts (FE)
+        layoutRootPath = EXT:eb_astrophotography/Resources/Private/Layouts/
+    }
+    persistence {
+        # cat=plugin.tx_ebastrophotography_skyatlas//a; type=string; label=Default storage PID
+        storagePid =
+    }
+}
+
+module.tx_ebastrophotography_astromanager {
+    view {
+        # cat=module.tx_ebastrophotography_astromanager/file; type=string; label=Path to template root (BE)
+        templateRootPath = EXT:eb_astrophotography/Resources/Private/Backend/Templates/
+        # cat=module.tx_ebastrophotography_astromanager/file; type=string; label=Path to template partials (BE)
+        partialRootPath = EXT:eb_astrophotography/Resources/Private/Backend/Partials/
+        # cat=module.tx_ebastrophotography_astromanager/file; type=string; label=Path to template layouts (BE)
+        layoutRootPath = EXT:eb_astrophotography/Resources/Private/Backend/Layouts/
+    }
+    persistence {
+        # cat=module.tx_ebastrophotography_astromanager//a; type=string; label=Default storage PID
+        storagePid =
+    }
+}
