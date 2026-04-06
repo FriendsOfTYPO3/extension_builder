@@ -345,7 +345,7 @@ class ClassBuilder implements SingletonInterface
             $setterMethod->getParameterByPosition(0)
                 ->setName($propertyName)
                 ->setTypeHint($domainProperty->getTypeHint() ?? '')
-                ->setTypeForParamTag($domainProperty->getTypeForComment());
+                ->setTypeForParamTag($domainProperty->getTypeForComment() ?? '');
         }
         if (!$setterMethod->hasDescription()) {
             $setterMethod->setDescription('Sets the ' . $propertyName);
@@ -468,7 +468,7 @@ class ClassBuilder implements SingletonInterface
             $removeParameter->setName(Tools::getParameterName($domainProperty, 'remove'))
                 ->setVarType($domainProperty->getForeignClassName() ?? '')
                 ->setTypeHint($domainProperty->getForeignClassName() ?? '')
-                ->setTypeForParamTag($domainProperty->getTypeForComment());
+                ->setTypeForParamTag($domainProperty->getTypeForComment() ?? '');
             $removeMethod->setParameter($removeParameter);
         }
 
