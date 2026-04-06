@@ -639,6 +639,7 @@ class Extension
     {
         $extensionKey = $this->extensionKey;
         $composerExtensionKey = strtolower(str_replace('_', '-', $extensionKey));
+        $versionConstraints = $this->getVersionConstraints();
         $info = [
             'name' => strtolower(str_replace('_', '', GeneralUtility::camelCaseToLowerCaseUnderscored($this->vendorName))) . '/' . $composerExtensionKey,
             'type' => 'typo3-cms-extension',
@@ -646,10 +647,11 @@ class Extension
             'authors' => [],
             'license' => 'GPL-2.0-or-later',
             'require' => [
-                'typo3/cms-core' => '^11.5',
+                'php' => $versionConstraints['php'],
+                'typo3/cms-core' => $versionConstraints['typo3/cms-core'],
             ],
             'require-dev' => [
-                'typo3/testing-framework' => '^6.9.0',
+                'typo3/testing-framework' => $versionConstraints['typo3/testing-framework'],
             ],
             'autoload' => [
                 'psr-4' => [
@@ -660,9 +662,6 @@ class Extension
                 'psr-4' => [
                     $this->getNamespaceName() . '\\Tests\\' => 'Tests',
                 ],
-            ],
-            'replace' => [
-                'typo3-ter/' . $composerExtensionKey => 'self.version',
             ],
             'config' => [
                 'vendor-dir' => '.Build/vendor',
@@ -690,5 +689,22 @@ class Extension
             $info['authors'][] = $author;
         }
         return $info;
+    }
+
+    private function getVersionConstraints(): array
+    {
+        $majorVersion = (int)$this->targetVersion;
+        return match ($majorVersion) {
+            12 => [
+                'php' => '>=8.1',
+                'typo3/cms-core' => '^12.4',
+                'typo3/testing-framework' => '^8.0',
+            ],
+            default => [
+                'php' => '>=8.2',
+                'typo3/cms-core' => '^13.4',
+                'typo3/testing-framework' => '^9.0',
+            ],
+        };
     }
 }

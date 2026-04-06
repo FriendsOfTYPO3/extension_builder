@@ -10,10 +10,11 @@
 	],
 	"license": "GPL-2.0-or-later",
 	"require": {
-		"typo3/cms-core": "^11.5"
+		"php": ">=8.2",
+		"typo3/cms-core": "^13.4"
 	},
 	"require-dev": {
-		"typo3/testing-framework": "^6.9.0"
+		"typo3/testing-framework": "^9.0"
 	},
 	"autoload": {
 		"psr-4": {
@@ -24,9 +25,6 @@
 		"psr-4": {
 			"FIXTURE\\TestExtension\\Tests\\": "Tests"
 		}
-	},
-	"replace": {
-		"typo3-ter/test-extension": "self.version"
 	},
 	"config": {
 		"vendor-dir": ".Build/vendor",

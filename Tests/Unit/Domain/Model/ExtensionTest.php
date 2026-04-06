@@ -67,4 +67,64 @@ class ExtensionTest extends BaseUnitTest
         self::assertEquals('1', $persons[1]->getName(), 'Wrong ordering of Persons in Extension.');
         self::assertEquals('2', $persons[2]->getName(), 'Wrong ordering of Persons in Extension.');
     }
+
+    /**
+     * @test
+     */
+    public function getComposerInfoReturnsCorrectConstraintsForV12(): void
+    {
+        $this->extension->setExtensionKey('test_extension');
+        $this->extension->setVendorName('TestVendor');
+        $this->extension->setTargetVersion(12.4);
+
+        $composerInfo = $this->extension->getComposerInfo();
+
+        self::assertSame('>=8.1', $composerInfo['require']['php']);
+        self::assertSame('^12.4', $composerInfo['require']['typo3/cms-core']);
+        self::assertSame('^8.0', $composerInfo['require-dev']['typo3/testing-framework']);
+    }
+
+    /**
+     * @test
+     */
+    public function getComposerInfoReturnsCorrectConstraintsForV13(): void
+    {
+        $this->extension->setExtensionKey('test_extension');
+        $this->extension->setVendorName('TestVendor');
+        $this->extension->setTargetVersion(13.4);
+
+        $composerInfo = $this->extension->getComposerInfo();
+
+        self::assertSame('>=8.2', $composerInfo['require']['php']);
+        self::assertSame('^13.4', $composerInfo['require']['typo3/cms-core']);
+        self::assertSame('^9.0', $composerInfo['require-dev']['typo3/testing-framework']);
+    }
+
+    /**
+     * @test
+     */
+    public function getComposerInfoDoesNotContainTerReplace(): void
+    {
+        $this->extension->setExtensionKey('test_extension');
+        $this->extension->setVendorName('TestVendor');
+        $this->extension->setTargetVersion(13.4);
+
+        $composerInfo = $this->extension->getComposerInfo();
+
+        self::assertArrayNotHasKey('replace', $composerInfo);
+    }
+
+    /**
+     * @test
+     */
+    public function getComposerInfoContainsPhpConstraint(): void
+    {
+        $this->extension->setExtensionKey('test_extension');
+        $this->extension->setVendorName('TestVendor');
+        $this->extension->setTargetVersion(12.4);
+
+        $composerInfo = $this->extension->getComposerInfo();
+
+        self::assertArrayHasKey('php', $composerInfo['require']);
+    }
 }
