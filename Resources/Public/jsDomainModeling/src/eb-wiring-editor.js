@@ -165,7 +165,7 @@ export class EbWiringEditor extends LitElement {
         instruction.textContent = 'Run the following command in your project root to fix this:';
         const code = document.createElement('pre');
         code.style.cssText =
-            'background:var(--bs-secondary-bg,#f8f9fa);padding:0.75rem 1rem;border-radius:4px;font-size:0.9em;white-space:pre-wrap;';
+            'background:var(--bs-tertiary-bg);color:var(--bs-body-color);border:1px solid var(--bs-border-color);padding:0.75rem 1rem;border-radius:4px;font-size:0.9em;white-space:pre-wrap;';
         code.textContent = 'mkdir -p packages && composer config repositories.local path "packages/*"';
         content.appendChild(intro);
         content.appendChild(instruction);
