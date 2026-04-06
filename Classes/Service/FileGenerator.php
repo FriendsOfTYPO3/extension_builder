@@ -283,18 +283,8 @@ class FileGenerator
      */
     protected function generatePageTsConfig(): void
     {
-        if (!$this->extension->hasPlugins()) {
-            return;
-        }
-        try {
-            $fileContents = $this->renderTemplate(
-                'Configuration/page.tsconfigt',
-                ['extension' => $this->extension]
-            );
-            $this->writeFile($this->configurationDirectory . 'page.tsconfig', $fileContents);
-        } catch (Exception $e) {
-            throw new Exception('Could not write Configuration/page.tsconfig. Error: ' . $e->getMessage());
-        }
+        // Plugin wizard entries are registered automatically by ExtensionUtility::registerPlugin()
+        // when using PLUGIN_TYPE_CONTENT_ELEMENT, so no page.tsconfig generation is needed.
     }
 
     /**
