@@ -261,6 +261,41 @@ test.describe('Domain Model Canvas', () => {
     expect(isCollapsed).toBe(true);
   });
 
+  // EBUILDER-234: New model objects must have a UID generated upon creation
+  test('new model object gets a uid assigned on creation', async ({ page }) => {
+    const frame = new BackendPage(page).getContentFrame();
+    await frame.getByRole('button', { name: '+ Model Object' }).click();
+
+    const uid = await frame.locator('eb-wiring-editor').evaluate(async (el: any) => {
+      const layer = el.shadowRoot?.querySelector('eb-layer') as any;
+      await layer?.updateComplete;
+      return layer?.serialize()?.modules?.[0]?.value?.objectsettings?.uid;
+    });
+    expect(uid).toBeTruthy();
+  });
+
+  // EBUILDER-234: New relations must have a UID generated upon creation
+  test('new relation gets a uid assigned on creation', async ({ page }) => {
+    const frame = new BackendPage(page).getContentFrame();
+    await frame.getByRole('button', { name: '+ Model Object' }).click();
+
+    const uid = await frame.locator('eb-wiring-editor').evaluate(async (el: any) => {
+      const layer = el.shadowRoot?.querySelector('eb-layer') as any;
+      await layer?.updateComplete;
+      const container = layer?.shadowRoot?.querySelector('eb-container') as any;
+      if (!container) return null;
+      await container.updateComplete;
+
+      const relListField = container.shadowRoot?.querySelector('[name="relations"]') as any;
+      if (!relListField) return null;
+      relListField._addItem();
+      await relListField.updateComplete;
+
+      return layer.serialize()?.modules?.[0]?.value?.relationGroup?.relations?.[0]?.uid;
+    });
+    expect(uid).toBeTruthy();
+  });
+
   test('property advanced options toggle reveals hidden fields', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
     await frame.getByRole('button', { name: '+ Model Object' }).click();

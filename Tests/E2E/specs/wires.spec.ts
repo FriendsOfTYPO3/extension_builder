@@ -73,6 +73,15 @@ const FIXTURE: object = {
   },
 };
 
+/** Performs the load-dialog UI interactions to open the given extension. */
+async function openExtensionViaUI(page: any, frame: any, extKey: string): Promise<void> {
+  await frame.locator('#WiringEditor-loadButton-button').click();
+  const modal = page.locator('.t3js-modal');
+  await expect(modal).toBeVisible();
+  await modal.locator('select').selectOption(extKey);
+  await modal.locator('.t3js-modal-footer .btn-primary').click();
+}
+
 test.describe('Wire loading on extension open', () => {
   test.use({ storageState: AUTH_FILE });
 
@@ -106,13 +115,7 @@ test.describe('Wire loading on extension open', () => {
   // re-calculation of wire positions).
   test('wires have non-zero positions immediately after opening a saved extension', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
-
-    // Open the test extension via the load dialog
-    await frame.locator('#WiringEditor-loadButton-button').click();
-    const modal = page.locator('.t3js-modal');
-    await expect(modal).toBeVisible();
-    await modal.locator('select').selectOption(TEST_EXT_KEY);
-    await modal.locator('.t3js-modal-footer .btn-primary').click();
+    await openExtensionViaUI(page, frame, TEST_EXT_KEY);
 
     // Wait for the editor to finish loading
     const wireData = await frame.locator('eb-wiring-editor').evaluate(async (el: any) => {
@@ -151,5 +154,64 @@ test.describe('Wire loading on extension open', () => {
     const wire = wireData[0];
     const hasNonZeroPosition = wire.x1 !== 0 || wire.y1 !== 0 || wire.x2 !== 0 || wire.y2 !== 0;
     expect(hasNonZeroPosition).toBe(true);
+  });
+
+  test('loaded extension has correct relation data on Foo', async ({ page }) => {
+    const frame = new BackendPage(page).getContentFrame();
+    await openExtensionViaUI(page, frame, TEST_EXT_KEY);
+
+    const relations = await frame.locator('eb-wiring-editor').evaluate(async (el: any) => {
+      if (el._loading) {
+        await new Promise<void>((resolve) => {
+          const check = setInterval(() => {
+            if (!el._loading) { clearInterval(check); resolve(); }
+          }, 100);
+          setTimeout(() => { clearInterval(check); resolve(); }, 5000);
+        });
+      }
+      const layer = el.shadowRoot?.querySelector('eb-layer') as any;
+      if (!layer) return null;
+      await layer.updateComplete;
+      const containers = Array.from(layer.shadowRoot?.querySelectorAll('eb-container') ?? []) as any[];
+      await Promise.all(containers.map((c: any) => c.updateComplete));
+      return layer.serialize()?.modules?.[0]?.value?.relationGroup?.relations ?? null;
+    });
+
+    expect(relations).toHaveLength(1);
+    expect(relations[0]).toMatchObject({
+      relationName: 'bars',
+      relationType: 'zeroToMany',
+    });
+  });
+
+  test('wire in loaded extension connects Foo and Bar (different module IDs)', async ({ page }) => {
+    const frame = new BackendPage(page).getContentFrame();
+    await openExtensionViaUI(page, frame, TEST_EXT_KEY);
+
+    const wires = await frame.locator('eb-wiring-editor').evaluate(async (el: any) => {
+      if (el._loading) {
+        await new Promise<void>((resolve) => {
+          const check = setInterval(() => {
+            if (!el._loading) { clearInterval(check); resolve(); }
+          }, 100);
+          setTimeout(() => { clearInterval(check); resolve(); }, 5000);
+        });
+      }
+      const layer = el.shadowRoot?.querySelector('eb-layer') as any;
+      if (!layer) return null;
+      await layer.updateComplete;
+      const containers = Array.from(layer.shadowRoot?.querySelectorAll('eb-container') ?? []) as any[];
+      await Promise.all(containers.map((c: any) => c.updateComplete));
+      return layer.serialize()?.wires ?? null;
+    });
+
+    expect(wires).toHaveLength(1);
+    // When the fixture's REL_0 terminal is loaded and re-serialized, the Lit
+    // component maps it to the actual DOM terminal-id 'relationWire_0'.
+    expect(wires[0]).toMatchObject({
+      src: { terminal: 'relationWire_0' },
+      tgt: { terminal: 'SOURCES' },
+    });
+    expect(wires[0].src.moduleId).not.toBe(wires[0].tgt.moduleId);
   });
 });
