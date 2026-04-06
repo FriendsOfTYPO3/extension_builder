@@ -30,6 +30,7 @@ export class EbWiringEditor extends LitElement {
         smdUrl: { type: String, attribute: 'smd-url' },
         extensionName: { type: String, attribute: 'extension-name' },
         initialWarnings: { type: Array, attribute: 'initial-warnings' },
+        composerWarning: { type: String, attribute: 'composer-warning' },
         _loading: { state: true },
         _extensionData: { state: true },
         _advancedMode: { state: true },
@@ -134,10 +135,46 @@ export class EbWiringEditor extends LitElement {
         this.smdUrl = '';
         this.extensionName = '';
         this.initialWarnings = [];
+        this.composerWarning = '';
         this._loading = false;
         this._extensionData = null;
         this._advancedMode = false;
         this._leftCollapsed = false;
+    }
+
+    async firstUpdated() {
+        if (this.composerWarning) {
+            this._showComposerWarningModal();
+        }
+    }
+
+    /**
+     * Show a TYPO3 Modal warning dialog when TYPO3 runs in composer mode but
+     * no local path repository for "packages/*" is configured in composer.json.
+     */
+    _showComposerWarningModal() {
+        const content = document.createElement('div');
+        const intro = document.createElement('p');
+        intro.textContent =
+            'TYPO3 is running in composer mode, but no local path repository for "packages/*" is configured in your composer.json. ' +
+            'The Extension Builder cannot save extensions without this configuration.';
+        const instruction = document.createElement('p');
+        instruction.textContent = 'Run the following command in your project root to fix this:';
+        const code = document.createElement('pre');
+        code.style.cssText =
+            'background:var(--bs-secondary-bg,#f8f9fa);padding:0.75rem 1rem;border-radius:4px;font-size:0.9em;white-space:pre-wrap;';
+        code.textContent = 'mkdir -p packages && composer config repositories.local path "packages/*"';
+        content.appendChild(intro);
+        content.appendChild(instruction);
+        content.appendChild(code);
+
+        Modal.confirm('Composer Mode — Configuration Required', content, Severity.warning, [
+            {
+                text: 'Close',
+                btnClass: 'btn-warning',
+                trigger: () => Modal.dismiss(),
+            },
+        ]);
     }
 
     async connectedCallback() {
@@ -416,9 +453,7 @@ export class EbWiringEditor extends LitElement {
                             <span aria-hidden="true">☰</span>
                         </button>
                     </div>
-                    <div class="left-panel-content">
-                        ${renderFields(extensionPropertiesFields)}
-                    </div>
+                    <div class="left-panel-content">${renderFields(extensionPropertiesFields)}</div>
                 </div>
                 <div class="center-panel" role="main">
                     ${this._loading ? html`<div class="loading">Loading...</div>` : html`<eb-layer></eb-layer>`}

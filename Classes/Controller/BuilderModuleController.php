@@ -125,13 +125,15 @@ class BuilderModuleController extends ActionController
         $this->setLocallangSettings();
 
         $initialWarnings = [];
+        $composerWarning = false;
         if (!$this->extensionService->isStoragePathConfigured()) {
-            $initialWarnings[] = ExtensionService::COMPOSER_PATH_WARNING;
+            $composerWarning = true;
         }
         $dispatchRpcUrl = (string)$this->backendUriBuilder->buildUriFromRoute('tools_extensionbuilder.BuilderModule_dispatchRpc');
 
         $this->moduleTemplate->assign('dispatchRpcUrl', $dispatchRpcUrl);
         $this->moduleTemplate->assign('initialWarnings', $initialWarnings);
+        $this->moduleTemplate->assign('composerWarning', $composerWarning);
         $GLOBALS['BE_USER']->pushModuleData('extensionbuilder', ['firstTime' => 0]);
 
         return $this->moduleTemplate->renderResponse('Domainmodelling');
