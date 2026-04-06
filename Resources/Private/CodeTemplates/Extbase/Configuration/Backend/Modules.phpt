@@ -4,7 +4,7 @@ return [<f:for each="{extension.BackendModules}" as="backendModule">
         'parent' => '{backendModule.mainModule}',
         'position' => [],
         'access' => 'user,group',
-        'iconIdentifier' => 'EXT:{extension.extensionKey}/Resources/Public/Icons/user_mod_{backendModule.key}.svg',
+        'iconIdentifier' => '{extension.extensionKey}-module-{backendModule.key}',
         'labels' => 'LLL:EXT:{extension.extensionKey}/Resources/Private/Language/locallang_{backendModule.key}.xlf',
         'extensionName' => '{extension.extensionName}',
         'controllerActions' => [<f:if condition="{backendModule.controllerActionCombinations}"><f:then>
