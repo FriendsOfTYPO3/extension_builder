@@ -8,7 +8,7 @@
         layoutRootPaths.1 = <k:curlyBrackets>$plugin.{extension.shortExtensionKey}_{plugin.key}.view.layoutRootPath</k:curlyBrackets>
     </k:curlyBrackets>
     persistence {
-        storagePid = <k:curlyBrackets>$plugin.{extension.shortExtensionKey}_{plugin.key}.persistence.storagePid</k:curlyBrackets>
+        #storagePid = <k:curlyBrackets>$plugin.{extension.shortExtensionKey}_{plugin.key}.persistence.storagePid</k:curlyBrackets>
         #recursive = 1
     }
     features {
