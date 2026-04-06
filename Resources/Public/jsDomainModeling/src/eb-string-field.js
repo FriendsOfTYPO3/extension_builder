@@ -1,6 +1,7 @@
-import { html } from 'lit';
+import { html, css } from 'lit';
 import { EbField } from './eb-field.js';
 import { formStyles } from './styles/form-styles.js';
+import { translate } from './translate.js';
 
 /**
  * Single-line text input with built-in string transformation and validation.
@@ -28,10 +29,33 @@ export class EbStringField extends EbField {
         forbiddenPrefixes: { type: String, attribute: 'forbidden-prefixes' },
         minLength: { type: Number, attribute: 'min-length' },
         maxLength: { type: Number, attribute: 'max-length' },
+        description: { type: String },
+        helpLink: { type: String, attribute: 'help-link' },
         _error: { state: true },
     };
 
-    static styles = [formStyles];
+    static styles = [
+        formStyles,
+        css`
+            .help-link {
+                font-size: 0.75em;
+                color: var(--bs-secondary-color, #6c757d);
+                text-decoration: none;
+                margin-left: 0.25rem;
+                opacity: 0.7;
+            }
+            .help-link:hover {
+                opacity: 1;
+                text-decoration: underline;
+            }
+            .help-text {
+                display: block;
+                margin-top: 0.2rem;
+                font-size: 0.8em;
+                color: var(--bs-secondary-color, #6c757d);
+            }
+        `,
+    ];
 
     _getValidationError(v) {
         if (this.required && !v) {
@@ -112,6 +136,9 @@ export class EbStringField extends EbField {
         const errorId = `${inputId}-error`;
         return html`
             ${this.label ? html`<label class="form-label" for="${inputId}">${this.label}</label>` : ''}
+            ${this.helpLink
+                ? html`<a href="${this.helpLink}" target="_blank" class="help-link" title="Documentation">?</a>`
+                : ''}
             <input
                 id="${inputId}"
                 class="form-control${this._error ? ' is-invalid' : ''}"
@@ -124,6 +151,7 @@ export class EbStringField extends EbField {
                 @input="${this._onInput}"
             />
             ${this._error ? html`<div id="${errorId}" class="invalid-feedback" role="alert">${this._error}</div>` : ''}
+            ${this.description ? html`<small class="help-text">${translate(this.description)}</small>` : ''}
         `;
     }
 }

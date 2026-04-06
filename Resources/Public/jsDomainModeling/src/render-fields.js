@@ -29,6 +29,8 @@ export function renderFieldDef(fieldDef) {
                 label="${translate(p.label ?? '')}"
                 ?required="${p.required}"
                 ?advanced="${p.advancedMode || false}"
+                description="${translate(p.description ?? '')}"
+                help-link="${p.helpLink ?? ''}"
                 type-invite="${p.typeInvite ?? ''}"
                 placeholder="${p.placeholder ?? ''}"
                 .value="${p.value ?? ''}"
@@ -51,6 +53,8 @@ export function renderFieldDef(fieldDef) {
                 name="${p.name}"
                 label="${translate(p.label ?? '')}"
                 ?advanced="${p.advancedMode || false}"
+                description="${translate(p.description ?? '')}"
+                help-link="${p.helpLink ?? ''}"
                 placeholder="${p.placeholder ?? ''}"
                 .value="${p.value ?? ''}"
             ></eb-textarea-field>`;
@@ -60,6 +64,8 @@ export function renderFieldDef(fieldDef) {
                 name="${p.name}"
                 label="${translate(p.label ?? '')}"
                 ?advanced="${p.advancedMode || false}"
+                description="${translate(p.description ?? '')}"
+                help-link="${p.helpLink ?? ''}"
                 .selectValues="${p.selectValues ?? []}"
                 .selectOptions="${p.selectOptions ?? []}"
                 .value="${p.value ?? p.selectValues?.[0] ?? ''}"
@@ -70,6 +76,8 @@ export function renderFieldDef(fieldDef) {
                 name="${p.name}"
                 label="${translate(p.label ?? '')}"
                 ?advanced="${p.advancedMode || false}"
+                description="${translate(p.description ?? '')}"
+                help-link="${p.helpLink ?? ''}"
                 .value="${p.value ?? false}"
             ></eb-boolean-field>`;
 

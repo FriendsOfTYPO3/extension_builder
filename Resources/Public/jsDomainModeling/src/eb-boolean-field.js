@@ -1,6 +1,7 @@
-import { html } from 'lit';
+import { html, css } from 'lit';
 import { EbField } from './eb-field.js';
 import { formStyles } from './styles/form-styles.js';
+import { translate } from './translate.js';
 
 /**
  * Checkbox field for boolean values.
@@ -11,9 +12,32 @@ import { formStyles } from './styles/form-styles.js';
 export class EbBooleanField extends EbField {
     static properties = {
         ...EbField.properties,
+        description: { type: String },
+        helpLink: { type: String, attribute: 'help-link' },
     };
 
-    static styles = [formStyles];
+    static styles = [
+        formStyles,
+        css`
+            .help-link {
+                font-size: 0.75em;
+                color: var(--bs-secondary-color, #6c757d);
+                text-decoration: none;
+                margin-left: 0.25rem;
+                opacity: 0.7;
+            }
+            .help-link:hover {
+                opacity: 1;
+                text-decoration: underline;
+            }
+            .help-text {
+                display: block;
+                margin-top: 0.2rem;
+                font-size: 0.8em;
+                color: var(--bs-secondary-color, #6c757d);
+            }
+        `,
+    ];
 
     _onChange(e) {
         this.value = e.target.checked;
@@ -41,7 +65,11 @@ export class EbBooleanField extends EbField {
                     id="eb-bool-${this.name}"
                 />
                 <label class="form-check-label" for="eb-bool-${this.name}"> ${this.label || ''} </label>
+                ${this.helpLink
+                    ? html`<a href="${this.helpLink}" target="_blank" class="help-link" title="Documentation">?</a>`
+                    : ''}
             </div>
+            ${this.description ? html`<small class="help-text">${translate(this.description)}</small>` : ''}
         `;
     }
 }
