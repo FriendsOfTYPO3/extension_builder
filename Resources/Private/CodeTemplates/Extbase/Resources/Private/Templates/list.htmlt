@@ -23,8 +23,6 @@ Otherwise your changes will be overwritten the next time you save the extension 
             <f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
             <th><k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag></th>
             </f:if></f:for>
-            <th></th>
-            <th></th>
         </tr>
         </k:format.removeMultipleNewlines>
         <k:format.removeMultipleNewlines>
@@ -36,14 +34,9 @@ Otherwise your changes will be overwritten the next time you save the extension 
                     <f:else><k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets></f:else>
                 </f:if><k:openingTag>/f:link.action</k:openingTag></td>
             </f:if></f:for>
-
-                <td><k:openingTag>f:link.action action="edit" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()} : {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Edit<k:openingTag>/f:link.action</k:openingTag></td>
-                <td><k:openingTag>f:link.action action="delete" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()} : {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Delete<k:openingTag>/f:link.action</k:openingTag></td>
             </tr>
         <k:openingTag>/f:for</k:openingTag>
         </k:format.removeMultipleNewlines>
     </table>
-
-    <k:openingTag>f:link.action action="new"</k:openingTag>New {domainObject.name}<k:openingTag>/f:link.action</k:openingTag>
 <k:openingTag>/f:section</k:openingTag>
 <k:openingTag>/html</k:openingTag></f:format.raw>
