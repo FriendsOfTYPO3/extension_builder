@@ -95,6 +95,7 @@ export class EbLayer extends LitElement {
         super.connectedCallback();
         this.addEventListener('terminal-connect', this._onTerminalConnect.bind(this));
         this.addEventListener('container-moved', this._onContainerMoved.bind(this));
+        this.addEventListener('container-removed', this._onContainerRemoved.bind(this));
         this._boundPointerMove = this._onPointerMove.bind(this);
         this._boundPointerUp = this._onPointerUp.bind(this);
         window.addEventListener('pointermove', this._boundPointerMove);
@@ -132,6 +133,12 @@ export class EbLayer extends LitElement {
 
     _onContainerMoved(e) {
         this._updateWirePositions();
+    }
+
+    _onContainerRemoved(e) {
+        const { moduleId } = e.detail;
+        this._containers = this._containers.filter((c) => c.moduleId !== moduleId);
+        this._wires = this._wires.filter((w) => w.srcModuleId !== moduleId && w.tgtModuleId !== moduleId);
     }
 
     _onPointerMove(e) {

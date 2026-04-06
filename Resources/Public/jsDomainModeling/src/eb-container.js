@@ -14,6 +14,7 @@ import { formStyles } from './styles/form-styles.js';
  *
  * @element eb-container
  * @fires container-moved - During drag with `{ moduleId, x, y }` detail
+ * @fires container-removed - When the delete button is clicked with `{ moduleId }` detail
  */
 export class EbContainer extends LitElement {
     static properties = {
@@ -55,6 +56,21 @@ export class EbContainer extends LitElement {
             .card-body {
                 padding: 0.5rem 0.75rem;
                 font-size: 12px;
+            }
+            .delete-btn {
+                position: absolute;
+                top: 0.25rem;
+                right: 0.25rem;
+                background: none;
+                border: none;
+                color: rgba(255, 255, 255, 0.8);
+                cursor: pointer;
+                font-size: 16px;
+                line-height: 1;
+                padding: 0 2px;
+            }
+            .delete-btn:hover {
+                color: #fff;
             }
         `,
     ];
@@ -140,6 +156,17 @@ export class EbContainer extends LitElement {
         this._name = e.detail.value;
     }
 
+    _onDeleteClick(e) {
+        e.stopPropagation();
+        this.dispatchEvent(
+            new CustomEvent('container-removed', {
+                bubbles: true,
+                composed: true,
+                detail: { moduleId: this.moduleId },
+            })
+        );
+    }
+
     get _fields() {
         return modelObjectModule.container.fields;
     }
@@ -194,6 +221,7 @@ export class EbContainer extends LitElement {
                     @inplace-change="${this._onNameChange}"
                 >
                 </eb-inplace-edit>
+                <button class="delete-btn" @click="${this._onDeleteClick}" title="Remove model object">×</button>
             </div>
             <div class="card-body">${renderFields(this._fields.slice(1))}</div>
         `;
