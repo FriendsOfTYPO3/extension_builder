@@ -216,6 +216,10 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $extension->setGenerateEditorConfig(true);
         }
 
+        if ($propertyConfiguration['emConf']['generateSiteSet'] ?? false) {
+            $extension->setGenerateSiteSet(true);
+        }
+
         // various extension properties
         $extension->setVersion($propertyConfiguration['emConf']['version'] ?? '1.0.0');
 

@@ -541,6 +541,50 @@ class FileGeneratorTest extends BaseFunctionalTest
         }
     }
 
+    /**
+     * @test
+     */
+    public function generateSiteSetFilesWhenActive(): void
+    {
+        $plugin = new Plugin();
+        $plugin->setName('Test');
+        $plugin->setKey('test');
+        $this->extension->addPlugin($plugin);
+        $this->extension->setGenerateSiteSet(true);
+
+        $this->fileGenerator->build($this->extension);
+
+        $extensionDir = $this->extension->getExtensionDir();
+        $extensionName = $this->extension->getExtensionName();
+        $setsDir = 'Configuration/Sets/' . $extensionName . '/';
+
+        self::assertFileExists($extensionDir . $setsDir . 'config.yaml');
+        self::assertFileExists($extensionDir . $setsDir . 'setup.typoscript');
+        self::assertFileExists($extensionDir . $setsDir . 'constants.typoscript');
+        self::assertFileDoesNotExist($extensionDir . 'Configuration/TCA/Overrides/sys_template.php');
+    }
+
+    /**
+     * @test
+     */
+    public function generateClassicFilesWhenSiteSetInactive(): void
+    {
+        $plugin = new Plugin();
+        $plugin->setName('Test');
+        $plugin->setKey('test');
+        $this->extension->addPlugin($plugin);
+        $this->extension->setGenerateSiteSet(false);
+
+        $this->fileGenerator->build($this->extension);
+
+        $extensionDir = $this->extension->getExtensionDir();
+
+        self::assertFileExists($extensionDir . 'Configuration/TCA/Overrides/sys_template.php');
+        self::assertFileExists($extensionDir . 'Configuration/TypoScript/setup.typoscript');
+        self::assertFileExists($extensionDir . 'Configuration/TypoScript/constants.typoscript');
+        self::assertDirectoryDoesNotExist($extensionDir . 'Configuration/Sets');
+    }
+
     public static function getDeprecatedTypoScriptExtensionsDataProvider(): array
     {
         return [['ts'], ['txt']];

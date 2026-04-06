@@ -71,6 +71,14 @@ class ExtensionTest extends BaseUnitTest
     /**
      * @test
      */
+    public function generateSiteSetDefaultValueIsFalse(): void
+    {
+        self::assertFalse($this->extension->getGenerateSiteSet());
+    }
+
+    /**
+     * @test
+     */
     public function getComposerInfoReturnsCorrectConstraintsForV12(): void
     {
         $this->extension->setExtensionKey('test_extension');

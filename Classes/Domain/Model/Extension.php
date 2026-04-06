@@ -58,6 +58,7 @@ class Extension
     protected bool $generateDocumentationTemplate = false;
     protected bool $generateEmptyGitRepository = false;
     protected bool $generateEditorConfig = false;
+    protected bool $generateSiteSet = false;
     protected string $sourceLanguage = 'en';
     /**
      * The extension's state. One of the STATE_* constants.
@@ -623,6 +624,16 @@ class Extension
     public function setGenerateEditorConfig(bool $generateEditorConfig): void
     {
         $this->generateEditorConfig = $generateEditorConfig;
+    }
+
+    public function getGenerateSiteSet(): bool
+    {
+        return $this->generateSiteSet;
+    }
+
+    public function setGenerateSiteSet(bool $generateSiteSet): void
+    {
+        $this->generateSiteSet = $generateSiteSet;
     }
 
     public function getSourceLanguage(): string

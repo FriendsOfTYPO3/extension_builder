@@ -184,6 +184,10 @@ class FileGenerator
 
         $this->generateTyposcriptFiles();
 
+        if ($extension->getGenerateSiteSet() && $extension->hasPlugins()) {
+            $this->generateSiteSetFiles();
+        }
+
         $this->generateHtaccessFile();
 
         $this->generateLocallangFiles();
@@ -375,11 +379,13 @@ class FileGenerator
                 );
             }
 
-            $fileContents = $this->generateTCAOverrideSysTemplate();
-            $this->writeFile(
-                $this->configurationDirectory . 'TCA/Overrides/sys_template.php',
-                $fileContents
-            );
+            if (!$this->extension->getGenerateSiteSet() || !$this->extension->hasPlugins()) {
+                $fileContents = $this->generateTCAOverrideSysTemplate();
+                $this->writeFile(
+                    $this->configurationDirectory . 'TCA/Overrides/sys_template.php',
+                    $fileContents
+                );
+            }
 
             if ($this->extension->hasPlugins()) {
                 $fileContents = $this->generateTCAOverrideTtContent();
@@ -547,7 +553,8 @@ class FileGenerator
      */
     protected function generateTyposcriptFiles(): void
     {
-        if ($this->extension->hasPlugins() || $this->extension->hasBackendModules()) {
+        $generateClassic = !$this->extension->getGenerateSiteSet() || $this->extension->hasBackendModules();
+        if ($generateClassic && ($this->extension->hasPlugins() || $this->extension->hasBackendModules())) {
             // Generate TypoScript setup
             try {
                 $this->mkdir_deep($this->extensionDirectory, 'Configuration/TypoScript');
@@ -566,7 +573,9 @@ class FileGenerator
             } catch (Exception $e) {
                 throw new Exception('Could not generate typoscript constants, error: ' . $e->getMessage());
             }
+        }
 
+        if ($this->extension->hasPlugins() || $this->extension->hasBackendModules()) {
             // Generate Static TypoScript
             try {
                 if ($this->extension->getDomainObjectsThatNeedMappingStatements()) {
@@ -576,6 +585,44 @@ class FileGenerator
             } catch (Exception $e) {
                 throw new Exception('Could not generate static typoscript, error: ' . $e->getMessage());
             }
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function generateSiteSetFiles(): void
+    {
+        $extensionName = $this->extension->getExtensionName();
+        $setsDirectory = 'Configuration/Sets/' . $extensionName . '/';
+        $this->mkdir_deep($this->extensionDirectory, $setsDirectory);
+        $fullSetsDir = $this->extensionDirectory . $setsDirectory;
+
+        try {
+            $fileContents = $this->renderTemplate('Configuration/Sets/config.yamlt', [
+                'extension' => $this->extension,
+            ]);
+            $this->writeFile($fullSetsDir . 'config.yaml', $fileContents);
+        } catch (Exception $e) {
+            throw new Exception('Could not generate site set config.yaml, error: ' . $e->getMessage());
+        }
+
+        try {
+            $fileContents = $this->renderTemplate('Configuration/Sets/setup.typoscriptt', [
+                'extension' => $this->extension,
+            ]);
+            $this->writeFile($fullSetsDir . 'setup.typoscript', $fileContents);
+        } catch (Exception $e) {
+            throw new Exception('Could not generate site set setup.typoscript, error: ' . $e->getMessage());
+        }
+
+        try {
+            $fileContents = $this->renderTemplate('Configuration/Sets/constants.typoscriptt', [
+                'extension' => $this->extension,
+            ]);
+            $this->writeFile($fullSetsDir . 'constants.typoscript', $fileContents);
+        } catch (Exception $e) {
+            throw new Exception('Could not generate site set constants.typoscript, error: ' . $e->getMessage());
         }
     }
 

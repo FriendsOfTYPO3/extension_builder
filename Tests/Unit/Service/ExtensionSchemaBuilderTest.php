@@ -138,6 +138,30 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
     /**
      * @test
      */
+    public function conversionMapsGenerateSiteSet(): void
+    {
+        $input = [
+            'properties' => [
+                'description' => 'Test',
+                'extensionKey' => $this->extensionKey,
+                'name' => 'TestExt',
+                'vendorName' => 'Vendor',
+                'emConf' => [
+                    'state' => 'alpha',
+                    'version' => '1.0.0',
+                    'generateSiteSet' => true,
+                ],
+            ],
+            'storagePath' => 'tmp',
+        ];
+
+        $extension = $this->extensionSchemaBuilder->build($input);
+        self::assertTrue($extension->getGenerateSiteSet());
+    }
+
+    /**
+     * @test
+     */
     public function conversionExtractsWholeExtensionMetadataWithRelations(): void
     {
         $input = [

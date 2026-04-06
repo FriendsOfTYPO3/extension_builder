@@ -182,6 +182,15 @@ export const extensionPropertiesFields = [
                     },
                 },
                 {
+                    type: 'boolean',
+                    inputParams: {
+                        name: 'generateSiteSet',
+                        label: 'generateSiteSet',
+                        description: 'descr_generateSiteSet',
+                        value: 0,
+                    },
+                },
+                {
                     type: 'string',
                     inputParams: {
                         name: 'sourceLanguage',

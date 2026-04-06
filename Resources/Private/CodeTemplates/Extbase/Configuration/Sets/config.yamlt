@@ -1,0 +1,4 @@
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}name: {extension.extensionKey}/{extension.extensionKey}
+label: {extension.name -> k:format.quoteString()}
+dependencies:
+  - typo3/fluid-styled-content

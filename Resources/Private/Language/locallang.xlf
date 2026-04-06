@@ -151,6 +151,12 @@
 			<trans-unit id="descr_generateEmptyGitRepository" resname="descr_generateEmptyGitRepository">
 				<source>Check this if you want to generate an empty git repository for your extension and want to publish it later on.</source>
 			</trans-unit>
+			<trans-unit id="generateSiteSet" resname="generateSiteSet">
+				<source>Generate Site Set</source>
+			</trans-unit>
+			<trans-unit id="descr_generateSiteSet" resname="descr_generateSiteSet">
+				<source>Generate a TYPO3 v13 Site Set (Configuration/Sets/) instead of the classic addStaticFile approach. Recommended for TYPO3 v13+.</source>
+			</trans-unit>
 			<trans-unit id="sourceLanguage" resname="sourceLanguage">
 				<source>Source language for xliff files</source>
 			</trans-unit>
