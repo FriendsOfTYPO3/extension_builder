@@ -190,6 +190,7 @@ class NodeFactory implements SingletonInterface
             $paramNodeBuilder->setDefault($parameter->getDefaultValue());
         }
         $parameterNode = $paramNodeBuilder->getNode();
+        $parameterNode->flags = $parameter->getFlags();
         $parameterNode->setAttribute('startLine', $parameter->getStartLine());
         $parameterNode->setAttribute('endLine', $parameter->getEndLine());
         return $parameterNode;

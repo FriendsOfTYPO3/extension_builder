@@ -184,6 +184,22 @@ class ParserTest extends BaseUnitTest
         self::assertSame(count($fileObject->getNamespace()->getAliasDeclarations()), 2, 'Alias declaration not found!');
     }
 
+    /**
+     * @test
+     */
+    public function parsePromotedConstructorPropertyPreservesFlags(): void
+    {
+        $classFileObject = $this->parseFile('ClassWithPromotedConstructorProperty.php');
+        $constructor = $classFileObject->getFirstClass()->getMethod('__construct');
+        self::assertNotNull($constructor);
+
+        $parameter = $constructor->getParameterByPosition(0);
+        self::assertNotNull($parameter);
+        self::assertSame('someRepository', $parameter->getName());
+        // private readonly = MODIFIER_PRIVATE (4) | MODIFIER_READONLY (64)
+        self::assertSame(68, $parameter->getFlags());
+    }
+
     private function parseFile(string $fileName): File
     {
         return $this->parserService->parseFile($this->fixturesPath . $fileName);

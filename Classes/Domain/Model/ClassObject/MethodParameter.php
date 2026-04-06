@@ -37,6 +37,7 @@ class MethodParameter extends AbstractObject
     protected int $startLine = -1;
     protected int $endLine = -1;
     protected bool $passedByReference = false;
+    protected int $flags = 0;
 
     public function __construct(string $name)
     {
@@ -106,6 +107,16 @@ class MethodParameter extends AbstractObject
     public function setPassedByReference(bool $passedByReference): void
     {
         $this->passedByReference = $passedByReference;
+    }
+
+    public function getFlags(): int
+    {
+        return $this->flags;
+    }
+
+    public function setFlags(int $flags): void
+    {
+        $this->flags = $flags;
     }
 
     public function getTypeHint(): string

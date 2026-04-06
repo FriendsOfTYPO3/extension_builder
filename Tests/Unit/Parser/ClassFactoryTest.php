@@ -17,9 +17,12 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Tests\Unit\Parser;
 
+use EBT\ExtensionBuilder\Domain\Model\ClassObject\MethodParameter;
 use EBT\ExtensionBuilder\Parser\ClassFactory;
+use EBT\ExtensionBuilder\Parser\NodeFactory;
 use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 use PhpParser\BuilderFactory;
+use PhpParser\Node\Stmt\Class_;
 
 class ClassFactoryTest extends BaseUnitTest
 {
@@ -29,6 +32,25 @@ class ClassFactoryTest extends BaseUnitTest
     {
         parent::setUp();
         $this->classFactory = new ClassFactory();
+    }
+
+    /**
+     * @test
+     */
+    public function buildParameterNodePreservesPromotedPropertyFlags(): void
+    {
+        $nodeFactory = new NodeFactory();
+        $parameter = new MethodParameter('someRepository');
+        $parameter->setTypeHint('SomeRepository');
+        // private readonly = MODIFIER_PRIVATE (4) | MODIFIER_READONLY (64)
+        $parameter->setFlags(Class_::MODIFIER_PRIVATE | Class_::MODIFIER_READONLY);
+
+        $paramNode = $nodeFactory->buildParameterNode($parameter);
+
+        self::assertSame(
+            Class_::MODIFIER_PRIVATE | Class_::MODIFIER_READONLY,
+            $paramNode->flags
+        );
     }
 
     /**

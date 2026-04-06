@@ -135,6 +135,9 @@ class ClassFactory implements ClassFactoryInterface, SingletonInterface
             $parameter->setStartLine($param->getAttribute('startLine'));
             $parameter->setEndLine($param->getAttribute('endLine'));
             $parameter->setPassedByReference($param->byRef);
+            if ($param->flags !== 0) {
+                $parameter->setFlags($param->flags);
+            }
             if ($param->type !== null) {
                 $parameter->setTypeHint(NodeConverter::getNameFromNode($param->type));
                 if (!$getVarTypeFromParamTag) {
