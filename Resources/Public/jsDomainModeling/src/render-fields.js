@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { translate } from './translate.js';
 
 /**
@@ -16,6 +16,10 @@ export function renderFieldDef(fieldDef) {
 
     if (!type || p.className?.includes('hiddenField')) {
         return html`<eb-hidden-field name="${p.name}"></eb-hidden-field>`;
+    }
+
+    if (p.wirable) {
+        return nothing; // rendered as eb-terminal by eb-list-field
     }
 
     switch (type) {
