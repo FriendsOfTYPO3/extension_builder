@@ -2,7 +2,7 @@
 	"name": "friendsoftypo3/extension-builder",
 	"type": "typo3-cms-extension",
 	"description": "Tool to kickstart and maintain TYPO3 extensions",
-	"keywords": ["TYPO3", "extension", "extension_builder"],
+	"keywords": ["TYPO3", "extension", "extension_builder", "dev"],
 	"homepage": "https://extensions.typo3.org/extension/extension_builder",
 	"support": {
 		"issues": "https://github.com/FriendsOfTYPO3/extension_builder/issues",
