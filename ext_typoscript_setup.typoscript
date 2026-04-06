@@ -1,7 +1,0 @@
- # global configuration
-module.extension_builder {
-	settings{
-		codeTemplateRootPaths.0 = EXT:extension_builder/Resources/Private/CodeTemplates/Extbase/
-		codeTemplatePartialPaths.0 = EXT:extension_builder/Resources/Private/CodeTemplates/Extbase/Partials
-	}
-}
