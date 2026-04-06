@@ -145,8 +145,18 @@ export class EbListField extends LitElement {
     }
 
     _addItem() {
-        const uid = Date.now() + Math.floor(Math.random() * 1000);
+        const uid = parseInt(Date.now() * Math.random()) || Date.now();
+        const newIndex = this._items.length;
         this._items = [...this._items, { uid, collapsed: false, label: '' }];
+        this.updateComplete.then(() => {
+            const containers = Array.from(this.shadowRoot?.querySelectorAll('.item-content') ?? []);
+            const container = containers[newIndex];
+            if (!container) {
+                return;
+            }
+            const uidField = container.querySelector('[name="uid"]');
+            uidField?.setValue?.(String(uid));
+        });
         this._fireUpdated();
     }
 

@@ -319,13 +319,24 @@ export class EbLayer extends LitElement {
 
     addContainer(moduleData) {
         const nextId = this._containers.length;
+        const uid = parseInt(Date.now() * Math.random()) || Date.now();
+        const moduleDataWithUid = {
+            ...moduleData,
+            value: {
+                ...moduleData.value,
+                objectsettings: {
+                    ...moduleData.value?.objectsettings,
+                    uid: moduleData.value?.objectsettings?.uid || uid,
+                },
+            },
+        };
         this._containers = [
             ...this._containers,
             {
                 moduleId: nextId,
                 posX: 20 + nextId * 20,
                 posY: 20 + nextId * 20,
-                moduleData,
+                moduleData: moduleDataWithUid,
             },
         ];
     }
