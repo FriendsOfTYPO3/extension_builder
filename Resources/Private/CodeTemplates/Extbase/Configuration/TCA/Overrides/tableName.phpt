@@ -6,8 +6,8 @@ defined('TYPO3') || die();
 <f:for each="{domainObjects}" as="domainObject"><f:if condition="{domainObject.mappedToExistingTable}">
 <f:render partial="TCA/Columns.phpt" arguments="{extension: domainObject.extension, domainObject:domainObject, settings:settings}" />
 $GLOBALS['TCA']['{domainObject.databaseTableName}']['columns'][$GLOBALS['TCA']['{domainObject.databaseTableName}']['ctrl']['type']]['config']['items'][] = [
-    'LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}',
-    '{domainObject.recordType}'
+    'label' => 'LLL:EXT:{domainObject.extension.extensionKey}/Resources/Private/Language/locallang_db.xlf:{domainObject.mapToTable}.tx_extbase_type.{domainObject.recordType}',
+    'value' => '{domainObject.recordType}',
 ];
 </f:if></f:for>
 <f:if condition="{domainObject.mappedToExistingTable}">//{domainObject.mapToTable}</f:if>
