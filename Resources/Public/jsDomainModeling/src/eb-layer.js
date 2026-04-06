@@ -227,27 +227,30 @@ export class EbLayer extends LitElement {
             return;
         }
 
+        // PHP's reArrangeRelations() expects src = relation terminal (REL_N),
+        // tgt = SOURCES terminal. The UI drag is reversed (user starts from SOURCES,
+        // drops on the relation terminal), so we swap here before storing.
         const duplicate = this._wires.some(
-            (w) => w.srcModuleId === src.moduleId && w.tgtModuleId === tgtModuleId && w.tgtTerminal === tgtTerminalId
+            (w) => w.srcModuleId === tgtModuleId && w.tgtModuleId === src.moduleId && w.srcTerminal === tgtTerminalId
         );
         if (duplicate) {
             return;
         }
 
-        const srcEl = this._findTerminalEl(src.terminalId, src.moduleId);
-        const tgtEl = this._findTerminalEl(tgtTerminalId, tgtModuleId);
+        const srcEl = this._findTerminalEl(tgtTerminalId, tgtModuleId);
+        const tgtEl = this._findTerminalEl(src.terminalId, src.moduleId);
         const pos = srcEl && tgtEl ? this._getWirePositions(srcEl, tgtEl) : { x1: 0, y1: 0, x2: 0, y2: 0 };
 
         this._wires = [
             ...this._wires,
             {
-                id: `wire-${src.moduleId}-${src.terminalId}-${tgtModuleId}-${tgtTerminalId}`,
-                srcTerminal: src.terminalId,
-                tgtTerminal: tgtTerminalId,
-                srcUid: src.uid,
-                tgtUid,
-                srcModuleId: src.moduleId,
-                tgtModuleId,
+                id: `wire-${tgtModuleId}-${tgtTerminalId}-${src.moduleId}-${src.terminalId}`,
+                srcTerminal: tgtTerminalId,
+                tgtTerminal: src.terminalId,
+                srcUid: tgtUid,
+                tgtUid: src.uid,
+                srcModuleId: tgtModuleId,
+                tgtModuleId: src.moduleId,
                 ...pos,
             },
         ];
@@ -272,11 +275,14 @@ export class EbLayer extends LitElement {
     }
 
     _findTerminalEl(terminalId, moduleId) {
+        // PHP's reArrangeRelations() normalises relation terminal ids to
+        // "relationWire_N", but the DOM uses "REL_N". Map between the two.
+        const domTerminalId = terminalId.replace(/^relationWire_(\d+)$/, 'REL_$1');
         const container = this.shadowRoot.querySelector(`eb-container[module-id="${moduleId}"]`);
         if (!container) {
             return null;
         }
-        return this._deepQuerySelector(container, `eb-terminal[terminal-id="${terminalId}"]`);
+        return this._deepQuerySelector(container, `eb-terminal[terminal-id="${domTerminalId}"]`);
     }
 
     _deepQuerySelector(element, selector) {
@@ -290,7 +296,7 @@ export class EbLayer extends LitElement {
         }
         for (const child of root.querySelectorAll('*')) {
             if (child.shadowRoot) {
-                const found = child.shadowRoot.querySelector(selector);
+                const found = this._deepQuerySelector(child, selector);
                 if (found) {
                     return found;
                 }
@@ -333,8 +339,25 @@ export class EbLayer extends LitElement {
         }));
     }
 
+    async _awaitAllUpdates(element) {
+        if (!element.shadowRoot) {
+            return;
+        }
+        const litChildren = Array.from(element.shadowRoot.querySelectorAll('*')).filter(
+            (el) => el.updateComplete instanceof Promise
+        );
+        if (litChildren.length === 0) {
+            return;
+        }
+        await Promise.all(litChildren.map((el) => el.updateComplete));
+        await Promise.all(litChildren.map((el) => this._awaitAllUpdates(el)));
+    }
+
     addWires(wires, modules) {
-        this.updateComplete.then(() => {
+        this.updateComplete.then(async () => {
+            const containers = Array.from(this.shadowRoot.querySelectorAll('eb-container'));
+            await Promise.all(containers.map((c) => c.updateComplete));
+            await Promise.all(containers.map((c) => this._awaitAllUpdates(c)));
             this._wires = wires.map((wire) => {
                 const srcEl = this._findTerminalEl(wire.src.terminal, wire.src.moduleId);
                 const tgtEl = this._findTerminalEl(wire.tgt.terminal, wire.tgt.moduleId);

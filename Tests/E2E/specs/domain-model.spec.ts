@@ -229,8 +229,8 @@ test.describe('Domain Model Canvas', () => {
 
     expect(serializedWires).toHaveLength(1);
     expect(serializedWires[0]).toMatchObject({
-      src: { moduleId: expect.any(Number), terminal: 'SOURCES' },
-      tgt: { moduleId: expect.any(Number), terminal: 'REL_0' },
+      src: { moduleId: expect.any(Number), terminal: 'REL_0' },
+      tgt: { moduleId: expect.any(Number), terminal: 'SOURCES' },
     });
   });
 
