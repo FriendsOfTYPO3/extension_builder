@@ -20,6 +20,7 @@ export class EbLayer extends LitElement {
         _drawingWire: { state: true },
         _tempWire: { state: true },
         _hoveredWireId: { state: true },
+        _panOffset: { state: true },
     };
 
     static styles = css`
@@ -37,6 +38,12 @@ export class EbLayer extends LitElement {
             flex: 1;
             width: 100%;
             overflow: hidden;
+            cursor: grab;
+        }
+        #pan-surface {
+            position: absolute;
+            top: 0;
+            left: 0;
         }
         #wire-overlay {
             position: absolute;
@@ -89,6 +96,10 @@ export class EbLayer extends LitElement {
         this._drawingWire = null;
         this._tempWire = null;
         this._hoveredWireId = null;
+        this._panOffset = { x: 0, y: 0 };
+        this._isPanning = false;
+        this._panStartX = 0;
+        this._panStartY = 0;
     }
 
     connectedCallback() {
@@ -106,6 +117,19 @@ export class EbLayer extends LitElement {
         super.disconnectedCallback();
         window.removeEventListener('pointermove', this._boundPointerMove);
         window.removeEventListener('pointerup', this._boundPointerUp);
+    }
+
+    _onCanvasPointerDown(e) {
+        const canvas = this.shadowRoot.querySelector('#canvas');
+        const panSurface = this.shadowRoot.querySelector('#pan-surface');
+        if (e.target !== canvas && e.target !== panSurface) {
+            return;
+        }
+
+        this._isPanning = true;
+        this._panStartX = e.clientX - this._panOffset.x;
+        this._panStartY = e.clientY - this._panOffset.y;
+        canvas.style.cursor = 'grabbing';
     }
 
     _onTerminalConnect(e) {
@@ -142,6 +166,13 @@ export class EbLayer extends LitElement {
     }
 
     _onPointerMove(e) {
+        if (this._isPanning) {
+            this._panOffset = {
+                x: e.clientX - this._panStartX,
+                y: e.clientY - this._panStartY,
+            };
+            return;
+        }
         if (!this._drawingWire) {
             return;
         }
@@ -158,6 +189,12 @@ export class EbLayer extends LitElement {
     }
 
     _onPointerUp(e) {
+        if (this._isPanning) {
+            this._isPanning = false;
+            this.shadowRoot.querySelector('#canvas').style.cursor = 'grab';
+            this._updateWirePositions();
+            return;
+        }
         if (!this._drawingWire) {
             return;
         }
@@ -335,19 +372,22 @@ export class EbLayer extends LitElement {
     }
 
     render() {
+        const { x, y } = this._panOffset;
         return html`
-            <div id="canvas">
-                ${this._containers.map(
-                    (c) => html`
-                        <eb-container
-                            module-id="${c.moduleId}"
-                            pos-x="${c.posX}"
-                            pos-y="${c.posY}"
-                            .moduleData="${c.moduleData}"
-                        >
-                        </eb-container>
-                    `
-                )}
+            <div id="canvas" @pointerdown="${this._onCanvasPointerDown}">
+                <div id="pan-surface" style="transform: translate(${x}px, ${y}px)">
+                    ${this._containers.map(
+                        (c) => html`
+                            <eb-container
+                                module-id="${c.moduleId}"
+                                pos-x="${c.posX}"
+                                pos-y="${c.posY}"
+                                .moduleData="${c.moduleData}"
+                            >
+                            </eb-container>
+                        `
+                    )}
+                </div>
                 <svg id="wire-overlay">
                     ${this._wires.map((w) => {
                         const mid = this._wireMidpoint(w);

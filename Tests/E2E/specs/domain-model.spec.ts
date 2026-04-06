@@ -13,6 +13,51 @@ test.describe('Domain Model Canvas', () => {
     await backend.getContentFrame().locator('#WiringEditor-newButton-button').click();
   });
 
+  // EBUILDER-225: Canvas can be panned by dragging the background
+  test('canvas background drag pans all containers', async ({ page }) => {
+    const frame = new BackendPage(page).getContentFrame();
+
+    // Add a model object so the canvas is not empty
+    await frame.getByRole('button', { name: '+ Model Object' }).click();
+
+    const editor = frame.locator('eb-wiring-editor');
+
+    // Record the container position before panning
+    const posBefore = await editor.evaluate(async (el: any) => {
+      const layer = el.shadowRoot?.querySelector('eb-layer') as any;
+      await layer?.updateComplete;
+      const container = layer?.shadowRoot?.querySelector('eb-container') as any;
+      if (!container) return null;
+      const rect = container.getBoundingClientRect();
+      return { x: rect.left, y: rect.top };
+    });
+    expect(posBefore).not.toBeNull();
+
+    // Drag the canvas background (the layer element itself is a safe background target)
+    const layerLocator = editor.locator('eb-layer');
+    const layerBox = await layerLocator.boundingBox();
+    expect(layerBox).not.toBeNull();
+
+    // Start drag in the lower-right area of the canvas (unlikely to hit containers)
+    const startX = layerBox!.x + layerBox!.width * 0.8;
+    const startY = layerBox!.y + layerBox!.height * 0.8;
+    const dragDeltaX = 100;
+    const dragDeltaY = 80;
+
+    await page.mouse.move(startX, startY);
+    await page.mouse.down();
+    await page.mouse.move(startX + dragDeltaX, startY + dragDeltaY, { steps: 5 });
+    await page.mouse.up();
+
+    // Verify panOffset was updated
+    const panOffset = await editor.evaluate((el: any) => {
+      const layer = el.shadowRoot?.querySelector('eb-layer') as any;
+      return layer?._panOffset ?? null;
+    });
+    expect(panOffset).not.toBeNull();
+    expect(Math.abs(panOffset.x) + Math.abs(panOffset.y)).toBeGreaterThan(0);
+  });
+
   // EBUILDER-38: Add model object to canvas
   test('clicking "+ Model Object" adds an eb-container to the canvas', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
