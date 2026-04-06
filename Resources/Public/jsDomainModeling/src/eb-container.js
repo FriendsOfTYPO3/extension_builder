@@ -78,6 +78,19 @@ export class EbContainer extends LitElement {
             .delete-btn:hover {
                 color: #fff;
             }
+            .drag-handle {
+                display: inline-flex;
+                align-items: center;
+                margin-right: 0.4rem;
+                color: rgba(255, 255, 255, 0.6);
+                cursor: grab;
+                font-size: 14px;
+                line-height: 1;
+                user-select: none;
+            }
+            .drag-handle:hover {
+                color: #fff;
+            }
             .resize-handle {
                 position: absolute;
                 bottom: 0;
@@ -281,6 +294,7 @@ export class EbContainer extends LitElement {
     render() {
         return html`
             <div class="card-header">
+                <span class="drag-handle" aria-hidden="true">⠿</span>
                 <eb-terminal
                     type="input"
                     terminal-id="SOURCES"
