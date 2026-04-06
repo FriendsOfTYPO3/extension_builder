@@ -4,6 +4,7 @@ import * as path from 'path';
 import { spawnSync } from 'child_process';
 import { BackendPage } from '../pages/BackendPage';
 import { ExtensionBuilderPage } from '../pages/ExtensionBuilderPage';
+import { createScreenshotter } from '../helpers/screenshot';
 
 // Project root on the host — maps to /var/www/html/ inside the ddev container
 const PROJECT_ROOT = path.resolve(__dirname, '../../../../../');
@@ -21,21 +22,30 @@ test.describe('Generated Code Quality', () => {
    * to inspect.
    */
   test.beforeAll(async ({ browser }) => {
+    // Clean up from any previous run. Folder is NOT deleted in afterAll so you can inspect it.
+    if (fs.existsSync(EXT_BASE)) {
+      fs.rmSync(EXT_BASE, { recursive: true });
+    }
+
     const context = await browser.newContext({
       storageState: path.resolve(__dirname, '../.auth/user.json'),
       baseURL: 'https://extensionbuilder.ddev.site',
       ignoreHTTPSErrors: true,
     });
     const page = await context.newPage();
+    const ss = createScreenshotter(page, 'generated-code-setup');
 
     const backend = new BackendPage(page);
     await backend.navigateToModule('Extension Builder');
     const extBuilder = new ExtensionBuilderPage(backend.getContentFrame(), page);
     await extBuilder.waitForLoaded();
     await extBuilder.goToDomainModeller();
+    await ss('domain-modeller-loaded');
 
     await extBuilder.openNewExtension();
+    await ss('new-extension-form-open');
     await extBuilder.fillExtensionProperties('EB Test Generated', EXT_KEY, 'TestVendor');
+    await ss('properties-filled');
 
     const frame = backend.getContentFrame();
     await frame.locator('eb-wiring-editor').evaluate(async (el: any, extKey: string) => {
@@ -104,8 +114,10 @@ test.describe('Generated Code Quality', () => {
       }
     }, EXT_KEY);
 
+    await ss('model-and-plugin-configured');
     await extBuilder.generateExtension();
     await expect(extBuilder.getSuccessMessage()).toBeVisible({ timeout: 15000 });
+    await ss('success-message-visible');
 
     // Poll until ext_emconf.php appears on the host filesystem (ddev volume mount sync)
     const emconfPath = path.join(EXT_BASE, 'ext_emconf.php');
@@ -115,6 +127,7 @@ test.describe('Generated Code Quality', () => {
     }
 
     await context.close();
+    // No afterAll cleanup — inspect generated files in packages/eb_test_generated/ after the run.
   });
 
   test('reference extension directory exists after generation', () => {
@@ -288,7 +301,4 @@ test.describe('Generated Code Quality', () => {
     });
   });
 
-  test.afterAll(() => {
-    fs.rmSync(EXT_BASE, { recursive: true, force: true });
-  });
 });

@@ -47,3 +47,4 @@ Tests/E2E/.auth/
 playwright-report/
 test-results/
 .playwright-cli
+.playwright-screenshots

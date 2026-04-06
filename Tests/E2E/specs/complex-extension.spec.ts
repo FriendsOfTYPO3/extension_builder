@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { BackendPage } from '../pages/BackendPage';
 import { ExtensionBuilderPage } from '../pages/ExtensionBuilderPage';
+import { createScreenshotter } from '../helpers/screenshot';
 
 const EXT_KEY = 'eb_complex_test';
 // Tests/E2E/specs/ -> up 4 levels -> packages/
@@ -78,8 +79,11 @@ test.describe('Complex Extension Stress Test', () => {
   test.beforeAll(async ({ browser }) => {
     test.setTimeout(300_000);
 
-    // Clean up from any previous failed run
-    fs.rmSync(EXT_BASE, { recursive: true, force: true });
+    // Clean up from any previous run so tests start fresh.
+    // Folders are NOT deleted in afterAll so you can inspect them after the run.
+    if (fs.existsSync(EXT_BASE)) {
+      fs.rmSync(EXT_BASE, { recursive: true });
+    }
 
     const context = await browser.newContext({
       storageState: path.resolve(__dirname, '../.auth/user.json'),
@@ -89,12 +93,16 @@ test.describe('Complex Extension Stress Test', () => {
     const page = await context.newPage();
 
     const backend = new BackendPage(page);
+    const ss = createScreenshotter(page, 'complex-extension-setup');
     await backend.navigateToModule('Extension Builder');
     const extBuilder = new ExtensionBuilderPage(backend.getContentFrame(), page);
     await extBuilder.waitForLoaded();
     await extBuilder.goToDomainModeller();
+    await ss('domain-modeller-loaded');
     await extBuilder.openNewExtension();
+    await ss('new-extension-form-open');
     await extBuilder.fillExtensionProperties('EB Complex Test', EXT_KEY, 'AcmeCorp');
+    await ss('properties-filled');
 
     const frame = backend.getContentFrame();
 
@@ -182,6 +190,7 @@ test.describe('Complex Extension Stress Test', () => {
       { extKey: EXT_KEY, models: MODELS, cols: COLS, colSpacing: COL_SPACING, rowSpacing: ROW_SPACING }
     );
 
+    await ss('models-and-relations-configured');
     await extBuilder.generateExtension();
 
     // Poll for either the success notification or a "Save anyway" confirmation dialog.
@@ -207,11 +216,9 @@ test.describe('Complex Extension Stress Test', () => {
       await page.waitForTimeout(500);
     }
 
+    await ss('generation-complete');
     await context.close();
-  });
-
-  test.afterAll(() => {
-    fs.rmSync(EXT_BASE, { recursive: true, force: true });
+    // No afterAll cleanup — inspect generated files in packages/eb_complex_test/ after the run.
   });
 
   // --- Phase 1: File structure assertions (synchronous) ---
@@ -235,6 +242,7 @@ test.describe('Complex Extension Stress Test', () => {
   // --- Phase 2: Load-back assertions ---
 
   test('load: all 22 containers appear on canvas after loading the extension', async ({ page }) => {
+    const ss = createScreenshotter(page, 'complex-extension-load');
     const consoleErrors: string[] = [];
     page.on('console', msg => {
       if (msg.type() === 'error') consoleErrors.push(msg.text());
@@ -245,11 +253,13 @@ test.describe('Complex Extension Stress Test', () => {
     const extBuilder = new ExtensionBuilderPage(backend.getContentFrame(), page);
     await extBuilder.waitForLoaded();
     await extBuilder.goToDomainModeller();
+    await ss('domain-modeller-loaded');
 
     const frame = backend.getContentFrame();
     await frame.locator('#WiringEditor-loadButton-button').click();
     const modal = page.locator('.t3js-modal');
     await expect(modal).toBeVisible();
+    await ss('load-modal-open');
     await modal.locator('select').selectOption(EXT_KEY);
     await modal.locator('.btn-primary').click();
 
@@ -279,6 +289,7 @@ test.describe('Complex Extension Stress Test', () => {
       };
     });
 
+    await ss('22-containers-loaded');
     expect(result.extensionName).toBe(EXT_KEY);
     expect(result.containerCount).toBe(22);
     expect(consoleErrors).toHaveLength(0);
@@ -287,6 +298,7 @@ test.describe('Complex Extension Stress Test', () => {
   // --- Phase 3: Edit and re-save assertion ---
 
   test('edit: adding a property to Article does not corrupt other model files', async ({ page }) => {
+    const ss = createScreenshotter(page, 'complex-extension-edit');
     const consoleErrors: string[] = [];
     page.on('console', msg => {
       if (msg.type() === 'error') consoleErrors.push(msg.text());
@@ -297,12 +309,14 @@ test.describe('Complex Extension Stress Test', () => {
     const extBuilder = new ExtensionBuilderPage(backend.getContentFrame(), page);
     await extBuilder.waitForLoaded();
     await extBuilder.goToDomainModeller();
+    await ss('domain-modeller-loaded');
 
     // Load the extension
     const frame = backend.getContentFrame();
     await frame.locator('#WiringEditor-loadButton-button').click();
     const modal = page.locator('.t3js-modal');
     await expect(modal).toBeVisible();
+    await ss('load-modal-open');
     await modal.locator('select').selectOption(EXT_KEY);
     await modal.locator('.btn-primary').click();
 
@@ -360,6 +374,7 @@ test.describe('Complex Extension Stress Test', () => {
       await listField.updateComplete;
     });
 
+    await ss('viewcount-property-added');
     // Re-generate the extension (poll for success OR "Save anyway" dialog simultaneously)
     await extBuilder.generateExtension();
     const saveAnywayBtn2 = page.locator('button', { hasText: 'Save anyway' });
@@ -382,6 +397,8 @@ test.describe('Complex Extension Stress Test', () => {
       if (fs.existsSync(articlePath) && fs.readFileSync(articlePath, 'utf8').includes('viewCount')) break;
       await page.waitForTimeout(500);
     }
+
+    await ss('regeneration-complete');
 
     // Assert Article.php contains viewCount
     expect(fs.readFileSync(articlePath, 'utf8')).toContain('viewCount');

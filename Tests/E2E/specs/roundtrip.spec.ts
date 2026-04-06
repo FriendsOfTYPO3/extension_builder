@@ -4,6 +4,7 @@ import * as path from 'path';
 import { spawnSync } from 'child_process';
 import { BackendPage } from '../pages/BackendPage';
 import { ExtensionBuilderPage } from '../pages/ExtensionBuilderPage';
+import { createScreenshotter } from '../helpers/screenshot';
 
 // Tests/E2E/specs/ -> up 4 levels -> packages/
 const PACKAGES_DIR = path.resolve(__dirname, '../../../../');
@@ -144,11 +145,15 @@ test.describe('Roundtrip Mode: basic scenarios', () => {
     const MODEL_NAME = 'SplitModel';
     const MODEL_FILE = path.join(PACKAGES_DIR, EXT_KEY, 'Classes/Domain/Model', `${MODEL_NAME}.php`);
 
-    // Clean up from any previous run
-    fs.rmSync(path.join(PACKAGES_DIR, EXT_KEY), { recursive: true, force: true });
+    // Clean up from any previous run. Folder persists after the test for inspection.
+    const extDir = path.join(PACKAGES_DIR, EXT_KEY);
+    if (fs.existsSync(extDir)) {
+      fs.rmSync(extDir, { recursive: true });
+    }
 
     const context = await makeContext(browser);
     const page = await context.newPage();
+    const ss = createScreenshotter(page, 'roundtrip-split-token');
 
     try {
       // Step 1: Generate the initial extension
@@ -156,6 +161,7 @@ test.describe('Roundtrip Mode: basic scenarios', () => {
         { propertyName: 'title', propertyType: 'String' },
       ]);
       await waitForFile(MODEL_FILE);
+      await ss('initial-extension-generated');
       expect(fs.existsSync(MODEL_FILE)).toBe(true);
 
       // Step 2: Inject split token + custom code
@@ -167,6 +173,7 @@ test.describe('Roundtrip Mode: basic scenarios', () => {
       await reloadAndSaveExtension(page, EXT_KEY);
       // Wait briefly for filesystem sync
       await page.waitForTimeout(2000);
+      await ss('after-regeneration');
 
       // Step 4: Assert custom code below split token is preserved
       const regenerated = fs.readFileSync(MODEL_FILE, 'utf8');
@@ -174,7 +181,7 @@ test.describe('Roundtrip Mode: basic scenarios', () => {
       expect(regenerated).toContain('MY CUSTOM METHOD');
     } finally {
       await context.close();
-      fs.rmSync(path.join(PACKAGES_DIR, EXT_KEY), { recursive: true, force: true });
+      // No cleanup — inspect generated files in packages/eb_rt_split/ after the run.
     }
   });
 
@@ -185,11 +192,15 @@ test.describe('Roundtrip Mode: basic scenarios', () => {
     const EXT_KEY = 'eb_rt_rename';
     const MODEL_DIR = path.join(PACKAGES_DIR, EXT_KEY, 'Classes/Domain/Model');
 
-    // Clean up from any previous run
-    fs.rmSync(path.join(PACKAGES_DIR, EXT_KEY), { recursive: true, force: true });
+    // Clean up from any previous run. Folder persists after the test for inspection.
+    const extDir = path.join(PACKAGES_DIR, EXT_KEY);
+    if (fs.existsSync(extDir)) {
+      fs.rmSync(extDir, { recursive: true });
+    }
 
     const context = await makeContext(browser);
     const page = await context.newPage();
+    const ss = createScreenshotter(page, 'roundtrip-rename');
 
     try {
       // Step 1: Generate extension with Foo model
@@ -197,6 +208,7 @@ test.describe('Roundtrip Mode: basic scenarios', () => {
         { propertyName: 'title', propertyType: 'String' },
       ]);
       await waitForFile(path.join(MODEL_DIR, 'Foo.php'));
+      await ss('foo-extension-generated');
       expect(fs.existsSync(path.join(MODEL_DIR, 'Foo.php'))).toBe(true);
 
       // Step 2: Load the extension and rename Foo → Bar, then save
@@ -233,12 +245,15 @@ test.describe('Roundtrip Mode: basic scenarios', () => {
         }
       });
 
+      await ss('foo-renamed-to-bar-in-editor');
       // Click save — with roundtrip + rename, a preview modal appears first
       await extBuilder.generateExtension();
       const previewModal = page.locator('.t3js-modal');
       await expect(previewModal).toBeVisible({ timeout: 10000 });
+      await ss('rename-preview-modal');
       await previewModal.getByRole('button', { name: 'Generate' }).click();
       await expect(extBuilder.getSuccessMessage()).toBeVisible({ timeout: 15000 });
+      await ss('rename-generation-complete');
       await page.waitForTimeout(2000);
 
       // Step 3: Assert Bar files exist
@@ -247,7 +262,7 @@ test.describe('Roundtrip Mode: basic scenarios', () => {
       expect(fs.existsSync(path.join(PACKAGES_DIR, EXT_KEY, 'Classes/Domain/Repository/BarRepository.php'))).toBe(true);
     } finally {
       await context.close();
-      fs.rmSync(path.join(PACKAGES_DIR, EXT_KEY), { recursive: true, force: true });
+      // No cleanup — inspect generated files in packages/eb_rt_rename/ after the run.
     }
   });
 
@@ -260,11 +275,15 @@ test.describe('Roundtrip Mode: basic scenarios', () => {
     const MODEL_NAME = 'NoRoundtrip';
     const MODEL_FILE = path.join(PACKAGES_DIR, EXT_KEY, 'Classes/Domain/Model', `${MODEL_NAME}.php`);
 
-    // Clean up from any previous run
-    fs.rmSync(path.join(PACKAGES_DIR, EXT_KEY), { recursive: true, force: true });
+    // Clean up from any previous run. Folder persists after the test for inspection.
+    const extDir = path.join(PACKAGES_DIR, EXT_KEY);
+    if (fs.existsSync(extDir)) {
+      fs.rmSync(extDir, { recursive: true });
+    }
 
     const context = await makeContext(browser);
     const page = await context.newPage();
+    const ss = createScreenshotter(page, 'roundtrip-disabled');
 
     try {
       // Step 1: Generate the initial extension (roundtrip is ON)
@@ -272,6 +291,7 @@ test.describe('Roundtrip Mode: basic scenarios', () => {
         { propertyName: 'title', propertyType: 'String' },
       ]);
       await waitForFile(MODEL_FILE);
+      await ss('initial-extension-generated');
 
       // Step 2: Inject split token + custom code
       const originalContent = fs.readFileSync(MODEL_FILE, 'utf8');
@@ -309,8 +329,10 @@ test.describe('Roundtrip Mode: basic scenarios', () => {
         // The confirmation modal ("Save anyway") appears because roundtrip is off
         const saveModal = page.locator('.t3js-modal');
         await expect(saveModal).toBeVisible({ timeout: 10000 });
+        await ss('save-anyway-modal');
         await saveModal.getByRole('button', { name: 'Save anyway' }).click();
         await expect(extBuilder.getSuccessMessage()).toBeVisible({ timeout: 15000 });
+        await ss('regeneration-complete');
         await page.waitForTimeout(2000);
 
         // Step 5: Custom code must NOT be preserved
@@ -322,7 +344,7 @@ test.describe('Roundtrip Mode: basic scenarios', () => {
       }
     } finally {
       await context.close();
-      fs.rmSync(path.join(PACKAGES_DIR, EXT_KEY), { recursive: true, force: true });
+      // No cleanup — inspect generated files in packages/eb_rt_disabled/ after the run.
     }
   });
 });
@@ -346,11 +368,14 @@ test.describe('Roundtrip Mode: complex stress test', () => {
     const CONTROL_MODELS = ['Zeta', 'Eta', 'Theta', 'Iota', 'Kappa'];
     const ALL_MODELS = [...INJECTED_MODELS, ...CONTROL_MODELS];
 
-    // Clean up from any previous run
-    fs.rmSync(EXT_BASE, { recursive: true, force: true });
+    // Clean up from any previous run. Folder persists after the test for inspection.
+    if (fs.existsSync(EXT_BASE)) {
+      fs.rmSync(EXT_BASE, { recursive: true });
+    }
 
     const context = await makeContext(browser);
     const page = await context.newPage();
+    const ss = createScreenshotter(page, 'roundtrip-stress-test');
 
     try {
       // Step 1: Generate extension with 10 models
@@ -401,8 +426,10 @@ test.describe('Roundtrip Mode: complex stress test', () => {
         { extKey: EXT_KEY, models: ALL_MODELS }
       );
 
+      await ss('models-configured');
       await extBuilder.generateExtension();
       await expect(extBuilder.getSuccessMessage()).toBeVisible({ timeout: 30000 });
+      await ss('initial-generation-complete');
 
       // Wait for all model files to appear
       for (const modelName of ALL_MODELS) {
@@ -420,6 +447,7 @@ test.describe('Roundtrip Mode: complex stress test', () => {
       // Step 3: Re-generate via UI (load and save)
       await reloadAndSaveExtension(page, EXT_KEY);
       await page.waitForTimeout(3000);
+      await ss('regeneration-complete');
 
       // Step 4: Assert custom code preserved in injected models
       for (const modelName of INJECTED_MODELS) {
@@ -437,7 +465,7 @@ test.describe('Roundtrip Mode: complex stress test', () => {
       }
     } finally {
       await context.close();
-      fs.rmSync(EXT_BASE, { recursive: true, force: true });
+      // No cleanup — inspect generated files in packages/eb_rt_stress/ after the run.
     }
   });
 });

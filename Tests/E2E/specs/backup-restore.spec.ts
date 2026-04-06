@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { BackendPage } from '../pages/BackendPage';
 import { ExtensionBuilderPage } from '../pages/ExtensionBuilderPage';
+import { createScreenshotter } from '../helpers/screenshot';
 
 // Tests/E2E/specs/ -> up 4 levels -> packages/
 const PACKAGES_DIR = path.resolve(__dirname, '../../../../');
@@ -87,27 +88,33 @@ test.describe('Backup-Restore UI (EBUILDER-120)', () => {
    */
   test('backup button shows "no backups" notification when extension has no backups', async ({ browser }) => {
     const extKey = 'eb_bkp_empty';
-    fs.rmSync(path.join(PACKAGES_DIR, extKey), { recursive: true, force: true });
-    fs.rmSync(path.join(BACKUP_BASE, extKey), { recursive: true, force: true });
+    // Clean up from any previous run. Folders persist after the test for inspection.
+    const extDir = path.join(PACKAGES_DIR, extKey);
+    const backupDir = path.join(BACKUP_BASE, extKey);
+    if (fs.existsSync(extDir)) { fs.rmSync(extDir, { recursive: true }); }
+    if (fs.existsSync(backupDir)) { fs.rmSync(backupDir, { recursive: true }); }
 
     const context = await makeContext(browser);
     const page = await context.newPage();
+    const ss = createScreenshotter(page, 'backup-no-backups');
     try {
       await generateExtension(page, extKey);
+      await ss('extension-generated');
 
       // Navigate back and load the extension
       const { frame } = await openDomainModeller(page);
       await loadExtension(frame, page, extKey);
+      await ss('extension-loaded');
 
       // Remove any backups that the second save may have created
-      fs.rmSync(path.join(BACKUP_BASE, extKey), { recursive: true, force: true });
+      if (fs.existsSync(backupDir)) { fs.rmSync(backupDir, { recursive: true }); }
 
       await frame.locator('#WiringEditor-backupsButton-button').click();
       await expect(page.locator('#alert-container .alert-info')).toBeVisible({ timeout: 5000 });
+      await ss('no-backups-notification');
     } finally {
       await context.close();
-      fs.rmSync(path.join(PACKAGES_DIR, extKey), { recursive: true, force: true });
-      fs.rmSync(path.join(BACKUP_BASE, extKey), { recursive: true, force: true });
+      // No cleanup — inspect files after the run.
     }
   });
 
@@ -120,13 +127,18 @@ test.describe('Backup-Restore UI (EBUILDER-120)', () => {
     const backupEntry = '2026-04-01-1000000';
     const backupPath = path.join(BACKUP_BASE, extKey, backupEntry);
 
-    fs.rmSync(path.join(PACKAGES_DIR, extKey), { recursive: true, force: true });
-    fs.rmSync(path.join(BACKUP_BASE, extKey), { recursive: true, force: true });
+    // Clean up from any previous run. Folders persist after the test for inspection.
+    const extDir = path.join(PACKAGES_DIR, extKey);
+    const backupExtDir = path.join(BACKUP_BASE, extKey);
+    if (fs.existsSync(extDir)) { fs.rmSync(extDir, { recursive: true }); }
+    if (fs.existsSync(backupExtDir)) { fs.rmSync(backupExtDir, { recursive: true }); }
 
     const context = await makeContext(browser);
     const page = await context.newPage();
+    const ss = createScreenshotter(page, 'backup-dialog-list');
     try {
       await generateExtension(page, extKey);
+      await ss('extension-generated');
 
       // Create a fake backup directory directly on the host filesystem
       fs.mkdirSync(backupPath, { recursive: true });
@@ -134,18 +146,19 @@ test.describe('Backup-Restore UI (EBUILDER-120)', () => {
 
       const { frame } = await openDomainModeller(page);
       await loadExtension(frame, page, extKey);
+      await ss('extension-loaded');
       await frame.locator('#WiringEditor-backupsButton-button').click();
 
       // Backup selection modal should appear
       const modal = page.locator('.t3js-modal');
       await expect(modal).toBeVisible({ timeout: 10000 });
+      await ss('backup-modal-open');
       await expect(modal.locator('.t3js-modal-title')).toContainText('Restore backup');
       await expect(modal.locator('select option')).toHaveCount(1);
       await expect(modal.locator('select option').first()).toHaveAttribute('value', backupEntry);
     } finally {
       await context.close();
-      fs.rmSync(path.join(PACKAGES_DIR, extKey), { recursive: true, force: true });
-      fs.rmSync(path.join(BACKUP_BASE, extKey), { recursive: true, force: true });
+      // No cleanup — inspect files after the run.
     }
   });
 
@@ -158,15 +171,19 @@ test.describe('Backup-Restore UI (EBUILDER-120)', () => {
     const backupEntry = '2026-04-01-2000000';
     const backupPath = path.join(BACKUP_BASE, extKey, backupEntry);
     const extDir = path.join(PACKAGES_DIR, extKey);
+    const backupExtDir = path.join(BACKUP_BASE, extKey);
     const markerContent = '<?php // FROM_BACKUP_MARKER';
 
-    fs.rmSync(extDir, { recursive: true, force: true });
-    fs.rmSync(path.join(BACKUP_BASE, extKey), { recursive: true, force: true });
+    // Clean up from any previous run. Folders persist after the test for inspection.
+    if (fs.existsSync(extDir)) { fs.rmSync(extDir, { recursive: true }); }
+    if (fs.existsSync(backupExtDir)) { fs.rmSync(backupExtDir, { recursive: true }); }
 
     const context = await makeContext(browser);
     const page = await context.newPage();
+    const ss = createScreenshotter(page, 'backup-restore-flow');
     try {
       await generateExtension(page, extKey);
+      await ss('extension-generated');
 
       // Create a backup with a distinctive marker in ext_emconf.php
       fs.mkdirSync(backupPath, { recursive: true });
@@ -174,6 +191,7 @@ test.describe('Backup-Restore UI (EBUILDER-120)', () => {
 
       const { frame } = await openDomainModeller(page);
       await loadExtension(frame, page, extKey);
+      await ss('extension-loaded');
 
       // Click "Restore backup"
       await frame.locator('#WiringEditor-backupsButton-button').click();
@@ -181,16 +199,19 @@ test.describe('Backup-Restore UI (EBUILDER-120)', () => {
       // Backup modal: select entry and click Restore
       const backupModal = page.locator('.t3js-modal');
       await expect(backupModal).toBeVisible({ timeout: 10000 });
+      await ss('backup-modal-open');
       await backupModal.locator('select').selectOption(backupEntry);
       await backupModal.locator('.t3js-modal-footer .btn-danger').click();
 
       // TYPO3 stacks a second confirmation modal on top; target the last btn-danger
       const confirmBtn = page.locator('.modal-footer button.btn-danger').last();
       await expect(confirmBtn).toBeVisible({ timeout: 10000 });
+      await ss('confirm-restore-modal');
       await confirmBtn.click();
 
       // Success notification
       await expect(page.locator('#alert-container .alert-success')).toBeVisible({ timeout: 15000 });
+      await ss('restore-success');
 
       // The extension directory should now contain the backup content
       await page.waitForTimeout(1500); // brief FS sync
@@ -198,8 +219,7 @@ test.describe('Backup-Restore UI (EBUILDER-120)', () => {
       expect(restored).toContain('FROM_BACKUP_MARKER');
     } finally {
       await context.close();
-      fs.rmSync(extDir, { recursive: true, force: true });
-      fs.rmSync(path.join(BACKUP_BASE, extKey), { recursive: true, force: true });
+      // No cleanup — inspect files after the run.
     }
   });
 });
