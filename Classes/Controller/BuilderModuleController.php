@@ -219,29 +219,6 @@ class BuilderModuleController extends ActionController
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
         $this->registerAdvancedOptionsButtonToButtonBar($buttonBar, ButtonBar::BUTTON_POSITION_RIGHT, 2);
-        $this->registerOpenInNewWindowButtonToButtonBar($buttonBar, ButtonBar::BUTTON_POSITION_RIGHT, 3);
-    }
-
-    protected function registerOpenInNewWindowButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void
-    {
-        $requestUri = $this->uriBuilder->uriFor('domainmodelling');
-
-        $openInNewWindowButton = (new LinkButtonWithId())
-            ->setHref('#')
-            ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.openInNewWindow'))
-            ->setIcon($this->iconFactory->getIcon('actions-window-open', IconSize::SMALL))
-            ->setDataAttributes([
-                'dispatch-action' => 'TYPO3.WindowManager.localOpen',
-                'dispatch-args' => GeneralUtility::jsonEncodeForHtmlAttribute([
-                    $requestUri,
-                    true, // switchFocus
-                    'extension_builder', // windowName,
-                    'width=1920,height=1080,status=0,menubar=0,scrollbars=1,resizable=1', // windowFeatures
-                ]),
-            ])
-            ->setId('opennewwindow');
-
-        $buttonBar->addButton($openInNewWindowButton, $position, $group);
     }
 
     protected function registerAdvancedOptionsButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void

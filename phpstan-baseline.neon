@@ -7,12 +7,6 @@ parameters:
 			path: Classes/Configuration/ExtensionBuilderConfigurationManager.php
 
 		-
-			message: '#^Call to an undefined method TYPO3\\CMS\\Backend\\Template\\Components\\Buttons\\LinkButton\:\:setId\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: Classes/Controller/BuilderModuleController.php
-
-		-
 			message: '#^Right side of && is always true\.$#'
 			identifier: booleanAnd.rightAlwaysTrue
 			count: 1
