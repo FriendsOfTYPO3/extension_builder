@@ -48,3 +48,4 @@ playwright-report/
 test-results/
 .playwright-cli
 .playwright-screenshots
+docs/superpowers
