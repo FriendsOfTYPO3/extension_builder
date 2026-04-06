@@ -123,6 +123,11 @@ class BuilderModuleController extends ActionController
         $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/JavaScript/domain-modeling.css');
 
         $this->setLocallangSettings();
+        $this->pageRenderer->addInlineSetting(
+            'extensionBuilder.publicResourceWebPath',
+            'core',
+            PathUtility::getPublicResourceWebPath('EXT:core/Resources/Public/')
+        );
 
         $initialWarnings = [];
         $composerWarning = false;

@@ -69,11 +69,16 @@ export class EbGroup extends LitElement {
     connectedCallback() {
         super.connectedCallback();
         this.addEventListener('field-updated', this._onFieldUpdated);
+        this._onAdvancedModeChanged = (e) => {
+            this.advancedMode = e.detail.enabled;
+        };
+        window.addEventListener('eb-advanced-mode-changed', this._onAdvancedModeChanged);
     }
 
     disconnectedCallback() {
         super.disconnectedCallback();
         this.removeEventListener('field-updated', this._onFieldUpdated);
+        window.removeEventListener('eb-advanced-mode-changed', this._onAdvancedModeChanged);
     }
 
     _onFieldUpdated(e) {

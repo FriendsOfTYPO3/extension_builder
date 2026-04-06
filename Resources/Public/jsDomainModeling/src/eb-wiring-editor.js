@@ -214,6 +214,11 @@ export class EbWiringEditor extends LitElement {
 
     _toggleAdvancedMode() {
         this._advancedMode = !this._advancedMode;
+        window.dispatchEvent(
+            new CustomEvent('eb-advanced-mode-changed', {
+                detail: { enabled: this._advancedMode },
+            })
+        );
     }
 
     _toggleLeftPanel() {
@@ -441,6 +446,13 @@ export class EbWiringEditor extends LitElement {
         return html`
             <div class="toolbar">
                 <button class="btn btn-primary btn-sm" @click="${this.addModelObject}">+ Model Object</button>
+                <button
+                    class="btn btn-default btn-sm"
+                    @click="${this._toggleAdvancedMode}"
+                    aria-pressed="${this._advancedMode}"
+                >
+                    ${this._advancedMode ? 'Hide Advanced Options' : 'Show Advanced Options'}
+                </button>
             </div>
             <div class="content ${this._advancedMode ? 'advanced-mode' : ''}">
                 <div class="left-panel ${this._leftCollapsed ? 'collapsed' : ''}">

@@ -398,7 +398,7 @@ export const modelObjectModule = {
             {
                 type: 'group',
                 inputParams: {
-                    collapsible: false,
+                    collapsible: true,
                     collapsed: false,
                     legend: 'relations',
                     name: 'relationGroup',
