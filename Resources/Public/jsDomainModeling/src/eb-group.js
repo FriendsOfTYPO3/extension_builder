@@ -17,6 +17,12 @@ export class EbGroup extends LitElement {
         collapsible: { type: Boolean },
         collapsed: { type: Boolean, reflect: true },
         advancedMode: { type: Boolean, attribute: 'advanced-mode', reflect: true },
+        /**
+         * When true, getValue() returns the flat child-values object directly
+         * instead of wrapping it under the group name. The parent container is
+         * expected to spread these values into its own result object.
+         */
+        flatten: { type: Boolean },
     };
 
     static styles = css`
@@ -125,23 +131,66 @@ export class EbGroup extends LitElement {
         this._initRelationTypes();
     }
 
+    /**
+     * Collects values from direct slotted children only (not deep descendants)
+     * to avoid double-collecting fields that belong to nested eb-group elements.
+     *
+     * When a direct child eb-group has flatten:true its values are spread into
+     * the result object rather than nested under the group name key.
+     *
+     * @returns {Object} Flat or nested values object depending on `flatten`.
+     */
     getValue() {
         const result = {};
-        this.querySelectorAll('[name]').forEach((field) => {
-            if (typeof field.getValue === 'function') {
-                result[field.name] = field.getValue();
+        // Only iterate assigned slot nodes (direct light-DOM children rendered
+        // into the default slot) to avoid picking up fields from nested groups.
+        const slot = this.shadowRoot?.querySelector('slot');
+        const directChildren = slot ? slot.assignedElements({ flatten: false }) : Array.from(this.children);
+
+        directChildren.forEach((el) => {
+            if (typeof el.getValue !== 'function') {
+                return;
+            }
+            // A flatten group merges its values into the parent result object.
+            if (el.tagName?.toLowerCase() === 'eb-group' && el.flatten) {
+                Object.assign(result, el.getValue());
+                return;
+            }
+            const name = el.getAttribute('name');
+            if (name !== null) {
+                result[name] = el.getValue();
             }
         });
         return result;
     }
 
+    /**
+     * Distributes values to direct slotted children.
+     *
+     * For flatten child groups the full values object is forwarded so the
+     * child group can populate its own fields from the flat key space.
+     *
+     * @param {Object} obj - Values object to distribute.
+     */
     setValue(obj) {
         if (!obj) {
             return;
         }
-        this.querySelectorAll('[name]').forEach((field) => {
-            if (typeof field.setValue === 'function' && obj[field.name] !== undefined) {
-                field.setValue(obj[field.name]);
+        const slot = this.shadowRoot?.querySelector('slot');
+        const directChildren = slot ? slot.assignedElements({ flatten: false }) : Array.from(this.children);
+
+        directChildren.forEach((el) => {
+            if (typeof el.setValue !== 'function') {
+                return;
+            }
+            // A flatten group receives the full object so it can pick its keys.
+            if (el.tagName?.toLowerCase() === 'eb-group' && el.flatten) {
+                el.setValue(obj);
+                return;
+            }
+            const name = el.getAttribute('name');
+            if (name !== null && obj[name] !== undefined) {
+                el.setValue(obj[name]);
             }
         });
     }

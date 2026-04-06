@@ -75,6 +75,7 @@ export function renderFieldDef(fieldDef) {
                 legend="${translate(p.legend ?? '')}"
                 ?collapsible="${p.collapsible}"
                 ?collapsed="${p.collapsed}"
+                ?flatten="${p.flatten}"
                 >${renderFields(p.fields ?? [])}</eb-group
             >`;
 
