@@ -104,7 +104,7 @@ class Extension
     /**
      * the lowest required TYPO3 version
      */
-    private float $targetVersion = 10.0;
+    private float $targetVersion = 13.0;
     protected string $previousExtensionDirectory = '';
     protected string $previousExtensionKey = '';
     protected ?string $storagePath;

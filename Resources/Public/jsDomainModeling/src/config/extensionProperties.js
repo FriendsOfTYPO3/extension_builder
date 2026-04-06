@@ -198,9 +198,9 @@ export const extensionPropertiesFields = [
                         id: 'targetVersionSelector',
                         label: 'target_version',
                         description: 'descr_target_version',
-                        selectValues: ['12.4.0-12.4.99'],
-                        selectOptions: ['TYPO3 v12.4'],
-                        value: '12.4.0-12.4.99',
+                        selectValues: ['13.4.0-13.4.99'],
+                        selectOptions: ['TYPO3 v13.4'],
+                        value: '13.4.0-13.4.99',
                     },
                 },
                 {
