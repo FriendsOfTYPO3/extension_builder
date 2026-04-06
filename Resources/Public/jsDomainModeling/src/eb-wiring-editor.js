@@ -123,6 +123,9 @@ export class EbWiringEditor extends LitElement {
                 padding: 20px;
                 color: var(--eb-text-muted, #666);
             }
+            :host [advanced] {
+                display: none;
+            }
             .advanced-mode ::slotted([advanced]),
             .advanced-mode [advanced] {
                 display: block;

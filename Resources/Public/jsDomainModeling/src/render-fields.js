@@ -28,6 +28,7 @@ export function renderFieldDef(fieldDef) {
                 name="${p.name}"
                 label="${translate(p.label ?? '')}"
                 ?required="${p.required}"
+                ?advanced="${p.advancedMode || false}"
                 type-invite="${p.typeInvite ?? ''}"
                 placeholder="${p.placeholder ?? ''}"
                 .value="${p.value ?? ''}"
@@ -49,6 +50,7 @@ export function renderFieldDef(fieldDef) {
             return html`<eb-textarea-field
                 name="${p.name}"
                 label="${translate(p.label ?? '')}"
+                ?advanced="${p.advancedMode || false}"
                 placeholder="${p.placeholder ?? ''}"
                 .value="${p.value ?? ''}"
             ></eb-textarea-field>`;
@@ -57,6 +59,7 @@ export function renderFieldDef(fieldDef) {
             return html`<eb-select-field
                 name="${p.name}"
                 label="${translate(p.label ?? '')}"
+                ?advanced="${p.advancedMode || false}"
                 .selectValues="${p.selectValues ?? []}"
                 .selectOptions="${p.selectOptions ?? []}"
                 .value="${p.value ?? p.selectValues?.[0] ?? ''}"
@@ -66,6 +69,7 @@ export function renderFieldDef(fieldDef) {
             return html`<eb-boolean-field
                 name="${p.name}"
                 label="${translate(p.label ?? '')}"
+                ?advanced="${p.advancedMode || false}"
                 .value="${p.value ?? false}"
             ></eb-boolean-field>`;
 
@@ -73,6 +77,7 @@ export function renderFieldDef(fieldDef) {
             return html`<eb-group
                 name="${p.name ?? ''}"
                 legend="${translate(p.legend ?? '')}"
+                ?advanced="${p.advancedMode || false}"
                 ?collapsible="${p.collapsible}"
                 ?collapsed="${p.collapsed}"
                 ?flatten="${p.flatten}"
@@ -87,6 +92,7 @@ export function renderFieldDef(fieldDef) {
                     : ''}
                 <eb-list-field
                     name="${p.name}"
+                    ?advanced="${p.advancedMode || false}"
                     ?sortable="${p.sortable}"
                     add-label="${translate('add')}"
                     element-type="${JSON.stringify(p.elementType ?? {})}"
