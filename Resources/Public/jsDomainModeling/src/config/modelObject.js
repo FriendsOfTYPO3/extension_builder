@@ -318,73 +318,80 @@ export const modelObjectModule = {
                                                 },
                                             },
                                             {
-                                                type: 'text',
+                                                type: 'group',
                                                 inputParams: {
-                                                    advancedMode: true,
-                                                    name: 'propertyDescription',
-                                                    placeholder: 'description',
-                                                    cols: 23,
-                                                    rows: 2,
-                                                },
-                                            },
-                                            {
-                                                type: 'string',
-                                                inputParams: {
-                                                    classname: 'textfieldWrapper dependant fileOnly',
-                                                    label: 'allowedFileTypes',
-                                                    description: 'descr_allowedFileTypes',
-                                                    advancedMode: true,
-                                                    name: 'allowedFileTypes',
-                                                },
-                                            },
-                                            {
-                                                type: 'string',
-                                                inputParams: {
-                                                    classname: 'textfieldWrapper dependant fileOnly imageOnly small',
-                                                    label: 'maxItems',
-                                                    advancedMode: true,
-                                                    name: 'maxItems',
-                                                    value: 1,
-                                                },
-                                            },
-                                            {
-                                                type: 'boolean',
-                                                inputParams: {
-                                                    label: 'isRequired',
-                                                    advancedMode: true,
-                                                    name: 'propertyIsRequired',
-                                                    value: false,
-                                                },
-                                            },
-                                            {
-                                                type: 'boolean',
-                                                inputParams: {
-                                                    classname:
-                                                        'dependant stringOnly textOnly passwordOnly emailOnly integerOnly floatOnly dateOnly dateTimeOnly dateTimeStampOnly timeOnly timeTimeStampOnly timeSecOnly',
-                                                    label: 'isNullable',
-                                                    advancedMode: true,
-                                                    name: 'propertyIsNullable',
-                                                    value: false,
-                                                },
-                                            },
-                                            {
-                                                type: 'boolean',
-                                                inputParams: {
-                                                    label: 'isExcludeField',
-                                                    advancedMode: true,
-                                                    name: 'propertyIsExcludeField',
-                                                    description: 'descr_isExcludeField',
-                                                    value: true,
-                                                },
-                                            },
-                                            {
-                                                type: 'boolean',
-                                                inputParams: {
-                                                    label: 'isL10nModeExclude',
-                                                    advancedMode: true,
-                                                    name: 'propertyIsL10nModeExclude',
-                                                    description: 'descr_isL10nModeExclude',
-                                                    value: false,
+                                                    collapsible: true,
+                                                    collapsed: true,
+                                                    flatten: true,
+                                                    className: 'advancedSettings',
+                                                    name: 'advancedSettings',
+                                                    legend: 'advancedOptions',
+                                                    fields: [
+                                                        {
+                                                            type: 'text',
+                                                            inputParams: {
+                                                                name: 'propertyDescription',
+                                                                placeholder: 'description',
+                                                                cols: 23,
+                                                                rows: 2,
+                                                            },
+                                                        },
+                                                        {
+                                                            type: 'string',
+                                                            inputParams: {
+                                                                classname: 'textfieldWrapper dependant fileOnly',
+                                                                label: 'allowedFileTypes',
+                                                                description: 'descr_allowedFileTypes',
+                                                                name: 'allowedFileTypes',
+                                                            },
+                                                        },
+                                                        {
+                                                            type: 'string',
+                                                            inputParams: {
+                                                                classname:
+                                                                    'textfieldWrapper dependant fileOnly imageOnly small',
+                                                                label: 'maxItems',
+                                                                name: 'maxItems',
+                                                                value: 1,
+                                                            },
+                                                        },
+                                                        {
+                                                            type: 'boolean',
+                                                            inputParams: {
+                                                                label: 'isRequired',
+                                                                name: 'propertyIsRequired',
+                                                                value: false,
+                                                            },
+                                                        },
+                                                        {
+                                                            type: 'boolean',
+                                                            inputParams: {
+                                                                classname:
+                                                                    'dependant stringOnly textOnly passwordOnly emailOnly integerOnly floatOnly dateOnly dateTimeOnly dateTimeStampOnly timeOnly timeTimeStampOnly timeSecOnly',
+                                                                label: 'isNullable',
+                                                                name: 'propertyIsNullable',
+                                                                value: false,
+                                                            },
+                                                        },
+                                                        {
+                                                            type: 'boolean',
+                                                            inputParams: {
+                                                                label: 'isExcludeField',
+                                                                name: 'propertyIsExcludeField',
+                                                                description: 'descr_isExcludeField',
+                                                                value: true,
+                                                            },
+                                                        },
+                                                        {
+                                                            type: 'boolean',
+                                                            inputParams: {
+                                                                label: 'isL10nModeExclude',
+                                                                name: 'propertyIsL10nModeExclude',
+                                                                description: 'descr_isL10nModeExclude',
+                                                                value: false,
+                                                            },
+                                                        },
+                                                    ],
                                                 },
                                             },
                                         ],

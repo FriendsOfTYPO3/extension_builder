@@ -233,4 +233,68 @@ test.describe('Domain Model Canvas', () => {
       tgt: { moduleId: expect.any(Number), terminal: 'REL_0' },
     });
   });
+
+  // EBUILDER-230: Property form shows only name and type by default
+  test('new property has advanced options collapsed by default', async ({ page }) => {
+    const frame = new BackendPage(page).getContentFrame();
+    await frame.getByRole('button', { name: '+ Model Object' }).click();
+
+    const isCollapsed = await frame.locator('eb-wiring-editor').evaluate(
+      async (el: any) => {
+        const layer = el.shadowRoot?.querySelector('eb-layer');
+        await layer?.updateComplete;
+        const container = layer?.shadowRoot?.querySelector('eb-container') as any;
+        if (!container) return null;
+        await container.updateComplete;
+
+        const listField = container.shadowRoot?.querySelector('[name="properties"]') as any;
+        if (!listField) return null;
+        listField._addItem();
+        await listField.updateComplete;
+
+        const advGroup = listField.querySelector('[name="advancedSettings"]') as any;
+        if (!advGroup) return null;
+        await advGroup.updateComplete;
+        return advGroup.collapsed;
+      }
+    );
+    expect(isCollapsed).toBe(true);
+  });
+
+  test('property advanced options toggle reveals hidden fields', async ({ page }) => {
+    const frame = new BackendPage(page).getContentFrame();
+    await frame.getByRole('button', { name: '+ Model Object' }).click();
+
+    const result = await frame.locator('eb-wiring-editor').evaluate(
+      async (el: any) => {
+        const layer = el.shadowRoot?.querySelector('eb-layer');
+        await layer?.updateComplete;
+        const container = layer?.shadowRoot?.querySelector('eb-container') as any;
+        if (!container) return null;
+        await container.updateComplete;
+
+        const listField = container.shadowRoot?.querySelector('[name="properties"]') as any;
+        if (!listField) return null;
+        listField._addItem();
+        await listField.updateComplete;
+
+        const advGroup = listField.querySelector('[name="advancedSettings"]') as any;
+        if (!advGroup) return null;
+        await advGroup.updateComplete;
+
+        // Expand the group
+        advGroup.collapsed = false;
+        await advGroup.updateComplete;
+
+        const descField = listField.querySelector('[name="propertyDescription"]') as any;
+        return {
+          collapsed: advGroup.collapsed,
+          descFieldExists: !!descField,
+        };
+      }
+    );
+    expect(result).not.toBeNull();
+    expect(result.collapsed).toBe(false);
+    expect(result.descFieldExists).toBe(true);
+  });
 });
