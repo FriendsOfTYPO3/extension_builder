@@ -34,7 +34,8 @@ export class EbContainer extends LitElement {
             :host {
                 display: block;
                 position: absolute;
-                min-width: 160px;
+                min-width: 300px;
+                max-width: 600px;
                 background: var(--bs-body-bg, #fff);
                 color: var(--bs-body-color, #000);
                 border: 1px solid var(--bs-border-color, #dee2e6);
@@ -217,7 +218,7 @@ export class EbContainer extends LitElement {
         if (!this._resizing) {
             return;
         }
-        const newW = Math.max(160, this._resizeStartW + (e.clientX - this._resizeStartX));
+        const newW = Math.min(600, Math.max(300, this._resizeStartW + (e.clientX - this._resizeStartX)));
         const newH = Math.max(80, this._resizeStartH + (e.clientY - this._resizeStartY));
         this._resizeWidth = newW;
         this._resizeHeight = newH;
