@@ -719,8 +719,15 @@ class ClassBuilder implements SingletonInterface
                 $declarations = $namespace->getAliasDeclarations();
                 $found = false;
                 foreach ($declarations as &$decl) {
-                    if (isset($decl['name']) && str_ends_with($decl['name'], 'DomainObjectRepository')) {
+                    if (!isset($decl['name'])) {
+                        continue;
+                    }
+                    if (str_ends_with($decl['name'], 'DomainObjectRepository')) {
                         $decl['name'] = $actualClass;
+                        $found = true;
+                        break;
+                    }
+                    if ($decl['name'] === $actualClass) {
                         $found = true;
                         break;
                     }

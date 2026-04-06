@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
+import { execFileSync } from 'child_process';
 import { BackendPage } from '../pages/BackendPage';
 import { ExtensionBuilderPage } from '../pages/ExtensionBuilderPage';
 
@@ -96,6 +97,13 @@ test.describe('Wire loading on extension open', () => {
       JSON.stringify(FIXTURE, null, 2),
       'utf8',
     );
+    // Flush Mutagen so the ddev container sees the new file before any test
+    // calls listWirings. Without this, the async Mutagen sync can race the test.
+    try {
+      execFileSync('ddev', ['mutagen', 'sync'], { stdio: 'ignore', timeout: 15000 });
+    } catch {
+      // Mutagen sync unavailable or already up-to-date — continue anyway
+    }
   });
 
   test.afterAll(() => {

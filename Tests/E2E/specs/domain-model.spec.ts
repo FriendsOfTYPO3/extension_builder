@@ -252,7 +252,7 @@ test.describe('Domain Model Canvas', () => {
         listField._addItem();
         await listField.updateComplete;
 
-        const advGroup = listField.querySelector('[name="advancedSettings"]') as any;
+        const advGroup = listField.shadowRoot?.querySelector('[name="advancedSettings"]') as any;
         if (!advGroup) return null;
         await advGroup.updateComplete;
         return advGroup.collapsed;
@@ -313,7 +313,7 @@ test.describe('Domain Model Canvas', () => {
         listField._addItem();
         await listField.updateComplete;
 
-        const advGroup = listField.querySelector('[name="advancedSettings"]') as any;
+        const advGroup = listField.shadowRoot?.querySelector('[name="advancedSettings"]') as any;
         if (!advGroup) return null;
         await advGroup.updateComplete;
 
@@ -321,7 +321,7 @@ test.describe('Domain Model Canvas', () => {
         advGroup.collapsed = false;
         await advGroup.updateComplete;
 
-        const descField = listField.querySelector('[name="propertyDescription"]') as any;
+        const descField = listField.shadowRoot?.querySelector('[name="propertyDescription"]') as any;
         return {
           collapsed: advGroup.collapsed,
           descFieldExists: !!descField,

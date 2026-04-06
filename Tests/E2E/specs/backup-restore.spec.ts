@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
+import { execFileSync } from 'child_process';
 import { BackendPage } from '../pages/BackendPage';
 import { ExtensionBuilderPage } from '../pages/ExtensionBuilderPage';
 import { createScreenshotter } from '../helpers/screenshot';
@@ -147,6 +148,22 @@ test.describe('Backup-Restore UI (EBUILDER-120)', () => {
       const { frame } = await openDomainModeller(page);
       await loadExtension(frame, page, extKey);
       await ss('extension-loaded');
+
+      // Remove any extra backups that may have been auto-created during generate/load,
+      // keeping only our known test entry so the modal shows exactly 1 option.
+      // We clean up inside the ddev container (not on the host) to avoid Mutagen
+      // sync delay: backups created by PHP in the container may not yet be visible
+      // on the host when we call readdirSync.
+      const containerBackupDir = `/var/www/html/var/tx_extensionbuilder/backups/${extKey}`;
+      try {
+        execFileSync('ddev', [
+          'exec',
+          `find ${containerBackupDir} -maxdepth 1 -mindepth 1 -type d ! -name '${backupEntry}' -exec rm -rf {} +`,
+        ], { stdio: 'ignore', timeout: 10000 });
+      } catch {
+        // Ignore — container may not have extra backups
+      }
+
       await frame.locator('#WiringEditor-backupsButton-button').click();
 
       // Backup selection modal should appear
