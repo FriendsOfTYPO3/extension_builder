@@ -98,7 +98,7 @@ class BuilderModuleController extends ActionController
 
         $this->moduleTemplate->assign('currentAction', $this->request->getControllerActionName());
 
-        if (!$this->request->hasArgument('action')) {
+        if (!$this->request->hasArgument('showIntro')) {
             $userSettings = $GLOBALS['BE_USER']->getModuleData('extensionbuilder');
             if (($userSettings['firstTime'] ?? 1) === 0) {
                 return new ForwardResponse('domainmodelling');
@@ -151,7 +151,7 @@ class BuilderModuleController extends ActionController
         $menu->addMenuItem(
             $menu->makeMenuItem()
                 ->setTitle('Introduction')
-                ->setHref($this->uriBuilder->uriFor('index'))
+                ->setHref($this->uriBuilder->uriFor('index', ['showIntro' => '1']))
                 ->setActive($currentAction === 'index')
         );
         $menu->addMenuItem(
