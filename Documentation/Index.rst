@@ -63,6 +63,7 @@ even if you change the extension in the graphical editor.
    Security/Index
    PublishToTer/Index
    InDepth/Index
+   Migration/Index
    Contribution/Index
    ChangeLog/Index
    Sponsoring/Index

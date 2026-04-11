@@ -28,8 +28,6 @@ options are enabled by clicking the :guilabel:`Show advanced options` button
 in the upper right corner (4). These options are mainly intended for experienced
 TYPO3 developers.
 
-.. include:: /Images/AutomaticScreenshots/GraphicalEditor.rst.txt
-
 2. Insert meta data of extension
 ================================
 
@@ -149,8 +147,6 @@ Edit the general settings of the domain object by opening the
 |                                   |An example is "\\TYPO3\\CMS\\Extbase\\Domain\\Model\\Category".                              |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 
-.. include:: /Images/AutomaticScreenshots/DomainObjectSettings.rst.txt
-
 3.b. Add actions
 ----------------
 
@@ -159,8 +155,6 @@ and select the actions you need and add custom actions if required.
 All selected actions are made available in the controller class that is created
 along with the domain object class, and a Fluid template with an appropriate name is
 generated for each action.
-
-.. include:: /Images/AutomaticScreenshots/Actions.rst.txt
 
 3.c. Add properties
 -------------------
@@ -193,8 +187,6 @@ Expand the :guilabel:`properties` subsection to add domain object properties:
 |**Is exclude field?**              |Enable this option if you want to be able to hide this property from non-administrators      |
 |(Advanced options)                 |in the TYPO3 backend.                                                                        |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
-
-.. include:: /Images/AutomaticScreenshots/Properties.rst.txt
 
 3.d. Add relations
 ------------------
@@ -287,8 +279,6 @@ type of relation.
 |                                   |domain object class.                                                                         |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 
-.. include:: /Images/AutomaticScreenshots/Relations.rst.txt
-
 4. Create a frontend plugin
 ===========================
 
@@ -312,26 +302,14 @@ TYPO3 content element "General Plugin".
 |                                   |default action. Actions are defined in the related aggregate root object, and the controller |
 |                                   |name corresponds to the object name.                                                         |
 |                                   |                                                                                             |
-|                                   |An example is                                                                                |
-|                                   |                                                                                             |
-|                                   |.. code-block:: none                                                                         |
-|                                   |                                                                                             |
-|                                   |   Blog => list,show,new,create,edit,update                                                  |
-|                                   |   Author => list,show                                                                       |
-|                                   |                                                                                             |
+|                                   |An example is ``Blog => list,show,new,create,edit,update`` and                               |
+|                                   |``Author => list,show``.                                                                     |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
 |**Non cacheable actions**          |Each line lists all actions of a controller that should not be cached. This list is a subset |
 |(Advanced options)                 |of the *Controller action combinations* property list.                                       |
 |                                   |                                                                                             |
-|                                   |An example is                                                                                |
-|                                   |                                                                                             |
-|                                   |.. code-block:: none                                                                         |
-|                                   |                                                                                             |
-|                                   |   Blog => new,create,edit,update                                                            |
-|                                   |                                                                                             |
+|                                   |An example is ``Blog => new,create,edit,update``.                                            |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
-
-.. include:: /Images/AutomaticScreenshots/FrontendPlugins.rst.txt
 
 5. Create a backend module
 ==========================
@@ -361,16 +339,9 @@ backend.
 |                                   |default action. Actions are defined in the related aggregate root object, and the controller |
 |                                   |name corresponds to the object name.                                                         |
 |                                   |                                                                                             |
-|                                   |An example is                                                                                |
-|                                   |                                                                                             |
-|                                   |.. code-block:: none                                                                         |
-|                                   |                                                                                             |
-|                                   |   Blog => list,show,new,create,edit,update,delete,duplicate                                 |
-|                                   |   Author => list,show,new,create,edit,update,delete                                         |
-|                                   |                                                                                             |
+|                                   |An example is ``Blog => list,show,new,create,edit,update,delete,duplicate`` and              |
+|                                   |``Author => list,show,new,create,edit,update,delete``.                                       |
 +-----------------------------------+---------------------------------------------------------------------------------------------+
-
-.. include:: /Images/AutomaticScreenshots/BackendModules.rst.txt
 
 6. Save the extension
 =====================
@@ -437,5 +408,3 @@ to be able to modify the domain model in the graphical editor you have to make
 sure that the *roundtrip mode* is activated in the
 :doc:`configuration </Configuration/Index>`, before loading the extension in the
 Extension Builder again.
-
-.. include:: /Images/AutomaticScreenshots/GraphicalEditorBlogExampleFullPage.rst.txt

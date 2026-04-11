@@ -189,7 +189,7 @@ Once you have made changes to the documentation files, you should render them
 locally to test the output. The recommended method is to use the official
 TYPO3 Documentation Team Docker image, but you can also install all the required
 rendering tools from scratch. You can find more about this in the official TYPO3
-documentation on the page ":doc:`h2document:RenderingDocs/Index`".
+documentation on rendering documentation.
 
 For example, on a Linux host with Docker installed, rendering boils down to
 these commands:
