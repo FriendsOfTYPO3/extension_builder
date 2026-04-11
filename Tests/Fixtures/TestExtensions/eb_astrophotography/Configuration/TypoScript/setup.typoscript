@@ -8,7 +8,7 @@ plugin.tx_ebastrophotography_imagegallery {
         layoutRootPaths.1 = {$plugin.tx_ebastrophotography_imagegallery.view.layoutRootPath}
     }
     persistence {
-        storagePid = {$plugin.tx_ebastrophotography_imagegallery.persistence.storagePid}
+        #storagePid = {$plugin.tx_ebastrophotography_imagegallery.persistence.storagePid}
         #recursive = 1
     }
     features {
@@ -30,7 +30,7 @@ plugin.tx_ebastrophotography_skyatlas {
         layoutRootPaths.1 = {$plugin.tx_ebastrophotography_skyatlas.view.layoutRootPath}
     }
     persistence {
-        storagePid = {$plugin.tx_ebastrophotography_skyatlas.persistence.storagePid}
+        #storagePid = {$plugin.tx_ebastrophotography_skyatlas.persistence.storagePid}
         #recursive = 1
     }
     features {

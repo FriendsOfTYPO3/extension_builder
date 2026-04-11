@@ -19,7 +19,8 @@ defined('TYPO3') || die();
             \AcmeCorp\EbAstrophotography\Controller\ImagingSessionController::class => '',
             \AcmeCorp\EbAstrophotography\Controller\ProcessingRecipeController::class => '',
             \AcmeCorp\EbAstrophotography\Controller\AwardController::class => ''
-        ]
+        ],
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
@@ -39,7 +40,8 @@ defined('TYPO3') || die();
             \AcmeCorp\EbAstrophotography\Controller\ImagingSessionController::class => '',
             \AcmeCorp\EbAstrophotography\Controller\ProcessingRecipeController::class => '',
             \AcmeCorp\EbAstrophotography\Controller\AwardController::class => ''
-        ]
+        ],
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
 })();

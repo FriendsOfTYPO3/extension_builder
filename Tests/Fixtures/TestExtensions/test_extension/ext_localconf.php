@@ -11,6 +11,7 @@ defined('TYPO3') || die();
         // non-cacheable actions
         [
             \FIXTURE\TestExtension\Controller\MainController::class => 'create, update, delete, '
-        ]
+        ],
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 })();

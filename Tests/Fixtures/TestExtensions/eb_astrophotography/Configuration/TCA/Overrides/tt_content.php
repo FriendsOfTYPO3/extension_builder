@@ -4,7 +4,8 @@ defined('TYPO3') || die();
 $pluginSignature = \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
     'EbAstrophotography',
     'Imagegallery',
-    'Image Gallery'
+    'Image Gallery',
+    'eb_astrophotography-plugin-imagegallery'
 );
 
 $GLOBALS['TCA']['tt_content']['types'][$pluginSignature] = [
@@ -23,7 +24,8 @@ $GLOBALS['TCA']['tt_content']['types'][$pluginSignature] = [
 $pluginSignature = \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
     'EbAstrophotography',
     'Skyatlas',
-    'Sky Atlas'
+    'Sky Atlas',
+    'eb_astrophotography-plugin-skyatlas'
 );
 
 $GLOBALS['TCA']['tt_content']['types'][$pluginSignature] = [

@@ -8,7 +8,7 @@ plugin.tx_testextension_testplugin {
     layoutRootPaths.1 = {$plugin.tx_testextension_testplugin.view.layoutRootPath}
   }
   persistence {
-    storagePid = {$plugin.tx_testextension_testplugin.persistence.storagePid}
+    #storagePid = {$plugin.tx_testextension_testplugin.persistence.storagePid}
     #recursive = 1
   }
   features {

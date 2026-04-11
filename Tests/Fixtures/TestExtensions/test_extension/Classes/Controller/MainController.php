@@ -26,7 +26,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * @param DomainObjectRepository $domainObjectRepository
      */
-    public function __construct(\FIXTURE\TestExtension\Domain\Repository\MainRepository $mainRepository)
+    public function __construct(private readonly \FIXTURE\TestExtension\Domain\Repository\MainRepository $mainRepository)
     {
     }
 
