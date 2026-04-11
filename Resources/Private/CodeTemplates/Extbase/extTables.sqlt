@@ -1,6 +1,6 @@
 {namespace k=EBT\ExtensionBuilder\ViewHelpers}{escaping off}<k:format.trim>
 <f:for each="{extension.domainObjects}" as="domainObject">
-<f:if condition="{domainObject.properties -> f:count()} > 0 || {k:domainObjectChecks(renderCondition: 'needsTypeField', domainObject: domainObject)}">
+<f:if condition="{domainObject.properties -> f:count()} > 0 || {k:domainObjectChecks(renderCondition: 'needsTypeField', domainObject: domainObject)} || {k:listForeignKeyRelations(domainObject:domainObject) -> f:count()} > 0">
 CREATE TABLE {domainObject.databaseTableName} (<f:for each="{k:listForeignKeyRelations(domainObject:domainObject)}" as="relation">
 	{relation.foreignKeyName} int unsigned DEFAULT '0' NOT NULL,</f:for><f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isPersistable}">
 	{property.sqlDefinition}</f:if></f:for><k:mapping renderCondition="needsTypeField" domainObject="{domainObject}">

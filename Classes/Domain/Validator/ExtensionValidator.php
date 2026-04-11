@@ -80,6 +80,10 @@ class ExtensionValidator extends AbstractValidator
     /**
      * @var int
      */
+    public const ERROR_DOMAINOBJECT_NO_PROPERTIES = 104;
+    /**
+     * @var int
+     */
     public const ERROR_PROPERTY_NO_NAME = 200;
     /**
      * @var int
@@ -543,6 +547,15 @@ class ExtensionValidator extends AbstractValidator
                 $this->validationResult['errors'][] = new ExtensionException(
                     'Domain object name "' . $domainObject->getName() . '" may not be used in extbase.',
                     self::ERROR_PROPERTY_RESERVED_WORD
+                );
+            }
+
+            if (!count($domainObject->getProperties())) {
+                $this->validationResult['warnings'][] = new ExtensionException(
+                    'Domain object "' . $domainObject->getName() . '" has no properties.' . LF
+                    . 'Without properties, no CREATE TABLE statement will be generated in ext_tables.sql.' . LF
+                    . 'Add at least one property to ensure the database table is created correctly.',
+                    self::ERROR_DOMAINOBJECT_NO_PROPERTIES
                 );
             }
 

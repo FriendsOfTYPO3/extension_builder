@@ -34,6 +34,26 @@ class ValidationServiceTest extends BaseUnitTest
     /**
      * @test
      */
+    public function validateExtensionWarnsForDomainObjectWithNoProperties(): void
+    {
+        $domainObject = $this->buildDomainObject('EmptyModel');
+        // no properties added
+        $this->extension->addDomainObject($domainObject);
+
+        $extensionValidator = new ExtensionValidator();
+        $result = $extensionValidator->validateExtension($this->extension);
+
+        $warningCodes = array_map(fn($w) => $w->getCode(), $result['warnings']);
+        self::assertContains(
+            ExtensionValidator::ERROR_DOMAINOBJECT_NO_PROPERTIES,
+            $warningCodes,
+            'Expected warning for domain object without properties'
+        );
+    }
+
+    /**
+     * @test
+     */
     public function validateConfigurationFormatReturnsExceptionsOnDuplicatePropertyNames(): void
     {
         $fixture = [
