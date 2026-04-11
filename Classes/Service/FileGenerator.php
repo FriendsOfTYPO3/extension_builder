@@ -154,7 +154,9 @@ class FileGenerator
 
         $this->generateComposerJson();
 
-        mkdir($this->extensionDirectory . 'Configuration', 0777, true);
+        if (!is_dir($this->extensionDirectory . 'Configuration')) {
+            mkdir($this->extensionDirectory . 'Configuration', 0777, true);
+        }
 
         $this->configurationDirectory = $this->extensionDirectory . 'Configuration/';
 
@@ -316,7 +318,9 @@ class FileGenerator
             return;
         }
         try {
-            mkdir($this->extensionDirectory . 'Configuration', 0777, true);
+            if (!is_dir($this->extensionDirectory . 'Configuration')) {
+                mkdir($this->extensionDirectory . 'Configuration', 0777, true);
+            }
 
             $fileContents = $this->renderTemplate(
                 'Configuration/Icons.phpt',
@@ -857,7 +861,7 @@ class FileGenerator
             return;
         }
         $sourceDirectory = ExtensionManagementUtility::extPath('extension_builder') . 'Resources/Private/CodeTemplates/Git/';
-        foreach (['objects/info', 'objects/pack', 'refs/heads', 'refs/tags'] as $item) {
+        foreach (['info', 'objects/info', 'objects/pack', 'refs/heads', 'refs/tags'] as $item) {
             $this->mkdir_deep($targetDirectory . '/' . $item, '');
         }
         foreach (['config', 'description', 'HEAD', 'info/exclude'] as $item) {
@@ -1609,7 +1613,7 @@ class FileGenerator
                 // skip creation
                 return;
             }
-            if (!is_dir($deepDirectory) || ($this->roundTripEnabled && $overWriteMode < 2)) {
+            if (!is_dir($tmpBasePath . $subDirectory)) {
                 mkdir($tmpBasePath . $subDirectory, 0777, true);
             }
             $tmpBasePath .= $subDirectory . '/';

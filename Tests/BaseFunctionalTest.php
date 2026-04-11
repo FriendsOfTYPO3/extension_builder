@@ -91,7 +91,7 @@ abstract class BaseFunctionalTest extends FunctionalTestCase
         $this->extension->expects(self::any())
             ->method('getExtensionDir')
             ->willReturn($dummyExtensionDir);
-        if (is_dir($dummyExtensionDir)) {
+        if (!is_dir($dummyExtensionDir)) {
             mkdir($dummyExtensionDir);
         }
 

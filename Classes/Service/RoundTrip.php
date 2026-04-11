@@ -1575,7 +1575,9 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
     public static function recurse_copy(string $src, string $dst): void
     {
         $dir = opendir($src);
-        mkdir($dst);
+        if (!is_dir($dst)) {
+            mkdir($dst);
+        }
         while (false !== ($file = readdir($dir))) {
             if ($file !== '.' && $file !== '..') {
                 if (is_dir($src . '/' . $file)) {
