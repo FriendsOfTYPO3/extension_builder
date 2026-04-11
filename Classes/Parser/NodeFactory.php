@@ -34,6 +34,7 @@ use PhpParser\Node\ArrayItem;
 use PhpParser\Node\Const_;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ConstFetch;
+use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Param;
