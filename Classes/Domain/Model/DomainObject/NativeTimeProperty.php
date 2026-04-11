@@ -26,7 +26,7 @@ class NativeTimeProperty extends AbstractProperty
      *
      * @var DateTime|null
      */
-    protected $defaultValue = null;
+    protected $defaultValue;
 
     public function getTypeForComment(): string
     {

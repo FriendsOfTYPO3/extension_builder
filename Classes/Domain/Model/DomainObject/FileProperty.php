@@ -27,7 +27,7 @@ class FileProperty extends AbstractProperty
      *
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference|null
      */
-    protected $defaultValue = null;
+    protected $defaultValue;
     /**
      * allowed file types for this property
      *

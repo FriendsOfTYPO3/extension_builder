@@ -511,12 +511,6 @@ parameters:
 			path: Classes/Service/FileGenerator.php
 
 		-
-			message: '#^Left side of && is always true\.$#'
-			identifier: booleanAnd.leftAlwaysTrue
-			count: 1
-			path: Classes/Service/FileGenerator.php
-
-		-
 			message: '#^PHPDoc tag @return has invalid value \(void;\)\: Unexpected token ";", expected TOKEN_HORIZONTAL_WS at offset 157 on line 6$#'
 			identifier: phpDoc.parseError
 			count: 1

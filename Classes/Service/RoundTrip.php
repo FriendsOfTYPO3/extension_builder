@@ -30,6 +30,8 @@ use Exception;
 use PhpParser\Error as PhpParserError;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -1452,8 +1454,8 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
                 continue;
             }
             $fileCount = iterator_count(
-                new \RecursiveIteratorIterator(
-                    new \RecursiveDirectoryIterator($fullPath, \RecursiveDirectoryIterator::SKIP_DOTS)
+                new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($fullPath, RecursiveDirectoryIterator::SKIP_DOTS)
                 )
             );
             $parts = explode('-', $entry);

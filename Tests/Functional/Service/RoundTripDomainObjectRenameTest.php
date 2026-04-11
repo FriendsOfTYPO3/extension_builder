@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Tests\Functional\Service;
 
-use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 
 class RoundTripDomainObjectRenameTest extends BaseFunctionalTest
