@@ -550,7 +550,7 @@ class ExtensionValidator extends AbstractValidator
                 );
             }
 
-            if (!count($domainObject->getProperties())) {
+            if (!count($domainObject->getProperties()) && !$this->hasIncomingFkRelation($domainObject, $extension)) {
                 $this->validationResult['warnings'][] = new ExtensionException(
                     'Domain object "' . $domainObject->getName() . '" has no properties.' . LF
                     . 'Without properties, no CREATE TABLE statement will be generated in ext_tables.sql.' . LF
@@ -577,6 +577,26 @@ class ExtensionValidator extends AbstractValidator
                 );
             }
         }
+    }
+
+    /**
+     * Returns true if any other domain object in the extension has an inline ZeroToMany relation
+     * pointing to $domainObject, meaning a FK column will be generated in ext_tables.sql even
+     * when $domainObject has no own properties.
+     */
+    private function hasIncomingFkRelation(DomainObject $domainObject, Extension $extension): bool
+    {
+        foreach ($extension->getDomainObjects() as $otherObject) {
+            foreach ($otherObject->getProperties() as $property) {
+                if ($property instanceof ZeroToManyRelation
+                    && $property->getRenderType() === 'inline'
+                    && $property->getForeignClassName() === $domainObject->getFullQualifiedClassName()
+                ) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
