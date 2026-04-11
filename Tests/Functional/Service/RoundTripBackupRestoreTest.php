@@ -19,6 +19,7 @@ namespace EBT\ExtensionBuilder\Tests\Functional\Service;
 
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
+use Exception;
 use TYPO3\CMS\Core\Core\Environment;
 
 class RoundTripBackupRestoreTest extends BaseFunctionalTest
@@ -137,7 +138,7 @@ class RoundTripBackupRestoreTest extends BaseFunctionalTest
      */
     public function restoreBackupThrowsExceptionForInvalidDirectoryName(): void
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         RoundTrip::restoreBackup($this->extension, '../etc/passwd', $this->backupRelDir);
     }
 }

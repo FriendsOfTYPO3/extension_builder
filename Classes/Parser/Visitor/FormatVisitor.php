@@ -18,8 +18,8 @@ declare(strict_types=1);
 namespace EBT\ExtensionBuilder\Parser\Visitor;
 
 use PhpParser\Node;
-use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\ArrayItem;
+use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\NodeVisitorAbstract;

@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Domain\Validator;
 
+use Doctrine\DBAL\Types\IntegerType;
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
 use EBT\ExtensionBuilder\Domain\Model\BackendModule;
@@ -26,7 +27,6 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
 use EBT\ExtensionBuilder\Domain\Model\Extension;
 use EBT\ExtensionBuilder\Domain\Model\Plugin;
 use EBT\ExtensionBuilder\Service\ValidationService;
-use Doctrine\DBAL\Types\IntegerType;
 use Exception;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;

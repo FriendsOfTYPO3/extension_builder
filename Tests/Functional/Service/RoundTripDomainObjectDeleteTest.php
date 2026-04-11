@@ -19,7 +19,6 @@ namespace EBT\ExtensionBuilder\Tests\Functional\Service;
 
 use EBT\ExtensionBuilder\Configuration\ExtensionBuilderConfigurationManager;
 use EBT\ExtensionBuilder\Service\ExtensionSchemaBuilder;
-use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Service\ParserService;
 use EBT\ExtensionBuilder\Service\RoundTrip;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
