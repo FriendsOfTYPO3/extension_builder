@@ -262,6 +262,7 @@ class ClassBuilder implements SingletonInterface
                 $this->classObject->setMethod($this->classObject->getMethod('__construct'));
             }
             $initObjectMethod = clone $this->templateClassObject->getMethod('initializeObject');
+            $initObjectMethod->setReturnType(null);
             $methodBodyStmts = [];
             $templateBodyStmts = $initObjectMethod->getBodyStmts();
             $initObjectMethod->setModifier('public');
@@ -316,7 +317,9 @@ class ClassBuilder implements SingletonInterface
         if ($this->classObject->methodExists($getterMethodName)) {
             $getterMethod = $this->classObject->getMethod($getterMethodName);
         } else {
+            /** @var Method $getterMethod */
             $getterMethod = clone $this->templateClassObject->getMethod('getProperty')->setName($getterMethodName);
+            $getterMethod->setReturnType(null);
             $replacements = ['property' => $propertyName];
             $this->updateMethodBody($getterMethod, $replacements);
             $this->updateDocComment($getterMethod, $replacements);
@@ -337,6 +340,7 @@ class ClassBuilder implements SingletonInterface
             $setterMethod = $this->classObject->getMethod($setterMethodName);
         } else {
             $setterMethod = clone $this->templateClassObject->getMethod('setProperty');
+            $setterMethod->setReturnType(null);
             $setterMethod->setName('set' . ucfirst($propertyName));
             $replacements = ['property' => $propertyName];
             $this->updateMethodBody($setterMethod, $replacements);
@@ -378,6 +382,7 @@ class ClassBuilder implements SingletonInterface
             $addMethod = $this->classObject->getMethod($addMethodName);
         } else {
             $addMethod = clone $this->templateClassObject->getMethod('addChild');
+            $addMethod->setReturnType(null);
             $addMethod->setName('add' . ucfirst(Inflector::singularize($propertyName)));
 
             $this->updateMethodBody(
@@ -435,6 +440,7 @@ class ClassBuilder implements SingletonInterface
             $removeMethod = $this->classObject->getMethod($removeMethodName);
         } else {
             $removeMethod = clone $this->templateClassObject->getMethod('removeChild');
+            $removeMethod->setReturnType(null);
             $removeMethod->setName('remove' . ucfirst(Inflector::singularize($propertyName)));
             $removeMethod->setTag('param', Tools::getParamTag($domainProperty, 'remove'), true);
             $removeMethod->setTag('return', 'void');
@@ -493,6 +499,7 @@ class ClassBuilder implements SingletonInterface
             $isMethod = $this->classObject->getMethod($isMethodName);
         } else {
             $isMethod = clone $this->templateClassObject->getMethod('isProperty');
+            $isMethod->setReturnType(null);
             $isMethod->setName('is' . ucfirst($domainProperty->getName()));
             $isMethod->setTag('return', 'bool');
             $replacements = ['property' => $domainProperty->getName()];
@@ -760,7 +767,9 @@ class ClassBuilder implements SingletonInterface
             return $this->classObject->getMethod($injectMethodName);
         }
 
+        /** @var Method $injectMethod */
         $injectMethod = clone $this->templateClassObject->getMethod('injectDomainObjectRepository')->setName($injectMethodName);
+        $injectMethod->setReturnType(null);
         $replacements = [
             preg_quote('\\VENDOR\\Package\\Domain\\Repository\\DomainObjectRepository', '/') => $domainObject->getFullyQualifiedDomainRepositoryClassName(),
             'domainObjectRepository' => lcfirst($repositoryName),
