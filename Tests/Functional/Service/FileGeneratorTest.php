@@ -482,6 +482,52 @@ class FileGeneratorTest extends BaseFunctionalTest
     }
 
     /**
+     * Verify that ext_tables.sql contains a CREATE TABLE for a child model that has no own properties
+     * but is the target of a ZeroToMany inline relation (requires FK column in its table).
+     *
+     * @test
+     */
+    public function extTablesSqlContainsForeignKeyForChildModelWithNoProperties(): void
+    {
+        $ownerModelName = 'OwnerModel';
+        $childModelName = 'ChildModel';
+        $relationName = 'children';
+
+        $ownerDomainObject = $this->buildDomainObject($ownerModelName, true, true);
+        $childDomainObject = $this->buildDomainObject($childModelName, true);
+
+        $property = new BooleanProperty('active');
+        $ownerDomainObject->addProperty($property);
+
+        $relation = new Relation\ZeroToManyRelation($relationName);
+        $relation->setForeignModel($childDomainObject);
+        $relation->setRenderType('inline');
+        $ownerDomainObject->addProperty($relation);
+
+        $this->extension->addDomainObject($ownerDomainObject);
+        $this->extension->addDomainObject($childDomainObject);
+
+        $this->fileGenerator->build($this->extension);
+
+        $sqlFile = $this->extension->getExtensionDir() . 'ext_tables.sql';
+        self::assertFileExists($sqlFile, 'ext_tables.sql was not generated');
+
+        $sqlContent = file_get_contents($sqlFile);
+        self::assertStringContainsString(
+            'CREATE TABLE ' . $childDomainObject->getDatabaseTableName(),
+            $sqlContent,
+            'ext_tables.sql must contain CREATE TABLE for child model with no own properties'
+        );
+        // FK column name is derived from the owner model name (lowercase)
+        $expectedFkColumn = strtolower($ownerModelName);
+        self::assertStringContainsString(
+            $expectedFkColumn,
+            $sqlContent,
+            'ext_tables.sql must contain the FK column for the child model'
+        );
+    }
+
+    /**
      * @test
      */
     public function writeExtensionFiles(): void

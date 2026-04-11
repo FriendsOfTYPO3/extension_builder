@@ -9,6 +9,8 @@ Change log
 Version 13.1.0
 --------------
 
+* [BUGFIX] ``ext_tables.sql`` now includes a ``CREATE TABLE`` statement for models that have no own properties but are the target of a ``ZeroToMany inline`` relation — previously the FK column was silently dropped, leaving the database table uncreated.
+* [BUGFIX] A validation warning is now shown when a domain object has no properties, informing the user that no ``CREATE TABLE`` statement will be generated in ``ext_tables.sql``.
 * [FEATURE] XLF files are no longer rewritten when only the ``date=`` attribute changed — avoids VCS noise on every regeneration. The ``staticDateInXliffFiles`` setting is removed as it is no longer needed.
 
 Version 12.0.0

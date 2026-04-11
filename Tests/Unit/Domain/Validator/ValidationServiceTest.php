@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace EBT\ExtensionBuilder\Tests\Unit\Domain\Validator;
 
 use EBT\ExtensionBuilder\Domain\Exception\ExtensionException;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
 use EBT\ExtensionBuilder\Domain\Validator\ExtensionValidator;
 use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 
@@ -29,6 +30,52 @@ class ValidationServiceTest extends BaseUnitTest
     public function testForReservedWord(): void
     {
         self::assertTrue(ExtensionValidator::isReservedWord('DATABASE'));
+    }
+
+    /**
+     * @test
+     */
+    public function validateExtensionWarnsForDomainObjectWithNoProperties(): void
+    {
+        $domainObject = $this->buildDomainObject('EmptyModel');
+        // no properties added
+        $this->extension->addDomainObject($domainObject);
+
+        $extensionValidator = new ExtensionValidator();
+        $result = $extensionValidator->validateExtension($this->extension);
+
+        $warningCodes = array_map(fn($w) => $w->getCode(), $result['warnings']);
+        self::assertContains(
+            ExtensionValidator::ERROR_DOMAINOBJECT_NO_PROPERTIES,
+            $warningCodes,
+            'Expected warning for domain object without properties'
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function noWarningForDomainObjectWithNoPropertiesWhenItIsInlineFkTarget(): void
+    {
+        $ownerObject = $this->buildDomainObject('OwnerModel', true, true);
+        $childObject = $this->buildDomainObject('ChildModel', true);
+        // child has no own properties, but is target of an inline ZeroToMany relation
+        $relation = new ZeroToManyRelation('children');
+        $relation->setForeignModel($childObject);
+        $relation->setRenderType('inline');
+        $ownerObject->addProperty($relation);
+        $this->extension->addDomainObject($ownerObject);
+        $this->extension->addDomainObject($childObject);
+
+        $extensionValidator = new ExtensionValidator();
+        $result = $extensionValidator->validateExtension($this->extension);
+
+        $warningCodes = array_map(fn($w) => $w->getCode(), $result['warnings']);
+        self::assertNotContains(
+            ExtensionValidator::ERROR_DOMAINOBJECT_NO_PROPERTIES,
+            $warningCodes,
+            'No warning expected for child model that is target of an inline FK relation'
+        );
     }
 
     /**

@@ -80,6 +80,10 @@ class ExtensionValidator extends AbstractValidator
     /**
      * @var int
      */
+    public const ERROR_DOMAINOBJECT_NO_PROPERTIES = 104;
+    /**
+     * @var int
+     */
     public const ERROR_PROPERTY_NO_NAME = 200;
     /**
      * @var int
@@ -546,6 +550,15 @@ class ExtensionValidator extends AbstractValidator
                 );
             }
 
+            if (!count($domainObject->getProperties()) && !$this->hasIncomingFkRelation($domainObject, $extension)) {
+                $this->validationResult['warnings'][] = new ExtensionException(
+                    'Domain object "' . $domainObject->getName() . '" has no properties.' . LF
+                    . 'Without properties, no CREATE TABLE statement will be generated in ext_tables.sql.' . LF
+                    . 'Add at least one property to ensure the database table is created correctly.',
+                    self::ERROR_DOMAINOBJECT_NO_PROPERTIES
+                );
+            }
+
             $this->validateProperties($domainObject);
             $this->validateDomainObjectActions($domainObject);
             $this->validateMapping($domainObject);
@@ -564,6 +577,26 @@ class ExtensionValidator extends AbstractValidator
                 );
             }
         }
+    }
+
+    /**
+     * Returns true if any other domain object in the extension has an inline ZeroToMany relation
+     * pointing to $domainObject, meaning a FK column will be generated in ext_tables.sql even
+     * when $domainObject has no own properties.
+     */
+    private function hasIncomingFkRelation(DomainObject $domainObject, Extension $extension): bool
+    {
+        foreach ($extension->getDomainObjects() as $otherObject) {
+            foreach ($otherObject->getProperties() as $property) {
+                if ($property instanceof ZeroToManyRelation
+                    && $property->getRenderType() === 'inline'
+                    && $property->getForeignClassName() === $domainObject->getFullQualifiedClassName()
+                ) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
