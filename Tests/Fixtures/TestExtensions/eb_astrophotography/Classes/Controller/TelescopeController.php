@@ -33,7 +33,7 @@ class TelescopeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     /**
      * action list
      */
-    public function listAction()
+    public function listAction(): ResponseInterface
     {
         $telescopes = $this->telescopeRepository->findAll();
         $this->view->assign('telescopes', $telescopes);
@@ -45,7 +45,7 @@ class TelescopeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      *
      * @param \AcmeCorp\EbAstrophotography\Domain\Model\Telescope $telescope
      */
-    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\Telescope $telescope)
+    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\Telescope $telescope): ResponseInterface
     {
         $this->view->assign('telescope', $telescope);
         return $this->htmlResponse();

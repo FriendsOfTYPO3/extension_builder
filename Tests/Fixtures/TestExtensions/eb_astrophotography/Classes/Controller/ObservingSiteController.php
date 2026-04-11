@@ -33,7 +33,7 @@ class ObservingSiteController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
     /**
      * action list
      */
-    public function listAction()
+    public function listAction(): ResponseInterface
     {
         $observingSites = $this->observingSiteRepository->findAll();
         $this->view->assign('observingSites', $observingSites);
@@ -45,7 +45,7 @@ class ObservingSiteController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
      *
      * @param \AcmeCorp\EbAstrophotography\Domain\Model\ObservingSite $observingSite
      */
-    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\ObservingSite $observingSite)
+    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\ObservingSite $observingSite): ResponseInterface
     {
         $this->view->assign('observingSite', $observingSite);
         return $this->htmlResponse();

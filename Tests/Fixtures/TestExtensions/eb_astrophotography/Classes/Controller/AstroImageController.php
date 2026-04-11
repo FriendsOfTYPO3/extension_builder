@@ -33,7 +33,7 @@ class AstroImageController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     /**
      * action list
      */
-    public function listAction()
+    public function listAction(): ResponseInterface
     {
         $astroImages = $this->astroImageRepository->findAll();
         $this->view->assign('astroImages', $astroImages);
@@ -45,7 +45,7 @@ class AstroImageController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      *
      * @param \AcmeCorp\EbAstrophotography\Domain\Model\AstroImage $astroImage
      */
-    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\AstroImage $astroImage)
+    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\AstroImage $astroImage): ResponseInterface
     {
         $this->view->assign('astroImage', $astroImage);
         return $this->htmlResponse();

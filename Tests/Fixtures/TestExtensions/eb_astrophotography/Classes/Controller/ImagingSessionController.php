@@ -33,7 +33,7 @@ class ImagingSessionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
     /**
      * action list
      */
-    public function listAction()
+    public function listAction(): ResponseInterface
     {
         $imagingSessions = $this->imagingSessionRepository->findAll();
         $this->view->assign('imagingSessions', $imagingSessions);
@@ -45,7 +45,7 @@ class ImagingSessionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
      *
      * @param \AcmeCorp\EbAstrophotography\Domain\Model\ImagingSession $imagingSession
      */
-    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\ImagingSession $imagingSession)
+    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\ImagingSession $imagingSession): ResponseInterface
     {
         $this->view->assign('imagingSession', $imagingSession);
         return $this->htmlResponse();

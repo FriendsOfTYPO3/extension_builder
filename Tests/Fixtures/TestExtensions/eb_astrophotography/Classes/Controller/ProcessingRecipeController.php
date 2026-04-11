@@ -33,7 +33,7 @@ class ProcessingRecipeController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
     /**
      * action list
      */
-    public function listAction()
+    public function listAction(): ResponseInterface
     {
         $processingRecipes = $this->processingRecipeRepository->findAll();
         $this->view->assign('processingRecipes', $processingRecipes);
@@ -45,7 +45,7 @@ class ProcessingRecipeController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      *
      * @param \AcmeCorp\EbAstrophotography\Domain\Model\ProcessingRecipe $processingRecipe
      */
-    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\ProcessingRecipe $processingRecipe)
+    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\ProcessingRecipe $processingRecipe): ResponseInterface
     {
         $this->view->assign('processingRecipe', $processingRecipe);
         return $this->htmlResponse();

@@ -361,12 +361,6 @@ parameters:
 			path: Classes/Parser/Visitor/ReplaceClassNamesVisitor.php
 
 		-
-			message: '#^Call to an undefined method EBT\\ExtensionBuilder\\Domain\\Model\\AbstractObject\:\:getParameterByPosition\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: Classes/Service/ClassBuilder.php
-
-		-
 			message: '#^Call to an undefined method EBT\\ExtensionBuilder\\Domain\\Model\\AbstractObject\:\:setClasses\(\)\.$#'
 			identifier: method.notFound
 			count: 3
@@ -381,13 +375,7 @@ parameters:
 		-
 			message: '#^Call to an undefined method EBT\\ExtensionBuilder\\Domain\\Model\\AbstractObject\:\:setVarType\(\)\.$#'
 			identifier: method.notFound
-			count: 5
-			path: Classes/Service/ClassBuilder.php
-
-		-
-			message: '#^Call to an undefined method EBT\\ExtensionBuilder\\Domain\\Model\\AbstractObject\:\:updateParamTags\(\)\.$#'
-			identifier: method.notFound
-			count: 1
+			count: 6
 			path: Classes/Service/ClassBuilder.php
 
 		-
@@ -405,18 +393,6 @@ parameters:
 		-
 			message: '#^If condition is always false\.$#'
 			identifier: if.alwaysFalse
-			count: 1
-			path: Classes/Service/ClassBuilder.php
-
-		-
-			message: '#^Method EBT\\ExtensionBuilder\\Service\\ClassBuilder\:\:buildGetterMethod\(\) should return EBT\\ExtensionBuilder\\Domain\\Model\\ClassObject\\Method but returns EBT\\ExtensionBuilder\\Domain\\Model\\AbstractObject\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: Classes/Service/ClassBuilder.php
-
-		-
-			message: '#^Method EBT\\ExtensionBuilder\\Service\\ClassBuilder\:\:buildInjectMethod\(\) should return EBT\\ExtensionBuilder\\Domain\\Model\\ClassObject\\Method but returns EBT\\ExtensionBuilder\\Domain\\Model\\AbstractObject\.$#'
-			identifier: return.type
 			count: 1
 			path: Classes/Service/ClassBuilder.php
 
@@ -448,12 +424,6 @@ parameters:
 			message: '#^Parameter \#1 \$domainProperty of method EBT\\ExtensionBuilder\\Service\\ClassBuilder\:\:buildRemoveMethod\(\) expects EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\Relation\\AbstractRelation, EBT\\ExtensionBuilder\\Domain\\Model\\DomainObject\\AbstractProperty given\.$#'
 			identifier: argument.type
 			count: 1
-			path: Classes/Service/ClassBuilder.php
-
-		-
-			message: '#^Parameter \#1 \$method of method EBT\\ExtensionBuilder\\Service\\ClassBuilder\:\:updateMethodBody\(\) expects EBT\\ExtensionBuilder\\Domain\\Model\\ClassObject\\Method, EBT\\ExtensionBuilder\\Domain\\Model\\AbstractObject given\.$#'
-			identifier: argument.type
-			count: 2
 			path: Classes/Service/ClassBuilder.php
 
 		-
