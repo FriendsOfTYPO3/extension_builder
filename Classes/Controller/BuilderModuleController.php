@@ -272,8 +272,6 @@ class BuilderModuleController extends ActionController
 
     /**
      * Main entry point for the buttons in the Javascript frontend.
-     *
-     * @return ResponseInterface json encoded array
      */
     public function dispatchRpcAction(): ResponseInterface
     {
@@ -311,7 +309,6 @@ class BuilderModuleController extends ActionController
     /**
      * Generate the code files according to the transferred JSON configuration.
      *
-     * @return array (status => message)
      * @throws Exception
      */
     protected function rpcActionSave(): array
@@ -441,8 +438,6 @@ class BuilderModuleController extends ActionController
     /**
      * Shows a list with available extensions (if they have an ExtensionBuilder.json
      * file).
-     *
-     * @return array
      */
     protected function rpcActionList(): array
     {
