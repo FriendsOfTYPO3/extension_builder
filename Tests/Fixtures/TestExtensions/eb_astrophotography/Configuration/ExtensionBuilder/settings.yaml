@@ -68,9 +68,6 @@ overwriteSettings:
 ## add declare strict types in php files
 declareStrictTypes: true
 
-## use static date attribute in xliff files
-#staticDateInXliffFiles: '2026-04-06T19:20:13Z'
-
 ## skip docComment (license header)
 #skipDocComment: false
 

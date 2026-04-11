@@ -168,19 +168,10 @@ This is an example of the :file:`settings.yaml` file:
 Miscellaneous
 -------------
 
-There are more options both for the timestamps of the language files and for
-working with the Extension Builder itself.
+There are more options for working with the Extension Builder itself.
 
 +----------------------------+-------------------------------------------------------------------------------+
 |**Setting**                 |**Description**                                                                |
-+----------------------------+-------------------------------------------------------------------------------+
-|staticDateInXliffFiles      |By default, the date attribute in language files is updated every time you     |
-|                            |save in the Extension Builder.                                                 |
-|                            |This can be confusing in a version control system if all language files are    |
-|                            |marked as changed even if no labels have been added or changed.                |
-|                            |To prevent this effect, you can set a static date –                            |
-|                            |although this is not recommended because the modification date can be useful   |
-|                            |in the translation context.                                                    |
 +----------------------------+-------------------------------------------------------------------------------+
 |ignoreWarnings              |Some modeling configurations result in warnings.                               |
 |                            |For example, if you configure a show action as a default action, you are       |
@@ -194,8 +185,6 @@ working with the Extension Builder itself.
 This is an example of the :file:`settings.yaml` file:
 
 .. code-block:: yaml
-
-   staticDateInXliffFiles: 2021-11-18T12:37:00Z
 
    ignoreWarnings:
      503
