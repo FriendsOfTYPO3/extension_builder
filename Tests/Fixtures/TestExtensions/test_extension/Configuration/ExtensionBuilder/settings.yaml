@@ -70,9 +70,6 @@ overwriteSettings:
 
 #  ext_tables.sql: merge
 
-## use static date attribute in xliff files ##
-#staticDateInXliffFiles: ###YEAR###-01-01T01:00:00Z
-
 ## list of error codes for warnings that should be ignored ##
 #ignoreWarnings:
   #503

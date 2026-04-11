@@ -6,6 +6,11 @@
 Change log
 ==========
 
+Version 13.1.0
+--------------
+
+* [FEATURE] XLF files are no longer rewritten when only the ``date=`` attribute changed — avoids VCS noise on every regeneration. The ``staticDateInXliffFiles`` setting is removed as it is no longer needed.
+
 Version 12.0.0
 --------------
 
