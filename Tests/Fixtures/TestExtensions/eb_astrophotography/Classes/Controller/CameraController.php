@@ -33,7 +33,7 @@ class CameraController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * action list
      */
-    public function listAction()
+    public function listAction(): ResponseInterface
     {
         $cameras = $this->cameraRepository->findAll();
         $this->view->assign('cameras', $cameras);
@@ -45,7 +45,7 @@ class CameraController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      *
      * @param \AcmeCorp\EbAstrophotography\Domain\Model\Camera $camera
      */
-    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\Camera $camera)
+    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\Camera $camera): ResponseInterface
     {
         $this->view->assign('camera', $camera);
         return $this->htmlResponse();

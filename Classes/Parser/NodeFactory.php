@@ -162,7 +162,11 @@ class NodeFactory implements SingletonInterface
         }
         $returnType = $methodObject->getReturnType();
         if ($returnType !== null) {
-            $methodNodeBuilder->setReturnType(new FullyQualified(ltrim($returnType, '\\')));
+            if (str_starts_with($returnType, '\\') || str_contains($returnType, '\\')) {
+                $methodNodeBuilder->setReturnType(new FullyQualified(ltrim($returnType, '\\')));
+            } else {
+                $methodNodeBuilder->setReturnType(new Name($returnType));
+            }
         }
         $methodNodeBuilder->addStmts($methodObject->getBodyStmts());
 

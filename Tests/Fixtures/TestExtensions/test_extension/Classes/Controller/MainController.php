@@ -33,7 +33,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * action list
      */
-    public function listAction()
+    public function listAction(): ResponseInterface
     {
         $mains = $this->mainRepository->findAll();
         $this->view->assign('mains', $mains);
@@ -45,7 +45,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
      */
-    public function showAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
+    public function showAction(\FIXTURE\TestExtension\Domain\Model\Main $main): ResponseInterface
     {
         $this->view->assign('main', $main);
         return $this->htmlResponse();
@@ -54,7 +54,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * action new
      */
-    public function newAction()
+    public function newAction(): ResponseInterface
     {
         return $this->htmlResponse();
     }
@@ -64,7 +64,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $newMain
      */
-    public function createAction(\FIXTURE\TestExtension\Domain\Model\Main $newMain)
+    public function createAction(\FIXTURE\TestExtension\Domain\Model\Main $newMain): ResponseInterface
     {
         $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/User/Index.html', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         $this->mainRepository->add($newMain);
@@ -77,7 +77,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("main")
      */
-    public function editAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
+    public function editAction(\FIXTURE\TestExtension\Domain\Model\Main $main): ResponseInterface
     {
         $this->view->assign('main', $main);
         return $this->htmlResponse();
@@ -88,7 +88,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
      */
-    public function updateAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
+    public function updateAction(\FIXTURE\TestExtension\Domain\Model\Main $main): ResponseInterface
     {
         $this->addFlashMessage('The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/User/Index.html', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         $this->mainRepository->update($main);
@@ -100,7 +100,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      *
      * @param \FIXTURE\TestExtension\Domain\Model\Main $main
      */
-    public function deleteAction(\FIXTURE\TestExtension\Domain\Model\Main $main)
+    public function deleteAction(\FIXTURE\TestExtension\Domain\Model\Main $main): ResponseInterface
     {
         $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/User/Index.html', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         $this->mainRepository->remove($main);
@@ -110,7 +110,7 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * action custom
      */
-    public function customAction()
+    public function customAction(): ResponseInterface
     {
         return $this->htmlResponse();
     }

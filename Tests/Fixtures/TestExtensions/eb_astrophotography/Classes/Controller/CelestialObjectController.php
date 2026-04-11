@@ -33,7 +33,7 @@ class CelestialObjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
     /**
      * action list
      */
-    public function listAction()
+    public function listAction(): ResponseInterface
     {
         $celestialObjects = $this->celestialObjectRepository->findAll();
         $this->view->assign('celestialObjects', $celestialObjects);
@@ -45,7 +45,7 @@ class CelestialObjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
      *
      * @param \AcmeCorp\EbAstrophotography\Domain\Model\CelestialObject $celestialObject
      */
-    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\CelestialObject $celestialObject)
+    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\CelestialObject $celestialObject): ResponseInterface
     {
         $this->view->assign('celestialObject', $celestialObject);
         return $this->htmlResponse();
@@ -54,7 +54,7 @@ class CelestialObjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
     /**
      * action new
      */
-    public function newAction()
+    public function newAction(): ResponseInterface
     {
         return $this->htmlResponse();
     }
@@ -64,7 +64,7 @@ class CelestialObjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
      *
      * @param \AcmeCorp\EbAstrophotography\Domain\Model\CelestialObject $newCelestialObject
      */
-    public function createAction(\AcmeCorp\EbAstrophotography\Domain\Model\CelestialObject $newCelestialObject)
+    public function createAction(\AcmeCorp\EbAstrophotography\Domain\Model\CelestialObject $newCelestialObject): ResponseInterface
     {
         $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/main/en-us/User/Index.html', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         $this->celestialObjectRepository->add($newCelestialObject);

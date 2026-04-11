@@ -33,7 +33,7 @@ class AwardController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * action list
      */
-    public function listAction()
+    public function listAction(): ResponseInterface
     {
         $awards = $this->awardRepository->findAll();
         $this->view->assign('awards', $awards);
@@ -45,7 +45,7 @@ class AwardController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      *
      * @param \AcmeCorp\EbAstrophotography\Domain\Model\Award $award
      */
-    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\Award $award)
+    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\Award $award): ResponseInterface
     {
         $this->view->assign('award', $award);
         return $this->htmlResponse();

@@ -33,7 +33,7 @@ class AstroFilterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     /**
      * action list
      */
-    public function listAction()
+    public function listAction(): ResponseInterface
     {
         $astroFilters = $this->astroFilterRepository->findAll();
         $this->view->assign('astroFilters', $astroFilters);
@@ -45,7 +45,7 @@ class AstroFilterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
      *
      * @param \AcmeCorp\EbAstrophotography\Domain\Model\AstroFilter $astroFilter
      */
-    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\AstroFilter $astroFilter)
+    public function showAction(\AcmeCorp\EbAstrophotography\Domain\Model\AstroFilter $astroFilter): ResponseInterface
     {
         $this->view->assign('astroFilter', $astroFilter);
         return $this->htmlResponse();
