@@ -1515,10 +1515,37 @@ class FileGenerator
         if (empty($fileContents)) {
             return;
         }
+
+        // Skip writing XLF files when only the date= attribute has changed to avoid VCS noise
+        if (
+            strtolower(pathinfo($targetFile, PATHINFO_EXTENSION)) === 'xlf'
+            && $this->xlfContentIsUnchanged($targetFile, $fileContents)
+        ) {
+            return;
+        }
+
         $success = GeneralUtility::writeFile($targetFile, $fileContents);
         if (!$success) {
             throw new Exception('File ' . $targetFile . ' could not be created!');
         }
+    }
+
+    /**
+     * Checks whether an existing XLF file has the same content as $newContent,
+     * ignoring differences in the date= attribute.
+     * Used to avoid rewriting XLF files when only the timestamp changed.
+     */
+    private function xlfContentIsUnchanged(string $targetFile, string $newContent): bool
+    {
+        if (!file_exists($targetFile)) {
+            return false;
+        }
+        $existing = file_get_contents($targetFile);
+        if ($existing === false) {
+            return false;
+        }
+        $normalize = static fn(string $content): string => (string)preg_replace('/\bdate="[^"]*"/', 'date=""', $content);
+        return $normalize($existing) === $normalize($newContent);
     }
 
     /**
