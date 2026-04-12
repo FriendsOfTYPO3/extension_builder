@@ -88,21 +88,6 @@ class LocalizationService implements SingletonInterface
         return $labelArray;
     }
 
-    /**
-     * @param DomainObject $domainObject
-     *
-     * @return array
-     * @throws InvalidArgumentException
-     */
-    public function prepareLabelArrayForContextHelp(DomainObject $domainObject): array
-    {
-        $labelArray = [];
-        foreach ($domainObject->getProperties() as $property) {
-            $labelArray[$property->getFieldName() . '.description'] = htmlspecialchars($property->getDescription());
-        }
-        return $labelArray;
-    }
-
     public function prepareLabelArrayForBackendModule(BackendModule $backendModule): array
     {
         return [

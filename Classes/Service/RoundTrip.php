@@ -1266,11 +1266,12 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
         // other files
         $iconsDirectory = $this->extensionDirectory . 'Resources/Public/Icons/';
         $languageDirectory = $this->extensionDirectory . 'Resources/Private/Language/';
-        $locallang_cshFile = $languageDirectory . 'locallang_csh_' . $domainObject->getDatabaseTableName() . '.xml';
         $iconFile = $iconsDirectory . $domainObject->getDatabaseTableName() . '.gif';
-        if (file_exists($locallang_cshFile)) {
-            // no overwrite settings check here...
-            unlink($locallang_cshFile);
+        foreach (['xml', 'xlf'] as $cshExt) {
+            $cshFile = $languageDirectory . 'locallang_csh_' . $domainObject->getDatabaseTableName() . '.' . $cshExt;
+            if (file_exists($cshFile)) {
+                unlink($cshFile);
+            }
         }
         if (file_exists($iconFile)) {
             unlink($iconFile);

@@ -439,13 +439,7 @@ class FileGenerator
                     );
                 }
             }
-            foreach ($this->extension->getDomainObjects() as $domainObject) {
-                $fileContents = $this->generateLocallangFileContent('_csh_' . $domainObject->getDatabaseTableName() . '.xlf', 'domainObject', $domainObject);
-                $this->writeFile(
-                    $this->languageDirectory . 'locallang_csh_' . $domainObject->getDatabaseTableName() . '.xlf',
-                    $fileContents
-                );
-            }
+
         } catch (Exception $e) {
             throw new Exception('Could not generate locallang files, error: ' . $e->getMessage());
         }
@@ -1251,7 +1245,7 @@ class FileGenerator
     }
 
     /**
-     * @param string $fileNameSuffix (_db, _csh, _mod)
+     * @param string $fileNameSuffix (_db, _mod)
      * @param string $variableName
      * @param DomainObject|BackendModule $variable
      *
@@ -1293,10 +1287,6 @@ class FileGenerator
 
     protected function getLanguageLabelsForVariable(string $variableName, $variable, string $fileNameSuffix): array
     {
-        if ($variableName === 'domainObject') {
-            return $this->localizationService->prepareLabelArrayForContextHelp($variable);
-        }
-
         if ($variableName === 'backendModule') {
             return $this->localizationService->prepareLabelArrayForBackendModule($variable);
         }
