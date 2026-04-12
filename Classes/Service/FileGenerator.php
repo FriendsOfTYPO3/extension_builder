@@ -172,6 +172,8 @@ class FileGenerator
 
         $this->generatePageTsConfig();
 
+        $this->generateUserTsConfig();
+
         $this->generateServicesYaml();
 
         $this->generateBackendModuleFiles();
@@ -287,6 +289,25 @@ class FileGenerator
     {
         // Plugin wizard entries are registered automatically by ExtensionUtility::registerPlugin()
         // when using PLUGIN_TYPE_CONTENT_ELEMENT, so no page.tsconfig generation is needed.
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function generateUserTsConfig(): void
+    {
+        if (!$this->extension->hasBackendModules()) {
+            return;
+        }
+        try {
+            $fileContents = $this->renderTemplate(
+                'Configuration/user.tsconfigt',
+                ['extension' => $this->extension]
+            );
+            $this->writeFile($this->configurationDirectory . 'user.tsconfig', $fileContents);
+        } catch (Exception $e) {
+            throw new Exception('Could not write Configuration/user.tsconfig. Error: ' . $e->getMessage());
+        }
     }
 
     /**
