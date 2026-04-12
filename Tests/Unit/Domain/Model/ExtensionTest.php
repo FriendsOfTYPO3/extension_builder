@@ -79,22 +79,6 @@ class ExtensionTest extends BaseUnitTest
     /**
      * @test
      */
-    public function getComposerInfoReturnsCorrectConstraintsForV12(): void
-    {
-        $this->extension->setExtensionKey('test_extension');
-        $this->extension->setVendorName('TestVendor');
-        $this->extension->setTargetVersion(12.4);
-
-        $composerInfo = $this->extension->getComposerInfo();
-
-        self::assertSame('>=8.1', $composerInfo['require']['php']);
-        self::assertSame('^12.4', $composerInfo['require']['typo3/cms-core']);
-        self::assertSame('^8.0', $composerInfo['require-dev']['typo3/testing-framework']);
-    }
-
-    /**
-     * @test
-     */
     public function getComposerInfoReturnsCorrectConstraintsForV13(): void
     {
         $this->extension->setExtensionKey('test_extension');
@@ -105,7 +89,31 @@ class ExtensionTest extends BaseUnitTest
 
         self::assertSame('>=8.2', $composerInfo['require']['php']);
         self::assertSame('^13.4', $composerInfo['require']['typo3/cms-core']);
+        self::assertSame('^13.4', $composerInfo['require']['typo3/cms-extbase']);
         self::assertSame('^9.0', $composerInfo['require-dev']['typo3/testing-framework']);
+    }
+
+    /**
+     * @test
+     */
+    public function getDependenciesAlwaysContainsExtbase(): void
+    {
+        $dependencies = $this->extension->getDependencies();
+
+        self::assertArrayHasKey('extbase', $dependencies);
+        self::assertSame('13.4.0-13.4.99', $dependencies['extbase']);
+    }
+
+    /**
+     * @test
+     */
+    public function getDependenciesDoesNotOverrideExistingExtbaseConstraint(): void
+    {
+        $this->extension->setDependencies(['extbase' => '12.0.0-12.4.99']);
+
+        $dependencies = $this->extension->getDependencies();
+
+        self::assertSame('12.0.0-12.4.99', $dependencies['extbase']);
     }
 
     /**
@@ -129,7 +137,6 @@ class ExtensionTest extends BaseUnitTest
     {
         $this->extension->setExtensionKey('test_extension');
         $this->extension->setVendorName('TestVendor');
-        $this->extension->setTargetVersion(12.4);
 
         $composerInfo = $this->extension->getComposerInfo();
 
