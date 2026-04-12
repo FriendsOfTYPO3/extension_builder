@@ -568,7 +568,11 @@ class Extension
 
     public function getDependencies(): array
     {
-        return $this->dependencies;
+        $dependencies = $this->dependencies;
+        if (!array_key_exists('extbase', $dependencies)) {
+            $dependencies['extbase'] = '13.4.0-13.4.99';
+        }
+        return $dependencies;
     }
 
     public function setTargetVersion(float $targetVersion): void
@@ -660,6 +664,7 @@ class Extension
             'require' => [
                 'php' => $versionConstraints['php'],
                 'typo3/cms-core' => $versionConstraints['typo3/cms-core'],
+                'typo3/cms-extbase' => $versionConstraints['typo3/cms-extbase'],
             ],
             'require-dev' => [
                 'typo3/testing-framework' => $versionConstraints['typo3/testing-framework'],
@@ -704,18 +709,11 @@ class Extension
 
     private function getVersionConstraints(): array
     {
-        $majorVersion = (int)$this->targetVersion;
-        return match ($majorVersion) {
-            12 => [
-                'php' => '>=8.1',
-                'typo3/cms-core' => '^12.4',
-                'typo3/testing-framework' => '^8.0',
-            ],
-            default => [
-                'php' => '>=8.2',
-                'typo3/cms-core' => '^13.4',
-                'typo3/testing-framework' => '^9.0',
-            ],
-        };
+        return [
+            'php' => '>=8.2',
+            'typo3/cms-core' => '^13.4',
+            'typo3/cms-extbase' => '^13.4',
+            'typo3/testing-framework' => '^9.0',
+        ];
     }
 }
