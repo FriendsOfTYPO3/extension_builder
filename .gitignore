@@ -12,24 +12,28 @@ sass-lint.html
 /Documentation-GENERATED-temp
 
 # Devbox
-.devbox/.ddev/config.local.yaml
 .devbox/bin
-.devbox/var
-.devbox/vendor
+.devbox/var/
+.devbox/vendor/
+.devbox/packages/
 .devbox/public/index.php
-.devbox/public/fileadmin/_processed_
-.devbox/public/fileadmin/_temp_
-.devbox/public/typo3
-.devbox/public/typo3conf/ext
-.devbox/public/typo3conf/PackageStates.php
-.devbox/public/typo3temp
-.devbox/.ddev/.global_commands/
-.devbox/.ddev/.homeadditions/
-.devbox/.ddev/apache/
-.devbox/.ddev/nginx_full/
-.devbox/.ddev/providers/
-.devbox/.ddev/xhprof/
-.devbox/.ddev/composer.lock
+.devbox/public/_assets
+.devbox/public/fileadmin/
+.devbox/public/uploads/
+.devbox/public/typo3/
+.devbox/public/typo3conf/
+.devbox/public/typo3temp/
+.devbox/composer.lock
+
+# DDEV (repo root)
+.ddev/.global_commands/
+.ddev/.homeadditions/
+.ddev/apache/
+.ddev/nginx_full/
+.ddev/providers/
+.ddev/xhprof/
+.ddev/config.local.yaml
+.ddev/composer.lock
 .claude
 .firecrawl
 tickets

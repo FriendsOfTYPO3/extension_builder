@@ -1,0 +1,17 @@
+name: extensionbuilder
+type: typo3
+docroot: .devbox/public
+php_version: "8.3"
+webserver_type: nginx-fpm
+xdebug_enabled: false
+database:
+    type: mariadb
+    version: "11.8"
+composer_root: .devbox
+use_dns_when_possible: true
+web_environment:
+    - TYPO3_CONTEXT=Development
+hooks:
+    post-start:
+        - exec: mkdir -p /var/www/html/.devbox/packages && ln -sfn /var/www/html /var/www/html/.devbox/packages/extension_builder
+        - exec: /var/www/html/.devbox/vendor/bin/typo3 database:updateschema 2>/dev/null || true
