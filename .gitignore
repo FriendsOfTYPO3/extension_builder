@@ -25,15 +25,7 @@ sass-lint.html
 .devbox/public/typo3temp/
 .devbox/composer.lock
 
-# DDEV (repo root)
-.ddev/.global_commands/
-.ddev/.homeadditions/
-.ddev/apache/
-.ddev/nginx_full/
-.ddev/providers/
-.ddev/xhprof/
-.ddev/config.local.yaml
-.ddev/composer.lock
+# DDEV (repo root) - generated files handled via .ddev/.gitignore
 .claude
 .firecrawl
 tickets

@@ -1,0 +1,15 @@
+.dbimageBuild
+.webimageBuild
+.ddev-docker-compose-base.yaml
+.ddev-docker-compose-full.yaml
+.global_commands/
+.homeadditions/
+apache/
+db-build/
+mutagen/
+nginx_full/
+providers/
+web-build/
+xhprof/
+config.local.yaml
+composer.lock
