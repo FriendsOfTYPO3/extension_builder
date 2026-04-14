@@ -29,6 +29,7 @@ sass-lint.html
 .claude
 .firecrawl
 tickets
+CLAUDE.md
 
 .env
 
@@ -44,3 +45,5 @@ test-results/
 .playwright-cli
 .playwright-screenshots
 docs/superpowers
+
+
