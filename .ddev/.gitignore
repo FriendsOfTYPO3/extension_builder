@@ -1,0 +1,26 @@
+# DDEV-generated files — do not commit
+.dbimageBuild/
+.webimageBuild/
+.ddev-docker-compose-base.yaml
+.ddev-docker-compose-full.yaml
+.global_commands/
+.homeadditions/
+.start-synced
+addon-metadata/
+apache/
+commands/
+db-build/
+db_snapshots/
+homeadditions/
+mutagen/
+mysql/
+nginx_full/
+php/
+providers/
+share-providers/
+traefik/
+web-build/
+web-entrypoint.d/
+xhprof/
+config.local.yaml
+composer.lock
