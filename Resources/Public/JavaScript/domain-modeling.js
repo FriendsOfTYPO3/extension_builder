@@ -51,7 +51,7 @@ const Je = (a) => new Ue(typeof a == "string" ? a : a + "", void 0, ye), x = (a,
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const { is: Ze, defineProperty: Qe, getOwnPropertyDescriptor: et, getOwnPropertyNames: tt, getOwnPropertySymbols: it, getPrototypeOf: rt } = Object, E = globalThis, we = E.trustedTypes, st = we ? we.emptyScript : "", K = E.reactiveElementPolyfillSupport, q = (a, e) => a, ie = { toAttribute(a, e) {
+const { is: Ze, defineProperty: Qe, getOwnPropertyDescriptor: et, getOwnPropertyNames: tt, getOwnPropertySymbols: it, getPrototypeOf: rt } = Object, A = globalThis, we = A.trustedTypes, st = we ? we.emptyScript : "", K = A.reactiveElementPolyfillSupport, q = (a, e) => a, ie = { toAttribute(a, e) {
   switch (e) {
     case Boolean:
       a = a ? st : null;
@@ -80,7 +80,7 @@ const { is: Ze, defineProperty: Qe, getOwnPropertyDescriptor: et, getOwnProperty
   }
   return t;
 } }, ze = (a, e) => !Ze(a, e), Ce = { attribute: !0, type: String, converter: ie, reflect: !1, useDefault: !1, hasChanged: ze };
-Symbol.metadata ?? (Symbol.metadata = Symbol("metadata")), E.litPropertyMetadata ?? (E.litPropertyMetadata = /* @__PURE__ */ new WeakMap());
+Symbol.metadata ?? (Symbol.metadata = Symbol("metadata")), A.litPropertyMetadata ?? (A.litPropertyMetadata = /* @__PURE__ */ new WeakMap());
 let R = class extends HTMLElement {
   static addInitializer(e) {
     this._$Ei(), (this.l ?? (this.l = [])).push(e);
@@ -284,15 +284,15 @@ let R = class extends HTMLElement {
   firstUpdated(e) {
   }
 };
-R.elementStyles = [], R.shadowRootOptions = { mode: "open" }, R[q("elementProperties")] = /* @__PURE__ */ new Map(), R[q("finalized")] = /* @__PURE__ */ new Map(), K == null || K({ ReactiveElement: R }), (E.reactiveElementVersions ?? (E.reactiveElementVersions = [])).push("2.1.2");
+R.elementStyles = [], R.shadowRootOptions = { mode: "open" }, R[q("elementProperties")] = /* @__PURE__ */ new Map(), R[q("finalized")] = /* @__PURE__ */ new Map(), K == null || K({ ReactiveElement: R }), (A.reactiveElementVersions ?? (A.reactiveElementVersions = [])).push("2.1.2");
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const F = globalThis, Ae = (a) => a, G = F.trustedTypes, ke = G ? G.createPolicy("lit-html", { createHTML: (a) => a }) : void 0, De = "$lit$", k = `lit$${Math.random().toFixed(9).slice(2)}$`, Be = "?" + k, nt = `<${Be}>`, I = document, j = () => I.createComment(""), H = (a) => a === null || typeof a != "object" && typeof a != "function", ve = Array.isArray, at = (a) => ve(a) || typeof (a == null ? void 0 : a[Symbol.iterator]) == "function", Z = `[ 	
-\f\r]`, B = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, Ee = /-->/g, Se = />/g, P = RegExp(`>|${Z}(?:([^\\s"'>=/]+)(${Z}*=${Z}*(?:[^ 	
-\f\r"'\`<>=]|("|')|))|$)`, "g"), Pe = /'/g, Te = /"/g, Ve = /^(?:script|style|textarea|title)$/i, We = (a) => (e, ...t) => ({ _$litType$: a, strings: e, values: t }), p = We(1), re = We(2), L = Symbol.for("lit-noChange"), g = Symbol.for("lit-nothing"), Ne = /* @__PURE__ */ new WeakMap(), N = I.createTreeWalker(I, 129);
+const F = globalThis, Se = (a) => a, G = F.trustedTypes, ke = G ? G.createPolicy("lit-html", { createHTML: (a) => a }) : void 0, De = "$lit$", k = `lit$${Math.random().toFixed(9).slice(2)}$`, Be = "?" + k, nt = `<${Be}>`, O = document, H = () => O.createComment(""), j = (a) => a === null || typeof a != "object" && typeof a != "function", ve = Array.isArray, at = (a) => ve(a) || typeof (a == null ? void 0 : a[Symbol.iterator]) == "function", Z = `[ 	
+\f\r]`, B = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, Ae = /-->/g, Ee = />/g, P = RegExp(`>|${Z}(?:([^\\s"'>=/]+)(${Z}*=${Z}*(?:[^ 	
+\f\r"'\`<>=]|("|')|))|$)`, "g"), Pe = /'/g, Te = /"/g, Ve = /^(?:script|style|textarea|title)$/i, We = (a) => (e, ...t) => ({ _$litType$: a, strings: e, values: t }), p = We(1), re = We(2), I = Symbol.for("lit-noChange"), g = Symbol.for("lit-nothing"), Ne = /* @__PURE__ */ new WeakMap(), N = O.createTreeWalker(O, 129);
 function qe(a, e) {
   if (!ve(a) || !a.hasOwnProperty("raw")) throw Error("invalid template strings array");
   return ke !== void 0 ? ke.createHTML(e) : e;
@@ -303,7 +303,7 @@ const ot = (a, e) => {
   for (let o = 0; o < t; o++) {
     const l = a[o];
     let c, b, d = -1, m = 0;
-    for (; m < l.length && (n.lastIndex = m, b = n.exec(l), b !== null); ) m = n.lastIndex, n === B ? b[1] === "!--" ? n = Ee : b[1] !== void 0 ? n = Se : b[2] !== void 0 ? (Ve.test(b[2]) && (r = RegExp("</" + b[2], "g")), n = P) : b[3] !== void 0 && (n = P) : n === P ? b[0] === ">" ? (n = r ?? B, d = -1) : b[1] === void 0 ? d = -2 : (d = n.lastIndex - b[2].length, c = b[1], n = b[3] === void 0 ? P : b[3] === '"' ? Te : Pe) : n === Te || n === Pe ? n = P : n === Ee || n === Se ? n = B : (n = P, r = void 0);
+    for (; m < l.length && (n.lastIndex = m, b = n.exec(l), b !== null); ) m = n.lastIndex, n === B ? b[1] === "!--" ? n = Ae : b[1] !== void 0 ? n = Ee : b[2] !== void 0 ? (Ve.test(b[2]) && (r = RegExp("</" + b[2], "g")), n = P) : b[3] !== void 0 && (n = P) : n === P ? b[0] === ">" ? (n = r ?? B, d = -1) : b[1] === void 0 ? d = -2 : (d = n.lastIndex - b[2].length, c = b[1], n = b[3] === void 0 ? P : b[3] === '"' ? Te : Pe) : n === Te || n === Pe ? n = P : n === Ae || n === Ee ? n = B : (n = P, r = void 0);
     const h = n === P && a[o + 1].startsWith("/>") ? " " : "";
     s += n === B ? l + nt : d >= 0 ? (i.push(c), l.slice(0, d) + De + l.slice(d) + k + h) : l + k + (d === -2 ? o : h);
   }
@@ -329,8 +329,8 @@ class Y {
           const d = r.textContent.split(k), m = d.length - 1;
           if (m > 0) {
             r.textContent = G ? G.emptyScript : "";
-            for (let h = 0; h < m; h++) r.append(d[h], j()), N.nextNode(), l.push({ type: 2, index: ++s });
-            r.append(d[m], j());
+            for (let h = 0; h < m; h++) r.append(d[h], H()), N.nextNode(), l.push({ type: 2, index: ++s });
+            r.append(d[m], H());
           }
         }
       } else if (r.nodeType === 8) if (r.data === Be) l.push({ type: 2, index: s });
@@ -342,15 +342,15 @@ class Y {
     }
   }
   static createElement(e, t) {
-    const i = I.createElement("template");
+    const i = O.createElement("template");
     return i.innerHTML = e, i;
   }
 }
 function z(a, e, t = a, i) {
   var n, o;
-  if (e === L) return e;
+  if (e === I) return e;
   let r = i !== void 0 ? (n = t._$Co) == null ? void 0 : n[i] : t._$Cl;
-  const s = H(e) ? void 0 : e._$litDirective$;
+  const s = j(e) ? void 0 : e._$litDirective$;
   return (r == null ? void 0 : r.constructor) !== s && ((o = r == null ? void 0 : r._$AO) == null || o.call(r, !1), s === void 0 ? r = void 0 : (r = new s(a), r._$AT(a, t, i)), i !== void 0 ? (t._$Co ?? (t._$Co = []))[i] = r : t._$Cl = r), r !== void 0 && (e = z(a, r._$AS(a, e.values), r, i)), e;
 }
 class lt {
@@ -364,7 +364,7 @@ class lt {
     return this._$AM._$AU;
   }
   u(e) {
-    const { el: { content: t }, parts: i } = this._$AD, r = ((e == null ? void 0 : e.creationScope) ?? I).importNode(t, !0);
+    const { el: { content: t }, parts: i } = this._$AD, r = ((e == null ? void 0 : e.creationScope) ?? O).importNode(t, !0);
     N.currentNode = r;
     let s = N.nextNode(), n = 0, o = 0, l = i[0];
     for (; l !== void 0; ) {
@@ -374,7 +374,7 @@ class lt {
       }
       n !== (l == null ? void 0 : l.index) && (s = N.nextNode(), n++);
     }
-    return N.currentNode = I, r;
+    return N.currentNode = O, r;
   }
   p(e) {
     let t = 0;
@@ -401,7 +401,7 @@ class D {
     return this._$AB;
   }
   _$AI(e, t = this) {
-    e = z(this, e, t), H(e) ? e === g || e == null || e === "" ? (this._$AH !== g && this._$AR(), this._$AH = g) : e !== this._$AH && e !== L && this._(e) : e._$litType$ !== void 0 ? this.$(e) : e.nodeType !== void 0 ? this.T(e) : at(e) ? this.k(e) : this._(e);
+    e = z(this, e, t), j(e) ? e === g || e == null || e === "" ? (this._$AH !== g && this._$AR(), this._$AH = g) : e !== this._$AH && e !== I && this._(e) : e._$litType$ !== void 0 ? this.$(e) : e.nodeType !== void 0 ? this.T(e) : at(e) ? this.k(e) : this._(e);
   }
   O(e) {
     return this._$AA.parentNode.insertBefore(e, this._$AB);
@@ -410,7 +410,7 @@ class D {
     this._$AH !== e && (this._$AR(), this._$AH = this.O(e));
   }
   _(e) {
-    this._$AH !== g && H(this._$AH) ? this._$AA.nextSibling.data = e : this.T(I.createTextNode(e)), this._$AH = e;
+    this._$AH !== g && j(this._$AH) ? this._$AA.nextSibling.data = e : this.T(O.createTextNode(e)), this._$AH = e;
   }
   $(e) {
     var s;
@@ -429,14 +429,14 @@ class D {
     ve(this._$AH) || (this._$AH = [], this._$AR());
     const t = this._$AH;
     let i, r = 0;
-    for (const s of e) r === t.length ? t.push(i = new D(this.O(j()), this.O(j()), this, this.options)) : i = t[r], i._$AI(s), r++;
+    for (const s of e) r === t.length ? t.push(i = new D(this.O(H()), this.O(H()), this, this.options)) : i = t[r], i._$AI(s), r++;
     r < t.length && (this._$AR(i && i._$AB.nextSibling, r), t.length = r);
   }
   _$AR(e = this._$AA.nextSibling, t) {
     var i;
     for ((i = this._$AP) == null ? void 0 : i.call(this, !1, !0, t); e !== this._$AB; ) {
-      const r = Ae(e).nextSibling;
-      Ae(e).remove(), e = r;
+      const r = Se(e).nextSibling;
+      Se(e).remove(), e = r;
     }
   }
   setConnected(e) {
@@ -457,11 +457,11 @@ class J {
   _$AI(e, t = this, i, r) {
     const s = this.strings;
     let n = !1;
-    if (s === void 0) e = z(this, e, t, 0), n = !H(e) || e !== this._$AH && e !== L, n && (this._$AH = e);
+    if (s === void 0) e = z(this, e, t, 0), n = !j(e) || e !== this._$AH && e !== I, n && (this._$AH = e);
     else {
       const o = e;
       let l, c;
-      for (e = s[0], l = 0; l < s.length - 1; l++) c = z(this, o[i + l], t, l), c === L && (c = this._$AH[l]), n || (n = !H(c) || c !== this._$AH[l]), c === g ? e = g : e !== g && (e += (c ?? "") + s[l + 1]), this._$AH[l] = c;
+      for (e = s[0], l = 0; l < s.length - 1; l++) c = z(this, o[i + l], t, l), c === I && (c = this._$AH[l]), n || (n = !j(c) || c !== this._$AH[l]), c === g ? e = g : e !== g && (e += (c ?? "") + s[l + 1]), this._$AH[l] = c;
     }
     n && !r && this.j(e);
   }
@@ -490,7 +490,7 @@ class pt extends J {
     super(e, t, i, r, s), this.type = 5;
   }
   _$AI(e, t = this) {
-    if ((e = z(this, e, t, 0) ?? g) === L) return;
+    if ((e = z(this, e, t, 0) ?? g) === I) return;
     const i = this._$AH, r = e === g && i !== g || e.capture !== i.capture || e.once !== i.once || e.passive !== i.passive, s = e !== g && (i === g || r);
     r && this.element.removeEventListener(this.name, this, i), s && this.element.addEventListener(this.name, this, e), this._$AH = e;
   }
@@ -517,7 +517,7 @@ const mt = (a, e, t) => {
   let r = i._$litPart$;
   if (r === void 0) {
     const s = (t == null ? void 0 : t.renderBefore) ?? null;
-    i._$litPart$ = r = new D(e.insertBefore(j(), s), s, void 0, t ?? {});
+    i._$litPart$ = r = new D(e.insertBefore(H(), s), s, void 0, t ?? {});
   }
   return r._$AI(a), r;
 };
@@ -549,7 +549,7 @@ let w = class extends R {
     super.disconnectedCallback(), (e = this._$Do) == null || e.setConnected(!1);
   }
   render() {
-    return L;
+    return I;
   }
 };
 var Re;
@@ -692,7 +692,7 @@ function _(a) {
   return t != null && t[e] ? t[e] : a.replace(/_/g, " ").replace(/([A-Z])/g, " $1").trim().replace(/\b\w/g, (n) => n.toUpperCase());
 }
 function Fe(a) {
-  var i, r, s, n, o, l;
+  var i, r;
   const e = a.inputParams ?? {}, t = a.type;
   if (!t || (i = e.className) != null && i.includes("hiddenField"))
     return p`<eb-hidden-field name="${e.name}"></eb-hidden-field>`;
@@ -722,8 +722,6 @@ function Fe(a) {
                 forbidden-prefixes="${e.forbiddenPrefixes ?? ""}"
                 min-length="${e.minLength ?? ""}"
                 max-length="${e.maxLength ?? ""}"
-                data-visible-for="${((r = e.visibleForTypes) == null ? void 0 : r.join(" ")) ?? ""}"
-                data-hidden-for="${((s = e.hiddenForTypes) == null ? void 0 : s.join(" ")) ?? ""}"
             ></eb-string-field>`;
     case "text":
       return p`<eb-textarea-field
@@ -744,7 +742,7 @@ function Fe(a) {
                 help-link="${e.helpLink ?? ""}"
                 .selectValues="${e.selectValues ?? []}"
                 .selectOptions="${e.selectOptions ?? []}"
-                .value="${e.value ?? ((n = e.selectValues) == null ? void 0 : n[0]) ?? ""}"
+                .value="${e.value ?? ((r = e.selectValues) == null ? void 0 : r[0]) ?? ""}"
             ></eb-select-field>`;
     case "boolean":
       return p`<eb-boolean-field
@@ -754,8 +752,6 @@ function Fe(a) {
                 description="${_(e.description ?? "")}"
                 help-link="${e.helpLink ?? ""}"
                 .value="${e.value ?? !1}"
-                data-visible-for="${((o = e.visibleForTypes) == null ? void 0 : o.join(" ")) ?? ""}"
-                data-hidden-for="${((l = e.hiddenForTypes) == null ? void 0 : l.join(" ")) ?? ""}"
             ></eb-boolean-field>`;
     case "group":
       return p`<eb-group
@@ -787,7 +783,7 @@ function Fe(a) {
 function _e(a) {
   return a.map((e) => Fe(e));
 }
-const je = {
+const He = {
   container: {
     xtype: "WireIt.FormContainer",
     title: "Title",
@@ -1115,18 +1111,6 @@ const je = {
                           name: "advancedSettings",
                           legend: "advancedOptions",
                           fields: [
-                            // --- Conditional field visibility ---
-                            // Two mechanisms control which advanced fields are shown
-                            // for a given property type (see eb-group.js:_applyPropertyTypeVisibility):
-                            //
-                            // visibleForTypes: [] — allowlist. Field is shown ONLY for the listed types.
-                            //   Use for fields that are only relevant to a small set of types.
-                            //   Adding a new property type: field stays hidden unless you add it here.
-                            //
-                            // hiddenForTypes: [] — denylist. Field is shown for ALL types EXCEPT the listed ones.
-                            //   Use for fields that apply broadly but must be hidden for a few special types.
-                            //   Adding a new property type: field is shown automatically. Only add it
-                            //   to hiddenForTypes if it genuinely does not apply to the new type.
                             {
                               type: "text",
                               inputParams: {
@@ -1139,7 +1123,7 @@ const je = {
                             {
                               type: "string",
                               inputParams: {
-                                visibleForTypes: ["File"],
+                                classname: "textfieldWrapper dependant fileOnly",
                                 label: "allowedFileTypes",
                                 description: "descr_allowedFileTypes",
                                 name: "allowedFileTypes"
@@ -1148,7 +1132,7 @@ const je = {
                             {
                               type: "string",
                               inputParams: {
-                                visibleForTypes: ["File", "Image"],
+                                classname: "textfieldWrapper dependant fileOnly imageOnly small",
                                 label: "maxItems",
                                 name: "maxItems",
                                 value: 1
@@ -1165,12 +1149,7 @@ const je = {
                             {
                               type: "boolean",
                               inputParams: {
-                                hiddenForTypes: [
-                                  "File",
-                                  "Image",
-                                  "PassThrough",
-                                  "None"
-                                ],
+                                classname: "dependant stringOnly textOnly passwordOnly emailOnly integerOnly floatOnly dateOnly dateTimeOnly dateTimeStampOnly timeOnly timeTimeStampOnly timeSecOnly",
                                 label: "isNullable",
                                 name: "propertyIsNullable",
                                 value: !1
@@ -1192,6 +1171,38 @@ const je = {
                                 name: "propertyIsL10nModeExclude",
                                 description: "descr_isL10nModeExclude",
                                 value: !1
+                              }
+                            },
+                            {
+                              type: "list",
+                              inputParams: {
+                                label: "selectItems",
+                                name: "selectItems",
+                                sortable: !0,
+                                elementType: {
+                                  type: "group",
+                                  inputParams: {
+                                    name: "selectItem",
+                                    fields: [
+                                      {
+                                        type: "string",
+                                        inputParams: {
+                                          name: "label",
+                                          placeholder: "label",
+                                          required: !0
+                                        }
+                                      },
+                                      {
+                                        type: "string",
+                                        inputParams: {
+                                          name: "value",
+                                          placeholder: "value",
+                                          required: !0
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
                               }
                             }
                           ]
@@ -1377,7 +1388,7 @@ const je = {
       }
     ]
   }
-}, S = x`
+}, E = x`
     eb-string-field,
     eb-textarea-field,
     eb-select-field,
@@ -1586,7 +1597,7 @@ class ae extends w {
     this._resizing && (this._resizing = !1, e.currentTarget.releasePointerCapture(e.pointerId));
   }
   get _fields() {
-    return je.container.fields;
+    return He.container.fields;
   }
   _populateFromValue() {
     var i, r;
@@ -1648,7 +1659,7 @@ f(ae, "properties", {
   _resizeWidth: { state: !0 },
   _resizeHeight: { state: !0 }
 }), f(ae, "styles", [
-  S,
+  E,
   x`
             :host {
                 display: block;
@@ -1922,7 +1933,7 @@ class oe extends w {
     });
   }
   serialize() {
-    const t = Array.from(this.shadowRoot.querySelectorAll("eb-container")).map((r) => r.serialize()), i = this._wires.filter((r) => r.srcTerminal && this._findTerminalEl(r.srcTerminal, r.srcModuleId) !== null).map((r) => ({
+    const t = Array.from(this.shadowRoot.querySelectorAll("eb-container")).map((r) => r.serialize()), i = this._wires.map((r) => ({
       src: { moduleId: r.srcModuleId, terminal: r.srcTerminal, uid: r.srcUid },
       tgt: { moduleId: r.tgtModuleId, terminal: r.tgtTerminal, uid: r.tgtUid }
     }));
@@ -2069,7 +2080,7 @@ f(oe, "properties", {
         }
     `);
 customElements.define("eb-layer", oe);
-const He = x`
+const je = x`
     .btn {
         display: inline-block;
         font-weight: 400;
@@ -2279,7 +2290,7 @@ f(le, "properties", {
   helpLink: { type: String, attribute: "help-link" },
   _error: { state: !0 }
 }), f(le, "styles", [
-  S,
+  E,
   x`
             .help-link {
                 font-size: 0.75em;
@@ -2341,7 +2352,7 @@ f(de, "properties", {
   description: { type: String },
   helpLink: { type: String, attribute: "help-link" }
 }), f(de, "styles", [
-  S,
+  E,
   x`
             .help-link {
                 font-size: 0.75em;
@@ -2390,11 +2401,11 @@ let gt = class {
  * Copyright 2020 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const { I: yt } = ht, Me = (a) => a, Ie = () => document.createComment(""), V = (a, e, t) => {
+const { I: yt } = ht, Me = (a) => a, Oe = () => document.createComment(""), V = (a, e, t) => {
   var s;
   const i = a._$AA.parentNode, r = e === void 0 ? a._$AB : e._$AA;
   if (t === void 0) {
-    const n = i.insertBefore(Ie(), r), o = i.insertBefore(Ie(), r);
+    const n = i.insertBefore(Oe(), r), o = i.insertBefore(Oe(), r);
     t = new yt(n, o, a, a.options);
   } else {
     const n = t._$AB.nextSibling, o = t._$AM, l = o !== a;
@@ -2419,7 +2430,7 @@ const { I: yt } = ht, Me = (a) => a, Ie = () => document.createComment(""), V = 
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const Le = (a, e, t) => {
+const Ie = (a, e, t) => {
   const i = /* @__PURE__ */ new Map();
   for (let r = e; r <= t; r++) i.set(a[r], r);
   return i;
@@ -2449,12 +2460,12 @@ const Le = (a, e, t) => {
     else if (o[m] === n[u]) l[u] = T(r[m], s[u]), m--, u--;
     else if (o[d] === n[u]) l[u] = T(r[d], s[u]), V(a, l[u + 1], r[d]), d++, u--;
     else if (o[m] === n[h]) l[h] = T(r[m], s[h]), V(a, r[d], r[m]), m--, h++;
-    else if (c === void 0 && (c = Le(n, h, u), b = Le(o, d, m)), c.has(o[d])) if (c.has(o[m])) {
-      const y = b.get(n[h]), A = y !== void 0 ? r[y] : null;
-      if (A === null) {
-        const O = V(a, r[d]);
-        T(O, s[h]), l[h] = O;
-      } else l[h] = T(A, s[h]), V(a, r[d], A), r[y] = null;
+    else if (c === void 0 && (c = Ie(n, h, u), b = Ie(o, d, m)), c.has(o[d])) if (c.has(o[m])) {
+      const y = b.get(n[h]), S = y !== void 0 ? r[y] : null;
+      if (S === null) {
+        const L = V(a, r[d]);
+        T(L, s[h]), l[h] = L;
+      } else l[h] = T(S, s[h]), V(a, r[d], S), r[y] = null;
       h++;
     } else te(r[m]), m--;
     else te(r[d]), d++;
@@ -2466,7 +2477,7 @@ const Le = (a, e, t) => {
       const y = r[d++];
       y !== null && te(y);
     }
-    return this.ut = n, _t(a, l), L;
+    return this.ut = n, _t(a, l), I;
   }
 });
 class ce extends C {
@@ -2529,7 +2540,7 @@ f(ce, "properties", {
   description: { type: String },
   helpLink: { type: String, attribute: "help-link" }
 }), f(ce, "styles", [
-  S,
+  E,
   x`
             .help-link {
                 font-size: 0.75em;
@@ -2584,7 +2595,7 @@ f(pe, "properties", {
   description: { type: String },
   helpLink: { type: String, attribute: "help-link" }
 }), f(pe, "styles", [
-  S,
+  E,
   x`
             .help-link {
                 font-size: 0.75em;
@@ -2635,37 +2646,19 @@ class he extends w {
     super.disconnectedCallback(), this.removeEventListener("field-updated", this._onFieldUpdated), window.removeEventListener("eb-advanced-mode-changed", this._onAdvancedModeChanged);
   }
   _onFieldUpdated(e) {
-    var t, i;
-    if (((t = e.detail) == null ? void 0 : t.name) === "relationType") {
-      const r = this.querySelector("[name=renderType]");
-      if (!r)
-        return;
-      const s = {
-        zeroToOne: ["selectSingle", "selectMultipleSideBySide", "inline"],
-        manyToOne: ["selectSingle", "selectMultipleSideBySide"],
-        zeroToMany: ["inline", "selectMultipleSideBySide"],
-        manyToMany: ["selectMultipleSideBySide", "selectSingleBox", "selectCheckBox"]
-      };
-      r.allowedValues = s[e.detail.value] ?? null;
-    }
-    ((i = e.detail) == null ? void 0 : i.name) === "propertyType" && this._applyPropertyTypeVisibility(e.detail.value);
-  }
-  _applyPropertyTypeVisibility(e) {
-    this.querySelectorAll("[data-visible-for]").forEach((t) => {
-      const i = (t.getAttribute("data-visible-for") || "").split(" ").filter(Boolean);
-      i.length > 0 && (t.style.display = i.includes(e) ? "" : "none");
-    }), this.querySelectorAll("[data-hidden-for]").forEach((t) => {
-      const i = (t.getAttribute("data-hidden-for") || "").split(" ").filter(Boolean);
-      i.length > 0 && (t.style.display = i.includes(e) ? "none" : "");
-    });
-  }
-  _initPropertyTypes() {
-    var i;
-    const e = this.querySelector("[name=propertyType]");
-    if (!e)
+    var r;
+    if (((r = e.detail) == null ? void 0 : r.name) !== "relationType")
       return;
-    const t = ((i = e.getValue) == null ? void 0 : i.call(e)) ?? e.value;
-    t && this._applyPropertyTypeVisibility(t);
+    const t = this.querySelector("[name=renderType]");
+    if (!t)
+      return;
+    const i = {
+      zeroToOne: ["selectSingle", "selectMultipleSideBySide", "inline"],
+      manyToOne: ["selectSingle", "selectMultipleSideBySide"],
+      zeroToMany: ["inline", "selectMultipleSideBySide"],
+      manyToMany: ["selectMultipleSideBySide", "selectSingleBox", "selectCheckBox"]
+    };
+    t.allowedValues = i[e.detail.value] ?? null;
   }
   _initRelationTypes() {
     this.querySelectorAll("[name=relationType]").forEach((e) => {
@@ -2692,7 +2685,7 @@ class he extends w {
     (e.key === "Enter" || e.key === " ") && (e.preventDefault(), this._toggleCollapse());
   }
   _onSlotChange() {
-    this.requestUpdate(), this._initRelationTypes(), this._initPropertyTypes();
+    this.requestUpdate(), this._initRelationTypes();
   }
   /**
    * Collects values from direct slotted children only (not deep descendants)
@@ -2704,17 +2697,18 @@ class he extends w {
    * @returns {Object} Flat or nested values object depending on `flatten`.
    */
   getValue() {
-    const e = {};
-    return Array.from(this.children).forEach((i) => {
-      var s;
-      if (typeof i.getValue != "function")
+    var r;
+    const e = {}, t = (r = this.shadowRoot) == null ? void 0 : r.querySelector("slot");
+    return (t ? t.assignedElements({ flatten: !1 }) : Array.from(this.children)).forEach((s) => {
+      var o;
+      if (typeof s.getValue != "function")
         return;
-      if (((s = i.tagName) == null ? void 0 : s.toLowerCase()) === "eb-group" && i.flatten) {
-        Object.assign(e, i.getValue());
+      if (((o = s.tagName) == null ? void 0 : o.toLowerCase()) === "eb-group" && s.flatten) {
+        Object.assign(e, s.getValue());
         return;
       }
-      const r = i.getAttribute("name");
-      r !== null && (e[r] = i.getValue());
+      const n = s.getAttribute("name");
+      n !== null && (e[n] = s.getValue());
     }), e;
   }
   /**
@@ -2726,19 +2720,21 @@ class he extends w {
    * @param {Object} obj - Values object to distribute.
    */
   setValue(e) {
+    var r;
     if (!e)
       return;
-    Array.from(this.children).forEach((i) => {
-      var s;
-      if (typeof i.setValue != "function")
+    const t = (r = this.shadowRoot) == null ? void 0 : r.querySelector("slot");
+    (t ? t.assignedElements({ flatten: !1 }) : Array.from(this.children)).forEach((s) => {
+      var o;
+      if (typeof s.setValue != "function")
         return;
-      if (((s = i.tagName) == null ? void 0 : s.toLowerCase()) === "eb-group" && i.flatten) {
-        i.setValue(e);
+      if (((o = s.tagName) == null ? void 0 : o.toLowerCase()) === "eb-group" && s.flatten) {
+        s.setValue(e);
         return;
       }
-      const r = i.getAttribute("name");
-      r !== null && e[r] !== void 0 && i.setValue(e[r]);
-    }), this._initPropertyTypes();
+      const n = s.getAttribute("name");
+      n !== null && e[n] !== void 0 && s.setValue(e[n]);
+    });
   }
   render() {
     return p`
@@ -2835,7 +2831,7 @@ function W(a) {
         </svg>
     ` : p`<span aria-hidden="true">${wt[a] ?? a}</span>`;
 }
-const Ct = /* @__PURE__ */ new Set(["propertyName", "relationName", "customAction", "name"]);
+const Ct = /* @__PURE__ */ new Set(["propertyName", "relationName", "customAction", "name", "label"]);
 class me extends w {
   constructor() {
     super(), this.sortable = !0, this.addLabel = "add", this._items = [], this._boundOnFieldUpdated = this._onFieldUpdated.bind(this);
@@ -2958,7 +2954,7 @@ class me extends w {
                     <div class="item-row">
                         ${t ? p`
                                   <div class="item-terminal">
-                                      <eb-terminal droppable terminal-id="REL_${r}" uid="${i.uid}"></eb-terminal>
+                                      <eb-terminal droppable terminal-id="REL_${r}"></eb-terminal>
                                   </div>
                               ` : g}
                         <div class="item-content ${i.collapsed ? "is-collapsed" : ""}">
@@ -3011,8 +3007,8 @@ f(me, "properties", {
   elementType: { type: String, attribute: "element-type" },
   _items: { state: !0 }
 }), f(me, "styles", [
-  He,
-  S,
+  je,
+  E,
   x`
             :host {
                 display: block;
@@ -3060,7 +3056,7 @@ f(me, "properties", {
         `
 ]);
 customElements.define("eb-list-field", me);
-const At = [
+const St = [
   {
     type: "string",
     inputParams: {
@@ -3588,17 +3584,7 @@ class be extends w {
     var t;
     const e = ((t = this._extensionData) == null ? void 0 : t.properties) ?? {};
     this.shadowRoot.querySelectorAll("[name]").forEach((i) => {
-      var o, l, c;
-      if (typeof i.setValue != "function" || ((o = i.tagName) == null ? void 0 : o.toLowerCase()) === "eb-group")
-        return;
-      const r = i.name, s = (l = i.parentElement) == null ? void 0 : l.closest("eb-group[name]");
-      let n;
-      if (s) {
-        const b = s.getAttribute("name");
-        n = (c = e[b]) == null ? void 0 : c[r];
-      } else
-        n = e[r];
-      n !== void 0 && i.setValue(n);
+      e[i.name] !== void 0 && typeof i.setValue == "function" && i.setValue(e[i.name]);
     });
   }
   _populateLayer() {
@@ -3730,7 +3716,7 @@ Files that will be deleted:
   }
   addModelObject() {
     const e = this.shadowRoot.querySelector("eb-layer");
-    e && e.addContainer(je.container);
+    e && e.addContainer(He.container);
   }
   render() {
     return p`
@@ -3756,7 +3742,7 @@ Files that will be deleted:
                             <span aria-hidden="true">☰</span>
                         </button>
                     </div>
-                    <div class="left-panel-content">${_e(At)}</div>
+                    <div class="left-panel-content">${_e(St)}</div>
                 </div>
                 <div class="center-panel" role="main">
                     ${this._loading ? p`<div class="loading">Loading...</div>` : p`<eb-layer></eb-layer>`}
@@ -3775,8 +3761,8 @@ f(be, "properties", {
   _advancedMode: { state: !0 },
   _leftCollapsed: { state: !0 }
 }), f(be, "styles", [
-  He,
-  S,
+  je,
+  E,
   x`
             :host {
                 display: flex;
@@ -3930,9 +3916,9 @@ class fe extends w {
 f(fe, "properties", {
   value: { type: String },
   _editing: { type: Boolean, state: !0 }
-}), f(fe, "styles", [S]);
+}), f(fe, "styles", [E]);
 customElements.define("eb-inplace-edit", fe);
-function Oe() {
+function Le() {
   var e, t, i, r, s;
   const a = document.querySelector("eb-wiring-editor");
   a && ((e = document.getElementById("WiringEditor-saveButton-button")) == null || e.addEventListener("click", (n) => {
@@ -4039,7 +4025,7 @@ function Oe() {
                   btnClass: "btn-danger",
                   trigger: async () => {
                     v.dismiss();
-                    const O = await (await fetch(o, {
+                    const L = await (await fetch(o, {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({
@@ -4047,9 +4033,9 @@ function Oe() {
                         params: { name: a.extensionName, working: l, backupDirectory: u }
                       })
                     })).json();
-                    O.error ? $.error("Restore failed", O.error) : $.success(
+                    L.error ? $.error("Restore failed", L.error) : $.success(
                       "Backup restored",
-                      O.success ?? "Extension restored."
+                      L.success ?? "Extension restored."
                     );
                   }
                 }
@@ -4061,11 +4047,11 @@ function Oe() {
       callback: (u) => {
         const y = u.querySelector(".t3js-modal-body");
         if (y) {
-          const A = document.createElement("p");
-          A.textContent = "Restoring a backup will overwrite all current extension files. The current state will be backed up first.", A.className = "text-danger", y.replaceChildren(A, m);
+          const S = document.createElement("p");
+          S.textContent = "Restoring a backup will overwrite all current extension files. The current state will be backed up first.", S.className = "text-danger", y.replaceChildren(S, m);
         }
       }
     });
   }));
 }
-document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", Oe) : Oe();
+document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", Le) : Le();

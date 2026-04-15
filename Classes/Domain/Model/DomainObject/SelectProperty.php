@@ -26,6 +26,13 @@ class SelectProperty extends AbstractProperty
      */
     protected $defaultValue = '';
 
+    /**
+     * Items for the TCA select field. Each entry is ['label' => '...', 'value' => '...'].
+     *
+     * @var array<int, array{label: string, value: string}>
+     */
+    protected array $selectItems = [];
+
     public function getTypeForComment(): string
     {
         return 'string';
@@ -39,5 +46,26 @@ class SelectProperty extends AbstractProperty
     public function getSqlDefinition(): string
     {
         return $this->getFieldName() . " varchar(255) NOT NULL DEFAULT '',";
+    }
+
+    /**
+     * @return array<int, array{label: string, value: string}>
+     */
+    public function getSelectItems(): array
+    {
+        return $this->selectItems;
+    }
+
+    /**
+     * @param array<int, array{label: string, value: string}> $selectItems
+     */
+    public function setSelectItems(array $selectItems): void
+    {
+        $this->selectItems = $selectItems;
+    }
+
+    public function hasSelectItems(): bool
+    {
+        return $this->selectItems !== [];
     }
 }

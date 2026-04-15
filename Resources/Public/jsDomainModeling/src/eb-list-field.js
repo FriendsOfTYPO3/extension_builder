@@ -31,7 +31,7 @@ function _svgIcon(name) {
 }
 
 // Field names treated as the item's display label when collapsed.
-const _LABEL_FIELDS = new Set(['propertyName', 'relationName', 'customAction', 'name']);
+const _LABEL_FIELDS = new Set(['propertyName', 'relationName', 'customAction', 'name', 'label']);
 
 export class EbListField extends LitElement {
     static properties = {

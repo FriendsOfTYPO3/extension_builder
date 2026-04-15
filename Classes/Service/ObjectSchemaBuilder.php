@@ -22,6 +22,7 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\AbstractProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\FileProperty;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\SelectProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
 use EBT\ExtensionBuilder\Utility\Tools;
@@ -246,6 +247,9 @@ class ObjectSchemaBuilder implements SingletonInterface
         }
         if ($property->isFileReference() && !empty($propertyJsonConfiguration['maxItems'])) {
             $property->setMaxItems((int)$propertyJsonConfiguration['maxItems']);
+        }
+        if ($property instanceof SelectProperty && isset($propertyJsonConfiguration['selectItems'])) {
+            $property->setSelectItems($propertyJsonConfiguration['selectItems']);
         }
         return $property;
     }
