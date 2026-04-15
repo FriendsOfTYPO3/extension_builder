@@ -39,9 +39,9 @@ class CelestialObject extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * objectType
      *
-     * @var int
+     * @var string
      */
-    protected $objectType = 0;
+    protected $objectType = '';
 
     /**
      * constellation
@@ -145,7 +145,7 @@ class CelestialObject extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the objectType
      *
-     * @return int
+     * @return string
      */
     public function getObjectType()
     {
@@ -155,10 +155,10 @@ class CelestialObject extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the objectType
      *
-     * @param int $objectType
+     * @param string $objectType
      * @return void
      */
-    public function setObjectType(int $objectType)
+    public function setObjectType(string $objectType)
     {
         $this->objectType = $objectType;
     }

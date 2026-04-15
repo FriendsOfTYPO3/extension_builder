@@ -78,10 +78,10 @@ class CelestialObjectTest extends UnitTestCase
     /**
      * @test
      */
-    public function getObjectTypeReturnsInitialValueForInt(): void
+    public function getObjectTypeReturnsInitialValueForString(): void
     {
         self::assertSame(
-            0,
+            '',
             $this->subject->getObjectType()
         );
     }
@@ -89,11 +89,11 @@ class CelestialObjectTest extends UnitTestCase
     /**
      * @test
      */
-    public function setObjectTypeForIntSetsObjectType(): void
+    public function setObjectTypeForStringSetsObjectType(): void
     {
-        $this->subject->setObjectType(12);
+        $this->subject->setObjectType('Conceived at T3CON10');
 
-        self::assertEquals(12, $this->subject->_get('objectType'));
+        self::assertEquals('Conceived at T3CON10', $this->subject->_get('objectType'));
     }
 
     /**

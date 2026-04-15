@@ -99,10 +99,10 @@ class ProcessingRecipeTest extends UnitTestCase
     /**
      * @test
      */
-    public function getStackingMethodReturnsInitialValueForInt(): void
+    public function getStackingMethodReturnsInitialValueForString(): void
     {
         self::assertSame(
-            0,
+            '',
             $this->subject->getStackingMethod()
         );
     }
@@ -110,11 +110,11 @@ class ProcessingRecipeTest extends UnitTestCase
     /**
      * @test
      */
-    public function setStackingMethodForIntSetsStackingMethod(): void
+    public function setStackingMethodForStringSetsStackingMethod(): void
     {
-        $this->subject->setStackingMethod(12);
+        $this->subject->setStackingMethod('Conceived at T3CON10');
 
-        self::assertEquals(12, $this->subject->_get('stackingMethod'));
+        self::assertEquals('Conceived at T3CON10', $this->subject->_get('stackingMethod'));
     }
 
     /**

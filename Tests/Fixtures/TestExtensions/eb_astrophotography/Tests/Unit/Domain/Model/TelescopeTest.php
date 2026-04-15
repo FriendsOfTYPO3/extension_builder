@@ -78,10 +78,10 @@ class TelescopeTest extends UnitTestCase
     /**
      * @test
      */
-    public function getTelescopeTypeReturnsInitialValueForInt(): void
+    public function getTelescopeTypeReturnsInitialValueForString(): void
     {
         self::assertSame(
-            0,
+            '',
             $this->subject->getTelescopeType()
         );
     }
@@ -89,11 +89,11 @@ class TelescopeTest extends UnitTestCase
     /**
      * @test
      */
-    public function setTelescopeTypeForIntSetsTelescopeType(): void
+    public function setTelescopeTypeForStringSetsTelescopeType(): void
     {
-        $this->subject->setTelescopeType(12);
+        $this->subject->setTelescopeType('Conceived at T3CON10');
 
-        self::assertEquals(12, $this->subject->_get('telescopeType'));
+        self::assertEquals('Conceived at T3CON10', $this->subject->_get('telescopeType'));
     }
 
     /**

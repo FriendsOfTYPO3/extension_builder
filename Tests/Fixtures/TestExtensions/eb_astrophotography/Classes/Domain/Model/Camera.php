@@ -39,9 +39,9 @@ class Camera extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * sensorType
      *
-     * @var int
+     * @var string
      */
-    protected $sensorType = 0;
+    protected $sensorType = '';
 
     /**
      * sensorWidth
@@ -137,7 +137,7 @@ class Camera extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the sensorType
      *
-     * @return int
+     * @return string
      */
     public function getSensorType()
     {
@@ -147,10 +147,10 @@ class Camera extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the sensorType
      *
-     * @param int $sensorType
+     * @param string $sensorType
      * @return void
      */
-    public function setSensorType(int $sensorType)
+    public function setSensorType(string $sensorType)
     {
         $this->sensorType = $sensorType;
     }

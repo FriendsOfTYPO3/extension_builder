@@ -57,10 +57,10 @@ class AstroFilterTest extends UnitTestCase
     /**
      * @test
      */
-    public function getFilterTypeReturnsInitialValueForInt(): void
+    public function getFilterTypeReturnsInitialValueForString(): void
     {
         self::assertSame(
-            0,
+            '',
             $this->subject->getFilterType()
         );
     }
@@ -68,11 +68,11 @@ class AstroFilterTest extends UnitTestCase
     /**
      * @test
      */
-    public function setFilterTypeForIntSetsFilterType(): void
+    public function setFilterTypeForStringSetsFilterType(): void
     {
-        $this->subject->setFilterType(12);
+        $this->subject->setFilterType('Conceived at T3CON10');
 
-        self::assertEquals(12, $this->subject->_get('filterType'));
+        self::assertEquals('Conceived at T3CON10', $this->subject->_get('filterType'));
     }
 
     /**
