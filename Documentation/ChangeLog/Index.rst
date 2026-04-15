@@ -6,6 +6,11 @@
 Change log
 ==========
 
+Version 13.2.0
+--------------
+
+* [TASK] ``locallang_csh_*.xlf`` files are no longer generated. CSH (Context Sensitive Help) was removed in TYPO3 v12; field descriptions are now written exclusively to ``locallang_db.xlf`` and referenced via the TCA ``description`` key. When a domain object is removed via RoundTrip, any leftover ``locallang_csh_*.xml`` and ``locallang_csh_*.xlf`` files are cleaned up automatically. Existing generated extensions may have orphaned CSH files that can be deleted manually.
+
 Version 13.1.0
 --------------
 
