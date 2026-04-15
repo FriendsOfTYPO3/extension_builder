@@ -18,7 +18,6 @@ declare(strict_types=1);
 namespace EBT\ExtensionBuilder\Tests\Functional\Service;
 
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
-use EBT\ExtensionBuilder\Service\FileGenerator;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 
 /**
