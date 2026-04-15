@@ -62,10 +62,10 @@ class LocalizationService implements SingletonInterface
         foreach ($extension->getDomainObjects() as $domainObject) {
             /* @var DomainObject $domainObject */
             $labelArray[$domainObject->getLabelNamespace()] = Inflector::humanize($domainObject->getName());
-            $labelArray[$domainObject->getDescriptionNamespace()] = Inflector::humanize($domainObject->getDescription());
+            $labelArray[$domainObject->getDescriptionNamespace()] = $domainObject->getDescription();
             foreach ($domainObject->getProperties() as $property) {
                 $labelArray[$property->getLabelNamespace()] = Inflector::humanize($property->getName());
-                $labelArray[$property->getDescriptionNamespace()] = Inflector::humanize($property->getDescription());
+                $labelArray[$property->getDescriptionNamespace()] = $property->getDescription();
             }
             if ($type === 'locallang_db.xlf') {
                 $tableToMapTo = $domainObject->getMapToTable();
