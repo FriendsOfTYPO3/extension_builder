@@ -195,6 +195,15 @@ export const extensionPropertiesFields = [
                     },
                 },
                 {
+                    type: 'boolean',
+                    inputParams: {
+                        name: 'generateCiSetup',
+                        label: 'generateCiSetup',
+                        description: 'descr_generateCiSetup',
+                        value: 0,
+                    },
+                },
+                {
                     type: 'string',
                     inputParams: {
                         name: 'sourceLanguage',

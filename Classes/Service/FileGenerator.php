@@ -209,6 +209,10 @@ class FileGenerator
             $this->generateGitIgnore();
             $this->generateGitAttributes();
         }
+
+        if ($extension->getGenerateCiSetup()) {
+            $this->generateCiSetupFiles();
+        }
     }
 
     protected function generateYamlSettingsFile(): void
@@ -1119,6 +1123,36 @@ class FileGenerator
                 $this->writeFile($this->extension->getExtensionDir() . '.editorconfig', $fileContents);
             } catch (Exception $e) {
                 throw new Exception('Could not create file, error: ' . $e->getMessage());
+            }
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function generateCiSetupFiles(): void
+    {
+        $ciFiles = [
+            '.github/workflows/ci.yml' => '.github/workflows/ci.yamlt',
+            'phpstan.neon' => 'phpstan.neont',
+            '.php-cs-fixer.php' => '.php-cs-fixer.phpt',
+            'Build/phpunit/UnitTests.xml' => 'Build/phpunit/UnitTests.xmlt',
+            'Build/phpunit/FunctionalTests.xml' => 'Build/phpunit/FunctionalTests.xmlt',
+        ];
+
+        foreach ($ciFiles as $targetRelativePath => $templateName) {
+            $targetFile = $this->extensionDirectory . $targetRelativePath;
+            if (!file_exists($targetFile)) {
+                try {
+                    $dir = dirname($targetFile);
+                    if (!is_dir($dir)) {
+                        GeneralUtility::mkdir_deep($dir);
+                    }
+                    $fileContents = file_get_contents($this->getTemplatePath($templateName));
+                    $this->writeFile($targetFile, $fileContents);
+                } catch (Exception $e) {
+                    throw new Exception('Could not create CI file ' . $targetRelativePath . ', error: ' . $e->getMessage());
+                }
             }
         }
     }

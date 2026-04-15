@@ -1,0 +1,190 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e5]:
+      - button "Minimize/maximize module menu" [ref=e6] [cursor=pointer]:
+        - img [ref=e9]
+      - link "TYPO3 Content Management System Extension Builder v11 11.5.41" [ref=e13] [cursor=pointer]:
+        - /url: ./
+        - img "TYPO3 Content Management System" [ref=e15]
+        - generic [ref=e16]:
+          - generic [ref=e17]: Extension Builder v11
+          - text: 11.5.41
+    - list [ref=e20]:
+      - listitem [ref=e21]:
+        - link [ref=e22] [cursor=pointer]:
+          - /url: "#"
+          - generic "Bookmarks" [ref=e23]:
+            - img [ref=e26]
+      - listitem [ref=e29]:
+        - link [ref=e30] [cursor=pointer]:
+          - /url: "#"
+          - generic "Clear cache" [ref=e31]:
+            - img [ref=e34]
+      - listitem [ref=e37]:
+        - link [ref=e38] [cursor=pointer]:
+          - /url: "#"
+          - generic "Help" [ref=e39]:
+            - img [ref=e42]
+      - listitem [ref=e46]:
+        - link [ref=e47] [cursor=pointer]:
+          - /url: "#"
+          - generic "System Information" [ref=e48]:
+            - img [ref=e51]
+      - listitem [ref=e55]:
+        - link "admin" [ref=e56] [cursor=pointer]:
+          - /url: "#"
+          - img [ref=e59]
+          - text: admin
+      - listitem [ref=e60]:
+        - search [ref=e61]:
+          - generic [ref=e62]:
+            - generic:
+              - generic:
+                - generic:
+                  - img
+            - searchbox "Search the contents" [ref=e64]
+        - link:
+          - /url: "#"
+  - navigation "Module Menu" [ref=e66]:
+    - menubar "Module Menu" [ref=e67]:
+      - menuitem "Dashboard" [ref=e68] [cursor=pointer]:
+        - img [ref=e72]
+        - generic [ref=e83]: Dashboard
+      - menu
+      - menuitem "Web" [expanded] [ref=e84] [cursor=pointer]:
+        - img [ref=e88]
+        - generic [ref=e91]: Web
+      - menu [ref=e93]:
+        - menuitem "Page" [ref=e94] [cursor=pointer]:
+          - img [ref=e98]
+          - generic [ref=e103]: Page
+        - menuitem "View" [ref=e104] [cursor=pointer]:
+          - img [ref=e108]
+          - generic [ref=e111]: View
+        - menuitem "List" [ref=e112] [cursor=pointer]:
+          - img [ref=e116]
+          - generic [ref=e122]: List
+        - menuitem "Forms" [ref=e123] [cursor=pointer]:
+          - img [ref=e127]
+          - generic [ref=e136]: Forms
+        - menuitem "Info" [ref=e137] [cursor=pointer]:
+          - img [ref=e141]
+          - generic [ref=e148]: Info
+        - menuitem "Template" [ref=e149] [cursor=pointer]:
+          - img [ref=e153]
+          - generic [ref=e158]: Template
+      - menuitem "Site Management" [expanded] [ref=e159] [cursor=pointer]:
+        - img [ref=e163]
+        - generic [ref=e166]: Site Management
+      - menu [ref=e168]:
+        - menuitem "Sites" [ref=e169] [cursor=pointer]:
+          - img [ref=e173]
+          - generic [ref=e182]: Sites
+      - menuitem "File" [expanded] [ref=e183] [cursor=pointer]:
+        - img [ref=e187]
+        - generic [ref=e193]: File
+      - menu [ref=e195]:
+        - menuitem "Filelist" [ref=e196] [cursor=pointer]:
+          - img [ref=e200]
+          - generic [ref=e203]: Filelist
+      - menuitem "Admin Tools" [expanded] [ref=e204] [cursor=pointer]:
+        - img [ref=e208]
+        - generic [ref=e212]: Admin Tools
+      - menu [ref=e214]:
+        - menuitem "Maintenance" [ref=e215] [cursor=pointer]:
+          - img [ref=e219]
+          - generic [ref=e222]: Maintenance
+        - menuitem "Settings" [ref=e223] [cursor=pointer]:
+          - img [ref=e227]
+          - generic [ref=e230]: Settings
+        - menuitem "Upgrade" [ref=e231] [cursor=pointer]:
+          - img [ref=e235]
+          - generic [ref=e238]: Upgrade
+        - menuitem "Environment" [ref=e239] [cursor=pointer]:
+          - img [ref=e243]
+          - generic [ref=e254]: Environment
+        - menuitem "Extensions" [ref=e255] [cursor=pointer]:
+          - img [ref=e259]
+          - generic [ref=e265]: Extensions
+        - menuitem "Extension Builder" [ref=e266] [cursor=pointer]:
+          - img [ref=e270]
+          - generic [ref=e278]: Extension Builder
+      - menuitem "System" [expanded] [ref=e279] [cursor=pointer]:
+        - img [ref=e283]
+        - generic [ref=e287]: System
+      - menu [ref=e289]:
+        - menuitem "Access" [ref=e290] [cursor=pointer]:
+          - img [ref=e294]
+          - generic [ref=e300]: Access
+        - menuitem "Backend Users" [ref=e301] [cursor=pointer]:
+          - img [ref=e305]
+          - generic [ref=e309]: Backend Users
+        - menuitem "Log" [ref=e310] [cursor=pointer]:
+          - img [ref=e314]
+          - generic [ref=e328]: Log
+  - iframe [active] [ref=e333]:
+    - generic [ref=f2e1]:
+      - iframe [ref=f2e2]:
+        
+      - generic [ref=f2e3]:
+        - generic [ref=f2e5]:
+          - combobox [ref=f2e10]:
+            - option "Introduction"
+            - option "Domain Modelling" [selected]
+          - generic [ref=f2e12]:
+            - toolbar [ref=f2e14]:
+              - link "Open extension" [ref=f2e15] [cursor=pointer]:
+                - /url: "#"
+                - img [ref=f2e18]
+              - link "New extension" [ref=f2e20] [cursor=pointer]:
+                - /url: "#"
+                - img [ref=f2e23]
+              - link "Save extension" [ref=f2e25] [cursor=pointer]:
+                - /url: "#"
+                - img [ref=f2e28]
+            - toolbar [ref=f2e31]:
+              - link "Hide advanced options." [active] [ref=f2e115] [cursor=pointer]:
+                - /url: "#"
+                - img [ref=f2e35]
+                - text: Hide advanced options.
+              - link "Open in new window" [ref=f2e37] [cursor=pointer]:
+                - /url: "#"
+                - img [ref=f2e40]
+        - generic [ref=f2e44]:
+          - generic [ref=f2e46]:
+            - generic [ref=f2e47]:
+              - heading "Extension properties" [level=2] [ref=f2e48]
+              - generic "Click to collapse this pane." [ref=f2e49] [cursor=pointer]
+            - group [ref=f2e54]:
+              - generic [ref=f2e55]:
+                - generic [ref=f2e57]: Name
+                - textbox [ref=f2e60]: Extension title
+              - generic [ref=f2e61]:
+                - generic [ref=f2e62]:
+                  - generic [ref=f2e63]: Vendor name
+                  - link "Open TYPO3 documentation in new window" [ref=f2e64] [cursor=pointer]:
+                    - /url: https://docs.typo3.org/m/typo3/reference-coreapi/master/en-us/ApiOverview/Namespaces/#usage-in-extensions
+                    - img [ref=f2e67]
+                - textbox "Vendor name" [ref=f2e71]
+              - generic [ref=f2e72]:
+                - generic [ref=f2e73]:
+                  - generic [ref=f2e74]: Key
+                  - link "Open TYPO3 documentation in new window" [ref=f2e75] [cursor=pointer]:
+                    - /url: https://docs.typo3.org/m/typo3/reference-coreapi/master/en-us/ExtensionArchitecture/ExtensionKey/
+                    - img [ref=f2e78]
+                - textbox [ref=f2e82]: Extension Key
+              - generic [ref=f2e83]:
+                - generic [ref=f2e85]: Description
+                - textbox [ref=f2e88]: Description
+              - group "More options" [ref=f2e90]:
+                - generic [ref=f2e91] [cursor=pointer]: More options
+              - generic [ref=f2e93]:
+                - generic [ref=f2e95]: Extension authors
+                - generic [ref=f2e96]: Add
+              - generic [ref=f2e97]:
+                - generic [ref=f2e99]: Frontend plugins
+                - generic [ref=f2e100]: Add
+              - generic [ref=f2e101]:
+                - generic [ref=f2e103]: Backend modules
+                - generic [ref=f2e104]: Add
+          - generic [ref=f2e112]: New Model Object

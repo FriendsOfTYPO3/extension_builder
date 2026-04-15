@@ -59,6 +59,7 @@ class Extension
     protected bool $generateEmptyGitRepository = false;
     protected bool $generateEditorConfig = false;
     protected bool $generateSiteSet = false;
+    protected bool $generateCiSetup = false;
     protected string $sourceLanguage = 'en';
     /**
      * The extension's state. One of the STATE_* constants.
@@ -640,6 +641,16 @@ class Extension
         $this->generateSiteSet = $generateSiteSet;
     }
 
+    public function getGenerateCiSetup(): bool
+    {
+        return $this->generateCiSetup;
+    }
+
+    public function setGenerateCiSetup(bool $generateCiSetup): void
+    {
+        $this->generateCiSetup = $generateCiSetup;
+    }
+
     public function getSourceLanguage(): string
     {
         return $this->sourceLanguage;
@@ -695,6 +706,26 @@ class Extension
                 ],
             ],
         ];
+        if ($this->generateCiSetup) {
+            $info['require-dev'] += [
+                'friendsofphp/php-cs-fixer' => '^3.0',
+                'php-parallel-lint/php-parallel-lint' => '^1.4',
+                'phpstan/phpstan' => '^2.0',
+                'saschaegerer/phpstan-typo3' => '^2.0',
+                'typo3/coding-standards' => '^0.8',
+            ];
+            $info['scripts'] += [
+                'check:php:cs-fixer' => 'php-cs-fixer fix -v --dry-run --diff',
+                'check:php:lint' => 'parallel-lint Classes Configuration Tests',
+                'check:php:stan' => 'phpstan --no-progress',
+                'check:tests:unit' => 'phpunit -c Build/phpunit/UnitTests.xml',
+                'check:tests:functional' => [
+                    'mkdir -p .Build/public/typo3temp/var/tests',
+                    'phpunit -c Build/phpunit/FunctionalTests.xml',
+                ],
+                'fix:php:cs-fixer' => 'php-cs-fixer fix',
+            ];
+        }
         foreach ($this->persons as $person) {
             $author = [
                 'name' => $person->getName(),

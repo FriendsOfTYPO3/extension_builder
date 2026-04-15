@@ -169,6 +169,12 @@
 			<trans-unit id="descr_generateSiteSet" resname="descr_generateSiteSet">
 				<source>Generate a TYPO3 v13 Site Set (Configuration/Sets/) instead of the classic addStaticFile approach. Recommended for TYPO3 v13+.</source>
 			</trans-unit>
+			<trans-unit id="generateCiSetup" resname="generateCiSetup">
+				<source>Generate CI setup</source>
+			</trans-unit>
+			<trans-unit id="descr_generateCiSetup" resname="descr_generateCiSetup">
+				<source>Generate CI/CD configuration based on TYPO3 tea best practices: GitHub Actions workflow, PHPStan, PHP-CS-Fixer, PHPUnit XML configs, and extended composer scripts and dev dependencies.</source>
+			</trans-unit>
 			<trans-unit id="sourceLanguage" resname="sourceLanguage">
 				<source>Source language for xliff files</source>
 			</trans-unit>
