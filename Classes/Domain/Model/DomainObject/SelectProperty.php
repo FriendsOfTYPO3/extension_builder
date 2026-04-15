@@ -22,22 +22,22 @@ class SelectProperty extends AbstractProperty
     /**
      * the property's default value
      *
-     * @var int
+     * @var string
      */
-    protected $defaultValue = 0;
+    protected $defaultValue = '';
 
     public function getTypeForComment(): string
     {
-        return 'int';
+        return 'string';
     }
 
     public function getTypeHint(): string
     {
-        return 'int';
+        return 'string';
     }
 
     public function getSqlDefinition(): string
     {
-        return $this->getFieldName() . " int(11) DEFAULT '0' NOT NULL,";
+        return $this->getFieldName() . " varchar(255) NOT NULL DEFAULT '',";
     }
 }

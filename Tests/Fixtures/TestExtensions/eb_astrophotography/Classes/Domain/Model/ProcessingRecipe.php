@@ -46,9 +46,9 @@ class ProcessingRecipe extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * stackingMethod
      *
-     * @var int
+     * @var string
      */
-    protected $stackingMethod = 0;
+    protected $stackingMethod = '';
 
     /**
      * totalIntegrationTime
@@ -181,7 +181,7 @@ class ProcessingRecipe extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the stackingMethod
      *
-     * @return int
+     * @return string
      */
     public function getStackingMethod()
     {
@@ -191,10 +191,10 @@ class ProcessingRecipe extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the stackingMethod
      *
-     * @param int $stackingMethod
+     * @param string $stackingMethod
      * @return void
      */
-    public function setStackingMethod(int $stackingMethod)
+    public function setStackingMethod(string $stackingMethod)
     {
         $this->stackingMethod = $stackingMethod;
     }

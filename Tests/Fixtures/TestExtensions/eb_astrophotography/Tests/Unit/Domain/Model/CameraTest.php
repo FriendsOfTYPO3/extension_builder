@@ -78,10 +78,10 @@ class CameraTest extends UnitTestCase
     /**
      * @test
      */
-    public function getSensorTypeReturnsInitialValueForInt(): void
+    public function getSensorTypeReturnsInitialValueForString(): void
     {
         self::assertSame(
-            0,
+            '',
             $this->subject->getSensorType()
         );
     }
@@ -89,11 +89,11 @@ class CameraTest extends UnitTestCase
     /**
      * @test
      */
-    public function setSensorTypeForIntSetsSensorType(): void
+    public function setSensorTypeForStringSetsSensorType(): void
     {
-        $this->subject->setSensorType(12);
+        $this->subject->setSensorType('Conceived at T3CON10');
 
-        self::assertEquals(12, $this->subject->_get('sensorType'));
+        self::assertEquals('Conceived at T3CON10', $this->subject->_get('sensorType'));
     }
 
     /**

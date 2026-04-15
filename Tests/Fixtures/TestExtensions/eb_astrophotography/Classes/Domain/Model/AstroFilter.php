@@ -32,9 +32,9 @@ class AstroFilter extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * filterType
      *
-     * @var int
+     * @var string
      */
-    protected $filterType = 0;
+    protected $filterType = '';
 
     /**
      * centralWavelength
@@ -102,7 +102,7 @@ class AstroFilter extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the filterType
      *
-     * @return int
+     * @return string
      */
     public function getFilterType()
     {
@@ -112,10 +112,10 @@ class AstroFilter extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the filterType
      *
-     * @param int $filterType
+     * @param string $filterType
      * @return void
      */
-    public function setFilterType(int $filterType)
+    public function setFilterType(string $filterType)
     {
         $this->filterType = $filterType;
     }

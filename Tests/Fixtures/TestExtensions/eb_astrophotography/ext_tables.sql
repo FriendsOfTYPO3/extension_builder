@@ -14,7 +14,7 @@ CREATE TABLE tx_ebastrophotography_domain_model_astroimage (
 CREATE TABLE tx_ebastrophotography_domain_model_celestialobject (
 	name varchar(255) NOT NULL DEFAULT '',
 	catalog_id varchar(255) NOT NULL DEFAULT '',
-	object_type int(11) DEFAULT '0' NOT NULL,
+	object_type varchar(255) NOT NULL DEFAULT '',
 	constellation varchar(255) NOT NULL DEFAULT '',
 	right_ascension varchar(255) NOT NULL DEFAULT '',
 	declination varchar(255) NOT NULL DEFAULT '',
@@ -28,7 +28,7 @@ CREATE TABLE tx_ebastrophotography_domain_model_celestialobject (
 CREATE TABLE tx_ebastrophotography_domain_model_telescope (
 	name varchar(255) NOT NULL DEFAULT '',
 	brand varchar(255) NOT NULL DEFAULT '',
-	telescope_type int(11) DEFAULT '0' NOT NULL,
+	telescope_type varchar(255) NOT NULL DEFAULT '',
 	focal_length int(11) NOT NULL DEFAULT '0',
 	aperture int(11) NOT NULL DEFAULT '0',
 	focal_ratio double(11,2) NOT NULL DEFAULT '0.00',
@@ -41,7 +41,7 @@ CREATE TABLE tx_ebastrophotography_domain_model_telescope (
 CREATE TABLE tx_ebastrophotography_domain_model_camera (
 	name varchar(255) NOT NULL DEFAULT '',
 	brand varchar(255) NOT NULL DEFAULT '',
-	sensor_type int(11) DEFAULT '0' NOT NULL,
+	sensor_type varchar(255) NOT NULL DEFAULT '',
 	sensor_width double(11,2) NOT NULL DEFAULT '0.00',
 	sensor_height double(11,2) NOT NULL DEFAULT '0.00',
 	pixel_size double(11,2) NOT NULL DEFAULT '0.00',
@@ -53,7 +53,7 @@ CREATE TABLE tx_ebastrophotography_domain_model_camera (
 
 CREATE TABLE tx_ebastrophotography_domain_model_astrofilter (
 	name varchar(255) NOT NULL DEFAULT '',
-	filter_type int(11) DEFAULT '0' NOT NULL,
+	filter_type varchar(255) NOT NULL DEFAULT '',
 	central_wavelength int(11) NOT NULL DEFAULT '0',
 	bandwidth double(11,2) NOT NULL DEFAULT '0.00',
 	color varchar(7) NOT NULL DEFAULT '',
@@ -97,7 +97,7 @@ CREATE TABLE tx_ebastrophotography_domain_model_processingrecipe (
 	title varchar(255) NOT NULL DEFAULT '',
 	software varchar(255) NOT NULL DEFAULT '',
 	description text,
-	stacking_method int(11) DEFAULT '0' NOT NULL,
+	stacking_method varchar(255) NOT NULL DEFAULT '',
 	total_integration_time double(11,2) NOT NULL DEFAULT '0.00',
 	processing_date datetime DEFAULT NULL,
 	

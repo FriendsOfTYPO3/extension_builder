@@ -39,9 +39,9 @@ class Telescope extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * telescopeType
      *
-     * @var int
+     * @var string
      */
-    protected $telescopeType = 0;
+    protected $telescopeType = '';
 
     /**
      * focalLength
@@ -138,7 +138,7 @@ class Telescope extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the telescopeType
      *
-     * @return int
+     * @return string
      */
     public function getTelescopeType()
     {
@@ -148,10 +148,10 @@ class Telescope extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the telescopeType
      *
-     * @param int $telescopeType
+     * @param string $telescopeType
      * @return void
      */
-    public function setTelescopeType(int $telescopeType)
+    public function setTelescopeType(string $telescopeType)
     {
         $this->telescopeType = $telescopeType;
     }
