@@ -195,7 +195,7 @@ class ClassBuilderTest extends BaseUnitTest
             'nativeDateTime' => ['nativeDateTime', null],
             'password' => ['password', ''],
             'richText' => ['richText', ''],
-            'select' => ['select', 0],
+            'select' => ['select', ''],
             'string' => ['string', ''],
             'text' => ['text', ''],
             'nativeTime' => ['nativeTime', null],

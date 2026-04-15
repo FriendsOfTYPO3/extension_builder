@@ -920,13 +920,13 @@ class GeneratedPropertyTest extends BaseFunctionalTest
         $classFileContent = $this->fileGenerator->generateDomainObjectCode($domainObject);
 
         self::assertMatchesRegularExpression(
-            '/.*\* @var int.*/',
+            '/.*\* @var string.*/',
             $classFileContent,
             'var tag for select property was not generated'
         );
 
         self::assertMatchesRegularExpression(
-            '/.*protected \\$color = 0;.*/',
+            "/.*protected \\\$color = '';.*/",
             $classFileContent,
             'select property was not generated'
         );
@@ -937,7 +937,7 @@ class GeneratedPropertyTest extends BaseFunctionalTest
             'Getter for select property was not generated'
         );
         self::assertMatchesRegularExpression(
-            '/.*public function setColor\(int \$color\).*/',
+            '/.*public function setColor\(string \$color\).*/',
             $classFileContent,
             'Setter for select property was not generated'
         );
