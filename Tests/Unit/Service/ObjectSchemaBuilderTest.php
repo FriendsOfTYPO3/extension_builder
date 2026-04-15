@@ -175,6 +175,43 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
     /**
      * @test
      */
+    public function buildRelationWithMissingExcludeFieldDefaultsToFalse(): void
+    {
+        $className = '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser';
+
+        $input = [
+            'name' => 'MyDomainObject',
+            'objectsettings' => [
+                'description' => '',
+                'aggregateRoot' => false,
+                'type' => 'Entity',
+            ],
+            'relationGroup' => [
+                'relations' => [
+                    0 => [
+                        'relationName' => 'relation without excludeField',
+                        'relationType' => 'manyToMany',
+                        // propertyIsExcludeField intentionally omitted to test regression
+                        'foreignRelationClass' => $className,
+                    ],
+                ],
+            ],
+        ];
+
+        $this->configurationManager->expects(self::atLeastOnce())
+            ->method('getPersistenceTable')
+            ->with($className)
+            ->willReturn('fe_users');
+
+        $domainObject = $this->objectSchemaBuilder->build($input);
+        $properties = $domainObject->getProperties();
+        self::assertCount(1, $properties);
+        self::assertFalse($properties[0]->getExcludeField(), 'excludeField should default to false when missing from JSON');
+    }
+
+    /**
+     * @test
+     */
     public function manyToManyRelationReturnsCorrectRelationTable(): void
     {
         $name = 'MyDomainObject';
