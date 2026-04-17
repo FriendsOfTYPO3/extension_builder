@@ -771,7 +771,7 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
                 if ($constructor !== null) {
                     $oldRepositoryClass = $oldDomainObject->getFullyQualifiedDomainRepositoryClassName();
                     foreach ($constructor->getParameters() as $constructorParam) {
-                        if ($oldRepositoryClass !== '' && strpos($constructorParam->getTypeHint(), $oldRepositoryClass) !== false) {
+                        if ($oldRepositoryClass !== '' && str_contains($constructorParam->getTypeHint(), $oldRepositoryClass)) {
                             $constructorParam->setTypeHint($currentDomainObject->getFullyQualifiedDomainRepositoryClassName());
                             $constructorParam->setName(lcfirst($newName) . 'Repository');
                             $constructor->replaceParameter($constructorParam);
@@ -793,7 +793,7 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
 
                         $parameters = $actionMethod->getParameters();
                         foreach ($parameters as &$parameter) {
-                            if (strpos($parameter->getTypeHint(), $oldDomainObject->getFullQualifiedClassName()) !== false) {
+                            if (str_contains($parameter->getTypeHint(), $oldDomainObject->getFullQualifiedClassName())) {
                                 $parameter->setTypeHint($currentDomainObject->getFullQualifiedClassName());
                                 $parameter->setName(
                                     $this->replaceUpperAndLowerCase(

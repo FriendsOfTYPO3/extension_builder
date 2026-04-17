@@ -145,4 +145,59 @@ class RoundTripDomainObjectRenameTest extends BaseFunctionalTest
             }
         }
     }
+
+    /**
+     * @test
+     */
+    public function renameAggregateRootUpdatesInjectMethodNameAndBody(): void
+    {
+        $oldName = 'Foo';
+        $newName = 'Bar';
+        $uid = md5('rename-foo-bar-inject');
+
+        $this->generateInitialModelClassFile($oldName);
+
+        $oldDomainObject = $this->buildDomainObject($oldName, true, true);
+
+        $controllerDir = $this->extension->getExtensionDir() . 'Classes/Controller/';
+        mkdir($controllerDir, 0777, true);
+        // Controller with TYPO3 v11-style inject method (not constructor injection)
+        file_put_contents(
+            $controllerDir . $oldName . 'Controller.php',
+            "<?php\nnamespace EBT\\Dummy\\Controller;\nuse EBT\\Dummy\\Domain\\Repository\\FooRepository;\nclass FooController extends \\TYPO3\\CMS\\Extbase\\Mvc\\Controller\\ActionController {\n    private FooRepository \$fooRepository;\n    public function injectFooRepository(FooRepository \$fooRepository): void { \$this->fooRepository = \$fooRepository; }\n}\n"
+        );
+
+        $repositoryDir = $this->extension->getExtensionDir() . 'Classes/Domain/Repository/';
+        mkdir($repositoryDir, 0777, true);
+        file_put_contents(
+            $repositoryDir . $oldName . 'Repository.php',
+            "<?php\nnamespace EBT\\Dummy\\Domain\\Repository;\nclass FooRepository extends \\TYPO3\\CMS\\Extbase\\Persistence\\Repository {}\n"
+        );
+
+        $oldDomainObject->setUniqueIdentifier($uid);
+        $this->roundTripService->_set('previousDomainObjects', [$uid => $oldDomainObject]);
+        $this->roundTripService->_set('previousExtensionDirectory', $this->extension->getExtensionDir());
+
+        $newDomainObject = $this->buildDomainObject($newName, true, true);
+        $newDomainObject->setUniqueIdentifier($uid);
+
+        $controllerFile = $this->roundTripService->getControllerClassFile($newDomainObject);
+
+        self::assertNotNull($controllerFile, 'Controller class file must not be null');
+
+        $controllerClass = $controllerFile->getFirstClass();
+        self::assertSame($newName . 'Controller', $controllerClass->getName());
+
+        // Inject method must be renamed from injectFooRepository to injectBarRepository
+        self::assertNull($controllerClass->getMethod('injectFooRepository'), 'Old inject method must be removed');
+        $injectMethod = $controllerClass->getMethod('injectBarRepository');
+        self::assertNotNull($injectMethod, 'Renamed inject method injectBarRepository must exist');
+
+        // Inject method parameter must reference the new repository
+        $injectParam = $injectMethod->getParameterByPosition(0);
+        self::assertNotNull($injectParam, 'Inject method must have a parameter');
+        self::assertSame('barRepository', $injectParam->getName(), 'Inject parameter must be renamed to barRepository');
+        self::assertStringContainsString('BarRepository', $injectParam->getTypeHint(), 'Inject parameter type must reference new repository');
+        self::assertStringNotContainsString('FooRepository', $injectParam->getTypeHint(), 'Inject parameter must not reference old repository');
+    }
 }
