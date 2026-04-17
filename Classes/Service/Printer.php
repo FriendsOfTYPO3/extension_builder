@@ -70,13 +70,6 @@ class Printer extends Standard
     }
 
     /**
-     * Pretty prints an array of nodes and implodes the printed values with commas.
-     *
-     * @param Node[] $nodes Array of Nodes to be printed
-     *
-     * @return string Comma separated pretty printed nodes
-     */
-    /**
      * Detects multiline based on startLine/endLine attributes preserved from the original parse,
      * and uses pCommaSeparatedMultiline (with proper indentation) when multiline is detected.
      * This preserves the indentation structure of user-written code after a roundtrip.
@@ -121,6 +114,13 @@ class Printer extends Standard
         return false;
     }
 
+    /**
+     * Pretty prints an array of nodes and implodes the printed values with commas.
+     *
+     * @param Node[] $nodes Array of Nodes to be printed
+     *
+     * @return string Comma separated pretty printed nodes
+     */
     protected function pCommaSeparated(array $nodes): string
     {
         $multiline = false;
