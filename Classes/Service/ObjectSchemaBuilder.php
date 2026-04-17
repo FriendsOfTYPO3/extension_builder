@@ -24,6 +24,7 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\FileProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\AbstractRelation;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation\ZeroToManyRelation;
+use EBT\ExtensionBuilder\Domain\Model\DomainObject\SelectProperty;
 use EBT\ExtensionBuilder\Utility\Tools;
 use Exception;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -51,7 +52,8 @@ class ObjectSchemaBuilder implements SingletonInterface
     public function build(array $jsonDomainObject): DomainObject
     {
         $domainObject = new DomainObject();
-        $domainObject->setUniqueIdentifier($jsonDomainObject['objectsettings']['uid'] ?? null);
+        $uid = $jsonDomainObject['objectsettings']['uid'] ?? null;
+        $domainObject->setUniqueIdentifier($uid !== null ? (string)$uid : null);
 
         $domainObject->setName($jsonDomainObject['name']);
         $domainObject->setDescription($jsonDomainObject['objectsettings']['description']);
@@ -246,6 +248,9 @@ class ObjectSchemaBuilder implements SingletonInterface
         }
         if ($property->isFileReference() && !empty($propertyJsonConfiguration['maxItems'])) {
             $property->setMaxItems((int)$propertyJsonConfiguration['maxItems']);
+        }
+        if ($property instanceof SelectProperty && isset($propertyJsonConfiguration['selectItems'])) {
+            $property->setSelectItems($propertyJsonConfiguration['selectItems']);
         }
         return $property;
     }

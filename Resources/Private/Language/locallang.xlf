@@ -292,6 +292,9 @@
 			<trans-unit id="descr_isL10nModeExclude" resname="descr_isL10nModeExclude">
 				<source>If set to true, this field will be set to l10n_mode = exclude</source>
 			</trans-unit>
+		<trans-unit id="selectItems" resname="selectItems">
+			<source>Select items</source>
+		</trans-unit>
 			<trans-unit id="newModelObject" resname="newModelObject">
 				<source>New model object</source>
 			</trans-unit>

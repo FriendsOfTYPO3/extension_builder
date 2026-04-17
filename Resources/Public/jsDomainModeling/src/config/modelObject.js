@@ -406,6 +406,39 @@ export const modelObjectModule = {
                                                                 value: false,
                                                             },
                                                         },
+                                                        {
+                                                            type: 'list',
+                                                            inputParams: {
+                                                                visibleForTypes: ['Select'],
+                                                                label: 'selectItems',
+                                                                name: 'selectItems',
+                                                                sortable: true,
+                                                                elementType: {
+                                                                    type: 'group',
+                                                                    inputParams: {
+                                                                        name: 'selectItem',
+                                                                        fields: [
+                                                                            {
+                                                                                type: 'string',
+                                                                                inputParams: {
+                                                                                    name: 'label',
+                                                                                    placeholder: 'label',
+                                                                                    required: true,
+                                                                                },
+                                                                            },
+                                                                            {
+                                                                                type: 'string',
+                                                                                inputParams: {
+                                                                                    name: 'value',
+                                                                                    placeholder: 'value',
+                                                                                    required: true,
+                                                                                },
+                                                                            },
+                                                                        ],
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
                                                     ],
                                                 },
                                             },
