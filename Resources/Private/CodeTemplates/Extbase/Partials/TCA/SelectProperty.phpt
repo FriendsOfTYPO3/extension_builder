@@ -2,7 +2,7 @@
     'type' => 'select',
     'renderType' => 'selectSingle',
     'items' => [
-        <f:if condition="{property.hasSelectItems}"><f:then><f:for each="{property.selectItems}" as="item">['label' => '{item.label}', 'value' => '{item.value}'],
+        <f:if condition="{property.hasSelectItems}"><f:then><f:for each="{property.selectItems}" as="item">['label' => '{item.label -> k:format.quoteString()}', 'value' => '{item.value -> k:format.quoteString()}'],
         </f:for></f:then><f:else>['label' => '-- Label --', 'value' => 0],
         </f:else></f:if>
     ],

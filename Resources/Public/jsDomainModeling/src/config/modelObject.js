@@ -409,6 +409,7 @@ export const modelObjectModule = {
                                                         {
                                                             type: 'list',
                                                             inputParams: {
+                                                                visibleForTypes: ['Select'],
                                                                 label: 'selectItems',
                                                                 name: 'selectItems',
                                                                 sortable: true,
