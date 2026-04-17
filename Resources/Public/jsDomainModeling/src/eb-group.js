@@ -176,10 +176,10 @@ export class EbGroup extends LitElement {
      */
     getValue() {
         const result = {};
-        // Only iterate assigned slot nodes (direct light-DOM children rendered
-        // into the default slot) to avoid picking up fields from nested groups.
-        const slot = this.shadowRoot?.querySelector('slot');
-        const directChildren = slot ? slot.assignedElements({ flatten: false }) : Array.from(this.children);
+        // Use this.children (light-DOM direct children) instead of
+        // slot.assignedElements() to avoid slot-initialization timing issues
+        // that can cause assigned elements to be empty when called early.
+        const directChildren = Array.from(this.children);
 
         directChildren.forEach((el) => {
             if (typeof el.getValue !== 'function') {
@@ -210,8 +210,10 @@ export class EbGroup extends LitElement {
         if (!obj) {
             return;
         }
-        const slot = this.shadowRoot?.querySelector('slot');
-        const directChildren = slot ? slot.assignedElements({ flatten: false }) : Array.from(this.children);
+        // Use this.children (light-DOM direct children) instead of
+        // slot.assignedElements() to avoid slot-initialization timing issues
+        // that can cause assigned elements to be empty when called early.
+        const directChildren = Array.from(this.children);
 
         directChildren.forEach((el) => {
             if (typeof el.setValue !== 'function') {
