@@ -35,6 +35,30 @@ class File extends Container
 
     protected string $comment = '';
 
+    protected ?array $origStmts = null;
+
+    protected ?array $origTokens = null;
+
+    public function setOrigStmts(array $stmts): void
+    {
+        $this->origStmts = $stmts;
+    }
+
+    public function getOrigStmts(): ?array
+    {
+        return $this->origStmts;
+    }
+
+    public function setOrigTokens(array $tokens): void
+    {
+        $this->origTokens = $tokens;
+    }
+
+    public function getOrigTokens(): ?array
+    {
+        return $this->origTokens;
+    }
+
     public function __clone()
     {
         $clonedClasses = [];
