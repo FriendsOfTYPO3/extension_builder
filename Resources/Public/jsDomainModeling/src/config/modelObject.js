@@ -327,6 +327,18 @@ export const modelObjectModule = {
                                                     name: 'advancedSettings',
                                                     legend: 'advancedOptions',
                                                     fields: [
+                                                        // --- Conditional field visibility ---
+                                                        // Two mechanisms control which advanced fields are shown
+                                                        // for a given property type (see eb-group.js:_applyPropertyTypeVisibility):
+                                                        //
+                                                        // visibleForTypes: [] — allowlist. Field is shown ONLY for the listed types.
+                                                        //   Use for fields that are only relevant to a small set of types.
+                                                        //   Adding a new property type: field stays hidden unless you add it here.
+                                                        //
+                                                        // hiddenForTypes: [] — denylist. Field is shown for ALL types EXCEPT the listed ones.
+                                                        //   Use for fields that apply broadly but must be hidden for a few special types.
+                                                        //   Adding a new property type: field is shown automatically. Only add it
+                                                        //   to hiddenForTypes if it genuinely does not apply to the new type.
                                                         {
                                                             type: 'text',
                                                             inputParams: {
@@ -365,26 +377,11 @@ export const modelObjectModule = {
                                                         {
                                                             type: 'boolean',
                                                             inputParams: {
-                                                                visibleForTypes: [
-                                                                    'String',
-                                                                    'Text',
-                                                                    'RichText',
-                                                                    'Slug',
-                                                                    'ColorPicker',
-                                                                    'Password',
-                                                                    'Email',
-                                                                    'Integer',
-                                                                    'Float',
-                                                                    'Boolean',
-                                                                    'InputLink',
-                                                                    'NativeDate',
-                                                                    'NativeDateTime',
-                                                                    'Date',
-                                                                    'DateTime',
-                                                                    'NativeTime',
-                                                                    'Time',
-                                                                    'TimeSec',
-                                                                    'Select',
+                                                                hiddenForTypes: [
+                                                                    'File',
+                                                                    'Image',
+                                                                    'PassThrough',
+                                                                    'None',
                                                                 ],
                                                                 label: 'isNullable',
                                                                 name: 'propertyIsNullable',

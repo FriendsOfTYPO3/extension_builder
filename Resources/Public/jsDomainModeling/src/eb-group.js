@@ -107,6 +107,12 @@ export class EbGroup extends LitElement {
                 el.style.display = allowedTypes.includes(selectedType) ? '' : 'none';
             }
         });
+        this.querySelectorAll('[data-hidden-for]').forEach((el) => {
+            const hiddenTypes = (el.getAttribute('data-hidden-for') || '').split(' ').filter(Boolean);
+            if (hiddenTypes.length > 0) {
+                el.style.display = hiddenTypes.includes(selectedType) ? 'none' : '';
+            }
+        });
     }
 
     _initPropertyTypes() {
