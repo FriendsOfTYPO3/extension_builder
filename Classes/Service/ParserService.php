@@ -46,7 +46,8 @@ class ParserService implements SingletonInterface
 
     public function parseCode(string $code): File
     {
-        $stmts = $this->parser->parse($code);
+        $origStmts = $this->parser->parse($code);
+        $origTokens = $this->parser->getTokens();
 
         // set defaults
         if ($this->traverser === null) {
@@ -59,9 +60,15 @@ class ParserService implements SingletonInterface
             $this->classFactory = new ClassFactory();
         }
         $this->fileVisitor->setClassFactory($this->classFactory);
+        $this->traverser->resetVisitors();
+        $this->traverser->appendVisitor(new CloningVisitor());
         $this->traverser->appendVisitor($this->fileVisitor);
-        $this->traverser->traverse($stmts);
-        return $this->fileVisitor->getFileObject();
+        $this->traverser->traverse($origStmts);
+
+        $fileObject = $this->fileVisitor->getFileObject();
+        $fileObject->setOrigStmts($origStmts);
+        $fileObject->setOrigTokens($origTokens);
+        return $fileObject;
     }
 
     public function parseFile(string $fileName): File

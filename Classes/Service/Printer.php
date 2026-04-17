@@ -70,6 +70,51 @@ class Printer extends Standard
     }
 
     /**
+     * Detects multiline based on startLine/endLine attributes preserved from the original parse,
+     * and uses pCommaSeparatedMultiline (with proper indentation) when multiline is detected.
+     * This preserves the indentation structure of user-written code after a roundtrip.
+     */
+    protected function pMaybeMultiline(array $nodes, bool $trailingComma = false): string
+    {
+        if ($this->hasNodeWithComments($nodes)) {
+            return $this->pCommaSeparatedMultiline($nodes, $trailingComma) . $this->nl;
+        }
+        if ($this->isNodeListOriginallyMultiline($nodes)) {
+            return $this->pCommaSeparatedMultiline($nodes, false) . $this->nl;
+        }
+        return $this->pCommaSeparated($nodes);
+    }
+
+    private function isNodeListOriginallyMultiline(array $nodes): bool
+    {
+        // Any single node spanning multiple lines (e.g. a multiline array arg)
+        foreach ($nodes as $node) {
+            if ($node instanceof Node) {
+                $startLine = $node->getAttribute('startLine');
+                $endLine = $node->getAttribute('endLine');
+                if ($startLine !== null && $endLine !== null && $startLine !== $endLine) {
+                    return true;
+                }
+            }
+        }
+        // Multiple nodes on different lines
+        if (count($nodes) < 2) {
+            return false;
+        }
+        $prevEndLine = null;
+        foreach ($nodes as $node) {
+            if ($node instanceof Node) {
+                $startLine = $node->getAttribute('startLine');
+                if ($startLine !== null && $prevEndLine !== null && $startLine !== $prevEndLine) {
+                    return true;
+                }
+                $prevEndLine = $node->getAttribute('endLine') ?? $startLine;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Pretty prints an array of nodes and implodes the printed values with commas.
      *
      * @param Node[] $nodes Array of Nodes to be printed

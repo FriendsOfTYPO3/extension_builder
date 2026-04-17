@@ -292,6 +292,81 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
+    /**
+     * @test
+     */
+    public function parsedFileObjectCarriesOriginalStmtsAndTokens(): void
+    {
+        $classFileObject = $this->parserService->parseFile($this->fixturesPath . 'SimpleProperty.php');
+        self::assertNotNull($classFileObject->getOrigStmts(), 'origStmts must be set after parseFile()');
+        self::assertNotEmpty($classFileObject->getOrigStmts());
+        self::assertNotNull($classFileObject->getOrigTokens(), 'origTokens must be set after parseFile()');
+        self::assertNotEmpty($classFileObject->getOrigTokens());
+    }
+
+    /**
+     * @test
+     */
+    public function newFileObjectHasNoOrigStmtsOrTokens(): void
+    {
+        $fileObject = new File();
+        self::assertNull($fileObject->getOrigStmts());
+        self::assertNull($fileObject->getOrigTokens());
+    }
+
+    /**
+     * @test
+     *
+     * Regression test for https://github.com/FriendsOfTYPO3/extension_builder/issues/628
+     * Verifies that nested method call arguments retain proper indentation after a roundtrip.
+     */
+    public function renderPreservesIndentationOfNestedMethodCalls(): void
+    {
+        $fileName = 'ClassWithNestedMethodCalls.php';
+        $originalPath = $this->fixturesPath . $fileName;
+        $classFileObject = $this->parserService->parseFile($originalPath);
+        $rendered = $this->printerService->renderFileObject($classFileObject);
+
+        // The key assertion: nested args must be indented more than the outer call,
+        // not all left-aligned at the same indentation (which was the bug).
+        self::assertStringContainsString(
+            '        $query->matching(' . "\n" . '            $query->logicalOr(',
+            $rendered,
+            'Arg of matching() must be indented relative to the call'
+        );
+        self::assertStringContainsString(
+            '            $query->logicalOr(' . "\n" . '                [',
+            $rendered,
+            'Array arg of logicalOr() must be indented relative to the call'
+        );
+        self::assertStringContainsString(
+            '                    $query->like(',
+            $rendered,
+            'Array items must be indented inside the array'
+        );
+    }
+
+    /**
+     * @test
+     *
+     * Regression test for https://github.com/FriendsOfTYPO3/extension_builder/issues/628
+     * Verifies a single multiline arg (array literal) is properly indented.
+     */
+    public function renderPreservesIndentationOfMultilineArrayArg(): void
+    {
+        $fileName = 'ClassWithNestedMethodCalls.php';
+        $originalPath = $this->fixturesPath . $fileName;
+        $classFileObject = $this->parserService->parseFile($originalPath);
+        $rendered = $this->printerService->renderFileObject($classFileObject);
+
+        // findAllActive has a single multiline array arg — must be indented
+        self::assertStringContainsString(
+            '        return $this->findBy(' . "\n" . '            [',
+            $rendered,
+            'Single multiline array arg must be indented relative to the call'
+        );
+    }
+
     private function parseAndWrite(string $fileName, string $subFolder = ''): File
     {
         $classFilePath = $this->fixturesPath . $subFolder . $fileName;
