@@ -70,7 +70,7 @@ class ExtensionBuilderConfigurationManagerTest extends BaseUnitTest
     /**
      * @test
      */
-    public function mapAdvancedModeBackwardToleratesMissingAdvancedSettingsKey(): void
+    public function mapAdvancedModeBackwardToleratesRelationWithoutRenderType(): void
     {
         $jsonConfig = [
             [
