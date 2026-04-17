@@ -52,7 +52,8 @@ class ObjectSchemaBuilder implements SingletonInterface
     public function build(array $jsonDomainObject): DomainObject
     {
         $domainObject = new DomainObject();
-        $domainObject->setUniqueIdentifier($jsonDomainObject['objectsettings']['uid'] ?? null);
+        $uid = $jsonDomainObject['objectsettings']['uid'] ?? null;
+        $domainObject->setUniqueIdentifier($uid !== null ? (string)$uid : null);
 
         $domainObject->setName($jsonDomainObject['name']);
         $domainObject->setDescription($jsonDomainObject['objectsettings']['description']);
